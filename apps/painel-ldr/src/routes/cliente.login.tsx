@@ -71,6 +71,15 @@ function ClientLogin() {
       toast.error("Não foi possível entrar. Verifique seus dados.");
       return;
     }
+
+    const { data: userData, error: userError } = await supabase.auth.getUser();
+    if (userError || !userData.user) {
+      await supabase.auth.signOut();
+      setBusy(false);
+      toast.error("Não foi possível validar sua sessão. Tente novamente.");
+      return;
+    }
+
     window.location.replace("/cliente");
   }
 
