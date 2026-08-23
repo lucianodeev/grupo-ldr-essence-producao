@@ -34,6 +34,7 @@ import { Route as AuthenticatedPainelProfissionalPsicanaliseRouteImport } from '
 import { Route as AuthenticatedPainelProfissionalS8RouteImport } from './routes/_authenticated/painel-profissional.s8'
 import { Route as ClientareaClienteIndexRouteImport } from './routes/_clientarea.cliente.index'
 import { Route as ClientareaClienteAgendaRouteImport } from './routes/_clientarea.cliente.agenda'
+import { Route as ClientareaClienteBibliotecaRouteImport } from './routes/_clientarea.cliente.biblioteca'
 import { Route as ClientareaClienteContratarRouteImport } from './routes/_clientarea.cliente.contratar'
 import { Route as ClientareaClienteEntregasRouteImport } from './routes/_clientarea.cliente.entregas'
 import { Route as ClientareaClienteMentoriaRouteImport } from './routes/_clientarea.cliente.mentoria'
@@ -41,6 +42,7 @@ import { Route as ClientareaClientePedidosRouteImport } from './routes/_clientar
 import { Route as ClientareaClientePerfilRouteImport } from './routes/_clientarea.cliente.perfil'
 import { Route as ClientareaClienteSessoesRouteImport } from './routes/_clientarea.cliente.sessoes'
 import { Route as ApiIntegrationsSiteOrdersRouteImport } from './routes/api/integrations/site-orders'
+import { Route as ApiStripeWebhookRouteImport } from './routes/api/stripe/webhook'
 import { Route as ClientareaClientePedidoOrderIdRouteImport } from './routes/_clientarea.cliente.pedido.$orderId'
 
 const IndexRoute = IndexRouteImport.update({
@@ -178,6 +180,12 @@ const ClientareaClienteAgendaRoute = ClientareaClienteAgendaRouteImport.update({
   path: '/agenda',
   getParentRoute: () => ClientareaClienteRoute,
 } as any)
+const ClientareaClienteBibliotecaRoute =
+  ClientareaClienteBibliotecaRouteImport.update({
+    id: '/biblioteca',
+    path: '/biblioteca',
+    getParentRoute: () => ClientareaClienteRoute,
+  } as any)
 const ClientareaClienteContratarRoute =
   ClientareaClienteContratarRouteImport.update({
     id: '/contratar',
@@ -219,6 +227,11 @@ const ApiIntegrationsSiteOrdersRoute =
     path: '/api/integrations/site-orders',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiStripeWebhookRoute = ApiStripeWebhookRouteImport.update({
+  id: '/api/stripe/webhook',
+  path: '/api/stripe/webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ClientareaClientePedidoOrderIdRoute =
   ClientareaClientePedidoOrderIdRouteImport.update({
     id: '/pedido/$orderId',
@@ -248,6 +261,7 @@ export interface FileRoutesByFullPath {
   '/painel-profissional/psicanalise': typeof AuthenticatedPainelProfissionalPsicanaliseRoute
   '/painel-profissional/s8': typeof AuthenticatedPainelProfissionalS8Route
   '/cliente/agenda': typeof ClientareaClienteAgendaRoute
+  '/cliente/biblioteca': typeof ClientareaClienteBibliotecaRoute
   '/cliente/contratar': typeof ClientareaClienteContratarRoute
   '/cliente/entregas': typeof ClientareaClienteEntregasRoute
   '/cliente/mentoria': typeof ClientareaClienteMentoriaRoute
@@ -255,6 +269,7 @@ export interface FileRoutesByFullPath {
   '/cliente/perfil': typeof ClientareaClientePerfilRoute
   '/cliente/sessoes': typeof ClientareaClienteSessoesRoute
   '/api/integrations/site-orders': typeof ApiIntegrationsSiteOrdersRoute
+  '/api/stripe/webhook': typeof ApiStripeWebhookRoute
   '/painel-profissional/': typeof AuthenticatedPainelProfissionalIndexRoute
   '/cliente/': typeof ClientareaClienteIndexRoute
   '/cliente/pedido/$orderId': typeof ClientareaClientePedidoOrderIdRoute
@@ -279,6 +294,7 @@ export interface FileRoutesByTo {
   '/painel-profissional/psicanalise': typeof AuthenticatedPainelProfissionalPsicanaliseRoute
   '/painel-profissional/s8': typeof AuthenticatedPainelProfissionalS8Route
   '/cliente/agenda': typeof ClientareaClienteAgendaRoute
+  '/cliente/biblioteca': typeof ClientareaClienteBibliotecaRoute
   '/cliente/contratar': typeof ClientareaClienteContratarRoute
   '/cliente/entregas': typeof ClientareaClienteEntregasRoute
   '/cliente/mentoria': typeof ClientareaClienteMentoriaRoute
@@ -286,6 +302,7 @@ export interface FileRoutesByTo {
   '/cliente/perfil': typeof ClientareaClientePerfilRoute
   '/cliente/sessoes': typeof ClientareaClienteSessoesRoute
   '/api/integrations/site-orders': typeof ApiIntegrationsSiteOrdersRoute
+  '/api/stripe/webhook': typeof ApiStripeWebhookRoute
   '/painel-profissional': typeof AuthenticatedPainelProfissionalIndexRoute
   '/cliente': typeof ClientareaClienteIndexRoute
   '/cliente/pedido/$orderId': typeof ClientareaClientePedidoOrderIdRoute
@@ -315,6 +332,7 @@ export interface FileRoutesById {
   '/_authenticated/painel-profissional/psicanalise': typeof AuthenticatedPainelProfissionalPsicanaliseRoute
   '/_authenticated/painel-profissional/s8': typeof AuthenticatedPainelProfissionalS8Route
   '/_clientarea/cliente/agenda': typeof ClientareaClienteAgendaRoute
+  '/_clientarea/cliente/biblioteca': typeof ClientareaClienteBibliotecaRoute
   '/_clientarea/cliente/contratar': typeof ClientareaClienteContratarRoute
   '/_clientarea/cliente/entregas': typeof ClientareaClienteEntregasRoute
   '/_clientarea/cliente/mentoria': typeof ClientareaClienteMentoriaRoute
@@ -322,6 +340,7 @@ export interface FileRoutesById {
   '/_clientarea/cliente/perfil': typeof ClientareaClientePerfilRoute
   '/_clientarea/cliente/sessoes': typeof ClientareaClienteSessoesRoute
   '/api/integrations/site-orders': typeof ApiIntegrationsSiteOrdersRoute
+  '/api/stripe/webhook': typeof ApiStripeWebhookRoute
   '/_authenticated/painel-profissional/': typeof AuthenticatedPainelProfissionalIndexRoute
   '/_clientarea/cliente/': typeof ClientareaClienteIndexRoute
   '/_clientarea/cliente/pedido/$orderId': typeof ClientareaClientePedidoOrderIdRoute
@@ -350,6 +369,7 @@ export interface FileRouteTypes {
     | '/painel-profissional/psicanalise'
     | '/painel-profissional/s8'
     | '/cliente/agenda'
+    | '/cliente/biblioteca'
     | '/cliente/contratar'
     | '/cliente/entregas'
     | '/cliente/mentoria'
@@ -357,6 +377,7 @@ export interface FileRouteTypes {
     | '/cliente/perfil'
     | '/cliente/sessoes'
     | '/api/integrations/site-orders'
+    | '/api/stripe/webhook'
     | '/painel-profissional/'
     | '/cliente/'
     | '/cliente/pedido/$orderId'
@@ -381,6 +402,7 @@ export interface FileRouteTypes {
     | '/painel-profissional/psicanalise'
     | '/painel-profissional/s8'
     | '/cliente/agenda'
+    | '/cliente/biblioteca'
     | '/cliente/contratar'
     | '/cliente/entregas'
     | '/cliente/mentoria'
@@ -388,6 +410,7 @@ export interface FileRouteTypes {
     | '/cliente/perfil'
     | '/cliente/sessoes'
     | '/api/integrations/site-orders'
+    | '/api/stripe/webhook'
     | '/painel-profissional'
     | '/cliente'
     | '/cliente/pedido/$orderId'
@@ -416,6 +439,7 @@ export interface FileRouteTypes {
     | '/_authenticated/painel-profissional/psicanalise'
     | '/_authenticated/painel-profissional/s8'
     | '/_clientarea/cliente/agenda'
+    | '/_clientarea/cliente/biblioteca'
     | '/_clientarea/cliente/contratar'
     | '/_clientarea/cliente/entregas'
     | '/_clientarea/cliente/mentoria'
@@ -423,6 +447,7 @@ export interface FileRouteTypes {
     | '/_clientarea/cliente/perfil'
     | '/_clientarea/cliente/sessoes'
     | '/api/integrations/site-orders'
+    | '/api/stripe/webhook'
     | '/_authenticated/painel-profissional/'
     | '/_clientarea/cliente/'
     | '/_clientarea/cliente/pedido/$orderId'
@@ -440,6 +465,7 @@ export interface RootRouteChildren {
   ClienteDefinirSenhaRoute: typeof ClienteDefinirSenhaRoute
   ClienteLoginRoute: typeof ClienteLoginRoute
   ApiIntegrationsSiteOrdersRoute: typeof ApiIntegrationsSiteOrdersRoute
+  ApiStripeWebhookRoute: typeof ApiStripeWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -619,6 +645,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClientareaClienteAgendaRouteImport
       parentRoute: typeof ClientareaClienteRoute
     }
+    '/_clientarea/cliente/biblioteca': {
+      id: '/_clientarea/cliente/biblioteca'
+      path: '/biblioteca'
+      fullPath: '/cliente/biblioteca'
+      preLoaderRoute: typeof ClientareaClienteBibliotecaRouteImport
+      parentRoute: typeof ClientareaClienteRoute
+    }
     '/_clientarea/cliente/contratar': {
       id: '/_clientarea/cliente/contratar'
       path: '/contratar'
@@ -666,6 +699,13 @@ declare module '@tanstack/react-router' {
       path: '/api/integrations/site-orders'
       fullPath: '/api/integrations/site-orders'
       preLoaderRoute: typeof ApiIntegrationsSiteOrdersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/stripe/webhook': {
+      id: '/api/stripe/webhook'
+      path: '/api/stripe/webhook'
+      fullPath: '/api/stripe/webhook'
+      preLoaderRoute: typeof ApiStripeWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_clientarea/cliente/pedido/$orderId': {
@@ -737,6 +777,7 @@ const AuthenticatedRouteRouteWithChildren =
 
 interface ClientareaClienteRouteChildren {
   ClientareaClienteAgendaRoute: typeof ClientareaClienteAgendaRoute
+  ClientareaClienteBibliotecaRoute: typeof ClientareaClienteBibliotecaRoute
   ClientareaClienteContratarRoute: typeof ClientareaClienteContratarRoute
   ClientareaClienteEntregasRoute: typeof ClientareaClienteEntregasRoute
   ClientareaClienteMentoriaRoute: typeof ClientareaClienteMentoriaRoute
@@ -749,6 +790,7 @@ interface ClientareaClienteRouteChildren {
 
 const ClientareaClienteRouteChildren: ClientareaClienteRouteChildren = {
   ClientareaClienteAgendaRoute: ClientareaClienteAgendaRoute,
+  ClientareaClienteBibliotecaRoute: ClientareaClienteBibliotecaRoute,
   ClientareaClienteContratarRoute: ClientareaClienteContratarRoute,
   ClientareaClienteEntregasRoute: ClientareaClienteEntregasRoute,
   ClientareaClienteMentoriaRoute: ClientareaClienteMentoriaRoute,
@@ -786,6 +828,7 @@ const rootRouteChildren: RootRouteChildren = {
   ClienteDefinirSenhaRoute: ClienteDefinirSenhaRoute,
   ClienteLoginRoute: ClienteLoginRoute,
   ApiIntegrationsSiteOrdersRoute: ApiIntegrationsSiteOrdersRoute,
+  ApiStripeWebhookRoute: ApiStripeWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -2,6 +2,7 @@
 import { createMiddleware } from '@tanstack/react-start'
 import { getRequest } from '@tanstack/react-start/server'
 import { createClient } from '@supabase/supabase-js'
+import { normalizeSupabaseUrl } from './config'
 import type { Database } from './types'
 
 
@@ -72,7 +73,7 @@ export const requireSupabaseAuth = createMiddleware({ type: 'function' }).server
     }
 
     const supabase = createClient<Database>(
-      SUPABASE_URL!,
+      normalizeSupabaseUrl(SUPABASE_URL!),
       SUPABASE_PUBLISHABLE_KEY!,
       {
         global: {

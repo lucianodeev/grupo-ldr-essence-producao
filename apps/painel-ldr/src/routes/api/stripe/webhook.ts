@@ -98,7 +98,7 @@ export const Route = createFileRoute("/api/stripe/webhook")({
 
           const object = event.data?.object ?? {};
           const metadata = object.metadata ?? {};
-          const orderId = metadata.order_id;
+          const orderId = metadata["order_id"];
 
           if (orderId) {
             if (event.type === "checkout.session.completed") {
