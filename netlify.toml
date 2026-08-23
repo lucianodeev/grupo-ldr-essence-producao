@@ -6,7 +6,3 @@
 [build.environment]
   NODE_VERSION = "22"
   NPM_FLAGS = "--no-audit --no-fund"
-
-[dev]
-  command = "vite dev"
-  port = 3000
