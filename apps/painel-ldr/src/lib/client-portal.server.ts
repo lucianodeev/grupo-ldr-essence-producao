@@ -22,6 +22,36 @@ export type ClientContext =
   | { status: "blocked" }
   | { status: "unlinked"; email: string | null };
 
+type CustomerLinkRow = {
+  id: string;
+  full_name: string;
+  email: string | null;
+  phone: string | null;
+  portal_active: boolean;
+};
+
+function linkedCustomerContext(customer: CustomerLinkRow): ClientContext {
+  if (!customer.portal_active) return { status: "blocked" };
+  return {
+    status: "ok",
+    customer: {
+      id: customer.id,
+      fullName: customer.full_name,
+      email: customer.email,
+      phone: customer.phone,
+    },
+  };
+}
+
+function basicCustomerName(email: string): string {
+  const localPart = email.split("@")[0] ?? "";
+  const name = localPart
+    .replace(/[._+-]+/g, " ")
+    .trim()
+    .replace(/\b\p{L}/gu, (letter) => letter.toUpperCase());
+  return name || email;
+}
+
 /**
  * Resolve o cliente da conta autenticada.
  * Vincula automaticamente (uma única vez) quando existe um cadastro de cliente
@@ -30,35 +60,30 @@ export type ClientContext =
 export async function resolveClient(userId: string, email: string | null): Promise<ClientContext> {
   const mail = email?.trim().toLowerCase() ?? null;
 
-  const { data: linked } = await supabaseAdmin
+  const { data: linked, error: linkedError } = await supabaseAdmin
     .from("customers")
     .select("id, full_name, email, phone, portal_active")
     .eq("auth_user_id", userId)
     .maybeSingle();
 
+  if (linkedError) fail("Não foi possível validar o acesso do cliente.");
+
   if (linked) {
-    if (!linked.portal_active) return { status: "blocked" };
-    return {
-      status: "ok",
-      customer: {
-        id: linked.id,
-        fullName: linked.full_name,
-        email: linked.email,
-        phone: linked.phone,
-      },
-    };
+    return linkedCustomerContext(linked);
   }
 
   if (mail) {
-    const { data: byEmail } = await supabaseAdmin
+    const { data: byEmail, error: byEmailError } = await supabaseAdmin
       .from("customers")
       .select("id, full_name, email, phone, portal_active, auth_user_id")
       .ilike("email", mail)
       .is("auth_user_id", null)
       .maybeSingle();
 
+    if (byEmailError) fail("Não foi possível validar o acesso do cliente.");
+
     if (byEmail) {
-      const { data: bound } = await supabaseAdmin
+      const { data: bound, error: bindError } = await supabaseAdmin
         .from("customers")
         .update({ auth_user_id: userId, portal_linked_at: new Date().toISOString() })
         .eq("id", byEmail.id)
@@ -66,20 +91,43 @@ export async function resolveClient(userId: string, email: string | null): Promi
         .select("id, full_name, email, phone, portal_active")
         .maybeSingle();
 
+      if (bindError) fail("Não foi possível vincular o acesso do cliente.");
+
       if (bound) {
         await audit(userId, mail, "client.account_linked", bound.id);
-        if (!bound.portal_active) return { status: "blocked" };
-        return {
-          status: "ok",
-          customer: {
-            id: bound.id,
-            fullName: bound.full_name,
-            email: bound.email,
-            phone: bound.phone,
-          },
-        };
+        return linkedCustomerContext(bound);
       }
     }
+
+    const { data: created, error: createError } = await supabaseAdmin
+      .from("customers")
+      .insert({
+        full_name: basicCustomerName(mail),
+        email: mail,
+        auth_user_id: userId,
+        portal_active: true,
+        portal_linked_at: new Date().toISOString(),
+        source: "portal_auto",
+      })
+      .select("id, full_name, email, phone, portal_active")
+      .maybeSingle();
+
+    if (created) {
+      await audit(userId, mail, "client.account_created", created.id);
+      return linkedCustomerContext(created);
+    }
+
+    if (createError?.code === "23505") {
+      const { data: concurrentLink, error: concurrentLinkError } = await supabaseAdmin
+        .from("customers")
+        .select("id, full_name, email, phone, portal_active")
+        .eq("auth_user_id", userId)
+        .maybeSingle();
+      if (concurrentLinkError) fail("Não foi possível validar o acesso do cliente.");
+      if (concurrentLink) return linkedCustomerContext(concurrentLink);
+    }
+
+    if (createError) fail("Não foi possível criar o cadastro do cliente.");
   }
 
   return { status: "unlinked", email: mail };
