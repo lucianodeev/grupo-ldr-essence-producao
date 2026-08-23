@@ -1,4 +1,4 @@
-import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -28,30 +28,50 @@ export const Route = createFileRoute("/cliente/login")({
 });
 
 function ClientLogin() {
-  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      if (data.session) navigate({ to: "/cliente", replace: true });
+    let active = true;
+
+    const redirectToClient = () => {
+      window.location.replace("/cliente");
+    };
+
+    void supabase.auth.getSession().then(({ data }) => {
+      if (active && data.session) redirectToClient();
     });
-  }, [navigate]);
+
+    const { data } = supabase.auth.onAuthStateChange((event, session) => {
+      if (
+        active &&
+        session &&
+        (event === "INITIAL_SESSION" || event === "SIGNED_IN" || event === "TOKEN_REFRESHED")
+      ) {
+        redirectToClient();
+      }
+    });
+
+    return () => {
+      active = false;
+      data.subscription.unsubscribe();
+    };
+  }, []);
 
   async function handleSignIn(event: React.FormEvent) {
     event.preventDefault();
     setBusy(true);
-    const { error } = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signInWithPassword({
       email: email.trim().toLowerCase(),
       password,
     });
-    setBusy(false);
-    if (error) {
+    if (error || !data.session) {
+      setBusy(false);
       toast.error("Não foi possível entrar. Verifique seus dados.");
       return;
     }
-    navigate({ to: "/cliente", replace: true });
+    window.location.replace("/cliente");
   }
 
   async function handleGoogle() {
@@ -59,17 +79,28 @@ function ClientLogin() {
     const result = await lovable.auth.signInWithOAuth("google", {
       redirect_uri: `${window.location.origin}/cliente/login`,
     });
-    setBusy(false);
+    if (result.redirected) return;
+
     if ("error" in result && result.error) {
+      setBusy(false);
       toast.error("Não foi possível entrar com o Google.");
       return;
     }
     const { data } = await supabase.auth.getSession();
-    if (data.session) navigate({ to: "/cliente", replace: true });
+    if (data.session) {
+      window.location.replace("/cliente");
+      return;
+    }
+
+    setBusy(false);
+    toast.error("Não foi possível concluir o login com o Google.");
   }
 
   return (
-    <ClientAuthShell title="Área do Cliente" subtitle="Acompanhe seus pedidos, mentorias e entregas.">
+    <ClientAuthShell
+      title="Área do Cliente"
+      subtitle="Acompanhe seus pedidos, mentorias e entregas."
+    >
       <form onSubmit={handleSignIn}>
         <label className="s8-label" htmlFor="email">
           E-mail
