@@ -7,5 +7,8 @@
   ],
   "scripts": {
     "build:painel": "npm --prefix apps/painel-ldr run build"
+  },
+  "devDependencies": {
+    "vite": "7.3.2"
   }
 }

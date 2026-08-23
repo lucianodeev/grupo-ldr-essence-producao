@@ -2,6 +2,7 @@ import { createServerClient } from "@supabase/ssr";
 import { createServerFn } from "@tanstack/react-start";
 import { getCookies, setCookie, setResponseHeader } from "@tanstack/react-start/server";
 
+import { normalizeSupabaseUrl } from "./config";
 import type { Database } from "./types";
 
 function isNewSupabaseApiKey(value: string): boolean {
@@ -42,7 +43,7 @@ function getSupabaseConfig() {
 function createRequestSupabaseClient() {
   const { supabaseUrl, supabasePublishableKey } = getSupabaseConfig();
 
-  return createServerClient<Database>(supabaseUrl, supabasePublishableKey, {
+  return createServerClient<Database>(normalizeSupabaseUrl(supabaseUrl), supabasePublishableKey, {
     global: {
       fetch: createSupabaseFetch(supabasePublishableKey),
     },

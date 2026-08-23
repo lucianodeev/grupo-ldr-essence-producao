@@ -2,7 +2,6 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-import { lovable } from "@/integrations/lovable";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/cliente/login")({
@@ -85,24 +84,20 @@ function ClientLogin() {
 
   async function handleGoogle() {
     setBusy(true);
-    const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: `${window.location.origin}/cliente/login`,
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${window.location.origin}/cliente/login`,
+        skipBrowserRedirect: true,
+      },
     });
-    if (result.redirected) return;
-
-    if ("error" in result && result.error) {
+    if (error || !data.url) {
       setBusy(false);
       toast.error("Não foi possível entrar com o Google.");
       return;
     }
-    const { data } = await supabase.auth.getSession();
-    if (data.session) {
-      window.location.replace("/cliente");
-      return;
-    }
 
-    setBusy(false);
-    toast.error("Não foi possível concluir o login com o Google.");
+    window.location.assign(data.url);
   }
 
   return (
