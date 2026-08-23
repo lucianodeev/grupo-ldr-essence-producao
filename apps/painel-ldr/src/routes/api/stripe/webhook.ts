@@ -58,12 +58,31 @@ async function markEvent(eventId: string, eventType: string) {
     .maybeSingle();
   if (!error && data) return "new" as const;
   if (error?.code === "23505") return "duplicate" as const;
+  if (error?.code === "PGRST205") {
+    console.warn("Stripe webhook event table unavailable; using order metadata idempotency.");
+    return "metadata_fallback" as const;
+  }
   throw error ?? new Error("Falha ao registrar evento Stripe.");
+}
+
+async function orderAlreadyProcessedEvent(orderId: string, eventId: string) {
+  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  const { data, error } = await supabaseAdmin
+    .from("orders")
+    .select("metadata")
+    .eq("id", orderId)
+    .maybeSingle();
+  if (error) throw error;
+  const metadata = data?.metadata as Record<string, unknown> | null | undefined;
+  return metadata?.["stripe_event_id"] === eventId;
 }
 
 async function updateOrder(orderId: string, patch: Record<string, unknown>) {
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-  const { error } = await supabaseAdmin.from("orders").update(patch as never).eq("id", orderId);
+  const { error } = await supabaseAdmin
+    .from("orders")
+    .update(patch as never)
+    .eq("id", orderId);
   if (error) throw error;
 }
 
@@ -92,7 +111,8 @@ export const Route = createFileRoute("/api/stripe/webhook")({
         if (!event.id || !event.type) return json(400, { ok: false });
 
         try {
-          if ((await markEvent(event.id, event.type)) === "duplicate") {
+          const eventMark = await markEvent(event.id, event.type);
+          if (eventMark === "duplicate") {
             return json(200, { received: true, duplicate: true });
           }
 
@@ -101,6 +121,13 @@ export const Route = createFileRoute("/api/stripe/webhook")({
           const orderId = metadata["order_id"];
 
           if (orderId) {
+            if (
+              eventMark === "metadata_fallback" &&
+              (await orderAlreadyProcessedEvent(orderId, event.id))
+            ) {
+              return json(200, { received: true, duplicate: true });
+            }
+
             if (event.type === "checkout.session.completed") {
               if (object.payment_status !== "paid") return json(200, { received: true });
               await updateOrder(orderId, {

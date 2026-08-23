@@ -990,7 +990,8 @@ export async function getClientDigitalLibrary(userId: string, email: string | nu
   for (const order of orders ?? []) {
     if (order.catalog_key) paidKeys.add(order.catalog_key);
     const metadata = order.metadata as Record<string, unknown> | null;
-    const key = metadata && typeof metadata["product_key"] === "string" ? metadata["product_key"] : null;
+    const key =
+      metadata && typeof metadata["product_key"] === "string" ? metadata["product_key"] : null;
     if (key) paidKeys.add(key);
   }
 
@@ -1008,9 +1009,16 @@ export async function getClientDigitalLibrary(userId: string, email: string | nu
   };
 }
 
-
 export type DigitalProductKey = "ebook_coragem_comecar" | "livro_menino_mamao";
 export type DigitalMarket = "BR" | "INTL";
+
+function logDigitalCheckout(
+  level: "info" | "warn" | "error",
+  event: string,
+  details: Record<string, string | number | boolean | null>,
+) {
+  console[level](`[digital-checkout] ${event}`, details);
+}
 
 const DIGITAL_CHECKOUT_CONFIG: Record<
   DigitalProductKey,
@@ -1057,7 +1065,28 @@ export async function createClientDigitalCheckout(
   email: string | null,
   input: { productKey: DigitalProductKey; market: DigitalMarket },
 ) {
-  const customer = await requireClient(userId, email);
+  logDigitalCheckout("info", "started", {
+    productKey: input.productKey,
+    market: input.market,
+  });
+
+  let customer: ClientCustomer;
+  try {
+    customer = await requireClient(userId, email);
+  } catch (error) {
+    logDigitalCheckout("error", "customer_resolution_failed", {
+      productKey: input.productKey,
+      market: input.market,
+    });
+    throw error;
+  }
+
+  logDigitalCheckout("info", "customer_resolved", {
+    productKey: input.productKey,
+    market: input.market,
+    hasCustomerId: Boolean(customer.id),
+  });
+
   const config = DIGITAL_CHECKOUT_CONFIG[input.productKey];
   if (!config) fail("Produto inválido.");
 
@@ -1087,7 +1116,6 @@ export async function createClientDigitalCheckout(
       payment_status: "pendente",
       status: "novo",
       priority: "media",
-      source: "biblioteca_cliente",
       catalog_key: input.productKey,
       metadata: {
         product_key: input.productKey,
@@ -1098,11 +1126,28 @@ export async function createClientDigitalCheckout(
     .select("id, order_number")
     .single();
 
-  if (orderError || !order) fail("Não foi possível iniciar o pedido.");
+  if (orderError || !order) {
+    logDigitalCheckout("error", "order_create_failed", {
+      productKey: input.productKey,
+      market: input.market,
+      errorCode: orderError?.code ?? null,
+    });
+    fail("Não foi possível iniciar o pedido.");
+  }
+
+  logDigitalCheckout("info", "order_created", {
+    productKey: input.productKey,
+    market: input.market,
+    hasOrderNumber: Boolean(order.order_number),
+  });
 
   const secret = process.env["STRIPE_SECRET_KEY"];
   if (!secret) {
     await supabaseAdmin.from("orders").delete().eq("id", order.id);
+    logDigitalCheckout("error", "stripe_secret_missing", {
+      productKey: input.productKey,
+      market: input.market,
+    });
     fail("STRIPE_SECRET_KEY não configurada.");
   }
 
@@ -1111,6 +1156,22 @@ export async function createClientDigitalCheckout(
   const appOrigin =
     process.env["CLIENT_PANEL_URL"]?.replace(/\/$/, "") ||
     (requestUrl ? requestUrl.origin : "https://painel.ldrrhestrategia.com");
+  const appUrl = new URL(appOrigin);
+
+  logDigitalCheckout("info", "stripe_configuration_ready", {
+    productKey: input.productKey,
+    market: input.market,
+    hasSecret: true,
+    hasPrice: Boolean(priceId),
+  });
+
+  logDigitalCheckout("info", "origin_resolved", {
+    productKey: input.productKey,
+    market: input.market,
+    sameOrigin: requestUrl ? requestUrl.origin === appOrigin : false,
+    requestHost: requestUrl?.host ?? null,
+    appHost: appUrl.host,
+  });
 
   const params = new URLSearchParams();
   params.set("mode", "payment");
@@ -1131,14 +1192,25 @@ export async function createClientDigitalCheckout(
   params.set("payment_intent_data[metadata][user_id]", userId);
   if (customer.email) params.set("customer_email", customer.email);
 
-  const stripeResponse = await fetch("https://api.stripe.com/v1/checkout/sessions", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${secret}`,
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: params,
-  });
+  let stripeResponse: Response;
+  try {
+    stripeResponse = await fetch("https://api.stripe.com/v1/checkout/sessions", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${secret}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: params,
+    });
+  } catch {
+    await supabaseAdmin.from("orders").delete().eq("id", order.id);
+    logDigitalCheckout("error", "stripe_request_failed", {
+      productKey: input.productKey,
+      market: input.market,
+    });
+    fail("Não foi possível abrir o checkout.");
+  }
+
   const session = (await stripeResponse.json()) as {
     id?: string;
     url?: string;
@@ -1147,14 +1219,18 @@ export async function createClientDigitalCheckout(
 
   if (!stripeResponse.ok || !session.id || !session.url) {
     await supabaseAdmin.from("orders").delete().eq("id", order.id);
+    logDigitalCheckout("error", "stripe_session_failed", {
+      productKey: input.productKey,
+      market: input.market,
+      stripeStatus: stripeResponse.status,
+    });
     fail(session.error?.message || "Não foi possível abrir o checkout.");
   }
 
-  await supabaseAdmin
+  const { error: sessionUpdateError } = await supabaseAdmin
     .from("orders")
     .update({
       stripe_checkout_session_id: session.id,
-      external_ref: `stripe:${session.id}`,
       metadata: {
         product_key: input.productKey,
         market: input.market,
@@ -1164,10 +1240,25 @@ export async function createClientDigitalCheckout(
     } as never)
     .eq("id", order.id);
 
+  if (sessionUpdateError) {
+    logDigitalCheckout("warn", "order_session_update_failed", {
+      productKey: input.productKey,
+      market: input.market,
+      errorCode: sessionUpdateError.code,
+    });
+  }
+
   await audit(userId, customer.email, "digital.checkout_created", order.id, {
     product_key: input.productKey,
     market: input.market,
     order_number: order.order_number,
+  });
+
+  logDigitalCheckout("info", "session_created", {
+    productKey: input.productKey,
+    market: input.market,
+    stripeStatus: stripeResponse.status,
+    hasCheckoutUrl: Boolean(session.url),
   });
 
   return { url: session.url, orderId: order.id, orderNumber: order.order_number };
