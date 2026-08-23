@@ -1,6 +1,5 @@
 [build]
-  base = "apps/painel-ldr"
-  command = "npm run build"
+  command = "vite build"
   publish = "dist/client"
 
 [build.environment]
