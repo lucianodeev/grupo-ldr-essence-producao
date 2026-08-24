@@ -2867,7 +2867,7 @@ Valores de referência: 🇧🇷 Brasil — R$ 4,90 &nbsp;&nbsp;•&nbsp;&nbsp; 
 <li data-i18n="li3">Biblioteca digital</li>
 <li data-i18n="li4">Pagamento único</li>
 </ul>
-<a class="btn btn-block" href="#" id="dynamicBuyBtn" onclick="openRegionalCheckout(event)">Comprar agora</a>
+<a class="btn btn-block" href="https://buy.stripe.com/eVq14ob2474a8IW8qkfw402" id="dynamicBuyBtn" onclick="openRegionalCheckout(event)">Comprar agora</a>
 <p style="font-size:0.7rem;color:#888;margin-top:8px;">* O checkout correto será selecionado automaticamente para sua região</p>
 </div>
 </div>
@@ -3355,10 +3355,13 @@ async function detectRegion() {
   // País/IP tem prioridade. Se a consulta falhar, o fallback usa apenas timezone (nunca idioma).
   userRegion = 'EU';
   userCountry = 'Internacional';
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 2500);
   try {
     const res = await fetch('https://ipapi.co/json/', {
       headers: { 'Accept': 'application/json' },
-      cache: 'no-store'
+      cache: 'no-store',
+      signal: controller.signal
     });
     if (!res.ok) throw new Error('region_lookup_failed');
     const data = await res.json();
@@ -3382,6 +3385,8 @@ async function detectRegion() {
       userRegion = 'BR';
       userCountry = 'Brasil';
     }
+  } finally {
+    clearTimeout(timeoutId);
   }
   applyRegionalCheckout();
   return userRegion;
@@ -3403,9 +3408,9 @@ function applyRegionalCheckout() {
     noteEl.innerHTML = 'Valores de referência: 🇧🇷 Brasil — <strong>R$ 4,90</strong> &nbsp;&nbsp;•&nbsp;&nbsp; 🌍 Resto do mundo — <strong>€ 4,90</strong>. O checkout correto continuará sendo selecionado automaticamente de acordo com sua região.';
   }
   if (buyBtn) {
-    buyBtn.removeAttribute('href');
+    buyBtn.href = userRegion === 'BR' ? STRIPE_CHECKOUT_BR : STRIPE_CHECKOUT_INTL;
     buyBtn.textContent = 'Comprar agora';
-    buyBtn.setAttribute('role', 'button');
+    buyBtn.removeAttribute('role');
   }
 }
 
