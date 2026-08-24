@@ -1214,15 +1214,28 @@ export async function createClientDigitalCheckout(
   const session = (await stripeResponse.json()) as {
     id?: string;
     url?: string;
-    error?: { message?: string };
+    error?: {
+      message?: string;
+      code?: string;
+      type?: string;
+      param?: string;
+    };
   };
 
   if (!stripeResponse.ok || !session.id || !session.url) {
     await supabaseAdmin.from("orders").delete().eq("id", order.id);
+    const safeStripeMessage =
+      session.error?.message?.replace(/\b(?:rk|sk)_(?:live|test)_[A-Za-z0-9]+\b/g, "[redacted]") ??
+      null;
     logDigitalCheckout("error", "stripe_session_failed", {
       productKey: input.productKey,
       market: input.market,
       stripeStatus: stripeResponse.status,
+      stripeErrorType: session.error?.type ?? null,
+      stripeErrorCode: session.error?.code ?? null,
+      stripeErrorParam: session.error?.param ?? null,
+      stripeErrorMessage: safeStripeMessage,
+      stripeRequestId: stripeResponse.headers.get("request-id"),
     });
     fail(session.error?.message || "Não foi possível abrir o checkout.");
   }
