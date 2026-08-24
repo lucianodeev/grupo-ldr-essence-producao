@@ -113,6 +113,21 @@ function OrdersPage() {
     onError: (e: Error) => toast.error(e.message),
   });
 
+  const cancelOrder = (order: Order) => {
+    if (order.status === "cancelado") return;
+    if (order.status === "concluido") {
+      toast.error("Pedidos concluídos não podem ser cancelados.");
+      return;
+    }
+
+    const confirmed = window.confirm(
+      `Cancelar o pedido ${order.order_number}? O pagamento não será reembolsado automaticamente.`,
+    );
+    if (confirmed) {
+      updateOrder.mutate({ id: order.id, patch: { status: "cancelado" } });
+    }
+  };
+
   const customerName = (id: string | null) =>
     (customers.data ?? []).find((c) => c.id === id)?.full_name ?? "—";
   const memberName = (id: string | null) => {
@@ -408,12 +423,23 @@ function OrdersPage() {
                 <Td>{formatDate(o.due_date)}</Td>
                 <Td>{formatMoney(o.amount_cents, o.currency)}</Td>
                 <Td>
-                  <GhostButton
-                    className="!px-3 !py-1.5"
-                    onClick={() => setSelectedId(selectedId === o.id ? null : o.id)}
-                  >
-                    {selectedId === o.id ? "Fechar" : "Abrir"}
-                  </GhostButton>
+                  <div className="flex flex-wrap gap-2">
+                    <GhostButton
+                      className="!px-3 !py-1.5"
+                      onClick={() => setSelectedId(selectedId === o.id ? null : o.id)}
+                    >
+                      {selectedId === o.id ? "Fechar" : "Abrir"}
+                    </GhostButton>
+                    {o.status !== "cancelado" && o.status !== "concluido" ? (
+                      <GhostButton
+                        className="!px-3 !py-1.5 !text-destructive"
+                        disabled={updateOrder.isPending}
+                        onClick={() => cancelOrder(o)}
+                      >
+                        Cancelar pedido
+                      </GhostButton>
+                    ) : null}
+                  </div>
                 </Td>
               </tr>
             ))}

@@ -435,6 +435,40 @@ export async function getClientDeliveries(userId: string, email: string | null) 
 
 // ---------------------------------------------------------------- escrita
 
+export async function cancelClientOrder(userId: string, email: string | null, orderId: string) {
+  const customer = await requireClient(userId, email);
+
+  const { data: order, error: loadError } = await supabaseAdmin
+    .from("orders")
+    .select("id, order_number, status, payment_status")
+    .eq("id", orderId)
+    .eq("customer_id", customer.id)
+    .maybeSingle();
+
+  if (loadError || !order) fail("Pedido não encontrado.");
+  if (order.status === "concluido") fail("Pedidos concluídos não podem ser cancelados.");
+  if (order.status === "cancelado") return { ok: true as const };
+
+  const { data: updated, error: updateError } = await supabaseAdmin
+    .from("orders")
+    .update({ status: "cancelado" })
+    .eq("id", order.id)
+    .eq("customer_id", customer.id)
+    .neq("status", "concluido")
+    .select("id")
+    .maybeSingle();
+
+  if (updateError || !updated) fail("Não foi possível cancelar este pedido.");
+
+  await audit(userId, email, "client.order_cancelled", order.id, {
+    order_number: order.order_number,
+    previous_status: order.status,
+    payment_status: order.payment_status,
+  });
+
+  return { ok: true as const };
+}
+
 async function loadOwnedDelivery(customerId: string, deliveryId: string) {
   const { data: delivery } = await supabaseAdmin
     .from("deliveries")

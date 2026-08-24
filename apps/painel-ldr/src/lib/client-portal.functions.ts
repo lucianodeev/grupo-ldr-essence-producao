@@ -37,6 +37,14 @@ export const clientOrderDetail = createServerFn({ method: "GET" })
     return getClientOrderDetail(context.userId, emailOf(context.claims), data.orderId);
   });
 
+export const clientCancelOrder = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: { orderId: string }) => data)
+  .handler(async ({ context, data }) => {
+    const { cancelClientOrder } = await import("@/lib/client-portal.server");
+    return cancelClientOrder(context.userId, emailOf(context.claims), data.orderId);
+  });
+
 export const clientMentorship = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
