@@ -27,8 +27,6 @@ export const Route = createFileRoute("/cliente/login")({
 });
 
 function ClientLogin() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
@@ -58,30 +56,6 @@ function ClientLogin() {
     };
   }, []);
 
-  async function handleSignIn(event: React.FormEvent) {
-    event.preventDefault();
-    setBusy(true);
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: email.trim().toLowerCase(),
-      password,
-    });
-    if (error || !data.session) {
-      setBusy(false);
-      toast.error("Não foi possível entrar. Verifique seus dados.");
-      return;
-    }
-
-    const { data: userData, error: userError } = await supabase.auth.getUser();
-    if (userError || !userData.user) {
-      await supabase.auth.signOut();
-      setBusy(false);
-      toast.error("Não foi possível validar sua sessão. Tente novamente.");
-      return;
-    }
-
-    window.location.replace("/cliente");
-  }
-
   async function handleGoogle() {
     setBusy(true);
     const { data, error } = await supabase.auth.signInWithOAuth({
@@ -103,46 +77,8 @@ function ClientLogin() {
   return (
     <ClientAuthShell
       title="Área do Cliente"
-      subtitle="Acompanhe seus pedidos, mentorias e entregas."
+      subtitle="Entre com sua conta Google para acompanhar pedidos, mentorias e entregas."
     >
-      <form onSubmit={handleSignIn}>
-        <label className="s8-label" htmlFor="email">
-          E-mail
-        </label>
-        <input
-          id="email"
-          type="email"
-          required
-          autoComplete="email"
-          className="s8-field"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <label className="s8-label" htmlFor="password">
-          Senha
-        </label>
-        <input
-          id="password"
-          type="password"
-          required
-          autoComplete="current-password"
-          className="s8-field"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button
-          type="submit"
-          disabled={busy}
-          className="mt-5 w-full rounded-lg bg-primary px-4 py-3 font-bold text-primary-foreground disabled:opacity-60"
-        >
-          {busy ? "Aguarde…" : "Entrar"}
-        </button>
-      </form>
-
-      <div className="my-4 flex items-center gap-3 text-xs text-muted-foreground">
-        <span className="h-px flex-1 bg-border" /> ou <span className="h-px flex-1 bg-border" />
-      </div>
-
       <button
         type="button"
         onClick={handleGoogle}
@@ -152,13 +88,8 @@ function ClientLogin() {
         Entrar com Google
       </button>
 
-      <p className="mt-6 text-sm">
-        <Link to="/cliente/ativar" className="font-semibold text-primary underline">
-          Primeiro acesso ou esqueci minha senha
-        </Link>
-      </p>
       <p className="mt-2 text-xs text-muted-foreground">
-        Use o mesmo e-mail informado na sua compra.{" "}
+        Use a mesma conta Google informada na sua compra.{" "}
         <Link to="/" className="underline">
           Voltar ao início
         </Link>
