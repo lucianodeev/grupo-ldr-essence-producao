@@ -12,7 +12,7 @@ import {
   labelOf,
   toneOf,
 } from "@/lib/central";
-import { useClientOrder } from "@/lib/client-portal-data";
+import { useCancelClientOrder, useClientOrder } from "@/lib/client-portal-data";
 
 export const Route = createFileRoute("/_clientarea/cliente/pedido/$orderId")({
   head: () => ({
@@ -32,6 +32,7 @@ export const Route = createFileRoute("/_clientarea/cliente/pedido/$orderId")({
 function ClientOrderDetail() {
   const { orderId } = Route.useParams();
   const { data, isLoading, isError } = useClientOrder(orderId);
+  const cancelOrder = useCancelClientOrder();
 
   if (isLoading) return <p className="text-sm text-muted-foreground">Carregando…</p>;
   if (isError || !data) {
@@ -50,6 +51,8 @@ function ClientOrderDetail() {
 
   const { order, deliveries, history, events } = data;
   const finished = order.status === "concluido";
+  const cancelled = order.status === "cancelado";
+  const canCancel = !finished && !cancelled;
 
   return (
     <div>
@@ -95,6 +98,35 @@ function ClientOrderDetail() {
             <dd>{formatMoney(order.amount_cents, order.currency)}</dd>
           </div>
         </dl>
+        {canCancel ? (
+          <div className="mt-4 rounded-xl border border-destructive/30 bg-destructive/5 p-4">
+            <p className="text-sm text-muted-foreground">
+              O cancelamento altera o status do pedido no painel. Pagamentos e reembolsos não são
+              modificados automaticamente.
+            </p>
+            <button
+              type="button"
+              className="mt-3 inline-flex items-center justify-center rounded-xl border border-destructive px-4 py-2 text-sm font-bold text-destructive transition hover:bg-destructive hover:text-destructive-foreground disabled:cursor-not-allowed disabled:opacity-60"
+              disabled={cancelOrder.isPending}
+              onClick={() => {
+                const confirmed = window.confirm(
+                  "Cancelar este pedido? O pagamento não será reembolsado automaticamente.",
+                );
+                if (confirmed) cancelOrder.mutate(order.id);
+              }}
+            >
+              {cancelOrder.isPending ? "Cancelando…" : "Cancelar pedido"}
+            </button>
+          </div>
+        ) : null}
+        {cancelled ? (
+          <div className="s8-notice mt-4">
+            <p className="text-sm">
+              <strong>Pedido cancelado.</strong> Se houver pagamento, fale com a equipe para tratar
+              um possível reembolso.
+            </p>
+          </div>
+        ) : null}
         {finished ? (
           <div className="s8-notice mt-4">
             <p className="text-sm">
