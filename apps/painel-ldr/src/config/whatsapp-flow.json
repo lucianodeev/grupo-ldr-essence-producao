@@ -1,0 +1,86 @@
+{
+  "brand": "Ecossistema Grupo LDR Essence",
+  "version": 1,
+  "entry": {
+    "type": "language_selection",
+    "languages": [
+      { "code": "pt", "label": "Português", "option": "1" },
+      { "code": "fr", "label": "Français", "option": "2" },
+      { "code": "en", "label": "English", "option": "3" },
+      { "code": "es", "label": "Español", "option": "4" }
+    ]
+  },
+  "keywords": {
+    "menu": ["menu", "início", "inicio", "start"],
+    "human": ["humano", "atendente", "pessoa", "human", "agent", "conseiller", "asesor"]
+  },
+  "services": {
+    "massage": {
+      "label": "Essence Massage & Bem-Estar",
+      "languages": ["pt", "fr", "en", "es"],
+      "routing": "direct_or_human"
+    },
+    "ebook": {
+      "label": "E-book",
+      "languages": ["pt", "fr", "en", "es"],
+      "routing": "direct_sale"
+    },
+    "book": {
+      "label": "Livro",
+      "languages": ["pt", "fr", "en", "es"],
+      "routing": "direct_sale"
+    },
+    "rh": {
+      "label": "RH & Recrutamento",
+      "languages": ["pt"],
+      "routing": "human"
+    },
+    "digital": {
+      "label": "Sites & Soluções Digitais",
+      "languages": ["pt"],
+      "routing": "human"
+    },
+    "mentoring_psychoanalysis": {
+      "label": "Mentoria & Psicanálise",
+      "languages": ["pt"],
+      "routing": "direct_or_human"
+    },
+    "talks": {
+      "label": "Palestras",
+      "languages": ["pt"],
+      "routing": "human"
+    },
+    "training": {
+      "label": "Treinamentos",
+      "languages": ["pt"],
+      "routing": "direct_or_human"
+    }
+  },
+  "menus": {
+    "pt": [
+      "rh",
+      "digital",
+      "mentoring_psychoanalysis",
+      "massage",
+      "talks",
+      "training",
+      "ebook",
+      "book",
+      "human"
+    ],
+    "fr": ["massage", "ebook", "book", "human"],
+    "en": ["massage", "ebook", "book", "human"],
+    "es": ["massage", "ebook", "book", "human"]
+  },
+  "handoff": {
+    "always_available": true,
+    "collect_before_handoff": ["name", "service", "country", "summary"],
+    "status": "aguardando_atendimento_humano"
+  },
+  "rules": {
+    "persist_language_preference": true,
+    "allow_menu_restart": true,
+    "allow_human_handoff_anytime": true,
+    "do_not_expose_unavailable_language_services": true
+  }
+}
