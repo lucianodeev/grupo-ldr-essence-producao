@@ -4,6 +4,7 @@ import { toast } from "sonner";
 
 import {
   clientAgenda,
+  clientCancelOrder,
   clientContractCatalog,
   clientApproveDelivery,
   clientDeliveries,
@@ -53,6 +54,22 @@ export function useClientOrder(orderId: string) {
     queryKey: ["client-order", orderId],
     queryFn: () => fn({ data: { orderId } }),
     retry: false,
+  });
+}
+
+export function useCancelClientOrder() {
+  const fn = useServerFn(clientCancelOrder);
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (orderId: string) => fn({ data: { orderId } }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["client-overview"] });
+      queryClient.invalidateQueries({ queryKey: ["client-order"] });
+      toast.success("Pedido cancelado.");
+    },
+    onError: (error: Error) =>
+      toast.error(error.message || "Não foi possível cancelar este pedido."),
   });
 }
 
