@@ -1,0 +1,35 @@
+name: Fix regional pricing
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-regional-pricing-20260825.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch regional prices
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace("Valores de referência: 🇧🇷 Brasil — R$ 4,90 &nbsp;&nbsp;•&nbsp;&nbsp; 🌍 Resto do mundo — € 4,90. O checkout correto continuará sendo selecionado automaticamente de acordo com sua região.", "Preço conforme sua localização: € 4,90")
+          s=s.replace("noteEl.innerHTML = 'Valores de referência: 🇧🇷 Brasil — <strong>R$ 4,90</strong> &nbsp;&nbsp;•&nbsp;&nbsp; 🌍 Resto do mundo — <strong>€ 4,90</strong>. O checkout correto continuará sendo selecionado automaticamente de acordo com sua região.';", "noteEl.innerHTML = userRegion === 'BR' ? 'Preço no Brasil: <strong>R$ 9,90</strong>' : 'Preço internacional: <strong>€ 4,90</strong>';")
+          s=s.replace("function newBookPriceDisplay(){return '🇧🇷 Brasil — R$ 49,90 &nbsp;•&nbsp; 🌍 Mundo — € 20,00';}", "function newBookPriceDisplay(){return newBookPriceText();}")
+          s=s.replace("Brasil — <strong>R$ 4,90</strong>", "Brasil — <strong>R$ 9,90</strong>")
+          s=s.replace("Brasil — R$ 4,90", "Brasil — R$ 9,90")
+          p.write_text(s,encoding='utf-8')
+          print('regional pricing patch applied')
+          PY
+      - name: Commit patch
+        run: |
+          if git diff --quiet; then echo 'No changes needed'; exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git commit -m 'Fix regional book and ebook pricing'
+          git push
