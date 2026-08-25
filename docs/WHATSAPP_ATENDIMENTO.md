@@ -56,3 +56,4 @@ A preferência do idioma deve ser salva para retornos futuros.
 - META_APP_SECRET
 
 As credenciais devem ficar somente em variáveis de ambiente do servidor e nunca no código ou no navegador.
+
