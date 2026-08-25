@@ -1,20 +1,22 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { CalendarDays, MessageCircle, BookOpen, Megaphone, ExternalLink } from "lucide-react";
+import { CalendarDays, MessageCircle, BookOpen, Megaphone, ExternalLink, Trash2 } from "lucide-react";
 import { useState } from "react";
-import { clientAddLibraryComment, clientLearningHub } from "@/lib/learning.functions";
+import { clientAddLibraryComment, clientDeleteLibraryComment, clientLearningHub } from "@/lib/learning.functions";
 
 export const Route = createFileRoute("/_clientarea/cliente/treinamentos")({ component: ClientTrainings });
 
 function ClientTrainings() {
   const load = useServerFn(clientLearningHub);
   const addComment = useServerFn(clientAddLibraryComment);
+  const deleteComment = useServerFn(clientDeleteLibraryComment);
   const qc = useQueryClient();
   const [message, setMessage] = useState("");
   const [trainingId, setTrainingId] = useState<string | null>(null);
   const { data, isLoading } = useQuery({ queryKey: ["client-learning-hub"], queryFn: () => load({}) });
   const commentMutation = useMutation({ mutationFn: () => addComment({ data: { body: message, trainingId } }), onSuccess: async () => { setMessage(""); await qc.invalidateQueries({ queryKey: ["client-learning-hub"] }); } });
+  const deleteMutation = useMutation({ mutationFn: (commentId: string) => deleteComment({ data: { commentId } }), onSuccess: async () => { await qc.invalidateQueries({ queryKey: ["client-learning-hub"] }); } });
 
   if (isLoading) return <p className="text-sm text-muted-foreground">Carregando treinamentos…</p>;
   if (!data) return <div className="s8-card">Não foi possível carregar seus treinamentos.</div>;
@@ -37,7 +39,7 @@ function ClientTrainings() {
           <div><h3 className="mb-2 flex items-center gap-2 font-bold"><CalendarDays className="h-4 w-4"/> Próximos encontros</h3>{sessions.length?<div className="space-y-2">{sessions.map((s:any)=><div key={s.id} className="rounded-xl border border-border p-4"><p className="font-semibold">{s.title}</p><p className="text-sm text-muted-foreground">{new Date(s.starts_at).toLocaleString("pt-BR")}</p>{s.meeting_url?<a href={s.meeting_url} target="_blank" rel="noreferrer" className="mt-2 inline-flex rounded-lg bg-primary px-3 py-2 text-xs font-bold text-primary-foreground">Entrar no encontro</a>:null}</div>)}</div>:<p className="text-sm text-muted-foreground">Nenhum encontro agendado no momento.</p>}</div>
         </div>
         <div><h3 className="mb-2 flex items-center gap-2 font-bold"><Megaphone className="h-4 w-4"/> Avisos</h3>{announcements.length?<div className="space-y-2">{announcements.map((a:any)=><div key={a.id} className="rounded-xl bg-accent/50 p-4"><p className="font-semibold">{a.title}</p><p className="mt-1 text-sm whitespace-pre-wrap">{a.body}</p></div>)}</div>:<p className="text-sm text-muted-foreground">Nenhum aviso novo.</p>}</div>
-        <div><h3 className="mb-2 flex items-center gap-2 font-bold"><MessageCircle className="h-4 w-4"/> Fórum e comentários</h3><div className="space-y-2">{comments.map((c:any)=><div key={c.id} className={`rounded-xl border p-3 text-sm ${c.author_kind === "professional" ? "bg-accent/70" : "bg-background"}`}><p className="text-xs font-bold text-primary">{c.author_label || (c.author_kind === "professional" ? "Equipe LDR Essence" : "Cliente")}</p><p className="mt-1 whitespace-pre-wrap">{c.body}</p></div>)}</div><div className="mt-3 flex flex-col gap-2 sm:flex-row"><textarea value={trainingId===training.id?message:""} onFocus={()=>setTrainingId(training.id)} onChange={e=>{setTrainingId(training.id);setMessage(e.target.value)}} className="min-h-20 flex-1 rounded-lg border border-border bg-background p-3 text-sm" placeholder="Escreva uma dúvida ou comentário…"/><button disabled={!message.trim() || trainingId!==training.id || commentMutation.isPending} onClick={()=>commentMutation.mutate()} className="rounded-lg bg-primary px-4 py-2 text-sm font-bold text-primary-foreground disabled:opacity-50">Publicar</button></div></div>
+        <div><h3 className="mb-2 flex items-center gap-2 font-bold"><MessageCircle className="h-4 w-4"/> Fórum e comentários</h3><div className="space-y-2">{comments.map((c:any)=><div key={c.id} className={`rounded-xl border p-3 text-sm ${c.author_kind === "professional" ? "bg-accent/70" : "bg-background"}`}><div className="flex items-start justify-between gap-3"><div className="min-w-0"><p className="text-xs font-bold text-primary">{c.author_label || (c.author_kind === "professional" ? "Equipe LDR Essence" : "Cliente")}</p><p className="mt-1 whitespace-pre-wrap">{c.body}</p></div>{data.clientCanDeleteComments && c.author_kind === "client" ? <button type="button" disabled={deleteMutation.isPending} onClick={()=>{if(window.confirm("Excluir este comentário?")) deleteMutation.mutate(c.id)}} className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-red-200 px-2 py-1 text-xs font-bold text-red-700 hover:bg-red-50 disabled:opacity-50"><Trash2 className="h-3.5 w-3.5"/> Excluir</button>:null}</div></div>)}</div>{data.clientCanDeleteComments ? <p className="mt-2 text-xs text-muted-foreground">Você pode excluir comentários publicados por você enquanto essa opção estiver habilitada.</p> : null}<div className="mt-3 flex flex-col gap-2 sm:flex-row"><textarea value={trainingId===training.id?message:""} onFocus={()=>setTrainingId(training.id)} onChange={e=>{setTrainingId(training.id);setMessage(e.target.value)}} className="min-h-20 flex-1 rounded-lg border border-border bg-background p-3 text-sm" placeholder="Escreva uma dúvida ou comentário…"/><button disabled={!message.trim() || trainingId!==training.id || commentMutation.isPending} onClick={()=>commentMutation.mutate()} className="rounded-lg bg-primary px-4 py-2 text-sm font-bold text-primary-foreground disabled:opacity-50">Publicar</button></div></div>
       </section>;
     })}
   </div>;
