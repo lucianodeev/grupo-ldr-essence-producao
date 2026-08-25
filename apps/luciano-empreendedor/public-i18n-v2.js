@@ -132,21 +132,29 @@
     node.nodeValue = leading + translated + trailing;
   }
 
-  function translateRoot(lang) {
-    const root = document.getElementById("palestraView");
-    if (!root) return;
-    translating = true;
+  function translateElement(root, lang) {
+    if (!root || root.nodeType !== 1) return;
     [root, ...root.querySelectorAll("*")].forEach((element) => {
       if (["SCRIPT", "STYLE", "NOSCRIPT"].includes(element.tagName)) return;
       Array.from(element.childNodes || []).forEach((node) => {
         if (node.nodeType === 3) translateTextNode(node, lang);
       });
     });
+  }
+
+  function translateRoot(lang) {
+    const root = document.getElementById("palestraView");
+    if (!root) return;
+    translating = true;
+    translateElement(root, lang);
     translating = false;
   }
 
-  function updatePageCounter(lang) {
-    document.querySelectorAll("#palestraView *").forEach((el) => {
+  function updatePageCounter(lang, scope) {
+    const root = scope || document.getElementById("palestraView");
+    if (!root) return;
+    const elements = root.nodeType === 1 ? [root, ...root.querySelectorAll("span,div,p")] : [];
+    elements.forEach((el) => {
       if (el.children.length || !el.textContent) return;
       const value = el.textContent.trim();
       const match = value.match(/^(?:Página|Page)\s+(\d+)\s+(?:de|of|sur)\s+(\d+)$/i);
@@ -208,14 +216,22 @@
     applyLocale(requestedLocale(), false);
     const observer = new MutationObserver((mutations) => {
       if (translating) return;
-      let changed = false;
+      translating = true;
       mutations.forEach((mutation) => {
-        if (mutation.type === "characterData" || mutation.addedNodes.length) changed = true;
+        if (mutation.type === "characterData") {
+          translateTextNode(mutation.target, current);
+          updatePageCounter(current, mutation.target.parentElement);
+          return;
+        }
+        mutation.addedNodes.forEach((node) => {
+          if (node.nodeType === 3) translateTextNode(node, current);
+          if (node.nodeType === 1) {
+            translateElement(node, current);
+            updatePageCounter(current, node);
+          }
+        });
       });
-      if (changed) {
-        translateRoot(current);
-        updatePageCounter(current);
-      }
+      translating = false;
     });
     observer.observe(document.getElementById("palestraView"), { childList: true, subtree: true, characterData: true });
   }
