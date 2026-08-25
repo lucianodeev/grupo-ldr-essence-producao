@@ -1,0 +1,48 @@
+name: Fix regional pricing v3
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-regional-pricing-v3-20260825.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch production entrepreneurship app
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('apps/luciano-empreendedor/index.html')
+          if not p.exists():
+              raise SystemExit('apps/luciano-empreendedor/index.html not found')
+          s = p.read_bytes().decode('utf-8', errors='replace')
+          before = s
+          s = s.replace("function newBookPriceDisplay(){return '🇧🇷 Brasil — R$ 49,90 &nbsp;•&nbsp; 🌍 Mundo — € 20,00';}", 'function newBookPriceDisplay(){return newBookPriceText();}')
+          s = s.replace("noteEl.innerHTML = 'Valores de referência: 🇧🇷 Brasil — <strong>R$ 4,90</strong> &nbsp;&nbsp;•&nbsp;&nbsp; 🌍 Resto do mundo — <strong>€ 4,90</strong>. O checkout correto continuará sendo selecionado automaticamente de acordo com sua região.';", "noteEl.innerHTML = userRegion === 'BR' ? 'Preço no Brasil: <strong>R$ 9,90</strong>' : 'Preço internacional: <strong>€ 4,90</strong>';")
+          s = s.replace('🇧🇷 Brasil — <strong>R$ 4,90</strong> &nbsp;•&nbsp; 🌍 Mundo — <strong>€ 4,90</strong>', '<strong id="ebookPriceNote">€ 4,90</strong>')
+          s = s.replace('Brasil — <strong>R$ 4,90</strong>', 'Brasil — <strong>R$ 9,90</strong>')
+          s = s.replace('Brasil — R$ 4,90', 'Brasil — R$ 9,90')
+          # Ensure the local-price-only note follows the resolved region.
+          if 'id="ebookPriceNote"' in s and "document.getElementById('ebookPriceNote')" not in s:
+              target = "priceEl.textContent = userRegion === 'BR' ? 'R$ 9,90' : '€ 4,90';"
+              if target in s:
+                  s = s.replace(target, target + "\n    const ebookPriceNote = document.getElementById('ebookPriceNote');\n    if (ebookPriceNote) ebookPriceNote.innerHTML = userRegion === 'BR' ? '<strong>R$ 9,90</strong>' : '<strong>€ 4,90</strong>';", 1)
+          if s == before:
+              print('No textual changes were needed')
+          else:
+              p.write_bytes(s.encode('utf-8'))
+              print('Production regional pricing patch applied')
+          PY
+      - name: Commit patch
+        shell: bash
+        run: |
+          if git diff --quiet -- apps/luciano-empreendedor/index.html; then echo 'No changes needed'; exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add apps/luciano-empreendedor/index.html
+          git commit -m 'Fix regional book and ebook prices in production app'
+          git push
