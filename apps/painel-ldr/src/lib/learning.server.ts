@@ -15,12 +15,18 @@ async function requireProfessional(userId: string) {
   return data.role as string;
 }
 
+async function clientCommentDeleteEnabled() {
+  const { data } = await supabaseAdmin.from("platform_settings").select("value").eq("key", "client_comment_delete_enabled").maybeSingle();
+  return data?.value === true;
+}
+
 export async function getClientLearningHub(userId: string, email: string | null) {
   const customer = await requireClient(userId, email);
-  const [{ data: enrollments }, { data: comments }, { data: progress }] = await Promise.all([
+  const [{ data: enrollments }, { data: comments }, { data: progress }, canDeleteComments] = await Promise.all([
     supabaseAdmin.from("training_enrollments").select("training_id, active, training_programs(id,slug,title,description,status)").eq("customer_id", customer.id).eq("active", true),
-    supabaseAdmin.from("library_comments").select("id,product_key,training_id,parent_id,author_kind,author_label,body,status,created_at").eq("customer_id", customer.id).order("created_at", { ascending: true }),
+    supabaseAdmin.from("library_comments").select("id,product_key,training_id,parent_id,author_user_id,author_kind,author_label,body,status,created_at").eq("customer_id", customer.id).order("created_at", { ascending: true }),
     supabaseAdmin.from("library_progress").select("product_key,progress_percent,current_location,updated_at").eq("customer_id", customer.id),
+    clientCommentDeleteEnabled(),
   ]);
 
   const trainingIds = (enrollments ?? []).map((e: any) => e.training_id);
@@ -35,7 +41,7 @@ export async function getClientLearningHub(userId: string, email: string | null)
     modules = result[0].data ?? []; materials = result[1].data ?? []; sessions = result[2].data ?? []; announcements = result[3].data ?? [];
   }
 
-  return { customer, trainings: enrollments ?? [], modules, materials, sessions, announcements, comments: comments ?? [], progress: progress ?? [] };
+  return { customer, trainings: enrollments ?? [], modules, materials, sessions, announcements, comments: comments ?? [], progress: progress ?? [], clientCanDeleteComments: canDeleteComments };
 }
 
 export async function addClientLibraryComment(userId: string, email: string | null, input: { body: string; productKey?: string | null; trainingId?: string | null; parentId?: string | null }) {
@@ -52,6 +58,16 @@ export async function addClientLibraryComment(userId: string, email: string | nu
   return { ok: true as const };
 }
 
+export async function deleteClientLibraryComment(userId: string, email: string | null, input: { commentId: string }) {
+  const customer = await requireClient(userId, email);
+  if (!(await clientCommentDeleteEnabled())) fail("A exclusão de comentários pelo cliente está desativada.");
+  const { data: comment } = await supabaseAdmin.from("library_comments").select("id,customer_id,author_user_id,author_kind").eq("id", input.commentId).maybeSingle();
+  if (!comment || comment.customer_id !== customer.id || comment.author_kind !== "client" || comment.author_user_id !== userId) fail("Você só pode excluir comentários publicados por você.");
+  const { error } = await supabaseAdmin.from("library_comments").delete().eq("id", input.commentId);
+  if (error) fail("Não foi possível excluir o comentário.");
+  return { ok: true as const };
+}
+
 export async function saveClientProgress(userId: string, email: string | null, input: { productKey: string; progressPercent: number; currentLocation?: string | null }) {
   const customer = await requireClient(userId, email);
   const pct = Math.max(0, Math.min(100, Math.round(input.progressPercent)));
@@ -62,16 +78,17 @@ export async function saveClientProgress(userId: string, email: string | null, i
 
 export async function getProfessionalLearningHub(userId: string) {
   await requireProfessional(userId);
-  const [trainings, modules, materials, sessions, announcements, comments, enrollments] = await Promise.all([
+  const [trainings, modules, materials, sessions, announcements, comments, enrollments, canDeleteComments] = await Promise.all([
     supabaseAdmin.from("training_programs").select("*").order("created_at", { ascending: false }),
     supabaseAdmin.from("training_modules").select("*").order("position"),
     supabaseAdmin.from("training_materials").select("*").order("position"),
     supabaseAdmin.from("training_live_sessions").select("*").order("starts_at"),
     supabaseAdmin.from("training_announcements").select("*").order("created_at", { ascending: false }),
-    supabaseAdmin.from("library_comments").select("id,customer_id,product_key,training_id,parent_id,author_kind,author_label,body,status,created_at,customers(full_name,email)").order("created_at", { ascending: false }),
+    supabaseAdmin.from("library_comments").select("id,customer_id,product_key,training_id,parent_id,author_user_id,author_kind,author_label,body,status,created_at,customers(full_name,email)").order("created_at", { ascending: false }),
     supabaseAdmin.from("training_enrollments").select("id,training_id,customer_id,active,enrolled_at,customers(full_name,email)").order("enrolled_at", { ascending: false }),
+    clientCommentDeleteEnabled(),
   ]);
-  return { trainings: trainings.data ?? [], modules: modules.data ?? [], materials: materials.data ?? [], sessions: sessions.data ?? [], announcements: announcements.data ?? [], comments: comments.data ?? [], enrollments: enrollments.data ?? [] };
+  return { trainings: trainings.data ?? [], modules: modules.data ?? [], materials: materials.data ?? [], sessions: sessions.data ?? [], announcements: announcements.data ?? [], comments: comments.data ?? [], enrollments: enrollments.data ?? [], clientCanDeleteComments: canDeleteComments };
 }
 
 export async function professionalReplyComment(userId: string, input: { commentId: string; body: string }) {
@@ -85,6 +102,20 @@ export async function professionalReplyComment(userId: string, input: { commentI
   if (error) fail("Não foi possível responder.");
   await supabaseAdmin.from("library_comments").update({ status: "answered", updated_at: new Date().toISOString() }).eq("id", input.commentId);
   return { ok: true as const };
+}
+
+export async function professionalDeleteLibraryComment(userId: string, input: { commentId: string }) {
+  await requireProfessional(userId);
+  const { error } = await supabaseAdmin.from("library_comments").delete().eq("id", input.commentId);
+  if (error) fail("Não foi possível excluir o comentário.");
+  return { ok: true as const };
+}
+
+export async function professionalSetClientCommentDeleteEnabled(userId: string, input: { enabled: boolean }) {
+  await requireProfessional(userId);
+  const { error } = await supabaseAdmin.from("platform_settings").upsert({ key: "client_comment_delete_enabled", value: input.enabled, updated_at: new Date().toISOString() }, { onConflict: "key" });
+  if (error) fail("Não foi possível atualizar a permissão de exclusão.");
+  return { ok: true as const, enabled: input.enabled };
 }
 
 export async function professionalCreateTraining(userId: string, input: { title: string; description?: string | null; slug: string }) {
