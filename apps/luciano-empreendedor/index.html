@@ -3974,7 +3974,41 @@ function renderReader() {
       <div class="page-counter">
         Página ${p.num} de ${totalPaginas} · ${progresso}% lido
       </div>
-      <section class="digital-page">
+      
+<!-- ldr-public-v3-20260825 -->
+<section id="amostra-gratis-ebook" class="ldr-v3-sample" aria-labelledby="sample-title">
+  <div class="ldr-v3-wrap">
+    <div class="ldr-v3-badge">AMOSTRA GRÁTIS · EBOOK</div>
+    <p class="ldr-v3-eyebrow">A Coragem de Começar</p>
+    <h2 id="sample-title">Leia gratuitamente o primeiro capítulo</h2>
+    <p class="ldr-v3-sub">Conheça o início da história antes de acessar o conteúdo completo na sua Biblioteca.</p>
+    <div class="ldr-v3-reader">
+      <p class="ldr-v3-chapter-label">CAPÍTULO 1</p>
+      <h3>O Começo de Tudo</h3>
+      <p>Tudo começou com uma fruta. Não uma fruta qualquer, mas um mamão. Eu o carregava nas mãos, oferecendo a quem passava, sem saber que aquele gesto simples era o primeiro passo de uma longa jornada. A feira era o meu mundo, e cada cliente, um professor. As pessoas compravam o mamão, mas eu vendia algo mais: uma história, um sorriso, uma promessa de que aquele dia seria melhor. Aprendi que o valor de uma coisa não está no que ela custa, mas no que ela representa para quem a recebe. Naquela época, eu não sabia o que era empreendedorismo. Para mim, era apenas sobreviver, ajudar minha família e entender como o mundo funcionava. Mas, olhando para trás, vejo que cada venda era uma lição de persistência e de fé. O mamão era doce, mas a vida, nem sempre. Havia dias em que ninguém comprava, em que o sol queimava e a chuva molhava a mercadoria. Ainda assim, eu voltava no dia seguinte, porque desistir nunca foi uma opção. A feira me ensinou a ler as pessoas. Eu sabia quem compraria apenas pelo olhar, quem estava com pressa e quem queria uma conversa. Essa habilidade, mais tarde, se tornaria a base de tudo o que eu construiria. Cada porta que se abria era uma oportunidade; cada porta que se fechava, um aprendizado. O menino que vendia mamão não sabia, mas estava sendo forjado para enfrentar o mundo, com todas as suas dificuldades e belezas. Lembro do cheiro da terra molhada, das risadas das feirantes, do barulho das caixas sendo empilhadas. A feira era caótica, mas tinha uma alma. E aquela alma, de alguma forma, entrou em mim. Quando alguém me perguntava o que eu queria ser quando crescesse, eu não sabia responder. Mas, no fundo, eu já sabia: queria ser alguém que fizesse a diferença, nem que fosse vendendo um mamão com um sorriso. Os anos passaram, a feira ficou para trás, mas as lições permaneceram. A coragem de oferecer, a resiliência de continuar e a certeza de que cada pequeno gesto importa. Essa é a essência da minha história. E assim, com um mamão na mão e um sonho no coração, dei o primeiro passo de uma jornada que mudaria minha vida para sempre. Este livro é o início dessa jornada, cheia de altos e baixos, mas sempre movida pela esperança.</p>
+      <div class="ldr-v3-end">Fim da amostra gratuita · Os próximos capítulos continuam protegidos.</div>
+    </div>
+    <div class="ldr-v3-actions">
+      <a href="https://painel.ldrrhestrategia.com/cliente/login" class="ldr-v3-gold">Entrar na Área do Cliente</a>
+    </div>
+  </div>
+</section>
+
+<section id="livro-o-menino-que-vendia-mamao" class="ldr-v3-book" aria-labelledby="book-title">
+  <div class="ldr-v3-wrap ldr-v3-book-grid">
+    <div class="ldr-v3-book-icon" aria-hidden="true">📖</div>
+    <div>
+      <p class="ldr-v3-eyebrow">LIVRO · JÁ DISPONÍVEL</p>
+      <h2 id="book-title">O Menino que Vendia Mamão</h2>
+      <p>Conheça a história que está na origem de <strong>A Coragem de Começar</strong>: uma trajetória de empreendedorismo, coragem, escolhas, resiliência e recomeços.</p>
+      <p>O livro possui identidade editorial própria e continua disponível exclusivamente dentro da <strong>Área do Cliente / Minha Biblioteca</strong>.</p>
+      <div class="ldr-v3-actions">
+        <a href="https://painel.ldrrhestrategia.com/cliente/login" class="ldr-v3-navy">Acessar Minha Biblioteca</a>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="digital-page">
         <h2>Capítulo ${p.capitulo}: ${p.tituloCap}</h2>
         <h3>${p.tituloPagina}</h3>
         <p>${p.texto}</p>
@@ -5053,4 +5087,65 @@ window.addEventListener('load',()=>{if(NEW_BOOK_PUBLIC_TEST)document.body.classL
 
 <nav class="ldr-floating" aria-label="Acessos rápidos"><a class="client" href="https://painel.ldrrhestrategia.com/cliente/login">Área do Cliente</a><a class="whatsapp" href="https://wa.me/32492923605?text=Ol%C3%A1%2C%20vim%20pelo%20site%20Luciano%20Empreendedor" target="_blank" rel="noreferrer">WhatsApp</a></nav>
 <!-- ldr-home-fix-v3 -->
+
+<style id="ldr-public-v3-final-css">
+/* FINAL OVERRIDE: PUBLIC SITE ONLY. Library / readers are intentionally untouched. */
+body{background:#f7f2e8!important}
+#site{background:#f7f2e8!important;color:#172033!important}
+#site > header, #site header.header, #site .navbar, #site nav:not(.ldr-floating){background:#0d2340!important;border-color:rgba(199,164,90,.48)!important}
+#site > header a, #site header.header a, #site .navbar a, #site nav:not(.ldr-floating) a{color:#fff!important}
+#site > header a:hover, #site header.header a:hover, #site .navbar a:hover{color:#c7a45a!important}
+
+/* Replace the old wine institutional look by LDR blue/gold/cream. */
+#site .section, #site section{background:#f7f2e8!important;color:#172033!important}
+#site .section-dark, #site .dark-section, #site section[class*="dark"]{background:linear-gradient(145deg,#0d2340,#173a67)!important;color:#fff!important}
+#site .section-dark h1,#site .section-dark h2,#site .section-dark h3,#site .section-dark p,#site .section-dark li,
+#site .dark-section h1,#site .dark-section h2,#site .dark-section h3,#site .dark-section p,#site .dark-section li,
+#site section[class*="dark"] h1,#site section[class*="dark"] h2,#site section[class*="dark"] h3,#site section[class*="dark"] p{color:#fff!important}
+#site .section-dark .highlight,#site .dark-section .highlight,#site section[class*="dark"] .highlight{color:#d7b767!important}
+#site .section-title,#site h1,#site h2,#site h3{color:#0d2340!important}
+#site .highlight,#site .eyebrow{color:#a88439!important}
+#site .card:not(.ldr-v3-reader),#site [class*="card"]:not(.ldr-v3-reader){border-color:rgba(199,164,90,.42)!important}
+#site .btn-primary,#site a.btn-primary,#site button.btn-primary{background:#c7a45a!important;color:#20170b!important;border-color:#c7a45a!important}
+
+/* Hide prior injected experiment so there is one clear presentation only. */
+#site > .ldr-home-enhancement{display:none!important}
+
+/* Dedicated free ebook sample keeps exclusive editorial wine/gold identity. */
+#site .ldr-v3-sample{display:block!important;visibility:visible!important;opacity:1!important;background:linear-gradient(145deg,#4b101d,#26080f)!important;color:#f7f2e8!important;padding:64px 18px!important;border-top:2px solid #c7a45a!important;border-bottom:2px solid #c7a45a!important}
+#site .ldr-v3-wrap{width:min(1080px,100%);margin:0 auto}
+#site .ldr-v3-badge{display:inline-flex;background:#c7a45a;color:#25190b;border-radius:999px;padding:9px 14px;font-weight:900;font-size:.78rem;letter-spacing:.08em;margin-bottom:14px}
+#site .ldr-v3-eyebrow{color:#d7b767!important;font-size:.8rem;letter-spacing:.16em;font-weight:900;text-transform:uppercase;margin:0 0 8px}
+#site .ldr-v3-sample h2{color:#fff!important;font-family:Georgia,'Times New Roman',serif;font-size:clamp(2rem,6vw,3.4rem);margin:0 0 12px}
+#site .ldr-v3-sub{color:#eadfce!important;max-width:760px;font-size:1.05rem;line-height:1.65}
+#site .ldr-v3-reader{margin-top:26px;background:#fffdf8!important;border:1px solid rgba(199,164,90,.65)!important;border-radius:20px;padding:clamp(22px,5vw,42px);box-shadow:0 20px 50px rgba(0,0,0,.24)}
+#site .ldr-v3-reader .ldr-v3-chapter-label{color:#a88439!important;font-weight:900;letter-spacing:.15em;font-size:.78rem}
+#site .ldr-v3-reader h3{color:#4b101d!important;font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.6rem,4vw,2.2rem);margin:.3rem 0 1rem}
+#site .ldr-v3-reader p:not(.ldr-v3-chapter-label){color:#302927!important;font-family:Georgia,'Times New Roman',serif;font-size:1.08rem;line-height:1.85;white-space:normal}
+#site .ldr-v3-end{margin-top:22px;padding-top:18px;border-top:1px solid #dfcfaa;color:#6a5426;font-weight:800}
+
+/* Dedicated book section, separate from Próximos lançamentos. */
+#site .ldr-v3-book{display:block!important;visibility:visible!important;opacity:1!important;background:#fffdf8!important;color:#172033!important;padding:64px 18px!important}
+#site .ldr-v3-book-grid{display:grid;grid-template-columns:180px 1fr;gap:34px;align-items:center;background:#fff!important;border:1px solid rgba(13,35,64,.14);border-top:5px solid #c7a45a;border-radius:24px;padding:clamp(24px,5vw,48px);box-shadow:0 18px 50px rgba(13,35,64,.10)}
+#site .ldr-v3-book-icon{display:grid;place-items:center;width:160px;height:190px;border-radius:18px;background:linear-gradient(145deg,#4b101d,#26080f);border:2px solid #c7a45a;font-size:64px;box-shadow:0 16px 34px rgba(43,10,17,.22)}
+#site .ldr-v3-book h2{color:#0d2340!important;font-family:Georgia,'Times New Roman',serif;font-size:clamp(2rem,5vw,3rem);margin:.2rem 0 .8rem}
+#site .ldr-v3-book p{color:#4b5567!important;line-height:1.75;font-size:1.04rem}
+#site .ldr-v3-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+#site .ldr-v3-actions a{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:13px 20px;text-decoration:none;font-weight:900}
+#site .ldr-v3-gold{background:#c7a45a!important;color:#24190c!important}
+#site .ldr-v3-navy{background:#0d2340!important;color:#fff!important;border:1px solid #c7a45a!important}
+
+/* Editorial elements already belonging to ebook/book/library keep wine/gold styling. */
+#site .ldr-editorial{background:linear-gradient(145deg,#4b101d,#26080f)!important;color:#f7f2e8!important}
+#site .ldr-editorial h1,#site .ldr-editorial h2,#site .ldr-editorial h3,#site .ldr-editorial p{color:#f7f2e8!important}
+
+@media(max-width:720px){
+  #site .ldr-v3-sample,#site .ldr-v3-book{padding:44px 14px!important}
+  #site .ldr-v3-book-grid{grid-template-columns:1fr;gap:20px}
+  #site .ldr-v3-book-icon{width:112px;height:132px;font-size:48px}
+  #site .ldr-v3-reader{padding:22px 18px}
+  #site .ldr-v3-actions a{width:100%}
+}
+</style>
+
 </body></html>
