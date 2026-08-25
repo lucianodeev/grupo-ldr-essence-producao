@@ -111,13 +111,28 @@
   let translating = false;
   let current = "pt";
 
+  function normalizeLocale(value) {
+    const locale = String(value || "").trim().toLowerCase().replace("_", "-").split("-")[0];
+    return SUPPORTED.includes(locale) ? locale : "";
+  }
+
   function requestedLocale() {
-    const query = new URLSearchParams(location.search).get("lang");
-    if (SUPPORTED.includes(query)) return query;
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (SUPPORTED.includes(saved)) return saved;
-    const detected = (navigator.language || "pt").slice(0, 2).toLowerCase();
-    return SUPPORTED.includes(detected) ? detected : "pt";
+    const query = normalizeLocale(new URLSearchParams(location.search).get("lang"));
+    if (query) return query;
+    try {
+      const saved = normalizeLocale(localStorage.getItem(STORAGE_KEY));
+      if (saved) return saved;
+    } catch (_) {
+      // Browsers in private/restricted mode can block storage.
+    }
+    const deviceLocales = Array.isArray(navigator.languages) && navigator.languages.length
+      ? navigator.languages
+      : [navigator.language];
+    for (const deviceLocale of deviceLocales) {
+      const detected = normalizeLocale(deviceLocale);
+      if (detected) return detected;
+    }
+    return "pt";
   }
 
   function translateTextNode(node, lang) {
@@ -167,7 +182,11 @@
   function applyLocale(lang, updateUrl) {
     if (!SUPPORTED.includes(lang)) lang = "pt";
     current = lang;
-    localStorage.setItem(STORAGE_KEY, lang);
+    try {
+      localStorage.setItem(STORAGE_KEY, lang);
+    } catch (_) {
+      // Language selection still works when storage is unavailable.
+    }
     document.documentElement.lang = HTML_LANG[lang];
     translateRoot(lang);
     updatePageCounter(lang);
@@ -191,7 +210,7 @@
     const nav = document.querySelector("#palestraView header nav");
     if (!nav || nav.querySelector(".ldr-public-language-switcher")) return;
     const style = document.createElement("style");
-    style.textContent = ".ldr-public-language-switcher{display:flex;gap:4px;align-items:center;flex-wrap:nowrap}.ldr-public-lang-button{border:1px solid rgba(247,239,227,.45);background:transparent;color:inherit;border-radius:999px;padding:5px 8px;font:700 11px/1 Montserrat,Arial,sans-serif;cursor:pointer}.ldr-public-lang-button:hover,.ldr-public-lang-button:focus-visible,.ldr-public-lang-button.active{background:var(--ouro);border-color:var(--ouro);color:var(--vinho2)}@media(max-width:760px){.ldr-public-language-switcher{order:-1;width:100%;justify-content:center;margin:4px 0}.ldr-public-lang-button{padding:7px 10px}}";
+    style.textContent = ".ldr-public-language-switcher{display:flex;align-items:center;flex-wrap:nowrap;flex-shrink:0;margin-left:25px;border-left:1px solid rgba(255,255,255,.25);padding-left:14px}.ldr-public-lang-button{border:0;border-bottom:2px solid transparent;background:none;color:rgba(255,255,255,.72);padding:7px 6px;font:700 10px/1 Montserrat,Arial,sans-serif;cursor:pointer}.ldr-public-lang-button:hover,.ldr-public-lang-button:focus-visible{color:var(--ouro)}.ldr-public-lang-button.active{color:var(--ouro);font-weight:900;border-bottom-color:var(--ouro)}#palestraView{overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%}#palestraView :where(header,nav,main,section,article,footer,div,form,fieldset){min-width:0}#palestraView :where(h1,h2,h3,h4){min-width:0;text-wrap:balance;overflow-wrap:normal;word-break:normal;hyphens:none}#palestraView :where(p,li,label,small){min-width:0;overflow-wrap:break-word;word-break:normal}#palestraView :where(a,button,input,select,textarea){max-width:100%}@media(max-width:900px){.ldr-public-language-switcher{margin-left:10px}}@media(max-width:760px){.ldr-public-language-switcher{order:-1;width:100%;justify-content:center;margin:4px 0;border-left:0;padding-left:0}.ldr-public-lang-button{padding:6px 4px}#palestraView h1{font-size:clamp(2rem,10vw,3.25rem)!important;line-height:1.08!important}#palestraView h2{font-size:clamp(1.55rem,7.5vw,2.35rem)!important;line-height:1.15!important}#palestraView h3{font-size:clamp(1.2rem,5.5vw,1.75rem)!important;line-height:1.2!important}#palestraView :where(a,button){white-space:normal;text-align:center}}";
     document.head.appendChild(style);
     const wrap = document.createElement("div");
     wrap.className = "ldr-public-language-switcher";
