@@ -1,4 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
+import { getRequest } from "@tanstack/react-start/server";
 
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { parseRescheduleRequest, parseScheduleRequest } from "@/lib/client-agenda.schemas";
@@ -6,6 +7,19 @@ import { parseRescheduleRequest, parseScheduleRequest } from "@/lib/client-agend
 function emailOf(claims: Record<string, unknown>): string | null {
   const value = claims["email"];
   return typeof value === "string" ? value : null;
+}
+
+function requestMarket(): "BR" | "INTL" {
+  try {
+    const request = getRequest();
+    const country =
+      request?.headers.get("x-vercel-ip-country") ??
+      request?.headers.get("cf-ipcountry") ??
+      request?.headers.get("x-country-code");
+    return country?.trim().toUpperCase() === "BR" ? "BR" : "INTL";
+  } catch {
+    return "INTL";
+  }
 }
 
 export const getClientContext = createServerFn({ method: "GET" })
@@ -117,9 +131,9 @@ export const clientDigitalLibrary = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const { getClientDigitalLibrary } = await import("@/lib/client-portal.server");
-    return getClientDigitalLibrary(context.userId, emailOf(context.claims));
+    const library = await getClientDigitalLibrary(context.userId, emailOf(context.claims));
+    return { ...library, market: requestMarket() };
   });
-
 
 export const clientCreateDigitalCheckout = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
