@@ -16,6 +16,11 @@ export const clientAddLibraryComment = createServerFn({ method: "POST" }).middle
   return addClientLibraryComment(context.userId, emailOf(context.claims), data);
 });
 
+export const clientDeleteLibraryComment = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth]).inputValidator((data: { commentId: string }) => data).handler(async ({ context, data }) => {
+  const { deleteClientLibraryComment } = await import("@/lib/learning.server");
+  return deleteClientLibraryComment(context.userId, emailOf(context.claims), data);
+});
+
 export const clientSaveProgress = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth]).inputValidator((data: { productKey: string; progressPercent: number; currentLocation?: string | null }) => data).handler(async ({ context, data }) => {
   const { saveClientProgress } = await import("@/lib/learning.server");
   return saveClientProgress(context.userId, emailOf(context.claims), data);
@@ -29,6 +34,16 @@ export const professionalLearningHub = createServerFn({ method: "GET" }).middlew
 export const professionalReplyLibraryComment = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth]).inputValidator((data: { commentId: string; body: string }) => data).handler(async ({ context, data }) => {
   const { professionalReplyComment } = await import("@/lib/learning.server");
   return professionalReplyComment(context.userId, data);
+});
+
+export const professionalDeleteLibraryComment = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth]).inputValidator((data: { commentId: string }) => data).handler(async ({ context, data }) => {
+  const { professionalDeleteLibraryComment } = await import("@/lib/learning.server");
+  return professionalDeleteLibraryComment(context.userId, data);
+});
+
+export const professionalSetClientCommentDelete = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth]).inputValidator((data: { enabled: boolean }) => data).handler(async ({ context, data }) => {
+  const { professionalSetClientCommentDeleteEnabled } = await import("@/lib/learning.server");
+  return professionalSetClientCommentDeleteEnabled(context.userId, data);
 });
 
 export const professionalCreateTraining = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth]).inputValidator((data: { title: string; description?: string | null; slug: string }) => data).handler(async ({ context, data }) => {
