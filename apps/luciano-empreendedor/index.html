@@ -3027,7 +3027,7 @@ body:has(#library.open) .ldr-floating{display:none}
 <span class="tag" data-i18n="launchTag">Lançamento</span>
 <span class="region" id="userRegion">🌍 Checkout regional automático</span>
 <div class="checkout-region-note" id="checkoutRegionNote" style="margin:18px 0 20px;padding:14px 16px;border-radius:14px;background:rgba(215,168,77,.08);border:1px solid rgba(215,168,77,.22);color:var(--vinho);font-weight:600;line-height:1.5;">
-Valores de referência: 🇧🇷 Brasil — R$ 4,90 &nbsp;&nbsp;•&nbsp;&nbsp; 🌍 Resto do mundo — € 4,90. O checkout correto continuará sendo selecionado automaticamente de acordo com sua região.
+Valores de referência: 🇧🇷 Brasil — R$ 9,90 &nbsp;&nbsp;•&nbsp;&nbsp; 🌍 Resto do mundo — € 4,90. O checkout correto continuará sendo selecionado automaticamente de acordo com sua região.
 </div>
 <p>Acesso digital individual.</p>
 <ul>
@@ -3574,7 +3574,7 @@ function applyRegionalCheckout() {
       : '🌍 Checkout internacional selecionado automaticamente';
   }
   if (noteEl) {
-    noteEl.innerHTML = 'Valores de referência: 🇧🇷 Brasil — <strong>R$ 4,90</strong> &nbsp;&nbsp;•&nbsp;&nbsp; 🌍 Resto do mundo — <strong>€ 4,90</strong>. O checkout correto continuará sendo selecionado automaticamente de acordo com sua região.';
+    noteEl.innerHTML = userRegion === 'BR' ? 'Preço no Brasil: <strong>R$ 9,90</strong>' : 'Preço internacional: <strong>€ 4,90</strong>';
   }
   if (buyBtn) {
     buyBtn.href = userRegion === 'BR' ? STRIPE_CHECKOUT_BR : STRIPE_CHECKOUT_INTL;
@@ -5124,7 +5124,7 @@ function hasNewBookAccess(){
   return false;
 }
 function newBookPriceText(){return (typeof userRegion!=='undefined' && userRegion==='BR')?'R$ 49,90':'€ 20,00';}
-function newBookPriceDisplay(){return '🇧🇷 Brasil — R$ 49,90 &nbsp;•&nbsp; 🌍 Mundo — € 20,00';}
+function newBookPriceDisplay(){return newBookPriceText();}
 async function getCheckoutIdentity(){
   let email='';let userId='';
   try{const r=await sb.auth.getSession(); const u=r?.data?.session?.user; email=u?.email||''; userId=u?.id||'';}catch(e){}
