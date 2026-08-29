@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { Field, PageHeader } from "@/components/central/ui";
 import { useClientContractCatalog } from "@/lib/client-portal-data";
@@ -8,278 +8,96 @@ import type { ContractItem } from "@/lib/contract-catalog";
 import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_clientarea/cliente/contratar")({
-  head: () => ({
-    meta: [
-      { title: "Contratar e agendar — Grupo LDR Essence" },
-      {
-        name: "description",
-        content: "Escolha sessões, pacotes e serviços profissionais do Grupo LDR Essence.",
-      },
-      { property: "og:title", content: "Contratar e agendar — Grupo LDR Essence" },
-      {
-        property: "og:description",
-        content: "Sessões, mentorias e serviços personalizados de carreira e estratégia.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "robots", content: "noindex" },
-    ],
-  }),
+  head: () => ({ meta: [{ title: "Contratar e agendar — Grupo LDR Essence" }, { name: "robots", content: "noindex" }] }),
   component: ClientContract,
 });
 
-const WHATSAPP_URL =
-  "https://wa.me/32492923605?text=Ol%C3%A1%2C%20vim%20pela%20%C3%81rea%20do%20Cliente%20e%20quero%20saber%20mais%20sobre%20um%20servi%C3%A7o.";
+const CATEGORY_BY_KEY: Record<string, string> = {
+  landing_page: "Sites e tecnologia", site_one_page: "Sites e tecnologia", site_institucional_entrada: "Sites e tecnologia",
+  site_empresarial_entrada: "Sites e tecnologia", catalogo_digital_entrada: "Sites e tecnologia", loja_virtual_entrada: "Sites e tecnologia",
+  diagnostico_digital: "Marketing e presença digital", plano_marketing: "Marketing e presença digital", identidade_visual_entrada: "Marketing e presença digital",
+  criativos_5: "Marketing e presença digital", criativos_10: "Marketing e presença digital", email_marketing_conteudo: "Marketing e presença digital",
+  meta_ads_setup: "Marketing e presença digital", google_ads_setup: "Marketing e presença digital",
+  manutencao_essencial: "Planos mensais", manutencao_profissional: "Planos mensais", manutencao_empresarial: "Planos mensais",
+  social_inicial: "Planos mensais", social_crescimento: "Planos mensais", social_profissional: "Planos mensais", social_empresarial: "Planos mensais",
+  ads_uma_plataforma: "Planos mensais", ads_meta_google: "Planos mensais",
+  orientacao_profissional_eu: "Carreira e desenvolvimento", orientacao_profissional_br: "Carreira e desenvolvimento",
+  plano_carreira_eu: "Carreira e desenvolvimento", plano_carreira_br: "Carreira e desenvolvimento",
+  transicao_carreira_eu: "Carreira e desenvolvimento", transicao_carreira_br: "Carreira e desenvolvimento",
+  carreira_internacional_eu: "Carreira e desenvolvimento", carreira_internacional_br: "Carreira e desenvolvimento",
+  diagnostico_projeto: "Mentoria e estratégia",
+};
 
-const PERSONALIZED_SERVICES = [
-  {
-    title: "Orientação profissional",
-    description:
-      "Clareza de objetivos, posicionamento profissional e próximos passos para decisões de carreira.",
-    tag: "Carreira",
-  },
-  {
-    title: "Transição de carreira",
-    description:
-      "Planejamento para mudar de área, função ou mercado com estratégia e organização do processo.",
-    tag: "Transição",
-  },
-  {
-    title: "Carreira internacional",
-    description:
-      "Orientação para profissionais e estudantes que querem estruturar uma trajetória profissional internacional.",
-    tag: "Internacional",
-  },
-  {
-    title: "Currículo e posicionamento profissional",
-    description:
-      "Revisão estratégica de currículo, apresentação profissional e direcionamento para novas oportunidades.",
-    tag: "Posicionamento",
-  },
-  {
-    title: "Planejamento de carreira",
-    description:
-      "Construção de um plano prático com metas, prioridades, competências e próximos movimentos profissionais.",
-    tag: "Planejamento",
-  },
-  {
-    title: "Consultoria para empreendedores",
-    description:
-      "Análise de negócio, organização de ideias, posicionamento, estratégia comercial e próximos passos.",
-    tag: "Negócios",
-  },
-  {
-    title: "Consultoria de RH para empresas",
-    description:
-      "Apoio em recrutamento, seleção, estruturação de processos e decisões relacionadas a pessoas.",
-    tag: "Empresas",
-  },
-  {
-    title: "Diagnóstico de presença digital",
-    description:
-      "Leitura estratégica da presença online para identificar oportunidades de comunicação, posicionamento e vendas.",
-    tag: "Estratégia",
-  },
-];
-
-function payLink(item: ContractItem): string | null {
-  const url = safeUrl(item.paymentUrl);
-  return url;
+function Card({ item }: { item: ContractItem }) {
+  const link = safeUrl(item.paymentUrl);
+  return (
+    <li className="group flex h-full flex-col rounded-2xl border border-border/70 bg-background p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <span className="inline-flex rounded-full bg-accent px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wide text-accent-foreground">
+            {item.region === "br" ? "Brasil" : item.region === "eu" ? "Europa" : CATEGORY_BY_KEY[item.catalogKey] ?? "Serviço"}
+          </span>
+          <h3 className="mt-3 font-serif text-lg leading-snug">{item.name}</h3>
+          {item.sessions > 0 && <p className="mt-1 text-xs font-bold text-muted-foreground">{item.sessions} {item.sessions === 1 ? "sessão" : "sessões"}</p>}
+        </div>
+        <div className="shrink-0 text-right">
+          {item.originalCents ? <p className="text-xs text-muted-foreground line-through">{formatMoney(item.originalCents, item.currency)}</p> : null}
+          <p className="text-xl font-extrabold text-primary">{formatMoney(item.amountCents, item.currency)}</p>
+          {item.originalCents ? <span className="text-[11px] font-bold text-primary">valor com desconto</span> : null}
+        </div>
+      </div>
+      <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">Pagamento seguro. Após a contratação, acompanhe os próximos passos pela sua Área do Cliente.</p>
+      {link ? (
+        <a className="mt-4 inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-primary px-4 py-3 text-sm font-extrabold text-primary-foreground shadow-sm transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" href={link} target="_blank" rel="noreferrer noopener">
+          Contratar agora
+        </a>
+      ) : <p className="mt-4 rounded-xl bg-muted p-3 text-center text-xs text-muted-foreground">Checkout temporariamente indisponível</p>}
+    </li>
+  );
 }
 
 function ClientContract() {
   const { t } = useI18n();
   const catalog = useClientContractCatalog();
   const [region, setRegion] = useState<"eu" | "br">("eu");
-
+  const [search, setSearch] = useState("");
   const items = catalog.data?.items ?? [];
-  const psicanalise = items.filter((i) => i.group === "psicanalise");
+  const psicanalise = items.filter((i) => i.group === "psicanalise" && i.region === region);
   const mentoria = items.filter((i) => i.group === "mentoria");
+  const services = items.filter((i) => i.group === "servicos");
+  const filtered = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    return services.filter((item) => {
+      if (item.region && item.region !== region) return false;
+      return !q || `${item.name} ${CATEGORY_BY_KEY[item.catalogKey] ?? ""}`.toLowerCase().includes(q);
+    });
+  }, [services, region, search]);
+  const grouped = useMemo(() => {
+    const map = new Map<string, ContractItem[]>();
+    for (const item of filtered) {
+      const category = CATEGORY_BY_KEY[item.catalogKey] ?? "Outros serviços";
+      map.set(category, [...(map.get(category) ?? []), item]);
+    }
+    return Array.from(map.entries());
+  }, [filtered]);
 
-  const psicByRegion = (r: "eu" | "br") => psicanalise.filter((i) => i.region === r);
+  if (catalog.isLoading) return <p className="text-sm text-muted-foreground">{t("state.loading")}</p>;
 
-  if (catalog.isLoading)
-    return <p className="text-sm text-muted-foreground">{t("state.loading")}</p>;
+  return <div className="grid gap-8">
+    <PageHeader title={t("contract.title")} subtitle="Escolha, pague com segurança e acompanhe tudo pelo painel." />
+    <section className="rounded-3xl border border-primary/15 bg-gradient-to-br from-card via-card to-accent/25 p-5 shadow-sm sm:p-7">
+      <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-primary">Grupo LDR Essence</p>
+      <h2 className="mt-2 max-w-2xl font-serif text-2xl sm:text-3xl">Todos os serviços em um só lugar</h2>
+      <p className="mt-2 max-w-3xl text-sm leading-relaxed text-muted-foreground">Sem redirecionamento para WhatsApp: cada serviço disponível possui acesso direto ao checkout oficial. Você escolhe com calma e mantém o acompanhamento centralizado.</p>
+      <div className="mt-5 grid gap-3 sm:grid-cols-2">
+        <Field label="Região e moeda" htmlFor="contract-region"><select id="contract-region" className="s8-field" value={region} onChange={(e) => setRegion(e.target.value as "eu" | "br")}><option value="eu">Europa — EUR</option><option value="br">Brasil — BRL</option></select></Field>
+        <Field label="Encontrar um serviço" htmlFor="service-search"><input id="service-search" className="s8-field" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Ex.: carreira, site, marketing..." /></Field>
+      </div>
+    </section>
 
-  const Card = ({ item }: { item: ContractItem }) => {
-    const link = payLink(item);
-    return (
-      <li className="group rounded-2xl border border-border/70 bg-background p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-md">
-        <div className="flex items-start justify-between gap-3">
-          <div>
-            <h3 className="font-serif text-lg leading-snug">{item.name}</h3>
-            <p className="mt-1 text-sm font-bold text-primary">
-              {item.sessions} {item.sessions === 1 ? t("contract.session") : t("contract.sessions")}
-            </p>
-            {item.originalCents !== null && (
-              <span className="mt-2 inline-flex rounded-full bg-accent px-2.5 py-1 text-xs font-bold text-accent-foreground">
-                {t("contract.discount")}
-              </span>
-            )}
-          </div>
-          <div className="shrink-0 text-right">
-            {item.originalCents ? (
-              <>
-                <p className="text-sm text-muted-foreground line-through">
-                  {formatMoney(item.originalCents, item.currency)}
-                </p>
-                <p className="text-xl font-extrabold text-primary">
-                  {formatMoney(item.amountCents, item.currency)}
-                </p>
-              </>
-            ) : (
-              <p className="text-xl font-extrabold text-primary">
-                {formatMoney(item.amountCents, item.currency)}
-              </p>
-            )}
-          </div>
-        </div>
+    <section><p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">Atendimento</p><h2 className="mt-1 font-serif text-2xl">{t("contract.psychoanalysis")}</h2><ul className="mt-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">{psicanalise.map((i) => <Card key={i.catalogKey} item={i} />)}</ul></section>
+    <section><p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">Mentoria e estratégia</p><h2 className="mt-1 font-serif text-2xl">{t("contract.mentorship")}</h2><ul className="mt-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">{mentoria.map((i) => <Card key={i.catalogKey} item={i} />)}</ul></section>
 
-        {link ? (
-          <a
-            className="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground shadow-sm transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-            href={link}
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            {t("contract.buy")}
-          </a>
-        ) : (
-          <p className="mt-3 text-xs text-muted-foreground">{t("contract.unavailable")}</p>
-        )}
-      </li>
-    );
-  };
-
-  return (
-    <div className="grid gap-8">
-      <PageHeader title={t("contract.title")} subtitle={t("contract.subtitle")} />
-
-      <section className="rounded-2xl border border-primary/10 bg-gradient-to-br from-card to-accent/20 p-5 shadow-sm">
-        <div className="mb-4">
-          <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-primary">
-            Simples e seguro
-          </p>
-          <h2 className="mt-1 font-serif text-xl">Escolha o serviço no seu ritmo</h2>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Nos serviços com pagamento online, você compra primeiro e agenda depois. Nos serviços personalizados, fale conosco para receber a orientação adequada antes de contratar.
-          </p>
-        </div>
-        <ol className="grid gap-3 text-sm sm:grid-cols-2">
-          <li className="flex items-start gap-3 rounded-xl bg-background/80 p-3">
-            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
-              1
-            </span>
-            <span>{t("contract.step1")}</span>
-          </li>
-          <li className="flex items-start gap-3 rounded-xl bg-background/80 p-3">
-            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
-              2
-            </span>
-            <span>{t("contract.step2")}</span>
-          </li>
-        </ol>
-        <p className="mt-3 text-xs text-muted-foreground">{t("contract.afterPayment")}</p>
-        <button
-          type="button"
-          onClick={() => catalog.refetch()}
-          disabled={catalog.isRefetching}
-          className="mt-3 rounded-xl border border-border bg-background px-4 py-2.5 text-sm font-bold transition hover:border-primary/30 hover:bg-accent disabled:opacity-60"
-        >
-          {t("contract.refresh")}
-        </button>
-      </section>
-
-      <section>
-        <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
-          <div>
-            <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">Atendimento</p>
-            <h2 className="mt-1 font-serif text-2xl">{t("contract.psychoanalysis")}</h2>
-          </div>
-          <Field label={t("contract.region")} htmlFor="contract-region">
-            <select
-              id="contract-region"
-              className="s8-field"
-              value={region}
-              onChange={(e) => setRegion(e.target.value as "eu" | "br")}
-            >
-              <option value="eu">Europa — EUR</option>
-              <option value="br">Brasil — BRL</option>
-            </select>
-          </Field>
-        </div>
-        <ul className="grid gap-4 sm:grid-cols-3">
-          {psicByRegion(region).map((i) => (
-            <Card key={i.catalogKey} item={i} />
-          ))}
-        </ul>
-      </section>
-
-      <section>
-        <div className="mb-4">
-          <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">Desenvolvimento</p>
-          <h2 className="mt-1 font-serif text-2xl">{t("contract.mentorship")}</h2>
-        </div>
-        <ul className="grid gap-4 sm:grid-cols-3">
-          {mentoria.map((i) => (
-            <Card key={i.catalogKey} item={i} />
-          ))}
-        </ul>
-      </section>
-
-      <section className="rounded-2xl border border-border/70 bg-card p-5 sm:p-6">
-        <div className="max-w-3xl">
-          <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">
-            Carreira, negócios e RH
-          </p>
-          <h2 className="mt-1 font-serif text-2xl sm:text-3xl">Outros serviços personalizados</h2>
-          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-            Alguns serviços precisam de uma conversa rápida para entender objetivo, país, momento profissional ou necessidade da empresa. Por isso, eles aparecem separados dos checkouts automáticos.
-          </p>
-        </div>
-
-        <ul className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          {PERSONALIZED_SERVICES.map((service) => (
-            <li
-              key={service.title}
-              className="flex h-full flex-col rounded-2xl border border-border/70 bg-background p-5 transition duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-md"
-            >
-              <span className="w-fit rounded-full bg-accent px-2.5 py-1 text-xs font-bold text-accent-foreground">
-                {service.tag}
-              </span>
-              <h3 className="mt-3 font-serif text-xl leading-tight">{service.title}</h3>
-              <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
-                {service.description}
-              </p>
-              <a
-                href={`${WHATSAPP_URL}%20Tenho%20interesse%20em%3A%20${encodeURIComponent(service.title)}`}
-                target="_blank"
-                rel="noreferrer noopener"
-                className="mt-4 inline-flex min-h-11 items-center justify-center rounded-xl border border-primary/25 bg-primary/5 px-4 py-2.5 text-sm font-extrabold text-primary transition hover:bg-primary hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-              >
-                Quero saber mais
-              </a>
-            </li>
-          ))}
-        </ul>
-
-        <div className="mt-5 rounded-2xl bg-primary p-5 text-primary-foreground sm:flex sm:items-center sm:justify-between sm:gap-6">
-          <div>
-            <h3 className="font-serif text-xl">Não encontrou exatamente o que procura?</h3>
-            <p className="mt-1 text-sm text-primary-foreground/80">
-              Conte sua necessidade e direcionamos você para o serviço mais adequado, sem obrigação de contratar.
-            </p>
-          </div>
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noreferrer noopener"
-            className="mt-4 inline-flex min-h-11 shrink-0 items-center justify-center rounded-xl bg-background px-5 py-2.5 text-sm font-extrabold text-foreground shadow-sm transition hover:opacity-90 sm:mt-0"
-          >
-            Falar no WhatsApp
-          </a>
-        </div>
-      </section>
-    </div>
-  );
+    {grouped.map(([category, categoryItems]) => <section key={category} className="rounded-3xl border border-border/70 bg-card p-5 sm:p-6"><div className="mb-4"><p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">Soluções LDR</p><h2 className="mt-1 font-serif text-2xl">{category}</h2></div><ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">{categoryItems.map((i) => <Card key={i.catalogKey} item={i} />)}</ul></section>)}
+  </div>;
 }
