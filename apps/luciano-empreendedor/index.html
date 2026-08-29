@@ -5426,6 +5426,270 @@ body{background:#f7f2e8!important}
   window.addEventListener('ldr:languagechange',applyLanguage);
 })();
 </script>
-
+<!-- ldr-public-conversion-v2-20260829 -->
+<style id="ldr-public-conversion-v2-20260829">
+  html,body{max-width:100%;overflow-x:hidden}
+  #platformView,#palestraView{min-width:0}
+  #platformView :where(section,article,div,nav,header,footer),
+  #palestraView :where(section,article,div,nav,header,footer){min-width:0}
+  #platformView :where(h1,h2,h3,h4,p,li,a,button),
+  #palestraView :where(h1,h2,h3,h4,p,li,a,button){overflow-wrap:break-word;word-break:normal}
+  #platformView :where(h1,h2),#palestraView :where(h1,h2){text-wrap:balance}
+  #platformView .hero h1{font-size:clamp(2.25rem,6.4vw,5rem)!important;line-height:1.04!important}
+  #platformView .section-title,#palestraView .section-title{font-size:clamp(1.9rem,4.5vw,3.6rem)!important}
+  #platformView #platformLancamentos{display:block!important}
+  #platformView #ldrLectureQuick,
+  #platformView .ldr-lecture-quick,
+  #palestraView #amostra-gratis-ebook,
+  #palestraView #livro-o-menino-que-vendia-mamao{display:none!important}
+  .ldr-view-tabs{
+    display:inline-flex;align-items:center;gap:4px;padding:4px;border-radius:999px;
+    background:rgba(255,255,255,.055);border:1px solid rgba(215,168,77,.25);
+    flex:0 0 auto
+  }
+  .ldr-view-tabs a{
+    display:inline-flex;align-items:center;justify-content:center;min-height:38px;
+    padding:8px 15px!important;border:0!important;border-radius:999px;
+    color:rgba(247,239,227,.78)!important;font-size:.78rem!important;font-weight:850;
+    letter-spacing:.015em;white-space:nowrap
+  }
+  .ldr-view-tabs a:hover,.ldr-view-tabs a:focus-visible{
+    color:#fff4e0!important;background:rgba(215,168,77,.11);outline:none
+  }
+  .ldr-view-tabs a.is-active{
+    background:linear-gradient(135deg,#e2b75f,#c99434);color:#24140d!important;
+    box-shadow:0 5px 16px rgba(215,168,77,.25)
+  }
+  #platformView header .container,#palestraView header .container{max-width:1280px}
+  #platformView header nav,#palestraView header nav{row-gap:8px}
+  #platformView header nav>.btn[href="#palestra"]{display:none!important}
+  #platformView #comprar .card-premium{
+    background:
+      radial-gradient(circle at 95% 5%,rgba(240,213,139,.10),transparent 30%),
+      linear-gradient(145deg,#571322 0%,#310b13 58%,#20080d 100%)!important;
+    color:#f7efe3!important;border:1px solid rgba(215,168,77,.62)!important;
+    box-shadow:0 22px 55px rgba(10,2,5,.32)!important
+  }
+  #platformView #comprar .card-premium:hover{
+    transform:translateY(-5px);border-color:rgba(240,213,139,.86)!important;
+    box-shadow:0 28px 70px rgba(10,2,5,.45)!important
+  }
+  #platformView #comprar .card-premium :where(h2,h3,.price,.ldr-book-price,.ldr-product-name,.ldr-product-type,.region){
+    color:#f0d58b!important
+  }
+  #platformView #comprar .card-premium :where(p,li){color:rgba(255,248,235,.88)!important}
+  #platformView #comprar .card-premium .tag{
+    background:#d7a84d!important;color:#25120d!important
+  }
+  #platformView #comprar .card-premium .btn{
+    min-height:48px;background:linear-gradient(135deg,#e2b75f,#c99434)!important;
+    color:#211109!important;border:1px solid rgba(255,240,190,.45)!important
+  }
+  #platformView #comprar .card-premium .btn-ghost{
+    background:transparent!important;color:#f7efe3!important;border-color:rgba(240,213,139,.48)!important
+  }
+  #platformView #comprar .card-premium .btn-ghost:hover{background:rgba(215,168,77,.10)!important}
+  #platformView #comprar .pricing-grid{align-items:stretch!important}
+  #platformView #comprar .card-premium{display:flex!important;flex-direction:column!important;height:100%}
+  #platformView #comprar .card-premium>.btn:first-of-type{margin-top:auto}
+  .ldr-lecture-cta,.ldr-live-section,.ldr-group-callout{
+    padding:clamp(48px,7vw,84px) clamp(18px,6vw,100px)
+  }
+  .ldr-lecture-cta{background:linear-gradient(145deg,#fffaf1,#f3e5d1);color:#352018}
+  .ldr-live-section{
+    background:
+      radial-gradient(circle at 82% 22%,rgba(215,168,77,.16),transparent 33%),
+      linear-gradient(140deg,#210b0f,#521525);
+    color:#f7efe3
+  }
+  .ldr-group-callout{background:#fffaf1;color:#352018}
+  .ldr-conversion-shell{width:min(1120px,100%);margin:0 auto}
+  .ldr-lecture-cta__card,.ldr-group-callout__card{
+    display:grid;grid-template-columns:minmax(0,1.2fr) minmax(240px,.8fr);
+    gap:clamp(20px,4vw,44px);align-items:center;padding:clamp(25px,4.5vw,48px);
+    border-radius:24px;border:1px solid rgba(92,23,36,.14);
+    background:rgba(255,255,255,.72);box-shadow:0 18px 50px rgba(43,13,18,.12)
+  }
+  .ldr-live-grid{
+    display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);
+    gap:clamp(28px,5vw,64px);align-items:center
+  }
+  .ldr-live-points{display:grid;gap:12px;margin-top:24px}
+  .ldr-live-point{
+    display:flex;gap:12px;align-items:flex-start;padding:15px 16px;
+    border:1px solid rgba(215,168,77,.24);border-radius:15px;background:rgba(255,255,255,.045)
+  }
+  .ldr-live-point strong{display:block;color:#f0d58b;margin-bottom:2px}
+  .ldr-live-point span{color:rgba(247,239,227,.76)}
+  .ldr-live-panel{
+    padding:clamp(24px,4vw,38px);border:1px solid rgba(215,168,77,.48);
+    border-radius:24px;background:rgba(12,4,7,.28);box-shadow:0 24px 60px rgba(0,0,0,.28)
+  }
+  .ldr-live-panel h3{color:#f0d58b;font-size:clamp(1.55rem,3vw,2.25rem);margin:8px 0 12px}
+  .ldr-live-panel p{color:rgba(247,239,227,.8)}
+  .ldr-actions{display:flex;flex-wrap:wrap;gap:11px;margin-top:22px}
+  .ldr-actions .btn{min-height:48px}
+  .ldr-actions .btn-ghost{border-color:rgba(215,168,77,.55)}
+  .ldr-lecture-cta h2,.ldr-group-callout h2{
+    color:#5c1724;font-size:clamp(1.8rem,4vw,3rem);line-height:1.1;margin:7px 0 12px
+  }
+  .ldr-lecture-cta p,.ldr-group-callout p{color:rgba(53,32,24,.78)}
+  .ldr-conversion-eyebrow{
+    display:inline-flex;padding:7px 12px;border-radius:999px;background:rgba(215,168,77,.16);
+    color:#8a631e;font-size:.72rem;font-weight:900;letter-spacing:.11em;text-transform:uppercase
+  }
+  .ldr-mobile-actions{display:none}
+  @media(max-width:960px){
+    #platformView header .container,#palestraView header .container{align-items:flex-start}
+    .ldr-view-tabs{order:-2}
+    .ldr-lecture-cta__card,.ldr-group-callout__card,.ldr-live-grid{grid-template-columns:1fr}
+  }
+  @media(max-width:760px){
+    #platformView header,#palestraView header{position:sticky!important}
+    #platformView header .container,#palestraView header .container{padding-inline:14px!important}
+    #platformView header nav,#palestraView header nav{width:100%;justify-content:center!important}
+    .ldr-view-tabs{width:100%;display:grid;grid-template-columns:1fr 1fr}
+    .ldr-view-tabs a{white-space:normal;line-height:1.18;min-height:44px}
+    #platformView .hero,#palestraView .hero{padding-inline:16px!important}
+    #platformView .hero h1,#palestraView .hero h1{font-size:clamp(2rem,10vw,3.2rem)!important}
+    #platformView :where(.btn,a[role="button"]),#palestraView :where(.btn,a[role="button"]){
+      max-width:100%;white-space:normal;text-align:center
+    }
+    #platformView #comprar .pricing-grid{grid-template-columns:1fr!important}
+    .ldr-actions{display:grid;grid-template-columns:1fr}
+    .ldr-actions .btn{width:100%}
+    .ldr-mobile-actions{
+      position:fixed;left:9px;right:9px;bottom:max(9px,env(safe-area-inset-bottom));
+      z-index:9991;display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:7px;
+      border-radius:17px;background:rgba(20,11,9,.95);border:1px solid rgba(215,168,77,.35);
+      box-shadow:0 15px 40px rgba(0,0,0,.4);backdrop-filter:blur(14px)
+    }
+    .ldr-mobile-actions a{display:flex;align-items:center;justify-content:center;min-height:46px;
+      border-radius:12px;padding:9px 10px;font-size:.76rem;font-weight:900;text-align:center}
+    body.ldr-mode-products #ldrPalestraMobileBar,
+    body.ldr-mode-palestra #ldrProductsMobileBar{display:none}
+    #platformView footer,#palestraView footer{padding-bottom:92px!important}
+  }
+  @media(max-width:390px){
+    #platformView header .logo,#palestraView header .logo{font-size:1rem!important}
+    .ldr-view-tabs a{font-size:.7rem!important;padding:8px 7px!important}
+    #platformView .hero h1,#palestraView .hero h1{font-size:clamp(1.85rem,9.6vw,2.65rem)!important}
+    .ldr-lecture-cta,.ldr-live-section,.ldr-group-callout{padding-inline:13px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    #platformView *,#palestraView *{scroll-behavior:auto!important}
+    #platformView .card-premium:hover{transform:none}
+  }
+</style>
+<script>
+(function(){
+  'use strict';
+  var FORM_URL='https://docs.google.com/forms/d/e/1FAIpQLSfKjV7lDqemNjz42i39FZQJSw2ePsHPAjepEhpbqxzBvQfxeQ/viewform?usp=embed';
+  var GROUP_URL='https://chat.whatsapp.com/IMk7F1zg2rZJdj9NWC664G?s=cl&p=i&ilr=0';
+  var INSTAGRAM_URL='https://www.instagram.com/luciano.ldr.rh';
+  var copy={
+    pt:{productsTab:'Produtos',lectureTab:'Palestra e Lives',buyNow:'Comprar agora',library:'Minha Biblioteca',freeTag:'Gratuita · 3 horas · Certificado',ctaTitle:'Reserve sua participação gratuita',ctaText:'Uma palestra prática para transformar ideias em ação, ampliar sua visão de oportunidades e empreender com mais equilíbrio.',register:'Fazer inscrição gratuita',liveTag:'ENCONTRO GRATUITO TODA SEMANA',liveTitle:'Lives semanais sobre empreendedorismo',liveLead:'Antes da palestra, Luciano realizará uma live gratuita toda semana com uma conversa prática, acessível e aberta para quem deseja empreender.',liveGeneral:'Nas lives',liveGeneralText:'Ideias, oportunidades, negócios, recomeços e desenvolvimento profissional apresentados de forma geral e prática.',lectureDeep:'Na palestra',lectureDeepText:'Os temas são aprofundados e direcionados, com três horas de conteúdo e certificado de participação.',follow:'Seguir no Instagram',share:'Compartilhar com amigos',group:'Entrar no WhatsApp',groupTitle:'Continue perto da comunidade',groupText:'Entre no grupo para receber informações sobre a palestra, as lives e os próximos encontros.',productsTitle:'Produtos digitais para começar agora'},
+    en:{productsTab:'Products',lectureTab:'Lecture & Lives',buyNow:'Buy now',library:'My Library',freeTag:'Free · 3 hours · Certificate',ctaTitle:'Reserve your free place',ctaText:'A practical lecture to turn ideas into action, broaden your view of opportunities and build with greater balance.',register:'Register for free',liveTag:'FREE WEEKLY MEETING',liveTitle:'Weekly entrepreneurship lives',liveLead:'Before the lecture, Luciano will host a free live every week with a practical, accessible conversation for people who want to start a business.',liveGeneral:'In the lives',liveGeneralText:'Ideas, opportunities, business, new beginnings and professional development presented in a practical, general way.',lectureDeep:'In the lecture',lectureDeepText:'Topics are explored in greater depth over three hours, with a participation certificate.',follow:'Follow on Instagram',share:'Share with friends',group:'Join WhatsApp',groupTitle:'Stay close to the community',groupText:'Join the group for news about the lecture, lives and upcoming meetings.',productsTitle:'Digital products to start now'},
+    fr:{productsTab:'Produits',lectureTab:'Conférence et Lives',buyNow:'Acheter maintenant',library:'Ma Bibliothèque',freeTag:'Gratuite · 3 heures · Certificat',ctaTitle:'Réservez votre participation gratuite',ctaText:'Une conférence pratique pour transformer les idées en action, élargir votre vision des opportunités et entreprendre avec plus d’équilibre.',register:'Inscription gratuite',liveTag:'RENCONTRE GRATUITE CHAQUE SEMAINE',liveTitle:'Lives hebdomadaires sur l’entrepreneuriat',liveLead:'Avant la conférence, Luciano animera chaque semaine un live gratuit, pratique et accessible, destiné à celles et ceux qui souhaitent entreprendre.',liveGeneral:'Pendant les lives',liveGeneralText:'Idées, opportunités, affaires, nouveaux départs et développement professionnel présentés de façon générale et pratique.',lectureDeep:'Pendant la conférence',lectureDeepText:'Les thèmes sont approfondis et ciblés pendant trois heures, avec un certificat de participation.',follow:'Suivre sur Instagram',share:'Partager avec des amis',group:'Rejoindre WhatsApp',groupTitle:'Restez proche de la communauté',groupText:'Rejoignez le groupe pour recevoir les informations sur la conférence, les lives et les prochaines rencontres.',productsTitle:'Produits numériques pour commencer'},
+    es:{productsTab:'Productos',lectureTab:'Conferencia y Lives',buyNow:'Comprar ahora',library:'Mi Biblioteca',freeTag:'Gratuita · 3 horas · Certificado',ctaTitle:'Reserva tu participación gratuita',ctaText:'Una conferencia práctica para convertir ideas en acción, ampliar tu visión de oportunidades y emprender con mayor equilibrio.',register:'Inscripción gratuita',liveTag:'ENCUENTRO GRATUITO CADA SEMANA',liveTitle:'Lives semanales sobre emprendimiento',liveLead:'Antes de la conferencia, Luciano realizará cada semana un live gratuito, práctico y accesible para quienes desean emprender.',liveGeneral:'En los lives',liveGeneralText:'Ideas, oportunidades, negocios, nuevos comienzos y desarrollo profesional presentados de forma general y práctica.',lectureDeep:'En la conferencia',lectureDeepText:'Los temas se profundizan durante tres horas, con certificado de participación.',follow:'Seguir en Instagram',share:'Compartir con amigos',group:'Entrar en WhatsApp',groupTitle:'Sigue cerca de la comunidad',groupText:'Únete al grupo para recibir información sobre la conferencia, los lives y los próximos encuentros.',productsTitle:'Productos digitales para empezar'}
+  };
+  function lang(){
+    var query='';
+    try{query=new URLSearchParams(location.search).get('lang')||'';}catch(e){}
+    var saved='';
+    try{saved=localStorage.getItem('luciano.public.locale.v2')||localStorage.getItem('lucianoLang')||'';}catch(e){}
+    var value=(query||saved||navigator.language||'pt').toLowerCase().slice(0,2);
+    return copy[value]?value:'pt';
+  }
+  function applyCopy(){
+    var dict=copy[lang()]||copy.pt;
+    document.querySelectorAll('[data-ux-copy]').forEach(function(el){
+      var key=el.getAttribute('data-ux-copy');
+      if(dict[key])el.textContent=dict[key];
+    });
+    document.title=location.hash.replace('#','').startsWith('palestra')||['sobre','detalhes','lancamentos','inscricao','lives'].includes(location.hash.replace('#',''))
+      ? dict.lectureTab+' — Luciano Rodrigues Almeida'
+      : dict.productsTitle+' — Luciano Rodrigues Almeida';
+  }
+  function addTabs(root,active){
+    var nav=root&&root.querySelector('header nav');
+    if(!nav||nav.querySelector('.ldr-view-tabs'))return;
+    var tabs=document.createElement('div');
+    tabs.className='ldr-view-tabs';
+    tabs.setAttribute('role','navigation');
+    tabs.setAttribute('aria-label','Navegação principal');
+    tabs.innerHTML='<a href="#plataforma" data-view-tab="products" data-ux-copy="productsTab"></a><a href="#palestra" data-view-tab="palestra" data-ux-copy="lectureTab"></a>';
+    nav.insertBefore(tabs,nav.firstChild);
+  }
+  function addLectureSections(){
+    var root=document.getElementById('palestraView');
+    var form=document.getElementById('inscricao');
+    if(!root||!form)return;
+    root.querySelector('#amostra-gratis-ebook')?.remove();
+    root.querySelector('#livro-o-menino-que-vendia-mamao')?.remove();
+    if(!document.getElementById('ldrLectureCta')){
+      var cta=document.createElement('section');
+      cta.id='ldrLectureCta';cta.className='ldr-lecture-cta';
+      cta.innerHTML='<div class="ldr-conversion-shell"><div class="ldr-lecture-cta__card"><div><span class="ldr-conversion-eyebrow" data-ux-copy="freeTag"></span><h2 data-ux-copy="ctaTitle"></h2><p data-ux-copy="ctaText"></p></div><div class="ldr-actions"><a class="btn" href="#inscricao" data-ux-copy="register"></a><a class="btn btn-ghost" href="'+GROUP_URL+'" target="_blank" rel="noopener noreferrer" data-ux-copy="group"></a></div></div></div>';
+      form.parentNode.insertBefore(cta,form);
+    }
+    if(!document.getElementById('lives')){
+      var live=document.createElement('section');
+      live.id='lives';live.className='ldr-live-section';
+      live.innerHTML='<div class="ldr-conversion-shell ldr-live-grid"><div><span class="ldr-conversion-eyebrow" data-ux-copy="liveTag"></span><h2 class="section-title" data-ux-copy="liveTitle"></h2><p class="section-subtitle" data-ux-copy="liveLead"></p><div class="ldr-live-points"><div class="ldr-live-point"><span>●</span><div><strong data-ux-copy="liveGeneral"></strong><span data-ux-copy="liveGeneralText"></span></div></div><div class="ldr-live-point"><span>◆</span><div><strong data-ux-copy="lectureDeep"></strong><span data-ux-copy="lectureDeepText"></span></div></div></div></div><aside class="ldr-live-panel"><span class="ldr-conversion-eyebrow" data-ux-copy="freeTag"></span><h3 data-ux-copy="liveTitle"></h3><p data-ux-copy="liveLead"></p><div class="ldr-actions"><a class="btn" href="'+INSTAGRAM_URL+'" target="_blank" rel="noopener noreferrer" data-ux-copy="follow"></a><a class="btn btn-ghost" href="#inscricao" data-ux-copy="register"></a><a class="btn btn-ghost" href="'+GROUP_URL+'" target="_blank" rel="noopener noreferrer" data-ux-copy="group"></a></div></aside></div>';
+      form.parentNode.insertBefore(live,form);
+    }
+    if(!document.getElementById('ldrGroupCallout')){
+      var group=document.createElement('section');
+      group.id='ldrGroupCallout';group.className='ldr-group-callout';
+      group.innerHTML='<div class="ldr-conversion-shell"><div class="ldr-group-callout__card"><div><span class="ldr-conversion-eyebrow">WhatsApp</span><h2 data-ux-copy="groupTitle"></h2><p data-ux-copy="groupText"></p></div><div class="ldr-actions"><a class="btn" href="'+GROUP_URL+'" target="_blank" rel="noopener noreferrer" data-ux-copy="group"></a><a class="btn btn-ghost" style="color:#5c1724;border-color:rgba(92,23,36,.35)" href="'+INSTAGRAM_URL+'" target="_blank" rel="noopener noreferrer" data-ux-copy="follow"></a></div></div></div>';
+      form.insertAdjacentElement('afterend',group);
+    }
+  }
+  function addMobileActions(){
+    document.getElementById('ldrMobileBuybar')?.remove();
+    if(!document.getElementById('ldrProductsMobileBar')){
+      var products=document.createElement('nav');
+      products.id='ldrProductsMobileBar';products.className='ldr-mobile-actions';
+      products.setAttribute('aria-label','Ações rápidas de produtos');
+      products.innerHTML='<a class="btn" href="#comprar" data-ux-copy="buyNow"></a><a class="btn btn-ghost" href="#biblioteca" data-ux-copy="library"></a>';
+      document.body.appendChild(products);
+    }
+    if(!document.getElementById('ldrPalestraMobileBar')){
+      var lecture=document.createElement('nav');
+      lecture.id='ldrPalestraMobileBar';lecture.className='ldr-mobile-actions';
+      lecture.setAttribute('aria-label','Ações rápidas da palestra');
+      lecture.innerHTML='<a class="btn" href="#inscricao" data-ux-copy="register"></a><a class="btn btn-ghost" href="'+GROUP_URL+'" target="_blank" rel="noopener noreferrer" data-ux-copy="group"></a>';
+      document.body.appendChild(lecture);
+    }
+  }
+  function updateMode(){
+    var hash=location.hash.replace('#','');
+    var lecture=['palestra','sobre','detalhes','lancamentos','inscricao','lives'].includes(hash);
+    document.body.classList.toggle('ldr-mode-palestra',lecture);
+    document.body.classList.toggle('ldr-mode-products',!lecture);
+    document.querySelectorAll('[data-view-tab]').forEach(function(el){
+      var active=el.getAttribute('data-view-tab')===(lecture?'palestra':'products');
+      el.classList.toggle('is-active',active);
+      if(active)el.setAttribute('aria-current','page');else el.removeAttribute('aria-current');
+    });
+    applyCopy();
+  }
+  function init(){
+    document.getElementById('ldrLectureQuick')?.remove();
+    addTabs(document.getElementById('platformView'),'products');
+    addTabs(document.getElementById('palestraView'),'palestra');
+    addLectureSections();
+    addMobileActions();
+    applyCopy();
+    updateMode();
+    window.addEventListener('hashchange',function(){setTimeout(updateMode,0);});
+    window.addEventListener('luciano:languagechange',function(){setTimeout(applyCopy,0);});
+    document.getElementById('langBtn')?.addEventListener('click',function(){setTimeout(applyCopy,0);});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(init,20);},{once:true});
+  else setTimeout(init,20);
+})();
+</script>
 
 </body></html>
