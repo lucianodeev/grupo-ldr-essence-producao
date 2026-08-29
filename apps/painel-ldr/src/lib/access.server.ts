@@ -29,6 +29,19 @@ function timingSafeEqual(a: string, b: string): boolean {
   return diff === 0;
 }
 
+async function findAuthUserByEmail(email: string) {
+  // An e-mail may already exist in Auth because the person entered first with Google
+  // or used the client area. Reusing the same Auth user avoids duplicate-account errors.
+  for (let page = 1; page <= 10; page += 1) {
+    const { data, error } = await supabaseAdmin.auth.admin.listUsers({ page, perPage: 100 });
+    if (error) fail("Não foi possível verificar este e-mail.");
+    const match = data.users.find((user) => user.email?.toLowerCase() === email);
+    if (match) return match;
+    if (data.users.length < 100) break;
+  }
+  return null;
+}
+
 export async function writeAudit(input: {
   actorId: string | null;
   actorEmail: string | null;
@@ -160,31 +173,72 @@ export async function createCollaborator(
   if (input.password.length < 12) fail("A senha inicial deve ter ao menos 12 caracteres.");
 
   const email = input.email.trim().toLowerCase();
-  const { data: created, error } = await supabaseAdmin.auth.admin.createUser({
-    email,
-    password: input.password,
-    email_confirm: true,
-    user_metadata: { full_name: input.fullName },
-  });
-  if (error || !created.user) fail("Não foi possível criar este acesso.");
+  const fullName = input.fullName.trim();
+  if (!email || !fullName) fail("Informe nome e e-mail do colaborador.");
 
-  await supabaseAdmin.from("profiles").insert({
-    id: created.user.id,
-    email,
-    full_name: input.fullName,
-    is_active: true,
-  });
-  await supabaseAdmin.from("user_roles").insert({ user_id: created.user.id, role: input.role });
+  const existingAuthUser = await findAuthUserByEmail(email);
+  let targetId: string;
+  let reusedExistingAccount = false;
+
+  if (existingAuthUser) {
+    targetId = existingAuthUser.id;
+    reusedExistingAccount = true;
+
+    // The account may have been created previously through Google/client login.
+    // The superadmin is explicitly granting professional access now, so we keep the
+    // same Auth identity and set the requested initial password for professional login.
+    const { error: updateError } = await supabaseAdmin.auth.admin.updateUserById(targetId, {
+      password: input.password,
+      email_confirm: true,
+      user_metadata: {
+        ...(existingAuthUser.user_metadata ?? {}),
+        full_name: fullName,
+      },
+    });
+    if (updateError) fail("Não foi possível atualizar a conta existente.");
+  } else {
+    const { data: created, error } = await supabaseAdmin.auth.admin.createUser({
+      email,
+      password: input.password,
+      email_confirm: true,
+      user_metadata: { full_name: fullName },
+    });
+    if (error || !created.user) fail("Não foi possível criar este acesso.");
+    targetId = created.user.id;
+  }
+
+  const { error: profileError } = await supabaseAdmin.from("profiles").upsert(
+    {
+      id: targetId,
+      email,
+      full_name: fullName,
+      is_active: true,
+    },
+    { onConflict: "id" },
+  );
+  if (profileError) {
+    if (!reusedExistingAccount) await supabaseAdmin.auth.admin.deleteUser(targetId);
+    fail("Não foi possível concluir o perfil do colaborador.");
+  }
+
+  // A user must have one effective professional role. Remove stale roles before assigning.
+  const { error: clearRoleError } = await supabaseAdmin.from("user_roles").delete().eq("user_id", targetId);
+  if (clearRoleError) fail("Não foi possível atualizar a permissão deste colaborador.");
+
+  const { error: roleError } = await supabaseAdmin
+    .from("user_roles")
+    .insert({ user_id: targetId, role: input.role });
+  if (roleError) fail("Não foi possível concluir a permissão deste colaborador.");
 
   await writeAudit({
     actorId: userId,
     actorEmail: actor.email,
-    action: "access.user_created",
-    target: created.user.id,
-    details: { role: input.role },
+    action: reusedExistingAccount ? "access.existing_user_granted" : "access.user_created",
+    target: targetId,
+    details: { role: input.role, reusedExistingAccount },
   });
 
-  return { ok: true as const };
+  return { ok: true as const, reusedExistingAccount };
 }
 
 export async function setUserActive(
