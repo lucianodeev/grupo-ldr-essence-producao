@@ -5692,4 +5692,259 @@ body{background:#f7f2e8!important}
 })();
 </script>
 
+
+<!-- ldr-ux-cleanup-v3-20260829 -->
+<style id="ldr-ux-cleanup-v3-20260829">
+  /* Product cards: identical premium treatment and stronger readability. */
+  #platformView #comprar #priceCard,
+  #platformView #comprar #ldrBookSalesCard{
+    opacity:1!important;filter:none!important;
+    background:
+      radial-gradient(circle at 85% 0,rgba(226,183,95,.13),transparent 34%),
+      linear-gradient(145deg,#731a35 0%,#4b1024 50%,#270812 100%)!important;
+    border:1px solid rgba(226,183,95,.58)!important;
+    box-shadow:0 22px 55px rgba(10,3,7,.34),inset 0 1px 0 rgba(255,255,255,.06)!important;
+  }
+  #platformView #comprar #priceCard:hover,
+  #platformView #comprar #ldrBookSalesCard:hover{
+    border-color:rgba(244,209,137,.78)!important;
+    box-shadow:0 26px 64px rgba(10,3,7,.42),inset 0 1px 0 rgba(255,255,255,.08)!important;
+  }
+  #platformView #comprar .checkout-region-note{
+    background:rgba(13,4,9,.32)!important;border-color:rgba(226,183,95,.45)!important;
+    color:#fff0d2!important
+  }
+  #platformView #comprar .checkout-region-note :where(strong,b){color:#f5d890!important}
+  #platformView #comprar #ldrBookSalesCard .btn-ghost{
+    color:#fff0d2!important;border-color:rgba(226,183,95,.55)!important;background:rgba(255,255,255,.035)!important
+  }
+  #platformView #comprar .ldr-product-actions{display:grid;gap:10px;margin-top:12px}
+  #platformView #comprar .ldr-sample-button{
+    width:100%;min-height:48px;border-radius:999px;border:1px solid rgba(226,183,95,.65);
+    background:rgba(255,255,255,.035);color:#fff3da;font:inherit;font-weight:850;cursor:pointer;
+    transition:background .2s ease,border-color .2s ease,transform .2s ease
+  }
+  #platformView #comprar .ldr-sample-button:hover,
+  #platformView #comprar .ldr-sample-button:focus-visible{
+    background:rgba(226,183,95,.13);border-color:#e2b75f;outline:none;transform:translateY(-1px)
+  }
+
+  /* One green language for every available product status. */
+  #site .ldr-status-available{
+    background:rgba(46,204,113,.16)!important;color:#71e8a2!important;
+    border:1px solid rgba(46,204,113,.48)!important
+  }
+  #site .card-premium .tag.ldr-status-available{
+    display:inline-flex!important;align-items:center!important;justify-content:center!important;
+    box-shadow:0 0 0 1px rgba(46,204,113,.08)!important
+  }
+
+  /* Cleaner launch grids, with balanced cards and safe line wrapping. */
+  #platformLancamentos .lancamentos-grid,
+  #palestraView #lancamentos .lancamentos-grid{
+    max-width:1080px!important;margin-inline:auto!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:20px!important
+  }
+  #platformLancamentos .lancamento-card,
+  #palestraView #lancamentos .lancamento-card{
+    display:flex!important;flex-direction:column!important;align-items:center!important;
+    min-height:0!important;padding:clamp(24px,3vw,34px)!important;
+    background:
+      radial-gradient(circle at 85% 0,rgba(226,183,95,.1),transparent 36%),
+      linear-gradient(145deg,rgba(105,22,49,.96),rgba(44,9,21,.98))!important;
+    border:1px solid rgba(226,183,95,.42)!important;box-shadow:0 18px 42px rgba(10,3,7,.25)!important
+  }
+  #platformLancamentos .lancamento-card p,
+  #palestraView #lancamentos .lancamento-card p{max-width:48ch!important}
+  #platformLancamentos .lancamento-card .status,
+  #palestraView #lancamentos .lancamento-card .status{margin-top:auto!important}
+  #platformLancamentos .quote-box,
+  #palestraView #lancamentos .quote-box{
+    max-width:1080px!important;margin:26px auto 0!important;border-style:solid!important;
+    background:rgba(16,5,10,.22)!important;border-color:rgba(226,183,95,.28)!important
+  }
+
+  /* Public sample stays on the sales page; the full book remains protected. */
+  #ldrPublicSample[hidden]{display:none!important}
+  #ldrPublicSample{
+    display:block!important;padding:clamp(54px,8vw,88px) 18px!important;
+    background:linear-gradient(180deg,#f8f0df,#fffaf1)!important;color:#351d18!important
+  }
+  #ldrPublicSample .ldr-v3-wrap{max-width:900px!important;margin-inline:auto!important}
+  #ldrPublicSample .ldr-v3-reader{
+    max-height:min(58vh,620px);overflow:auto;padding:clamp(24px,5vw,46px)!important;
+    border:1px solid rgba(92,23,36,.16)!important;border-radius:24px!important;
+    background:#fffdf8!important;box-shadow:0 20px 48px rgba(63,30,20,.1)!important;
+    scrollbar-color:#c99a3d #f2e7d3
+  }
+  #ldrPublicSample .ldr-v3-reader p{font-size:clamp(1rem,1.7vw,1.12rem)!important;line-height:1.85!important}
+  #ldrPublicSample .ldr-v3-actions{
+    display:flex!important;flex-wrap:wrap!important;gap:12px!important;justify-content:center!important;margin-top:24px!important
+  }
+  #ldrPublicSample .ldr-v3-actions :where(button,a){
+    min-height:48px;padding:12px 20px;border-radius:999px;font:inherit;font-weight:850;cursor:pointer;text-decoration:none
+  }
+  #ldrPublicSample .ldr-sample-buy{border:0;background:linear-gradient(135deg,#e2b75f,#c99434);color:#25140c}
+  #ldrPublicSample .ldr-sample-close{border:1px solid rgba(92,23,36,.32);background:transparent;color:#5c1724}
+
+  /* A single, accessible language control matching the gold PT control. */
+  #palestraView .ldr-public-language-switcher{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip-path:inset(50%)!important}
+  #ldrLectureLanguage{
+    appearance:none;-webkit-appearance:none;min-width:74px;min-height:42px;padding:9px 30px 9px 14px;
+    border:1px solid rgba(244,209,137,.72);border-radius:999px;
+    background:#e2b75f linear-gradient(45deg,transparent 50%,#351d18 50%) calc(100% - 15px) 17px/6px 6px no-repeat;
+    color:#27150d;font:inherit;font-size:.78rem;font-weight:900;letter-spacing:.04em;cursor:pointer
+  }
+  #ldrLectureLanguage:focus-visible{outline:3px solid rgba(226,183,95,.3);outline-offset:3px}
+
+  /* Lighter live presentation: content once, actions once. */
+  #lives .ldr-live-panel{align-self:stretch;display:flex;flex-direction:column;justify-content:center}
+  #lives .ldr-live-panel h3{font-size:clamp(1.55rem,3vw,2.25rem)!important;line-height:1.12!important}
+  #lives .ldr-live-panel p{font-size:.98rem!important;line-height:1.65!important}
+  #ldrLectureCta .btn-ghost{color:#5c1724!important;border-color:rgba(92,23,36,.36)!important;background:transparent!important}
+
+  @media(max-width:760px){
+    #platformLancamentos .lancamentos-grid,
+    #palestraView #lancamentos .lancamentos-grid{grid-template-columns:1fr!important;gap:15px!important}
+    #platformLancamentos .lancamento-card,
+    #palestraView #lancamentos .lancamento-card{padding:24px 20px!important}
+    #palestraView header nav{display:grid!important;grid-template-columns:1fr auto!important;gap:9px!important;align-items:center!important}
+    #palestraView header nav>.ldr-view-tabs{grid-column:1/-1!important}
+    #palestraView header nav>a:not(.btn){display:none!important}
+    #palestraView header nav>.btn{display:none!important}
+    #ldrLectureLanguage{grid-column:2!important;grid-row:2!important;justify-self:end!important}
+    .ldr-mobile-actions{left:12px!important;right:12px!important;bottom:max(12px,env(safe-area-inset-bottom))!important}
+    .ldr-mobile-actions a{min-width:0!important;overflow-wrap:anywhere!important;line-height:1.15!important}
+    .ldr-floating{
+      right:12px!important;bottom:calc(84px + env(safe-area-inset-bottom))!important;
+      gap:6px!important;z-index:9992!important
+    }
+    .ldr-floating .whatsapp{display:none!important}
+    .ldr-floating .client{
+      min-height:38px!important;padding:9px 13px!important;font-size:.72rem!important;
+      box-shadow:0 10px 28px rgba(0,0,0,.28)!important
+    }
+    #platformView footer,#palestraView footer{padding-bottom:112px!important}
+    #ldrPublicSample{padding-inline:13px!important}
+    #ldrPublicSample .ldr-v3-reader{max-height:62vh;padding:22px 18px!important;border-radius:18px!important}
+    #ldrPublicSample .ldr-v3-actions{display:grid!important;grid-template-columns:1fr!important}
+    #ldrPublicSample .ldr-v3-actions :where(button,a){width:100%!important;text-align:center!important}
+  }
+  @media(max-width:390px){
+    #ldrProductsMobileBar,#ldrPalestraMobileBar{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important}
+    .ldr-mobile-actions a{font-size:.7rem!important;padding-inline:7px!important}
+    .ldr-floating .client{font-size:.68rem!important}
+  }
+</style>
+<script>
+(function(){
+  'use strict';
+  var sampleCopy={
+    pt:{sample:'Ler amostra grátis',sampleTag:'AMOSTRA GRÁTIS · EBOOK',sampleTitle:'Leia gratuitamente o primeiro capítulo',sampleSub:'Conheça o início da história antes de comprar o conteúdo completo.',sampleBuy:'Comprar o eBook completo',close:'Fechar amostra',available:'Já disponível',liveAction:'Participe da próxima live',liveActionText:'Siga Luciano no Instagram, receba os avisos e garanta também sua inscrição gratuita na palestra.'},
+    en:{sample:'Read free sample',sampleTag:'FREE SAMPLE · EBOOK',sampleTitle:'Read the first chapter for free',sampleSub:'Discover how the story begins before purchasing the complete content.',sampleBuy:'Buy the complete eBook',close:'Close sample',available:'Available now',liveAction:'Join the next live',liveActionText:'Follow Luciano on Instagram, receive updates and reserve your free place at the lecture.'},
+    fr:{sample:'Lire un extrait gratuit',sampleTag:'EXTRAIT GRATUIT · EBOOK',sampleTitle:'Lisez gratuitement le premier chapitre',sampleSub:'Découvrez le début de l’histoire avant d’acheter le contenu complet.',sampleBuy:'Acheter l’eBook complet',close:'Fermer l’extrait',available:'Déjà disponible',liveAction:'Participez au prochain live',liveActionText:'Suivez Luciano sur Instagram, recevez les actualités et réservez votre place gratuite à la conférence.'},
+    es:{sample:'Leer muestra gratis',sampleTag:'MUESTRA GRATIS · EBOOK',sampleTitle:'Lee gratis el primer capítulo',sampleSub:'Descubre el inicio de la historia antes de comprar el contenido completo.',sampleBuy:'Comprar el eBook completo',close:'Cerrar muestra',available:'Ya disponible',liveAction:'Participa en el próximo live',liveActionText:'Sigue a Luciano en Instagram, recibe los avisos y reserva también tu plaza gratuita en la conferencia.'}
+  };
+  function selectedLanguage(){
+    var active=document.querySelector('#palestraView .ldr-public-lang-button.active,#palestraView .ldr-public-lang-button[aria-pressed="true"]');
+    if(active&&sampleCopy[active.getAttribute('data-lang')])return active.getAttribute('data-lang');
+    var saved='';
+    try{saved=localStorage.getItem('luciano.public.locale.v2')||localStorage.getItem('lucianoLang')||''}catch(e){}
+    saved=String(saved).toLowerCase().slice(0,2);
+    return sampleCopy[saved]?saved:'pt';
+  }
+  function applyCleanCopy(){
+    var code=selectedLanguage(),dict=sampleCopy[code]||sampleCopy.pt;
+    document.querySelectorAll('[data-clean-copy]').forEach(function(el){
+      var key=el.getAttribute('data-clean-copy');if(dict[key])el.textContent=dict[key];
+    });
+    var select=document.getElementById('ldrLectureLanguage');if(select&&select.value!==code)select.value=code;
+  }
+  function openPublicSample(){
+    var section=document.getElementById('ldrPublicSample');
+    if(!section)return;
+    section.hidden=false;section.setAttribute('aria-hidden','false');
+    applyCleanCopy();
+    setTimeout(function(){section.scrollIntoView({behavior:'smooth',block:'start'})},20);
+  }
+  function closePublicSample(){
+    var section=document.getElementById('ldrPublicSample');
+    if(section){section.hidden=true;section.setAttribute('aria-hidden','true')}
+    var card=document.getElementById('priceCard');
+    if(card)setTimeout(function(){card.scrollIntoView({behavior:'smooth',block:'center'})},20);
+  }
+  window.openPublicSample=openPublicSample;
+  window.closePublicSample=closePublicSample;
+
+  function moveSampleToProducts(){
+    var sample=document.getElementById('amostra-gratis-ebook');
+    var offer=document.getElementById('comprar');
+    if(!sample||!offer)return;
+    sample.id='ldrPublicSample';sample.hidden=true;sample.setAttribute('aria-hidden','true');
+    offer.insertAdjacentElement('afterend',sample);
+    var badge=sample.querySelector('.ldr-v3-badge');if(badge)badge.setAttribute('data-clean-copy','sampleTag');
+    var title=sample.querySelector('#sample-title');if(title)title.setAttribute('data-clean-copy','sampleTitle');
+    var sub=sample.querySelector('.ldr-v3-sub');if(sub)sub.setAttribute('data-clean-copy','sampleSub');
+    var actions=sample.querySelector('.ldr-v3-actions');
+    if(actions){
+      actions.innerHTML='<button type="button" class="ldr-sample-buy" data-clean-copy="sampleBuy"></button><button type="button" class="ldr-sample-close" data-clean-copy="close"></button>';
+      actions.querySelector('.ldr-sample-buy').addEventListener('click',function(){
+        var buy=document.getElementById('dynamicBuyBtn');if(buy)buy.click();
+      });
+      actions.querySelector('.ldr-sample-close').addEventListener('click',closePublicSample);
+    }
+  }
+  function addSampleButton(){
+    var card=document.getElementById('priceCard'),buy=document.getElementById('dynamicBuyBtn');
+    if(!card||!buy||card.querySelector('.ldr-sample-button'))return;
+    var button=document.createElement('button');
+    button.type='button';button.className='ldr-sample-button';button.setAttribute('data-clean-copy','sample');
+    buy.insertAdjacentElement('afterend',button);button.addEventListener('click',openPublicSample);
+    document.querySelectorAll('#platformView [onclick*="openDemo"],#palestraView [onclick*="openDemo"]').forEach(function(el){
+      el.removeAttribute('onclick');el.addEventListener('click',function(event){event.preventDefault();openPublicSample()});
+    });
+  }
+  function normalizeAvailability(){
+    document.querySelectorAll('#platformLancamentos .status,#palestraView #lancamentos .status').forEach(function(el){
+      if(/dispon|available|disponible/i.test(el.textContent||''))el.classList.add('ldr-status-available');
+    });
+    var tag=document.querySelector('#ldrBookSalesCard .tag');
+    if(tag){tag.classList.add('ldr-status-available');tag.setAttribute('data-clean-copy','available')}
+  }
+  function addLectureLanguageSelect(){
+    var nav=document.querySelector('#palestraView header nav');
+    var switcher=nav&&nav.querySelector('.ldr-public-language-switcher');
+    if(!nav||!switcher||document.getElementById('ldrLectureLanguage'))return;
+    var select=document.createElement('select');
+    select.id='ldrLectureLanguage';select.setAttribute('aria-label','Idioma');
+    select.innerHTML='<option value="pt">PT</option><option value="fr">FR</option><option value="en">EN</option><option value="es">ES</option>';
+    switcher.insertAdjacentElement('afterend',select);
+    select.addEventListener('change',function(){
+      var button=switcher.querySelector('[data-lang="'+select.value+'"]');if(button)button.click();
+      setTimeout(applyCleanCopy,30);
+    });
+    var observer=new MutationObserver(function(){applyCleanCopy()});
+    switcher.querySelectorAll('[data-lang]').forEach(function(button){observer.observe(button,{attributes:true,attributeFilter:['class','aria-pressed']})});
+  }
+  function simplifyLivePanel(){
+    var panel=document.querySelector('#lives .ldr-live-panel');
+    if(!panel)return;
+    var title=panel.querySelector('h3'),text=panel.querySelector('p');
+    if(title)title.setAttribute('data-clean-copy','liveAction');
+    if(text)text.setAttribute('data-clean-copy','liveActionText');
+  }
+  function initCleanups(){
+    moveSampleToProducts();
+    addLectureLanguageSelect();
+    setTimeout(function(){
+      addSampleButton();normalizeAvailability();simplifyLivePanel();applyCleanCopy();
+    },35);
+    window.addEventListener('luciano:languagechange',function(){setTimeout(applyCleanCopy,20)});
+    window.addEventListener('ldr:languagechange',function(){setTimeout(applyCleanCopy,20)});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initCleanups,{once:true});
+  else initCleanups();
+})();
+</script>
+
 </body></html>
