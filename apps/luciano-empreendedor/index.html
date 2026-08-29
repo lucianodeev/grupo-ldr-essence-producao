@@ -6215,4 +6215,283 @@ body{background:#f7f2e8!important}
 })();
 </script>
 
-</body></html>
+
+<!-- ldr-reader-experience-v1-20260829 -->
+<style>
+#platformView #site #ldrPublicSample .ldr-v3-reader {
+  --reader-ink: #321b17;
+  overflow: hidden !important;
+  padding: 0 !important;
+  border: 1px solid rgba(190, 137, 47, .42) !important;
+  box-shadow: 0 24px 70px rgba(19, 4, 8, .30) !important;
+}
+#platformView #site #ldrPublicSample .ldr-v3-reader .ldr-reader-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 14px clamp(16px, 3vw, 28px) !important;
+  border-bottom: 1px solid rgba(111, 71, 35, .20);
+  background: rgba(255, 250, 237, .96) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+#platformView #site #ldrPublicSample .ldr-v3-reader .ldr-reader-book {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+  color: #3a211b !important;
+}
+#platformView #site #ldrPublicSample .ldr-v3-reader .ldr-reader-book strong {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1rem, 2vw, 1.12rem);
+  line-height: 1.15;
+}
+#platformView #site #ldrPublicSample .ldr-v3-reader .ldr-reader-book span {
+  color: #765e52 !important;
+  font-size: .78rem;
+  line-height: 1.3;
+}
+#platformView #site #ldrPublicSample .ldr-v3-reader .ldr-reader-tools {
+  display: flex !important;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px !important;
+  flex: 0 0 auto;
+}
+#platformView #site #ldrPublicSample .ldr-v3-reader .ldr-reader-tools-label {
+  margin-right: 2px;
+  color: #6c5146;
+  font-size: .76rem;
+  font-weight: 800;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+#platformView #site #ldrPublicSample .ldr-v3-reader .ldr-reader-tool {
+  appearance: none;
+  display: inline-grid !important;
+  place-items: center;
+  width: 46px !important;
+  min-width: 46px !important;
+  height: 42px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 1px solid rgba(104, 62, 36, .27) !important;
+  border-radius: 13px !important;
+  background: rgba(255, 255, 255, .75) !important;
+  color: #321b17 !important;
+  box-shadow: 0 4px 12px rgba(46, 22, 16, .08);
+  font: 800 .95rem/1 system-ui, sans-serif !important;
+  cursor: pointer;
+  transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
+}
+#platformView #site #ldrPublicSample .ldr-v3-reader .ldr-reader-tool:hover {
+  transform: translateY(-1px);
+  border-color: rgba(190, 137, 47, .75) !important;
+  box-shadow: 0 7px 18px rgba(46, 22, 16, .13);
+}
+#platformView #site #ldrPublicSample .ldr-v3-reader .ldr-reader-tool:focus-visible,
+#platformView #site #ldrPublicSample .ldr-v3-reader .ldr-reader-nav button:focus-visible {
+  outline: 3px solid rgba(226, 183, 95, .78) !important;
+  outline-offset: 3px;
+}
+#platformView #site #ldrPublicSample .ldr-v3-reader .ldr-reader-tool[aria-pressed="true"] {
+  border-color: #c99636 !important;
+  background: #dcae50 !important;
+  color: #25110d !important;
+}
+#platformView #site #ldrPublicSample .ldr-v3-reader .ldr-reader-status {
+  display: block;
+  padding: 9px clamp(18px, 4vw, 36px) 0;
+  color: #765e52;
+  font-size: .78rem;
+  font-weight: 700;
+  text-align: right;
+}
+#platformView #site #ldrPublicSample .ldr-v3-reader .ldr-reader-content {
+  width: min(100%, 76ch) !important;
+  margin: 0 auto !important;
+  padding: clamp(28px, 5vw, 56px) clamp(20px, 5vw, 58px) clamp(24px, 4vw, 42px) !important;
+}
+#platformView #site #ldrPublicSample .ldr-v3-reader .ldr-reader-content .ldr-sample-page p {
+  max-width: 68ch;
+  margin-inline: auto;
+  color: var(--reader-ink) !important;
+  font-size: var(--sample-font, 19px) !important;
+  line-height: 1.82 !important;
+  letter-spacing: .006em;
+  overflow-wrap: break-word;
+  text-wrap: pretty;
+}
+#platformView #site #ldrPublicSample .ldr-v3-reader .ldr-reader-content .ldr-sample-page h3 {
+  color: #4a1f22 !important;
+  font-size: clamp(1.8rem, 5vw, 3rem) !important;
+  line-height: 1.08 !important;
+  text-wrap: balance;
+}
+#platformView #site #ldrPublicSample .ldr-v3-reader .ldr-reader-progress {
+  height: 5px !important;
+  background: rgba(83, 46, 32, .12) !important;
+}
+#platformView #site #ldrPublicSample .ldr-v3-reader .ldr-reader-progress > span {
+  background: linear-gradient(90deg, #b77828, #e2b75f) !important;
+}
+#platformView #site #ldrPublicSample .ldr-v3-reader .ldr-reader-footer {
+  padding: 14px clamp(16px, 3vw, 28px) 18px !important;
+  border-top: 1px solid rgba(111, 71, 35, .16);
+  background: rgba(255, 250, 237, .88);
+}
+#platformView #site #ldrPublicSample .ldr-v3-reader .ldr-reader-nav {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 12px !important;
+}
+#platformView #site #ldrPublicSample .ldr-v3-reader .ldr-reader-nav button {
+  min-height: 44px;
+  border-radius: 999px !important;
+}
+#platformView #site #ldrPublicSample .ldr-v3-reader .ldr-reader-nav button:last-child {
+  justify-self: end;
+}
+#platformView #site #ldrPublicSample .ldr-v3-reader.ldr-reader-dark {
+  --reader-ink: #f4e8d7;
+  background: linear-gradient(145deg, #241c1f 0%, #110c0e 100%) !important;
+  color: #f4e8d7 !important;
+  border-color: rgba(226, 183, 95, .55) !important;
+}
+#platformView #site #ldrPublicSample .ldr-v3-reader.ldr-reader-dark .ldr-reader-topbar,
+#platformView #site #ldrPublicSample .ldr-v3-reader.ldr-reader-dark .ldr-reader-footer {
+  background: rgba(28, 20, 22, .96) !important;
+  border-color: rgba(226, 183, 95, .22) !important;
+}
+#platformView #site #ldrPublicSample .ldr-v3-reader.ldr-reader-dark .ldr-reader-book,
+#platformView #site #ldrPublicSample .ldr-v3-reader.ldr-reader-dark .ldr-reader-book span,
+#platformView #site #ldrPublicSample .ldr-v3-reader.ldr-reader-dark .ldr-reader-status {
+  color: #dbcdbd !important;
+}
+#platformView #site #ldrPublicSample .ldr-v3-reader.ldr-reader-dark .ldr-reader-content .ldr-sample-page h3,
+#platformView #site #ldrPublicSample .ldr-v3-reader.ldr-reader-dark .ldr-reader-content .ldr-sample-page p {
+  color: #f4e8d7 !important;
+}
+#platformView #site #ldrPublicSample .ldr-v3-reader.ldr-reader-dark .ldr-v3-chapter-label {
+  color: #e2b75f !important;
+}
+#platformView #site #ldrPublicSample .ldr-v3-reader.ldr-reader-dark .ldr-reader-tool {
+  border-color: rgba(226, 183, 95, .32) !important;
+  background: rgba(255, 255, 255, .07) !important;
+  color: #f4e8d7 !important;
+}
+#platformView #site #ldrPublicSample .ldr-v3-reader.ldr-reader-dark .ldr-reader-tool[aria-pressed="true"] {
+  background: #dcae50 !important;
+  color: #25110d !important;
+}
+#platformView #site #ldrPublicSample .ldr-v3-reader.ldr-reader-dark .ldr-reader-progress {
+  background: rgba(255, 255, 255, .13) !important;
+}
+@media (max-width: 640px) {
+  #platformView #site #ldrPublicSample .ldr-v3-reader .ldr-reader-topbar {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+  #platformView #site #ldrPublicSample .ldr-v3-reader .ldr-reader-tools {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  #platformView #site #ldrPublicSample .ldr-v3-reader .ldr-reader-tools-label {
+    margin-right: auto;
+  }
+  #platformView #site #ldrPublicSample .ldr-v3-reader .ldr-reader-status {
+    padding-top: 8px;
+    text-align: left;
+  }
+  #platformView #site #ldrPublicSample .ldr-v3-reader .ldr-reader-content {
+    padding-inline: 20px !important;
+  }
+  #platformView #site #ldrPublicSample .ldr-v3-reader .ldr-reader-nav {
+    grid-template-columns: 1fr 1fr;
+  }
+  #platformView #site #ldrPublicSample .ldr-v3-reader .ldr-reader-page-indicator {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    text-align: center;
+  }
+  #platformView #site #ldrPublicSample .ldr-v3-reader .ldr-reader-nav button {
+    grid-row: 2;
+    width: 100%;
+  }
+}
+</style>
+<script>
+(function enhancePublicSampleReader(){
+  var dictionary = {
+    pt: { label: 'Leitura', text: 'Texto', light: 'Modo claro', dark: 'Modo escuro', smaller: 'Diminuir o texto', larger: 'Aumentar o texto', theme: 'Alternar modo claro e escuro' },
+    en: { label: 'Reading', text: 'Text', light: 'Light mode', dark: 'Dark mode', smaller: 'Decrease text size', larger: 'Increase text size', theme: 'Switch light and dark mode' },
+    fr: { label: 'Lecture', text: 'Texte', light: 'Mode clair', dark: 'Mode sombre', smaller: 'Réduire le texte', larger: 'Agrandir le texte', theme: 'Alterner le mode clair et sombre' },
+    es: { label: 'Lectura', text: 'Texto', light: 'Modo claro', dark: 'Modo oscuro', smaller: 'Disminuir el texto', larger: 'Aumentar el texto', theme: 'Alternar modo claro y oscuro' }
+  };
+  function currentLanguage(){
+    var active = document.querySelector('[data-lang].active, [data-lang][aria-current="true"]');
+    var value = (active && active.getAttribute('data-lang')) || document.documentElement.lang || 'pt';
+    value = value.toLowerCase().slice(0, 2);
+    return dictionary[value] ? value : 'pt';
+  }
+  function enhance(){
+    var reader = document.querySelector('#ldrPublicSample .ldr-v3-reader');
+    if (!reader || reader.dataset.readerExperience === 'ready') return false;
+    var topbar = reader.querySelector('.ldr-reader-topbar');
+    var tools = reader.querySelector('.ldr-reader-tools');
+    if (!topbar || !tools) return false;
+    reader.dataset.readerExperience = 'ready';
+    var label = document.createElement('span');
+    label.className = 'ldr-reader-tools-label';
+    tools.insertBefore(label, tools.firstChild);
+    var status = document.createElement('span');
+    status.className = 'ldr-reader-status';
+    status.setAttribute('aria-live', 'polite');
+    topbar.insertAdjacentElement('afterend', status);
+    var smaller = tools.querySelector('[data-reader-action="smaller"]');
+    var larger = tools.querySelector('[data-reader-action="larger"]');
+    var theme = tools.querySelector('[data-reader-action="theme"]');
+    function update(){
+      var copy = dictionary[currentLanguage()];
+      var font = reader.style.getPropertyValue('--sample-font').trim() || '19px';
+      var dark = reader.classList.contains('ldr-reader-dark');
+      label.textContent = copy.label;
+      status.textContent = copy.text + ' ' + font + ' · ' + (dark ? copy.dark : copy.light);
+      if (smaller) { smaller.title = copy.smaller; smaller.setAttribute('aria-label', copy.smaller); }
+      if (larger) { larger.title = copy.larger; larger.setAttribute('aria-label', copy.larger); }
+      if (theme) {
+        theme.title = copy.theme;
+        theme.setAttribute('aria-label', copy.theme);
+        theme.setAttribute('aria-pressed', dark ? 'true' : 'false');
+      }
+    }
+    tools.addEventListener('click', function(event){
+      if (event.target.closest('[data-reader-action]')) window.setTimeout(update, 0);
+    });
+    document.addEventListener('click', function(event){
+      if (event.target.closest('[data-lang]')) window.setTimeout(update, 0);
+    });
+    update();
+    return true;
+  }
+  function start(){
+    if (enhance()) return;
+    var attempts = 0;
+    var timer = window.setInterval(function(){
+      attempts += 1;
+      if (enhance() || attempts > 40) window.clearInterval(timer);
+    }, 250);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+  else start();
+})();
+</script>
+
+</body>
+</html>
