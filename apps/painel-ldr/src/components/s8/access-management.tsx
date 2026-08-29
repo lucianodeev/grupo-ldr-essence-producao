@@ -29,14 +29,18 @@ export function AccessManagement() {
 
   const createMutation = useMutation({
     mutationFn: () => create({ data: { email, fullName, password, role } }),
-    onSuccess: () => {
-      toast.success("Acesso criado.");
+    onSuccess: (result) => {
+      toast.success(
+        result.reusedExistingAccount
+          ? "Conta existente vinculada ao painel profissional."
+          : "Colaborador cadastrado com sucesso.",
+      );
       setEmail("");
       setFullName("");
       setPassword("");
       refresh();
     },
-    onError: (error: Error) => toast.error(error.message || "Não foi possível criar o acesso."),
+    onError: (error: Error) => toast.error(error.message || "Não foi possível cadastrar o colaborador."),
   });
 
   const toggleMutation = useMutation({
@@ -58,16 +62,20 @@ export function AccessManagement() {
   });
 
   return (
-    <div className="space-y-4">
-      <section className="s8-card">
-        <h2 className="font-serif text-2xl">Gestão de acessos</h2>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Cada pessoa deve usar a própria conta. Defina uma senha inicial forte e peça a troca no
-          primeiro acesso, pela opção “Esqueci minha senha”.
-        </p>
+    <div className="space-y-5">
+      <section className="s8-card overflow-hidden">
+        <div className="rounded-xl border border-primary/10 bg-primary/5 p-4">
+          <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">
+            Cadastro de colaborador
+          </p>
+          <h2 className="mt-1 font-serif text-2xl">Adicionar uma pessoa à equipe</h2>
+          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-muted-foreground">
+            Use o e-mail real do colaborador. Se esse e-mail já tiver entrado na Área do Cliente ou pelo Google, a mesma conta será vinculada ao painel profissional — não será criada uma conta duplicada.
+          </p>
+        </div>
 
         <form
-          className="mt-4 grid gap-3 sm:grid-cols-2"
+          className="mt-5 grid gap-4 sm:grid-cols-2"
           onSubmit={(e) => {
             e.preventDefault();
             createMutation.mutate();
@@ -75,12 +83,14 @@ export function AccessManagement() {
         >
           <div>
             <label className="s8-label" htmlFor="new-email">
-              E-mail
+              E-mail do colaborador
             </label>
             <input
               id="new-email"
               type="email"
+              autoComplete="email"
               required
+              placeholder="nome@empresa.com"
               className="s8-field"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -93,6 +103,8 @@ export function AccessManagement() {
             <input
               id="new-name"
               required
+              autoComplete="name"
+              placeholder="Nome e sobrenome"
               className="s8-field"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
@@ -100,7 +112,7 @@ export function AccessManagement() {
           </div>
           <div>
             <label className="s8-label" htmlFor="new-password">
-              Senha inicial (mín. 12 caracteres)
+              Senha inicial
             </label>
             <input
               id="new-password"
@@ -108,14 +120,18 @@ export function AccessManagement() {
               autoComplete="new-password"
               required
               minLength={12}
+              placeholder="Mínimo de 12 caracteres"
               className="s8-field"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            <p className="mt-1 text-xs text-muted-foreground">
+              A senha não fica visível no painel. O colaborador poderá redefini-la depois pelo fluxo de recuperação de acesso.
+            </p>
           </div>
           <div>
             <label className="s8-label" htmlFor="new-role">
-              Perfil
+              Nível de acesso
             </label>
             <select
               id="new-role"
@@ -123,57 +139,68 @@ export function AccessManagement() {
               value={role}
               onChange={(e) => setRole(e.target.value as AppRole)}
             >
-              <option value="colaborador">Colaborador</option>
-              <option value="superadmin">Superadmin</option>
+              <option value="colaborador">Colaborador — operação</option>
+              <option value="superadmin">Superadmin — acesso total</option>
             </select>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Para a equipe comum, mantenha “Colaborador”. Use Superadmin somente para quem realmente precisa administrar acessos.
+            </p>
           </div>
           <div className="sm:col-span-2">
             <button
               type="submit"
               disabled={createMutation.isPending}
-              className="rounded-lg bg-primary px-5 py-3 font-bold text-primary-foreground disabled:opacity-60"
+              className="inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-primary px-5 py-3 font-extrabold text-primary-foreground shadow-sm transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
             >
-              {createMutation.isPending ? "Criando…" : "Cadastrar acesso"}
+              {createMutation.isPending ? "Cadastrando…" : "Cadastrar colaborador"}
             </button>
           </div>
         </form>
       </section>
 
       <section className="s8-card">
-        <h3 className="font-serif text-xl">Pessoas com acesso</h3>
-        <div className="mt-3 overflow-x-auto">
+        <div className="flex flex-wrap items-end justify-between gap-2">
+          <div>
+            <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">Equipe</p>
+            <h3 className="mt-1 font-serif text-xl">Pessoas com acesso</h3>
+          </div>
+          <span className="rounded-full bg-accent px-3 py-1 text-xs font-bold text-accent-foreground">
+            {(users.data ?? []).length} {(users.data ?? []).length === 1 ? "acesso" : "acessos"}
+          </span>
+        </div>
+        <div className="mt-4 overflow-x-auto rounded-xl border border-border/70">
           <table className="w-full min-w-[640px] text-left text-sm">
-            <thead className="text-xs uppercase text-muted-foreground">
+            <thead className="bg-muted/40 text-xs uppercase text-muted-foreground">
               <tr>
-                <th className="py-2">Nome</th>
-                <th className="py-2">E-mail</th>
-                <th className="py-2">Perfil</th>
-                <th className="py-2">Situação</th>
-                <th className="py-2">Ações</th>
+                <th className="px-3 py-3">Nome</th>
+                <th className="px-3 py-3">E-mail</th>
+                <th className="px-3 py-3">Perfil</th>
+                <th className="px-3 py-3">Situação</th>
+                <th className="px-3 py-3">Ações</th>
               </tr>
             </thead>
             <tbody>
               {(users.data ?? []).map((u) => (
-                <tr key={u.id} className="border-t border-border">
-                  <td className="py-2">{u.fullName ?? "—"}</td>
-                  <td className="py-2">{u.email}</td>
-                  <td className="py-2">{u.role ?? "sem perfil"}</td>
-                  <td className="py-2">
+                <tr key={u.id} className="border-t border-border hover:bg-muted/20">
+                  <td className="px-3 py-3 font-semibold">{u.fullName ?? "—"}</td>
+                  <td className="px-3 py-3">{u.email}</td>
+                  <td className="px-3 py-3">{u.role ?? "sem perfil"}</td>
+                  <td className="px-3 py-3">
                     <span
-                      className="rounded-full px-2 py-1 text-xs font-bold"
+                      className="rounded-full px-2.5 py-1 text-xs font-bold"
                       style={{
                         background: u.isActive ? "var(--gold-soft)" : "var(--muted)",
                         color: u.isActive ? "var(--accent-foreground)" : "var(--muted-foreground)",
                       }}
                     >
-                      {u.isActive ? "ativo" : "inativo"}
+                      {u.isActive ? "Ativo" : "Inativo"}
                     </span>
                   </td>
-                  <td className="py-2">
+                  <td className="px-3 py-3">
                     <div className="flex flex-wrap gap-2">
                       <button
                         type="button"
-                        className="rounded-md border border-border px-3 py-1 text-xs font-bold text-primary"
+                        className="rounded-lg border border-border px-3 py-2 text-xs font-bold text-primary transition hover:bg-accent"
                         onClick={() =>
                           toggleMutation.mutate({ targetId: u.id, isActive: !u.isActive })
                         }
@@ -182,7 +209,7 @@ export function AccessManagement() {
                       </button>
                       <button
                         type="button"
-                        className="rounded-md px-3 py-1 text-xs font-bold text-destructive-foreground"
+                        className="rounded-lg px-3 py-2 text-xs font-bold text-destructive-foreground transition hover:opacity-90"
                         style={{ background: "var(--destructive)" }}
                         onClick={() => {
                           if (window.confirm("Remover definitivamente o acesso desta pessoa?")) {
@@ -202,10 +229,14 @@ export function AccessManagement() {
       </section>
 
       <section className="s8-card">
-        <h3 className="font-serif text-xl">Registros de auditoria</h3>
-        <ul className="mt-3 space-y-1 text-sm">
+        <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">Segurança</p>
+        <h3 className="mt-1 font-serif text-xl">Registros de auditoria</h3>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Histórico das alterações de acesso para facilitar conferência e rastreabilidade.
+        </p>
+        <ul className="mt-4 space-y-2 text-sm">
           {(logs.data ?? []).map((log) => (
-            <li key={log.id} className="border-b border-border py-1">
+            <li key={log.id} className="rounded-lg border border-border/60 px-3 py-2">
               <span className="font-semibold">{log.action}</span>{" "}
               <span className="text-muted-foreground">
                 — {log.actor_email ?? "—"} • {new Date(log.created_at).toLocaleString("pt-BR")}
