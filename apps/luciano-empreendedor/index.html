@@ -6220,11 +6220,45 @@ body{background:#f7f2e8!important}
 <style>
 #platformView #site #ldrPublicSample .ldr-v3-reader {
   --reader-ink: #321b17;
-  overflow: hidden !important;
+  max-height: min(78vh, 820px) !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  overscroll-behavior-y: contain;
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(183, 120, 40, .78) rgba(76, 38, 30, .12);
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
   padding: 0 !important;
   border: 1px solid rgba(190, 137, 47, .42) !important;
   box-shadow: 0 24px 70px rgba(19, 4, 8, .30) !important;
 }
+
+#platformView #site #ldrPublicSample .ldr-v3-reader::-webkit-scrollbar {
+  width: 10px;
+}
+#platformView #site #ldrPublicSample .ldr-v3-reader::-webkit-scrollbar-track {
+  background: rgba(76, 38, 30, .10);
+}
+#platformView #site #ldrPublicSample .ldr-v3-reader::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: linear-gradient(#dcae50, #a96825) padding-box;
+}
+#platformView #site #ldrPublicSample .ldr-v3-reader .ldr-sample-page {
+  display: none !important;
+  animation: ldrReaderPageIn .24s ease both;
+}
+#platformView #site #ldrPublicSample .ldr-v3-reader .ldr-sample-page.is-active {
+  display: block !important;
+}
+@keyframes ldrReaderPageIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 #platformView #site #ldrPublicSample .ldr-v3-reader .ldr-reader-topbar {
   position: sticky;
   top: 0;
@@ -6393,6 +6427,10 @@ body{background:#f7f2e8!important}
   background: rgba(255, 255, 255, .13) !important;
 }
 @media (max-width: 640px) {
+  #platformView #site #ldrPublicSample .ldr-v3-reader {
+    max-height: 80svh !important;
+    scroll-padding-top: 150px;
+  }
   #platformView #site #ldrPublicSample .ldr-v3-reader .ldr-reader-topbar {
     align-items: flex-start;
     flex-direction: column;
