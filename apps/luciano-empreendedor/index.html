@@ -5947,4 +5947,164 @@ body{background:#f7f2e8!important}
 })();
 </script>
 
+
+<!-- ldr-visual-polish-v4-20260829 -->
+<style id="ldr-visual-polish-v4-20260829">
+  /* Give the two product actions distinct priority and breathing room. */
+  #platformView #priceCard #dynamicBuyBtn{margin-bottom:0!important}
+  #platformView #priceCard .ldr-sample-button{
+    display:flex!important;align-items:center!important;justify-content:center!important;
+    margin-top:14px!important;min-height:50px!important;
+    background:rgba(28,7,15,.72)!important;color:#fff2d8!important;
+    border:1px solid rgba(226,183,95,.68)!important;
+    box-shadow:none!important
+  }
+  #platformView #priceCard .ldr-sample-button:hover,
+  #platformView #priceCard .ldr-sample-button:focus-visible{
+    background:rgba(226,183,95,.12)!important;color:#fff8e9!important;
+    border-color:#f0cc7f!important
+  }
+
+  /* The free preview now uses the same wine/gold identity instead of white. */
+  #ldrPublicSample{
+    background:
+      radial-gradient(circle at 80% 0,rgba(226,183,95,.12),transparent 34%),
+      linear-gradient(145deg,#4c1024 0%,#270811 58%,#17050b 100%)!important;
+    color:#f8eedc!important;border-top:1px solid rgba(226,183,95,.34)!important;
+    border-bottom:1px solid rgba(226,183,95,.24)!important
+  }
+  #ldrPublicSample :where(.ldr-v3-eyebrow,h2,.ldr-v3-sub){color:#f8eedc!important}
+  #ldrPublicSample h2{font-size:clamp(2.1rem,5vw,4rem)!important;line-height:1.05!important;max-width:14ch!important}
+  #ldrPublicSample .ldr-v3-sub{color:rgba(248,238,220,.78)!important;max-width:58ch!important}
+  #ldrPublicSample .ldr-v3-reader{
+    background:linear-gradient(145deg,#f3e6cd,#e8d4b3)!important;
+    color:#321b17!important;border-color:rgba(226,183,95,.55)!important;
+    box-shadow:0 22px 55px rgba(5,1,3,.38)!important
+  }
+  #ldrPublicSample .ldr-v3-reader :where(h3,p){color:#321b17!important}
+  #ldrPublicSample .ldr-v3-chapter-label,
+  #ldrPublicSample .ldr-v3-end{color:#7b5420!important}
+  #ldrPublicSample .ldr-sample-close{
+    color:#fff2d8!important;border-color:rgba(226,183,95,.62)!important;background:rgba(255,255,255,.035)!important
+  }
+
+  /* Availability is always green for both published books. */
+  #platformLancamentos .lancamento-card:nth-child(1) .status,
+  #platformLancamentos .lancamento-card:nth-child(2) .status,
+  #palestraView #lancamentos .lancamento-card:nth-child(1) .status,
+  #palestraView #lancamentos .lancamento-card:nth-child(2) .status,
+  #ldrBookSalesCard .tag{
+    background:rgba(30,155,78,.22)!important;color:#78e9a3!important;
+    border:1px solid rgba(70,211,123,.58)!important;
+    box-shadow:inset 0 0 0 1px rgba(30,155,78,.08)!important
+  }
+
+  /* Free participation: premium wine surface, never a detached white banner. */
+  #ldrLectureCta{
+    padding:clamp(30px,5vw,58px) 18px!important;
+    background:linear-gradient(180deg,#2a0a14,#3c0d1d)!important
+  }
+  #ldrLectureCta .ldr-lecture-cta__card{
+    gap:clamp(24px,4vw,48px)!important;padding:clamp(28px,4vw,44px)!important;
+    border:1px solid rgba(226,183,95,.5)!important;
+    background:
+      radial-gradient(circle at 90% 0,rgba(226,183,95,.14),transparent 38%),
+      linear-gradient(145deg,#691731,#390c1b)!important;
+    box-shadow:0 22px 52px rgba(8,2,5,.35)!important
+  }
+  #ldrLectureCta :where(h2,p){color:#f8eedc!important}
+  #ldrLectureCta p{color:rgba(248,238,220,.78)!important;max-width:58ch!important}
+  #ldrLectureCta .ldr-actions{gap:14px!important;align-items:stretch!important}
+  #ldrLectureCta .btn{min-width:220px!important}
+  #ldrLectureCta .btn-ghost{
+    color:#fff2d8!important;border-color:rgba(226,183,95,.65)!important;
+    background:rgba(255,255,255,.035)!important
+  }
+
+  /* Weekly lives: one main explanation and one compact action panel. */
+  #lives{
+    padding:clamp(58px,8vw,92px) 18px!important;
+    background:
+      radial-gradient(circle at 15% 15%,rgba(133,29,61,.5),transparent 36%),
+      linear-gradient(145deg,#240711,#120307)!important
+  }
+  #lives .ldr-live-grid{
+    grid-template-columns:minmax(0,1.35fr) minmax(300px,.65fr)!important;
+    gap:clamp(22px,4vw,42px)!important;align-items:stretch!important
+  }
+  #lives .section-title{
+    font-size:clamp(2.15rem,4.6vw,4rem)!important;line-height:1.02!important;
+    max-width:13ch!important;margin-bottom:18px!important
+  }
+  #lives .section-subtitle{max-width:62ch!important;color:rgba(248,238,220,.8)!important}
+  #lives .ldr-live-points{gap:14px!important;margin-top:26px!important}
+  #lives .ldr-live-point{
+    padding:17px 18px!important;background:rgba(255,255,255,.035)!important;
+    border-color:rgba(226,183,95,.28)!important
+  }
+  #lives .ldr-live-panel{
+    padding:clamp(26px,3vw,36px)!important;border:1px solid rgba(226,183,95,.5)!important;
+    background:
+      radial-gradient(circle at 90% 0,rgba(226,183,95,.13),transparent 38%),
+      linear-gradient(155deg,#5f142d,#2c0915)!important;
+    box-shadow:0 22px 52px rgba(6,1,4,.35)!important
+  }
+  #lives .ldr-live-panel h3{font-size:clamp(1.65rem,3vw,2.35rem)!important;max-width:14ch!important}
+  #lives .ldr-live-panel p{color:rgba(248,238,220,.78)!important}
+  #lives .ldr-live-panel .ldr-actions{display:grid!important;grid-template-columns:1fr!important;gap:12px!important;margin-top:22px!important}
+  #lives .ldr-live-panel .btn{width:100%!important;margin:0!important;min-height:48px!important}
+
+  @media(max-width:820px){
+    #ldrLectureCta .ldr-lecture-cta__card,
+    #lives .ldr-live-grid{grid-template-columns:1fr!important}
+    #ldrLectureCta .ldr-actions{display:grid!important;grid-template-columns:1fr!important}
+    #ldrLectureCta .btn{width:100%!important;min-width:0!important}
+    #lives .section-title{max-width:16ch!important}
+  }
+  @media(max-width:520px){
+    #platformView #priceCard .ldr-sample-button{margin-top:12px!important}
+    #ldrPublicSample h2{font-size:clamp(2rem,10vw,3rem)!important}
+    #ldrLectureCta,#lives{padding-inline:13px!important}
+    #ldrLectureCta .ldr-lecture-cta__card,#lives .ldr-live-panel{padding:24px 18px!important;border-radius:20px!important}
+    #lives .section-title{font-size:clamp(2rem,10vw,3rem)!important}
+  }
+</style>
+<script>
+(function(){
+  'use strict';
+  var labels={
+    pt:{title:'Participe da próxima live',text:'Siga Luciano no Instagram, acompanhe os encontros semanais e faça também sua inscrição gratuita na palestra.'},
+    en:{title:'Join the next live',text:'Follow Luciano on Instagram, attend the weekly meetings and reserve your free place at the lecture.'},
+    fr:{title:'Participez au prochain live',text:'Suivez Luciano sur Instagram, participez aux rencontres hebdomadaires et réservez votre place gratuite à la conférence.'},
+    es:{title:'Participa en el próximo live',text:'Sigue a Luciano en Instagram, acompaña los encuentros semanales y reserva tu plaza gratuita en la conferencia.'}
+  };
+  function language(){
+    var active=document.querySelector('#palestraView .ldr-public-lang-button.active,#palestraView .ldr-public-lang-button[aria-pressed="true"]');
+    var code=active&&active.getAttribute('data-lang');
+    return labels[code]?code:'pt';
+  }
+  function cleanLive(){
+    var panel=document.querySelector('#lives .ldr-live-panel');
+    if(!panel)return false;
+    var copy=labels[language()]||labels.pt;
+    var title=panel.querySelector('h3'),text=panel.querySelector('p');
+    if(title)title.textContent=copy.title;
+    if(text)text.textContent=copy.text;
+    return true;
+  }
+  function run(){
+    var tries=0;
+    var timer=setInterval(function(){
+      tries+=1;if(cleanLive()||tries>20)clearInterval(timer);
+    },50);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run,{once:true});else run();
+  window.addEventListener('luciano:languagechange',function(){setTimeout(cleanLive,30)});
+  window.addEventListener('ldr:languagechange',function(){setTimeout(cleanLive,30)});
+  document.addEventListener('click',function(event){
+    if(event.target.closest&&event.target.closest('#palestraView .ldr-public-lang-button'))setTimeout(cleanLive,80);
+  });
+})();
+</script>
+
 </body></html>
