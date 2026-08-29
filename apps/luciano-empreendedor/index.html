@@ -6107,4 +6107,64 @@ body{background:#f7f2e8!important}
 })();
 </script>
 
+
+<!-- ldr-visual-polish-v5-20260829 -->
+<style id="ldr-visual-polish-v5-20260829">
+  #site #platformView #ldrPublicSample.ldr-v3-sample{
+    background:
+      radial-gradient(circle at 80% 0,rgba(226,183,95,.13),transparent 34%),
+      linear-gradient(145deg,#4c1024 0%,#270811 58%,#17050b 100%)!important;
+    background-color:#270811!important
+  }
+  #lives .ldr-live-panel>h3,
+  #lives .ldr-live-panel>p{display:none!important}
+  #lives .ldr-live-action-copy{margin:16px 0 4px}
+  #lives .ldr-live-action-copy h3{
+    display:block!important;color:#f5d890!important;font-size:clamp(1.65rem,3vw,2.35rem)!important;
+    line-height:1.1!important;max-width:14ch!important;margin:0 0 12px!important
+  }
+  #lives .ldr-live-action-copy p{
+    display:block!important;color:rgba(248,238,220,.78)!important;font-size:.98rem!important;
+    line-height:1.65!important;margin:0!important
+  }
+</style>
+<script>
+(function(){
+  'use strict';
+  var copy={
+    pt:['Participe da próxima live','Siga Luciano no Instagram, acompanhe os encontros semanais e faça também sua inscrição gratuita na palestra.'],
+    en:['Join the next live','Follow Luciano on Instagram, attend the weekly meetings and reserve your free place at the lecture.'],
+    fr:['Participez au prochain live','Suivez Luciano sur Instagram, participez aux rencontres hebdomadaires et réservez votre place gratuite à la conférence.'],
+    es:['Participa en el próximo live','Sigue a Luciano en Instagram, acompaña los encuentros semanales y reserva tu plaza gratuita en la conferencia.']
+  };
+  function lang(){
+    var active=document.querySelector('#palestraView .ldr-public-lang-button.active,#palestraView .ldr-public-lang-button[aria-pressed="true"]');
+    var code=active&&active.getAttribute('data-lang');return copy[code]?code:'pt';
+  }
+  function install(){
+    var panel=document.querySelector('#lives .ldr-live-panel');
+    if(!panel)return false;
+    var box=panel.querySelector('.ldr-live-action-copy');
+    if(!box){
+      box=document.createElement('div');box.className='ldr-live-action-copy';
+      box.innerHTML='<h3></h3><p></p>';
+      var actions=panel.querySelector('.ldr-actions');
+      if(actions)panel.insertBefore(box,actions);else panel.appendChild(box);
+    }
+    var words=copy[lang()]||copy.pt;
+    box.querySelector('h3').textContent=words[0];box.querySelector('p').textContent=words[1];
+    return true;
+  }
+  function start(){
+    var attempts=0,timer=setInterval(function(){attempts+=1;if(install()||attempts>30)clearInterval(timer)},50);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
+  document.addEventListener('click',function(event){
+    if(event.target.closest&&event.target.closest('#palestraView .ldr-public-lang-button,#ldrLectureLanguage'))setTimeout(install,100);
+  });
+  window.addEventListener('luciano:languagechange',function(){setTimeout(install,80)});
+  window.addEventListener('ldr:languagechange',function(){setTimeout(install,80)});
+})();
+</script>
+
 </body></html>
