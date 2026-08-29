@@ -5061,7 +5061,7 @@ console.log('Plataforma carregada.');
 console.log('🔐 Painel administrativo carregado.');
 console.log('🌐 Biblioteca com suporte a PT, EN, FR, ES automático.');
 
-window.addEventListener('DOMContentLoaded', () => { if (!location.hash) showPalestraView(); route(); });
+window.addEventListener('DOMContentLoaded', () => { if (!location.hash) history.replaceState({},'',location.pathname+location.search+'#plataforma'); route(); });
 
 </script>
 
@@ -5317,4 +5317,115 @@ body{background:#f7f2e8!important}
 </script>
 
 <script src="/public-i18n-v2.js" defer></script>
+<!-- ldr-sales-ux-20260829: página inicial comercial, preservando checkouts e recursos existentes -->
+<style id="ldr-sales-ux-20260829">
+  #platformView #site > .ldr-home-enhancement{display:none!important}
+  #platformView #platformLancamentos{display:none!important}
+  #platformView #comprar{
+    padding:clamp(56px,7vw,92px) clamp(18px,6vw,100px)!important;
+    background:
+      radial-gradient(circle at 85% 10%,rgba(215,168,77,.13),transparent 34%),
+      linear-gradient(145deg,#210b0f,#491522)!important;
+  }
+  #platformView #comprar .pricing-grid{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:24px!important;
+    max-width:1080px!important;
+    margin:0 auto!important;
+    align-items:stretch;
+  }
+  #platformView #comprar .card-premium{
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    border:1px solid rgba(215,168,77,.45);
+  }
+  #platformView #comprar .card-premium .btn{margin-top:auto}
+  .ldr-product-name{color:var(--vinho);font-size:clamp(1.5rem,2.5vw,2rem);margin:14px 0 4px}
+  .ldr-product-type{color:var(--vinho);font-size:.76rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;opacity:.72}
+  .ldr-book-price{color:var(--vinho);font:700 clamp(2.2rem,4vw,3.4rem) Georgia,serif;margin:10px 0}
+  .ldr-sales-trust{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:24px auto 0;max-width:900px}
+  .ldr-sales-trust span{border:1px solid rgba(215,168,77,.3);background:rgba(255,255,255,.05);border-radius:999px;padding:8px 13px;color:rgba(247,239,227,.82);font-size:.82rem}
+  .ldr-lecture-quick{
+    margin:0;
+    padding:clamp(44px,6vw,72px) clamp(18px,6vw,100px);
+    background:var(--papel);
+    color:var(--texto);
+  }
+  .ldr-lecture-quick__inner{
+    max-width:1080px;margin:auto;display:grid;grid-template-columns:1.25fr .75fr;gap:30px;
+    align-items:center;padding:clamp(26px,4vw,42px);border-radius:24px;
+    border:1px solid rgba(92,23,36,.14);box-shadow:var(--sombra-suave);
+    background:linear-gradient(135deg,#fffaf1,#f7efe3);
+  }
+  .ldr-lecture-quick h2{color:var(--vinho);font-size:clamp(2rem,4vw,3.25rem);line-height:1.08;margin:8px 0 12px}
+  .ldr-lecture-quick p{color:rgba(53,32,24,.8);font-size:1rem}
+  .ldr-lecture-quick__actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end}
+  .ldr-lecture-quick__actions .btn{min-width:190px}
+  .ldr-mobile-buybar{display:none}
+  #livro-o-menino-que-vendia-mamao{display:none!important}
+  @media(max-width:820px){
+    #platformView #comprar .pricing-grid,.ldr-lecture-quick__inner{grid-template-columns:1fr!important}
+    .ldr-lecture-quick__actions{justify-content:flex-start}
+    .ldr-lecture-quick__actions .btn{width:100%}
+    .ldr-mobile-buybar{
+      position:fixed;left:10px;right:10px;bottom:max(10px,env(safe-area-inset-bottom));
+      z-index:9990;display:grid;grid-template-columns:1.2fr .8fr;gap:8px;
+      padding:8px;border-radius:18px;background:rgba(20,11,9,.94);
+      border:1px solid rgba(215,168,77,.28);backdrop-filter:blur(14px);
+      box-shadow:0 12px 36px rgba(0,0,0,.35)
+    }
+    .ldr-mobile-buybar a{min-height:46px;padding:10px 12px;font-size:.78rem;text-align:center}
+    #platformView footer{padding-bottom:92px}
+  }
+</style>
+<script>
+(() => {
+  const FORM_URL='https://docs.google.com/forms/d/e/1FAIpQLSfKjV7lDqemNjz42i39FZQJSw2ePsHPAjepEhpbqxzBvQfxeQ/viewform?usp=embed';
+  const GROUP_URL='https://chat.whatsapp.com/IMk7F1zg2rZJdj9NWC664G?s=cl&p=i&ilr=0';
+  const copy={
+    pt:{ebook:'eBook',ebookTitle:'A Coragem de Começar',ebookDesc:'Leitura digital com acesso pessoal à biblioteca. Pagamento único e checkout regional automático.',book:'Livro digital',bookTitle:'O Menino que Vendia Mamão',bookDesc:'A história completa que deu origem à jornada. Compre separadamente e leia dentro da sua biblioteca.',buyBook:'Comprar o livro',library:'Minha biblioteca',secure:'Pagamento seguro pela Stripe',once:'Pagamento único',access:'Acesso digital individual',lectureTag:'Palestra gratuita · 3h + certificado',lectureTitle:'Empreendedorismo sem Fronteiras',lectureText:'Inscreva-se em poucos segundos. A venda dos produtos continua sendo o foco principal desta página.',register:'Fazer inscrição gratuita',group:'Entrar no WhatsApp',mobileBuy:'Comprar agora',mobileLecture:'Palestra grátis'},
+    en:{ebook:'eBook',ebookTitle:'The Courage to Begin',ebookDesc:'Digital reading with personal library access. One-time payment and automatic regional checkout.',book:'Digital book',bookTitle:'The Boy Who Sold Papayas',bookDesc:'The complete story behind the journey. Buy it separately and read it in your library.',buyBook:'Buy the book',library:'My library',secure:'Secure Stripe payment',once:'One-time payment',access:'Individual digital access',lectureTag:'Free lecture · 3h + certificate',lectureTitle:'Entrepreneurship Without Borders',lectureText:'Register in seconds. Product sales remain the main focus of this page.',register:'Register for free',group:'Join WhatsApp',mobileBuy:'Buy now',mobileLecture:'Free lecture'},
+    fr:{ebook:'eBook',ebookTitle:'Le Courage de Commencer',ebookDesc:'Lecture numérique avec accès personnel à la bibliothèque. Paiement unique et checkout régional automatique.',book:'Livre numérique',bookTitle:'Le Garçon qui Vendait des Papayes',bookDesc:'L’histoire complète à l’origine du parcours. Achetez-la séparément et lisez-la dans votre bibliothèque.',buyBook:'Acheter le livre',library:'Ma bibliothèque',secure:'Paiement sécurisé par Stripe',once:'Paiement unique',access:'Accès numérique individuel',lectureTag:'Conférence gratuite · 3h + certificat',lectureTitle:'Entrepreneuriat Sans Frontières',lectureText:'Inscrivez-vous en quelques secondes. La vente des produits reste la priorité de cette page.',register:'Inscription gratuite',group:'Rejoindre WhatsApp',mobileBuy:'Acheter',mobileLecture:'Conférence'},
+    es:{ebook:'eBook',ebookTitle:'El Coraje de Comenzar',ebookDesc:'Lectura digital con acceso personal a la biblioteca. Pago único y checkout regional automático.',book:'Libro digital',bookTitle:'El Niño que Vendía Papayas',bookDesc:'La historia completa que dio origen al camino. Cómprala por separado y léela en tu biblioteca.',buyBook:'Comprar el libro',library:'Mi biblioteca',secure:'Pago seguro con Stripe',once:'Pago único',access:'Acceso digital individual',lectureTag:'Conferencia gratuita · 3h + certificado',lectureTitle:'Emprendimiento Sin Fronteras',lectureText:'Inscríbete en pocos segundos. La venta de productos sigue siendo el foco principal de esta página.',register:'Inscripción gratuita',group:'Entrar en WhatsApp',mobileBuy:'Comprar ahora',mobileLecture:'Conferencia'}
+  };
+  const language=()=>{const v=(localStorage.getItem('ldr-language')||document.documentElement.lang||navigator.language||'pt').toLowerCase().slice(0,2);return copy[v]?v:'pt'};
+  const t=(key)=>copy[language()][key]||copy.pt[key];
+  function setText(root,key){const el=root?.querySelector('[data-sales-copy="'+key+'"]');if(el)el.textContent=t(key)}
+  function applyLanguage(){
+    document.querySelectorAll('[data-sales-copy]').forEach(el=>{const k=el.getAttribute('data-sales-copy');el.textContent=t(k)});
+    const bookBtn=document.querySelector('[data-new-book-buy="1"]');
+    if(bookBtn&&!bookBtn.disabled)bookBtn.textContent=t('buyBook');
+  }
+  function build(){
+    document.getElementById('livro-o-menino-que-vendia-mamao')?.remove();
+    const site=document.getElementById('site'),hero=site?.querySelector(':scope > .hero'),offer=document.getElementById('comprar');
+    if(!site||!hero||!offer)return;
+    hero.insertAdjacentElement('afterend',offer);
+    const grid=offer.querySelector('.pricing-grid'),priceCard=document.getElementById('priceCard');
+    if(priceCard&&!priceCard.querySelector('.ldr-product-name')){
+      priceCard.querySelector('.tag')?.insertAdjacentHTML('afterend','<div class="ldr-product-type" data-sales-copy="ebook"></div><h3 class="ldr-product-name" data-sales-copy="ebookTitle"></h3><p data-sales-copy="ebookDesc"></p>');
+    }
+    if(grid&&!document.getElementById('ldrBookSalesCard')){
+      let price='€ 4,90';
+      try{if(typeof newBookPriceDisplay==='function')price=newBookPriceDisplay()}catch(e){}
+      grid.insertAdjacentHTML('beforeend','<article class="card-premium" id="ldrBookSalesCard"><span class="tag">Disponível</span><div class="ldr-product-type" data-sales-copy="book"></div><h3 class="ldr-product-name" data-sales-copy="bookTitle"></h3><div class="ldr-book-price">'+price+'</div><p data-sales-copy="bookDesc"></p><ul><li data-sales-copy="once"></li><li data-sales-copy="access"></li><li data-sales-copy="library"></li></ul><button type="button" class="btn btn-block" data-new-book-buy="1" data-sales-copy="buyBook"></button><a class="btn btn-block btn-ghost" style="margin-top:10px;color:var(--vinho);border-color:rgba(92,23,36,.35)" href="#biblioteca" data-sales-copy="library"></a></article>');
+      document.querySelector('#ldrBookSalesCard [data-new-book-buy]')?.addEventListener('click',()=>{if(typeof buyNewBook==='function')buyNewBook()});
+    }
+    if(!offer.querySelector('.ldr-sales-trust'))offer.insertAdjacentHTML('beforeend','<div class="ldr-sales-trust"><span data-sales-copy="secure"></span><span data-sales-copy="once"></span><span data-sales-copy="access"></span></div>');
+    if(!document.getElementById('ldrLectureQuick')){
+      offer.insertAdjacentHTML('afterend','<section class="ldr-lecture-quick" id="ldrLectureQuick"><div class="ldr-lecture-quick__inner"><div><span class="eyebrow" data-sales-copy="lectureTag"></span><h2 data-sales-copy="lectureTitle"></h2><p data-sales-copy="lectureText"></p></div><div class="ldr-lecture-quick__actions"><a class="btn" href="'+FORM_URL+'" target="_blank" rel="noopener noreferrer" data-sales-copy="register"></a><a class="btn btn-ghost" style="color:var(--vinho);border-color:rgba(92,23,36,.35)" href="'+GROUP_URL+'" target="_blank" rel="noopener noreferrer" data-sales-copy="group"></a></div></div></section>');
+    }
+    if(!document.getElementById('ldrMobileBuybar')){
+      document.body.insertAdjacentHTML('beforeend','<nav class="ldr-mobile-buybar" id="ldrMobileBuybar" aria-label="Ações rápidas"><a class="btn" href="#comprar" data-sales-copy="mobileBuy"></a><a class="btn btn-ghost" href="'+FORM_URL+'" target="_blank" rel="noopener noreferrer" data-sales-copy="mobileLecture"></a></nav>');
+    }
+    applyLanguage();
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(build,0),{once:true});else setTimeout(build,0);
+  window.addEventListener('ldr:languagechange',applyLanguage);
+})();
+</script>
+
+
 </body></html>
