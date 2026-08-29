@@ -6178,4 +6178,41 @@ body{background:#f7f2e8!important}
   }
 </style>
 
+
+<!-- ldr-available-product-links-v1-20260829 -->
+<script id="ldr-available-product-links-v1-20260829">
+(function(){
+  'use strict';
+  function wireAvailableProducts(){
+    document.querySelectorAll('#palestraView #lancamentos .lancamento-card:nth-child(-n+2) .status').forEach(function(status){
+      if(status.tagName==='A'){
+        status.setAttribute('href','#plataforma');
+        status.removeAttribute('target');
+        return;
+      }
+      var link=document.createElement('a');
+      link.className=status.className;
+      link.href='#plataforma';
+      link.innerHTML=status.innerHTML;
+      status.replaceWith(link);
+    });
+  }
+  function start(){
+    wireAvailableProducts();
+    var root=document.querySelector('#palestraView #lancamentos');
+    if(root){
+      var queued=false;
+      new MutationObserver(function(){
+        if(queued)return;queued=true;
+        setTimeout(function(){queued=false;wireAvailableProducts()},0);
+      }).observe(root,{childList:true,subtree:true});
+    }
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(start,80)},{once:true});
+  else setTimeout(start,80);
+  window.addEventListener('luciano:languagechange',function(){setTimeout(wireAvailableProducts,50)});
+  window.addEventListener('ldr:languagechange',function(){setTimeout(wireAvailableProducts,50)});
+})();
+</script>
+
 </body></html>
