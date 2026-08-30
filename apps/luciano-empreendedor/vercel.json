@@ -9,7 +9,7 @@
           "value": "lucianoempreendendor.com"
         }
       ],
-      "destination": "https://lucianoempreendedor.com/:path*",
+      "destination": "https://www.lucianoempreendendor.com/:path*",
       "permanent": true
     },
     {
@@ -17,10 +17,10 @@
       "has": [
         {
           "type": "host",
-          "value": "www.lucianoempreendendor.com"
+          "value": "lucianoempreendedor.com"
         }
       ],
-      "destination": "https://lucianoempreendedor.com/:path*",
+      "destination": "https://www.lucianoempreendendor.com/:path*",
       "permanent": true
     },
     {
@@ -31,7 +31,7 @@
           "value": "www.lucianoempreendedor.com"
         }
       ],
-      "destination": "https://lucianoempreendedor.com/:path*",
+      "destination": "https://www.lucianoempreendendor.com/:path*",
       "permanent": true
     }
   ],

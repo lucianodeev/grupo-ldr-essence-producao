@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://lucianoempreendedor.com/sitemap.xml
+Sitemap: https://www.lucianoempreendendor.com/sitemap.xml
