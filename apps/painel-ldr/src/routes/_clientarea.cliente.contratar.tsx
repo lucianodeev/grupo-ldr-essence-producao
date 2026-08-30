@@ -64,17 +64,19 @@ function CorporateWellbeing() {
   return (
     <section className="rounded-3xl border border-primary/20 bg-card p-5 shadow-sm sm:p-6">
       <div className="grid gap-6 lg:grid-cols-[1.05fr_1.95fr] lg:items-stretch">
-        <div className="overflow-hidden rounded-2xl border border-border/70 bg-muted">
-          <img src="/massagem-laboral-empresa.svg" alt="Ilustração de Massagem Laboral em ambiente empresarial" className="h-full min-h-64 w-full object-cover" />
-        </div>
+        <figure className="group overflow-hidden rounded-2xl border border-primary/25 bg-muted shadow-sm">
+          <img src="/massagem-laboral-corporativa.webp" alt="Profissional realizando Massagem Laboral nos ombros de um colaborador vestido em um escritório moderno" width={1600} height={900} loading="lazy" decoding="async" className="h-full min-h-64 w-full object-cover object-center transition duration-500 group-hover:scale-[1.02]" />
+          <figcaption className="sr-only">Massagem Laboral profissional em ambiente empresarial na Bélgica.</figcaption>
+        </figure>
         <div>
           <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">Bem-estar corporativo</p>
           <h2 className="mt-1 font-serif text-2xl">Massagem Laboral e Hora de Bem-Estar LDR</h2>
           <div className="mt-3 inline-flex rounded-full bg-accent px-3 py-1.5 text-xs font-extrabold text-accent-foreground">🇧🇪 Disponível atualmente somente na Bélgica</div>
           <p className="mt-4 text-sm leading-relaxed text-muted-foreground">A Massagem Laboral utiliza a mesma proposta de relaxamento e bem-estar da Massagem Relaxante, adaptada à rotina de empresas, equipes, colaboradores e eventos corporativos. Os atendimentos podem ser organizados de forma escalonada para não interromper toda a operação.</p>
           <div className="mt-5 grid gap-4 xl:grid-cols-2">
-            <article className="rounded-2xl border border-border/70 bg-background p-4">
-              <h3 className="font-serif text-lg">Massagem Laboral</h3>
+            <article className="relative rounded-2xl border-2 border-primary/30 bg-background p-4 shadow-sm">
+              <span className="inline-flex rounded-full bg-accent px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wide text-accent-foreground">Um dos serviços mais procurados</span>
+              <h3 className="mt-3 font-serif text-lg">Massagem Laboral</h3>
               <p className="mt-2 text-sm text-muted-foreground">Escolha o tempo por colaborador:</p>
               <ul className="mt-3 grid gap-1.5 text-sm">
                 <li><strong>10 min — €25</strong> por colaborador</li>
@@ -85,7 +87,7 @@ function CorporateWellbeing() {
               </ul>
               <p className="mt-3 text-xs font-bold text-muted-foreground">Contratação mínima: €150 por ação/deslocamento.</p>
               <p className="mt-2 text-xs text-muted-foreground">O horário de almoço costuma ser uma ótima opção. Também pode ser organizado pela manhã, à tarde, no início/final do expediente ou em eventos corporativos.</p>
-              <a className="mt-4 inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-primary px-4 py-3 text-sm font-extrabold text-primary-foreground shadow-sm transition hover:opacity-90" href={MASSAGE_MESSAGE} target="_blank" rel="noreferrer noopener">Solicitar orçamento no WhatsApp</a>
+              <a className="mt-4 inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-[#25D366] px-4 py-3 text-sm font-extrabold text-[#063d20] shadow-sm transition hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" href={MASSAGE_MESSAGE} target="_blank" rel="noreferrer noopener">Solicitar orçamento no WhatsApp</a>
             </article>
             <article className="rounded-2xl border border-border/70 bg-background p-4">
               <h3 className="font-serif text-lg">Hora de Bem-Estar LDR</h3>
@@ -98,7 +100,7 @@ function CorporateWellbeing() {
               </ul>
               <p className="mt-3 text-sm font-extrabold text-primary">Valor sob proposta</p>
               <p className="mt-2 text-xs text-muted-foreground">A proposta considera duração, número de colaboradores, cidade na Bélgica e formato da ação. Não há checkout automático nesta modalidade.</p>
-              <a className="mt-4 inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-primary px-4 py-3 text-sm font-extrabold text-primary-foreground shadow-sm transition hover:opacity-90" href={WELLBEING_MESSAGE} target="_blank" rel="noreferrer noopener">Solicitar proposta no WhatsApp</a>
+              <a className="mt-4 inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-[#25D366] px-4 py-3 text-sm font-extrabold text-[#063d20] shadow-sm transition hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" href={WELLBEING_MESSAGE} target="_blank" rel="noreferrer noopener">Solicitar proposta no WhatsApp</a>
             </article>
           </div>
         </div>
