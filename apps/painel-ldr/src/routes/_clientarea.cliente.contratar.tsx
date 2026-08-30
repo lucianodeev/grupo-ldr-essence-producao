@@ -30,7 +30,7 @@ const CATEGORY_BY_KEY: Record<string, string> = {
 
 const WHATSAPP = "https://wa.me/32492923605";
 const MASSAGE_MESSAGE = `${WHATSAPP}?text=${encodeURIComponent("Olá! Vim pelo painel da LDR RH & Estratégia e gostaria de saber mais sobre a Massagem Laboral para minha empresa/equipe.")}`;
-const WELLBEING_MESSAGE = `${WHATSAPP}?text=${encodeURIComponent("Olá! Vim pelo painel da LDR RH & Estratégia e gostaria de solicitar uma proposta para a Hora de Bem-Estar LDR.")}`;
+const WELLBEING_URL = "https://ldrrhestrategia.com/bem-estar?lang=pt#hora-bem-estar-ldr";
 
 function Card({ item }: { item: ContractItem }) {
   const link = safeUrl(item.paymentUrl);
@@ -89,18 +89,17 @@ function CorporateWellbeing() {
               <p className="mt-2 text-xs text-muted-foreground">O horário de almoço costuma ser uma ótima opção. Também pode ser organizado pela manhã, à tarde, no início/final do expediente ou em eventos corporativos.</p>
               <a className="mt-4 inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-[#25D366] px-4 py-3 text-sm font-extrabold text-[#063d20] shadow-sm transition hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" href={MASSAGE_MESSAGE} target="_blank" rel="noreferrer noopener">Solicitar orçamento no WhatsApp</a>
             </article>
-            <article className="rounded-2xl border border-border/70 bg-background p-4">
+            <article className="rounded-2xl border border-primary/25 bg-background p-4">
               <h3 className="font-serif text-lg">Hora de Bem-Estar LDR</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">Para empresas que preferem contratar um período completo de atendimento, com organização escalonada conforme a equipe.</p>
-              <ul className="mt-3 grid gap-1.5 text-sm">
-                <li><strong>2 horas</strong></li>
-                <li><strong>4 horas</strong></li>
-                <li><strong>Meio período</strong></li>
-                <li><strong>Dia de Bem-Estar Corporativo</strong></li>
-              </ul>
-              <p className="mt-3 text-sm font-extrabold text-primary">Valor sob proposta</p>
-              <p className="mt-2 text-xs text-muted-foreground">A proposta considera duração, número de colaboradores, cidade na Bélgica e formato da ação. Não há checkout automático nesta modalidade.</p>
-              <a className="mt-4 inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-[#25D366] px-4 py-3 text-sm font-extrabold text-[#063d20] shadow-sm transition hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" href={WELLBEING_MESSAGE} target="_blank" rel="noreferrer noopener">Solicitar proposta no WhatsApp</a>
+              <p className="mt-2 text-sm font-bold text-primary">Sua empresa escolhe o tempo. Nós organizamos a experiência.</p>
+              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">Pagamento de 50% para solicitar a reserva. Os 50% restantes são pagos após a ação. A disponibilidade definitiva será confirmada pelo atendimento.</p>
+              <div className="mt-4 grid gap-2">
+                <div className="rounded-xl border border-border/70 p-3"><div className="flex items-center justify-between gap-3"><strong>2 horas</strong><b className="text-primary">€300</b></div><p className="mt-1 text-xs text-muted-foreground">Entrada: <strong>€150</strong></p></div>
+                <div className="relative rounded-xl border-2 border-primary bg-accent/40 p-3 pt-7"><span className="absolute left-3 top-0 rounded-b-lg bg-primary px-2 py-1 text-[9px] font-extrabold text-primary-foreground">MAIS ESCOLHIDO</span><div className="flex items-center justify-between gap-3"><strong>4 horas</strong><b className="text-primary">€550</b></div><p className="mt-1 text-xs text-muted-foreground">Entrada: <strong>€275</strong></p></div>
+                <div className="rounded-xl border border-border/70 p-3"><div className="flex items-center justify-between gap-3"><strong>Meio período · 5 horas</strong><b className="text-primary">€700</b></div><p className="mt-1 text-xs text-muted-foreground">Entrada: <strong>€350</strong></p></div>
+                <div className="rounded-xl border border-border/70 p-3"><div className="flex items-center justify-between gap-3"><strong>Dia Corporativo · até 8 horas</strong><b className="text-primary">€1.050</b></div><p className="mt-1 text-xs text-muted-foreground">Entrada: <strong>€525</strong></p></div>
+              </div>
+              <a className="mt-4 inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-primary px-4 py-3 text-sm font-extrabold text-primary-foreground shadow-sm transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" href={WELLBEING_URL} target="_blank" rel="noreferrer noopener">Escolher período e pagar 50%</a>
             </article>
           </div>
         </div>
@@ -141,7 +140,7 @@ function ClientContract() {
     <section className="rounded-3xl border border-primary/15 bg-gradient-to-br from-card via-card to-accent/25 p-5 shadow-sm sm:p-7">
       <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-primary">Grupo LDR Essence</p>
       <h2 className="mt-2 max-w-2xl font-serif text-2xl sm:text-3xl">Todos os serviços em um só lugar</h2>
-      <p className="mt-2 max-w-3xl text-sm leading-relaxed text-muted-foreground">Os serviços com checkout mantêm contratação direta e segura. As soluções de Bem-Estar Corporativo são organizadas pelo WhatsApp porque dependem de cidade, data, quantidade de colaboradores e disponibilidade.</p>
+      <p className="mt-2 max-w-3xl text-sm leading-relaxed text-muted-foreground">Os serviços com checkout mantêm contratação direta e segura. Na Hora de Bem-Estar LDR, escolha o período e pague 50% para solicitar a reserva; a disponibilidade definitiva será confirmada pelo atendimento.</p>
       <div className="mt-5 grid gap-3 sm:grid-cols-2">
         <Field label="Região e moeda" htmlFor="contract-region"><select id="contract-region" className="s8-field" value={region} onChange={(e) => setRegion(e.target.value as "eu" | "br")}><option value="eu">Europa — EUR</option><option value="br">Brasil — BRL</option></select></Field>
         <Field label="Encontrar um serviço" htmlFor="service-search"><input id="service-search" className="s8-field" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Ex.: carreira, site, marketing..." /></Field>
