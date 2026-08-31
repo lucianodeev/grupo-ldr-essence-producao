@@ -118,6 +118,21 @@ export async function createProfessionalSubscriptionCheckout(userId: string, ema
   const account = await ensureAccount(userId, email);
   const mail = normEmail(email);
   if (!mail) fail("Sua conta precisa ter um e-mail válido.");
+  const { data: existingSubscription } = await db.from("professional_subscriptions")
+    .select("id,status,current_period_end,cancel_at_period_end")
+    .eq("professional_account_id", account.id)
+    .eq("status", "active")
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (existingSubscription) {
+    const end = existingSubscription.current_period_end ? new Date(existingSubscription.current_period_end).getTime() : 0;
+    if (!end || end > Date.now()) {
+      fail(existingSubscription.cancel_at_period_end
+        ? "Você já possui uma assinatura ativa até o fim do ciclo pago. Reative a renovação em Minha Assinatura se quiser continuar no próximo mês."
+        : "Você já possui uma assinatura mensal ativa. Gerencie sua assinatura atual em Minha Assinatura.");
+    }
+  }
   const { data: plan } = await db.from("subscription_plans").select("id,market,plan_code,name,currency,amount_cents,interval,active").eq("id", planId).eq("active", true).maybeSingle();
   if (!plan) fail("Plano indisponível.");
   const secret = process.env["STRIPE_SECRET_KEY"];
