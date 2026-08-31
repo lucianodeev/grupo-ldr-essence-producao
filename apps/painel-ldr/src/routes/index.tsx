@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Building2, UserRound, UsersRound } from "lucide-react";
-
-import { SiteHeader } from "@/components/site-header";
+import { LanguageSelect } from "@/lib/i18n";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -25,7 +24,7 @@ const ACCESS = [
 
 function Home() {
   return <div className="min-h-screen">
-    <SiteHeader />
+    <header className="text-primary-foreground shadow-sm" style={{background:"linear-gradient(135deg, var(--wine-deep), var(--wine))"}}><div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-5 sm:px-6"><div className="min-w-0"><p className="break-words font-serif text-2xl">Grupo LDR Essence</p><p className="mt-1 text-sm opacity-85">Serviços, benefícios, desenvolvimento e bem-estar</p></div><LanguageSelect/></div></header>
     <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
       <section className="s8-card min-w-0">
         <p className="text-xs font-bold uppercase tracking-[.18em] text-primary">Grupo LDR Essence</p>
