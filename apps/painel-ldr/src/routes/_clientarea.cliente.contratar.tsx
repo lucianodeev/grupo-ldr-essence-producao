@@ -67,6 +67,7 @@ const COPY = {
     hours2: "2 horas", hours4: "4 horas", halfDay: "Meio período · 5 horas", corporateDay: "Dia Corporativo · até 8 horas",
     deposit: "Entrada", mostChosen: "MAIS ESCOLHIDO", choosePeriod: "Escolher período e pagar 50%",
     serviceSolutions: "Soluções LDR", attendance: "Atendimento", mentorshipStrategy: "Mentoria e estratégia",
+    massageMessage: "Olá! Vim pelo painel da LDR RH & Estratégia e gostaria de saber mais sobre a Massagem Laboral para minha empresa/equipe.",
     categories: { sites: "Sites e tecnologia", marketing: "Marketing e presença digital", monthly: "Planos mensais", career: "Carreira e desenvolvimento", mentorship: "Mentoria e estratégia", other: "Outros serviços" },
   },
   en: {
@@ -85,6 +86,7 @@ const COPY = {
     wellbeingHour: "LDR Wellbeing Hour", tagline: "Your company chooses the time. We organize the experience.", depositText: "Pay 50% to request the booking. The remaining 50% is paid after the action. Final availability is confirmed by our team.",
     hours2: "2 hours", hours4: "4 hours", halfDay: "Half day · 5 hours", corporateDay: "Corporate Day · up to 8 hours", deposit: "Deposit", mostChosen: "MOST CHOSEN", choosePeriod: "Choose period and pay 50%",
     serviceSolutions: "LDR Solutions", attendance: "Care", mentorshipStrategy: "Mentorship and strategy",
+    massageMessage: "Hello! I came from the LDR RH & Strategy dashboard and would like to know more about Workplace Massage for my company/team.",
     categories: { sites: "Websites and technology", marketing: "Marketing and digital presence", monthly: "Monthly plans", career: "Career and development", mentorship: "Mentorship and strategy", other: "Other services" },
   },
   fr: {
@@ -103,6 +105,7 @@ const COPY = {
     wellbeingHour: "Heure Bien-Être LDR", tagline: "Votre entreprise choisit la durée. Nous organisons l’expérience.", depositText: "Payez 50 % pour demander la réservation. Les 50 % restants sont payés après l’intervention. La disponibilité finale est confirmée par notre équipe.",
     hours2: "2 heures", hours4: "4 heures", halfDay: "Demi-journée · 5 heures", corporateDay: "Journée entreprise · jusqu’à 8 heures", deposit: "Acompte", mostChosen: "LE PLUS CHOISI", choosePeriod: "Choisir la durée et payer 50 %",
     serviceSolutions: "Solutions LDR", attendance: "Accompagnement", mentorshipStrategy: "Mentorat et stratégie",
+    massageMessage: "Bonjour ! Je viens de l’espace LDR RH & Stratégie et je souhaite en savoir plus sur le Massage en entreprise pour mon entreprise/équipe.",
     categories: { sites: "Sites et technologie", marketing: "Marketing et présence numérique", monthly: "Forfaits mensuels", career: "Carrière et développement", mentorship: "Mentorat et stratégie", other: "Autres services" },
   },
   es: {
@@ -121,15 +124,15 @@ const COPY = {
     wellbeingHour: "Hora de Bienestar LDR", tagline: "Tu empresa elige el tiempo. Nosotros organizamos la experiencia.", depositText: "Paga el 50 % para solicitar la reserva. El 50 % restante se paga después de la acción. La disponibilidad final será confirmada por nuestro equipo.",
     hours2: "2 horas", hours4: "4 horas", halfDay: "Medio día · 5 horas", corporateDay: "Día Corporativo · hasta 8 horas", deposit: "Entrada", mostChosen: "MÁS ELEGIDO", choosePeriod: "Elegir período y pagar 50 %",
     serviceSolutions: "Soluciones LDR", attendance: "Atención", mentorshipStrategy: "Mentoría y estrategia",
+    massageMessage: "¡Hola! Vengo del panel LDR RH & Estrategia y me gustaría saber más sobre el Masaje Laboral para mi empresa/equipo.",
     categories: { sites: "Sitios y tecnología", marketing: "Marketing y presencia digital", monthly: "Planes mensuales", career: "Carrera y desarrollo", mentorship: "Mentoría y estrategia", other: "Otros servicios" },
   },
 } as const;
 
 const WHATSAPP = "https://wa.me/32492923605";
-const MASSAGE_MESSAGE = `${WHATSAPP}?text=${encodeURIComponent("Olá! Vim pelo painel da LDR RH & Estratégia e gostaria de saber mais sobre a Massagem Laboral para minha empresa/equipe.")}`;
-const WELLBEING_URL = "https://ldrrhestrategia.com/bem-estar?lang=pt#hora-bem-estar-ldr";
 
 type Copy = (typeof COPY)[keyof typeof COPY];
+type Locale = keyof typeof COPY;
 
 function Card({ item, copy }: { item: ContractItem; copy: Copy }) {
   const link = safeUrl(item.paymentUrl);
@@ -160,7 +163,9 @@ function Card({ item, copy }: { item: ContractItem; copy: Copy }) {
   );
 }
 
-function CorporateWellbeing({ copy }: { copy: Copy }) {
+function CorporateWellbeing({ copy, locale }: { copy: Copy; locale: Locale }) {
+  const massageMessage = `${WHATSAPP}?text=${encodeURIComponent(copy.massageMessage)}`;
+  const wellbeingUrl = `https://ldrrhestrategia.com/bem-estar?lang=${locale}#hora-bem-estar-ldr`;
   return (
     <section className="min-w-0 rounded-3xl border border-primary/20 bg-card p-5 shadow-sm sm:p-6">
       <div className="grid min-w-0 gap-6 lg:grid-cols-[1.05fr_1.95fr] lg:items-stretch">
@@ -187,7 +192,7 @@ function CorporateWellbeing({ copy }: { copy: Copy }) {
               <p className="mt-3 break-words text-xs font-bold text-muted-foreground">{copy.minimum}</p>
               <p className="mt-2 break-words text-xs text-muted-foreground">{copy.localQuote}</p>
               <p className="mt-2 break-words text-xs text-muted-foreground">{copy.timing}</p>
-              <a className="mt-4 inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-[#25D366] px-4 py-3 text-center text-sm font-extrabold leading-snug text-[#063d20] shadow-sm transition hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" href={MASSAGE_MESSAGE} target="_blank" rel="noreferrer noopener">{copy.quoteWhatsapp}</a>
+              <a className="mt-4 inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-[#25D366] px-4 py-3 text-center text-sm font-extrabold leading-snug text-[#063d20] shadow-sm transition hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" href={massageMessage} target="_blank" rel="noreferrer noopener">{copy.quoteWhatsapp}</a>
             </article>
             <article className="min-w-0 rounded-2xl border border-primary/25 bg-background p-4">
               <h3 className="break-words font-serif text-lg">{copy.wellbeingHour}</h3>
@@ -199,7 +204,7 @@ function CorporateWellbeing({ copy }: { copy: Copy }) {
                 <div className="rounded-xl border border-border/70 p-3"><div className="flex flex-wrap items-center justify-between gap-2"><strong>{copy.halfDay}</strong><b className="whitespace-nowrap text-primary">€700</b></div><p className="mt-1 text-xs text-muted-foreground">{copy.deposit}: <strong>€350</strong></p></div>
                 <div className="rounded-xl border border-border/70 p-3"><div className="flex flex-wrap items-center justify-between gap-2"><strong>{copy.corporateDay}</strong><b className="whitespace-nowrap text-primary">€1.050</b></div><p className="mt-1 text-xs text-muted-foreground">{copy.deposit}: <strong>€525</strong></p></div>
               </div>
-              <a className="mt-4 inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-primary px-4 py-3 text-center text-sm font-extrabold leading-snug text-primary-foreground shadow-sm transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" href={WELLBEING_URL} target="_blank" rel="noreferrer noopener">{copy.choosePeriod}</a>
+              <a className="mt-4 inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-primary px-4 py-3 text-center text-sm font-extrabold leading-snug text-primary-foreground shadow-sm transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" href={wellbeingUrl} target="_blank" rel="noreferrer noopener">{copy.choosePeriod}</a>
             </article>
           </div>
         </div>
@@ -249,7 +254,7 @@ function ClientContract() {
       </div>
     </section>
 
-    <CorporateWellbeing copy={copy} />
+    <CorporateWellbeing copy={copy} locale={locale} />
 
     <section className="min-w-0"><p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">{copy.attendance}</p><h2 className="mt-1 break-words font-serif text-2xl">{t("contract.psychoanalysis")}</h2><ul className="mt-4 grid min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-3">{psicanalise.map((i) => <Card key={i.catalogKey} item={i} copy={copy} />)}</ul></section>
     <section className="min-w-0"><p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">{copy.mentorshipStrategy}</p><h2 className="mt-1 break-words font-serif text-2xl">{t("contract.mentorship")}</h2><ul className="mt-4 grid min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-3">{mentoria.map((i) => <Card key={i.catalogKey} item={i} copy={copy} />)}</ul></section>
