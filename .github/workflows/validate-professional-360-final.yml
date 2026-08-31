@@ -13,34 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Connect social navigation
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          p=Path('apps/painel-ldr/src/routes/profissional-painel.tsx')
-          s=p.read_text()
-          s=s.replace('["#perfil","Meu Perfil",UserRound],','["/profissional-perfil","Meu Perfil",UserRound],["/mensagens-profissionais","Mensagens",UsersRound],')
-          p.write_text(s)
-          p=Path('apps/painel-ldr/src/routes/_authenticated/painel-profissional.tsx')
-          s=p.read_text()
-          needle='{ to: "/painel-profissional/rede-profissionais-conteudo", extra: "networkContent", superOnly: true },'
-          add=needle+'\n  { to: "/painel-profissional/rede-avaliacoes", extra: "networkReviews", superOnly: true },'
-          if 'rede-avaliacoes' not in s: s=s.replace(needle,add)
-          s=s.replace('networkContent: "Rede · Treinamentos / Comunidade", notifications:', 'networkContent: "Rede · Treinamentos / Comunidade", networkReviews: "Rede · Avaliações", notifications:')
-          s=s.replace('networkContent: "Network · Training / Community", notifications:', 'networkContent: "Network · Training / Community", networkReviews: "Network · Reviews", notifications:')
-          s=s.replace('networkContent: "Réseau · Formations / Communauté", notifications:', 'networkContent: "Réseau · Formations / Communauté", networkReviews: "Réseau · Avis", notifications:')
-          s=s.replace('networkContent: "Red · Formación / Comunidad", notifications:', 'networkContent: "Red · Formación / Comunidad", networkReviews: "Red · Opiniones", notifications:')
-          p.write_text(s)
-          PY
-      - name: Commit navigation if changed
-        run: |
-          if ! git diff --quiet; then
-            git config user.name "ldr-rh-campanhas"
-            git config user.email "llucianouam@gmail.com"
-            git add apps/painel-ldr/src/routes/profissional-painel.tsx apps/painel-ldr/src/routes/_authenticated/painel-profissional.tsx
-            git commit -m "feat(network): conecta perfil mensagens e avaliações na navegação"
-            git push
-          fi
       - uses: actions/setup-node@v4
         with:
           node-version: 22
