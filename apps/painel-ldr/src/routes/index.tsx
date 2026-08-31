@@ -1,21 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { Building2, UserRound, UsersRound } from "lucide-react";
 
 import { SiteHeader } from "@/components/site-header";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Grupo LDR Essence — Sistema S8" },
-      {
-        name: "description",
-        content:
-          "Metodologia S8 da Grupo LDR Essence: 8 sessões individuais de mentoria com projeto de negócio e Plano de Desenvolvimento (PDE).",
-      },
-      { property: "og:title", content: "Grupo LDR Essence — Sistema S8" },
-      {
-        property: "og:description",
-        content: "8 sessões individuais de mentoria, projeto de negócio e PDE final.",
-      },
+      { title: "Grupo LDR Essence — Acessos e Sistema S8" },
+      { name: "description", content: "Acesse sua área no ecossistema Grupo LDR Essence: cliente individual, empresa ou funcionário." },
+      { property: "og:title", content: "Grupo LDR Essence — Acessos" },
+      { property: "og:description", content: "Áreas organizadas para clientes, empresas e funcionários." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -23,54 +17,27 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
-function Home() {
-  return (
-    <div className="min-h-screen">
-      <SiteHeader />
-      <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
-        <section className="s8-card">
-          <h1 className="font-serif text-3xl">Sistema S8 / Mentoria</h1>
-          <p className="mt-3 max-w-3xl text-[0.98rem]">
-            Um percurso de oito encontros individuais de 50 minutos, conduzido pela LDR RH &amp;
-            Estratégia, que estrutura o projeto de negócio do participante e conclui com um Plano de
-            Desenvolvimento (PDE) personalizado.
-          </p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <Link
-              to="/formulario"
-              className="rounded-lg bg-primary px-5 py-3 font-bold text-primary-foreground"
-            >
-              Quero participar
-            </Link>
-            <Link
-              to="/painel-profissional"
-              className="rounded-lg border border-border bg-card px-5 py-3 font-bold text-primary"
-            >
-              Acesso profissional
-            </Link>
-          </div>
-        </section>
+const ACCESS = [
+  { to:"/cliente/login", title:"Área do Cliente", text:"Compras, agenda, serviços, biblioteca, e-book, treinamentos e acompanhamento.", icon:UserRound, featured:true },
+  { to:"/empresa/login", title:"Área da Empresa", text:"Gerencie funcionários, benefícios, contratação, pagamentos e agenda corporativa.", icon:Building2 },
+  { to:"/funcionario/login", title:"Área do Funcionário", text:"Consulte benefícios, créditos, agenda, notificações e conteúdos disponibilizados.", icon:UsersRound },
+] as const;
 
-        <section className="mt-4 grid gap-4 sm:grid-cols-2">
-          <div className="s8-card">
-            <h2 className="font-serif text-xl">Como funciona</h2>
-            <ul className="mt-3 list-disc space-y-1 pl-5 text-sm">
-              <li>8 sessões individuais com escala de evolução de 0 a 10;</li>
-              <li>registro profissional de respostas, observações e tarefas;</li>
-              <li>construção do projeto de negócio ao longo do percurso;</li>
-              <li>relatório final e PDE entregues na oitava sessão.</li>
-            </ul>
-          </div>
-          <div className="s8-card">
-            <h2 className="font-serif text-xl">Confidencialidade</h2>
-            <p className="mt-3 text-sm">
-              Os registros das sessões são confidenciais. O painel profissional é restrito a
-              profissionais autorizados, com conta individual e intransferível — conhecer o endereço
-              da página não dá acesso a nenhum dado.
-            </p>
-          </div>
-        </section>
-      </main>
-    </div>
-  );
+function Home() {
+  return <div className="min-h-screen">
+    <SiteHeader />
+    <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+      <section className="s8-card min-w-0">
+        <p className="text-xs font-bold uppercase tracking-[.18em] text-primary">Grupo LDR Essence</p>
+        <h1 className="mt-2 break-words font-serif text-3xl sm:text-4xl">Escolha sua área</h1>
+        <p className="mt-3 max-w-3xl text-[0.98rem] leading-7 text-muted-foreground">Cada perfil encontra apenas o que precisa. Cliente individual, empresa e funcionário têm acesso organizado a serviços, agenda, conteúdos e benefícios.</p>
+        <div className="mt-6 grid gap-4 md:grid-cols-3">{ACCESS.map(({to,title,text,icon:Icon,featured})=><Link key={to} to={to} className={`min-w-0 rounded-2xl border p-5 transition hover:-translate-y-0.5 hover:shadow-lg ${featured?"border-primary bg-primary text-primary-foreground":"bg-card"}`}><Icon className="h-7 w-7"/><h2 className="mt-3 break-words font-serif text-2xl">{title}</h2><p className={`mt-2 break-words text-sm leading-6 ${featured?"opacity-85":"text-muted-foreground"}`}>{text}</p><span className="mt-4 inline-block text-sm font-bold">Entrar →</span></Link>)}</div>
+      </section>
+
+      <section className="mt-4 grid gap-4 lg:grid-cols-[1.1fr_.9fr]">
+        <div className="s8-card"><h2 className="font-serif text-2xl">Sistema S8 / Mentoria</h2><p className="mt-3 text-sm leading-6">Um percurso de oito encontros individuais de 50 minutos, conduzido pela LDR RH &amp; Estratégia, que estrutura o projeto de negócio do participante e conclui com um Plano de Desenvolvimento (PDE) personalizado.</p><Link to="/formulario" className="mt-5 inline-block rounded-lg bg-primary px-5 py-3 font-bold text-primary-foreground">Quero participar</Link></div>
+        <div className="s8-card"><h2 className="font-serif text-2xl">Outras páginas do ecossistema</h2><p className="mt-3 text-sm leading-6 text-muted-foreground">Conheça serviços, soluções corporativas e conteúdos para empreendedores.</p><div className="mt-4 grid gap-2"><a href="https://ldrrhestrategia.com/" target="_blank" rel="noreferrer" className="rounded-xl border px-4 py-3 text-sm font-bold text-primary">Grupo LDR Essence</a><a href="https://www.lucianoempreendedor.com/" target="_blank" rel="noreferrer" className="rounded-xl border px-4 py-3 text-sm font-bold text-primary">Luciano Empreendedor</a></div></div>
+      </section>
+    </main>
+  </div>;
 }
