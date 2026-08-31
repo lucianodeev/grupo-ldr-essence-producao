@@ -29,10 +29,20 @@ export const Route = createFileRoute("/cliente/login")({
 function cameFromCorporateBenefits() {
   if (typeof document === "undefined") return false;
   try {
+    if (!document.referrer) return false;
     const referrer = new URL(document.referrer);
+    const normalizedPath = referrer.pathname.replace(/\/$/, "") || "/";
+
+    // O botão legado de Benefícios Corporativos ainda aponta para /cliente.
+    // Em navegação anônima, /cliente redireciona para /cliente/login e o navegador
+    // pode preservar apenas a origem do site público ou usar /cliente como referrer.
+    const fromPublicLdr = /(^|\.)ldrrhestrategia\.com$/i.test(referrer.hostname);
+    const fromLegacyClientHop =
+      /(^|\.)painel\.ldrrhestrategia\.com$/i.test(referrer.hostname) && normalizedPath === "/cliente";
+
     return (
-      /(^|\.)ldrrhestrategia\.com$/i.test(referrer.hostname) &&
-      referrer.pathname.replace(/\/$/, "") === "/beneficios-corporativos"
+      fromLegacyClientHop ||
+      (fromPublicLdr && (normalizedPath === "/beneficios-corporativos" || normalizedPath === "/"))
     );
   } catch {
     return false;
