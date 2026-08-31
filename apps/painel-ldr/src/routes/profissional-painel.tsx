@@ -1,7 +1,7 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useMemo, useState } from "react";
-import { CalendarDays, CircleDollarSign, CreditCard, FileText, GraduationCap, LayoutDashboard, LogOut, Megaphone, Settings2, UserRound, UsersRound } from "lucide-react";
+import { BriefcaseBusiness, CalendarDays, CircleDollarSign, CreditCard, ExternalLink, FileText, GraduationCap, LayoutDashboard, LogOut, Megaphone, Settings2, UserRound, UsersRound } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { LanguageSelect, useI18n } from "@/lib/i18n";
@@ -9,7 +9,7 @@ import { professionalAddAvailability, professionalDashboard, professionalSaveOnb
 
 export const Route=createFileRoute("/profissional-painel")({head:()=>({meta:[{title:"Painel Profissional — Rede LDR"},{name:"robots",content:"noindex,nofollow"}]}),component:ProfessionalDashboardPage});
 type AnyRow=Record<string,any>;
-const NAV=[["#dashboard","Dashboard",LayoutDashboard],["#perfil","Meu Perfil",UserRound],["#agenda","Agenda",CalendarDays],["#atendimentos","Atendimentos",UsersRound],["#ganhos","Meus Ganhos",CircleDollarSign],["#repasses","Repasses",CreditCard],["#documentos","Documentos",FileText],["#assinatura","Minha Assinatura",CreditCard],["#treinamentos","Treinamentos ao Vivo",GraduationCap],["#comunidade","Comunidade",Megaphone],["#config","Configurações",Settings2]] as const;
+const NAV=[["#dashboard","Dashboard",LayoutDashboard],["#perfil","Meu Perfil",UserRound],["/profissional-servicos","Meus Serviços",BriefcaseBusiness],["#agenda","Agenda",CalendarDays],["#atendimentos","Atendimentos",UsersRound],["#ganhos","Meus Ganhos",CircleDollarSign],["#repasses","Repasses",CreditCard],["/profissional-documentos","Documentos",FileText],["/profissional-assinatura","Minha Assinatura",CreditCard],["#treinamentos","Treinamentos ao Vivo",GraduationCap],["#comunidade","Comunidade",Megaphone],["https://ldrrhestrategia.com/solucoes","Serviços LDR",ExternalLink],["mailto:contacto@ldrrhestrategia.com","Suporte",ExternalLink],["#config","Configurações",Settings2]] as const;
 function money(c:number,currency:string,locale:string){return new Intl.NumberFormat(locale==="pt"?"pt-BR":locale,{style:"currency",currency}).format((c||0)/100)}
 function statusLabel(s:string){return ({incomplete:"CADASTRO INCOMPLETO",under_review:"EM ANÁLISE",documents_pending:"DOCUMENTAÇÃO PENDENTE",approved:"APROVADO",active:"ATIVO",paused:"PAUSADO",subscription_pending:"ASSINATURA PENDENTE",suspended:"SUSPENSO"} as Record<string,string>)[s]||s}
 function ProfessionalDashboardPage(){

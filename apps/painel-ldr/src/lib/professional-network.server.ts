@@ -198,6 +198,7 @@ export async function createMarketplaceBookingCheckout(input: { profileSlug: str
   params.set("customer_email", mail);
   params.set("success_url", `${origin()}/profissional/${input.profileSlug}?booking=success`);
   params.set("cancel_url", `${origin()}/profissional/${input.profileSlug}?booking=cancel`);
+  params.set("expires_at", String(Math.floor(Date.now() / 1000) + 30 * 60));
   params.set("metadata[checkout_kind]", "marketplace_booking");
   params.set("metadata[booking_id]", booking.id);
   params.set("metadata[payment_id]", payment.id);
