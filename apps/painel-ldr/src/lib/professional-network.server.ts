@@ -32,7 +32,7 @@ export async function getNetworkLanding() {
     db.from("professional_categories").select("id,slug,name_pt,name_en,name_fr,name_es,active,sort_order").eq("active", true).order("sort_order"),
     db.from("subscription_plans").select("id,market,plan_code,name,currency,amount_cents,interval,benefits,active,sort_order").eq("active", true).order("market").order("sort_order"),
     db.from("professional_profiles").select("id,slug,display_name,professional_title,category_id,city,country_code,languages,online_enabled,in_person_enabled,public_region,photo_url,about,specialties,identity_verified,documents_verified,profile_verified,view_count").eq("is_public", true).eq("profile_status", "active").eq("compliance_status", "approved").order("display_name"),
-    db.from("professional_events").select("id,event_type,title,description,instructor,starts_at,ends_at,timezone,published").eq("published", true).gte("starts_at", new Date().toISOString()).order("starts_at").limit(8),
+    db.from("professional_events").select("id,event_type,title,description,instructor,starts_at,ends_at,timezone,published,access_tier").eq("published", true).eq("access_tier", "free").gte("starts_at", new Date().toISOString()).order("starts_at").limit(8),
     db.from("platform_financial_config").select("config_key,numeric_value,text_value").eq("active", true),
   ]);
   return { categories: categories ?? [], plans: plans ?? [], profiles: profiles ?? [], events: events ?? [], config: config ?? [] };
@@ -62,14 +62,21 @@ export async function getProfessionalDashboard(userId: string, email: string | n
     db.from("provider_balances").select("*").eq("professional_account_id", account.id),
     db.from("payouts").select("*").eq("professional_account_id", account.id).order("period_end", { ascending: false }).limit(24),
     db.from("payout_documents").select("id,payout_id,document_type,original_filename,period_start,period_end,declared_amount_cents,currency,status,uploaded_at,rejection_reason").eq("professional_account_id", account.id).order("uploaded_at", { ascending: false }).limit(50),
-    db.from("professional_events").select("id,event_type,title,description,instructor,starts_at,ends_at,timezone,meeting_url,published").eq("published", true).gte("starts_at", new Date().toISOString()).order("starts_at").limit(12),
-    db.from("community_posts").select("id,post_type,title,body,locale,published_at,created_at").eq("published", true).order("published_at", { ascending: false }).limit(20),
+    db.from("professional_events").select("id,event_type,title,description,instructor,starts_at,ends_at,timezone,meeting_url,published,access_tier").eq("published", true).gte("starts_at", new Date().toISOString()).order("starts_at").limit(12),
+    db.from("community_posts").select("id,post_type,title,body,locale,published_at,created_at,access_tier").eq("published", true).order("published_at", { ascending: false }).limit(20),
     profile ? db.from("professional_services").select("*").eq("professional_profile_id", profile.id).order("sort_order") : Promise.resolve({ data: [] }),
     profile ? db.from("professional_availability").select("*").eq("professional_profile_id", profile.id).order("weekday").order("start_time") : Promise.resolve({ data: [] }),
     db.from("professional_categories").select("id,slug,name_pt,name_en,name_fr,name_es,regulated_by_default,requires_admin_review").eq("active", true).order("sort_order"),
     db.from("platform_financial_config").select("config_key,numeric_value,text_value,json_value").eq("active", true),
   ]);
-  return { account, profile, subscription: subscription ?? null, plans: plans ?? [], bookings: bookings ?? [], payments: payments ?? [], balances: balances ?? [], payouts: payouts ?? [], documents: documents ?? [], events: events ?? [], community: community ?? [], services: services ?? [], availability: availability ?? [], categories: categories ?? [], config: config ?? [] };
+  const planCode = subscription?.status === "active" ? subscription?.subscription_plans?.plan_code : null;
+  const allowedTiers = new Set<string>(["free"]);
+  if (planCode === "pro" || planCode === "360") allowedTiers.add("pro");
+  if (planCode === "360") allowedTiers.add("360");
+  const visibleEvents = (events ?? []).filter((item: any) => allowedTiers.has(item.access_tier || "pro"));
+  const visibleCommunity = (community ?? []).filter((item: any) => allowedTiers.has(item.access_tier || "pro"));
+  const access = { planCode, free: true, community: planCode === "pro" || planCode === "360", liveTraining: planCode === "pro" || planCode === "360", mentoriaS8: planCode === "360" };
+  return { account, profile, subscription: subscription ?? null, plans: plans ?? [], bookings: bookings ?? [], payments: payments ?? [], balances: balances ?? [], payouts: payouts ?? [], documents: documents ?? [], events: visibleEvents, community: visibleCommunity, services: services ?? [], availability: availability ?? [], categories: categories ?? [], config: config ?? [], access };
 }
 
 export async function saveProfessionalOnboarding(userId: string, email: string | null, input: { step: number; countryCode?: string; currency?: "EUR"|"BRL"; displayName?: string; slug?: string; professionalTitle?: string; categoryId?: string; city?: string; languages?: string[]; onlineEnabled?: boolean; inPersonEnabled?: boolean; about?: string; experienceSummary?: string; educationSummary?: string; specialties?: string[] }) {
