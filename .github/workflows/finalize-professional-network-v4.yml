@@ -26,43 +26,43 @@ jobs:
           server = Path('apps/painel-ldr/src/lib/professional-network.server.ts')
           s = server.read_text(encoding='utf-8')
           needle = '  if (!mail) fail("Sua conta precisa ter um e-mail válido.");\n  const { data: plan } = await db.from("subscription_plans")'
-          replacement = '''  if (!mail) fail("Sua conta precisa ter um e-mail válido.");
-  const { data: existingSubscription } = await db.from("professional_subscriptions")
-    .select("id,status,current_period_end,cancel_at_period_end")
-    .eq("professional_account_id", account.id)
-    .eq("status", "active")
-    .order("created_at", { ascending: false })
-    .limit(1)
-    .maybeSingle();
-  if (existingSubscription) {
-    const end = existingSubscription.current_period_end ? new Date(existingSubscription.current_period_end).getTime() : 0;
-    if (!end || end > Date.now()) {
-      fail(existingSubscription.cancel_at_period_end
-        ? "Você já possui uma assinatura ativa até o fim do ciclo pago. Reative a renovação em Minha Assinatura se quiser continuar no próximo mês."
-        : "Você já possui uma assinatura mensal ativa. Gerencie sua assinatura atual em Minha Assinatura.");
-    }
-  }
-  const { data: plan } = await db.from("subscription_plans")'''
+          replacement = "\n".join([
+              '  if (!mail) fail("Sua conta precisa ter um e-mail válido.");',
+              '  const { data: existingSubscription } = await db.from("professional_subscriptions")',
+              '    .select("id,status,current_period_end,cancel_at_period_end")',
+              '    .eq("professional_account_id", account.id)',
+              '    .eq("status", "active")',
+              '    .order("created_at", { ascending: false })',
+              '    .limit(1)',
+              '    .maybeSingle();',
+              '  if (existingSubscription) {',
+              '    const end = existingSubscription.current_period_end ? new Date(existingSubscription.current_period_end).getTime() : 0;',
+              '    if (!end || end > Date.now()) {',
+              '      fail(existingSubscription.cancel_at_period_end',
+              '        ? "Você já possui uma assinatura ativa até o fim do ciclo pago. Reative a renovação em Minha Assinatura se quiser continuar no próximo mês."',
+              '        : "Você já possui uma assinatura mensal ativa. Gerencie sua assinatura atual em Minha Assinatura.");',
+              '    }',
+              '  }',
+              '  const { data: plan } = await db.from("subscription_plans")',
+          ])
           if needle not in s:
-            raise SystemExit('Subscription checkout signature changed; refusing unsafe patch')
-          s = s.replace(needle, replacement, 1)
-          server.write_text(s, encoding='utf-8')
+              raise SystemExit('Subscription checkout signature changed; refusing unsafe patch')
+          server.write_text(s.replace(needle, replacement, 1), encoding='utf-8')
 
           terms = Path('apps/painel-ldr/src/routes/rede-profissionais.termos.tsx')
           t = terms.read_text(encoding='utf-8')
           old = '["Termos para Profissionais","O profissional é responsável pela veracidade de seus dados, títulos, qualificações, registros e serviços. Títulos sujeitos a requisitos profissionais ou legais podem permanecer em revisão até validação. A assinatura mensal é separada da comissão sobre atendimentos pagos pelo marketplace."],'
           new = '["Termos para Profissionais","O profissional é responsável pela veracidade de seus dados, títulos, qualificações, registros e serviços. Títulos sujeitos a requisitos profissionais ou legais podem permanecer em revisão até validação. A assinatura é mensal e separada da comissão sobre atendimentos pagos pelo marketplace. Após o pagamento, o acesso permanece ativo durante todo o ciclo mensal já pago. O profissional pode cancelar a renovação automática a qualquer momento; o cancelamento não interrompe imediatamente o acesso e passa a valer somente ao final do período já pago. Antes do fim do ciclo, a renovação pode ser reativada pelo painel."],'
           if old not in t:
-            raise SystemExit('Professional terms signature changed; refusing unsafe patch')
+              raise SystemExit('Professional terms signature changed; refusing unsafe patch')
           terms.write_text(t.replace(old, new, 1), encoding='utf-8')
 
           landing = Path('apps/painel-ldr/src/routes/para-profissionais.tsx')
           l = landing.read_text(encoding='utf-8')
           marker = '<p className="mt-5 text-3xl font-black">{money(p.amount_cents,p.currency,locale)} <span className="text-sm font-semibold text-muted-foreground">/ mês</span></p>'
-          note = marker + '<p className="mt-2 text-xs leading-5 text-muted-foreground">Pagamento mensal. Cancele a renovação quando quiser e continue usando até o fim do ciclo já pago.</p>'
           if marker in l and 'continue usando até o fim do ciclo já pago' not in l:
-            l = l.replace(marker, note, 1)
-            landing.write_text(l, encoding='utf-8')
+              note = marker + '<p className="mt-2 text-xs leading-5 text-muted-foreground">Pagamento mensal. Cancele a renovação quando quiser e continue usando até o fim do ciclo já pago.</p>'
+              landing.write_text(l.replace(marker, note, 1), encoding='utf-8')
           PY
 
       - uses: actions/setup-node@v4
