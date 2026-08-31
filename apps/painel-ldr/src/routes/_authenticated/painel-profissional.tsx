@@ -19,6 +19,7 @@ const NAV = [
   { to: "/painel-profissional/clientes", key: "nav.customers" },
   { to: "/painel-profissional/empresas", extra: "companies" },
   { to: "/painel-profissional/rede-profissionais", extra: "network" },
+  { to: "/painel-profissional/rede-servicos", extra: "networkServices", superOnly: true },
   { to: "/painel-profissional/rede-profissionais-financeiro", extra: "networkFinance", superOnly: true },
   { to: "/painel-profissional/rede-profissionais-repasses", extra: "networkPayouts", superOnly: true },
   { to: "/painel-profissional/rede-profissionais-conformidade", extra: "networkCompliance", superOnly: true },
@@ -32,10 +33,10 @@ const NAV = [
 ] as const;
 
 const COPY = {
-  pt: { companies: "Empresas / Funcionários", network: "Rede de Profissionais", networkFinance: "Rede · Financeiro", networkPayouts: "Rede · Repasses", networkCompliance: "Rede · Conformidade", networkContent: "Rede · Treinamentos / Comunidade", notifications: "Notificações", training: "Treinamentos / Conteúdos", comments: "Comentários / Fórum", profile: "perfil", denied: "Sua conta não possui autorização para acessar esta central." },
-  en: { companies: "Companies / Employees", network: "Professional Network", networkFinance: "Network · Finance", networkPayouts: "Network · Payouts", networkCompliance: "Network · Compliance", networkContent: "Network · Training / Community", notifications: "Notifications", training: "Training / Content", comments: "Comments / Forum", profile: "role", denied: "Your account is not authorized to access this operations hub." },
-  fr: { companies: "Entreprises / Collaborateurs", network: "Réseau de Professionnels", networkFinance: "Réseau · Finance", networkPayouts: "Réseau · Reversements", networkCompliance: "Réseau · Conformité", networkContent: "Réseau · Formations / Communauté", notifications: "Notifications", training: "Formations / Contenus", comments: "Commentaires / Forum", profile: "profil", denied: "Votre compte n’est pas autorisé à accéder à cette centrale." },
-  es: { companies: "Empresas / Empleados", network: "Red de Profesionales", networkFinance: "Red · Finanzas", networkPayouts: "Red · Pagos", networkCompliance: "Red · Cumplimiento", networkContent: "Red · Formación / Comunidad", notifications: "Notificaciones", training: "Formaciones / Contenidos", comments: "Comentarios / Foro", profile: "perfil", denied: "Tu cuenta no está autorizada para acceder a esta central." },
+  pt: { companies: "Empresas / Funcionários", network: "Rede de Profissionais", networkServices: "Rede · Serviços", networkFinance: "Rede · Financeiro", networkPayouts: "Rede · Repasses", networkCompliance: "Rede · Conformidade", networkContent: "Rede · Treinamentos / Comunidade", notifications: "Notificações", training: "Treinamentos / Conteúdos", comments: "Comentários / Fórum", profile: "perfil", denied: "Sua conta não possui autorização para acessar esta central." },
+  en: { companies: "Companies / Employees", network: "Professional Network", networkServices: "Network · Services", networkFinance: "Network · Finance", networkPayouts: "Network · Payouts", networkCompliance: "Network · Compliance", networkContent: "Network · Training / Community", notifications: "Notifications", training: "Training / Content", comments: "Comments / Forum", profile: "role", denied: "Your account is not authorized to access this operations hub." },
+  fr: { companies: "Entreprises / Collaborateurs", network: "Réseau de Professionnels", networkServices: "Réseau · Services", networkFinance: "Réseau · Finance", networkPayouts: "Réseau · Reversements", networkCompliance: "Réseau · Conformité", networkContent: "Réseau · Formations / Communauté", notifications: "Notifications", training: "Formations / Contenus", comments: "Commentaires / Forum", profile: "profil", denied: "Votre compte n’est pas autorisé à accéder à cette centrale." },
+  es: { companies: "Empresas / Empleados", network: "Red de Profesionales", networkServices: "Red · Servicios", networkFinance: "Red · Finanzas", networkPayouts: "Red · Pagos", networkCompliance: "Red · Cumplimiento", networkContent: "Red · Formación / Comunidad", notifications: "Notificaciones", training: "Formaciones / Contenidos", comments: "Comentarios / Foro", profile: "perfil", denied: "Tu cuenta no está autorizada para acceder a esta central." },
 } as const;
 
 function CentralLayout() {

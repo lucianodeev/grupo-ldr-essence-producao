@@ -17,6 +17,15 @@ import { Route as AcessoRouteImport } from './routes/acesso'
 import { Route as BootstrapRouteImport } from './routes/bootstrap'
 import { Route as FormularioRouteImport } from './routes/formulario'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as ParaProfissionaisRouteImport } from './routes/para-profissionais'
+import { Route as ProfissionaisRouteImport } from './routes/profissionais'
+import { Route as ProfissionalAssinaturaRouteImport } from './routes/profissional-assinatura'
+import { Route as ProfissionalCatalogoLdrRouteImport } from './routes/profissional-catalogo-ldr'
+import { Route as ProfissionalDocumentosRouteImport } from './routes/profissional-documentos'
+import { Route as ProfissionalFerramentasRouteImport } from './routes/profissional-ferramentas'
+import { Route as ProfissionalOnboardingRouteImport } from './routes/profissional-onboarding'
+import { Route as ProfissionalPainelRouteImport } from './routes/profissional-painel'
+import { Route as ProfissionalServicosRouteImport } from './routes/profissional-servicos'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AuthenticatedPainelProfissionalRouteImport } from './routes/_authenticated/painel-profissional'
 import { Route as ClientareaClienteRouteImport } from './routes/_clientarea.cliente'
@@ -27,6 +36,10 @@ import { Route as ClienteDefinirSenhaRouteImport } from './routes/cliente.defini
 import { Route as ClienteLoginRouteImport } from './routes/cliente.login'
 import { Route as EmpresaLoginRouteImport } from './routes/empresa.login'
 import { Route as FuncionarioLoginRouteImport } from './routes/funcionario.login'
+import { Route as ProfissionaisCategoryRouteImport } from './routes/profissionais.$category'
+import { Route as ProfissionalSlugRouteImport } from './routes/profissional.$slug'
+import { Route as ProfissionalLoginRouteImport } from './routes/profissional.login'
+import { Route as RedeProfissionaisTermosRouteImport } from './routes/rede-profissionais.termos'
 import { Route as AuthenticatedPainelProfissionalIndexRouteImport } from './routes/_authenticated/painel-profissional.index'
 import { Route as AuthenticatedPainelProfissionalAcessosRouteImport } from './routes/_authenticated/painel-profissional.acessos'
 import { Route as AuthenticatedPainelProfissionalAgendaRouteImport } from './routes/_authenticated/painel-profissional.agenda'
@@ -40,6 +53,12 @@ import { Route as AuthenticatedPainelProfissionalMentoriaRouteImport } from './r
 import { Route as AuthenticatedPainelProfissionalNotificacoesRouteImport } from './routes/_authenticated/painel-profissional.notificacoes'
 import { Route as AuthenticatedPainelProfissionalPedidosRouteImport } from './routes/_authenticated/painel-profissional.pedidos'
 import { Route as AuthenticatedPainelProfissionalPsicanaliseRouteImport } from './routes/_authenticated/painel-profissional.psicanalise'
+import { Route as AuthenticatedPainelProfissionalRedeProfissionaisRouteImport } from './routes/_authenticated/painel-profissional.rede-profissionais'
+import { Route as AuthenticatedPainelProfissionalRedeProfissionaisConformidadeRouteImport } from './routes/_authenticated/painel-profissional.rede-profissionais-conformidade'
+import { Route as AuthenticatedPainelProfissionalRedeProfissionaisConteudoRouteImport } from './routes/_authenticated/painel-profissional.rede-profissionais-conteudo'
+import { Route as AuthenticatedPainelProfissionalRedeProfissionaisFinanceiroRouteImport } from './routes/_authenticated/painel-profissional.rede-profissionais-financeiro'
+import { Route as AuthenticatedPainelProfissionalRedeProfissionaisRepassesRouteImport } from './routes/_authenticated/painel-profissional.rede-profissionais-repasses'
+import { Route as AuthenticatedPainelProfissionalRedeServicosRouteImport } from './routes/_authenticated/painel-profissional.rede-servicos'
 import { Route as AuthenticatedPainelProfissionalS8RouteImport } from './routes/_authenticated/painel-profissional.s8'
 import { Route as AuthenticatedPainelProfissionalTreinamentosRouteImport } from './routes/_authenticated/painel-profissional.treinamentos'
 import { Route as ClientareaClienteIndexRouteImport } from './routes/_clientarea.cliente.index'
@@ -93,6 +112,51 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ParaProfissionaisRoute = ParaProfissionaisRouteImport.update({
+  id: '/para-profissionais',
+  path: '/para-profissionais',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfissionaisRoute = ProfissionaisRouteImport.update({
+  id: '/profissionais',
+  path: '/profissionais',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfissionalAssinaturaRoute = ProfissionalAssinaturaRouteImport.update({
+  id: '/profissional-assinatura',
+  path: '/profissional-assinatura',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfissionalCatalogoLdrRoute = ProfissionalCatalogoLdrRouteImport.update({
+  id: '/profissional-catalogo-ldr',
+  path: '/profissional-catalogo-ldr',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfissionalDocumentosRoute = ProfissionalDocumentosRouteImport.update({
+  id: '/profissional-documentos',
+  path: '/profissional-documentos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfissionalFerramentasRoute = ProfissionalFerramentasRouteImport.update({
+  id: '/profissional-ferramentas',
+  path: '/profissional-ferramentas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfissionalOnboardingRoute = ProfissionalOnboardingRouteImport.update({
+  id: '/profissional-onboarding',
+  path: '/profissional-onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfissionalPainelRoute = ProfissionalPainelRouteImport.update({
+  id: '/profissional-painel',
+  path: '/profissional-painel',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfissionalServicosRoute = ProfissionalServicosRouteImport.update({
+  id: '/profissional-servicos',
+  path: '/profissional-servicos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
@@ -142,6 +206,26 @@ const EmpresaLoginRoute = EmpresaLoginRouteImport.update({
 const FuncionarioLoginRoute = FuncionarioLoginRouteImport.update({
   id: '/funcionario/login',
   path: '/funcionario/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfissionaisCategoryRoute = ProfissionaisCategoryRouteImport.update({
+  id: '/$category',
+  path: '/$category',
+  getParentRoute: () => ProfissionaisRoute,
+} as any)
+const ProfissionalSlugRoute = ProfissionalSlugRouteImport.update({
+  id: '/profissional/$slug',
+  path: '/profissional/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfissionalLoginRoute = ProfissionalLoginRouteImport.update({
+  id: '/profissional/login',
+  path: '/profissional/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RedeProfissionaisTermosRoute = RedeProfissionaisTermosRouteImport.update({
+  id: '/rede-profissionais/termos',
+  path: '/rede-profissionais/termos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedPainelProfissionalIndexRoute =
@@ -220,6 +304,44 @@ const AuthenticatedPainelProfissionalPsicanaliseRoute =
   AuthenticatedPainelProfissionalPsicanaliseRouteImport.update({
     id: '/psicanalise',
     path: '/psicanalise',
+    getParentRoute: () => AuthenticatedPainelProfissionalRoute,
+  } as any)
+const AuthenticatedPainelProfissionalRedeProfissionaisRoute =
+  AuthenticatedPainelProfissionalRedeProfissionaisRouteImport.update({
+    id: '/rede-profissionais',
+    path: '/rede-profissionais',
+    getParentRoute: () => AuthenticatedPainelProfissionalRoute,
+  } as any)
+const AuthenticatedPainelProfissionalRedeProfissionaisConformidadeRoute =
+  AuthenticatedPainelProfissionalRedeProfissionaisConformidadeRouteImport.update(
+    {
+      id: '/rede-profissionais-conformidade',
+      path: '/rede-profissionais-conformidade',
+      getParentRoute: () => AuthenticatedPainelProfissionalRoute,
+    } as any,
+  )
+const AuthenticatedPainelProfissionalRedeProfissionaisConteudoRoute =
+  AuthenticatedPainelProfissionalRedeProfissionaisConteudoRouteImport.update({
+    id: '/rede-profissionais-conteudo',
+    path: '/rede-profissionais-conteudo',
+    getParentRoute: () => AuthenticatedPainelProfissionalRoute,
+  } as any)
+const AuthenticatedPainelProfissionalRedeProfissionaisFinanceiroRoute =
+  AuthenticatedPainelProfissionalRedeProfissionaisFinanceiroRouteImport.update({
+    id: '/rede-profissionais-financeiro',
+    path: '/rede-profissionais-financeiro',
+    getParentRoute: () => AuthenticatedPainelProfissionalRoute,
+  } as any)
+const AuthenticatedPainelProfissionalRedeProfissionaisRepassesRoute =
+  AuthenticatedPainelProfissionalRedeProfissionaisRepassesRouteImport.update({
+    id: '/rede-profissionais-repasses',
+    path: '/rede-profissionais-repasses',
+    getParentRoute: () => AuthenticatedPainelProfissionalRoute,
+  } as any)
+const AuthenticatedPainelProfissionalRedeServicosRoute =
+  AuthenticatedPainelProfissionalRedeServicosRouteImport.update({
+    id: '/rede-servicos',
+    path: '/rede-servicos',
     getParentRoute: () => AuthenticatedPainelProfissionalRoute,
   } as any)
 const AuthenticatedPainelProfissionalS8Route =
@@ -315,6 +437,15 @@ export interface FileRoutesByFullPath {
   '/bootstrap': typeof BootstrapRoute
   '/formulario': typeof FormularioRoute
   '/login': typeof LoginRoute
+  '/para-profissionais': typeof ParaProfissionaisRoute
+  '/profissionais': typeof ProfissionaisRouteWithChildren
+  '/profissional-assinatura': typeof ProfissionalAssinaturaRoute
+  '/profissional-catalogo-ldr': typeof ProfissionalCatalogoLdrRoute
+  '/profissional-documentos': typeof ProfissionalDocumentosRoute
+  '/profissional-ferramentas': typeof ProfissionalFerramentasRoute
+  '/profissional-onboarding': typeof ProfissionalOnboardingRoute
+  '/profissional-painel': typeof ProfissionalPainelRoute
+  '/profissional-servicos': typeof ProfissionalServicosRoute
   '/reset-password': typeof ResetPasswordRoute
   '/painel-profissional': typeof AuthenticatedPainelProfissionalRouteWithChildren
   '/cliente': typeof ClientareaClienteRouteWithChildren
@@ -325,6 +456,10 @@ export interface FileRoutesByFullPath {
   '/cliente/login': typeof ClienteLoginRoute
   '/empresa/login': typeof EmpresaLoginRoute
   '/funcionario/login': typeof FuncionarioLoginRoute
+  '/profissionais/$category': typeof ProfissionaisCategoryRoute
+  '/profissional/$slug': typeof ProfissionalSlugRoute
+  '/profissional/login': typeof ProfissionalLoginRoute
+  '/rede-profissionais/termos': typeof RedeProfissionaisTermosRoute
   '/painel-profissional/acessos': typeof AuthenticatedPainelProfissionalAcessosRoute
   '/painel-profissional/agenda': typeof AuthenticatedPainelProfissionalAgendaRoute
   '/painel-profissional/catalogo': typeof AuthenticatedPainelProfissionalCatalogoRoute
@@ -337,6 +472,12 @@ export interface FileRoutesByFullPath {
   '/painel-profissional/notificacoes': typeof AuthenticatedPainelProfissionalNotificacoesRoute
   '/painel-profissional/pedidos': typeof AuthenticatedPainelProfissionalPedidosRoute
   '/painel-profissional/psicanalise': typeof AuthenticatedPainelProfissionalPsicanaliseRoute
+  '/painel-profissional/rede-profissionais': typeof AuthenticatedPainelProfissionalRedeProfissionaisRoute
+  '/painel-profissional/rede-profissionais-conformidade': typeof AuthenticatedPainelProfissionalRedeProfissionaisConformidadeRoute
+  '/painel-profissional/rede-profissionais-conteudo': typeof AuthenticatedPainelProfissionalRedeProfissionaisConteudoRoute
+  '/painel-profissional/rede-profissionais-financeiro': typeof AuthenticatedPainelProfissionalRedeProfissionaisFinanceiroRoute
+  '/painel-profissional/rede-profissionais-repasses': typeof AuthenticatedPainelProfissionalRedeProfissionaisRepassesRoute
+  '/painel-profissional/rede-servicos': typeof AuthenticatedPainelProfissionalRedeServicosRoute
   '/painel-profissional/s8': typeof AuthenticatedPainelProfissionalS8Route
   '/painel-profissional/treinamentos': typeof AuthenticatedPainelProfissionalTreinamentosRoute
   '/cliente/agenda': typeof ClientareaClienteAgendaRoute
@@ -360,6 +501,15 @@ export interface FileRoutesByTo {
   '/bootstrap': typeof BootstrapRoute
   '/formulario': typeof FormularioRoute
   '/login': typeof LoginRoute
+  '/para-profissionais': typeof ParaProfissionaisRoute
+  '/profissionais': typeof ProfissionaisRouteWithChildren
+  '/profissional-assinatura': typeof ProfissionalAssinaturaRoute
+  '/profissional-catalogo-ldr': typeof ProfissionalCatalogoLdrRoute
+  '/profissional-documentos': typeof ProfissionalDocumentosRoute
+  '/profissional-ferramentas': typeof ProfissionalFerramentasRoute
+  '/profissional-onboarding': typeof ProfissionalOnboardingRoute
+  '/profissional-painel': typeof ProfissionalPainelRoute
+  '/profissional-servicos': typeof ProfissionalServicosRoute
   '/reset-password': typeof ResetPasswordRoute
   '/empresa': typeof PortalEmpresaRoute
   '/funcionario': typeof PortalFuncionarioRoute
@@ -368,6 +518,10 @@ export interface FileRoutesByTo {
   '/cliente/login': typeof ClienteLoginRoute
   '/empresa/login': typeof EmpresaLoginRoute
   '/funcionario/login': typeof FuncionarioLoginRoute
+  '/profissionais/$category': typeof ProfissionaisCategoryRoute
+  '/profissional/$slug': typeof ProfissionalSlugRoute
+  '/profissional/login': typeof ProfissionalLoginRoute
+  '/rede-profissionais/termos': typeof RedeProfissionaisTermosRoute
   '/painel-profissional/acessos': typeof AuthenticatedPainelProfissionalAcessosRoute
   '/painel-profissional/agenda': typeof AuthenticatedPainelProfissionalAgendaRoute
   '/painel-profissional/catalogo': typeof AuthenticatedPainelProfissionalCatalogoRoute
@@ -380,6 +534,12 @@ export interface FileRoutesByTo {
   '/painel-profissional/notificacoes': typeof AuthenticatedPainelProfissionalNotificacoesRoute
   '/painel-profissional/pedidos': typeof AuthenticatedPainelProfissionalPedidosRoute
   '/painel-profissional/psicanalise': typeof AuthenticatedPainelProfissionalPsicanaliseRoute
+  '/painel-profissional/rede-profissionais': typeof AuthenticatedPainelProfissionalRedeProfissionaisRoute
+  '/painel-profissional/rede-profissionais-conformidade': typeof AuthenticatedPainelProfissionalRedeProfissionaisConformidadeRoute
+  '/painel-profissional/rede-profissionais-conteudo': typeof AuthenticatedPainelProfissionalRedeProfissionaisConteudoRoute
+  '/painel-profissional/rede-profissionais-financeiro': typeof AuthenticatedPainelProfissionalRedeProfissionaisFinanceiroRoute
+  '/painel-profissional/rede-profissionais-repasses': typeof AuthenticatedPainelProfissionalRedeProfissionaisRepassesRoute
+  '/painel-profissional/rede-servicos': typeof AuthenticatedPainelProfissionalRedeServicosRoute
   '/painel-profissional/s8': typeof AuthenticatedPainelProfissionalS8Route
   '/painel-profissional/treinamentos': typeof AuthenticatedPainelProfissionalTreinamentosRoute
   '/cliente/agenda': typeof ClientareaClienteAgendaRoute
@@ -407,6 +567,15 @@ export interface FileRoutesById {
   '/bootstrap': typeof BootstrapRoute
   '/formulario': typeof FormularioRoute
   '/login': typeof LoginRoute
+  '/para-profissionais': typeof ParaProfissionaisRoute
+  '/profissionais': typeof ProfissionaisRouteWithChildren
+  '/profissional-assinatura': typeof ProfissionalAssinaturaRoute
+  '/profissional-catalogo-ldr': typeof ProfissionalCatalogoLdrRoute
+  '/profissional-documentos': typeof ProfissionalDocumentosRoute
+  '/profissional-ferramentas': typeof ProfissionalFerramentasRoute
+  '/profissional-onboarding': typeof ProfissionalOnboardingRoute
+  '/profissional-painel': typeof ProfissionalPainelRoute
+  '/profissional-servicos': typeof ProfissionalServicosRoute
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/painel-profissional': typeof AuthenticatedPainelProfissionalRouteWithChildren
   '/_clientarea/cliente': typeof ClientareaClienteRouteWithChildren
@@ -417,6 +586,10 @@ export interface FileRoutesById {
   '/cliente/login': typeof ClienteLoginRoute
   '/empresa/login': typeof EmpresaLoginRoute
   '/funcionario/login': typeof FuncionarioLoginRoute
+  '/profissionais/$category': typeof ProfissionaisCategoryRoute
+  '/profissional/$slug': typeof ProfissionalSlugRoute
+  '/profissional/login': typeof ProfissionalLoginRoute
+  '/rede-profissionais/termos': typeof RedeProfissionaisTermosRoute
   '/_authenticated/painel-profissional/acessos': typeof AuthenticatedPainelProfissionalAcessosRoute
   '/_authenticated/painel-profissional/agenda': typeof AuthenticatedPainelProfissionalAgendaRoute
   '/_authenticated/painel-profissional/catalogo': typeof AuthenticatedPainelProfissionalCatalogoRoute
@@ -429,6 +602,12 @@ export interface FileRoutesById {
   '/_authenticated/painel-profissional/notificacoes': typeof AuthenticatedPainelProfissionalNotificacoesRoute
   '/_authenticated/painel-profissional/pedidos': typeof AuthenticatedPainelProfissionalPedidosRoute
   '/_authenticated/painel-profissional/psicanalise': typeof AuthenticatedPainelProfissionalPsicanaliseRoute
+  '/_authenticated/painel-profissional/rede-profissionais': typeof AuthenticatedPainelProfissionalRedeProfissionaisRoute
+  '/_authenticated/painel-profissional/rede-profissionais-conformidade': typeof AuthenticatedPainelProfissionalRedeProfissionaisConformidadeRoute
+  '/_authenticated/painel-profissional/rede-profissionais-conteudo': typeof AuthenticatedPainelProfissionalRedeProfissionaisConteudoRoute
+  '/_authenticated/painel-profissional/rede-profissionais-financeiro': typeof AuthenticatedPainelProfissionalRedeProfissionaisFinanceiroRoute
+  '/_authenticated/painel-profissional/rede-profissionais-repasses': typeof AuthenticatedPainelProfissionalRedeProfissionaisRepassesRoute
+  '/_authenticated/painel-profissional/rede-servicos': typeof AuthenticatedPainelProfissionalRedeServicosRoute
   '/_authenticated/painel-profissional/s8': typeof AuthenticatedPainelProfissionalS8Route
   '/_authenticated/painel-profissional/treinamentos': typeof AuthenticatedPainelProfissionalTreinamentosRoute
   '/_clientarea/cliente/agenda': typeof ClientareaClienteAgendaRoute
@@ -454,6 +633,15 @@ export interface FileRouteTypes {
     | '/bootstrap'
     | '/formulario'
     | '/login'
+    | '/para-profissionais'
+    | '/profissionais'
+    | '/profissional-assinatura'
+    | '/profissional-catalogo-ldr'
+    | '/profissional-documentos'
+    | '/profissional-ferramentas'
+    | '/profissional-onboarding'
+    | '/profissional-painel'
+    | '/profissional-servicos'
     | '/reset-password'
     | '/painel-profissional'
     | '/cliente'
@@ -464,6 +652,10 @@ export interface FileRouteTypes {
     | '/cliente/login'
     | '/empresa/login'
     | '/funcionario/login'
+    | '/profissionais/$category'
+    | '/profissional/$slug'
+    | '/profissional/login'
+    | '/rede-profissionais/termos'
     | '/painel-profissional/acessos'
     | '/painel-profissional/agenda'
     | '/painel-profissional/catalogo'
@@ -476,6 +668,12 @@ export interface FileRouteTypes {
     | '/painel-profissional/notificacoes'
     | '/painel-profissional/pedidos'
     | '/painel-profissional/psicanalise'
+    | '/painel-profissional/rede-profissionais'
+    | '/painel-profissional/rede-profissionais-conformidade'
+    | '/painel-profissional/rede-profissionais-conteudo'
+    | '/painel-profissional/rede-profissionais-financeiro'
+    | '/painel-profissional/rede-profissionais-repasses'
+    | '/painel-profissional/rede-servicos'
     | '/painel-profissional/s8'
     | '/painel-profissional/treinamentos'
     | '/cliente/agenda'
@@ -499,6 +697,15 @@ export interface FileRouteTypes {
     | '/bootstrap'
     | '/formulario'
     | '/login'
+    | '/para-profissionais'
+    | '/profissionais'
+    | '/profissional-assinatura'
+    | '/profissional-catalogo-ldr'
+    | '/profissional-documentos'
+    | '/profissional-ferramentas'
+    | '/profissional-onboarding'
+    | '/profissional-painel'
+    | '/profissional-servicos'
     | '/reset-password'
     | '/empresa'
     | '/funcionario'
@@ -507,6 +714,10 @@ export interface FileRouteTypes {
     | '/cliente/login'
     | '/empresa/login'
     | '/funcionario/login'
+    | '/profissionais/$category'
+    | '/profissional/$slug'
+    | '/profissional/login'
+    | '/rede-profissionais/termos'
     | '/painel-profissional/acessos'
     | '/painel-profissional/agenda'
     | '/painel-profissional/catalogo'
@@ -519,6 +730,12 @@ export interface FileRouteTypes {
     | '/painel-profissional/notificacoes'
     | '/painel-profissional/pedidos'
     | '/painel-profissional/psicanalise'
+    | '/painel-profissional/rede-profissionais'
+    | '/painel-profissional/rede-profissionais-conformidade'
+    | '/painel-profissional/rede-profissionais-conteudo'
+    | '/painel-profissional/rede-profissionais-financeiro'
+    | '/painel-profissional/rede-profissionais-repasses'
+    | '/painel-profissional/rede-servicos'
     | '/painel-profissional/s8'
     | '/painel-profissional/treinamentos'
     | '/cliente/agenda'
@@ -545,6 +762,15 @@ export interface FileRouteTypes {
     | '/bootstrap'
     | '/formulario'
     | '/login'
+    | '/para-profissionais'
+    | '/profissionais'
+    | '/profissional-assinatura'
+    | '/profissional-catalogo-ldr'
+    | '/profissional-documentos'
+    | '/profissional-ferramentas'
+    | '/profissional-onboarding'
+    | '/profissional-painel'
+    | '/profissional-servicos'
     | '/reset-password'
     | '/_authenticated/painel-profissional'
     | '/_clientarea/cliente'
@@ -555,6 +781,10 @@ export interface FileRouteTypes {
     | '/cliente/login'
     | '/empresa/login'
     | '/funcionario/login'
+    | '/profissionais/$category'
+    | '/profissional/$slug'
+    | '/profissional/login'
+    | '/rede-profissionais/termos'
     | '/_authenticated/painel-profissional/acessos'
     | '/_authenticated/painel-profissional/agenda'
     | '/_authenticated/painel-profissional/catalogo'
@@ -567,6 +797,12 @@ export interface FileRouteTypes {
     | '/_authenticated/painel-profissional/notificacoes'
     | '/_authenticated/painel-profissional/pedidos'
     | '/_authenticated/painel-profissional/psicanalise'
+    | '/_authenticated/painel-profissional/rede-profissionais'
+    | '/_authenticated/painel-profissional/rede-profissionais-conformidade'
+    | '/_authenticated/painel-profissional/rede-profissionais-conteudo'
+    | '/_authenticated/painel-profissional/rede-profissionais-financeiro'
+    | '/_authenticated/painel-profissional/rede-profissionais-repasses'
+    | '/_authenticated/painel-profissional/rede-servicos'
     | '/_authenticated/painel-profissional/s8'
     | '/_authenticated/painel-profissional/treinamentos'
     | '/_clientarea/cliente/agenda'
@@ -594,12 +830,24 @@ export interface RootRouteChildren {
   BootstrapRoute: typeof BootstrapRoute
   FormularioRoute: typeof FormularioRoute
   LoginRoute: typeof LoginRoute
+  ParaProfissionaisRoute: typeof ParaProfissionaisRoute
+  ProfissionaisRoute: typeof ProfissionaisRouteWithChildren
+  ProfissionalAssinaturaRoute: typeof ProfissionalAssinaturaRoute
+  ProfissionalCatalogoLdrRoute: typeof ProfissionalCatalogoLdrRoute
+  ProfissionalDocumentosRoute: typeof ProfissionalDocumentosRoute
+  ProfissionalFerramentasRoute: typeof ProfissionalFerramentasRoute
+  ProfissionalOnboardingRoute: typeof ProfissionalOnboardingRoute
+  ProfissionalPainelRoute: typeof ProfissionalPainelRoute
+  ProfissionalServicosRoute: typeof ProfissionalServicosRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   ClienteAtivarRoute: typeof ClienteAtivarRoute
   ClienteDefinirSenhaRoute: typeof ClienteDefinirSenhaRoute
   ClienteLoginRoute: typeof ClienteLoginRoute
   EmpresaLoginRoute: typeof EmpresaLoginRoute
   FuncionarioLoginRoute: typeof FuncionarioLoginRoute
+  ProfissionalSlugRoute: typeof ProfissionalSlugRoute
+  ProfissionalLoginRoute: typeof ProfissionalLoginRoute
+  RedeProfissionaisTermosRoute: typeof RedeProfissionaisTermosRoute
   ApiIntegrationsSiteOrdersRoute: typeof ApiIntegrationsSiteOrdersRoute
   ApiStripeWebhookRoute: typeof ApiStripeWebhookRoute
 }
@@ -660,6 +908,69 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/para-profissionais': {
+      id: '/para-profissionais'
+      path: '/para-profissionais'
+      fullPath: '/para-profissionais'
+      preLoaderRoute: typeof ParaProfissionaisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profissionais': {
+      id: '/profissionais'
+      path: '/profissionais'
+      fullPath: '/profissionais'
+      preLoaderRoute: typeof ProfissionaisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profissional-assinatura': {
+      id: '/profissional-assinatura'
+      path: '/profissional-assinatura'
+      fullPath: '/profissional-assinatura'
+      preLoaderRoute: typeof ProfissionalAssinaturaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profissional-catalogo-ldr': {
+      id: '/profissional-catalogo-ldr'
+      path: '/profissional-catalogo-ldr'
+      fullPath: '/profissional-catalogo-ldr'
+      preLoaderRoute: typeof ProfissionalCatalogoLdrRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profissional-documentos': {
+      id: '/profissional-documentos'
+      path: '/profissional-documentos'
+      fullPath: '/profissional-documentos'
+      preLoaderRoute: typeof ProfissionalDocumentosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profissional-ferramentas': {
+      id: '/profissional-ferramentas'
+      path: '/profissional-ferramentas'
+      fullPath: '/profissional-ferramentas'
+      preLoaderRoute: typeof ProfissionalFerramentasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profissional-onboarding': {
+      id: '/profissional-onboarding'
+      path: '/profissional-onboarding'
+      fullPath: '/profissional-onboarding'
+      preLoaderRoute: typeof ProfissionalOnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profissional-painel': {
+      id: '/profissional-painel'
+      path: '/profissional-painel'
+      fullPath: '/profissional-painel'
+      preLoaderRoute: typeof ProfissionalPainelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profissional-servicos': {
+      id: '/profissional-servicos'
+      path: '/profissional-servicos'
+      fullPath: '/profissional-servicos'
+      preLoaderRoute: typeof ProfissionalServicosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reset-password': {
@@ -730,6 +1041,34 @@ declare module '@tanstack/react-router' {
       path: '/funcionario/login'
       fullPath: '/funcionario/login'
       preLoaderRoute: typeof FuncionarioLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profissionais/$category': {
+      id: '/profissionais/$category'
+      path: '/$category'
+      fullPath: '/profissionais/$category'
+      preLoaderRoute: typeof ProfissionaisCategoryRouteImport
+      parentRoute: typeof ProfissionaisRoute
+    }
+    '/profissional/$slug': {
+      id: '/profissional/$slug'
+      path: '/profissional/$slug'
+      fullPath: '/profissional/$slug'
+      preLoaderRoute: typeof ProfissionalSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profissional/login': {
+      id: '/profissional/login'
+      path: '/profissional/login'
+      fullPath: '/profissional/login'
+      preLoaderRoute: typeof ProfissionalLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rede-profissionais/termos': {
+      id: '/rede-profissionais/termos'
+      path: '/rede-profissionais/termos'
+      fullPath: '/rede-profissionais/termos'
+      preLoaderRoute: typeof RedeProfissionaisTermosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/painel-profissional/': {
@@ -821,6 +1160,48 @@ declare module '@tanstack/react-router' {
       path: '/psicanalise'
       fullPath: '/painel-profissional/psicanalise'
       preLoaderRoute: typeof AuthenticatedPainelProfissionalPsicanaliseRouteImport
+      parentRoute: typeof AuthenticatedPainelProfissionalRoute
+    }
+    '/_authenticated/painel-profissional/rede-profissionais': {
+      id: '/_authenticated/painel-profissional/rede-profissionais'
+      path: '/rede-profissionais'
+      fullPath: '/painel-profissional/rede-profissionais'
+      preLoaderRoute: typeof AuthenticatedPainelProfissionalRedeProfissionaisRouteImport
+      parentRoute: typeof AuthenticatedPainelProfissionalRoute
+    }
+    '/_authenticated/painel-profissional/rede-profissionais-conformidade': {
+      id: '/_authenticated/painel-profissional/rede-profissionais-conformidade'
+      path: '/rede-profissionais-conformidade'
+      fullPath: '/painel-profissional/rede-profissionais-conformidade'
+      preLoaderRoute: typeof AuthenticatedPainelProfissionalRedeProfissionaisConformidadeRouteImport
+      parentRoute: typeof AuthenticatedPainelProfissionalRoute
+    }
+    '/_authenticated/painel-profissional/rede-profissionais-conteudo': {
+      id: '/_authenticated/painel-profissional/rede-profissionais-conteudo'
+      path: '/rede-profissionais-conteudo'
+      fullPath: '/painel-profissional/rede-profissionais-conteudo'
+      preLoaderRoute: typeof AuthenticatedPainelProfissionalRedeProfissionaisConteudoRouteImport
+      parentRoute: typeof AuthenticatedPainelProfissionalRoute
+    }
+    '/_authenticated/painel-profissional/rede-profissionais-financeiro': {
+      id: '/_authenticated/painel-profissional/rede-profissionais-financeiro'
+      path: '/rede-profissionais-financeiro'
+      fullPath: '/painel-profissional/rede-profissionais-financeiro'
+      preLoaderRoute: typeof AuthenticatedPainelProfissionalRedeProfissionaisFinanceiroRouteImport
+      parentRoute: typeof AuthenticatedPainelProfissionalRoute
+    }
+    '/_authenticated/painel-profissional/rede-profissionais-repasses': {
+      id: '/_authenticated/painel-profissional/rede-profissionais-repasses'
+      path: '/rede-profissionais-repasses'
+      fullPath: '/painel-profissional/rede-profissionais-repasses'
+      preLoaderRoute: typeof AuthenticatedPainelProfissionalRedeProfissionaisRepassesRouteImport
+      parentRoute: typeof AuthenticatedPainelProfissionalRoute
+    }
+    '/_authenticated/painel-profissional/rede-servicos': {
+      id: '/_authenticated/painel-profissional/rede-servicos'
+      path: '/rede-servicos'
+      fullPath: '/painel-profissional/rede-servicos'
+      preLoaderRoute: typeof AuthenticatedPainelProfissionalRedeServicosRouteImport
       parentRoute: typeof AuthenticatedPainelProfissionalRoute
     }
     '/_authenticated/painel-profissional/s8': {
@@ -944,6 +1325,12 @@ interface AuthenticatedPainelProfissionalRouteChildren {
   AuthenticatedPainelProfissionalNotificacoesRoute: typeof AuthenticatedPainelProfissionalNotificacoesRoute
   AuthenticatedPainelProfissionalPedidosRoute: typeof AuthenticatedPainelProfissionalPedidosRoute
   AuthenticatedPainelProfissionalPsicanaliseRoute: typeof AuthenticatedPainelProfissionalPsicanaliseRoute
+  AuthenticatedPainelProfissionalRedeProfissionaisRoute: typeof AuthenticatedPainelProfissionalRedeProfissionaisRoute
+  AuthenticatedPainelProfissionalRedeProfissionaisConformidadeRoute: typeof AuthenticatedPainelProfissionalRedeProfissionaisConformidadeRoute
+  AuthenticatedPainelProfissionalRedeProfissionaisConteudoRoute: typeof AuthenticatedPainelProfissionalRedeProfissionaisConteudoRoute
+  AuthenticatedPainelProfissionalRedeProfissionaisFinanceiroRoute: typeof AuthenticatedPainelProfissionalRedeProfissionaisFinanceiroRoute
+  AuthenticatedPainelProfissionalRedeProfissionaisRepassesRoute: typeof AuthenticatedPainelProfissionalRedeProfissionaisRepassesRoute
+  AuthenticatedPainelProfissionalRedeServicosRoute: typeof AuthenticatedPainelProfissionalRedeServicosRoute
   AuthenticatedPainelProfissionalS8Route: typeof AuthenticatedPainelProfissionalS8Route
   AuthenticatedPainelProfissionalTreinamentosRoute: typeof AuthenticatedPainelProfissionalTreinamentosRoute
   AuthenticatedPainelProfissionalIndexRoute: typeof AuthenticatedPainelProfissionalIndexRoute
@@ -975,6 +1362,18 @@ const AuthenticatedPainelProfissionalRouteChildren: AuthenticatedPainelProfissio
       AuthenticatedPainelProfissionalPedidosRoute,
     AuthenticatedPainelProfissionalPsicanaliseRoute:
       AuthenticatedPainelProfissionalPsicanaliseRoute,
+    AuthenticatedPainelProfissionalRedeProfissionaisRoute:
+      AuthenticatedPainelProfissionalRedeProfissionaisRoute,
+    AuthenticatedPainelProfissionalRedeProfissionaisConformidadeRoute:
+      AuthenticatedPainelProfissionalRedeProfissionaisConformidadeRoute,
+    AuthenticatedPainelProfissionalRedeProfissionaisConteudoRoute:
+      AuthenticatedPainelProfissionalRedeProfissionaisConteudoRoute,
+    AuthenticatedPainelProfissionalRedeProfissionaisFinanceiroRoute:
+      AuthenticatedPainelProfissionalRedeProfissionaisFinanceiroRoute,
+    AuthenticatedPainelProfissionalRedeProfissionaisRepassesRoute:
+      AuthenticatedPainelProfissionalRedeProfissionaisRepassesRoute,
+    AuthenticatedPainelProfissionalRedeServicosRoute:
+      AuthenticatedPainelProfissionalRedeServicosRoute,
     AuthenticatedPainelProfissionalS8Route:
       AuthenticatedPainelProfissionalS8Route,
     AuthenticatedPainelProfissionalTreinamentosRoute:
@@ -1056,6 +1455,18 @@ const PortalRouteChildren: PortalRouteChildren = {
 const PortalRouteWithChildren =
   PortalRoute._addFileChildren(PortalRouteChildren)
 
+interface ProfissionaisRouteChildren {
+  ProfissionaisCategoryRoute: typeof ProfissionaisCategoryRoute
+}
+
+const ProfissionaisRouteChildren: ProfissionaisRouteChildren = {
+  ProfissionaisCategoryRoute: ProfissionaisCategoryRoute,
+}
+
+const ProfissionaisRouteWithChildren = ProfissionaisRoute._addFileChildren(
+  ProfissionaisRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
@@ -1065,12 +1476,24 @@ const rootRouteChildren: RootRouteChildren = {
   BootstrapRoute: BootstrapRoute,
   FormularioRoute: FormularioRoute,
   LoginRoute: LoginRoute,
+  ParaProfissionaisRoute: ParaProfissionaisRoute,
+  ProfissionaisRoute: ProfissionaisRouteWithChildren,
+  ProfissionalAssinaturaRoute: ProfissionalAssinaturaRoute,
+  ProfissionalCatalogoLdrRoute: ProfissionalCatalogoLdrRoute,
+  ProfissionalDocumentosRoute: ProfissionalDocumentosRoute,
+  ProfissionalFerramentasRoute: ProfissionalFerramentasRoute,
+  ProfissionalOnboardingRoute: ProfissionalOnboardingRoute,
+  ProfissionalPainelRoute: ProfissionalPainelRoute,
+  ProfissionalServicosRoute: ProfissionalServicosRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   ClienteAtivarRoute: ClienteAtivarRoute,
   ClienteDefinirSenhaRoute: ClienteDefinirSenhaRoute,
   ClienteLoginRoute: ClienteLoginRoute,
   EmpresaLoginRoute: EmpresaLoginRoute,
   FuncionarioLoginRoute: FuncionarioLoginRoute,
+  ProfissionalSlugRoute: ProfissionalSlugRoute,
+  ProfissionalLoginRoute: ProfissionalLoginRoute,
+  RedeProfissionaisTermosRoute: RedeProfissionaisTermosRoute,
   ApiIntegrationsSiteOrdersRoute: ApiIntegrationsSiteOrdersRoute,
   ApiStripeWebhookRoute: ApiStripeWebhookRoute,
 }

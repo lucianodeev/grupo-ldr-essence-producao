@@ -48,7 +48,7 @@ function emptySession(participantId: string, n: number): SessionRow {
   };
 }
 
-export function S8Panel({ participantId }: { participantId?: string | null } = {}) {
+export function S8Panel({ participantId, professionalAccountId }: { participantId?: string | null; professionalAccountId?: string | null } = {}) {
   const queryClient = useQueryClient();
   const [selectedId, setSelectedId] = useState<string | null>(participantId ?? null);
   const [newName, setNewName] = useState("");
@@ -57,10 +57,9 @@ export function S8Panel({ participantId }: { participantId?: string | null } = {
   const participants = useQuery({
     queryKey: ["participants"],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("participants")
-        .select("*")
-        .order("full_name", { ascending: true });
+      let query = supabase.from("participants").select("*").order("full_name", { ascending: true });
+      if (professionalAccountId) query = query.eq("professional_account_id", professionalAccountId);
+      const { data, error } = await query;
       if (error) throw new Error("Não foi possível carregar os participantes.");
       return (data ?? []) as Participant[];
     },
@@ -124,7 +123,7 @@ export function S8Panel({ participantId }: { participantId?: string | null } = {
       const { data: auth } = await supabase.auth.getUser();
       const { data, error } = await supabase
         .from("participants")
-        .insert({ full_name: name, created_by: auth.user?.id ?? null })
+        .insert({ full_name: name, created_by: auth.user?.id ?? null, professional_account_id: professionalAccountId ?? null })
         .select("id")
         .single();
       if (error) throw new Error("Não foi possível criar o participante.");

@@ -43,7 +43,7 @@ export async function getPublicProfessional(slug: string) {
   if (!profile) return null;
   const [{ data: category }, { data: services }, { data: availability }, { data: reviews }] = await Promise.all([
     db.from("professional_categories").select("slug,name_pt,name_en,name_fr,name_es").eq("id", profile.category_id).maybeSingle(),
-    db.from("professional_services").select("id,name,description,modality,duration_minutes,currency,price_cents,city,public_location,booking_enabled,active,sort_order").eq("professional_profile_id", profile.id).eq("active", true).order("sort_order"),
+    db.from("professional_services").select("id,name,description,modality,duration_minutes,currency,price_cents,city,public_location,booking_enabled,active,sort_order").eq("professional_profile_id", profile.id).eq("active", true).eq("approval_status", "approved").order("sort_order"),
     db.from("professional_availability").select("id,professional_service_id,weekday,start_time,end_time,timezone,slot_interval_minutes,buffer_minutes,modality,location_label,effective_from,effective_until").eq("professional_profile_id", profile.id).eq("active", true),
     db.from("professional_reviews").select("id,rating,body,created_at").eq("professional_profile_id", profile.id).eq("status", "published").order("created_at", { ascending: false }).limit(12),
   ]);
@@ -180,7 +180,7 @@ export async function createMarketplaceBookingCheckout(input: { profileSlug: str
   if (!Number.isFinite(start.getTime()) || start.getTime() < Date.now() + 5 * 60_000) fail("Horário inválido ou já muito próximo.");
   const { data: profile } = await db.from("professional_profiles").select("id,professional_account_id,display_name,country_code").eq("slug", input.profileSlug).eq("is_public", true).eq("profile_status", "active").eq("compliance_status", "approved").maybeSingle();
   if (!profile) fail("Profissional indisponível.");
-  const { data: service } = await db.from("professional_services").select("id,name,modality,duration_minutes,currency,price_cents,booking_enabled,public_location").eq("id", input.serviceId).eq("professional_profile_id", profile.id).eq("active", true).eq("booking_enabled", true).maybeSingle();
+  const { data: service } = await db.from("professional_services").select("id,name,modality,duration_minutes,currency,price_cents,booking_enabled,public_location").eq("id", input.serviceId).eq("professional_profile_id", profile.id).eq("active", true).eq("approval_status", "approved").eq("booking_enabled", true).maybeSingle();
   if (!service || !service.currency || service.price_cents == null) fail("Este serviço ainda não está disponível para checkout.");
   if (service.modality !== "both" && service.modality !== input.modality) fail("Modalidade indisponível para este serviço.");
   const { data: rules } = await db.from("professional_availability").select("weekday,start_time,end_time,timezone,modality,effective_from,effective_until").eq("professional_profile_id", profile.id).eq("active", true).or(`professional_service_id.eq.${service.id},professional_service_id.is.null`);
