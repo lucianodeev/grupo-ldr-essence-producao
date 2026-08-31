@@ -1,11 +1,10 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { useServerFn } from "@tanstack/react-start";
-import { useEffect, useState } from "react";
 import { BadgeCheck, BookOpen, CalendarDays, ChartNoAxesCombined, CircleDollarSign, Globe2, GraduationCap, HeartHandshake, ShieldCheck, Sparkles, UsersRound } from "lucide-react";
 import { LanguageSelect, useI18n } from "@/lib/i18n";
 import { networkLanding } from "@/lib/professional-network.functions";
 
 export const Route = createFileRoute("/para-profissionais")({
+  loader: () => networkLanding(),
   head: () => ({ meta: [{ title: "Rede de Profissionais LDR — Faça parte" }, { name: "description", content: "Perfil profissional, agenda, checkout, treinamentos ao vivo, comunidade e ferramentas em um único ambiente." }] }),
   component: ProfessionalsSales,
 });
@@ -31,8 +30,7 @@ const FAQ=[
 
 function money(cents:number,currency:string,locale:string){return new Intl.NumberFormat(locale==="pt"?"pt-BR":locale,{style:"currency",currency}).format(cents/100)}
 function ProfessionalsSales(){
- const {locale}=useI18n(); const copy=COPY[locale]; const load=useServerFn(networkLanding); const [data,setData]=useState<any>(null);
- useEffect(()=>{void load().then(setData)},[load]);
+ const {locale}=useI18n(); const copy=COPY[locale]; const data=Route.useLoaderData() as any;
  const plans=(data?.plans??[]) as AnyRow[]; const luciano=(data?.profiles??[]).find((p:AnyRow)=>p.slug==="luciano-rodrigues-almeida");
  return <div className="min-h-screen bg-background text-foreground">
   <header className="sticky top-0 z-40 border-b bg-background/95 backdrop-blur"><div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4 sm:px-6"><Link to="/" className="font-serif text-xl font-bold">Grupo LDR Essence</Link><div className="flex items-center gap-2"><Link to="/profissionais" className="hidden rounded-lg px-3 py-2 text-sm font-bold sm:inline-flex">{copy.directory}</Link><LanguageSelect/></div></div></header>
