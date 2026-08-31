@@ -17,6 +17,7 @@ const NAV = [
   { to: "/painel-profissional/mentoria", label: "Mentoria" },
   { to: "/painel-profissional/s8", label: "Sistema S8" },
   { to: "/painel-profissional/clientes", label: "Clientes" },
+  { to: "/painel-profissional/empresas", label: "Empresas / Funcionários" },
   { to: "/painel-profissional/equipe", label: "Equipe" },
   { to: "/painel-profissional/entregas", label: "Entregas" },
   { to: "/painel-profissional/catalogo", label: "Catálogo" },

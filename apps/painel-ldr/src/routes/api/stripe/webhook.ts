@@ -46,11 +46,13 @@ type StripeEvent = {
   data?: { object?: StripeObject };
 };
 
-async function markEvent(eventId: string, eventType: string) {
+async function database() {
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-  const db = supabaseAdmin as unknown as {
-    from: (table: string) => any;
-  };
+  return supabaseAdmin as unknown as { from: (table: string) => any };
+}
+
+async function markEvent(eventId: string, eventType: string) {
+  const db = await database();
   const { data, error } = await db
     .from("stripe_webhook_events")
     .insert({ event_id: eventId, event_type: eventType })
@@ -66,24 +68,80 @@ async function markEvent(eventId: string, eventType: string) {
 }
 
 async function orderAlreadyProcessedEvent(orderId: string, eventId: string) {
-  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-  const { data, error } = await supabaseAdmin
-    .from("orders")
-    .select("metadata")
-    .eq("id", orderId)
-    .maybeSingle();
+  const db = await database();
+  const { data, error } = await db.from("orders").select("metadata").eq("id", orderId).maybeSingle();
   if (error) throw error;
   const metadata = data?.metadata as Record<string, unknown> | null | undefined;
   return metadata?.["stripe_event_id"] === eventId;
 }
 
 async function updateOrder(orderId: string, patch: Record<string, unknown>) {
-  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-  const { error } = await supabaseAdmin
-    .from("orders")
-    .update(patch as never)
-    .eq("id", orderId);
+  const db = await database();
+  const { error } = await db.from("orders").update(patch).eq("id", orderId);
   if (error) throw error;
+}
+
+async function completeOrganizationPurchase(metadata: Record<string, string>) {
+  const purchaseId = metadata["purchase_id"];
+  const orderId = metadata["order_id"];
+  if (!purchaseId || !orderId) return;
+
+  const db = await database();
+  const { data: purchase, error: purchaseError } = await db
+    .from("organization_purchases")
+    .select("id,organization_id,order_id,catalog_key,status")
+    .eq("id", purchaseId)
+    .eq("order_id", orderId)
+    .maybeSingle();
+  if (purchaseError) throw purchaseError;
+  if (!purchase || purchase.status === "paid") return;
+
+  const [{ data: selected, error: selectedError }, { data: service, error: serviceError }] = await Promise.all([
+    db.from("organization_purchase_members").select("member_id").eq("purchase_id", purchase.id),
+    db.from("service_catalog").select("package_sessions").eq("catalog_key", purchase.catalog_key).maybeSingle(),
+  ]);
+  if (selectedError) throw selectedError;
+  if (serviceError) throw serviceError;
+
+  const credits = Math.max(Number(service?.package_sessions ?? 0), 1);
+  const rows = (selected ?? []).map((row: { member_id: string }) => ({
+    organization_id: purchase.organization_id,
+    member_id: row.member_id,
+    catalog_key: purchase.catalog_key,
+    purchase_id: purchase.id,
+    credits_granted: credits,
+    credits_used: 0,
+    status: "assigned",
+  }));
+
+  if (rows.length) {
+    const { error: allocationError } = await db
+      .from("organization_benefit_allocations")
+      .upsert(rows, { onConflict: "purchase_id,member_id", ignoreDuplicates: true });
+    if (allocationError) throw allocationError;
+  }
+
+  const { error: purchaseUpdateError } = await db
+    .from("organization_purchases")
+    .update({ status: "paid" })
+    .eq("id", purchase.id);
+  if (purchaseUpdateError) throw purchaseUpdateError;
+}
+
+async function setOrganizationPurchaseStatus(metadata: Record<string, string>, status: "cancelled" | "refunded") {
+  const purchaseId = metadata["purchase_id"];
+  if (!purchaseId) return;
+  const db = await database();
+  const { error } = await db.from("organization_purchases").update({ status }).eq("id", purchaseId);
+  if (error) throw error;
+  if (status === "refunded") {
+    const { error: revokeError } = await db
+      .from("organization_benefit_allocations")
+      .update({ status: "revoked" })
+      .eq("purchase_id", purchaseId)
+      .eq("credits_used", 0);
+    if (revokeError) throw revokeError;
+  }
 }
 
 export const Route = createFileRoute("/api/stripe/webhook")({
@@ -112,19 +170,14 @@ export const Route = createFileRoute("/api/stripe/webhook")({
 
         try {
           const eventMark = await markEvent(event.id, event.type);
-          if (eventMark === "duplicate") {
-            return json(200, { received: true, duplicate: true });
-          }
+          if (eventMark === "duplicate") return json(200, { received: true, duplicate: true });
 
           const object = event.data?.object ?? {};
           const metadata = object.metadata ?? {};
           const orderId = metadata["order_id"];
 
           if (orderId) {
-            if (
-              eventMark === "metadata_fallback" &&
-              (await orderAlreadyProcessedEvent(orderId, event.id))
-            ) {
+            if (eventMark === "metadata_fallback" && (await orderAlreadyProcessedEvent(orderId, event.id))) {
               return json(200, { received: true, duplicate: true });
             }
 
@@ -134,18 +187,16 @@ export const Route = createFileRoute("/api/stripe/webhook")({
                 payment_status: "pago",
                 status: "concluido",
                 stripe_checkout_session_id: object.id ?? null,
-                metadata: {
-                  ...metadata,
-                  stripe_event_id: event.id,
-                  paid_at: new Date().toISOString(),
-                },
+                metadata: { ...metadata, stripe_event_id: event.id, paid_at: new Date().toISOString() },
               });
+              await completeOrganizationPurchase(metadata);
             } else if (event.type === "checkout.session.expired") {
               await updateOrder(orderId, {
                 payment_status: "falhou",
                 status: "cancelado",
                 metadata: { ...metadata, stripe_event_id: event.id, expired: true },
               });
+              await setOrganizationPurchaseStatus(metadata, "cancelled");
             } else if (event.type === "payment_intent.payment_failed") {
               await updateOrder(orderId, {
                 payment_status: "falhou",
@@ -157,15 +208,14 @@ export const Route = createFileRoute("/api/stripe/webhook")({
                 status: "cancelado",
                 metadata: { ...metadata, stripe_event_id: event.id, refunded: true },
               });
+              await setOrganizationPurchaseStatus(metadata, "refunded");
             }
           }
 
           return json(200, { received: true });
         } catch (error) {
-          // Libera o event_id para o retry legítimo da Stripe quando o processamento falha.
           try {
-            const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-            const db = supabaseAdmin as unknown as { from: (table: string) => any };
+            const db = await database();
             await db.from("stripe_webhook_events").delete().eq("event_id", event.id);
           } catch {
             /* best effort */
