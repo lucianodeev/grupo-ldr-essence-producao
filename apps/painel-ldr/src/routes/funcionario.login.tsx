@@ -23,9 +23,7 @@ function EmployeeLogin() {
   useEffect(() => {
     let active = true;
     void supabase.auth.getSession().then(({ data }) => { if (active && data.session) window.location.replace("/funcionario"); });
-    const { data } = supabase.auth.onAuthStateChange((event, session) => {
-      if (active && session && (event === "SIGNED_IN" || event === "INITIAL_SESSION" || event === "TOKEN_REFRESHED")) window.location.replace("/funcionario");
-    });
+    const { data } = supabase.auth.onAuthStateChange((event, session) => { if (active && session && (event === "SIGNED_IN" || event === "INITIAL_SESSION" || event === "TOKEN_REFRESHED")) window.location.replace("/funcionario"); });
     return () => { active = false; data.subscription.unsubscribe(); };
   }, []);
 
@@ -37,7 +35,7 @@ function EmployeeLogin() {
   }
 
   return <div className="min-h-screen" style={{ background: "var(--cream)" }}>
-    <header className="text-primary-foreground" style={{ background: "linear-gradient(135deg, var(--wine-deep), var(--wine))" }}><div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-5 sm:px-6"><div><p className="font-serif text-xl sm:text-2xl">Grupo LDR Essence</p><p className="text-sm opacity-85">{copy.portal}</p></div><LanguageSelect /></div></header>
-    <main className="mx-auto flex max-w-md flex-col px-4 py-10 sm:px-6"><section className="s8-card"><h1 className="font-serif text-2xl">{copy.title}</h1><p className="mt-2 text-sm leading-6 text-muted-foreground">{copy.subtitle}</p><button type="button" disabled={busy} onClick={signIn} className="mt-5 w-full rounded-xl border border-border bg-card px-4 py-3 text-sm font-bold text-primary hover:bg-accent disabled:opacity-60">{busy ? copy.opening : copy.google}</button><p className="mt-4 text-xs text-muted-foreground">{copy.privacy} <Link to="/acesso" className="underline">{copy.back}</Link></p></section></main>
+    <header className="text-primary-foreground" style={{ background: "linear-gradient(135deg, var(--wine-deep), var(--wine))" }}><div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-5 sm:px-6"><div className="min-w-0 flex-1"><p className="break-words font-serif text-xl sm:text-2xl">Grupo LDR Essence</p><p className="break-words text-sm opacity-85">{copy.portal}</p></div><div className="shrink-0"><LanguageSelect /></div></div></header>
+    <main className="mx-auto flex max-w-md flex-col px-4 py-8 sm:px-6 sm:py-10"><section className="s8-card min-w-0"><h1 className="break-words font-serif text-2xl">{copy.title}</h1><p className="mt-2 break-words text-sm leading-6 text-muted-foreground">{copy.subtitle}</p><button type="button" disabled={busy} onClick={signIn} className="mt-5 w-full rounded-xl border border-border bg-card px-4 py-3 text-center text-sm font-bold text-primary hover:bg-accent disabled:opacity-60">{busy ? copy.opening : copy.google}</button><p className="mt-4 break-words text-xs leading-5 text-muted-foreground">{copy.privacy} <Link to="/acesso" className="font-semibold underline">{copy.back}</Link></p></section></main>
   </div>;
 }
