@@ -26,6 +26,11 @@ export const organizationAddMember = createServerFn({ method: "POST" }).middlewa
   return addOrganizationMember(context.userId, emailOf(context.claims), data);
 });
 
+export const organizationUpdateMember = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth]).inputValidator((data: { memberId: string; phone?: string | null; birthDate?: string | null; vacationStart?: string | null; vacationEnd?: string | null; nextDayOff?: string | null }) => data).handler(async ({ context, data }) => {
+  const { updateOrganizationMember } = await import("@/lib/organization-portal.server");
+  return updateOrganizationMember(context.userId, emailOf(context.claims), data.memberId, data);
+});
+
 export const organizationSetMemberActive = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth]).inputValidator((data: { memberId: string; active: boolean }) => data).handler(async ({ context, data }) => {
   const { setOrganizationMemberActive } = await import("@/lib/organization-portal.server");
   return setOrganizationMemberActive(context.userId, emailOf(context.claims), data.memberId, data.active);
