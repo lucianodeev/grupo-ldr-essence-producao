@@ -1,6 +1,6 @@
 import { Link, Outlet, createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BookOpen, CalendarDays, ClipboardList, GraduationCap, Home, Menu, MessageCircle, UserRound, X } from "lucide-react";
 
 import { supabase } from "@/integrations/supabase/client";
@@ -21,11 +21,30 @@ const NAV = [
 
 const WHATSAPP_URL = "https://wa.me/32492923605?text=Ola%2C%20preciso%20de%20ajuda%20na%20Area%20do%20Cliente%20do%20Grupo%20LDR%20Essence";
 
+function cameFromCorporateBenefits() {
+  if (typeof document === "undefined") return false;
+  try {
+    const referrer = new URL(document.referrer);
+    return (
+      /(^|\.)ldrrhestrategia\.com$/i.test(referrer.hostname) &&
+      referrer.pathname.replace(/\/$/, "") === "/beneficios-corporativos"
+    );
+  } catch {
+    return false;
+  }
+}
+
 function ClientShell() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [menuOpen, setMenuOpen] = useState(false);
   const context = useClientContext();
+
+  useEffect(() => {
+    if (cameFromCorporateBenefits()) {
+      window.location.replace("/empresa");
+    }
+  }, []);
 
   async function handleSignOut() {
     await queryClient.cancelQueries();
