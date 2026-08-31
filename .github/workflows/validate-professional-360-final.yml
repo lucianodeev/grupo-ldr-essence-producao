@@ -7,7 +7,7 @@ on:
       - '.github/workflows/validate-professional-360-final.yml'
   workflow_dispatch:
 
-# Validação final após catálogo LDR, plano 360, S8, administração de preços e termos.
+# Validação final consolidada: catálogo LDR, plano 360, S8, preços administrativos e termos.
 jobs:
   build:
     runs-on: ubuntu-latest
