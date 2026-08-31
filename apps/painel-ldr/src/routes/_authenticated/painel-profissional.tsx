@@ -19,6 +19,9 @@ const NAV = [
   { to: "/painel-profissional/clientes", key: "nav.customers" },
   { to: "/painel-profissional/empresas", extra: "companies" },
   { to: "/painel-profissional/rede-profissionais", extra: "network" },
+  { to: "/painel-profissional/rede-profissionais-repasses", extra: "networkPayouts", superOnly: true },
+  { to: "/painel-profissional/rede-profissionais-conformidade", extra: "networkCompliance", superOnly: true },
+  { to: "/painel-profissional/rede-profissionais-conteudo", extra: "networkContent", superOnly: true },
   { to: "/painel-profissional/notificacoes", extra: "notifications" },
   { to: "/painel-profissional/equipe", key: "nav.team" },
   { to: "/painel-profissional/entregas", key: "nav.deliveries" },
@@ -28,10 +31,10 @@ const NAV = [
 ] as const;
 
 const COPY = {
-  pt: { companies: "Empresas / Funcionários", network: "Rede de Profissionais", notifications: "Notificações", training: "Treinamentos / Conteúdos", comments: "Comentários / Fórum", profile: "perfil", denied: "Sua conta não possui autorização para acessar esta central." },
-  en: { companies: "Companies / Employees", network: "Professional Network", notifications: "Notifications", training: "Training / Content", comments: "Comments / Forum", profile: "role", denied: "Your account is not authorized to access this operations hub." },
-  fr: { companies: "Entreprises / Collaborateurs", network: "Réseau de Professionnels", notifications: "Notifications", training: "Formations / Contenus", comments: "Commentaires / Forum", profile: "profil", denied: "Votre compte n’est pas autorisé à accéder à cette centrale." },
-  es: { companies: "Empresas / Empleados", network: "Red de Profesionales", notifications: "Notificaciones", training: "Formaciones / Contenidos", comments: "Comentarios / Foro", profile: "perfil", denied: "Tu cuenta no está autorizada para acceder a esta central." },
+  pt: { companies: "Empresas / Funcionários", network: "Rede de Profissionais", networkPayouts: "Rede · Repasses", networkCompliance: "Rede · Conformidade", networkContent: "Rede · Treinamentos / Comunidade", notifications: "Notificações", training: "Treinamentos / Conteúdos", comments: "Comentários / Fórum", profile: "perfil", denied: "Sua conta não possui autorização para acessar esta central." },
+  en: { companies: "Companies / Employees", network: "Professional Network", networkPayouts: "Network · Payouts", networkCompliance: "Network · Compliance", networkContent: "Network · Training / Community", notifications: "Notifications", training: "Training / Content", comments: "Comments / Forum", profile: "role", denied: "Your account is not authorized to access this operations hub." },
+  fr: { companies: "Entreprises / Collaborateurs", network: "Réseau de Professionnels", networkPayouts: "Réseau · Reversements", networkCompliance: "Réseau · Conformité", networkContent: "Réseau · Formations / Communauté", notifications: "Notifications", training: "Formations / Contenus", comments: "Commentaires / Forum", profile: "profil", denied: "Votre compte n’est pas autorisé à accéder à cette centrale." },
+  es: { companies: "Empresas / Empleados", network: "Red de Profesionales", networkPayouts: "Red · Pagos", networkCompliance: "Red · Cumplimiento", networkContent: "Red · Formación / Comunidad", notifications: "Notificaciones", training: "Formaciones / Contenidos", comments: "Comentarios / Foro", profile: "perfil", denied: "Tu cuenta no está autorizada para acceder a esta central." },
 } as const;
 
 function CentralLayout() {
@@ -54,8 +57,8 @@ function CentralLayout() {
   if (access.isLoading) return <div className="min-h-screen p-6"><div className="s8-card mx-auto max-w-md text-center">{t("state.loading")}</div></div>;
   if (!access.data?.authorized) return <div className="min-h-screen p-6"><div className="s8-card mx-auto max-w-md text-center"><h1 className="font-serif text-3xl">403</h1><p className="mt-2 text-sm text-muted-foreground">{copy.denied}</p><button type="button" onClick={signOut} className="mt-5 rounded-lg bg-primary px-5 py-3 font-bold text-primary-foreground">{t("action.signout")}</button></div></div>;
 
-  const baseItems = NAV.map((item) => ({ ...item, label: "key" in item ? t(item.key) : copy[item.extra] }));
   const isSuperadmin = access.data.role === "superadmin";
+  const baseItems = NAV.filter((item) => !("superOnly" in item && item.superOnly && !isSuperadmin)).map((item) => ({ ...item, label: "key" in item ? t(item.key) : copy[item.extra] }));
   const items = isSuperadmin
     ? [...baseItems, { to: "/painel-profissional/psicanalise", label: t("nav.clinical") }, { to: "/painel-profissional/acessos", label: t("nav.access") }]
     : baseItems;
