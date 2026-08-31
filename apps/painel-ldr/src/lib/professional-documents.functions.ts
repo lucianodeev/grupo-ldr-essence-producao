@@ -1,0 +1,5 @@
+import { createServerFn } from "@tanstack/react-start";
+import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+
+export const professionalDocumentPrepare=createServerFn({method:"POST"}).middleware([requireSupabaseAuth]).inputValidator((data:{documentType:string;fileName:string;mimeType:string;purpose:"professional"|"payout";payoutId?:string|null})=>data).handler(async({context,data})=>{const {prepareProfessionalDocumentUpload}=await import("@/lib/professional-documents.server");return prepareProfessionalDocumentUpload(context.userId,data)});
+export const professionalDocumentFinalize=createServerFn({method:"POST"}).middleware([requireSupabaseAuth]).inputValidator((data:{documentType:string;fileName:string;mimeType:string;purpose:"professional"|"payout";path:string;payoutId?:string|null;countryCode?:string|null;periodStart?:string|null;periodEnd?:string|null;declaredAmountCents?:number|null;currency?:"EUR"|"BRL"|null})=>data).handler(async({context,data})=>{const {finalizeProfessionalDocumentUpload}=await import("@/lib/professional-documents.server");return finalizeProfessionalDocumentUpload(context.userId,data)});
