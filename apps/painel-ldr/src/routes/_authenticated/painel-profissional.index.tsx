@@ -1,4 +1,5 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
+import { BookOpen } from "lucide-react";
 
 import { EmptyState, PageHeader, StatCard, StatusBadge } from "@/components/central/ui";
 import {
@@ -73,6 +74,7 @@ function Overview() {
   return (
     <div className="min-w-0">
       <PageHeader title={copy.title} subtitle={copy.subtitle} />
+      <a data-card="ebook-profissional-ldr" href="https://www.lucianoempreendendor.com/" target="_blank" rel="noreferrer" className="mb-4 block rounded-2xl border p-5 transition hover:-translate-y-0.5 hover:shadow-lg"><BookOpen className="h-6 w-6"/><h2 className="mt-3 font-serif text-2xl">E-book e biblioteca — A Coragem de Começar</h2><p className="mt-2 text-sm">Acesse a plataforma editorial e os conteúdos para empreendedores.</p></a>
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
         <StatCard label={copy.orders} value={list.length} tone="info" />
