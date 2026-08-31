@@ -12,26 +12,36 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as ClientareaRouteImport } from './routes/_clientarea'
+import { Route as PortalRouteImport } from './routes/_portal'
+import { Route as AcessoRouteImport } from './routes/acesso'
 import { Route as BootstrapRouteImport } from './routes/bootstrap'
 import { Route as FormularioRouteImport } from './routes/formulario'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AuthenticatedPainelProfissionalRouteImport } from './routes/_authenticated/painel-profissional'
 import { Route as ClientareaClienteRouteImport } from './routes/_clientarea.cliente'
+import { Route as PortalEmpresaRouteImport } from './routes/_portal.empresa'
+import { Route as PortalFuncionarioRouteImport } from './routes/_portal.funcionario'
 import { Route as ClienteAtivarRouteImport } from './routes/cliente.ativar'
 import { Route as ClienteDefinirSenhaRouteImport } from './routes/cliente.definir-senha'
 import { Route as ClienteLoginRouteImport } from './routes/cliente.login'
+import { Route as EmpresaLoginRouteImport } from './routes/empresa.login'
+import { Route as FuncionarioLoginRouteImport } from './routes/funcionario.login'
 import { Route as AuthenticatedPainelProfissionalIndexRouteImport } from './routes/_authenticated/painel-profissional.index'
 import { Route as AuthenticatedPainelProfissionalAcessosRouteImport } from './routes/_authenticated/painel-profissional.acessos'
 import { Route as AuthenticatedPainelProfissionalAgendaRouteImport } from './routes/_authenticated/painel-profissional.agenda'
 import { Route as AuthenticatedPainelProfissionalCatalogoRouteImport } from './routes/_authenticated/painel-profissional.catalogo'
 import { Route as AuthenticatedPainelProfissionalClientesRouteImport } from './routes/_authenticated/painel-profissional.clientes'
+import { Route as AuthenticatedPainelProfissionalComentariosRouteImport } from './routes/_authenticated/painel-profissional.comentarios'
+import { Route as AuthenticatedPainelProfissionalEmpresasRouteImport } from './routes/_authenticated/painel-profissional.empresas'
 import { Route as AuthenticatedPainelProfissionalEntregasRouteImport } from './routes/_authenticated/painel-profissional.entregas'
 import { Route as AuthenticatedPainelProfissionalEquipeRouteImport } from './routes/_authenticated/painel-profissional.equipe'
 import { Route as AuthenticatedPainelProfissionalMentoriaRouteImport } from './routes/_authenticated/painel-profissional.mentoria'
+import { Route as AuthenticatedPainelProfissionalNotificacoesRouteImport } from './routes/_authenticated/painel-profissional.notificacoes'
 import { Route as AuthenticatedPainelProfissionalPedidosRouteImport } from './routes/_authenticated/painel-profissional.pedidos'
 import { Route as AuthenticatedPainelProfissionalPsicanaliseRouteImport } from './routes/_authenticated/painel-profissional.psicanalise'
 import { Route as AuthenticatedPainelProfissionalS8RouteImport } from './routes/_authenticated/painel-profissional.s8'
+import { Route as AuthenticatedPainelProfissionalTreinamentosRouteImport } from './routes/_authenticated/painel-profissional.treinamentos'
 import { Route as ClientareaClienteIndexRouteImport } from './routes/_clientarea.cliente.index'
 import { Route as ClientareaClienteAgendaRouteImport } from './routes/_clientarea.cliente.agenda'
 import { Route as ClientareaClienteBibliotecaRouteImport } from './routes/_clientarea.cliente.biblioteca'
@@ -41,6 +51,7 @@ import { Route as ClientareaClienteMentoriaRouteImport } from './routes/_clienta
 import { Route as ClientareaClientePedidosRouteImport } from './routes/_clientarea.cliente.pedidos'
 import { Route as ClientareaClientePerfilRouteImport } from './routes/_clientarea.cliente.perfil'
 import { Route as ClientareaClienteSessoesRouteImport } from './routes/_clientarea.cliente.sessoes'
+import { Route as ClientareaClienteTreinamentosRouteImport } from './routes/_clientarea.cliente.treinamentos'
 import { Route as ApiIntegrationsSiteOrdersRouteImport } from './routes/api/integrations/site-orders'
 import { Route as ApiStripeWebhookRouteImport } from './routes/api/stripe/webhook'
 import { Route as ClientareaClientePedidoOrderIdRouteImport } from './routes/_clientarea.cliente.pedido.$orderId'
@@ -56,6 +67,15 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 } as any)
 const ClientareaRoute = ClientareaRouteImport.update({
   id: '/_clientarea',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PortalRoute = PortalRouteImport.update({
+  id: '/_portal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AcessoRoute = AcessoRouteImport.update({
+  id: '/acesso',
+  path: '/acesso',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BootstrapRoute = BootstrapRouteImport.update({
@@ -89,6 +109,16 @@ const ClientareaClienteRoute = ClientareaClienteRouteImport.update({
   path: '/cliente',
   getParentRoute: () => ClientareaRoute,
 } as any)
+const PortalEmpresaRoute = PortalEmpresaRouteImport.update({
+  id: '/empresa',
+  path: '/empresa',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalFuncionarioRoute = PortalFuncionarioRouteImport.update({
+  id: '/funcionario',
+  path: '/funcionario',
+  getParentRoute: () => PortalRoute,
+} as any)
 const ClienteAtivarRoute = ClienteAtivarRouteImport.update({
   id: '/cliente/ativar',
   path: '/cliente/ativar',
@@ -102,6 +132,16 @@ const ClienteDefinirSenhaRoute = ClienteDefinirSenhaRouteImport.update({
 const ClienteLoginRoute = ClienteLoginRouteImport.update({
   id: '/cliente/login',
   path: '/cliente/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EmpresaLoginRoute = EmpresaLoginRouteImport.update({
+  id: '/empresa/login',
+  path: '/empresa/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FuncionarioLoginRoute = FuncionarioLoginRouteImport.update({
+  id: '/funcionario/login',
+  path: '/funcionario/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedPainelProfissionalIndexRoute =
@@ -134,6 +174,18 @@ const AuthenticatedPainelProfissionalClientesRoute =
     path: '/clientes',
     getParentRoute: () => AuthenticatedPainelProfissionalRoute,
   } as any)
+const AuthenticatedPainelProfissionalComentariosRoute =
+  AuthenticatedPainelProfissionalComentariosRouteImport.update({
+    id: '/comentarios',
+    path: '/comentarios',
+    getParentRoute: () => AuthenticatedPainelProfissionalRoute,
+  } as any)
+const AuthenticatedPainelProfissionalEmpresasRoute =
+  AuthenticatedPainelProfissionalEmpresasRouteImport.update({
+    id: '/empresas',
+    path: '/empresas',
+    getParentRoute: () => AuthenticatedPainelProfissionalRoute,
+  } as any)
 const AuthenticatedPainelProfissionalEntregasRoute =
   AuthenticatedPainelProfissionalEntregasRouteImport.update({
     id: '/entregas',
@@ -152,6 +204,12 @@ const AuthenticatedPainelProfissionalMentoriaRoute =
     path: '/mentoria',
     getParentRoute: () => AuthenticatedPainelProfissionalRoute,
   } as any)
+const AuthenticatedPainelProfissionalNotificacoesRoute =
+  AuthenticatedPainelProfissionalNotificacoesRouteImport.update({
+    id: '/notificacoes',
+    path: '/notificacoes',
+    getParentRoute: () => AuthenticatedPainelProfissionalRoute,
+  } as any)
 const AuthenticatedPainelProfissionalPedidosRoute =
   AuthenticatedPainelProfissionalPedidosRouteImport.update({
     id: '/pedidos',
@@ -168,6 +226,12 @@ const AuthenticatedPainelProfissionalS8Route =
   AuthenticatedPainelProfissionalS8RouteImport.update({
     id: '/s8',
     path: '/s8',
+    getParentRoute: () => AuthenticatedPainelProfissionalRoute,
+  } as any)
+const AuthenticatedPainelProfissionalTreinamentosRoute =
+  AuthenticatedPainelProfissionalTreinamentosRouteImport.update({
+    id: '/treinamentos',
+    path: '/treinamentos',
     getParentRoute: () => AuthenticatedPainelProfissionalRoute,
   } as any)
 const ClientareaClienteIndexRoute = ClientareaClienteIndexRouteImport.update({
@@ -221,6 +285,12 @@ const ClientareaClienteSessoesRoute =
     path: '/sessoes',
     getParentRoute: () => ClientareaClienteRoute,
   } as any)
+const ClientareaClienteTreinamentosRoute =
+  ClientareaClienteTreinamentosRouteImport.update({
+    id: '/treinamentos',
+    path: '/treinamentos',
+    getParentRoute: () => ClientareaClienteRoute,
+  } as any)
 const ApiIntegrationsSiteOrdersRoute =
   ApiIntegrationsSiteOrdersRouteImport.update({
     id: '/api/integrations/site-orders',
@@ -241,25 +311,34 @@ const ClientareaClientePedidoOrderIdRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/acesso': typeof AcessoRoute
   '/bootstrap': typeof BootstrapRoute
   '/formulario': typeof FormularioRoute
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
   '/painel-profissional': typeof AuthenticatedPainelProfissionalRouteWithChildren
   '/cliente': typeof ClientareaClienteRouteWithChildren
+  '/empresa': typeof PortalEmpresaRoute
+  '/funcionario': typeof PortalFuncionarioRoute
   '/cliente/ativar': typeof ClienteAtivarRoute
   '/cliente/definir-senha': typeof ClienteDefinirSenhaRoute
   '/cliente/login': typeof ClienteLoginRoute
+  '/empresa/login': typeof EmpresaLoginRoute
+  '/funcionario/login': typeof FuncionarioLoginRoute
   '/painel-profissional/acessos': typeof AuthenticatedPainelProfissionalAcessosRoute
   '/painel-profissional/agenda': typeof AuthenticatedPainelProfissionalAgendaRoute
   '/painel-profissional/catalogo': typeof AuthenticatedPainelProfissionalCatalogoRoute
   '/painel-profissional/clientes': typeof AuthenticatedPainelProfissionalClientesRoute
+  '/painel-profissional/comentarios': typeof AuthenticatedPainelProfissionalComentariosRoute
+  '/painel-profissional/empresas': typeof AuthenticatedPainelProfissionalEmpresasRoute
   '/painel-profissional/entregas': typeof AuthenticatedPainelProfissionalEntregasRoute
   '/painel-profissional/equipe': typeof AuthenticatedPainelProfissionalEquipeRoute
   '/painel-profissional/mentoria': typeof AuthenticatedPainelProfissionalMentoriaRoute
+  '/painel-profissional/notificacoes': typeof AuthenticatedPainelProfissionalNotificacoesRoute
   '/painel-profissional/pedidos': typeof AuthenticatedPainelProfissionalPedidosRoute
   '/painel-profissional/psicanalise': typeof AuthenticatedPainelProfissionalPsicanaliseRoute
   '/painel-profissional/s8': typeof AuthenticatedPainelProfissionalS8Route
+  '/painel-profissional/treinamentos': typeof AuthenticatedPainelProfissionalTreinamentosRoute
   '/cliente/agenda': typeof ClientareaClienteAgendaRoute
   '/cliente/biblioteca': typeof ClientareaClienteBibliotecaRoute
   '/cliente/contratar': typeof ClientareaClienteContratarRoute
@@ -268,6 +347,7 @@ export interface FileRoutesByFullPath {
   '/cliente/pedidos': typeof ClientareaClientePedidosRoute
   '/cliente/perfil': typeof ClientareaClientePerfilRoute
   '/cliente/sessoes': typeof ClientareaClienteSessoesRoute
+  '/cliente/treinamentos': typeof ClientareaClienteTreinamentosRoute
   '/api/integrations/site-orders': typeof ApiIntegrationsSiteOrdersRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
   '/painel-profissional/': typeof AuthenticatedPainelProfissionalIndexRoute
@@ -276,23 +356,32 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/acesso': typeof AcessoRoute
   '/bootstrap': typeof BootstrapRoute
   '/formulario': typeof FormularioRoute
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/empresa': typeof PortalEmpresaRoute
+  '/funcionario': typeof PortalFuncionarioRoute
   '/cliente/ativar': typeof ClienteAtivarRoute
   '/cliente/definir-senha': typeof ClienteDefinirSenhaRoute
   '/cliente/login': typeof ClienteLoginRoute
+  '/empresa/login': typeof EmpresaLoginRoute
+  '/funcionario/login': typeof FuncionarioLoginRoute
   '/painel-profissional/acessos': typeof AuthenticatedPainelProfissionalAcessosRoute
   '/painel-profissional/agenda': typeof AuthenticatedPainelProfissionalAgendaRoute
   '/painel-profissional/catalogo': typeof AuthenticatedPainelProfissionalCatalogoRoute
   '/painel-profissional/clientes': typeof AuthenticatedPainelProfissionalClientesRoute
+  '/painel-profissional/comentarios': typeof AuthenticatedPainelProfissionalComentariosRoute
+  '/painel-profissional/empresas': typeof AuthenticatedPainelProfissionalEmpresasRoute
   '/painel-profissional/entregas': typeof AuthenticatedPainelProfissionalEntregasRoute
   '/painel-profissional/equipe': typeof AuthenticatedPainelProfissionalEquipeRoute
   '/painel-profissional/mentoria': typeof AuthenticatedPainelProfissionalMentoriaRoute
+  '/painel-profissional/notificacoes': typeof AuthenticatedPainelProfissionalNotificacoesRoute
   '/painel-profissional/pedidos': typeof AuthenticatedPainelProfissionalPedidosRoute
   '/painel-profissional/psicanalise': typeof AuthenticatedPainelProfissionalPsicanaliseRoute
   '/painel-profissional/s8': typeof AuthenticatedPainelProfissionalS8Route
+  '/painel-profissional/treinamentos': typeof AuthenticatedPainelProfissionalTreinamentosRoute
   '/cliente/agenda': typeof ClientareaClienteAgendaRoute
   '/cliente/biblioteca': typeof ClientareaClienteBibliotecaRoute
   '/cliente/contratar': typeof ClientareaClienteContratarRoute
@@ -301,6 +390,7 @@ export interface FileRoutesByTo {
   '/cliente/pedidos': typeof ClientareaClientePedidosRoute
   '/cliente/perfil': typeof ClientareaClientePerfilRoute
   '/cliente/sessoes': typeof ClientareaClienteSessoesRoute
+  '/cliente/treinamentos': typeof ClientareaClienteTreinamentosRoute
   '/api/integrations/site-orders': typeof ApiIntegrationsSiteOrdersRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
   '/painel-profissional': typeof AuthenticatedPainelProfissionalIndexRoute
@@ -312,25 +402,35 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/_clientarea': typeof ClientareaRouteWithChildren
+  '/_portal': typeof PortalRouteWithChildren
+  '/acesso': typeof AcessoRoute
   '/bootstrap': typeof BootstrapRoute
   '/formulario': typeof FormularioRoute
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/painel-profissional': typeof AuthenticatedPainelProfissionalRouteWithChildren
   '/_clientarea/cliente': typeof ClientareaClienteRouteWithChildren
+  '/_portal/empresa': typeof PortalEmpresaRoute
+  '/_portal/funcionario': typeof PortalFuncionarioRoute
   '/cliente/ativar': typeof ClienteAtivarRoute
   '/cliente/definir-senha': typeof ClienteDefinirSenhaRoute
   '/cliente/login': typeof ClienteLoginRoute
+  '/empresa/login': typeof EmpresaLoginRoute
+  '/funcionario/login': typeof FuncionarioLoginRoute
   '/_authenticated/painel-profissional/acessos': typeof AuthenticatedPainelProfissionalAcessosRoute
   '/_authenticated/painel-profissional/agenda': typeof AuthenticatedPainelProfissionalAgendaRoute
   '/_authenticated/painel-profissional/catalogo': typeof AuthenticatedPainelProfissionalCatalogoRoute
   '/_authenticated/painel-profissional/clientes': typeof AuthenticatedPainelProfissionalClientesRoute
+  '/_authenticated/painel-profissional/comentarios': typeof AuthenticatedPainelProfissionalComentariosRoute
+  '/_authenticated/painel-profissional/empresas': typeof AuthenticatedPainelProfissionalEmpresasRoute
   '/_authenticated/painel-profissional/entregas': typeof AuthenticatedPainelProfissionalEntregasRoute
   '/_authenticated/painel-profissional/equipe': typeof AuthenticatedPainelProfissionalEquipeRoute
   '/_authenticated/painel-profissional/mentoria': typeof AuthenticatedPainelProfissionalMentoriaRoute
+  '/_authenticated/painel-profissional/notificacoes': typeof AuthenticatedPainelProfissionalNotificacoesRoute
   '/_authenticated/painel-profissional/pedidos': typeof AuthenticatedPainelProfissionalPedidosRoute
   '/_authenticated/painel-profissional/psicanalise': typeof AuthenticatedPainelProfissionalPsicanaliseRoute
   '/_authenticated/painel-profissional/s8': typeof AuthenticatedPainelProfissionalS8Route
+  '/_authenticated/painel-profissional/treinamentos': typeof AuthenticatedPainelProfissionalTreinamentosRoute
   '/_clientarea/cliente/agenda': typeof ClientareaClienteAgendaRoute
   '/_clientarea/cliente/biblioteca': typeof ClientareaClienteBibliotecaRoute
   '/_clientarea/cliente/contratar': typeof ClientareaClienteContratarRoute
@@ -339,6 +439,7 @@ export interface FileRoutesById {
   '/_clientarea/cliente/pedidos': typeof ClientareaClientePedidosRoute
   '/_clientarea/cliente/perfil': typeof ClientareaClientePerfilRoute
   '/_clientarea/cliente/sessoes': typeof ClientareaClienteSessoesRoute
+  '/_clientarea/cliente/treinamentos': typeof ClientareaClienteTreinamentosRoute
   '/api/integrations/site-orders': typeof ApiIntegrationsSiteOrdersRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
   '/_authenticated/painel-profissional/': typeof AuthenticatedPainelProfissionalIndexRoute
@@ -349,25 +450,34 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/acesso'
     | '/bootstrap'
     | '/formulario'
     | '/login'
     | '/reset-password'
     | '/painel-profissional'
     | '/cliente'
+    | '/empresa'
+    | '/funcionario'
     | '/cliente/ativar'
     | '/cliente/definir-senha'
     | '/cliente/login'
+    | '/empresa/login'
+    | '/funcionario/login'
     | '/painel-profissional/acessos'
     | '/painel-profissional/agenda'
     | '/painel-profissional/catalogo'
     | '/painel-profissional/clientes'
+    | '/painel-profissional/comentarios'
+    | '/painel-profissional/empresas'
     | '/painel-profissional/entregas'
     | '/painel-profissional/equipe'
     | '/painel-profissional/mentoria'
+    | '/painel-profissional/notificacoes'
     | '/painel-profissional/pedidos'
     | '/painel-profissional/psicanalise'
     | '/painel-profissional/s8'
+    | '/painel-profissional/treinamentos'
     | '/cliente/agenda'
     | '/cliente/biblioteca'
     | '/cliente/contratar'
@@ -376,6 +486,7 @@ export interface FileRouteTypes {
     | '/cliente/pedidos'
     | '/cliente/perfil'
     | '/cliente/sessoes'
+    | '/cliente/treinamentos'
     | '/api/integrations/site-orders'
     | '/api/stripe/webhook'
     | '/painel-profissional/'
@@ -384,23 +495,32 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/acesso'
     | '/bootstrap'
     | '/formulario'
     | '/login'
     | '/reset-password'
+    | '/empresa'
+    | '/funcionario'
     | '/cliente/ativar'
     | '/cliente/definir-senha'
     | '/cliente/login'
+    | '/empresa/login'
+    | '/funcionario/login'
     | '/painel-profissional/acessos'
     | '/painel-profissional/agenda'
     | '/painel-profissional/catalogo'
     | '/painel-profissional/clientes'
+    | '/painel-profissional/comentarios'
+    | '/painel-profissional/empresas'
     | '/painel-profissional/entregas'
     | '/painel-profissional/equipe'
     | '/painel-profissional/mentoria'
+    | '/painel-profissional/notificacoes'
     | '/painel-profissional/pedidos'
     | '/painel-profissional/psicanalise'
     | '/painel-profissional/s8'
+    | '/painel-profissional/treinamentos'
     | '/cliente/agenda'
     | '/cliente/biblioteca'
     | '/cliente/contratar'
@@ -409,6 +529,7 @@ export interface FileRouteTypes {
     | '/cliente/pedidos'
     | '/cliente/perfil'
     | '/cliente/sessoes'
+    | '/cliente/treinamentos'
     | '/api/integrations/site-orders'
     | '/api/stripe/webhook'
     | '/painel-profissional'
@@ -419,25 +540,35 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/_clientarea'
+    | '/_portal'
+    | '/acesso'
     | '/bootstrap'
     | '/formulario'
     | '/login'
     | '/reset-password'
     | '/_authenticated/painel-profissional'
     | '/_clientarea/cliente'
+    | '/_portal/empresa'
+    | '/_portal/funcionario'
     | '/cliente/ativar'
     | '/cliente/definir-senha'
     | '/cliente/login'
+    | '/empresa/login'
+    | '/funcionario/login'
     | '/_authenticated/painel-profissional/acessos'
     | '/_authenticated/painel-profissional/agenda'
     | '/_authenticated/painel-profissional/catalogo'
     | '/_authenticated/painel-profissional/clientes'
+    | '/_authenticated/painel-profissional/comentarios'
+    | '/_authenticated/painel-profissional/empresas'
     | '/_authenticated/painel-profissional/entregas'
     | '/_authenticated/painel-profissional/equipe'
     | '/_authenticated/painel-profissional/mentoria'
+    | '/_authenticated/painel-profissional/notificacoes'
     | '/_authenticated/painel-profissional/pedidos'
     | '/_authenticated/painel-profissional/psicanalise'
     | '/_authenticated/painel-profissional/s8'
+    | '/_authenticated/painel-profissional/treinamentos'
     | '/_clientarea/cliente/agenda'
     | '/_clientarea/cliente/biblioteca'
     | '/_clientarea/cliente/contratar'
@@ -446,6 +577,7 @@ export interface FileRouteTypes {
     | '/_clientarea/cliente/pedidos'
     | '/_clientarea/cliente/perfil'
     | '/_clientarea/cliente/sessoes'
+    | '/_clientarea/cliente/treinamentos'
     | '/api/integrations/site-orders'
     | '/api/stripe/webhook'
     | '/_authenticated/painel-profissional/'
@@ -457,6 +589,8 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   ClientareaRoute: typeof ClientareaRouteWithChildren
+  PortalRoute: typeof PortalRouteWithChildren
+  AcessoRoute: typeof AcessoRoute
   BootstrapRoute: typeof BootstrapRoute
   FormularioRoute: typeof FormularioRoute
   LoginRoute: typeof LoginRoute
@@ -464,6 +598,8 @@ export interface RootRouteChildren {
   ClienteAtivarRoute: typeof ClienteAtivarRoute
   ClienteDefinirSenhaRoute: typeof ClienteDefinirSenhaRoute
   ClienteLoginRoute: typeof ClienteLoginRoute
+  EmpresaLoginRoute: typeof EmpresaLoginRoute
+  FuncionarioLoginRoute: typeof FuncionarioLoginRoute
   ApiIntegrationsSiteOrdersRoute: typeof ApiIntegrationsSiteOrdersRoute
   ApiStripeWebhookRoute: typeof ApiStripeWebhookRoute
 }
@@ -489,6 +625,20 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof ClientareaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_portal': {
+      id: '/_portal'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof PortalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/acesso': {
+      id: '/acesso'
+      path: '/acesso'
+      fullPath: '/acesso'
+      preLoaderRoute: typeof AcessoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/bootstrap': {
@@ -533,6 +683,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClientareaClienteRouteImport
       parentRoute: typeof ClientareaRoute
     }
+    '/_portal/empresa': {
+      id: '/_portal/empresa'
+      path: '/empresa'
+      fullPath: '/empresa'
+      preLoaderRoute: typeof PortalEmpresaRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/_portal/funcionario': {
+      id: '/_portal/funcionario'
+      path: '/funcionario'
+      fullPath: '/funcionario'
+      preLoaderRoute: typeof PortalFuncionarioRouteImport
+      parentRoute: typeof PortalRoute
+    }
     '/cliente/ativar': {
       id: '/cliente/ativar'
       path: '/cliente/ativar'
@@ -552,6 +716,20 @@ declare module '@tanstack/react-router' {
       path: '/cliente/login'
       fullPath: '/cliente/login'
       preLoaderRoute: typeof ClienteLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/empresa/login': {
+      id: '/empresa/login'
+      path: '/empresa/login'
+      fullPath: '/empresa/login'
+      preLoaderRoute: typeof EmpresaLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/funcionario/login': {
+      id: '/funcionario/login'
+      path: '/funcionario/login'
+      fullPath: '/funcionario/login'
+      preLoaderRoute: typeof FuncionarioLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/painel-profissional/': {
@@ -589,6 +767,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPainelProfissionalClientesRouteImport
       parentRoute: typeof AuthenticatedPainelProfissionalRoute
     }
+    '/_authenticated/painel-profissional/comentarios': {
+      id: '/_authenticated/painel-profissional/comentarios'
+      path: '/comentarios'
+      fullPath: '/painel-profissional/comentarios'
+      preLoaderRoute: typeof AuthenticatedPainelProfissionalComentariosRouteImport
+      parentRoute: typeof AuthenticatedPainelProfissionalRoute
+    }
+    '/_authenticated/painel-profissional/empresas': {
+      id: '/_authenticated/painel-profissional/empresas'
+      path: '/empresas'
+      fullPath: '/painel-profissional/empresas'
+      preLoaderRoute: typeof AuthenticatedPainelProfissionalEmpresasRouteImport
+      parentRoute: typeof AuthenticatedPainelProfissionalRoute
+    }
     '/_authenticated/painel-profissional/entregas': {
       id: '/_authenticated/painel-profissional/entregas'
       path: '/entregas'
@@ -610,6 +802,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPainelProfissionalMentoriaRouteImport
       parentRoute: typeof AuthenticatedPainelProfissionalRoute
     }
+    '/_authenticated/painel-profissional/notificacoes': {
+      id: '/_authenticated/painel-profissional/notificacoes'
+      path: '/notificacoes'
+      fullPath: '/painel-profissional/notificacoes'
+      preLoaderRoute: typeof AuthenticatedPainelProfissionalNotificacoesRouteImport
+      parentRoute: typeof AuthenticatedPainelProfissionalRoute
+    }
     '/_authenticated/painel-profissional/pedidos': {
       id: '/_authenticated/painel-profissional/pedidos'
       path: '/pedidos'
@@ -629,6 +828,13 @@ declare module '@tanstack/react-router' {
       path: '/s8'
       fullPath: '/painel-profissional/s8'
       preLoaderRoute: typeof AuthenticatedPainelProfissionalS8RouteImport
+      parentRoute: typeof AuthenticatedPainelProfissionalRoute
+    }
+    '/_authenticated/painel-profissional/treinamentos': {
+      id: '/_authenticated/painel-profissional/treinamentos'
+      path: '/treinamentos'
+      fullPath: '/painel-profissional/treinamentos'
+      preLoaderRoute: typeof AuthenticatedPainelProfissionalTreinamentosRouteImport
       parentRoute: typeof AuthenticatedPainelProfissionalRoute
     }
     '/_clientarea/cliente/': {
@@ -694,6 +900,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClientareaClienteSessoesRouteImport
       parentRoute: typeof ClientareaClienteRoute
     }
+    '/_clientarea/cliente/treinamentos': {
+      id: '/_clientarea/cliente/treinamentos'
+      path: '/treinamentos'
+      fullPath: '/cliente/treinamentos'
+      preLoaderRoute: typeof ClientareaClienteTreinamentosRouteImport
+      parentRoute: typeof ClientareaClienteRoute
+    }
     '/api/integrations/site-orders': {
       id: '/api/integrations/site-orders'
       path: '/api/integrations/site-orders'
@@ -723,12 +936,16 @@ interface AuthenticatedPainelProfissionalRouteChildren {
   AuthenticatedPainelProfissionalAgendaRoute: typeof AuthenticatedPainelProfissionalAgendaRoute
   AuthenticatedPainelProfissionalCatalogoRoute: typeof AuthenticatedPainelProfissionalCatalogoRoute
   AuthenticatedPainelProfissionalClientesRoute: typeof AuthenticatedPainelProfissionalClientesRoute
+  AuthenticatedPainelProfissionalComentariosRoute: typeof AuthenticatedPainelProfissionalComentariosRoute
+  AuthenticatedPainelProfissionalEmpresasRoute: typeof AuthenticatedPainelProfissionalEmpresasRoute
   AuthenticatedPainelProfissionalEntregasRoute: typeof AuthenticatedPainelProfissionalEntregasRoute
   AuthenticatedPainelProfissionalEquipeRoute: typeof AuthenticatedPainelProfissionalEquipeRoute
   AuthenticatedPainelProfissionalMentoriaRoute: typeof AuthenticatedPainelProfissionalMentoriaRoute
+  AuthenticatedPainelProfissionalNotificacoesRoute: typeof AuthenticatedPainelProfissionalNotificacoesRoute
   AuthenticatedPainelProfissionalPedidosRoute: typeof AuthenticatedPainelProfissionalPedidosRoute
   AuthenticatedPainelProfissionalPsicanaliseRoute: typeof AuthenticatedPainelProfissionalPsicanaliseRoute
   AuthenticatedPainelProfissionalS8Route: typeof AuthenticatedPainelProfissionalS8Route
+  AuthenticatedPainelProfissionalTreinamentosRoute: typeof AuthenticatedPainelProfissionalTreinamentosRoute
   AuthenticatedPainelProfissionalIndexRoute: typeof AuthenticatedPainelProfissionalIndexRoute
 }
 
@@ -742,18 +959,26 @@ const AuthenticatedPainelProfissionalRouteChildren: AuthenticatedPainelProfissio
       AuthenticatedPainelProfissionalCatalogoRoute,
     AuthenticatedPainelProfissionalClientesRoute:
       AuthenticatedPainelProfissionalClientesRoute,
+    AuthenticatedPainelProfissionalComentariosRoute:
+      AuthenticatedPainelProfissionalComentariosRoute,
+    AuthenticatedPainelProfissionalEmpresasRoute:
+      AuthenticatedPainelProfissionalEmpresasRoute,
     AuthenticatedPainelProfissionalEntregasRoute:
       AuthenticatedPainelProfissionalEntregasRoute,
     AuthenticatedPainelProfissionalEquipeRoute:
       AuthenticatedPainelProfissionalEquipeRoute,
     AuthenticatedPainelProfissionalMentoriaRoute:
       AuthenticatedPainelProfissionalMentoriaRoute,
+    AuthenticatedPainelProfissionalNotificacoesRoute:
+      AuthenticatedPainelProfissionalNotificacoesRoute,
     AuthenticatedPainelProfissionalPedidosRoute:
       AuthenticatedPainelProfissionalPedidosRoute,
     AuthenticatedPainelProfissionalPsicanaliseRoute:
       AuthenticatedPainelProfissionalPsicanaliseRoute,
     AuthenticatedPainelProfissionalS8Route:
       AuthenticatedPainelProfissionalS8Route,
+    AuthenticatedPainelProfissionalTreinamentosRoute:
+      AuthenticatedPainelProfissionalTreinamentosRoute,
     AuthenticatedPainelProfissionalIndexRoute:
       AuthenticatedPainelProfissionalIndexRoute,
   }
@@ -784,6 +1009,7 @@ interface ClientareaClienteRouteChildren {
   ClientareaClientePedidosRoute: typeof ClientareaClientePedidosRoute
   ClientareaClientePerfilRoute: typeof ClientareaClientePerfilRoute
   ClientareaClienteSessoesRoute: typeof ClientareaClienteSessoesRoute
+  ClientareaClienteTreinamentosRoute: typeof ClientareaClienteTreinamentosRoute
   ClientareaClienteIndexRoute: typeof ClientareaClienteIndexRoute
   ClientareaClientePedidoOrderIdRoute: typeof ClientareaClientePedidoOrderIdRoute
 }
@@ -797,6 +1023,7 @@ const ClientareaClienteRouteChildren: ClientareaClienteRouteChildren = {
   ClientareaClientePedidosRoute: ClientareaClientePedidosRoute,
   ClientareaClientePerfilRoute: ClientareaClientePerfilRoute,
   ClientareaClienteSessoesRoute: ClientareaClienteSessoesRoute,
+  ClientareaClienteTreinamentosRoute: ClientareaClienteTreinamentosRoute,
   ClientareaClienteIndexRoute: ClientareaClienteIndexRoute,
   ClientareaClientePedidoOrderIdRoute: ClientareaClientePedidoOrderIdRoute,
 }
@@ -816,10 +1043,25 @@ const ClientareaRouteWithChildren = ClientareaRoute._addFileChildren(
   ClientareaRouteChildren,
 )
 
+interface PortalRouteChildren {
+  PortalEmpresaRoute: typeof PortalEmpresaRoute
+  PortalFuncionarioRoute: typeof PortalFuncionarioRoute
+}
+
+const PortalRouteChildren: PortalRouteChildren = {
+  PortalEmpresaRoute: PortalEmpresaRoute,
+  PortalFuncionarioRoute: PortalFuncionarioRoute,
+}
+
+const PortalRouteWithChildren =
+  PortalRoute._addFileChildren(PortalRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   ClientareaRoute: ClientareaRouteWithChildren,
+  PortalRoute: PortalRouteWithChildren,
+  AcessoRoute: AcessoRoute,
   BootstrapRoute: BootstrapRoute,
   FormularioRoute: FormularioRoute,
   LoginRoute: LoginRoute,
@@ -827,6 +1069,8 @@ const rootRouteChildren: RootRouteChildren = {
   ClienteAtivarRoute: ClienteAtivarRoute,
   ClienteDefinirSenhaRoute: ClienteDefinirSenhaRoute,
   ClienteLoginRoute: ClienteLoginRoute,
+  EmpresaLoginRoute: EmpresaLoginRoute,
+  FuncionarioLoginRoute: FuncionarioLoginRoute,
   ApiIntegrationsSiteOrdersRoute: ApiIntegrationsSiteOrdersRoute,
   ApiStripeWebhookRoute: ApiStripeWebhookRoute,
 }

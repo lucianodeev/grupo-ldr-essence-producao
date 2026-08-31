@@ -244,6 +244,10 @@ function ClientContract() {
 
   return <div className="grid min-w-0 gap-8">
     <PageHeader title={t("contract.title")} subtitle={copy.pageSubtitle} />
+    <section data-section="priority-services-20260831" className="grid gap-3 md:grid-cols-2">
+      <div className="rounded-2xl border-2 border-primary bg-primary p-5 text-primary-foreground shadow-md"><p className="text-xs font-extrabold uppercase tracking-[.16em] opacity-80">1º destaque</p><h2 className="mt-2 font-serif text-2xl">Psicanálise</h2><p className="mt-2 text-sm opacity-90">Sessão individual e pacotes de 4, 8 e 12 sessões. Para empresas, pacotes por funcionário com créditos para acompanhamento.</p></div>
+      <div className="rounded-2xl border border-secondary/60 bg-secondary/10 p-5"><p className="text-xs font-extrabold uppercase tracking-[.16em] text-primary">2º destaque</p><h2 className="mt-2 font-serif text-2xl">Massagem Laboral + Hora de Bem-Estar</h2><p className="mt-2 text-sm text-muted-foreground">Bem-estar corporativo com contratação organizada para equipes e empresas.</p></div>
+    </section>
     <section className="min-w-0 rounded-3xl border border-primary/15 bg-gradient-to-br from-card via-card to-accent/25 p-5 shadow-sm sm:p-7">
       <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-primary">Grupo LDR Essence</p>
       <h2 className="mt-2 max-w-2xl break-words font-serif text-2xl leading-tight sm:text-3xl">{copy.allServices}</h2>

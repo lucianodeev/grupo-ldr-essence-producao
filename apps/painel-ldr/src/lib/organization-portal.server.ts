@@ -49,14 +49,14 @@ export async function getOrganizationDashboard(userId: string) {
     db.from("organization_benefit_allocations").select("id,member_id,catalog_key,credits_granted,credits_used,status,created_at,purchase_id,requested_at,used_at,scheduled_at,scheduled_note,schedule_status").eq("organization_id", org.id),
   ]);
   const keys = (services ?? []).map((s: any) => s.catalog_key);
-  const { data: catalog } = keys.length ? await db.from("service_catalog").select("catalog_key,name,category,currency,amount_cents,package_sessions,active").in("catalog_key", keys).eq("active", true) : { data: [] };
+  const { data: catalog } = keys.length ? await db.from("service_catalog").select("catalog_key,name,category,currency,amount_cents,package_sessions,active,sort_order").in("catalog_key", keys).eq("active", true) : { data: [] };
   const serviceByKey = new Map((catalog ?? []).map((x: any) => [x.catalog_key, x]));
   return {
     organization: org,
     members: members ?? [],
     purchases: purchases ?? [],
     benefits: benefits ?? [],
-    services: (services ?? []).map((s: any) => ({ ...s, ...(serviceByKey.get(s.catalog_key) ?? {}) })).filter((s: any) => s.name),
+    services: (services ?? []).map((s: any) => ({ ...s, ...(serviceByKey.get(s.catalog_key) ?? {}) })).filter((s: any) => s.name).sort((a: any, b: any) => { const priority = (x: any) => String(x.catalog_key).startsWith("psicanalise") ? 0 : String(x.catalog_key).startsWith("massagem_laboral") ? 1 : 2; return priority(a) - priority(b) || Number(a.sort_order ?? 9999) - Number(b.sort_order ?? 9999) || String(a.name).localeCompare(String(b.name)); }),
   };
 }
 
