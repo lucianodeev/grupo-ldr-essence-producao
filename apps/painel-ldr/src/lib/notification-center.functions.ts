@@ -17,14 +17,16 @@ export const professionalNotificationTargets = createServerFn({ method: "GET" })
   .handler(async ({ context }) => {
     await requireProfessional(context);
     const database = await db();
-    const [{ data: customers }, { data: employees }, { data: professionals }, { data: organizations }, { data: recent }] = await Promise.all([
+    const [{ data: customers }, { data: employees }, { data: professionals }, { data: organizations }, { data: recent }, { data: benefits }, { data: catalog }] = await Promise.all([
       database.from("customers").select("id,full_name,email,phone,language,birth_date,vacation_start,vacation_end,next_day_off,portal_active").order("full_name"),
       database.from("organization_members").select("id,organization_id,full_name,email,phone,birth_date,vacation_start,vacation_end,next_day_off,portal_active").order("full_name"),
       database.from("profiles").select("id,full_name,email,phone,birth_date,vacation_start,vacation_end,next_day_off,is_active").eq("is_active", true).order("full_name"),
       database.from("organizations").select("id,name,billing_email,phone,active").order("name"),
       database.from("notification_outbox").select("id,audience_type,target_id,channel,event_type,recipient,subject,body,status,scheduled_for,sent_at,created_at").order("created_at", { ascending: false }).limit(100),
+      database.from("organization_benefit_allocations").select("id,organization_id,member_id,catalog_key,status,credits_granted,credits_used,requested_at,scheduled_at,scheduled_note,schedule_status").in("status", ["assigned","requested"]).order("requested_at", { ascending:false, nullsFirst:false }).limit(300),
+      database.from("service_catalog").select("catalog_key,name").eq("active", true),
     ]);
-    return { customers: customers ?? [], employees: employees ?? [], professionals: professionals ?? [], organizations: organizations ?? [], recent: recent ?? [] };
+    return { customers: customers ?? [], employees: employees ?? [], professionals: professionals ?? [], organizations: organizations ?? [], recent: recent ?? [], benefits: benefits ?? [], catalog: catalog ?? [] };
   });
 
 export const professionalSendNotification = createServerFn({ method: "POST" })
