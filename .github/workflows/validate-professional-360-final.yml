@@ -7,7 +7,7 @@ on:
       - '.github/workflows/validate-professional-360-final.yml'
   workflow_dispatch:
 
-# Validação final consolidada: catálogo LDR, plano 360, S8, perfil multimídia, avaliações e chat privado.
+# Validação final consolidada: catálogo LDR, plano 360, S8, perfil multimídia, avaliações, moderação e chat privado.
 jobs:
   build:
     runs-on: ubuntu-latest
