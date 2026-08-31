@@ -1,0 +1,32 @@
+name: Finaliza prioridades dos portais
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/finaliza-prioridades-portais-20260831.yml
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Aplicar
+        run: python .github/scripts/finaliza_prioridades_portais.py
+      - name: Build
+        working-directory: apps/painel-ldr
+        run: npm install --no-audit --no-fund && npm run build
+      - name: Commitar
+        run: |
+          if git diff --quiet; then exit 0; fi
+          git config user.name ldr-rh-campanhas
+          git config user.email llucianouam@gmail.com
+          git add apps/painel-ldr/src
+          git commit -m "feat(panel): completa destaque de ebook e ordem de servicos"
+          git push origin main
