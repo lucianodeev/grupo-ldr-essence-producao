@@ -26,10 +26,28 @@ export const Route = createFileRoute("/cliente/login")({
   component: ClientLogin,
 });
 
+function cameFromCorporateBenefits() {
+  if (typeof document === "undefined") return false;
+  try {
+    const referrer = new URL(document.referrer);
+    return (
+      /(^|\.)ldrrhestrategia\.com$/i.test(referrer.hostname) &&
+      referrer.pathname.replace(/\/$/, "") === "/beneficios-corporativos"
+    );
+  } catch {
+    return false;
+  }
+}
+
 function ClientLogin() {
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
+    if (cameFromCorporateBenefits()) {
+      window.location.replace("/empresa/login");
+      return;
+    }
+
     let active = true;
 
     const redirectToClient = () => {
