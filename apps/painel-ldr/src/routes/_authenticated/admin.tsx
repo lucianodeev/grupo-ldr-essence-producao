@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Link, createFileRoute } from "@tanstack/react-router";
+import { Link, Outlet, createFileRoute, useRouterState } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 
 import { useAccess, useAppointments, useCustomers, useOrders, useTeam } from "@/lib/central-data";
@@ -42,12 +42,13 @@ const ownerActions = [
 ] as const;
 
 function MasterAdmin() {
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
   const access = useAccess();
   if (access.isLoading) return <div className="s8-card mx-auto max-w-md text-center">Carregando painel master...</div>;
   if (!access.data?.authorized || access.data.role !== "superadmin") {
     return <div className="s8-card mx-auto max-w-xl text-center"><h1 className="font-serif text-3xl">403</h1><p className="mt-2 text-sm text-muted-foreground">Esta área é exclusiva do administrador master da LDR.</p></div>;
   }
-  return <MasterAdminContent />;
+  return pathname === "/admin" || pathname === "/admin/" ? <MasterAdminContent /> : <Outlet />;
 }
 
 function money(cents: number, currency: string) {
