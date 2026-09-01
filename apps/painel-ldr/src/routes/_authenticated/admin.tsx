@@ -5,7 +5,7 @@ export const Route = createFileRoute("/_authenticated/admin")({ component: Maste
 
 const sections = [
   { title: "Meus atendimentos", description: "Acesse sua operação diária, sessões, agenda e clientes próprios.", links: [
-    ["Atendimentos / Psicanálise", "/painel-profissional/psicanalise"],
+    ["Central de atendimentos", "/admin/meus-atendimentos"],
     ["Minha agenda", "/painel-profissional/agenda"],
     ["Meus clientes", "/painel-profissional/clientes"],
     ["Meus pedidos", "/painel-profissional/pedidos"],
@@ -50,8 +50,8 @@ function MasterAdmin() {
       <h1 className="mt-2 font-serif text-3xl text-[#0B1F3A] sm:text-4xl">Central de administração e atendimentos</h1>
       <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600">Um único ponto de acesso para administrar o ecossistema LDR e chegar rapidamente aos seus próprios atendimentos, mantendo os painéis de profissionais, empresas, funcionários e clientes separados por permissão.</p>
       <div className="mt-5 flex flex-wrap gap-3">
-        <Link to="/painel-profissional/agenda" className="rounded-xl bg-[#0B1F3A] px-4 py-3 text-sm font-bold text-white">Abrir minha agenda</Link>
-        <Link to="/painel-profissional/psicanalise" className="rounded-xl border border-[#C7A33B] bg-white px-4 py-3 text-sm font-bold text-[#0B1F3A]">Meus atendimentos</Link>
+        <Link to="/admin/meus-atendimentos" className="rounded-xl bg-[#0B1F3A] px-4 py-3 text-sm font-bold text-white">Meus atendimentos</Link>
+        <Link to="/painel-profissional/agenda" className="rounded-xl border border-[#C7A33B] bg-white px-4 py-3 text-sm font-bold text-[#0B1F3A]">Abrir minha agenda</Link>
         <Link to="/painel-profissional" className="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-[#0B1F3A]">Central operacional</Link>
       </div>
     </section>
