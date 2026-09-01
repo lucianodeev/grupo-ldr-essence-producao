@@ -8,7 +8,7 @@ const db=supabaseAdmin as unknown as {from:(table:string)=>any};
 function fail(m:string):never{throw new Error(m)}
 async function requireInternal(supabase:Client,userId:string,superOnly=false){const a=await resolveAccess(supabase,userId);if(!a.authorized||(superOnly&&a.role!=="superadmin"))fail("Acesso negado.");return a}
 
-export async function getProfessionalNetworkAdmin(supabase:Client,userId:string){await requireInternal(supabase,userId);const [{data:profiles},{data:accounts},{data:subs},{data:plans},{data:payments},{data:payouts},{data:rules},{data:categories},{data:config},{data:events}]=await Promise.all([
+export async function getProfessionalNetworkAdmin(supabase:Client,userId:string){await requireInternal(supabase,userId,true);const [{data:profiles},{data:accounts},{data:subs},{data:plans},{data:payments},{data:payouts},{data:rules},{data:categories},{data:config},{data:events}]=await Promise.all([
  db.from("professional_profiles").select("id,professional_account_id,slug,display_name,professional_title,category_id,city,country_code,languages,online_enabled,in_person_enabled,identity_verified,documents_verified,profile_verified,compliance_status,profile_status,is_public,view_count,created_at,updated_at").order("created_at",{ascending:false}),
  db.from("professional_accounts").select("id,auth_user_id,status,onboarding_step,onboarding_completed,country_code,preferred_currency,connect_status,payout_method_status,created_at"),
  db.from("professional_subscriptions").select("id,professional_account_id,plan_id,status,current_period_start,current_period_end,cancel_at_period_end,created_at").order("created_at",{ascending:false}),

@@ -297,10 +297,9 @@ export async function listAuditLogs(supabase: Client, userId: string) {
   return data ?? [];
 }
 
-/** Lista operacional da equipe: visível para qualquer usuário autorizado (não expõe dados sensíveis). */
+/** Lista administrativa global: exclusiva do superadmin. */
 export async function listTeamMembers(supabase: Client, userId: string): Promise<AccessUser[]> {
-  const access = await resolveAccess(supabase, userId);
-  if (!access.authorized) fail("Acesso negado.");
+  await requireSuperadmin(supabase, userId);
 
   const { data: profiles } = await supabaseAdmin
     .from("profiles")

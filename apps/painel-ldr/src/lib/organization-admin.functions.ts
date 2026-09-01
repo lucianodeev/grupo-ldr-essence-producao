@@ -1,17 +1,17 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
-async function requireProfessional(context: any) {
+async function requireSuperadmin(context: any) {
   const { resolveAccess } = await import("@/lib/access.server");
   const access = await resolveAccess(context.supabase, context.userId);
-  if (!access.authorized) throw new Error("Acesso negado.");
+  if (!access.authorized || access.role !== "superadmin") throw new Error("Acesso negado.");
   return access;
 }
 
 export const professionalOrganizations = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
-    await requireProfessional(context);
+    await requireSuperadmin(context);
 
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const db = supabaseAdmin as unknown as { from: (table: string) => any };
@@ -30,7 +30,7 @@ export const professionalCompleteOrganizationBenefit = createServerFn({ method: 
   .middleware([requireSupabaseAuth])
   .inputValidator((data: { benefitId: string }) => data)
   .handler(async ({ context, data }) => {
-    await requireProfessional(context);
+    await requireSuperadmin(context);
     const benefitId = String(data.benefitId ?? "").trim();
     if (!benefitId) throw new Error("Benefício inválido.");
 
