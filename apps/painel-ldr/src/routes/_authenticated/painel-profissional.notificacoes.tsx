@@ -3,13 +3,29 @@ import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useMemo, useState } from "react";
 import { Bell, CalendarDays, Mail, MessageSquareText, Send, UsersRound } from "lucide-react";
 import { toast } from "sonner";
-import { professionalNotificationTargets, professionalScheduleOrganizationBenefit, professionalSendNotification } from "@/lib/notification-center.functions";
+import { portalNotifications, professionalNotificationTargets, professionalScheduleOrganizationBenefit, professionalSendNotification } from "@/lib/notification-center.functions";
+import { useAccess } from "@/lib/central-data";
 
 export const Route = createFileRoute("/_authenticated/painel-profissional/notificacoes")({ component: NotificationCenter });
 type Audience="client"|"employee"|"professional"|"company";type AnyRow=Record<string,any>;
 const LABELS:Record<Audience,string>={client:"Clientes",employee:"Funcionários",professional:"Profissionais",company:"Empresas"};
 
 function NotificationCenter(){
+ const access=useAccess();
+ if(access.isLoading)return <section className="s8-card text-center">Carregando notificações…</section>;
+ if(!access.data?.authorized)return <section className="s8-card text-center"><h1 className="font-serif text-3xl">403</h1><p className="mt-2 text-sm text-muted-foreground">Acesso negado.</p></section>;
+ return access.data.role==="superadmin"?<AdminNotificationCenter/>:<OwnNotificationCenter/>;
+}
+
+function OwnNotificationCenter(){
+ const loadFn=useServerFn(portalNotifications);
+ const [items,setItems]=useState<AnyRow[]>([]),[loading,setLoading]=useState(true);
+ useEffect(()=>{let active=true;void loadFn().then(rows=>{if(active)setItems(rows as AnyRow[])}).catch(()=>{if(active)toast.error("Não foi possível carregar suas notificações.")}).finally(()=>{if(active)setLoading(false)});return()=>{active=false}},[]);
+ if(loading)return <section className="s8-card text-center">Carregando notificações…</section>;
+ return <div className="space-y-6"><div><p className="text-xs font-bold uppercase tracking-[.18em] text-muted-foreground">Minha operação profissional</p><h1 className="font-serif text-3xl">Minhas notificações</h1><p className="mt-2 max-w-3xl text-sm text-muted-foreground">Avisos relacionados exclusivamente à sua conta e à sua atuação profissional.</p></div><section className="s8-card"><div className="flex items-center gap-3"><Bell className="h-5 w-5 text-primary"/><h2 className="font-serif text-2xl">Avisos recentes</h2></div><div className="mt-4 space-y-2">{items.length===0?<p className="text-sm text-muted-foreground">Nenhuma notificação disponível.</p>:items.map(n=><article key={n.id} className="rounded-xl border bg-card p-4"><div className="flex flex-wrap items-start justify-between gap-3"><div className="min-w-0"><p className="break-words text-sm font-bold">{n.subject||n.event_type||"Aviso"}</p><p className="mt-1 break-words text-sm text-muted-foreground">{n.body}</p></div><time className="text-xs text-muted-foreground">{new Date(n.created_at??n.scheduled_for).toLocaleString("pt-BR")}</time></div></article>)}</div></section></div>;
+}
+
+function AdminNotificationCenter(){
  const loadFn=useServerFn(professionalNotificationTargets),sendFn=useServerFn(professionalSendNotification),scheduleFn=useServerFn(professionalScheduleOrganizationBenefit);
  const [data,setData]=useState<any>(null),[loading,setLoading]=useState(true),[audience,setAudience]=useState<Audience>("client"),[selected,setSelected]=useState<string[]>([]),[channels,setChannels]=useState<Array<"in_app"|"email"|"sms">>(["in_app","email"]),[eventType,setEventType]=useState<any>("manual"),[subject,setSubject]=useState(""),[body,setBody]=useState(""),[busy,setBusy]=useState(false),[scheduleBusy,setScheduleBusy]=useState<string|null>(null),[scheduleForm,setScheduleForm]=useState<Record<string,{date:string;note:string}>>({});
  async function load(){setLoading(true);try{setData(await loadFn());}catch{toast.error("Não foi possível carregar o centro de notificações.");}finally{setLoading(false);}}useEffect(()=>{void load();},[]);useEffect(()=>setSelected([]),[audience]);

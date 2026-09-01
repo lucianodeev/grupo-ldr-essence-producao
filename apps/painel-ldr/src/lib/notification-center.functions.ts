@@ -6,16 +6,16 @@ async function db() {
   return supabaseAdmin as unknown as { from: (table: string) => any };
 }
 
-async function requireProfessional(context: any) {
+async function requireSuperadmin(context: any) {
   const { resolveAccess } = await import("@/lib/access.server");
   const access = await resolveAccess(context.supabase, context.userId);
-  if (!access.authorized) throw new Error("Acesso negado.");
+  if (!access.authorized || access.role !== "superadmin") throw new Error("Acesso negado.");
 }
 
 export const professionalNotificationTargets = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
-    await requireProfessional(context);
+    await requireSuperadmin(context);
     const database = await db();
     const [{ data: customers }, { data: employees }, { data: professionals }, { data: organizations }, { data: recent }, { data: benefits }, { data: catalog }] = await Promise.all([
       database.from("customers").select("id,full_name,email,phone,language,birth_date,vacation_start,vacation_end,next_day_off,portal_active").order("full_name"),
@@ -33,7 +33,7 @@ export const professionalSendNotification = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((data: { audienceType: "client"|"employee"|"professional"|"company"; targetIds: string[]; channels: Array<"in_app"|"email"|"sms">; eventType: "appointment"|"credit_reminder"|"no_credit_offer"|"birthday"|"vacation"|"day_off"|"manual"; subject?: string; body: string; scheduledFor?: string | null }) => data)
   .handler(async ({ context, data }) => {
-    await requireProfessional(context);
+    await requireSuperadmin(context);
     const ids = [...new Set((data.targetIds ?? []).map(String).filter(Boolean))].slice(0, 500);
     if (!ids.length) throw new Error("Selecione pelo menos um destinatário.");
     if (!data.body?.trim()) throw new Error("Escreva a mensagem.");
@@ -67,7 +67,7 @@ export const professionalScheduleOrganizationBenefit = createServerFn({ method: 
   .middleware([requireSupabaseAuth])
   .inputValidator((data: { benefitId: string; scheduledAt: string; note?: string | null }) => data)
   .handler(async ({ context, data }) => {
-    await requireProfessional(context);
+    await requireSuperadmin(context);
     const when = new Date(data.scheduledAt);
     if (!data.benefitId || Number.isNaN(when.getTime())) throw new Error("Data ou benefício inválido.");
     const database = await db();
