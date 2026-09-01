@@ -1,5 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { Link, Outlet, createFileRoute, useNavigate } from "@tanstack/react-router";
+import { Link, Outlet, createFileRoute, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 
@@ -39,15 +39,18 @@ const ADMIN_NAV = [
   { to: "/painel-profissional/acessos", key: "nav.access" },
 ] as const;
 
+const ADMIN_PATHS = ADMIN_NAV.map((item) => item.to);
+
 const COPY = {
-  pt: { companies: "Empresas / Funcionários", network: "Rede de Profissionais", networkServices: "Rede · Serviços", networkPlans: "Rede · Planos", networkFinance: "Rede · Financeiro", networkPayouts: "Rede · Repasses", networkCompliance: "Rede · Conformidade", networkContent: "Rede · Treinamentos / Comunidade", networkReviews: "Rede · Avaliações", notifications: "Notificações", training: "Treinamentos / Conteúdos", comments: "Comentários / Fórum", profile: "perfil", denied: "Sua conta não possui autorização para acessar o Painel do Profissional.", master: "Painel Master LDR" },
-  en: { companies: "Companies / Employees", network: "Professional Network", networkServices: "Network · Services", networkPlans: "Network · Plans", networkFinance: "Network · Finance", networkPayouts: "Network · Payouts", networkCompliance: "Network · Compliance", networkContent: "Network · Training / Community", networkReviews: "Network · Reviews", notifications: "Notifications", training: "Training / Content", comments: "Comments / Forum", profile: "role", denied: "Your account is not authorized to access the Professional Panel.", master: "LDR Master Panel" },
-  fr: { companies: "Entreprises / Collaborateurs", network: "Réseau de Professionnels", networkServices: "Réseau · Services", networkPlans: "Réseau · Plans", networkFinance: "Réseau · Finance", networkPayouts: "Réseau · Reversements", networkCompliance: "Réseau · Conformité", networkContent: "Réseau · Formations / Communauté", networkReviews: "Réseau · Avis", notifications: "Notifications", training: "Formations / Contenus", comments: "Commentaires / Forum", profile: "profil", denied: "Votre compte n’est pas autorisé à accéder au Panneau Professionnel.", master: "Panneau Master LDR" },
-  es: { companies: "Empresas / Empleados", network: "Red de Profesionales", networkServices: "Red · Servicios", networkPlans: "Red · Planes", networkFinance: "Red · Finanzas", networkPayouts: "Red · Pagos", networkCompliance: "Red · Cumplimiento", networkContent: "Red · Formación / Comunidad", networkReviews: "Red · Opiniones", notifications: "Notificaciones", training: "Formaciones / Contenidos", comments: "Comentarios / Foro", profile: "perfil", denied: "Tu cuenta no está autorizada para acceder al Panel Profesional.", master: "Panel Master LDR" },
+  pt: { companies: "Empresas / Funcionários", network: "Rede de Profissionais", networkServices: "Rede · Serviços", networkPlans: "Rede · Planos", networkFinance: "Rede · Financeiro", networkPayouts: "Rede · Repasses", networkCompliance: "Rede · Conformidade", networkContent: "Rede · Treinamentos / Comunidade", networkReviews: "Rede · Avaliações", notifications: "Notificações", training: "Treinamentos / Conteúdos", comments: "Comentários / Fórum", profile: "perfil", denied: "Sua conta não possui autorização para acessar o Painel do Profissional.", adminDenied: "Esta área administrativa é exclusiva do Painel Master LDR.", master: "Painel Master LDR" },
+  en: { companies: "Companies / Employees", network: "Professional Network", networkServices: "Network · Services", networkPlans: "Network · Plans", networkFinance: "Network · Finance", networkPayouts: "Network · Payouts", networkCompliance: "Network · Compliance", networkContent: "Network · Training / Community", networkReviews: "Network · Reviews", notifications: "Notifications", training: "Training / Content", comments: "Comments / Forum", profile: "role", denied: "Your account is not authorized to access the Professional Panel.", adminDenied: "This administrative area is exclusive to the LDR Master Panel.", master: "LDR Master Panel" },
+  fr: { companies: "Entreprises / Collaborateurs", network: "Réseau de Professionnels", networkServices: "Réseau · Services", networkPlans: "Réseau · Plans", networkFinance: "Réseau · Finance", networkPayouts: "Réseau · Reversements", networkCompliance: "Réseau · Conformité", networkContent: "Réseau · Formations / Communauté", networkReviews: "Réseau · Avis", notifications: "Notifications", training: "Formations / Contenus", comments: "Commentaires / Forum", profile: "profil", denied: "Votre compte n’est pas autorisé à accéder au Panneau Professionnel.", adminDenied: "Cette zone administrative est réservée au Panneau Master LDR.", master: "Panneau Master LDR" },
+  es: { companies: "Empresas / Empleados", network: "Red de Profesionales", networkServices: "Red · Servicios", networkPlans: "Red · Planes", networkFinance: "Red · Finanzas", networkPayouts: "Red · Pagos", networkCompliance: "Red · Cumplimiento", networkContent: "Red · Formación / Comunidad", networkReviews: "Red · Opiniones", notifications: "Notificaciones", training: "Formaciones / Contenidos", comments: "Comentarios / Foro", profile: "perfil", denied: "Tu cuenta no está autorizada para acceder al Panel Profesional.", adminDenied: "Esta área administrativa es exclusiva del Panel Master LDR.", master: "Panel Master LDR" },
 } as const;
 
 function CentralLayout() {
   const navigate = useNavigate();
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
   const queryClient = useQueryClient();
   const logEvent = useServerFn(logAuthEvent);
   const access = useAccess();
@@ -69,6 +72,9 @@ function CentralLayout() {
   const isProfessional = access.data?.authorized && access.data.role === "colaborador";
 
   if (!isSuperadmin && !isProfessional) return <div className="min-h-screen p-6"><div className="s8-card mx-auto max-w-md text-center"><h1 className="font-serif text-3xl">403</h1><p className="mt-2 text-sm text-muted-foreground">{copy.denied}</p><button type="button" onClick={signOut} className="mt-5 rounded-lg bg-primary px-5 py-3 font-bold text-primary-foreground">{t("action.signout")}</button></div></div>;
+
+  const isAdminPath = ADMIN_PATHS.some((path) => pathname === path || pathname.startsWith(`${path}/`));
+  if (isProfessional && isAdminPath) return <div className="min-h-screen p-6"><div className="s8-card mx-auto max-w-md text-center"><h1 className="font-serif text-3xl">403</h1><p className="mt-2 text-sm text-muted-foreground">{copy.adminDenied}</p><Link to="/painel-profissional" className="mt-5 inline-flex rounded-lg bg-primary px-5 py-3 font-bold text-primary-foreground">Voltar ao painel</Link></div></div>;
 
   const professionalItems = PROFESSIONAL_NAV.map((item) => ({ ...item, label: "key" in item ? t(item.key) : copy[item.extra] }));
   const adminItems = ADMIN_NAV.map((item) => ({ ...item, label: "key" in item ? t(item.key) : copy[item.extra] }));
