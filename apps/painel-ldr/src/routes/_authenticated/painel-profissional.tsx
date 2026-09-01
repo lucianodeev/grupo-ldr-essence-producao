@@ -63,7 +63,7 @@ function CentralLayout() {
     await queryClient.cancelQueries();
     queryClient.clear();
     await supabase.auth.signOut();
-    navigate({ to: "/profissional/login", replace: true });
+    window.location.replace("/profissional/login");
   }
 
   if (access.isLoading) return <div className="min-h-screen p-6"><div className="s8-card mx-auto max-w-md text-center">{t("state.loading")}</div></div>;
