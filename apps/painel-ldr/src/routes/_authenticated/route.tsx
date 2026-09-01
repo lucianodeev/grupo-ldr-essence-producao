@@ -8,7 +8,12 @@ export const Route = createFileRoute("/_authenticated")({
     const { data, error } = await supabase.auth.getUser();
     if (error || !data.user) {
       const professionalArea = location.pathname === "/painel-profissional" || location.pathname.startsWith("/painel-profissional/");
-      throw redirect({ to: professionalArea ? "/profissional/login" : "/login" });
+      const loginPath = professionalArea ? "/profissional/login" : "/login";
+      if (typeof window !== "undefined" && loginPath === "/login") {
+        window.location.replace(loginPath);
+        await new Promise<never>(() => {});
+      }
+      throw redirect({ to: loginPath });
     }
   },
   component: () => <Outlet />,
