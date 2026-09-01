@@ -11,29 +11,22 @@ const sections = [
     ["Meus pedidos", "/admin/meus-pedidos"],
   ]},
   { title: "Rede de Profissionais LDR", description: "Administre profissionais, serviços, planos, financeiro, repasses, conformidade e conteúdo.", links: [
+    ["Central da Rede", "/admin/rede"],
     ["Profissionais", "/painel-profissional/rede-profissionais"],
     ["Serviços da rede", "/painel-profissional/rede-servicos"],
     ["Planos da rede", "/painel-profissional/rede-planos"],
-    ["Financeiro da rede", "/painel-profissional/rede-profissionais-financeiro"],
-    ["Repasses", "/painel-profissional/rede-profissionais-repasses"],
-    ["Conformidade", "/painel-profissional/rede-profissionais-conformidade"],
-    ["Treinamentos / Comunidade", "/painel-profissional/rede-profissionais-conteudo"],
-    ["Avaliações", "/painel-profissional/rede-avaliacoes"],
   ]},
   { title: "Empresas, funcionários e operação", description: "Centralize empresas, colaboradores, equipe, catálogo, entregas e acessos.", links: [
-    ["Empresas / Funcionários", "/painel-profissional/empresas"],
+    ["Central de empresas", "/admin/empresas"],
     ["Equipe LDR", "/painel-profissional/equipe"],
     ["Catálogo de serviços", "/painel-profissional/catalogo"],
-    ["Entregas", "/painel-profissional/entregas"],
-    ["Notificações", "/painel-profissional/notificacoes"],
     ["Gestão de acessos", "/painel-profissional/acessos"],
   ]},
-  { title: "Clientes e desenvolvimento", description: "Acompanhe clientes, mentorias, S8, treinamentos e conteúdos do ecossistema.", links: [
-    ["Clientes", "/painel-profissional/clientes"],
+  { title: "Financeiro e desenvolvimento", description: "Acompanhe financeiro, pedidos, mentorias, S8 e treinamentos do ecossistema.", links: [
+    ["Central financeira", "/admin/financeiro"],
     ["Mentoria", "/painel-profissional/mentoria"],
     ["Sistema S8", "/painel-profissional/s8"],
     ["Treinamentos", "/painel-profissional/treinamentos"],
-    ["Comentários / Fórum", "/painel-profissional/comentarios"],
   ]},
 ] as const;
 
@@ -68,7 +61,7 @@ function MasterAdmin() {
       <div className="mt-5 flex flex-wrap gap-3">
         <Link to="/admin/meus-atendimentos" className="rounded-xl bg-[#0B1F3A] px-4 py-3 text-sm font-bold text-white">Iniciar / acompanhar atendimentos</Link>
         <Link to="/admin/minha-agenda" className="rounded-xl border border-[#C7A33B] bg-white px-4 py-3 text-sm font-bold text-[#0B1F3A]">Abrir minha agenda</Link>
-        <Link to="/painel-profissional" className="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-[#0B1F3A]">Central operacional</Link>
+        <Link to="/admin/financeiro" className="rounded-xl border border-[#C7A33B] bg-white px-4 py-3 text-sm font-bold text-[#0B1F3A]">Financeiro</Link>
       </div>
     </section>
 
