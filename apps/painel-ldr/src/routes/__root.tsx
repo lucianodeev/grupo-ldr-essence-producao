@@ -79,11 +79,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Grupo LDR Essence — Sistema S8" },
+      { title: "Grupo LDR Essence — Plataforma e Painéis" },
       {
         name: "description",
         content:
-          "Sistema S8 da Grupo LDR Essence: mentoria em 8 sessões individuais com PDE final.",
+          "Plataforma Grupo LDR Essence para clientes, profissionais, empresas, funcionários e administração do ecossistema LDR.",
       },
       { name: "author", content: "Grupo LDR Essence" },
     ],
