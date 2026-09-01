@@ -18,9 +18,31 @@ type CheckoutInput = {
   extraCredits?: 0 | 5 | 10 | 25;
 };
 
+type SubscriptionRow = {
+  id: string;
+  organization_id: string;
+  plan_code: PlanCode;
+  region: CompanyPlanRegion;
+  employee_count: number;
+  services: CompanyServiceKey[];
+  extra_credits: number;
+  currency: string;
+  monthly_amount_cents: number;
+  stripe_customer_id?: string | null;
+  stripe_subscription_id?: string | null;
+  stripe_checkout_session_id?: string | null;
+  status: string;
+  current_period_start?: string | null;
+  current_period_end?: string | null;
+  cancel_at_period_end: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
 function fail(message: string): never { throw new Error(message); }
 function emailNorm(value: string | null | undefined) { return value?.trim().toLowerCase() ?? null; }
 function isoFromUnix(value?: number | null) { return value && Number.isFinite(value) ? new Date(value * 1000).toISOString() : null; }
+function stripeId(value: string | { id?: string } | null | undefined) { return typeof value === "string" ? value : value?.id ?? null; }
 
 async function requireOrganization(userId: string) {
   const { data, error } = await db.from("organizations")
@@ -34,6 +56,53 @@ async function requireOrganization(userId: string) {
 
 async function audit(actorId: string, actorEmail: string | null, action: string, target?: string | null, details?: Record<string, unknown>) {
   await db.from("audit_logs").insert({ actor_id: actorId, actor_email: actorEmail, action, target: target ?? null, details: details ?? {} });
+}
+
+async function stripeGet(path: string) {
+  const secret = process.env["STRIPE_SECRET_KEY"];
+  if (!secret) return null;
+  try {
+    const response = await fetch(`https://api.stripe.com/v1/${path}`, { headers: { Authorization: `Bearer ${secret}` } });
+    if (!response.ok) return null;
+    return await response.json() as any;
+  } catch { return null; }
+}
+
+function normalizedStripeStatus(status?: string) {
+  if (status === "trialing") return "active";
+  const allowed = new Set(["pending","active","past_due","canceled","unpaid","paused","incomplete"]);
+  return status && allowed.has(status) ? status : "incomplete";
+}
+
+async function syncSubscriptionFromStripe(row: SubscriptionRow): Promise<SubscriptionRow> {
+  let stripeSubscriptionId = row.stripe_subscription_id ?? null;
+  let stripeCustomerId = row.stripe_customer_id ?? null;
+  if (!stripeSubscriptionId && row.stripe_checkout_session_id) {
+    const session = await stripeGet(`checkout/sessions/${encodeURIComponent(row.stripe_checkout_session_id)}`);
+    if (session) {
+      stripeSubscriptionId = stripeId(session.subscription);
+      stripeCustomerId = stripeId(session.customer) ?? stripeCustomerId;
+      if (!stripeSubscriptionId && session.status === "expired") {
+        const patch = { status: "canceled", updated_at: new Date().toISOString() };
+        await db.from("company_subscriptions").update(patch).eq("id", row.id);
+        return { ...row, ...patch };
+      }
+    }
+  }
+  if (!stripeSubscriptionId) return row;
+  const stripeSub = await stripeGet(`subscriptions/${encodeURIComponent(stripeSubscriptionId)}`);
+  if (!stripeSub) return row;
+  const patch = {
+    stripe_subscription_id: stripeSubscriptionId,
+    stripe_customer_id: stripeId(stripeSub.customer) ?? stripeCustomerId,
+    status: normalizedStripeStatus(stripeSub.status),
+    current_period_start: isoFromUnix(stripeSub.current_period_start),
+    current_period_end: isoFromUnix(stripeSub.current_period_end),
+    cancel_at_period_end: Boolean(stripeSub.cancel_at_period_end),
+    updated_at: new Date().toISOString(),
+  };
+  await db.from("company_subscriptions").update(patch).eq("id", row.id);
+  return { ...row, ...patch } as SubscriptionRow;
 }
 
 function planQuote(input: CheckoutInput) {
@@ -61,28 +130,30 @@ function planName(planCode: PlanCode) {
 export async function getCompanySubscriptionContext(userId: string) {
   const organization = await requireOrganization(userId);
   const { data: subscription, error } = await db.from("company_subscriptions")
-    .select("id,organization_id,plan_code,region,employee_count,services,extra_credits,currency,monthly_amount_cents,stripe_customer_id,stripe_subscription_id,status,current_period_start,current_period_end,cancel_at_period_end,created_at,updated_at")
+    .select("id,organization_id,plan_code,region,employee_count,services,extra_credits,currency,monthly_amount_cents,stripe_customer_id,stripe_subscription_id,stripe_checkout_session_id,status,current_period_start,current_period_end,cancel_at_period_end,created_at,updated_at")
     .eq("organization_id", organization.id)
     .order("created_at", { ascending: false })
     .limit(1)
     .maybeSingle();
   if (error) fail("Não foi possível carregar a assinatura da empresa.");
-  return { organization, subscription: subscription ?? null };
+  const synced = subscription ? await syncSubscriptionFromStripe(subscription as SubscriptionRow) : null;
+  return { organization, subscription: synced };
 }
 
 export async function createCompanySubscriptionCheckout(userId: string, email: string | null, input: CheckoutInput) {
   const organization = await requireOrganization(userId);
   const quote = planQuote(input);
   const { data: existing } = await db.from("company_subscriptions")
-    .select("id,status,stripe_subscription_id")
+    .select("id,status,stripe_subscription_id,stripe_checkout_session_id,organization_id,plan_code,region,employee_count,services,extra_credits,currency,monthly_amount_cents,stripe_customer_id,current_period_start,current_period_end,cancel_at_period_end,created_at,updated_at")
     .eq("organization_id", organization.id)
     .in("status", ["pending","active","past_due","unpaid","paused","incomplete"])
     .order("created_at", { ascending: false })
     .limit(1)
     .maybeSingle();
 
-  if (existing?.stripe_subscription_id) fail("Sua empresa já possui uma assinatura. Use a opção de gerenciar renovação no painel.");
-  if (existing?.id) await db.from("company_subscriptions").delete().eq("id", existing.id).eq("organization_id", organization.id);
+  const syncedExisting = existing ? await syncSubscriptionFromStripe(existing as SubscriptionRow) : null;
+  if (syncedExisting?.stripe_subscription_id && syncedExisting.status !== "canceled") fail("Sua empresa já possui uma assinatura. Use a opção de gerenciar renovação no painel.");
+  if (syncedExisting?.id && syncedExisting.status !== "canceled") await db.from("company_subscriptions").delete().eq("id", syncedExisting.id).eq("organization_id", organization.id);
 
   const { data: row, error: insertError } = await db.from("company_subscriptions").insert({
     organization_id: organization.id,
@@ -106,7 +177,7 @@ export async function createCompanySubscriptionCheckout(userId: string, email: s
   params.set("line_items[0][price_data][currency]", quote.currency.toLowerCase());
   params.set("line_items[0][price_data][unit_amount]", String(quote.monthlyCents));
   params.set("line_items[0][price_data][recurring][interval]", "month");
-  params.set("line_items[0][product_data][name]", `${planName(input.planCode)} — ${quote.employees} funcionários`);
+  params.set("line_items[0][price_data][product_data][name]", `${planName(input.planCode)} — ${quote.employees} funcionários`);
   params.set("line_items[0][quantity]", "1");
   params.set("success_url", `${origin}/assinatura-empresa?subscription=success&session_id={CHECKOUT_SESSION_ID}`);
   params.set("cancel_url", `${origin}/assinatura-empresa?subscription=cancel`);
@@ -164,7 +235,7 @@ async function updateStripeCancellation(userId: string, email: string | null, ca
   const sub = await response.json() as { status?: string; current_period_start?: number; current_period_end?: number; cancel_at_period_end?: boolean; error?: { message?: string } };
   if (!response.ok) fail(sub.error?.message || "Não foi possível atualizar a assinatura.");
   await db.from("company_subscriptions").update({
-    status: sub.status === "trialing" ? "active" : (sub.status ?? row.status),
+    status: normalizedStripeStatus(sub.status),
     current_period_start: isoFromUnix(sub.current_period_start),
     current_period_end: isoFromUnix(sub.current_period_end),
     cancel_at_period_end: Boolean(sub.cancel_at_period_end),
