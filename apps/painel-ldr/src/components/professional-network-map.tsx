@@ -4,14 +4,28 @@ type ProfileLike = {
   id?: string;
   country_code?: string | null;
   city?: string | null;
+  public_region?: string | null;
   display_name?: string | null;
+};
+
+export type NetworkMapLabels = {
+  oneProfessional: string;
+  manyProfessionals: string;
+  oneActiveProfile: string;
+  manyActiveProfiles: string;
+  empty: string;
+  filterByCountry: string;
+  clearFilter: string;
 };
 
 type Props = {
   profiles: ProfileLike[];
   title: string;
   text: string;
+  labels: NetworkMapLabels;
   dark?: boolean;
+  selectedCountry?: string;
+  onCountrySelect?: (countryCode: string) => void;
 };
 
 const POSITIONS: Record<string, { x: number; y: number }> = {
@@ -29,14 +43,15 @@ function fallbackPosition(index: number) {
   return { x: 22 + ((index * 17) % 64), y: 26 + ((index * 13) % 54) };
 }
 
-export function ProfessionalNetworkMap({ profiles, title, text, dark = false }: Props) {
+export function ProfessionalNetworkMap({ profiles, title, text, labels, dark = false, selectedCountry = "", onCountrySelect }: Props) {
   const counts = new Map<string, number>();
   for (const profile of profiles) {
     const code = String(profile.country_code || "").toUpperCase();
     if (!code) continue;
     counts.set(code, (counts.get(code) || 0) + 1);
   }
-  const countries = [...counts.entries()];
+  const countries = [...counts.entries()].sort(([a], [b]) => a.localeCompare(b));
+  const professionalLabel = (count: number) => count === 1 ? labels.oneProfessional : labels.manyProfessionals;
 
   return (
     <div className={`relative overflow-hidden rounded-[2rem] border p-6 shadow-xl ${dark ? "border-white/20 bg-white/10 text-white backdrop-blur" : "bg-white"}`} style={dark ? undefined : { borderColor: "rgba(201,166,58,.45)" }}>
@@ -49,7 +64,7 @@ export function ProfessionalNetworkMap({ profiles, title, text, dark = false }: 
         </div>
       </div>
 
-      <div className={`relative mt-5 aspect-[16/9] overflow-hidden rounded-2xl border ${dark ? "border-white/15 bg-white/5" : "border-primary/10 bg-[#f4f1e8]"}`} aria-label={title}>
+      <div className={`relative mt-5 aspect-[16/9] min-h-56 overflow-hidden rounded-2xl border ${dark ? "border-white/15 bg-white/5" : "border-primary/10 bg-[#f4f1e8]"}`} role="group" aria-label={title}>
         <svg viewBox="0 0 100 60" className="absolute inset-0 h-full w-full" aria-hidden="true">
           <g fill={dark ? "rgba(255,255,255,.10)" : "rgba(11,31,58,.10)"} stroke={dark ? "rgba(255,255,255,.14)" : "rgba(11,31,58,.12)"} strokeWidth=".35">
             <path d="M7 16 15 8l13 2 7 8-6 7-9 1-5 8-7-4-3-8z" />
@@ -60,29 +75,31 @@ export function ProfessionalNetworkMap({ profiles, title, text, dark = false }: 
             <path d="m79 39 11 2 7 9-5 7-12-2-5-8z" />
           </g>
           <g stroke={dark ? "rgba(255,255,255,.08)" : "rgba(11,31,58,.06)"} strokeWidth=".25">
-            {[20,40,60,80].map((x) => <line key={`x${x}`} x1={x} y1="0" x2={x} y2="60" />)}
-            {[15,30,45].map((y) => <line key={`y${y}`} x1="0" y1={y} x2="100" y2={y} />)}
+            {[20, 40, 60, 80].map((x) => <line key={`x${x}`} x1={x} y1="0" x2={x} y2="60" />)}
+            {[15, 30, 45].map((y) => <line key={`y${y}`} x1="0" y1={y} x2="100" y2={y} />)}
           </g>
         </svg>
 
         {countries.map(([code, count], index) => {
           const pos = POSITIONS[code] || fallbackPosition(index);
-          return (
-            <div key={code} className="absolute -translate-x-1/2 -translate-y-1/2" style={{ left: `${pos.x}%`, top: `${pos.y}%` }} title={`${code}: ${count}`}>
-              <div className="relative grid h-8 w-8 place-items-center rounded-full bg-secondary text-[10px] font-black text-primary shadow-lg ring-4 ring-secondary/20">
-                {count}
-                <span className="absolute -bottom-5 whitespace-nowrap rounded-full bg-primary px-2 py-0.5 text-[9px] font-black text-primary-foreground shadow">{code}</span>
-              </div>
-            </div>
-          );
+          const active = selectedCountry === code;
+          const marker = <><span className={`relative grid h-9 w-9 place-items-center rounded-full bg-secondary text-xs font-black text-primary shadow-lg ring-4 ${active ? "ring-primary/50" : "ring-secondary/20"}`}>{count}</span><span className="absolute left-1/2 top-10 -translate-x-1/2 whitespace-nowrap rounded-full bg-primary px-2 py-0.5 text-[9px] font-black text-primary-foreground shadow">{code} · {count} {professionalLabel(count)}</span></>;
+          const className = "absolute min-h-11 min-w-11 -translate-x-1/2 -translate-y-1/2 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2";
+          const style = { left: `${pos.x}%`, top: `${pos.y}%` };
+          const ariaLabel = `${active ? labels.clearFilter : labels.filterByCountry}: ${code}, ${count} ${professionalLabel(count)}`;
+          return onCountrySelect ? <button key={code} type="button" className={className} style={style} onClick={() => onCountrySelect(code)} aria-label={ariaLabel} aria-pressed={active}>{marker}</button> : <div key={code} className={className} style={style} title={`${code}: ${count} ${professionalLabel(count)}`}>{marker}</div>;
         })}
 
-        {countries.length === 0 ? <div className="absolute inset-0 grid place-items-center p-6 text-center"><div><MapPin className={`mx-auto h-7 w-7 ${dark ? "text-secondary" : "text-primary"}`} /><p className={`mt-2 text-xs ${dark ? "text-white/70" : "text-muted-foreground"}`}>Os países aparecem aqui conforme os perfis públicos forem ativados.</p></div></div> : null}
+        {countries.length === 0 ? <div className="absolute inset-0 grid place-items-center p-6 text-center"><div><MapPin className={`mx-auto h-7 w-7 ${dark ? "text-secondary" : "text-primary"}`} /><p className={`mt-2 text-xs ${dark ? "text-white/70" : "text-muted-foreground"}`}>{labels.empty}</p></div></div> : null}
       </div>
 
       <div className="mt-5 flex flex-wrap gap-2">
-        {countries.map(([code, count]) => <span key={code} className={`rounded-full border px-3 py-1.5 text-xs font-black ${dark ? "border-white/20 bg-white/5" : "border-primary/15 bg-primary/5"}`}>{code} · {count}</span>)}
-        <span className={`rounded-full border px-3 py-1.5 text-xs font-black ${dark ? "border-white/20 bg-white/5" : "border-primary/15 bg-primary/5"}`}>{profiles.length} {profiles.length === 1 ? "perfil ativo" : "perfis ativos"}</span>
+        {countries.map(([code, count]) => {
+          const active = selectedCountry === code;
+          const className = `rounded-full border px-3 py-2 text-xs font-black transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary ${dark ? "border-white/20 bg-white/5" : "border-primary/15 bg-primary/5"} ${active ? "ring-2 ring-secondary" : ""}`;
+          return onCountrySelect ? <button key={code} type="button" className={className} onClick={() => onCountrySelect(code)} aria-pressed={active}>{code} · {count} {professionalLabel(count)}</button> : <span key={code} className={className}>{code} · {count} {professionalLabel(count)}</span>;
+        })}
+        <span className={`rounded-full border px-3 py-2 text-xs font-black ${dark ? "border-white/20 bg-white/5" : "border-primary/15 bg-primary/5"}`}>{profiles.length} {profiles.length === 1 ? labels.oneActiveProfile : labels.manyActiveProfiles}</span>
       </div>
     </div>
   );

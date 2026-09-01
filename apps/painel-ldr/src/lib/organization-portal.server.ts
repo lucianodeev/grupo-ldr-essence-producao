@@ -40,6 +40,26 @@ async function requireOrganization(userId: string) {
   return data;
 }
 
+async function ensureEmployeeCapacity(organizationId: string) {
+  const { data: subscription, error: subscriptionError } = await db.from("company_subscriptions")
+    .select("employee_count")
+    .eq("organization_id", organizationId)
+    .in("status", ["active", "past_due"])
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (subscriptionError) fail("Não foi possível validar o limite do plano.");
+  // Empresas sem assinatura continuam podendo usar o catálogo avulso existente.
+  if (!subscription) return;
+  const limit = Math.max(1, Number(subscription.employee_count) || 1);
+  const { count, error: countError } = await db.from("organization_members")
+    .select("id", { count: "exact", head: true })
+    .eq("organization_id", organizationId)
+    .eq("portal_active", true);
+  if (countError) fail("Não foi possível validar o limite do plano.");
+  if (Number(count ?? 0) >= limit) fail(`Seu plano atual permite até ${limit} funcionários.`);
+}
+
 export async function getOrganizationDashboard(userId: string) {
   const org = await requireOrganization(userId);
   const [{ data: members }, { data: services }, { data: purchases }, { data: benefits }] = await Promise.all([
@@ -65,6 +85,7 @@ export async function addOrganizationMember(userId: string, email: string | null
   const fullName = input.fullName.trim();
   const memberEmail = emailNorm(input.email);
   if (fullName.length < 2 || !memberEmail?.includes("@")) fail("Informe nome e e-mail válidos.");
+  await ensureEmployeeCapacity(org.id);
   const { data, error } = await db.from("organization_members").insert({
     organization_id: org.id, full_name: fullName, email: memberEmail,
     department: input.department?.trim() || null, employee_code: input.employeeCode?.trim() || null,
@@ -92,6 +113,9 @@ export async function updateOrganizationMember(userId: string, email: string | n
 
 export async function setOrganizationMemberActive(userId: string, email: string | null, memberId: string, active: boolean) {
   const org = await requireOrganization(userId);
+  const { data: current, error: currentError } = await db.from("organization_members").select("id,portal_active").eq("id", memberId).eq("organization_id", org.id).maybeSingle();
+  if (currentError || !current) fail("Funcionário não encontrado.");
+  if (active && !current.portal_active) await ensureEmployeeCapacity(org.id);
   const { data, error } = await db.from("organization_members").update({ portal_active: active }).eq("id", memberId).eq("organization_id", org.id).select("id").maybeSingle();
   if (error || !data) fail("Funcionário não encontrado.");
   await audit(userId, emailNorm(email), active ? "organization.member_activated" : "organization.member_deactivated", memberId);

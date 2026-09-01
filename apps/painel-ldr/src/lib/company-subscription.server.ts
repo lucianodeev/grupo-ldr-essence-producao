@@ -143,6 +143,14 @@ export async function getCompanySubscriptionContext(userId: string) {
 export async function createCompanySubscriptionCheckout(userId: string, email: string | null, input: CheckoutInput) {
   const organization = await requireOrganization(userId);
   const quote = planQuote(input);
+  const { count: activeEmployees, error: employeeCountError } = await db.from("organization_members")
+    .select("id", { count: "exact", head: true })
+    .eq("organization_id", organization.id)
+    .eq("portal_active", true);
+  if (employeeCountError) fail("Não foi possível validar os funcionários da empresa.");
+  if (Number(activeEmployees ?? 0) > quote.employees) {
+    fail(`Sua empresa possui ${activeEmployees} funcionários ativos. Escolha um plano com capacidade para pelo menos ${activeEmployees}.`);
+  }
   const { data: existing } = await db.from("company_subscriptions")
     .select("id,status,stripe_subscription_id,stripe_checkout_session_id,organization_id,plan_code,region,employee_count,services,extra_credits,currency,monthly_amount_cents,stripe_customer_id,current_period_start,current_period_end,cancel_at_period_end,created_at,updated_at")
     .eq("organization_id", organization.id)

@@ -4,10 +4,11 @@ import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/_authenticated")({
   ssr: false,
-  beforeLoad: async () => {
+  beforeLoad: async ({ location }) => {
     const { data, error } = await supabase.auth.getUser();
     if (error || !data.user) {
-      throw redirect({ to: "/login" });
+      const professionalArea = location.pathname === "/painel-profissional" || location.pathname.startsWith("/painel-profissional/");
+      throw redirect({ to: professionalArea ? "/profissional/login" : "/login" });
     }
   },
   component: () => <Outlet />,

@@ -37,7 +37,9 @@ type StripeObject = {
   amount_refunded?: number;
   currency?: string;
   metadata?: Record<string, string>;
+  customer?: string | { id?: string } | null;
   subscription?: string | { id?: string } | null;
+  parent?: { subscription_details?: { subscription?: string | { id?: string } | null } } | null;
   payment_intent?: string | { id?: string } | null;
   current_period_start?: number;
   current_period_end?: number;
@@ -133,7 +135,7 @@ async function setProfessionalSubscription(metadata: Record<string, string>, obj
   const rawStatus = eventType === "customer.subscription.deleted" ? "canceled" : String(object.status ?? (eventType === "checkout.session.completed" ? "active" : "pending"));
   const allowed = new Set(["pending","active","past_due","canceled","unpaid","paused","incomplete"]);
   const status = rawStatus === "trialing" ? "active" : allowed.has(rawStatus) ? rawStatus : "incomplete";
-  const subscriptionId = eventType.startsWith("customer.subscription") ? object.id ?? null : stripeId(object.subscription);
+  const subscriptionId = eventType.startsWith("customer.subscription") ? object.id ?? null : stripeId(object.subscription) ?? stripeId(object.parent?.subscription_details?.subscription);
   let query = db.from("professional_subscriptions").update({
     status,
     stripe_checkout_session_id: eventType === "checkout.session.completed" ? object.id ?? null : undefined,
@@ -164,6 +166,40 @@ async function setProfessionalSubscription(metadata: Record<string, string>, obj
       await db.from("professional_profiles").update({ is_public: false, profile_status: "paused", updated_at: new Date().toISOString() }).eq("professional_account_id", resolvedAccountId);
     }
   }
+  return true;
+}
+
+async function setCompanySubscription(metadata: Record<string, string>, object: StripeObject, eventType: string) {
+  const rowId = metadata["company_subscription_id"];
+  const subscriptionId = eventType.startsWith("customer.subscription") ? object.id ?? null : stripeId(object.subscription);
+  if (!rowId && !subscriptionId) return false;
+
+  let rawStatus = String(object.status ?? "pending");
+  if (eventType === "checkout.session.completed") rawStatus = object.payment_status === "paid" || object.payment_status === "no_payment_required" ? "active" : "pending";
+  if (eventType === "invoice.payment_succeeded") rawStatus = "active";
+  if (eventType === "checkout.session.expired" || eventType === "customer.subscription.deleted") rawStatus = "canceled";
+  if (eventType === "invoice.payment_failed") rawStatus = "past_due";
+  const allowed = new Set(["pending", "active", "past_due", "canceled", "unpaid", "paused", "incomplete"]);
+  // A tabela atual não oferece período de teste; se a Stripe enviar trialing, os benefícios seguem ativos.
+  const status = rawStatus === "trialing" ? "active" : allowed.has(rawStatus) ? rawStatus : "incomplete";
+  const patch: Record<string, unknown> = { status, updated_at: new Date().toISOString() };
+  if (eventType === "checkout.session.completed" || eventType === "checkout.session.expired") patch.stripe_checkout_session_id = object.id ?? null;
+  if (subscriptionId) patch.stripe_subscription_id = subscriptionId;
+  const customerId = stripeId(object.customer);
+  if (customerId) patch.stripe_customer_id = customerId;
+  const periodStart = isoFromUnix(object.current_period_start);
+  const periodEnd = isoFromUnix(object.current_period_end);
+  if (periodStart) patch.current_period_start = periodStart;
+  if (periodEnd) patch.current_period_end = periodEnd;
+  if (typeof object.cancel_at_period_end === "boolean") patch.cancel_at_period_end = object.cancel_at_period_end;
+
+  const db = await database();
+  let query = db.from("company_subscriptions").update(patch);
+  if (rowId) query = query.eq("id", rowId);
+  else if (subscriptionId) query = query.eq("stripe_subscription_id", subscriptionId);
+  else return false;
+  const { error } = await query;
+  if (error) throw error;
   return true;
 }
 
@@ -290,6 +326,19 @@ export const Route = createFileRoute("/api/stripe/webhook")({
               await updateOrder(orderId, { payment_status: "reembolsado", status: "cancelado", metadata: { ...metadata, stripe_event_id: event.id, refunded: true } });
               await setOrganizationPurchaseStatus(metadata, "refunded");
             }
+          }
+
+          // Empresas LDR: assinatura mensal recorrente, renovação, falha e cancelamento.
+          if (metadata["checkout_kind"] === "company_subscription" && (event.type === "checkout.session.completed" || event.type === "checkout.session.expired")) {
+            await setCompanySubscription(metadata, object, event.type);
+          } else if (
+            event.type === "customer.subscription.created" ||
+            event.type === "customer.subscription.updated" ||
+            event.type === "customer.subscription.deleted" ||
+            event.type === "invoice.payment_succeeded" ||
+            event.type === "invoice.payment_failed"
+          ) {
+            await setCompanySubscription(metadata, object, event.type);
           }
 
           // Rede de Profissionais LDR: assinatura mensal.

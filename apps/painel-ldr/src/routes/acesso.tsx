@@ -20,7 +20,7 @@ function AccessPage() {
   const access = [
     { to: "/empresa/login", title: copy.company, text: copy.companyText, icon: Building2 },
     { to: "/funcionario/login", title: copy.employee, text: copy.employeeText, icon: UsersRound },
-    { to: "/login", title: copy.professional, text: copy.professionalText, icon: BriefcaseBusiness },
+    { to: "/profissional/login", title: copy.professional, text: copy.professionalText, icon: BriefcaseBusiness },
     { to: "/cliente/login", title: copy.client, text: copy.clientText, icon: UserRound },
   ] as const;
 
