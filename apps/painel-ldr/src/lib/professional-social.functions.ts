@@ -3,7 +3,7 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
 export const enhancedPublicProfessional=createServerFn({method:"GET"}).inputValidator((data:{slug:string})=>data).handler(async({data})=>{const {getEnhancedPublicProfessional}=await import("@/lib/professional-social.server");return getEnhancedPublicProfessional(data.slug)});
 
-export const professionalSaveMediaIdentity=createServerFn({method:"POST"}).middleware([requireSupabaseAuth]).inputValidator((data:{photoUrl?:string|null;introVideoUrl?:string|null;profileHeadline?:string|null;lgbtqSelfIdentified?:boolean|null;showLgbtqBadge?:boolean})=>data).handler(async({context,data})=>{const {saveProfessionalMediaAndIdentity}=await import("@/lib/professional-social.server");return saveProfessionalMediaAndIdentity(context.userId,data)});
+export const professionalSaveMediaIdentity=createServerFn({method:"POST"}).middleware([requireSupabaseAuth]).inputValidator((data:{photoUrl?:string|null;introVideoUrl?:string|null;profileHeadline?:string|null;lgbtqSelfIdentified?:boolean|null;showLgbtqBadge?:boolean;operatingCountries?:string[];openToInternationalProjects?:boolean;openToPartnerships?:boolean;internationalPositioning?:string|null;showPassportBadge?:boolean})=>data).handler(async({context,data})=>{const {saveProfessionalMediaAndIdentity}=await import("@/lib/professional-social.server");return saveProfessionalMediaAndIdentity(context.userId,data)});
 
 export const professionalConversationList=createServerFn({method:"GET"}).middleware([requireSupabaseAuth]).handler(async({context})=>{const {listProfessionalConversations}=await import("@/lib/professional-social.server");return listProfessionalConversations(context.userId)});
 

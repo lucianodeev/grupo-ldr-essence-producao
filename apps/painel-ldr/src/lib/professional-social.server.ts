@@ -4,7 +4,7 @@ const db = supabaseAdmin as unknown as { from: (table: string) => any };
 function fail(message:string):never{throw new Error(message)}
 
 export async function getEnhancedPublicProfessional(slug:string){
-  const {data:profile}=await db.from("professional_profiles").select("id,professional_account_id,slug,display_name,professional_title,profile_headline,category_id,city,country_code,languages,online_enabled,in_person_enabled,public_region,photo_url,intro_video_url,about,experience_summary,education_summary,specialties,identity_verified,documents_verified,profile_verified,view_count,lgbtq_self_identified,show_lgbtq_badge").eq("slug",slug).eq("is_public",true).eq("profile_status","active").eq("compliance_status","approved").maybeSingle();
+  const {data:profile}=await db.from("professional_profiles").select("id,professional_account_id,slug,display_name,professional_title,profile_headline,category_id,city,country_code,languages,online_enabled,in_person_enabled,public_region,photo_url,intro_video_url,about,experience_summary,education_summary,specialties,identity_verified,documents_verified,profile_verified,view_count,lgbtq_self_identified,show_lgbtq_badge,operating_countries,open_to_international_projects,open_to_partnerships,international_positioning,show_passport_badge").eq("slug",slug).eq("is_public",true).eq("profile_status","active").eq("compliance_status","approved").maybeSingle();
   if(!profile)return null;
   const [{data:category},{data:services},{data:availability},{data:reviews}]=await Promise.all([
     db.from("professional_categories").select("slug,name_pt,name_en,name_fr,name_es").eq("id",profile.category_id).maybeSingle(),
@@ -13,10 +13,12 @@ export async function getEnhancedPublicProfessional(slug:string){
     db.from("professional_reviews").select("id,rating,body,professional_reply,replied_at,verified_booking,created_at").eq("professional_profile_id",profile.id).eq("status","published").order("created_at",{ascending:false}).limit(20),
   ]);
   void db.from("professional_profiles").update({view_count:Number(profile.view_count??0)+1}).eq("id",profile.id);
-  return {profile:{...profile,lgbtq_public:Boolean(profile.lgbtq_self_identified&&profile.show_lgbtq_badge)},category,services:services??[],availability:availability??[],reviews:reviews??[]};
+  const passportItems={identity:Boolean(profile.identity_verified),documents:Boolean(profile.documents_verified),photo:Boolean(profile.photo_url),video:Boolean(profile.intro_video_url),languages:Array.isArray(profile.languages)&&profile.languages.length>0,services:(services??[]).length>0,availability:(availability??[]).length>0,international:Array.isArray(profile.operating_countries)&&profile.operating_countries.length>0};
+  const passportScore=Math.round((Object.values(passportItems).filter(Boolean).length/Object.keys(passportItems).length)*100);
+  return {profile:{...profile,lgbtq_public:Boolean(profile.lgbtq_self_identified&&profile.show_lgbtq_badge)},category,services:services??[],availability:availability??[],reviews:reviews??[],passport:{score:passportScore,items:passportItems,label:"Passaporte Profissional LDR",disclaimer:"Indicador de completude e verificações da plataforma. Não é licença, certificação oficial ou autorização profissional."}};
 }
 
-export async function saveProfessionalMediaAndIdentity(userId:string,input:{photoUrl?:string|null;introVideoUrl?:string|null;profileHeadline?:string|null;lgbtqSelfIdentified?:boolean|null;showLgbtqBadge?:boolean}){
+export async function saveProfessionalMediaAndIdentity(userId:string,input:{photoUrl?:string|null;introVideoUrl?:string|null;profileHeadline?:string|null;lgbtqSelfIdentified?:boolean|null;showLgbtqBadge?:boolean;operatingCountries?:string[];openToInternationalProjects?:boolean;openToPartnerships?:boolean;internationalPositioning?:string|null;showPassportBadge?:boolean}){
   const {data:account}=await db.from("professional_accounts").select("id").eq("auth_user_id",userId).maybeSingle();
   if(!account)fail("Perfil profissional não encontrado.");
   const patch:Record<string,unknown>={updated_at:new Date().toISOString()};
@@ -25,6 +27,11 @@ export async function saveProfessionalMediaAndIdentity(userId:string,input:{phot
   if(input.profileHeadline!==undefined)patch.profile_headline=input.profileHeadline?.trim().slice(0,140)||null;
   if(input.lgbtqSelfIdentified!==undefined)patch.lgbtq_self_identified=input.lgbtqSelfIdentified;
   if(input.showLgbtqBadge!==undefined)patch.show_lgbtq_badge=Boolean(input.showLgbtqBadge&&input.lgbtqSelfIdentified===true);
+  if(input.operatingCountries!==undefined)patch.operating_countries=[...new Set(input.operatingCountries.map(x=>x.trim().toUpperCase()).filter(Boolean))].slice(0,20);
+  if(input.openToInternationalProjects!==undefined)patch.open_to_international_projects=Boolean(input.openToInternationalProjects);
+  if(input.openToPartnerships!==undefined)patch.open_to_partnerships=Boolean(input.openToPartnerships);
+  if(input.internationalPositioning!==undefined)patch.international_positioning=input.internationalPositioning?.trim().slice(0,500)||null;
+  if(input.showPassportBadge!==undefined)patch.show_passport_badge=Boolean(input.showPassportBadge);
   const {error}=await db.from("professional_profiles").update(patch).eq("professional_account_id",account.id);if(error)throw error;
   return {ok:true as const};
 }
