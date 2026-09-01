@@ -9,6 +9,7 @@ import { logAuthEvent } from "@/lib/access.functions";
 import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/login")({
+  ssr: false,
   head: () => ({
     meta: [
       { title: "Acesso profissional — Sistema S8 | Grupo LDR Essence" },
