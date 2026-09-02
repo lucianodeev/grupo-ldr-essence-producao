@@ -5,6 +5,7 @@
   const COPY = {
     pt: {
       badge: "TREINAMENTO · JÁ DISPONÍVEL",
+      available: "✅ JÁ DISPONÍVEL",
       title: "Do Mamão ao Negócio",
       subtitle: "Treinamento de Empreendedorismo · 3 meses · 300 horas",
       body: "Da ideia ao projeto pronto para aplicar em qualquer negócio, com Sistema S8, teoria, quizzes, atividades, Laboratório de Campo, Projeto de Negócio, fórum e 4 encontros ao vivo.",
@@ -17,6 +18,7 @@
     },
     en: {
       badge: "TRAINING · AVAILABLE NOW",
+      available: "✅ AVAILABLE NOW",
       title: "From Papaya to Business",
       subtitle: "Entrepreneurship Training · 3 months · 300 hours",
       body: "From idea to a business-ready project, with the S8 System, theory, quizzes, activities, Field Lab, Business Project, forum and 4 live meetings.",
@@ -29,6 +31,7 @@
     },
     fr: {
       badge: "FORMATION · DÉJÀ DISPONIBLE",
+      available: "✅ DÉJÀ DISPONIBLE",
       title: "Du Papaye au Business",
       subtitle: "Formation en entrepreneuriat · 3 mois · 300 heures",
       body: "De l’idée à un projet prêt à appliquer à votre activité, avec le Système S8, théorie, quiz, activités, Laboratoire de Terrain, Projet d’Entreprise, forum et 4 rencontres en direct.",
@@ -41,6 +44,7 @@
     },
     es: {
       badge: "ENTRENAMIENTO · YA DISPONIBLE",
+      available: "✅ YA DISPONIBLE",
       title: "De la Papaya al Negocio",
       subtitle: "Entrenamiento de Emprendimiento · 3 meses · 300 horas",
       body: "De la idea a un proyecto listo para aplicar en cualquier negocio, con Sistema S8, teoría, cuestionarios, actividades, Laboratorio de Campo, Proyecto de Negocio, foro y 4 encuentros en vivo.",
@@ -52,6 +56,20 @@
       know: "CONOCER EL ENTRENAMIENTO"
     }
   };
+
+  const TRAINING_TITLES = [
+    "Treinamento de Empreendedorismo",
+    "Entrepreneurship Training",
+    "Formation en entrepreneuriat",
+    "Entrenamiento de Emprendimiento"
+  ];
+
+  const PRODUCTION_LABELS = [
+    "🚀 Em produção", "Em produção",
+    "🚀 In production", "In production",
+    "🚀 En production", "En production",
+    "🚀 En producción", "En producción"
+  ];
 
   function language() {
     const raw = (document.documentElement.lang || navigator.language || "pt").toLowerCase();
@@ -81,6 +99,7 @@
       .ldr-training-lecture strong{display:block;color:#68152f;font-size:12px;letter-spacing:.13em;margin-bottom:7px}
       .ldr-training-lecture p{margin:0 0 14px;line-height:1.55}
       .ldr-training-lecture a{color:#68152f!important;font-weight:900;text-decoration:underline;text-underline-offset:3px}
+      .ldr-training-available{display:inline-flex!important;align-items:center!important;width:max-content!important;color:#166534!important;background:#dcfce7!important;border:1px solid #86efac!important;border-radius:999px!important;padding:6px 10px!important;font-weight:900!important;line-height:1.2!important}
       @media(max-width:640px){.ldr-training-public{padding:0 14px;margin-top:28px}.ldr-training-card{border-radius:18px;padding:24px 20px}.ldr-training-actions{align-items:stretch;flex-direction:column}.ldr-training-cta{width:100%;box-sizing:border-box}.ldr-training-price{text-align:center}.ldr-training-lecture{margin-left:14px;margin-right:14px}}
     `;
     document.head.appendChild(style);
@@ -102,18 +121,74 @@
     return box;
   }
 
+  function ancestorContainsTrainingTitle(element, section) {
+    let current = element;
+    for (let depth = 0; current && current !== section && depth < 7; depth += 1, current = current.parentElement) {
+      const text = current.textContent || "";
+      if (TRAINING_TITLES.some(title => text.includes(title))) return true;
+    }
+    return false;
+  }
+
+  function upgradeLegacyStatus(section, copy) {
+    if (!section) return false;
+    let changed = false;
+    const walker = document.createTreeWalker(section, NodeFilter.SHOW_TEXT);
+    let node;
+    while ((node = walker.nextNode())) {
+      const raw = (node.nodeValue || "").trim();
+      if (!PRODUCTION_LABELS.includes(raw)) continue;
+      const parent = node.parentElement;
+      if (!parent || !ancestorContainsTrainingTitle(parent, section)) continue;
+      node.nodeValue = copy.available;
+      parent.classList.add("ldr-training-available");
+      parent.setAttribute("aria-label", copy.available.replace("✅ ", ""));
+      changed = true;
+    }
+    return changed;
+  }
+
+  function removeInjectedCard(kind) {
+    const card = document.querySelector(`[data-ldr-training-card="${kind}"]`);
+    if (card) card.remove();
+  }
+
   function mount() {
     addStyles();
     const copy = COPY[language()] || COPY.pt;
     const platform = document.getElementById("plataforma");
     const lecture = document.getElementById("palestra");
-    if (platform && !document.querySelector('[data-ldr-training-card="plataforma"]')) platform.appendChild(platformCard(copy));
-    if (lecture && !document.querySelector('[data-ldr-training-card="palestra"]')) lecture.appendChild(lectureCard(copy));
+
+    const legacyPlatform = upgradeLegacyStatus(platform, copy);
+    const legacyLecture = upgradeLegacyStatus(lecture, copy);
+
+    if (legacyPlatform) removeInjectedCard("plataforma");
+    else if (platform && !document.querySelector('[data-ldr-training-card="plataforma"]')) platform.appendChild(platformCard(copy));
+
+    if (legacyLecture) removeInjectedCard("palestra");
+    else if (lecture && !document.querySelector('[data-ldr-training-card="palestra"]')) lecture.appendChild(lectureCard(copy));
+
     return Boolean(platform && lecture);
   }
 
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mount, { once: true });
-  else mount();
-  let tries = 0;
-  const retry = setInterval(() => { tries++; if (mount() || tries > 20) clearInterval(retry); }, 500);
+  function watchForReRender() {
+    if (window.__ldrTrainingStatusObserver) return;
+    const observer = new MutationObserver(() => mount());
+    observer.observe(document.body, { childList: true, subtree: true, characterData: true });
+    window.__ldrTrainingStatusObserver = observer;
+  }
+
+  function start() {
+    mount();
+    watchForReRender();
+    let tries = 0;
+    const retry = setInterval(() => {
+      tries += 1;
+      mount();
+      if (tries > 20) clearInterval(retry);
+    }, 500);
+  }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start, { once: true });
+  else start();
 })();
