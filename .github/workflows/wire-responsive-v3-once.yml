@@ -1,0 +1,60 @@
+name: Wire responsive v3 once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/wire-responsive-v3-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Conectar CSS responsivo ao site e painel
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          # Site público: injeta folha responsiva sem tocar no restante do HTML.
+          index = Path('apps/luciano-empreendedor/index.html')
+          s = index.read_text(encoding='utf-8')
+          tag = '<link rel="stylesheet" href="/responsive-v3.css?v=20260902">'
+          if tag not in s:
+              marker = '</head>'
+              if marker not in s:
+                  raise SystemExit('index.html sem </head>')
+              s = s.replace(marker, f'{tag}\n{marker}', 1)
+              index.write_text(s, encoding='utf-8')
+
+          # Painel: importa a folha responsiva como asset e inclui depois do CSS principal.
+          root = Path('apps/painel-ldr/src/routes/__root.tsx')
+          r = root.read_text(encoding='utf-8')
+          imp = 'import responsiveCss from "../responsive-v3.css?url";'
+          if imp not in r:
+              marker = 'import appCss from "../styles.css?url";'
+              if marker not in r:
+                  raise SystemExit('__root.tsx sem import appCss')
+              r = r.replace(marker, marker + '\n' + imp, 1)
+          link = '{ rel: "stylesheet", href: responsiveCss },'
+          if link not in r:
+              marker = '{ rel: "stylesheet", href: appCss },'
+              if marker not in r:
+                  raise SystemExit('__root.tsx sem link appCss')
+              r = r.replace(marker, marker + '\n      ' + link, 1)
+          root.write_text(r, encoding='utf-8')
+          PY
+      - name: Commit integração responsiva
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add apps/luciano-empreendedor/index.html apps/painel-ldr/src/routes/__root.tsx
+          git diff --cached --quiet && exit 0
+          git commit -m 'fix ux: conectar responsividade global em site e painel'
+          git push origin main
