@@ -14,6 +14,44 @@ async function requireSuperadmin(supabase: Client, userId: string) {
   return access;
 }
 
+function stripeSecret() {
+  const secret = process.env["STRIPE_SECRET_KEY"];
+  if (!secret) fail("Stripe Connect indisponível no momento.");
+  return secret;
+}
+
+async function stripeGet(path: string) {
+  const response = await fetch(`https://api.stripe.com${path}`, {
+    headers: { Authorization: `Bearer ${stripeSecret()}` },
+  });
+  const payload = await response.json() as any;
+  if (!response.ok) fail(payload?.error?.message || "Não foi possível consultar o Stripe.");
+  return payload;
+}
+
+async function stripeTransfer(input: { payoutId: string; professionalAccountId: string; destination: string; amount: number; currency: string }) {
+  const params = new URLSearchParams();
+  params.set("amount", String(input.amount));
+  params.set("currency", input.currency.toLowerCase());
+  params.set("destination", input.destination);
+  params.set("transfer_group", `ldr-payout-${input.payoutId}`);
+  params.set("metadata[payout_id]", input.payoutId);
+  params.set("metadata[professional_account_id]", input.professionalAccountId);
+  params.set("metadata[platform]", "Rede de Profissionais LDR");
+  const response = await fetch("https://api.stripe.com/v1/transfers", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${stripeSecret()}`,
+      "Content-Type": "application/x-www-form-urlencoded",
+      "Idempotency-Key": `ldr-professional-payout-${input.payoutId}`,
+    },
+    body: params,
+  });
+  const payload = await response.json() as any;
+  if (!response.ok || !payload?.id) fail(payload?.error?.message || "Não foi possível enviar o repasse pelo Stripe Connect.");
+  return payload;
+}
+
 export async function getProfessionalPayoutAdmin(supabase: Client, userId: string) {
   await requireSuperadmin(supabase, userId);
   const [{ data: payouts }, { data: documents }, { data: profiles }, { data: balances }] = await Promise.all([
@@ -71,13 +109,69 @@ export async function getPayoutDocumentSignedUrl(supabase: Client, userId: strin
 
 export async function setPayoutProcessing(supabase: Client, userId: string, payoutId: string) {
   const actor = await requireSuperadmin(supabase, userId);
-  const { data: payout } = await db.from("payouts").select("id,status").eq("id", payoutId).maybeSingle();
+  const { data: payout } = await db.from("payouts")
+    .select("id,professional_account_id,status,net_cents,currency,payment_reference,payment_method")
+    .eq("id", payoutId)
+    .maybeSingle();
   if (!payout) fail("Repasse não encontrado.");
+  if (payout.status === "paid") return { ok: true as const, alreadyPaid: true };
+
+  let transferId = String(payout.payment_reference || "");
+  if (payout.status === "processing" && transferId.startsWith("tr_")) {
+    const { data, error } = await db.rpc("finalize_professional_payout", {
+      p_payout_id: payout.id,
+      p_actor_id: userId,
+      p_payment_reference: transferId,
+      p_payment_method: "stripe_connect",
+    });
+    if (error) fail(error.message || "A transferência foi criada no Stripe, mas a baixa do repasse ainda precisa ser concluída.");
+    return data ?? { ok: true as const, transferId };
+  }
+
   if (payout.status !== "approved_for_payout") fail("O repasse precisa estar aprovado antes de processar.");
-  const { error } = await db.from("payouts").update({ status: "processing", updated_at: new Date().toISOString() }).eq("id", payoutId);
-  if (error) throw error;
-  await writeAudit({ actorId: userId, actorEmail: actor.email, action: "professional_network.payout_processing", target: payoutId });
-  return { ok: true as const };
+  const amount = Math.round(Number(payout.net_cents || 0));
+  if (!Number.isFinite(amount) || amount <= 0) fail("O valor líquido do repasse precisa ser maior que zero.");
+
+  const { data: account } = await db.from("professional_accounts")
+    .select("id,stripe_connected_account_id,connect_status,payout_method_status")
+    .eq("id", payout.professional_account_id)
+    .maybeSingle();
+  if (!account?.stripe_connected_account_id) fail("O profissional ainda não configurou a conta Stripe Connect.");
+
+  const stripeAccount = await stripeGet(`/v1/accounts/${encodeURIComponent(account.stripe_connected_account_id)}`);
+  const transfersStatus = stripeAccount?.capabilities?.transfers;
+  if (transfersStatus !== "active") fail("A conta Stripe Connect do profissional ainda não está habilitada para receber transferências.");
+  if (!stripeAccount?.details_submitted) fail("O profissional ainda precisa concluir os dados obrigatórios no Stripe.");
+
+  const transfer = await stripeTransfer({
+    payoutId: payout.id,
+    professionalAccountId: payout.professional_account_id,
+    destination: account.stripe_connected_account_id,
+    amount,
+    currency: payout.currency,
+  });
+  transferId = transfer.id;
+
+  const { error: processingError } = await db.from("payouts").update({
+    status: "processing",
+    payment_reference: transferId,
+    payment_method: "stripe_connect",
+    updated_at: new Date().toISOString(),
+  }).eq("id", payout.id).eq("status", "approved_for_payout");
+  if (processingError) throw processingError;
+
+  const { data, error } = await db.rpc("finalize_professional_payout", {
+    p_payout_id: payout.id,
+    p_actor_id: userId,
+    p_payment_reference: transferId,
+    p_payment_method: "stripe_connect",
+  });
+  if (error) {
+    await writeAudit({ actorId: userId, actorEmail: actor.email, action: "professional_network.payout_transfer_created_finalize_pending", target: payout.id, details: { transferId, amount, currency: payout.currency } });
+    fail(error.message || "A transferência foi criada no Stripe, mas a baixa do repasse ainda precisa ser concluída.");
+  }
+  await writeAudit({ actorId: userId, actorEmail: actor.email, action: "professional_network.payout_paid_stripe_connect", target: payout.id, details: { transferId, amount, currency: payout.currency, destination: account.stripe_connected_account_id } });
+  return data ?? { ok: true as const, transferId };
 }
 
 export async function markProfessionalPayoutPaid(supabase: Client, userId: string, input: { payoutId: string; paymentReference: string; paymentMethod?: string | null }) {
