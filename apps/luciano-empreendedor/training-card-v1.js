@@ -4,72 +4,50 @@
   const PANEL_LIBRARY = "https://painel.ldrrhestrategia.com/cliente/biblioteca?produto=do-mamao-ao-negocio";
   const COPY = {
     pt: {
-      badge: "TREINAMENTO · JÁ DISPONÍVEL",
       available: "✅ JÁ DISPONÍVEL",
-      title: "Do Mamão ao Negócio",
-      subtitle: "Treinamento de Empreendedorismo · 3 meses · 300 horas",
-      body: "Da ideia ao projeto pronto para aplicar em qualquer negócio, com Sistema S8, teoria, quizzes, atividades, Laboratório de Campo, Projeto de Negócio, fórum e 4 encontros ao vivo.",
-      features: ["Sistema S8", "300 horas", "Projeto aplicável ao seu negócio", "Certificado"],
-      price: "Brasil R$ 599,99 · Europa € 100,56",
-      buy: "COMPRAR TREINAMENTO",
-      lectureBadge: "CONTINUE SUA JORNADA",
-      lectureBody: "A palestra abre a conversa. O treinamento Do Mamão ao Negócio transforma o aprendizado em um projeto estruturado durante 3 meses.",
-      know: "CONHECER TREINAMENTO"
+      trainingTitle: "Treinamento de Empreendedorismo",
+      trainingPrice: "R$ 599,99 · € 100,56",
+      ebookPrice: "R$ 9,90 · € 4,90",
+      bookPrice: "R$ 49,90 · € 20,00",
+      fallbackTitle: "Do Mamão ao Negócio",
+      fallbackSubtitle: "Treinamento de Empreendedorismo · 3 meses · 300 horas",
+      fallbackBody: "Da ideia ao Projeto de Negócio, com Sistema S8, quizzes, atividades, Laboratório de Campo, fórum, encontros ao vivo e certificado.",
+      buy: "COMPRAR TREINAMENTO"
     },
     en: {
-      badge: "TRAINING · AVAILABLE NOW",
       available: "✅ AVAILABLE NOW",
-      title: "From Papaya to Business",
-      subtitle: "Entrepreneurship Training · 3 months · 300 hours",
-      body: "From idea to a business-ready project, with the S8 System, theory, quizzes, activities, Field Lab, Business Project, forum and 4 live meetings.",
-      features: ["S8 System", "300 hours", "Project for your business", "Certificate"],
-      price: "Brazil R$ 599.99 · Europe € 100.56",
-      buy: "BUY TRAINING",
-      lectureBadge: "CONTINUE YOUR JOURNEY",
-      lectureBody: "The lecture starts the conversation. From Papaya to Business turns learning into a structured project over 3 months.",
-      know: "DISCOVER THE TRAINING"
+      trainingTitle: "Entrepreneurship Training",
+      trainingPrice: "R$ 599.99 · € 100.56",
+      ebookPrice: "R$ 9.90 · € 4.90",
+      bookPrice: "R$ 49.90 · € 20.00",
+      fallbackTitle: "From Papaya to Business",
+      fallbackSubtitle: "Entrepreneurship Training · 3 months · 300 hours",
+      fallbackBody: "From idea to a Business Project with the S8 System, quizzes, activities, Field Lab, forum, live meetings and certificate.",
+      buy: "BUY TRAINING"
     },
     fr: {
-      badge: "FORMATION · DÉJÀ DISPONIBLE",
       available: "✅ DÉJÀ DISPONIBLE",
-      title: "Du Papaye au Business",
-      subtitle: "Formation en entrepreneuriat · 3 mois · 300 heures",
-      body: "De l’idée à un projet prêt à appliquer à votre activité, avec le Système S8, théorie, quiz, activités, Laboratoire de Terrain, Projet d’Entreprise, forum et 4 rencontres en direct.",
-      features: ["Système S8", "300 heures", "Projet pour votre activité", "Certificat"],
-      price: "Brésil R$ 599,99 · Europe 100,56 €",
-      buy: "ACHETER LA FORMATION",
-      lectureBadge: "POURSUIVEZ VOTRE PARCOURS",
-      lectureBody: "La conférence ouvre la réflexion. Du Papaye au Business transforme l’apprentissage en projet structuré pendant 3 mois.",
-      know: "DÉCOUVRIR LA FORMATION"
+      trainingTitle: "Formation en entrepreneuriat",
+      trainingPrice: "R$ 599,99 · 100,56 €",
+      ebookPrice: "R$ 9,90 · 4,90 €",
+      bookPrice: "R$ 49,90 · 20,00 €",
+      fallbackTitle: "Du Papaye au Business",
+      fallbackSubtitle: "Formation en entrepreneuriat · 3 mois · 300 heures",
+      fallbackBody: "De l’idée au Projet d’Entreprise avec le Système S8, quiz, activités, Laboratoire de Terrain, forum, rencontres en direct et certificat.",
+      buy: "ACHETER LA FORMATION"
     },
     es: {
-      badge: "ENTRENAMIENTO · YA DISPONIBLE",
       available: "✅ YA DISPONIBLE",
-      title: "De la Papaya al Negocio",
-      subtitle: "Entrenamiento de Emprendimiento · 3 meses · 300 horas",
-      body: "De la idea a un proyecto listo para aplicar en cualquier negocio, con Sistema S8, teoría, cuestionarios, actividades, Laboratorio de Campo, Proyecto de Negocio, foro y 4 encuentros en vivo.",
-      features: ["Sistema S8", "300 horas", "Proyecto para tu negocio", "Certificado"],
-      price: "Brasil R$ 599,99 · Europa € 100,56",
-      buy: "COMPRAR ENTRENAMIENTO",
-      lectureBadge: "CONTINÚA TU CAMINO",
-      lectureBody: "La conferencia abre la conversación. De la Papaya al Negocio transforma el aprendizaje en un proyecto estructurado durante 3 meses.",
-      know: "CONOCER EL ENTRENAMIENTO"
+      trainingTitle: "Entrenamiento de Emprendimiento",
+      trainingPrice: "R$ 599,99 · € 100,56",
+      ebookPrice: "R$ 9,90 · € 4,90",
+      bookPrice: "R$ 49,90 · € 20,00",
+      fallbackTitle: "De la Papaya al Negocio",
+      fallbackSubtitle: "Entrenamiento de Emprendimiento · 3 meses · 300 horas",
+      fallbackBody: "De la idea al Proyecto de Negocio con Sistema S8, cuestionarios, actividades, Laboratorio de Campo, foro, encuentros en vivo y certificado.",
+      buy: "COMPRAR ENTRENAMIENTO"
     }
   };
-
-  const TRAINING_TITLES = [
-    "Treinamento de Empreendedorismo",
-    "Entrepreneurship Training",
-    "Formation en entrepreneuriat",
-    "Entrenamiento de Emprendimiento"
-  ];
-
-  const PRODUCTION_LABELS = [
-    "🚀 Em produção", "Em produção",
-    "🚀 In production", "In production",
-    "🚀 En production", "En production",
-    "🚀 En producción", "En producción"
-  ];
 
   function language() {
     const raw = (document.documentElement.lang || navigator.language || "pt").toLowerCase();
@@ -78,115 +56,132 @@
   }
 
   function addStyles() {
-    if (document.getElementById("ldr-training-card-styles")) return;
+    if (document.getElementById("ldr-training-card-styles-v2")) return;
     const style = document.createElement("style");
-    style.id = "ldr-training-card-styles";
+    style.id = "ldr-training-card-styles-v2";
     style.textContent = `
-      .ldr-training-public{max-width:1120px;margin:42px auto 8px;padding:0 20px;box-sizing:border-box;font-family:inherit}
-      .ldr-training-card{position:relative;overflow:hidden;border:1px solid #c99b4b;border-radius:24px;background:linear-gradient(145deg,#68152f 0%,#3d0b1b 100%);color:#fff8e8;box-shadow:0 22px 60px rgba(61,11,27,.22);padding:clamp(24px,5vw,52px)}
-      .ldr-training-card:after{content:"";position:absolute;width:260px;height:260px;border-radius:50%;right:-90px;top:-120px;background:rgba(201,155,75,.12);pointer-events:none}
-      .ldr-training-badge{display:inline-flex;border:1px solid rgba(201,155,75,.6);border-radius:999px;padding:7px 11px;color:#e8c782;font-size:12px;font-weight:800;letter-spacing:.13em}
-      .ldr-training-title{margin:17px 0 4px;font-size:clamp(30px,5vw,52px);line-height:1.02;font-family:Georgia,'Times New Roman',serif;color:#fff8e8}
-      .ldr-training-subtitle{margin:0;color:#e8c782;font-weight:800;font-size:clamp(14px,2vw,18px)}
-      .ldr-training-body{max-width:820px;margin:18px 0 0;line-height:1.65;color:rgba(255,248,232,.9);font-size:16px}
-      .ldr-training-features{display:flex;flex-wrap:wrap;gap:9px;margin:22px 0 0;padding:0;list-style:none}
-      .ldr-training-features li{border:1px solid rgba(255,248,232,.2);background:rgba(255,255,255,.07);border-radius:999px;padding:8px 12px;font-size:13px;font-weight:700}
-      .ldr-training-actions{display:flex;flex-wrap:wrap;gap:15px;align-items:center;margin-top:28px}
-      .ldr-training-cta{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 21px;border-radius:12px;background:#c99b4b;color:#301018!important;text-decoration:none!important;font-weight:900;letter-spacing:.03em;box-shadow:0 10px 28px rgba(0,0,0,.18);transition:transform .18s ease,filter .18s ease}
-      .ldr-training-cta:hover{transform:translateY(-1px);filter:brightness(1.06)}
-      .ldr-training-price{font-size:14px;font-weight:800;color:#fff8e8}
-      .ldr-training-lecture{max-width:1040px;margin:34px auto 0;padding:22px 25px;border:1px solid rgba(201,155,75,.55);border-radius:18px;background:#fff8e8;color:#3d0b1b;box-shadow:0 14px 38px rgba(61,11,27,.10);box-sizing:border-box}
-      .ldr-training-lecture strong{display:block;color:#68152f;font-size:12px;letter-spacing:.13em;margin-bottom:7px}
-      .ldr-training-lecture p{margin:0 0 14px;line-height:1.55}
-      .ldr-training-lecture a{color:#68152f!important;font-weight:900;text-decoration:underline;text-underline-offset:3px}
-      .ldr-training-available{display:inline-flex!important;align-items:center!important;width:max-content!important;color:#166534!important;background:#dcfce7!important;border:1px solid #86efac!important;border-radius:999px!important;padding:6px 10px!important;font-weight:900!important;line-height:1.2!important}
-      @media(max-width:640px){.ldr-training-public{padding:0 14px;margin-top:28px}.ldr-training-card{border-radius:18px;padding:24px 20px}.ldr-training-actions{align-items:stretch;flex-direction:column}.ldr-training-cta{width:100%;box-sizing:border-box}.ldr-training-price{text-align:center}.ldr-training-lecture{margin-left:14px;margin-right:14px}}
+      .ldr-product-available{display:inline-flex!important;align-items:center!important;width:max-content!important;color:#166534!important;background:#dcfce7!important;border:1px solid #86efac!important;border-radius:999px!important;padding:6px 10px!important;font-weight:900!important;line-height:1.2!important}
+      .ldr-public-product-price{margin:9px auto 0!important;width:max-content!important;max-width:100%!important;color:#fff8e8!important;background:rgba(255,255,255,.08)!important;border:1px solid rgba(255,248,232,.24)!important;border-radius:999px!important;padding:6px 10px!important;font-size:12px!important;font-weight:900!important;letter-spacing:.02em!important}
+      .ldr-training-fallback{max-width:1040px;margin:28px auto 0;padding:24px;border:1px solid #c99b4b;border-radius:20px;background:linear-gradient(145deg,#68152f,#3d0b1b);color:#fff8e8;text-align:center}
+      .ldr-training-fallback h3{margin:10px 0 4px;font-family:Georgia,'Times New Roman',serif;font-size:30px;color:#fff8e8}
+      .ldr-training-fallback p{max-width:760px;margin:8px auto;line-height:1.55;color:#fff8e8}
+      .ldr-training-fallback a{display:inline-flex;margin-top:12px;padding:11px 17px;border-radius:10px;background:#c99b4b;color:#301018!important;text-decoration:none!important;font-weight:900}
+      .ldr-training-fallback .ldr-public-product-price{display:block!important;margin:12px auto 0!important}
     `;
     document.head.appendChild(style);
   }
 
-  function platformCard(copy) {
-    const wrap = document.createElement("div");
-    wrap.className = "ldr-training-public";
-    wrap.dataset.ldrTrainingCard = "plataforma";
-    wrap.innerHTML = `<article class="ldr-training-card" aria-labelledby="ldr-training-title"><span class="ldr-training-badge">${copy.badge}</span><h2 class="ldr-training-title" id="ldr-training-title">${copy.title}</h2><p class="ldr-training-subtitle">${copy.subtitle}</p><p class="ldr-training-body">${copy.body}</p><ul class="ldr-training-features">${copy.features.map(x=>`<li>✓ ${x}</li>`).join("")}</ul><div class="ldr-training-actions"><a class="ldr-training-cta" href="${PANEL_LIBRARY}">${copy.buy}</a><span class="ldr-training-price">${copy.price}</span></div></article>`;
-    return wrap;
+  function normalize(value) {
+    return String(value || "").replace(/\s+/g, " ").trim().toLowerCase();
   }
 
-  function lectureCard(copy) {
+  function productionLabel(value) {
+    const v = normalize(value).replace(/^🚀\s*/, "");
+    return v === "em produção" || v === "in production" || v === "en production" || v === "en producción";
+  }
+
+  function replaceLegacyProduction(section, copy) {
+    if (!section) return 0;
+    const walker = document.createTreeWalker(section, NodeFilter.SHOW_TEXT);
+    let node;
+    let count = 0;
+    while ((node = walker.nextNode())) {
+      if (!productionLabel(node.nodeValue)) continue;
+      node.nodeValue = copy.available;
+      const parent = node.parentElement;
+      if (parent) {
+        parent.classList.add("ldr-product-available");
+        parent.style.setProperty("color", "#166534", "important");
+        parent.style.setProperty("background", "#dcfce7", "important");
+        parent.style.setProperty("border-color", "#86efac", "important");
+      }
+      count += 1;
+    }
+    return count;
+  }
+
+  function findTextElement(section, fragments) {
+    if (!section) return null;
+    const candidates = Array.from(section.querySelectorAll("h1,h2,h3,h4,h5,p,strong,b,span,div"));
+    return candidates.find(el => {
+      const t = normalize(el.textContent);
+      return fragments.some(fragment => t.includes(normalize(fragment))) && el.children.length <= 3;
+    }) || null;
+  }
+
+  function cardAround(element, section) {
+    if (!element) return null;
+    let current = element;
+    let best = null;
+    for (let depth = 0; current && current !== section && depth < 8; depth += 1, current = current.parentElement) {
+      const text = normalize(current.textContent);
+      if (text.length >= 60 && text.length <= 1200) best = current;
+      if (text.length >= 180 && /dispon|produção|production|producción/.test(text)) return current;
+    }
+    return best;
+  }
+
+  function addPrice(section, titleFragments, price, key) {
+    const title = findTextElement(section, titleFragments);
+    const card = cardAround(title, section);
+    if (!card || card.querySelector(`[data-ldr-price="${key}"]`)) return false;
+    const priceEl = document.createElement("div");
+    priceEl.className = "ldr-public-product-price";
+    priceEl.dataset.ldrPrice = key;
+    priceEl.textContent = price;
+    card.appendChild(priceEl);
+    return true;
+  }
+
+  function makeFallback(copy, kind) {
     const box = document.createElement("div");
-    box.className = "ldr-training-lecture";
-    box.dataset.ldrTrainingCard = "palestra";
-    box.innerHTML = `<strong>${copy.lectureBadge}</strong><p>${copy.lectureBody}</p><a href="#plataforma">${copy.know} →</a>`;
+    box.className = "ldr-training-fallback";
+    box.dataset.ldrTrainingFallback = kind;
+    box.innerHTML = `<span class="ldr-product-available">${copy.available}</span><h3>${copy.fallbackTitle}</h3><p><strong>${copy.fallbackSubtitle}</strong></p><p>${copy.fallbackBody}</p><div class="ldr-public-product-price">${copy.trainingPrice}</div><a href="${PANEL_LIBRARY}">${copy.buy}</a>`;
     return box;
   }
 
-  function ancestorContainsTrainingTitle(element, section) {
-    let current = element;
-    for (let depth = 0; current && current !== section && depth < 7; depth += 1, current = current.parentElement) {
-      const text = current.textContent || "";
-      if (TRAINING_TITLES.some(title => text.includes(title))) return true;
-    }
-    return false;
-  }
+  function ensureSection(section, copy, kind) {
+    if (!section) return;
+    replaceLegacyProduction(section, copy);
 
-  function upgradeLegacyStatus(section, copy) {
-    if (!section) return false;
-    let changed = false;
-    const walker = document.createTreeWalker(section, NodeFilter.SHOW_TEXT);
-    let node;
-    while ((node = walker.nextNode())) {
-      const raw = (node.nodeValue || "").trim();
-      if (!PRODUCTION_LABELS.includes(raw)) continue;
-      const parent = node.parentElement;
-      if (!parent || !ancestorContainsTrainingTitle(parent, section)) continue;
-      node.nodeValue = copy.available;
-      parent.classList.add("ldr-training-available");
-      parent.setAttribute("aria-label", copy.available.replace("✅ ", ""));
-      changed = true;
-    }
-    return changed;
-  }
+    addPrice(section, ["A Coragem de Começar", "Coragem de Começar"], copy.ebookPrice, `${kind}-ebook`);
+    addPrice(section, ["O Menino que Vendia Mamão", "Menino que Vendia Mamão"], copy.bookPrice, `${kind}-book`);
+    const trainingPriceAdded = addPrice(section, ["Treinamento de Empreendedorismo", copy.trainingTitle], copy.trainingPrice, `${kind}-training`);
 
-  function removeInjectedCard(kind) {
-    const card = document.querySelector(`[data-ldr-training-card="${kind}"]`);
-    if (card) card.remove();
+    const hasTraining = Boolean(findTextElement(section, ["Treinamento de Empreendedorismo", copy.trainingTitle]));
+    const oldFallback = section.querySelector(`[data-ldr-training-fallback="${kind}"]`);
+    if (hasTraining) {
+      if (oldFallback) oldFallback.remove();
+    } else if (!oldFallback) {
+      section.appendChild(makeFallback(copy, kind));
+    }
+
+    // O filme permanece exatamente como está. O texto "Em pré-produção" não é alterado.
+    return trainingPriceAdded;
   }
 
   function mount() {
     addStyles();
     const copy = COPY[language()] || COPY.pt;
-    const platform = document.getElementById("plataforma");
-    const lecture = document.getElementById("palestra");
-
-    const legacyPlatform = upgradeLegacyStatus(platform, copy);
-    const legacyLecture = upgradeLegacyStatus(lecture, copy);
-
-    if (legacyPlatform) removeInjectedCard("plataforma");
-    else if (platform && !document.querySelector('[data-ldr-training-card="plataforma"]')) platform.appendChild(platformCard(copy));
-
-    if (legacyLecture) removeInjectedCard("palestra");
-    else if (lecture && !document.querySelector('[data-ldr-training-card="palestra"]')) lecture.appendChild(lectureCard(copy));
-
-    return Boolean(platform && lecture);
-  }
-
-  function watchForReRender() {
-    if (window.__ldrTrainingStatusObserver) return;
-    const observer = new MutationObserver(() => mount());
-    observer.observe(document.body, { childList: true, subtree: true, characterData: true });
-    window.__ldrTrainingStatusObserver = observer;
+    ensureSection(document.getElementById("plataforma"), copy, "plataforma");
+    ensureSection(document.getElementById("palestra"), copy, "palestra");
   }
 
   function start() {
     mount();
-    watchForReRender();
+    if (!window.__ldrProductStatusObserver) {
+      let scheduled = false;
+      const observer = new MutationObserver(() => {
+        if (scheduled) return;
+        scheduled = true;
+        requestAnimationFrame(() => { scheduled = false; mount(); });
+      });
+      observer.observe(document.body, { childList: true, subtree: true, characterData: true });
+      window.__ldrProductStatusObserver = observer;
+    }
     let tries = 0;
-    const retry = setInterval(() => {
-      tries += 1;
-      mount();
-      if (tries > 20) clearInterval(retry);
-    }, 500);
+    const retry = setInterval(() => { mount(); tries += 1; if (tries > 30) clearInterval(retry); }, 500);
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start, { once: true });
