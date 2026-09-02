@@ -1,11 +1,11 @@
-import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 import { toast } from "sonner";
 
 import { SiteHeader } from "@/components/site-header";
 import { supabase } from "@/integrations/supabase/client";
-import { logAuthEvent } from "@/lib/access.functions";
+import { getMyAccess, logAuthEvent } from "@/lib/access.functions";
 import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/login")({
@@ -34,7 +34,7 @@ const COPY = {
 function LoginPage() {
   const { locale } = useI18n();
   const copy = COPY[locale];
-  const navigate = useNavigate();
+  const fetchAccess = useServerFn(getMyAccess);
   const logEvent = useServerFn(logAuthEvent);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -46,9 +46,18 @@ function LoginPage() {
     setBusy(true);
     const { error } = await supabase.auth.signInWithPassword({ email: email.trim().toLowerCase(), password });
     if (error) { setBusy(false); toast.error(copy.loginError); return; }
+
+    let target = "/painel-profissional";
+    try {
+      const access = await fetchAccess({});
+      if (access.authorized && access.role === "superadmin") target = "/admin";
+    } catch {
+      // Preserva o fluxo profissional existente se a leitura da permissão ficar temporariamente indisponível.
+    }
+
     try { await logEvent({ data: { action: "auth.login" } }); } catch { /* auditoria não bloqueia o acesso */ }
     setBusy(false);
-    navigate({ to: "/painel-profissional" });
+    window.location.replace(target);
   }
 
   async function handleRecover(event: React.FormEvent) {
