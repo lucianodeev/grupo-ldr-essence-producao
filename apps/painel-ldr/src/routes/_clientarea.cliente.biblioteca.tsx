@@ -169,7 +169,7 @@ function ClientLibrary() {
                     product.entitled ? "bg-emerald-100 text-emerald-800" : "bg-amber-100 text-amber-900"
                   }`}
                 >
-                  {product.entitled ? "Disponível" : "Compra necessária"}
+                  {product.entitled ? "Acesso liberado" : "Disponível para compra"}
                 </span>
               </div>
 
@@ -252,7 +252,7 @@ function ClientLibrary() {
                 trainingOffer?.entitled ? "bg-emerald-100 text-emerald-800" : "bg-amber-100 text-amber-900"
               }`}
             >
-              {trainingOffer?.entitled ? "Disponível" : "Já disponível"}
+              {trainingOffer?.entitled ? "Acesso liberado" : "Disponível para compra"}
             </span>
           </div>
 
