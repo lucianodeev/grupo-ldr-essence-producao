@@ -1,21 +1,16 @@
-// Recepção de eventos do site principal (pedidos/pagamentos).
-// Autenticação por Bearer token; apenas o SHA-256 do token existe no banco
-// (private.integration_tokens). Todo o processamento acontece em uma única
-// função transacional SECURITY DEFINER (private.process_site_order), de modo
-// que qualquer falha desfaz inclusive a reserva do evento.
+// Recepção segura de eventos do site principal (pedidos/pagamentos).
+// O token bruto nunca é armazenado: somente o SHA-256 é comparado no banco.
 import { createFileRoute } from "@tanstack/react-router";
-import { createHash, timingSafeEqual } from "crypto";
+import { createHash } from "crypto";
 import { z } from "zod";
 
 const MAX_BODY = 16 * 1024;
 
 const EVENT_TYPES = [
-  // valores canônicos do site
   "checkout.session.completed",
   "checkout.session.async_payment_succeeded",
   "payment_confirmation",
   "charge.refunded",
-  // valores legados/PT ainda aceitos
   "order.created",
   "order.updated",
   "payment.confirmed",
@@ -79,24 +74,20 @@ function generic(status: number, message: string) {
   });
 }
 
-function eq(a: string, b: string): boolean {
-  const x = Buffer.from(a);
-  const y = Buffer.from(b);
-  return x.length === y.length && timingSafeEqual(x, y);
-}
+type RpcResult = {
+  data: unknown;
+  error: { code?: string; message?: string } | null;
+};
 
 export const Route = createFileRoute("/api/integrations/site-orders")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-
         const contentType = request.headers.get("content-type") ?? "";
         if (!contentType.toLowerCase().includes("application/json")) {
           return generic(415, "Formato não suportado.");
         }
 
-        // Limite de corpo antes de qualquer leitura completa.
         const declaredLength = Number(request.headers.get("content-length") ?? "0");
         if (Number.isFinite(declaredLength) && declaredLength > MAX_BODY) {
           return generic(413, "Payload muito grande.");
@@ -106,34 +97,6 @@ export const Route = createFileRoute("/api/integrations/site-orders")({
         if (!auth.startsWith("Bearer ")) return generic(401, "Não autorizado.");
         const token = auth.slice(7).trim();
         if (!token || token.length > 512) return generic(401, "Não autorizado.");
-
-        // O schema `private` não é tipado no client gerado.
-        const privateSchema = (
-          supabaseAdmin as unknown as {
-            schema: (name: string) => {
-              from: (table: string) => {
-                select: (cols: string) => Promise<{ data: unknown[] | null }>;
-                update: (patch: Record<string, unknown>) => {
-                  eq: (col: string, value: string) => Promise<unknown>;
-                };
-              };
-            };
-          }
-        ).schema("private");
-
-        const digest = createHash("sha256").update(token).digest("hex");
-        const { data: tokens } = await privateSchema
-          .from("integration_tokens")
-          .select("id, token_sha256, active, source");
-
-        const rows = (tokens ?? []) as {
-          id: string;
-          token_sha256: string;
-          active: boolean;
-          source: string;
-        }[];
-        const match = rows.find((t) => t.active && eq(t.token_sha256, digest));
-        if (!match) return generic(401, "Não autorizado.");
 
         const raw = await request.text();
         if (new TextEncoder().encode(raw).length > MAX_BODY) {
@@ -149,37 +112,42 @@ export const Route = createFileRoute("/api/integrations/site-orders")({
 
         const parsed = payloadSchema.safeParse(json);
         if (!parsed.success) return generic(400, "Payload inválido.");
-        const source = match.source || parsed.data.source;
 
-        // Processamento atômico: reserva do evento, cliente, pedido, histórico,
-        // créditos e S8 dentro da mesma transação.
+        const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
         const rpc = supabaseAdmin as unknown as {
-          rpc: (
-            name: string,
-            args: Record<string, unknown>,
-          ) => Promise<{ data: unknown; error: { code?: string; message?: string } | null }>;
+          rpc: (name: string, args: Record<string, unknown>) => Promise<RpcResult>;
         };
 
+        const digest = createHash("sha256").update(token).digest("hex");
+        const { data: verified, error: verifyError } = await rpc.rpc(
+          "verify_site_integration_token",
+          { _token_sha256: digest },
+        );
+        if (verifyError) return generic(503, "Temporariamente indisponível.");
+
+        const rows = Array.isArray(verified) ? verified : [];
+        const match = rows[0] as { id?: string; source?: string } | undefined;
+        if (!match?.id) return generic(401, "Não autorizado.");
+
+        const source = String(match.source || parsed.data.source || "ldr_site");
         const { data, error } = await rpc.rpc("process_site_order", {
           _source: source,
           _payload: parsed.data as unknown as Record<string, unknown>,
         });
 
         if (error) {
-          // 22023 = payload/valores inválidos (falha fechada, sem retry).
           if (error.code === "22023") return generic(400, "Payload inválido.");
-          // Qualquer outra falha desfez a transação: permitir retry do site.
           return generic(503, "Temporariamente indisponível.");
         }
 
         const result = (data ?? {}) as { status?: string };
+        const touch = await rpc.rpc("touch_site_integration_token", { _id: match.id });
+        if (touch.error) console.warn("Não foi possível atualizar last_used_at do token de integração.");
 
-        await privateSchema
-          .from("integration_tokens")
-          .update({ last_used_at: new Date().toISOString() })
-          .eq("id", match.id);
-
-        return generic(200, result.status === "duplicate" ? "Evento já processado." : "Evento recebido.");
+        return generic(
+          200,
+          result.status === "duplicate" ? "Evento já processado." : "Evento recebido.",
+        );
       },
     },
   },
