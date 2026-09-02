@@ -16,6 +16,7 @@ import { I18nProvider, useI18n } from "@/lib/i18n";
 import { supabase } from "@/integrations/supabase/client";
 
 import appCss from "../styles.css?url";
+import responsiveCss from "../responsive-v3.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 const WHATSAPP_URL = "https://wa.me/32492923605?text=Olá%2C%20vim%20pelo%20Grupo%20LDR%20Essence%20e%20gostaria%20de%20mais%20informações.";
@@ -100,6 +101,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "stylesheet", href: appCss },
+      { rel: "stylesheet", href: responsiveCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
