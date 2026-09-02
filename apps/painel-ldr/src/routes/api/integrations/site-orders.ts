@@ -53,7 +53,7 @@ const payloadSchema = z
     stripe_event_id: z.string().max(200).optional(),
     stripe_payment_link_id: z.string().max(200).optional(),
     stripe_checkout_session_id: z.string().max(200).optional(),
-    customer_email: z.string().email().max(200),
+    customer_email: z.string().email().max(200).optional(),
     customer_name: z.string().max(200).optional(),
     customer_phone: z.string().max(60).optional(),
     catalog_key: z.string().max(80).optional(),
