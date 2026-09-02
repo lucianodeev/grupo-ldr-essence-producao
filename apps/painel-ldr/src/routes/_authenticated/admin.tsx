@@ -8,25 +8,29 @@ import { ownerDashboardSummary } from "@/lib/owner-dashboard.functions";
 export const Route = createFileRoute("/_authenticated/admin")({ component: MasterAdmin });
 
 const sections = [
-  { title: "Meus atendimentos", description: "Acesse sua operação diária, sessões, agenda e clientes próprios.", links: [
+  { title: "1. Minha operação", description: "Seus atendimentos próprios: agenda, clientes e pedidos.", links: [
     ["Central de atendimentos", "/admin/meus-atendimentos"],
     ["Minha agenda", "/admin/minha-agenda"],
     ["Meus clientes", "/admin/meus-clientes"],
     ["Meus pedidos", "/admin/meus-pedidos"],
   ]},
-  { title: "Rede de Profissionais LDR", description: "Administre profissionais, serviços, planos, financeiro, repasses, conformidade e conteúdo.", links: [
+  { title: "2. Rede de Profissionais LDR", description: "Cadastros, aprovação, serviços, planos, financeiro, repasses e conformidade.", links: [
     ["Central da Rede", "/admin/rede"],
     ["Profissionais", "/painel-profissional/rede-profissionais"],
     ["Serviços da rede", "/painel-profissional/rede-servicos"],
     ["Planos da rede", "/painel-profissional/rede-planos"],
+    ["Financeiro da rede", "/painel-profissional/rede-profissionais-financeiro"],
+    ["Repasses", "/painel-profissional/rede-profissionais-repasses"],
+    ["Conformidade", "/painel-profissional/rede-profissionais-conformidade"],
+    ["Conteúdo e eventos", "/painel-profissional/rede-profissionais-conteudo"],
   ]},
-  { title: "Empresas, funcionários e operação", description: "Centralize empresas, colaboradores, equipe, catálogo, entregas e acessos.", links: [
+  { title: "3. Empresas e funcionários", description: "Empresas clientes, colaboradores, benefícios, equipe, catálogo e permissões.", links: [
     ["Central de empresas", "/admin/empresas"],
     ["Equipe LDR", "/painel-profissional/equipe"],
     ["Catálogo de serviços", "/painel-profissional/catalogo"],
     ["Gestão de acessos", "/painel-profissional/acessos"],
   ]},
-  { title: "Financeiro e desenvolvimento", description: "Acompanhe financeiro, pedidos, mentorias, S8 e treinamentos do ecossistema.", links: [
+  { title: "4. Financeiro e produtos", description: "Pagamentos, comissões, repasses e produtos de desenvolvimento do ecossistema.", links: [
     ["Central financeira", "/admin/financeiro"],
     ["Mentoria", "/painel-profissional/mentoria"],
     ["Sistema S8", "/painel-profissional/s8"],
@@ -39,6 +43,23 @@ const ownerActions = [
   ["Acompanhar financeiro", "Consultar pagamentos, comissões e repasses da Rede.", "/admin/financeiro"],
   ["Administrar empresas", "Gerenciar empresas, funcionários e benefícios ativos.", "/admin/empresas"],
   ["Enviar notificações", "Abrir a central global de comunicação da administração.", "/painel-profissional/notificacoes"],
+] as const;
+
+const workflow = [
+  ["1", "Entrada", "Cliente, empresa ou profissional entra pelo portal correto."],
+  ["2", "Compra / cadastro", "O sistema registra pedido, assinatura, serviço ou cadastro profissional."],
+  ["3", "Pagamento", "Stripe confirma o pagamento e o painel atualiza o status automaticamente."],
+  ["4", "Execução", "Atendimento, benefício, serviço ou agenda é liberado para o usuário correto."],
+  ["5", "Financeiro", "O painel separa valor bruto, comissão LDR e valor líquido do profissional."],
+  ["6", "Repasse", "Após documentação e aprovação, o repasse é processado e registrado."],
+] as const;
+
+const accessMap = [
+  ["VOCÊ - Master", "Controle total do ecossistema", "/admin"],
+  ["Profissional", "Somente perfil, agenda, clientes próprios, serviços e recebimentos próprios", "/painel-profissional"],
+  ["Empresa", "Somente organização, funcionários, benefícios e pagamentos da empresa", "/empresa/login"],
+  ["Cliente", "Somente pedidos, agenda, pagamentos e dados pessoais", "/cliente/login"],
+  ["Profissional - recebimentos", "Cadastro Stripe Connect e conta bancária do próprio profissional", "/profissional-repasses"],
 ] as const;
 
 function MasterAdmin() {
@@ -89,19 +110,38 @@ function MasterAdminContent() {
     ["Funcionários ativos", summary?.metrics.activeEmployees, "/admin/empresas"],
     ["Assinaturas ativas", summary?.metrics.activeSubscriptions, "/admin/financeiro"],
     ["Pagamentos confirmados", summary?.metrics.paidPayments, "/admin/financeiro"],
-    ["Repasses pendentes", summary?.metrics.pendingPayouts, "/admin/financeiro"],
+    ["Repasses pendentes", summary?.metrics.pendingPayouts, "/painel-profissional/rede-profissionais-repasses"],
     ["Notificações pendentes", summary?.metrics.pendingNotifications, "/painel-profissional/notificacoes"],
   ] as const;
 
   return <div className="space-y-7">
     <section className="rounded-2xl border border-[#C7A33B]/60 bg-[#F8F3E8] p-6 shadow-sm sm:p-8">
-      <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#C7A33B]">Painel Master LDR</p>
-      <h1 className="mt-2 font-serif text-3xl text-[#0B1F3A] sm:text-4xl">Central de administração e atendimentos</h1>
-      <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600">Um único ponto de acesso para administrar o ecossistema LDR e sua própria operação, mantendo profissionais, empresas, funcionários e clientes separados por permissão.</p>
+      <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#C7A33B]">Painel Master LDR - acesso do proprietário</p>
+      <h1 className="mt-2 font-serif text-3xl text-[#0B1F3A] sm:text-4xl">Tudo começa aqui</h1>
+      <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600">Use este painel como seu único ponto de entrada. Você administra sua operação, Rede de Profissionais, empresas, funcionários, clientes, pagamentos e repasses sem precisar decorar outros links.</p>
       <div className="mt-5 flex flex-wrap gap-3">
-        <Link to="/admin/meus-atendimentos" className="rounded-xl bg-[#0B1F3A] px-4 py-3 text-sm font-bold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7A33B] focus-visible:ring-offset-2">Iniciar / acompanhar atendimentos</Link>
-        <Link to="/admin/minha-agenda" className="rounded-xl border border-[#C7A33B] bg-white px-4 py-3 text-sm font-bold text-[#0B1F3A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7A33B] focus-visible:ring-offset-2">Abrir minha agenda</Link>
-        <Link to="/admin/financeiro" className="rounded-xl border border-[#C7A33B] bg-white px-4 py-3 text-sm font-bold text-[#0B1F3A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7A33B] focus-visible:ring-offset-2">Financeiro</Link>
+        <Link to="/admin/meus-atendimentos" className="rounded-xl bg-[#0B1F3A] px-4 py-3 text-sm font-bold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7A33B] focus-visible:ring-offset-2">Meus atendimentos</Link>
+        <Link to="/admin/rede" className="rounded-xl border border-[#C7A33B] bg-white px-4 py-3 text-sm font-bold text-[#0B1F3A]">Rede de profissionais</Link>
+        <Link to="/admin/empresas" className="rounded-xl border border-[#C7A33B] bg-white px-4 py-3 text-sm font-bold text-[#0B1F3A]">Empresas e funcionários</Link>
+        <Link to="/admin/financeiro" className="rounded-xl border border-[#C7A33B] bg-white px-4 py-3 text-sm font-bold text-[#0B1F3A]">Financeiro</Link>
+        <Link to="/painel-profissional/rede-profissionais-repasses" className="rounded-xl border border-[#C7A33B] bg-white px-4 py-3 text-sm font-bold text-[#0B1F3A]">Repasses</Link>
+      </div>
+    </section>
+
+    <section aria-labelledby="fluxo-title" className="rounded-2xl border border-[#C7A33B]/45 bg-white p-5 shadow-sm sm:p-6">
+      <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#C7A33B]">Entenda o sistema</p>
+      <h2 id="fluxo-title" className="mt-1 font-serif text-2xl text-[#0B1F3A]">Fluxo da plataforma em 6 etapas</h2>
+      <div className="mt-5 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+        {workflow.map(([step,title,description]) => <article key={step} className="rounded-2xl border border-slate-200 p-4"><div className="flex items-center gap-3"><span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#0B1F3A] text-sm font-black text-white">{step}</span><h3 className="font-serif text-xl text-[#0B1F3A]">{title}</h3></div><p className="mt-3 text-sm leading-6 text-slate-600">{description}</p></article>)}
+      </div>
+    </section>
+
+    <section aria-labelledby="acessos-title" className="rounded-2xl border border-[#C7A33B]/45 bg-[#F8F3E8] p-5 shadow-sm sm:p-6">
+      <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#C7A33B]">Quem entra onde</p>
+      <h2 id="acessos-title" className="mt-1 font-serif text-2xl text-[#0B1F3A]">Acessos separados por perfil</h2>
+      <p className="mt-2 text-sm text-slate-600">Você vê tudo. Cada outro usuário vê somente o que pertence ao próprio perfil.</p>
+      <div className="mt-5 grid gap-3 md:grid-cols-2">
+        {accessMap.map(([label,description,to]) => <Link key={`${label}-${to}`} to={to} className="rounded-2xl border border-[#C7A33B]/35 bg-white p-4 transition hover:border-[#C7A33B] hover:shadow-sm"><h3 className="font-serif text-xl text-[#0B1F3A]">{label}</h3><p className="mt-2 text-sm leading-6 text-slate-600">{description}</p><span className="mt-3 inline-block text-xs font-bold text-[#0B1F3A]">Abrir acesso →</span></Link>)}
       </div>
     </section>
 
@@ -155,14 +195,8 @@ function MasterAdminContent() {
     </section>
 
     <section className="rounded-2xl border border-slate-200 bg-white p-5">
-      <h2 className="font-serif text-2xl text-[#0B1F3A]">Separação de acesso</h2>
-      <div className="mt-3 grid gap-3 text-sm text-slate-600 sm:grid-cols-2 lg:grid-cols-3">
-        <p><strong className="text-[#0B1F3A]">Master:</strong> visão administrativa global.</p>
-        <p><strong className="text-[#0B1F3A]">Profissional:</strong> somente dados e operação próprios.</p>
-        <p><strong className="text-[#0B1F3A]">Empresa:</strong> somente sua organização e funcionários.</p>
-        <p><strong className="text-[#0B1F3A]">Funcionário:</strong> somente seus benefícios e serviços.</p>
-        <p><strong className="text-[#0B1F3A]">Cliente:</strong> somente seus pedidos, agenda e dados.</p>
-      </div>
+      <h2 className="font-serif text-2xl text-[#0B1F3A]">Regra simples de acesso</h2>
+      <p className="mt-2 text-sm leading-6 text-slate-600"><strong className="text-[#0B1F3A]">Você entra sempre pelo /admin e vê tudo.</strong> Profissionais, empresas e clientes entram pelos próprios portais e não visualizam dados de terceiros.</p>
     </section>
   </div>;
 }
