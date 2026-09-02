@@ -153,18 +153,33 @@
 }
 
 
-/* ldr-ebook-editorial-card-20260831 */
-a[href="https://www.lucianoempreendendor.com/"][class*="rounded-2xl"] {
+/* ldr-ebook-editorial-card-20260902
+ * Padrão único do produto A Coragem de Começar em todos os portais.
+ */
+a[href="https://www.lucianoempreendendor.com/"],
+a[href="https://lucianoempreendendor.com/"] {
   background: linear-gradient(145deg,#4b101d,#26080f) !important;
   color: #f7f2e8 !important;
   border-color: #c7a45a !important;
-  box-shadow: 0 16px 34px rgba(43,10,17,.18);
+  box-shadow: 0 16px 34px rgba(43,10,17,.18) !important;
 }
-a[href="https://www.lucianoempreendendor.com/"][class*="rounded-2xl"] h2,
-a[href="https://www.lucianoempreendendor.com/"][class*="rounded-2xl"] h3,
-a[href="https://www.lucianoempreendendor.com/"][class*="rounded-2xl"] p,
-a[href="https://www.lucianoempreendendor.com/"][class*="rounded-2xl"] svg { color:#f7f2e8 !important; }
-a[href="https://www.lucianoempreendendor.com/"][class*="rounded-2xl"]::after {
-  content:"A CORAGEM DE COMEÇAR"; display:block; margin-top:.75rem; color:#d7b767;
-  font-size:.68rem; font-weight:900; letter-spacing:.14em;
+a[href="https://www.lucianoempreendendor.com/"] h2,
+a[href="https://www.lucianoempreendendor.com/"] h3,
+a[href="https://www.lucianoempreendendor.com/"] p,
+a[href="https://www.lucianoempreendendor.com/"] svg,
+a[href="https://lucianoempreendendor.com/"] h2,
+a[href="https://lucianoempreendendor.com/"] h3,
+a[href="https://lucianoempreendendor.com/"] p,
+a[href="https://lucianoempreendendor.com/"] svg {
+  color:#f7f2e8 !important;
+}
+a[href="https://www.lucianoempreendendor.com/"]::after,
+a[href="https://lucianoempreendendor.com/"]::after {
+  content:"A CORAGEM DE COMEÇAR";
+  display:block;
+  margin-top:.75rem;
+  color:#d7b767;
+  font-size:.68rem;
+  font-weight:900;
+  letter-spacing:.14em;
 }
