@@ -108,7 +108,7 @@ export async function createDoMamaoTrainingCheckout(userId: string, email: strin
     customer_id: customer.id,
     contact_email: customer.email,
     contact_phone: customer.phone,
-    service_type: "treinamento",
+    service_type: "produto_digital",
     title: TRAINING_TITLE,
     description: "Treinamento de 3 meses / 300 horas pela Biblioteca / Plataforma",
     quantity: 1,
