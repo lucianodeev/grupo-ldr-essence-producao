@@ -19,8 +19,6 @@ const NAV = [
   { to: "/cliente/perfil", label: "Meu perfil", icon: UserRound },
 ] as const;
 
-const WHATSAPP_URL = "https://wa.me/32492923605?text=Ola%2C%20preciso%20de%20ajuda%20na%20Area%20do%20Cliente%20do%20Grupo%20LDR%20Essence";
-
 function cameFromCorporateBenefits() {
   if (typeof document === "undefined") return false;
   try {
@@ -77,9 +75,11 @@ function ClientShell() {
         </main>
       </div>
 
-      <div className="fixed bottom-5 right-4 z-50 flex flex-col items-end gap-2 sm:right-6">
+      <div
+        className="fixed z-50 flex flex-col items-end gap-2"
+        style={{ bottom: "calc(5rem + env(safe-area-inset-bottom))", right: "calc(1rem + env(safe-area-inset-right))" }}
+      >
         <Link to="/cliente/biblioteca" className="rounded-full bg-primary px-4 py-3 text-sm font-bold text-primary-foreground shadow-lg">Minha Biblioteca</Link>
-        <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="rounded-full bg-emerald-600 px-4 py-3 text-sm font-bold text-white shadow-lg">WhatsApp</a>
       </div>
     </div>
   );
