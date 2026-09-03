@@ -1,0 +1,55 @@
+name: Fix Pages training label hard
+
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - '.github/workflows/fix-pages-training-label-hard.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          fetch-depth: 0
+      - name: Corrigir treinamento em plataforma e palestra
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          # Corrige somente os cards do treinamento, preservando o filme em pré-produção.
+          pattern=re.compile(r'(<[^>]+[^>]*>.*?Treinamento de Empreendedorismo.*?)(🚀\s*EM PRODUÇÃO|EM PRODUÇÃO)(.*?</(?:article|div)>)', re.I|re.S)
+          n=0
+          def repl(m):
+              global n
+              n += 1
+              return m.group(1)+'✅ JÁ DISPONÍVEL'+m.group(3)
+          s2=pattern.sub(repl,s)
+          # fallback seguro: atua em janelas curtas após o título e nunca no card do filme
+          if n < 2:
+              chunks=[]; pos=0
+              for m in re.finditer(r'Treinamento de Empreendedorismo', s2, re.I):
+                  start=m.start(); end=min(len(s2), start+5000)
+                  chunk=s2[start:end]
+                  chunk2=re.sub(r'🚀\s*EM PRODUÇÃO|EM PRODUÇÃO','✅ JÁ DISPONÍVEL',chunk,count=1,flags=re.I)
+                  if chunk2!=chunk:
+                      s2=s2[:start]+chunk2+s2[end:]
+          if s2==s:
+              raise SystemExit('Nenhuma ocorrência do status do treinamento foi alterada')
+          p.write_text(s2,encoding='utf-8')
+          PY
+      - name: Commit patch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git diff --cached --quiet && exit 0
+          git commit -m 'fix pages: treinamento já disponível em plataforma e palestra'
+          git push origin gh-pages
