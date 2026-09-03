@@ -1,89 +1,81 @@
-/* LDR responsive hardening v4 — 2026-09-03
-   Painel, Biblioteca e leitores: tipografia estável e caixas alinhadas. */
+/* LDR responsive hardening v5 — 2026-09-03
+   Painel, Biblioteca e leitores: escala menor, leitura confortável e cards alinhados. */
 html,body,#root{max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%;box-sizing:border-box}
 *,*::before,*::after{box-sizing:inherit;min-width:0}
-body{font-synthesis:none;line-height:1.5}
+body{font-synthesis:none;font-size:16px;line-height:1.52}
 img,video,iframe,svg,canvas{display:block;max-width:100%;height:auto}
 table{max-width:100%;width:100%;border-collapse:collapse}
 pre,code{max-width:100%;overflow-x:auto;white-space:pre-wrap;overflow-wrap:anywhere}
 
-/* Nunca partir palavras normais no meio. */
-h1,h2,h3,h4,h5,h6{max-width:100%;word-break:normal;overflow-wrap:normal;hyphens:none;text-wrap:balance;line-height:1.15}
-p,li,label,strong,small{max-width:100%;word-break:normal;overflow-wrap:break-word;hyphens:none;text-wrap:pretty}
-a,button,span,input,textarea,select{word-break:normal;overflow-wrap:break-word;hyphens:none}
-a[href^='http'],a[href^='mailto:'],a[href^='tel:']{overflow-wrap:anywhere}
-
-/* Componentes não ultrapassam seu container. */
+h1,h2,h3,h4,h5,h6{max-width:100%;word-break:normal!important;overflow-wrap:normal!important;hyphens:none!important;text-wrap:balance;line-height:1.14}
+p,li,label,strong,small{max-width:100%;word-break:normal!important;overflow-wrap:break-word!important;hyphens:none!important;text-wrap:pretty}
+a,button,span,input,textarea,select{word-break:normal!important;hyphens:none!important}
+a[href^='http'],a[href^='mailto:'],a[href^='tel:'],pre,code{overflow-wrap:anywhere!important}
 button,a[class*='rounded'],[role='button']{max-width:100%;min-height:44px;white-space:normal;text-align:center;line-height:1.25}
 input,textarea,select{max-width:100%;width:100%;line-height:1.4}
 textarea{resize:vertical}
 
-/* Cards e grids sempre no prumo. */
 .s8-card{box-sizing:border-box;min-width:0;max-width:100%;width:100%;overflow:hidden}
 .s8-card>*{min-width:0;max-width:100%}
 [class*='grid']{min-width:0;align-items:stretch}
 [class*='grid']>*{min-width:0;max-width:100%}
 [class*='flex']>*{min-width:0;max-width:100%}
 
-/* Cards da Biblioteca: mesma altura visual por linha e botão dentro da caixa. */
-[aria-label='Minha Biblioteca']>article,
-[aria-label='My Library']>article,
-[aria-label='Ma Bibliothèque']>article,
-[aria-label='Mi Biblioteca']>article{height:100%;display:flex;flex-direction:column;align-self:stretch}
-[aria-label='Minha Biblioteca']>article>a:last-child,
-[aria-label='Minha Biblioteca']>article>button:last-child,
-[aria-label='My Library']>article>a:last-child,
-[aria-label='My Library']>article>button:last-child,
-[aria-label='Ma Bibliothèque']>article>a:last-child,
-[aria-label='Ma Bibliothèque']>article>button:last-child,
-[aria-label='Mi Biblioteca']>article>a:last-child,
-[aria-label='Mi Biblioteca']>article>button:last-child{margin-top:auto}
+[aria-label='Minha Biblioteca']>article,[aria-label='My Library']>article,[aria-label='Ma Bibliothèque']>article,[aria-label='Mi Biblioteca']>article{height:100%;display:flex;flex-direction:column;align-self:stretch}
+[aria-label='Minha Biblioteca']>article>a:last-child,[aria-label='Minha Biblioteca']>article>button:last-child,[aria-label='My Library']>article>a:last-child,[aria-label='My Library']>article>button:last-child,[aria-label='Ma Bibliothèque']>article>a:last-child,[aria-label='Ma Bibliothèque']>article>button:last-child,[aria-label='Mi Biblioteca']>article>a:last-child,[aria-label='Mi Biblioteca']>article>button:last-child{margin-top:auto}
 
-/* Leitores: conteúdo com largura de leitura confortável. */
-article p,article li{max-width:75ch}
-article h1,article h2,article h3{overflow-wrap:normal;word-break:normal}
-article .whitespace-pre-line{overflow-wrap:break-word;word-break:normal;line-height:1.75}
+article p,article li{max-width:72ch}
+article h1,article h2,article h3{overflow-wrap:normal!important;word-break:normal!important}
+article .whitespace-pre-line{overflow-wrap:break-word!important;word-break:normal!important;line-height:1.65}
 
-/* Tamanhos responsivos coerentes. */
-.text-4xl{font-size:clamp(1.85rem,4.8vw,2.25rem)!important;line-height:1.1!important}
-.text-3xl{font-size:clamp(1.6rem,4.2vw,1.95rem)!important;line-height:1.12!important}
-.text-2xl{font-size:clamp(1.3rem,3.7vw,1.55rem)!important;line-height:1.15!important}
-.text-xl{font-size:clamp(1.1rem,3vw,1.3rem)!important}
+.text-4xl{font-size:clamp(1.7rem,4vw,2.05rem)!important;line-height:1.12!important}
+.text-3xl{font-size:clamp(1.5rem,3.5vw,1.8rem)!important;line-height:1.14!important}
+.text-2xl{font-size:clamp(1.2rem,3vw,1.45rem)!important;line-height:1.17!important}
+.text-xl{font-size:clamp(1.05rem,2.5vw,1.22rem)!important}
+.text-base{font-size:.95rem!important}
+.text-sm{font-size:.86rem!important}
 
 @media(max-width:1024px){
-  .s8-card{padding:1.15rem}
+  .s8-card{padding:1.05rem}
   [class*='xl:grid-cols-4'],[class*='lg:grid-cols-4']{grid-template-columns:repeat(2,minmax(0,1fr))!important}
 }
 
 @media(max-width:768px){
-  body{font-size:15px}
-  .s8-card{padding:1rem!important;border-radius:1rem!important}
-  .text-4xl{font-size:clamp(1.7rem,7.5vw,2.05rem)!important}
-  .text-3xl{font-size:clamp(1.5rem,6.8vw,1.85rem)!important}
-  .text-2xl{font-size:clamp(1.25rem,5.8vw,1.5rem)!important}
-  .text-xl{font-size:clamp(1.08rem,5vw,1.28rem)!important}
-  [class*='px-6'],[class*='px-8']{padding-left:1rem!important;padding-right:1rem!important}
-  [class*='gap-6'],[class*='gap-8']{gap:1rem!important}
-  button,a[class*='rounded']{min-height:44px}
+  body{font-size:14.5px;line-height:1.52}
+  .s8-card{padding:.95rem!important;border-radius:1rem!important}
+  .text-4xl{font-size:clamp(1.45rem,6.4vw,1.8rem)!important}
+  .text-3xl{font-size:clamp(1.32rem,5.8vw,1.65rem)!important}
+  .text-2xl{font-size:clamp(1.16rem,5vw,1.38rem)!important}
+  .text-xl{font-size:clamp(1rem,4.4vw,1.18rem)!important}
+  .text-base{font-size:.92rem!important}
+  .text-sm{font-size:.84rem!important}
+  [class*='px-6'],[class*='px-8']{padding-left:.9rem!important;padding-right:.9rem!important}
+  [class*='gap-6'],[class*='gap-8']{gap:.9rem!important}
+  button,a[class*='rounded']{min-height:44px;font-size:.86rem!important}
   .fixed.right-4,.fixed[class*='right-']{right:max(.75rem,env(safe-area-inset-right))!important}
   .fixed.bottom-4,.fixed[class*='bottom-']{bottom:max(.75rem,env(safe-area-inset-bottom))!important}
   [class*='sm:grid-cols-2'],[class*='md:grid-cols-2'],[class*='lg:grid-cols-2'],[class*='xl:grid-cols-4']{grid-template-columns:1fr!important}
 }
 
 @media(max-width:480px){
-  body{font-size:14px;line-height:1.55}
-  .s8-card{padding:.9rem!important}
-  .text-xs{font-size:.72rem!important}
-  .text-sm{font-size:.84rem!important}
-  .tracking-\[\.18em\],.tracking-\[\.16em\],.tracking-\[\.14em\]{letter-spacing:.06em!important}
-  button,a[class*='rounded']{padding-left:.8rem!important;padding-right:.8rem!important}
+  body{font-size:14px;line-height:1.5}
+  .s8-card{padding:.82rem!important}
+  .text-4xl{font-size:1.55rem!important}
+  .text-3xl{font-size:1.4rem!important}
+  .text-2xl{font-size:1.2rem!important}
+  .text-xl{font-size:1.05rem!important}
+  .text-xs{font-size:.68rem!important}
+  .text-sm{font-size:.81rem!important}
+  .tracking-\[\.18em\],.tracking-\[\.16em\],.tracking-\[\.14em\]{letter-spacing:.05em!important}
+  button,a[class*='rounded']{padding-left:.72rem!important;padding-right:.72rem!important;font-size:.83rem!important}
   .grid{grid-auto-columns:minmax(0,1fr)}
   select{min-height:44px}
+  article .whitespace-pre-line{line-height:1.58}
 }
 
 @media(max-width:360px){
   body{font-size:13.5px}
-  .s8-card{padding:.8rem!important}
-  .text-3xl{font-size:clamp(1.38rem,7vw,1.7rem)!important}
-  .text-2xl{font-size:clamp(1.18rem,6vw,1.4rem)!important}
+  .s8-card{padding:.75rem!important}
+  .text-3xl{font-size:1.32rem!important}
+  .text-2xl{font-size:1.12rem!important}
 }
