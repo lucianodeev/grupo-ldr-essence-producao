@@ -1,0 +1,47 @@
+name: Final public Pages fix
+
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - '.github/workflows/final-public-pages-fix.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          fetch-depth: 0
+      - name: Corrigir site público provisório
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+
+          # A área pública Plataforma deve levar à Biblioteca; a própria rota protegida cuida do login se necessário.
+          s=s.replace('https://painel.ldrrhestrategia.com/cliente/login','https://painel.ldrrhestrategia.com/cliente/biblioteca')
+
+          # Remover somente o controle global temporário criado para o GitHub Pages.
+          s=re.sub(r'<script[^>]+accessibility-v1\.js[^>]*>\s*</script>','',s,flags=re.I)
+          s=re.sub(r'<script[^>]+accessibility-v1\.js[^>]*/>','',s,flags=re.I)
+
+          # Garantir cache novo do script que padroniza os três selos verdes.
+          s=re.sub(r'(?:\./)?training-card-v1\.js(?:\?v=[^"\']*)?', './training-card-v1.js?v=20260903-final', s)
+
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit patch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git diff --cached --quiet && exit 0
+          git commit -m 'fix pages: biblioteca correta, sem controles globais e cache final'
+          git push origin gh-pages
