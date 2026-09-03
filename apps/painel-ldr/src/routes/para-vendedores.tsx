@@ -25,7 +25,7 @@ function SellerLanding() {
   const [form,setForm]=useState({full_name:"",email:"",phone:"",country:"",preferred_currency:"EUR",experience:""});
   async function submit(e:React.FormEvent){
     e.preventDefault(); setBusy(true);
-    const { error }=await supabase.from("seller_applications" as any).insert(form as any);
+    const { error }=await (supabase as any).from("seller_applications").insert(form);
     setBusy(false);
     if(error){toast.error("Não foi possível enviar sua candidatura.");return;}
     setDone(true); toast.success("Candidatura enviada para análise.");
