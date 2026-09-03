@@ -1,0 +1,74 @@
+name: Finalizar Biblioteca Digital v2
+
+on:
+  push:
+    paths:
+      - '.github/workflows/finalize-digital-library-content-v2.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Localizar versão exata e importar
+        env:
+          SUPABASE_URL: https://sfrcsrzuoqdscflfuwik.supabase.co
+          SUPABASE_KEY: sb_publishable_nN4RVHqSvj84P-GtTJfKgw_QNUGa6Sb
+        run: |
+          node <<'NODE'
+          const cp=require('child_process'),vm=require('vm'),crypto=require('crypto');
+          const path='apps/luciano-empreendedor/index.html';
+          const expected={
+            'ebook_coragem_comecar:pt':'16c72dcbd1781a44899f2c269f84fec6e7b60a03a795301bc87dc1a54343570f',
+            'ebook_coragem_comecar:en':'4c92ce18bd0876812f8b37f14aae1cd4207cb5008711eadcd9cf3d7d7fcb9032',
+            'ebook_coragem_comecar:fr':'25481c059c4b158207b4a91599cc2e6994be4f81ba80a81c68436a34b26d0645',
+            'ebook_coragem_comecar:es':'57dd7ab094ffbc92560ced2238b78980aa4c58043cf46cefe9ca6a7e6d78c82b',
+            'livro_menino_mamao:pt':'5e0f2dd110e0b3043f075e7dd72bff0588c091108c998f05f4cad720cb8204db',
+            'livro_menino_mamao:en':'788134c976ec853211cda1a18b73617cf9132bbbe4ba46a66f5b24de90fff2c2',
+            'livro_menino_mamao:es':'5cc08985d19d73df816a22759af72ae61a0b5f21c585108afad03ede64bdd889',
+            'livro_menino_mamao:fr':'bbda74325ee3efa4048b4d2f4a4f50bd6adece3440c5b06ad8441dfc45c799f9'};
+          const titles={
+            'ebook_coragem_comecar:pt':'A Coragem de Começar','ebook_coragem_comecar:en':'The Courage to Start','ebook_coragem_comecar:fr':'Le Courage de Commencer','ebook_coragem_comecar:es':'El Coraje de Empezar',
+            'livro_menino_mamao:pt':'O Menino que Vendia Mamão','livro_menino_mamao:en':'The Boy Who Sold Papaya','livro_menino_mamao:fr':'Le Garçon qui Vendait des Papayes','livro_menino_mamao:es':'El Niño que Vendía Papayas'};
+          const sha=s=>crypto.createHash('sha256').update(s).digest('hex');
+          function expr(html,name){
+            const mark=`const ${name}`; let s=html.indexOf(mark); if(s<0)throw Error('missing '+name);
+            let eq=html.indexOf('=',s),i=eq+1; while(/\s/.test(html[i]))i++;
+            let depth=0,q=null,esc=false;
+            for(let j=i;j<html.length;j++){
+              const c=html[j]; if(q){if(esc){esc=false;continue} if(c==='\\'){esc=true;continue} if(c===q)q=null;continue}
+              if(c==='"'||c==="'"||c==='`'){q=c;continue} if(c==='{'||c==='['||c==='(')depth++; else if(c==='}'||c===']'||c===')')depth--;
+              if(depth===0&&c===';')return html.slice(eq+1,j);
+            } throw Error('unterminated '+name);
+          }
+          function ev(x,extra={}){const ctx={...extra};vm.createContext(ctx);vm.runInContext(`globalThis.v=(${x})`,ctx);return ctx.v}
+          function split(text,size=1800){const out=[];let r=String(text).trim();while(r.length>size){let c=r.lastIndexOf('\n',size);if(c<size*.6)c=r.lastIndexOf(' ',size);if(c<=0)c=size;out.push(r.slice(0,c).trim());r=r.slice(c).trim()}if(r)out.push(r);return out}
+          function dedupe(text){const parts=String(text||'').trim().split(/(?<=[.!?…])\s+/u),seen=new Set(),out=[];for(const x of parts){const p=x.trim(),k=p.replace(/\s+/g,' ').trim().toLocaleLowerCase('und');if(k&&seen.has(k))continue;if(k)seen.add(k);if(p)out.push(p)}return out.join(' ')}
+          function build(html){
+            if(!html.includes('EBOOK_PAGES_I18N')||!html.includes('NEW_BOOKS'))throw Error('markers');
+            const ei=ev(expr(html,'EBOOK_PAGES_I18N')),books=ev(expr(html,'NEW_BOOKS'));
+            let pt=[];
+            const pos=html.indexOf('const conteudo = [');
+            if(pos>=0){const arr=ev(expr(html,'conteudo'),{dividirEmPaginas:split});let n=1;arr.forEach((c,ci)=>(c.paginas||split(c.texto||'')).forEach((t,pi)=>pt.push({num:n++,capitulo:ci+1,tituloCap:c.titulo,tituloPagina:pi===0?c.titulo:`Reflexão ${pi}`,texto:t})))}
+            else{const co=ev(expr(html,'conteudo'));let n=1;(co.pt||[]).forEach((c,ci)=>split(c.texto||'').forEach((t,pi)=>pt.push({num:n++,capitulo:ci+1,tituloCap:c.titulo,tituloPagina:pi===0?c.titulo:`Reflexão ${pi}`,texto:t})))}
+            const rows=[];
+            for(const [loc,pages] of Object.entries({pt,en:ei.en,fr:ei.fr,es:ei.es})) rows.push({product_key:'ebook_coragem_comecar',locale:loc,payload:{kind:'ebook',pages:pages.map(p=>({titulo:p.tituloPagina||p.tituloCap||'',texto:p.texto||''}))}});
+            for(const [loc,src] of Object.entries(books)){const d=JSON.parse(JSON.stringify(src));d.chapters=(d.chapters||[]).map(ch=>[ch[0],ch[1],(ch[2]||[]).map(dedupe)]);rows.push({product_key:'livro_menino_mamao',locale:loc,payload:{kind:'book',data:d}})}
+            return rows;
+          }
+          const commits=cp.execFileSync('git',['log','--all','--format=%H','--',path],{encoding:'utf8',maxBuffer:10*1024*1024}).trim().split(/\s+/);
+          let rows=null,source=null;
+          for(const c of commits){
+            try{const h=cp.execFileSync('git',['show',`${c}:${path}`],{encoding:'utf8',maxBuffer:20*1024*1024});const candidate=build(h);let ok=true;for(const r of candidate){const k=`${r.product_key}:${r.locale}`,s=JSON.stringify(r.payload);if(expected[k]!==sha(s)){ok=false;break}}if(ok&&candidate.length===8){rows=candidate;source=c;break}}catch{}
+          }
+          if(!rows)throw Error('Nenhuma versão histórica corresponde aos 8 hashes validados');
+          console.log('Fonte validada encontrada:',source);
+          async function send(r){const k=`${r.product_key}:${r.locale}`,text=JSON.stringify(r.payload);const res=await fetch(`${process.env.SUPABASE_URL}/rest/v1/rpc/import_verified_digital_content`,{method:'POST',headers:{apikey:process.env.SUPABASE_KEY,Authorization:`Bearer ${process.env.SUPABASE_KEY}`,'Content-Type':'application/json'},body:JSON.stringify({p_product_key:r.product_key,p_locale:r.locale,p_title:titles[k],p_payload_text:text})});const body=await res.text();if(!res.ok)throw Error(`${k}: ${res.status} ${body}`);console.log(k,'ok')}
+          (async()=>{for(const r of rows)await send(r)})().catch(e=>{console.error(e);process.exit(1)});
+          NODE
