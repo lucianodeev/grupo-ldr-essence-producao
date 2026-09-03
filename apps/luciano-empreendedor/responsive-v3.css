@@ -85,3 +85,14 @@ textarea{resize:vertical}
   .section-title,#palestraView .section-title{font-size:clamp(1.18rem,5.3vw,1.52rem)!important}
   .card p,.product-card p,.ldr-training-fallback p,.info-item p{font-size:.86rem!important}
 }
+
+/* v7 — correção pontual do seletor real e do título da palestra. */
+header select,nav select,.language-select,[data-language-select],select[aria-label*='idioma' i],select[aria-label*='language' i]{width:auto!important;min-width:68px!important;max-width:92px!important;height:40px!important;min-height:40px!important;padding:6px 28px 6px 12px!important;margin:0!important;border-radius:999px!important;display:inline-block!important;font-size:.82rem!important;line-height:1!important;flex:0 0 auto!important}
+header,header .container,header nav,nav{max-width:100%;min-width:0}
+@media(max-width:760px){
+  header select,nav select,.language-select,[data-language-select],select[aria-label*='idioma' i],select[aria-label*='language' i]{min-width:64px!important;max-width:80px!important;height:38px!important;min-height:38px!important;padding:5px 22px 5px 10px!important;font-size:.76rem!important}
+  #palestra .hero h1,#palestraView .hero h1,#palestraView h1,.hero h1{font-size:clamp(1.38rem,5.8vw,1.72rem)!important;line-height:1.08!important;max-width:100%!important;white-space:normal!important;overflow-wrap:normal!important;word-break:normal!important}
+}
+@media(max-width:480px){
+  #palestra .hero h1,#palestraView .hero h1,#palestraView h1,.hero h1{font-size:clamp(1.28rem,5.4vw,1.55rem)!important;line-height:1.08!important}
+}
