@@ -1,5 +1,5 @@
-/* LDR responsive hardening v5 — 2026-09-03
-   Escala tipográfica final: leitura confortável, sem quebras indevidas e cards alinhados. */
+/* LDR responsive hardening v6 — 2026-09-03
+   Escala tipográfica final: leitura confortável, seletor de idioma compacto e sem quebras indevidas. */
 :root{--ldr-page-gutter:clamp(12px,3vw,28px)}
 html{max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%;box-sizing:border-box;scroll-behavior:smooth}
 *,*::before,*::after{box-sizing:inherit;min-width:0}
@@ -8,13 +8,11 @@ img,video,iframe,svg,canvas{display:block;max-width:100%;height:auto}
 table{max-width:100%;width:100%;border-collapse:collapse}
 pre,code{max-width:100%;overflow-x:auto;white-space:pre-wrap;overflow-wrap:anywhere}
 
-/* Nunca partir palavras comuns no meio. */
 h1,h2,h3,h4,h5,h6,.section-title{max-width:100%;word-break:normal!important;overflow-wrap:normal!important;hyphens:none!important;text-wrap:balance;line-height:1.12}
 p,li,label,strong,small,.section-subtitle,.subtitle{max-width:100%;word-break:normal!important;overflow-wrap:break-word!important;hyphens:none!important;text-wrap:pretty}
 a,button,.btn,input,textarea,select,span{word-break:normal!important;hyphens:none!important}
 a[href^='http'],a[href^='mailto:'],a[href^='tel:'],pre,code{overflow-wrap:anywhere!important}
 
-/* Componentes ficam dentro das caixas. */
 button,.btn,a.btn{max-width:100%;min-height:44px;white-space:normal;text-align:center;line-height:1.25;display:inline-flex;align-items:center;justify-content:center;gap:.4rem;font-size:.94rem}
 input,textarea,select{max-width:100%;width:100%;line-height:1.4}
 textarea{resize:vertical}
@@ -28,15 +26,19 @@ textarea{resize:vertical}
 .card p,.product-card p,.ldr-training-fallback p,.info-item p{font-size:.95rem;line-height:1.55;overflow-wrap:break-word!important;word-break:normal!important}
 .card .actions,.product-card .actions{margin-top:auto}
 
-/* Escala desktop equilibrada. */
-.hero h1,#palestraView .hero h1{font-size:clamp(2rem,4.2vw,3.75rem)!important;line-height:1.06!important;letter-spacing:-.022em!important;max-width:18ch!important;word-break:normal!important;overflow-wrap:normal!important}
+.hero h1,#palestraView .hero h1,#palestraView h1{font-size:clamp(2rem,4.2vw,3.75rem)!important;line-height:1.06!important;letter-spacing:-.022em!important;max-width:18ch!important;word-break:normal!important;overflow-wrap:normal!important}
 .section-title,#palestraView .section-title{font-size:clamp(1.7rem,3vw,2.7rem)!important;line-height:1.12!important;letter-spacing:-.012em!important}
 .hero .subtitle,#palestraView .hero .subtitle,.section-subtitle,#palestraView .section-subtitle{font-size:clamp(.98rem,1.35vw,1.08rem)!important;line-height:1.6!important;max-width:68ch}
 .eyebrow,.badge,.tag,.ldr-product-available,.ldr-public-product-price{max-width:100%;white-space:normal;text-align:center;line-height:1.25;overflow-wrap:break-word;word-break:normal}
 
+#palestraView header select,#palestraView nav select,#palestraView .language-select,#palestraView [data-language-select]{width:auto!important;min-width:72px!important;max-width:92px!important;height:40px!important;min-height:40px!important;padding:6px 28px 6px 12px!important;margin:0!important;border-radius:999px!important;display:inline-block!important;font-size:.82rem!important;line-height:1!important;flex:0 0 auto!important}
+#palestraView header nav,#palestraView header .container{align-items:center!important}
+.ldr-public-language-switcher{display:inline-flex!important;width:auto!important;max-width:220px!important;flex:0 0 auto!important;align-items:center!important;justify-content:center!important;margin-left:12px!important;padding-left:10px!important}
+.ldr-public-lang-button{min-width:34px!important;min-height:36px!important;padding:6px!important;font-size:.72rem!important}
+
 @media(max-width:1024px){
   .hero{grid-template-columns:1fr!important;gap:28px!important}
-  .hero h1,#palestraView .hero h1{font-size:clamp(1.9rem,5.4vw,3.1rem)!important;max-width:20ch!important}
+  .hero h1,#palestraView .hero h1,#palestraView h1{font-size:clamp(1.9rem,5.4vw,3.1rem)!important;max-width:20ch!important}
   .section-title,#palestraView .section-title{font-size:clamp(1.55rem,4vw,2.25rem)!important}
   .grid-3,.storyline{grid-template-columns:repeat(2,minmax(0,1fr))!important}
 }
@@ -46,7 +48,7 @@ textarea{resize:vertical}
   .container,.section,.hero{padding-left:15px!important;padding-right:15px!important}
   .section{padding-top:40px!important;padding-bottom:40px!important}
   .hero{padding-top:34px!important;padding-bottom:34px!important;min-height:auto!important;gap:22px!important}
-  .hero h1,#palestraView .hero h1{font-size:clamp(1.65rem,7.4vw,2.15rem)!important;line-height:1.1!important;letter-spacing:-.016em!important;max-width:100%!important}
+  .hero h1,#palestraView .hero h1,#palestraView h1{font-size:clamp(1.52rem,6.6vw,1.95rem)!important;line-height:1.1!important;letter-spacing:-.016em!important;max-width:100%!important;overflow-wrap:normal!important;word-break:normal!important}
   .section-title,#palestraView .section-title{font-size:clamp(1.35rem,5.9vw,1.8rem)!important;line-height:1.16!important;max-width:100%!important}
   .hero .subtitle,#palestraView .hero .subtitle,.section-subtitle,#palestraView .section-subtitle{font-size:clamp(.9rem,3.7vw,.98rem)!important;line-height:1.55!important}
   .card h2,.card h3,.product-card h2,.product-card h3,.ldr-training-fallback h3{font-size:clamp(1.08rem,4.8vw,1.3rem)!important}
@@ -57,6 +59,9 @@ textarea{resize:vertical}
   .btn,button{font-size:.88rem!important}
   .card,.product-card,.ldr-training-fallback,.grid-3 article{padding-left:15px!important;padding-right:15px!important}
   .ldr-public-product-price{width:100%!important}
+  #palestraView header select,#palestraView nav select,#palestraView .language-select,#palestraView [data-language-select]{min-width:68px!important;max-width:84px!important;height:38px!important;min-height:38px!important;padding:5px 24px 5px 10px!important;font-size:.78rem!important}
+  .ldr-public-language-switcher{width:auto!important;max-width:190px!important;margin:4px 0!important;padding:0!important}
+  .ldr-public-lang-button{min-width:32px!important;min-height:34px!important;padding:5px!important;font-size:.68rem!important}
 }
 
 @media(max-width:480px){
@@ -64,7 +69,7 @@ textarea{resize:vertical}
   .container,.section{padding-left:12px!important;padding-right:12px!important}
   .section{padding-top:34px!important;padding-bottom:34px!important}
   .hero{padding:28px 12px!important}
-  .hero h1,#palestraView .hero h1{font-size:clamp(1.5rem,6.8vw,1.9rem)!important;line-height:1.1!important;letter-spacing:-.012em!important}
+  .hero h1,#palestraView .hero h1,#palestraView h1{font-size:clamp(1.42rem,6vw,1.72rem)!important;line-height:1.1!important;letter-spacing:-.012em!important}
   .section-title,#palestraView .section-title{font-size:clamp(1.25rem,5.5vw,1.65rem)!important;line-height:1.16!important}
   .hero .subtitle,#palestraView .hero .subtitle,.section-subtitle,#palestraView .section-subtitle{font-size:.9rem!important;line-height:1.5!important}
   .card h2,.card h3,.product-card h2,.product-card h3,.ldr-training-fallback h3{font-size:1.1rem!important;line-height:1.22!important}
@@ -76,7 +81,7 @@ textarea{resize:vertical}
 
 @media(max-width:360px){
   body{font-size:13.5px}
-  .hero h1,#palestraView .hero h1{font-size:clamp(1.42rem,6.7vw,1.75rem)!important}
+  .hero h1,#palestraView .hero h1,#palestraView h1{font-size:clamp(1.34rem,5.8vw,1.58rem)!important}
   .section-title,#palestraView .section-title{font-size:clamp(1.18rem,5.3vw,1.52rem)!important}
   .card p,.product-card p,.ldr-training-fallback p,.info-item p{font-size:.86rem!important}
 }
