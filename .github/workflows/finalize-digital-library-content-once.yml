@@ -1,0 +1,155 @@
+name: Finalizar conteúdo protegido da Biblioteca (uma vez)
+
+on:
+  push:
+    paths:
+      - '.github/workflows/finalize-digital-library-content-once.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  import-content:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Extrair, validar e importar conteúdos
+        env:
+          SUPABASE_URL: https://sfrcsrzuoqdscflfuwik.supabase.co
+          SUPABASE_KEY: sb_publishable_nN4RVHqSvj84P-GtTJfKgw_QNUGa6Sb
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const cp = require('child_process');
+          const vm = require('vm');
+          const crypto = require('crypto');
+
+          const SOURCE_COMMIT = '77b917d290a553a3f3b5393622f86901f9fbc503';
+          const path = 'apps/luciano-empreendedor/index.html';
+          const html = cp.execFileSync('git', ['show', `${SOURCE_COMMIT}:${path}`], { encoding: 'utf8', maxBuffer: 20 * 1024 * 1024 });
+
+          function extractConst(name) {
+            const start = html.indexOf(`const ${name} = `);
+            if (start < 0) throw new Error(`missing ${name}`);
+            const eq = html.indexOf('=', start) + 1;
+            let i = eq; while (/\s/.test(html[i])) i++;
+            let depth = 0, quote = null, esc = false;
+            for (let j = i; j < html.length; j++) {
+              const c = html[j];
+              if (quote) {
+                if (esc) { esc = false; continue; }
+                if (c === '\\') { esc = true; continue; }
+                if (c === quote) quote = null;
+                continue;
+              }
+              if (c === '"' || c === "'" || c === '`') { quote = c; continue; }
+              if (c === '{' || c === '[' || c === '(') depth++;
+              else if (c === '}' || c === ']' || c === ')') depth--;
+              if (depth === 0 && c === ';') return html.slice(eq, j);
+            }
+            throw new Error(`unterminated ${name}`);
+          }
+
+          function evalExpr(expr, extras = {}) {
+            const ctx = { ...extras }; vm.createContext(ctx); vm.runInContext(`globalThis.__x=(${expr})`, ctx); return ctx.__x;
+          }
+
+          function dividirEmPaginas(texto, tamanho = 1800) {
+            const paginas = []; let restante = String(texto).trim();
+            while (restante.length > tamanho) {
+              let corte = restante.lastIndexOf('\n', tamanho);
+              if (corte < tamanho * 0.6) corte = restante.lastIndexOf(' ', tamanho);
+              if (corte <= 0) corte = tamanho;
+              paginas.push(restante.slice(0, corte).trim());
+              restante = restante.slice(corte).trim();
+            }
+            if (restante.length) paginas.push(restante);
+            return paginas;
+          }
+
+          let ebookI18n;
+          try { ebookI18n = evalExpr(extractConst('EBOOK_PAGES_I18N')); }
+          catch { throw new Error('A versão histórica não contém EBOOK_PAGES_I18N'); }
+          const books = evalExpr(extractConst('NEW_BOOKS'));
+
+          // Português do eBook: usa o conteúdo editorial original do mesmo commit.
+          let ebookPt;
+          const oldStart = html.indexOf('const conteudo = [');
+          if (oldStart >= 0) {
+            const end = html.indexOf('\n];', oldStart);
+            if (end < 0) throw new Error('conteudo PT incompleto');
+            const expr = html.slice(html.indexOf('=', oldStart) + 1, end + 2);
+            const chapters = evalExpr(expr, { dividirEmPaginas });
+            let num = 1; ebookPt = [];
+            chapters.forEach((cap, ci) => cap.paginas.forEach((texto, pi) => ebookPt.push({ num:num++, capitulo:ci+1, tituloCap:cap.titulo, tituloPagina:pi===0?cap.titulo:`Reflexão ${pi}`, texto })));
+          } else {
+            // versões mais novas usam objeto por idioma
+            const obj = evalExpr(extractConst('conteudo'));
+            const chapters = obj.pt;
+            let num = 1; ebookPt = [];
+            chapters.forEach((cap, ci) => dividirEmPaginas(cap.texto).forEach((texto, pi) => ebookPt.push({ num:num++, capitulo:ci+1, tituloCap:cap.titulo, tituloPagina:pi===0?cap.titulo:`Reflexão ${pi}`, texto })));
+          }
+
+          function dedupe(text) {
+            const parts = String(text || '').trim().split(/(?<=[.!?…])\s+/u);
+            const seen = new Set(), out = [];
+            for (const raw of parts) {
+              const part = raw.trim();
+              const key = part.replace(/\s+/g, ' ').trim().toLocaleLowerCase('und');
+              if (key && seen.has(key)) continue;
+              if (key) seen.add(key);
+              if (part) out.push(part);
+            }
+            return out.join(' ');
+          }
+
+          const expected = {
+            'ebook_coragem_comecar:pt':'16c72dcbd1781a44899f2c269f84fec6e7b60a03a795301bc87dc1a54343570f',
+            'ebook_coragem_comecar:en':'4c92ce18bd0876812f8b37f14aae1cd4207cb5008711eadcd9cf3d7d7fcb9032',
+            'ebook_coragem_comecar:fr':'25481c059c4b158207b4a91599cc2e6994be4f81ba80a81c68436a34b26d0645',
+            'ebook_coragem_comecar:es':'57dd7ab094ffbc92560ced2238b78980aa4c58043cf46cefe9ca6a7e6d78c82b',
+            'livro_menino_mamao:pt':'5e0f2dd110e0b3043f075e7dd72bff0588c091108c998f05f4cad720cb8204db',
+            'livro_menino_mamao:en':'788134c976ec853211cda1a18b73617cf9132bbbe4ba46a66f5b24de90fff2c2',
+            'livro_menino_mamao:es':'5cc08985d19d73df816a22759af72ae61a0b5f21c585108afad03ede64bdd889',
+            'livro_menino_mamao:fr':'bbda74325ee3efa4048b4d2f4a4f50bd6adece3440c5b06ad8441dfc45c799f9'
+          };
+          const titles = {
+            'ebook_coragem_comecar:pt':'A Coragem de Começar', 'ebook_coragem_comecar:en':'The Courage to Start',
+            'ebook_coragem_comecar:fr':'Le Courage de Commencer', 'ebook_coragem_comecar:es':'El Coraje de Empezar',
+            'livro_menino_mamao:pt':'O Menino que Vendia Mamão', 'livro_menino_mamao:en':'The Boy Who Sold Papaya',
+            'livro_menino_mamao:fr':'Le Garçon qui Vendait des Papayes', 'livro_menino_mamao:es':'El Niño que Vendía Papayas'
+          };
+
+          const payloads = [];
+          const ebooks = { pt: ebookPt, en: ebookI18n.en, fr: ebookI18n.fr, es: ebookI18n.es };
+          for (const [locale, pages] of Object.entries(ebooks)) {
+            payloads.push({ product_key:'ebook_coragem_comecar', locale, payload:{kind:'ebook', pages:pages.map(p=>({titulo:p.tituloPagina||p.tituloCap||'', texto:p.texto||''}))} });
+          }
+          for (const [locale, source] of Object.entries(books)) {
+            const data = JSON.parse(JSON.stringify(source));
+            data.chapters = (data.chapters || []).map(ch => [ch[0], ch[1], (ch[2] || []).map(dedupe)]);
+            payloads.push({ product_key:'livro_menino_mamao', locale, payload:{kind:'book', data} });
+          }
+
+          async function importOne(row) {
+            const key = `${row.product_key}:${row.locale}`;
+            const payload_text = JSON.stringify(row.payload);
+            const hash = crypto.createHash('sha256').update(payload_text).digest('hex');
+            console.log(key, 'sha256', hash, 'bytes', Buffer.byteLength(payload_text));
+            if (hash !== expected[key]) throw new Error(`HASH_MISMATCH ${key}: ${hash}`);
+            const res = await fetch(`${process.env.SUPABASE_URL}/rest/v1/rpc/import_verified_digital_content`, {
+              method:'POST',
+              headers:{ apikey:process.env.SUPABASE_KEY, Authorization:`Bearer ${process.env.SUPABASE_KEY}`, 'Content-Type':'application/json' },
+              body: JSON.stringify({ p_product_key:row.product_key, p_locale:row.locale, p_title:titles[key], p_payload_text:payload_text })
+            });
+            const body = await res.text();
+            if (!res.ok) throw new Error(`${key} import failed ${res.status}: ${body}`);
+            console.log(key, body);
+          }
+
+          (async()=>{ for(const row of payloads) await importOne(row); })().catch(err=>{ console.error(err); process.exit(1); });
+          NODE
