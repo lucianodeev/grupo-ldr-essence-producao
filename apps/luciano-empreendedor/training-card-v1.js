@@ -15,6 +15,7 @@
 
   function language(){ const raw=(document.documentElement.lang||navigator.language||"pt").toLowerCase(); const key=raw.slice(0,2); return COPY[key]?key:"pt"; }
   function normalize(v){ return String(v||"").replace(/[✅🚀]/g,"").replace(/\s+/g," ").trim().toLowerCase(); }
+  function hasTrainingTitle(v){ const t=normalize(v); return TRAINING_TITLES.some(x=>t.includes(x)); }
   function addStyles(){
     if(document.getElementById("ldr-training-card-styles-final")) return;
     const s=document.createElement("style"); s.id="ldr-training-card-styles-final";
@@ -62,10 +63,21 @@
       });
     });
   }
+  function forceProductionLeaves(copy){
+    const leaves=Array.from(document.querySelectorAll("a,span,p,strong,b,button,div")).filter(el=>el.children.length===0 && PRODUCTION.includes(normalize(el.textContent)));
+    leaves.forEach(el=>{
+      let cur=el.parentElement;
+      for(let i=0;cur&&i<10;i++,cur=cur.parentElement){
+        const txt=cur.textContent||"";
+        if(hasTrainingTitle(txt)){ makeGreen(el,copy); break; }
+        if(normalize(txt).length>2500) break;
+      }
+    });
+  }
   function addPrice(section,titleFragments,price,key){ const title=findTextElement(section,titleFragments); const card=cardAround(title,section); if(!card||card.querySelector(`[data-ldr-price="${key}"]`))return; const el=document.createElement("div");el.className="ldr-public-product-price";el.dataset.ldrPrice=key;el.textContent=price;card.appendChild(el); }
   function makeFallback(copy,kind){ const box=document.createElement("div");box.className="ldr-training-fallback";box.dataset.ldrTrainingFallback=kind;box.innerHTML=`<span class="ldr-product-available">${copy.available}</span><h3>${copy.fallbackTitle}</h3><p><strong>${copy.fallbackSubtitle}</strong></p><p>${copy.fallbackBody}</p><div class="ldr-public-product-price">${copy.trainingPrice}</div><a href="${PANEL_LIBRARY}">${copy.buy}</a>`;return box; }
   function ensureSection(section,copy,kind){ if(!section)return; normalizeAvailableBadges(section,copy); const has=forceTrainingAvailable(section,copy); addPrice(section,["A Coragem de Começar","Coragem de Começar"],copy.ebookPrice,`${kind}-ebook`); addPrice(section,["O Menino que Vendia Mamão","Menino que Vendia Mamão"],copy.bookPrice,`${kind}-book`); addPrice(section,["Treinamento de Empreendedorismo",copy.trainingTitle,"Do Mamão ao Negócio"],copy.trainingPrice,`${kind}-training`); const old=section.querySelector(`[data-ldr-training-fallback="${kind}"]`); if(has&&old)old.remove(); else if(!has&&!old)section.appendChild(makeFallback(copy,kind)); normalizeAvailableBadges(section,copy); }
-  function mount(){ addStyles(); const copy=COPY[language()]||COPY.pt; ensureSection(document.getElementById("plataforma"),copy,"plataforma"); ensureSection(document.getElementById("palestra"),copy,"palestra"); ensureSection(document.getElementById("palestraView"),copy,"palestra-view"); forceAllTrainingCards(copy); }
-  function start(){ mount(); if(!window.__ldrProductStatusObserverFinal){ let scheduled=false; const ob=new MutationObserver(()=>{if(scheduled)return;scheduled=true;requestAnimationFrame(()=>{scheduled=false;mount();});}); ob.observe(document.body,{childList:true,subtree:true,characterData:true}); window.__ldrProductStatusObserverFinal=ob;} let tries=0;const retry=setInterval(()=>{mount();if(++tries>90)clearInterval(retry);},400); }
+  function mount(){ addStyles(); const copy=COPY[language()]||COPY.pt; ensureSection(document.getElementById("plataforma"),copy,"plataforma"); ensureSection(document.getElementById("palestra"),copy,"palestra"); ensureSection(document.getElementById("palestraView"),copy,"palestra-view"); forceAllTrainingCards(copy); forceProductionLeaves(copy); }
+  function start(){ mount(); if(!window.__ldrProductStatusObserverFinal){ let scheduled=false; const ob=new MutationObserver(()=>{if(scheduled)return;scheduled=true;requestAnimationFrame(()=>{scheduled=false;mount();});}); ob.observe(document.body,{childList:true,subtree:true,characterData:true}); window.__ldrProductStatusObserverFinal=ob;} let tries=0;const retry=setInterval(()=>{mount();if(++tries>120)clearInterval(retry);},300); }
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start,{once:true});else start();
 })();
