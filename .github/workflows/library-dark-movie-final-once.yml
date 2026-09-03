@@ -1,0 +1,45 @@
+name: Library dark and movie final once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/library-dark-movie-final-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Finalize Biblioteca
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace('className={`space-y-5 ${libraryTheme === "dark" ? "rounded-2xl bg-slate-950 p-3 text-slate-100 sm:p-4" : ""}`}', 'className={`space-y-5 ${libraryTheme === "dark" ? "library-dark rounded-2xl p-3 sm:p-4" : ""}`}')
+          old='''          <p className="mt-2 text-sm text-muted-foreground">Adaptação cinematográfica do projeto. Este card é apenas informativo enquanto o filme está em produção.</p>\n          <div className="mt-auto pt-5">\n            <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">\n              <strong>Em produção.</strong> Ainda não há compra, acesso ou conteúdo liberado na Biblioteca.\n            </div>\n          </div>'''
+          new='''          <div className="mt-auto pt-5">\n            <div className="rounded-xl border border-border bg-background/70 p-4 text-center text-sm text-muted-foreground">\n              Em produção\n            </div>\n          </div>'''
+          if old in s: s=s.replace(old,new)
+          p.write_text(s,encoding='utf-8')
+
+          css=Path('apps/painel-ldr/src/styles.css')
+          c=css.read_text(encoding='utf-8')
+          block='''\n/* Biblioteca: tema escuro local e acessível */\n.library-dark {\n  --background: oklch(0.19 0.025 258);\n  --foreground: oklch(0.95 0.01 250);\n  --paper: oklch(0.24 0.03 258);\n  --card: var(--paper);\n  --card-foreground: var(--foreground);\n  --muted: oklch(0.30 0.025 258);\n  --muted-foreground: oklch(0.80 0.018 250);\n  --accent: oklch(0.29 0.035 258);\n  --accent-foreground: oklch(0.95 0.01 250);\n  --border: oklch(0.40 0.03 258);\n  --input: oklch(0.46 0.03 258);\n  --wine: oklch(0.82 0.08 79);\n  --primary: var(--wine);\n  color: var(--foreground);\n  background: var(--background);\n}\n.library-dark .s8-card { background-color: var(--paper); color: var(--foreground); }\n.library-dark h1, .library-dark h2, .library-dark h3 { color: var(--wine); }\n.library-dark input, .library-dark textarea, .library-dark select, .library-dark button { color: var(--foreground); }\n'''
+          if '/* Biblioteca: tema escuro local e acessível */' not in c:
+              css.write_text(c+block,encoding='utf-8')
+          PY
+      - name: Commit patch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx apps/painel-ldr/src/styles.css
+          git diff --cached --quiet && exit 0
+          git commit -m 'fix biblioteca: card do filme simples e tema escuro completo'
+          git push origin main
