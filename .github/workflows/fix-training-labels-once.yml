@@ -17,34 +17,63 @@ jobs:
         with:
           ref: main
           fetch-depth: 0
-      - name: Padronizar labels e bust de cache
+
+      - name: Corrigir status real do treinamento no código-fonte público
         run: |
           python - <<'PY'
           from pathlib import Path
-          route = Path('apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx')
-          s = route.read_text(encoding='utf-8')
-          pairs = [
-              ('{product.entitled ? "Disponível" : "Compra necessária"}', '{product.entitled ? "Acesso liberado" : "Disponível para compra"}'),
-              ('{trainingOffer?.entitled ? "Disponível" : "Já disponível"}', '{trainingOffer?.entitled ? "Acesso liberado" : "Disponível para compra"}'),
-          ]
-          for old,new in pairs:
-              if old not in s:
-                  raise SystemExit(f'Marcador não encontrado: {old}')
-              s = s.replace(old,new)
-          route.write_text(s,encoding='utf-8')
 
-          index = Path('apps/luciano-empreendedor/index.html')
-          i = index.read_text(encoding='utf-8')
-          old = '/training-card-v1.js?v=20260902'
-          if old in i:
-              i = i.replace(old, '/training-card-v1.js?v=20260902c')
-              index.write_text(i,encoding='utf-8')
+          def patch_index(path: Path):
+              s = path.read_text(encoding='utf-8')
+              replacements = {
+                  'treinamentoBadge: "Em breve"': 'treinamentoBadge: "✅ JÁ DISPONÍVEL"',
+                  'treinamentoBadge: "Coming soon"': 'treinamentoBadge: "✅ AVAILABLE NOW"',
+                  'treinamentoBadge: "Bientôt"': 'treinamentoBadge: "✅ DÉJÀ DISPONIBLE"',
+                  'treinamentoBadge: "Próximamente"': 'treinamentoBadge: "✅ YA DISPONIBLE"',
+                  "badgeKey: 'treinamentoBadge',\n    disponivel: false": "badgeKey: 'treinamentoBadge',\n    disponivel: true",
+                  'training-card-v1.js?v=20260903-final': 'training-card-v1.js?v=20260903-final2',
+              }
+              for old, new in replacements.items():
+                  s = s.replace(old, new)
+              path.write_text(s, encoding='utf-8')
+
+          patch_index(Path('apps/luciano-empreendedor/index.html'))
           PY
-      - name: Commit patch
+
+      - name: Commit main
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx apps/luciano-empreendedor/index.html
-          git diff --cached --quiet && exit 0
-          git commit -m 'fix treinamento: padronizar estados da Biblioteca e limpar cache público'
-          git push origin main
+          git add apps/luciano-empreendedor/index.html
+          if ! git diff --cached --quiet; then
+            git commit -m 'fix public: treinamento disponível em todos os idiomas'
+            git push origin main
+          fi
+
+      - name: Corrigir a versão publicada no GitHub Pages
+        run: |
+          git fetch origin gh-pages
+          git worktree add /tmp/gh-pages origin/gh-pages
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('/tmp/gh-pages/index.html')
+          s = p.read_text(encoding='utf-8')
+          replacements = {
+              'treinamentoBadge: "Em breve"': 'treinamentoBadge: "✅ JÁ DISPONÍVEL"',
+              'treinamentoBadge: "Coming soon"': 'treinamentoBadge: "✅ AVAILABLE NOW"',
+              'treinamentoBadge: "Bientôt"': 'treinamentoBadge: "✅ DÉJÀ DISPONIBLE"',
+              'treinamentoBadge: "Próximamente"': 'treinamentoBadge: "✅ YA DISPONIBLE"',
+              "badgeKey: 'treinamentoBadge',\n    disponivel: false": "badgeKey: 'treinamentoBadge',\n    disponivel: true",
+              'training-card-v1.js?v=20260903-final': 'training-card-v1.js?v=20260903-final2',
+          }
+          for old, new in replacements.items():
+              s = s.replace(old, new)
+          p.write_text(s, encoding='utf-8')
+          PY
+          cd /tmp/gh-pages
+          git switch -c gh-pages-fix --track origin/gh-pages
+          git add index.html
+          if ! git diff --cached --quiet; then
+            git commit -m 'fix pages: treinamento disponível em todos os idiomas'
+            git push origin HEAD:gh-pages
+          fi
