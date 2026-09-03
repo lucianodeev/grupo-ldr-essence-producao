@@ -116,7 +116,7 @@ function ClientLibrary() {
 
   return (
     <div
-      className={`space-y-5 ${libraryTheme === "dark" ? "rounded-2xl bg-slate-950 p-3 text-slate-100 sm:p-4" : ""}`}
+      className={`space-y-5 ${libraryTheme === "dark" ? "library-dark rounded-2xl p-3 sm:p-4" : ""}`}
       style={{ fontSize: `${libraryScale}em` }}
     >
       <section className="s8-card flex flex-wrap items-center justify-between gap-3" aria-label="Acessibilidade da Biblioteca">
@@ -264,10 +264,9 @@ function ClientLibrary() {
           </div>
           <p className="mt-5 text-xs font-bold uppercase tracking-[.14em] text-primary">Filme</p>
           <h2 className="mt-1 font-serif text-2xl">O Menino que Vendia Mamão</h2>
-          <p className="mt-2 text-sm text-muted-foreground">Adaptação cinematográfica do projeto. Este card é apenas informativo enquanto o filme está em produção.</p>
           <div className="mt-auto pt-5">
-            <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
-              <strong>Em produção.</strong> Ainda não há compra, acesso ou conteúdo liberado na Biblioteca.
+            <div className="rounded-xl border border-border bg-background/70 p-4 text-center text-sm text-muted-foreground">
+              Em produção
             </div>
           </div>
         </article>
