@@ -24,56 +24,21 @@
       .ldr-public-product-price{margin:9px auto 0!important;width:max-content!important;max-width:100%!important;color:#fff8e8!important;background:rgba(255,255,255,.08)!important;border:1px solid rgba(255,248,232,.24)!important;border-radius:999px!important;padding:6px 10px!important;font-size:12px!important;font-weight:900!important}
       .ldr-training-fallback{max-width:1040px;margin:28px auto 0;padding:24px;border:1px solid #c99b4b;border-radius:20px;background:linear-gradient(145deg,#68152f,#3d0b1b);color:#fff8e8;text-align:center}
       .ldr-training-fallback h3{margin:10px 0 4px;font-family:Georgia,'Times New Roman',serif;font-size:30px}.ldr-training-fallback p{max-width:760px;margin:8px auto;line-height:1.55}.ldr-training-fallback a{display:inline-flex;margin-top:12px;padding:11px 17px;border-radius:10px;background:#c99b4b;color:#301018!important;text-decoration:none!important;font-weight:900}
+      html body #palestraView header button.lang-selector,html body #platformView header button.lang-selector,html body #palestraView header select,html body #platformView header select{width:auto!important;min-width:64px!important;max-width:96px!important;height:40px!important;min-height:40px!important;padding:6px 12px!important;margin:0!important;border-radius:999px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;flex:0 0 auto!important;font-size:.78rem!important;line-height:1!important;white-space:nowrap!important}
+      html body #palestraView header nav .ldr-public-language-switcher,html body #platformView header nav .ldr-public-language-switcher{width:auto!important;max-width:190px!important;display:inline-flex!important;flex:0 0 auto!important;align-items:center!important;justify-content:center!important;margin-left:8px!important;padding-left:8px!important}
+      html body #palestraView header nav .ldr-public-lang-button,html body #platformView header nav .ldr-public-lang-button{min-width:30px!important;max-width:38px!important;min-height:34px!important;padding:5px!important;font-size:.68rem!important}
+      @media(max-width:760px){html body #palestraView .hero h1{font-size:clamp(1.34rem,5.5vw,1.68rem)!important;line-height:1.08!important;max-width:100%!important;white-space:normal!important;overflow-wrap:normal!important;word-break:normal!important;hyphens:none!important}html body #palestraView header button.lang-selector,html body #platformView header button.lang-selector,html body #palestraView header select,html body #platformView header select{min-width:62px!important;max-width:82px!important;height:38px!important;min-height:38px!important;font-size:.74rem!important;padding:5px 10px!important}html body #palestraView header nav .ldr-public-language-switcher,html body #platformView header nav .ldr-public-language-switcher{width:auto!important;max-width:160px!important;margin:4px auto!important;padding:0!important}}
+      @media(max-width:480px){html body #palestraView .hero h1{font-size:clamp(1.24rem,5.1vw,1.5rem)!important;line-height:1.08!important}}
     `;
     document.head.appendChild(s);
   }
   function findTextElement(section, fragments){ if(!section)return null; return Array.from(section.querySelectorAll("h1,h2,h3,h4,h5,p,strong,b,span,div")).find(el=>{const t=normalize(el.textContent);return fragments.some(f=>t.includes(normalize(f)))&&el.children.length<=3;})||null; }
   function cardAround(el,section){ if(!el)return null; let cur=el,best=null; for(let i=0;cur&&cur!==section&&i<10;i++,cur=cur.parentElement){const t=normalize(cur.textContent); if(t.length>=35&&t.length<=1800)best=cur; if(t.length>=80&&/(produção|production|producción|dispon|available)/.test(t))return cur;} return best; }
   function makeGreen(el, copy){ if(!el)return; el.textContent=copy.available; el.classList.add("ldr-product-available"); el.style.setProperty("color","#166534","important"); el.style.setProperty("background","#dcfce7","important"); el.style.setProperty("border-color","#86efac","important"); }
-  function normalizeAvailableBadges(section,copy){
-    if(!section)return;
-    const nodes=Array.from(section.querySelectorAll("a,span,p,strong,b,button,div"));
-    nodes.forEach(el=>{ const t=normalize(el.textContent); if(t.length<=36 && AVAILABLE.some(v=>t===v || t.endsWith(v))) makeGreen(el,copy); });
-  }
-  function forceTrainingAvailable(section,copy){
-    const title=findTextElement(section,["Treinamento de Empreendedorismo",copy.trainingTitle,"Do Mamão ao Negócio",copy.fallbackTitle]);
-    const card=cardAround(title,section); if(!card)return false;
-    const candidates=Array.from(card.querySelectorAll("a,span,p,strong,b,button,div"));
-    let badge=candidates.find(el=>{const t=normalize(el.textContent);return t.length<44&&(PRODUCTION.includes(t)||AVAILABLE.includes(t));});
-    if(!badge) badge=candidates.find(el=>{const t=normalize(el.textContent);return t.length<44&&/(produção|production|producción|dispon|available)/.test(t);});
-    if(badge) makeGreen(badge,copy);
-    return true;
-  }
-  function forceAllTrainingCards(copy){
-    const titleNodes=Array.from(document.querySelectorAll("h1,h2,h3,h4,h5,strong,b,p,span"));
-    titleNodes.forEach(title=>{
-      const titleText=normalize(title.textContent);
-      if(!TRAINING_TITLES.some(v=>titleText.includes(v))) return;
-      let card=title;
-      for(let i=0;i<10&&card.parentElement;i++){
-        const parent=card.parentElement;
-        const text=normalize(parent.textContent);
-        card=parent;
-        if(text.length>70&&text.length<2000&&/(produção|production|producción|dispon|available)/.test(text)) break;
-      }
-      const badges=Array.from(card.querySelectorAll("a,span,p,strong,b,button,div"));
-      badges.forEach(el=>{
-        const t=normalize(el.textContent);
-        if(t.length<44&&(PRODUCTION.includes(t)||AVAILABLE.includes(t)||/(^|\s)(em produção|in production|en production|en producción)$/.test(t))) makeGreen(el,copy);
-      });
-    });
-  }
-  function forceProductionLeaves(copy){
-    const leaves=Array.from(document.querySelectorAll("a,span,p,strong,b,button,div")).filter(el=>el.children.length===0 && PRODUCTION.includes(normalize(el.textContent)));
-    leaves.forEach(el=>{
-      let cur=el.parentElement;
-      for(let i=0;cur&&i<10;i++,cur=cur.parentElement){
-        const txt=cur.textContent||"";
-        if(hasTrainingTitle(txt)){ makeGreen(el,copy); break; }
-        if(normalize(txt).length>2500) break;
-      }
-    });
-  }
+  function normalizeAvailableBadges(section,copy){ if(!section)return; const nodes=Array.from(section.querySelectorAll("a,span,p,strong,b,button,div")); nodes.forEach(el=>{ const t=normalize(el.textContent); if(t.length<=36 && AVAILABLE.some(v=>t===v || t.endsWith(v))) makeGreen(el,copy); }); }
+  function forceTrainingAvailable(section,copy){ const title=findTextElement(section,["Treinamento de Empreendedorismo",copy.trainingTitle,"Do Mamão ao Negócio",copy.fallbackTitle]); const card=cardAround(title,section); if(!card)return false; const candidates=Array.from(card.querySelectorAll("a,span,p,strong,b,button,div")); let badge=candidates.find(el=>{const t=normalize(el.textContent);return t.length<44&&(PRODUCTION.includes(t)||AVAILABLE.includes(t));}); if(!badge) badge=candidates.find(el=>{const t=normalize(el.textContent);return t.length<44&&/(produção|production|producción|dispon|available)/.test(t);}); if(badge) makeGreen(badge,copy); return true; }
+  function forceAllTrainingCards(copy){ const titleNodes=Array.from(document.querySelectorAll("h1,h2,h3,h4,h5,strong,b,p,span")); titleNodes.forEach(title=>{ const titleText=normalize(title.textContent); if(!TRAINING_TITLES.some(v=>titleText.includes(v))) return; let card=title; for(let i=0;i<10&&card.parentElement;i++){ const parent=card.parentElement; const text=normalize(parent.textContent); card=parent; if(text.length>70&&text.length<2000&&/(produção|production|producción|dispon|available)/.test(text)) break; } const badges=Array.from(card.querySelectorAll("a,span,p,strong,b,button,div")); badges.forEach(el=>{ const t=normalize(el.textContent); if(t.length<44&&(PRODUCTION.includes(t)||AVAILABLE.includes(t)||/(^|\s)(em produção|in production|en production|en producción)$/.test(t))) makeGreen(el,copy); }); }); }
+  function forceProductionLeaves(copy){ const leaves=Array.from(document.querySelectorAll("a,span,p,strong,b,button,div")).filter(el=>el.children.length===0 && PRODUCTION.includes(normalize(el.textContent))); leaves.forEach(el=>{ let cur=el.parentElement; for(let i=0;cur&&i<10;i++,cur=cur.parentElement){ const txt=cur.textContent||""; if(hasTrainingTitle(txt)){ makeGreen(el,copy); break; } if(normalize(txt).length>2500) break; } }); }
   function addPrice(section,titleFragments,price,key){ const title=findTextElement(section,titleFragments); const card=cardAround(title,section); if(!card||card.querySelector(`[data-ldr-price="${key}"]`))return; const el=document.createElement("div");el.className="ldr-public-product-price";el.dataset.ldrPrice=key;el.textContent=price;card.appendChild(el); }
   function makeFallback(copy,kind){ const box=document.createElement("div");box.className="ldr-training-fallback";box.dataset.ldrTrainingFallback=kind;box.innerHTML=`<span class="ldr-product-available">${copy.available}</span><h3>${copy.fallbackTitle}</h3><p><strong>${copy.fallbackSubtitle}</strong></p><p>${copy.fallbackBody}</p><div class="ldr-public-product-price">${copy.trainingPrice}</div><a href="${PANEL_LIBRARY}">${copy.buy}</a>`;return box; }
   function ensureSection(section,copy,kind){ if(!section)return; normalizeAvailableBadges(section,copy); const has=forceTrainingAvailable(section,copy); addPrice(section,["A Coragem de Começar","Coragem de Começar"],copy.ebookPrice,`${kind}-ebook`); addPrice(section,["O Menino que Vendia Mamão","Menino que Vendia Mamão"],copy.bookPrice,`${kind}-book`); addPrice(section,["Treinamento de Empreendedorismo",copy.trainingTitle,"Do Mamão ao Negócio"],copy.trainingPrice,`${kind}-training`); const old=section.querySelector(`[data-ldr-training-fallback="${kind}"]`); if(has&&old)old.remove(); else if(!has&&!old)section.appendChild(makeFallback(copy,kind)); normalizeAvailableBadges(section,copy); }
