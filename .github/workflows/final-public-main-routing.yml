@@ -1,0 +1,38 @@
+name: Final public main routing
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/final-public-main-routing.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Alinhar navegação e cache do site público
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('apps/luciano-empreendedor/index.html')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace('https://painel.ldrrhestrategia.com/cliente/login','https://painel.ldrrhestrategia.com/cliente/biblioteca')
+          s=re.sub(r'(?:/|\./)?training-card-v1\.js(?:\?v=[^"\']*)?', '/training-card-v1.js?v=20260903-final', s)
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit patch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add apps/luciano-empreendedor/index.html
+          git diff --cached --quiet && exit 0
+          git commit -m 'fix público: Plataforma abre Biblioteca e usa status final'
+          git push origin main
