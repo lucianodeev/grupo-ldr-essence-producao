@@ -1,19 +1,33 @@
-/* LDR responsive hardening v3 — 2026-09-02 */
-html{max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%}
-body{max-width:100%;overflow-x:hidden}
-*,*::before,*::after{min-width:0}
-img,video,iframe,svg,canvas{max-width:100%;height:auto}
+/* LDR responsive hardening v4 — 2026-09-03
+   Objetivo: tipografia estável, textos sem quebra indevida e caixas alinhadas em todas as telas. */
+:root{--ldr-page-gutter:clamp(12px,3vw,28px)}
+html{max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%;box-sizing:border-box}
+*,*::before,*::after{box-sizing:inherit;min-width:0}
+body{max-width:100%;overflow-x:hidden;font-synthesis:none}
+img,video,iframe,svg,canvas{display:block;max-width:100%;height:auto}
 table{max-width:100%;width:100%;border-collapse:collapse}
 pre,code{max-width:100%;overflow-x:auto;white-space:pre-wrap;overflow-wrap:anywhere}
-h1,h2,h3,h4,h5,h6{max-width:100%;word-break:normal;overflow-wrap:normal;hyphens:none;text-wrap:balance}
-p,li,a,button,label,span,strong,small,input,textarea,select{overflow-wrap:anywhere;word-break:normal}
-button,.btn,a.btn{max-width:100%;white-space:normal;text-align:center;line-height:1.25}
-.container,.section,.hero,#palestra,#plataforma,#palestraView{max-width:100%}
-.grid-3,.storyline,.pricing-grid,.lancamentos-grid,.story-photo-row,.editorial-strip{min-width:0}
+h1,h2,h3,h4,h5,h6,.section-title{max-width:100%;word-break:normal;overflow-wrap:normal;hyphens:none;text-wrap:balance;line-height:1.12}
+p,li,label,strong,small{max-width:100%;word-break:normal;overflow-wrap:break-word;hyphens:none;text-wrap:pretty}
+a,button,.btn,input,textarea,select,span{word-break:normal;overflow-wrap:break-word;hyphens:none}
+a[href^='http'],a[href^='mailto:'],a[href^='tel:']{overflow-wrap:anywhere}
+button,.btn,a.btn{max-width:100%;min-height:44px;white-space:normal;text-align:center;line-height:1.25;display:inline-flex;align-items:center;justify-content:center;gap:.45rem}
+input,textarea,select{max-width:100%;width:100%;line-height:1.4}
+textarea{resize:vertical}
+.container,.section,.hero,#palestra,#plataforma,#palestraView{width:100%;max-width:100%}
+.grid-3,.storyline,.pricing-grid,.lancamentos-grid,.story-photo-row,.editorial-strip{min-width:0;align-items:stretch}
 .grid-3>* ,.storyline>* ,.pricing-grid>* ,.lancamentos-grid>* ,.story-photo-row>* ,.editorial-strip>*{min-width:0;max-width:100%}
-.hero h1{font-size:clamp(2rem,6vw,4.7rem)!important;line-height:1.06!important}
-.section-title{font-size:clamp(1.9rem,4.5vw,3.5rem)!important;line-height:1.12!important}
-.card,.product-card,.ldr-training-fallback{max-width:100%;overflow:hidden}
+.card,.product-card,.ldr-training-fallback{box-sizing:border-box;max-width:100%;width:100%;overflow:hidden;height:100%;min-width:0}
+.card>* ,.product-card>* ,.ldr-training-fallback>*{max-width:100%;min-width:0}
+.card h1,.card h2,.card h3,.card h4,.product-card h1,.product-card h2,.product-card h3,.ldr-training-fallback h3{overflow-wrap:normal;word-break:normal}
+.card p,.product-card p,.ldr-training-fallback p{overflow-wrap:break-word;word-break:normal}
+.hero h1{font-size:clamp(2rem,6vw,4.55rem)!important;line-height:1.04!important;letter-spacing:-.025em;max-width:100%}
+#palestraView .hero h1{font-size:clamp(2rem,5.3vw,4rem)!important;line-height:1.05!important;letter-spacing:-.025em;max-width:100%}
+.section-title,#palestraView .section-title{font-size:clamp(1.85rem,4.4vw,3.35rem)!important;line-height:1.1!important;letter-spacing:-.015em}
+.section-subtitle,#palestraView .section-subtitle,#palestraView .subtitle{max-width:72ch;line-height:1.65}
+.eyebrow,.badge,.tag,.ldr-product-available,.ldr-public-product-price{max-width:100%;white-space:normal;text-align:center;line-height:1.25;overflow-wrap:break-word;word-break:normal}
+.logo,#palestraView .logo{max-width:100%;overflow-wrap:normal;word-break:normal}
 @media(max-width:1100px){.hero{grid-template-columns:1fr!important;gap:32px!important}.grid-3{grid-template-columns:repeat(2,minmax(0,1fr))!important}.storyline{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
-@media(max-width:760px){.container{padding-left:16px!important;padding-right:16px!important}.section{padding-left:16px!important;padding-right:16px!important}.hero{padding-left:16px!important;padding-right:16px!important;min-height:auto!important}.hero h1{font-size:clamp(1.85rem,9vw,2.9rem)!important}.section-title{font-size:clamp(1.65rem,8vw,2.45rem)!important}.grid-3,.storyline,.pricing-grid,.lancamentos-grid,.story-photo-row,.editorial-strip{grid-template-columns:1fr!important}.actions,.hero .actions,nav,header .container{gap:10px!important}.actions>.btn,.hero .actions>.btn{width:100%!important}.ldr-public-product-price{white-space:normal!important;width:100%!important;text-align:center!important}.ldr-product-available{white-space:normal!important;max-width:100%!important;text-align:center!important}.ldr-training-fallback{margin-left:12px!important;margin-right:12px!important;padding:20px!important}.ldr-training-fallback h3{font-size:clamp(1.6rem,7vw,2.2rem)!important}}
-@media(max-width:480px){body{font-size:15px}.container{padding-left:12px!important;padding-right:12px!important}.section{padding:48px 12px!important}.hero{padding:42px 12px!important}.hero h1{font-size:clamp(1.65rem,9.5vw,2.35rem)!important}.btn,button{min-height:44px!important;padding-left:14px!important;padding-right:14px!important}.eyebrow,.badge,.tag{font-size:.66rem!important;letter-spacing:.08em!important}.card,.grid-3 article{padding-left:16px!important;padding-right:16px!important}}
+@media(max-width:760px){.container,.section{padding-left:16px!important;padding-right:16px!important}.hero{padding-left:16px!important;padding-right:16px!important;min-height:auto!important}.hero h1,#palestraView .hero h1{font-size:clamp(1.8rem,8.8vw,2.8rem)!important;line-height:1.08!important}.section-title,#palestraView .section-title{font-size:clamp(1.6rem,7.6vw,2.35rem)!important;line-height:1.12!important}.section-subtitle,#palestraView .section-subtitle,#palestraView .subtitle{font-size:clamp(.98rem,4vw,1.08rem)!important;line-height:1.6!important}.grid-3,.storyline,.pricing-grid,.lancamentos-grid,.story-photo-row,.editorial-strip{grid-template-columns:1fr!important}.actions,.hero .actions,nav,header .container{gap:10px!important;flex-wrap:wrap!important}.actions>.btn,.hero .actions>.btn{width:100%!important}.ldr-public-product-price{width:100%!important}.ldr-training-fallback{margin-left:12px!important;margin-right:12px!important;padding:20px!important}.ldr-training-fallback h3{font-size:clamp(1.55rem,6.8vw,2.15rem)!important}}
+@media(max-width:480px){body{font-size:15px;line-height:1.55}.container{padding-left:12px!important;padding-right:12px!important}.section{padding:48px 12px!important}.hero{padding:42px 12px!important}.hero h1,#palestraView .hero h1{font-size:clamp(1.62rem,9vw,2.3rem)!important;line-height:1.08!important}.section-title,#palestraView .section-title{font-size:clamp(1.5rem,7.8vw,2.15rem)!important}.btn,button{min-height:44px!important;padding-left:14px!important;padding-right:14px!important}.eyebrow,.badge,.tag{font-size:.68rem!important;letter-spacing:.07em!important}.card,.product-card,.grid-3 article{padding-left:16px!important;padding-right:16px!important}}
+@media(max-width:360px){body{font-size:14px}.hero h1,#palestraView .hero h1{font-size:clamp(1.5rem,9vw,2rem)!important}.section-title,#palestraView .section-title{font-size:clamp(1.4rem,7.8vw,1.95rem)!important}.eyebrow,.badge,.tag{letter-spacing:.04em!important}}
