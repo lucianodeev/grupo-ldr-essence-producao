@@ -1,0 +1,48 @@
+name: Library movie and accessibility once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/library-movie-accessibility-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Patch Biblioteca
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace('  PlayCircle,\n} from "lucide-react";', '  PlayCircle,\n  Film,\n  Sun,\n  Moon,\n  ZoomIn,\n  ZoomOut,\n} from "lucide-react";')
+          old='  const [productKey, setProductKey] = useState<string>("ebook_coragem_comecar");'
+          new='''  const [productKey, setProductKey] = useState<string>("ebook_coragem_comecar");\n  const [libraryTheme, setLibraryTheme] = useState<"light" | "dark">("light");\n  const [libraryScale, setLibraryScale] = useState(1);'''
+          if old in s: s=s.replace(old,new)
+          old='''  return (\n    <div className="space-y-5">'''
+          new='''  return (\n    <div\n      className={`space-y-5 ${libraryTheme === "dark" ? "rounded-2xl bg-slate-950 p-3 text-slate-100 sm:p-4" : ""}`}\n      style={{ fontSize: `${libraryScale}em` }}\n    >\n      <section className="s8-card flex flex-wrap items-center justify-between gap-3" aria-label="Acessibilidade da Biblioteca">\n        <div>\n          <p className="text-xs font-bold uppercase tracking-[.14em] text-primary">Acessibilidade</p>\n          <p className="mt-1 text-sm text-muted-foreground">Ajuste contraste e tamanho da letra somente nesta Biblioteca.</p>\n        </div>\n        <div className="flex flex-wrap gap-2">\n          <button type="button" aria-label="Tema claro" onClick={() => setLibraryTheme("light")} className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-border bg-background px-3 py-2 text-sm font-bold"><Sun className="h-4 w-4" /> Claro</button>\n          <button type="button" aria-label="Tema escuro" onClick={() => setLibraryTheme("dark")} className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-border bg-background px-3 py-2 text-sm font-bold"><Moon className="h-4 w-4" /> Escuro</button>\n          <button type="button" aria-label="Diminuir letra" onClick={() => setLibraryScale((v) => Math.max(.9, +(v - .1).toFixed(1)))} className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-border bg-background px-3 py-2 text-sm font-bold"><ZoomOut className="h-4 w-4" /> A−</button>\n          <button type="button" aria-label="Aumentar letra" onClick={() => setLibraryScale((v) => Math.min(1.3, +(v + .1).toFixed(1)))} className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-border bg-background px-3 py-2 text-sm font-bold"><ZoomIn className="h-4 w-4" /> A+</button>\n        </div>\n      </section>'''
+          if old not in s: raise SystemExit('wrapper marker not found')
+          s=s.replace(old,new,1)
+          marker='''        <article\n          className="s8-card flex min-h-[340px] flex-col"\n          style={{ borderColor: "#b58a44" }}\n          data-product="do-mamao-ao-negocio"'''
+          movie='''        <article className="s8-card flex min-h-[340px] flex-col" data-product="filme-menino-mamao">\n          <div className="flex items-start justify-between gap-3">\n            <div className="rounded-xl border border-border bg-accent/50 p-3 text-primary"><Film className="h-6 w-6" /></div>\n            <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-900">Em produção</span>\n          </div>\n          <p className="mt-5 text-xs font-bold uppercase tracking-[.14em] text-primary">Filme</p>\n          <h2 className="mt-1 font-serif text-2xl">O Menino que Vendia Mamão</h2>\n          <p className="mt-2 text-sm text-muted-foreground">Adaptação cinematográfica do projeto. Este card é apenas informativo enquanto o filme está em produção.</p>\n          <div className="mt-auto pt-5">\n            <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">\n              <strong>Em produção.</strong> Ainda não há compra, acesso ou conteúdo liberado na Biblioteca.\n            </div>\n          </div>\n        </article>\n\n'''
+          if marker not in s: raise SystemExit('training marker not found')
+          if 'data-product="filme-menino-mamao"' not in s:
+              s=s.replace(marker,movie+marker,1)
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit patch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          git diff --cached --quiet && exit 0
+          git commit -m 'feat biblioteca: filme em produção e controles de acessibilidade'
+          git push origin main
