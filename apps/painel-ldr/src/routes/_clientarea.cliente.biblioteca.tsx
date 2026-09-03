@@ -9,6 +9,11 @@ import {
   ReceiptText,
   MessageCircle,
   PlayCircle,
+  Film,
+  Sun,
+  Moon,
+  ZoomIn,
+  ZoomOut,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -39,6 +44,8 @@ function ClientLibrary() {
   const queryClient = useQueryClient();
   const [comment, setComment] = useState("");
   const [productKey, setProductKey] = useState<string>("ebook_coragem_comecar");
+  const [libraryTheme, setLibraryTheme] = useState<"light" | "dark">("light");
+  const [libraryScale, setLibraryScale] = useState(1);
 
   const checkout = useMutation({
     mutationFn: (input: {
@@ -108,7 +115,22 @@ function ClientLibrary() {
       : "€ 100,56";
 
   return (
-    <div className="space-y-5">
+    <div
+      className={`space-y-5 ${libraryTheme === "dark" ? "rounded-2xl bg-slate-950 p-3 text-slate-100 sm:p-4" : ""}`}
+      style={{ fontSize: `${libraryScale}em` }}
+    >
+      <section className="s8-card flex flex-wrap items-center justify-between gap-3" aria-label="Acessibilidade da Biblioteca">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-[.14em] text-primary">Acessibilidade</p>
+          <p className="mt-1 text-sm text-muted-foreground">Ajuste contraste e tamanho da letra somente nesta Biblioteca.</p>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <button type="button" aria-label="Tema claro" onClick={() => setLibraryTheme("light")} className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-border bg-background px-3 py-2 text-sm font-bold"><Sun className="h-4 w-4" /> Claro</button>
+          <button type="button" aria-label="Tema escuro" onClick={() => setLibraryTheme("dark")} className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-border bg-background px-3 py-2 text-sm font-bold"><Moon className="h-4 w-4" /> Escuro</button>
+          <button type="button" aria-label="Diminuir letra" onClick={() => setLibraryScale((v) => Math.max(.9, +(v - .1).toFixed(1)))} className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-border bg-background px-3 py-2 text-sm font-bold"><ZoomOut className="h-4 w-4" /> A−</button>
+          <button type="button" aria-label="Aumentar letra" onClick={() => setLibraryScale((v) => Math.min(1.3, +(v + .1).toFixed(1)))} className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-border bg-background px-3 py-2 text-sm font-bold"><ZoomIn className="h-4 w-4" /> A+</button>
+        </div>
+      </section>
       <section
         className="s8-card"
         style={{
@@ -234,6 +256,21 @@ function ClientLibrary() {
             </article>
           );
         })}
+
+        <article className="s8-card flex min-h-[340px] flex-col" data-product="filme-menino-mamao">
+          <div className="flex items-start justify-between gap-3">
+            <div className="rounded-xl border border-border bg-accent/50 p-3 text-primary"><Film className="h-6 w-6" /></div>
+            <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-900">Em produção</span>
+          </div>
+          <p className="mt-5 text-xs font-bold uppercase tracking-[.14em] text-primary">Filme</p>
+          <h2 className="mt-1 font-serif text-2xl">O Menino que Vendia Mamão</h2>
+          <p className="mt-2 text-sm text-muted-foreground">Adaptação cinematográfica do projeto. Este card é apenas informativo enquanto o filme está em produção.</p>
+          <div className="mt-auto pt-5">
+            <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+              <strong>Em produção.</strong> Ainda não há compra, acesso ou conteúdo liberado na Biblioteca.
+            </div>
+          </div>
+        </article>
 
         <article
           className="s8-card flex min-h-[340px] flex-col"
