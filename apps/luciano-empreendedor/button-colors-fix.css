@@ -8,10 +8,10 @@
 #site #dynamicBuyBtn,
 #site #ldrBookSalesCard .btn,
 #site #ldrTrainingSalesCardFinal .btn {
-  background:#c7a45a!important;
-  color:#20170b!important;
-  border-color:#c7a45a!important;
-  box-shadow:0 8px 20px rgba(199,164,90,.20)!important;
+  background:#d7a84d!important;
+  color:#25120d!important;
+  border-color:#d7a84d!important;
+  box-shadow:0 8px 20px rgba(215,168,77,.24)!important;
 }
 #site .btn:hover,
 #site a.btn:hover,
@@ -22,10 +22,39 @@
 #site #dynamicBuyBtn:hover,
 #site #ldrBookSalesCard .btn:hover,
 #site #ldrTrainingSalesCardFinal .btn:hover {
-  background:#d7b968!important;
-  color:#20170b!important;
-  border-color:#d7b968!important;
+  background:#e0b85e!important;
+  color:#25120d!important;
+  border-color:#e0b85e!important;
 }
+
+#platformView .btn,
+#platformView a.btn,
+#platformView button.btn,
+#platformView .btn-secondary,
+#platformView a.btn-secondary,
+#platformView .btn-outline,
+#platformView .btn-ghost,
+#platformView .btn-light,
+#platformView #dynamicBuyBtn,
+#platformView #ldrBookSalesCard .btn,
+#platformView #ldrTrainingSalesCardFinal .btn {
+  background:#d7a84d!important;
+  color:#25120d!important;
+  border:1px solid #d7a84d!important;
+  box-shadow:0 8px 20px rgba(215,168,77,.24)!important;
+}
+#platformView .btn:hover,
+#platformView a.btn:hover,
+#platformView button.btn:hover,
+#platformView .btn-secondary:hover,
+#platformView .btn-outline:hover,
+#platformView .btn-ghost:hover,
+#platformView .btn-light:hover {
+  background:#e0b85e!important;
+  color:#25120d!important;
+  border-color:#e0b85e!important;
+}
+
 #site .btn-secondary,
 #site a.btn-secondary,
 #site button.btn-secondary,
@@ -33,16 +62,29 @@
 #site .btn-outline,
 #site .btn-ghost {
   background:transparent!important;
-  color:#0d2340!important;
-  border:1px solid #c7a45a!important;
+  color:#f7efe3!important;
+  border:1px solid #d7a84d!important;
   box-shadow:none!important;
 }
 #site .btn-light,
 #site a.btn-light,
 #site button.btn-light {
   background:#fff!important;
-  color:#0d2340!important;
-  border-color:#c7a45a!important;
+  color:#2b0d12!important;
+  border-color:#d7a84d!important;
+}
+#site #platformView .btn,
+#site #platformView a.btn,
+#site #platformView button.btn,
+#site #platformView .btn-secondary,
+#site #platformView a.btn-secondary,
+#site #platformView .btn-outline,
+#site #platformView .btn-ghost,
+#site #platformView .btn-light {
+  background:#d7a84d!important;
+  color:#25120d!important;
+  border-color:#d7a84d!important;
+  box-shadow:0 8px 20px rgba(215,168,77,.24)!important;
 }
 #site .btn-danger,
 #site button.btn-danger {
