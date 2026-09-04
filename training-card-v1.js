@@ -11,5 +11,5 @@
   }
 
   loadOnce("ldr-training-card-original-loader", "./training-card-v1-original-20260904.js?v=37394935");
-  loadOnce("ldr-platform-extra-cards-final-loader", "./platform-product-cards-final.js?v=20260905-livefix3");
+  loadOnce("ldr-platform-extra-cards-final-loader", "./platform-product-cards-final.js?v=20260905-langsync1");
 })();
