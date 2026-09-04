@@ -1,4 +1,4 @@
-name: Final typography and buttons audit
+name: Final typography buttons audit
 
 on:
   push:
@@ -10,7 +10,7 @@ permissions:
   contents: write
 
 jobs:
-  patch-and-audit:
+  patch:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -18,239 +18,67 @@ jobs:
           ref: main
           fetch-depth: 0
 
-      - name: Apply typography and CTA polish on main
+      - name: Patch main index
         run: |
-          python - <<'PY'
-          from pathlib import Path
-          import re
-
-          typo = Path('apps/luciano-empreendedor/typography-fix.css')
-          resp = Path('apps/luciano-empreendedor/responsive-v3.css')
-          index = Path('apps/luciano-empreendedor/index.html')
-
-          typo_block = r'''
-
-/* LDR UI typography polish v5 — 2026-09-05 */
-body,input,textarea,select,button,.btn{
-  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-}
-h1,h2,h3,h4,h5,h6,.section-title,#palestraView .section-title,.card-premium h3{
-  font-family:Georgia,"Times New Roman",serif;
-  font-weight:700;
-}
-p,li,label,.section-subtitle,.subtitle,.card p,.product-card p,.card-premium p{
-  line-height:1.62;
-}
-.btn:focus-visible,a.btn:focus-visible,button:focus-visible,[role="button"]:focus-visible{
-  outline:3px solid rgba(215,168,77,.58)!important;
-  outline-offset:3px!important;
-}
-'''
-
-          resp_block = r'''
-
-/* LDR UI buttons & mobile readability v8 — 2026-09-05 */
-body{font-size:16px!important;line-height:1.6!important}
-.btn,a.btn,#palestraView .btn,.ldr-btn,.btn-form,.btn-whatsapp,.card-premium .btn,.ldr-v3-actions a{
-  min-height:48px!important;
-  padding:12px 22px!important;
-  font-size:.95rem!important;
-  line-height:1.2!important;
-  font-weight:700!important;
-  display:inline-flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  gap:.45rem!important;
-  text-align:center!important;
-  white-space:normal!important;
-  overflow-wrap:break-word!important;
-}
-.btn-sm,a.btn-sm,#palestraView .btn-sm{
-  min-height:42px!important;
-  padding:9px 16px!important;
-  font-size:.88rem!important;
-}
-/* Utility controls keep their compact semantics; do not inflate every raw button. */
-button:not(.btn):not(.ldr-btn):not(.btn-form):not(.btn-whatsapp){
-  font-size:inherit;
-}
-.card-premium h3,.product-card h3,.card h3{line-height:1.2!important}
-.card-premium p,.product-card p,.card p,.info-item p{font-size:.96rem!important;line-height:1.58!important}
-@media(max-width:760px){
-  body{font-size:16px!important;line-height:1.6!important}
-  .hero .subtitle,#palestraView .hero .subtitle,.section-subtitle,#palestraView .section-subtitle{font-size:1rem!important;line-height:1.6!important}
-  .card-premium p,.product-card p,.card p,.info-item p{font-size:.96rem!important;line-height:1.58!important}
-  .btn,a.btn,#palestraView .btn,.ldr-btn,.btn-form,.btn-whatsapp,.card-premium .btn,.ldr-v3-actions a{
-    min-height:48px!important;
-    padding:12px 18px!important;
-    font-size:.95rem!important;
-  }
-  .actions>.btn,.hero .actions>.btn{width:100%!important}
-}
-@media(max-width:480px){
-  body{font-size:16px!important;line-height:1.6!important}
-  .hero h1,#palestraView .hero h1,#palestraView h1{font-size:clamp(1.7rem,7.2vw,2.05rem)!important;line-height:1.1!important}
-  .section-title,#palestraView .section-title{font-size:clamp(1.45rem,6.2vw,1.85rem)!important;line-height:1.16!important}
-  .hero .subtitle,#palestraView .hero .subtitle,.section-subtitle,#palestraView .section-subtitle{font-size:1rem!important}
-  .card h2,.card h3,.product-card h2,.product-card h3,.card-premium h3,.ldr-training-fallback h3{font-size:1.18rem!important;line-height:1.22!important}
-  .card-premium p,.product-card p,.card p,.info-item p{font-size:.95rem!important;line-height:1.58!important}
-}
-@media(max-width:360px){body{font-size:16px!important}}
-'''
-
-          for p, marker, block in [
-              (typo, 'LDR UI typography polish v5', typo_block),
-              (resp, 'LDR UI buttons & mobile readability v8', resp_block),
-          ]:
-              s=p.read_text(encoding='utf-8')
-              if marker not in s:
-                  p.write_text(s.rstrip()+block+'\n', encoding='utf-8')
-
-          s=index.read_text(encoding='utf-8')
-          s=re.sub(r'/typography-fix\.css\?v=[^"\']+', '/typography-fix.css?v=20260905-ui1', s)
-          s=re.sub(r'/responsive-v3\.css\?v=[^"\']+', '/responsive-v3.css?v=20260905-ui1', s)
-          index.write_text(s, encoding='utf-8')
-          PY
-
-      - name: Audit main buttons, handlers and internal routes
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          from html.parser import HTMLParser
-          import re, sys
-
-          p=Path('apps/luciano-empreendedor/index.html')
-          s=p.read_text(encoding='utf-8')
-          ids=set(re.findall(r'\bid=["\']([^"\']+)', s))
-          routes={'palestra','sobre','detalhes','lancamentos','inscricao','plataforma','jornada','experiencia','comprar','biblioteca','admin'}
-
-          class P(HTMLParser):
-              def __init__(self):
-                  super().__init__(); self.onclick=[]; self.hrefs=[]; self.controls=[]
-              def handle_starttag(self, tag, attrs):
-                  d=dict(attrs)
-                  if d.get('onclick'): self.onclick.append(d['onclick'])
-                  if tag=='a' and 'href' in d: self.hrefs.append(d['href'])
-                  if tag in ('a','button') or d.get('role')=='button': self.controls.append((tag,d))
-          parser=P(); parser.feed(s)
-
-          missing_handlers=[]
-          for expr in parser.onclick:
-              for name in re.findall(r'\b([A-Za-z_$][\w$]*)\s*\(', expr):
-                  if name in {'if','for','while','alert','confirm','setTimeout','setInterval'}: continue
-                  patterns=[rf'function\s+{re.escape(name)}\s*\(', rf'\b{name}\s*=\s*(?:async\s*)?\(?[^=]*=>', rf'window\.{re.escape(name)}\s*=']
-                  if not any(re.search(pt,s) for pt in patterns):
-                      missing_handlers.append((name,expr))
-
-          missing_fragments=[]
-          for href in parser.hrefs:
-              if href.startswith('#') and len(href)>1:
-                  frag=href[1:]
-                  if frag not in ids and frag not in routes:
-                      missing_fragments.append(href)
-
-          empty_actions=[]
-          for tag,d in parser.controls:
-              if tag=='a' and d.get('href','').strip() in ('','#') and not d.get('onclick'):
-                  empty_actions.append(d.get('id') or d.get('class') or '(anchor)')
-
-          print('onclick expressions:', len(parser.onclick))
-          print('links:', len(parser.hrefs))
-          print('interactive controls:', len(parser.controls))
-          print('missing handlers:', missing_handlers)
-          print('missing internal fragments:', sorted(set(missing_fragments)))
-          print('empty action anchors:', empty_actions)
-
-          if missing_handlers or missing_fragments:
-              sys.exit('Audit failed: broken handler or internal fragment detected')
-          PY
-          grep -q 'typography-fix.css?v=20260905-ui1' apps/luciano-empreendedor/index.html
-          grep -q 'responsive-v3.css?v=20260905-ui1' apps/luciano-empreendedor/index.html
+          python -c "from pathlib import Path; p=Path('apps/luciano-empreendedor/index.html'); s=p.read_text(encoding='utf-8'); tag='<link rel=\"stylesheet\" href=\"/ui-final.css?v=20260905-ui1\">'; s=s if tag in s else s.replace('</head>',tag+'\\n</head>',1); p.write_text(s,encoding='utf-8')"
+          grep -q 'ui-final.css?v=20260905-ui1' apps/luciano-empreendedor/index.html
+          grep -q 'function openDemo' apps/luciano-empreendedor/index.html
+          grep -q 'function continuarLeitura' apps/luciano-empreendedor/index.html
+          grep -q 'function goHome' apps/luciano-empreendedor/index.html
+          grep -q 'function logout' apps/luciano-empreendedor/index.html
+          grep -q 'function closeDemo' apps/luciano-empreendedor/index.html
+          grep -q 'function openLogin' apps/luciano-empreendedor/index.html
+          grep -q 'function closeLogin' apps/luciano-empreendedor/index.html
+          grep -q 'function googleLogin' apps/luciano-empreendedor/index.html
+          grep -q 'function emailLogin' apps/luciano-empreendedor/index.html
+          grep -q 'function mudarPagina' apps/luciano-empreendedor/index.html
+          grep -q 'function primeiraPagina' apps/luciano-empreendedor/index.html
+          grep -q 'function ultimaPagina' apps/luciano-empreendedor/index.html
+          grep -q 'function irParaPagina' apps/luciano-empreendedor/index.html
+          grep -q 'function closePublicSample' apps/luciano-empreendedor/index.html
+          grep -q 'href="#inscricao"' apps/luciano-empreendedor/index.html
+          grep -q 'href="#comprar"' apps/luciano-empreendedor/index.html
+          grep -q 'href="#plataforma"' apps/luciano-empreendedor/index.html
 
       - name: Commit main
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add apps/luciano-empreendedor/typography-fix.css apps/luciano-empreendedor/responsive-v3.css apps/luciano-empreendedor/index.html
+          git add apps/luciano-empreendedor/index.html
           if ! git diff --cached --quiet; then
-            git commit -m 'fix ui: padronizar fontes e botoes'
+            git commit -m 'fix ui: ativar camada final de fontes e botoes'
             git push origin main
           fi
 
-      - name: Apply and audit GitHub Pages
+      - name: Patch GitHub Pages
         run: |
           git fetch origin gh-pages
           git worktree add /tmp/gh-pages origin/gh-pages
           cd /tmp/gh-pages
-          git switch -c gh-pages-ui-audit --track origin/gh-pages
-          python - <<'PY'
-          from pathlib import Path
-          import re
-
-          typo=Path('typography-fix.css'); resp=Path('responsive-v3.css'); index=Path('index.html')
-          typo_block=r'''
-
-/* LDR UI typography polish v5 — 2026-09-05 */
-body,input,textarea,select,button,.btn{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
-h1,h2,h3,h4,h5,h6,.section-title,#palestraView .section-title,.card-premium h3{font-family:Georgia,"Times New Roman",serif;font-weight:700}
-p,li,label,.section-subtitle,.subtitle,.card p,.product-card p,.card-premium p{line-height:1.62}
-.btn:focus-visible,a.btn:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline:3px solid rgba(215,168,77,.58)!important;outline-offset:3px!important}
-'''
-          resp_block=r'''
-
-/* LDR UI buttons & mobile readability v8 — 2026-09-05 */
-body{font-size:16px!important;line-height:1.6!important}
-.btn,a.btn,#palestraView .btn,.ldr-btn,.btn-form,.btn-whatsapp,.card-premium .btn,.ldr-v3-actions a{min-height:48px!important;padding:12px 22px!important;font-size:.95rem!important;line-height:1.2!important;font-weight:700!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:.45rem!important;text-align:center!important;white-space:normal!important;overflow-wrap:break-word!important}
-.btn-sm,a.btn-sm,#palestraView .btn-sm{min-height:42px!important;padding:9px 16px!important;font-size:.88rem!important}
-button:not(.btn):not(.ldr-btn):not(.btn-form):not(.btn-whatsapp){font-size:inherit}
-.card-premium h3,.product-card h3,.card h3{line-height:1.2!important}
-.card-premium p,.product-card p,.card p,.info-item p{font-size:.96rem!important;line-height:1.58!important}
-@media(max-width:760px){body{font-size:16px!important;line-height:1.6!important}.hero .subtitle,#palestraView .hero .subtitle,.section-subtitle,#palestraView .section-subtitle{font-size:1rem!important;line-height:1.6!important}.card-premium p,.product-card p,.card p,.info-item p{font-size:.96rem!important;line-height:1.58!important}.btn,a.btn,#palestraView .btn,.ldr-btn,.btn-form,.btn-whatsapp,.card-premium .btn,.ldr-v3-actions a{min-height:48px!important;padding:12px 18px!important;font-size:.95rem!important}.actions>.btn,.hero .actions>.btn{width:100%!important}}
-@media(max-width:480px){body{font-size:16px!important;line-height:1.6!important}.hero h1,#palestraView .hero h1,#palestraView h1{font-size:clamp(1.7rem,7.2vw,2.05rem)!important;line-height:1.1!important}.section-title,#palestraView .section-title{font-size:clamp(1.45rem,6.2vw,1.85rem)!important;line-height:1.16!important}.hero .subtitle,#palestraView .hero .subtitle,.section-subtitle,#palestraView .section-subtitle{font-size:1rem!important}.card h2,.card h3,.product-card h2,.product-card h3,.card-premium h3,.ldr-training-fallback h3{font-size:1.18rem!important;line-height:1.22!important}.card-premium p,.product-card p,.card p,.info-item p{font-size:.95rem!important;line-height:1.58!important}}
-@media(max-width:360px){body{font-size:16px!important}}
-'''
-          for p,marker,block in [(typo,'LDR UI typography polish v5',typo_block),(resp,'LDR UI buttons & mobile readability v8',resp_block)]:
-              s=p.read_text(encoding='utf-8')
-              if marker not in s: p.write_text(s.rstrip()+block+'\n',encoding='utf-8')
-          s=index.read_text(encoding='utf-8')
-          s=re.sub(r'/typography-fix\.css\?v=[^"\']+', '/typography-fix.css?v=20260905-ui1', s)
-          s=re.sub(r'/responsive-v3\.css\?v=[^"\']+', '/responsive-v3.css?v=20260905-ui1', s)
-          index.write_text(s,encoding='utf-8')
-          PY
-
-          python - <<'PY'
-          from pathlib import Path
-          from html.parser import HTMLParser
-          import re,sys
-          s=Path('index.html').read_text(encoding='utf-8')
-          ids=set(re.findall(r'\bid=["\']([^"\']+)',s))
-          routes={'palestra','sobre','detalhes','lancamentos','inscricao','plataforma','jornada','experiencia','comprar','biblioteca','admin'}
-          class P(HTMLParser):
-              def __init__(self): super().__init__(); self.onclick=[]; self.hrefs=[]
-              def handle_starttag(self,tag,attrs):
-                  d=dict(attrs)
-                  if d.get('onclick'): self.onclick.append(d['onclick'])
-                  if tag=='a' and 'href' in d: self.hrefs.append(d['href'])
-          p=P(); p.feed(s)
-          missing=[]
-          for expr in p.onclick:
-              for name in re.findall(r'\b([A-Za-z_$][\w$]*)\s*\(',expr):
-                  if name in {'if','for','while','alert','confirm','setTimeout','setInterval'}: continue
-                  pats=[rf'function\s+{re.escape(name)}\s*\(',rf'\b{name}\s*=\s*(?:async\s*)?\(?[^=]*=>',rf'window\.{re.escape(name)}\s*=']
-                  if not any(re.search(x,s) for x in pats): missing.append((name,expr))
-          bad=[]
-          for href in p.hrefs:
-              if href.startswith('#') and len(href)>1 and href[1:] not in ids and href[1:] not in routes: bad.append(href)
-          print('pages onclick:',len(p.onclick),'links:',len(p.hrefs),'missing handlers:',missing,'bad fragments:',sorted(set(bad)))
-          if missing or bad: sys.exit('Pages audit failed')
-          PY
-
-          grep -q 'typography-fix.css?v=20260905-ui1' index.html
-          grep -q 'responsive-v3.css?v=20260905-ui1' index.html
+          git switch -c gh-pages-ui-final --track origin/gh-pages
+          python -c "from pathlib import Path; p=Path('index.html'); s=p.read_text(encoding='utf-8'); tag='<link rel=\"stylesheet\" href=\"/ui-final.css?v=20260905-ui1\">'; s=s if tag in s else s.replace('</head>',tag+'\\n</head>',1); p.write_text(s,encoding='utf-8')"
+          grep -q 'ui-final.css?v=20260905-ui1' index.html
+          grep -q 'function openDemo' index.html
+          grep -q 'function continuarLeitura' index.html
+          grep -q 'function goHome' index.html
+          grep -q 'function logout' index.html
+          grep -q 'function closeDemo' index.html
+          grep -q 'function openLogin' index.html
+          grep -q 'function closeLogin' index.html
+          grep -q 'function googleLogin' index.html
+          grep -q 'function emailLogin' index.html
+          grep -q 'function mudarPagina' index.html
+          grep -q 'function primeiraPagina' index.html
+          grep -q 'function ultimaPagina' index.html
+          grep -q 'function irParaPagina' index.html
+          grep -q 'function closePublicSample' index.html
+          grep -q 'href="#inscricao"' index.html
+          grep -q 'href="#comprar"' index.html
+          grep -q 'href="#plataforma"' index.html
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add typography-fix.css responsive-v3.css index.html
+          git add index.html
           if ! git diff --cached --quiet; then
-            git commit -m 'fix pages: padronizar fontes e botoes'
+            git commit -m 'fix pages: ativar camada final de fontes e botoes'
             git push origin HEAD:gh-pages
           fi
