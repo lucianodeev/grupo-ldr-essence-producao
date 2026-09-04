@@ -18,36 +18,6 @@ jobs:
           ref: main
           fetch-depth: 0
 
-      - name: Cache-bust main public script
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          import re
-          p=Path('apps/luciano-empreendedor/index.html')
-          s=p.read_text(encoding='utf-8')
-          new='/training-card-v1.js?v=20260905-livefix4'
-          s2,n=re.subn(r'(?:/|\./)?training-card-v1\.js(?:\?v=[^"\']*)?', new, s, count=1)
-          if n != 1:
-              raise SystemExit('training-card reference not found exactly once on main')
-          p.write_text(s2,encoding='utf-8')
-          PY
-          grep -q 'training-card-v1.js?v=20260905-livefix4' apps/luciano-empreendedor/index.html
-          grep -q 'platform-product-cards-final.js?v=20260905-livefix3' apps/luciano-empreendedor/training-card-v1.js
-          grep -q '4 encontros ao vivo' apps/luciano-empreendedor/platform-product-cards-final.js
-          grep -q 'Pagamento único' apps/luciano-empreendedor/platform-product-cards-final.js
-          grep -q 'Acesso individual' apps/luciano-empreendedor/platform-product-cards-final.js
-          grep -q 'EM PRODUÇÃO' apps/luciano-empreendedor/platform-product-cards-final.js
-
-      - name: Commit main
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add apps/luciano-empreendedor/index.html
-          if ! git diff --cached --quiet; then
-            git commit -m 'fix public: renovar cache do treinamento'
-            git push origin main
-          fi
-
       - name: Cache-bust GitHub Pages
         run: |
           git fetch origin gh-pages
@@ -59,13 +29,13 @@ jobs:
           import re
           p=Path('index.html')
           s=p.read_text(encoding='utf-8')
-          new='./training-card-v1.js?v=20260905-livefix4'
+          new='./training-card-v1.js?v=20260905-livefix5'
           s2,n=re.subn(r'(?:/|\./)?training-card-v1\.js(?:\?v=[^"\']*)?', new, s, count=1)
           if n != 1:
               raise SystemExit('training-card reference not found exactly once on gh-pages')
           p.write_text(s2,encoding='utf-8')
           PY
-          grep -q 'training-card-v1.js?v=20260905-livefix4' index.html
+          grep -q 'training-card-v1.js?v=20260905-livefix5' index.html
           grep -q 'platform-product-cards-final.js?v=20260905-livefix3' training-card-v1.js
           grep -q '4 encontros ao vivo' platform-product-cards-final.js
           grep -q 'Pagamento único' platform-product-cards-final.js
@@ -75,6 +45,6 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add index.html
           if ! git diff --cached --quiet; then
-            git commit -m 'fix pages: renovar cache do treinamento'
+            git commit -m 'fix pages: forçar atualização do card de treinamento'
             git push origin HEAD:gh-pages
           fi
