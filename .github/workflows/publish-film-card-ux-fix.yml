@@ -25,20 +25,20 @@ jobs:
           import re
           p=Path('apps/luciano-empreendedor/index.html')
           s=p.read_text(encoding='utf-8')
-          new='/training-card-v1.js?v=20260905-langsync6'
+          new='/training-card-v1.js?v=20260905-langsync7'
           s2,n=re.subn(r'(?:/|\./)?training-card-v1\.js(?:\?v=[^"\']*)?', new, s, count=1)
           if n != 1: raise SystemExit('main training-card reference not found exactly once')
           p.write_text(s2,encoding='utf-8')
           PY
-          grep -q 'training-card-v1.js?v=20260905-langsync6' apps/luciano-empreendedor/index.html
+          grep -q 'training-card-v1.js?v=20260905-langsync7' apps/luciano-empreendedor/index.html
+          grep -q 'button-colors-fix.css?v=20260905-buttons1' apps/luciano-empreendedor/training-card-v1.js
+          grep -q '#c7a45a' apps/luciano-empreendedor/button-colors-fix.css
           grep -q 'global-i18n-reload-v1.js?v=20260905-fullsite1' apps/luciano-empreendedor/training-card-v1.js
-          grep -q 'location.replace' apps/luciano-empreendedor/global-i18n-reload-v1.js
-          grep -q 'site.id="palestraView"' apps/luciano-empreendedor/global-i18n-reload-v1.js
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add apps/luciano-empreendedor/index.html
           if ! git diff --cached --quiet; then
-            git commit -m 'fix public: i18n global com recarregamento'
+            git commit -m 'fix public: restaurar cores dos botões'
             git push origin main
           fi
 
@@ -47,29 +47,25 @@ jobs:
           git fetch origin gh-pages
           git worktree add /tmp/gh-pages origin/gh-pages
           cd /tmp/gh-pages
-          git switch -c gh-pages-langsync6 --track origin/gh-pages
+          git switch -c gh-pages-langsync7 --track origin/gh-pages
           python - <<'PY'
           from pathlib import Path
           import re
           p=Path('index.html')
           s=p.read_text(encoding='utf-8')
-          new='./training-card-v1.js?v=20260905-langsync6'
+          new='./training-card-v1.js?v=20260905-langsync7'
           s2,n=re.subn(r'(?:/|\./)?training-card-v1\.js(?:\?v=[^"\']*)?', new, s, count=1)
           if n != 1: raise SystemExit('pages training-card reference not found exactly once')
           p.write_text(s2,encoding='utf-8')
           PY
-          grep -q 'training-card-v1.js?v=20260905-langsync6' index.html
+          grep -q 'training-card-v1.js?v=20260905-langsync7' index.html
+          grep -q 'button-colors-fix.css?v=20260905-buttons1' training-card-v1.js
+          grep -q '#c7a45a' button-colors-fix.css
           grep -q 'global-i18n-reload-v1.js?v=20260905-fullsite1' training-card-v1.js
-          grep -q 'location.replace' global-i18n-reload-v1.js
-          grep -q 'site.id="palestraView"' global-i18n-reload-v1.js
-          grep -q '4 encontros ao vivo' platform-product-cards-final.js
-          grep -q 'Paiement unique' platform-product-cards-final.js
-          grep -q 'One-time payment' platform-product-cards-final.js
-          grep -q 'Pago único' platform-product-cards-final.js
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add index.html
           if ! git diff --cached --quiet; then
-            git commit -m 'fix pages: i18n global com recarregamento'
+            git commit -m 'fix pages: restaurar cores dos botões'
             git push origin HEAD:gh-pages
           fi
