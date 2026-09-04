@@ -22,13 +22,14 @@ jobs:
         run: |
           python - <<'PY'
           from pathlib import Path
+          import re
           p=Path('apps/luciano-empreendedor/index.html')
-          s=p.read_text()
-          old='./training-card-v1.js?v=20260904-fourcards1'
-          new='./training-card-v1.js?v=20260904-filmux2'
-          if old not in s and new not in s:
-              raise SystemExit('training-card reference not found on main')
-          p.write_text(s.replace(old,new))
+          s=p.read_text(encoding='utf-8')
+          new='/training-card-v1.js?v=20260904-filmux2'
+          s2,n=re.subn(r'(?:/|\./)?training-card-v1\.js(?:\?v=[^"\']*)?', new, s, count=1)
+          if n != 1:
+              raise SystemExit('training-card reference not found exactly once on main')
+          p.write_text(s2,encoding='utf-8')
           PY
           grep -q 'training-card-v1.js?v=20260904-filmux2' apps/luciano-empreendedor/index.html
           grep -q 'platform-product-cards-final.js?v=20260904-filmux2' apps/luciano-empreendedor/training-card-v1.js
@@ -53,13 +54,14 @@ jobs:
           git switch -c gh-pages-filmux --track origin/gh-pages
           python - <<'PY'
           from pathlib import Path
+          import re
           p=Path('index.html')
-          s=p.read_text()
-          old='./training-card-v1.js?v=20260904-fourcards1'
+          s=p.read_text(encoding='utf-8')
           new='./training-card-v1.js?v=20260904-filmux2'
-          if old not in s and new not in s:
-              raise SystemExit('training-card reference not found on gh-pages')
-          p.write_text(s.replace(old,new))
+          s2,n=re.subn(r'(?:/|\./)?training-card-v1\.js(?:\?v=[^"\']*)?', new, s, count=1)
+          if n != 1:
+              raise SystemExit('training-card reference not found exactly once on gh-pages')
+          p.write_text(s2,encoding='utf-8')
           PY
           grep -q 'training-card-v1.js?v=20260904-filmux2' index.html
           grep -q 'platform-product-cards-final.js?v=20260904-filmux2' training-card-v1.js
