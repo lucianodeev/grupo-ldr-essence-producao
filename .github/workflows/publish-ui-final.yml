@@ -1,0 +1,72 @@
+name: Publish UI final
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish-ui-final.yml'
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Patch main
+        shell: bash
+        run: |
+          python -c "from pathlib import Path; p=Path('apps/luciano-empreendedor/index.html'); s=p.read_text(encoding='utf-8'); t='<link rel=\"stylesheet\" href=\"/ui-final.css?v=20260905-ui1\">'; p.write_text(s if t in s else s.replace('</head>',t+'\\n</head>',1),encoding='utf-8')"
+          grep -q 'ui-final.css?v=20260905-ui1' apps/luciano-empreendedor/index.html
+          grep -q 'function openDemo' apps/luciano-empreendedor/index.html
+          grep -q 'function continuarLeitura' apps/luciano-empreendedor/index.html
+          grep -q 'function goHome' apps/luciano-empreendedor/index.html
+          grep -q 'function logout' apps/luciano-empreendedor/index.html
+          grep -q 'function closeDemo' apps/luciano-empreendedor/index.html
+          grep -q 'function openLogin' apps/luciano-empreendedor/index.html
+          grep -q 'function closeLogin' apps/luciano-empreendedor/index.html
+          grep -q 'function googleLogin' apps/luciano-empreendedor/index.html
+          grep -q 'function emailLogin' apps/luciano-empreendedor/index.html
+          grep -q 'function mudarPagina' apps/luciano-empreendedor/index.html
+          grep -q 'function primeiraPagina' apps/luciano-empreendedor/index.html
+          grep -q 'function ultimaPagina' apps/luciano-empreendedor/index.html
+          grep -q 'function irParaPagina' apps/luciano-empreendedor/index.html
+          grep -q 'function closePublicSample' apps/luciano-empreendedor/index.html
+          grep -q 'href="#inscricao"' apps/luciano-empreendedor/index.html
+          grep -q 'href="#comprar"' apps/luciano-empreendedor/index.html
+          grep -q 'href="#plataforma"' apps/luciano-empreendedor/index.html
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add apps/luciano-empreendedor/index.html
+          if ! git diff --cached --quiet; then git commit -m 'fix ui: ativar revisao de fontes e botoes'; git push origin main; fi
+      - name: Patch pages
+        shell: bash
+        run: |
+          git fetch origin gh-pages
+          git worktree add /tmp/pages origin/gh-pages
+          cd /tmp/pages
+          git switch -c ui-final --track origin/gh-pages
+          python -c "from pathlib import Path; p=Path('index.html'); s=p.read_text(encoding='utf-8'); t='<link rel=\"stylesheet\" href=\"/ui-final.css?v=20260905-ui1\">'; p.write_text(s if t in s else s.replace('</head>',t+'\\n</head>',1),encoding='utf-8')"
+          grep -q 'ui-final.css?v=20260905-ui1' index.html
+          grep -q 'function openDemo' index.html
+          grep -q 'function continuarLeitura' index.html
+          grep -q 'function goHome' index.html
+          grep -q 'function logout' index.html
+          grep -q 'function closeDemo' index.html
+          grep -q 'function openLogin' index.html
+          grep -q 'function closeLogin' index.html
+          grep -q 'function googleLogin' index.html
+          grep -q 'function emailLogin' index.html
+          grep -q 'function mudarPagina' index.html
+          grep -q 'function primeiraPagina' index.html
+          grep -q 'function ultimaPagina' index.html
+          grep -q 'function irParaPagina' index.html
+          grep -q 'function closePublicSample' index.html
+          grep -q 'href="#inscricao"' index.html
+          grep -q 'href="#comprar"' index.html
+          grep -q 'href="#plataforma"' index.html
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          if ! git diff --cached --quiet; then git commit -m 'fix pages: ativar revisao de fontes e botoes'; git push origin HEAD:gh-pages; fi
