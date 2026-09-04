@@ -10,12 +10,26 @@
     const style = document.createElement("style");
     style.id = "ldr-film-card-ux-final";
     style.textContent = `
+      #platformView #comprar .pricing-grid{
+        align-items:stretch!important;
+        grid-auto-rows:1fr!important;
+      }
+      #platformView #comprar .pricing-grid > #priceCard,
+      #platformView #comprar .pricing-grid > #ldrBookSalesCard,
+      #platformView #comprar .pricing-grid > #${TRAINING_ID},
+      #platformView #comprar .pricing-grid > #${FILM_ID}{
+        height:100%!important;
+        min-height:520px!important;
+        box-sizing:border-box!important;
+        display:flex!important;
+        flex-direction:column!important;
+      }
+      #platformView #comprar #${TRAINING_ID} .btn-block{
+        margin-top:auto!important;
+      }
       #platformView #comprar #${FILM_ID}{
         position:relative!important;
         overflow:hidden!important;
-        display:flex!important;
-        flex-direction:column!important;
-        min-height:100%!important;
         padding:30px 28px!important;
         background:
           radial-gradient(circle at 92% 8%,rgba(240,213,139,.11),transparent 32%),
@@ -78,7 +92,16 @@
         line-height:1.45!important;
       }
       @media(max-width:760px){
-        #platformView #comprar #${FILM_ID}{padding:24px 22px!important;min-height:auto!important}
+        #platformView #comprar .pricing-grid{
+          grid-auto-rows:auto!important;
+        }
+        #platformView #comprar .pricing-grid > #priceCard,
+        #platformView #comprar .pricing-grid > #ldrBookSalesCard,
+        #platformView #comprar .pricing-grid > #${TRAINING_ID},
+        #platformView #comprar .pricing-grid > #${FILM_ID}{
+          min-height:500px!important;
+        }
+        #platformView #comprar #${FILM_ID}{padding:24px 22px!important}
       }
     `;
     document.head.appendChild(style);
@@ -91,9 +114,9 @@
     card.setAttribute("data-ldr-extra-card-final", "training");
     card.innerHTML = `
       <span class="tag ldr-product-available">JÁ DISPONÍVEL</span>
-      <div class="ldr-product-type">TREINAMENTO</div>
+      <div class="ldr-product-type">TREINAMENTO PARA EMPREENDEDORISMO</div>
       <h3 class="ldr-product-name">Do Mamão ao Negócio</h3>
-      <p><strong>Treinamento de Empreendedorismo</strong></p>
+      <p><strong>Treinamento para Empreendedorismo</strong></p>
       <ul>
         <li>3 meses · 300 horas</li>
         <li>Acesso pela Biblioteca do Cliente</li>
