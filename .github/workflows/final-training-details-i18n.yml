@@ -1,0 +1,140 @@
+name: Final training details and i18n
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/final-training-details-i18n.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Patch main public cards
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          base=Path('apps/luciano-empreendedor')
+          cards=base/'platform-product-cards-final.js'
+          loader=base/'training-card-v1.js'
+          s=cards.read_text(encoding='utf-8')
+          old='''        <li>3 meses · 300 horas</li>\n        <li>Acesso pela Biblioteca do Cliente</li>'''
+          new='''        <li>3 meses · 300 horas</li>\n        <li>4 encontros ao vivo</li>\n        <li>Certificado de conclusão</li>\n        <li>Projeto prático para aplicar no seu negócio</li>\n        <li>Acesso pela Biblioteca do Cliente</li>\n        <li>Pagamento único</li>\n        <li>Acesso individual</li>'''
+          if old not in s and '4 encontros ao vivo' not in s:
+              raise SystemExit('training list target not found')
+          s=s.replace(old,new)
+          cards.write_text(s,encoding='utf-8')
+
+          i18n=r'''(function(){
+  "use strict";
+  const TID="ldrTrainingSalesCardFinal", FID="ldrFilmSalesCardFinal", KEY="luciano.public.locale.v2";
+  const COPY={
+    pt:{available:"JÁ DISPONÍVEL",type:"TREINAMENTO PARA EMPREENDEDORISMO",subtitle:"Treinamento para Empreendedorismo",items:["3 meses · 300 horas","4 encontros ao vivo","Certificado de conclusão","Projeto prático para aplicar no seu negócio","Acesso pela Biblioteca do Cliente","Pagamento único","Acesso individual"],button:"Acessar Biblioteca do Cliente",filmStatus:"EM PRODUÇÃO",filmType:"FILME",filmDesc:"Uma história que está ganhando vida nas telas. Produção em desenvolvimento.",filmNote:"Novidades serão divulgadas em breve."},
+    en:{available:"AVAILABLE NOW",type:"ENTREPRENEURSHIP TRAINING",subtitle:"Entrepreneurship Training",items:["3 months · 300 hours","4 live sessions","Certificate of completion","Practical project to apply to your business","Access through the Client Library","One-time payment","Individual access"],button:"Access Client Library",filmStatus:"IN PRODUCTION",filmType:"FILM",filmDesc:"A story coming to life on screen. Production in development.",filmNote:"Updates will be announced soon."},
+    fr:{available:"DÉJÀ DISPONIBLE",type:"FORMATION EN ENTREPRENEURIAT",subtitle:"Formation en entrepreneuriat",items:["3 mois · 300 heures","4 rencontres en direct","Certificat de fin de formation","Projet pratique à appliquer à votre entreprise","Accès via la Bibliothèque Client","Paiement unique","Accès individuel"],button:"Accéder à la Bibliothèque Client",filmStatus:"EN PRODUCTION",filmType:"FILM",filmDesc:"Une histoire qui prend vie à l’écran. Production en développement.",filmNote:"Les nouveautés seront annoncées prochainement."},
+    es:{available:"YA DISPONIBLE",type:"ENTRENAMIENTO PARA EMPRENDIMIENTO",subtitle:"Entrenamiento para Emprendimiento",items:["3 meses · 300 horas","4 encuentros en vivo","Certificado de finalización","Proyecto práctico para aplicar en tu negocio","Acceso mediante la Biblioteca del Cliente","Pago único","Acceso individual"],button:"Acceder a la Biblioteca del Cliente",filmStatus:"EN PRODUCCIÓN",filmType:"PELÍCULA",filmDesc:"Una historia que está cobrando vida en la pantalla. Producción en desarrollo.",filmNote:"Las novedades se anunciarán próximamente."}
+  };
+  function locale(){
+    let v=""; try{v=localStorage.getItem(KEY)||""}catch(e){}
+    if(COPY[v]) return v;
+    v=(document.documentElement.lang||"").slice(0,2).toLowerCase();
+    return COPY[v]?v:"pt";
+  }
+  function apply(){
+    const c=COPY[locale()];
+    const t=document.getElementById(TID);
+    if(t){
+      const badge=t.querySelector('.ldr-product-available,.tag'); if(badge) badge.textContent=c.available;
+      const type=t.querySelector('.ldr-product-type'); if(type) type.textContent=c.type;
+      const strong=t.querySelector('p strong'); if(strong) strong.textContent=c.subtitle;
+      const lis=t.querySelectorAll('ul li'); c.items.forEach((x,i)=>{if(lis[i]) lis[i].textContent=x;});
+      const a=t.querySelector('a.btn'); if(a) a.textContent=c.button;
+    }
+    const f=document.getElementById(FID);
+    if(f){
+      const badge=f.querySelector('.ldr-film-production,.tag'); if(badge) badge.textContent=c.filmStatus;
+      const type=f.querySelector('.ldr-product-type'); if(type) type.textContent=c.filmType;
+      const d=f.querySelector('.ldr-film-description'); if(d) d.textContent=c.filmDesc;
+      const n=f.querySelector('.ldr-film-note'); if(n) n.textContent=c.filmNote;
+    }
+  }
+  let queued=false;
+  const obs=new MutationObserver(()=>{if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;apply();});});
+  function start(){apply();obs.observe(document.documentElement,{attributes:true,attributeFilter:['lang']});obs.observe(document.body,{childList:true,subtree:true});window.addEventListener('storage',apply);setInterval(apply,500);}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
+})();
+'''
+          (base/'training-extra-i18n-v1.js').write_text(i18n,encoding='utf-8')
+          l=loader.read_text(encoding='utf-8')
+          l=l.replace('./platform-product-cards-final.js?v=20260904-filmux2','./platform-product-cards-final.js?v=20260905-details1')
+          line='  loadOnce("ldr-training-extra-i18n-loader", "./training-extra-i18n-v1.js?v=20260905-i18n1");\n'
+          if 'ldr-training-extra-i18n-loader' not in l:
+              l=l.replace('})();',line+'})();')
+          loader.write_text(l,encoding='utf-8')
+          PY
+          grep -q '4 encontros ao vivo' apps/luciano-empreendedor/platform-product-cards-final.js
+          grep -q 'Pagamento único' apps/luciano-empreendedor/platform-product-cards-final.js
+          grep -q 'Acesso individual' apps/luciano-empreendedor/platform-product-cards-final.js
+          grep -q 'en:{available:' apps/luciano-empreendedor/training-extra-i18n-v1.js
+          grep -q 'fr:{available:' apps/luciano-empreendedor/training-extra-i18n-v1.js
+          grep -q 'es:{available:' apps/luciano-empreendedor/training-extra-i18n-v1.js
+          grep -q 'SUPPORTED = \["pt", "fr", "en", "es"\]' apps/luciano-empreendedor/public-i18n-v2.js
+
+      - name: Commit main
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add apps/luciano-empreendedor/platform-product-cards-final.js apps/luciano-empreendedor/training-card-v1.js apps/luciano-empreendedor/training-extra-i18n-v1.js
+          if ! git diff --cached --quiet; then
+            git commit -m 'fix training: detalhes e quatro idiomas'
+            git push origin main
+          fi
+
+      - name: Patch GitHub Pages
+        run: |
+          git fetch origin gh-pages
+          git worktree add /tmp/ldr-pages origin/gh-pages
+          cd /tmp/ldr-pages
+          git switch -c final-training-details --track origin/gh-pages
+          python - <<'PY'
+          from pathlib import Path
+          cards=Path('platform-product-cards-final.js'); loader=Path('training-card-v1.js')
+          s=cards.read_text(encoding='utf-8')
+          old='''        <li>3 meses · 300 horas</li>\n        <li>Acesso pela Biblioteca do Cliente</li>'''
+          new='''        <li>3 meses · 300 horas</li>\n        <li>4 encontros ao vivo</li>\n        <li>Certificado de conclusão</li>\n        <li>Projeto prático para aplicar no seu negócio</li>\n        <li>Acesso pela Biblioteca do Cliente</li>\n        <li>Pagamento único</li>\n        <li>Acesso individual</li>'''
+          if old not in s and '4 encontros ao vivo' not in s: raise SystemExit('pages training list target not found')
+          cards.write_text(s.replace(old,new),encoding='utf-8')
+          src=Path('../../workspace/apps/luciano-empreendedor/training-extra-i18n-v1.js')
+          # worktree path can vary; use main file copied from repository root instead
+          PY
+          cp "$GITHUB_WORKSPACE/apps/luciano-empreendedor/training-extra-i18n-v1.js" training-extra-i18n-v1.js
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('training-card-v1.js'); l=p.read_text(encoding='utf-8')
+          l=l.replace('./platform-product-cards-final.js?v=20260904-filmux2','./platform-product-cards-final.js?v=20260905-details1')
+          line='  loadOnce("ldr-training-extra-i18n-loader", "./training-extra-i18n-v1.js?v=20260905-i18n1");\n'
+          if 'ldr-training-extra-i18n-loader' not in l: l=l.replace('})();',line+'})();')
+          p.write_text(l,encoding='utf-8')
+          PY
+          grep -q '4 encontros ao vivo' platform-product-cards-final.js
+          grep -q 'Certificado de conclusão' platform-product-cards-final.js
+          grep -q 'Projeto prático para aplicar no seu negócio' platform-product-cards-final.js
+          grep -q 'Pagamento único' platform-product-cards-final.js
+          grep -q 'Acesso individual' platform-product-cards-final.js
+          grep -q 'SUPPORTED = \["pt", "fr", "en", "es"\]' public-i18n-v2.js
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add platform-product-cards-final.js training-card-v1.js training-extra-i18n-v1.js
+          if ! git diff --cached --quiet; then
+            git commit -m 'fix pages: detalhes e quatro idiomas do treinamento'
+            git push origin HEAD:gh-pages
+          fi
