@@ -25,20 +25,21 @@ jobs:
           import re
           p=Path('apps/luciano-empreendedor/index.html')
           s=p.read_text(encoding='utf-8')
-          new='/training-card-v1.js?v=20260905-langsync3'
+          new='/training-card-v1.js?v=20260905-langsync4'
           s2,n=re.subn(r'(?:/|\./)?training-card-v1\.js(?:\?v=[^"\']*)?', new, s, count=1)
           if n != 1: raise SystemExit('main training-card reference not found exactly once')
           p.write_text(s2,encoding='utf-8')
           PY
-          grep -q 'training-card-v1.js?v=20260905-langsync3' apps/luciano-empreendedor/index.html
-          grep -q 'platform-product-cards-final.js?v=20260905-langsync2' apps/luciano-empreendedor/training-card-v1.js
-          grep -q 'fromActive' apps/luciano-empreendedor/platform-product-cards-final.js
-          grep -q 'luciano:languagechange' apps/luciano-empreendedor/platform-product-cards-final.js
+          grep -q 'training-card-v1.js?v=20260905-langsync4' apps/luciano-empreendedor/index.html
+          grep -q 'site-i18n-sync-final.js?v=20260905-global2' apps/luciano-empreendedor/training-card-v1.js
+          grep -q 'authoritative=' apps/luciano-empreendedor/site-i18n-sync-final.js
+          grep -q 'applySiteLang' apps/luciano-empreendedor/site-i18n-sync-final.js
+          grep -q 'applyLibraryLang' apps/luciano-empreendedor/site-i18n-sync-final.js
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add apps/luciano-empreendedor/index.html
           if ! git diff --cached --quiet; then
-            git commit -m 'fix public: renovar cache da tradução dos cards'
+            git commit -m 'fix public: forçar sincronização global de idioma'
             git push origin main
           fi
 
@@ -47,21 +48,22 @@ jobs:
           git fetch origin gh-pages
           git worktree add /tmp/gh-pages origin/gh-pages
           cd /tmp/gh-pages
-          git switch -c gh-pages-langsync --track origin/gh-pages
+          git switch -c gh-pages-langsync4 --track origin/gh-pages
           python - <<'PY'
           from pathlib import Path
           import re
           p=Path('index.html')
           s=p.read_text(encoding='utf-8')
-          new='./training-card-v1.js?v=20260905-langsync3'
+          new='./training-card-v1.js?v=20260905-langsync4'
           s2,n=re.subn(r'(?:/|\./)?training-card-v1\.js(?:\?v=[^"\']*)?', new, s, count=1)
           if n != 1: raise SystemExit('pages training-card reference not found exactly once')
           p.write_text(s2,encoding='utf-8')
           PY
-          grep -q 'training-card-v1.js?v=20260905-langsync3' index.html
-          grep -q 'platform-product-cards-final.js?v=20260905-langsync2' training-card-v1.js
-          grep -q 'fromActive' platform-product-cards-final.js
-          grep -q 'luciano:languagechange' platform-product-cards-final.js
+          grep -q 'training-card-v1.js?v=20260905-langsync4' index.html
+          grep -q 'site-i18n-sync-final.js?v=20260905-global2' training-card-v1.js
+          grep -q 'authoritative=' site-i18n-sync-final.js
+          grep -q 'applySiteLang' site-i18n-sync-final.js
+          grep -q 'applyLibraryLang' site-i18n-sync-final.js
           grep -q '4 encontros ao vivo' platform-product-cards-final.js
           grep -q 'Paiement unique' platform-product-cards-final.js
           grep -q 'One-time payment' platform-product-cards-final.js
@@ -70,6 +72,6 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add index.html
           if ! git diff --cached --quiet; then
-            git commit -m 'fix pages: renovar cache da tradução dos cards'
+            git commit -m 'fix pages: forçar sincronização global de idioma'
             git push origin HEAD:gh-pages
           fi
