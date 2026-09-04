@@ -25,16 +25,18 @@ jobs:
           import re
           p=Path('apps/luciano-empreendedor/index.html')
           s=p.read_text(encoding='utf-8')
-          new='/training-card-v1.js?v=20260904-filmux2'
+          new='/training-card-v1.js?v=20260905-livefix4'
           s2,n=re.subn(r'(?:/|\./)?training-card-v1\.js(?:\?v=[^"\']*)?', new, s, count=1)
           if n != 1:
               raise SystemExit('training-card reference not found exactly once on main')
           p.write_text(s2,encoding='utf-8')
           PY
-          grep -q 'training-card-v1.js?v=20260904-filmux2' apps/luciano-empreendedor/index.html
-          grep -q 'platform-product-cards-final.js?v=20260904-filmux2' apps/luciano-empreendedor/training-card-v1.js
+          grep -q 'training-card-v1.js?v=20260905-livefix4' apps/luciano-empreendedor/index.html
+          grep -q 'platform-product-cards-final.js?v=20260905-livefix3' apps/luciano-empreendedor/training-card-v1.js
+          grep -q '4 encontros ao vivo' apps/luciano-empreendedor/platform-product-cards-final.js
+          grep -q 'Pagamento único' apps/luciano-empreendedor/platform-product-cards-final.js
+          grep -q 'Acesso individual' apps/luciano-empreendedor/platform-product-cards-final.js
           grep -q 'EM PRODUÇÃO' apps/luciano-empreendedor/platform-product-cards-final.js
-          grep -q 'cleanupLecturePrices' apps/luciano-empreendedor/platform-product-cards-final.js
 
       - name: Commit main
         run: |
@@ -42,7 +44,7 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add apps/luciano-empreendedor/index.html
           if ! git diff --cached --quiet; then
-            git commit -m 'fix public: atualizar cache da correção de palestra e filme'
+            git commit -m 'fix public: renovar cache do treinamento'
             git push origin main
           fi
 
@@ -51,26 +53,28 @@ jobs:
           git fetch origin gh-pages
           git worktree add /tmp/gh-pages origin/gh-pages
           cd /tmp/gh-pages
-          git switch -c gh-pages-filmux --track origin/gh-pages
+          git switch -c gh-pages-livefix --track origin/gh-pages
           python - <<'PY'
           from pathlib import Path
           import re
           p=Path('index.html')
           s=p.read_text(encoding='utf-8')
-          new='./training-card-v1.js?v=20260904-filmux2'
+          new='./training-card-v1.js?v=20260905-livefix4'
           s2,n=re.subn(r'(?:/|\./)?training-card-v1\.js(?:\?v=[^"\']*)?', new, s, count=1)
           if n != 1:
               raise SystemExit('training-card reference not found exactly once on gh-pages')
           p.write_text(s2,encoding='utf-8')
           PY
-          grep -q 'training-card-v1.js?v=20260904-filmux2' index.html
-          grep -q 'platform-product-cards-final.js?v=20260904-filmux2' training-card-v1.js
+          grep -q 'training-card-v1.js?v=20260905-livefix4' index.html
+          grep -q 'platform-product-cards-final.js?v=20260905-livefix3' training-card-v1.js
+          grep -q '4 encontros ao vivo' platform-product-cards-final.js
+          grep -q 'Pagamento único' platform-product-cards-final.js
+          grep -q 'Acesso individual' platform-product-cards-final.js
           grep -q 'EM PRODUÇÃO' platform-product-cards-final.js
-          grep -q 'cleanupLecturePrices' platform-product-cards-final.js
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add index.html
           if ! git diff --cached --quiet; then
-            git commit -m 'fix pages: atualizar cache da correção de palestra e filme'
+            git commit -m 'fix pages: renovar cache do treinamento'
             git push origin HEAD:gh-pages
           fi
