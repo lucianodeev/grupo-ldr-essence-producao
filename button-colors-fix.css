@@ -1,0 +1,63 @@
+/* Restore LDR public CTA colors without changing layout or behavior. */
+#site .btn,
+#site a.btn,
+#site button.btn,
+#site .ldr-btn,
+#site .btn-form,
+#site .btn-whatsapp,
+#site #dynamicBuyBtn,
+#site #ldrBookSalesCard .btn,
+#site #ldrTrainingSalesCardFinal .btn {
+  background:#c7a45a!important;
+  color:#20170b!important;
+  border-color:#c7a45a!important;
+  box-shadow:0 8px 20px rgba(199,164,90,.20)!important;
+}
+#site .btn:hover,
+#site a.btn:hover,
+#site button.btn:hover,
+#site .ldr-btn:hover,
+#site .btn-form:hover,
+#site .btn-whatsapp:hover,
+#site #dynamicBuyBtn:hover,
+#site #ldrBookSalesCard .btn:hover,
+#site #ldrTrainingSalesCardFinal .btn:hover {
+  background:#d7b968!important;
+  color:#20170b!important;
+  border-color:#d7b968!important;
+}
+#site .btn-secondary,
+#site a.btn-secondary,
+#site button.btn-secondary,
+#site .ldr-btn-secondary,
+#site .btn-outline,
+#site .btn-ghost {
+  background:transparent!important;
+  color:#0d2340!important;
+  border:1px solid #c7a45a!important;
+  box-shadow:none!important;
+}
+#site .btn-light,
+#site a.btn-light,
+#site button.btn-light {
+  background:#fff!important;
+  color:#0d2340!important;
+  border-color:#c7a45a!important;
+}
+#site .btn-danger,
+#site button.btn-danger {
+  background:#8b2635!important;
+  color:#fff!important;
+  border-color:#8b2635!important;
+}
+#palestraView .ldr-public-lang-button {
+  background:transparent!important;
+  color:rgba(255,255,255,.78)!important;
+  border:0!important;
+  border-bottom:2px solid transparent!important;
+  box-shadow:none!important;
+}
+#palestraView .ldr-public-lang-button.active {
+  color:#f0d58b!important;
+  border-bottom-color:#f0d58b!important;
+}
