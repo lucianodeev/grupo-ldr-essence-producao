@@ -1,0 +1,72 @@
+name: Fix public refresh platform anchor once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/fix-public-refresh-platform-anchor-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Corrigir refresh da ancora plataforma no site publico
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          marker = 'id="ldr-refresh-anchor-fix"'
+          script = '''<script id="ldr-refresh-anchor-fix">\n(function(){\n  if (window.location.hash === '#plataforma') {\n    try {\n      sessionStorage.setItem('ldrRestorePlataforma', '1');\n      history.replaceState(null, '', window.location.pathname + window.location.search);\n    } catch (e) {}\n    window.addEventListener('DOMContentLoaded', function(){\n      try {\n        if (sessionStorage.getItem('ldrRestorePlataforma') === '1') {\n          sessionStorage.removeItem('ldrRestorePlataforma');\n          var el = document.getElementById('plataforma');\n          if (el) el.scrollIntoView({behavior:'auto', block:'start'});\n        }\n      } catch (e) {}\n    });\n  }\n})();\n</script>\n'''
+
+          p = Path('apps/luciano-empreendedor/index.html')
+          s = p.read_text(encoding='utf-8')
+          if marker not in s:
+              if '<head>' not in s:
+                  raise SystemExit('Marcador <head> nao encontrado')
+              s = s.replace('<head>', '<head>\n' + script, 1)
+              p.write_text(s, encoding='utf-8')
+          PY
+
+      - name: Commit main
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add apps/luciano-empreendedor/index.html
+          if ! git diff --cached --quiet; then
+            git commit -m 'fix public: refresh em plataforma permanece no site'
+            git push origin main
+          fi
+
+      - name: Corrigir versao publicada no GitHub Pages
+        run: |
+          git fetch origin gh-pages
+          git worktree add /tmp/gh-pages origin/gh-pages
+          python - <<'PY'
+          from pathlib import Path
+
+          marker = 'id="ldr-refresh-anchor-fix"'
+          script = '''<script id="ldr-refresh-anchor-fix">\n(function(){\n  if (window.location.hash === '#plataforma') {\n    try {\n      sessionStorage.setItem('ldrRestorePlataforma', '1');\n      history.replaceState(null, '', window.location.pathname + window.location.search);\n    } catch (e) {}\n    window.addEventListener('DOMContentLoaded', function(){\n      try {\n        if (sessionStorage.getItem('ldrRestorePlataforma') === '1') {\n          sessionStorage.removeItem('ldrRestorePlataforma');\n          var el = document.getElementById('plataforma');\n          if (el) el.scrollIntoView({behavior:'auto', block:'start'});\n        }\n      } catch (e) {}\n    });\n  }\n})();\n</script>\n'''
+
+          p = Path('/tmp/gh-pages/index.html')
+          s = p.read_text(encoding='utf-8')
+          if marker not in s:
+              if '<head>' not in s:
+                  raise SystemExit('Marcador <head> nao encontrado no gh-pages')
+              s = s.replace('<head>', '<head>\n' + script, 1)
+              p.write_text(s, encoding='utf-8')
+          PY
+          cd /tmp/gh-pages
+          git switch -c gh-pages-refresh-fix --track origin/gh-pages
+          git add index.html
+          if ! git diff --cached --quiet; then
+            git commit -m 'fix pages: refresh em plataforma permanece no site'
+            git push origin HEAD:gh-pages
+          fi
