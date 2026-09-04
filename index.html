@@ -1,6 +1,26 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
+<script id="ldr-refresh-anchor-fix">
+(function(){
+  if (window.location.hash === '#plataforma') {
+    try {
+      sessionStorage.setItem('ldrRestorePlataforma', '1');
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    } catch (e) {}
+    window.addEventListener('DOMContentLoaded', function(){
+      try {
+        if (sessionStorage.getItem('ldrRestorePlataforma') === '1') {
+          sessionStorage.removeItem('ldrRestorePlataforma');
+          var el = document.getElementById('plataforma');
+          if (el) el.scrollIntoView({behavior:'auto', block:'start'});
+        }
+      } catch (e) {}
+    });
+  }
+})();
+</script>
+
 <script>window.__BOOK_PUBLIC_TEST__=false;</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
