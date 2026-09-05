@@ -20,8 +20,7 @@
   }
 
   loadStyleOnce("ldr-button-colors-fix", "./button-colors-fix.css?v=20260905-buttons2");
-  loadOnce("ldr-training-card-original-loader", "./training-card-v1-original-20260904.js?v=37394935");
   loadOnce("ldr-platform-extra-cards-final-loader", "./platform-product-cards-final.js?v=20260905-langsync2");
-  loadOnce("ldr-global-i18n-reload-loader", "./global-i18n-reload-v1.js?v=20260905-fullsite1");
-  loadOnce("ldr-product-i18n-final-v2-loader", "./product-i18n-final-v2.js?v=20260905-products3");
+  loadOnce("ldr-global-i18n-reload-loader", "./global-i18n-reload-v1.js?v=20260905-lecture-only1");
+  loadOnce("ldr-platform-i18n-single-loader", "./platform-i18n-single.js?v=20260905-platform-single1");
 })();
