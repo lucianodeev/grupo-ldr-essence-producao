@@ -1,4 +1,4 @@
-name: Publish total site language sync
+name: Publish authoritative platform language
 
 on:
   push:
@@ -25,23 +25,23 @@ jobs:
           import re
           p=Path('apps/luciano-empreendedor/index.html')
           s=p.read_text(encoding='utf-8')
-          new='/training-card-v1.js?v=20260905-langsync8'
+          new='/training-card-v1.js?v=20260905-langsync9'
           s2,n=re.subn(r'(?:/|\./)?training-card-v1\.js(?:\?v=[^"\']*)?', new, s, count=1)
           if n != 1: raise SystemExit('main training-card reference not found exactly once')
           p.write_text(s2,encoding='utf-8')
           PY
-          grep -q 'training-card-v1.js?v=20260905-langsync8' apps/luciano-empreendedor/index.html
-          grep -q 'product-i18n-final-v2.js?v=20260905-products2' apps/luciano-empreendedor/training-card-v1.js
+          grep -q 'training-card-v1.js?v=20260905-langsync9' apps/luciano-empreendedor/index.html
+          grep -q 'product-i18n-final-v2.js?v=20260905-products3' apps/luciano-empreendedor/training-card-v1.js
+          grep -q 'let current=' apps/luciano-empreendedor/product-i18n-final-v2.js
+          grep -q 'luciano:languagechange' apps/luciano-empreendedor/product-i18n-final-v2.js
           grep -q 'The Courage to Start' apps/luciano-empreendedor/product-i18n-final-v2.js
           grep -q 'Le Courage de Commencer' apps/luciano-empreendedor/product-i18n-final-v2.js
           grep -q 'El Coraje de Comenzar' apps/luciano-empreendedor/product-i18n-final-v2.js
-          grep -q 'navigator.languages' apps/luciano-empreendedor/product-i18n-final-v2.js
-          grep -q 'button-colors-fix.css?v=20260905-buttons2' apps/luciano-empreendedor/training-card-v1.js
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add apps/luciano-empreendedor/index.html
           if ! git diff --cached --quiet; then
-            git commit -m 'fix public: publicar tradução total dos cards'
+            git commit -m 'fix public: idioma autoritativo da plataforma'
             git push origin main
           fi
 
@@ -50,28 +50,28 @@ jobs:
           git fetch origin gh-pages
           git worktree add /tmp/gh-pages origin/gh-pages
           cd /tmp/gh-pages
-          git switch -c gh-pages-langsync8 --track origin/gh-pages
+          git switch -c gh-pages-langsync9 --track origin/gh-pages
           python - <<'PY'
           from pathlib import Path
           import re
           p=Path('index.html')
           s=p.read_text(encoding='utf-8')
-          new='./training-card-v1.js?v=20260905-langsync8'
+          new='./training-card-v1.js?v=20260905-langsync9'
           s2,n=re.subn(r'(?:/|\./)?training-card-v1\.js(?:\?v=[^"\']*)?', new, s, count=1)
           if n != 1: raise SystemExit('pages training-card reference not found exactly once')
           p.write_text(s2,encoding='utf-8')
           PY
-          grep -q 'training-card-v1.js?v=20260905-langsync8' index.html
-          grep -q 'product-i18n-final-v2.js?v=20260905-products2' training-card-v1.js
+          grep -q 'training-card-v1.js?v=20260905-langsync9' index.html
+          grep -q 'product-i18n-final-v2.js?v=20260905-products3' training-card-v1.js
+          grep -q 'let current=' product-i18n-final-v2.js
+          grep -q 'luciano:languagechange' product-i18n-final-v2.js
           grep -q 'The Courage to Start' product-i18n-final-v2.js
           grep -q 'Le Courage de Commencer' product-i18n-final-v2.js
           grep -q 'El Coraje de Comenzar' product-i18n-final-v2.js
-          grep -q 'navigator.languages' product-i18n-final-v2.js
-          grep -q 'button-colors-fix.css?v=20260905-buttons2' training-card-v1.js
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add index.html
           if ! git diff --cached --quiet; then
-            git commit -m 'fix pages: publicar tradução total dos cards'
+            git commit -m 'fix pages: idioma autoritativo da plataforma'
             git push origin HEAD:gh-pages
           fi
