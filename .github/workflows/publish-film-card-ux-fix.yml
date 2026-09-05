@@ -1,4 +1,4 @@
-name: Publish card language sync
+name: Publish total site language sync
 
 on:
   push:
@@ -25,20 +25,23 @@ jobs:
           import re
           p=Path('apps/luciano-empreendedor/index.html')
           s=p.read_text(encoding='utf-8')
-          new='/training-card-v1.js?v=20260905-langsync7'
+          new='/training-card-v1.js?v=20260905-langsync8'
           s2,n=re.subn(r'(?:/|\./)?training-card-v1\.js(?:\?v=[^"\']*)?', new, s, count=1)
           if n != 1: raise SystemExit('main training-card reference not found exactly once')
           p.write_text(s2,encoding='utf-8')
           PY
-          grep -q 'training-card-v1.js?v=20260905-langsync7' apps/luciano-empreendedor/index.html
-          grep -q 'button-colors-fix.css?v=20260905-buttons1' apps/luciano-empreendedor/training-card-v1.js
-          grep -q '#c7a45a' apps/luciano-empreendedor/button-colors-fix.css
-          grep -q 'global-i18n-reload-v1.js?v=20260905-fullsite1' apps/luciano-empreendedor/training-card-v1.js
+          grep -q 'training-card-v1.js?v=20260905-langsync8' apps/luciano-empreendedor/index.html
+          grep -q 'product-i18n-final-v2.js?v=20260905-products2' apps/luciano-empreendedor/training-card-v1.js
+          grep -q 'The Courage to Start' apps/luciano-empreendedor/product-i18n-final-v2.js
+          grep -q 'Le Courage de Commencer' apps/luciano-empreendedor/product-i18n-final-v2.js
+          grep -q 'El Coraje de Comenzar' apps/luciano-empreendedor/product-i18n-final-v2.js
+          grep -q 'navigator.languages' apps/luciano-empreendedor/product-i18n-final-v2.js
+          grep -q 'button-colors-fix.css?v=20260905-buttons2' apps/luciano-empreendedor/training-card-v1.js
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add apps/luciano-empreendedor/index.html
           if ! git diff --cached --quiet; then
-            git commit -m 'fix public: restaurar cores dos botões'
+            git commit -m 'fix public: publicar tradução total dos cards'
             git push origin main
           fi
 
@@ -47,25 +50,28 @@ jobs:
           git fetch origin gh-pages
           git worktree add /tmp/gh-pages origin/gh-pages
           cd /tmp/gh-pages
-          git switch -c gh-pages-langsync7 --track origin/gh-pages
+          git switch -c gh-pages-langsync8 --track origin/gh-pages
           python - <<'PY'
           from pathlib import Path
           import re
           p=Path('index.html')
           s=p.read_text(encoding='utf-8')
-          new='./training-card-v1.js?v=20260905-langsync7'
+          new='./training-card-v1.js?v=20260905-langsync8'
           s2,n=re.subn(r'(?:/|\./)?training-card-v1\.js(?:\?v=[^"\']*)?', new, s, count=1)
           if n != 1: raise SystemExit('pages training-card reference not found exactly once')
           p.write_text(s2,encoding='utf-8')
           PY
-          grep -q 'training-card-v1.js?v=20260905-langsync7' index.html
-          grep -q 'button-colors-fix.css?v=20260905-buttons1' training-card-v1.js
-          grep -q '#c7a45a' button-colors-fix.css
-          grep -q 'global-i18n-reload-v1.js?v=20260905-fullsite1' training-card-v1.js
+          grep -q 'training-card-v1.js?v=20260905-langsync8' index.html
+          grep -q 'product-i18n-final-v2.js?v=20260905-products2' training-card-v1.js
+          grep -q 'The Courage to Start' product-i18n-final-v2.js
+          grep -q 'Le Courage de Commencer' product-i18n-final-v2.js
+          grep -q 'El Coraje de Comenzar' product-i18n-final-v2.js
+          grep -q 'navigator.languages' product-i18n-final-v2.js
+          grep -q 'button-colors-fix.css?v=20260905-buttons2' training-card-v1.js
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add index.html
           if ! git diff --cached --quiet; then
-            git commit -m 'fix pages: restaurar cores dos botões'
+            git commit -m 'fix pages: publicar tradução total dos cards'
             git push origin HEAD:gh-pages
           fi
