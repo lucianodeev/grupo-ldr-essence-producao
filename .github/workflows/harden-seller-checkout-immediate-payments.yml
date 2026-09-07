@@ -1,0 +1,28 @@
+name: Harden Seller Checkout Immediate Payments
+on:
+  push:
+    paths:
+      - 'tools/harden_seller_checkout_immediate_payments.py'
+      - '.github/workflows/harden-seller-checkout-immediate-payments.yml'
+  workflow_dispatch:
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply immediate-payment hardening
+        run: python tools/harden_seller_checkout_immediate_payments.py
+      - name: Validate checkout safeguards
+        run: |
+          grep -q 'payment_method_types\[\]' apps/painel-ldr/src/routes/api/seller-checkout.ts
+          grep -q 'seller_commission_scope' apps/painel-ldr/src/routes/api/seller-checkout.ts
+      - name: Commit backend update
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/routes/api/seller-checkout.ts
+          git diff --cached --quiet && exit 0
+          git commit -m "fix: require immediate card confirmation for seller checkout"
+          git push
