@@ -28,11 +28,18 @@ function safeTarget(value: unknown) {
     "/cliente/biblioteca",
     "/cliente/treinamentos",
     "/cliente/mentoria",
+    "/cliente/sessoes",
     "/empresa",
     "/funcionario",
     "/painel-profissional",
   ];
   return allowed.includes(target) ? target : "/cliente";
+}
+
+function maskEmail(email: string) {
+  const [local = "", domain = ""] = email.split("@");
+  if (!domain) return "";
+  return `${local.slice(0, 2)}***@${domain}`;
 }
 
 export const Route = createFileRoute("/api/seller-purchase-access")({
@@ -41,7 +48,7 @@ export const Route = createFileRoute("/api/seller-purchase-access")({
       GET: async ({ request }) => {
         const url = new URL(request.url);
         const sessionId = url.searchParams.get("session_id")?.trim() ?? "";
-        if (!sessionId.startsWith("cs_")) return json(400, { ok: false, error: "Sessão inválida." });
+        if (!sessionId.startsWith("cs_") || sessionId.length > 255) return json(400, { ok: false, error: "Sessão inválida." });
 
         const secret = process.env["STRIPE_SECRET_KEY"];
         if (!secret) return json(503, { ok: false, error: "Pagamento temporariamente indisponível." });
@@ -61,7 +68,7 @@ export const Route = createFileRoute("/api/seller-purchase-access")({
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
         const db = supabaseAdmin as any;
         const { data: sale, error: saleError } = await db.from("ldr_simple_sales")
-          .select("id,payment_status,amount_cents,currency,stripe_checkout_session_id")
+          .select("id,payment_status,amount_cents,currency,stripe_checkout_session_id,customer_email,access_email_sent_at")
           .eq("id", saleId)
           .eq("sale_source", "stripe_checkout")
           .maybeSingle();
@@ -93,19 +100,34 @@ export const Route = createFileRoute("/api/seller-purchase-access")({
         if (provisionError || !provisioned) return json(503, { ok: false, error: "Pagamento confirmado, mas o acesso ainda está sendo preparado." });
 
         const result = provisioned as Record<string, unknown>;
-        const customerId = String(result["customer_id"] ?? "");
-        const customerEmail = String(result["customer_email"] ?? "").toLowerCase();
-        const customerName = String(result["customer_name"] ?? customerEmail);
+        const portalKind = String(result["portal_kind"] ?? "client");
         const target = safeTarget(result["target_path"]);
 
+        // O catálogo seguro atual é de acesso do cliente. Os outros tipos já ficam
+        // preparados no roteamento, mas só serão liberados quando houver produtos
+        // específicos com os dados obrigatórios de empresa/profissional/funcionário.
+        if (portalKind !== "client") {
+          return json(200, {
+            ok: true,
+            status: "ready",
+            target,
+            portal_kind: portalKind,
+            activation_required: false,
+          });
+        }
+
+        const customerId = String(result["customer_id"] ?? "");
+        const customerEmail = String(result["customer_email"] ?? sale.customer_email ?? "").toLowerCase();
+        const customerName = String(result["customer_name"] ?? customerEmail);
+
         let activationRequired = true;
-        let activationSent = false;
+        let activationSent = Boolean(sale.access_email_sent_at);
         if (customerId) {
           const { data: customer } = await db.from("customers").select("auth_user_id").eq("id", customerId).maybeSingle();
           activationRequired = !customer?.auth_user_id;
         }
 
-        if (activationRequired && customerEmail.includes("@")) {
+        if (activationRequired && !activationSent && customerEmail.includes("@")) {
           const { data: staff } = await db.from("profiles").select("id").ilike("email", customerEmail).maybeSingle();
           if (!staff) {
             const { error: createError } = await supabaseAdmin.auth.admin.createUser({
@@ -114,12 +136,19 @@ export const Route = createFileRoute("/api/seller-purchase-access")({
               password: crypto.randomUUID() + crypto.randomUUID(),
               user_metadata: { full_name: customerName, account_kind: "cliente" },
             });
-            if (!createError) {
-              const origin = "https://painel.ldrrhestrategia.com";
-              const { error: resetError } = await supabaseAdmin.auth.resetPasswordForEmail(customerEmail, {
-                redirectTo: `${origin}/cliente/definir-senha?next=${encodeURIComponent(target)}`,
-              });
-              activationSent = !resetError;
+            // Se a conta já existir, ainda enviamos o link de redefinição. A resposta
+            // continua genérica para não expor a existência de contas.
+            void createError;
+            const origin = "https://painel.ldrrhestrategia.com";
+            const { error: resetError } = await supabaseAdmin.auth.resetPasswordForEmail(customerEmail, {
+              redirectTo: `${origin}/cliente/definir-senha?next=${encodeURIComponent(target)}`,
+            });
+            if (!resetError) {
+              activationSent = true;
+              await db.from("ldr_simple_sales")
+                .update({ access_email_sent_at: new Date().toISOString() })
+                .eq("id", sale.id)
+                .is("access_email_sent_at", null);
             }
           }
         }
@@ -128,9 +157,11 @@ export const Route = createFileRoute("/api/seller-purchase-access")({
           ok: true,
           status: "ready",
           target,
+          portal_kind: "client",
           activation_required: activationRequired,
           activation_sent: activationSent,
-          email: customerEmail,
+          email_masked: maskEmail(customerEmail),
+          activation_email: activationRequired ? customerEmail : undefined,
         });
       },
     },
