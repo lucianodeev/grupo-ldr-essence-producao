@@ -1,0 +1,36 @@
+name: Apply Unified Master Admin
+on:
+  push:
+    paths:
+      - 'tools/patch-unified-master-admin.py'
+      - '.github/workflows/apply-unified-master-admin.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply admin patch
+        run: python tools/patch-unified-master-admin.py
+      - name: Validate unified routes
+        run: |
+          grep -q 'Rede Comercial / Vendedores' apps/painel-ldr/src/routes/_authenticated/admin.tsx
+          grep -q '/admin/vendedores' apps/painel-ldr/src/routes/_authenticated/admin.tsx
+          grep -q 'createFileRoute("/_authenticated/admin/vendedores")' apps/painel-ldr/src/routes/_authenticated/admin.vendedores.tsx
+      - name: Install dependencies
+        run: npm ci
+      - name: Build panel
+        run: npm run build:painel
+      - name: Commit admin update
+        run: |
+          git config user.name 'ldr-rh-campanhas'
+          git config user.email 'llucianouam@gmail.com'
+          git add apps/painel-ldr/src/routes/_authenticated/admin.tsx
+          if git diff --cached --quiet; then
+            echo 'No changes to commit'
+          else
+            git commit -m 'feat: unify seller management in master admin'
+            git push
+          fi
