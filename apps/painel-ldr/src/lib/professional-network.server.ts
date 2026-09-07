@@ -1,7 +1,7 @@
 import { getRequest } from "@tanstack/react-start/server";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 
-const db = supabaseAdmin as unknown as { from: (table: string) => any };
+const db = supabaseAdmin as unknown as { from: (table: string) => any; rpc: (name: string, args: Record<string, unknown>) => Promise<{ data: any; error: { message?: string } | null }> };
 const PLATFORM = "Rede de Profissionais LDR";
 
 function fail(message: string): never { throw new Error(message); }
@@ -121,7 +121,7 @@ export async function addProfessionalAvailability(userId: string, email: string 
   return { ok: true as const };
 }
 
-export async function createProfessionalSubscriptionCheckout(userId: string, email: string | null, planId: string) {
+export async function createProfessionalSubscriptionCheckout(userId: string, email: string | null, planId: string, sellerReferral: string | null = null) {
   const account = await ensureAccount(userId, email);
   const mail = normEmail(email);
   if (!mail) fail("Sua conta precisa ter um e-mail válido.");
@@ -142,21 +142,33 @@ export async function createProfessionalSubscriptionCheckout(userId: string, ema
   }
   const { data: plan } = await db.from("subscription_plans").select("id,market,plan_code,name,currency,amount_cents,interval,active").eq("id", planId).eq("active", true).maybeSingle();
   if (!plan) fail("Plano indisponível.");
+  const referral = sellerReferral?.trim() || null;
+  if (referral) {
+    const { error } = await db.rpc("ldr_seller_referral_validate_service", {
+      p_ref: referral,
+      p_portal_kind: "professional",
+      p_plan_code: String(plan.plan_code),
+      p_market: String(plan.market),
+      p_email: mail,
+    });
+    if (error) fail(error.message || "Não foi possível validar o link do vendedor.");
+  }
   const secret = process.env["STRIPE_SECRET_KEY"];
   if (!secret) fail("Assinatura indisponível no momento.");
   const { data: pending, error: pendingError } = await db.from("professional_subscriptions").insert({ professional_account_id: account.id, plan_id: plan.id, status: "pending" }).select("id").single();
   if (pendingError || !pending) fail("Não foi possível preparar sua assinatura.");
   const params = new URLSearchParams();
   params.set("mode", "subscription");
+  params.append("payment_method_types[]", "card");
   params.set("line_items[0][price_data][currency]", String(plan.currency).toLowerCase());
   params.set("line_items[0][price_data][unit_amount]", String(plan.amount_cents));
   params.set("line_items[0][price_data][recurring][interval]", String(plan.interval));
-  params.set("line_items[0][price_data][product_data][name]", `${PLATFORM} — ${plan.name}`);
+  params.set("line_items[0][price_data][product_data][name]", String(plan.name));
   params.set("line_items[0][quantity]", "1");
-  params.set("customer_email", mail);
-  params.set("success_url", `${origin()}/profissional-painel?subscription=success&session_id={CHECKOUT_SESSION_ID}`);
-  params.set("cancel_url", `${origin()}/profissional-painel?subscription=cancel`);
+  params.set("success_url", referral ? `${origin()}/profissional-painel?subscription=success&seller_ref=${encodeURIComponent(referral)}` : `${origin()}/profissional-painel?subscription=success&session_id={CHECKOUT_SESSION_ID}`);
+  params.set("cancel_url", referral ? `${origin()}/profissional-onboarding?subscription=cancel&seller_ref=${encodeURIComponent(referral)}` : `${origin()}/profissional-painel?subscription=cancel`);
   params.set("client_reference_id", userId);
+  params.set("customer_email", mail);
   params.set("metadata[checkout_kind]", "professional_subscription");
   params.set("metadata[professional_account_id]", account.id);
   params.set("metadata[professional_subscription_id]", pending.id);
@@ -165,18 +177,39 @@ export async function createProfessionalSubscriptionCheckout(userId: string, ema
   params.set("subscription_data[metadata][professional_account_id]", account.id);
   params.set("subscription_data[metadata][professional_subscription_id]", pending.id);
   params.set("subscription_data[metadata][plan_id]", plan.id);
-  const response = await fetch("https://api.stripe.com/v1/checkout/sessions", { method: "POST", headers: { Authorization: `Bearer ${secret}`, "Content-Type": "application/x-www-form-urlencoded", "Idempotency-Key": `pro-sub-${pending.id}` }, body: params });
+  if (referral) {
+    params.set("metadata[source]", "seller_portal_referral");
+    params.set("metadata[ldr_seller_referral_id]", referral);
+    params.set("metadata[seller_commission_scope]", "initial_checkout");
+    params.set("subscription_data[metadata][source]", "seller_portal_referral");
+    params.set("subscription_data[metadata][ldr_seller_referral_id]", referral);
+    params.set("subscription_data[metadata][seller_commission_scope]", "initial_checkout");
+  }
+  const response = await fetch("https://api.stripe.com/v1/checkout/sessions", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${secret}`, "Content-Type": "application/x-www-form-urlencoded", "Idempotency-Key": `pro-sub-${pending.id}` },
+    body: params,
+  });
   const session = await response.json() as { id?: string; url?: string; error?: { message?: string } };
-  if (!response.ok || !session.id || !session.url) { await db.from("professional_subscriptions").delete().eq("id", pending.id); fail(session.error?.message || "Não foi possível abrir a assinatura."); }
-  await db.from("professional_subscriptions").update({ stripe_checkout_session_id: session.id }).eq("id", pending.id);
-  return { url: session.url };
-}
-
-function localSlotParts(date: Date, timezone: string) {
-  const parts = new Intl.DateTimeFormat("en-US", { timeZone: timezone, weekday: "short", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).formatToParts(date);
-  const map = Object.fromEntries(parts.map(p => [p.type, p.value]));
-  const dayMap: Record<string, number> = { Sun:0, Mon:1, Tue:2, Wed:3, Thu:4, Fri:5, Sat:6 };
-  return { weekday: dayMap[map.weekday] ?? -1, time: `${map.hour}:${map.minute}:00` };
+  if (!response.ok || !session.id || !session.url) {
+    await db.from("professional_subscriptions").delete().eq("id", pending.id).eq("professional_account_id", account.id);
+    fail(session.error?.message || "Não foi possível abrir o pagamento.");
+  }
+  if (referral) {
+    const { error: bindError } = await db.rpc("ldr_seller_referral_bind_checkout_service", {
+      p_ref: referral,
+      p_checkout_session_id: session.id,
+      p_amount_cents: Number(plan.amount_cents),
+      p_currency: String(plan.currency),
+    });
+    if (bindError) {
+      await db.from("professional_subscriptions").delete().eq("id", pending.id).eq("professional_account_id", account.id);
+      fail(bindError.message || "Não foi possível vincular a venda ao vendedor.");
+    }
+  }
+  await db.from("professional_subscriptions").update({ stripe_checkout_session_id: session.id, updated_at: new Date().toISOString() }).eq("id", pending.id);
+  await db.from("audit_logs").insert({ actor_id: userId, actor_email: mail, action: "professional_network.subscription_checkout_created", target: pending.id, details: { plan_id: plan.id, seller_referral: referral } });
+  return { url: session.url, subscriptionId: pending.id };
 }
 
 export async function createMarketplaceBookingCheckout(input: { profileSlug: string; serviceId: string; startAt: string; customerName: string; customerEmail: string; timezone: string; modality: "online"|"in_person" }) {
