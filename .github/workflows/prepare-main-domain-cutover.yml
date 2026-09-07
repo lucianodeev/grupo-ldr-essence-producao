@@ -1,0 +1,49 @@
+name: Prepare main domain cutover
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/prepare-main-domain-cutover.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Add unified public domain to seller checkout CORS
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('apps/painel-ldr/src/routes/api/seller-checkout.ts')
+          s = p.read_text(encoding='utf-8')
+          if '"https://ldrrhestrategia.com"' not in s:
+              old = '  "https://lucianodeev.github.io",\n  "https://painel.ldrrhestrategia.com",'
+              new = '  "https://lucianodeev.github.io",\n  "https://ldrrhestrategia.com",\n  "https://www.ldrrhestrategia.com",\n  "https://painel.ldrrhestrategia.com",'
+              if old not in s:
+                  raise SystemExit('seller checkout CORS anchor not found')
+              s = s.replace(old, new, 1)
+              p.write_text(s, encoding='utf-8')
+          PY
+      - name: Install dependencies
+        run: npm install --no-package-lock
+      - name: Validate production panel build
+        run: npm run build:painel
+      - name: Commit compatibility patch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add apps/painel-ldr/src/routes/api/seller-checkout.ts
+          git diff --cached --quiet && exit 0
+          git commit -m 'chore: allow unified public domain in seller checkout'
+          git push origin main
