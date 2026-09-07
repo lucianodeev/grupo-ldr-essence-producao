@@ -14,7 +14,10 @@ const sections = [
     ["Meus clientes", "/admin/meus-clientes"],
     ["Meus pedidos", "/admin/meus-pedidos"],
   ]},
-  { title: "2. Rede de Profissionais LDR", description: "Cadastros, aprovação, serviços, planos, financeiro, repasses e conformidade.", links: [
+  { title: "2. Rede Comercial / Vendedores", description: "Candidatos, entrevistas, vendedores aprovados, vendas, comissões e repasses PIX/IBAN.", links: [
+    ["Central de vendedores", "/admin/vendedores"],
+  ]},
+  { title: "3. Rede de Profissionais LDR", description: "Cadastros, aprovação, serviços, planos, financeiro, repasses e conformidade.", links: [
     ["Central da Rede", "/admin/rede"],
     ["Profissionais", "/painel-profissional/rede-profissionais"],
     ["Serviços da rede", "/painel-profissional/rede-servicos"],
@@ -24,13 +27,13 @@ const sections = [
     ["Conformidade", "/painel-profissional/rede-profissionais-conformidade"],
     ["Conteúdo e eventos", "/painel-profissional/rede-profissionais-conteudo"],
   ]},
-  { title: "3. Empresas e funcionários", description: "Empresas clientes, colaboradores, benefícios, equipe, catálogo e permissões.", links: [
+  { title: "4. Empresas e funcionários", description: "Empresas clientes, colaboradores, benefícios, equipe, catálogo e permissões.", links: [
     ["Central de empresas", "/admin/empresas"],
     ["Equipe LDR", "/painel-profissional/equipe"],
     ["Catálogo de serviços", "/painel-profissional/catalogo"],
     ["Gestão de acessos", "/painel-profissional/acessos"],
   ]},
-  { title: "4. Financeiro e produtos", description: "Pagamentos, comissões, repasses e produtos de desenvolvimento do ecossistema.", links: [
+  { title: "5. Financeiro e produtos", description: "Pagamentos, comissões, repasses e produtos de desenvolvimento do ecossistema.", links: [
     ["Central financeira", "/admin/financeiro"],
     ["Mentoria", "/painel-profissional/mentoria"],
     ["Sistema S8", "/painel-profissional/s8"],
@@ -39,6 +42,7 @@ const sections = [
 ] as const;
 
 const ownerActions = [
+  ["Administrar vendedores", "Revisar candidatos, acompanhar vendas e liberar comissões da Rede Comercial.", "/admin/vendedores"],
   ["Revisar profissionais", "Aprovar perfis e acompanhar pendências de conformidade.", "/admin/rede"],
   ["Acompanhar financeiro", "Consultar pagamentos, comissões e repasses da Rede.", "/admin/financeiro"],
   ["Administrar empresas", "Gerenciar empresas, funcionários e benefícios ativos.", "/admin/empresas"],
@@ -121,6 +125,7 @@ function MasterAdminContent() {
       <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600">Use este painel como seu único ponto de entrada. Você administra sua operação, Rede de Profissionais, empresas, funcionários, clientes, pagamentos e repasses sem precisar decorar outros links.</p>
       <div className="mt-5 flex flex-wrap gap-3">
         <Link to="/admin/meus-atendimentos" className="rounded-xl bg-[#0B1F3A] px-4 py-3 text-sm font-bold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7A33B] focus-visible:ring-offset-2">Meus atendimentos</Link>
+        <Link to="/admin/vendedores" className="rounded-xl border border-[#C7A33B] bg-white px-4 py-3 text-sm font-bold text-[#0B1F3A]">Rede Comercial</Link>
         <Link to="/admin/rede" className="rounded-xl border border-[#C7A33B] bg-white px-4 py-3 text-sm font-bold text-[#0B1F3A]">Rede de profissionais</Link>
         <Link to="/admin/empresas" className="rounded-xl border border-[#C7A33B] bg-white px-4 py-3 text-sm font-bold text-[#0B1F3A]">Empresas e funcionários</Link>
         <Link to="/admin/financeiro" className="rounded-xl border border-[#C7A33B] bg-white px-4 py-3 text-sm font-bold text-[#0B1F3A]">Financeiro</Link>
