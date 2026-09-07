@@ -31,9 +31,9 @@ export const professionalAddAvailability = createServerFn({ method: "POST" }).mi
   return addProfessionalAvailability(context.userId, emailOf(context.claims), data);
 });
 
-export const professionalSubscriptionCheckout = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth]).inputValidator((data: { planId: string }) => data).handler(async ({ context, data }) => {
+export const professionalSubscriptionCheckout = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth]).inputValidator((data: { planId: string; sellerReferral?: string | null }) => data).handler(async ({ context, data }) => {
   const { createProfessionalSubscriptionCheckout } = await import("@/lib/professional-network.server");
-  return createProfessionalSubscriptionCheckout(context.userId, emailOf(context.claims), data.planId);
+  return createProfessionalSubscriptionCheckout(context.userId, emailOf(context.claims), data.planId, data.sellerReferral ?? null);
 });
 
 export const professionalConnectStatus = createServerFn({ method: "GET" }).middleware([requireSupabaseAuth]).handler(async ({ context }) => {
