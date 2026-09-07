@@ -1,8 +1,20 @@
 User-agent: Googlebot
 Allow: /
+Disallow: /admin
+Disallow: /cliente
+Disallow: /empresa
+Disallow: /funcionario
+Disallow: /profissional
+Disallow: /api/
 
 User-agent: Bingbot
 Allow: /
+Disallow: /admin
+Disallow: /cliente
+Disallow: /empresa
+Disallow: /funcionario
+Disallow: /profissional
+Disallow: /api/
 
 User-agent: Twitterbot
 Allow: /
@@ -12,3 +24,11 @@ Allow: /
 
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /cliente
+Disallow: /empresa
+Disallow: /funcionario
+Disallow: /profissional
+Disallow: /api/
+
+Sitemap: https://ldrrhestrategia.com/sitemap.xml
