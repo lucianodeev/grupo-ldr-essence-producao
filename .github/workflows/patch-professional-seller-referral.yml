@@ -1,0 +1,29 @@
+name: Patch Professional Seller Referral
+on:
+  push:
+    paths:
+      - 'tools/patch-professional-seller-referral.py'
+      - '.github/workflows/patch-professional-seller-referral.yml'
+  workflow_dispatch:
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch professional referral checkout
+        run: python tools/patch-professional-seller-referral.py
+      - name: Validate markers
+        run: |
+          grep -q 'ldr_seller_referral_validate_service' apps/painel-ldr/src/lib/professional-network.server.ts
+          grep -q 'ldr_seller_referral_bind_checkout_service' apps/painel-ldr/src/lib/professional-network.server.ts
+          grep -q 'seller_portal_referral' apps/painel-ldr/src/lib/professional-network.server.ts
+      - name: Commit backend update
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/lib/professional-network.server.ts
+          git diff --cached --quiet && exit 0
+          git commit -m "feat: bind seller referral to professional subscriptions"
+          git push
