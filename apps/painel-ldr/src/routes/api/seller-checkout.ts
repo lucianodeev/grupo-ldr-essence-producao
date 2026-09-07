@@ -4,6 +4,8 @@ import { z } from "zod";
 const MAX_BODY = 16 * 1024;
 const ALLOWED_ORIGINS = new Set([
   "https://lucianodeev.github.io",
+  "https://ldrrhestrategia.com",
+  "https://www.ldrrhestrategia.com",
   "https://painel.ldrrhestrategia.com",
 ]);
 
