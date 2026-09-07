@@ -1,0 +1,29 @@
+name: Patch Seller Access Redirects
+on:
+  push:
+    paths:
+      - 'tools/patch_seller_access_redirects.py'
+      - '.github/workflows/patch-seller-access-redirects.yml'
+  workflow_dispatch:
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch seller purchase access redirects
+        run: python tools/patch_seller_access_redirects.py
+      - name: Validate markers
+        run: |
+          grep -q 'cliente/definir-senha?next=' apps/painel-ldr/src/routes/api/seller-purchase-access.ts
+          grep -q 'safePurchaseTarget' apps/painel-ldr/src/routes/cliente.definir-senha.tsx
+          grep -q 'URLSearchParams(window.location.search).get("email")' apps/painel-ldr/src/routes/cliente.ativar.tsx
+      - name: Commit updates
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/routes/api/seller-purchase-access.ts apps/painel-ldr/src/routes/cliente.definir-senha.tsx apps/painel-ldr/src/routes/cliente.ativar.tsx
+          git diff --cached --quiet && exit 0
+          git commit -m "feat: preserve destination after seller purchase activation"
+          git push
