@@ -79,12 +79,49 @@ export const Route = createFileRoute("/api/seller-checkout")({
         const parsed = bodySchema.safeParse(parsedJson);
         if (!parsed.success) return json(400, { ok: false, error: "Dados da venda inválidos." }, origin);
 
-        const secret = process.env["STRIPE_SECRET_KEY"];
-        if (!secret) return json(503, { ok: false, error: "Pagamento temporariamente indisponível." }, origin);
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
         const db = supabaseAdmin as any;
         let saleId: string | null = null;
         try {
+          const { data: catalogRow, error: catalogError } = await db.from("ldr_seller_catalog")
+            .select("catalog_key,name,currency,amount_cents,commission_rate,source_metadata")
+            .eq("catalog_key", parsed.data.catalog_key)
+            .eq("active", true)
+            .eq("seller_enabled", true)
+            .maybeSingle();
+          if (catalogError) throw new Error("Não foi possível validar o catálogo.");
+
+          const deliveryMode = catalogRow?.source_metadata?.delivery_mode;
+          if (deliveryMode === "portal_referral") {
+            const { data: referral, error: referralError } = await db.rpc("ldr_seller_referral_create", {
+              p_token: parsed.data.token,
+              p_catalog_key: parsed.data.catalog_key,
+              p_customer_name: parsed.data.customer_name,
+              p_customer_email: parsed.data.customer_email,
+              p_customer_phone: parsed.data.customer_phone || null,
+            });
+            if (referralError || !referral?.referral_id) throw new Error(referralError?.message || "Não foi possível gerar o link do plano.");
+            const variable = Boolean(referral.variable_price);
+            const amount = variable ? 0 : Number(referral.amount_cents || 0);
+            const commissionRate = Number(referral.commission_rate || 0);
+            return json(200, {
+              ok: true,
+              link_type: "portal_referral",
+              referral_id: referral.referral_id,
+              url: `https://painel.ldrrhestrategia.com/seller-referral?ref=${encodeURIComponent(referral.referral_id)}`,
+              name: referral.name,
+              currency: referral.currency,
+              amount_cents: amount,
+              variable_price: variable,
+              commission_rate: commissionRate,
+              commission_cents: variable ? 0 : Math.round(amount * commissionRate / 100),
+              expires_at: referral.expires_at,
+            }, origin);
+          }
+
+          const secret = process.env["STRIPE_SECRET_KEY"];
+          if (!secret) return json(503, { ok: false, error: "Pagamento temporariamente indisponível." }, origin);
+
           const { data, error } = await db.rpc("ldr_seller_checkout_prepare", {
             p_token: parsed.data.token,
             p_catalog_key: parsed.data.catalog_key,
@@ -166,6 +203,7 @@ export const Route = createFileRoute("/api/seller-checkout")({
 
           return json(200, {
             ok: true,
+            link_type: "stripe_checkout",
             sale_id: prepared.sale_id,
             session_id: session.id,
             url: session.url,
