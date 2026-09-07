@@ -22,6 +22,7 @@ export const companySubscriptionCheckout = createServerFn({ method: "POST" })
     employees: number;
     services?: CompanyServiceKey[];
     extraCredits?: 0 | 5 | 10 | 25;
+    sellerReferral?: string | null;
   }) => data)
   .handler(async ({ context, data }) => {
     const { createCompanySubscriptionCheckout } = await import("@/lib/company-subscription.server");
