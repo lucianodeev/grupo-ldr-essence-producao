@@ -1,0 +1,31 @@
+name: Patch Seller Referral Portal UX
+on:
+  push:
+    paths:
+      - 'tools/patch-seller-referral-portal-ux.py'
+      - '.github/workflows/patch-seller-referral-portal-ux.yml'
+  workflow_dispatch:
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch referral UX
+        run: python tools/patch-seller-referral-portal-ux.py
+      - name: Validate markers
+        run: |
+          grep -q 'sellerReferral' apps/painel-ldr/src/routes/_portal.assinatura-empresa.tsx
+          grep -q 'seller_ref' apps/painel-ldr/src/routes/empresa.login.tsx
+          grep -q 'sellerReferralId' apps/painel-ldr/src/routes/profissional-onboarding.tsx
+          grep -q 'sellerReferralForSubscription' apps/painel-ldr/src/routes/profissional-painel.tsx
+          grep -q 'ldr_seller_referral_data' apps/painel-ldr/src/routes/seller-referral.tsx
+      - name: Commit UX update
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/routes/_portal.assinatura-empresa.tsx apps/painel-ldr/src/routes/_portal.empresa.tsx apps/painel-ldr/src/routes/profissional.login.tsx apps/painel-ldr/src/routes/profissional-onboarding.tsx apps/painel-ldr/src/routes/profissional-painel.tsx apps/painel-ldr/src/routes/seller-referral.tsx
+          git diff --cached --quiet && exit 0
+          git commit -m "feat: preserve seller attribution through company and professional onboarding"
+          git push
