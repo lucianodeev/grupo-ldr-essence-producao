@@ -1,0 +1,29 @@
+name: Patch Seller Plan Referral Webhook
+on:
+  push:
+    paths:
+      - 'tools/patch-seller-plan-referral-webhook.py'
+      - '.github/workflows/patch-seller-plan-referral-webhook.yml'
+  workflow_dispatch:
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch webhook
+        run: python tools/patch-seller-plan-referral-webhook.py
+      - name: Validate webhook markers
+        run: |
+          grep -q 'handleSellerReferralEvent' apps/painel-ldr/src/routes/api/stripe/webhook.ts
+          grep -q 'ldr_seller_referral_paid_service' apps/painel-ldr/src/routes/api/stripe/webhook.ts
+          grep -q 'stripe_portal_referral' apps/painel-ldr/src/routes/api/stripe/webhook.ts
+      - name: Commit webhook update
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/routes/api/stripe/webhook.ts
+          git diff --cached --quiet && exit 0
+          git commit -m "feat: credit seller on referred company and professional plans"
+          git push
