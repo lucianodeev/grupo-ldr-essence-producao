@@ -7,7 +7,10 @@ import {
   type CompanyServiceKey,
 } from "@/lib/company-plan-pricing";
 
-const db = supabaseAdmin as unknown as { from: (table: string) => any };
+const db = supabaseAdmin as unknown as {
+  from: (table: string) => any;
+  rpc: (name: string, args: Record<string, unknown>) => Promise<{ data: any; error: { message?: string } | null }>;
+};
 
 type PlanCode = "essential" | "pro" | "custom";
 type CheckoutInput = {
@@ -16,6 +19,7 @@ type CheckoutInput = {
   employees: number;
   services?: CompanyServiceKey[];
   extraCredits?: 0 | 5 | 10 | 25;
+  sellerReferral?: string | null;
 };
 
 type SubscriptionRow = {
@@ -143,6 +147,18 @@ export async function getCompanySubscriptionContext(userId: string) {
 export async function createCompanySubscriptionCheckout(userId: string, email: string | null, input: CheckoutInput) {
   const organization = await requireOrganization(userId);
   const quote = planQuote(input);
+  const sellerReferral = input.sellerReferral?.trim() || null;
+  if (sellerReferral) {
+    const { error } = await db.rpc("ldr_seller_referral_validate_service", {
+      p_ref: sellerReferral,
+      p_portal_kind: "company",
+      p_plan_code: input.planCode,
+      p_market: input.region,
+      p_email: emailNorm(organization.billing_email),
+    });
+    if (error) fail(error.message || "Não foi possível validar o link do vendedor.");
+  }
+
   const { count: activeEmployees, error: employeeCountError } = await db.from("organization_members")
     .select("id", { count: "exact", head: true })
     .eq("organization_id", organization.id)
@@ -182,13 +198,14 @@ export async function createCompanySubscriptionCheckout(userId: string, email: s
   const origin = process.env["CLIENT_PANEL_URL"]?.replace(/\/$/, "") || (request ? new URL(request.url).origin : "https://painel.ldrrhestrategia.com");
   const params = new URLSearchParams();
   params.set("mode", "subscription");
+  params.append("payment_method_types[]", "card");
   params.set("line_items[0][price_data][currency]", quote.currency.toLowerCase());
   params.set("line_items[0][price_data][unit_amount]", String(quote.monthlyCents));
   params.set("line_items[0][price_data][recurring][interval]", "month");
   params.set("line_items[0][price_data][product_data][name]", `${planName(input.planCode)} — ${quote.employees} funcionários`);
   params.set("line_items[0][quantity]", "1");
-  params.set("success_url", `${origin}/assinatura-empresa?subscription=success&session_id={CHECKOUT_SESSION_ID}`);
-  params.set("cancel_url", `${origin}/assinatura-empresa?subscription=cancel`);
+  params.set("success_url", sellerReferral ? `${origin}/empresa?subscription=success&seller_ref=${encodeURIComponent(sellerReferral)}` : `${origin}/assinatura-empresa?subscription=success&session_id={CHECKOUT_SESSION_ID}`);
+  params.set("cancel_url", sellerReferral ? `${origin}/assinatura-empresa?subscription=cancel&seller_ref=${encodeURIComponent(sellerReferral)}` : `${origin}/assinatura-empresa?subscription=cancel`);
   params.set("client_reference_id", userId);
   params.set("customer_email", organization.billing_email);
   params.set("billing_address_collection", "auto");
@@ -199,6 +216,14 @@ export async function createCompanySubscriptionCheckout(userId: string, email: s
   params.set("subscription_data[metadata][company_subscription_id]", row.id);
   params.set("subscription_data[metadata][organization_id]", organization.id);
   params.set("subscription_data[description]", `${planName(input.planCode)} — renovação mensal automática`);
+  if (sellerReferral) {
+    params.set("metadata[source]", "seller_portal_referral");
+    params.set("metadata[ldr_seller_referral_id]", sellerReferral);
+    params.set("metadata[seller_commission_scope]", "initial_checkout");
+    params.set("subscription_data[metadata][source]", "seller_portal_referral");
+    params.set("subscription_data[metadata][ldr_seller_referral_id]", sellerReferral);
+    params.set("subscription_data[metadata][seller_commission_scope]", "initial_checkout");
+  }
 
   let response: Response;
   try {
@@ -216,8 +241,20 @@ export async function createCompanySubscriptionCheckout(userId: string, email: s
     await db.from("company_subscriptions").delete().eq("id", row.id);
     fail(session.error?.message || "Não foi possível abrir o checkout.");
   }
+  if (sellerReferral) {
+    const { error: bindError } = await db.rpc("ldr_seller_referral_bind_checkout_service", {
+      p_ref: sellerReferral,
+      p_checkout_session_id: session.id,
+      p_amount_cents: quote.monthlyCents,
+      p_currency: quote.currency,
+    });
+    if (bindError) {
+      await db.from("company_subscriptions").delete().eq("id", row.id);
+      fail(bindError.message || "Não foi possível vincular a venda ao vendedor.");
+    }
+  }
   await db.from("company_subscriptions").update({ stripe_checkout_session_id: session.id, updated_at: new Date().toISOString() }).eq("id", row.id);
-  await audit(userId, emailNorm(email), "organization.subscription_checkout_created", row.id, { organization_id: organization.id, plan_code: input.planCode, monthly_amount_cents: quote.monthlyCents, currency: quote.currency });
+  await audit(userId, emailNorm(email), "organization.subscription_checkout_created", row.id, { organization_id: organization.id, plan_code: input.planCode, monthly_amount_cents: quote.monthlyCents, currency: quote.currency, seller_referral: sellerReferral });
   return { url: session.url, subscriptionId: row.id };
 }
 
