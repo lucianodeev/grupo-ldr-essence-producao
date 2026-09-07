@@ -1,0 +1,43 @@
+name: Apply Unified Admin Route Aliases
+on:
+  push:
+    paths:
+      - 'tools/patch-admin-route-aliases.py'
+      - '.github/workflows/apply-admin-route-aliases.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      - name: Create admin aliases
+        run: python tools/patch-admin-route-aliases.py
+      - name: Validate aliases
+        run: |
+          test -f apps/painel-ldr/src/routes/_authenticated/admin.profissionais.tsx
+          test -f apps/painel-ldr/src/routes/_authenticated/admin.profissionais-repasses.tsx
+          test -f apps/painel-ldr/src/routes/_authenticated/admin.catalogo.tsx
+          grep -q 'createFileRoute("/_authenticated/admin/profissionais")' apps/painel-ldr/src/routes/_authenticated/admin.profissionais.tsx
+          grep -q '/admin/profissionais' apps/painel-ldr/src/routes/_authenticated/admin.tsx
+          grep -q '/admin/catalogo' apps/painel-ldr/src/routes/_authenticated/admin.tsx
+      - name: Install dependencies
+        run: npm install --no-package-lock --no-audit --no-fund
+      - name: Build panel
+        run: npm run build:painel
+      - name: Commit unified admin aliases
+        run: |
+          git config user.name 'ldr-rh-campanhas'
+          git config user.email 'llucianouam@gmail.com'
+          git add apps/painel-ldr/src/routes/_authenticated/admin*.tsx apps/painel-ldr/src/routeTree.gen.ts
+          if git diff --cached --quiet; then
+            echo 'No changes to commit'
+          else
+            git commit -m 'feat: keep admin modules under unified admin routes'
+            git push
+          fi
