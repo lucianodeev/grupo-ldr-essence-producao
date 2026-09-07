@@ -129,6 +129,10 @@ export const Route = createFileRoute("/api/seller-checkout")({
 
           const params = new URLSearchParams();
           params.set("mode", mode);
+          // Seller checkout intentionally uses card-only immediate confirmation so the existing production webhook set is sufficient.
+          // This avoids delayed-payment methods that would require additional async webhook events.
+          params.append("payment_method_types[]", "card");
+          metadata["seller_commission_scope"] = "initial_checkout";
           params.set("line_items[0][price]", priceId);
           params.set("line_items[0][quantity]", String(prepared.quantity || 1));
           params.set("customer_email", parsed.data.customer_email.toLowerCase());
