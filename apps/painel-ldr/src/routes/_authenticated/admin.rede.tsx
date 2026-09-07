@@ -9,13 +9,13 @@ function RedeAdmin() {
   if (!access.data?.authorized || access.data.role !== "superadmin") return <div className="s8-card mx-auto max-w-xl text-center"><h1 className="font-serif text-3xl">403</h1><p className="mt-2 text-sm text-muted-foreground">Área exclusiva do administrador master.</p></div>;
 
   const links = [
-    ["Profissionais", "/painel-profissional/rede-profissionais"],
-    ["Serviços", "/painel-profissional/rede-servicos"],
-    ["Planos", "/painel-profissional/rede-planos"],
-    ["Financeiro", "/painel-profissional/rede-profissionais-financeiro"],
-    ["Repasses", "/painel-profissional/rede-profissionais-repasses"],
-    ["Conformidade", "/painel-profissional/rede-profissionais-conformidade"],
-    ["Treinamentos / Comunidade", "/painel-profissional/rede-profissionais-conteudo"],
+    ["Profissionais", "/admin/profissionais"],
+    ["Serviços", "/admin/profissionais-servicos"],
+    ["Planos", "/admin/profissionais-planos"],
+    ["Financeiro", "/admin/profissionais-financeiro"],
+    ["Repasses", "/admin/profissionais-repasses"],
+    ["Conformidade", "/admin/profissionais-conformidade"],
+    ["Treinamentos / Comunidade", "/admin/profissionais-conteudo"],
     ["Avaliações", "/painel-profissional/rede-avaliacoes"],
   ] as const;
 

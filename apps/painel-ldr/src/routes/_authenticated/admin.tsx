@@ -19,25 +19,25 @@ const sections = [
   ]},
   { title: "3. Rede de Profissionais LDR", description: "Cadastros, aprovação, serviços, planos, financeiro, repasses e conformidade.", links: [
     ["Central da Rede", "/admin/rede"],
-    ["Profissionais", "/painel-profissional/rede-profissionais"],
-    ["Serviços da rede", "/painel-profissional/rede-servicos"],
-    ["Planos da rede", "/painel-profissional/rede-planos"],
-    ["Financeiro da rede", "/painel-profissional/rede-profissionais-financeiro"],
-    ["Repasses", "/painel-profissional/rede-profissionais-repasses"],
-    ["Conformidade", "/painel-profissional/rede-profissionais-conformidade"],
-    ["Conteúdo e eventos", "/painel-profissional/rede-profissionais-conteudo"],
+    ["Profissionais", "/admin/profissionais"],
+    ["Serviços da rede", "/admin/profissionais-servicos"],
+    ["Planos da rede", "/admin/profissionais-planos"],
+    ["Financeiro da rede", "/admin/profissionais-financeiro"],
+    ["Repasses", "/admin/profissionais-repasses"],
+    ["Conformidade", "/admin/profissionais-conformidade"],
+    ["Conteúdo e eventos", "/admin/profissionais-conteudo"],
   ]},
   { title: "4. Empresas e funcionários", description: "Empresas clientes, colaboradores, benefícios, equipe, catálogo e permissões.", links: [
     ["Central de empresas", "/admin/empresas"],
-    ["Equipe LDR", "/painel-profissional/equipe"],
-    ["Catálogo de serviços", "/painel-profissional/catalogo"],
-    ["Gestão de acessos", "/painel-profissional/acessos"],
+    ["Equipe LDR", "/admin/equipe"],
+    ["Catálogo de serviços", "/admin/catalogo"],
+    ["Gestão de acessos", "/admin/acessos"],
   ]},
   { title: "5. Financeiro e produtos", description: "Pagamentos, comissões, repasses e produtos de desenvolvimento do ecossistema.", links: [
     ["Central financeira", "/admin/financeiro"],
-    ["Mentoria", "/painel-profissional/mentoria"],
-    ["Sistema S8", "/painel-profissional/s8"],
-    ["Treinamentos", "/painel-profissional/treinamentos"],
+    ["Mentoria", "/admin/mentoria"],
+    ["Sistema S8", "/admin/s8"],
+    ["Treinamentos", "/admin/treinamentos"],
   ]},
 ] as const;
 
@@ -46,7 +46,7 @@ const ownerActions = [
   ["Revisar profissionais", "Aprovar perfis e acompanhar pendências de conformidade.", "/admin/rede"],
   ["Acompanhar financeiro", "Consultar pagamentos, comissões e repasses da Rede.", "/admin/financeiro"],
   ["Administrar empresas", "Gerenciar empresas, funcionários e benefícios ativos.", "/admin/empresas"],
-  ["Enviar notificações", "Abrir a central global de comunicação da administração.", "/painel-profissional/notificacoes"],
+  ["Enviar notificações", "Abrir a central global de comunicação da administração.", "/admin/notificacoes"],
 ] as const;
 
 const workflow = [
@@ -114,8 +114,8 @@ function MasterAdminContent() {
     ["Funcionários ativos", summary?.metrics.activeEmployees, "/admin/empresas"],
     ["Assinaturas ativas", summary?.metrics.activeSubscriptions, "/admin/financeiro"],
     ["Pagamentos confirmados", summary?.metrics.paidPayments, "/admin/financeiro"],
-    ["Repasses pendentes", summary?.metrics.pendingPayouts, "/painel-profissional/rede-profissionais-repasses"],
-    ["Notificações pendentes", summary?.metrics.pendingNotifications, "/painel-profissional/notificacoes"],
+    ["Repasses pendentes", summary?.metrics.pendingPayouts, "/admin/profissionais-repasses"],
+    ["Notificações pendentes", summary?.metrics.pendingNotifications, "/admin/notificacoes"],
   ] as const;
 
   return <div className="space-y-7">
@@ -129,7 +129,7 @@ function MasterAdminContent() {
         <Link to="/admin/rede" className="rounded-xl border border-[#C7A33B] bg-white px-4 py-3 text-sm font-bold text-[#0B1F3A]">Rede de profissionais</Link>
         <Link to="/admin/empresas" className="rounded-xl border border-[#C7A33B] bg-white px-4 py-3 text-sm font-bold text-[#0B1F3A]">Empresas e funcionários</Link>
         <Link to="/admin/financeiro" className="rounded-xl border border-[#C7A33B] bg-white px-4 py-3 text-sm font-bold text-[#0B1F3A]">Financeiro</Link>
-        <Link to="/painel-profissional/rede-profissionais-repasses" className="rounded-xl border border-[#C7A33B] bg-white px-4 py-3 text-sm font-bold text-[#0B1F3A]">Repasses</Link>
+        <Link to="/admin/profissionais-repasses" className="rounded-xl border border-[#C7A33B] bg-white px-4 py-3 text-sm font-bold text-[#0B1F3A]">Repasses</Link>
       </div>
     </section>
 
