@@ -29,10 +29,13 @@ function ActivatePage() {
   const [email, setEmail] = useState("");
   const [busy, setBusy] = useState(false);
   const [sent, setSent] = useState(false);
+  const [purchase, setPurchase] = useState(false);
 
   useEffect(() => {
-    const value = new URLSearchParams(window.location.search).get("email");
+    const params = new URLSearchParams(window.location.search);
+    const value = params.get("email");
     if (value && value.includes("@")) setEmail(value.trim().toLowerCase());
+    setPurchase(params.get("purchase") === "success");
   }, []);
 
   async function handleSubmit(event: React.FormEvent) {
@@ -50,8 +53,8 @@ function ActivatePage() {
 
   return (
     <ClientAuthShell
-      title="Primeiro acesso"
-      subtitle="Informe o mesmo e-mail usado na sua compra. Enviaremos um link seguro para você definir sua senha. Você também pode entrar com o Google usando esse mesmo e-mail."
+      title={purchase ? "Pagamento confirmado — ative seu acesso" : "Primeiro acesso"}
+      subtitle={purchase ? "Sua compra já foi confirmada. Use o mesmo e-mail informado no pagamento para concluir o acesso à sua área." : "Informe o mesmo e-mail usado na sua compra. Enviaremos um link seguro para você definir sua senha. Você também pode entrar com o Google usando esse mesmo e-mail."}
     >
       {sent ? (
         <div className="s8-notice">
@@ -86,7 +89,7 @@ function ActivatePage() {
 
       <p className="mt-6 text-sm">
         <Link to="/cliente/login" className="font-semibold text-primary underline">
-          Voltar para o login
+          Já tenho acesso — entrar
         </Link>
       </p>
     </ClientAuthShell>
