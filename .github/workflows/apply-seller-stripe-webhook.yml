@@ -1,0 +1,38 @@
+name: Apply Seller Stripe Webhook
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/patch-seller-stripe-webhook.py'
+      - '.github/workflows/apply-seller-stripe-webhook.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Patch seller Stripe webhook
+        run: python tools/patch-seller-stripe-webhook.py
+      - name: Validate markers
+        run: |
+          grep -q 'handleSellerStripeEvent' apps/painel-ldr/src/routes/api/stripe/webhook.ts
+          grep -q 'ldr_seller_stripe_apply_service' apps/painel-ldr/src/routes/api/stripe/webhook.ts
+          grep -q 'invoice.payment_succeeded' apps/painel-ldr/src/routes/api/stripe/webhook.ts
+      - name: Commit webhook update
+        run: |
+          if git diff --quiet -- apps/painel-ldr/src/routes/api/stripe/webhook.ts; then
+            echo 'No changes to commit'
+          else
+            git config user.name 'ldr-rh-campanhas'
+            git config user.email 'llucianouam@gmail.com'
+            git add apps/painel-ldr/src/routes/api/stripe/webhook.ts
+            git commit -m 'feat: process seller Stripe payments in canonical webhook'
+            git push
+          fi
