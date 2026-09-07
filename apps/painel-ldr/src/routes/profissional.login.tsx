@@ -1,6 +1,6 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { LanguageSelect, useI18n } from "@/lib/i18n";
@@ -12,6 +12,8 @@ function ProfessionalLogin(){
   const {locale}=useI18n();
   const c=COPY[locale];
   const [busy,setBusy]=useState(false);
+  const sellerRef=useMemo(()=>typeof window==="undefined"?"":new URLSearchParams(window.location.search).get("seller_ref")||"",[]);
+  useEffect(()=>{if(sellerRef){try{sessionStorage.setItem("ldr_seller_referral",sellerRef)}catch{}}},[sellerRef]);
   const load=useServerFn(professionalDashboard);
 
   const redirectAuthenticated=useCallback(async()=>{
@@ -19,11 +21,11 @@ function ProfessionalLogin(){
       const dashboard=await load();
       const profile=dashboard?.profile;
       const isActiveApproved=profile?.profile_status==="active"&&profile?.compliance_status==="approved";
-      window.location.replace(isActiveApproved?"/painel-profissional":"/profissional-onboarding");
+      window.location.replace((isActiveApproved?"/painel-profissional":"/profissional-onboarding")+(sellerRef?`?seller_ref=${encodeURIComponent(sellerRef)}`:""));
     }catch{
       window.location.replace("/profissional-onboarding");
     }
-  },[load]);
+  },[load,sellerRef]);
 
   useEffect(()=>{
     let active=true;
@@ -38,7 +40,7 @@ function ProfessionalLogin(){
 
   async function signIn(){
     setBusy(true);
-    const {data,error}=await supabase.auth.signInWithOAuth({provider:"google",options:{redirectTo:`${window.location.origin}/profissional/login`,skipBrowserRedirect:true}});
+    const {data,error}=await supabase.auth.signInWithOAuth({provider:"google",options:{redirectTo:`${window.location.origin}/profissional/login${sellerRef?`?seller_ref=${encodeURIComponent(sellerRef)}`:""}`,skipBrowserRedirect:true}});
     if(error||!data.url){setBusy(false);toast.error(c.error);return}
     window.location.assign(data.url);
   }

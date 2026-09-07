@@ -46,7 +46,7 @@ function SellerReferralPage() {
   const continueUrl = ref ? `${target}?seller_ref=${encodeURIComponent(ref)}` : target;
 
   function proceed() {
-    try { sessionStorage.setItem("ldr_seller_referral", ref); } catch { /* storage optional */ }
+    try { sessionStorage.setItem("ldr_seller_referral", ref); sessionStorage.setItem("ldr_seller_referral_data", JSON.stringify(data)); } catch { /* storage optional */ }
     window.location.assign(continueUrl);
   }
 

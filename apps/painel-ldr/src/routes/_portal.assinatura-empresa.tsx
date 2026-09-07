@@ -26,6 +26,17 @@ export const Route = createFileRoute("/_portal/assinatura-empresa")({
 type Locale = "pt" | "en" | "fr" | "es";
 const INTL: Record<Locale, string> = { pt: "pt-PT", en: "en-GB", fr: "fr-FR", es: "es-ES" };
 const money = (cents: number, currency: string, locale: Locale) => new Intl.NumberFormat(INTL[locale], { style: "currency", currency }).format(cents / 100);
+function sellerReferralFromBrowser() {
+  if (typeof window === "undefined") return "";
+  const query = new URLSearchParams(window.location.search).get("seller_ref") || "";
+  if (query) { try { sessionStorage.setItem("ldr_seller_referral", query); } catch {} return query; }
+  try { return sessionStorage.getItem("ldr_seller_referral") || ""; } catch { return ""; }
+}
+function sellerReferralData() {
+  if (typeof window === "undefined") return null as any;
+  try { const raw=sessionStorage.getItem("ldr_seller_referral_data"); return raw ? JSON.parse(raw) : null; } catch { return null; }
+}
+
 
 const COPY = {
   pt: {
@@ -71,6 +82,9 @@ function CompanySubscriptionPage() {
   const [extraCredits, setExtraCredits] = useState<0 | 5 | 10 | 25>(0);
   const pricing = COMPANY_PLAN_PRICING[region];
   const custom = useMemo(() => calculateCustomCompanyPlan({ region, employees, services, extraCredits }), [region, employees, services, extraCredits]);
+  const sellerReferral = sellerReferralFromBrowser();
+  const referralData = sellerReferralData();
+
 
   async function load() {
     setLoading(true);
@@ -78,6 +92,8 @@ function CompanySubscriptionPage() {
     finally { setLoading(false); }
   }
   useEffect(() => {
+    const rd = sellerReferralData();
+    if (rd?.portal_kind === "company" && (rd.market === "EU" || rd.market === "BR")) setRegion(rd.market);
     void load();
     const params = new URLSearchParams(window.location.search);
     if (params.get("subscription") === "success") toast.success(copy.success);
@@ -93,18 +109,18 @@ function CompanySubscriptionPage() {
   async function start(planCode: "essential" | "pro" | "custom", count: number, selectedServices: CompanyServiceKey[] = [], credits: 0 | 5 | 10 | 25 = 0) {
     setBusy(true);
     try {
-      const result = await checkout({ data: { planCode, region, employees: count, services: selectedServices, extraCredits: credits } });
+      const result = await checkout({ data: { planCode, region, employees: count, services: selectedServices, extraCredits: credits, sellerReferral: sellerReferral || null } });
       window.location.assign(result.url);
     } catch (error) { toast.error(live ? copy.currentPlan : error instanceof Error ? error.message : copy.error); setBusy(false); }
   }
 
   if (loading) return <div className="min-h-screen p-6"><div className="s8-card mx-auto max-w-md text-center">{copy.loading}</div></div>;
-  if (!data?.organization) return <div className="min-h-screen bg-background p-6"><section className="s8-card mx-auto max-w-xl text-center"><h1 className="font-serif text-3xl">{copy.title}</h1><p className="mt-3 text-muted-foreground">{copy.noCompany}</p><Link to="/empresa" className="mt-5 inline-flex rounded-xl bg-primary px-5 py-3 font-bold text-primary-foreground">{copy.goCompany}</Link></section></div>;
+  if (!data?.organization) return <div className="min-h-screen bg-background p-6"><section className="s8-card mx-auto max-w-xl text-center"><h1 className="font-serif text-3xl">{copy.title}</h1><p className="mt-3 text-muted-foreground">{copy.noCompany}</p><a href={sellerReferral ? `/empresa?seller_ref=${encodeURIComponent(sellerReferral)}` : "/empresa"} className="mt-5 inline-flex rounded-xl bg-primary px-5 py-3 font-bold text-primary-foreground">{copy.goCompany}</a></section></div>;
 
   return <div className="min-h-screen bg-background text-foreground">
     <header className="border-b bg-card/95"><div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-6"><Link to="/empresa" className="inline-flex items-center gap-2 text-sm font-black text-primary"><ArrowLeft className="h-4 w-4"/>{copy.back}</Link><LanguageSelect/></div></header>
     <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
-      <section className="rounded-[2rem] bg-primary p-7 text-primary-foreground sm:p-9"><div className="flex flex-wrap items-start justify-between gap-6"><div className="max-w-3xl"><p className="text-xs font-black uppercase tracking-[.18em] text-secondary">LDR RH & Estratégia</p><h1 className="mt-3 font-serif text-4xl sm:text-5xl">{copy.title}</h1><p className="mt-4 max-w-2xl leading-7 opacity-90">{copy.intro}</p></div><div className="grid gap-2 text-sm"><span className="flex items-center gap-2"><RefreshCw className="h-4 w-4 text-secondary"/>{copy.auto}</span><span className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-secondary"/>{copy.noCommitment}</span><span className="flex items-center gap-2"><CreditCard className="h-4 w-4 text-secondary"/>{copy.secure}</span></div></div></section>
+      <section className="rounded-[2rem] bg-primary p-7 text-primary-foreground sm:p-9"><div className="flex flex-wrap items-start justify-between gap-6"><div className="max-w-3xl"><p className="text-xs font-black uppercase tracking-[.18em] text-secondary">LDR RH & Estratégia</p><h1 className="mt-3 font-serif text-4xl sm:text-5xl">{copy.title}</h1><p className="mt-4 max-w-2xl leading-7 opacity-90">{copy.intro}</p>{sellerReferral && <p className="mt-3 rounded-xl bg-white/10 px-4 py-3 text-sm"><strong>Plano indicado pela Rede Comercial LDR.</strong> Use o mesmo e-mail informado ao vendedor. A comissão só é atribuída após o pagamento confirmado pela Stripe.</p>}</div><div className="grid gap-2 text-sm"><span className="flex items-center gap-2"><RefreshCw className="h-4 w-4 text-secondary"/>{copy.auto}</span><span className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-secondary"/>{copy.noCommitment}</span><span className="flex items-center gap-2"><CreditCard className="h-4 w-4 text-secondary"/>{copy.secure}</span></div></div></section>
 
       {subscription && <section className="s8-card mt-6"><div className="flex flex-wrap items-start justify-between gap-5"><div><p className="text-xs font-black uppercase tracking-[.16em] text-primary">{copy.current}</p><h2 className="mt-2 font-serif text-3xl">{label}</h2><p className="mt-2 text-sm text-muted-foreground">{subscription.employee_count} {copy.employees} · {money(Number(subscription.monthly_amount_cents), subscription.currency, locale)} {copy.month}</p></div><span className={`rounded-full px-3 py-1.5 text-xs font-black ${subscription.status === "active" ? "bg-emerald-100 text-emerald-800" : "bg-amber-100 text-amber-900"}`}>{statusLabel}</span></div>
         <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4"><div className="rounded-xl border p-4"><p className="text-xs text-muted-foreground">{subscription.cancel_at_period_end ? copy.ends : copy.renews}</p><p className="mt-1 font-bold">{subscription.current_period_end ? new Date(subscription.current_period_end).toLocaleDateString(INTL[locale]) : "—"}</p></div><div className="rounded-xl border p-4"><p className="text-xs text-muted-foreground">{copy.auto}</p><p className="mt-1 font-bold">{subscription.cancel_at_period_end ? copy.no : copy.yes}</p></div><div className="rounded-xl border p-4"><p className="text-xs text-muted-foreground">Stripe</p><p className="mt-1 font-bold">{subscription.stripe_subscription_id ? copy.connected : copy.pending}</p></div><div className="rounded-xl border p-4"><p className="text-xs text-muted-foreground">{copy.creditsIncluded}</p><p className="mt-1 font-bold">{monthlyCredits}</p></div></div>
