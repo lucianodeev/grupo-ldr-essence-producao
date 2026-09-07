@@ -298,7 +298,7 @@ async function sellerSaleByPaymentIntent(paymentIntentId: string | null) {
   const { data, error } = await db.from("ldr_simple_sales")
     .select("id,amount_cents,currency,payment_status,stripe_subscription_id")
     .eq("stripe_payment_intent_id", paymentIntentId)
-    .in("sale_source", ["stripe_checkout", "stripe_subscription_renewal"])
+    .in("sale_source", ["stripe_checkout", "stripe_subscription_renewal", "stripe_portal_referral"])
     .maybeSingle();
   if (error) throw error;
   return data ?? null;
@@ -345,6 +345,34 @@ async function applySellerRenewalEvent(args: Record<string, unknown>) {
   const { data, error } = await db.rpc("ldr_seller_stripe_renewal_service", args);
   if (error) throw new Error(error.message || "Falha ao atualizar renovação do vendedor.");
   return data;
+}
+
+async function handleSellerReferralEvent(event: StripeEvent, object: StripeObject) {
+  const metadata = object.metadata ?? {};
+  const referralId = metadata["source"] === "seller_portal_referral" ? metadata["ldr_seller_referral_id"] : undefined;
+  if (!referralId) return false;
+  const db = await database();
+  if (event.type === "checkout.session.completed") {
+    if (object.payment_status !== "paid" && object.payment_status !== "no_payment_required") return false;
+    const { data, error } = await db.rpc("ldr_seller_referral_paid_service", {
+      p_ref: referralId,
+      p_event_id: event.id,
+      p_event_type: event.type,
+      p_checkout_session_id: object.id ?? null,
+      p_amount_cents: object.amount_total ?? null,
+      p_currency: object.currency ? String(object.currency).toUpperCase() : null,
+      p_payment_intent_id: stripeId(object.payment_intent),
+      p_subscription_id: stripeId(object.subscription),
+    });
+    if (error) throw new Error(error.message || "Falha ao atribuir comissão do plano ao vendedor.");
+    return Boolean(data);
+  }
+  if (event.type === "checkout.session.expired") {
+    const { error } = await db.rpc("ldr_seller_referral_status_service", { p_ref: referralId, p_status: "expired" });
+    if (error) throw new Error(error.message || "Falha ao expirar indicação do vendedor.");
+    return true;
+  }
+  return false;
 }
 
 async function handleSellerStripeEvent(event: StripeEvent, object: StripeObject) {
@@ -473,6 +501,7 @@ export const Route = createFileRoute("/api/stripe/webhook")({
           // Rede Comercial LDR: pagamento gerado pelo painel do vendedor.
           // Preço/comissão são congelados no banco; a confirmação financeira vem apenas deste webhook assinado.
           await handleSellerStripeEvent(event, object);
+          await handleSellerReferralEvent(event, object);
 
           // Mantém intacto o fluxo já validado de pedidos e benefícios corporativos.
           if (orderId) {
