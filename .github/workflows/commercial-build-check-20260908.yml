@@ -1,0 +1,25 @@
+name: Commercial UX build check 20260908
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/commercial-build-check-20260908.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Build panel app
+        run: npm run build:painel
