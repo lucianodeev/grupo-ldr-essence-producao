@@ -30,6 +30,7 @@ type Prepared = {
   billing_mode: "payment" | "subscription";
   stripe_payment_link_id?: string | null;
   stripe_price_id?: string | null;
+  source_site?: string | null;
   source_metadata?: Record<string, unknown> | null;
 };
 
@@ -119,26 +120,24 @@ export const Route = createFileRoute("/api/seller-checkout")({
             ldr_sale_id: prepared.sale_id,
             ldr_seller_id: prepared.seller_id,
             ldr_catalog_key: prepared.catalog_key,
+            seller_commission_scope: "initial_checkout",
           };
           const sourceMetadata = prepared.source_metadata ?? {};
           if (typeof sourceMetadata["training_slug"] === "string") {
             metadata["training_slug"] = String(sourceMetadata["training_slug"]);
-            metadata["product_key"] = "do-mamao-ao-negocio";
+            metadata["product_key"] = "do_mamao_ao_negocio";
             metadata["region"] = prepared.currency === "BRL" ? "BR" : "EU";
           }
 
           const params = new URLSearchParams();
           params.set("mode", mode);
-          // Seller checkout intentionally uses card-only immediate confirmation so the existing production webhook set is sufficient.
-          // This avoids delayed-payment methods that would require additional async webhook events.
           params.append("payment_method_types[]", "card");
-          metadata["seller_commission_scope"] = "initial_checkout";
           params.set("line_items[0][price]", priceId);
           params.set("line_items[0][quantity]", String(prepared.quantity || 1));
           params.set("customer_email", parsed.data.customer_email.toLowerCase());
           params.set("client_reference_id", prepared.sale_id);
-          params.set("success_url", "https://ldrrhestrategia.com/?pagamento=sucesso");
-          params.set("cancel_url", "https://ldrrhestrategia.com/?pagamento=cancelado");
+          params.set("success_url", "https://painel.ldrrhestrategia.com/acesso-compra?session_id={CHECKOUT_SESSION_ID}");
+          params.set("cancel_url", "https://lucianodeev.github.io/grupo-ldr-essence-unificado/?pagamento=cancelado");
           putMetadata(params, "metadata", metadata);
           if (mode === "payment") putMetadata(params, "payment_intent_data[metadata]", metadata);
           else putMetadata(params, "subscription_data[metadata]", metadata);
