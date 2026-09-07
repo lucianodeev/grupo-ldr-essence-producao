@@ -1,0 +1,63 @@
+name: Final commercial copy 20260908
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/commercial-copy-final-20260908.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Apply safe multilingual copy patch
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          def repl(path, pairs):
+              p=Path(path)
+              s=p.read_text(encoding='utf-8')
+              for old,new in pairs:
+                  if old not in s:
+                      print(f'WARN not found in {path}: {old[:70]}')
+                  s=s.replace(old,new)
+              p.write_text(s,encoding='utf-8')
+
+          repl('apps/painel-ldr/src/routes/para-profissionais.tsx', [
+            ('sub:"Uma estrutura criada para profissionais que desejam fortalecer sua presença, organizar seus serviços e desenvolver sua atuação dentro de uma comunidade profissional."', 'sub:"Construa sua presença profissional dentro de um ecossistema criado para conectar organização, desenvolvimento, visibilidade e oportunidades."'),
+            ('sub:"A structure for professionals who want to strengthen their presence, organize services and grow within a professional community."', 'sub:"Build your professional presence inside an ecosystem created to connect organization, development, visibility and opportunities."'),
+            ('sub:"Une structure pour renforcer votre présence, organiser vos services et développer votre activité au sein d’une communauté professionnelle."', 'sub:"Construisez votre présence professionnelle dans un écosystème conçu pour relier organisation, développement, visibilité et opportunités."'),
+            ('sub:"Una estructura para fortalecer tu presencia, organizar servicios y desarrollar tu actividad dentro de una comunidad profesional."', 'sub:"Construye tu presencia profesional dentro de un ecosistema creado para conectar organización, desarrollo, visibilidad y oportunidades."'),
+            ('PALESTRA / GRUPO GRATUITO','WEBINAR / GRUPO GRATUITO'),
+          ])
+
+          repl('apps/painel-ldr/src/routes/profissionais.tsx', [
+            ('title: "ENCONTRE O PROFISSIONAL CERTO PARA O SEU MOMENTO",\n    sub: "Pesquise profissionais por área, localização, idioma e modalidade de atendimento."', 'title: "ENCONTRE O PROFISSIONAL ADEQUADO PARA O SEU MOMENTO",\n    sub: "Encontre o profissional adequado para o seu momento, com filtros claros e acesso direto ao perfil, serviços e disponibilidade."'),
+            ('title: "FIND THE RIGHT PROFESSIONAL FOR YOUR MOMENT", sub: "Search professionals by area, location, language and service modality."', 'title: "FIND THE RIGHT PROFESSIONAL FOR YOUR MOMENT", sub: "Find the right professional for your current needs, with clear filters and direct access to profiles, services and availability."'),
+            ('title: "TROUVEZ LE PROFESSIONNEL ADAPTÉ À VOTRE MOMENT", sub: "Recherchez par domaine, localisation, langue et modalité de service."', 'title: "TROUVEZ LE PROFESSIONNEL ADAPTÉ À VOTRE MOMENT", sub: "Trouvez le professionnel adapté à votre besoin, avec des filtres clairs et un accès direct au profil, aux services et aux disponibilités."'),
+            ('title: "ENCUENTRA AL PROFESIONAL ADECUADO PARA TU MOMENTO", sub: "Busca profesionales por área, ubicación, idioma y modalidad de atención."', 'title: "ENCUENTRA AL PROFESIONAL ADECUADO PARA TU MOMENTO", sub: "Encuentra al profesional adecuado para tu momento, con filtros claros y acceso directo al perfil, servicios y disponibilidad."'),
+          ])
+
+          repl('apps/painel-ldr/src/components/commercial-public-page.tsx', [
+            ('>Transformação</p>', '>{locale==="en"?"Transformation":locale==="fr"?"Transformation":locale==="es"?"Transformación":"Transformação"}</p>'),
+            ('O Grupo LDR Essence conecta desenvolvimento humano, empreendedorismo, carreira, bem-estar e soluções para empresas. Luciano aparece como fundador e CEO para dar contexto, responsabilidade e direção ao ecossistema — sem tirar o foco da necessidade de quem chega até aqui.', '{locale==="en"?"Grupo LDR Essence connects human development, entrepreneurship, careers, wellbeing and business solutions. Luciano appears as Founder and CEO to provide context, accountability and direction without taking focus away from the visitor’s needs.":locale==="fr"?"Grupo LDR Essence relie développement humain, entrepreneuriat, carrière, bien-être et solutions pour les entreprises. Luciano apparaît comme Fondateur et CEO pour apporter contexte, responsabilité et direction sans détourner l’attention des besoins du visiteur.":locale==="es"?"Grupo LDR Essence conecta desarrollo humano, emprendimiento, carrera, bienestar y soluciones para empresas. Luciano aparece como Fundador y CEO para aportar contexto, responsabilidad y dirección sin quitar el foco de las necesidades del visitante.":"O Grupo LDR Essence conecta desenvolvimento humano, empreendedorismo, carreira, bem-estar e soluções para empresas. Luciano aparece como Fundador e CEO para dar contexto, responsabilidade e direção ao ecossistema — sem tirar o foco da necessidade de quem chega até aqui."}'),
+            ('>Rede de Profissionais</Link>', '>{locale==="en"?"Professional Network":locale==="fr"?"Réseau de Professionnels":locale==="es"?"Red de Profesionales":"Rede de Profissionais"}</Link>'),
+            ('>Ecossistema profissional</Link>', '>{locale==="en"?"Professional ecosystem":locale==="fr"?"Écosystème professionnel":locale==="es"?"Ecosistema profesional":"Ecossistema profissional"}</Link>'),
+          ])
+          PY
+      - name: Commit safe copy patch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add apps/painel-ldr/src/routes/para-profissionais.tsx apps/painel-ldr/src/routes/profissionais.tsx apps/painel-ldr/src/components/commercial-public-page.tsx
+          git diff --cached --quiet && exit 0
+          git commit -m 'feat: finalize multilingual commercial positioning'
+          git push origin main
