@@ -117,7 +117,7 @@ export const Route = createFileRoute("/api/seller-purchase-access")({
             if (!createError) {
               const origin = "https://painel.ldrrhestrategia.com";
               const { error: resetError } = await supabaseAdmin.auth.resetPasswordForEmail(customerEmail, {
-                redirectTo: `${origin}/cliente/definir-senha`,
+                redirectTo: `${origin}/cliente/definir-senha?next=${encodeURIComponent(target)}`,
               });
               activationSent = !resetError;
             }

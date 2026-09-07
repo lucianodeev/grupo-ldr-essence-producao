@@ -20,6 +20,14 @@ export const Route = createFileRoute("/cliente/definir-senha")({
   component: SetPasswordPage,
 });
 
+function safePurchaseTarget(value: string | null) {
+  const allowed = new Set([
+    "/cliente", "/cliente/biblioteca", "/cliente/treinamentos", "/cliente/mentoria",
+    "/empresa", "/funcionario", "/painel-profissional",
+  ]);
+  return value && allowed.has(value) ? value : "/cliente";
+}
+
 function SetPasswordPage() {
   const navigate = useNavigate();
   const [ready, setReady] = useState(false);
@@ -50,7 +58,7 @@ function SetPasswordPage() {
       return;
     }
     toast.success("Senha definida com sucesso.");
-    navigate({ to: "/cliente", replace: true });
+    window.location.replace(safePurchaseTarget(new URLSearchParams(window.location.search).get("next")));
   }
 
   return (

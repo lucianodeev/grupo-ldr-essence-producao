@@ -1,6 +1,6 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import { activateClientAccess } from "@/lib/client-portal.functions";
@@ -29,6 +29,11 @@ function ActivatePage() {
   const [email, setEmail] = useState("");
   const [busy, setBusy] = useState(false);
   const [sent, setSent] = useState(false);
+
+  useEffect(() => {
+    const value = new URLSearchParams(window.location.search).get("email");
+    if (value && value.includes("@")) setEmail(value.trim().toLowerCase());
+  }, []);
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
