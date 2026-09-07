@@ -1,3 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { UnifiedPublicPage } from "@/components/unified-public-page";
-export const Route=createFileRoute("/acoragemdecomecar")({head:()=>({meta:[{title:"A Coragem de Começar | LDR RH & Estratégia"},{name:"description",content:"eBook A Coragem de Começar em PT, EN, FR e ES."}],links:[{rel:"canonical",href:"https://ldrrhestrategia.com/acoragemdecomecar"}]}),component:()=> <UnifiedPublicPage kind="ebook"/>});
+import { CommercialPublicPage } from "@/components/commercial-public-page";
+
+export const Route=createFileRoute("/acoragemdecomecar")({
+  head:()=>({meta:[{title:"A Coragem de Começar | LDR RH & Estratégia"},{name:"description",content:"Livro digital A Coragem de Começar: história, reflexão e empreendedorismo real dentro do ecossistema LDR."}],links:[{rel:"canonical",href:"https://ldrrhestrategia.com/acoragemdecomecar"}]}),
+  component:()=> <CommercialPublicPage kind="ebook"/>
+});
