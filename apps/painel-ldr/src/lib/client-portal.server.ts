@@ -1013,6 +1013,8 @@ const DIGITAL_LIBRARY_PRODUCTS: Omit<ClientLibraryProduct, "entitled">[] = [
  */
 export async function getClientDigitalLibrary(userId: string, email: string | null) {
   const customer = await requireClient(userId, email);
+  const { hasOwnerDigitalAccess } = await import("@/lib/owner-digital-access.server");
+  const ownerAccess = hasOwnerDigitalAccess(email ?? customer.email);
 
   const { data: orders } = await supabaseAdmin
     .from("orders")
@@ -1038,7 +1040,7 @@ export async function getClientDigitalLibrary(userId: string, email: string | nu
     customer,
     products: DIGITAL_LIBRARY_PRODUCTS.map((product) => ({
       ...product,
-      entitled: aliases[product.key].some((key) => paidKeys.has(key)),
+      entitled: ownerAccess || aliases[product.key].some((key) => paidKeys.has(key)),
     })),
   };
 }
