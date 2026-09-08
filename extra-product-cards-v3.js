@@ -1,0 +1,35 @@
+(function(){
+  "use strict";
+  const LIB="https://painel.ldrrhestrategia.com/cliente/biblioteca";
+  const COPY={
+    pt:{avail:"JÁ DISPONÍVEL",trainingType:"TREINAMENTO",training:"Do Mamão ao Negócio",trainingDesc:"Treinamento de Empreendedorismo · 3 meses · 300 horas.",trainingMeta:"Sistema S8 · atividades práticas · encontros ao vivo · certificado.",access:"Acessar treinamento",filmType:"FILME",film:"O Menino que Vendia Mamão",filmStatus:"EM PRODUÇÃO",filmDesc:"Adaptação cinematográfica da história que inspira esta jornada.",filmMeta:"Projeto atualmente em desenvolvimento."},
+    en:{avail:"AVAILABLE NOW",trainingType:"TRAINING",training:"From Papaya to Business",trainingDesc:"Entrepreneurship Training · 3 months · 300 hours.",trainingMeta:"S8 System · practical activities · live meetings · certificate.",access:"Access training",filmType:"FILM",film:"The Boy Who Sold Papaya",filmStatus:"IN PRODUCTION",filmDesc:"Film adaptation of the story that inspires this journey.",filmMeta:"Project currently in development."},
+    fr:{avail:"DÉJÀ DISPONIBLE",trainingType:"FORMATION",training:"De la Papaye au Business",trainingDesc:"Formation en entrepreneuriat · 3 mois · 300 heures.",trainingMeta:"Système S8 · activités pratiques · rencontres en direct · certificat.",access:"Accéder à la formation",filmType:"FILM",film:"Le Garçon qui Vendait des Papayes",filmStatus:"EN PRODUCTION",filmDesc:"Adaptation cinématographique de l'histoire qui inspire ce parcours.",filmMeta:"Projet actuellement en développement."},
+    es:{avail:"YA DISPONIBLE",trainingType:"ENTRENAMIENTO",training:"De la Papaya al Negocio",trainingDesc:"Entrenamiento de Emprendimiento · 3 meses · 300 horas.",trainingMeta:"Sistema S8 · actividades prácticas · encuentros en vivo · certificado.",access:"Acceder al entrenamiento",filmType:"PELÍCULA",film:"El Niño que Vendía Papayas",filmStatus:"EN PRODUCCIÓN",filmDesc:"Adaptación cinematográfica de la historia que inspira este recorrido.",filmMeta:"Proyecto actualmente en desarrollo."}
+  };
+
+  function lang(){const k=(document.documentElement.lang||navigator.language||"pt").slice(0,2).toLowerCase();return COPY[k]?k:"pt"}
+  function txt(s){return (s||"").toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
+  function findTitle(words){return Array.from(document.querySelectorAll('h1,h2,h3,h4,h5')).find(el=>words.some(w=>txt(el.textContent).includes(txt(w))))||null}
+  function ancestors(el){const a=[];while(el){a.push(el);el=el.parentElement}return a}
+  function lca(a,b){const aa=ancestors(a),bb=new Set(ancestors(b));return aa.find(x=>bb.has(x))||null}
+  function directChildUnder(ancestor,node){let cur=node;while(cur&&cur.parentElement!==ancestor)cur=cur.parentElement;return cur&&cur.parentElement===ancestor?cur:null}
+  function styles(){if(document.getElementById('ldr-extra-products-v3-css'))return;const s=document.createElement('style');s.id='ldr-extra-products-v3-css';s.textContent=`
+    .ldr-extra-product-v3{display:flex!important;flex-direction:column!important;min-height:100%!important}
+    .ldr-extra-product-v3 .ldr-x-status{display:inline-flex!important;align-items:center!important;justify-content:center!important;align-self:flex-start!important;border-radius:999px!important;padding:6px 11px!important;font-size:.72rem!important;font-weight:900!important;letter-spacing:.06em!important;margin-bottom:12px!important}
+    .ldr-extra-product-v3 .ldr-x-status.available{background:#dcfce7!important;color:#166534!important;border:1px solid #86efac!important}
+    .ldr-extra-product-v3 .ldr-x-status.production{background:#f3e4bd!important;color:#5b3a0c!important;border:1px solid #d6b056!important}
+    .ldr-extra-product-v3 .ldr-x-type{font-size:.72rem!important;font-weight:900!important;letter-spacing:.14em!important;text-transform:uppercase!important;opacity:.8!important;margin-bottom:8px!important}
+    .ldr-extra-product-v3 h3{margin:.2rem 0 .7rem!important;line-height:1.12!important}
+    .ldr-extra-product-v3 p{margin:.35rem 0!important;line-height:1.55!important}
+    .ldr-extra-product-v3 .ldr-x-meta{font-size:.9rem!important;opacity:.86!important}
+    .ldr-extra-product-v3 .ldr-x-action{margin-top:auto!important;padding-top:18px!important}
+    .ldr-extra-product-v3 .ldr-x-btn,.ldr-extra-product-v3 .ldr-x-disabled{display:flex!important;align-items:center!important;justify-content:center!important;min-height:44px!important;border-radius:10px!important;padding:10px 16px!important;font-weight:900!important;text-decoration:none!important}
+    .ldr-extra-product-v3 .ldr-x-btn{background:#c99b4b!important;color:#26130b!important}
+    .ldr-extra-product-v3 .ldr-x-disabled{border:1px solid rgba(201,155,75,.55)!important;opacity:.82!important}
+  `;document.head.appendChild(s)}
+  function build(template,kind,t){const tag=template&&template.tagName?template.tagName.toLowerCase():'div';const el=document.createElement(tag==='article'?'article':'div');el.className=(template&&template.className?String(template.className)+' ':'')+'ldr-extra-product-v3';el.dataset.ldrExtraCardV3=kind;if(kind==='training'){el.innerHTML=`<div class="ldr-x-status available">✅ ${t.avail}</div><div class="ldr-x-type">${t.trainingType}</div><h3>${t.training}</h3><p>${t.trainingDesc}</p><p class="ldr-x-meta">${t.trainingMeta}</p><div class="ldr-x-action"><a class="ldr-x-btn" href="${LIB}">${t.access}</a></div>`}else{el.innerHTML=`<div class="ldr-x-status production">${t.filmStatus}</div><div class="ldr-x-type">${t.filmType}</div><h3>${t.film}</h3><p>${t.filmDesc}</p><p class="ldr-x-meta">${t.filmMeta}</p><div class="ldr-x-action"><span class="ldr-x-disabled" aria-disabled="true">${t.filmStatus}</span></div>`}return el}
+  function mount(){styles();const ebook=document.getElementById('ebook-title')||findTitle(['A Coragem de Começar','The Courage to Start','Le Courage de Commencer','El Coraje de Empezar']);const book=document.getElementById('book-title')||findTitle(['O Menino que Vendia Mamão','The Boy Who Sold Papaya','Le Garçon qui Vendait des Papayes','El Niño que Vendía Papayas']);if(!ebook||!book)return false;const common=lca(ebook,book);if(!common)return false;const ebookCard=directChildUnder(common,ebook),bookCard=directChildUnder(common,book);if(!ebookCard||!bookCard||ebookCard===bookCard)return false;document.querySelectorAll('[data-ldr-extra-card-v3]').forEach(x=>x.remove());const t=COPY[lang()];common.appendChild(build(bookCard,'training',t));common.appendChild(build(bookCard,'film',t));return true}
+  function start(){let tries=0;mount();const timer=setInterval(()=>{mount();if(++tries>80)clearInterval(timer)},250);if(!window.__ldrExtraV3Observer){let busy=false;const ob=new MutationObserver(()=>{if(busy)return;busy=true;requestAnimationFrame(()=>{busy=false;mount()})});ob.observe(document.body,{childList:true,subtree:true});window.__ldrExtraV3Observer=ob}}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
+})();
