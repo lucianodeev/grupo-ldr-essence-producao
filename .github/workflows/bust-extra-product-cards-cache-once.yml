@@ -1,0 +1,70 @@
+name: Bust extra product cards cache once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/bust-extra-product-cards-cache-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Force fresh renderer on main
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('apps/luciano-empreendedor/index.html')
+          s=p.read_text(encoding='utf-8')
+          old='./extra-product-cards-v3.js?v=20260908-final'
+          new='./extra-product-cards-v3.js?v=20260908-v4-2237'
+          if old in s:
+              s=s.replace(old,new)
+          elif new not in s:
+              raise SystemExit('renderer include not found on main')
+          p.write_text(s,encoding='utf-8')
+          PY
+          grep -q 'extra-product-cards-v3.js?v=20260908-v4-2237' apps/luciano-empreendedor/index.html
+
+      - name: Commit main cache bust
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add apps/luciano-empreendedor/index.html
+          if ! git diff --cached --quiet; then
+            git commit -m 'fix public: forçar carregamento fresco dos cards treinamento e filme'
+            git push origin main
+          fi
+
+      - name: Force fresh renderer on GitHub Pages
+        run: |
+          git fetch origin gh-pages
+          git worktree add /tmp/gh-pages origin/gh-pages
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('/tmp/gh-pages/index.html')
+          s=p.read_text(encoding='utf-8')
+          old='./extra-product-cards-v3.js?v=20260908-final'
+          new='./extra-product-cards-v3.js?v=20260908-v4-2237'
+          if old in s:
+              s=s.replace(old,new)
+          elif new not in s:
+              raise SystemExit('renderer include not found on gh-pages')
+          p.write_text(s,encoding='utf-8')
+          PY
+          cd /tmp/gh-pages
+          git switch -c gh-pages-cache-bust --track origin/gh-pages
+          grep -q 'extra-product-cards-v3.js?v=20260908-v4-2237' index.html
+          git add index.html
+          if ! git diff --cached --quiet; then
+            git commit -m 'fix pages: forçar script atualizado dos cards'
+            git push origin HEAD:gh-pages
+          fi
