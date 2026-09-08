@@ -1,69 +1,12 @@
 (function(){
-  "use strict";
-  const LIB="https://painel.ldrrhestrategia.com/cliente/biblioteca";
-  const COPY={
-    pt:{avail:"JÁ DISPONÍVEL",trainingType:"TREINAMENTO",training:"Do Mamão ao Negócio",trainingDesc:"Treinamento de Empreendedorismo · 3 meses · 300 horas.",trainingMeta:"Sistema S8 · atividades práticas · encontros ao vivo · certificado.",access:"Acessar treinamento",filmType:"FILME",film:"O Menino que Vendia Mamão",filmStatus:"EM PRODUÇÃO",filmDesc:"Adaptação cinematográfica da história que inspira esta jornada.",filmMeta:"Projeto atualmente em desenvolvimento."},
-    en:{avail:"AVAILABLE NOW",trainingType:"TRAINING",training:"From Papaya to Business",trainingDesc:"Entrepreneurship Training · 3 months · 300 hours.",trainingMeta:"S8 System · practical activities · live meetings · certificate.",access:"Access training",filmType:"FILM",film:"The Boy Who Sold Papaya",filmStatus:"IN PRODUCTION",filmDesc:"Film adaptation of the story that inspires this journey.",filmMeta:"Project currently in development."},
-    fr:{avail:"DÉJÀ DISPONIBLE",trainingType:"FORMATION",training:"De la Papaye au Business",trainingDesc:"Formation en entrepreneuriat · 3 mois · 300 heures.",trainingMeta:"Système S8 · activités pratiques · rencontres en direct · certificat.",access:"Accéder à la formation",filmType:"FILM",film:"Le Garçon qui Vendait des Papayes",filmStatus:"EN PRODUCTION",filmDesc:"Adaptation cinématographique de l'histoire qui inspire ce parcours.",filmMeta:"Projet actuellement en développement."},
-    es:{avail:"YA DISPONIBLE",trainingType:"ENTRENAMIENTO",training:"De la Papaya al Negocio",trainingDesc:"Entrenamiento de Emprendimiento · 3 meses · 300 horas.",trainingMeta:"Sistema S8 · actividades prácticas · encuentros en vivo · certificado.",access:"Acceder al entrenamiento",filmType:"PELÍCULA",film:"El Niño que Vendía Papayas",filmStatus:"EN PRODUCCIÓN",filmDesc:"Adaptación cinematográfica de la historia que inspira este recorrido.",filmMeta:"Proyecto actualmente en desarrollo."}
-  };
-  const TITLES={
-    ebook:["A Coragem de Começar","The Courage to Start","Le Courage de Commencer","El Coraje de Empezar"],
-    book:["O Menino que Vendia Mamão","The Boy Who Sold Papaya","Le Garçon qui Vendait des Papayes","El Niño que Vendía Papayas"]
-  };
-  function lang(){const k=(document.documentElement.lang||navigator.language||"pt").slice(0,2).toLowerCase();return COPY[k]?k:"pt"}
-  function norm(v){return String(v||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\s+/g," ").trim()}
-  function matches(el,list){const t=norm(el.textContent);return list.some(x=>t.includes(norm(x)))}
-  function visible(el){if(!el)return false;const s=getComputedStyle(el);if(s.display==="none"||s.visibility==="hidden")return false;const r=el.getBoundingClientRect();return r.width>0&&r.height>0}
-  function candidates(list){return Array.from(document.querySelectorAll("h1,h2,h3,h4,h5")).filter(el=>matches(el,list))}
-  function chain(el,limit=10){const out=[];let cur=el;for(let i=0;cur&&i<limit;i++,cur=cur.parentElement)out.push(cur);return out}
-  function childUnder(ancestor,node){let cur=node;while(cur&&cur.parentElement!==ancestor)cur=cur.parentElement;return cur&&cur.parentElement===ancestor?cur:null}
-  function findGrid(){
-    const es=candidates(TITLES.ebook).sort((a,b)=>Number(visible(b))-Number(visible(a)));
-    const bs=candidates(TITLES.book).sort((a,b)=>Number(visible(b))-Number(visible(a)));
-    let best=null;
-    for(const e of es){for(const b of bs){if(e===b)continue;const ea=chain(e,12),ba=chain(b,12);for(let i=0;i<ea.length;i++){const common=ea[i];const j=ba.indexOf(common);if(j<0)continue;const ec=childUnder(common,e),bc=childUnder(common,b);if(!ec||!bc||ec===bc)continue;const score=(visible(e)?1000:0)+(visible(b)?1000:0)-(i+j);if(!best||score>best.score)best={grid:common,ebookCard:ec,bookCard:bc,score};break;}}}
-    return best;
-  }
-  function styles(){if(document.getElementById("ldr-extra-products-v4-css"))return;const s=document.createElement("style");s.id="ldr-extra-products-v4-css";s.textContent=`
-    .ldr-extra-product-v4{display:flex!important;flex-direction:column!important;min-height:100%!important}
-    .ldr-extra-product-v4 .ldr-x-status{display:inline-flex!important;align-items:center!important;justify-content:center!important;align-self:flex-start!important;border-radius:999px!important;padding:6px 11px!important;font-size:.72rem!important;font-weight:900!important;letter-spacing:.06em!important;margin-bottom:12px!important}
-    .ldr-extra-product-v4 .ldr-x-status.available{background:#dcfce7!important;color:#166534!important;border:1px solid #86efac!important}
-    .ldr-extra-product-v4 .ldr-x-status.production{background:#f3e4bd!important;color:#5b3a0c!important;border:1px solid #d6b056!important}
-    .ldr-extra-product-v4 .ldr-x-type{font-size:.72rem!important;font-weight:900!important;letter-spacing:.14em!important;text-transform:uppercase!important;opacity:.8!important;margin-bottom:8px!important}
-    .ldr-extra-product-v4 h3{margin:.2rem 0 .7rem!important;line-height:1.12!important}
-    .ldr-extra-product-v4 p{margin:.35rem 0!important;line-height:1.55!important}
-    .ldr-extra-product-v4 .ldr-x-meta{font-size:.9rem!important;opacity:.86!important}
-    .ldr-extra-product-v4 .ldr-x-action{margin-top:auto!important;padding-top:18px!important}
-    .ldr-extra-product-v4 .ldr-x-btn,.ldr-extra-product-v4 .ldr-x-disabled{display:flex!important;align-items:center!important;justify-content:center!important;min-height:44px!important;border-radius:10px!important;padding:10px 16px!important;font-weight:900!important;text-decoration:none!important}
-    .ldr-extra-product-v4 .ldr-x-btn{background:#c99b4b!important;color:#26130b!important}
-    .ldr-extra-product-v4 .ldr-x-disabled{border:1px solid rgba(201,155,75,.55)!important;opacity:.82!important}
-  `;document.head.appendChild(s)}
-  function fill(el,kind,t){
-    el.dataset.ldrExtraCardV4=kind;
-    el.classList.add("ldr-extra-product-v4");
-    if(kind==="training")el.innerHTML=`<div class="ldr-x-status available">✅ ${t.avail}</div><div class="ldr-x-type">${t.trainingType}</div><h3>${t.training}</h3><p>${t.trainingDesc}</p><p class="ldr-x-meta">${t.trainingMeta}</p><div class="ldr-x-action"><a class="ldr-x-btn" href="${LIB}">${t.access}</a></div>`;
-    else el.innerHTML=`<div class="ldr-x-status production">${t.filmStatus}</div><div class="ldr-x-type">${t.filmType}</div><h3>${t.film}</h3><p>${t.filmDesc}</p><p class="ldr-x-meta">${t.filmMeta}</p><div class="ldr-x-action"><span class="ldr-x-disabled" aria-disabled="true">${t.filmStatus}</span></div>`;
-  }
-  function make(template,kind,t){const el=template.cloneNode(false);el.removeAttribute("id");fill(el,kind,t);return el}
-  function mount(){
-    styles();
-    const found=findGrid();if(!found)return false;
-    const {grid,bookCard}=found,t=COPY[lang()];
-    document.getElementById("ldr-extra-products-20260904")?.remove();
-    document.querySelectorAll("[data-ldr-extra-card-v3]").forEach(el=>el.remove());
-    let training=grid.querySelector('[data-ldr-extra-card-v4="training"]');
-    let film=grid.querySelector('[data-ldr-extra-card-v4="film"]');
-    if(!training){training=make(bookCard,"training",t);grid.insertBefore(training,bookCard.nextSibling)}else fill(training,"training",t);
-    if(!film){film=make(bookCard,"film",t);grid.insertBefore(film,training.nextSibling)}else fill(film,"film",t);
-    return true;
-  }
-  function start(){
-    let tries=0,lastLang=lang();
-    mount();
-    const timer=setInterval(()=>{const now=lang();if(now!==lastLang){lastLang=now;mount()}else if(!document.querySelector('[data-ldr-extra-card-v4="training"]'))mount();if(++tries>120)clearInterval(timer)},250);
-    window.addEventListener("hashchange",()=>setTimeout(mount,50));
-    document.addEventListener("click",()=>setTimeout(()=>{if(!document.querySelector('[data-ldr-extra-card-v4="training"]'))mount()},50),true);
-  }
-  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start,{once:true});else start();
+'use strict';
+const LIB='https://painel.ldrrhestrategia.com/cliente/biblioteca';
+const C={pt:{a:'JÁ DISPONÍVEL',tt:'TREINAMENTO',t:'Do Mamão ao Negócio',d:'Treinamento de Empreendedorismo · 3 meses · 300 horas.',m:'Sistema S8 · atividades práticas · encontros ao vivo · certificado.',go:'Acessar treinamento',ft:'FILME',f:'O Menino que Vendia Mamão',fs:'EM PRODUÇÃO',fd:'Adaptação cinematográfica da história que inspira esta jornada.',fm:'Projeto atualmente em desenvolvimento.'},en:{a:'AVAILABLE NOW',tt:'TRAINING',t:'From Papaya to Business',d:'Entrepreneurship Training · 3 months · 300 hours.',m:'S8 System · practical activities · live meetings · certificate.',go:'Access training',ft:'FILM',f:'The Boy Who Sold Papaya',fs:'IN PRODUCTION',fd:'Film adaptation of the story that inspires this journey.',fm:'Project currently in development.'},fr:{a:'DÉJÀ DISPONIBLE',tt:'FORMATION',t:'De la Papaye au Business',d:'Formation en entrepreneuriat · 3 mois · 300 heures.',m:'Système S8 · activités pratiques · rencontres en direct · certificat.',go:'Accéder à la formation',ft:'FILM',f:'Le Garçon qui Vendait des Papayes',fs:'EN PRODUCTION',fd:"Adaptation cinématographique de l'histoire qui inspire ce parcours.",fm:'Projet actuellement en développement.'},es:{a:'YA DISPONIBLE',tt:'ENTRENAMIENTO',t:'De la Papaya al Negocio',d:'Entrenamiento de Emprendimiento · 3 meses · 300 horas.',m:'Sistema S8 · actividades prácticas · encuentros en vivo · certificado.',go:'Acceder al entrenamiento',ft:'PELÍCULA',f:'El Niño que Vendía Papayas',fs:'EN PRODUCCIÓN',fd:'Adaptación cinematográfica de la historia que inspira este recorrido.',fm:'Proyecto actualmente en desarrollo.'}};
+function l(){let x=(document.documentElement.lang||navigator.language||'pt').slice(0,2).toLowerCase();return C[x]?x:'pt'}
+function css(){if(document.getElementById('ldr-extra-final-css'))return;let s=document.createElement('style');s.id='ldr-extra-final-css';s.textContent='.ldr-extra-final{display:flex!important;flex-direction:column!important;min-height:100%!important}.ldr-extra-final .xs{display:inline-flex!important;align-self:flex-start!important;border-radius:999px!important;padding:6px 11px!important;font-size:.72rem!important;font-weight:900!important;margin-bottom:12px!important}.ldr-extra-final .ok{background:#dcfce7!important;color:#166534!important;border:1px solid #86efac!important}.ldr-extra-final .prod{background:#f3e4bd!important;color:#5b3a0c!important;border:1px solid #d6b056!important}.ldr-extra-final .xt{font-size:.72rem!important;font-weight:900!important;letter-spacing:.14em!important;margin-bottom:8px!important}.ldr-extra-final h3{margin:.2rem 0 .7rem!important}.ldr-extra-final p{margin:.35rem 0!important;line-height:1.55!important}.ldr-extra-final .xm{font-size:.9rem!important;opacity:.86!important}.ldr-extra-final .xa{margin-top:auto!important;padding-top:18px!important}.ldr-extra-final .xb{display:flex!important;align-items:center!important;justify-content:center!important;min-height:44px!important;border-radius:10px!important;padding:10px 16px!important;font-weight:900!important;text-decoration:none!important;background:#d7a84d!important;color:#25120d!important}.ldr-extra-final .xd{background:transparent!important;border:1px solid rgba(215,168,77,.6)!important;color:inherit!important}';document.head.appendChild(s)}
+function findBook(){let b=document.getElementById('ldrBookSalesCard');if(b)return b;let hs=[...document.querySelectorAll('#platformView h1,#platformView h2,#platformView h3,#platformView h4,#platformView h5')];let h=hs.find(x=>/menino que vendia mam[aã]o/i.test(x.textContent||''));if(!h)return null;let n=h;for(let i=0;n&&i<7;i++,n=n.parentElement){if(n.parentElement&&n.parentElement.children.length>=2)return n}return null}
+function fill(e,k,t){e.classList.add('ldr-extra-final');e.dataset.ldrExtraFinal=k;if(k==='training')e.innerHTML='<div class="xs ok">✅ '+t.a+'</div><div class="xt">'+t.tt+'</div><h3>'+t.t+'</h3><p>'+t.d+'</p><p class="xm">'+t.m+'</p><div class="xa"><a class="xb" href="'+LIB+'">'+t.go+'</a></div>';else e.innerHTML='<div class="xs prod">'+t.fs+'</div><div class="xt">'+t.ft+'</div><h3>'+t.f+'</h3><p>'+t.fd+'</p><p class="xm">'+t.fm+'</p><div class="xa"><span class="xb xd">'+t.fs+'</span></div>'}
+function mount(){css();let b=findBook();if(!b||!b.parentElement)return false;let g=b.parentElement,t=C[l()];document.querySelectorAll('[data-ldr-extra-final]').forEach(x=>x.remove());document.querySelectorAll('[data-ldr-extra-card-v4],[data-ldr-extra-card-v3]').forEach(x=>x.remove());let tr=b.cloneNode(false),fi=b.cloneNode(false);tr.removeAttribute('id');fi.removeAttribute('id');fill(tr,'training',t);fill(fi,'film',t);g.insertBefore(tr,b.nextSibling);g.insertBefore(fi,tr.nextSibling);return true}
+function start(){let n=0;let timer=setInterval(()=>{if(mount()||++n>80)clearInterval(timer)},250);setTimeout(mount,50);window.addEventListener('hashchange',()=>setTimeout(mount,100));}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })();
