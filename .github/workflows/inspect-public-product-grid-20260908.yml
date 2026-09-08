@@ -1,0 +1,41 @@
+name: Inspect public product grid 20260908
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/inspect-public-product-grid-20260908.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Inspect main and gh-pages product structure
+        run: |
+          git fetch origin gh-pages
+          python - <<'PY'
+          from pathlib import Path
+          import subprocess
+
+          def show(label, text):
+              print('\n===== '+label+' =====')
+              lines=text.splitlines()
+              for needle in ['id="ebook-title"','id="book-title"','extra-product-cards-v2.js','ldr-extra-products-20260904']:
+                  hits=[i for i,l in enumerate(lines) if needle in l]
+                  print('\n--- NEEDLE',needle,'HITS',hits,'---')
+                  for i in hits[:3]:
+                      a=max(0,i-18); b=min(len(lines),i+30)
+                      for n in range(a,b): print(f'{n+1:05d}: {lines[n]}')
+
+          main=Path('apps/luciano-empreendedor/index.html').read_text(encoding='utf-8')
+          pages=subprocess.check_output(['git','show','origin/gh-pages:index.html'],text=True)
+          show('MAIN',main)
+          show('GH-PAGES',pages)
+          PY
