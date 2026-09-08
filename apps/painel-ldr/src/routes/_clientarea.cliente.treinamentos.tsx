@@ -1,11 +1,21 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { Outlet, createFileRoute, useLocation } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { CalendarDays, MessageCircle, BookOpen, Megaphone, ExternalLink, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { clientAddLibraryComment, clientDeleteLibraryComment, clientLearningHub } from "@/lib/learning.functions";
 
-export const Route = createFileRoute("/_clientarea/cliente/treinamentos")({ component: ClientTrainings });
+export const Route = createFileRoute("/_clientarea/cliente/treinamentos")({ component: ClientTrainingsRoute });
+
+function ClientTrainingsRoute() {
+  const location = useLocation();
+  const pathname = location.pathname.replace(/\/+$/, "") || "/";
+
+  // This route owns the full training experience as a nested child. Let the
+  // child render instead of leaving the training list over the selected item.
+  if (pathname !== "/cliente/treinamentos") return <Outlet />;
+  return <ClientTrainings />;
+}
 
 function ClientTrainings() {
   const load = useServerFn(clientLearningHub);
