@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { Outlet, createFileRoute, useLocation } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { BookOpen, Film, GraduationCap, LockKeyhole, MessageCircle, ReceiptText, ShoppingCart } from "lucide-react";
@@ -9,7 +9,18 @@ import { clientAddLibraryComment, clientLearningHub } from "@/lib/learning.funct
 import { clientCreateDoMamaoTrainingCheckout, clientDoMamaoTrainingOffer } from "@/lib/training-commerce.functions";
 import { useI18n } from "@/lib/i18n";
 
-export const Route = createFileRoute("/_clientarea/cliente/biblioteca")({ component: ClientLibrary });
+export const Route = createFileRoute("/_clientarea/cliente/biblioteca")({ component: ClientLibraryRoute });
+
+function ClientLibraryRoute() {
+  const location = useLocation();
+  const pathname = location.pathname.replace(/\/+$/, "") || "/";
+
+  // This file is also the layout parent of /biblioteca/$productKey.
+  // Render the child reader when a product is selected; otherwise the parent
+  // page would keep covering it and the "Acessar" button would appear inert.
+  if (pathname !== "/cliente/biblioteca") return <Outlet />;
+  return <ClientLibrary />;
+}
 
 type Locale = "pt" | "en" | "fr" | "es";
 
