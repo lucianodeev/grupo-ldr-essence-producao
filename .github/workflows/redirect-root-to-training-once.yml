@@ -1,0 +1,77 @@
+name: Redirect root domain to training once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/redirect-root-to-training-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Add root-only redirect to public site
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          target='https://ldrrhestrategia.com/treinamento?lang=pt'
+          marker='ldr-root-training-redirect-20260908'
+          script=f'''<script id="{marker}">(function(){{try{{var h=location.hostname.toLowerCase();if((h==='www.lucianoempreendendor.com'||h==='lucianoempreendendor.com')&&location.pathname==='/'&&!location.hash){{location.replace('{target}');}}}}catch(e){{}}}})();</script>'''
+          p=Path('apps/luciano-empreendedor/index.html')
+          s=p.read_text(encoding='utf-8')
+          if marker not in s:
+              if '<head>' not in s:
+                  raise SystemExit('head not found')
+              s=s.replace('<head>','<head>\n'+script,1)
+              p.write_text(s,encoding='utf-8')
+          PY
+
+      - name: Verify main redirect
+        run: |
+          grep -q 'ldr-root-training-redirect-20260908' apps/luciano-empreendedor/index.html
+          grep -q 'https://ldrrhestrategia.com/treinamento?lang=pt' apps/luciano-empreendedor/index.html
+
+      - name: Commit main
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add apps/luciano-empreendedor/index.html
+          if ! git diff --cached --quiet; then
+            git commit -m 'feat public: redirecionar domínio principal para treinamento'
+            git push origin main
+          fi
+
+      - name: Apply same redirect to GitHub Pages
+        run: |
+          git fetch origin gh-pages
+          git worktree add /tmp/gh-pages origin/gh-pages
+          python - <<'PY'
+          from pathlib import Path
+          target='https://ldrrhestrategia.com/treinamento?lang=pt'
+          marker='ldr-root-training-redirect-20260908'
+          script=f'''<script id="{marker}">(function(){{try{{var h=location.hostname.toLowerCase();if((h==='www.lucianoempreendendor.com'||h==='lucianoempreendendor.com')&&location.pathname==='/'&&!location.hash){{location.replace('{target}');}}}}catch(e){{}}}})();</script>'''
+          p=Path('/tmp/gh-pages/index.html')
+          s=p.read_text(encoding='utf-8')
+          if marker not in s:
+              if '<head>' not in s:
+                  raise SystemExit('head not found')
+              s=s.replace('<head>','<head>\n'+script,1)
+              p.write_text(s,encoding='utf-8')
+          PY
+          cd /tmp/gh-pages
+          git switch -c gh-pages-root-redirect --track origin/gh-pages
+          grep -q 'ldr-root-training-redirect-20260908' index.html
+          grep -q 'https://ldrrhestrategia.com/treinamento?lang=pt' index.html
+          git add index.html
+          if ! git diff --cached --quiet; then
+            git commit -m 'feat pages: redirecionar domínio principal para treinamento'
+            git push origin HEAD:gh-pages
+          fi
