@@ -1,6 +1,7 @@
 import { gunzipSync } from "node:zlib";
 
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { hasOwnerDigitalAccess } from "@/lib/owner-digital-access.server";
 
 export type DigitalReaderProductKey = "ebook_coragem_comecar" | "livro_menino_mamao";
 export type DigitalReaderLocale = "pt" | "en" | "fr" | "es";
@@ -73,7 +74,7 @@ export async function getProtectedDigitalContent(
   locale: DigitalReaderLocale,
 ) {
   const customerId = await resolveCustomer(userId, email);
-  await assertEntitlement(customerId, productKey);
+  if (!hasOwnerDigitalAccess(email)) await assertEntitlement(customerId, productKey);
 
   let { data, error } = await supabaseAdmin
     .from("digital_product_content")
