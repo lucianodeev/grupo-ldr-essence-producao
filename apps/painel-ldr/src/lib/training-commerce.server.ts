@@ -69,8 +69,13 @@ async function enrollment(customerId: string, trainingId: string) {
   return data ?? null;
 }
 
-async function ensureOwnerEnrollment(customerId: string, trainingId: string, email: string | null) {
-  if (!hasOwnerDigitalAccess(email)) return null;
+async function ensureOwnerEnrollment(
+  customerId: string,
+  trainingId: string,
+  email: string | null,
+  userId: string,
+) {
+  if (!hasOwnerDigitalAccess(email, userId)) return null;
   const { error } = await db
     .from("training_enrollments")
     .upsert(
@@ -108,7 +113,7 @@ export async function getDoMamaoTrainingOffer(userId: string, email: string | nu
     currentEnrollment = await enrollment(customer.id, training.id);
   }
   if (!currentEnrollment)
-    currentEnrollment = await ensureOwnerEnrollment(customer.id, training.id, email);
+    currentEnrollment = await ensureOwnerEnrollment(customer.id, training.id, email, userId);
   return {
     productKey: PRODUCT_KEY,
     title: training.title || TRAINING_TITLE,
@@ -260,7 +265,7 @@ export async function getDoMamaoTrainingExperience(userId: string, email: string
     }
   }
   if (!currentEnrollment)
-    currentEnrollment = await ensureOwnerEnrollment(customer.id, training.id, email);
+    currentEnrollment = await ensureOwnerEnrollment(customer.id, training.id, email, userId);
   if (!currentEnrollment) fail("Compre o treinamento para liberar este conteúdo.");
   const { data: cloud } = await db
     .from("training_state")
@@ -315,7 +320,9 @@ export async function saveDoMamaoTrainingState(
 ) {
   const customer = await customerFor(userId, email);
   const training = await trainingRow();
-  const currentEnrollment = await enrollment(customer.id, training.id);
+  let currentEnrollment = await enrollment(customer.id, training.id);
+  if (!currentEnrollment)
+    currentEnrollment = await ensureOwnerEnrollment(customer.id, training.id, email, userId);
   if (!currentEnrollment) fail("Matrícula não encontrada.");
   const serialized = JSON.stringify(state ?? {});
   if (serialized.length > 700_000)
