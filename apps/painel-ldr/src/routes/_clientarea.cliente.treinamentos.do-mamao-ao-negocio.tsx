@@ -73,7 +73,7 @@ function DoMamaoTraining() {
   if (error || !data) return <div className="s8-card"><h1 className="font-serif text-2xl">Do Mamão ao Negócio</h1><p className="mt-2 text-sm text-muted-foreground">{copy.unavailable}</p><a href="/cliente/biblioteca" className="mt-4 inline-flex min-h-11 rounded-xl bg-primary px-4 py-3 text-sm font-bold text-primary-foreground">{copy.library}</a></div>;
 
   return <div className="min-w-0 space-y-4">
-    <section className="s8-card" style={{ background:"linear-gradient(145deg,#4b101d,#2b0a11)", color:"#f7ead8", borderColor:"#b58a44" }}>
+    <section className="s8-card" style={{ background:"linear-gradient(145deg,#0b2341,#071426)", color:"#ffffff", borderColor:"#c9a63a" }}>
       <div className="flex min-w-0 flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
         <div className="min-w-0 flex-1"><a href="/cliente/treinamentos" className="inline-flex min-h-11 items-center gap-1 text-xs font-bold opacity-80 hover:opacity-100"><ArrowLeft className="h-4 w-4"/> {copy.back}</a><p className="mt-3 break-words text-xs font-bold uppercase tracking-[.18em]" style={{color:"#d6ad63"}}>{copy.meta}</p><h1 className="mt-1 flex min-w-0 items-center gap-2 break-words !text-[#f7ead8] font-serif text-2xl sm:text-3xl"><GraduationCap className="h-7 w-7 shrink-0"/> Do Mamão ao Negócio</h1><p className="mt-2 break-words text-sm leading-6 opacity-85">{copy.desc}</p></div>
         <div className="grid min-w-0 gap-3">

@@ -1,5 +1,6 @@
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { resolveClient } from "@/lib/client-portal.server";
+import { hasOwnerDigitalAccess } from "@/lib/owner-digital-access.server";
 
 function fail(message: string): never { throw new Error(message); }
 
@@ -22,6 +23,20 @@ async function clientCommentDeleteEnabled() {
 
 export async function getClientLearningHub(userId: string, email: string | null) {
   const customer = await requireClient(userId, email);
+  if (hasOwnerDigitalAccess(email ?? customer.email, userId)) {
+    const { data: training } = await supabaseAdmin
+      .from("training_programs")
+      .select("id")
+      .eq("slug", "do-mamao-ao-negocio")
+      .eq("status", "published")
+      .maybeSingle();
+    if (training?.id) {
+      await supabaseAdmin.from("training_enrollments").upsert(
+        { training_id: training.id, customer_id: customer.id, active: true },
+        { onConflict: "training_id,customer_id" },
+      );
+    }
+  }
   const [{ data: enrollments }, { data: comments }, { data: progress }, canDeleteComments] = await Promise.all([
     supabaseAdmin.from("training_enrollments").select("training_id, active, training_programs(id,slug,title,description,status)").eq("customer_id", customer.id).eq("active", true),
     supabaseAdmin.from("library_comments").select("id,product_key,training_id,parent_id,author_user_id,author_kind,author_label,body,status,created_at").eq("customer_id", customer.id).order("created_at", { ascending: true }),

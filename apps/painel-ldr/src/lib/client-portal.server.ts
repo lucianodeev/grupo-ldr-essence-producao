@@ -991,7 +991,7 @@ const DIGITAL_LIBRARY_PRODUCTS: Omit<ClientLibraryProduct, "entitled">[] = [
       "E-book de empreendedorismo, coragem e recomeços. O acesso à leitura depende de compra confirmada para esta conta.",
     priceBrlCents: 990,
     priceEurCents: 490,
-    purchaseUrl: "https://lucianoempreendendor.com/?produto=ebook#comprar",
+    purchaseUrl: "https://ldrrhestrategia.com/acoragemdecomecar?lang=pt",
   },
   {
     key: "livro_menino_mamao",
@@ -1000,7 +1000,7 @@ const DIGITAL_LIBRARY_PRODUCTS: Omit<ClientLibraryProduct, "entitled">[] = [
       "Livro autobiográfico sobre trabalho, recomeços, estratégia e a coragem de continuar construindo.",
     priceBrlCents: 4990,
     priceEurCents: 2000,
-    purchaseUrl: "https://lucianoempreendendor.com/?produto=livro#comprar",
+    purchaseUrl: "https://ldrrhestrategia.com/livros?lang=pt",
   },
 ];
 
@@ -1014,7 +1014,7 @@ const DIGITAL_LIBRARY_PRODUCTS: Omit<ClientLibraryProduct, "entitled">[] = [
 export async function getClientDigitalLibrary(userId: string, email: string | null) {
   const customer = await requireClient(userId, email);
   const { hasOwnerDigitalAccess } = await import("@/lib/owner-digital-access.server");
-  const ownerAccess = hasOwnerDigitalAccess(email ?? customer.email);
+  const ownerAccess = hasOwnerDigitalAccess(email ?? customer.email, userId);
 
   const { data: orders } = await supabaseAdmin
     .from("orders")
