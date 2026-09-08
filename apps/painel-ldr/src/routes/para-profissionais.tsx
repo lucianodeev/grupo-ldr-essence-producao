@@ -1,52 +1,671 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { BadgeCheck, BookOpen, CalendarDays, ChartNoAxesCombined, CircleDollarSign, Globe2, GraduationCap, HeartHandshake, ShieldCheck, Sparkles, UsersRound } from "lucide-react";
+import {
+  BadgeCheck,
+  BookOpen,
+  CalendarDays,
+  ChartNoAxesCombined,
+  CircleDollarSign,
+  Globe2,
+  GraduationCap,
+  HeartHandshake,
+  ShieldCheck,
+  Sparkles,
+  UsersRound,
+} from "lucide-react";
 import { ProfessionalNetworkMap } from "@/components/professional-network-map";
 import { LanguageSelect, useI18n } from "@/lib/i18n";
 import { networkLanding } from "@/lib/professional-network.functions";
 
 export const Route = createFileRoute("/para-profissionais")({
   loader: () => networkLanding(),
-  head: () => ({ meta: [{ title: "Rede de Profissionais LDR — Faça parte" }, { name: "description", content: "Perfil profissional, agenda, checkout, treinamentos ao vivo, comunidade e ferramentas em um único ambiente." }] }),
+  head: () => ({
+    meta: [
+      { title: "Rede de Profissionais LDR — Faça parte" },
+      {
+        name: "description",
+        content:
+          "Perfil profissional, agenda, checkout, treinamentos ao vivo, comunidade e ferramentas em um único ambiente.",
+      },
+    ],
+  }),
   component: ProfessionalsSales,
 });
 
 type AnyRow = Record<string, any>;
 const COPY = {
-pt:{hero:"FAÇA PARTE DA REDE DE PROFISSIONAIS LDR",sub:"Construa sua presença profissional dentro de um ecossistema criado para conectar organização, desenvolvimento, visibilidade e oportunidades.",join:"QUERO FAZER PARTE",plans:"CONHECER OS PLANOS",concept:"Você não entra apenas em uma plataforma. Você entra em um ecossistema profissional.",mapTitle:"A REDE LDR PELO MUNDO",mapText:"Veja onde já existem profissionais da Rede LDR e acompanhe a expansão do nosso ecossistema profissional.",mapOne:"profissional",mapMany:"profissionais",mapActiveOne:"perfil ativo",mapActiveMany:"perfis ativos",mapEmpty:"As localizações aparecem conforme os perfis públicos forem ativados.",mapFilter:"Ver profissionais do país",mapClear:"Remover filtro",more:"MAIS DO QUE UM PERFIL PROFISSIONAL",how:"COMO FUNCIONA",training:"TREINAMENTOS AO VIVO LDR",payments:"ATENDIMENTOS E PAGAMENTOS",plansTitle:"PLANOS",faq:"PERGUNTAS FREQUENTES",transparency:"TRANSPARÊNCIA",final:"CRIE SUA PRESENÇA PROFISSIONAL NA REDE LDR",noGuarantee:"A participação na Rede de Profissionais LDR não representa garantia de clientes, atendimentos ou faturamento.",commission:"Comissão inicial da plataforma: 10% sobre atendimentos efetivamente pagos pela plataforma, além da assinatura mensal.",monthly:"Repasses são organizados uma vez por mês, conforme calendário, documentação aplicável e condições dos termos.",directory:"Encontrar profissionais"},
-en:{hero:"JOIN THE LDR PROFESSIONAL NETWORK",sub:"Build your professional presence inside an ecosystem created to connect organization, development, visibility and opportunities.",join:"JOIN THE NETWORK",plans:"VIEW PLANS",concept:"You are not just joining a platform. You are joining a professional ecosystem.",mapTitle:"THE LDR NETWORK AROUND THE WORLD",mapText:"See where LDR Network professionals are already present and follow the expansion of our professional ecosystem.",mapOne:"professional",mapMany:"professionals",mapActiveOne:"active profile",mapActiveMany:"active profiles",mapEmpty:"Locations appear as public profiles are activated.",mapFilter:"View professionals in this country",mapClear:"Clear filter",more:"MORE THAN A PROFESSIONAL PROFILE",how:"HOW IT WORKS",training:"LDR LIVE TRAINING",payments:"BOOKINGS AND PAYMENTS",plansTitle:"PLANS",faq:"FAQ",transparency:"TRANSPARENCY",final:"BUILD YOUR PROFESSIONAL PRESENCE WITH LDR",noGuarantee:"Participation in the LDR Professional Network does not guarantee clients, appointments or revenue.",commission:"Initial platform commission: 10% on appointments effectively paid through the platform, in addition to the monthly subscription.",monthly:"Payouts are organized monthly according to the platform calendar, applicable documents and terms.",directory:"Find professionals"},
-fr:{hero:"REJOIGNEZ LE RÉSEAU DE PROFESSIONNELS LDR",sub:"Construisez votre présence professionnelle dans un écosystème conçu pour relier organisation, développement, visibilité et opportunités.",join:"JE VEUX PARTICIPER",plans:"VOIR LES PLANS",concept:"Vous ne rejoignez pas seulement une plateforme. Vous rejoignez un écosystème professionnel.",mapTitle:"LE RÉSEAU LDR DANS LE MONDE",mapText:"Découvrez où des professionnels du Réseau LDR sont déjà présents et suivez l’expansion de notre écosystème professionnel.",mapOne:"professionnel",mapMany:"professionnels",mapActiveOne:"profil actif",mapActiveMany:"profils actifs",mapEmpty:"Les localisations apparaissent à mesure que les profils publics sont activés.",mapFilter:"Voir les professionnels de ce pays",mapClear:"Effacer le filtre",more:"PLUS QU’UN PROFIL PROFESSIONNEL",how:"COMMENT ÇA MARCHE",training:"FORMATIONS LDR EN DIRECT",payments:"RENDEZ-VOUS ET PAIEMENTS",plansTitle:"PLANS",faq:"QUESTIONS FRÉQUENTES",transparency:"TRANSPARENCE",final:"DÉVELOPPEZ VOTRE PRÉSENCE PROFESSIONNELLE AVEC LDR",noGuarantee:"La participation au Réseau de Professionnels LDR ne garantit pas de clients, rendez-vous ou chiffre d’affaires.",commission:"Commission initiale de la plateforme : 10 % sur les prestations effectivement payées via la plateforme, en plus de l’abonnement mensuel.",monthly:"Les versements sont organisés mensuellement selon le calendrier, les documents applicables et les conditions.",directory:"Trouver un professionnel"},
-es:{hero:"FORMA PARTE DE LA RED DE PROFESIONALES LDR",sub:"Construye tu presencia profesional dentro de un ecosistema creado para conectar organización, desarrollo, visibilidad y oportunidades.",join:"QUIERO PARTICIPAR",plans:"VER PLANES",concept:"No entras solo en una plataforma. Entras en un ecosistema profesional.",mapTitle:"LA RED LDR EN EL MUNDO",mapText:"Descubre dónde ya hay profesionales de la Red LDR y sigue la expansión de nuestro ecosistema profesional.",mapOne:"profesional",mapMany:"profesionales",mapActiveOne:"perfil activo",mapActiveMany:"perfiles activos",mapEmpty:"Las ubicaciones aparecen a medida que se activan los perfiles públicos.",mapFilter:"Ver profesionales de este país",mapClear:"Quitar filtro",more:"MÁS QUE UN PERFIL PROFESIONAL",how:"CÓMO FUNCIONA",training:"FORMACIONES LDR EN VIVO",payments:"CITAS Y PAGOS",plansTitle:"PLANES",faq:"PREGUNTAS FRECUENTES",transparency:"TRANSPARENCIA",final:"DESARROLLA TU PRESENCIA PROFESIONAL CON LDR",noGuarantee:"Participar en la Red de Profesionales LDR no garantiza clientes, citas ni facturación.",commission:"Comisión inicial de la plataforma: 10% sobre las citas efectivamente pagadas mediante la plataforma, además de la suscripción mensual.",monthly:"Los pagos a profesionales se organizan mensualmente según calendario, documentación aplicable y condiciones.",directory:"Encontrar profesionales"}
+  pt: {
+    hero: "Faça parte da Rede de Profissionais LDR",
+    sub: "Amplie sua presença profissional, conecte-se a novas oportunidades e faça parte de uma rede com atuação no Brasil, Portugal e Bélgica.",
+    join: "QUERO FAZER PARTE DA REDE",
+    plans: "VER PROFISSIONAIS",
+    concept:
+      "Tenha perfil público, presença no mapa, atuação online ou presencial, treinamentos e acesso a oportunidades. A participação pode seguir assinatura ou comissão, quando aplicável, sem promessa de clientes.",
+    mapTitle: "A REDE LDR PELO MUNDO",
+    mapText:
+      "Veja onde já existem profissionais da Rede LDR e acompanhe a expansão do nosso ecossistema profissional.",
+    mapOne: "profissional",
+    mapMany: "profissionais",
+    mapActiveOne: "perfil ativo",
+    mapActiveMany: "perfis ativos",
+    mapEmpty: "As localizações aparecem conforme os perfis públicos forem ativados.",
+    mapFilter: "Ver profissionais do país",
+    mapClear: "Remover filtro",
+    mapCountry: "Todos os países",
+    mapCity: "Todas as cidades",
+    mapArea: "Todas as áreas",
+    city: "Cidade",
+    area: "Área de atuação",
+    viewProfile: "VER PERFIL",
+    more: "MAIS DO QUE UM PERFIL PROFISSIONAL",
+    how: "COMO FUNCIONA",
+    training: "TREINAMENTOS AO VIVO LDR",
+    payments: "ATENDIMENTOS E PAGAMENTOS",
+    plansTitle: "PLANOS",
+    faq: "PERGUNTAS FREQUENTES",
+    transparency: "TRANSPARÊNCIA",
+    final: "CRIE SUA PRESENÇA PROFISSIONAL NA REDE LDR",
+    noGuarantee:
+      "A participação na Rede de Profissionais LDR não representa garantia de clientes, atendimentos ou faturamento.",
+    commission:
+      "O modelo comercial pode ser assinatura mensal, comissão por atendimento ou parceria administrativa, conforme cadastro e aprovação da LDR.",
+    monthly:
+      "Repasses são organizados uma vez por mês, conforme calendário, documentação aplicável e condições dos termos.",
+    directory: "VER PROFISSIONAIS",
+  },
+  en: {
+    hero: "JOIN THE LDR PROFESSIONAL NETWORK",
+    sub: "Expand your professional presence, connect with new opportunities and join a network active in Brazil, Portugal and Belgium.",
+    join: "JOIN THE LDR NETWORK",
+    plans: "VIEW PROFESSIONALS",
+    concept:
+      "Create a public profile, appear on the map, work online or in person, access training and professional opportunities. Participation may use a subscription or commission model when applicable, without any promise of clients.",
+    mapTitle: "THE LDR NETWORK AROUND THE WORLD",
+    mapText:
+      "See where LDR Network professionals are already present and follow the expansion of our professional ecosystem.",
+    mapOne: "professional",
+    mapMany: "professionals",
+    mapActiveOne: "active profile",
+    mapActiveMany: "active profiles",
+    mapEmpty: "Locations appear as public profiles are activated.",
+    mapFilter: "View professionals in this country",
+    mapClear: "Clear filter",
+    mapCountry: "All countries",
+    mapCity: "All cities",
+    mapArea: "All practice areas",
+    city: "City",
+    area: "Practice area",
+    viewProfile: "VIEW PROFILE",
+    more: "MORE THAN A PROFESSIONAL PROFILE",
+    how: "HOW IT WORKS",
+    training: "LDR LIVE TRAINING",
+    payments: "BOOKINGS AND PAYMENTS",
+    plansTitle: "PLANS",
+    faq: "FAQ",
+    transparency: "TRANSPARENCY",
+    final: "BUILD YOUR PROFESSIONAL PRESENCE WITH LDR",
+    noGuarantee:
+      "Participation in the LDR Professional Network does not guarantee clients, appointments or revenue.",
+    commission:
+      "The commercial model may be a monthly subscription, a commission per appointment or an administrative partnership, according to LDR registration and approval.",
+    monthly:
+      "Payouts are organized monthly according to the platform calendar, applicable documents and terms.",
+    directory: "Find professionals",
+  },
+  fr: {
+    hero: "REJOIGNEZ LE RÉSEAU DE PROFESSIONNELS LDR",
+    sub: "Développez votre présence professionnelle, accédez à de nouvelles opportunités et rejoignez un réseau actif au Brésil, au Portugal et en Belgique.",
+    join: "REJOINDRE LE RÉSEAU LDR",
+    plans: "VOIR LES PROFESSIONNELS",
+    concept:
+      "Créez un profil public, apparaissez sur la carte, intervenez en ligne ou en présentiel et accédez aux formations et opportunités. La participation peut relever d’un abonnement ou d’une commission, selon le cas, sans promesse de clientèle.",
+    mapTitle: "LE RÉSEAU LDR DANS LE MONDE",
+    mapText:
+      "Découvrez où des professionnels du Réseau LDR sont déjà présents et suivez l’expansion de notre écosystème professionnel.",
+    mapOne: "professionnel",
+    mapMany: "professionnels",
+    mapActiveOne: "profil actif",
+    mapActiveMany: "profils actifs",
+    mapEmpty: "Les localisations apparaissent à mesure que les profils publics sont activés.",
+    mapFilter: "Voir les professionnels de ce pays",
+    mapClear: "Effacer le filtre",
+    mapCountry: "Tous les pays",
+    mapCity: "Toutes les villes",
+    mapArea: "Tous les domaines",
+    city: "Ville",
+    area: "Domaine d’activité",
+    viewProfile: "VOIR LE PROFIL",
+    more: "PLUS QU’UN PROFIL PROFESSIONNEL",
+    how: "COMMENT ÇA MARCHE",
+    training: "FORMATIONS LDR EN DIRECT",
+    payments: "RENDEZ-VOUS ET PAIEMENTS",
+    plansTitle: "PLANS",
+    faq: "QUESTIONS FRÉQUENTES",
+    transparency: "TRANSPARENCE",
+    final: "DÉVELOPPEZ VOTRE PRÉSENCE PROFESSIONNELLE AVEC LDR",
+    noGuarantee:
+      "La participation au Réseau de Professionnels LDR ne garantit pas de clients, rendez-vous ou chiffre d’affaires.",
+    commission:
+      "Le modèle commercial peut être un abonnement mensuel, une commission par prestation ou un partenariat administratif, selon l’inscription et l’approbation de LDR.",
+    monthly:
+      "Les versements sont organisés mensuellement selon le calendrier, les documents applicables et les conditions.",
+    directory: "Trouver un professionnel",
+  },
+  es: {
+    hero: "FORMA PARTE DE LA RED DE PROFESIONALES LDR",
+    sub: "Amplía tu presencia profesional, conecta con nuevas oportunidades y forma parte de una red con actuación en Brasil, Portugal y Bélgica.",
+    join: "QUIERO FORMAR PARTE DE LA RED",
+    plans: "VER PROFESIONALES",
+    concept:
+      "Crea un perfil público, aparece en el mapa, trabaja online o presencialmente y accede a formaciones y oportunidades. La participación puede usar suscripción o comisión cuando corresponda, sin promesa de clientes.",
+    mapTitle: "LA RED LDR EN EL MUNDO",
+    mapText:
+      "Descubre dónde ya hay profesionales de la Red LDR y sigue la expansión de nuestro ecosistema profesional.",
+    mapOne: "profesional",
+    mapMany: "profesionales",
+    mapActiveOne: "perfil activo",
+    mapActiveMany: "perfiles activos",
+    mapEmpty: "Las ubicaciones aparecen a medida que se activan los perfiles públicos.",
+    mapFilter: "Ver profesionales de este país",
+    mapClear: "Quitar filtro",
+    mapCountry: "Todos los países",
+    mapCity: "Todas las ciudades",
+    mapArea: "Todas las áreas",
+    city: "Ciudad",
+    area: "Área de actuación",
+    viewProfile: "VER PERFIL",
+    more: "MÁS QUE UN PERFIL PROFESIONAL",
+    how: "CÓMO FUNCIONA",
+    training: "FORMACIONES LDR EN VIVO",
+    payments: "CITAS Y PAGOS",
+    plansTitle: "PLANES",
+    faq: "PREGUNTAS FRECUENTES",
+    transparency: "TRANSPARENCIA",
+    final: "DESARROLLA TU PRESENCIA PROFESIONAL CON LDR",
+    noGuarantee:
+      "Participar en la Red de Profesionales LDR no garantiza clientes, citas ni facturación.",
+    commission:
+      "El modelo comercial puede ser suscripción mensual, comisión por atención o colaboración administrativa, según el registro y la aprobación de LDR.",
+    monthly:
+      "Los pagos a profesionales se organizan mensualmente según calendario, documentación aplicable y condiciones.",
+    directory: "Encontrar profesionales",
+  },
 } as const;
 
-const BENEFITS=["Perfil profissional público","Página própria dentro da plataforma","Agenda integrada","Checkout de atendimentos","Painel profissional e financeiro","Histórico de atendimentos","Gestão de disponibilidade","Treinamentos ao vivo","Palestras e benefícios","Comunidade profissional","Serviços de marketing opcionais","Consultoria e desenvolvimento profissional"];
-const TRAINING=["Marketing profissional","Atendimento e experiência do cliente","Organização financeira","Carreira e posicionamento","Comunicação","Empreendedorismo","IA aplicada ao trabalho","Gestão"];
-const STEPS=["CRIE SEU PERFIL","ESCOLHA SEU PLANO","ENVIE SUAS INFORMAÇÕES","AGUARDE A ANÁLISE","PUBLIQUE SEUS SERVIÇOS","GERENCIE TUDO PELO PAINEL"];
-const FAQ=[
-["A plataforma garante clientes?","Não. A Rede LDR oferece estrutura, visibilidade, tecnologia, comunidade e ferramentas para o desenvolvimento profissional, mas não garante quantidade de clientes, atendimentos ou faturamento."],
-["Existe comissão?","Sim. Inicialmente a comissão é de 10% sobre atendimentos pagos através da plataforma, além da assinatura mensal."],
-["Quando recebo?","Os repasses são organizados mensalmente, conforme calendário da plataforma, documentação exigida e condições previstas nos termos."],
-["Tenho treinamento?","Sim. Os membros terão acesso aos treinamentos ao vivo incluídos conforme o plano e calendário da comunidade."],
-["Posso atender online?","Depende da natureza do serviço, da qualificação e das regras profissionais e legais aplicáveis ao país do profissional e do cliente."]
+const BENEFITS = [
+  "Perfil profissional público",
+  "Página própria dentro da plataforma",
+  "Agenda integrada",
+  "Checkout de atendimentos",
+  "Painel profissional e financeiro",
+  "Histórico de atendimentos",
+  "Gestão de disponibilidade",
+  "Treinamentos ao vivo",
+  "Palestras e benefícios",
+  "Comunidade profissional",
+  "Serviços de marketing opcionais",
+  "Consultoria e desenvolvimento profissional",
+];
+const TRAINING = [
+  "Marketing profissional",
+  "Atendimento e experiência do cliente",
+  "Organização financeira",
+  "Carreira e posicionamento",
+  "Comunicação",
+  "Empreendedorismo",
+  "IA aplicada ao trabalho",
+  "Gestão",
+];
+const STEPS = [
+  "CRIE SEU PERFIL",
+  "ESCOLHA SEU PLANO",
+  "ENVIE SUAS INFORMAÇÕES",
+  "AGUARDE A ANÁLISE",
+  "PUBLIQUE SEUS SERVIÇOS",
+  "GERENCIE TUDO PELO PAINEL",
+];
+const FAQ = [
+  [
+    "A plataforma garante clientes?",
+    "Não. A Rede LDR oferece estrutura, visibilidade, tecnologia, comunidade e ferramentas para o desenvolvimento profissional, mas não garante quantidade de clientes, atendimentos ou faturamento.",
+  ],
+  [
+    "Existe comissão?",
+    "Sim. Inicialmente a comissão é de 10% sobre atendimentos pagos através da plataforma, além da assinatura mensal.",
+  ],
+  [
+    "Quando recebo?",
+    "Os repasses são organizados mensalmente, conforme calendário da plataforma, documentação exigida e condições previstas nos termos.",
+  ],
+  [
+    "Tenho treinamento?",
+    "Sim. Os membros terão acesso aos treinamentos ao vivo incluídos conforme o plano e calendário da comunidade.",
+  ],
+  [
+    "Posso atender online?",
+    "Depende da natureza do serviço, da qualificação e das regras profissionais e legais aplicáveis ao país do profissional e do cliente.",
+  ],
 ];
 
-function money(cents:number,currency:string,locale:string){return new Intl.NumberFormat(locale==="pt"?"pt-BR":locale,{style:"currency",currency}).format(cents/100)}
-function ProfessionalsSales(){
- const {locale}=useI18n(); const copy=COPY[locale]; const data=Route.useLoaderData() as any;
- const profiles=(data?.profiles??[]) as AnyRow[]; const plans=(data?.plans??[]) as AnyRow[]; const luciano=profiles.find((p:AnyRow)=>p.slug==="luciano-rodrigues-almeida");
- return <div className="min-h-screen bg-background text-foreground">
-  <header className="sticky top-0 z-40 border-b bg-background/95 backdrop-blur"><div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4 sm:px-6"><Link to="/" className="font-serif text-xl font-bold">Grupo LDR Essence</Link><div className="flex items-center gap-2"><Link to="/profissionais" className="hidden rounded-lg px-3 py-2 text-sm font-bold sm:inline-flex">{copy.directory}</Link><LanguageSelect/></div></div></header>
-  <main>
-   <section className="overflow-hidden border-b bg-gradient-to-br from-primary via-primary to-primary/80 text-primary-foreground"><div className="mx-auto grid max-w-7xl gap-8 px-4 py-16 sm:px-6 lg:grid-cols-[1.15fr_.85fr] lg:py-24"><div><p className="text-xs font-black uppercase tracking-[.2em] text-secondary">Rede de Profissionais LDR</p><h1 className="mt-4 max-w-4xl font-serif text-4xl leading-tight sm:text-5xl lg:text-6xl">{copy.hero}</h1><p className="mt-5 max-w-3xl text-lg leading-8 opacity-90">{copy.sub}</p><div className="mt-8 flex flex-wrap gap-3"><Link to="/profissional/login" className="rounded-xl bg-secondary px-6 py-3 font-black text-secondary-foreground">{copy.join}</Link><a href="#planos" className="rounded-xl border border-white/40 px-6 py-3 font-bold">{copy.plans}</a></div><p className="mt-5 max-w-2xl text-sm leading-6 text-white/75">{copy.concept}</p></div><ProfessionalNetworkMap profiles={profiles} title={copy.mapTitle} text={copy.mapText} labels={{ oneProfessional: copy.mapOne, manyProfessionals: copy.mapMany, oneActiveProfile: copy.mapActiveOne, manyActiveProfiles: copy.mapActiveMany, empty: copy.mapEmpty, filterByCountry: copy.mapFilter, clearFilter: copy.mapClear }} dark /></div></section>
-   <section className="border-b bg-secondary/10"><div className="mx-auto max-w-7xl px-4 py-10 sm:px-6"><div className="grid gap-5 lg:grid-cols-[1.2fr_.8fr]"><div><p className="text-xs font-black uppercase tracking-[.18em] text-primary">COMECE GRATUITAMENTE</p><h2 className="mt-2 font-serif text-3xl">Mesmo sem assinatura, você continua dentro do ecossistema.</h2><p className="mt-3 max-w-3xl text-sm leading-6 text-muted-foreground">Acesse palestras e eventos marcados como gratuitos, conteúdos abertos e orientação inicial pelo WhatsApp. Quando quiser ampliar sua estrutura profissional, escolha o plano que combina com seu momento.</p><div className="mt-5 flex flex-wrap gap-3"><a href="https://chat.whatsapp.com/IMk7F1zg2rZJdj9NWC664G?s=cl&p=i&ilr=0" target="_blank" rel="noreferrer" className="rounded-xl bg-primary px-5 py-3 font-black text-primary-foreground">WEBINAR / GRUPO GRATUITO</a><a href="https://wa.me/32492923605?text=Ol%C3%A1%21%20Quero%20uma%20orienta%C3%A7%C3%A3o%20inicial%20sobre%20a%20Rede%20de%20Profissionais%20LDR." target="_blank" rel="noreferrer" className="rounded-xl border border-primary px-5 py-3 font-black text-primary">FALAR NO WHATSAPP</a></div></div><div className="rounded-3xl border bg-card p-6"><p className="text-xs font-black uppercase tracking-wide text-primary">ESCADA DE VALOR</p><div className="mt-4 space-y-3 text-sm"><p><b>Gratuito:</b> palestras/eventos gratuitos + conteúdos abertos + orientação inicial.</p><p><b>Profissional:</b> perfil + agenda + checkout + financeiro.</p><p><b>Pro:</b> tudo do Profissional + comunidade + treinamentos ao vivo.</p><p><b>360:</b> tudo do Pro + Mentoria LDR + S8 + ferramentas ampliadas.</p></div></div></div></div></section>
-   <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6"><p className="text-xs font-black uppercase tracking-[.18em] text-primary">Rede LDR</p><h2 className="mt-2 font-serif text-3xl">{copy.more}</h2><div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">{BENEFITS.map((b,i)=>{const I=[BadgeCheck,Globe2,CalendarDays,CircleDollarSign,ChartNoAxesCombined,UsersRound,GraduationCap,HeartHandshake,BookOpen,ShieldCheck,Sparkles,UsersRound][i];return <div key={b} className="rounded-2xl border bg-card p-5"><I className="h-6 w-6 text-primary"/><p className="mt-3 font-bold">{b}</p></div>})}</div></section>
-   <section className="border-y bg-primary/5"><div className="mx-auto max-w-7xl px-4 py-14 sm:px-6"><p className="text-xs font-black uppercase tracking-[.18em] text-primary">DIFERENCIAIS LDR</p><h2 className="mt-2 max-w-4xl font-serif text-3xl sm:text-4xl">Uma comunidade profissional com visão internacional — e ferramentas para transformar presença em operação.</h2><p className="mt-4 max-w-4xl text-sm leading-7 text-muted-foreground">A Rede LDR combina marketplace, comunidade internacional, desenvolvimento profissional e ferramentas de operação em um único ecossistema. O objetivo não é prometer clientes, mas ampliar estrutura, confiança, conexão e capacidade profissional.</p><div className="mt-7 grid gap-4 md:grid-cols-2 xl:grid-cols-4"><article className="rounded-3xl border bg-card p-6"><Globe2 className="h-7 w-7 text-primary"/><h3 className="mt-4 font-serif text-xl">Comunidade internacional</h3><p className="mt-2 text-sm leading-6 text-muted-foreground">Networking entre profissionais de diferentes países, idiomas e mercados, com possibilidade de colaboração e troca de experiência.</p></article><article className="rounded-3xl border bg-card p-6"><BadgeCheck className="h-7 w-7 text-primary"/><h3 className="mt-4 font-serif text-xl">Passaporte Profissional LDR</h3><p className="mt-2 text-sm leading-6 text-muted-foreground">Painel de completude com identidade, documentos, foto, vídeo, idiomas, serviços, agenda e atuação internacional. Não é licença ou certificação oficial.</p></article><article className="rounded-3xl border bg-card p-6"><UsersRound className="h-7 w-7 text-primary"/><h3 className="mt-4 font-serif text-xl">Conexões Internacionais</h3><p className="mt-2 text-sm leading-6 text-muted-foreground">O profissional pode indicar mercados de atuação, interesse em projetos internacionais e disponibilidade para parcerias profissionais.</p></article><article className="rounded-3xl border bg-card p-6"><Sparkles className="h-7 w-7 text-primary"/><h3 className="mt-4 font-serif text-xl">Ecossistema, não apenas perfil</h3><p className="mt-2 text-sm leading-6 text-muted-foreground">Perfil, agenda, checkout, financeiro, chat privado, avaliações verificadas, comunidade, treinamentos e ferramentas de desenvolvimento conforme o plano.</p></article></div><div className="mt-7 rounded-3xl border bg-card p-7"><p className="text-sm font-black uppercase tracking-[.14em] text-primary">POSICIONAMENTO CENTRAL</p><blockquote className="mt-3 max-w-4xl font-serif text-2xl leading-relaxed">“Sua profissão não precisa ficar limitada à sua cidade. Entre em uma comunidade profissional internacional, organize sua atuação e desenvolva sua presença dentro de um ecossistema completo.”</blockquote></div></div></section><section className="border-y bg-muted/35"><div className="mx-auto max-w-7xl px-4 py-14 sm:px-6"><h2 className="font-serif text-3xl">{copy.how}</h2><div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">{STEPS.map((s,i)=><div key={s} className="rounded-2xl border bg-card p-5"><span className="text-3xl font-black text-primary/30">{i+1}</span><p className="mt-3 font-black">{s}</p></div>)}</div></div></section>
-   {luciano?<section className="mx-auto max-w-7xl px-4 py-14 sm:px-6"><p className="text-xs font-black uppercase tracking-[.18em] text-primary">Perfil profissional real</p><div className="mt-4 grid gap-5 rounded-3xl border bg-card p-6 lg:grid-cols-[1fr_auto]"><div><h2 className="font-serif text-3xl">{luciano.display_name}</h2><p className="mt-2 font-bold text-primary">{luciano.professional_title}</p><p className="mt-3 max-w-3xl text-sm leading-6 text-muted-foreground">{luciano.about}</p><div className="mt-4 flex flex-wrap gap-2">{(luciano.specialties??[]).slice(0,7).map((s:string)=><span key={s} className="rounded-full bg-primary/8 px-3 py-1 text-xs font-bold">{s}</span>)}</div></div><Link to="/profissional/$slug" params={{slug:luciano.slug}} className="self-end rounded-xl bg-primary px-5 py-3 text-center font-bold text-primary-foreground">VER PERFIL</Link></div></section>:null}
-   <section className="border-y bg-primary/5"><div className="mx-auto max-w-7xl px-4 py-14 sm:px-6"><h2 className="font-serif text-3xl">{copy.training}</h2><p className="mt-2 max-w-3xl text-sm text-muted-foreground">Encontros AO VIVO, com data e horário publicados no painel e exibição automática conforme o fuso local do participante.</p><div className="mt-6 flex flex-wrap gap-2">{TRAINING.map(t=><span key={t} className="rounded-full border bg-card px-4 py-2 text-sm font-bold">{t}</span>)}</div></div></section>
-   <section className="mx-auto grid max-w-7xl gap-5 px-4 py-14 sm:px-6 lg:grid-cols-2"><div className="rounded-3xl border bg-card p-7"><h2 className="font-serif text-3xl">{copy.payments}</h2><p className="mt-4 text-sm leading-6 text-muted-foreground">Perfil → serviço → modalidade → data → horário → checkout → pagamento → confirmação → atendimento. Quando o serviço estiver no marketplace, o pagamento acontece pelo site.</p><p className="mt-4 text-sm font-semibold">{copy.commission}</p></div><div className="rounded-3xl border bg-card p-7"><h2 className="font-serif text-3xl">Repasse mensal</h2><p className="mt-4 text-sm leading-6 text-muted-foreground">Valor do serviço, comissão LDR, taxas, reembolsos, ajustes e líquido previsto aparecem separadamente no painel.</p><p className="mt-4 text-sm font-semibold">{copy.monthly}</p></div></section>
-   <section id="planos" className="border-y bg-muted/35"><div className="mx-auto max-w-7xl px-4 py-14 sm:px-6"><h2 className="font-serif text-3xl">{copy.plansTitle}</h2><div className="mt-7 grid gap-4 lg:grid-cols-2">{plans.map((p:AnyRow)=><article key={p.id} className={`rounded-3xl border bg-card p-7 ${p.plan_code==="360"?"border-primary shadow-lg":""}`}><div className="flex flex-wrap items-start justify-between gap-3"><div><p className="text-xs font-black uppercase tracking-[.16em] text-primary">{p.market==="BR"?"Brasil":"Europa"}</p><h3 className="mt-2 font-serif text-2xl">{p.name}</h3></div>{p.plan_code==="360"?<span className="rounded-full bg-primary px-3 py-1 text-xs font-black text-primary-foreground">MAIS COMPLETO</span>:p.plan_code==="pro"?<span className="rounded-full border px-3 py-1 text-xs font-black text-primary">MAIS RECURSOS</span>:null}</div><p className="mt-5 text-3xl font-black">{money(p.amount_cents,p.currency,locale)} <span className="text-sm font-semibold text-muted-foreground">/ mês</span></p><p className="mt-2 text-xs leading-5 text-muted-foreground">Pagamento mensal. Cancele a renovação quando quiser e continue usando até o fim do ciclo já pago.</p><p className="mt-3 rounded-xl bg-muted px-3 py-2 text-xs font-bold">{p.plan_code==="professional"?"Comunidade e treinamentos premium ficam disponíveis no Pro e no 360. Recursos gratuitos continuam acessíveis.":p.plan_code==="pro"?"Inclui comunidade profissional e treinamentos ao vivo.":"Inclui comunidade, treinamentos ao vivo, Mentoria LDR, S8 e ferramentas ampliadas."}</p><ul className="mt-5 space-y-2 text-sm">{(p.benefits??[]).map((b:string)=><li key={b} className="flex gap-2"><span className="font-black text-primary">✓</span>{b}</li>)}</ul><Link to="/profissional/login" className="mt-6 block rounded-xl bg-primary px-5 py-3 text-center font-black text-primary-foreground">CRIAR MEU PERFIL</Link></article>)}</div></div></section>
-   <section className="mx-auto max-w-5xl px-4 py-14 sm:px-6"><h2 className="font-serif text-3xl">{copy.faq}</h2><div className="mt-6 space-y-3">{FAQ.map(([q,a])=><details key={q} className="rounded-2xl border bg-card p-5"><summary className="cursor-pointer font-bold">{q}</summary><p className="mt-3 text-sm leading-6 text-muted-foreground">{a}</p></details>)}</div></section>
-   <section className="border-y bg-primary/5"><div className="mx-auto max-w-5xl px-4 py-12 text-sm leading-6 sm:px-6"><h2 className="font-serif text-2xl">{copy.transparency}</h2><p className="mt-4">{copy.noGuarantee}</p><p className="mt-2">A ativação do perfil depende da categoria, país, documentação aplicável, assinatura e aprovação da LDR. Títulos profissionais regulamentados ficam em revisão administrativa até validação dos requisitos configurados.</p><p className="mt-2">Serviços de saúde mental não substituem serviços de emergência.</p><Link to="/rede-profissionais/termos" className="mt-4 inline-block font-bold text-primary underline">Ler termos, privacidade, cancelamento, reembolso e repasse</Link></div></section>
-   <section className="bg-primary text-primary-foreground"><div className="mx-auto max-w-5xl px-4 py-16 text-center sm:px-6"><h2 className="font-serif text-4xl">{copy.final}</h2><div className="mt-7 flex flex-wrap justify-center gap-3"><Link to="/profissional/login" className="rounded-xl bg-secondary px-6 py-3 font-black text-secondary-foreground">{copy.join}</Link><Link to="/profissionais" className="rounded-xl border border-white/40 px-6 py-3 font-bold">{copy.directory}</Link></div></div></section>
-  </main>
- </div>
+function money(cents: number, currency: string, locale: string) {
+  return new Intl.NumberFormat(locale === "pt" ? "pt-BR" : locale, {
+    style: "currency",
+    currency,
+  }).format(cents / 100);
+}
+function ProfessionalsSales() {
+  const { locale } = useI18n();
+  const copy = COPY[locale];
+  const data = Route.useLoaderData() as any;
+  const profiles = (data?.profiles ?? []) as AnyRow[];
+  const categories = (data?.categories ?? []) as AnyRow[];
+  const categoryById = new Map(categories.map((category) => [category.id, category]));
+  const plans = (data?.plans ?? []) as AnyRow[];
+  const luciano = profiles.find((p: AnyRow) => p.slug === "luciano-rodrigues-almeida");
+  return (
+    <div className="min-h-screen bg-background text-foreground">
+      <header className="sticky top-0 z-40 border-b bg-background/95 backdrop-blur">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4 sm:px-6">
+          <Link to="/" className="font-serif text-xl font-bold">
+            Grupo LDR Essence
+          </Link>
+          <div className="flex items-center gap-2">
+            <Link
+              to="/profissionais"
+              className="hidden rounded-lg px-3 py-2 text-sm font-bold sm:inline-flex"
+            >
+              {copy.directory}
+            </Link>
+            <LanguageSelect />
+          </div>
+        </div>
+      </header>
+      <main>
+        <section className="overflow-hidden border-b bg-gradient-to-br from-primary via-primary to-primary/80 text-primary-foreground">
+          <div className="mx-auto grid max-w-7xl gap-8 px-4 py-16 sm:px-6 lg:grid-cols-[1.15fr_.85fr] lg:py-24">
+            <div>
+              <p className="text-xs font-black uppercase tracking-[.2em] text-secondary">
+                Rede de Profissionais LDR
+              </p>
+              <h1 className="mt-4 max-w-4xl font-serif text-4xl leading-tight sm:text-5xl lg:text-6xl">
+                {copy.hero}
+              </h1>
+              <p className="mt-5 max-w-3xl text-lg leading-8 opacity-90">{copy.sub}</p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link
+                  to="/profissional/login"
+                  className="rounded-xl bg-secondary px-6 py-3 font-black text-secondary-foreground"
+                >
+                  {copy.join}
+                </Link>
+                <Link
+                  to="/profissionais"
+                  className="rounded-xl border border-white/40 px-6 py-3 font-bold"
+                >
+                  {copy.plans}
+                </Link>
+              </div>
+              <p className="mt-5 max-w-2xl text-sm leading-6 text-white/75">{copy.concept}</p>
+            </div>
+            <ProfessionalNetworkMap
+              profiles={profiles.map((profile) => ({
+                ...profile,
+                area_label:
+                  categoryById.get(profile.category_id)?.[`name_${locale}`] ||
+                  categoryById.get(profile.category_id)?.name_pt ||
+                  profile.professional_title,
+              }))}
+              title={copy.mapTitle}
+              text={copy.mapText}
+              labels={{
+                oneProfessional: copy.mapOne,
+                manyProfessionals: copy.mapMany,
+                oneActiveProfile: copy.mapActiveOne,
+                manyActiveProfiles: copy.mapActiveMany,
+                empty: copy.mapEmpty,
+                filterByCountry: copy.mapFilter,
+                clearFilter: copy.mapClear,
+                allCountries: copy.mapCountry,
+                allCities: copy.mapCity,
+                allAreas: copy.mapArea,
+                city: copy.city,
+                area: copy.area,
+                viewProfile: copy.viewProfile,
+              }}
+              dark
+            />
+          </div>
+        </section>
+        <section className="border-b bg-secondary/10">
+          <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
+            <div className="grid gap-5 lg:grid-cols-[1.2fr_.8fr]">
+              <div>
+                <p className="text-xs font-black uppercase tracking-[.18em] text-primary">
+                  COMECE GRATUITAMENTE
+                </p>
+                <h2 className="mt-2 font-serif text-3xl">
+                  Mesmo sem assinatura, você continua dentro do ecossistema.
+                </h2>
+                <p className="mt-3 max-w-3xl text-sm leading-6 text-muted-foreground">
+                  Acesse palestras e eventos marcados como gratuitos, conteúdos abertos e orientação
+                  inicial pelo WhatsApp. Quando quiser ampliar sua estrutura profissional, escolha o
+                  plano que combina com seu momento.
+                </p>
+                <div className="mt-5 flex flex-wrap gap-3">
+                  <a
+                    href="https://chat.whatsapp.com/IMk7F1zg2rZJdj9NWC664G?s=cl&p=i&ilr=0"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="rounded-xl bg-primary px-5 py-3 font-black text-primary-foreground"
+                  >
+                    WEBINAR / GRUPO GRATUITO
+                  </a>
+                  <a
+                    href="https://wa.me/32492923605?text=Ol%C3%A1%21%20Quero%20uma%20orienta%C3%A7%C3%A3o%20inicial%20sobre%20a%20Rede%20de%20Profissionais%20LDR."
+                    target="_blank"
+                    rel="noreferrer"
+                    className="rounded-xl border border-primary px-5 py-3 font-black text-primary"
+                  >
+                    FALAR NO WHATSAPP
+                  </a>
+                </div>
+              </div>
+              <div className="rounded-3xl border bg-card p-6">
+                <p className="text-xs font-black uppercase tracking-wide text-primary">
+                  ESCADA DE VALOR
+                </p>
+                <div className="mt-4 space-y-3 text-sm">
+                  <p>
+                    <b>Gratuito:</b> palestras/eventos gratuitos + conteúdos abertos + orientação
+                    inicial.
+                  </p>
+                  <p>
+                    <b>Profissional:</b> perfil + agenda + checkout + financeiro.
+                  </p>
+                  <p>
+                    <b>Pro:</b> tudo do Profissional + comunidade + treinamentos ao vivo.
+                  </p>
+                  <p>
+                    <b>360:</b> tudo do Pro + Mentoria LDR + S8 + ferramentas ampliadas.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
+          <p className="text-xs font-black uppercase tracking-[.18em] text-primary">Rede LDR</p>
+          <h2 className="mt-2 font-serif text-3xl">{copy.more}</h2>
+          <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {BENEFITS.map((b, i) => {
+              const I = [
+                BadgeCheck,
+                Globe2,
+                CalendarDays,
+                CircleDollarSign,
+                ChartNoAxesCombined,
+                UsersRound,
+                GraduationCap,
+                HeartHandshake,
+                BookOpen,
+                ShieldCheck,
+                Sparkles,
+                UsersRound,
+              ][i];
+              return (
+                <div key={b} className="rounded-2xl border bg-card p-5">
+                  <I className="h-6 w-6 text-primary" />
+                  <p className="mt-3 font-bold">{b}</p>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+        <section className="border-y bg-primary/5">
+          <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
+            <p className="text-xs font-black uppercase tracking-[.18em] text-primary">
+              DIFERENCIAIS LDR
+            </p>
+            <h2 className="mt-2 max-w-4xl font-serif text-3xl sm:text-4xl">
+              Uma comunidade profissional com visão internacional — e ferramentas para transformar
+              presença em operação.
+            </h2>
+            <p className="mt-4 max-w-4xl text-sm leading-7 text-muted-foreground">
+              A Rede LDR combina marketplace, comunidade internacional, desenvolvimento profissional
+              e ferramentas de operação em um único ecossistema. O objetivo não é prometer clientes,
+              mas ampliar estrutura, confiança, conexão e capacidade profissional.
+            </p>
+            <div className="mt-7 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              <article className="rounded-3xl border bg-card p-6">
+                <Globe2 className="h-7 w-7 text-primary" />
+                <h3 className="mt-4 font-serif text-xl">Comunidade internacional</h3>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                  Networking entre profissionais de diferentes países, idiomas e mercados, com
+                  possibilidade de colaboração e troca de experiência.
+                </p>
+              </article>
+              <article className="rounded-3xl border bg-card p-6">
+                <BadgeCheck className="h-7 w-7 text-primary" />
+                <h3 className="mt-4 font-serif text-xl">Passaporte Profissional LDR</h3>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                  Painel de completude com identidade, documentos, foto, vídeo, idiomas, serviços,
+                  agenda e atuação internacional. Não é licença ou certificação oficial.
+                </p>
+              </article>
+              <article className="rounded-3xl border bg-card p-6">
+                <UsersRound className="h-7 w-7 text-primary" />
+                <h3 className="mt-4 font-serif text-xl">Conexões Internacionais</h3>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                  O profissional pode indicar mercados de atuação, interesse em projetos
+                  internacionais e disponibilidade para parcerias profissionais.
+                </p>
+              </article>
+              <article className="rounded-3xl border bg-card p-6">
+                <Sparkles className="h-7 w-7 text-primary" />
+                <h3 className="mt-4 font-serif text-xl">Ecossistema, não apenas perfil</h3>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                  Perfil, agenda, checkout, financeiro, chat privado, avaliações verificadas,
+                  comunidade, treinamentos e ferramentas de desenvolvimento conforme o plano.
+                </p>
+              </article>
+            </div>
+            <div className="mt-7 rounded-3xl border bg-card p-7">
+              <p className="text-sm font-black uppercase tracking-[.14em] text-primary">
+                POSICIONAMENTO CENTRAL
+              </p>
+              <blockquote className="mt-3 max-w-4xl font-serif text-2xl leading-relaxed">
+                “Sua profissão não precisa ficar limitada à sua cidade. Entre em uma comunidade
+                profissional internacional, organize sua atuação e desenvolva sua presença dentro de
+                um ecossistema completo.”
+              </blockquote>
+            </div>
+          </div>
+        </section>
+        <section className="border-y bg-muted/35">
+          <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
+            <h2 className="font-serif text-3xl">{copy.how}</h2>
+            <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {STEPS.map((s, i) => (
+                <div key={s} className="rounded-2xl border bg-card p-5">
+                  <span className="text-3xl font-black text-primary/30">{i + 1}</span>
+                  <p className="mt-3 font-black">{s}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+        {luciano ? (
+          <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
+            <p className="text-xs font-black uppercase tracking-[.18em] text-primary">
+              Perfil profissional real
+            </p>
+            <div className="mt-4 grid gap-5 rounded-3xl border bg-card p-6 lg:grid-cols-[1fr_auto]">
+              <div>
+                <h2 className="font-serif text-3xl">{luciano.display_name}</h2>
+                <p className="mt-2 font-bold text-primary">{luciano.professional_title}</p>
+                <p className="mt-3 max-w-3xl text-sm leading-6 text-muted-foreground">
+                  {luciano.about}
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {(luciano.specialties ?? []).slice(0, 7).map((s: string) => (
+                    <span key={s} className="rounded-full bg-primary/8 px-3 py-1 text-xs font-bold">
+                      {s}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <Link
+                to="/profissional/$slug"
+                params={{ slug: luciano.slug }}
+                className="self-end rounded-xl bg-primary px-5 py-3 text-center font-bold text-primary-foreground"
+              >
+                VER PERFIL
+              </Link>
+            </div>
+          </section>
+        ) : null}
+        <section className="border-y bg-primary/5">
+          <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
+            <h2 className="font-serif text-3xl">{copy.training}</h2>
+            <p className="mt-2 max-w-3xl text-sm text-muted-foreground">
+              Encontros AO VIVO, com data e horário publicados no painel e exibição automática
+              conforme o fuso local do participante.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {TRAINING.map((t) => (
+                <span key={t} className="rounded-full border bg-card px-4 py-2 text-sm font-bold">
+                  {t}
+                </span>
+              ))}
+            </div>
+          </div>
+        </section>
+        <section className="mx-auto grid max-w-7xl gap-5 px-4 py-14 sm:px-6 lg:grid-cols-2">
+          <div className="rounded-3xl border bg-card p-7">
+            <h2 className="font-serif text-3xl">{copy.payments}</h2>
+            <p className="mt-4 text-sm leading-6 text-muted-foreground">
+              Perfil → serviço → modalidade → data → horário → checkout → pagamento → confirmação →
+              atendimento. Quando o serviço estiver no marketplace, o pagamento acontece pelo site.
+            </p>
+            <p className="mt-4 text-sm font-semibold">{copy.commission}</p>
+          </div>
+          <div className="rounded-3xl border bg-card p-7">
+            <h2 className="font-serif text-3xl">Repasse mensal</h2>
+            <p className="mt-4 text-sm leading-6 text-muted-foreground">
+              Valor do serviço, comissão LDR, taxas, reembolsos, ajustes e líquido previsto aparecem
+              separadamente no painel.
+            </p>
+            <p className="mt-4 text-sm font-semibold">{copy.monthly}</p>
+          </div>
+        </section>
+        <section id="planos" className="border-y bg-muted/35">
+          <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
+            <h2 className="font-serif text-3xl">{copy.plansTitle}</h2>
+            <div className="mt-7 grid gap-4 lg:grid-cols-2">
+              {plans.map((p: AnyRow) => (
+                <article
+                  key={p.id}
+                  className={`rounded-3xl border bg-card p-7 ${p.plan_code === "360" ? "border-primary shadow-lg" : ""}`}
+                >
+                  <div className="flex flex-wrap items-start justify-between gap-3">
+                    <div>
+                      <p className="text-xs font-black uppercase tracking-[.16em] text-primary">
+                        {p.market === "BR" ? "Brasil" : "Europa"}
+                      </p>
+                      <h3 className="mt-2 font-serif text-2xl">{p.name}</h3>
+                    </div>
+                    {p.plan_code === "360" ? (
+                      <span className="rounded-full bg-primary px-3 py-1 text-xs font-black text-primary-foreground">
+                        MAIS COMPLETO
+                      </span>
+                    ) : p.plan_code === "pro" ? (
+                      <span className="rounded-full border px-3 py-1 text-xs font-black text-primary">
+                        MAIS RECURSOS
+                      </span>
+                    ) : null}
+                  </div>
+                  <p className="mt-5 text-3xl font-black">
+                    {money(p.amount_cents, p.currency, locale)}{" "}
+                    <span className="text-sm font-semibold text-muted-foreground">/ mês</span>
+                  </p>
+                  <p className="mt-2 text-xs leading-5 text-muted-foreground">
+                    Pagamento mensal. Cancele a renovação quando quiser e continue usando até o fim
+                    do ciclo já pago.
+                  </p>
+                  <p className="mt-3 rounded-xl bg-muted px-3 py-2 text-xs font-bold">
+                    {p.plan_code === "professional"
+                      ? "Comunidade e treinamentos premium ficam disponíveis no Pro e no 360. Recursos gratuitos continuam acessíveis."
+                      : p.plan_code === "pro"
+                        ? "Inclui comunidade profissional e treinamentos ao vivo."
+                        : "Inclui comunidade, treinamentos ao vivo, Mentoria LDR, S8 e ferramentas ampliadas."}
+                  </p>
+                  <ul className="mt-5 space-y-2 text-sm">
+                    {(p.benefits ?? []).map((b: string) => (
+                      <li key={b} className="flex gap-2">
+                        <span className="font-black text-primary">✓</span>
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+                  <Link
+                    to="/profissional/login"
+                    className="mt-6 block rounded-xl bg-primary px-5 py-3 text-center font-black text-primary-foreground"
+                  >
+                    CRIAR MEU PERFIL
+                  </Link>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+        <section className="mx-auto max-w-5xl px-4 py-14 sm:px-6">
+          <h2 className="font-serif text-3xl">{copy.faq}</h2>
+          <div className="mt-6 space-y-3">
+            {FAQ.map(([q, a]) => (
+              <details key={q} className="rounded-2xl border bg-card p-5">
+                <summary className="cursor-pointer font-bold">{q}</summary>
+                <p className="mt-3 text-sm leading-6 text-muted-foreground">{a}</p>
+              </details>
+            ))}
+          </div>
+        </section>
+        <section className="border-y bg-primary/5">
+          <div className="mx-auto max-w-5xl px-4 py-12 text-sm leading-6 sm:px-6">
+            <h2 className="font-serif text-2xl">{copy.transparency}</h2>
+            <p className="mt-4">{copy.noGuarantee}</p>
+            <p className="mt-2">
+              A ativação do perfil depende da categoria, país, documentação aplicável, assinatura e
+              aprovação da LDR. Títulos profissionais regulamentados ficam em revisão administrativa
+              até validação dos requisitos configurados.
+            </p>
+            <p className="mt-2">Serviços de saúde mental não substituem serviços de emergência.</p>
+            <Link
+              to="/rede-profissionais/termos"
+              className="mt-4 inline-block font-bold text-primary underline"
+            >
+              Ler termos, privacidade, cancelamento, reembolso e repasse
+            </Link>
+          </div>
+        </section>
+        <section className="bg-primary text-primary-foreground">
+          <div className="mx-auto max-w-5xl px-4 py-16 text-center sm:px-6">
+            <h2 className="font-serif text-4xl">{copy.final}</h2>
+            <div className="mt-7 flex flex-wrap justify-center gap-3">
+              <Link
+                to="/profissional/login"
+                className="rounded-xl bg-secondary px-6 py-3 font-black text-secondary-foreground"
+              >
+                {copy.join}
+              </Link>
+              <Link
+                to="/profissionais"
+                className="rounded-xl border border-white/40 px-6 py-3 font-bold"
+              >
+                {copy.directory}
+              </Link>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  );
 }
