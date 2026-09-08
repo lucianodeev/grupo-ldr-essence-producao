@@ -21,11 +21,27 @@ export const clientCreateDoMamaoTrainingCheckout = createServerFn({ method: "POS
     return createDoMamaoTrainingCheckout(context.userId, emailOf(context.claims), data.market);
   });
 
+export const clientCreateDoMamaoProjectReviewCheckout = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: { market: "BR" | "INTL" }) => data)
+  .handler(async ({ context, data }) => {
+    const { createDoMamaoProjectReviewCheckout } = await import("@/lib/training-commerce.server");
+    return createDoMamaoProjectReviewCheckout(context.userId, emailOf(context.claims), data.market);
+  });
+
 export const clientDoMamaoTrainingExperience = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const { getDoMamaoTrainingExperience } = await import("@/lib/training-commerce.server");
     return getDoMamaoTrainingExperience(context.userId, emailOf(context.claims));
+  });
+
+export const clientSubmitDoMamaoProject = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: { title: string; projectUrl?: string | null; projectText?: string | null }) => data)
+  .handler(async ({ context, data }) => {
+    const { submitDoMamaoProject } = await import("@/lib/training-commerce.server");
+    return submitDoMamaoProject(context.userId, emailOf(context.claims), data);
   });
 
 export const clientSaveDoMamaoTrainingState = createServerFn({ method: "POST" })
