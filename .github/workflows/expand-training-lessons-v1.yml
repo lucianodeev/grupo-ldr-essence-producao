@@ -1,0 +1,149 @@
+name: Expandir 90 aulas do treinamento
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/expand-training-lessons-v1.yml
+
+permissions:
+  contents: write
+
+jobs:
+  expand-build-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Expandir conteúdo para cerca de 20 minutos por aula
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          path=Path('apps/painel-ldr/src/content/do-mamao-curriculum.ts')
+          text=path.read_text()
+          if 'function extendedReading(' not in text:
+            marker='export function getDoMamaoCurriculum(locale:TrainingLocale):DailyLesson[] {'
+            if marker not in text: raise SystemExit('Função do currículo não encontrada')
+            helper=r'''function extendedReading(locale:TrainingLocale,name:string,description:string,phaseName:string,application:string):string[]{
+  const ctx={name,description,phaseName,application};
+  const templates:Record<TrainingLocale,string[]>={
+    pt:[
+      "Comece esta aula tratando {name} como uma decisão de negócio, não como uma ideia abstrata. {description} Antes de escolher qualquer resposta, observe o que acontece hoje na prática: quem participa, quais recursos existem, quais limites são reais e quais suposições ainda não foram testadas. Um negócio ganha clareza quando o empreendedor separa desejo de evidência. Escreva mentalmente o que você acredita saber sobre este tema e, ao lado, o que você realmente consegue demonstrar com comportamento de cliente, números, conversas, testes ou resultados. Essa diferença será importante ao longo da atividade.",
+      "No contexto da etapa {phaseName}, este tema precisa produzir movimento. {application} O objetivo não é decorar conceitos, mas transformar o conceito em uma pequena decisão executável. Pense em três níveis: o que precisa ser compreendido, o que precisa ser escolhido e o que precisa ser testado. Se você permanecer apenas na compreensão, a aula vira informação. Quando registra uma escolha e cria um teste, ela começa a virar estratégia. Ao longo da leitura, procure frases que você conseguiria transformar em uma ação para as próximas 24 ou 48 horas.",
+      "Uma forma útil de aprofundar {name} é observar o negócio pelos olhos do cliente. Pergunte o que ele vê, o que entende, o que compara, o que teme perder e qual esforço precisa fazer para avançar. Muitas decisões internas parecem claras para quem criou a oferta, mas não são claras para quem está do outro lado. Por isso, teste a linguagem, a sequência e a facilidade de compreensão. Se uma pessoa externa não consegue explicar sua proposta com palavras simples, ainda existe trabalho de clareza a fazer.",
+      "Também é necessário olhar para {name} pelo ponto de vista financeiro. Nem toda boa ideia é sustentável na forma em que foi desenhada. Pergunte qual custo esta decisão cria, qual receita pode gerar, qual margem precisa preservar e quanto tempo é necessário para perceber resultado. Mesmo quando o tema da aula não é diretamente financeiro, toda escolha consome algum recurso: dinheiro, horas, energia, atenção da equipe ou capacidade operacional. Registrar esse custo evita crescimento desorganizado e ajuda a comparar alternativas com mais maturidade.",
+      "Agora observe a dimensão operacional. Uma decisão só se torna parte do negócio quando pode ser repetida com um padrão mínimo. Em {name}, identifique quais tarefas dependem exclusivamente de você, quais podem ser documentadas e quais poderiam ser executadas por outra pessoa com uma orientação clara. Pense em entrada, processo e saída: o que dispara a tarefa, o que precisa acontecer no meio e qual resultado mostra que ela terminou bem. Esse raciocínio transforma improviso em processo sem exigir burocracia excessiva.",
+      "Outro ponto importante é risco. Para cada decisão relacionada a {name}, imagine pelo menos três cenários: melhor resultado razoável, resultado esperado e resultado abaixo do esperado. Depois determine o que você faria em cada um deles. Esse exercício diminui decisões impulsivas porque cria critérios antes da emoção do momento. Risco não significa evitar movimento; significa saber quanto você pode investir, perder ou adaptar sem comprometer o restante da operação. Uma estratégia madura contém também uma regra de saída ou correção.",
+      "Use evidências pequenas antes de comprometer recursos grandes. Em vez de tentar provar que toda a estratégia está certa, procure a próxima hipótese que pode ser testada com baixo custo. Pode ser uma conversa, uma oferta piloto, uma página simples, uma amostra, uma pré-venda, uma mensagem, uma observação de comportamento ou uma comparação de números. O foco de {name} deve ser aprender algo concreto. Um teste bom não é apenas aquele que confirma sua ideia; é aquele que ajuda você a decidir melhor o próximo passo.",
+      "A comparação com concorrentes e alternativas também deve ser objetiva. Não observe apenas empresas parecidas com a sua. O cliente pode resolver o mesmo problema de outra maneira, adiar a decisão, fazer sozinho ou simplesmente não comprar nada. Em {name}, liste quais alternativas competem pela mesma atenção, dinheiro ou prioridade. Depois identifique em que situação sua proposta é claramente mais adequada e em que situação não é. Essa honestidade melhora posicionamento e evita tentar vender para pessoas que não têm aderência.",
+      "Pense agora na comunicação. Uma decisão estratégica perde força quando não pode ser explicada de forma simples. Tente resumir o aprendizado central sobre {name} em três frases: qual problema estamos tratando, qual escolha estamos fazendo e qual benefício esperamos produzir. Depois elimine palavras genéricas e promessas que você não consegue demonstrar. Comunicação clara não é falar pouco por obrigação; é reduzir a distância entre o que o negócio pretende entregar e o que o cliente entende que receberá.",
+      "Considere também a experiência do cliente depois da compra. Muitas estratégias se concentram em conquistar atenção e esquecem entrega, acompanhamento e pós-venda. Pergunte como {name} influencia a expectativa antes da compra, a percepção durante a entrega e a lembrança depois do resultado. Se a promessa cria uma expectativa maior do que a operação consegue sustentar, haverá frustração. Se a entrega é boa, mas o cliente não percebe o valor, haverá dificuldade de retenção e indicação. Estratégia e experiência precisam conversar.",
+      "Na prática, evolução exige registro. Ao trabalhar {name}, anote data, hipótese, ação realizada, resultado observado e decisão tomada. Esse histórico cria memória empresarial e reduz a tendência de repetir erros ou mudar de direção sem saber por quê. Ao final de algumas semanas, você deverá conseguir olhar para seus registros e identificar padrões: o que costuma funcionar, quais objeções se repetem, onde surgem atrasos, quais canais respondem melhor e quais decisões consomem muito esforço para pouco retorno.",
+      "Também existe uma dimensão humana na execução. Empreendedores podem confundir ansiedade com urgência, comparação com estratégia e perfeccionismo com qualidade. Ao estudar {name}, perceba se você está evitando um teste por medo de resposta, adiando uma decisão esperando certeza absoluta ou copiando movimentos de outras pessoas sem relação com seu contexto. A função da aula é criar critérios para agir com mais clareza. A emoção pode ser reconhecida sem ser transformada automaticamente em regra de negócio.",
+      "Se você trabalha sozinho, adapte esta análise para sua capacidade real. Se possui equipe, transforme as decisões em acordos claros: responsável, prazo, padrão e forma de acompanhamento. Em ambos os casos, {name} deve terminar com uma próxima ação identificável. Evite listas enormes. Escolha uma prioridade que possa ser executada, observada e revisada. Depois de executá-la, volte ao dado produzido e ajuste. Esse ciclo curto de ação, observação e correção é mais útil do que um plano grande que nunca encontra a realidade.",
+      "Para negócios digitais, físicos, serviços profissionais ou produtos, o princípio permanece semelhante, mas a evidência muda. Em um serviço, você pode observar conversas, agendamentos, recorrência e indicação. Em produto, pode observar procura, conversão, devolução e margem. Em negócio digital, acompanhe atenção, cadastro, ativação, pagamento e retenção. Use {name} para escolher indicadores compatíveis com seu modelo, evitando medir apenas números fáceis que não ajudam a tomar decisões.",
+      "Antes de seguir para o quiz, faça uma revisão ativa. Explique para si mesmo, sem consultar o texto, o que {name} significa no seu negócio, qual erro você quer evitar, qual evidência ainda falta e qual teste realizará. Se não conseguir explicar, releia a parte correspondente. A atividade escrita depois do quiz não é uma formalidade: ela será usada no Manual do Seu Negócio. Por isso, responda com contexto, exemplos, números quando existirem, hipóteses claramente marcadas e decisões que possam ser revistas nas avaliações mensais.",
+      "Feche a leitura conectando o tema ao mês atual. A formação foi desenhada para que cada aula construa uma parte do projeto e não fique isolada. O que você decidir hoje sobre {name} deve conversar com as decisões anteriores e preparar as próximas. Procure contradições: uma proposta de valor que não combina com o preço, uma promessa que a operação não entrega, uma meta sem recursos, um canal sem público ou um crescimento sem caixa. Encontrar contradições agora é progresso, porque permite corrigir antes que o custo aumente."
+    ],
+    en:[
+      "Treat {name} as a business decision rather than an abstract idea. {description} Before choosing an answer, observe what is happening today: who is involved, which resources exist, which constraints are real and which assumptions remain untested. A business becomes clearer when the entrepreneur separates desire from evidence. List what you believe you know about this topic and what you can actually demonstrate through customer behavior, numbers, conversations, experiments or results. That gap matters throughout the exercise.",
+      "Within the {phaseName} stage, this topic must create movement. {application} The goal is not to memorize concepts but to turn them into an executable decision. Think in three levels: what must be understood, what must be chosen and what must be tested. Understanding alone becomes information; a recorded choice plus a test becomes strategy. As you read, identify statements that can become an action within the next 24 to 48 hours.",
+      "Explore {name} through the customer's eyes. Ask what the customer sees, understands, compares, fears losing and must do to move forward. Internal decisions often feel obvious to the creator but remain confusing to the buyer. Test language, sequence and ease of understanding. If an outside person cannot explain your offer in simple words, there is still clarity work to do.",
+      "Look at the financial dimension as well. Not every good idea is sustainable in its current design. Ask what cost the decision creates, what revenue it may generate, what margin must be protected and how long it should take to observe a result. Even when {name} is not a finance topic, every choice consumes money, time, energy, team attention or operational capacity. Recording that cost helps compare alternatives responsibly.",
+      "Now examine operations. A decision becomes part of the business only when it can be repeated with a minimum standard. For {name}, identify tasks that depend only on you, tasks that can be documented and tasks another person could perform with clear guidance. Think input, process and output: what starts the work, what happens in the middle and what proves it ended well. This turns improvisation into a useful process without unnecessary bureaucracy.",
+      "Consider risk through three scenarios: a reasonable best case, the expected case and a below-expectation case. Decide in advance how you would respond to each. This reduces impulsive decisions because criteria exist before the emotion of the moment. Risk management does not mean avoiding action; it means knowing how much you can invest, lose or adapt without damaging the rest of the operation.",
+      "Use small evidence before making large commitments. Instead of proving the entire strategy, identify the next low-cost hypothesis to test. It can be a conversation, pilot offer, simple page, sample, pre-sale, message, observation or numerical comparison. The purpose of {name} is to learn something concrete. A good test is useful even when it disproves your initial idea because it improves the next decision.",
+      "Compare competitors and alternatives objectively. Customers may solve the same problem in another way, postpone the decision, do it themselves or buy nothing. List the alternatives competing for the same attention, money or priority. Identify when your proposal is clearly more suitable and when it is not. This honesty improves positioning and prevents wasted selling effort.",
+      "Translate the strategy into communication. Summarize {name} in three sentences: the problem being addressed, the decision being made and the expected benefit. Remove vague words and promises you cannot support. Clear communication reduces the distance between what the business intends to deliver and what the customer believes will be delivered.",
+      "Consider the customer experience after purchase. Acquisition is only one part of the system. Ask how {name} affects expectations before buying, perception during delivery and memory after the result. When promises exceed operational capacity, frustration follows. When delivery is strong but value is not perceived, retention and referrals become harder. Strategy and experience must reinforce each other.",
+      "Build a record of learning. For each experiment related to {name}, note the date, hypothesis, action, observed result and next decision. This creates business memory and prevents repeated mistakes or unexplained changes in direction. After several weeks, patterns should become visible in objections, delays, channels, conversion, customer behavior and effort-to-return ratios.",
+      "Execution also has a human dimension. Anxiety can look like urgency, comparison can look like strategy and perfectionism can look like quality. Notice whether you are avoiding a test because you fear the answer, delaying a decision while waiting for certainty or copying someone else's move without context. The lesson should give you criteria for clearer action rather than a demand for emotional certainty.",
+      "Adapt the analysis to your real capacity. If you work alone, choose a manageable next action. If you have a team, turn decisions into clear agreements about ownership, deadlines, standards and follow-up. In both cases, {name} should end with something observable. Short cycles of action, observation and correction are more valuable than large plans that never meet reality.",
+      "The principle applies to services, physical products and digital businesses, but the evidence differs. Services may track conversations, bookings, recurrence and referrals. Products may track demand, conversion, returns and margin. Digital businesses may track attention, registration, activation, payment and retention. Choose indicators for {name} that match your model instead of measuring only what is easy.",
+      "Before the quiz, explain without looking at the text what {name} means for your business, which mistake you want to avoid, which evidence is missing and what test you will run. If you cannot explain it, revisit the relevant section. Your written answers will feed the Business Manual, so include context, examples, numbers when available, clearly labeled assumptions and decisions that can be reviewed during the monthly evaluations.",
+      "Connect today's decision to the current month. Each lesson is meant to build part of the same project. Check for contradictions between value, price, operations, resources, channels and goals. Finding a contradiction is useful because it allows correction before the cost of the mistake grows."
+    ],
+    fr:[
+      "Traitez {name} comme une décision d’entreprise et non comme une idée abstraite. {description} Observez d’abord la réalité actuelle : personnes impliquées, ressources, contraintes et hypothèses non testées. Une activité devient plus claire lorsque l’entrepreneur sépare désir et preuve. Distinguez ce que vous pensez savoir de ce que vous pouvez démontrer par le comportement des clients, les chiffres, les conversations, les tests ou les résultats.",
+      "Dans l’étape {phaseName}, ce thème doit produire du mouvement. {application} L’objectif n’est pas de mémoriser des concepts mais de les transformer en décision exécutable. Pensez à trois niveaux : comprendre, choisir et tester. La compréhension seule reste de l’information ; une décision documentée accompagnée d’un test devient une stratégie.",
+      "Analysez {name} avec les yeux du client. Que voit-il, que comprend-il, que compare-t-il, que craint-il de perdre et quel effort doit-il fournir ? Les décisions internes semblent souvent évidentes au créateur mais restent confuses pour l’acheteur. Testez le langage, la séquence et la facilité de compréhension.",
+      "Examinez aussi la dimension financière. Toute décision consomme une ressource : argent, temps, énergie, attention de l’équipe ou capacité opérationnelle. Demandez quel coût crée {name}, quel revenu peut être généré, quelle marge doit être protégée et combien de temps sera nécessaire avant d’observer un résultat.",
+      "Observez ensuite l’opération. Une décision devient réellement une partie de l’entreprise lorsqu’elle peut être répétée avec un standard minimal. Pour {name}, identifiez les tâches dépendantes de vous, celles qui peuvent être documentées et celles qu’une autre personne pourrait réaliser avec des consignes claires.",
+      "Travaillez le risque à travers trois scénarios : favorable, attendu et inférieur aux attentes. Décidez à l’avance comment agir dans chacun. Le risque ne signifie pas éviter l’action ; il signifie savoir combien investir, perdre ou adapter sans compromettre le reste de l’activité.",
+      "Cherchez de petites preuves avant de faire de grands engagements. Une conversation, une offre pilote, une page simple, un échantillon, une prévente, un message ou une comparaison chiffrée peuvent suffire à tester une hypothèse. Le but de {name} est de produire un apprentissage concret.",
+      "Comparez objectivement concurrents et alternatives. Le client peut résoudre le même problème autrement, reporter la décision, le faire lui-même ou ne rien acheter. Identifiez les alternatives qui se disputent la même attention, le même budget ou la même priorité.",
+      "Transformez ensuite la stratégie en communication. Résumez {name} en trois phrases : problème traité, décision prise et bénéfice attendu. Supprimez les mots vagues et les promesses que vous ne pouvez pas soutenir. La clarté réduit la distance entre ce que l’entreprise veut livrer et ce que le client comprend.",
+      "Pensez également à l’expérience après l’achat. Comment {name} influence-t-il l’attente avant la vente, la perception pendant la livraison et le souvenir après le résultat ? Une promesse supérieure à la capacité opérationnelle crée de la frustration ; une bonne livraison dont la valeur n’est pas perçue limite fidélisation et recommandation.",
+      "Documentez l’apprentissage. Pour chaque test, notez date, hypothèse, action, résultat observé et décision suivante. Cette mémoire d’entreprise aide à éviter la répétition des erreurs et permet de repérer des tendances dans les objections, retards, canaux, conversions et comportements clients.",
+      "L’exécution possède aussi une dimension humaine. L’anxiété peut ressembler à l’urgence, la comparaison à la stratégie et le perfectionnisme à la qualité. Observez si vous évitez un test par peur de la réponse ou si vous retardez une décision en attendant une certitude impossible.",
+      "Adaptez l’analyse à votre capacité réelle. Si vous travaillez seul, choisissez une prochaine action réaliste. Avec une équipe, transformez les décisions en accords clairs : responsable, délai, standard et suivi. Les cycles courts d’action, observation et correction sont plus utiles qu’un grand plan jamais confronté au réel.",
+      "Le principe s’applique aux services, produits physiques et activités numériques, mais les preuves diffèrent. Choisissez pour {name} des indicateurs adaptés à votre modèle : conversations, réservations, récurrence, demande, conversion, marge, activation, paiement ou rétention.",
+      "Avant le quiz, expliquez sans relire ce que {name} signifie pour votre activité, quelle erreur vous voulez éviter, quelle preuve manque et quel test vous réaliserez. Vos réponses écrites alimenteront le Manuel de l’Entreprise ; donnez donc du contexte, des exemples, des chiffres quand ils existent et des décisions révisables lors des évaluations mensuelles.",
+      "Reliez enfin cette décision au mois actuel. Chaque cours construit une partie du même projet. Cherchez les contradictions entre valeur, prix, opération, ressources, canaux et objectifs. Trouver une contradiction est utile, car cela permet de la corriger avant que son coût augmente."
+    ],
+    es:[
+      "Trata {name} como una decisión de negocio y no como una idea abstracta. {description} Antes de responder, observa la realidad actual: personas involucradas, recursos, límites e hipótesis todavía no probadas. Un negocio gana claridad cuando el emprendedor separa deseo de evidencia. Distingue lo que crees saber de lo que realmente puedes demostrar mediante comportamiento del cliente, números, conversaciones, pruebas o resultados.",
+      "En la etapa {phaseName}, este tema necesita producir movimiento. {application} El objetivo no es memorizar conceptos, sino convertirlos en una decisión ejecutable. Piensa en tres niveles: comprender, elegir y probar. La comprensión sola es información; una elección documentada acompañada de una prueba empieza a convertirse en estrategia.",
+      "Analiza {name} desde los ojos del cliente. Pregunta qué ve, qué entiende, qué compara, qué teme perder y qué esfuerzo debe hacer para avanzar. Muchas decisiones internas parecen obvias para quien creó la oferta, pero siguen siendo confusas para el comprador. Prueba el lenguaje, la secuencia y la facilidad de comprensión.",
+      "Mira también la dimensión financiera. Toda decisión consume algún recurso: dinero, tiempo, energía, atención del equipo o capacidad operativa. Pregunta qué coste crea {name}, qué ingreso podría generar, qué margen necesitas proteger y cuánto tiempo debería pasar antes de observar un resultado.",
+      "Observa ahora la operación. Una decisión se convierte en parte real del negocio cuando puede repetirse con un estándar mínimo. Para {name}, identifica qué tareas dependen solo de ti, cuáles pueden documentarse y cuáles podría realizar otra persona con instrucciones claras.",
+      "Trabaja el riesgo con tres escenarios: favorable, esperado y por debajo de lo esperado. Decide antes cómo actuarías en cada uno. Gestionar riesgo no significa evitar movimiento; significa saber cuánto puedes invertir, perder o adaptar sin comprometer el resto de la operación.",
+      "Busca evidencias pequeñas antes de asumir compromisos grandes. Una conversación, oferta piloto, página sencilla, muestra, preventa, mensaje, observación o comparación de números puede probar una hipótesis. El objetivo de {name} es aprender algo concreto que mejore la siguiente decisión.",
+      "Compara competidores y alternativas con objetividad. El cliente puede resolver el mismo problema de otra manera, aplazar la decisión, hacerlo solo o no comprar nada. Identifica qué alternativas compiten por la misma atención, dinero o prioridad y cuándo tu propuesta es realmente la más adecuada.",
+      "Convierte la estrategia en comunicación. Resume {name} en tres frases: problema tratado, decisión tomada y beneficio esperado. Elimina palabras genéricas y promesas que no puedas respaldar. La claridad reduce la distancia entre lo que el negocio pretende entregar y lo que el cliente cree que recibirá.",
+      "Piensa en la experiencia después de la compra. ¿Cómo afecta {name} a la expectativa antes de comprar, a la percepción durante la entrega y al recuerdo después del resultado? Una promesa superior a la capacidad de operación genera frustración; una buena entrega cuyo valor no se percibe dificulta retención y recomendación.",
+      "Documenta el aprendizaje. Para cada prueba relacionada con {name}, registra fecha, hipótesis, acción, resultado observado y decisión siguiente. Esa memoria empresarial reduce la repetición de errores y permite encontrar patrones en objeciones, retrasos, canales, conversión y comportamiento del cliente.",
+      "La ejecución también tiene una dimensión humana. La ansiedad puede parecer urgencia, la comparación puede parecer estrategia y el perfeccionismo puede parecer calidad. Observa si estás evitando una prueba por miedo a la respuesta o aplazando una decisión mientras esperas una certeza que no existe.",
+      "Adapta el análisis a tu capacidad real. Si trabajas solo, elige una acción próxima que puedas ejecutar. Si tienes equipo, transforma las decisiones en acuerdos claros sobre responsable, plazo, estándar y seguimiento. Los ciclos cortos de acción, observación y corrección son más valiosos que los planes enormes que nunca llegan a la realidad.",
+      "El principio sirve para servicios, productos físicos y negocios digitales, aunque la evidencia cambia. Elige para {name} indicadores compatibles con tu modelo: conversaciones, reservas, recurrencia, demanda, conversión, devoluciones, margen, activación, pago o retención.",
+      "Antes del quiz, explica sin mirar el texto qué significa {name} para tu negocio, qué error quieres evitar, qué evidencia falta y qué prueba harás. Tus respuestas escritas alimentarán el Manual de Mi Negocio, así que incluye contexto, ejemplos, números cuando existan, hipótesis claramente identificadas y decisiones que puedan revisarse en las evaluaciones mensuales.",
+      "Conecta la decisión de hoy con el mes actual. Cada clase construye una parte del mismo proyecto. Busca contradicciones entre valor, precio, operación, recursos, canales y objetivos. Encontrar una contradicción es progreso porque permite corregirla antes de que aumente el coste del error."
+    ]
+  };
+  return templates[locale].map(p=>p.replaceAll('{name}',ctx.name).replaceAll('{description}',ctx.description).replaceAll('{phaseName}',ctx.phaseName).replaceAll('{application}',ctx.application));
+}
+
+'''
+            text=text.replace(marker,helper+marker,1)
+
+          # acrescenta a leitura aprofundada ao array theory de cada uma das 90 aulas
+          function_start=text.index('export function getDoMamaoCurriculum')
+          head=text[:function_start]; body=text[function_start:]
+          pattern=re.compile(r'(const theory=\[\n)(.*?)(\n      \];)',re.S)
+          m=pattern.search(body)
+          if not m: raise SystemExit('Array theory não encontrado')
+          if 'extendedReading(locale,name' not in m.group(0):
+            expanded=m.group(1)+m.group(2)+',\n        ...extendedReading(locale,name,theme.description[locale],phase.name,phase.application)'+m.group(3)
+            body=body[:m.start()]+expanded+body[m.end():]
+          text=head+body
+          path.write_text(text)
+          PY
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Instalar dependências
+        working-directory: apps/painel-ldr
+        run: npm install --no-audit --no-fund
+
+      - name: Validar build
+        working-directory: apps/painel-ldr
+        run: npm run build
+
+      - name: Publicar expansão no main
+        shell: bash
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/content/do-mamao-curriculum.ts
+          if git diff --cached --quiet; then
+            echo "Nenhuma alteração."
+            exit 0
+          fi
+          git commit -m "feat: expandir as 90 aulas para leitura aprofundada"
+          git push origin main
