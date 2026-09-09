@@ -38,7 +38,7 @@ export async function getClientLearningHub(userId: string, email: string | null)
     }
   }
   const [{ data: enrollments }, { data: comments }, { data: progress }, canDeleteComments] = await Promise.all([
-    supabaseAdmin.from("training_enrollments").select("training_id, active, training_programs(id,slug,title,description,status)").eq("customer_id", customer.id).eq("active", true),
+    supabaseAdmin.from("training_enrollments").select("training_id,active,cohort_id,training_programs(id,slug,title,description,status),training_cohorts(cohort_number,capacity,status)").eq("customer_id", customer.id).eq("active", true),
     supabaseAdmin.from("library_comments").select("id,product_key,training_id,parent_id,author_user_id,author_kind,author_label,body,status,created_at").eq("customer_id", customer.id).order("created_at", { ascending: true }),
     supabaseAdmin.from("library_progress").select("product_key,progress_percent,current_location,updated_at").eq("customer_id", customer.id),
     clientCommentDeleteEnabled(),
@@ -50,7 +50,7 @@ export async function getClientLearningHub(userId: string, email: string | null)
     const result = await Promise.all([
       supabaseAdmin.from("training_modules").select("id,training_id,title,description,position,published").in("training_id", trainingIds).eq("published", true).order("position"),
       supabaseAdmin.from("training_materials").select("id,training_id,module_id,title,description,material_type,url,body,position,published").in("training_id", trainingIds).eq("published", true).order("position"),
-      supabaseAdmin.from("training_live_sessions").select("id,training_id,title,description,starts_at,ends_at,meeting_url,published").in("training_id", trainingIds).eq("published", true).order("starts_at"),
+      supabaseAdmin.from("training_live_sessions").select("id,training_id,title,description,starts_at,ends_at,meeting_url,recording_url,published,cohort_id,sequence_no,journey_month,training_cohorts(cohort_number)").in("training_id", trainingIds).eq("published", true).order("starts_at"),
       supabaseAdmin.from("training_announcements").select("id,training_id,title,body,created_at,published").in("training_id", trainingIds).eq("published", true).order("created_at", { ascending: false }),
     ]);
     modules = result[0].data ?? []; materials = result[1].data ?? []; sessions = result[2].data ?? []; announcements = result[3].data ?? [];
@@ -93,18 +93,19 @@ export async function saveClientProgress(userId: string, email: string | null, i
 
 export async function getProfessionalLearningHub(userId: string) {
   await requireProfessional(userId);
-  const [trainings, modules, materials, sessions, announcements, comments, enrollments, submissions, canDeleteComments] = await Promise.all([
+  const [trainings, modules, materials, sessions, announcements, comments, enrollments, submissions, cohorts, canDeleteComments] = await Promise.all([
     supabaseAdmin.from("training_programs").select("*").order("created_at", { ascending: false }),
     supabaseAdmin.from("training_modules").select("*").order("position"),
     supabaseAdmin.from("training_materials").select("*").order("position"),
-    supabaseAdmin.from("training_live_sessions").select("*").order("starts_at"),
+    supabaseAdmin.from("training_live_sessions").select("*,training_cohorts(cohort_number)").order("starts_at"),
     supabaseAdmin.from("training_announcements").select("*").order("created_at", { ascending: false }),
     supabaseAdmin.from("library_comments").select("id,customer_id,product_key,training_id,parent_id,author_user_id,author_kind,author_label,body,status,created_at,customers(full_name,email)").order("created_at", { ascending: false }),
-    supabaseAdmin.from("training_enrollments").select("id,training_id,customer_id,active,enrolled_at,customers(full_name,email)").order("enrolled_at", { ascending: false }),
+    supabaseAdmin.from("training_enrollments").select("id,training_id,customer_id,active,enrolled_at,cohort_id,customers(full_name,email),training_cohorts(cohort_number,capacity,status)").order("enrolled_at", { ascending: false }),
     supabaseAdmin.from("training_project_submissions").select("id,training_id,customer_id,submission_number,title,project_url,project_text,status,submitted_at,reviewed_at,feedback,customers(full_name,email)").order("submitted_at", { ascending: false }),
+    supabaseAdmin.from("training_cohorts").select("id,training_id,cohort_number,capacity,status,starts_at,created_at").order("cohort_number"),
     clientCommentDeleteEnabled(),
   ]);
-  return { trainings: trainings.data ?? [], modules: modules.data ?? [], materials: materials.data ?? [], sessions: sessions.data ?? [], announcements: announcements.data ?? [], comments: comments.data ?? [], enrollments: enrollments.data ?? [], projectSubmissions: submissions.data ?? [], clientCanDeleteComments: canDeleteComments };
+  return { trainings: trainings.data ?? [], modules: modules.data ?? [], materials: materials.data ?? [], sessions: sessions.data ?? [], announcements: announcements.data ?? [], comments: comments.data ?? [], enrollments: enrollments.data ?? [], projectSubmissions: submissions.data ?? [], cohorts: cohorts.data ?? [], clientCanDeleteComments: canDeleteComments };
 }
 
 export async function professionalReplyComment(userId: string, input: { commentId: string; body: string }) {
@@ -153,7 +154,7 @@ export async function professionalCreateTraining(userId: string, input: { title:
   return data;
 }
 
-export async function professionalAddTrainingItem(userId: string, input: { kind: "module" | "material" | "live" | "announcement"; trainingId: string; title: string; description?: string | null; moduleId?: string | null; materialType?: "link" | "pdf" | "video" | "text" | "file"; url?: string | null; body?: string | null; startsAt?: string | null; endsAt?: string | null; meetingUrl?: string | null }) {
+export async function professionalAddTrainingItem(userId: string, input: { kind: "module" | "material" | "live" | "announcement"; trainingId: string; title: string; description?: string | null; moduleId?: string | null; materialType?: "link" | "pdf" | "video" | "text" | "file"; url?: string | null; body?: string | null; startsAt?: string | null; endsAt?: string | null; meetingUrl?: string | null; recordingUrl?: string | null; cohortId?: string | null; sequenceNo?: number | null; journeyMonth?: number | null }) {
   await requireProfessional(userId);
   const common = { training_id: input.trainingId, title: input.title.trim(), description: input.description?.trim() || null };
   let error: any = null;
@@ -161,7 +162,7 @@ export async function professionalAddTrainingItem(userId: string, input: { kind:
   if (input.kind === "material") ({ error } = await supabaseAdmin.from("training_materials").insert({ ...common, module_id: input.moduleId ?? null, material_type: input.materialType ?? "link", url: input.url ?? null, body: input.body ?? null, published: true }));
   if (input.kind === "live") {
     if (!input.startsAt) fail("Informe a data do encontro.");
-    ({ error } = await supabaseAdmin.from("training_live_sessions").insert({ ...common, starts_at: input.startsAt, ends_at: input.endsAt ?? null, meeting_url: input.meetingUrl ?? null, published: true }));
+    ({ error } = await supabaseAdmin.from("training_live_sessions").insert({ ...common, starts_at: input.startsAt, ends_at: input.endsAt ?? null, meeting_url: input.meetingUrl ?? null, recording_url: input.recordingUrl ?? null, cohort_id: input.cohortId ?? null, sequence_no: input.sequenceNo ?? null, journey_month: input.journeyMonth ?? null, published: true }));
   }
   if (input.kind === "announcement") ({ error } = await supabaseAdmin.from("training_announcements").insert({ training_id: input.trainingId, title: input.title.trim(), body: input.body?.trim() || input.description?.trim() || "", published: true }));
   if (error) fail("Não foi possível publicar o conteúdo.");

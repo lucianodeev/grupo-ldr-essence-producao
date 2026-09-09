@@ -56,7 +56,7 @@ export const professionalCreateTraining = createServerFn({ method: "POST" }).mid
   return professionalCreateTraining(context.userId, data);
 });
 
-export const professionalAddTrainingItem = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth]).inputValidator((data: { kind: "module" | "material" | "live" | "announcement"; trainingId: string; title: string; description?: string | null; moduleId?: string | null; materialType?: "link" | "pdf" | "video" | "text" | "file"; url?: string | null; body?: string | null; startsAt?: string | null; endsAt?: string | null; meetingUrl?: string | null }) => data).handler(async ({ context, data }) => {
+export const professionalAddTrainingItem = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth]).inputValidator((data: { kind: "module" | "material" | "live" | "announcement"; trainingId: string; title: string; description?: string | null; moduleId?: string | null; materialType?: "link" | "pdf" | "video" | "text" | "file"; url?: string | null; body?: string | null; startsAt?: string | null; endsAt?: string | null; meetingUrl?: string | null; recordingUrl?: string | null; cohortId?: string | null; sequenceNo?: number | null; journeyMonth?: number | null }) => data).handler(async ({ context, data }) => {
   const { professionalAddTrainingItem } = await import("@/lib/learning.server");
   return professionalAddTrainingItem(context.userId, data);
 });
