@@ -1,0 +1,83 @@
+name: Revisar copy e idiomas do treinamento
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/fix-training-copy-i18n-v1.yml
+
+permissions:
+  contents: write
+
+jobs:
+  copy-i18n:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Corrigir textos mensais e localizar combo
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          # Área do aluno: remover textos antigos de uma única avaliação após 90 dias
+          p=Path('apps/painel-ldr/src/routes/_clientarea.cliente.treinamentos.do-mamao-ao-negocio.tsx')
+          t=p.read_text()
+          replacements={
+            'evaluationText:"Após 90 dias, envie seu projeto. A primeira avaliação humana está incluída; você recebe correções e devolutiva dentro da plataforma."':'evaluationText:"Ao final de cada mês, envie a evolução do seu projeto. São 3 avaliações humanas incluídas, com correções, feedback e liberação do mês seguinte após aprovação."',
+            'projectLocked:"A entrega oficial abre após 90 dias."':'projectLocked:"A avaliação mensal abre após concluir as 30 aulas correspondentes e, a partir do mês 2, após a aprovação da avaliação anterior."',
+            'extraHelp:"A primeira avaliação está incluída. Avaliações adicionais não exigem recompra do curso."':'extraHelp:"As 3 avaliações mensais estão incluídas. Depois delas, cada nova avaliação é paga separadamente e não exige recompra do curso."',
+            'evaluationText:"After 90 days, submit your project. One human review is included and feedback is returned inside the platform."':'evaluationText:"At the end of each month, submit your project progress. Three human reviews are included, with feedback and the next month unlocked after approval."',
+            'projectLocked:"Official submission opens after 90 days."':'projectLocked:"The monthly review opens after the corresponding 30 lessons are completed and, from month 2 onward, after the previous review is approved."',
+            'extraHelp:"The first review is included. Extra reviews do not require repurchasing."':'extraHelp:"Three monthly reviews are included. After them, each additional review is paid separately and does not require repurchasing."',
+            'evaluationText:"Après 90 jours, envoyez votre projet. Une évaluation humaine est incluse avec corrections dans la plateforme."':'evaluationText:"À la fin de chaque mois, envoyez l’évolution de votre projet. Trois évaluations humaines sont incluses, avec feedback et déblocage du mois suivant après approbation."',
+            'projectLocked:"Le dépôt officiel ouvre après 90 jours."':'projectLocked:"L’évaluation mensuelle s’ouvre après les 30 cours correspondants et, dès le mois 2, après l’approbation de l’évaluation précédente."',
+            'extraHelp:"La première évaluation est incluse."':'extraHelp:"Les 3 évaluations mensuelles sont incluses. Toute évaluation supplémentaire est ensuite payante, sans rachat de la formation."',
+            'evaluationText:"Tras 90 días, envía tu proyecto. Una evaluación humana está incluida y recibes correcciones en la plataforma."':'evaluationText:"Al final de cada mes, envía la evolución de tu proyecto. Se incluyen 3 evaluaciones humanas, con feedback y liberación del mes siguiente tras la aprobación."',
+            'projectLocked:"La entrega oficial abre después de 90 días."':'projectLocked:"La evaluación mensual se abre al completar las 30 clases correspondientes y, desde el mes 2, tras aprobar la evaluación anterior."',
+            'extraHelp:"La primera evaluación está incluida."':'extraHelp:"Las 3 evaluaciones mensuales están incluidas. Después, cada evaluación adicional es de pago y no exige recomprar la formación."'
+          }
+          for old,new in replacements.items():
+            if old not in t: raise SystemExit('Texto esperado não encontrado: '+old[:70])
+            t=t.replace(old,new,1)
+          p.write_text(t)
+
+          # Página pública: localizar todos os textos do card Combo
+          p=Path('apps/painel-ldr/src/components/training-launch-page-v2.tsx')
+          t=p.read_text()
+          t=t.replace('>COMBO DE LANÇAMENTO</span>','>{locale==="pt"?"COMBO DE LANÇAMENTO":locale==="fr"?"COMBO DE LANCEMENT":locale==="es"?"COMBO DE LANZAMIENTO":"LAUNCH COMBO"}</span>')
+          t=t.replace('>eBook + Livro + Formação</span>','>{locale==="pt"?"eBook + Livro + Formação":locale==="fr"?"eBook + Livre + Formation":locale==="es"?"eBook + Libro + Formación":"eBook + Book + Training"}</span>')
+          t=t.replace('>3 produtos pelo preço promocional da formação</h2>','>{locale==="pt"?"3 produtos pelo preço promocional da formação":locale==="fr"?"3 produits au prix promotionnel de la formation":locale==="es"?"3 productos por el precio promocional de la formación":"3 products for the training launch price"}</h2>')
+          t=t.replace('>A Coragem de Começar + O Menino que Vendia Mamão + Do Mamão ao Negócio. Pagamento único.</p>','>{locale==="pt"?"A Coragem de Começar + O Menino que Vendia Mamão + Do Mamão ao Negócio. Pagamento único.":locale==="fr"?"Le Courage de Commencer + Le Garçon qui Vendait des Papayes + De la Papaye à l’Entreprise. Paiement unique.":locale==="es"?"El Valor de Empezar + El Niño que Vendía Papaya + De la Papaya al Negocio. Pago único.":"The Courage to Begin + The Boy Who Sold Papaya + From Papaya to Business. One-time payment."}</p>')
+          t=t.replace('>QUERO O COMBO COMPLETO</a>','>{locale==="pt"?"QUERO O COMBO COMPLETO":locale==="fr"?"JE VEUX LE COMBO COMPLET":locale==="es"?"QUIERO EL COMBO COMPLETO":"I WANT THE FULL COMBO"}</a>')
+          p.write_text(t)
+
+          # Biblioteca: localizar o card de Combo sem alterar lógica/checkout
+          p=Path('apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx')
+          t=p.read_text()
+          t=t.replace('>COMBO DE LANÇAMENTO</span>','>{locale==="pt"?"COMBO DE LANÇAMENTO":locale==="fr"?"COMBO DE LANCEMENT":locale==="es"?"COMBO DE LANZAMIENTO":"LAUNCH COMBO"}</span>')
+          t=t.replace('>3 PRODUTOS PELO PREÇO PROMOCIONAL DA FORMAÇÃO</span>','>{locale==="pt"?"3 PRODUTOS PELO PREÇO PROMOCIONAL DA FORMAÇÃO":locale==="fr"?"3 PRODUITS AU PRIX PROMOTIONNEL DE LA FORMATION":locale==="es"?"3 PRODUCTOS POR EL PRECIO PROMOCIONAL DE LA FORMACIÓN":"3 PRODUCTS FOR THE TRAINING LAUNCH PRICE"}</span>')
+          t=t.replace('>Combo Empreendedor — Formação Completa</h2>','>{locale==="pt"?"Combo Empreendedor — Formação Completa":locale==="fr"?"Combo Entrepreneur — Formation Complète":locale==="es"?"Combo Emprendedor — Formación Completa":"Entrepreneur Combo — Complete Training"}</h2>')
+          t=t.replace('>QUERO O COMBO COMPLETO</button>','>{locale==="pt"?"QUERO O COMBO COMPLETO":locale==="fr"?"JE VEUX LE COMBO COMPLET":locale==="es"?"QUIERO EL COMBO COMPLETO":"I WANT THE FULL COMBO"}</button>')
+          t=t.replace('>Pagamento único · acesso vitalício aos conteúdos digitais</p>','>{locale==="pt"?"Pagamento único · acesso vitalício aos conteúdos digitais":locale==="fr"?"Paiement unique · accès à vie aux contenus numériques":locale==="es"?"Pago único · acceso vitalicio a los contenidos digitales":"One-time payment · lifetime access to digital content"}</p>')
+          p.write_text(t)
+          PY
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Instalar dependências
+        working-directory: apps/painel-ldr
+        run: npm install --no-audit --no-fund
+      - name: Validar build
+        working-directory: apps/painel-ldr
+        run: npm run build
+      - name: Publicar revisão final
+        shell: bash
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.treinamentos.do-mamao-ao-negocio.tsx apps/painel-ldr/src/components/training-launch-page-v2.tsx apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          git commit -m "fix: alinhar copy mensal e idiomas do combo"
+          git push origin main
