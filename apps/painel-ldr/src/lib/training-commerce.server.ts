@@ -289,7 +289,7 @@ function completeDailyLessons(state: StateRecord) {
     const written = value.writtenAnswers && typeof value.writtenAnswers === "object" ? value.writtenAnswers : {};
     const quiz = value.quizAnswers && typeof value.quizAnswers === "object" ? value.quizAnswers : {};
     const objectiveOk = Object.values(objective).filter((x) => typeof x === "string" && x.trim()).length >= 7;
-    const writtenOk = Object.values(written).filter((x) => typeof x === "string" && x.trim().length >= 500).length >= 3;
+    const writtenOk = Object.values(written).filter((x) => typeof x === "string" && x.trim().length >= 500 && x.length <= 1000).length >= 3;
     const quizOk = Object.values(quiz).filter((x) => typeof x === "number").length >= 3;
     if (objectiveOk && writtenOk && quizOk) complete++;
   }
@@ -312,6 +312,12 @@ function countTrainingProgress(state: StateRecord) {
 
 export async function saveDoMamaoTrainingState(userId: string, email: string | null, state: StateRecord) {
   const customer = await customerFor(userId, email); const training = await trainingRow(); let currentEnrollment = await enrollment(customer.id, training.id); if (!currentEnrollment) currentEnrollment = await ensureOwnerEnrollment(customer.id, training.id, email, userId); if (!currentEnrollment) fail("Matrícula não encontrada.");
+  const activitiesForValidation=(state?.dailyActivities&&typeof state.dailyActivities==="object"?state.dailyActivities:{}) as Record<string,any>;
+  for(const day of Object.values(activitiesForValidation)){
+    if(!day||typeof day!=="object")continue;
+    const written=day.writtenAnswers&&typeof day.writtenAnswers==="object"?day.writtenAnswers:{};
+    if(Object.values(written).some((value)=>typeof value==="string"&&value.length>1000)) fail("Cada resposta escrita pode ter no máximo 1.000 caracteres.");
+  }
   const serialized = JSON.stringify(state ?? {}); if (serialized.length > 700_000) fail("Dados do treinamento excederam o limite de sincronização.");
   const progress = countTrainingProgress(state ?? {}); const started = new Date(currentEnrollment.enrolled_at).getTime(); const eligibleDay = started + Number(training.minimum_days ?? DEFAULT_MINIMUM_DAYS) * 86400000;
   let completedAt = currentEnrollment.completed_at as string | null; let certificateAvailableAt = currentEnrollment.certificate_available_at as string | null;
