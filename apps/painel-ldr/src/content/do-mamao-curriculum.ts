@@ -80,6 +80,43 @@ const TXT:Record<TrainingLocale,Record<string,string>>={
 
 function repl(s:string,x:string){return s.replaceAll("{x}",x)}
 
+function buildExtendedLessonReading(locale:TrainingLocale,name:string,description:string,phaseName:string,application:string):string[]{
+  const angles:Record<TrainingLocale,string[]>={
+    pt:["cliente","evidências","finanças","operação","comunicação","vendas","experiência do cliente","riscos","concorrência","processos","indicadores","prioridades","capacidade real","testes de baixo custo","aprendizagem","próxima decisão"],
+    en:["customer","evidence","finance","operations","communication","sales","customer experience","risk","competition","processes","metrics","priorities","real capacity","low-cost tests","learning","next decision"],
+    fr:["client","preuves","finances","opérations","communication","ventes","expérience client","risques","concurrence","processus","indicateurs","priorités","capacité réelle","tests à faible coût","apprentissage","prochaine décision"],
+    es:["cliente","evidencias","finanzas","operación","comunicación","ventas","experiencia del cliente","riesgos","competencia","procesos","indicadores","prioridades","capacidad real","pruebas de bajo coste","aprendizaje","próxima decisión"]
+  };
+  const templates:Record<TrainingLocale,string[]>={
+    pt:[
+      "Ao analisar {topic} pelo ângulo de {angle}, não procure uma resposta bonita; procure uma resposta verificável. {description} Relacione o tema com algo que acontece hoje no seu negócio ou na ideia que está construindo. Separe o que é fato, o que é hipótese e o que ainda precisa de teste. Essa distinção evita decisões baseadas apenas em entusiasmo ou medo e transforma a aula em matéria-prima para uma estratégia que pode ser revisada com o tempo.",
+      "Na etapa {phase}, o ponto de {angle} precisa terminar em uma decisão concreta. {application} Pergunte quais recursos essa decisão exige, quem será afetado, qual resultado deverá ser observado e em quanto tempo será possível perceber se a escolha funcionou. Se não houver forma de observar o efeito da decisão, reformule-a até que exista um comportamento, número, entrega, conversa ou evidência que possa ser acompanhado.",
+      "Faça agora um exercício de contraste sobre {topic}: imagine uma execução cuidadosa e uma execução apressada. No olhar de {angle}, descreva o que muda entre as duas. Identifique pelo menos um risco de fazer cedo demais, um risco de adiar e um critério que ajudará você a decidir o momento adequado. Essa comparação ajuda a abandonar respostas genéricas e aproxima a reflexão das condições reais do negócio.",
+      "Conecte {angle} ao restante do sistema. Uma escolha sobre {topic} pode alterar preço, prazo, promessa, experiência, margem, carga de trabalho ou percepção do cliente. Procure pelo menos duas consequências indiretas. Em seguida, registre uma ação pequena que possa ser executada nas próximas 24 a 48 horas para produzir informação nova. O objetivo não é acertar tudo de primeira, mas criar um ciclo de decisão, teste, leitura do resultado e correção."
+    ],
+    en:[
+      "When examining {topic} through {angle}, look for a verifiable answer rather than an attractive one. {description} Connect the topic to something that is happening now in your business or business idea. Separate facts, assumptions and items that still require testing. This distinction keeps decisions from being driven only by excitement or fear and turns the lesson into material for a strategy that can improve over time.",
+      "During the {phase} stage, the {angle} perspective must end in a concrete decision. {application} Ask which resources the decision requires, who it affects, what result should be observed and how long it should take to learn whether the choice worked. If the effect cannot be observed, rewrite the decision until a behavior, number, delivery, conversation or other evidence can be tracked.",
+      "Contrast a careful execution of {topic} with a rushed one. From the {angle} perspective, describe what changes. Identify one risk of acting too early, one risk of delaying and one criterion that helps decide the right moment. This comparison moves the reflection away from generic answers and toward the actual conditions of the business.",
+      "Connect {angle} with the rest of the system. A decision about {topic} can change price, deadlines, promises, customer experience, margin, workload or perceived value. Identify at least two indirect consequences, then choose a small action for the next 24 to 48 hours that can create new information. The aim is not perfect certainty but a cycle of decision, test, observation and correction."
+    ],
+    fr:[
+      "En examinant {topic} sous l’angle de {angle}, cherchez une réponse vérifiable plutôt qu’une réponse séduisante. {description} Reliez le thème à une situation actuelle de votre activité ou de votre projet. Séparez faits, hypothèses et éléments qui doivent encore être testés. Cette distinction empêche les décisions fondées uniquement sur l’enthousiasme ou la peur et transforme le cours en matière stratégique révisable.",
+      "Dans l’étape {phase}, le regard de {angle} doit aboutir à une décision concrète. {application} Demandez quelles ressources elle exige, qui elle affecte, quel résultat observer et dans quel délai. Si l’effet ne peut pas être observé, reformulez la décision jusqu’à disposer d’un comportement, d’un chiffre, d’une livraison, d’une conversation ou d’une autre preuve à suivre.",
+      "Comparez maintenant une exécution soigneuse de {topic} avec une exécution précipitée. Du point de vue de {angle}, décrivez ce qui change. Identifiez un risque d’agir trop tôt, un risque de retarder et un critère pour choisir le bon moment. Cette comparaison rapproche la réflexion des conditions réelles de l’entreprise.",
+      "Reliez {angle} au reste du système. Une décision concernant {topic} peut modifier prix, délais, promesse, expérience client, marge, charge de travail ou valeur perçue. Repérez au moins deux conséquences indirectes puis choisissez une petite action réalisable dans les 24 à 48 heures afin de produire une information nouvelle. Le but est de créer un cycle décision, test, observation et correction."
+    ],
+    es:[
+      "Al analizar {topic} desde el ángulo de {angle}, busca una respuesta verificable y no solo una respuesta atractiva. {description} Relaciona el tema con algo que esté ocurriendo hoy en tu negocio o idea. Separa hechos, hipótesis y aspectos que todavía necesitan prueba. Esta distinción evita decisiones basadas únicamente en entusiasmo o miedo y convierte la clase en material para una estrategia que puede revisarse con el tiempo.",
+      "En la etapa {phase}, la perspectiva de {angle} debe terminar en una decisión concreta. {application} Pregunta qué recursos exige, a quién afecta, qué resultado debe observarse y cuánto tiempo necesitarás para saber si funcionó. Si el efecto no puede observarse, reformula la decisión hasta tener un comportamiento, número, entrega, conversación u otra evidencia que puedas seguir.",
+      "Contrasta una ejecución cuidadosa de {topic} con una ejecución apresurada. Desde {angle}, describe qué cambia. Identifica un riesgo de actuar demasiado pronto, un riesgo de aplazar y un criterio que te ayude a decidir el momento adecuado. Esta comparación aleja la reflexión de respuestas genéricas y la acerca a las condiciones reales del negocio.",
+      "Conecta {angle} con el resto del sistema. Una decisión sobre {topic} puede cambiar precio, plazos, promesa, experiencia del cliente, margen, carga de trabajo o valor percibido. Encuentra al menos dos consecuencias indirectas y elige una acción pequeña para las próximas 24 a 48 horas que produzca información nueva. El objetivo es crear un ciclo de decisión, prueba, observación y corrección."
+    ]
+  };
+  const vars=(s:string,angle:string)=>s.replaceAll("{topic}",name).replaceAll("{angle}",angle).replaceAll("{description}",description).replaceAll("{phase}",phaseName).replaceAll("{application}",application);
+  return angles[locale].flatMap(angle=>templates[locale].map(text=>vars(text,angle)));
+}
+
 export function getDoMamaoCurriculum(locale:TrainingLocale):DailyLesson[] {
   const txt=TXT[locale];
   const result:DailyLesson[]=[];
@@ -92,6 +129,7 @@ export function getDoMamaoCurriculum(locale:TrainingLocale):DailyLesson[] {
         phase.intro,
         theme.description[locale],
         `${phase.name}: ${phase.application}`,
+        ...buildExtendedLessonReading(locale,name,theme.description[locale],phase.name,phase.application),
         locale==="pt"?`A pergunta central da aula é: o que você consegue provar hoje sobre ${name.toLowerCase()}? Uma boa resposta diferencia hipótese, evidência e decisão.`:locale==="fr"?`La question centrale est : que pouvez-vous prouver aujourd’hui sur ${name.toLowerCase()} ? Une bonne réponse distingue hypothèse, preuve et décision.`:locale==="es"?`La pregunta central es: ¿qué puedes demostrar hoy sobre ${name.toLowerCase()}? Una buena respuesta distingue hipótesis, evidencia y decisión.`:`The central question is: what can you prove today about ${name.toLowerCase()}? A strong answer separates hypothesis, evidence and decision.`
       ];
       const objective=[txt.q1,txt.q2,txt.q3,txt.q4,txt.q5,txt.q6,txt.q7].map((q,i)=>({id:`d${day}q${i+1}`,type:"objective" as const,prompt:repl(q,name),options:[txt.yes,txt.part,txt.no]}));
