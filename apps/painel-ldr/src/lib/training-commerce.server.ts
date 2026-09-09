@@ -209,10 +209,10 @@ export async function getDoMamaoTrainingExperience(userId: string, email: string
   if (!currentEnrollment) currentEnrollment = await ensureOwnerEnrollment(customer.id, training.id, email, userId);
   if (!currentEnrollment) fail("Compre o treinamento para liberar este conteúdo.");
 
-  const { data: existingIncluded } = await db.from("training_project_review_credits").select("id").eq("training_id", training.id).eq("customer_id", customer.id).eq("source", "included");
+  const { data: existingIncluded } = await db.from("training_project_review_credits").select("id,source").eq("training_id", training.id).eq("customer_id", customer.id).in("source", ["included","manual"]);
   const missingIncluded = Math.max(0, 3 - (existingIncluded ?? []).length);
   if (missingIncluded) {
-    const rows = Array.from({length:missingIncluded},()=>({training_id:training.id,enrollment_id:currentEnrollment.id,customer_id:customer.id,source:"included",status:"available"}));
+    const rows = Array.from({length:missingIncluded},()=>({training_id:training.id,enrollment_id:currentEnrollment.id,customer_id:customer.id,source:"manual",status:"available"}));
     const { error } = await db.from("training_project_review_credits").insert(rows);
     if (error) fail("Não foi possível preparar as avaliações mensais incluídas.");
   }
@@ -273,7 +273,7 @@ export async function submitDoMamaoProject(userId: string, email: string | null,
     const required=nextNumber*30; if(completed<required) fail(`Conclua as ${required} aulas previstas antes de enviar esta avaliação.`);
     if(nextNumber>1 && !list.some((x:any)=>Number(x.submission_number)===nextNumber-1&&x.status==="approved")) fail("A avaliação do mês anterior precisa ser aprovada antes do próximo envio.");
   } else if(approvedIncluded<3) fail("Conclua e tenha aprovadas as 3 avaliações incluídas antes de solicitar uma avaliação extra.");
-  let creditQuery=db.from("training_project_review_credits").select("id").eq("training_id",training.id).eq("customer_id",customer.id).eq("status","available").eq("source",isIncluded?"included":"paid").order("created_at",{ascending:true}).limit(1);
+  let creditQuery=db.from("training_project_review_credits").select("id").eq("training_id",training.id).eq("customer_id",customer.id).eq("status","available"); if(isIncluded) creditQuery=creditQuery.in("source",["included","manual"]); else creditQuery=creditQuery.eq("source","paid"); creditQuery=creditQuery.order("created_at",{ascending:true}).limit(1);
   const {data:credit}=await creditQuery.maybeSingle(); if(!credit) fail(isIncluded?"Crédito de avaliação incluída indisponível.":"Você não possui crédito pago para uma nova avaliação.");
   const {data:submission,error}=await db.from("training_project_submissions").insert({training_id:training.id,enrollment_id:currentEnrollment.id,customer_id:customer.id,review_credit_id:credit.id,submission_number:nextNumber,title,project_url:projectUrl,project_text:projectText,status:"submitted"}).select("id,submission_number,status,submitted_at").single();
   if(error||!submission) fail("Não foi possível enviar o projeto."); await db.from("training_project_review_credits").update({status:"used",used_at:new Date().toISOString()}).eq("id",credit.id); return {ok:true as const,submission};
