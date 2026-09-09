@@ -36,7 +36,7 @@ export const professionalReplyLibraryComment = createServerFn({ method: "POST" }
   return professionalReplyComment(context.userId, data);
 });
 
-export const professionalReviewTrainingProject = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth]).inputValidator((data: { submissionId: string; feedback: string }) => data).handler(async ({ context, data }) => {
+export const professionalReviewTrainingProject = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth]).inputValidator((data: { submissionId: string; feedback: string; decision: "approved" | "changes_requested" }) => data).handler(async ({ context, data }) => {
   const { professionalReviewTrainingProject } = await import("@/lib/learning.server");
   return professionalReviewTrainingProject(context.userId, data);
 });

@@ -15,7 +15,7 @@ const LAUNCH_PRICE_EUR = 4_990;
 const LAUNCH_LIMIT = 100;
 const DEFAULT_MINIMUM_DAYS = 90;
 const DEFAULT_LIVE_SESSIONS = 6;
-const DEFAULT_PROJECTS_INCLUDED = 1;
+const DEFAULT_PROJECTS_INCLUDED = 3;
 const DEFAULT_PROJECT_REVIEW_BRL = 17_990;
 const DEFAULT_PROJECT_REVIEW_EUR = 2_990;
 
@@ -34,7 +34,7 @@ async function customerFor(userId: string, email: string | null) {
 function productMatches(order: any) {
   const metadata = (order?.metadata ?? {}) as Record<string, unknown>;
   const key = typeof metadata.product_key === "string" ? metadata.product_key : "";
-  return order?.catalog_key === PRODUCT_KEY || key === PRODUCT_KEY || key === TRAINING_SLUG;
+  return order?.catalog_key === PRODUCT_KEY || key === PRODUCT_KEY || key === TRAINING_SLUG || order?.catalog_key === "combo_empreendedor" || key === "combo_empreendedor";
 }
 
 function projectReviewMatches(order: any) {
@@ -208,6 +208,15 @@ export async function getDoMamaoTrainingExperience(userId: string, email: string
   if (!currentEnrollment) { const order = await paidOrder(customer.id); if (order) { await provisionFromPaidOrder(customer.id, order); currentEnrollment = await enrollment(customer.id, training.id); } }
   if (!currentEnrollment) currentEnrollment = await ensureOwnerEnrollment(customer.id, training.id, email, userId);
   if (!currentEnrollment) fail("Compre o treinamento para liberar este conteúdo.");
+
+  const { data: existingIncluded } = await db.from("training_project_review_credits").select("id").eq("training_id", training.id).eq("customer_id", customer.id).eq("source", "included");
+  const missingIncluded = Math.max(0, 3 - (existingIncluded ?? []).length);
+  if (missingIncluded) {
+    const rows = Array.from({length:missingIncluded},()=>({training_id:training.id,enrollment_id:currentEnrollment.id,customer_id:customer.id,source:"included",status:"available"}));
+    const { error } = await db.from("training_project_review_credits").insert(rows);
+    if (error) fail("Não foi possível preparar as avaliações mensais incluídas.");
+  }
+
   await syncPaidProjectReviewCredits(customer.id, training.id);
   const [{ data: cloud }, { data: credits }, { data: submissions }] = await Promise.all([
     db.from("training_state").select("state,progress_percent,current_panel,started_at,completed_at,certificate_available_at").eq("training_id", training.id).eq("customer_id", customer.id).maybeSingle(),
@@ -216,40 +225,58 @@ export async function getDoMamaoTrainingExperience(userId: string, email: string
   ]);
   const minimumDays = Number(training.minimum_days ?? DEFAULT_MINIMUM_DAYS);
   const eligibleAt = new Date(new Date(currentEnrollment.enrolled_at).getTime() + minimumDays * 86400000).toISOString();
+  const state = (cloud?.state && typeof cloud.state === "object" ? cloud.state : {}) as StateRecord;
+  const completedDailyLessons = completeDailyLessons(state);
+  const list = submissions ?? [];
+  const includedReviewsCompleted = list.filter((x:any)=>Number(x.submission_number)<=3 && x.status === "approved").length;
+  const last = list.length ? list[list.length-1] : null;
+  const hasEvaluationPending = Boolean(last && (last.status === "submitted" || last.status === "in_review"));
+  const evaluationNeedsChanges = Boolean(last && last.status === "changes_requested");
+  const nextEvaluationNumber = evaluationNeedsChanges ? Number(last.submission_number) : Math.min(3, list.filter((x:any)=>Number(x.submission_number)<=3).length + 1);
+  const previousApproved = nextEvaluationNumber === 1 || list.some((x:any)=>Number(x.submission_number)===nextEvaluationNumber-1 && x.status==="approved");
+  const monthlyEvaluationEligible = evaluationNeedsChanges || (!hasEvaluationPending && includedReviewsCompleted < 3 && previousApproved && completedDailyLessons >= nextEvaluationNumber * 30);
   const availableProjectCredits = (credits ?? []).filter((x: any) => x.status === "available").length;
+  const availablePaidReviewCredits = (credits ?? []).filter((x:any)=>x.status==="available" && x.source==="paid").length;
+  const projectSubmissionEligible = monthlyEvaluationEligible || (includedReviewsCompleted >= 3 && availablePaidReviewCredits > 0);
   return {
-    html: "",
-    trainingId: training.id,
-    title: training.title,
-    studentName: customer.fullName,
-    studentEmail: customer.email,
-    progressPercent: Number(cloud?.progress_percent ?? currentEnrollment.progress_percent ?? 0),
-    cohortNumber: currentEnrollment.training_cohorts?.cohort_number ?? null,
-    enrolledAt: currentEnrollment.enrolled_at,
-    completedAt: cloud?.completed_at ?? currentEnrollment.completed_at ?? null,
-    certificateAvailableAt: cloud?.certificate_available_at ?? currentEnrollment.certificate_available_at ?? null,
-    minimumDays,
-    lifetimeAccess: training.lifetime_access !== false,
-    liveSessionsIncluded: Number(training.live_sessions_included ?? DEFAULT_LIVE_SESSIONS),
-    projectsIncluded: Number(training.projects_included ?? DEFAULT_PROJECTS_INCLUDED),
-    officialCompletionEligibleAt: eligibleAt,
-    projectSubmissionEligible: Date.now() >= new Date(eligibleAt).getTime(),
-    availableProjectCredits,
-    projectSubmissions: submissions ?? [],
-    extraProjectReviewBrlCents: Number(training.extra_project_review_brl_minor ?? DEFAULT_PROJECT_REVIEW_BRL),
-    extraProjectReviewEurCents: Number(training.extra_project_review_eur_minor ?? DEFAULT_PROJECT_REVIEW_EUR),
+    html: "", trainingId: training.id, title: training.title, studentName: customer.fullName, studentEmail: customer.email,
+    progressPercent: Number(cloud?.progress_percent ?? currentEnrollment.progress_percent ?? 0), cohortNumber: currentEnrollment.training_cohorts?.cohort_number ?? null, enrolledAt: currentEnrollment.enrolled_at,
+    completedAt: cloud?.completed_at ?? currentEnrollment.completed_at ?? null, certificateAvailableAt: cloud?.certificate_available_at ?? currentEnrollment.certificate_available_at ?? null,
+    minimumDays, lifetimeAccess: training.lifetime_access !== false, liveSessionsIncluded: Number(training.live_sessions_included ?? DEFAULT_LIVE_SESSIONS), projectsIncluded: 3,
+    officialCompletionEligibleAt: eligibleAt, projectSubmissionEligible, availableProjectCredits, availablePaidReviewCredits, projectSubmissions: list,
+    includedReviewsCompleted, nextEvaluationNumber, completedDailyLessons, hasEvaluationPending, evaluationNeedsChanges, month2Unlocked: includedReviewsCompleted>=1, month3Unlocked: includedReviewsCompleted>=2,
+    extraProjectReviewBrlCents: Number(training.extra_project_review_brl_minor ?? DEFAULT_PROJECT_REVIEW_BRL), extraProjectReviewEurCents: Number(training.extra_project_review_eur_minor ?? DEFAULT_PROJECT_REVIEW_EUR),
   };
 }
 
 export async function submitDoMamaoProject(userId: string, email: string | null, input: { title: string; projectUrl?: string | null; projectText?: string | null }) {
   const customer = await customerFor(userId, email); const training = await trainingRow(); const currentEnrollment = await enrollment(customer.id, training.id); if (!currentEnrollment) fail("Matrícula não encontrada.");
-  const eligibleAt = new Date(new Date(currentEnrollment.enrolled_at).getTime() + Number(training.minimum_days ?? DEFAULT_MINIMUM_DAYS) * 86400000); if (Date.now() < eligibleAt.getTime()) fail("A entrega oficial do projeto é liberada ao concluir os 3 meses da formação.");
-  await syncPaidProjectReviewCredits(customer.id, training.id);
-  const { data: credit } = await db.from("training_project_review_credits").select("id").eq("training_id", training.id).eq("customer_id", customer.id).eq("status", "available").order("created_at", { ascending: true }).limit(1).maybeSingle(); if (!credit) fail("Você não possui crédito disponível para uma nova avaliação de projeto.");
-  const { count } = await db.from("training_project_submissions").select("id", { count: "exact", head: true }).eq("enrollment_id", currentEnrollment.id); const submissionNumber = Number(count ?? 0) + 1; const title = input.title.trim(); const projectUrl = input.projectUrl?.trim() || null; const projectText = input.projectText?.trim() || null;
+  const title = input.title.trim(); const projectUrl = input.projectUrl?.trim() || null; const projectText = input.projectText?.trim() || null;
   if (!title) fail("Informe o nome do projeto."); if (!projectUrl && !projectText) fail("Envie um link ou descreva o projeto para avaliação.");
-  const { data: submission, error } = await db.from("training_project_submissions").insert({ training_id: training.id, enrollment_id: currentEnrollment.id, customer_id: customer.id, review_credit_id: credit.id, submission_number: submissionNumber, title, project_url: projectUrl, project_text: projectText, status: "submitted" }).select("id,submission_number,status,submitted_at").single();
-  if (error || !submission) fail("Não foi possível enviar o projeto."); await db.from("training_project_review_credits").update({ status: "used", used_at: new Date().toISOString() }).eq("id", credit.id); return { ok: true as const, submission };
+  await syncPaidProjectReviewCredits(customer.id, training.id);
+  const [{data:cloud},{data:submissions}] = await Promise.all([
+    db.from("training_state").select("state").eq("training_id",training.id).eq("customer_id",customer.id).maybeSingle(),
+    db.from("training_project_submissions").select("id,submission_number,status,review_credit_id").eq("training_id",training.id).eq("customer_id",customer.id).order("submission_number",{ascending:true})
+  ]);
+  const state=(cloud?.state&&typeof cloud.state==="object"?cloud.state:{}) as StateRecord;
+  const completed=completeDailyLessons(state); const list=submissions??[]; const last=list.length?list[list.length-1]:null;
+  if(last && (last.status==="submitted" || last.status==="in_review")) fail("Sua avaliação atual ainda está em análise.");
+  if(last?.status==="changes_requested") {
+    const {data:submission,error}=await db.from("training_project_submissions").update({title,project_url:projectUrl,project_text:projectText,status:"submitted",submitted_at:new Date().toISOString(),reviewed_at:null,reviewed_by:null}).eq("id",last.id).select("id,submission_number,status,submitted_at").single();
+    if(error||!submission) fail("Não foi possível reenviar o projeto."); return {ok:true as const,submission,resubmitted:true as const};
+  }
+  const approvedIncluded=list.filter((x:any)=>Number(x.submission_number)<=3&&x.status==="approved").length;
+  const includedSubmitted=list.filter((x:any)=>Number(x.submission_number)<=3).length;
+  const nextNumber=includedSubmitted<3?includedSubmitted+1:list.length+1;
+  const isIncluded=nextNumber<=3;
+  if(isIncluded){
+    const required=nextNumber*30; if(completed<required) fail(`Conclua as ${required} aulas previstas antes de enviar esta avaliação.`);
+    if(nextNumber>1 && !list.some((x:any)=>Number(x.submission_number)===nextNumber-1&&x.status==="approved")) fail("A avaliação do mês anterior precisa ser aprovada antes do próximo envio.");
+  } else if(approvedIncluded<3) fail("Conclua e tenha aprovadas as 3 avaliações incluídas antes de solicitar uma avaliação extra.");
+  let creditQuery=db.from("training_project_review_credits").select("id").eq("training_id",training.id).eq("customer_id",customer.id).eq("status","available").eq("source",isIncluded?"included":"paid").order("created_at",{ascending:true}).limit(1);
+  const {data:credit}=await creditQuery.maybeSingle(); if(!credit) fail(isIncluded?"Crédito de avaliação incluída indisponível.":"Você não possui crédito pago para uma nova avaliação.");
+  const {data:submission,error}=await db.from("training_project_submissions").insert({training_id:training.id,enrollment_id:currentEnrollment.id,customer_id:customer.id,review_credit_id:credit.id,submission_number:nextNumber,title,project_url:projectUrl,project_text:projectText,status:"submitted"}).select("id,submission_number,status,submitted_at").single();
+  if(error||!submission) fail("Não foi possível enviar o projeto."); await db.from("training_project_review_credits").update({status:"used",used_at:new Date().toISOString()}).eq("id",credit.id); return {ok:true as const,submission};
 }
 
 function completeDailyLessons(state: StateRecord) {
@@ -262,7 +289,7 @@ function completeDailyLessons(state: StateRecord) {
     const written = value.writtenAnswers && typeof value.writtenAnswers === "object" ? value.writtenAnswers : {};
     const quiz = value.quizAnswers && typeof value.quizAnswers === "object" ? value.quizAnswers : {};
     const objectiveOk = Object.values(objective).filter((x) => typeof x === "string" && x.trim()).length >= 7;
-    const writtenOk = Object.values(written).filter((x) => typeof x === "string" && x.trim().length >= 20).length >= 3;
+    const writtenOk = Object.values(written).filter((x) => typeof x === "string" && x.trim().length >= 500).length >= 3;
     const quizOk = Object.values(quiz).filter((x) => typeof x === "number").length >= 3;
     if (objectiveOk && writtenOk && quizOk) complete++;
   }
@@ -288,7 +315,8 @@ export async function saveDoMamaoTrainingState(userId: string, email: string | n
   const serialized = JSON.stringify(state ?? {}); if (serialized.length > 700_000) fail("Dados do treinamento excederam o limite de sincronização.");
   const progress = countTrainingProgress(state ?? {}); const started = new Date(currentEnrollment.enrolled_at).getTime(); const eligibleDay = started + Number(training.minimum_days ?? DEFAULT_MINIMUM_DAYS) * 86400000;
   let completedAt = currentEnrollment.completed_at as string | null; let certificateAvailableAt = currentEnrollment.certificate_available_at as string | null;
-  if (!completedAt && progress >= 100 && Date.now() >= eligibleDay) { completedAt = new Date().toISOString(); certificateAvailableAt = new Date(Date.now() + 15 * 86400000).toISOString(); }
+  const { count: approvedReviews } = await db.from("training_project_submissions").select("id", { count:"exact", head:true }).eq("training_id", training.id).eq("customer_id", customer.id).eq("status", "approved").lte("submission_number", 3);
+  if (!completedAt && progress >= 100 && Date.now() >= eligibleDay && Number(approvedReviews ?? 0) >= 3) { completedAt = new Date().toISOString(); certificateAvailableAt = new Date(Date.now() + 15 * 86400000).toISOString(); }
   const currentPanel = typeof state.lastPanel === "string" ? state.lastPanel.slice(0, 80) : "inicio";
   const { error } = await db.from("training_state").upsert({ training_id: training.id, customer_id: customer.id, state, progress_percent: progress, current_panel: currentPanel, completed_at: completedAt, certificate_available_at: certificateAvailableAt, updated_at: new Date().toISOString() }, { onConflict: "training_id,customer_id" }); if (error) fail("Não foi possível sincronizar seu progresso.");
   await db.from("training_enrollments").update({ progress_percent: progress, completed_at: completedAt, certificate_available_at: certificateAvailableAt }).eq("id", currentEnrollment.id);

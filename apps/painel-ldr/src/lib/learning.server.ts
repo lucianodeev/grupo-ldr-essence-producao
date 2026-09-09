@@ -120,15 +120,16 @@ export async function professionalReplyComment(userId: string, input: { commentI
   return { ok: true as const };
 }
 
-export async function professionalReviewTrainingProject(userId: string, input: { submissionId: string; feedback: string }) {
+export async function professionalReviewTrainingProject(userId: string, input: { submissionId: string; feedback: string; decision: "approved" | "changes_requested" }) {
   await requireProfessional(userId);
   const feedback = input.feedback.trim();
   if (!feedback || feedback.length > 12000) fail("Escreva a avaliação do projeto.");
-  const { data: submission } = await supabaseAdmin.from("training_project_submissions").select("id,status").eq("id", input.submissionId).maybeSingle();
+  const { data: submission } = await supabaseAdmin.from("training_project_submissions").select("id,status,submission_number").eq("id", input.submissionId).maybeSingle();
   if (!submission) fail("Projeto não encontrado.");
-  const { error } = await supabaseAdmin.from("training_project_submissions").update({ status: "reviewed", feedback, reviewed_at: new Date().toISOString() }).eq("id", input.submissionId);
+  if (submission.status !== "submitted" && submission.status !== "in_review") fail("Este envio não está aguardando avaliação.");
+  const { error } = await supabaseAdmin.from("training_project_submissions").update({ status: input.decision, feedback, reviewed_at: new Date().toISOString(), reviewed_by:userId }).eq("id", input.submissionId);
   if (error) fail("Não foi possível devolver a avaliação ao aluno.");
-  return { ok: true as const };
+  return { ok: true as const, status:input.decision, submissionNumber:submission.submission_number };
 }
 
 export async function professionalDeleteLibraryComment(userId: string, input: { commentId: string }) {

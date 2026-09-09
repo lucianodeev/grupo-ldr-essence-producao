@@ -7,8 +7,8 @@ export type DigitalReaderProductKey = "ebook_coragem_comecar" | "livro_menino_ma
 export type DigitalReaderLocale = "pt" | "en" | "fr" | "es";
 
 const ALIASES: Record<DigitalReaderProductKey, string[]> = {
-  ebook_coragem_comecar: ["ebook_coragem_comecar", "a_coragem_de_comecar", "ebook"],
-  livro_menino_mamao: ["livro_menino_mamao", "menino_mamao", "livro"],
+  ebook_coragem_comecar: ["ebook_coragem_comecar", "a_coragem_de_comecar", "ebook", "combo_empreendedor"],
+  livro_menino_mamao: ["livro_menino_mamao", "menino_mamao", "livro", "combo_empreendedor"],
 };
 
 function fail(message: string): never {

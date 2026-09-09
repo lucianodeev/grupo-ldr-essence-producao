@@ -142,3 +142,6 @@ export const clientCreateDigitalCheckout = createServerFn({ method: "POST" })
     const { createClientDigitalCheckout } = await import("@/lib/client-portal.server");
     return createClientDigitalCheckout(context.userId, emailOf(context.claims), data);
   });
+
+
+export const clientCreateEntrepreneurComboCheckout = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth]).inputValidator((data:{market:"BR"|"INTL"})=>data).handler(async({context,data})=>{const {createClientEntrepreneurComboCheckout}=await import("@/lib/client-portal.server");return createClientEntrepreneurComboCheckout(context.userId,emailOf(context.claims),data.market);});
