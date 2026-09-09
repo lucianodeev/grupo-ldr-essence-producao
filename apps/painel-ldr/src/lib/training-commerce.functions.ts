@@ -34,15 +34,10 @@ export const clientDoMamaoTrainingExperience = createServerFn({ method: "GET" })
   .handler(async ({ context }) => {
     const { getDoMamaoTrainingExperience } = await import("@/lib/training-commerce.server");
     const result = await getDoMamaoTrainingExperience(context.userId, emailOf(context.claims));
-
-    // The guided route still uses a tiny srcDoc only to hydrate legacy/cloud state.
-    // Never send the full legacy training HTML to that iframe: on some mobile Safari
-    // builds it could become visible before the utility class was applied, creating
-    // a duplicated training interface above the new experience.
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { resolveClient } = await import("@/lib/client-portal.server");
     const client = await resolveClient(context.userId, emailOf(context.claims));
-    let state: Record<string, unknown> = {};
+    let trainingState: Record<string, unknown> = {};
     if (client.status === "ok") {
       const { data } = await supabaseAdmin
         .from("training_state")
@@ -50,11 +45,9 @@ export const clientDoMamaoTrainingExperience = createServerFn({ method: "GET" })
         .eq("training_id", result.trainingId)
         .eq("customer_id", client.customer.id)
         .maybeSingle();
-      if (data?.state && typeof data.state === "object") state = data.state as Record<string, unknown>;
+      if (data?.state && typeof data.state === "object") trainingState = data.state as Record<string, unknown>;
     }
-    const serialized = JSON.stringify(state).replace(/</g, "\\u003c").replace(/-->/g, "--\\u003e");
-    const hydrationHtml = `<!doctype html><html><head><meta charset="utf-8"><style>html,body{display:none!important;width:0!important;height:0!important;margin:0!important;overflow:hidden!important}</style></head><body><script>try{if(window.frameElement){window.frameElement.hidden=true;window.frameElement.style.cssText='display:none!important;width:0!important;height:0!important;border:0!important;position:absolute!important;pointer-events:none!important'}localStorage.setItem('ldr_training_v3_library_ready',JSON.stringify(${serialized}));}catch(e){}</script></body></html>`;
-    return { ...result, html: hydrationHtml };
+    return { ...result, html: "", trainingState };
   });
 
 export const clientSubmitDoMamaoProject = createServerFn({ method: "POST" })
