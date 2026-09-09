@@ -93,7 +93,7 @@ export async function saveClientProgress(userId: string, email: string | null, i
 
 export async function getProfessionalLearningHub(userId: string) {
   await requireProfessional(userId);
-  const [trainings, modules, materials, sessions, announcements, comments, enrollments, canDeleteComments] = await Promise.all([
+  const [trainings, modules, materials, sessions, announcements, comments, enrollments, submissions, canDeleteComments] = await Promise.all([
     supabaseAdmin.from("training_programs").select("*").order("created_at", { ascending: false }),
     supabaseAdmin.from("training_modules").select("*").order("position"),
     supabaseAdmin.from("training_materials").select("*").order("position"),
@@ -101,9 +101,10 @@ export async function getProfessionalLearningHub(userId: string) {
     supabaseAdmin.from("training_announcements").select("*").order("created_at", { ascending: false }),
     supabaseAdmin.from("library_comments").select("id,customer_id,product_key,training_id,parent_id,author_user_id,author_kind,author_label,body,status,created_at,customers(full_name,email)").order("created_at", { ascending: false }),
     supabaseAdmin.from("training_enrollments").select("id,training_id,customer_id,active,enrolled_at,customers(full_name,email)").order("enrolled_at", { ascending: false }),
+    supabaseAdmin.from("training_project_submissions").select("id,training_id,customer_id,submission_number,title,project_url,project_text,status,submitted_at,reviewed_at,feedback,customers(full_name,email)").order("submitted_at", { ascending: false }),
     clientCommentDeleteEnabled(),
   ]);
-  return { trainings: trainings.data ?? [], modules: modules.data ?? [], materials: materials.data ?? [], sessions: sessions.data ?? [], announcements: announcements.data ?? [], comments: comments.data ?? [], enrollments: enrollments.data ?? [], clientCanDeleteComments: canDeleteComments };
+  return { trainings: trainings.data ?? [], modules: modules.data ?? [], materials: materials.data ?? [], sessions: sessions.data ?? [], announcements: announcements.data ?? [], comments: comments.data ?? [], enrollments: enrollments.data ?? [], projectSubmissions: submissions.data ?? [], clientCanDeleteComments: canDeleteComments };
 }
 
 export async function professionalReplyComment(userId: string, input: { commentId: string; body: string }) {
@@ -116,6 +117,17 @@ export async function professionalReplyComment(userId: string, input: { commentI
   const { error } = await supabaseAdmin.from("library_comments").insert({ customer_id: parent.customer_id, product_key: parent.product_key, training_id: parent.training_id, parent_id: input.commentId, author_user_id: userId, author_kind: "professional", author_label: profile?.full_name ?? profile?.email ?? "Equipe LDR Essence", body, status: "answered" });
   if (error) fail("Não foi possível responder.");
   await supabaseAdmin.from("library_comments").update({ status: "answered", updated_at: new Date().toISOString() }).eq("id", input.commentId);
+  return { ok: true as const };
+}
+
+export async function professionalReviewTrainingProject(userId: string, input: { submissionId: string; feedback: string }) {
+  await requireProfessional(userId);
+  const feedback = input.feedback.trim();
+  if (!feedback || feedback.length > 12000) fail("Escreva a avaliação do projeto.");
+  const { data: submission } = await supabaseAdmin.from("training_project_submissions").select("id,status").eq("id", input.submissionId).maybeSingle();
+  if (!submission) fail("Projeto não encontrado.");
+  const { error } = await supabaseAdmin.from("training_project_submissions").update({ status: "reviewed", feedback, reviewed_at: new Date().toISOString() }).eq("id", input.submissionId);
+  if (error) fail("Não foi possível devolver a avaliação ao aluno.");
   return { ok: true as const };
 }
 
