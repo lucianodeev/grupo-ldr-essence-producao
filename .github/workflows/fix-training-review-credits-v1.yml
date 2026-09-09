@@ -1,0 +1,56 @@
+name: Corrigir créditos das avaliações mensais
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/fix-training-review-credits-v1.yml
+
+permissions:
+  contents: write
+
+jobs:
+  fix-build-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Corrigir créditos incluídos
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('apps/painel-ldr/src/lib/training-commerce.server.ts')
+          t=p.read_text()
+          old='const { data: existingIncluded } = await db.from("training_project_review_credits").select("id").eq("training_id", training.id).eq("customer_id", customer.id).eq("source", "included");'
+          new='const { data: existingIncluded } = await db.from("training_project_review_credits").select("id,source").eq("training_id", training.id).eq("customer_id", customer.id).in("source", ["included","manual"]);'
+          if old not in t: raise SystemExit('consulta de créditos incluídos não encontrada')
+          t=t.replace(old,new,1)
+          old='const rows = Array.from({length:missingIncluded},()=>({training_id:training.id,enrollment_id:currentEnrollment.id,customer_id:customer.id,source:"included",status:"available"}));'
+          new='const rows = Array.from({length:missingIncluded},()=>({training_id:training.id,enrollment_id:currentEnrollment.id,customer_id:customer.id,source:"manual",status:"available"}));'
+          if old not in t: raise SystemExit('criação dos créditos incluídos não encontrada')
+          t=t.replace(old,new,1)
+          old='let creditQuery=db.from("training_project_review_credits").select("id").eq("training_id",training.id).eq("customer_id",customer.id).eq("status","available").eq("source",isIncluded?"included":"paid").order("created_at",{ascending:true}).limit(1);'
+          new='let creditQuery=db.from("training_project_review_credits").select("id").eq("training_id",training.id).eq("customer_id",customer.id).eq("status","available"); if(isIncluded) creditQuery=creditQuery.in("source",["included","manual"]); else creditQuery=creditQuery.eq("source","paid"); creditQuery=creditQuery.order("created_at",{ascending:true}).limit(1);'
+          if old not in t: raise SystemExit('seleção do crédito da avaliação não encontrada')
+          t=t.replace(old,new,1)
+          p.write_text(t)
+          PY
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Instalar dependências
+        working-directory: apps/painel-ldr
+        run: npm install --no-audit --no-fund
+      - name: Validar build
+        working-directory: apps/painel-ldr
+        run: npm run build
+      - name: Publicar correção
+        shell: bash
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/lib/training-commerce.server.ts
+          git commit -m "fix: suportar três avaliações mensais incluídas"
+          git push origin main
