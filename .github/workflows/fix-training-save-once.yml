@@ -1,0 +1,85 @@
+name: Corrigir salvamento do treinamento
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/fix-training-save-once.yml
+
+permissions:
+  contents: write
+
+jobs:
+  fix-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Aplicar correção segura
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('apps/painel-ldr/src/routes/_clientarea.cliente.treinamentos.do-mamao-ao-negocio.tsx')
+          text = path.read_text()
+
+          replacements = [
+            (
+              'import { useEffect, useMemo, useState } from "react";',
+              'import { useEffect, useMemo, useRef, useState } from "react";'
+            ),
+            (
+              '  const [activities,setActivities]=useState<Activities>({});\n  const [signature,setSignature]=useState("");',
+              '  const [activities,setActivities]=useState<Activities>({});\n  const activitiesRef=useRef<Activities>({});\n  const [signature,setSignature]=useState("");'
+            ),
+            (
+              '    setActivities(saved); setSignature(typeof state.studentSignature==="string"?state.studentSignature:data.studentName??"");',
+              '    activitiesRef.current=saved; setActivities(saved); setSignature(typeof state.studentSignature==="string"?state.studentSignature:data.studentName??"");'
+            ),
+            (
+              '''  function updateDay(mutator:(draft:DayState)=>DayState){\n    const base=activities[String(selectedDay)]??blankDay();\n    setActivities({...activities,[String(selectedDay)]:mutator({...base,objectiveAnswers:{...base.objectiveAnswers},writtenAnswers:{...base.writtenAnswers},quizAnswers:{...base.quizAnswers},updatedAt:new Date().toISOString()})});\n  }\n  function persist(markComplete=false){\n    const base=activities[String(selectedDay)]??blankDay();\n    const nextDay={...base,completedAt:markComplete&&isDayComplete(base)?(base.completedAt??new Date().toISOString()):base.completedAt,updatedAt:new Date().toISOString()};\n    const next={...activities,[String(selectedDay)]:nextDay}; setActivities(next); save.mutate({activities:next,lastDay:selectedDay,signature});\n  }''',
+              '''  function updateDay(mutator:(draft:DayState)=>DayState){\n    const source=activitiesRef.current;\n    const base=source[String(selectedDay)]??blankDay();\n    const updated=mutator({...base,objectiveAnswers:{...base.objectiveAnswers},writtenAnswers:{...base.writtenAnswers},quizAnswers:{...base.quizAnswers},updatedAt:new Date().toISOString()});\n    const next={...source,[String(selectedDay)]:updated};\n    activitiesRef.current=next;\n    setActivities(next);\n    try{localStorage.setItem("ldr-training-draft",JSON.stringify({activities:next,lastDay:selectedDay,signature,updatedAt:new Date().toISOString()}));}catch{}\n  }\n  function persist(markComplete=false){\n    const source=activitiesRef.current;\n    const base=source[String(selectedDay)]??blankDay();\n    const nextDay={...base,completedAt:markComplete&&isDayComplete(base)?(base.completedAt??new Date().toISOString()):base.completedAt,updatedAt:new Date().toISOString()};\n    const next={...source,[String(selectedDay)]:nextDay};\n    activitiesRef.current=next;\n    setActivities(next);\n    try{localStorage.setItem("ldr-training-draft",JSON.stringify({activities:next,lastDay:selectedDay,signature,updatedAt:new Date().toISOString()}));}catch{}\n    save.mutate({activities:next,lastDay:selectedDay,signature});\n  }'''
+            ),
+          ]
+
+          for old, new in replacements:
+            if old not in text:
+              raise SystemExit(f'Bloco esperado não encontrado; abortando para não alterar código inesperado:\n{old[:180]}')
+            text = text.replace(old, new, 1)
+
+          marker = '  const buyReview=useMutation({mutationFn:(market:"BR"|"INTL")=>reviewCheckoutFn({data:{market}}),onSuccess:(r)=>{if(r.url)window.location.assign(r.url);}});'
+          autosave = '''  const buyReview=useMutation({mutationFn:(market:"BR"|"INTL")=>reviewCheckoutFn({data:{market}}),onSuccess:(r)=>{if(r.url)window.location.assign(r.url);}});\n\n  useEffect(()=>{\n    if(!data)return;\n    const timer=window.setTimeout(()=>{\n      const current=activitiesRef.current;\n      if(!Object.keys(current).length)return;\n      try{localStorage.setItem("ldr-training-draft",JSON.stringify({activities:current,lastDay:selectedDay,signature,updatedAt:new Date().toISOString()}));}catch{}\n      if(!save.isPending)save.mutate({activities:current,lastDay:selectedDay,signature});\n    },1400);\n    return()=>window.clearTimeout(timer);\n  },[activities,selectedDay,signature]);'''
+          if marker not in text:
+            raise SystemExit('Ponto de autosave não encontrado; abortando.')
+          text = text.replace(marker, autosave, 1)
+
+          path.write_text(text)
+          PY
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: apps/painel-ldr/package-lock.json
+
+      - name: Instalar dependências
+        run: npm --prefix apps/painel-ldr install --no-package-lock --no-audit --no-fund
+
+      - name: Validar build
+        run: npm --prefix apps/painel-ldr run build
+
+      - name: Publicar correção no main
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo "Nenhuma alteração necessária."
+            exit 0
+          fi
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.treinamentos.do-mamao-ao-negocio.tsx
+          git commit -m "fix: salvar atividades do treinamento sem perder respostas"
+          git push origin HEAD:main
