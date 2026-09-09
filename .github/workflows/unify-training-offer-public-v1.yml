@@ -1,0 +1,79 @@
+name: Unificar oferta pública do treinamento
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/unify-training-offer-public-v1.yml
+permissions:
+  contents: write
+jobs:
+  fix-build-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Unificar preços e combo público
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          root=Path('apps/painel-ldr/src')
+
+          # 1) Corrigir qualquer página pública comercial antiga que ainda mostre o preço normal como preço atual.
+          p=root/'components/commercial-public-page.tsx'
+          t=p.read_text()
+          t=t.replace('price: "R$ 599,99 · € 100,56",','price: "DE R$ 599,99 / € 100,56 · AGORA R$ 299,99 / € 49,90",')
+          t=t.replace('price: "R$ 599.99 · € 100.56",','price: "FROM R$ 599.99 / €100.56 · NOW R$ 299.99 / €49.90",')
+          t=t.replace('price: "R$ 599,99 · 100,56 €",','price: "DE R$ 599,99 / 100,56 € · MAINTENANT R$ 299,99 / 49,90 €",')
+          t=t.replace('price: "R$ 599,99 · € 100,56",','price: "DE R$ 599,99 / € 100,56 · AHORA R$ 299,99 / € 49,90",',1 if False else 0)
+          p.write_text(t)
+
+          # 2) Garantir que a página oficial /treinamento mostre o Combo e os dois mercados no mesmo card.
+          p=root/'components/training-launch-page-v2.tsx'
+          t=p.read_text()
+          if 'data-public-combo-card="v1"' not in t:
+            raise SystemExit('Card público do combo ausente do componente oficial')
+          t=t.replace('separate:locale==="pt"?"Separadamente: € 74,80":locale==="fr"?"Séparément : 74,80 €":locale==="es"?"Por separado: € 74,80":"Separately: €74.80"',
+                      'separate:locale==="pt"?"Separadamente: R$ 359,79 · € 74,80":locale==="fr"?"Séparément : R$ 359,79 · 74,80 €":locale==="es"?"Por separado: R$ 359,79 · € 74,80":"Separately: R$ 359.79 · €74.80"')
+          t=t.replace('saving:locale==="pt"?"Economia: € 24,90":locale==="fr"?"Économie : 24,90 €":locale==="es"?"Ahorro: € 24,90":"You save: €24.90"',
+                      'saving:locale==="pt"?"Economia: R$ 59,80 · € 24,90":locale==="fr"?"Économie : R$ 59,80 · 24,90 €":locale==="es"?"Ahorro: R$ 59,80 · € 24,90":"You save: R$ 59.80 · €24.90"')
+          t=t.replace('<strong className="mt-1 block text-4xl text-[#f0ca73]">€ 49,90</strong>',
+                      '<div className="mt-2 flex flex-wrap items-end gap-x-5 gap-y-2"><strong className="text-4xl text-[#f0ca73]">R$ 299,99</strong><strong className="text-3xl text-[#f0ca73]">€ 49,90</strong></div>')
+          t=t.replace('data-launch-offer-version="2026-09-09-v3"','data-launch-offer-version="2026-09-09-v4"')
+          p.write_text(t)
+
+          # 3) Padronizar o card do Combo da Biblioteca na mesma identidade visual vinho/dourado/creme.
+          p=root/'routes/_clientarea.cliente.biblioteca.tsx'
+          t=p.read_text()
+          t=t.replace('border-[#d5aa45] bg-[#5b0824]','border-[#d7ad54] bg-[#5b0824]')
+          t=t.replace('bg-[#d9aa3f]','bg-[#d7ad54]')
+          t=t.replace('text-[#3d0818]','text-[#42111d]')
+          p.write_text(t)
+
+          # 4) Auditoria simples: não pode restar o preço normal isolado como preço atual no componente comercial.
+          c=(root/'components/commercial-public-page.tsx').read_text()
+          if 'price: "R$ 599,99 · € 100,56"' in c:
+            raise SystemExit('Preço antigo ainda presente como preço atual no componente comercial')
+          launch=(root/'components/training-launch-page-v2.tsx').read_text()
+          required=['data-public-combo-card="v1"','R$ 299,99','€ 49,90','R$ 359,79','€ 74,80']
+          missing=[x for x in required if x not in launch]
+          if missing:
+            raise SystemExit('Itens obrigatórios ausentes na página pública: '+', '.join(missing))
+          PY
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Instalar dependências
+        working-directory: apps/painel-ldr
+        run: npm install --no-audit --no-fund
+      - name: Validar build
+        working-directory: apps/painel-ldr
+        run: npm run build
+      - name: Publicar correções
+        run: |
+          git restore apps/painel-ldr/package-lock.json 2>/dev/null || true
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/components/commercial-public-page.tsx apps/painel-ldr/src/components/training-launch-page-v2.tsx apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          git commit -m "fix: unificar oferta pública, combo e preços do treinamento" || exit 0
+          git push origin main
