@@ -6,11 +6,9 @@
 
 /*
  * Central Única de Operação — Grupo LDR Essence
- * Identidade: azul institucional / dourado / creme (tokens semânticos em oklch).
- * Obs.: os tokens --wine/--wine-deep são mantidos por compatibilidade e agora
- * carregam os tons de azul institucional.
+ * Identidade da plataforma: vinho / dourado / creme.
+ * Paleta alinhada à comunicação visual da Formação LDR.
  */
-
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
@@ -48,43 +46,40 @@
   --font-serif: Georgia, "Times New Roman", serif;
   --font-sans:
     Montserrat, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-  --shadow-panel: 0 8px 24px oklch(0.35 0.09 255 / 0.1);
-  --shadow-header: 0 4px 18px oklch(0.25 0.07 255 / 0.25);
+  --shadow-panel: 0 8px 24px rgb(90 0 21 / 0.10);
+  --shadow-header: 0 4px 18px rgb(51 0 12 / 0.24);
 }
 
 :root {
   --radius: 0.75rem;
-  /* Azul institucional (mantém os nomes de token por compatibilidade) */
-  --wine: oklch(0.4 0.11 255);
-  --wine-deep: oklch(0.28 0.09 258);
-  --gold: oklch(0.7549 0.1201 79.16);
-  --gold-soft: oklch(0.9187 0.0536 85.63);
-  --cream: oklch(0.9776 0.0088 250);
-  --paper: oklch(0.9963 0.0025 250);
+  --wine: #5a0015;
+  --wine-deep: #33000c;
+  --gold: #d9b15f;
+  --gold-soft: #f0d8a4;
+  --cream: #f5e9d4;
+  --paper: #fffaf1;
   --success: oklch(0.5198 0.0987 160.15);
 
   --background: var(--cream);
-  --foreground: oklch(0.2413 0.0242 259);
+  --foreground: #2d1720;
   --card: var(--paper);
-  --card-foreground: oklch(0.2413 0.0242 259);
+  --card-foreground: #2d1720;
   --popover: var(--paper);
-  --popover-foreground: oklch(0.2413 0.0242 259);
+  --popover-foreground: #2d1720;
   --primary: var(--wine);
-  --primary-foreground: oklch(0.9963 0.0025 250);
+  --primary-foreground: #fffaf1;
   --secondary: var(--gold);
-  --secondary-foreground: oklch(0.235 0.0407 68);
-  --muted: oklch(0.9295 0.0125 251);
-  --muted-foreground: oklch(0.4494 0.0215 258);
-  --accent: oklch(0.9421 0.0209 250);
-  --accent-foreground: oklch(0.3355 0.0745 258);
+  --secondary-foreground: #2c1d09;
+  --muted: #efe2cf;
+  --muted-foreground: #6b5960;
+  --accent: #f4e6d1;
+  --accent-foreground: var(--wine-deep);
   --destructive: oklch(0.505 0.19 25);
-  --destructive-foreground: oklch(0.9963 0.0025 250);
-  --border: oklch(0.9 0.0148 250);
-  --input: oklch(0.79 0.0247 252);
+  --destructive-foreground: #fffaf1;
+  --border: #dfccb1;
+  --input: #cdb99f;
   --ring: var(--wine);
 }
-
-
 
 @layer base {
   * {
@@ -138,7 +133,7 @@
 
 @utility s8-notice {
   border-left: 5px solid var(--gold);
-  background: oklch(0.9714 0.0344 88.77);
+  background: #fbf1dc;
   padding: 0.875rem;
   border-radius: 0.5rem;
 }
@@ -152,22 +147,20 @@
   }
 }
 
-
-
-/* Biblioteca: tema escuro local e acessível */
+/* Biblioteca: versão escura coerente com a identidade vinho */
 .library-dark {
-  --background: oklch(0.19 0.025 258);
-  --foreground: oklch(0.95 0.01 250);
-  --paper: oklch(0.24 0.03 258);
+  --background: #240008;
+  --foreground: #fff6e9;
+  --paper: #3a0714;
   --card: var(--paper);
   --card-foreground: var(--foreground);
-  --muted: oklch(0.30 0.025 258);
-  --muted-foreground: oklch(0.80 0.018 250);
-  --accent: oklch(0.29 0.035 258);
-  --accent-foreground: oklch(0.95 0.01 250);
-  --border: oklch(0.40 0.03 258);
-  --input: oklch(0.46 0.03 258);
-  --wine: oklch(0.82 0.08 79);
+  --muted: #4a1722;
+  --muted-foreground: #e2cfc6;
+  --accent: #531b28;
+  --accent-foreground: #fff6e9;
+  --border: #713141;
+  --input: #85505c;
+  --wine: #d9b15f;
   --primary: var(--wine);
   color: var(--foreground);
   background: var(--background);
