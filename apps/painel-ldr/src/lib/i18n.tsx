@@ -596,6 +596,8 @@ const I18nContext = createContext<Ctx>({ locale: "pt", setLocale: () => {}, t: (
 
 function detect(): Locale {
   if (typeof window === "undefined") return "pt";
+  const query = new URLSearchParams(window.location.search).get("lang")?.slice(0, 2).toLowerCase();
+  if (query && (LOCALES as readonly string[]).includes(query)) return query as Locale;
   const saved = window.localStorage.getItem(STORAGE_KEY);
   if (saved && (LOCALES as readonly string[]).includes(saved)) return saved as Locale;
   const nav = window.navigator.language?.slice(0, 2).toLowerCase();
@@ -614,8 +616,12 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     setLocaleState(l);
     try {
       window.localStorage.setItem(STORAGE_KEY, l);
+      const url = new URL(window.location.href);
+      url.searchParams.set("lang", l);
+      window.history.replaceState(window.history.state, "", `${url.pathname}${url.search}${url.hash}`);
+      document.documentElement.lang = l;
     } catch {
-      /* armazenamento indisponível */
+      /* armazenamento/URL indisponível */
     }
   }, []);
 
