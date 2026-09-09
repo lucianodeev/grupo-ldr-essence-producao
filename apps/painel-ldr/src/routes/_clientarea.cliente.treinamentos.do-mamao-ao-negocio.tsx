@@ -5,7 +5,7 @@ import {
   ArrowLeft, BookOpen, CalendarDays, CheckCircle2, ChevronLeft, ChevronRight, Download,
   FileCheck2, GraduationCap, LockKeyhole, MessageCircle, Moon, PenLine, Settings2, Sun, Video,
 } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   clientCreateDoMamaoProjectReviewCheckout,
   clientDoMamaoTrainingExperience,
@@ -54,6 +54,7 @@ function DoMamaoTraining(){
   const [scale,setScale]=useState(1);
   const [selectedDay,setSelectedDay]=useState(1);
   const [activities,setActivities]=useState<Activities>({});
+  const activitiesRef=useRef<Activities>({});
   const [signature,setSignature]=useState("");
   const [syncLabel,setSyncLabel]=useState("");
   const [localProgress,setLocalProgress]=useState(0);
@@ -78,7 +79,7 @@ function DoMamaoTraining(){
     if(!data)return;
     const state=(data.trainingState??{}) as Record<string,unknown>;
     const saved=(state.dailyActivities&&typeof state.dailyActivities==="object"?state.dailyActivities:{}) as Activities;
-    setActivities(saved); setSignature(typeof state.studentSignature==="string"?state.studentSignature:data.studentName??"");
+    activitiesRef.current=saved; setActivities(saved); setSignature(typeof state.studentSignature==="string"?state.studentSignature:data.studentName??"");
     setLocalProgress(Number(data.progressPercent??0)); setCompletedAt(data.completedAt??null); setCertificateAt(data.certificateAvailableAt??null);
     const start=new Date(data.enrolledAt).getTime(); const unlocked=Math.max(1,Math.min(90,Math.floor((Date.now()-start)/86400000)+1));
     const last=typeof state.lastDay==="number"?state.lastDay:unlocked; setSelectedDay(Math.min(unlocked,Math.max(1,last)));
@@ -93,6 +94,17 @@ function DoMamaoTraining(){
   const ask=useMutation({mutationFn:()=>commentFn({data:{body:question,trainingId:data!.trainingId}}),onSuccess:async()=>{setQuestion("");await qc.invalidateQueries({queryKey:["client-learning-hub"]});}});
   const submitProject=useMutation({mutationFn:()=>submitProjectFn({data:{title:projectTitle,projectUrl,projectText}}),onSuccess:async()=>{setProjectTitle("");setProjectUrl("");setProjectText("");await qc.invalidateQueries({queryKey:["do-mamao-training-experience"]});}});
   const buyReview=useMutation({mutationFn:(market:"BR"|"INTL")=>reviewCheckoutFn({data:{market}}),onSuccess:(r)=>{if(r.url)window.location.assign(r.url);}});
+
+  useEffect(()=>{
+    if(!data)return;
+    const timer=window.setTimeout(()=>{
+      const current=activitiesRef.current;
+      if(!Object.keys(current).length)return;
+      try{localStorage.setItem("ldr-training-draft",JSON.stringify({activities:current,lastDay:selectedDay,signature,updatedAt:new Date().toISOString()}));}catch{}
+      if(!save.isPending)save.mutate({activities:current,lastDay:selectedDay,signature});
+    },1400);
+    return()=>window.clearTimeout(timer);
+  },[activities,selectedDay,signature]);
 
   if(isLoading)return <div className="s8-card">Carregando…</div>;
   if(error||!data)return <div className="s8-card">Não foi possível abrir o treinamento.</div>;
@@ -115,13 +127,23 @@ function DoMamaoTraining(){
   const certificateReady=Boolean(completedAt&&certificateAt&&Date.now()>=new Date(certificateAt).getTime());
 
   function updateDay(mutator:(draft:DayState)=>DayState){
-    const base=activities[String(selectedDay)]??blankDay();
-    setActivities({...activities,[String(selectedDay)]:mutator({...base,objectiveAnswers:{...base.objectiveAnswers},writtenAnswers:{...base.writtenAnswers},quizAnswers:{...base.quizAnswers},updatedAt:new Date().toISOString()})});
+    const source=activitiesRef.current;
+    const base=source[String(selectedDay)]??blankDay();
+    const updated=mutator({...base,objectiveAnswers:{...base.objectiveAnswers},writtenAnswers:{...base.writtenAnswers},quizAnswers:{...base.quizAnswers},updatedAt:new Date().toISOString()});
+    const next={...source,[String(selectedDay)]:updated};
+    activitiesRef.current=next;
+    setActivities(next);
+    try{localStorage.setItem("ldr-training-draft",JSON.stringify({activities:next,lastDay:selectedDay,signature,updatedAt:new Date().toISOString()}));}catch{}
   }
   function persist(markComplete=false){
-    const base=activities[String(selectedDay)]??blankDay();
+    const source=activitiesRef.current;
+    const base=source[String(selectedDay)]??blankDay();
     const nextDay={...base,completedAt:markComplete&&isDayComplete(base)?(base.completedAt??new Date().toISOString()):base.completedAt,updatedAt:new Date().toISOString()};
-    const next={...activities,[String(selectedDay)]:nextDay}; setActivities(next); save.mutate({activities:next,lastDay:selectedDay,signature});
+    const next={...source,[String(selectedDay)]:nextDay};
+    activitiesRef.current=next;
+    setActivities(next);
+    try{localStorage.setItem("ldr-training-draft",JSON.stringify({activities:next,lastDay:selectedDay,signature,updatedAt:new Date().toISOString()}));}catch{}
+    save.mutate({activities:next,lastDay:selectedDay,signature});
   }
   function goDay(day:number){if(day<1||day>unlockedDay)return;setSelectedDay(day);setArea("aula");window.scrollTo({top:0,behavior:"smooth"});}
 
