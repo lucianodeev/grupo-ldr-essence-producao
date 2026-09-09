@@ -1,0 +1,29 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import { EyeOff, Lock, MessageCircle, Pin, PinOff, Send, Unlock } from "lucide-react";
+import { useMemo, useState } from "react";
+import { adminForumModeratePost, adminForumModerateTopic, adminForumReply, adminTrainingForum } from "@/lib/training-forum.functions";
+
+const SLUG="do-mamao-ao-negocio";
+export const Route=createFileRoute("/_authenticated/admin/forum-treinamento")({component:AdminForum});
+
+function AdminForum(){
+  const forumFn=useServerFn(adminTrainingForum);const replyFn=useServerFn(adminForumReply);const topicFn=useServerFn(adminForumModerateTopic);const postFn=useServerFn(adminForumModeratePost);const qc=useQueryClient();
+  const [replyBody,setReplyBody]=useState<Record<string,string>>({});
+  const {data,isLoading,error}=useQuery({queryKey:["admin-training-forum",SLUG],queryFn:()=>forumFn({data:{slug:SLUG}})});
+  const postsByTopic=useMemo(()=>{const map:Record<string,any[]>={};for(const p of data?.posts??[]){(map[p.topic_id]??=[]).push(p)}return map},[data?.posts]);
+  const refresh=()=>qc.invalidateQueries({queryKey:["admin-training-forum",SLUG]});
+  const reply=useMutation({mutationFn:(topicId:string)=>replyFn({data:{topicId,body:replyBody[topicId]??""}}),onSuccess:async(_,id)=>{setReplyBody(v=>({...v,[id]:""}));await refresh()}});
+  const moderateTopic=useMutation({mutationFn:(x:{topicId:string;status:"open"|"closed"|"hidden";pinned:boolean})=>topicFn({data:x}),onSuccess:refresh});
+  const moderatePost=useMutation({mutationFn:(x:{postId:string;status:"visible"|"hidden"})=>postFn({data:x}),onSuccess:refresh});
+  if(isLoading)return <div className="s8-card">Carregando fórum…</div>;
+  if(error||!data)return <div className="s8-card"><h1 className="text-xl font-bold">Fórum indisponível</h1><p className="mt-2 text-sm text-muted-foreground">{String((error as Error)?.message||"Não foi possível carregar")}</p><Link to="/admin" className="mt-4 inline-block text-primary underline">Voltar ao admin</Link></div>;
+  return <div className="min-w-0 space-y-5"><div className="flex flex-wrap items-end justify-between gap-3"><div><p className="text-xs font-black uppercase tracking-[.16em] text-primary">Treinamento</p><h1 className="font-serif text-3xl font-bold">Moderação do Fórum</h1><p className="mt-2 text-sm text-muted-foreground">Do Mamão ao Negócio · todos os tópicos e respostas dos alunos matriculados.</p></div><a href="/cliente/treinamentos/do-mamao-ao-negocio/forum" target="_blank" rel="noreferrer" className="rounded-xl border px-4 py-2 text-sm font-black text-primary">Abrir visão do aluno</a></div>
+    <div className="grid gap-4">{data.topics.length?data.topics.map((t:any)=>{const posts=postsByTopic[t.id]??[];return <article key={t.id} className="s8-card"><div className="flex flex-wrap items-start justify-between gap-3"><div className="min-w-0 flex-1"><div className="flex items-center gap-2">{t.pinned?<Pin className="h-4 w-4 text-primary"/>:null}<h2 className="break-words font-serif text-2xl font-bold">{t.title}</h2></div><p className="mt-2 whitespace-pre-wrap text-sm leading-6">{t.body}</p><p className="mt-2 text-xs font-bold text-primary">{t.author_label||"Aluno"} · {new Date(t.created_at).toLocaleString()}</p></div><span className="rounded-full bg-muted px-3 py-1 text-xs font-black uppercase">{t.status}</span></div>
+      <div className="mt-4 flex flex-wrap gap-2"><button onClick={()=>moderateTopic.mutate({topicId:t.id,status:t.status==="open"?"closed":"open",pinned:Boolean(t.pinned)})} className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-xs font-black">{t.status==="open"?<><Lock className="h-4 w-4"/>Encerrar</>:<><Unlock className="h-4 w-4"/>Reabrir</>}</button><button onClick={()=>moderateTopic.mutate({topicId:t.id,status:t.status,pinned:!t.pinned})} className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-xs font-black">{t.pinned?<><PinOff className="h-4 w-4"/>Desafixar</>:<><Pin className="h-4 w-4"/>Fixar</>}</button><button onClick={()=>moderateTopic.mutate({topicId:t.id,status:"hidden",pinned:false})} className="inline-flex items-center gap-2 rounded-xl border border-rose-300 px-3 py-2 text-xs font-black text-rose-700"><EyeOff className="h-4 w-4"/>Ocultar tópico</button></div>
+      <div className="mt-5 space-y-2">{posts.map((p:any)=><div key={p.id} className={`rounded-2xl border p-3 ${p.status==="hidden"?"opacity-45":""}`}><div className="flex items-center justify-between gap-3"><strong className="text-sm text-primary">{p.author_label||"Participante"}</strong><span className="text-[11px] text-muted-foreground">{new Date(p.created_at).toLocaleString()}</span></div><p className="mt-2 whitespace-pre-wrap text-sm">{p.body}</p><button onClick={()=>moderatePost.mutate({postId:p.id,status:p.status==="visible"?"hidden":"visible"})} className="mt-2 text-xs font-bold text-muted-foreground underline">{p.status==="visible"?"Ocultar resposta":"Restaurar resposta"}</button></div>)}</div>
+      <div className="mt-4"><textarea value={replyBody[t.id]??""} maxLength={4000} onChange={e=>setReplyBody(v=>({...v,[t.id]:e.target.value}))} placeholder="Responder como equipe LDR…" className="min-h-24 w-full rounded-xl border bg-background p-3"/><button disabled={reply.isPending||!(replyBody[t.id]??"").trim()} onClick={()=>reply.mutate(t.id)} className="mt-2 inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-black text-primary-foreground disabled:opacity-40"><Send className="h-4 w-4"/>Responder</button></div>
+    </article>}):<div className="s8-card text-center"><MessageCircle className="mx-auto h-7 w-7 text-primary"/><p className="mt-2 font-bold">Nenhum tópico publicado ainda.</p></div>}</div>
+  </div>;
+}
