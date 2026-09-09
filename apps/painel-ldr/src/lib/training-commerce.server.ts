@@ -98,6 +98,23 @@ async function syncPaidProjectReviewCredits(customerId: string, trainingId: stri
   }
 }
 
+export async function getPublicDoMamaoTrainingOffer() {
+  const training = await trainingRow();
+  const launch = await launchStatus();
+  return {
+    productKey: PRODUCT_KEY,
+    title: training.title || TRAINING_TITLE,
+    description: training.description || "Treinamento empreendedor de 3 meses e 300 horas com jornada guiada, atividades, projeto e encontros ao vivo opcionais.",
+    priceBrlCents: launch.active ? LAUNCH_PRICE_BRL : PRICE_BRL,
+    priceEurCents: launch.active ? LAUNCH_PRICE_EUR : PRICE_EUR,
+    regularPriceBrlCents: PRICE_BRL,
+    regularPriceEurCents: PRICE_EUR,
+    launchPromotionActive: launch.active,
+    launchRemaining: launch.remaining,
+    launchLimit: LAUNCH_LIMIT,
+  };
+}
+
 export async function getDoMamaoTrainingOffer(userId: string, email: string | null) {
   const customer = await customerFor(userId, email);
   const training = await trainingRow();
