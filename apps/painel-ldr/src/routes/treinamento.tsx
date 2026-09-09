@@ -1,5 +1,28 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { TrainingLaunchPageV2 } from "@/components/training-launch-page-v2";
+import { useEffect } from "react";
+
+const TRAINING_PUBLIC_URL = "https://kind-crest-9804.hosted.pageshare.ai";
+
+function TrainingPublicRedirect() {
+  useEffect(() => {
+    window.location.replace(TRAINING_PUBLIC_URL);
+  }, []);
+
+  return (
+    <main className="flex min-h-screen items-center justify-center bg-background px-4 text-foreground">
+      <div className="max-w-md text-center">
+        <h1 className="font-serif text-3xl">Do Mamão ao Negócio</h1>
+        <p className="mt-3 text-sm text-muted-foreground">Abrindo a página pública do treinamento…</p>
+        <a
+          href={TRAINING_PUBLIC_URL}
+          className="mt-6 inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-5 py-3 text-sm font-black text-primary-foreground"
+        >
+          Abrir treinamento
+        </a>
+      </div>
+    </main>
+  );
+}
 
 export const Route=createFileRoute("/treinamento")({
   head:()=>({
@@ -11,5 +34,5 @@ export const Route=createFileRoute("/treinamento")({
     ],
     links:[{rel:"canonical",href:"https://ldrrhestrategia.com/treinamento"}]
   }),
-  component:TrainingLaunchPageV2
+  component:TrainingPublicRedirect
 });
