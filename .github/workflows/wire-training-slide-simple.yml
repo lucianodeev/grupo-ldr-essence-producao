@@ -1,0 +1,28 @@
+name: Wire training slide simple
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/wire-training-slide-simple.yml']
+permissions:
+  contents: write
+jobs:
+  wire:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: python3 .github/scripts/wire_training_slide.py
+      - run: npm ci
+        working-directory: apps/painel-ldr
+      - run: npm run build
+        working-directory: apps/painel-ldr
+      - run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.treinamentos.do-mamao-ao-negocio.tsx apps/painel-ldr/src/components/training-slide-experience.tsx
+          git commit -m "feat: aplicar UX dinâmica em etapas às 90 aulas"
+          git push origin main
