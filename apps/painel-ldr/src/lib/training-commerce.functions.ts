@@ -47,7 +47,7 @@ export const clientDoMamaoTrainingExperience = createServerFn({ method: "GET" })
         .maybeSingle();
       if (data?.state && typeof data.state === "object") trainingState = data.state as Record<string, unknown>;
     }
-    return { ...result, html: "", trainingState };
+    return { ...result, html: "", trainingState, state: trainingState };
   });
 
 export const clientSubmitDoMamaoProject = createServerFn({ method: "POST" })
