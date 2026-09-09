@@ -52,7 +52,7 @@ const COPY = {
       lead: "Transforme sua ideia em um projeto de negócio mais claro, estruturado e possível de executar.",
       cta: "QUERO CONHECER O TREINAMENTO",
       secondary: "JÁ TENHO ACESSO",
-      price: "R$ 599,99 · € 100,56",
+      price: "DE R$ 599,99 / € 100,56 · AGORA R$ 299,99 / € 49,90",
       problem:
         "Ter uma ideia é diferente de saber como organizá-la, testá-la e transformá-la em um projeto que faça sentido no mundo real.",
       transform:
@@ -386,7 +386,7 @@ const COPY = {
       lead: "Turn your idea into a clearer, more structured business project that is possible to execute.",
       cta: "EXPLORE THE TRAINING",
       secondary: "I ALREADY HAVE ACCESS",
-      price: "R$ 599.99 · € 100.56",
+      price: "FROM R$ 599.99 / €100.56 · NOW R$ 299.99 / €49.90",
       problem:
         "Having an idea is different from knowing how to organize, test and turn it into a project that makes sense in the real world.",
       transform:
@@ -709,7 +709,7 @@ const COPY = {
       lead: "Transformez votre idée en un projet d’entreprise plus clair, structuré et possible à exécuter.",
       cta: "DÉCOUVRIR LA FORMATION",
       secondary: "J’AI DÉJÀ ACCÈS",
-      price: "R$ 599,99 · 100,56 €",
+      price: "DE R$ 599,99 / 100,56 € · MAINTENANT R$ 299,99 / 49,90 €",
       problem:
         "Avoir une idée est différent de savoir l’organiser, la tester et la transformer en projet réel.",
       transform:
@@ -1038,7 +1038,7 @@ const COPY = {
       lead: "Transforma tu idea en un proyecto de negocio más claro, estructurado y posible de ejecutar.",
       cta: "CONOCER LA FORMACIÓN",
       secondary: "YA TENGO ACCESO",
-      price: "R$ 599,99 · € 100,56",
+      price: "DE R$ 599,99 / € 100,56 · AGORA R$ 299,99 / € 49,90",
       problem:
         "Tener una idea es diferente de saber organizarla, probarla y convertirla en un proyecto real.",
       transform:
