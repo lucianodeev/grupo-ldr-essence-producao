@@ -1,7 +1,6 @@
 import { getRequest } from "@tanstack/react-start/server";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { resolveClient } from "@/lib/client-portal.server";
-import { getDoMamaoAoNegocioHtml } from "@/content/do-mamao-ao-negocio.server";
 import { hasOwnerDigitalAccess } from "@/lib/owner-digital-access.server";
 
 const PRODUCT_KEY = "do_mamao_ao_negocio";
@@ -93,7 +92,9 @@ async function syncPaidProjectReviewCredits(customerId: string, trainingId: stri
   const { data: orders, error } = await db.from("orders").select("id,catalog_key,payment_status,amount_cents,currency,stripe_checkout_session_id,metadata,created_at").eq("customer_id", customerId).eq("payment_status", "pago").order("created_at", { ascending: true });
   if (error) return;
   for (const order of (orders ?? []).filter(projectReviewMatches)) {
-    await db.from("training_project_review_credits").upsert({ training_id: trainingId, customer_id: customerId, source: "paid", status: "available", order_id: order.id, amount_minor: order.amount_cents ?? null, currency: order.currency ?? null, stripe_checkout_session_id: order.stripe_checkout_session_id ?? null }, { onConflict: "order_id" });
+    const { data: existing } = await db.from("training_project_review_credits").select("id").eq("order_id", order.id).maybeSingle();
+    if (existing) continue;
+    await db.from("training_project_review_credits").insert({ training_id: trainingId, customer_id: customerId, source: "paid", status: "available", order_id: order.id, amount_minor: order.amount_cents ?? null, currency: order.currency ?? null, stripe_checkout_session_id: order.stripe_checkout_session_id ?? null });
   }
 }
 
@@ -200,8 +201,6 @@ export async function createDoMamaoProjectReviewCheckout(userId: string, email: 
   return { url: session.url };
 }
 
-function safeJsonForInline(value: unknown) { return JSON.stringify(value ?? {}).replace(/</g, "\\u003c").replace(/-->/g, "--\\u003e"); }
-
 export async function getDoMamaoTrainingExperience(userId: string, email: string | null) {
   const customer = await customerFor(userId, email);
   const training = await trainingRow();
@@ -215,14 +214,31 @@ export async function getDoMamaoTrainingExperience(userId: string, email: string
     db.from("training_project_review_credits").select("id,source,status,amount_minor,currency,created_at,used_at").eq("training_id", training.id).eq("customer_id", customer.id).order("created_at", { ascending: true }),
     db.from("training_project_submissions").select("id,submission_number,title,project_url,status,submitted_at,reviewed_at,feedback").eq("training_id", training.id).eq("customer_id", customer.id).order("submission_number", { ascending: true }),
   ]);
-  const seed = cloud?.state && typeof cloud.state === "object" ? cloud.state : {};
-  let html = getDoMamaoAoNegocioHtml();
-  const seedScript = `<script>try{localStorage.setItem('ldr_training_v3_library_ready',JSON.stringify(${safeJsonForInline(seed)}));}catch(e){}</script>`;
-  html = html.includes("</head>") ? html.replace("</head>", `${seedScript}</head>`) : `${seedScript}${html}`;
   const minimumDays = Number(training.minimum_days ?? DEFAULT_MINIMUM_DAYS);
   const eligibleAt = new Date(new Date(currentEnrollment.enrolled_at).getTime() + minimumDays * 86400000).toISOString();
   const availableProjectCredits = (credits ?? []).filter((x: any) => x.status === "available").length;
-  return { html, trainingId: training.id, title: training.title, progressPercent: Number(cloud?.progress_percent ?? currentEnrollment.progress_percent ?? 0), cohortNumber: currentEnrollment.training_cohorts?.cohort_number ?? null, enrolledAt: currentEnrollment.enrolled_at, completedAt: cloud?.completed_at ?? currentEnrollment.completed_at ?? null, certificateAvailableAt: cloud?.certificate_available_at ?? currentEnrollment.certificate_available_at ?? null, minimumDays, lifetimeAccess: training.lifetime_access !== false, liveSessionsIncluded: Number(training.live_sessions_included ?? DEFAULT_LIVE_SESSIONS), projectsIncluded: Number(training.projects_included ?? DEFAULT_PROJECTS_INCLUDED), officialCompletionEligibleAt: eligibleAt, projectSubmissionEligible: Date.now() >= new Date(eligibleAt).getTime(), availableProjectCredits, projectSubmissions: submissions ?? [], extraProjectReviewBrlCents: Number(training.extra_project_review_brl_minor ?? DEFAULT_PROJECT_REVIEW_BRL), extraProjectReviewEurCents: Number(training.extra_project_review_eur_minor ?? DEFAULT_PROJECT_REVIEW_EUR) };
+  return {
+    html: "",
+    trainingId: training.id,
+    title: training.title,
+    studentName: customer.fullName,
+    studentEmail: customer.email,
+    progressPercent: Number(cloud?.progress_percent ?? currentEnrollment.progress_percent ?? 0),
+    cohortNumber: currentEnrollment.training_cohorts?.cohort_number ?? null,
+    enrolledAt: currentEnrollment.enrolled_at,
+    completedAt: cloud?.completed_at ?? currentEnrollment.completed_at ?? null,
+    certificateAvailableAt: cloud?.certificate_available_at ?? currentEnrollment.certificate_available_at ?? null,
+    minimumDays,
+    lifetimeAccess: training.lifetime_access !== false,
+    liveSessionsIncluded: Number(training.live_sessions_included ?? DEFAULT_LIVE_SESSIONS),
+    projectsIncluded: Number(training.projects_included ?? DEFAULT_PROJECTS_INCLUDED),
+    officialCompletionEligibleAt: eligibleAt,
+    projectSubmissionEligible: Date.now() >= new Date(eligibleAt).getTime(),
+    availableProjectCredits,
+    projectSubmissions: submissions ?? [],
+    extraProjectReviewBrlCents: Number(training.extra_project_review_brl_minor ?? DEFAULT_PROJECT_REVIEW_BRL),
+    extraProjectReviewEurCents: Number(training.extra_project_review_eur_minor ?? DEFAULT_PROJECT_REVIEW_EUR),
+  };
 }
 
 export async function submitDoMamaoProject(userId: string, email: string | null, input: { title: string; projectUrl?: string | null; projectText?: string | null }) {
@@ -236,20 +252,46 @@ export async function submitDoMamaoProject(userId: string, email: string | null,
   if (error || !submission) fail("Não foi possível enviar o projeto."); await db.from("training_project_review_credits").update({ status: "used", used_at: new Date().toISOString() }).eq("id", credit.id); return { ok: true as const, submission };
 }
 
+function completeDailyLessons(state: StateRecord) {
+  const activities = (state.dailyActivities && typeof state.dailyActivities === "object" ? state.dailyActivities : {}) as Record<string, any>;
+  let complete = 0;
+  for (let day = 1; day <= 90; day++) {
+    const value = activities[String(day)] ?? activities[`day_${day}`];
+    if (!value || typeof value !== "object") continue;
+    const objective = value.objectiveAnswers && typeof value.objectiveAnswers === "object" ? value.objectiveAnswers : {};
+    const written = value.writtenAnswers && typeof value.writtenAnswers === "object" ? value.writtenAnswers : {};
+    const quiz = value.quizAnswers && typeof value.quizAnswers === "object" ? value.quizAnswers : {};
+    const objectiveOk = Object.values(objective).filter((x) => typeof x === "string" && x.trim()).length >= 7;
+    const writtenOk = Object.values(written).filter((x) => typeof x === "string" && x.trim().length >= 20).length >= 3;
+    const quizOk = Object.values(quiz).filter((x) => typeof x === "number").length >= 3;
+    if (objectiveOk && writtenOk && quizOk) complete++;
+  }
+  return complete;
+}
+
 function countTrainingProgress(state: StateRecord) {
+  const dailyCount = completeDailyLessons(state);
+  if (state.dailyActivities && typeof state.dailyActivities === "object") return Math.max(0, Math.min(100, Math.round((dailyCount / 90) * 100)));
   const guided = (state.guidedAnswers && typeof state.guidedAnswers === "object" ? state.guidedAnswers : {}) as Record<string, unknown>;
   const guidedCount = Object.values(guided).filter((value) => typeof value === "string" && value.trim().length > 0).length;
   if (guidedCount > 0) return Math.max(0, Math.min(100, Math.round((Math.min(9, guidedCount) / 9) * 100)));
-  const answers = (state.answers && typeof state.answers === "object" ? state.answers : {}) as Record<string, unknown>; const quiz = (state.quiz && typeof state.quiz === "object" ? state.quiz : {}) as Record<string, unknown>; const reflections = (state.reflections && typeof state.reflections === "object" ? state.reflections : {}) as Record<string, unknown>;
+  const answers = (state.answers && typeof state.answers === "object" ? state.answers : {}) as Record<string, unknown>;
+  const quiz = (state.quiz && typeof state.quiz === "object" ? state.quiz : {}) as Record<string, unknown>;
+  const reflections = (state.reflections && typeof state.reflections === "object" ? state.reflections : {}) as Record<string, unknown>;
   let written = 0; for (const value of Object.values(reflections)) if (typeof value === "string" && value.trim().length >= 40) written++;
-  const done = Math.min(60, Object.keys(answers).length) + Math.min(36, Object.keys(quiz).length) + Math.min(30, written); return Math.max(0, Math.min(100, Math.round((done / 126) * 100)));
+  const done = Math.min(60, Object.keys(answers).length) + Math.min(36, Object.keys(quiz).length) + Math.min(30, written);
+  return Math.max(0, Math.min(100, Math.round((done / 126) * 100)));
 }
 
 export async function saveDoMamaoTrainingState(userId: string, email: string | null, state: StateRecord) {
   const customer = await customerFor(userId, email); const training = await trainingRow(); let currentEnrollment = await enrollment(customer.id, training.id); if (!currentEnrollment) currentEnrollment = await ensureOwnerEnrollment(customer.id, training.id, email, userId); if (!currentEnrollment) fail("Matrícula não encontrada.");
-  const serialized = JSON.stringify(state ?? {}); if (serialized.length > 700_000) fail("Dados do treinamento excederam o limite de sincronização."); const progress = countTrainingProgress(state ?? {}); const started = new Date(currentEnrollment.enrolled_at).getTime(); const eligibleDay = started + Number(training.minimum_days ?? DEFAULT_MINIMUM_DAYS) * 86400000;
-  let completedAt = currentEnrollment.completed_at as string | null; let certificateAvailableAt = currentEnrollment.certificate_available_at as string | null; if (!completedAt && progress >= 100 && Date.now() >= eligibleDay) { completedAt = new Date().toISOString(); certificateAvailableAt = new Date(Date.now() + 15 * 86400000).toISOString(); }
+  const serialized = JSON.stringify(state ?? {}); if (serialized.length > 700_000) fail("Dados do treinamento excederam o limite de sincronização.");
+  const progress = countTrainingProgress(state ?? {}); const started = new Date(currentEnrollment.enrolled_at).getTime(); const eligibleDay = started + Number(training.minimum_days ?? DEFAULT_MINIMUM_DAYS) * 86400000;
+  let completedAt = currentEnrollment.completed_at as string | null; let certificateAvailableAt = currentEnrollment.certificate_available_at as string | null;
+  if (!completedAt && progress >= 100 && Date.now() >= eligibleDay) { completedAt = new Date().toISOString(); certificateAvailableAt = new Date(Date.now() + 15 * 86400000).toISOString(); }
   const currentPanel = typeof state.lastPanel === "string" ? state.lastPanel.slice(0, 80) : "inicio";
   const { error } = await db.from("training_state").upsert({ training_id: training.id, customer_id: customer.id, state, progress_percent: progress, current_panel: currentPanel, completed_at: completedAt, certificate_available_at: certificateAvailableAt, updated_at: new Date().toISOString() }, { onConflict: "training_id,customer_id" }); if (error) fail("Não foi possível sincronizar seu progresso.");
-  await db.from("training_enrollments").update({ progress_percent: progress, completed_at: completedAt, certificate_available_at: certificateAvailableAt }).eq("id", currentEnrollment.id); await db.from("library_progress").upsert({ customer_id: customer.id, product_key: TRAINING_SLUG, progress_percent: progress, current_location: currentPanel, updated_at: new Date().toISOString() }, { onConflict: "customer_id,product_key" }); return { ok: true as const, progressPercent: progress, completedAt, certificateAvailableAt };
+  await db.from("training_enrollments").update({ progress_percent: progress, completed_at: completedAt, certificate_available_at: certificateAvailableAt }).eq("id", currentEnrollment.id);
+  await db.from("library_progress").upsert({ customer_id: customer.id, product_key: TRAINING_SLUG, progress_percent: progress, current_location: currentPanel, updated_at: new Date().toISOString() }, { onConflict: "customer_id,product_key" });
+  return { ok: true as const, progressPercent: progress, completedAt, certificateAvailableAt, completedDailyLessons: completeDailyLessons(state) };
 }
