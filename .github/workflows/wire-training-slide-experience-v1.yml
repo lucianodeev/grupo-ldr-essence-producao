@@ -1,0 +1,68 @@
+name: Wire training slide experience v1
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/wire-training-slide-experience-v1.yml']
+permissions:
+  contents: write
+jobs:
+  wire:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Wire component
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('apps/painel-ldr/src/routes/_clientarea.cliente.treinamentos.do-mamao-ao-negocio.tsx')
+          s=p.read_text()
+          imp='import { TrainingSlideExperience } from "@/components/training-slide-experience";\n'
+          marker='import { getDoMamaoCurriculum, PROGRAM_SUMMARY, type TrainingLocale } from "@/content/do-mamao-curriculum";\n'
+          if imp not in s:
+              s=s.replace(marker,marker+imp,1)
+          start='      {area==="aula"&&<>\n'
+          end='\n      {area==="manual"&&<>'
+          i=s.find(start); j=s.find(end,i)
+          if i<0 or j<0:
+              raise SystemExit('lesson area markers not found')
+          replacement='''      {area==="aula"&&<TrainingSlideExperience
+        key={selectedDay}
+        locale={locale}
+        c={c}
+        currentLesson={currentLesson}
+        currentState={currentState}
+        selectedDay={selectedDay}
+        unlockedDay={unlockedDay}
+        curriculum={curriculum}
+        activities={activities}
+        currentComplete={currentComplete}
+        dark={dark}
+        card={card}
+        soft={soft}
+        input={input}
+        updateDay={updateDay}
+        persist={persist}
+        goDay={goDay}
+        savePending={save.isPending}
+        syncLabel={syncLabel}
+        isDayComplete={isDayComplete}
+      />}
+'''
+          s=s[:i]+replacement+s[j:]
+          p.write_text(s)
+          PY
+      - name: Build
+        working-directory: apps/painel-ldr
+        run: npm ci && npm run build
+      - name: Commit
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.treinamentos.do-mamao-ao-negocio.tsx apps/painel-ldr/src/components/training-slide-experience.tsx
+          git commit -m "feat: aplicar UX dinâmica em etapas às 90 aulas"
+          git push origin main
