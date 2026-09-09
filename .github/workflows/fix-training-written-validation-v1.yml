@@ -1,0 +1,56 @@
+name: Validar respostas escritas do treinamento
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/fix-training-written-validation-v1.yml
+
+permissions:
+  contents: write
+
+jobs:
+  validate-written:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Aplicar mínimo 500 e máximo 1000 no cliente e servidor
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          ui=Path('apps/painel-ldr/src/routes/_clientarea.cliente.treinamentos.do-mamao-ao-negocio.tsx')
+          t=ui.read_text()
+          t=t.replace('v.trim().length>=500).length>=3','v.trim().length>=500&&v.length<=1000).length>=3',1)
+          t=t.replace('const valid=writtenValue.trim().length>=500;','const valid=writtenValue.trim().length>=500&&writtenValue.length<=1000;',1)
+          t=t.replace('<span>{writtenValue.length}/1000 {valid?"✓":""}</span>','<span>{writtenValue.length<500?`${writtenValue.length}/500 — continue`:`${writtenValue.length}/1000 ✓`}</span>',1)
+          ui.write_text(t)
+
+          server=Path('apps/painel-ldr/src/lib/training-commerce.server.ts')
+          s=server.read_text()
+          s=s.replace('x.trim().length >= 500).length >= 3','x.trim().length >= 500 && x.length <= 1000).length >= 3',1)
+          anchor='''  const serialized = JSON.stringify(state ?? {}); if (serialized.length > 700_000) fail("Dados do treinamento excederam o limite de sincronização.");'''
+          replacement='''  const activitiesForValidation=(state?.dailyActivities&&typeof state.dailyActivities==="object"?state.dailyActivities:{}) as Record<string,any>;\n  for(const day of Object.values(activitiesForValidation)){\n    if(!day||typeof day!=="object")continue;\n    const written=day.writtenAnswers&&typeof day.writtenAnswers==="object"?day.writtenAnswers:{};\n    if(Object.values(written).some((value)=>typeof value==="string"&&value.length>1000)) fail("Cada resposta escrita pode ter no máximo 1.000 caracteres.");\n  }\n  const serialized = JSON.stringify(state ?? {}); if (serialized.length > 700_000) fail("Dados do treinamento excederam o limite de sincronização.");'''
+          if anchor not in s: raise SystemExit('Ponto de validação do servidor não encontrado')
+          s=s.replace(anchor,replacement,1)
+          server.write_text(s)
+          PY
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Instalar dependências
+        working-directory: apps/painel-ldr
+        run: npm install --no-audit --no-fund
+      - name: Validar build
+        working-directory: apps/painel-ldr
+        run: npm run build
+      - name: Publicar validação
+        shell: bash
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.treinamentos.do-mamao-ao-negocio.tsx apps/painel-ldr/src/lib/training-commerce.server.ts
+          git commit -m "fix: validar respostas entre 500 e 1000 caracteres"
+          git push origin main
