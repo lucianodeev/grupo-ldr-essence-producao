@@ -1,0 +1,71 @@
+name: Fix Hotmart EUR combo price
+
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-hotmart-eur-combo-price-v1.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  fix-price:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Align panel and checkout with Hotmart EUR price
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          ui = Path('apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx')
+          t = ui.read_text()
+
+          replacements = [
+              (
+                  '{locale==="pt"?"3 PRODUTOS PELO PREÇO PROMOCIONAL DA FORMAÇÃO":locale==="fr"?"3 PRODUITS AU PRIX PROMOTIONNEL DE LA FORMATION":locale==="es"?"3 PRODUCTOS POR EL PREÇO PROMOCIONAL DE LA FORMACIÓN":"3 PRODUCTS FOR THE TRAINING LAUNCH PRICE"}',
+                  '{locale==="pt"?"3 PRODUTOS EM UMA OFERTA COMPLETA":locale==="fr"?"3 PRODUITS DANS UNE OFFRE COMPLÈTE":locale==="es"?"3 PRODUCTOS EN UNA OFERTA COMPLETA":"3 PRODUCTS IN ONE COMPLETE OFFER"}'
+              ),
+              (
+                  '{market==="BR"?"R$ 299,99":"€ 49,90"}',
+                  '{market==="BR"?"R$ 299,99":"€ 65,34"}'
+              ),
+              (
+                  '{market==="BR"?"Economia: R$ 59,80":"Economia: € 24,90"}',
+                  '{market==="BR"?"Economia: R$ 59,80":"Economia: € 9,46"}'
+              ),
+          ]
+
+          for old, new in replacements:
+              if old not in t:
+                  raise SystemExit(f'Expected UI fragment not found: {old}')
+              t = t.replace(old, new, 1)
+
+          ui.write_text(t)
+
+          backend = Path('apps/painel-ldr/src/lib/client-portal.server.ts')
+          s = backend.read_text()
+          old = 'const {getPublicDoMamaoTrainingOffer}=await import("@/lib/training-commerce.server"); const trainingOffer=await getPublicDoMamaoTrainingOffer(); const amountCents=market==="BR"?trainingOffer.priceBrlCents:trainingOffer.priceEurCents; const currency=market==="BR"?"BRL":"EUR";'
+          new = 'const {getPublicDoMamaoTrainingOffer}=await import("@/lib/training-commerce.server"); const trainingOffer=await getPublicDoMamaoTrainingOffer(); const amountCents=market==="BR"?trainingOffer.priceBrlCents:6534; const currency=market==="BR"?"BRL":"EUR";'
+          if old not in s:
+              raise SystemExit('Expected combo checkout pricing fragment not found')
+          s = s.replace(old, new, 1)
+          backend.write_text(s)
+          PY
+
+      - name: Commit correction
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo 'No changes required.'
+            exit 0
+          fi
+          git config user.name 'ldr-rh-campanhas'
+          git config user.email 'llucianouam@gmail.com'
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx apps/painel-ldr/src/lib/client-portal.server.ts
+          git commit -m 'fix: use Hotmart EUR combo price 65.34'
+          git push origin HEAD:main
