@@ -1,0 +1,54 @@
+name: Add training forum links v1
+
+on:
+  push:
+    paths:
+      - '.github/workflows/add-training-forum-links-v1.yml'
+  workflow_dispatch:
+
+jobs:
+  patch-and-build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Patch forum links
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          training=Path('apps/painel-ldr/src/routes/_clientarea.cliente.treinamentos.do-mamao-ao-negocio.tsx')
+          s=training.read_text(encoding='utf-8')
+          anchor='''<button onClick={()=>{setSelectedDay(unlockedDay);setArea("aula")}} className="mt-5 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl bg-[#5b0824] px-5 py-3 font-black text-white sm:w-auto">{c.continue}<ChevronRight className="h-4 w-4"/></button></section>'''
+          repl='''<div className="mt-5 flex flex-col gap-2 sm:flex-row"><button onClick={()=>{setSelectedDay(unlockedDay);setArea("aula")}} className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl bg-[#5b0824] px-5 py-3 font-black text-white sm:w-auto">{c.continue}<ChevronRight className="h-4 w-4"/></button><a href="/cliente/treinamentos/do-mamao-ao-negocio/forum" className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl border border-[#d7ad54] px-5 py-3 font-black text-[#8a1739] sm:w-auto"><MessageCircle className="h-4 w-4"/>Fórum da comunidade</a></div></section>'''
+          if 'href="/cliente/treinamentos/do-mamao-ao-negocio/forum"' not in s:
+              if anchor not in s: raise SystemExit('training anchor not found')
+              s=s.replace(anchor,repl,1)
+              training.write_text(s,encoding='utf-8')
+
+          admin=Path('apps/painel-ldr/src/routes/_authenticated/admin.tsx')
+          a=admin.read_text(encoding='utf-8')
+          line='''    ["Treinamentos", "/admin/treinamentos"],'''
+          insert='''    ["Treinamentos", "/admin/treinamentos"],\n    ["Fórum do treinamento", "/admin/forum-treinamento"],'''
+          if 'Fórum do treinamento' not in a:
+              if line not in a: raise SystemExit('admin anchor not found')
+              a=a.replace(line,insert,1)
+              admin.write_text(a,encoding='utf-8')
+          PY
+      - name: Install
+        working-directory: apps/painel-ldr
+        run: npm install
+      - name: Build
+        working-directory: apps/painel-ldr
+        run: npm run build
+      - name: Commit generated route tree and links
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add apps/painel-ldr/src/routes apps/painel-ldr/src/routeTree.gen.ts
+          git diff --cached --quiet && exit 0
+          git commit -m 'feat: integrar fórum coletivo ao treinamento e admin'
+          git push
