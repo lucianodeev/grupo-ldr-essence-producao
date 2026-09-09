@@ -38,6 +38,7 @@ const sections = [
     ["Mentoria", "/admin/mentoria"],
     ["Sistema S8", "/admin/s8"],
     ["Treinamentos", "/admin/treinamentos"],
+    ["Fórum do treinamento", "/admin/forum-treinamento"],
   ]},
 ] as const;
 

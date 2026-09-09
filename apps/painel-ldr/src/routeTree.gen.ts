@@ -25,6 +25,7 @@ import { Route as MensagensProfissionaisRouteImport } from './routes/mensagens-p
 import { Route as ParaProfissionaisRouteImport } from './routes/para-profissionais'
 import { Route as ParaVendedoresRouteImport } from './routes/para-vendedores'
 import { Route as PlanosEmpresasRouteImport } from './routes/planos-empresas'
+import { Route as ProdutosRouteImport } from './routes/produtos'
 import { Route as ProfissionaisRouteImport } from './routes/profissionais'
 import { Route as ProfissionalAssinaturaRouteImport } from './routes/profissional-assinatura'
 import { Route as ProfissionalCatalogoLdrRouteImport } from './routes/profissional-catalogo-ldr'
@@ -65,6 +66,7 @@ import { Route as AuthenticatedAdminCatalogoRouteImport } from './routes/_authen
 import { Route as AuthenticatedAdminEmpresasRouteImport } from './routes/_authenticated/admin.empresas'
 import { Route as AuthenticatedAdminEquipeRouteImport } from './routes/_authenticated/admin.equipe'
 import { Route as AuthenticatedAdminFinanceiroRouteImport } from './routes/_authenticated/admin.financeiro'
+import { Route as AuthenticatedAdminForumTreinamentoRouteImport } from './routes/_authenticated/admin.forum-treinamento'
 import { Route as AuthenticatedAdminMentoriaRouteImport } from './routes/_authenticated/admin.mentoria'
 import { Route as AuthenticatedAdminMeusAtendimentosRouteImport } from './routes/_authenticated/admin.meus-atendimentos'
 import { Route as AuthenticatedAdminMeusClientesRouteImport } from './routes/_authenticated/admin.meus-clientes'
@@ -121,6 +123,7 @@ import { Route as ApiStripeWebhookRouteImport } from './routes/api/stripe/webhoo
 import { Route as ClientareaClienteBibliotecaProductKeyRouteImport } from './routes/_clientarea.cliente.biblioteca.$productKey'
 import { Route as ClientareaClientePedidoOrderIdRouteImport } from './routes/_clientarea.cliente.pedido.$orderId'
 import { Route as ClientareaClienteTreinamentosDoMamaoAoNegocioRouteImport } from './routes/_clientarea.cliente.treinamentos.do-mamao-ao-negocio'
+import { Route as ClientareaClienteTreinamentosDoMamaoAoNegocioForumRouteImport } from './routes/_clientarea.cliente.treinamentos.do-mamao-ao-negocio.forum'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -197,6 +200,11 @@ const ParaVendedoresRoute = ParaVendedoresRouteImport.update({
 const PlanosEmpresasRoute = PlanosEmpresasRouteImport.update({
   id: '/planos-empresas',
   path: '/planos-empresas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProdutosRoute = ProdutosRouteImport.update({
+  id: '/produtos',
+  path: '/produtos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProfissionaisRoute = ProfissionaisRouteImport.update({
@@ -403,6 +411,12 @@ const AuthenticatedAdminFinanceiroRoute =
   AuthenticatedAdminFinanceiroRouteImport.update({
     id: '/financeiro',
     path: '/financeiro',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminForumTreinamentoRoute =
+  AuthenticatedAdminForumTreinamentoRouteImport.update({
+    id: '/forum-treinamento',
+    path: '/forum-treinamento',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
 const AuthenticatedAdminMentoriaRoute =
@@ -737,6 +751,12 @@ const ClientareaClienteTreinamentosDoMamaoAoNegocioRoute =
     path: '/do-mamao-ao-negocio',
     getParentRoute: () => ClientareaClienteTreinamentosRoute,
   } as any)
+const ClientareaClienteTreinamentosDoMamaoAoNegocioForumRoute =
+  ClientareaClienteTreinamentosDoMamaoAoNegocioForumRouteImport.update({
+    id: '/forum',
+    path: '/forum',
+    getParentRoute: () => ClientareaClienteTreinamentosDoMamaoAoNegocioRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -752,6 +772,7 @@ export interface FileRoutesByFullPath {
   '/para-profissionais': typeof ParaProfissionaisRoute
   '/para-vendedores': typeof ParaVendedoresRoute
   '/planos-empresas': typeof PlanosEmpresasRoute
+  '/produtos': typeof ProdutosRoute
   '/profissionais': typeof ProfissionaisRouteWithChildren
   '/profissional-assinatura': typeof ProfissionalAssinaturaRoute
   '/profissional-catalogo-ldr': typeof ProfissionalCatalogoLdrRoute
@@ -791,6 +812,7 @@ export interface FileRoutesByFullPath {
   '/admin/empresas': typeof AuthenticatedAdminEmpresasRoute
   '/admin/equipe': typeof AuthenticatedAdminEquipeRoute
   '/admin/financeiro': typeof AuthenticatedAdminFinanceiroRoute
+  '/admin/forum-treinamento': typeof AuthenticatedAdminForumTreinamentoRoute
   '/admin/mentoria': typeof AuthenticatedAdminMentoriaRoute
   '/admin/meus-atendimentos': typeof AuthenticatedAdminMeusAtendimentosRoute
   '/admin/meus-clientes': typeof AuthenticatedAdminMeusClientesRoute
@@ -846,7 +868,8 @@ export interface FileRoutesByFullPath {
   '/cliente/': typeof ClientareaClienteIndexRoute
   '/cliente/biblioteca/$productKey': typeof ClientareaClienteBibliotecaProductKeyRoute
   '/cliente/pedido/$orderId': typeof ClientareaClientePedidoOrderIdRoute
-  '/cliente/treinamentos/do-mamao-ao-negocio': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioRoute
+  '/cliente/treinamentos/do-mamao-ao-negocio': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioRouteWithChildren
+  '/cliente/treinamentos/do-mamao-ao-negocio/forum': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioForumRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -862,6 +885,7 @@ export interface FileRoutesByTo {
   '/para-profissionais': typeof ParaProfissionaisRoute
   '/para-vendedores': typeof ParaVendedoresRoute
   '/planos-empresas': typeof PlanosEmpresasRoute
+  '/produtos': typeof ProdutosRoute
   '/profissionais': typeof ProfissionaisRouteWithChildren
   '/profissional-assinatura': typeof ProfissionalAssinaturaRoute
   '/profissional-catalogo-ldr': typeof ProfissionalCatalogoLdrRoute
@@ -899,6 +923,7 @@ export interface FileRoutesByTo {
   '/admin/empresas': typeof AuthenticatedAdminEmpresasRoute
   '/admin/equipe': typeof AuthenticatedAdminEquipeRoute
   '/admin/financeiro': typeof AuthenticatedAdminFinanceiroRoute
+  '/admin/forum-treinamento': typeof AuthenticatedAdminForumTreinamentoRoute
   '/admin/mentoria': typeof AuthenticatedAdminMentoriaRoute
   '/admin/meus-atendimentos': typeof AuthenticatedAdminMeusAtendimentosRoute
   '/admin/meus-clientes': typeof AuthenticatedAdminMeusClientesRoute
@@ -954,7 +979,8 @@ export interface FileRoutesByTo {
   '/cliente': typeof ClientareaClienteIndexRoute
   '/cliente/biblioteca/$productKey': typeof ClientareaClienteBibliotecaProductKeyRoute
   '/cliente/pedido/$orderId': typeof ClientareaClientePedidoOrderIdRoute
-  '/cliente/treinamentos/do-mamao-ao-negocio': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioRoute
+  '/cliente/treinamentos/do-mamao-ao-negocio': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioRouteWithChildren
+  '/cliente/treinamentos/do-mamao-ao-negocio/forum': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioForumRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -974,6 +1000,7 @@ export interface FileRoutesById {
   '/para-profissionais': typeof ParaProfissionaisRoute
   '/para-vendedores': typeof ParaVendedoresRoute
   '/planos-empresas': typeof PlanosEmpresasRoute
+  '/produtos': typeof ProdutosRoute
   '/profissionais': typeof ProfissionaisRouteWithChildren
   '/profissional-assinatura': typeof ProfissionalAssinaturaRoute
   '/profissional-catalogo-ldr': typeof ProfissionalCatalogoLdrRoute
@@ -1014,6 +1041,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/empresas': typeof AuthenticatedAdminEmpresasRoute
   '/_authenticated/admin/equipe': typeof AuthenticatedAdminEquipeRoute
   '/_authenticated/admin/financeiro': typeof AuthenticatedAdminFinanceiroRoute
+  '/_authenticated/admin/forum-treinamento': typeof AuthenticatedAdminForumTreinamentoRoute
   '/_authenticated/admin/mentoria': typeof AuthenticatedAdminMentoriaRoute
   '/_authenticated/admin/meus-atendimentos': typeof AuthenticatedAdminMeusAtendimentosRoute
   '/_authenticated/admin/meus-clientes': typeof AuthenticatedAdminMeusClientesRoute
@@ -1069,7 +1097,8 @@ export interface FileRoutesById {
   '/_clientarea/cliente/': typeof ClientareaClienteIndexRoute
   '/_clientarea/cliente/biblioteca/$productKey': typeof ClientareaClienteBibliotecaProductKeyRoute
   '/_clientarea/cliente/pedido/$orderId': typeof ClientareaClientePedidoOrderIdRoute
-  '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioRoute
+  '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioRouteWithChildren
+  '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio/forum': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioForumRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -1087,6 +1116,7 @@ export interface FileRouteTypes {
     | '/para-profissionais'
     | '/para-vendedores'
     | '/planos-empresas'
+    | '/produtos'
     | '/profissionais'
     | '/profissional-assinatura'
     | '/profissional-catalogo-ldr'
@@ -1126,6 +1156,7 @@ export interface FileRouteTypes {
     | '/admin/empresas'
     | '/admin/equipe'
     | '/admin/financeiro'
+    | '/admin/forum-treinamento'
     | '/admin/mentoria'
     | '/admin/meus-atendimentos'
     | '/admin/meus-clientes'
@@ -1182,6 +1213,7 @@ export interface FileRouteTypes {
     | '/cliente/biblioteca/$productKey'
     | '/cliente/pedido/$orderId'
     | '/cliente/treinamentos/do-mamao-ao-negocio'
+    | '/cliente/treinamentos/do-mamao-ao-negocio/forum'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -1197,6 +1229,7 @@ export interface FileRouteTypes {
     | '/para-profissionais'
     | '/para-vendedores'
     | '/planos-empresas'
+    | '/produtos'
     | '/profissionais'
     | '/profissional-assinatura'
     | '/profissional-catalogo-ldr'
@@ -1234,6 +1267,7 @@ export interface FileRouteTypes {
     | '/admin/empresas'
     | '/admin/equipe'
     | '/admin/financeiro'
+    | '/admin/forum-treinamento'
     | '/admin/mentoria'
     | '/admin/meus-atendimentos'
     | '/admin/meus-clientes'
@@ -1290,6 +1324,7 @@ export interface FileRouteTypes {
     | '/cliente/biblioteca/$productKey'
     | '/cliente/pedido/$orderId'
     | '/cliente/treinamentos/do-mamao-ao-negocio'
+    | '/cliente/treinamentos/do-mamao-ao-negocio/forum'
   id:
     | '__root__'
     | '/'
@@ -1308,6 +1343,7 @@ export interface FileRouteTypes {
     | '/para-profissionais'
     | '/para-vendedores'
     | '/planos-empresas'
+    | '/produtos'
     | '/profissionais'
     | '/profissional-assinatura'
     | '/profissional-catalogo-ldr'
@@ -1348,6 +1384,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/empresas'
     | '/_authenticated/admin/equipe'
     | '/_authenticated/admin/financeiro'
+    | '/_authenticated/admin/forum-treinamento'
     | '/_authenticated/admin/mentoria'
     | '/_authenticated/admin/meus-atendimentos'
     | '/_authenticated/admin/meus-clientes'
@@ -1404,6 +1441,7 @@ export interface FileRouteTypes {
     | '/_clientarea/cliente/biblioteca/$productKey'
     | '/_clientarea/cliente/pedido/$orderId'
     | '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio'
+    | '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio/forum'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -1423,6 +1461,7 @@ export interface RootRouteChildren {
   ParaProfissionaisRoute: typeof ParaProfissionaisRoute
   ParaVendedoresRoute: typeof ParaVendedoresRoute
   PlanosEmpresasRoute: typeof PlanosEmpresasRoute
+  ProdutosRoute: typeof ProdutosRoute
   ProfissionaisRoute: typeof ProfissionaisRouteWithChildren
   ProfissionalAssinaturaRoute: typeof ProfissionalAssinaturaRoute
   ProfissionalCatalogoLdrRoute: typeof ProfissionalCatalogoLdrRoute
@@ -1564,6 +1603,13 @@ declare module '@tanstack/react-router' {
       path: '/planos-empresas'
       fullPath: '/planos-empresas'
       preLoaderRoute: typeof PlanosEmpresasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/produtos': {
+      id: '/produtos'
+      path: '/produtos'
+      fullPath: '/produtos'
+      preLoaderRoute: typeof ProdutosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/profissionais': {
@@ -1844,6 +1890,13 @@ declare module '@tanstack/react-router' {
       path: '/financeiro'
       fullPath: '/admin/financeiro'
       preLoaderRoute: typeof AuthenticatedAdminFinanceiroRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/forum-treinamento': {
+      id: '/_authenticated/admin/forum-treinamento'
+      path: '/forum-treinamento'
+      fullPath: '/admin/forum-treinamento'
+      preLoaderRoute: typeof AuthenticatedAdminForumTreinamentoRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
     '/_authenticated/admin/mentoria': {
@@ -2238,6 +2291,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClientareaClienteTreinamentosDoMamaoAoNegocioRouteImport
       parentRoute: typeof ClientareaClienteTreinamentosRoute
     }
+    '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio/forum': {
+      id: '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio/forum'
+      path: '/forum'
+      fullPath: '/cliente/treinamentos/do-mamao-ao-negocio/forum'
+      preLoaderRoute: typeof ClientareaClienteTreinamentosDoMamaoAoNegocioForumRouteImport
+      parentRoute: typeof ClientareaClienteTreinamentosDoMamaoAoNegocioRoute
+    }
   }
 }
 
@@ -2247,6 +2307,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminEmpresasRoute: typeof AuthenticatedAdminEmpresasRoute
   AuthenticatedAdminEquipeRoute: typeof AuthenticatedAdminEquipeRoute
   AuthenticatedAdminFinanceiroRoute: typeof AuthenticatedAdminFinanceiroRoute
+  AuthenticatedAdminForumTreinamentoRoute: typeof AuthenticatedAdminForumTreinamentoRoute
   AuthenticatedAdminMentoriaRoute: typeof AuthenticatedAdminMentoriaRoute
   AuthenticatedAdminMeusAtendimentosRoute: typeof AuthenticatedAdminMeusAtendimentosRoute
   AuthenticatedAdminMeusClientesRoute: typeof AuthenticatedAdminMeusClientesRoute
@@ -2272,6 +2333,8 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminEmpresasRoute: AuthenticatedAdminEmpresasRoute,
   AuthenticatedAdminEquipeRoute: AuthenticatedAdminEquipeRoute,
   AuthenticatedAdminFinanceiroRoute: AuthenticatedAdminFinanceiroRoute,
+  AuthenticatedAdminForumTreinamentoRoute:
+    AuthenticatedAdminForumTreinamentoRoute,
   AuthenticatedAdminMentoriaRoute: AuthenticatedAdminMentoriaRoute,
   AuthenticatedAdminMeusAtendimentosRoute:
     AuthenticatedAdminMeusAtendimentosRoute,
@@ -2416,14 +2479,29 @@ const ClientareaClienteBibliotecaRouteWithChildren =
     ClientareaClienteBibliotecaRouteChildren,
   )
 
+interface ClientareaClienteTreinamentosDoMamaoAoNegocioRouteChildren {
+  ClientareaClienteTreinamentosDoMamaoAoNegocioForumRoute: typeof ClientareaClienteTreinamentosDoMamaoAoNegocioForumRoute
+}
+
+const ClientareaClienteTreinamentosDoMamaoAoNegocioRouteChildren: ClientareaClienteTreinamentosDoMamaoAoNegocioRouteChildren =
+  {
+    ClientareaClienteTreinamentosDoMamaoAoNegocioForumRoute:
+      ClientareaClienteTreinamentosDoMamaoAoNegocioForumRoute,
+  }
+
+const ClientareaClienteTreinamentosDoMamaoAoNegocioRouteWithChildren =
+  ClientareaClienteTreinamentosDoMamaoAoNegocioRoute._addFileChildren(
+    ClientareaClienteTreinamentosDoMamaoAoNegocioRouteChildren,
+  )
+
 interface ClientareaClienteTreinamentosRouteChildren {
-  ClientareaClienteTreinamentosDoMamaoAoNegocioRoute: typeof ClientareaClienteTreinamentosDoMamaoAoNegocioRoute
+  ClientareaClienteTreinamentosDoMamaoAoNegocioRoute: typeof ClientareaClienteTreinamentosDoMamaoAoNegocioRouteWithChildren
 }
 
 const ClientareaClienteTreinamentosRouteChildren: ClientareaClienteTreinamentosRouteChildren =
   {
     ClientareaClienteTreinamentosDoMamaoAoNegocioRoute:
-      ClientareaClienteTreinamentosDoMamaoAoNegocioRoute,
+      ClientareaClienteTreinamentosDoMamaoAoNegocioRouteWithChildren,
   }
 
 const ClientareaClienteTreinamentosRouteWithChildren =
@@ -2534,6 +2612,7 @@ const rootRouteChildren: RootRouteChildren = {
   ParaProfissionaisRoute: ParaProfissionaisRoute,
   ParaVendedoresRoute: ParaVendedoresRoute,
   PlanosEmpresasRoute: PlanosEmpresasRoute,
+  ProdutosRoute: ProdutosRoute,
   ProfissionaisRoute: ProfissionaisRouteWithChildren,
   ProfissionalAssinaturaRoute: ProfissionalAssinaturaRoute,
   ProfissionalCatalogoLdrRoute: ProfissionalCatalogoLdrRoute,
