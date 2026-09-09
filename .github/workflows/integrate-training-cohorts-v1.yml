@@ -1,0 +1,132 @@
+name: Integrate training cohorts v1
+
+on:
+  push:
+    paths:
+      - '.github/workflows/integrate-training-cohorts-v1.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Patch cohort organization
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          root=Path('apps/painel-ldr/src')
+
+          # Backend learning hub: expose cohorts, cohort labels on enrollments/sessions and allow meeting targeting.
+          p=root/'lib/learning.server.ts'
+          s=p.read_text()
+          old='supabaseAdmin.from("training_enrollments").select("training_id, active, training_programs(id,slug,title,description,status)").eq("customer_id", customer.id).eq("active", true),'
+          new='supabaseAdmin.from("training_enrollments").select("training_id,active,cohort_id,training_programs(id,slug,title,description,status),training_cohorts(cohort_number,capacity,status)").eq("customer_id", customer.id).eq("active", true),'
+          assert old in s
+          s=s.replace(old,new,1)
+          old='supabaseAdmin.from("training_live_sessions").select("id,training_id,title,description,starts_at,ends_at,meeting_url,published").in("training_id", trainingIds).eq("published", true).order("starts_at"),'
+          new='supabaseAdmin.from("training_live_sessions").select("id,training_id,title,description,starts_at,ends_at,meeting_url,recording_url,published,cohort_id,sequence_no,journey_month,training_cohorts(cohort_number)").in("training_id", trainingIds).eq("published", true).order("starts_at"),'
+          assert old in s
+          s=s.replace(old,new,1)
+          old='const [trainings, modules, materials, sessions, announcements, comments, enrollments, submissions, canDeleteComments] = await Promise.all(['
+          new='const [trainings, modules, materials, sessions, announcements, comments, enrollments, submissions, cohorts, canDeleteComments] = await Promise.all(['
+          assert old in s
+          s=s.replace(old,new,1)
+          old='supabaseAdmin.from("training_live_sessions").select("*").order("starts_at"),'
+          new='supabaseAdmin.from("training_live_sessions").select("*,training_cohorts(cohort_number)").order("starts_at"),'
+          assert old in s
+          s=s.replace(old,new,1)
+          old='supabaseAdmin.from("training_enrollments").select("id,training_id,customer_id,active,enrolled_at,customers(full_name,email)").order("enrolled_at", { ascending: false }),'
+          new='supabaseAdmin.from("training_enrollments").select("id,training_id,customer_id,active,enrolled_at,cohort_id,customers(full_name,email),training_cohorts(cohort_number,capacity,status)").order("enrolled_at", { ascending: false }),'
+          assert old in s
+          s=s.replace(old,new,1)
+          old='supabaseAdmin.from("training_project_submissions").select("id,training_id,customer_id,submission_number,title,project_url,project_text,status,submitted_at,reviewed_at,feedback,customers(full_name,email)").order("submitted_at", { ascending: false }),\n    clientCommentDeleteEnabled(),'
+          new='supabaseAdmin.from("training_project_submissions").select("id,training_id,customer_id,submission_number,title,project_url,project_text,status,submitted_at,reviewed_at,feedback,customers(full_name,email)").order("submitted_at", { ascending: false }),\n    supabaseAdmin.from("training_cohorts").select("id,training_id,cohort_number,capacity,status,starts_at,created_at").order("cohort_number"),\n    clientCommentDeleteEnabled(),'
+          assert old in s
+          s=s.replace(old,new,1)
+          old='return { trainings: trainings.data ?? [], modules: modules.data ?? [], materials: materials.data ?? [], sessions: sessions.data ?? [], announcements: announcements.data ?? [], comments: comments.data ?? [], enrollments: enrollments.data ?? [], projectSubmissions: submissions.data ?? [], clientCanDeleteComments: canDeleteComments };'
+          new='return { trainings: trainings.data ?? [], modules: modules.data ?? [], materials: materials.data ?? [], sessions: sessions.data ?? [], announcements: announcements.data ?? [], comments: comments.data ?? [], enrollments: enrollments.data ?? [], projectSubmissions: submissions.data ?? [], cohorts: cohorts.data ?? [], clientCanDeleteComments: canDeleteComments };'
+          assert old in s
+          s=s.replace(old,new,1)
+          old='export async function professionalAddTrainingItem(userId: string, input: { kind: "module" | "material" | "live" | "announcement"; trainingId: string; title: string; description?: string | null; moduleId?: string | null; materialType?: "link" | "pdf" | "video" | "text" | "file"; url?: string | null; body?: string | null; startsAt?: string | null; endsAt?: string | null; meetingUrl?: string | null }) {'
+          new='export async function professionalAddTrainingItem(userId: string, input: { kind: "module" | "material" | "live" | "announcement"; trainingId: string; title: string; description?: string | null; moduleId?: string | null; materialType?: "link" | "pdf" | "video" | "text" | "file"; url?: string | null; body?: string | null; startsAt?: string | null; endsAt?: string | null; meetingUrl?: string | null; recordingUrl?: string | null; cohortId?: string | null; sequenceNo?: number | null; journeyMonth?: number | null }) {'
+          assert old in s
+          s=s.replace(old,new,1)
+          old='({ error } = await supabaseAdmin.from("training_live_sessions").insert({ ...common, starts_at: input.startsAt, ends_at: input.endsAt ?? null, meeting_url: input.meetingUrl ?? null, published: true }));'
+          new='({ error } = await supabaseAdmin.from("training_live_sessions").insert({ ...common, starts_at: input.startsAt, ends_at: input.endsAt ?? null, meeting_url: input.meetingUrl ?? null, recording_url: input.recordingUrl ?? null, cohort_id: input.cohortId ?? null, sequence_no: input.sequenceNo ?? null, journey_month: input.journeyMonth ?? null, published: true }));'
+          assert old in s
+          s=s.replace(old,new,1)
+          p.write_text(s)
+
+          # Server function contract.
+          p=root/'lib/learning.functions.ts'
+          s=p.read_text()
+          old='export const professionalAddTrainingItem = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth]).inputValidator((data: { kind: "module" | "material" | "live" | "announcement"; trainingId: string; title: string; description?: string | null; moduleId?: string | null; materialType?: "link" | "pdf" | "video" | "text" | "file"; url?: string | null; body?: string | null; startsAt?: string | null; endsAt?: string | null; meetingUrl?: string | null }) => data)'
+          new='export const professionalAddTrainingItem = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth]).inputValidator((data: { kind: "module" | "material" | "live" | "announcement"; trainingId: string; title: string; description?: string | null; moduleId?: string | null; materialType?: "link" | "pdf" | "video" | "text" | "file"; url?: string | null; body?: string | null; startsAt?: string | null; endsAt?: string | null; meetingUrl?: string | null; recordingUrl?: string | null; cohortId?: string | null; sequenceNo?: number | null; journeyMonth?: number | null }) => data)'
+          assert old in s
+          s=s.replace(old,new,1)
+          p.write_text(s)
+
+          # Student training UI: cohort badge + correct meeting links + cohort recommendation.
+          p=root/'routes/_clientarea.cliente.treinamentos.do-mamao-ao-negocio.tsx'
+          s=p.read_text()
+          marker='function blankDay():DayState { return {objectiveAnswers:{},writtenAnswers:{},quizAnswers:{}}; }'
+          assert marker in s
+          helper='function cohortName(value:number|null|undefined){if(!value||value<1)return null;let n=value,out="";while(n>0){n--;out=String.fromCharCode(65+(n%26))+out;n=Math.floor(n/26);}return `Turma ${out}`;}\n'
+          s=s.replace(marker,helper+marker,1)
+          old='<span className="rounded-full bg-white/10 px-3 py-1.5">10 perguntas/dia</span></div></div>'
+          new='<span className="rounded-full bg-white/10 px-3 py-1.5">10 perguntas/dia</span>{data.cohortNumber?<span className="rounded-full bg-[#d7ad54] px-3 py-1.5 font-black text-[#42111d]">{locale==="pt"?`Você faz parte da ${cohortName(data.cohortNumber)}`:locale==="fr"?`Vous faites partie de la ${cohortName(data.cohortNumber)}`:locale==="es"?`Formas parte de la ${cohortName(data.cohortNumber)}`:`You are part of ${cohortName(data.cohortNumber)}`}</span>:null}</div></div>'
+          assert old in s
+          s=s.replace(old,new,1)
+          old='{s.join_url?<a href={s.join_url} target="_blank" rel="noreferrer" className="rounded-xl bg-[#5b0824] px-3 py-2 text-xs font-bold text-white">{c.join}</a>:null}'
+          new='{s.meeting_url?<a href={s.meeting_url} target="_blank" rel="noreferrer" className="rounded-xl bg-[#5b0824] px-3 py-2 text-xs font-bold text-white">{c.join}</a>:null}'
+          assert old in s
+          s=s.replace(old,new,1)
+          old='<strong>{s.title}</strong>{s.starts_at?<p className="mt-1 text-sm opacity-70">{new Date(s.starts_at).toLocaleString()}</p>:null}'
+          new='<strong>{s.title}</strong>{s.training_cohorts?.cohort_number?<p className="mt-1 text-xs font-black text-[#9e7119]">{locale==="pt"?`Encontro principal da ${cohortName(s.training_cohorts.cohort_number)} · outras turmas também podem participar`:locale==="fr"?`${cohortName(s.training_cohorts.cohort_number)} recommandée · les autres groupes peuvent aussi participer`:locale==="es"?`Encuentro principal de ${cohortName(s.training_cohorts.cohort_number)} · otros grupos también pueden participar`:`Recommended for ${cohortName(s.training_cohorts.cohort_number)} · other cohorts may also join`}</p>:<p className="mt-1 text-xs font-black text-[#9e7119]">{locale==="pt"?"Aberto a todas as turmas":locale==="fr"?"Ouvert à tous les groupes":locale==="es"?"Abierto a todos los grupos":"Open to all cohorts"}</p>}{s.starts_at?<p className="mt-1 text-sm opacity-70">{new Date(s.starts_at).toLocaleString()}</p>:null}'
+          assert old in s
+          s=s.replace(old,new,1)
+          p.write_text(s)
+
+          # Admin: choose recommended cohort for live meeting and see cohort counts.
+          p=root/'routes/_authenticated/admin.treinamentos.tsx'
+          s=p.read_text()
+          old='const [trainingId, setTrainingId] = useState(""); const [kind, setKind] = useState<Kind>("module"); const [itemTitle, setItemTitle] = useState(""); const [itemDescription, setItemDescription] = useState(""); const [url, setUrl] = useState(""); const [startsAt, setStartsAt] = useState(""); const [meetingUrl, setMeetingUrl] = useState("");'
+          new='const [trainingId, setTrainingId] = useState(""); const [kind, setKind] = useState<Kind>("module"); const [itemTitle, setItemTitle] = useState(""); const [itemDescription, setItemDescription] = useState(""); const [url, setUrl] = useState(""); const [startsAt, setStartsAt] = useState(""); const [meetingUrl, setMeetingUrl] = useState(""); const [cohortId,setCohortId]=useState(""); const [sequenceNo,setSequenceNo]=useState(""); const [journeyMonth,setJourneyMonth]=useState("");'
+          assert old in s
+          s=s.replace(old,new,1)
+          old='const publish = useMutation({ mutationFn: () => addItem({ data: { kind, trainingId, title: itemTitle, description: itemDescription, url: url || null, body: kind === "announcement" ? itemDescription : null, startsAt: kind === "live" && startsAt ? new Date(startsAt).toISOString() : null, meetingUrl: meetingUrl || null } }), onSuccess: async () => { setItemTitle(""); setItemDescription(""); setUrl(""); setStartsAt(""); setMeetingUrl(""); await refresh(); } });'
+          new='const publish = useMutation({ mutationFn: () => addItem({ data: { kind, trainingId, title: itemTitle, description: itemDescription, url: url || null, body: kind === "announcement" ? itemDescription : null, startsAt: kind === "live" && startsAt ? new Date(startsAt).toISOString() : null, meetingUrl: meetingUrl || null, cohortId:kind==="live"?(cohortId||null):null, sequenceNo:kind==="live"&&sequenceNo?Number(sequenceNo):null, journeyMonth:kind==="live"&&journeyMonth?Number(journeyMonth):null } }), onSuccess: async () => { setItemTitle(""); setItemDescription(""); setUrl(""); setStartsAt(""); setMeetingUrl(""); setCohortId(""); setSequenceNo(""); setJourneyMonth(""); await refresh(); } });'
+          assert old in s
+          s=s.replace(old,new,1)
+          old='{kind === "live" ? <><input type="datetime-local" value={startsAt} onChange={e=>setStartsAt(e.target.value)} className="rounded-lg border border-border bg-background p-3 text-sm"/><input value={meetingUrl} onChange={e=>setMeetingUrl(e.target.value)} placeholder="Link do encontro" className="rounded-lg border border-border bg-background p-3 text-sm"/></> : null}'
+          new='{kind === "live" ? <><input type="datetime-local" value={startsAt} onChange={e=>setStartsAt(e.target.value)} className="rounded-lg border border-border bg-background p-3 text-sm"/><input value={meetingUrl} onChange={e=>setMeetingUrl(e.target.value)} placeholder="Link do encontro" className="rounded-lg border border-border bg-background p-3 text-sm"/><select value={cohortId} onChange={e=>setCohortId(e.target.value)} className="rounded-lg border border-border bg-background p-3 text-sm"><option value="">Aberto a todas as turmas</option>{(data?.cohorts??[]).filter((x:any)=>x.training_id===trainingId).map((x:any)=><option key={x.id} value={x.id}>{`Turma ${String.fromCharCode(64+x.cohort_number)} · recomendada (${(data?.enrollments??[]).filter((e:any)=>e.cohort_id===x.id&&e.active).length}/${x.capacity})`}</option>)}</select><div className="grid grid-cols-2 gap-2"><input type="number" min="1" max="6" value={sequenceNo} onChange={e=>setSequenceNo(e.target.value)} placeholder="Encontro 1–6" className="rounded-lg border border-border bg-background p-3 text-sm"/><input type="number" min="1" max="3" value={journeyMonth} onChange={e=>setJourneyMonth(e.target.value)} placeholder="Mês 1–3" className="rounded-lg border border-border bg-background p-3 text-sm"/></div><p className="text-xs text-muted-foreground">A turma escolhida é apenas a principal/recomendada. O encontro continua opcional e acessível às outras turmas.</p></> : null}'
+          assert old in s
+          s=s.replace(old,new,1)
+          old='<div className="rounded-lg bg-accent/50 p-3">{(data?.enrollments.filter((x:any)=>x.training_id===t.id&&x.active)??[]).length} participantes</div>'
+          new='<div className="rounded-lg bg-accent/50 p-3">{(data?.enrollments.filter((x:any)=>x.training_id===t.id&&x.active)??[]).length} participantes</div></div><div className="mt-3 flex flex-wrap gap-2">{(data?.cohorts??[]).filter((c:any)=>c.training_id===t.id).map((c:any)=><span key={c.id} className="rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-bold">{`Turma ${String.fromCharCode(64+c.cohort_number)} · ${(data?.enrollments??[]).filter((e:any)=>e.cohort_id===c.id&&e.active).length}/${c.capacity} · ${c.status}`}</span>)}</div><div className="mt-3 grid gap-2 text-sm">{sessions.map((s:any)=><div key={s.id} className="rounded-lg border border-border p-3"><strong>{s.title}</strong><p className="text-xs text-muted-foreground">{s.training_cohorts?.cohort_number?`Principal: Turma ${String.fromCharCode(64+s.training_cohorts.cohort_number)} · aberto às demais turmas`:"Aberto a todas as turmas"}</p></div>)}'
+          assert old in s
+          s=s.replace(old,new,1)
+          p.write_text(s)
+          PY
+      - name: Install dependencies
+        working-directory: apps/painel-ldr
+        run: npm install --ignore-scripts
+      - name: Build
+        working-directory: apps/painel-ldr
+        run: npm run build
+      - name: Commit cohort integration
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add apps/painel-ldr/src/lib/learning.server.ts apps/painel-ldr/src/lib/learning.functions.ts apps/painel-ldr/src/routes/_clientarea.cliente.treinamentos.do-mamao-ao-negocio.tsx apps/painel-ldr/src/routes/_authenticated/admin.treinamentos.tsx
+          git diff --cached --quiet && exit 0
+          git commit -m 'feat: organizar turmas e encontros do treinamento'
+          git push origin HEAD:main
