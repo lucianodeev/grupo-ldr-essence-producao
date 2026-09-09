@@ -1,0 +1,101 @@
+name: Corrigir promoção e conclusão prática das aulas
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/fix-training-promo-completion-v1.yml
+
+permissions:
+  contents: write
+
+jobs:
+  fix-build-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Aplicar promoção visível e encerramento prático
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          base=Path('apps/painel-ldr/src')
+
+          # 1) Página pública: faixa crítica independente no topo, sempre visível.
+          p=base/'components/training-launch-page-v2.tsx'
+          t=p.read_text()
+          marker='return <div className="min-h-screen bg-[#fffaf2] text-[#32111b]">'
+          replacement='''return <div className="min-h-screen bg-[#fffaf2] text-[#32111b]" data-launch-offer-version="2026-09-09-v3">\n  <div className="sticky top-0 z-[60] border-b-2 border-[#d7ad54] bg-[#2f0715] px-3 py-3 text-center text-white shadow-xl">\n    <div className="mx-auto flex max-w-6xl flex-col items-center justify-center gap-2 sm:flex-row sm:gap-5">\n      <strong className="text-xs font-black uppercase tracking-[.16em] text-[#f0ca73]">🔥 {c.badge}</strong>\n      <span className="text-sm font-bold"><span className="mr-2 opacity-65 line-through">{c.normalBR}</span><strong className="text-xl text-[#f0ca73]">{c.launchBR}</strong></span>\n      <span className="text-sm font-bold"><span className="mr-2 opacity-65 line-through">{c.normalEU}</span><strong className="text-xl text-[#f0ca73]">{c.launchEU}</strong></span>\n      <a href={`${PANEL}/cliente/biblioteca`} className="rounded-xl bg-[#d7ad54] px-4 py-2 text-xs font-black text-[#42111d]">{c.final}</a>\n    </div>\n  </div>'''
+          if marker not in t:
+            raise SystemExit('training launch marker not found')
+          t=t.replace(marker,replacement,1)
+          p.write_text(t)
+
+          # 2) Área do aluno: mensagem pós-conclusão somente após confirmação do servidor.
+          p=base/'routes/_clientarea.cliente.treinamentos.do-mamao-ao-negocio.tsx'
+          t=p.read_text()
+
+          state_marker='const [syncLabel,setSyncLabel]=useState("");'
+          if state_marker not in t: raise SystemExit('state marker not found')
+          t=t.replace(state_marker,state_marker+' const [completedMessageDay,setCompletedMessageDay]=useState<number|null>(null); const completionRequestedRef=useRef<number|null>(null);',1)
+
+          old='onSuccess:(r)=>{setSyncLabel(c.saved);setLocalProgress(Number(r.progressPercent??0));setCompletedAt(r.completedAt??null);setCertificateAt(r.certificateAvailableAt??null);},'
+          new='onSuccess:(r)=>{setSyncLabel(c.saved);setLocalProgress(Number(r.progressPercent??0));setCompletedAt(r.completedAt??null);setCertificateAt(r.certificateAvailableAt??null);if(completionRequestedRef.current!==null){setCompletedMessageDay(completionRequestedRef.current);completionRequestedRef.current=null;}}, onError:()=>{completionRequestedRef.current=null;setSyncLabel(locale==="pt"?"Falha ao sincronizar. Tente novamente.":locale==="fr"?"Échec de la synchronisation. Réessayez.":locale==="es"?"Error al sincronizar. Inténtalo de nuevo.":"Sync failed. Please try again.");},'
+          if old not in t: raise SystemExit('save success marker not found')
+          t=t.replace(old,new,1)
+
+          old='save.mutate({activities:next,lastDay:selectedDay,signature});\n  }'
+          new='if(markComplete&&isDayComplete(nextDay)) completionRequestedRef.current=selectedDay;\n    save.mutate({activities:next,lastDay:selectedDay,signature});\n  }'
+          if old not in t: raise SystemExit('persist marker not found')
+          t=t.replace(old,new,1)
+
+          # Inserir helpers de frase/encerramento antes do return principal.
+          helper_marker='const nav:[Area,string,any][]=[["inicio",c.start,BookOpen],["aula",c.lesson,GraduationCap],["manual",c.manual,FileCheck2],["projeto",c.project,PenLine],["encontros",c.live,Video]];'
+          helper='''const nav:[Area,string,any][]=[["inicio",c.start,BookOpen],["aula",c.lesson,GraduationCap],["manual",c.manual,FileCheck2],["projeto",c.project,PenLine],["encontros",c.live,Video]];\n\n  function impactFor(day:number){\n    const lesson=curriculum[day-1]; const topic=lesson?.theme??"seu negócio"; const variant=(day-1)%6;\n    const templates={\n      pt:[`Uma ideia sobre ${topic} só ganha valor quando encontra a realidade.`,`O mercado não responde ao que você pretende fazer; responde ao que você coloca em prática sobre ${topic}.`,`Clareza sobre ${topic} cresce quando você testa, observa e corrige.`,`Decisão sem aplicação é intenção. Hoje, transforme ${topic} em movimento.`,`Pequenos testes em ${topic} ensinam mais do que grandes planos sem execução.`,`Seu negócio muda quando o aprendizado sobre ${topic} vira uma decisão observável.`],\n      en:[`An idea about ${topic} gains value only when it meets reality.`,`The market does not respond to intentions; it responds to what you put into practice about ${topic}.`,`Clarity about ${topic} grows when you test, observe and correct.`,`A decision without application is only intention. Turn ${topic} into movement today.`,`Small tests around ${topic} teach more than large plans without execution.`,`Your business changes when learning about ${topic} becomes an observable decision.`],\n      fr:[`Une idée sur ${topic} prend de la valeur lorsqu’elle rencontre la réalité.`,`Le marché ne répond pas à vos intentions, mais à ce que vous mettez en pratique sur ${topic}.`,`La clarté sur ${topic} grandit quand vous testez, observez et corrigez.`,`Une décision sans application reste une intention. Transformez ${topic} en mouvement aujourd’hui.`,`De petits tests sur ${topic} enseignent plus que de grands plans sans exécution.`,`Votre activité change lorsque l’apprentissage sur ${topic} devient une décision observable.`],\n      es:[`Una idea sobre ${topic} gana valor cuando se encuentra con la realidad.`,`El mercado no responde a tus intenciones; responde a lo que pones en práctica sobre ${topic}.`,`La claridad sobre ${topic} crece cuando pruebas, observas y corriges.`,`Una decisión sin aplicación es solo intención. Convierte ${topic} en movimiento hoy.`,`Pequeñas pruebas sobre ${topic} enseñan más que grandes planes sin ejecución.`,`Tu negocio cambia cuando lo aprendido sobre ${topic} se convierte en una decisión observable.`]\n    } as const; return templates[locale][variant];\n  }\n  function completionCopy(day:number){const month=curriculum[day-1]?.month??1; if(locale==="pt")return month===1?"Por hoje, você fez o que precisava. Agora leve esta aula para a realidade: observe, teste e aplique. Amanhã voltamos com mais um passo para construir clareza no seu negócio.":month===2?"A aula terminou, mas o teste começa agora. Use o que respondeu hoje no mercado, observe o resultado e traga essa realidade para a próxima etapa. Amanhã continuamos.":"Você já não está apenas planejando: está construindo. Transforme a decisão de hoje em uma ação concreta. Amanhã damos mais um passo para consolidar o seu negócio."; if(locale==="fr")return month===1?"Pour aujourd’hui, vous avez fait l’essentiel. Mettez maintenant ce cours en pratique : observez, testez et appliquez. Demain, nous avancerons d’une nouvelle étape.":month===2?"Le cours se termine, mais le test commence maintenant. Appliquez ce que vous avez écrit, observez le résultat et revenez demain avec cette réalité.":"Vous ne faites plus que planifier : vous construisez. Transformez la décision d’aujourd’hui en action concrète. Demain, nous consoliderons une nouvelle étape."; if(locale==="es")return month===1?"Por hoy, hiciste lo que necesitabas. Ahora lleva esta clase a la realidad: observa, prueba y aplica. Mañana volvemos con un nuevo paso.":month===2?"La clase terminó, pero la prueba empieza ahora. Aplica lo que respondiste, observa el resultado y vuelve mañana con esa realidad.":"Ya no estás solo planificando: estás construyendo. Convierte la decisión de hoy en una acción concreta. Mañana daremos otro paso para consolidar tu negocio."; return month===1?"You did what you needed for today. Now take the lesson into reality: observe, test and apply. Tomorrow we return with the next step.":month===2?"The lesson is over, but the test starts now. Apply what you wrote, observe the result and bring that reality into tomorrow’s lesson.":"You are no longer only planning: you are building. Turn today’s decision into a concrete action. Tomorrow we take another step toward consolidating your business.";}'''
+          if helper_marker not in t: raise SystemExit('nav marker not found')
+          t=t.replace(helper_marker,helper,1)
+
+          # Inserir modal premium antes do nav fixo.
+          modal_marker='    <nav className={`fixed inset-x-2 bottom-2 z-40'
+          modal='''    {completedMessageDay!==null?<div className="fixed inset-0 z-[80] grid place-items-center bg-black/60 p-4 backdrop-blur-sm"><section className={`w-full max-w-xl rounded-[2rem] border-2 border-[#d7ad54] p-6 shadow-2xl sm:p-8 ${dark?"bg-[#21151b] text-[#fff7e9]":"bg-[#fffaf2] text-[#32111b]"}`} role="dialog" aria-modal="true"><div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-[#5b0824] text-[#f2cf78]"><CheckCircle2 className="h-7 w-7"/></div><p className="mt-4 text-center text-xs font-black uppercase tracking-[.18em] text-[#a67618]">{locale==="pt"?"Aula concluída":locale==="fr"?"Cours terminé":locale==="es"?"Clase completada":"Lesson completed"}</p><h2 className="mt-2 text-center font-serif text-3xl font-bold">{locale==="pt"?"Por hoje, você foi o máximo.":locale==="fr"?"Pour aujourd’hui, vous avez fait un excellent travail.":locale==="es"?"Por hoy, hiciste un gran trabajo.":"You did great work today."}</h2><p className="mt-4 text-center leading-7 opacity-80">{completionCopy(completedMessageDay)}</p><blockquote className="mt-5 rounded-2xl border border-[#d7ad54]/50 bg-[#5b0824] p-4 text-center font-serif text-lg font-bold italic text-[#fff4dc]">“{impactFor(completedMessageDay)}”</blockquote><p className="mt-4 text-center text-sm font-bold text-[#9e7119]">{completedMessageDay<90?(locale==="pt"?"Próxima aula disponível amanhã. Até lá, coloque o aprendizado de hoje em prática.":locale==="fr"?"Prochain cours disponible demain. D’ici là, mettez en pratique l’apprentissage d’aujourd’hui.":locale==="es"?"La próxima clase estará disponible mañana. Hasta entonces, pon en práctica lo aprendido hoy.":"Next lesson available tomorrow. Until then, put today’s learning into practice."):(locale==="pt"?"Você concluiu a jornada diária. Agora consolide o que construiu.":locale==="fr"?"Vous avez terminé le parcours quotidien. Consolidez maintenant ce que vous avez construit.":locale==="es"?"Has completado el recorrido diario. Ahora consolida lo que construiste.":"You completed the daily journey. Now consolidate what you built.")}</p><div className="mt-6 grid gap-2 sm:grid-cols-2"><button onClick={()=>{const d=completedMessageDay;setCompletedMessageDay(null);setSelectedDay(d);setArea("aula")}} className="min-h-12 rounded-2xl border border-[#5b0824] px-4 font-bold">{locale==="pt"?"Rever o que vou aplicar":locale==="fr"?"Revoir ce que je vais appliquer":locale==="es"?"Revisar lo que voy a aplicar":"Review what I will apply"}</button><button onClick={()=>{setCompletedMessageDay(null);setArea("inicio")}} className="min-h-12 rounded-2xl bg-[#5b0824] px-4 font-black text-white">{locale==="pt"?"Voltar ao início":locale==="fr"?"Retour à l’accueil":locale==="es"?"Volver al inicio":"Back to home"}</button></div></section></div>:null}\n\n    <nav className={`fixed inset-x-2 bottom-2 z-40'''
+          if modal_marker not in t: raise SystemExit('nav render marker not found')
+          t=t.replace(modal_marker,modal,1)
+
+          # Corrigir textos antigos que ainda diziam 1 avaliação / após 90 dias.
+          replacements={
+            'Após 90 dias, envie seu projeto. A primeira avaliação humana está incluída; você recebe correções e devolutiva dentro da plataforma.':'Ao final de cada mês, envie a evolução do projeto para avaliação humana. São 3 avaliações incluídas; cada aprovação libera a etapa seguinte.',
+            'After 90 days, submit your project. One human review is included and feedback is returned inside the platform.':'At the end of each month, submit your project progress for human review. Three reviews are included; each approval unlocks the next stage.',
+            'Après 90 jours, envoyez votre projet. Une évaluation humaine est incluse avec corrections dans la plateforme.':'À la fin de chaque mois, envoyez l’évolution du projet pour une évaluation humaine. Trois évaluations sont incluses; chaque approbation débloque l’étape suivante.',
+            'Tras 90 días, envía tu proyecto. Una evaluación humana está incluida y recibes correcciones en la plataforma.':'Al final de cada mes, envía la evolución del proyecto para evaluación humana. Se incluyen 3 evaluaciones; cada aprobación libera la etapa siguiente.',
+            'A primeira avaliação está incluída. Avaliações adicionais não exigem recompra do curso.':'As 3 avaliações mensais estão incluídas. Somente novas avaliações após as três exigem pagamento, sem recompra do treinamento.',
+            'The first review is included. Extra reviews do not require repurchasing.':'Three monthly reviews are included. Only additional reviews after those three are paid, without repurchasing the training.',
+            'La première évaluation est incluse.':'Les 3 évaluations mensuelles sont incluses. Seules les évaluations supplémentaires après ces trois sont payantes.',
+            'La primera evaluación está incluida.':'Las 3 evaluaciones mensuales están incluidas. Solo las evaluaciones adicionales después de estas tres son de pago.'
+          }
+          for a,b in replacements.items(): t=t.replace(a,b)
+          p.write_text(t)
+          PY
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Instalar dependências
+        working-directory: apps/painel-ldr
+        run: npm install --no-audit --no-fund
+
+      - name: Validar build
+        working-directory: apps/painel-ldr
+        run: npm run build
+
+      - name: Publicar correção
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/components/training-launch-page-v2.tsx apps/painel-ldr/src/routes/_clientarea.cliente.treinamentos.do-mamao-ao-negocio.tsx
+          git commit -m "fix: destacar promoção e encerrar aulas com aplicação prática"
+          git push origin main
