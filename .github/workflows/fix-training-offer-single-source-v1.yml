@@ -1,0 +1,56 @@
+name: Fix training offer single source v1
+
+on:
+  push:
+    paths:
+      - ".github/workflows/fix-training-offer-single-source-v1.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply single-source training offer fix
+        run: |
+          python <<'PY'
+          from pathlib import Path
+
+          base = Path('apps/painel-ldr/src')
+
+          # 1) Expor uma oferta pública read-only baseada EXATAMENTE nas mesmas constantes/status do painel.
+          p = base / 'lib/training-commerce.server.ts'
+          t = p.read_text()
+          marker = 'export async function getDoMamaoTrainingOffer(userId: string, email: string | null) {'
+          public_fn = '''export async function getPublicDoMamaoTrainingOffer() {\n  const training = await trainingRow();\n  const launch = await launchStatus();\n  return {\n    productKey: PRODUCT_KEY,\n    title: training.title || TRAINING_TITLE,\n    description: training.description || "Treinamento empreendedor de 3 meses e 300 horas com jornada guiada, atividades, projeto e encontros ao vivo opcionais.",\n    priceBrlCents: launch.active ? LAUNCH_PRICE_BRL : PRICE_BRL,\n    priceEurCents: launch.active ? LAUNCH_PRICE_EUR : PRICE_EUR,\n    regularPriceBrlCents: PRICE_BRL,\n    regularPriceEurCents: PRICE_EUR,\n    launchPromotionActive: launch.active,\n    launchRemaining: launch.remaining,\n    launchLimit: LAUNCH_LIMIT,\n  };\n}\n\n'''
+          if 'export async function getPublicDoMamaoTrainingOffer()' not in t:
+              if marker not in t:
+                  raise SystemExit('Marcador getDoMamaoTrainingOffer não encontrado')
+              t = t.replace(marker, public_fn + marker, 1)
+          p.write_text(t)
+
+          # 2) Combo deixa de ter preço hardcoded e usa a mesma oferta central.
+          p = base / 'lib/client-portal.server.ts'
+          t = p.read_text()
+          old = 'const amountCents=market==="BR"?29999:4990; const currency=market==="BR"?"BRL":"EUR";'
+          new = 'const {getPublicDoMamaoTrainingOffer}=await import("@/lib/training-commerce.server"); const trainingOffer=await getPublicDoMamaoTrainingOffer(); const amountCents=market==="BR"?trainingOffer.priceBrlCents:trainingOffer.priceEurCents; const currency=market==="BR"?"BRL":"EUR";'
+          if old in t:
+              t = t.replace(old, new, 1)
+          elif 'const trainingOffer=await getPublicDoMamaoTrainingOffer()' not in t:
+              raise SystemExit('Preço hardcoded do combo não encontrado')
+          p.write_text(t)
+
+          # 3) Endpoint público somente leitura para a página pública consumir a mesma oferta.
+          p = base / 'routes/api/training-offer.ts'
+          p.parent.mkdir(parents=True, exist_ok=True)
+          p.write_text('''import { createFileRoute } from "@tanstack/react-router";\n\nconst ALLOWED_ORIGINS = new Set([\n  "https://ldrrhestrategia.com",\n  "https://www.ldrrhestrategia.com",\n  "https://kind-crest-9804.hosted.pageshare.ai",\n  "https://painel.ldrrhestrategia.com",\n]);\n\nfunction cors(origin: string | null) {\n  const headers: Record<string, string> = {\n    "Cache-Control": "no-store, max-age=0",\n    "Access-Control-Allow-Methods": "GET, OPTIONS",\n    "Access-Control-Allow-Headers": "Content-Type",\n    "Vary": "Origin",\n  };\n  if (origin && ALLOWED_ORIGINS.has(origin)) headers["Access-Control-Allow-Origin"] = origin;\n  return headers;\n}\n\nexport const Route = createFileRoute("/api/training-offer")({\n  server: {\n    handlers: {\n      OPTIONS: async ({ request }) =>\n        new Response(null, { status: 204, headers: cors(request.headers.get("origin")) }),\n      GET: async ({ request }) => {\n        const { getPublicDoMamaoTrainingOffer } = await import("@/lib/training-commerce.server");\n        const offer = await getPublicDoMamaoTrainingOffer();\n        return new Response(JSON.stringify({ ok: true, ...offer }), {\n          status: 200,\n          headers: {\n            ...cors(request.headers.get("origin")),\n            "Content-Type": "application/json; charset=utf-8",\n          },\n        });\n      },\n    },\n  },\n});\n''')
+          PY
+
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/lib/training-commerce.server.ts apps/painel-ldr/src/lib/client-portal.server.ts apps/painel-ldr/src/routes/api/training-offer.ts
+          git diff --cached --quiet && exit 0
+          git commit -m "fix: usar uma única oferta do treinamento no público e combo"
+          git push origin main
