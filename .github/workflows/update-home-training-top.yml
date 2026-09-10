@@ -1,0 +1,65 @@
+name: Update home training card top
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/update-home-training-top.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Move training card to top and refresh price
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('apps/painel-ldr/src/routes/index.tsx')
+          s=p.read_text()
+
+          # Update current commercial values in all languages.
+          replacements={
+            'regular:"R$ 599,99 · € 100,56", promo:"R$ 299,99 · € 49,90", off:"50% OFF", start:"QUERO COMEÇAR MINHA FORMAÇÃO", pay:"Pagamento único · acesso vitalício"':'regular:"", promo:"12x de R$ 31,03 · € 65,34", off:"OFERTA ATUAL", start:"QUERO COMEÇAR MINHA FORMAÇÃO", pay:"Brasil: até 12x · Europa: € 65,34 · acesso vitalício"',
+            'regular:"R$ 599.99 · €100.56", promo:"R$ 299.99 · €49.90", off:"50% OFF", start:"START MY TRAINING", pay:"One-time payment · lifetime access"':'regular:"", promo:"12x R$ 31.03 · €65.34", off:"CURRENT OFFER", start:"START MY TRAINING", pay:"Brazil: up to 12 installments · Europe: €65.34 · lifetime access"',
+            'regular:"R$ 599,99 · 100,56 €", promo:"R$ 299,99 · 49,90 €", off:"-50 %", start:"COMMENCER MA FORMATION", pay:"Paiement unique · accès à vie"':'regular:"", promo:"12x R$ 31,03 · 65,34 €", off:"OFFRE ACTUELLE", start:"COMMENCER MA FORMATION", pay:"Brésil : jusqu’à 12 fois · Europe : 65,34 € · accès à vie"',
+            'regular:"R$ 599,99 · € 100,56", promo:"R$ 299,99 · € 49,90", off:"50% OFF", start:"COMENZAR MI FORMACIÓN", pay:"Pago único · acceso de por vida"':'regular:"", promo:"12x R$ 31,03 · € 65,34", off:"OFERTA ACTUAL", start:"COMENZAR MI FORMACIÓN", pay:"Brasil: hasta 12 cuotas · Europa: € 65,34 · acceso de por vida"'
+          }
+          for a,b in replacements.items():
+              if a not in s:
+                  raise SystemExit(f'Expected price copy not found: {a[:80]}')
+              s=s.replace(a,b,1)
+
+          # Remove the obsolete crossed-out regular price from the card.
+          old_regular='<span className="text-base text-white/60 line-through">{c.regular}</span>'
+          if old_regular not in s:
+              raise SystemExit('Regular-price span not found')
+          s=s.replace(old_regular,'',1)
+
+          # Move only the training launch section to the top of <main>.
+          launch_start='      <section className="relative mt-4 overflow-hidden rounded-[2rem] border border-[#d5aa45] bg-[#5b0824]'
+          company_start='      <section className="relative mt-4 overflow-hidden rounded-[2rem] border bg-card'
+          i=s.find(launch_start)
+          j=s.find(company_start,i)
+          if i<0 or j<0:
+              raise SystemExit('Training/company section markers not found')
+          launch=s[i:j]
+          s=s[:i]+s[j:]
+          launch=launch.replace('className="relative mt-4 overflow-hidden','className="relative overflow-hidden',1)
+          main_marker='    <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6">\n'
+          if main_marker not in s:
+              raise SystemExit('Main marker not found')
+          s=s.replace(main_marker,main_marker+launch+'\n',1)
+
+          p.write_text(s)
+          PY
+      - name: Commit focused home update
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/painel-ldr/src/routes/index.tsx
+          git diff --cached --quiet || git commit -m "feat: move training offer to home top and refresh price"
+          git push
