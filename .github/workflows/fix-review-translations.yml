@@ -1,3 +1,4 @@
+# Temporary self-cleaning workflow: applies the review localization patch and removes itself.
 name: Apply review translation patch
 
 on:
