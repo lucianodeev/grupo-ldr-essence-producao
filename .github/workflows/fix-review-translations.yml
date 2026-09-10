@@ -1,0 +1,141 @@
+name: Apply review translation patch
+
+on:
+  push:
+    branches:
+      - fix/review-translations
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/review-translations
+      - name: Patch review translations
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('apps/painel-ldr/src/routes/profissional.$slug.tsx')
+          text = path.read_text()
+
+          marker = '} as const;\nfunction money(c: number | null, currency: string | null, locale: string) {'
+          insert = r'''} as const;
+
+const REVIEW_TRANSLATIONS: Record<string, { en: string; fr: string; es: string }> = {
+  "Ana|2023-04-14": {
+    en: "Excellent professional. He welcomed me and helped me a lot during this moment.",
+    fr: "Excellent professionnel. Il m’a accueillie et beaucoup aidée pendant cette période.",
+    es: "Excelente profesional. Me acogió y me ayudó mucho en este momento.",
+  },
+  "Elizabeth|2023-08-01": {
+    en: "Very friendly and attentive! I’m really enjoying my sessions with Luciano!",
+    fr: "Très sympathique et attentionné ! J’apprécie beaucoup mes séances avec Luciano !",
+    es: "¡Muy simpático y atento! ¡Me están gustando mucho mis sesiones con Luciano!",
+  },
+  "Madalena|2023-03-20": {
+    en: "A professional with excellent listening skills who helped me a great deal.",
+    fr: "Un professionnel doté d’une excellente qualité d’écoute, qui m’a beaucoup aidée.",
+    es: "Un profesional con una escucha excelente que me ayudó muchísimo.",
+  },
+  "Livian|2023-07-04": {
+    en: "I felt very comfortable from the very first session. I highly recommend him.",
+    fr: "Je me suis sentie très à l’aise dès la première séance. Je le recommande vivement.",
+    es: "Me sentí muy cómoda desde la primera sesión. Lo recomiendo muchísimo.",
+  },
+  "Murilo|2023-12-18": {
+    en: "A great first session. I felt welcomed; he is an excellent professional.",
+    fr: "Une excellente première séance. Je me suis senti accueilli ; c’est un excellent professionnel.",
+    es: "Una excelente primera sesión. Me sentí acogido; es un profesional excelente.",
+  },
+  "Marcello|2023-09-03": {
+    en: "Very attentive during the first appointment!",
+    fr: "Très attentionné lors de la première consultation !",
+    es: "¡Muy atento durante la primera consulta!",
+  },
+  "Jose|2023-09-14": {
+    en: "Luciano was extremely attentive, asked relevant questions from beginning to end of the session, and has incredible active-listening skills.",
+    fr: "Luciano a été extrêmement attentionné, a posé des questions pertinentes du début à la fin de la séance et possède une remarquable écoute active.",
+    es: "Luciano fue extremadamente atento, hizo preguntas pertinentes de principio a fin de la sesión y tiene una capacidad de escucha activa increíble.",
+  },
+  "Jenifer|2023-10-19": {
+    en: "Great professional. He knew how to listen to me and helps me with my concerns. I highly recommend him!",
+    fr: "Excellent professionnel. Il a su m’écouter et m’aide à travailler sur mes difficultés. Je le recommande vivement !",
+    es: "Excelente profesional. Supo escucharme y me ayuda con mis dificultades. ¡Lo recomiendo muchísimo!",
+  },
+  "Haroldo|2023-11-01": {
+    en: "Very attentive when it comes to mental well-being.",
+    fr: "Très attentionné en matière de bien-être mental.",
+    es: "Muy atento al bienestar mental.",
+  },
+  "Bianca|2023-02-15": {
+    en: "Wonderful! Luciano is caring for my mother and has been wonderful with her. An excellent professional!",
+    fr: "Merveilleux ! Luciano accompagne ma mère et a été formidable avec elle. Un excellent professionnel !",
+    es: "¡Maravilloso! Luciano está acompañando a mi madre y ha sido maravilloso con ella. ¡Un excelente profesional!",
+  },
+  "Gabriel|2023-07-18": {
+    en: "Besides being a great professional, Luciano makes a point of ensuring that you feel well and comfortable during your sessions. He seeks to understand your concerns and help you find a way forward.",
+    fr: "En plus d’être un excellent professionnel, Luciano veille à ce que vous vous sentiez bien et à l’aise pendant les séances. Il cherche à comprendre vos difficultés et à vous aider à trouver une voie possible.",
+    es: "Además de ser un excelente profesional, Luciano procura que te sientas bien y cómodo durante las sesiones. Busca comprender tus dificultades y ayudarte a encontrar un camino posible.",
+  },
+  "Luan|2023-02-08": {
+    en: "A kind person with wonderful energy!",
+    fr: "Une belle personne avec une énergie merveilleuse !",
+    es: "¡Una gran persona, con una energía maravillosa!",
+  },
+  "Thaísa|2023-02-02": {
+    en: "He is helping me get to know myself better, and I’m loving his work.",
+    fr: "Il m’aide à mieux me connaître et j’apprécie beaucoup son travail.",
+    es: "Me está ayudando a conocerme mejor y me encanta su trabajo.",
+  },
+  "Jessica|2025-07-15": {
+    en: "Luciano was and continues to be a remarkable discovery in my life. Situations and feelings that were often unclear to me become understandable, and together we are able to build a new story.",
+    fr: "Luciano a été et reste une très belle rencontre dans ma vie. Des situations et des sentiments souvent obscurs pour moi deviennent compréhensibles et, ensemble, nous parvenons à construire une nouvelle histoire.",
+    es: "Luciano fue y sigue siendo un gran hallazgo en mi vida. Situaciones y sentimientos que muchas veces eran confusos para mí se vuelven comprensibles y, juntos, logramos construir una nueva historia.",
+  },
+  "Diego|2024-01-05": {
+    en: "Great! We were able to make very good progress in 50 minutes.",
+    fr: "Très bien ! Nous avons pu avancer efficacement en 50 minutes.",
+    es: "¡Excelente! Pudimos avanzar muy bien en 50 minutos.",
+  },
+};
+
+function reviewText(r: AnyRow, locale: string) {
+  if (locale === "pt") return r.body;
+  const key = `${String(r.reviewer_name || "")}|${String(r.review_date || "")}`;
+  const translated = REVIEW_TRANSLATIONS[key]?.[locale as "en" | "fr" | "es"];
+  return translated || r.body;
+}
+
+function money(c: number | null, currency: string | null, locale: string) {'''
+
+          if marker not in text:
+              raise SystemExit('translation insertion marker not found')
+          text = text.replace(marker, insert, 1)
+
+          old = '<p className="mt-2 text-sm leading-6">{r.body}</p>'
+          new = '<p className="mt-2 text-sm leading-6">{reviewText(r, locale)}</p>'
+          if old not in text:
+              raise SystemExit('review body marker not found')
+          text = text.replace(old, new, 1)
+          path.write_text(text)
+          PY
+      - name: Validate patch
+        shell: bash
+        run: |
+          grep -q 'REVIEW_TRANSLATIONS' 'apps/painel-ldr/src/routes/profissional.$slug.tsx'
+          grep -q 'reviewText(r, locale)' 'apps/painel-ldr/src/routes/profissional.$slug.tsx'
+      - name: Commit patch and remove temporary workflow
+        shell: bash
+        run: |
+          rm .github/workflows/fix-review-translations.yml
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add 'apps/painel-ldr/src/routes/profissional.$slug.tsx' .github/workflows/fix-review-translations.yml
+          git commit -m 'fix: localize public review comments'
+          git push origin HEAD:fix/review-translations
