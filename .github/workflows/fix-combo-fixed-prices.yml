@@ -1,0 +1,36 @@
+name: Fix combo fixed prices
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/fix-combo-fixed-prices.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show both fixed combo prices
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx')
+          s=p.read_text()
+          old='''<div className="mt-5"><p className="text-xs font-black uppercase tracking-[.12em] text-[#f5dfac]">{locale==="pt"?"3 PRODUTOS POR ESTE VALOR":locale==="fr"?"3 PRODUITS POUR CE PRIX":locale==="es"?"3 PRODUCTOS POR ESTE PRECIO":"3 PRODUCTS FOR THIS PRICE"}</p><strong className="mt-2 block text-4xl text-[#f1c45d]">{market==="BR"?(locale==="pt"?"12x de R$ 31,03":"12x R$ 31.03"):(locale==="fr"?"65,34 €":"€ 65,34")}</strong></div>'''
+          new='''<div className="mt-5"><p className="text-xs font-black uppercase tracking-[.12em] text-[#f5dfac]">{locale==="pt"?"3 PRODUTOS POR ESTE VALOR":locale==="fr"?"3 PRODUITS POUR CE PRIX":locale==="es"?"3 PRODUCTOS POR ESTE PRECIO":"3 PRODUCTS FOR THIS PRICE"}</p><div className="mt-2 grid gap-1"><strong className="block text-3xl text-[#f1c45d] sm:text-4xl">🇧🇷 12x de R$ 31,03</strong><strong className="block text-3xl text-[#f1c45d] sm:text-4xl">🇪🇺 € 65,34</strong></div></div>'''
+          if old not in s:
+              raise SystemExit('Combo fixed-price block not found')
+          s=s.replace(old,new,1)
+          p.write_text(s)
+          PY
+      - name: Commit combo fixed prices
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          git diff --cached --quiet || git commit -m "fix: show both fixed combo prices in library"
+          git push
