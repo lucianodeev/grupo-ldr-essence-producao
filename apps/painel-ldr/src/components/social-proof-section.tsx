@@ -1,11 +1,19 @@
 import type { Locale } from "@/lib/i18n";
 
 const COPY: Record<Locale, {
+  storyKicker:string; storyTitle:string; storyText:string; storyItems:string[]; storyQuestion:string; storyQuote:string; storyBridge:string;
   title:string; intro:string; psycho:string; massage:string; note:string;
   psychoReviews:{name:string; date?:string; text:string}[];
   massageReviews:{name:string; date?:string; text:string}[];
 }> = {
   pt: {
+    storyKicker:"O QUE ESSA HISTÓRIA PODE ENSINAR A VOCÊ",
+    storyTitle:"Você não precisa começar com tudo. Precisa começar com o que tem e aprender a transformar isso.",
+    storyText:"Minha trajetória não é uma fórmula para você repetir. Ela mostra que é possível construir a partir do que já existe: uma habilidade, uma ideia, um serviço ou uma necessidade.",
+    storyItems:["Começar com o que você tem","Aprender a vender e se comunicar","Adaptar-se sem perder sua essência","Transformar experiência em negócio"],
+    storyQuestion:"E se o seu negócio também puder começar com aquilo que você já tem hoje?",
+    storyQuote:"Eu comecei vendendo de porta em porta. Hoje continuo indo até as pessoas — mas agora também ensino como transformar uma ideia, um serviço ou um conhecimento em negócio.",
+    storyBridge:"O que antes era sobrevivência virou experiência. A experiência virou repertório. O repertório virou método.",
     title:"O que dizem sobre meu trabalho",
     intro:"Experiências de clientes em diferentes áreas da minha atuação.",
     psycho:"Psicanálise",
@@ -25,6 +33,13 @@ const COPY: Record<Locale, {
     ]
   },
   en: {
+    storyKicker:"WHAT CAN THIS STORY TEACH YOU?",
+    storyTitle:"You do not need to start with everything. Start with what you have and learn how to transform it.",
+    storyText:"My journey is not a formula for you to copy. It shows that you can build from what already exists: a skill, an idea, a service or a need.",
+    storyItems:["Start with what you have","Learn to sell and communicate","Adapt without losing your essence","Turn experience into business"],
+    storyQuestion:"What if your business can also begin with what you already have today?",
+    storyQuote:"I started selling door to door. Today I still go to people — but now I also teach how to turn an idea, a service or knowledge into a business.",
+    storyBridge:"What began as survival became experience. Experience became repertoire. Repertoire became a method.",
     title:"What people say about my work",
     intro:"Client experiences across different areas of my work.",
     psycho:"Psychoanalysis",
@@ -44,6 +59,13 @@ const COPY: Record<Locale, {
     ]
   },
   fr: {
+    storyKicker:"CE QUE CETTE HISTOIRE PEUT VOUS APPRENDRE",
+    storyTitle:"Vous n’avez pas besoin de tout avoir pour commencer. Commencez avec ce que vous avez et apprenez à le transformer.",
+    storyText:"Mon parcours n’est pas une formule à reproduire. Il montre qu’il est possible de construire à partir de ce qui existe déjà : une compétence, une idée, un service ou un besoin.",
+    storyItems:["Commencer avec ce que vous avez","Apprendre à vendre et à communiquer","S’adapter sans perdre son essence","Transformer l’expérience en business"],
+    storyQuestion:"Et si votre business pouvait lui aussi commencer avec ce que vous avez déjà aujourd’hui ?",
+    storyQuote:"J’ai commencé en vendant de porte à porte. Aujourd’hui, je continue d’aller vers les gens — mais maintenant j’enseigne aussi comment transformer une idée, un service ou un savoir en business.",
+    storyBridge:"Ce qui était d’abord une nécessité est devenu une expérience. L’expérience est devenue un savoir-faire. Le savoir-faire est devenu une méthode.",
     title:"Ce que l’on dit de mon travail",
     intro:"Expériences de clients dans différents domaines de mon activité.",
     psycho:"Psychanalyse",
@@ -63,6 +85,13 @@ const COPY: Record<Locale, {
     ]
   },
   es: {
+    storyKicker:"LO QUE ESTA HISTORIA PUEDE ENSEÑARTE",
+    storyTitle:"No necesitas empezar con todo. Empieza con lo que tienes y aprende a transformarlo.",
+    storyText:"Mi trayectoria no es una fórmula para copiar. Demuestra que es posible construir a partir de lo que ya existe: una habilidad, una idea, un servicio o una necesidad.",
+    storyItems:["Empezar con lo que tienes","Aprender a vender y comunicar","Adaptarte sin perder tu esencia","Transformar experiencia en negocio"],
+    storyQuestion:"¿Y si tu negocio también puede empezar con lo que ya tienes hoy?",
+    storyQuote:"Empecé vendiendo puerta a puerta. Hoy sigo yendo hasta las personas, pero ahora también enseño cómo transformar una idea, un servicio o un conocimiento en negocio.",
+    storyBridge:"Lo que empezó como necesidad se convirtió en experiencia. La experiencia se convirtió en repertorio. El repertorio se convirtió en método.",
     title:"Lo que dicen sobre mi trabajo",
     intro:"Experiencias de clientes en diferentes áreas de mi trabajo.",
     psycho:"Psicoanálisis",
@@ -93,21 +122,37 @@ function ReviewCard({name,date,text}:{name:string;date?:string;text:string}){
 
 export function SocialProofSection({locale}:{locale:Locale}){
   const c=COPY[locale];
-  return <section className="overflow-hidden rounded-[2rem] border bg-card p-6 shadow-xl shadow-primary/5 sm:p-8">
-    <div className="mx-auto max-w-4xl text-center">
-      <h2 className="font-serif text-3xl leading-tight sm:text-4xl">{c.title}</h2>
-      <p className="mx-auto mt-4 max-w-3xl text-sm leading-7 text-muted-foreground sm:text-base">{c.intro}</p>
-    </div>
-    <div className="mt-8 grid gap-8 lg:grid-cols-2">
-      <div>
-        <div className="mb-4 flex items-center justify-between gap-3"><h3 className="font-serif text-2xl">{c.psycho}</h3><span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-black text-primary">5★</span></div>
-        <div className="grid gap-4 sm:grid-cols-2">{c.psychoReviews.map((r)=><ReviewCard key={`${r.name}-${r.date??""}`} {...r}/>)}</div>
+  return <>
+    <section className="rounded-[2rem] border bg-card p-6 shadow-xl shadow-primary/5 sm:p-8">
+      <div className="max-w-4xl">
+        <p className="text-xs font-black uppercase tracking-[.18em] text-primary">{c.storyKicker}</p>
+        <h2 className="mt-3 font-serif text-3xl leading-tight sm:text-4xl">{c.storyTitle}</h2>
+        <p className="mt-4 max-w-3xl text-sm leading-7 text-muted-foreground sm:text-base">{c.storyText}</p>
+        <p className="mt-5 max-w-4xl font-serif text-2xl font-bold leading-9 text-primary">{c.storyBridge}</p>
       </div>
-      <div>
-        <div className="mb-4 flex items-center justify-between gap-3"><h3 className="font-serif text-2xl">{c.massage}</h3><span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-black text-primary">5★</span></div>
-        <div className="grid gap-4">{c.massageReviews.map((r)=><ReviewCard key={`${r.name}-${r.date??""}`} {...r}/>)}</div>
+      <div className="mt-7 grid gap-3 sm:grid-cols-2">
+        {c.storyItems.map((item,i)=><div key={item} className="flex items-center gap-3 rounded-2xl border bg-background p-4"><span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-primary/10 text-xs font-black text-primary">{i+1}</span><span className="text-sm font-bold">{item}</span></div>)}
       </div>
-    </div>
-    <p className="mt-6 text-center text-xs leading-6 text-muted-foreground">{c.note}</p>
-  </section>
+      <p className="mt-8 font-serif text-2xl font-bold leading-9 text-primary">{c.storyQuestion}</p>
+      <blockquote className="mt-5 border-l-4 border-[#d9aa3f] pl-5 text-base font-semibold italic leading-8 text-foreground sm:text-lg">“{c.storyQuote}”</blockquote>
+    </section>
+
+    <section className="overflow-hidden rounded-[2rem] border bg-card p-6 shadow-xl shadow-primary/5 sm:p-8">
+      <div className="mx-auto max-w-4xl text-center">
+        <h2 className="font-serif text-3xl leading-tight sm:text-4xl">{c.title}</h2>
+        <p className="mx-auto mt-4 max-w-3xl text-sm leading-7 text-muted-foreground sm:text-base">{c.intro}</p>
+      </div>
+      <div className="mt-8 grid gap-8 lg:grid-cols-2">
+        <div>
+          <div className="mb-4 flex items-center justify-between gap-3"><h3 className="font-serif text-2xl">{c.psycho}</h3><span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-black text-primary">5★</span></div>
+          <div className="grid gap-4 sm:grid-cols-2">{c.psychoReviews.map((r)=><ReviewCard key={`${r.name}-${r.date??""}`} {...r}/>)}</div>
+        </div>
+        <div>
+          <div className="mb-4 flex items-center justify-between gap-3"><h3 className="font-serif text-2xl">{c.massage}</h3><span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-black text-primary">5★</span></div>
+          <div className="grid gap-4">{c.massageReviews.map((r)=><ReviewCard key={`${r.name}-${r.date??""}`} {...r}/>)}</div>
+        </div>
+      </div>
+      <p className="mt-6 text-center text-xs leading-6 text-muted-foreground">{c.note}</p>
+    </section>
+  </>
 }
