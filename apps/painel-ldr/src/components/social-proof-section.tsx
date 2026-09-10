@@ -1,17 +1,16 @@
 import type { Locale } from "@/lib/i18n";
 
 const COPY: Record<Locale, {
-  eyebrow:string; title:string; intro:string; psycho:string; massage:string; note:string;
+  title:string; intro:string; psycho:string; massage:string; note:string;
   psychoReviews:{name:string; date?:string; text:string}[];
   massageReviews:{name:string; date?:string; text:string}[];
 }> = {
   pt: {
-    eyebrow:"PROVA SOCIAL REAL",
     title:"O que dizem sobre meu trabalho",
-    intro:"Avaliações reais de clientes em diferentes áreas da minha atuação. Estes depoimentos são de Psicanálise e Massagem/Bem-estar — não são avaliações da formação.",
+    intro:"Experiências de clientes em diferentes áreas da minha atuação.",
     psycho:"Psicanálise",
-    massage:"Massagem / Bem-estar",
-    note:"Depoimentos apresentados conforme o contexto original de cada atendimento.",
+    massage:"Massagem e Bem-estar",
+    note:"Depoimentos referentes a serviços de Psicanálise e Massagem/Bem-estar.",
     psychoReviews:[
       {name:"Thaisa",date:"02/2023",text:"Está me ajudando a me autoconhecer e estou adorando seu trabalho."},
       {name:"Jessica",date:"07/2025",text:"Luciano foi e é um achado na minha vida. Situações e sentimentos antes obscuros se tornam mais compreensíveis e, juntos, conseguimos trilhar uma nova história."},
@@ -26,12 +25,11 @@ const COPY: Record<Locale, {
     ]
   },
   en: {
-    eyebrow:"REAL SOCIAL PROOF",
     title:"What people say about my work",
-    intro:"Real client reviews from different areas of my work. These testimonials are from Psychoanalysis and Massage/Well-being — they are not reviews of the training program.",
+    intro:"Client experiences across different areas of my work.",
     psycho:"Psychoanalysis",
-    massage:"Massage / Well-being",
-    note:"Testimonials are presented according to the original context of each service.",
+    massage:"Massage and Well-being",
+    note:"Testimonials refer to Psychoanalysis and Massage/Well-being services.",
     psychoReviews:[
       {name:"Thaisa",date:"02/2023",text:"It is helping me understand myself better, and I am really enjoying his work."},
       {name:"Jessica",date:"07/2025",text:"Luciano has been a real find in my life. Feelings and situations that used to feel obscure become more understandable, and together we have been able to build a new story."},
@@ -46,12 +44,11 @@ const COPY: Record<Locale, {
     ]
   },
   fr: {
-    eyebrow:"PREUVE SOCIALE RÉELLE",
     title:"Ce que l’on dit de mon travail",
-    intro:"Avis réels de clients dans différentes activités. Ces témoignages concernent la Psychanalyse et le Massage/Bien-être — ce ne sont pas des avis sur la formation.",
+    intro:"Expériences de clients dans différents domaines de mon activité.",
     psycho:"Psychanalyse",
-    massage:"Massage / Bien-être",
-    note:"Les témoignages sont présentés dans le contexte réel de chaque accompagnement.",
+    massage:"Massage et bien-être",
+    note:"Témoignages concernant des services de Psychanalyse et de Massage/Bien-être.",
     psychoReviews:[
       {name:"Thaisa",date:"02/2023",text:"Cela m’aide à mieux me connaître et j’apprécie beaucoup son travail."},
       {name:"Jessica",date:"07/2025",text:"Luciano a été une véritable découverte dans ma vie. Des situations et des sentiments auparavant obscurs deviennent plus compréhensibles et, ensemble, nous parvenons à construire une nouvelle histoire."},
@@ -66,12 +63,11 @@ const COPY: Record<Locale, {
     ]
   },
   es: {
-    eyebrow:"PRUEBA SOCIAL REAL",
     title:"Lo que dicen sobre mi trabajo",
-    intro:"Opiniones reales de clientes en diferentes áreas de mi trabajo. Estos testimonios son de Psicoanálisis y Masaje/Bienestar — no son reseñas de la formación.",
+    intro:"Experiencias de clientes en diferentes áreas de mi trabajo.",
     psycho:"Psicoanálisis",
-    massage:"Masaje / Bienestar",
-    note:"Los testimonios se presentan según el contexto original de cada atención.",
+    massage:"Masaje y Bienestar",
+    note:"Testimonios correspondientes a servicios de Psicoanálisis y Masaje/Bienestar.",
     psychoReviews:[
       {name:"Thaisa",date:"02/2023",text:"Me está ayudando a conocerme mejor y estoy encantada con su trabajo."},
       {name:"Jessica",date:"07/2025",text:"Luciano ha sido un gran hallazgo en mi vida. Situaciones y sentimientos antes confusos se vuelven más comprensibles y, juntos, hemos podido construir una nueva historia."},
@@ -99,8 +95,7 @@ export function SocialProofSection({locale}:{locale:Locale}){
   const c=COPY[locale];
   return <section className="overflow-hidden rounded-[2rem] border bg-card p-6 shadow-xl shadow-primary/5 sm:p-8">
     <div className="mx-auto max-w-4xl text-center">
-      <p className="text-xs font-black uppercase tracking-[.18em] text-primary">{c.eyebrow}</p>
-      <h2 className="mt-3 font-serif text-3xl leading-tight sm:text-4xl">{c.title}</h2>
+      <h2 className="font-serif text-3xl leading-tight sm:text-4xl">{c.title}</h2>
       <p className="mx-auto mt-4 max-w-3xl text-sm leading-7 text-muted-foreground sm:text-base">{c.intro}</p>
     </div>
     <div className="mt-8 grid gap-8 lg:grid-cols-2">
