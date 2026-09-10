@@ -1,0 +1,66 @@
+name: Move ebook preview to public home
+on:
+  push:
+    paths:
+      - '.github/workflows/move-ebook-preview-home.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Move preview entry safely
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          # 1) Remove preview promo block from private library only.
+          p=Path('apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx')
+          s=p.read_text()
+          pattern=r'\{!data\.products\.find\(\(product\)=>product\.key==="ebook_coragem_comecar"\)\?\.entitled\?<section.*?</section>:null\}\s*'
+          s2,n=re.subn(pattern,'',s,count=1,flags=re.S)
+          if n==0 and '/cliente/biblioteca/amostra' in s:
+              raise SystemExit('Could not safely remove old library preview block')
+          p.write_text(s2)
+
+          # 2) Make preview reader public-facing rather than library-facing.
+          p=Path('apps/painel-ldr/src/components/digital-preview-reader.tsx')
+          s=p.read_text()
+          replacements={
+            'back:"Voltar à Biblioteca"':'back:"Voltar à página principal"',
+            'back:"Back to Library"':'back:"Back to main page"',
+            'back:"Retour à la bibliothèque"':'back:"Retour à la page principale"',
+            'back:"Volver a la Biblioteca"':'back:"Volver a la página principal"',
+          }
+          for a,b in replacements.items(): s=s.replace(a,b)
+          # First library link is the back button; any remaining library links are conversion CTAs.
+          old='href="/cliente/biblioteca"'
+          if old in s:
+              s=s.replace(old,'href="/"',1)
+              s=s.replace(old,'href="/#formacao"')
+          p.write_text(s)
+
+          # 3) Add public preview invite to Home, immediately before social proof.
+          p=Path('apps/painel-ldr/src/routes/index.tsx')
+          s=p.read_text()
+          marker='        <SocialProofSection locale={locale}/>'
+          if '/amostra-gratis' not in s:
+              if marker not in s:
+                  raise SystemExit('Home marker not found; refusing to modify')
+              block='''        <section className="overflow-hidden rounded-[2rem] border-2 border-[#d5aa45] bg-gradient-to-br from-[#35101e] to-[#5b0824] p-7 text-white shadow-2xl sm:p-10"><div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between"><div className="max-w-3xl"><span className="inline-flex rounded-full bg-[#d9aa3f] px-3 py-1.5 text-xs font-black text-[#3d0818]">{locale==="pt"?"AMOSTRA GRÁTIS":locale==="fr"?"EXTRAIT GRATUIT":locale==="es"?"MUESTRA GRATIS":"FREE PREVIEW"}</span><h2 className="mt-4 font-serif text-3xl leading-tight text-[#fff5df] sm:text-4xl">{locale==="pt"?"Leia o início da minha história antes de decidir":locale==="fr"?"Lisez le début de mon histoire avant de décider":locale==="es"?"Lee el inicio de mi historia antes de decidir":"Read the beginning of my story before you decide"}</h2><p className="mt-4 text-sm leading-7 text-[#f5dfac] sm:text-base">{locale==="pt"?"Entre na experiência de leitura e conheça gratuitamente uma parte da história que deu origem ao livro, ao eBook e à formação — Bahia, porta em porta, recomeços e a transformação da experiência em método.":locale==="fr"?"Entrez dans l’expérience de lecture et découvrez gratuitement une partie de l’histoire à l’origine du livre, de l’eBook et de la formation — Bahia, porte-à-porte, nouveaux départs et transformation de l’expérience en méthode.":locale==="es"?"Entra en la experiencia de lectura y conoce gratis una parte de la historia que dio origen al libro, al eBook y a la formación — Bahia, puerta a puerta, nuevos comienzos y la transformación de la experiencia en método.":"Enter the reading experience and discover a free part of the story behind the book, eBook and training — Bahia, door to door, new beginnings and turning experience into method."}</p><p className="mt-4 font-serif text-xl font-bold text-[#f1c45d]">{locale==="pt"?"Leia primeiro. Depois decida se quer continuar.":locale==="fr"?"Lisez d’abord. Décidez ensuite si vous voulez continuer.":locale==="es"?"Lee primero. Después decide si quieres continuar.":"Read first. Then decide if you want to continue."}</p></div><a href="/amostra-gratis" className="inline-flex min-h-14 shrink-0 items-center justify-center rounded-2xl bg-[#d9aa3f] px-6 py-4 text-sm font-black text-[#3d0818] shadow-lg">{locale==="pt"?"LER AMOSTRA GRÁTIS →":locale==="fr"?"LIRE L’EXTRAIT GRATUIT →":locale==="es"?"LEER MUESTRA GRATIS →":"READ FREE PREVIEW →"}</a></div></section>\n\n'''
+              s=s.replace(marker,block+marker,1)
+              p.write_text(s)
+          PY
+      - name: Commit changes
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx apps/painel-ldr/src/components/digital-preview-reader.tsx apps/painel-ldr/src/routes/index.tsx
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "feat: move free ebook preview to public home"
+          git push origin main
