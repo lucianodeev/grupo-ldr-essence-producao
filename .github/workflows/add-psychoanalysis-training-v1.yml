@@ -1,0 +1,25 @@
+name: Add psychoanalysis training v1
+on:
+  push:
+    paths:
+      - 'tools/add_psychoanalysis_training_v1.py'
+      - '.github/workflows/add-psychoanalysis-training-v1.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Apply integration
+        run: python tools/add_psychoanalysis_training_v1.py
+      - name: Commit integration
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/routes/index.tsx apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          git diff --cached --quiet && exit 0
+          git commit -m "feat: integrate psychoanalysis training into home and library"
+          git push origin main
