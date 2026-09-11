@@ -15,7 +15,7 @@ jobs:
           ref: main
           fetch-depth: 0
       - name: Apply psychoanalysis patch
-        run: python tools/psychoanalysis_1200h_forum_requirements_v9.py
+        run: python tools/psychoanalysis_1200h_forum_requirements_v10.py
       - name: Validate production build
         run: |
           corepack enable
