@@ -1,0 +1,109 @@
+name: Integrate psychoanalysis autism module once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/patch-psychoanalysis-autism-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Integrate module and refresh counts
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          def patch(path, replacements):
+              p=Path(path)
+              s=p.read_text(encoding='utf-8')
+              original=s
+              for old,new,required in replacements:
+                  if old not in s:
+                      if required:
+                          raise SystemExit(f'pattern not found in {path}: {old[:120]}')
+                      continue
+                  s=s.replace(old,new)
+              if s!=original:
+                  p.write_text(s,encoding='utf-8')
+
+          route='apps/painel-ldr/src/routes/_clientarea.cliente.treinamentos.psicanalise.tsx'
+          patch(route,[
+            ('@/content/psychoanalysis-curriculum"','@/content/psychoanalysis-curriculum-active"',True),
+            ('12 módulos, 180 unidades de aprendizagem','13 módulos, 200 unidades de aprendizagem',True),
+            ('12 módulos · 180 unidades','13 módulos · 200 unidades',True),
+            ('Conclusão mínima: 180 dias','Conclusão mínima: 200 dias',True),
+            ('período mínimo de 180 dias','período mínimo de 200 dias',True),
+            ('180 dias de percurso estruturado · até 12 meses para concluir.','200 dias de percurso estruturado · até 12 meses para concluir.',True),
+            ('O percurso acadêmico pode ser concluído a partir de 180 dias','O percurso acadêmico pode ser concluído a partir de 200 dias',True),
+            ('Somente após 180 dias de matrícula','Somente após 200 dias de matrícula',True),
+            ('currentLocation:`Módulo ${m.id} · ${l.title}`','currentLocation:`Módulo ${psychoanalysisModules.indexOf(m)+1} · ${l.title}`',True),
+            ('Módulo {String(m.id).padStart(2,"0")} ·','Módulo {String(mi+1).padStart(2,"0")} ·',True),
+            ('Módulo {mod.id}</span>','Módulo {state.module+1}</span>',True),
+          ])
+
+          cert='apps/painel-ldr/src/routes/_clientarea.cliente.treinamentos.psicanalise.certificado.tsx'
+          patch(cert,[
+            ('@/content/psychoanalysis-curriculum"','@/content/psychoanalysis-curriculum-active"',True),
+            ('período mínimo formativo de 180 dias','período mínimo formativo de 200 dias',True),
+          ])
+
+          server='apps/painel-ldr/src/lib/psychoanalysis-commerce.server.ts'
+          patch(server,[
+            ('const TOTAL_LESSONS=180;','const TOTAL_LESSONS=200;',True),
+            ('const MINIMUM_DAYS=180;','const MINIMUM_DAYS=200;',True),
+            ('Formação livre em Psicanálise com 12 módulos, 180 unidades de aprendizagem','Formação livre em Psicanálise com 13 módulos, 200 unidades de aprendizagem',True),
+            ('totalModules:12','totalModules:13',True),
+          ])
+
+          public_route='apps/painel-ldr/src/routes/formacao-psicanalise.tsx'
+          patch(public_route,[
+            ('Formação Online em Psicanálise: 12 módulos','Formação Online em Psicanálise: 13 módulos',True),
+          ])
+
+          component='apps/painel-ldr/src/components/psychoanalysis-training-page.tsx'
+          p=Path(component); s=p.read_text(encoding='utf-8'); original=s
+          old='''["11","Análise Pessoal e o Lugar do Analista","Análise pessoal, pontos cegos, desejo do analista, ética, limites e implicação subjetiva na escuta."],\n["12","Supervisão Clínica e Construção da Escuta","Apresentação de caso, hipótese clínica, transferência, manejo, confidencialidade, encaminhamento e preparação para a prática."],'''
+          new='''["11","Autismo na Clínica Psicanalítica: Teoria, Manejo e Casos Clínicos","Fundamentos, linguagem, manejo clínico, autores fundamentais, neurodiversidade, trabalho interdisciplinar e construção de caso."],\n["12","Análise Pessoal e o Lugar do Analista","Análise pessoal, pontos cegos, desejo do analista, ética, limites e implicação subjetiva na escuta."],\n["13","Supervisão Clínica e Construção da Escuta","Apresentação de caso, hipótese clínica, transferência, manejo, confidencialidade, encaminhamento e preparação para a prática."],'''
+          if old not in s: raise SystemExit('module list pattern not found in public component')
+          s=s.replace(old,new)
+          s=s.replace('12 módulos','13 módulos').replace('180 unidades de aprendizagem','200 unidades de aprendizagem').replace('180 unidades','200 unidades')
+          s=s.replace('180 dias de percurso estruturado','200 dias de percurso estruturado').replace('período mínimo de 180 dias','período mínimo de 200 dias').replace('a partir de 180 dias','a partir de 200 dias')
+          if s!=original: p.write_text(s,encoding='utf-8')
+
+          library='apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx'
+          patch(library,[
+            ('12 módulos · 180 unidades · percurso formativo completo.','13 módulos · 200 unidades · percurso formativo completo.',False),
+          ])
+          PY
+
+      - name: Verify integration
+        run: |
+          grep -q 'psychoanalysis-curriculum-active' apps/painel-ldr/src/routes/_clientarea.cliente.treinamentos.psicanalise.tsx
+          grep -q 'Autismo na Clínica Psicanalítica: Teoria, Manejo e Casos Clínicos' apps/painel-ldr/src/components/psychoanalysis-training-page.tsx
+          grep -q 'const TOTAL_LESSONS=200' apps/painel-ldr/src/lib/psychoanalysis-commerce.server.ts
+          grep -q 'totalModules:13' apps/painel-ldr/src/lib/psychoanalysis-commerce.server.ts
+
+      - name: Commit integration
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.treinamentos.psicanalise.tsx \
+                  apps/painel-ldr/src/routes/_clientarea.cliente.treinamentos.psicanalise.certificado.tsx \
+                  apps/painel-ldr/src/lib/psychoanalysis-commerce.server.ts \
+                  apps/painel-ldr/src/routes/formacao-psicanalise.tsx \
+                  apps/painel-ldr/src/components/psychoanalysis-training-page.tsx \
+                  apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          if ! git diff --cached --quiet; then
+            git commit -m 'feat(painel): integrate autism module into psychoanalysis formation'
+            git push origin main
+          fi
