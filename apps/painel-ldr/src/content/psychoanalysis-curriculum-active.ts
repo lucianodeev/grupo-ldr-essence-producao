@@ -1,11 +1,13 @@
 import { autismPsychoanalysisModule } from "@/content/psychoanalysis-autism-module";
+import { psychoanalysisCaseStudiesModule } from "@/content/psychoanalysis-case-studies-module";
 import { psychoanalysisModules as existingPsychoanalysisModules } from "@/content/psychoanalysis-curriculum";
 
 // Preserve all existing module and lesson IDs so previously saved progress remains valid.
-// The new autism module uses internal id 13 but is presented as module 11 by its position in the curriculum.
+// Autism keeps internal id 13 and Case Studies uses internal id 14; both are displayed by curriculum position in the UI.
 export const psychoanalysisModules=[
   ...existingPsychoanalysisModules.slice(0,10),
   autismPsychoanalysisModule,
+  psychoanalysisCaseStudiesModule,
   ...existingPsychoanalysisModules.slice(10),
 ];
 
