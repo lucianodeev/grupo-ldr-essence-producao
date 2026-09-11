@@ -12,6 +12,11 @@ async function trainingBySlug(slug:string){
 async function requireEnrolledClient(userId:string,email:string|null,slug:string){
   const ctx=await resolveClient(userId,email);
   if(ctx.status!=="ok")fail("Acesso negado.");
+  if(slug==="formacao-psicanalise"){
+    const {getPsychoanalysisOffer}=await import("@/lib/psychoanalysis-commerce.server");
+    const offer=await getPsychoanalysisOffer(userId,email);
+    if(!offer.entitled)fail("Você precisa estar matriculado para acessar o fórum.");
+  }
   const training=await trainingBySlug(slug);
   const {data:enrollment}=await supabaseAdmin.from("training_enrollments").select("id").eq("training_id",training.id).eq("customer_id",ctx.customer.id).eq("active",true).maybeSingle();
   if(!enrollment)fail("Você precisa estar matriculado para acessar o fórum.");
