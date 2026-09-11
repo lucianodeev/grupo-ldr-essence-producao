@@ -1,0 +1,99 @@
+name: Integrate psychoanalysis case studies once
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Apply focused integration
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          root=Path('apps/painel-ldr/src')
+
+          def rw(path, fn):
+              p=root/path
+              s=p.read_text()
+              n=fn(s)
+              if n!=s:
+                  p.write_text(n)
+
+          def common_counts(s):
+              return (s.replace('13 módulos','14 módulos')
+                       .replace('200 unidades','220 unidades')
+                       .replace('200 dias','220 dias'))
+
+          # Server-side offer/unlock/certificate totals.
+          def server(s):
+              s=s.replace('const TOTAL_LESSONS=200;','const TOTAL_LESSONS=220;')
+              s=s.replace('const MINIMUM_DAYS=200;','const MINIMUM_DAYS=220;')
+              s=s.replace('totalModules:13','totalModules:14')
+              s=common_counts(s)
+              return s
+          rw(Path('lib/psychoanalysis-commerce.server.ts'),server)
+
+          # Student experience: totals plus display numbering by curriculum position,
+          # preserving old internal module IDs and saved lesson IDs.
+          def training(s):
+              s=common_counts(s)
+              s=s.replace('Módulo {String(m.id).padStart(2,"0")}', 'Módulo {String(mi+1).padStart(2,"0")}')
+              s=s.replace('Módulo {mod.id}</span>', 'Módulo {state.module+1}</span>')
+              s=s.replace('currentLocation:`Módulo ${m.id} · ${l.title}`', 'currentLocation:`Módulo ${Math.min(next.module,psychoanalysisModules.length-1)+1} · ${l.title}`')
+              return s
+          rw(Path('routes/_clientarea.cliente.treinamentos.psicanalise.tsx'),training)
+
+          # Certificate and library counters.
+          rw(Path('routes/_clientarea.cliente.treinamentos.psicanalise.certificado.tsx'),common_counts)
+          rw(Path('routes/_clientarea.cliente.biblioteca.tsx'),common_counts)
+          rw(Path('routes/formacao-psicanalise.tsx'),common_counts)
+
+          # Public page counters and curriculum sequence.
+          def public_page(s):
+              s=common_counts(s)
+              old='''["11","Autismo na Clínica Psicanalítica: Teoria, Manejo e Casos Clínicos","Fundamentos, linguagem, manejo clínico, autores fundamentais, neurodiversidade, trabalho interdisciplinar e construção de caso."],\n["12","Análise Pessoal e o Lugar do Analista","Análise pessoal, pontos cegos, desejo do analista, ética, limites e implicação subjetiva na escuta."],\n["13","Supervisão Clínica e Construção da Escuta","Apresentação de caso, hipótese clínica, transferência, manejo, confidencialidade, encaminhamento e preparação para a prática."],'''
+              new='''["11","Autismo na Clínica Psicanalítica: Teoria, Manejo e Casos Clínicos","Fundamentos, linguagem, manejo clínico, autores fundamentais, neurodiversidade, trabalho interdisciplinar e construção de caso."],\n["12","Estudo de Casos Clínicos em Psicanálise: Da Teoria à Escuta","Construção de casos, leitura freudiana, transferência, resistência, manejo, ética e preparação para supervisão."],\n["13","Análise Pessoal e o Lugar do Analista","Análise pessoal, pontos cegos, desejo do analista, ética, limites e implicação subjetiva na escuta."],\n["14","Supervisão Clínica e Construção da Escuta","Apresentação de caso, hipótese clínica, transferência, manejo, confidencialidade, encaminhamento e preparação para a prática."],'''
+              if old in s:
+                  s=s.replace(old,new)
+              elif 'Estudo de Casos Clínicos em Psicanálise: Da Teoria à Escuta' not in s:
+                  raise SystemExit('public curriculum block not found; aborting to avoid unsafe edit')
+              return s
+          rw(Path('components/psychoanalysis-training-page.tsx'),public_page)
+
+          # Sanity checks required by this change.
+          active=(root/'content/psychoanalysis-curriculum-active.ts').read_text()
+          case=(root/'content/psychoanalysis-case-studies-module.ts').read_text()
+          offer=(root/'lib/psychoanalysis-commerce.server.ts').read_text()
+          page=(root/'components/psychoanalysis-training-page.tsx').read_text()
+          assert 'psychoanalysisCaseStudiesModule' in active
+          assert case.count('lesson(') >= 20
+          assert 'id:14' in case
+          assert 'const TOTAL_LESSONS=220;' in offer
+          assert 'const MINIMUM_DAYS=220;' in offer
+          assert 'totalModules:14' in offer
+          assert '["12","Estudo de Casos Clínicos em Psicanálise: Da Teoria à Escuta"' in page
+          PY
+      - name: Commit focused changes
+        run: |
+          if git diff --quiet; then
+            echo "No changes needed"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/painel-ldr/src
+          git commit -m "feat(painel): integrate Freud-centered case studies module"
+          git push
