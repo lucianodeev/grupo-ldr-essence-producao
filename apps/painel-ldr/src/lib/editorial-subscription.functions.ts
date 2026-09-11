@@ -1,0 +1,9 @@
+import { createServerFn } from "@tanstack/react-start";
+import { getRequest } from "@tanstack/react-start/server";
+import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import type { EditorialProduct } from "@/lib/editorial-subscription.server";
+function emailOf(c:Record<string,unknown>):string|null{const v=c["email"];return typeof v==="string"?v:null}
+function requestMarket():"BR"|"INTL"{try{const r=getRequest();const c=r?.headers.get("x-vercel-ip-country")??r?.headers.get("cf-ipcountry")??r?.headers.get("x-country-code");return c?.trim().toUpperCase()==="BR"?"BR":"INTL"}catch{return "INTL"}}
+export const clientEditorialSubscription=createServerFn({method:"GET"}).middleware([requireSupabaseAuth]).inputValidator((data:{productKey:EditorialProduct})=>data).handler(async({context,data})=>{const {getEditorialSubscriptionContext}=await import("@/lib/editorial-subscription.server");const r=await getEditorialSubscriptionContext(context.userId,emailOf(context.claims),data.productKey);return {...r,market:requestMarket()};});
+export const clientCreateEditorialCheckout=createServerFn({method:"POST"}).middleware([requireSupabaseAuth]).inputValidator((data:{productKey:EditorialProduct;market:"BR"|"INTL"})=>data).handler(async({context,data})=>{const {createEditorialCheckout}=await import("@/lib/editorial-subscription.server");return createEditorialCheckout(context.userId,emailOf(context.claims),data.productKey,data.market);});
+export const clientSetEditorialCancellation=createServerFn({method:"POST"}).middleware([requireSupabaseAuth]).inputValidator((data:{productKey:EditorialProduct;cancelAtPeriodEnd:boolean})=>data).handler(async({context,data})=>{const {setEditorialCancellation}=await import("@/lib/editorial-subscription.server");return setEditorialCancellation(context.userId,emailOf(context.claims),data.productKey,data.cancelAtPeriodEnd);});
