@@ -1,0 +1,25 @@
+name: Fix owner library access UI
+on:
+  push:
+    paths:
+      - 'tools/fix_owner_access_library_ui.py'
+      - '.github/workflows/fix-owner-library-access-ui.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Apply owner access and label fix
+        run: python tools/fix_owner_access_library_ui.py
+      - name: Commit fix
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          git diff --cached --quiet && exit 0
+          git commit -m "fix: ensure owner library access and fit training label"
+          git push origin main
