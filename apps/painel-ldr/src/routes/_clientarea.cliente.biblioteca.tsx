@@ -150,7 +150,7 @@ function ClientLibrary(){
           <p className="mt-3 text-xs font-bold text-[#0b2341]">✓ {SUB_TXT[locale].included}</p>
         </div>
         <div className="w-full shrink-0 rounded-2xl bg-[#071426] p-4 text-white sm:w-[280px]">
-          <p className="text-xs text-white/70">{subscriptionData?.active?SUB_TXT[locale].active:subscriptionData?.promoActive?(locale==="pt"?"PROMOÇÃO 24H · 50% OFF NO 1º MÊS":locale==="fr"?"PROMO 24H · -50% LE 1ER MOIS":locale==="es"?"PROMO 24H · 50% EN EL 1ER MES":"24H PROMO · 50% OFF FIRST MONTH"):SUB_TXT[locale].title}</p>
+          <p className="text-xs text-white/70">{subscriptionData?.active?SUB_TXT[locale].active:subscriptionData?.promoActive?(locale==="pt"?"PROMOÇÃO DO MÊS · 50% OFF NO 1º MÊS":locale==="fr"?"PROMO DU MOIS · -50% LE 1ER MOIS":locale==="es"?"PROMO DU MOIS · 50% EN EL 1ER MES":"MONTHLY PROMO · 50% OFF FIRST MONTH"):SUB_TXT[locale].title}</p>
           {!subscriptionData?.active&&subscriptionData?.promoActive?<>
             <p className="mt-2 text-xs text-white/55 line-through">{market==="BR"?money(subscriptionData?.priceBrlCents??3990,"BRL",locale):money(subscriptionData?.priceEurCents??990,"EUR",locale)} / mês</p>
             <p className="mt-1 text-3xl font-black text-[#ffd84d]">{market==="BR"?money(subscriptionData?.promoFirstBrlCents??1995,"BRL",locale):money(subscriptionData?.promoFirstEurCents??495,"EUR",locale)}<span className="text-xs font-medium text-white/70"> / primeiro mês</span></p>

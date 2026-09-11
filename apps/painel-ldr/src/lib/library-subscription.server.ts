@@ -7,7 +7,7 @@ const PRICE_BRL = 3990;
 const PRICE_EUR = 990;
 const PROMO_FIRST_BRL = 1995;
 const PROMO_FIRST_EUR = 495;
-const PROMO_END_AT = "2026-09-12T16:46:00.000Z";
+const PROMO_END_AT = "2026-09-30T23:59:59+02:00";
 const PRODUCT_NAME = "Biblioteca LDR — Assinatura Mensal";
 function libraryPromoActive(){ return Date.now() < Date.parse(PROMO_END_AT); }
 const INCLUDED_PRODUCTS = [
