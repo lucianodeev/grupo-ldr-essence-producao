@@ -16,6 +16,7 @@ const INCLUDED_PRODUCTS = [
   ["do_mamao_ao_negocio", "Do Mamão ao Negócio"],
   ["formacao_psicanalise", "Formação Online em Psicanálise"],
   ["formacao_terapia_breve_psicanalitica", "Formação em Terapia Breve Psicanalítica"],
+  ["formacao_massoterapia", "Formação Completa em Massoterapia"],
   ["formacao_negocio_24_horas", "Formação Negócio em 24 Horas"],
   ["formacao_mentoria_profissional_carreira", "Formação em Mentoria Profissional e de Carreira"],
   ["formacao_lideranca_gestao_pessoas", "Formação em Liderança e Gestão de Pessoas"],
