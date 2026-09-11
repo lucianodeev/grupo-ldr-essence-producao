@@ -15,6 +15,7 @@ const INCLUDED_PRODUCTS = [
   ["livro_menino_mamao", "O Menino que Vendia Mamão"],
   ["do_mamao_ao_negocio", "Do Mamão ao Negócio"],
   ["formacao_psicanalise", "Formação Online em Psicanálise"],
+  ["formacao_terapia_breve_psicanalitica", "Formação em Terapia Breve Psicanalítica"],
   ["formacao_mentoria_profissional_carreira", "Formação em Mentoria Profissional e de Carreira"],
   ["formacao_lideranca_gestao_pessoas", "Formação em Liderança e Gestão de Pessoas"],
 ] as const;
