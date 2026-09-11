@@ -1,0 +1,82 @@
+name: One-time align September subscription promotion
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/one-time-september-promo-countdown.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Extend September promo and show countdown
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          END='2026-09-30T21:59:59.000Z'  # 23:59:59 Brussels time (CEST)
+
+          # Backend: keep promotional checkout active through end of September.
+          p=Path('apps/painel-ldr/src/lib/library-subscription.server.ts')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace('const PROMO_END_AT = "2026-09-12T16:46:00.000Z";', f'const PROMO_END_AT = "{END}";')
+          p.write_text(s,encoding='utf-8')
+
+          # Main sales page currently rendered in production.
+          p=Path('apps/painel-ldr/src/components/library-sales-home-access-choice.tsx')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace('const PROMO_END_AT = new Date("2026-09-12T16:46:00.000Z").getTime();', f'const PROMO_END_AT = new Date("{END}").getTime();')
+          s=s.replace('⚡ PROMOÇÃO DE 24 HORAS · 50% NO PRIMEIRO MÊS','⚡ PROMOÇÃO DO MÊS · 50% NO PRIMEIRO MÊS')
+          s=s.replace('⚡ 24-HOUR PROMO · 50% OFF FIRST MONTH','⚡ MONTH PROMO · 50% OFF FIRST MONTH')
+          s=s.replace('⚡ PROMO 24H · -50% LE PREMIER MOIS','⚡ PROMO DU MOIS · -50% LE PREMIER MOIS')
+          s=s.replace('⚡ PROMOCIÓN 24H · 50% PRIMER MES','⚡ PROMOCIÓN DEL MES · 50% PRIMER MES')
+
+          # Use days + hours for a month-long countdown.
+          old='''  const countdown=remaining===null?"--:--:--":`${String(Math.floor(remaining/3600000)).padStart(2,"0")}:${String(Math.floor((remaining%3600000)/60000)).padStart(2,"0")}:${String(Math.floor((remaining%60000)/1000)).padStart(2,"0")}`;\n'''
+          new='''  const countdown=remaining===null?{days:"--",hours:"--",minutes:"--",seconds:"--"}:{days:String(Math.floor(remaining/86400000)),hours:String(Math.floor((remaining%86400000)/3600000)).padStart(2,"0"),minutes:String(Math.floor((remaining%3600000)/60000)).padStart(2,"0"),seconds:String(Math.floor((remaining%60000)/1000)).padStart(2,"0")};\n'''
+          if old in s:
+              s=s.replace(old,new,1)
+
+          old_card='''<div className="mt-5 rounded-2xl border border-[#d6ad63]/35 bg-[#d6ad63]/10 p-5"><p className="text-sm font-black text-[#f5cc82]">{promo?t.promo:"ASSINATURA BIBLIOTECA LDR"}</p><p className="mt-2 text-2xl font-black">{promo?t.first:"🇧🇷 R$ 39,90/mês · 🇪🇺 € 9,90/mês"}</p>{promo&&<p className="mt-2 text-sm text-white/80">{t.after}</p>}</div>'''
+          new_card='''<div className="mt-5 rounded-2xl border border-[#d6ad63]/35 bg-[#d6ad63]/10 p-5"><p className="text-sm font-black text-[#f5cc82]">{promo?t.promo:"ASSINATURA BIBLIOTECA LDR"}</p><p className="mt-2 text-2xl font-black">{promo?t.first:"🇧🇷 R$ 39,90/mês · 🇪🇺 € 9,90/mês"}</p>{promo&&<><div className="mt-4 rounded-2xl border border-[#d6ad63]/60 bg-black/25 p-4"><p className="text-center text-[11px] font-black uppercase tracking-[.16em] text-[#f5cc82]">{countdownLabel}</p><div className="mt-3 grid grid-cols-4 gap-2 text-center"><div><p className="font-mono text-2xl font-black">{countdown.days}</p><p className="text-[9px] uppercase text-white/60">{locale==='pt'?'dias':locale==='fr'?'jours':locale==='es'?'días':'days'}</p></div><div><p className="font-mono text-2xl font-black">{countdown.hours}</p><p className="text-[9px] uppercase text-white/60">{locale==='pt'?'horas':locale==='fr'?'heures':locale==='es'?'horas':'hours'}</p></div><div><p className="font-mono text-2xl font-black">{countdown.minutes}</p><p className="text-[9px] uppercase text-white/60">min</p></div><div><p className="font-mono text-2xl font-black">{countdown.seconds}</p><p className="text-[9px] uppercase text-white/60">seg</p></div></div></div><p className="mt-3 text-sm text-white/80">{t.after}</p></>}</div>'''
+          if old_card not in s:
+              raise SystemExit('promo card anchor not found')
+          s=s.replace(old_card,new_card,1)
+          p.write_text(s,encoding='utf-8')
+
+          # Secondary sales component kept consistent.
+          p=Path('apps/painel-ldr/src/components/library-sales-home.tsx')
+          if p.exists():
+              s=p.read_text(encoding='utf-8')
+              s=s.replace('new Date("2026-09-12T16:46:00.000Z").getTime()', f'new Date("{END}").getTime()')
+              s=s.replace('PROMOÇÃO 24H','PROMOÇÃO DO MÊS')
+              s=s.replace('24H PROMO','MONTH PROMO')
+              s=s.replace('PROMO 24H','PROMO DU MOIS')
+              s=s.replace('PROMOCIÓN 24H','PROMOCIÓN DEL MES')
+              p.write_text(s,encoding='utf-8')
+
+          # Client library card text: remove 24h wording.
+          p=Path('apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace('PROMOÇÃO 24H · 50% OFF NO 1º MÊS','PROMOÇÃO DO MÊS · 50% OFF NO 1º MÊS')
+          s=s.replace('PROMO 24H · -50% LE 1ER MOIS','PROMO DU MOIS · -50% LE 1ER MOIS')
+          s=s.replace('PROMO 24H · 50% EN EL 1ER MES','PROMOCIÓN DEL MES · 50% EN EL 1ER MES')
+          s=s.replace('24H PROMO · 50% OFF FIRST MONTH','MONTH PROMO · 50% OFF FIRST MONTH')
+          p.write_text(s,encoding='utf-8')
+          PY
+
+      - name: Commit patch
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/lib/library-subscription.server.ts apps/painel-ldr/src/components/library-sales-home-access-choice.tsx apps/painel-ldr/src/components/library-sales-home.tsx apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          git commit -m "fix: run library promotion through September with countdown" || exit 0
+          git push origin main
