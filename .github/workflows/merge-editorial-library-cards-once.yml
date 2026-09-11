@@ -1,0 +1,35 @@
+name: Merge editorial library cards once
+on:
+  push:
+    paths:
+      - '.github/workflows/merge-editorial-library-cards-once.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Merge Jornal and Revista cards
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx')
+          s=p.read_text()
+          pattern=r'''\s*<a href="/cliente/biblioteca/jornal-ldr" className="min-w-0 rounded-2xl bg-\[#0b2341\][\s\S]*?</a>\s*<a href="/cliente/biblioteca/revista-ldr" className="min-w-0 rounded-2xl bg-\[#6b0d2b\][\s\S]*?</a>'''
+          replacement='''\n        <a href="/cliente/biblioteca/publicacoes" className="min-w-0 rounded-2xl bg-[#0b2341] px-1 py-4 text-center !text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md" aria-label="Abrir todos os jornais e revistas"><div className="mx-auto text-lg leading-none">📰</div><p className="mt-2 text-[8px] font-black leading-tight !text-white sm:text-[10px]">Jornais & Revistas</p><p className="mt-1 text-[7px] !text-white/80">Todos em um só lugar</p></a>'''
+          ns,n=re.subn(pattern,replacement,s,count=1)
+          if n!=1:
+              raise SystemExit(f'Expected to replace 1 Jornal/Revista pair, replaced {n}')
+          p.write_text(ns)
+          PY
+      - name: Commit cleanup
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          git commit -m "fix(painel): merge newspaper and magazine library cards"
+          git push
