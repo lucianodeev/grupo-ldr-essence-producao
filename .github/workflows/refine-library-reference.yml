@@ -1,0 +1,25 @@
+name: Refine library reference
+on:
+  push:
+    paths:
+      - 'tools/refine_library_like_reference.py'
+      - '.github/workflows/refine-library-reference.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Apply library refinement
+        run: python tools/refine_library_like_reference.py
+      - name: Commit refinement
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          git diff --cached --quiet && exit 0
+          git commit -m "refine: align library with platform reference"
+          git push origin main
