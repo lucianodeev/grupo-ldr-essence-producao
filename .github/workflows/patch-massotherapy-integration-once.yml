@@ -1,0 +1,108 @@
+name: Patch massotherapy integration once
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Patch massotherapy into current platform
+        run: |
+          cat > /tmp/patch.py <<'PY'
+          from pathlib import Path
+          root=Path("apps/painel-ldr/src")
+          
+          def patch(path,replacements):
+              p=root/path
+              s=p.read_text(encoding="utf-8")
+              before=s
+              for old,new,label in replacements:
+                  if new in s: continue
+                  if old not in s: raise SystemExit(f"{path}: anchor missing: {label}")
+                  s=s.replace(old,new,1)
+              if s!=before: p.write_text(s,encoding="utf-8")
+          
+          patch(Path("lib/library-subscription.server.ts"),[
+          ('  ["formacao_terapia_breve_psicanalitica", "Formação em Terapia Breve Psicanalítica"],\n',
+           '  ["formacao_terapia_breve_psicanalitica", "Formação em Terapia Breve Psicanalítica"],\n  ["formacao_massoterapia", "Formação Completa em Massoterapia"],\n',
+           "subscription product")
+          ])
+          
+          patch(Path("routes/_clientarea.cliente.biblioteca.tsx"),[
+          ('import { clientCreateBriefTherapyCheckout, clientBriefTherapyOffer } from "@/lib/brief-therapy-commerce.functions";\n',
+           'import { clientCreateBriefTherapyCheckout, clientBriefTherapyOffer } from "@/lib/brief-therapy-commerce.functions";\nimport { clientCreateMassotherapyCheckout, clientMassotherapyOffer } from "@/lib/massotherapy-commerce.functions";\n',
+           "massotherapy import"),
+          ('    briefFn=useServerFn(clientBriefTherapyOffer),\n',
+           '    briefFn=useServerFn(clientBriefTherapyOffer),\n    massageFn=useServerFn(clientMassotherapyOffer),\n',
+           "offer fn"),
+          ('    briefCheckoutFn=useServerFn(clientCreateBriefTherapyCheckout),\n',
+           '    briefCheckoutFn=useServerFn(clientCreateBriefTherapyCheckout),\n    massageCheckoutFn=useServerFn(clientCreateMassotherapyCheckout),\n',
+           "checkout fn"),
+          ('  const {data:brief}=useQuery({queryKey:["brief-therapy-offer"],queryFn:()=>briefFn({})});\n',
+           '  const {data:brief}=useQuery({queryKey:["brief-therapy-offer"],queryFn:()=>briefFn({})});\n  const {data:massage}=useQuery({queryKey:["massotherapy-offer"],queryFn:()=>massageFn({})});\n',
+           "offer query"),
+          ('  const briefCheckout=useMutation({mutationFn:(m:"BR"|"INTL")=>briefCheckoutFn({data:{market:m}}),onSuccess:r=>location.href=r.url});\n',
+           '  const briefCheckout=useMutation({mutationFn:(m:"BR"|"INTL")=>briefCheckoutFn({data:{market:m}}),onSuccess:r=>location.href=r.url});\n  const massageCheckout=useMutation({mutationFn:(m:"BR"|"INTL")=>massageCheckoutFn({data:{market:m}}),onSuccess:r=>location.href=r.url});\n',
+           "checkout mutation"),
+          ('brief:owner||!!brief?.entitled,mentor:',
+           'brief:owner||!!brief?.entitled,massage:owner||!!massage?.entitled,mentor:',
+           "entitlement"),
+          ('const buyFormation=(kind:"psycho"|"brief"|"mentor"|"leader",mut:any,color:string)=>',
+           'const buyFormation=(kind:"psycho"|"brief"|"massage"|"mentor"|"leader",mut:any,color:string)=>',
+           "formation union"),
+          ('{card("brief","Terapia Breve","bg-[#17645e]")}\n',
+           '{card("brief","Terapia Breve","bg-[#17645e]")}\n        {card("massage","Massoterapia","bg-[#0F5E7A]")}\n',
+           "library card"),
+          (':active==="mentor"?',
+           ':active==="massage"?<div><h3 className="font-serif text-xl text-[#083B50]">Formação Completa em Massoterapia</h3><p className="mt-2 text-sm text-muted-foreground">15 módulos · 300 aulas · 1.200 horas · 6 a 12 meses · 100% online · sem encontros ao vivo.</p>{ent.massage?<a href="/cliente/treinamentos/massoterapia" className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#0F5E7A] px-4 py-3 font-black text-white">Acessar formação</a>:buyFormation("massage",massageCheckout,"bg-[#0F5E7A]")}</div>:active==="mentor"?',
+           "massotherapy active branch")
+          ])
+          
+          home=root/"components/library-sales-home-access-choice.tsx"
+          s=home.read_text(encoding="utf-8")
+          if "/formacao-massoterapia" not in s:
+              anchor='    <section id="formacoes" className="bg-white py-14">'
+              if anchor not in s: raise SystemExit("active sales home formacoes anchor missing")
+              s=s.replace(anchor,'    <section className="mx-auto max-w-7xl px-4 pt-10 sm:px-6"><article className="overflow-hidden rounded-[30px] border-2 border-[#0F5E7A]/35 bg-gradient-to-br from-[#e9f6fb] to-white p-7 shadow-sm"><div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center"><div><span className="inline-flex rounded-full bg-[#0F5E7A] px-3 py-1 text-[10px] font-black uppercase tracking-[.14em] text-white">NOVA FORMAÇÃO</span><p className="mt-4 text-xs font-black uppercase tracking-[.18em] text-[#0F5E7A]">MASSOTERAPIA · 1.200H</p><h2 className="mt-2 font-serif text-3xl sm:text-4xl">Formação Completa em Massoterapia</h2><p className="mt-3 max-w-3xl text-sm leading-7 text-slate-600">15 módulos · 300 aulas · 1.200 horas · 100% online · percurso recomendado de 6 a 12 meses · sem encontros ao vivo nesta etapa.</p><p className="mt-4 font-black text-[#083B50]">R$ 299,99 · € 49,90 · pagamento único · acesso vitalício</p><p className="mt-2 text-sm text-slate-600">Também incluída na assinatura ativa da Biblioteca LDR.</p></div><Link to="/formacao-massoterapia" className="rounded-xl bg-[#0F5E7A] px-5 py-3 text-center text-sm font-black text-white">CONHECER A FORMAÇÃO</Link></div></article></section>\n\n'+anchor,1)
+              home.write_text(s,encoding="utf-8")
+          
+          legacy=root/"components/library-sales-home.tsx"
+          if legacy.exists():
+              s=legacy.read_text(encoding="utf-8")
+              if "/formacao-massoterapia" not in s:
+                  anchor='  {tag:"TERAPIA BREVE · 1.200H",title:"Formação em Terapia Breve Psicanalítica",'
+                  pos=s.find(anchor)
+                  if pos>=0:
+                      line_end=s.find("\n",pos)+1
+                      entry='  {tag:"MASSOTERAPIA · 1.200H",title:"Formação Completa em Massoterapia",desc:"15 módulos · 300 aulas · 1.200 horas · 100% online · 6 a 12 meses",price:"R$ 299,99 · € 49,90",href:"/formacao-massoterapia",tone:"blue"},\n'
+                      s=s[:line_end]+entry+s[line_end:]
+                      legacy.write_text(s,encoding="utf-8")
+          
+          lib=(root/"routes/_clientarea.cliente.biblioteca.tsx").read_text(encoding="utf-8")
+          sub=(root/"lib/library-subscription.server.ts").read_text(encoding="utf-8")
+          home_text=home.read_text(encoding="utf-8")
+          assert 'card("massage","Massoterapia","bg-[#0F5E7A]")' in lib
+          assert 'active==="massage"' in lib
+          assert 'formacao_massoterapia' in sub
+          assert '/formacao-massoterapia' in home_text
+          assert 'R$ 299,99 · € 49,90' in home_text
+          assert 'sem encontros ao vivo' in home_text.lower()
+          PY
+          python /tmp/patch.py
+      - name: Commit focused integration
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/painel-ldr/src
+          if git diff --cached --quiet; then echo "No changes"; exit 0; fi
+          git commit -m "feat(painel): integrate massotherapy in sales, library and subscription"
+          git push
