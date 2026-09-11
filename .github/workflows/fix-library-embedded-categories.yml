@@ -1,0 +1,25 @@
+name: Fix library embedded categories
+on:
+  push:
+    paths:
+      - 'tools/fix_library_embedded_categories.py'
+      - '.github/workflows/fix-library-embedded-categories.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Apply embedded category fix
+        run: python tools/fix_library_embedded_categories.py
+      - name: Commit focused library fix
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          git diff --cached --quiet && exit 0
+          git commit -m "fix: embed library products inside category icons"
+          git push origin main
