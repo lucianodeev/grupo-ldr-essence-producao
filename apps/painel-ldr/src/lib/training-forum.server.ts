@@ -18,7 +18,8 @@ async function requireEnrolledClient(userId:string,email:string|null,slug:string
     if(!offer.entitled)fail("Você precisa estar matriculado para acessar o fórum.");
   }
   const training=await trainingBySlug(slug);
-  const {data:enrollment}=await supabaseAdmin.from("training_enrollments").select("id").eq("training_id",training.id).eq("customer_id",ctx.customer.id).eq("active",true).maybeSingle();
+  let {data:enrollment}=await supabaseAdmin.from("training_enrollments").select("id").eq("training_id",training.id).eq("customer_id",ctx.customer.id).eq("active",true).maybeSingle();
+  if(!enrollment&&slug==="formacao-psicanalise"){const {getPsychoanalysisOffer}=await import("@/lib/psychoanalysis-commerce.server");await getPsychoanalysisOffer(userId,email);const retry=await supabaseAdmin.from("training_enrollments").select("id").eq("training_id",training.id).eq("customer_id",ctx.customer.id).eq("active",true).maybeSingle();enrollment=retry.data;}
   if(!enrollment)fail("Você precisa estar matriculado para acessar o fórum.");
   return {customer:ctx.customer,training};
 }
