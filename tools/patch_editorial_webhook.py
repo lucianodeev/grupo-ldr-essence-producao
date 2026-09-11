@@ -1,4 +1,5 @@
 from pathlib import Path
+# One-time safe production patch for independent editorial subscriptions.
 p=Path('apps/painel-ldr/src/routes/api/stripe/webhook.ts')
 s=p.read_text(encoding='utf-8')
 helper='''async function setEditorialSubscription(metadata: Record<string, string>, object: StripeObject, eventType: string) {\n  const { handleEditorialStripeEvent } = await import("@/lib/editorial-subscription.server");\n  return handleEditorialStripeEvent(metadata, object, eventType);\n}\n\n'''
