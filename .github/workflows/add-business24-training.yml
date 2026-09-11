@@ -18,6 +18,8 @@ jobs:
           node-version: 22
       - name: Recover and run generator
         run: |
+          git fetch origin main
+          git reset --hard origin/main
           python - <<'PY'
           import subprocess
           from pathlib import Path
@@ -40,11 +42,14 @@ jobs:
           grep -q 'BUSINESS24_TOTAL_LESSONS=90' apps/painel-ldr/src/content/business24-curriculum.ts
           npm install --no-package-lock --no-audit --no-fund
           npm run build:painel
-      - name: Commit course
+      - name: Commit and publish course safely
         run: |
           git config user.name "ldr-rh-campanhas"
           git config user.email "llucianouam@gmail.com"
           git add apps/painel-ldr/src
           git diff --cached --check
+          if git diff --cached --quiet; then exit 0; fi
           git commit -m "feat: add Negocio em 24 Horas training"
-          git push origin main
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
