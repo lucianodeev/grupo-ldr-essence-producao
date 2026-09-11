@@ -1,7 +1,8 @@
-import { Link, Outlet, createFileRoute, useNavigate } from "@tanstack/react-router";
+import { Link, Outlet, createFileRoute, useLocation, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { BookOpen, CalendarDays, ClipboardList, GraduationCap, Home, Menu, MessageCircle, UserRound, X } from "lucide-react";
+import { createPortal } from "react-dom";
+import { BookOpen, CalendarDays, ClipboardList, GraduationCap, Home, Menu, MessageCircle, Newspaper, UserRound, X } from "lucide-react";
 
 import { supabase } from "@/integrations/supabase/client";
 import { useClientContext } from "@/lib/client-portal-data";
@@ -34,8 +35,10 @@ function cameFromCorporateBenefits() {
 
 function ClientShell() {
   const navigate = useNavigate();
+  const location = useLocation();
   const queryClient = useQueryClient();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [libraryCardsTarget, setLibraryCardsTarget] = useState<HTMLElement | null>(null);
   const context = useClientContext();
 
   useEffect(() => {
@@ -43,6 +46,27 @@ function ClientShell() {
       window.location.replace("/empresa");
     }
   }, []);
+
+  useEffect(() => {
+    if (location.pathname !== "/cliente/biblioteca") {
+      setLibraryCardsTarget(null);
+      return;
+    }
+    let cancelled = false;
+    const locate = () => {
+      if (cancelled) return;
+      const buttons = Array.from(document.querySelectorAll("button"));
+      const ebookButton = buttons.find((button) => button.textContent?.trim() === "eBooks");
+      const grid = ebookButton?.parentElement;
+      if (grid && grid.className.includes("grid")) {
+        setLibraryCardsTarget(grid);
+        return;
+      }
+      window.setTimeout(locate, 120);
+    };
+    locate();
+    return () => { cancelled = true; };
+  }, [location.pathname]);
 
   async function handleSignOut() {
     await queryClient.cancelQueries();
@@ -74,6 +98,14 @@ function ClientShell() {
           {context.isLoading ? <p className="text-sm text-muted-foreground">Carregando…</p> : status === "ok" ? <Outlet /> : <section className="s8-card"><h1 className="font-serif text-2xl">Acesso indisponível</h1><p className="mt-2 text-sm text-muted-foreground">{status === "blocked" ? "Seu acesso está temporariamente desativado. Fale com a equipe do Grupo LDR Essence." : "Ainda não localizamos um cadastro de cliente vinculado a este e-mail. Use o mesmo e-mail informado na sua compra ou fale com a nossa equipe."}</p><button type="button" onClick={handleSignOut} className="mt-4 rounded-lg bg-primary px-4 py-2 text-sm font-bold text-primary-foreground">Sair</button></section>}
         </main>
       </div>
+
+      {libraryCardsTarget && createPortal(
+        <Link to="/cliente/biblioteca/jornal-ldr" className="min-w-0 rounded-2xl bg-[#0b2341] px-1 py-4 text-center text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md" aria-label="Abrir Jornal LDR">
+          <Newspaper className="mx-auto h-5 w-5"/>
+          <p className="mt-2 text-[8px] font-black leading-none sm:text-[10px]">Jornal LDR</p>
+        </Link>,
+        libraryCardsTarget
+      )}
 
       <div
         className="fixed z-50 flex flex-col items-end gap-2"
