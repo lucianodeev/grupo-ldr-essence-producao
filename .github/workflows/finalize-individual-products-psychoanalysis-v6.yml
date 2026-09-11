@@ -1,0 +1,32 @@
+name: Finalize individual products and psychoanalysis v6
+on:
+  push:
+    paths:
+      - 'tools/finalize_individual_products_psychoanalysis_v6.py'
+      - '.github/workflows/finalize-individual-products-psychoanalysis-v6.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Apply final patch
+        run: python tools/finalize_individual_products_psychoanalysis_v6.py
+      - name: Commit changes
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/lib/psychoanalysis-commerce.server.ts \
+                  apps/painel-ldr/src/components/psychoanalysis-training-page.tsx \
+                  apps/painel-ldr/src/routes/formacao-psicanalise.tsx \
+                  apps/painel-ldr/src/content/psychoanalysis-curriculum.ts \
+                  apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx \
+                  apps/painel-ldr/src/lib/client-portal.server.ts \
+                  apps/painel-ldr/src/components/training-launch-page-v2.tsx \
+                  apps/painel-ldr/src/routes/index.tsx
+          git diff --cached --quiet && exit 0
+          git commit -m "fix: sell digital products individually and complete psychoanalysis modules"
+          git push origin main
