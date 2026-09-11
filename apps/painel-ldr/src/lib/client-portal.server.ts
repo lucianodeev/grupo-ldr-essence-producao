@@ -1314,18 +1314,6 @@ export async function createClientDigitalCheckout(
 }
 
 
-export async function createClientEntrepreneurComboCheckout(userId:string,email:string|null,market:DigitalMarket){
-  const customer=await requireClient(userId,email);
-  const {data:existing}=await supabaseAdmin.from("orders").select("id").eq("customer_id",customer.id).eq("payment_status","pago").eq("catalog_key","combo_empreendedor").limit(1).maybeSingle();
-  if(existing) fail("O Combo Empreendedor já está disponível para esta conta.");
-  const amountCents=market==="BR"?37236:6534; const currency=market==="BR"?"BRL":"EUR";
-  const {data:order,error:orderError}=await supabaseAdmin.from("orders").insert({order_number:"",customer_id:customer.id,contact_email:customer.email,contact_phone:customer.phone,service_type:"produto_digital",title:"Combo Empreendedor — Formação Completa",description:"eBook + Livro + Formação Do Mamão ao Negócio",quantity:1,amount_cents:amountCents,currency,payment_status:"pendente",status:"novo",priority:"media",catalog_key:"combo_empreendedor",metadata:{product_key:"combo_empreendedor",bundle:"ebook_coragem_comecar,livro_menino_mamao,do_mamao_ao_negocio",market,auth_user_id:userId}} as never).select("id").single();
-  if(orderError||!order) fail("Não foi possível iniciar o pedido do Combo.");
-  const secret=process.env["STRIPE_SECRET_KEY"]; if(!secret){await supabaseAdmin.from("orders").delete().eq("id",order.id);fail("Pagamento temporariamente indisponível.");}
-  const request=getRequest(); const requestUrl=request?new URL(request.url):null; const appOrigin=process.env["CLIENT_PANEL_URL"]?.replace(/\/$/,"")||(requestUrl?requestUrl.origin:"https://painel.ldrrhestrategia.com");
-  const params=new URLSearchParams(); params.set("mode","payment"); params.set("line_items[0][price_data][currency]",currency.toLowerCase()); params.set("line_items[0][price_data][unit_amount]",String(amountCents)); params.set("line_items[0][price_data][product_data][name]","Combo Empreendedor — eBook + Livro + Formação"); params.set("line_items[0][quantity]","1");
-  params.set("success_url",`${appOrigin}/cliente/biblioteca?payment=success&combo=1&session_id={CHECKOUT_SESSION_ID}`); params.set("cancel_url",`${appOrigin}/cliente/biblioteca?payment=cancel&combo=1`); params.set("client_reference_id",userId); params.set("metadata[order_id]",order.id); params.set("metadata[product_key]","combo_empreendedor"); params.set("metadata[user_id]",userId); params.set("metadata[market]",market); params.set("payment_intent_data[metadata][order_id]",order.id); params.set("payment_intent_data[metadata][product_key]","combo_empreendedor"); if(customer.email)params.set("customer_email",customer.email);
-  let response:Response; try{response=await fetch("https://api.stripe.com/v1/checkout/sessions",{method:"POST",headers:{Authorization:`Bearer ${secret}`,"Content-Type":"application/x-www-form-urlencoded"},body:params});}catch{await supabaseAdmin.from("orders").delete().eq("id",order.id);fail("Não foi possível abrir o checkout do Combo.");}
-  const session=await response.json() as {id?:string;url?:string}; if(!response.ok||!session.id||!session.url){await supabaseAdmin.from("orders").delete().eq("id",order.id);fail("Não foi possível abrir o checkout do Combo.");}
-  await supabaseAdmin.from("orders").update({stripe_checkout_session_id:session.id}).eq("id",order.id); return {url:session.url};
+export async function createClientEntrepreneurComboCheckout(_userId:string,_email:string|null,_market:DigitalMarket){
+  fail("A oferta de combo foi descontinuada. Os produtos são vendidos individualmente.");
 }

@@ -6,8 +6,8 @@ import { hasOwnerDigitalAccess } from "@/lib/owner-digital-access.server";
 const PRODUCT_KEY="formacao_psicanalise";
 const PRODUCT_SLUG="formacao-psicanalise";
 const TITLE="Formação Online em Psicanálise";
-const PRICE_BRL=37_236;
-const PRICE_EUR=6_534;
+const PRICE_BRL=29_999;
+const PRICE_EUR=4_990;
 const TOTAL_LESSONS=180;
 const MINIMUM_DAYS=180;
 const MAXIMUM_MONTHS=12;
@@ -25,7 +25,7 @@ function daysSince(value:string|null|undefined){if(!value)return 0;const time=Da
 async function ensureProgram(){
   const {data:existing}=await db.from("training_programs").select("id,slug,title,status").eq("slug",PRODUCT_SLUG).maybeSingle();
   if(existing)return existing;
-  const {data,error}=await db.from("training_programs").insert({slug:PRODUCT_SLUG,title:TITLE,description:"Formação livre em Psicanálise com 10 módulos, 180 unidades de aprendizagem e 6 encontros ao vivo.",status:"published"}).select("id,slug,title,status").single();
+  const {data,error}=await db.from("training_programs").insert({slug:PRODUCT_SLUG,title:TITLE,description:"Formação livre em Psicanálise com 12 módulos, 180 unidades de aprendizagem e 6 encontros ao vivo.",status:"published"}).select("id,slug,title,status").single();
   if(error||!data)throw error??new Error("Falha ao preparar a formação.");
   return data;
 }
@@ -86,7 +86,7 @@ export async function getPsychoanalysisOffer(userId:string,email:string|null){
   const maxUnlockedLesson=owner?TOTAL_LESSONS:Math.min(TOTAL_LESSONS,elapsedDays+1);
   const progressPercent=Number(progress?.progress_percent??enrollment?.progress_percent??0);
   const certificateEligible=entitled&&elapsedDays>=MINIMUM_DAYS&&progressPercent>=100;
-  return {productKey:PRODUCT_KEY,slug:PRODUCT_SLUG,title:TITLE,priceBrlCents:PRICE_BRL,priceEurCents:PRICE_EUR,regularPriceBrlCents:PRICE_BRL,regularPriceEurCents:PRICE_EUR,launchPromotionActive:false,launchMonths:0,launchStart:null,launchEnd:null,entitled,lifetimeAccess:true,minimumMonths:6,maximumMonths:MAXIMUM_MONTHS,minimumDays:MINIMUM_DAYS,liveSessionsIncluded:6,totalModules:10,totalLessons:TOTAL_LESSONS,enrolledAt,elapsedDays,maxUnlockedLesson,progressPercent,cohortNumber:enrollment?.training_cohorts?.cohort_number??null,cohortCapacity:enrollment?.training_cohorts?.capacity??COHORT_CAPACITY,certificateEligible,certificateAvailableAt:certificateEligible?new Date().toISOString():enrollment?.certificate_available_at??null,customerName:customer.fullName??customer.full_name??customer.email??"Aluno"};
+  return {productKey:PRODUCT_KEY,slug:PRODUCT_SLUG,title:TITLE,priceBrlCents:PRICE_BRL,priceEurCents:PRICE_EUR,regularPriceBrlCents:PRICE_BRL,regularPriceEurCents:PRICE_EUR,launchPromotionActive:false,launchMonths:0,launchStart:null,launchEnd:null,entitled,lifetimeAccess:true,minimumMonths:6,maximumMonths:MAXIMUM_MONTHS,minimumDays:MINIMUM_DAYS,liveSessionsIncluded:6,totalModules:12,totalLessons:TOTAL_LESSONS,enrolledAt,elapsedDays,maxUnlockedLesson,progressPercent,cohortNumber:enrollment?.training_cohorts?.cohort_number??null,cohortCapacity:enrollment?.training_cohorts?.capacity??COHORT_CAPACITY,certificateEligible,certificateAvailableAt:certificateEligible?new Date().toISOString():enrollment?.certificate_available_at??null,customerName:customer.fullName??customer.full_name??customer.email??"Aluno"};
 }
 
 export async function createPsychoanalysisCheckout(userId:string,email:string|null,market:Market){
