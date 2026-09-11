@@ -1,6 +1,7 @@
-name: Patch editorial cards into active sales page
+name: Final September promo and chat timing fix
 on:
   push:
+    branches: [main]
     paths:
       - '.github/workflows/one-time-editorial-sales-access-choice.yml'
 permissions:
@@ -12,35 +13,79 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Patch active sales component
+      - name: Apply narrowly scoped fixes
         run: |
           python - <<'PY'
           from pathlib import Path
+          import re
+
+          END='2026-09-30T23:59:59+02:00'
+
+          # Active homepage component.
           p=Path('apps/painel-ldr/src/components/library-sales-home-access-choice.tsx')
           s=p.read_text(encoding='utf-8')
-          if 'id="editorial-ldr-sales"' in s:
-              raise SystemExit(0)
-          marker='''    <section className="mx-auto max-w-5xl px-4 py-16 text-center sm:px-6"><h2 className="font-serif text-4xl">{t.final}</h2>'''
-          section='''    <section id="editorial-ldr-sales" className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
-      <div className="mb-7 max-w-3xl"><p className="text-xs font-black uppercase tracking-[.2em] text-[#a77b2e]">JORNAL & REVISTA LDR</p><h2 className="mt-2 font-serif text-3xl sm:text-4xl">Informação e inspiração, toda semana.</h2><p className="mt-3 text-sm leading-6 text-slate-600">Assinaturas editoriais independentes da Biblioteca LDR. Jornal e Revista são contratados separadamente.</p></div>
-      <div className="grid gap-5 md:grid-cols-2">
-        <a href="/cliente/biblioteca/jornal-ldr" className="rounded-[28px] bg-gradient-to-br from-[#071426] via-[#0b2341] to-[#163b67] p-7 text-white shadow-lg transition hover:-translate-y-1 hover:shadow-xl"><p className="text-xs font-black uppercase tracking-[.2em] text-[#d6ad63]">📰 JORNAL LDR</p><h3 className="mt-3 font-serif text-3xl text-[#fff7e7]">O mundo em movimento</h3><p className="mt-3 text-sm leading-6 text-white/75">Negócios, ciência, tecnologia, mundo e entretenimento em uma edição digital.</p><div className="mt-6"><p className="text-2xl font-black">R$ 0,90 / semana</p><p className="mt-1 font-black text-[#d6ad63]">€ 0,90 / semana</p></div><span className="mt-6 inline-block rounded-xl bg-[#d6ad63] px-5 py-3 text-xs font-black text-[#281605]">ASSINAR JORNAL LDR</span></a>
-        <a href="/cliente/biblioteca/revista-ldr" className="rounded-[28px] bg-gradient-to-br from-[#4c071d] via-[#6b0d2b] to-[#2a0a15] p-7 text-white shadow-lg transition hover:-translate-y-1 hover:shadow-xl"><p className="text-xs font-black uppercase tracking-[.2em] text-[#f0c775]">📖 REVISTA LDR</p><h3 className="mt-3 font-serif text-3xl text-[#fff7e7]">Ideias que movem pessoas e negócios</h3><p className="mt-3 text-sm leading-6 text-white/75">Carreira, empreendedorismo, comportamento, inovação e histórias que inspiram.</p><div className="mt-6"><p className="text-2xl font-black">R$ 0,90 / semana</p><p className="mt-1 font-black text-[#f0c775]">€ 0,90 / semana</p></div><span className="mt-6 inline-block rounded-xl bg-[#f0c775] px-5 py-3 text-xs font-black text-[#35101e]">ASSINAR REVISTA LDR</span></a>
-      </div>
-      <p className="mt-4 text-xs text-slate-500">Biblioteca LDR, Jornal LDR e Revista LDR possuem assinaturas independentes.</p>
-    </section>
-
-'''
-          if marker not in s:
-              raise SystemExit('final section marker not found')
-          s=s.replace(marker,section+marker,1)
+          s=re.sub(r'const PROMO_END_AT = new Date\("[^"]+"\)\.getTime\(\);', f'const PROMO_END_AT = new Date("{END}").getTime();', s, count=1)
+          for a,b in {
+            '⚡ PROMOÇÃO DE 24 HORAS · 50% NO PRIMEIRO MÊS':'⚡ PROMOÇÃO DO MÊS · 50% NO PRIMEIRO MÊS',
+            '⚡ 24-HOUR PROMO · 50% OFF FIRST MONTH':'⚡ MONTHLY PROMOTION · 50% OFF FIRST MONTH',
+            '⚡ PROMO 24H · -50% LE PREMIER MOIS':'⚡ PROMO DU MOIS · -50% LE PREMIER MOIS',
+            '⚡ PROMOCIÓN 24H · 50% PRIMER MES':'⚡ PROMOCIÓN DEL MES · 50% PRIMER MES',
+          }.items(): s=s.replace(a,b)
+          s=s.replace(
+            'const countdown=remaining===null?"--:--:--":`${String(Math.floor(remaining/3600000)).padStart(2,"0")}:${String(Math.floor((remaining%3600000)/60000)).padStart(2,"0")}:${String(Math.floor((remaining%60000)/1000)).padStart(2,"0")}`;',
+            'const countdown=remaining===null?"--d --:--:--":`${Math.floor(remaining/86400000)}d ${String(Math.floor((remaining%86400000)/3600000)).padStart(2,"0")}:${String(Math.floor((remaining%3600000)/60000)).padStart(2,"0")}:${String(Math.floor((remaining%60000)/1000)).padStart(2,"0")}`;'
+          )
+          anchor='<p className="text-sm font-black text-[#f5cc82]">{promo?t.promo:"ASSINATURA BIBLIOTECA LDR"}</p>'
+          if anchor not in s: raise SystemExit('homepage promo anchor not found')
+          if 'DIAS · HORAS · MINUTOS · SEGUNDOS' not in s:
+              s=s.replace(anchor, anchor+'{promo&&<div className="mt-4 rounded-2xl border-2 border-[#d6ad63] bg-black/25 p-4 text-center"><p className="text-[11px] font-black uppercase tracking-[.18em] text-[#f5cc82]">{countdownLabel}</p><p className="mt-1 font-mono text-3xl font-black tracking-wider text-white">{countdown}</p><p className="mt-1 text-[10px] uppercase tracking-[.12em] text-white/60">DIAS · HORAS · MINUTOS · SEGUNDOS</p></div>}',1)
           p.write_text(s,encoding='utf-8')
+
+          # Checkout/backend deadline.
+          p=Path('apps/painel-ldr/src/lib/library-subscription.server.ts')
+          s=p.read_text(encoding='utf-8')
+          s,n=re.subn(r'const PROMO_END_AT = "[^"]+";', f'const PROMO_END_AT = "{END}";', s, count=1)
+          if n!=1: raise SystemExit('backend promo date not found')
+          p.write_text(s,encoding='utf-8')
+
+          # Remove stale 24h copy anywhere the same offer is shown.
+          for file in ['apps/painel-ldr/src/components/library-sales-home.tsx','apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx']:
+              p=Path(file)
+              if not p.exists(): continue
+              s=p.read_text(encoding='utf-8')
+              for a,b in {
+                'PROMOÇÃO 24H':'PROMOÇÃO DO MÊS',
+                'PROMOÇÃO DE 24 HORAS':'PROMOÇÃO DO MÊS',
+                '24H PROMO':'MONTHLY PROMO',
+                'PROMO 24H':'PROMO DU MOIS',
+                'PROMOCIÓN 24H':'PROMOCIÓN DEL MES',
+              }.items(): s=s.replace(a,b)
+              s=re.sub(r'const PROMO_END_AT = new Date\("[^"]+"\)\.getTime\(\);', f'const PROMO_END_AT = new Date("{END}").getTime();', s, count=1)
+              p.write_text(s,encoding='utf-8')
+
+          # Chat notice shown after purchase on both orientation services.
+          notice='<div className="border-b bg-amber-50 px-5 py-4 text-sm leading-6 text-amber-950"><b>⚠️ Atenção ao seu tempo:</b> o tempo do seu pacote só começa a contar depois da primeira resposta do profissional. Assim que receber essa resposta, fique atento ao chat para aproveitar o período contratado. Enquanto você aguarda uma nova resposta do profissional, o contador fica pausado.</div>'
+          for file in ['apps/painel-ldr/src/routes/_clientarea.cliente.orientacao-psicanalitica.tsx','apps/painel-ldr/src/routes/_clientarea.cliente.orientacao-profissional.tsx']:
+              p=Path(file); s=p.read_text(encoding='utf-8')
+              anchor='<div className="h-[52vh] space-y-3 overflow-y-auto bg-slate-50 p-4">'
+              if anchor not in s: raise SystemExit(f'chat anchor not found: {file}')
+              if 'o tempo do seu pacote só começa a contar depois da primeira resposta do profissional' not in s:
+                  s=s.replace(anchor,notice+anchor,1)
+              p.write_text(s,encoding='utf-8')
           PY
-      - name: Commit active sales page fix
+      - name: Verify before commit
+        run: |
+          grep -q 'PROMOÇÃO DO MÊS · 50% NO PRIMEIRO MÊS' apps/painel-ldr/src/components/library-sales-home-access-choice.tsx
+          grep -q 'DIAS · HORAS · MINUTOS · SEGUNDOS' apps/painel-ldr/src/components/library-sales-home-access-choice.tsx
+          grep -q '2026-09-30T23:59:59+02:00' apps/painel-ldr/src/lib/library-subscription.server.ts
+          grep -q 'só começa a contar depois da primeira resposta do profissional' apps/painel-ldr/src/routes/_clientarea.cliente.orientacao-psicanalitica.tsx
+          grep -q 'só começa a contar depois da primeira resposta do profissional' apps/painel-ldr/src/routes/_clientarea.cliente.orientacao-profissional.tsx
+          ! grep -q 'PROMOÇÃO DE 24 HORAS' apps/painel-ldr/src/components/library-sales-home-access-choice.tsx
+      - name: Commit fixes
         run: |
           if git diff --quiet; then exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add apps/painel-ldr/src/components/library-sales-home-access-choice.tsx
-          git commit -m "fix(painel): show Jornal and Revista on active sales home"
+          git add apps/painel-ldr/src/components/library-sales-home-access-choice.tsx apps/painel-ldr/src/components/library-sales-home.tsx apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx apps/painel-ldr/src/lib/library-subscription.server.ts apps/painel-ldr/src/routes/_clientarea.cliente.orientacao-psicanalitica.tsx apps/painel-ldr/src/routes/_clientarea.cliente.orientacao-profissional.tsx
+          git commit -m "fix(painel): show September countdown and chat timing notice"
           git push
