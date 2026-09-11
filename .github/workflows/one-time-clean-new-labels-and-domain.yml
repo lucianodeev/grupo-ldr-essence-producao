@@ -1,0 +1,56 @@
+name: One-time clean labels and canonical learn domain
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/one-time-clean-new-labels-and-domain.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Remove NEW labels and canonicalize old panel domain
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          # 1) Remove visual labels such as NOVA FORMAÇÃO / NOVO SERVIÇO from the public sales home.
+          p = Path('apps/painel-ldr/src/components/library-sales-home-access-choice.tsx')
+          s = p.read_text(encoding='utf-8')
+          labels = [
+            '<span className="inline-flex rounded-full bg-[#17645e] px-3 py-1 text-[10px] font-black uppercase tracking-[.14em] text-white">NOVA FORMAÇÃO</span>',
+            '<span className="inline-flex rounded-full bg-[#c85a24] px-3 py-1 text-[10px] font-black uppercase tracking-[.14em] text-white">NOVA FORMAÇÃO · 100% ONLINE</span>',
+            '<span className="inline-flex rounded-full bg-[#0F5E7A] px-3 py-1 text-[10px] font-black uppercase tracking-[.14em] text-white">NOVA FORMAÇÃO</span>',
+            '<span className="inline-flex rounded-full bg-[#263b63] px-3 py-1 text-[10px] font-black uppercase tracking-[.14em] text-white">NOVO SERVIÇO · POR TEXTO</span>',
+            '<span className="inline-flex rounded-full bg-[#0b5cab] px-3 py-1 text-[10px] font-black uppercase tracking-[.14em] text-white">NOVO SERVIÇO · CARREIRA</span>',
+          ]
+          for label in labels:
+            s = s.replace(label, '')
+          p.write_text(s, encoding='utf-8')
+
+          # 2) If someone enters through the old public panel domain, move them to LEARN preserving path/query/hash.
+          r = Path('apps/painel-ldr/src/routes/__root.tsx')
+          t = r.read_text(encoding='utf-8')
+          anchor = '''  const location = useLocation();\n\n  useEffect(() => {\n    const { data } = supabase.auth.onAuthStateChange'''
+          replacement = '''  const location = useLocation();\n\n  useEffect(() => {\n    if (typeof window === "undefined") return;\n    if (window.location.hostname === "painel.ldrrhestrategia.com" || window.location.hostname === "painel.lucianoconecta.online") {\n      const next = `https://learn.lucianoconecta.online${window.location.pathname}${window.location.search}${window.location.hash}`;\n      window.location.replace(next);\n    }\n  }, []);\n\n  useEffect(() => {\n    const { data } = supabase.auth.onAuthStateChange'''
+          if anchor not in t:
+            raise SystemExit('Root redirect anchor not found')
+          t = t.replace(anchor, replacement, 1)
+          r.write_text(t, encoding='utf-8')
+          PY
+
+      - name: Commit patch
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/components/library-sales-home-access-choice.tsx apps/painel-ldr/src/routes/__root.tsx
+          git commit -m "fix: remove new labels and prefer learn domain" || exit 0
+          git push origin main
