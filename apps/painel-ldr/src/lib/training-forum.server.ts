@@ -4,8 +4,15 @@ import { resolveClient } from "@/lib/client-portal.server";
 function fail(message:string):never{throw new Error(message)}
 
 async function trainingBySlug(slug:string){
-  const {data}=await supabaseAdmin.from("training_programs").select("id,slug,title,status").eq("slug",slug).eq("status","published").maybeSingle();
+  const {data,error}=await supabaseAdmin.from("training_programs").select("id,slug,title,status").eq("slug",slug).maybeSingle();
+  if(error)fail("Não foi possível localizar a formação.");
   if(!data)fail("Treinamento não encontrado.");
+  if(data.status!=="published"){
+    if(slug!=="formacao-psicanalise")fail("Treinamento indisponível.");
+    const {data:published,error:publishError}=await supabaseAdmin.from("training_programs").update({status:"published"}).eq("id",data.id).select("id,slug,title,status").single();
+    if(publishError||!published)fail("Não foi possível preparar o fórum da formação.");
+    return published;
+  }
   return data;
 }
 
