@@ -49,9 +49,9 @@ old='''<a href="/cliente/treinamentos/do-mamao-ao-negocio/forum" className="inli
 new='''<button type="button" onClick={()=>setArea("forum")} className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl border border-[#d7ad54] px-5 py-3 font-black text-[#8a1739] sm:w-auto"><MessageCircle className="h-4 w-4"/>Fórum da comunidade</button>'''
 if old not in s: raise SystemExit('do mamao forum CTA not found')
 s=s.replace(old,new,1)
-anchor='''      {area==="encontros"&&<section className={`rounded-3xl border p-5 ${card}`}><h2 className="font-serif text-2xl">'''
+anchor='''\n\n      {area==="encontros"&&'''
 if anchor not in s: raise SystemExit('do mamao encontros anchor not found')
-forum='''      {area==="forum"&&<EmbeddedTrainingForum slug="do-mamao-ao-negocio" title="Do Mamão ao Negócio" accent="#7f1235" soft="#fff7f2"/>}\n\n'''
+forum='''\n\n      {area==="forum"&&<EmbeddedTrainingForum slug="do-mamao-ao-negocio" title="Do Mamão ao Negócio" accent="#7f1235" soft="#fff7f2"/>}'''
 s=s.replace(anchor,forum+anchor,1)
 p.write_text(s,encoding='utf-8')
 
