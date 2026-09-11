@@ -1,0 +1,64 @@
+name: One-time editorial webhook patch
+on:
+  push:
+    paths:
+      - '.github/workflows/one-time-editorial-webhook.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Patch Stripe webhook
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('apps/painel-ldr/src/routes/api/stripe/webhook.ts')
+          s=p.read_text(encoding='utf-8')
+          helper='''async function setEditorialSubscription(metadata: Record<string, string>, object: StripeObject, eventType: string) {
+  const { handleEditorialStripeEvent } = await import("@/lib/editorial-subscription.server");
+  return handleEditorialStripeEvent(metadata, object, eventType);
+}
+
+'''
+          anchor='''async function setLibrarySubscription(metadata: Record<string, string>, object: StripeObject, eventType: string) {
+  const { handleLibrarySubscriptionStripeEvent } = await import("@/lib/library-subscription.server");
+  return handleLibrarySubscriptionStripeEvent(metadata, object, eventType);
+}
+
+'''
+          if 'async function setEditorialSubscription(' not in s:
+              if anchor not in s: raise SystemExit('Library webhook helper anchor not found')
+              s=s.replace(anchor,anchor+helper,1)
+          editorial='''          // Jornal LDR e Revista LDR: assinaturas editoriais independentes.
+          if (metadata["checkout_kind"] === "editorial_subscription" && (
+            event.type === "checkout.session.completed" ||
+            event.type === "checkout.session.expired" ||
+            event.type === "customer.subscription.created" ||
+            event.type === "customer.subscription.updated" ||
+            event.type === "customer.subscription.deleted" ||
+            event.type === "invoice.payment_succeeded" ||
+            event.type === "invoice.payment_failed"
+          )) {
+            await setEditorialSubscription(metadata, object, event.type);
+          }
+
+'''
+          marker='''          // Biblioteca LDR: assinatura mensal de conteúdos digitais.
+'''
+          if '// Jornal LDR e Revista LDR: assinaturas editoriais independentes.' not in s:
+              if marker not in s: raise SystemExit('Library subscription handler marker not found')
+              s=s.replace(marker,editorial+marker,1)
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit patch
+        run: |
+          if git diff --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/painel-ldr/src/routes/api/stripe/webhook.ts
+          git commit -m "feat(painel): sync editorial subscriptions through Stripe webhook"
+          git push
