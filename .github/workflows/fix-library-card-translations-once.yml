@@ -1,0 +1,116 @@
+name: Fix library card translations once
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-library-card-translations-once.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Translate all library card labels and sales cards
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          # 1) Authenticated library: make every top card label react to PT/EN/FR/ES selector.
+          p=Path('apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx')
+          s=p.read_text()
+          marker='''const SUB_TXT={'''
+          if 'const CARD_TXT=' not in s:
+              idx=s.index(marker)
+              card_txt='''const CARD_TXT={
+  pt:{ebooks:"eBooks",books:"Livros",editorial:"Jornais & Revistas",editorialSub:"Todos em um só lugar",business:"Negócios",psycho:"Psicanálise",brief:"Terapia Breve",massage:"Massoterapia",psychoOrientation:"Orientação Psicanalítica",profOrientation:"Orientação Profissional",business24:"Negócio 24h",mentorship:"Mentoria",leadership:"Liderança",hr:"RH 600h",free:"Gratuito",startFormation:"Quero começar minha formação",loading:"Carregando biblioteca…"},
+  en:{ebooks:"eBooks",books:"Books",editorial:"Newspapers & Magazines",editorialSub:"Everything in one place",business:"Business",psycho:"Psychoanalysis",brief:"Brief Therapy",massage:"Massage Therapy",psychoOrientation:"Psychoanalytic Guidance",profOrientation:"Career Guidance",business24:"Business 24h",mentorship:"Mentoring",leadership:"Leadership",hr:"HR 600h",free:"Free",startFormation:"Start my training",loading:"Loading library…"},
+  fr:{ebooks:"eBooks",books:"Livres",editorial:"Journaux & Magazines",editorialSub:"Tout au même endroit",business:"Affaires",psycho:"Psychanalyse",brief:"Thérapie Brève",massage:"Massothérapie",psychoOrientation:"Orientation Psychanalytique",profOrientation:"Orientation Professionnelle",business24:"Entreprise 24h",mentorship:"Mentorat",leadership:"Leadership",hr:"RH 600h",free:"Gratuit",startFormation:"Commencer ma formation",loading:"Chargement de la bibliothèque…"},
+  es:{ebooks:"eBooks",books:"Libros",editorial:"Periódicos & Revistas",editorialSub:"Todo en un solo lugar",business:"Negocios",psycho:"Psicoanálisis",brief:"Terapia Breve",massage:"Masoterapia",psychoOrientation:"Orientación Psicoanalítica",profOrientation:"Orientación Profesional",business24:"Negocio 24h",mentorship:"Mentoría",leadership:"Liderazgo",hr:"RR. HH. 600h",free:"Gratis",startFormation:"Comenzar mi formación",loading:"Cargando biblioteca…"}
+} as const;
+
+'''
+              s=s[:idx]+card_txt+s[idx:]
+          s=s.replace('const t=TXT[locale];','const t=TXT[locale];\n  const ct=CARD_TXT[locale];',1)
+          replacements={
+            '{card("ebook","eBooks","bg-[#5b0824]","book")}':'{card("ebook",ct.ebooks,"bg-[#5b0824]","book")}',
+            '{card("book","Livros","bg-[#5b0824]","book")}':'{card("book",ct.books,"bg-[#5b0824]","book")}',
+            '{card("training","Negócios","bg-[#d6ad63]")}':'{card("training",ct.business,"bg-[#d6ad63]")}',
+            '{card("psycho","Psicanálise","bg-[#5b2b86]")}':'{card("psycho",ct.psycho,"bg-[#5b2b86]")}',
+            '{card("brief","Terapia Breve","bg-[#17645e]")}':'{card("brief",ct.brief,"bg-[#17645e]")}',
+            '{card("massage","Massoterapia","bg-[#0F5E7A]")}':'{card("massage",ct.massage,"bg-[#0F5E7A]")}',
+            '{card("business24","Negócio 24h","bg-[#c85a24]")}':'{card("business24",ct.business24,"bg-[#c85a24]")}',
+            '{card("mentor","Mentoria","bg-[#0b5cab]")}':'{card("mentor",ct.mentorship,"bg-[#0b5cab]")}',
+            '{card("leader","Liderança","bg-[#0f5132]")}':'{card("leader",ct.leadership,"bg-[#0f5132]")}',
+            '{card("hr","RH 600h","bg-[#047857]")}':'{card("hr",ct.hr,"bg-[#047857]")}',
+            '{card("free","Gratuito","bg-[#b85c2e]","book")}':'{card("free",ct.free,"bg-[#b85c2e]","book")}',
+          }
+          for a,b in replacements.items(): s=s.replace(a,b)
+          s=s.replace('>Orientação Psicanalítica</p>','>{ct.psychoOrientation}</p>')
+          s=s.replace('>Orientação Profissional</p>','>{ct.profOrientation}</p>')
+          s=s.replace('>Jornais & Revistas</p>','>{ct.editorial}</p>')
+          s=s.replace('>Todos em um só lugar</p>','>{ct.editorialSub}</p>')
+          s=s.replace('>Quero começar minha formação</button>','>{ct.startFormation}</button>')
+          s=s.replace('if(isLoading||!data)return <p className="text-sm text-muted-foreground">Carregando biblioteca…</p>;','if(isLoading||!data)return <p className="text-sm text-muted-foreground">{ct.loading}</p>;')
+          p.write_text(s)
+
+          # 2) Public sales home: formation and free-course cards were fixed in Portuguese.
+          p=Path('apps/painel-ldr/src/components/library-sales-home.tsx')
+          s=p.read_text()
+          start=s.index('const formations = [')
+          end=s.index('export function LibrarySalesHome()')
+          catalog='''function salesCatalog(locale:Locale){
+  const data={
+    pt:{formations:[
+      {tag:"RH · 600H",title:"Formação em Gestão de Pessoas e Recursos Humanos",desc:"600 horas · 100% online · leitura e atividades",free:true,href:"/cliente/formacoes/gestao-pessoas-rh",tone:"emerald"},
+      {tag:"PSICANÁLISE",title:"Formação Online em Psicanálise",desc:"14 módulos · 1.200 horas · 220 unidades · 6 encontros ao vivo",price:"R$ 299,99 · € 49,90",href:"/formacao-psicanalise",tone:"violet"},
+      {tag:"TERAPIA BREVE · 1.200H",title:"Formação em Terapia Breve Psicanalítica",desc:"15 módulos · 300 aulas · 1.200 horas · 6 encontros ao vivo",price:"R$ 299,99 · € 49,90",href:"/formacao-terapia-breve-psicanalitica",tone:"petrol"},
+      {tag:"NEGÓCIO EM 24H",title:"Formação Negócio em 24 Horas",desc:"9 módulos · 90 aulas · 360 horas · 100% online · projeto final avaliado",price:"R$ 299,99 · € 49,90",href:"/formacao-negocio-em-24-horas",tone:"gold"},
+      {tag:"MENTORIA E CARREIRA",title:"Formação em Mentoria Profissional e de Carreira",desc:"3 meses · percurso estruturado · acesso digital",price:"R$ 299,99 · € 49,90",href:"/cliente/biblioteca",tone:"blue"},
+      {tag:"LIDERANÇA",title:"Formação em Liderança e Gestão de Pessoas",desc:"3 meses · percurso estruturado · acesso digital",price:"R$ 299,99 · € 49,90",href:"/cliente/biblioteca",tone:"green"}],
+      freeCourses:[["Gestão de Pessoas e RH","600h · formação livre profissional","/cliente/formacoes/gestao-pessoas-rh"],["Organize sua Carreira","7 aulas · leitura · sem expiração","/cliente/cursos/organizar-carreira"],["Francês Básico para Negócios — A1","30 aulas · 10 horas","/cliente/cursos/frances-negocios-a1"],["Primeiros Socorros — Noções Básicas","30 aulas · 10 horas","/cliente/cursos/primeiros-socorros"]]},
+    en:{formations:[
+      {tag:"HR · 600H",title:"People & Human Resources Management Training",desc:"600 hours · 100% online · reading and activities",free:true,href:"/cliente/formacoes/gestao-pessoas-rh",tone:"emerald"},
+      {tag:"PSYCHOANALYSIS",title:"Online Psychoanalysis Training",desc:"14 modules · 1,200 hours · 220 units · 6 live meetings",price:"R$ 299.99 · €49.90",href:"/formacao-psicanalise",tone:"violet"},
+      {tag:"BRIEF THERAPY · 1,200H",title:"Psychoanalytic Brief Therapy Training",desc:"15 modules · 300 lessons · 1,200 hours · 6 live meetings",price:"R$ 299.99 · €49.90",href:"/formacao-terapia-breve-psicanalitica",tone:"petrol"},
+      {tag:"BUSINESS IN 24H",title:"Business in 24 Hours Training",desc:"9 modules · 90 lessons · 360 hours · 100% online · assessed final project",price:"R$ 299.99 · €49.90",href:"/formacao-negocio-em-24-horas",tone:"gold"},
+      {tag:"MENTORING & CAREER",title:"Professional & Career Mentoring Training",desc:"3 months · structured pathway · digital access",price:"R$ 299.99 · €49.90",href:"/cliente/biblioteca",tone:"blue"},
+      {tag:"LEADERSHIP",title:"Leadership & People Management Training",desc:"3 months · structured pathway · digital access",price:"R$ 299.99 · €49.90",href:"/cliente/biblioteca",tone:"green"}],
+      freeCourses:[["People Management & HR","600h · professional open course","/cliente/formacoes/gestao-pessoas-rh"],["Organize Your Career","7 lessons · reading · no expiry","/cliente/cursos/organizar-carreira"],["Basic French for Business — A1","30 lessons · 10 hours","/cliente/cursos/frances-negocios-a1"],["First Aid — Basic Concepts","30 lessons · 10 hours","/cliente/cursos/primeiros-socorros"]]},
+    fr:{formations:[
+      {tag:"RH · 600H",title:"Formation en Gestion des Personnes et Ressources Humaines",desc:"600 heures · 100 % en ligne · lecture et activités",free:true,href:"/cliente/formacoes/gestao-pessoas-rh",tone:"emerald"},
+      {tag:"PSYCHANALYSE",title:"Formation en Ligne en Psychanalyse",desc:"14 modules · 1 200 heures · 220 unités · 6 rencontres en direct",price:"R$ 299,99 · 49,90 €",href:"/formacao-psicanalise",tone:"violet"},
+      {tag:"THÉRAPIE BRÈVE · 1 200H",title:"Formation en Thérapie Brève Psychanalytique",desc:"15 modules · 300 leçons · 1 200 heures · 6 rencontres en direct",price:"R$ 299,99 · 49,90 €",href:"/formacao-terapia-breve-psicanalitica",tone:"petrol"},
+      {tag:"ENTREPRISE EN 24H",title:"Formation Entreprise en 24 Heures",desc:"9 modules · 90 leçons · 360 heures · 100 % en ligne · projet final évalué",price:"R$ 299,99 · 49,90 €",href:"/formacao-negocio-em-24-horas",tone:"gold"},
+      {tag:"MENTORAT & CARRIÈRE",title:"Formation en Mentorat Professionnel et de Carrière",desc:"3 mois · parcours structuré · accès numérique",price:"R$ 299,99 · 49,90 €",href:"/cliente/biblioteca",tone:"blue"},
+      {tag:"LEADERSHIP",title:"Formation en Leadership et Gestion des Personnes",desc:"3 mois · parcours structuré · accès numérique",price:"R$ 299,99 · 49,90 €",href:"/cliente/biblioteca",tone:"green"}],
+      freeCourses:[["Gestion des Personnes et RH","600h · formation professionnelle libre","/cliente/formacoes/gestao-pessoas-rh"],["Organisez votre Carrière","7 leçons · lecture · sans expiration","/cliente/cursos/organizar-carreira"],["Français Basique des Affaires — A1","30 leçons · 10 heures","/cliente/cursos/frances-negocios-a1"],["Premiers Secours — Notions de Base","30 leçons · 10 heures","/cliente/cursos/primeiros-socorros"]]},
+    es:{formations:[
+      {tag:"RR. HH. · 600H",title:"Formación en Gestión de Personas y Recursos Humanos",desc:"600 horas · 100 % online · lectura y actividades",free:true,href:"/cliente/formacoes/gestao-pessoas-rh",tone:"emerald"},
+      {tag:"PSICOANÁLISIS",title:"Formación Online en Psicoanálisis",desc:"14 módulos · 1.200 horas · 220 unidades · 6 encuentros en vivo",price:"R$ 299,99 · 49,90 €",href:"/formacao-psicanalise",tone:"violet"},
+      {tag:"TERAPIA BREVE · 1.200H",title:"Formación en Terapia Breve Psicoanalítica",desc:"15 módulos · 300 clases · 1.200 horas · 6 encuentros en vivo",price:"R$ 299,99 · 49,90 €",href:"/formacao-terapia-breve-psicanalitica",tone:"petrol"},
+      {tag:"NEGOCIO EN 24H",title:"Formación Negocio en 24 Horas",desc:"9 módulos · 90 clases · 360 horas · 100 % online · proyecto final evaluado",price:"R$ 299,99 · 49,90 €",href:"/formacao-negocio-em-24-horas",tone:"gold"},
+      {tag:"MENTORÍA Y CARRERA",title:"Formación en Mentoría Profesional y de Carrera",desc:"3 meses · recorrido estructurado · acceso digital",price:"R$ 299,99 · 49,90 €",href:"/cliente/biblioteca",tone:"blue"},
+      {tag:"LIDERAZGO",title:"Formación en Liderazgo y Gestión de Personas",desc:"3 meses · recorrido estructurado · acceso digital",price:"R$ 299,99 · 49,90 €",href:"/cliente/biblioteca",tone:"green"}],
+      freeCourses:[["Gestión de Personas y RR. HH.","600h · formación profesional libre","/cliente/formacoes/gestao-pessoas-rh"],["Organiza tu Carrera","7 clases · lectura · sin caducidad","/cliente/cursos/organizar-carreira"],["Francés Básico para Negocios — A1","30 clases · 10 horas","/cliente/cursos/frances-negocios-a1"],["Primeros Auxilios — Conceptos Básicos","30 clases · 10 horas","/cliente/cursos/primeiros-socorros"]]}
+  } as const;
+  return data[locale];
+}
+
+'''
+          s=s[:start]+catalog+s[end:]
+          old='''const {locale:raw}=useI18n(); const locale=(raw==="pt"||raw==="en"||raw==="fr"||raw==="es"?raw:"pt") as Locale; const t=COPY[locale]; const promo=Date.now()<PROMO_END_AT;'''
+          new='''const {locale:raw}=useI18n(); const locale=(raw==="pt"||raw==="en"||raw==="fr"||raw==="es"?raw:"pt") as Locale; const t=COPY[locale]; const {formations,freeCourses}=salesCatalog(locale); const promo=Date.now()<PROMO_END_AT;'''
+          if old not in s: raise SystemExit('Sales home component anchor not found')
+          s=s.replace(old,new,1)
+          p.write_text(s)
+          PY
+      - name: Commit translation fixes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx apps/painel-ldr/src/components/library-sales-home.tsx
+          git commit -m "fix(painel): translate library cards in all four languages"
+          git push
