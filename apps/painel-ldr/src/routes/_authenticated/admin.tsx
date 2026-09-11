@@ -41,6 +41,7 @@ const sections = [
     ["Fórum do treinamento", "/admin/forum-treinamento"],
     ["Interesses em Pós-Graduação", "/admin/interesses-pos"],
     ["Graduações — Interessados", "/admin/interesses-graduacoes"],
+    ["Orientações Psicanalíticas Escritas", "/admin/orientacoes-psicanaliticas"],
   ]},
 ] as const;
 
