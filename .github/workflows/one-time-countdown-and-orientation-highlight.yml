@@ -1,0 +1,72 @@
+name: One-time promo countdown and orientation highlights
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/one-time-countdown-and-orientation-highlight.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Add countdown and highlight written orientation services
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('apps/painel-ldr/src/components/library-sales-home-access-choice.tsx')
+          s=p.read_text(encoding='utf-8')
+
+          # React timer hooks.
+          hook='import { useEffect, useState } from "react";\n'
+          if hook not in s:
+              anchor='import { LanguageSelect, useI18n } from "@/lib/i18n";\n'
+              if anchor not in s:
+                  raise SystemExit('i18n import anchor not found')
+              s=s.replace(anchor, anchor+hook, 1)
+
+          old='  const promo=Date.now()<PROMO_END_AT;\n'
+          new='''  const promo=Date.now()<PROMO_END_AT;\n  const [remaining,setRemaining]=useState<number|null>(null);\n  useEffect(()=>{\n    const tick=()=>setRemaining(Math.max(0,PROMO_END_AT-Date.now()));\n    tick();\n    const timer=window.setInterval(tick,1000);\n    return ()=>window.clearInterval(timer);\n  },[]);\n  const countdown=remaining===null?"--:--:--":`${String(Math.floor(remaining/3600000)).padStart(2,"0")}:${String(Math.floor((remaining%3600000)/60000)).padStart(2,"0")}:${String(Math.floor((remaining%60000)/1000)).padStart(2,"0")}`;\n  const countdownLabel=locale==="pt"?"A PROMOÇÃO TERMINA EM":locale==="fr"?"LA PROMOTION SE TERMINE DANS":locale==="es"?"LA PROMOCIÓN TERMINA EN":"PROMOTION ENDS IN";\n'''
+          if old in s and 'const countdown=' not in s:
+              s=s.replace(old,new,1)
+
+          # Add a visible urgency block immediately after the promotion label.
+          marker='>{t.promo}</p>'
+          timer_block='''>{t.promo}</p><div className="mt-4 rounded-2xl border-2 border-[#d6ad63] bg-black/25 p-4 text-center shadow-inner"><p className="text-[11px] font-black uppercase tracking-[.18em] text-[#f5cc82]">{countdownLabel}</p><p className="mt-1 font-mono text-3xl font-black tracking-wider text-white sm:text-4xl">{countdown}</p><p className="mt-1 text-[11px] text-white/65">HORAS · MINUTOS · SEGUNDOS</p></div>'''
+          if marker in s and 'HORAS · MINUTOS · SEGUNDOS' not in s:
+              s=s.replace(marker,timer_block,1)
+
+          # Make the two written-orientation cards visually prominent without using 'new' claims.
+          s=s.replace('border-2 border-[#263b63]/30 bg-gradient-to-br from-[#eef2ff] via-white to-[#f8f3e9] p-7 shadow-sm',
+                      'border-4 border-[#263b63]/55 bg-gradient-to-br from-[#e8edff] via-white to-[#f8f3e9] p-7 shadow-xl ring-4 ring-[#263b63]/10',1)
+          s=s.replace('border-2 border-[#0b5cab]/30 bg-gradient-to-br from-[#eef6ff] via-white to-[#f7f3e9] p-7 shadow-sm',
+                      'border-4 border-[#0b5cab]/55 bg-gradient-to-br from-[#e8f3ff] via-white to-[#f7f3e9] p-7 shadow-xl ring-4 ring-[#0b5cab]/10',1)
+
+          # Add neutral attention badges if absent.
+          psycho='<p className="mt-4 text-xs font-black uppercase tracking-[.18em] text-[#263b63]">ORIENTAÇÃO PSICANALÍTICA ESCRITA</p>'
+          psycho_new='<span className="inline-flex rounded-full bg-[#263b63] px-3 py-1 text-[10px] font-black uppercase tracking-[.14em] text-white">ATENDIMENTO POR TEXTO</span>'+psycho
+          if psycho in s and 'ATENDIMENTO POR TEXTO</span>'+psycho not in s:
+              s=s.replace(psycho,psycho_new,1)
+
+          prof='<p className="mt-4 text-xs font-black uppercase tracking-[.18em] text-[#0b5cab]">ORIENTAÇÃO PROFISSIONAL ESCRITA</p>'
+          prof_new='<span className="inline-flex rounded-full bg-[#0b5cab] px-3 py-1 text-[10px] font-black uppercase tracking-[.14em] text-white">ATENDIMENTO POR TEXTO</span>'+prof
+          if prof in s and 'ATENDIMENTO POR TEXTO</span>'+prof not in s:
+              s=s.replace(prof,prof_new,1)
+
+          p.write_text(s,encoding='utf-8')
+          PY
+
+      - name: Commit patch
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/components/library-sales-home-access-choice.tsx
+          git commit -m "feat: add promo countdown and emphasize written orientations" || exit 0
+          git push origin main
