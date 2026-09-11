@@ -167,8 +167,7 @@ function ClientLibrary(){
       <div className="grid grid-cols-4 gap-1.5 sm:grid-cols-10 sm:gap-3">
         {card("ebook","eBooks","bg-[#5b0824]","book")}
         {card("book","Livros","bg-[#5b0824]","book")}
-        <a href="/cliente/biblioteca/jornal-ldr" className="min-w-0 rounded-2xl bg-[#0b2341] px-1 py-4 text-center text-white shadow-sm"><div className="mx-auto text-lg">📰</div><p className="mt-2 text-[8px] font-black leading-none sm:text-[10px]">Jornal LDR</p><p className="mt-1 text-[7px] text-white/70">0,90/mês</p></a>
-        <a href="/cliente/biblioteca/revista-ldr" className="min-w-0 rounded-2xl bg-[#6b0d2b] px-1 py-4 text-center text-white shadow-sm"><div className="mx-auto text-lg">📖</div><p className="mt-2 text-[8px] font-black leading-none sm:text-[10px]">Revista LDR</p><p className="mt-1 text-[7px] text-white/70">0,90/mês</p></a>
+        <a href="/cliente/biblioteca/publicacoes" className="min-w-0 rounded-2xl bg-[#0b2341] px-1 py-4 text-center !text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md" aria-label="Abrir todos os jornais e revistas"><div className="mx-auto text-lg leading-none">📰</div><p className="mt-2 text-[8px] font-black leading-tight !text-white sm:text-[10px]">Jornais & Revistas</p><p className="mt-1 text-[7px] !text-white/80">Todos em um só lugar</p></a>
         {card("training","Negócios","bg-[#d6ad63]")}
         {card("psycho","Psicanálise","bg-[#5b2b86]")}
         {card("brief","Terapia Breve","bg-[#17645e]")}
