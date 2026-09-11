@@ -1,0 +1,31 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import { Award, LockKeyhole, Printer } from "lucide-react";
+import { psychoanalysisModules } from "@/content/psychoanalysis-curriculum";
+import { clientPsychoanalysisOffer } from "@/lib/psychoanalysis-commerce.functions";
+
+export const Route=createFileRoute("/_clientarea/cliente/treinamentos/psicanalise/certificado")({component:PsychoanalysisCertificate});
+
+function PsychoanalysisCertificate(){
+ const offerFn=useServerFn(clientPsychoanalysisOffer);
+ const {data:offer,isLoading}=useQuery({queryKey:["psychoanalysis-certificate-status"],queryFn:()=>offerFn({})});
+ if(isLoading)return <section className="s8-card">Verificando certificado…</section>;
+ if(!offer?.entitled)return <section className="s8-card"><LockKeyhole className="h-7 w-7"/><h1 className="mt-3 font-serif text-2xl font-bold">Certificado indisponível</h1><p className="mt-2 text-sm text-muted-foreground">É necessário possuir acesso à Formação Online em Psicanálise.</p></section>;
+ if(!offer.certificateEligible)return <section className="mx-auto max-w-3xl rounded-[28px] border border-[#ded0eb] bg-white p-6 shadow-sm"><LockKeyhole className="h-8 w-8 text-[#5b2b86]"/><h1 className="mt-4 font-serif text-3xl font-bold text-[#2f1457]">Seu certificado ainda está bloqueado</h1><p className="mt-3 text-sm leading-6 text-[#66576f]">A liberação ocorre somente depois de pelo menos 180 dias de matrícula e 100% do percurso obrigatório concluído.</p><div className="mt-5 grid gap-3 sm:grid-cols-3"><div className="rounded-2xl bg-[#f8f3fb] p-4"><p className="text-xs font-black uppercase text-[#7b4aa3]">Dias de percurso</p><p className="mt-1 text-2xl font-black text-[#2f1457]">{offer.elapsedDays}/180</p></div><div className="rounded-2xl bg-[#f8f3fb] p-4"><p className="text-xs font-black uppercase text-[#7b4aa3]">Progresso</p><p className="mt-1 text-2xl font-black text-[#2f1457]">{offer.progressPercent}%</p></div><div className="rounded-2xl bg-[#f8f3fb] p-4"><p className="text-xs font-black uppercase text-[#7b4aa3]">Turma</p><p className="mt-1 text-2xl font-black text-[#2f1457]">{offer.cohortNumber?`PSICA-${String(offer.cohortNumber).padStart(3,"0")}`:"Em organização"}</p></div></div><Link to="/cliente/treinamentos/psicanalise" className="mt-5 inline-flex min-h-11 items-center rounded-xl bg-[#5b2b86] px-4 text-sm font-black text-white">Voltar à formação</Link></section>;
+ const completionDate=new Date().toLocaleDateString("pt-BR");
+ return <div className="mx-auto max-w-5xl space-y-4 pb-10">
+   <div className="flex flex-wrap items-center justify-between gap-3 print:hidden"><Link to="/cliente/treinamentos/psicanalise" className="text-sm font-bold text-[#5b2b86] underline">Voltar à formação</Link><button onClick={()=>window.print()} className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#5b2b86] px-4 text-sm font-black text-white"><Printer className="h-4 w-4"/>Gerar / imprimir certificado</button></div>
+   <section className="border-[10px] border-double border-[#5b2b86] bg-[#fffdf9] p-7 text-center shadow-xl print:shadow-none sm:p-12">
+     <Award className="mx-auto h-12 w-12 text-[#c9a54a]"/>
+     <p className="mt-4 text-xs font-black uppercase tracking-[.28em] text-[#7b4aa3]">Grupo LDR Essence · LDR RH & Estratégia</p>
+     <h1 className="mt-5 font-serif text-4xl font-bold text-[#2f1457] sm:text-5xl">Certificado de Conclusão</h1>
+     <p className="mx-auto mt-6 max-w-3xl text-base leading-8 text-[#51445a]">Certificamos que <strong className="text-[#2f1457]">{offer.customerName}</strong> concluiu a <strong>Formação Online em Psicanálise</strong>, após cumprir o período mínimo formativo de 180 dias e os requisitos obrigatórios previstos no percurso.</p>
+     <p className="mx-auto mt-4 max-w-3xl text-sm leading-7 text-[#66576f]">Formação livre em Psicanálise. Referência ocupacional no Brasil: Psicanalista — Classificação Brasileira de Ocupações (CBO) 2515-50. Este certificado não equivale a graduação nem, isoladamente, constitui licença estatal para exercício profissional.</p>
+     <div className="mt-8 grid gap-4 text-left sm:grid-cols-2"><div className="rounded-2xl border border-[#dfd3e8] p-4"><p className="text-xs font-black uppercase text-[#7b4aa3]">Data de matrícula</p><p className="mt-1 font-bold text-[#2f1457]">{offer.enrolledAt?new Date(offer.enrolledAt).toLocaleDateString("pt-BR"):"Registrada na plataforma"}</p></div><div className="rounded-2xl border border-[#dfd3e8] p-4"><p className="text-xs font-black uppercase text-[#7b4aa3]">Data de conclusão</p><p className="mt-1 font-bold text-[#2f1457]">{completionDate}</p></div></div>
+     <div className="mt-8 text-left"><h2 className="font-serif text-2xl font-bold text-[#2f1457]">Matriz curricular</h2><div className="mt-4 grid gap-2 sm:grid-cols-2">{psychoanalysisModules.map(m=><div key={m.id} className="rounded-xl border border-[#eadff0] p-3"><strong className="text-sm text-[#5b2b86]">Módulo {m.id}</strong><p className="mt-1 text-xs leading-5 text-[#66576f]">{m.title} · 18 unidades de aprendizagem</p></div>)}</div></div>
+     <div className="mt-12 grid gap-10 sm:grid-cols-2"><div><div className="mx-auto h-px max-w-xs bg-[#2f1457]"/><p className="mt-2 font-serif text-lg font-bold text-[#2f1457]">Luciano Rodrigues Almeida</p><p className="text-xs text-[#66576f]">Responsável pela formação</p></div><div><div className="mx-auto h-px max-w-xs bg-[#2f1457]"/><p className="mt-2 font-serif text-lg font-bold text-[#2f1457]">Assinatura do aluno</p><p className="text-xs text-[#66576f]">{offer.customerName}</p></div></div>
+     <p className="mt-10 text-[11px] leading-5 text-[#85788c]">Certificado emitido digitalmente pela Plataforma LDR. Validação vinculada à conta e ao histórico de conclusão do aluno.</p>
+   </section>
+ </div>;
+}
