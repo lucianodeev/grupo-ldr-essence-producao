@@ -1,0 +1,42 @@
+name: Rename visible portals to Minha Área
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/rename_my_area_labels.py'
+      - '.github/workflows/rename-my-area-labels.yml'
+permissions:
+  contents: write
+jobs:
+  patch-build-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Apply label updates
+        run: python tools/rename_my_area_labels.py
+      - name: Validate build
+        working-directory: apps/painel-ldr
+        run: |
+          npm install
+          npm run build
+      - name: Commit validated changes
+        run: |
+          git config user.name 'ldr-rh-campanhas'
+          git config user.email 'llucianouam@gmail.com'
+          git add apps/painel-ldr/src/routes/acesso.tsx \
+                  apps/painel-ldr/src/routes/cliente.login.tsx \
+                  apps/painel-ldr/src/routes/_clientarea.cliente.tsx \
+                  apps/painel-ldr/src/routes/cliente.ativar.tsx \
+                  apps/painel-ldr/src/routes/cliente.definir-senha.tsx \
+                  apps/painel-ldr/src/routes/_clientarea.cliente.contratar.tsx \
+                  apps/painel-ldr/src/routes/funcionario.login.tsx \
+                  apps/painel-ldr/src/routes/_portal.funcionario.tsx \
+                  apps/painel-ldr/src/routes/acesso-compra.tsx \
+                  apps/painel-ldr/src/components/site-header.tsx \
+                  apps/painel-ldr/src/routeTree.gen.ts
+          git diff --cached --quiet && exit 0
+          git commit -m 'feat: rename individual and employee portals to Minha Área'
+          git push origin main
