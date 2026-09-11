@@ -1,0 +1,60 @@
+name: Wire postgraduate interest flow once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/patch-postgraduate-interest-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Wire Biblioteca CTA and Master link
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          library = Path('apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx')
+          s = library.read_text(encoding='utf-8')
+          old_array = 'const postgrads=[{icon:"🤖",title:"Inteligência Artificial Aplicada aos Negócios e à Gestão",highlight:true},{icon:"👥",title:"Gestão Estratégica de Pessoas, Liderança e RH"},{icon:"🚀",title:"Empreendedorismo, Inovação e Gestão de Negócios"},{icon:"💼",title:"Gestão de Carreira, Mentoria e Desenvolvimento Profissional"},{icon:"📈",title:"Marketing Digital, Vendas e Inteligência Artificial"},{icon:"🌍",title:"Negócios Internacionais e Expansão de Empresas"},{icon:"🧠",title:"Psicanálise, Cultura e Comportamento Organizacional"}];'
+          new_array = 'const postgrads=[{key:"ia-negocios-gestao",icon:"🤖",title:"Inteligência Artificial Aplicada aos Negócios e à Gestão",highlight:true},{key:"gestao-pessoas-lideranca-rh",icon:"👥",title:"Gestão Estratégica de Pessoas, Liderança e RH"},{key:"empreendedorismo-inovacao-negocios",icon:"🚀",title:"Empreendedorismo, Inovação e Gestão de Negócios"},{key:"carreira-mentoria-desenvolvimento",icon:"💼",title:"Gestão de Carreira, Mentoria e Desenvolvimento Profissional"},{key:"marketing-vendas-ia",icon:"📈",title:"Marketing Digital, Vendas e Inteligência Artificial"},{key:"negocios-internacionais-expansao",icon:"🌍",title:"Negócios Internacionais e Expansão de Empresas"},{key:"psicanalise-cultura-comportamento",icon:"🧠",title:"Psicanálise, Cultura e Comportamento Organizacional"}];'
+          if old_array not in s and new_array not in s:
+              raise SystemExit('postgrads array anchor not found')
+          s = s.replace(old_array, new_array)
+
+          old_cta = '<div className={`mt-5 rounded-xl border px-3 py-2 text-center text-xs font-black ${course.highlight?"border-[#d6ad63]/60 bg-white text-[#0b2341]":"border-white/15 bg-white/10 text-white"}`}>Tenho interesse · lista em breve</div>'
+          new_cta = '<a href={`/cliente/interesse-pos/${course.key}`} className={`mt-5 block rounded-xl border px-3 py-2 text-center text-xs font-black transition hover:-translate-y-0.5 ${course.highlight?"border-[#d6ad63]/60 bg-white text-[#0b2341] hover:bg-[#fff3cf]":"border-white/15 bg-white/10 text-white hover:bg-white/15"}`}>Tenho interesse</a>'
+          if old_cta not in s and new_cta not in s:
+              raise SystemExit('postgraduate CTA anchor not found')
+          s = s.replace(old_cta, new_cta)
+          library.write_text(s, encoding='utf-8')
+
+          admin = Path('apps/painel-ldr/src/routes/_authenticated/admin.tsx')
+          a = admin.read_text(encoding='utf-8')
+          old_link = '    ["Fórum do treinamento", "/admin/forum-treinamento"],\n'
+          new_link = '    ["Fórum do treinamento", "/admin/forum-treinamento"],\n    ["Interesses em Pós-Graduação", "/admin/interesses-pos"],\n'
+          if old_link not in a and new_link not in a:
+              raise SystemExit('admin section anchor not found')
+          if new_link not in a:
+              a = a.replace(old_link, new_link)
+          admin.write_text(a, encoding='utf-8')
+          PY
+
+      - name: Commit wired flow
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx apps/painel-ldr/src/routes/_authenticated/admin.tsx
+          if ! git diff --cached --quiet; then
+            git commit -m 'feat(painel): connect postgraduate interest form to master'
+            git push origin main
+          fi
