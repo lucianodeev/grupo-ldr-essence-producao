@@ -2,10 +2,24 @@ name: Fix library navigation
 on:
   push:
     paths:
+      - 'tools/fix_library_navigation.py'
       - '.github/workflows/fix-library-navigation.yml'
+permissions:
+  contents: write
 jobs:
-  test:
+  patch:
     runs-on: ubuntu-latest
     steps:
-      - name: Test runner
-        run: echo "library workflow runner ok"
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Apply library navigation fix
+        run: python tools/fix_library_navigation.py
+      - name: Commit fix
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          git diff --cached --quiet && exit 0
+          git commit -m "fix: make library category cards functional"
+          git push origin main
