@@ -1,3 +1,4 @@
+// Standalone route: intentionally not nested under the patient-facing Social Clinic page.
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { type FormEvent, useState } from "react";
