@@ -19,7 +19,7 @@ jobs:
         run: |
           git config user.name "ldr-rh-campanhas"
           git config user.email "llucianouam@gmail.com"
-          git add apps/painel-ldr/src/routes/_clientarea.cliente.treinamentos.psicanalise.tsx apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.treinamentos.psicanalise.tsx apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx apps/painel-ldr/src/lib/client-portal.server.ts
           git diff --cached --quiet && exit 0
-          git commit -m "fix: align psychoanalysis pricing and mobile course UX"
+          git commit -m "fix: align psychoanalysis and combo checkout pricing"
           git push origin main
