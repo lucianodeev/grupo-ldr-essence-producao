@@ -174,6 +174,7 @@ function ClientLibrary(){
         {card("brief","Terapia Breve","bg-[#17645e]")}
         {card("massage","Massoterapia","bg-[#0F5E7A]")}
         <a href="/cliente/orientacao-psicanalitica" className="min-w-0 rounded-2xl bg-[#263b63] px-1 py-4 text-center text-white shadow-sm"><span className="mx-auto block text-lg">✍️</span><p className="mt-2 text-[8px] font-black leading-none sm:text-[10px]">Orientação Escrita</p></a>
+        <a href="/cliente/orientacao-profissional" className="min-w-0 rounded-2xl bg-[#0b5cab] px-1 py-4 text-center text-white shadow-sm"><span className="mx-auto block text-lg">💼</span><p className="mt-2 text-[8px] font-black leading-none sm:text-[10px]">Orientação Profissional</p></a>
         {card("business24","Negócio 24h","bg-[#c85a24]")}
         {card("mentor","Mentoria","bg-[#0b5cab]")}
         {card("leader","Liderança","bg-[#0f5132]")}
