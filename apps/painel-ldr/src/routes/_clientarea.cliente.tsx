@@ -12,7 +12,7 @@ export const Route = createFileRoute("/_clientarea/cliente")({ component: Client
 const NAV = [
   { to: "/cliente", label: "Início", exact: true, icon: Home },
   { to: "/cliente/biblioteca", label: "Minha Biblioteca", icon: BookOpen, featured: true },
-  { to: "/cliente/treinamentos", label: "Treinamentos e Fórum", icon: GraduationCap },
+  { to: "/cliente/treinamentos", label: "Treinamentos", icon: GraduationCap },
   { to: "/cliente/agenda", label: "Minha agenda", icon: CalendarDays },
   { to: "/cliente/pedidos", label: "Meus pedidos", icon: ClipboardList },
   { to: "/cliente/contratar", label: "Contratar e agendar", icon: MessageCircle },

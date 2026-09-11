@@ -16,8 +16,10 @@ import { Route as PortalRouteImport } from './routes/_portal'
 import { Route as AcessoRouteImport } from './routes/acesso'
 import { Route as AcessoCompraRouteImport } from './routes/acesso-compra'
 import { Route as AcoragemdecomecarRouteImport } from './routes/acoragemdecomecar'
+import { Route as AmostraGratisRouteImport } from './routes/amostra-gratis'
 import { Route as BootstrapRouteImport } from './routes/bootstrap'
 import { Route as EmpreendedoresRouteImport } from './routes/empreendedores'
+import { Route as FormacaoPsicanaliseRouteImport } from './routes/formacao-psicanalise'
 import { Route as FormularioRouteImport } from './routes/formulario'
 import { Route as LivrosRouteImport } from './routes/livros'
 import { Route as LoginRouteImport } from './routes/login'
@@ -50,6 +52,7 @@ import { Route as PortalFuncionarioRouteImport } from './routes/_portal.funciona
 import { Route as ApiSellerCheckoutRouteImport } from './routes/api/seller-checkout'
 import { Route as ApiSellerPurchaseAccessRouteImport } from './routes/api/seller-purchase-access'
 import { Route as ApiSellerReferralRouteImport } from './routes/api/seller-referral'
+import { Route as ApiTrainingOfferRouteImport } from './routes/api/training-offer'
 import { Route as ClienteAtivarRouteImport } from './routes/cliente.ativar'
 import { Route as ClienteDefinirSenhaRouteImport } from './routes/cliente.definir-senha'
 import { Route as ClienteLoginRouteImport } from './routes/cliente.login'
@@ -118,12 +121,16 @@ import { Route as ClientareaClientePedidosRouteImport } from './routes/_clientar
 import { Route as ClientareaClientePerfilRouteImport } from './routes/_clientarea.cliente.perfil'
 import { Route as ClientareaClienteSessoesRouteImport } from './routes/_clientarea.cliente.sessoes'
 import { Route as ClientareaClienteTreinamentosRouteImport } from './routes/_clientarea.cliente.treinamentos'
+import { Route as ApiHotmartWebhookRouteImport } from './routes/api/hotmart/webhook'
 import { Route as ApiIntegrationsSiteOrdersRouteImport } from './routes/api/integrations/site-orders'
 import { Route as ApiStripeWebhookRouteImport } from './routes/api/stripe/webhook'
 import { Route as ClientareaClienteBibliotecaProductKeyRouteImport } from './routes/_clientarea.cliente.biblioteca.$productKey'
 import { Route as ClientareaClientePedidoOrderIdRouteImport } from './routes/_clientarea.cliente.pedido.$orderId'
 import { Route as ClientareaClienteTreinamentosDoMamaoAoNegocioRouteImport } from './routes/_clientarea.cliente.treinamentos.do-mamao-ao-negocio'
+import { Route as ClientareaClienteTreinamentosPsicanaliseRouteImport } from './routes/_clientarea.cliente.treinamentos.psicanalise'
 import { Route as ClientareaClienteTreinamentosDoMamaoAoNegocioForumRouteImport } from './routes/_clientarea.cliente.treinamentos.do-mamao-ao-negocio.forum'
+import { Route as ClientareaClienteTreinamentosPsicanaliseCertificadoRouteImport } from './routes/_clientarea.cliente.treinamentos.psicanalise.certificado'
+import { Route as ClientareaClienteTreinamentosPsicanaliseForumRouteImport } from './routes/_clientarea.cliente.treinamentos.psicanalise.forum'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -157,6 +164,11 @@ const AcoragemdecomecarRoute = AcoragemdecomecarRouteImport.update({
   path: '/acoragemdecomecar',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AmostraGratisRoute = AmostraGratisRouteImport.update({
+  id: '/amostra-gratis',
+  path: '/amostra-gratis',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BootstrapRoute = BootstrapRouteImport.update({
   id: '/bootstrap',
   path: '/bootstrap',
@@ -165,6 +177,11 @@ const BootstrapRoute = BootstrapRouteImport.update({
 const EmpreendedoresRoute = EmpreendedoresRouteImport.update({
   id: '/empreendedores',
   path: '/empreendedores',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FormacaoPsicanaliseRoute = FormacaoPsicanaliseRouteImport.update({
+  id: '/formacao-psicanalise',
+  path: '/formacao-psicanalise',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FormularioRoute = FormularioRouteImport.update({
@@ -326,6 +343,11 @@ const ApiSellerPurchaseAccessRoute = ApiSellerPurchaseAccessRouteImport.update({
 const ApiSellerReferralRoute = ApiSellerReferralRouteImport.update({
   id: '/api/seller-referral',
   path: '/api/seller-referral',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiTrainingOfferRoute = ApiTrainingOfferRouteImport.update({
+  id: '/api/training-offer',
+  path: '/api/training-offer',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ClienteAtivarRoute = ClienteAtivarRouteImport.update({
@@ -722,6 +744,11 @@ const ClientareaClienteTreinamentosRoute =
     path: '/treinamentos',
     getParentRoute: () => ClientareaClienteRoute,
   } as any)
+const ApiHotmartWebhookRoute = ApiHotmartWebhookRouteImport.update({
+  id: '/api/hotmart/webhook',
+  path: '/api/hotmart/webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiIntegrationsSiteOrdersRoute =
   ApiIntegrationsSiteOrdersRouteImport.update({
     id: '/api/integrations/site-orders',
@@ -751,11 +778,29 @@ const ClientareaClienteTreinamentosDoMamaoAoNegocioRoute =
     path: '/do-mamao-ao-negocio',
     getParentRoute: () => ClientareaClienteTreinamentosRoute,
   } as any)
+const ClientareaClienteTreinamentosPsicanaliseRoute =
+  ClientareaClienteTreinamentosPsicanaliseRouteImport.update({
+    id: '/psicanalise',
+    path: '/psicanalise',
+    getParentRoute: () => ClientareaClienteTreinamentosRoute,
+  } as any)
 const ClientareaClienteTreinamentosDoMamaoAoNegocioForumRoute =
   ClientareaClienteTreinamentosDoMamaoAoNegocioForumRouteImport.update({
     id: '/forum',
     path: '/forum',
     getParentRoute: () => ClientareaClienteTreinamentosDoMamaoAoNegocioRoute,
+  } as any)
+const ClientareaClienteTreinamentosPsicanaliseCertificadoRoute =
+  ClientareaClienteTreinamentosPsicanaliseCertificadoRouteImport.update({
+    id: '/certificado',
+    path: '/certificado',
+    getParentRoute: () => ClientareaClienteTreinamentosPsicanaliseRoute,
+  } as any)
+const ClientareaClienteTreinamentosPsicanaliseForumRoute =
+  ClientareaClienteTreinamentosPsicanaliseForumRouteImport.update({
+    id: '/forum',
+    path: '/forum',
+    getParentRoute: () => ClientareaClienteTreinamentosPsicanaliseRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -763,8 +808,10 @@ export interface FileRoutesByFullPath {
   '/acesso': typeof AcessoRoute
   '/acesso-compra': typeof AcessoCompraRoute
   '/acoragemdecomecar': typeof AcoragemdecomecarRoute
+  '/amostra-gratis': typeof AmostraGratisRoute
   '/bootstrap': typeof BootstrapRoute
   '/empreendedores': typeof EmpreendedoresRoute
+  '/formacao-psicanalise': typeof FormacaoPsicanaliseRoute
   '/formulario': typeof FormularioRoute
   '/livros': typeof LivrosRoute
   '/login': typeof LoginRoute
@@ -796,6 +843,7 @@ export interface FileRoutesByFullPath {
   '/api/seller-checkout': typeof ApiSellerCheckoutRoute
   '/api/seller-purchase-access': typeof ApiSellerPurchaseAccessRoute
   '/api/seller-referral': typeof ApiSellerReferralRoute
+  '/api/training-offer': typeof ApiTrainingOfferRoute
   '/cliente/ativar': typeof ClienteAtivarRoute
   '/cliente/definir-senha': typeof ClienteDefinirSenhaRoute
   '/cliente/login': typeof ClienteLoginRoute
@@ -862,6 +910,7 @@ export interface FileRoutesByFullPath {
   '/cliente/perfil': typeof ClientareaClientePerfilRoute
   '/cliente/sessoes': typeof ClientareaClienteSessoesRoute
   '/cliente/treinamentos': typeof ClientareaClienteTreinamentosRouteWithChildren
+  '/api/hotmart/webhook': typeof ApiHotmartWebhookRoute
   '/api/integrations/site-orders': typeof ApiIntegrationsSiteOrdersRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
   '/painel-profissional/': typeof AuthenticatedPainelProfissionalIndexRoute
@@ -869,15 +918,20 @@ export interface FileRoutesByFullPath {
   '/cliente/biblioteca/$productKey': typeof ClientareaClienteBibliotecaProductKeyRoute
   '/cliente/pedido/$orderId': typeof ClientareaClientePedidoOrderIdRoute
   '/cliente/treinamentos/do-mamao-ao-negocio': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioRouteWithChildren
+  '/cliente/treinamentos/psicanalise': typeof ClientareaClienteTreinamentosPsicanaliseRouteWithChildren
   '/cliente/treinamentos/do-mamao-ao-negocio/forum': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioForumRoute
+  '/cliente/treinamentos/psicanalise/certificado': typeof ClientareaClienteTreinamentosPsicanaliseCertificadoRoute
+  '/cliente/treinamentos/psicanalise/forum': typeof ClientareaClienteTreinamentosPsicanaliseForumRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/acesso': typeof AcessoRoute
   '/acesso-compra': typeof AcessoCompraRoute
   '/acoragemdecomecar': typeof AcoragemdecomecarRoute
+  '/amostra-gratis': typeof AmostraGratisRoute
   '/bootstrap': typeof BootstrapRoute
   '/empreendedores': typeof EmpreendedoresRoute
+  '/formacao-psicanalise': typeof FormacaoPsicanaliseRoute
   '/formulario': typeof FormularioRoute
   '/livros': typeof LivrosRoute
   '/login': typeof LoginRoute
@@ -907,6 +961,7 @@ export interface FileRoutesByTo {
   '/api/seller-checkout': typeof ApiSellerCheckoutRoute
   '/api/seller-purchase-access': typeof ApiSellerPurchaseAccessRoute
   '/api/seller-referral': typeof ApiSellerReferralRoute
+  '/api/training-offer': typeof ApiTrainingOfferRoute
   '/cliente/ativar': typeof ClienteAtivarRoute
   '/cliente/definir-senha': typeof ClienteDefinirSenhaRoute
   '/cliente/login': typeof ClienteLoginRoute
@@ -973,6 +1028,7 @@ export interface FileRoutesByTo {
   '/cliente/perfil': typeof ClientareaClientePerfilRoute
   '/cliente/sessoes': typeof ClientareaClienteSessoesRoute
   '/cliente/treinamentos': typeof ClientareaClienteTreinamentosRouteWithChildren
+  '/api/hotmart/webhook': typeof ApiHotmartWebhookRoute
   '/api/integrations/site-orders': typeof ApiIntegrationsSiteOrdersRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
   '/painel-profissional': typeof AuthenticatedPainelProfissionalIndexRoute
@@ -980,7 +1036,10 @@ export interface FileRoutesByTo {
   '/cliente/biblioteca/$productKey': typeof ClientareaClienteBibliotecaProductKeyRoute
   '/cliente/pedido/$orderId': typeof ClientareaClientePedidoOrderIdRoute
   '/cliente/treinamentos/do-mamao-ao-negocio': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioRouteWithChildren
+  '/cliente/treinamentos/psicanalise': typeof ClientareaClienteTreinamentosPsicanaliseRouteWithChildren
   '/cliente/treinamentos/do-mamao-ao-negocio/forum': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioForumRoute
+  '/cliente/treinamentos/psicanalise/certificado': typeof ClientareaClienteTreinamentosPsicanaliseCertificadoRoute
+  '/cliente/treinamentos/psicanalise/forum': typeof ClientareaClienteTreinamentosPsicanaliseForumRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -991,8 +1050,10 @@ export interface FileRoutesById {
   '/acesso': typeof AcessoRoute
   '/acesso-compra': typeof AcessoCompraRoute
   '/acoragemdecomecar': typeof AcoragemdecomecarRoute
+  '/amostra-gratis': typeof AmostraGratisRoute
   '/bootstrap': typeof BootstrapRoute
   '/empreendedores': typeof EmpreendedoresRoute
+  '/formacao-psicanalise': typeof FormacaoPsicanaliseRoute
   '/formulario': typeof FormularioRoute
   '/livros': typeof LivrosRoute
   '/login': typeof LoginRoute
@@ -1025,6 +1086,7 @@ export interface FileRoutesById {
   '/api/seller-checkout': typeof ApiSellerCheckoutRoute
   '/api/seller-purchase-access': typeof ApiSellerPurchaseAccessRoute
   '/api/seller-referral': typeof ApiSellerReferralRoute
+  '/api/training-offer': typeof ApiTrainingOfferRoute
   '/cliente/ativar': typeof ClienteAtivarRoute
   '/cliente/definir-senha': typeof ClienteDefinirSenhaRoute
   '/cliente/login': typeof ClienteLoginRoute
@@ -1091,6 +1153,7 @@ export interface FileRoutesById {
   '/_clientarea/cliente/perfil': typeof ClientareaClientePerfilRoute
   '/_clientarea/cliente/sessoes': typeof ClientareaClienteSessoesRoute
   '/_clientarea/cliente/treinamentos': typeof ClientareaClienteTreinamentosRouteWithChildren
+  '/api/hotmart/webhook': typeof ApiHotmartWebhookRoute
   '/api/integrations/site-orders': typeof ApiIntegrationsSiteOrdersRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
   '/_authenticated/painel-profissional/': typeof AuthenticatedPainelProfissionalIndexRoute
@@ -1098,7 +1161,10 @@ export interface FileRoutesById {
   '/_clientarea/cliente/biblioteca/$productKey': typeof ClientareaClienteBibliotecaProductKeyRoute
   '/_clientarea/cliente/pedido/$orderId': typeof ClientareaClientePedidoOrderIdRoute
   '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioRouteWithChildren
+  '/_clientarea/cliente/treinamentos/psicanalise': typeof ClientareaClienteTreinamentosPsicanaliseRouteWithChildren
   '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio/forum': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioForumRoute
+  '/_clientarea/cliente/treinamentos/psicanalise/certificado': typeof ClientareaClienteTreinamentosPsicanaliseCertificadoRoute
+  '/_clientarea/cliente/treinamentos/psicanalise/forum': typeof ClientareaClienteTreinamentosPsicanaliseForumRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -1107,8 +1173,10 @@ export interface FileRouteTypes {
     | '/acesso'
     | '/acesso-compra'
     | '/acoragemdecomecar'
+    | '/amostra-gratis'
     | '/bootstrap'
     | '/empreendedores'
+    | '/formacao-psicanalise'
     | '/formulario'
     | '/livros'
     | '/login'
@@ -1140,6 +1208,7 @@ export interface FileRouteTypes {
     | '/api/seller-checkout'
     | '/api/seller-purchase-access'
     | '/api/seller-referral'
+    | '/api/training-offer'
     | '/cliente/ativar'
     | '/cliente/definir-senha'
     | '/cliente/login'
@@ -1206,6 +1275,7 @@ export interface FileRouteTypes {
     | '/cliente/perfil'
     | '/cliente/sessoes'
     | '/cliente/treinamentos'
+    | '/api/hotmart/webhook'
     | '/api/integrations/site-orders'
     | '/api/stripe/webhook'
     | '/painel-profissional/'
@@ -1213,15 +1283,20 @@ export interface FileRouteTypes {
     | '/cliente/biblioteca/$productKey'
     | '/cliente/pedido/$orderId'
     | '/cliente/treinamentos/do-mamao-ao-negocio'
+    | '/cliente/treinamentos/psicanalise'
     | '/cliente/treinamentos/do-mamao-ao-negocio/forum'
+    | '/cliente/treinamentos/psicanalise/certificado'
+    | '/cliente/treinamentos/psicanalise/forum'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/acesso'
     | '/acesso-compra'
     | '/acoragemdecomecar'
+    | '/amostra-gratis'
     | '/bootstrap'
     | '/empreendedores'
+    | '/formacao-psicanalise'
     | '/formulario'
     | '/livros'
     | '/login'
@@ -1251,6 +1326,7 @@ export interface FileRouteTypes {
     | '/api/seller-checkout'
     | '/api/seller-purchase-access'
     | '/api/seller-referral'
+    | '/api/training-offer'
     | '/cliente/ativar'
     | '/cliente/definir-senha'
     | '/cliente/login'
@@ -1317,6 +1393,7 @@ export interface FileRouteTypes {
     | '/cliente/perfil'
     | '/cliente/sessoes'
     | '/cliente/treinamentos'
+    | '/api/hotmart/webhook'
     | '/api/integrations/site-orders'
     | '/api/stripe/webhook'
     | '/painel-profissional'
@@ -1324,7 +1401,10 @@ export interface FileRouteTypes {
     | '/cliente/biblioteca/$productKey'
     | '/cliente/pedido/$orderId'
     | '/cliente/treinamentos/do-mamao-ao-negocio'
+    | '/cliente/treinamentos/psicanalise'
     | '/cliente/treinamentos/do-mamao-ao-negocio/forum'
+    | '/cliente/treinamentos/psicanalise/certificado'
+    | '/cliente/treinamentos/psicanalise/forum'
   id:
     | '__root__'
     | '/'
@@ -1334,8 +1414,10 @@ export interface FileRouteTypes {
     | '/acesso'
     | '/acesso-compra'
     | '/acoragemdecomecar'
+    | '/amostra-gratis'
     | '/bootstrap'
     | '/empreendedores'
+    | '/formacao-psicanalise'
     | '/formulario'
     | '/livros'
     | '/login'
@@ -1368,6 +1450,7 @@ export interface FileRouteTypes {
     | '/api/seller-checkout'
     | '/api/seller-purchase-access'
     | '/api/seller-referral'
+    | '/api/training-offer'
     | '/cliente/ativar'
     | '/cliente/definir-senha'
     | '/cliente/login'
@@ -1434,6 +1517,7 @@ export interface FileRouteTypes {
     | '/_clientarea/cliente/perfil'
     | '/_clientarea/cliente/sessoes'
     | '/_clientarea/cliente/treinamentos'
+    | '/api/hotmart/webhook'
     | '/api/integrations/site-orders'
     | '/api/stripe/webhook'
     | '/_authenticated/painel-profissional/'
@@ -1441,7 +1525,10 @@ export interface FileRouteTypes {
     | '/_clientarea/cliente/biblioteca/$productKey'
     | '/_clientarea/cliente/pedido/$orderId'
     | '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio'
+    | '/_clientarea/cliente/treinamentos/psicanalise'
     | '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio/forum'
+    | '/_clientarea/cliente/treinamentos/psicanalise/certificado'
+    | '/_clientarea/cliente/treinamentos/psicanalise/forum'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -1452,8 +1539,10 @@ export interface RootRouteChildren {
   AcessoRoute: typeof AcessoRoute
   AcessoCompraRoute: typeof AcessoCompraRoute
   AcoragemdecomecarRoute: typeof AcoragemdecomecarRoute
+  AmostraGratisRoute: typeof AmostraGratisRoute
   BootstrapRoute: typeof BootstrapRoute
   EmpreendedoresRoute: typeof EmpreendedoresRoute
+  FormacaoPsicanaliseRoute: typeof FormacaoPsicanaliseRoute
   FormularioRoute: typeof FormularioRoute
   LivrosRoute: typeof LivrosRoute
   LoginRoute: typeof LoginRoute
@@ -1479,6 +1568,7 @@ export interface RootRouteChildren {
   ApiSellerCheckoutRoute: typeof ApiSellerCheckoutRoute
   ApiSellerPurchaseAccessRoute: typeof ApiSellerPurchaseAccessRoute
   ApiSellerReferralRoute: typeof ApiSellerReferralRoute
+  ApiTrainingOfferRoute: typeof ApiTrainingOfferRoute
   ClienteAtivarRoute: typeof ClienteAtivarRoute
   ClienteDefinirSenhaRoute: typeof ClienteDefinirSenhaRoute
   ClienteLoginRoute: typeof ClienteLoginRoute
@@ -1487,6 +1577,7 @@ export interface RootRouteChildren {
   ProfissionalSlugRoute: typeof ProfissionalSlugRoute
   ProfissionalLoginRoute: typeof ProfissionalLoginRoute
   RedeProfissionaisTermosRoute: typeof RedeProfissionaisTermosRoute
+  ApiHotmartWebhookRoute: typeof ApiHotmartWebhookRoute
   ApiIntegrationsSiteOrdersRoute: typeof ApiIntegrationsSiteOrdersRoute
   ApiStripeWebhookRoute: typeof ApiStripeWebhookRoute
 }
@@ -1542,6 +1633,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AcoragemdecomecarRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/amostra-gratis': {
+      id: '/amostra-gratis'
+      path: '/amostra-gratis'
+      fullPath: '/amostra-gratis'
+      preLoaderRoute: typeof AmostraGratisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/bootstrap': {
       id: '/bootstrap'
       path: '/bootstrap'
@@ -1554,6 +1652,13 @@ declare module '@tanstack/react-router' {
       path: '/empreendedores'
       fullPath: '/empreendedores'
       preLoaderRoute: typeof EmpreendedoresRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/formacao-psicanalise': {
+      id: '/formacao-psicanalise'
+      path: '/formacao-psicanalise'
+      fullPath: '/formacao-psicanalise'
+      preLoaderRoute: typeof FormacaoPsicanaliseRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/formulario': {
@@ -1778,6 +1883,13 @@ declare module '@tanstack/react-router' {
       path: '/api/seller-referral'
       fullPath: '/api/seller-referral'
       preLoaderRoute: typeof ApiSellerReferralRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/training-offer': {
+      id: '/api/training-offer'
+      path: '/api/training-offer'
+      fullPath: '/api/training-offer'
+      preLoaderRoute: typeof ApiTrainingOfferRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cliente/ativar': {
@@ -2256,6 +2368,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClientareaClienteTreinamentosRouteImport
       parentRoute: typeof ClientareaClienteRoute
     }
+    '/api/hotmart/webhook': {
+      id: '/api/hotmart/webhook'
+      path: '/api/hotmart/webhook'
+      fullPath: '/api/hotmart/webhook'
+      preLoaderRoute: typeof ApiHotmartWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/integrations/site-orders': {
       id: '/api/integrations/site-orders'
       path: '/api/integrations/site-orders'
@@ -2291,12 +2410,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClientareaClienteTreinamentosDoMamaoAoNegocioRouteImport
       parentRoute: typeof ClientareaClienteTreinamentosRoute
     }
+    '/_clientarea/cliente/treinamentos/psicanalise': {
+      id: '/_clientarea/cliente/treinamentos/psicanalise'
+      path: '/psicanalise'
+      fullPath: '/cliente/treinamentos/psicanalise'
+      preLoaderRoute: typeof ClientareaClienteTreinamentosPsicanaliseRouteImport
+      parentRoute: typeof ClientareaClienteTreinamentosRoute
+    }
     '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio/forum': {
       id: '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio/forum'
       path: '/forum'
       fullPath: '/cliente/treinamentos/do-mamao-ao-negocio/forum'
       preLoaderRoute: typeof ClientareaClienteTreinamentosDoMamaoAoNegocioForumRouteImport
       parentRoute: typeof ClientareaClienteTreinamentosDoMamaoAoNegocioRoute
+    }
+    '/_clientarea/cliente/treinamentos/psicanalise/certificado': {
+      id: '/_clientarea/cliente/treinamentos/psicanalise/certificado'
+      path: '/certificado'
+      fullPath: '/cliente/treinamentos/psicanalise/certificado'
+      preLoaderRoute: typeof ClientareaClienteTreinamentosPsicanaliseCertificadoRouteImport
+      parentRoute: typeof ClientareaClienteTreinamentosPsicanaliseRoute
+    }
+    '/_clientarea/cliente/treinamentos/psicanalise/forum': {
+      id: '/_clientarea/cliente/treinamentos/psicanalise/forum'
+      path: '/forum'
+      fullPath: '/cliente/treinamentos/psicanalise/forum'
+      preLoaderRoute: typeof ClientareaClienteTreinamentosPsicanaliseForumRouteImport
+      parentRoute: typeof ClientareaClienteTreinamentosPsicanaliseRoute
     }
   }
 }
@@ -2494,14 +2634,35 @@ const ClientareaClienteTreinamentosDoMamaoAoNegocioRouteWithChildren =
     ClientareaClienteTreinamentosDoMamaoAoNegocioRouteChildren,
   )
 
+interface ClientareaClienteTreinamentosPsicanaliseRouteChildren {
+  ClientareaClienteTreinamentosPsicanaliseCertificadoRoute: typeof ClientareaClienteTreinamentosPsicanaliseCertificadoRoute
+  ClientareaClienteTreinamentosPsicanaliseForumRoute: typeof ClientareaClienteTreinamentosPsicanaliseForumRoute
+}
+
+const ClientareaClienteTreinamentosPsicanaliseRouteChildren: ClientareaClienteTreinamentosPsicanaliseRouteChildren =
+  {
+    ClientareaClienteTreinamentosPsicanaliseCertificadoRoute:
+      ClientareaClienteTreinamentosPsicanaliseCertificadoRoute,
+    ClientareaClienteTreinamentosPsicanaliseForumRoute:
+      ClientareaClienteTreinamentosPsicanaliseForumRoute,
+  }
+
+const ClientareaClienteTreinamentosPsicanaliseRouteWithChildren =
+  ClientareaClienteTreinamentosPsicanaliseRoute._addFileChildren(
+    ClientareaClienteTreinamentosPsicanaliseRouteChildren,
+  )
+
 interface ClientareaClienteTreinamentosRouteChildren {
   ClientareaClienteTreinamentosDoMamaoAoNegocioRoute: typeof ClientareaClienteTreinamentosDoMamaoAoNegocioRouteWithChildren
+  ClientareaClienteTreinamentosPsicanaliseRoute: typeof ClientareaClienteTreinamentosPsicanaliseRouteWithChildren
 }
 
 const ClientareaClienteTreinamentosRouteChildren: ClientareaClienteTreinamentosRouteChildren =
   {
     ClientareaClienteTreinamentosDoMamaoAoNegocioRoute:
       ClientareaClienteTreinamentosDoMamaoAoNegocioRouteWithChildren,
+    ClientareaClienteTreinamentosPsicanaliseRoute:
+      ClientareaClienteTreinamentosPsicanaliseRouteWithChildren,
   }
 
 const ClientareaClienteTreinamentosRouteWithChildren =
@@ -2603,8 +2764,10 @@ const rootRouteChildren: RootRouteChildren = {
   AcessoRoute: AcessoRoute,
   AcessoCompraRoute: AcessoCompraRoute,
   AcoragemdecomecarRoute: AcoragemdecomecarRoute,
+  AmostraGratisRoute: AmostraGratisRoute,
   BootstrapRoute: BootstrapRoute,
   EmpreendedoresRoute: EmpreendedoresRoute,
+  FormacaoPsicanaliseRoute: FormacaoPsicanaliseRoute,
   FormularioRoute: FormularioRoute,
   LivrosRoute: LivrosRoute,
   LoginRoute: LoginRoute,
@@ -2630,6 +2793,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiSellerCheckoutRoute: ApiSellerCheckoutRoute,
   ApiSellerPurchaseAccessRoute: ApiSellerPurchaseAccessRoute,
   ApiSellerReferralRoute: ApiSellerReferralRoute,
+  ApiTrainingOfferRoute: ApiTrainingOfferRoute,
   ClienteAtivarRoute: ClienteAtivarRoute,
   ClienteDefinirSenhaRoute: ClienteDefinirSenhaRoute,
   ClienteLoginRoute: ClienteLoginRoute,
@@ -2638,6 +2802,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProfissionalSlugRoute: ProfissionalSlugRoute,
   ProfissionalLoginRoute: ProfissionalLoginRoute,
   RedeProfissionaisTermosRoute: RedeProfissionaisTermosRoute,
+  ApiHotmartWebhookRoute: ApiHotmartWebhookRoute,
   ApiIntegrationsSiteOrdersRoute: ApiIntegrationsSiteOrdersRoute,
   ApiStripeWebhookRoute: ApiStripeWebhookRoute,
 }
