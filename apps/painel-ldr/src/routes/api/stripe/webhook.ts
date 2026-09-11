@@ -209,6 +209,11 @@ async function setCompanySubscription(metadata: Record<string, string>, object: 
   return true;
 }
 
+async function setLibrarySubscription(metadata: Record<string, string>, object: StripeObject, eventType: string) {
+  const { handleLibrarySubscriptionStripeEvent } = await import("@/lib/library-subscription.server");
+  return handleLibrarySubscriptionStripeEvent(metadata, object, eventType);
+}
+
 async function balanceCredit(accountId: string, currency: string, gross: number, platformFee: number, net: number) {
   const db = await database();
   const { data: row } = await db.from("provider_balances").select("available_cents,pending_cents,lifetime_gross_cents,lifetime_platform_fee_cents,lifetime_refunds_cents").eq("professional_account_id", accountId).eq("currency", currency).maybeSingle();
@@ -532,6 +537,19 @@ export const Route = createFileRoute("/api/stripe/webhook")({
             event.type === "invoice.payment_failed"
           ) {
             await setCompanySubscription(metadata, object, event.type);
+          }
+
+          // Biblioteca LDR: assinatura mensal de conteúdos digitais.
+          if (metadata["checkout_kind"] === "library_subscription" && (event.type === "checkout.session.completed" || event.type === "checkout.session.expired")) {
+            await setLibrarySubscription(metadata, object, event.type);
+          } else if (
+            event.type === "customer.subscription.created" ||
+            event.type === "customer.subscription.updated" ||
+            event.type === "customer.subscription.deleted" ||
+            event.type === "invoice.payment_succeeded" ||
+            event.type === "invoice.payment_failed"
+          ) {
+            await setLibrarySubscription(metadata, object, event.type);
           }
 
           // Rede de Profissionais LDR: assinatura mensal.
