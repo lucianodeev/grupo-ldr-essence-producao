@@ -48,7 +48,7 @@ function ClientLibrary(){
   if(isLoading)return <p className="text-sm text-muted-foreground">Carregando biblioteca…</p>; if(error||!data)return <section className="s8-card"><h1 className="font-serif text-2xl">{copy.title}</h1></section>;
   const comments=learning?.comments?.filter((c:any)=>c.product_key)??[]; const progress=learning?.progress??[]; const market:"BR"|"INTL"=data.market==="BR"?"BR":"INTL";
   const trainingPrice=trainingOffer?(market==="BR"?money(trainingOffer.priceBrlCents,"BRL",locale):money(trainingOffer.priceEurCents,"EUR",locale)):market==="BR"?"R$ 299,99":"€ 49,90";
-  const regularTrainingPrice=trainingOffer?(market==="BR"?money(trainingOffer.regularPriceBrlCents,"BRL",locale):money(trainingOffer.regularPriceEurCents,"EUR",locale)):market==="BR"?"R$ 599,99":"€ 100,56";
+  const regularTrainingPrice=trainingOffer?(market==="BR"?money(trainingOffer.regularPriceBrlCents,"BRL",locale):money(trainingOffer.regularPriceEurCents,"EUR",locale)):market==="BR"?"R$ 299,99":"€ 49,90";
   const ebookProduct=data.products.find((p)=>p.key==="ebook_coragem_comecar");
   const bookProduct=data.products.find((p)=>p.key==="livro_menino_mamao");
   const ebookProgress=progress.find((x:any)=>x.product_key==="ebook_coragem_comecar");
