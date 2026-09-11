@@ -12,17 +12,12 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: main
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: pnpm
-          cache-dependency-path: apps/painel-ldr/pnpm-lock.yaml
+          cache: npm
+          cache-dependency-path: package-lock.json
       - name: Install
-        working-directory: apps/painel-ldr
-        run: pnpm install --frozen-lockfile
-      - name: Build
-        working-directory: apps/painel-ldr
-        run: pnpm build
+        run: npm ci
+      - name: Build panel
+        run: npm run build:painel
