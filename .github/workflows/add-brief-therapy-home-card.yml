@@ -1,0 +1,40 @@
+name: Add brief therapy home card
+on:
+  push:
+    paths:
+      - '.github/workflows/add-brief-therapy-home-card.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Add card to public home
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('apps/painel-ldr/src/components/library-sales-home-access-choice.tsx')
+          s=p.read_text()
+          marker='    <section id="formacoes"'
+          assert marker in s
+          card='''    <section className="mx-auto max-w-7xl px-4 pt-10 sm:px-6"><article className="overflow-hidden rounded-[30px] border-2 border-[#17645e]/35 bg-gradient-to-br from-[#edf8f5] to-white p-7 shadow-sm"><div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center"><div><span className="inline-flex rounded-full bg-[#17645e] px-3 py-1 text-[10px] font-black uppercase tracking-[.14em] text-white">NOVA FORMAÇÃO</span><p className="mt-4 text-xs font-black uppercase tracking-[.18em] text-[#17645e]">TERAPIA BREVE PSICANALÍTICA</p><h2 className="mt-2 font-serif text-3xl sm:text-4xl">{locale==='pt'?'Formação em Terapia Breve Psicanalítica':locale==='fr'?'Formation en Thérapie Brève Psychanalytique':locale==='es'?'Formación en Terapia Breve Psicoanalítica':'Brief Psychoanalytic Therapy Training'}</h2><p className="mt-3 max-w-3xl text-sm leading-7 text-slate-600">{locale==='pt'?'15 módulos · 300 aulas · 1.200 horas · 6 encontros ao vivo. Do foco à alta, com fundamentos, técnica e prática clínica.':locale==='fr'?'15 modules · 300 leçons · 1 200 heures · 6 rencontres en direct. Des fondements à la pratique clinique.':locale==='es'?'15 módulos · 300 clases · 1.200 horas · 6 encuentros en vivo. Fundamentos, técnica y práctica clínica.':'15 modules · 300 lessons · 1,200 hours · 6 live meetings. Foundations, technique and clinical practice.'}</p><p className="mt-4 font-black text-[#103d3a]">R$ 299,99 · € 49,90 · {locale==='pt'?'pagamento único · acesso vitalício':locale==='fr'?'paiement unique · accès à vie':locale==='es'?'pago único · acceso vitalicio':'one-time payment · lifetime access'}</p></div><Link to="/formacao-terapia-breve-psicanalitica" className="rounded-xl bg-[#17645e] px-6 py-4 text-center text-sm font-black text-white shadow-sm">{locale==='pt'?'CONHECER A FORMAÇÃO':locale==='fr'?'DÉCOUVRIR LA FORMATION':locale==='es'?'CONOCER LA FORMACIÓN':'LEARN MORE'}</Link></div></article></section>\n\n'''
+          if 'TERAPIA BREVE PSICANALÍTICA' not in s:
+              s=s.replace(marker,card+marker,1)
+              p.write_text(s)
+          PY
+      - name: Validate
+        run: |
+          grep -q 'TERAPIA BREVE PSICANALÍTICA' apps/painel-ldr/src/components/library-sales-home-access-choice.tsx
+          npm install --no-package-lock --no-audit --no-fund
+          npm run build:painel
+      - name: Commit
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/components/library-sales-home-access-choice.tsx
+          git diff --cached --check
+          git commit -m "fix: show brief therapy training card on public home"
+          git push origin main
