@@ -57,10 +57,10 @@ function ClientShell() {
     <div className="min-h-screen lg:flex" style={{ background: "var(--cream)" }}>
       <aside className="no-print sticky top-0 z-40 text-primary-foreground lg:h-screen lg:w-72 lg:shrink-0" style={{ background: "linear-gradient(160deg, var(--wine-deep), var(--wine))" }}>
         <div className="flex items-center justify-between gap-3 px-4 py-4 lg:block">
-          <div><p className="font-serif text-lg leading-tight">Grupo LDR Essence</p><p className="text-xs opacity-80">Área do Cliente</p></div>
+          <div><p className="font-serif text-lg leading-tight">Grupo LDR Essence</p><p className="text-xs opacity-80">Minha Área</p></div>
           <button type="button" className="rounded-lg border border-white/30 p-2 lg:hidden" onClick={() => setMenuOpen(v => !v)} aria-label="Abrir menu">{menuOpen ? <X className="h-5 w-5"/> : <Menu className="h-5 w-5"/>}</button>
         </div>
-        <nav className={`${menuOpen ? "block" : "hidden"} px-3 pb-4 lg:block`} aria-label="Navegação da área do cliente">
+        <nav className={`${menuOpen ? "block" : "hidden"} px-3 pb-4 lg:block`} aria-label="Navegação da Minha Área">
           <ul className="space-y-1">
             {NAV.map((item) => { const Icon = item.icon; return <li key={item.to}><Link to={item.to} activeOptions={{ exact: "exact" in item ? item.exact : false }} onClick={() => setMenuOpen(false)} className={`flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold transition ${"featured" in item && item.featured ? "mb-2 bg-secondary text-secondary-foreground shadow-sm" : "hover:bg-white/10"}`} activeProps={{ className: "flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-bold bg-white/15" }}><Icon className="h-4 w-4" aria-hidden="true"/>{item.label}</Link></li>; })}
           </ul>

@@ -8,9 +8,9 @@ import { ClientAuthShell } from "./cliente.login";
 export const Route = createFileRoute("/cliente/definir-senha")({
   head: () => ({
     meta: [
-      { title: "Definir senha — Área do Cliente | Grupo LDR Essence" },
-      { name: "description", content: "Defina a senha de acesso à sua área de cliente." },
-      { property: "og:title", content: "Definir senha — Área do Cliente" },
+      { title: "Definir senha — Minha Área | Grupo LDR Essence" },
+      { name: "description", content: "Defina a senha de acesso à sua Minha Área." },
+      { property: "og:title", content: "Definir senha — Minha Área" },
       { property: "og:description", content: "Crie sua senha de acesso com segurança." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

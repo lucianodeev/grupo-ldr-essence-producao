@@ -5,15 +5,15 @@ import { supabase } from "@/integrations/supabase/client";
 import { LanguageSelect, useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/funcionario/login")({
-  head: () => ({ meta: [{ title: "Área do Funcionário — Grupo LDR Essence" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "Minha Área — Grupo LDR Essence" }, { name: "robots", content: "noindex" }] }),
   component: EmployeeLogin,
 });
 
 const COPY = {
-  pt: { portal: "Benefícios corporativos", title: "Área do Funcionário", subtitle: "Entre com a mesma conta Google do e-mail cadastrado pela sua empresa.", opening: "Abrindo…", google: "Entrar com Google", privacy: "Seu acesso só mostra os benefícios atribuídos a você.", back: "Voltar aos acessos", error: "Não foi possível entrar com o Google." },
-  en: { portal: "Corporate benefits", title: "Employee Area", subtitle: "Sign in with the same Google account as the email registered by your company.", opening: "Opening…", google: "Continue with Google", privacy: "Your access only shows benefits assigned to you.", back: "Back to access options", error: "Could not sign in with Google." },
-  fr: { portal: "Avantages entreprise", title: "Espace Collaborateur", subtitle: "Connectez-vous avec le même compte Google que l’adresse e-mail enregistrée par votre entreprise.", opening: "Ouverture…", google: "Continuer avec Google", privacy: "Votre accès affiche uniquement les avantages qui vous sont attribués.", back: "Retour aux accès", error: "Impossible de se connecter avec Google." },
-  es: { portal: "Beneficios corporativos", title: "Área del Empleado", subtitle: "Entra con la misma cuenta de Google del correo registrado por tu empresa.", opening: "Abriendo…", google: "Continuar con Google", privacy: "Tu acceso solo muestra los beneficios que tienes asignados.", back: "Volver a los accesos", error: "No fue posible iniciar sesión con Google." },
+  pt: { portal: "Benefícios corporativos", title: "Minha Área", subtitle: "Entre com a mesma conta Google do e-mail cadastrado pela sua empresa.", opening: "Abrindo…", google: "Entrar com Google", privacy: "Seu acesso só mostra os benefícios atribuídos a você.", back: "Voltar aos acessos", error: "Não foi possível entrar com o Google." },
+  en: { portal: "Corporate benefits", title: "My Area", subtitle: "Sign in with the same Google account as the email registered by your company.", opening: "Opening…", google: "Continue with Google", privacy: "Your access only shows benefits assigned to you.", back: "Back to access options", error: "Could not sign in with Google." },
+  fr: { portal: "Avantages entreprise", title: "Mon espace", subtitle: "Connectez-vous avec le même compte Google que l’adresse e-mail enregistrée par votre entreprise.", opening: "Ouverture…", google: "Continuer avec Google", privacy: "Votre accès affiche uniquement les avantages qui vous sont attribués.", back: "Retour aux accès", error: "Impossible de se connecter avec Google." },
+  es: { portal: "Beneficios corporativos", title: "Mi Área", subtitle: "Entra con la misma cuenta de Google del correo registrado por tu empresa.", opening: "Abriendo…", google: "Continuar con Google", privacy: "Tu acceso solo muestra los beneficios que tienes asignados.", back: "Volver a los accesos", error: "No fue posible iniciar sesión con Google." },
 } as const;
 
 function EmployeeLogin() {

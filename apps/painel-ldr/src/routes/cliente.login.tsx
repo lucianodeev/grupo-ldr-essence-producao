@@ -7,13 +7,13 @@ import { supabase } from "@/integrations/supabase/client";
 export const Route = createFileRoute("/cliente/login")({
   head: () => ({
     meta: [
-      { title: "Área do Cliente — Grupo LDR Essence" },
+      { title: "Minha Área — Grupo LDR Essence" },
       {
         name: "description",
         content:
-          "Acesse sua área de cliente da Grupo LDR Essence para acompanhar pedidos, mentoria, sessões e entregas.",
+          "Acesse sua área no Grupo LDR Essence para acompanhar biblioteca, formações, agenda, atendimentos, pedidos e serviços.",
       },
-      { property: "og:title", content: "Área do Cliente — Grupo LDR Essence" },
+      { property: "og:title", content: "Minha Área — Grupo LDR Essence" },
       {
         property: "og:description",
         content: "Acompanhe seus pedidos, mentorias e entregas em um só lugar.",
@@ -94,8 +94,8 @@ function ClientLogin() {
 
   return (
     <ClientAuthShell
-      title="Área do Cliente"
-      subtitle="Entre com sua conta Google para acompanhar pedidos, mentorias e entregas."
+      title="Minha Área"
+      subtitle="Entre com sua conta Google para acessar biblioteca, formações, agenda, atendimentos, pedidos e serviços."
     >
       <button
         type="button"
@@ -133,7 +133,7 @@ export function ClientAuthShell({
       >
         <div className="mx-auto max-w-6xl px-4 py-5 sm:px-6">
           <p className="font-serif text-xl leading-tight sm:text-2xl">Grupo LDR Essence</p>
-          <p className="text-sm opacity-85">Área do Cliente</p>
+          <p className="text-sm opacity-85">Minha Área</p>
         </div>
       </header>
       <main className="mx-auto flex max-w-md flex-col px-4 py-10 sm:px-6">

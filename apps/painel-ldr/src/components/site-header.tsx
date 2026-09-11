@@ -3,10 +3,10 @@ import type { ReactNode } from "react";
 import { LanguageSelect, useI18n } from "@/lib/i18n";
 
 const COPY = {
-  pt: { title: "Painel Profissional — Sistema S8 / Mentoria", subtitle: "Grupo LDR Essence • 8 sessões individuais • 50 minutos • PDE final", home: "Início", form: "Formulário", client: "Área do cliente", panel: "Painel" },
-  en: { title: "Professional Panel — S8 System / Mentorship", subtitle: "Grupo LDR Essence • 8 individual sessions • 50 minutes • final PDE", home: "Home", form: "Form", client: "Client area", panel: "Panel" },
-  fr: { title: "Espace Professionnel — Système S8 / Mentorat", subtitle: "Grupo LDR Essence • 8 séances individuelles • 50 minutes • PDE final", home: "Accueil", form: "Formulaire", client: "Espace client", panel: "Tableau de bord" },
-  es: { title: "Panel Profesional — Sistema S8 / Mentoría", subtitle: "Grupo LDR Essence • 8 sesiones individuales • 50 minutos • PDE final", home: "Inicio", form: "Formulario", client: "Área del cliente", panel: "Panel" },
+  pt: { title: "Painel Profissional — Sistema S8 / Mentoria", subtitle: "Grupo LDR Essence • 8 sessões individuais • 50 minutos • PDE final", home: "Início", form: "Formulário", client: "Minha Área", panel: "Painel" },
+  en: { title: "Professional Panel — S8 System / Mentorship", subtitle: "Grupo LDR Essence • 8 individual sessions • 50 minutes • final PDE", home: "Home", form: "Form", client: "My Area", panel: "Panel" },
+  fr: { title: "Espace Professionnel — Système S8 / Mentorat", subtitle: "Grupo LDR Essence • 8 séances individuelles • 50 minutes • PDE final", home: "Accueil", form: "Formulaire", client: "Mon espace", panel: "Tableau de bord" },
+  es: { title: "Panel Profesional — Sistema S8 / Mentoría", subtitle: "Grupo LDR Essence • 8 sesiones individuales • 50 minutos • PDE final", home: "Inicio", form: "Formulario", client: "Mi Área", panel: "Panel" },
 } as const;
 
 export function SiteHeader({ actions }: { actions?: ReactNode }) {

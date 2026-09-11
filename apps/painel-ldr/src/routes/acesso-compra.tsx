@@ -25,9 +25,9 @@ type AccessResult = {
 
 function portalLabel(kind?: AccessResult["portal_kind"]) {
   if (kind === "company") return "Área da Empresa";
-  if (kind === "employee") return "Área do Funcionário";
+  if (kind === "employee") return "Minha Área";
   if (kind === "professional") return "Área do Profissional";
-  return "Área do Cliente";
+  return "Minha Área";
 }
 
 function PurchaseAccessPage() {

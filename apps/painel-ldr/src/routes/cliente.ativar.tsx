@@ -9,12 +9,12 @@ import { ClientAuthShell } from "./cliente.login";
 export const Route = createFileRoute("/cliente/ativar")({
   head: () => ({
     meta: [
-      { title: "Primeiro acesso — Área do Cliente | Grupo LDR Essence" },
+      { title: "Primeiro acesso — Minha Área | Grupo LDR Essence" },
       {
         name: "description",
-        content: "Ative o acesso à sua área de cliente da Grupo LDR Essence com segurança.",
+        content: "Ative o acesso à sua Minha Área da Grupo LDR Essence com segurança.",
       },
-      { property: "og:title", content: "Primeiro acesso — Área do Cliente" },
+      { property: "og:title", content: "Primeiro acesso — Minha Área" },
       { property: "og:description", content: "Ative seu acesso usando o e-mail da compra." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
