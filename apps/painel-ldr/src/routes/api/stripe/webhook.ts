@@ -214,6 +214,11 @@ async function setLibrarySubscription(metadata: Record<string, string>, object: 
   return handleLibrarySubscriptionStripeEvent(metadata, object, eventType);
 }
 
+async function setEditorialSubscription(metadata: Record<string, string>, object: StripeObject, eventType: string) {
+  const { handleEditorialStripeEvent } = await import("@/lib/editorial-subscription.server");
+  return handleEditorialStripeEvent(metadata, object, eventType);
+}
+
 async function balanceCredit(accountId: string, currency: string, gross: number, platformFee: number, net: number) {
   const db = await database();
   const { data: row } = await db.from("provider_balances").select("available_cents,pending_cents,lifetime_gross_cents,lifetime_platform_fee_cents,lifetime_refunds_cents").eq("professional_account_id", accountId).eq("currency", currency).maybeSingle();
@@ -537,6 +542,19 @@ export const Route = createFileRoute("/api/stripe/webhook")({
             event.type === "invoice.payment_failed"
           ) {
             await setCompanySubscription(metadata, object, event.type);
+          }
+
+          // Jornal LDR e Revista LDR: assinaturas editoriais independentes.
+          if (metadata["checkout_kind"] === "editorial_subscription" && (
+            event.type === "checkout.session.completed" ||
+            event.type === "checkout.session.expired" ||
+            event.type === "customer.subscription.created" ||
+            event.type === "customer.subscription.updated" ||
+            event.type === "customer.subscription.deleted" ||
+            event.type === "invoice.payment_succeeded" ||
+            event.type === "invoice.payment_failed"
+          )) {
+            await setEditorialSubscription(metadata, object, event.type);
           }
 
           // Biblioteca LDR: assinatura mensal de conteúdos digitais.
