@@ -5,6 +5,7 @@ import { BookOpen, CheckCircle2, ChevronLeft, ChevronRight, GraduationCap, LockK
 import { useEffect, useMemo, useState } from "react";
 import { psychoanalysisModules, PSYCHOANALYSIS_TOTAL_LESSONS } from "@/content/psychoanalysis-curriculum";
 import { clientCreatePsychoanalysisCheckout, clientPsychoanalysisOffer } from "@/lib/psychoanalysis-commerce.functions";
+import { clientSaveProgress } from "@/lib/learning.functions";
 
 export const Route=createFileRoute("/_clientarea/cliente/treinamentos/psicanalise")({component:PsychoanalysisTrainingExperience});
 
@@ -14,7 +15,7 @@ const KEY="ldr-psychoanalysis-training-v1";
 function loadState():Saved{if(typeof window==="undefined")return EMPTY;try{const p=JSON.parse(localStorage.getItem(KEY)||"");return {...EMPTY,...p,answers:p.answers??{},completed:Array.isArray(p.completed)?p.completed:[]};}catch{return EMPTY;}}
 
 function PsychoanalysisTrainingExperience(){
- const offerFn=useServerFn(clientPsychoanalysisOffer);const checkoutFn=useServerFn(clientCreatePsychoanalysisCheckout);
+ const offerFn=useServerFn(clientPsychoanalysisOffer);const checkoutFn=useServerFn(clientCreatePsychoanalysisCheckout);const saveProgressFn=useServerFn(clientSaveProgress);
  const {data:offer,isLoading}=useQuery({queryKey:["psychoanalysis-offer"],queryFn:()=>offerFn({})});
  const checkout=useMutation({mutationFn:(market:"BR"|"INTL")=>checkoutFn({data:{market}}),onSuccess:r=>{window.location.href=r.url;}});
  const [state,setState]=useState<Saved>(EMPTY);const [answer,setAnswer]=useState("");
@@ -22,7 +23,7 @@ function PsychoanalysisTrainingExperience(){
  const mod=psychoanalysisModules[Math.min(state.module,psychoanalysisModules.length-1)];const lesson=mod.lessons[Math.min(state.lesson,mod.lessons.length-1)];
  useEffect(()=>setAnswer(state.answers[`m${mod.id}`]??""),[mod.id,state.answers]);
  const progress=Math.round((state.completed.length/PSYCHOANALYSIS_TOTAL_LESSONS)*100);
- const persist=(next:Saved)=>{setState(next);try{localStorage.setItem(KEY,JSON.stringify(next));}catch{}};
+ const persist=(next:Saved)=>{setState(next);try{localStorage.setItem(KEY,JSON.stringify(next));}catch{}const pct=Math.round((next.completed.length/PSYCHOANALYSIS_TOTAL_LESSONS)*100);const m=psychoanalysisModules[Math.min(next.module,psychoanalysisModules.length-1)];const l=m.lessons[Math.min(next.lesson,m.lessons.length-1)];saveProgressFn({data:{productKey:"formacao_psicanalise",progressPercent:pct,currentLocation:`Módulo ${m.id} · ${l.title}`}}).catch(()=>undefined);};
  const markDone=()=>{const completed=state.completed.includes(lesson.id)?state.completed:[...state.completed,lesson.id];persist({...state,completed});};
  const next=()=>{markDone();if(state.lesson<mod.lessons.length-1){persist({...state,completed:state.completed.includes(lesson.id)?state.completed:[...state.completed,lesson.id],lesson:state.lesson+1});return;}if(state.module<psychoanalysisModules.length-1)persist({...state,completed:state.completed.includes(lesson.id)?state.completed:[...state.completed,lesson.id],module:state.module+1,lesson:0});};
  const previous=()=>{if(state.lesson>0)return persist({...state,lesson:state.lesson-1});if(state.module>0){const prev=psychoanalysisModules[state.module-1];persist({...state,module:state.module-1,lesson:prev.lessons.length-1});}};
