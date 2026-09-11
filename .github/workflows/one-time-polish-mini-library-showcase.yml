@@ -1,0 +1,61 @@
+name: Polish mini-library showcase
+on:
+  push:
+    paths:
+      - '.github/workflows/one-time-polish-mini-library-showcase.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Refine library showcase UI copy and layout
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('apps/painel-ldr/src/components/library-sales-home-access-choice.tsx')
+          s=p.read_text(encoding='utf-8')
+
+          replacements = {
+            'pt:{eyebrow:"POR DENTRO DA BIBLIOTECA",title:"Veja o que você encontra antes de escolher.",sub:"Uma prévia visual da experiência da Biblioteca LDR. Escolha um caminho e avance para a oferta correspondente.",more:"VER TODOS OS CONTEÚDOS",less:"MOSTRAR MENOS",cta:"Explorar",items:{psycho:["Psicanálise","Formação completa para aprofundar teoria e prática"],business:["Negócio 24h","Da ideia à primeira oferta pronta para vender"],massage:["Massoterapia","Formação completa e prática profissional"],mentor:["Mentoria","Desenvolvimento profissional e de carreira"],psychoWrite:["Orientação Psicanalítica Escrita","Orientação privada por texto"],careerWrite:["Orientação Profissional Escrita","Carreira, currículo e próximos passos"],news:["Jornal LDR","Notícias, negócios, ciência e mundo"],mag:["Revista LDR","Carreira, comportamento, inovação e histórias"],ebooks:["eBooks","Conteúdos digitais para ler no seu ritmo"],books:["Livros","Histórias, conhecimento e desenvolvimento"],brief:["Terapia Breve","Formação em Terapia Breve Psicanalítica"],lead:["Liderança","Gestão de pessoas e desenvolvimento de equipes"],rh:["RH 600h","Formação gratuita em Gestão de Pessoas e RH"],free:["Conteúdo Gratuito","Comece a aprender sem pagar"],ai:["IA","Conteúdos e ferramentas para o futuro"],film:["Filme","Conteúdo audiovisual e reflexão"]}}':
+            'pt:{eyebrow:"PRÉVIA DA ÁREA DO CLIENTE",title:"Minha Biblioteca",sub:"Seus conteúdos e próximos passos em um só lugar.",more:"VER TODOS OS CONTEÚDOS",less:"MOSTRAR MENOS",cta:"Abrir",items:{psycho:["Psicanálise","Formação"],business:["Negócio 24h","Formação"],massage:["Massoterapia","Formação"],mentor:["Mentoria","Formação"],psychoWrite:["Orientação Psicanalítica","Por texto"],careerWrite:["Orientação Profissional","Por texto"],news:["Jornal LDR","Assinatura"],mag:["Revista LDR","Assinatura"],ebooks:["eBooks","Leitura"],books:["Livros","Leitura"],brief:["Terapia Breve","Formação"],lead:["Liderança","Formação"],rh:["RH 600h","Formação gratuita"],free:["Conteúdo Gratuito","Acesso gratuito"],ai:["IA","Conteúdo"],film:["Filme","Conteúdo audiovisual"]}}',
+            'en:{eyebrow:"INSIDE THE LIBRARY",title:"See what you can access before choosing.",sub:"A visual preview of the LDR Library experience. Choose a path and continue to the corresponding offer.",more:"VIEW ALL CONTENT",less:"SHOW LESS",cta:"Explore",items:{psycho:["Psychoanalysis","Complete training in theory and clinical practice"],business:["Business in 24h","From idea to a first offer ready to sell"],massage:["Massage Therapy","Complete training and professional practice"],mentor:["Mentoring","Professional and career development"],psychoWrite:["Written Psychoanalytic Guidance","Private guidance by text"],careerWrite:["Written Career Guidance","Career, résumé and next steps"],news:["LDR Newspaper","News, business, science and world"],mag:["LDR Magazine","Career, behavior, innovation and stories"],ebooks:["eBooks","Digital content to read at your own pace"],books:["Books","Stories, knowledge and development"],brief:["Brief Therapy","Brief Psychoanalytic Therapy training"],lead:["Leadership","People management and team development"],rh:["HR 600h","Free People Management and HR training"],free:["Free Content","Start learning at no cost"],ai:["AI","Content and tools for the future"],film:["Film","Audiovisual content and reflection"]}}':
+            'en:{eyebrow:"CLIENT AREA PREVIEW",title:"My Library",sub:"Your content and next steps in one place.",more:"VIEW ALL CONTENT",less:"SHOW LESS",cta:"Open",items:{psycho:["Psychoanalysis","Training"],business:["Business in 24h","Training"],massage:["Massage Therapy","Training"],mentor:["Mentoring","Training"],psychoWrite:["Psychoanalytic Guidance","By text"],careerWrite:["Career Guidance","By text"],news:["LDR Newspaper","Subscription"],mag:["LDR Magazine","Subscription"],ebooks:["eBooks","Reading"],books:["Books","Reading"],brief:["Brief Therapy","Training"],lead:["Leadership","Training"],rh:["HR 600h","Free training"],free:["Free Content","Free access"],ai:["AI","Content"],film:["Film","Audiovisual content"]}}',
+          }
+          for old,new in replacements.items():
+              if old in s:
+                  s=s.replace(old,new,1)
+
+          # French and Spanish: shorten heading/subtitle and card descriptions without disturbing routes.
+          s=s.replace('eyebrow:"À L’INTÉRIEUR DE LA BIBLIOTHÈQUE",title:"Découvrez ce que vous pouvez trouver avant de choisir.",sub:"Un aperçu visuel de l’expérience Bibliothèque LDR. Choisissez un parcours et continuez vers l’offre correspondante."', 'eyebrow:"APERÇU DE L’ESPACE CLIENT",title:"Ma Bibliothèque",sub:"Vos contenus et vos prochaines étapes au même endroit."')
+          s=s.replace('eyebrow:"DENTRO DE LA BIBLIOTECA",title:"Mira lo que encontrarás antes de elegir.",sub:"Una vista previa visual de la experiencia de Biblioteca LDR. Elige un camino y continúa a la oferta correspondiente."', 'eyebrow:"VISTA PREVIA DEL ÁREA DEL CLIENTE",title:"Mi Biblioteca",sub:"Tus contenidos y próximos pasos en un solo lugar."')
+
+          # Make the showcase feel like the internal library: contained panel, compact cards, stronger scanability.
+          s=s.replace('id="mini-library-showcase" className="border-b border-[#d6ad63]/20 bg-white py-12 sm:py-14"', 'id="mini-library-showcase" className="bg-[#f7f3e9] py-10 sm:py-12"')
+          s=s.replace('<div className="mx-auto max-w-7xl px-4 sm:px-6">\n        <div className="mx-auto max-w-3xl text-center">', '<div className="mx-auto max-w-7xl px-4 sm:px-6">\n        <div className="rounded-[32px] border border-slate-200 bg-[#f5f8fc] p-5 shadow-sm sm:p-8">\n        <div className="max-w-3xl text-left">')
+          s=s.replace('className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4"', 'className="mt-7 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4"')
+          s=s.replace('className={`group relative min-h-[168px] overflow-hidden rounded-[24px] bg-gradient-to-br ${card.tone} p-5 text-white shadow-md transition duration-200 hover:-translate-y-1 hover:shadow-xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#d6ad63]/40`}', 'className={`group relative min-h-[148px] overflow-hidden rounded-[24px] bg-gradient-to-br ${card.tone} p-4 text-white shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-lg focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#d6ad63]/40 sm:p-5`}')
+          s=s.replace('<h3 className="mt-5 text-base font-black leading-tight sm:text-lg">{item[0]}</h3><p className="mt-2 text-xs leading-5 text-white/75 sm:text-sm">{item[1]}</p>', '<h3 className="mt-5 pr-8 text-base font-black leading-tight sm:text-lg">{item[0]}</h3><p className="mt-1 text-[11px] font-semibold uppercase tracking-[.08em] text-white/70 sm:text-xs">{item[1]}</p>')
+          s=s.replace('<div className="mt-7 text-center"><button', '<div className="mt-6 text-center"><button')
+          # close the new panel wrapper before section end
+          old='''        <div className="mt-6 text-center"><button type="button" onClick={()=>setShowLibraryAll(v=>!v)}'''
+          if old in s and '</div>\n      </div>\n    </section>' in s:
+              s=s.replace('</div>\n      </div>\n    </section>', '</div>\n        </div>\n      </div>\n    </section>',1)
+
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Verify
+        run: |
+          grep -q 'title:"Minha Biblioteca"' apps/painel-ldr/src/components/library-sales-home-access-choice.tsx
+          grep -q 'min-h-\[148px\]' apps/painel-ldr/src/components/library-sales-home-access-choice.tsx
+      - name: Commit
+        run: |
+          if git diff --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/painel-ldr/src/components/library-sales-home-access-choice.tsx
+          git commit -m "style(painel): polish mini-library showcase"
+          git push
