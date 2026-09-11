@@ -48,7 +48,7 @@ export async function createWrittenOrientationCheckout(userId:string,email:strin
   const amountCents=amountFor(market,packageMinutes,promo.active);
   const currency=market==="BR"?"BRL":"EUR";
   const metadata={product_key:PRODUCT_KEY,package_minutes:String(packageMinutes),promo_applied:String(promo.active),market,auth_user_id:userId};
-  const {data:order,error}=await db.from("orders").insert({order_number:"",customer_id:customer.id,contact_email:customer.email,contact_phone:customer.phone,service_type:"servico_digital",title:`${TITLE} — ${packageMinutes} minutos`,description:`Orientação breve por texto · ${packageMinutes} minutos`,quantity:1,amount_cents:amountCents,currency,payment_status:"pendente",status:"novo",priority:"media",catalog_key:PRODUCT_KEY,metadata}).select("id").single();
+  const {data:order,error}=await db.from("orders").insert({order_number:"",customer_id:customer.id,contact_email:customer.email,contact_phone:customer.phone,service_type:"produto_digital",title:`${TITLE} — ${packageMinutes} minutos`,description:`Orientação breve por texto · ${packageMinutes} minutos`,quantity:1,amount_cents:amountCents,currency,payment_status:"pendente",status:"novo",priority:"media",catalog_key:PRODUCT_KEY,metadata}).select("id").single();
   if(error||!order)fail("Não foi possível iniciar o pagamento.");
   const secret=process.env.STRIPE_SECRET_KEY;if(!secret){await db.from("orders").delete().eq("id",order.id);fail("Pagamento temporariamente indisponível.");}
   const params=new URLSearchParams();
