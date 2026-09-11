@@ -1,0 +1,25 @@
+name: Finalize psychoanalysis launch and progress
+on:
+  push:
+    paths:
+      - 'tools/finalize_psychoanalysis_launch_progress.py'
+      - '.github/workflows/finalize-psychoanalysis-launch-progress.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Apply finalization
+        run: python tools/finalize_psychoanalysis_launch_progress.py
+      - name: Commit finalization
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/lib/psychoanalysis-commerce.server.ts apps/painel-ldr/src/routes/_clientarea.cliente.treinamentos.psicanalise.tsx
+          git diff --cached --quiet && exit 0
+          git commit -m "feat: enforce first-month launch and persist psychoanalysis progress"
+          git push origin main
