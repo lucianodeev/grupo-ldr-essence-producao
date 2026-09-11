@@ -1,0 +1,25 @@
+name: Refine psychoanalysis checkout UX
+on:
+  push:
+    paths:
+      - 'tools/refine_psychoanalysis_checkout_ux.py'
+      - '.github/workflows/refine-psychoanalysis-checkout-ux.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Apply checkout UX refinements
+        run: python tools/refine_psychoanalysis_checkout_ux.py
+      - name: Commit refinements
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.treinamentos.psicanalise.tsx apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          git diff --cached --quiet && exit 0
+          git commit -m "fix: align psychoanalysis pricing and mobile course UX"
+          git push origin main
