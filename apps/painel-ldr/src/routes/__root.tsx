@@ -222,6 +222,14 @@ function RootComponent() {
   const location = useLocation();
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (window.location.hostname === "painel.ldrrhestrategia.com" || window.location.hostname === "painel.lucianoconecta.online") {
+      const next = `https://learn.lucianoconecta.online${window.location.pathname}${window.location.search}${window.location.hash}`;
+      window.location.replace(next);
+    }
+  }, []);
+
+  useEffect(() => {
     const { data } = supabase.auth.onAuthStateChange((event) => {
       if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
       router.invalidate();
