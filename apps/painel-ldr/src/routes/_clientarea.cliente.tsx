@@ -100,10 +100,16 @@ function ClientShell() {
       </div>
 
       {libraryCardsTarget && createPortal(
-        <Link to="/cliente/biblioteca/jornal-ldr" className="min-w-0 rounded-2xl bg-[#0b2341] px-1 py-4 text-center text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md" aria-label="Abrir Jornal LDR">
-          <Newspaper className="mx-auto h-5 w-5"/>
-          <p className="mt-2 text-[8px] font-black leading-none sm:text-[10px]">Jornal LDR</p>
-        </Link>,
+        <>
+          <Link to="/cliente/biblioteca/jornal-ldr" className="min-w-0 rounded-2xl bg-[#0b2341] px-1 py-4 text-center text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md" aria-label="Abrir Jornal LDR">
+            <Newspaper className="mx-auto h-5 w-5"/>
+            <p className="mt-2 text-[8px] font-black leading-none sm:text-[10px]">Jornal LDR</p>
+          </Link>
+          <Link to="/cliente/biblioteca/publicacoes" className="min-w-0 rounded-2xl bg-[#a77b2e] px-1 py-4 text-center text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md" aria-label="Abrir jornais, revistas e artigos científicos">
+            <BookOpen className="mx-auto h-5 w-5"/>
+            <p className="mt-2 text-[8px] font-black leading-none sm:text-[10px]">Jornais & Revistas</p>
+          </Link>
+        </>,
         libraryCardsTarget
       )}
 
