@@ -1,0 +1,107 @@
+name: One-time final September promo countdown and chat notice
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/one-time-final-september-promo-and-chat-notice.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Patch promotion and orientation chat notices safely
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          END='2026-09-30T23:59:59+02:00'
+
+          # 1) Main sales home actually rendered at /
+          p=Path('apps/painel-ldr/src/components/library-sales-home-access-choice.tsx')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace('new Date("2026-09-12T16:46:00.000Z").getTime()', f'new Date("{END}").getTime()')
+          s=s.replace('⚡ PROMOÇÃO DE 24 HORAS · 50% NO PRIMEIRO MÊS','⚡ PROMOÇÃO DO MÊS · 50% NO PRIMEIRO MÊS')
+          s=s.replace('⚡ 24-HOUR PROMO · 50% OFF FIRST MONTH','⚡ MONTHLY PROMOTION · 50% OFF FIRST MONTH')
+          s=s.replace('⚡ PROMO 24H · -50% LE PREMIER MOIS','⚡ PROMO DU MOIS · -50% LE PREMIER MOIS')
+          s=s.replace('⚡ PROMOCIÓN 24H · 50% PRIMER MES','⚡ PROMOCIÓN DEL MES · 50% PRIMER MES')
+
+          # Days-aware countdown.
+          old='const countdown=remaining===null?"--:--:--":`${String(Math.floor(remaining/3600000)).padStart(2,"0")}:${String(Math.floor((remaining%3600000)/60000)).padStart(2,"0")}:${String(Math.floor((remaining%60000)/1000)).padStart(2,"0")}`;'
+          new='const countdown=remaining===null?"--d --:--:--":`${Math.floor(remaining/86400000)}d ${String(Math.floor((remaining%86400000)/3600000)).padStart(2,"0")}:${String(Math.floor((remaining%3600000)/60000)).padStart(2,"0")}:${String(Math.floor((remaining%60000)/1000)).padStart(2,"0")}`;'
+          s=s.replace(old,new)
+
+          # Insert visible timer inside the promo card, immediately after promo title.
+          anchor='<p className="text-sm font-black text-[#f5cc82]">{promo?t.promo:"ASSINATURA BIBLIOTECA LDR"}</p>'
+          block=anchor+'{promo&&<div className="mt-4 rounded-2xl border-2 border-[#d6ad63] bg-black/25 p-4 text-center"><p className="text-[11px] font-black uppercase tracking-[.18em] text-[#f5cc82]">{countdownLabel}</p><p className="mt-1 font-mono text-3xl font-black tracking-wider text-white">{countdown}</p><p className="mt-1 text-[10px] uppercase tracking-[.12em] text-white/60">DIAS · HORAS · MINUTOS · SEGUNDOS</p></div>}'
+          if anchor not in s:
+              raise SystemExit('Promo card anchor not found in access choice')
+          if 'DIAS · HORAS · MINUTOS · SEGUNDOS' not in s:
+              s=s.replace(anchor,block,1)
+          p.write_text(s,encoding='utf-8')
+
+          # 2) Backend promo eligibility: same end date so checkout agrees with the page.
+          p=Path('apps/painel-ldr/src/lib/library-subscription.server.ts')
+          s=p.read_text(encoding='utf-8')
+          import re
+          s,n=re.subn(r'const PROMO_END_AT = "[^"]+";',f'const PROMO_END_AT = "{END}";',s,count=1)
+          if n!=1: raise SystemExit('Backend PROMO_END_AT not found')
+          p.write_text(s,encoding='utf-8')
+
+          # 3) Other library surfaces: remove all 24h wording so no contradictory copy remains.
+          for file in [
+            'apps/painel-ldr/src/components/library-sales-home.tsx',
+            'apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx'
+          ]:
+              p=Path(file)
+              if not p.exists(): continue
+              s=p.read_text(encoding='utf-8')
+              repl={
+                'PROMOÇÃO 24H':'PROMOÇÃO DO MÊS',
+                'PROMOÇÃO DE 24 HORAS':'PROMOÇÃO DO MÊS',
+                '24H PROMO':'MONTHLY PROMO',
+                'PROMO 24H':'PROMO DU MOIS',
+                'PROMOCIÓN 24H':'PROMOCIÓN DEL MES',
+              }
+              for a,b in repl.items(): s=s.replace(a,b)
+              s=s.replace('new Date("2026-09-12T16:46:00.000Z").getTime()', f'new Date("{END}").getTime()')
+              p.write_text(s,encoding='utf-8')
+
+          # 4) Client chat notice after purchase, both written orientation services.
+          notices={
+            'apps/painel-ldr/src/routes/_clientarea.cliente.orientacao-psicanalitica.tsx':'#263b63',
+            'apps/painel-ldr/src/routes/_clientarea.cliente.orientacao-profissional.tsx':'#0b5cab',
+          }
+          for file,color in notices.items():
+              p=Path(file); s=p.read_text(encoding='utf-8')
+              anchor='<div className="h-[52vh] space-y-3 overflow-y-auto bg-slate-50 p-4">'
+              notice=f'<div className="border-b bg-amber-50 px-5 py-4 text-sm leading-6 text-amber-950"><b>⚠️ Atenção ao seu tempo:</b> o tempo do seu pacote só começa a contar depois da primeira resposta do profissional. Assim que receber essa resposta, fique atento ao chat para aproveitar o período contratado. Enquanto você aguarda uma nova resposta do profissional, o contador fica pausado.</div>'+anchor
+              if anchor not in s: raise SystemExit(f'Chat anchor not found: {file}')
+              if 'o tempo do seu pacote só começa a contar depois da primeira resposta do profissional' not in s:
+                  s=s.replace(anchor,notice,1)
+              p.write_text(s,encoding='utf-8')
+          PY
+
+      - name: Verify exact intended changes before commit
+        run: |
+          grep -q '2026-09-30T23:59:59+02:00' apps/painel-ldr/src/lib/library-subscription.server.ts
+          grep -q 'PROMOÇÃO DO MÊS · 50% NO PRIMEIRO MÊS' apps/painel-ldr/src/components/library-sales-home-access-choice.tsx
+          grep -q 'DIAS · HORAS · MINUTOS · SEGUNDOS' apps/painel-ldr/src/components/library-sales-home-access-choice.tsx
+          grep -q 'só começa a contar depois da primeira resposta do profissional' apps/painel-ldr/src/routes/_clientarea.cliente.orientacao-psicanalitica.tsx
+          grep -q 'só começa a contar depois da primeira resposta do profissional' apps/painel-ldr/src/routes/_clientarea.cliente.orientacao-profissional.tsx
+          ! grep -q 'PROMOÇÃO DE 24 HORAS' apps/painel-ldr/src/components/library-sales-home-access-choice.tsx
+
+      - name: Commit patch
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/components/library-sales-home-access-choice.tsx apps/painel-ldr/src/components/library-sales-home.tsx apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx apps/painel-ldr/src/lib/library-subscription.server.ts apps/painel-ldr/src/routes/_clientarea.cliente.orientacao-psicanalitica.tsx apps/painel-ldr/src/routes/_clientarea.cliente.orientacao-profissional.tsx
+          git commit -m "fix: keep September promo live with visible countdown and chat notice"
+          git push origin main
