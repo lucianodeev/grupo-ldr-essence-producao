@@ -1,3 +1,4 @@
+# trigger 2026-09-12
 name: Sales mini-library showcase
 on:
   push:
@@ -20,7 +21,6 @@ jobs:
           s=p.read_text(encoding='utf-8')
           if 'id="mini-library-showcase"' in s:
               raise SystemExit(0)
-
           marker='''const tone = { violet:"border-violet-200 bg-violet-50", blue:"border-blue-200 bg-blue-50", emerald:"border-emerald-200 bg-emerald-50", gold:"border-[#d6ad63]/40 bg-[#fff9ed]" } as const;'''
           showcase='''const libraryShowcase = {
   pt:{eyebrow:"POR DENTRO DA BIBLIOTECA",title:"Veja o que você encontra antes de escolher.",sub:"Uma prévia visual da experiência da Biblioteca LDR. Escolha um caminho e avance para a oferta correspondente.",more:"VER TODOS OS CONTEÚDOS",less:"MOSTRAR MENOS",cta:"Explorar",items:{psycho:["Psicanálise","Formação completa para aprofundar teoria e prática"],business:["Negócio 24h","Da ideia à primeira oferta pronta para vender"],massage:["Massoterapia","Formação completa e prática profissional"],mentor:["Mentoria","Desenvolvimento profissional e de carreira"],psychoWrite:["Orientação Psicanalítica Escrita","Orientação privada por texto"],careerWrite:["Orientação Profissional Escrita","Carreira, currículo e próximos passos"],news:["Jornal LDR","Notícias, negócios, ciência e mundo"],mag:["Revista LDR","Carreira, comportamento, inovação e histórias"],ebooks:["eBooks","Conteúdos digitais para ler no seu ritmo"],books:["Livros","Histórias, conhecimento e desenvolvimento"],brief:["Terapia Breve","Formação em Terapia Breve Psicanalítica"],lead:["Liderança","Gestão de pessoas e desenvolvimento de equipes"],rh:["RH 600h","Formação gratuita em Gestão de Pessoas e RH"],free:["Conteúdo Gratuito","Comece a aprender sem pagar"],ai:["IA","Conteúdos e ferramentas para o futuro"],film:["Filme","Conteúdo audiovisual e reflexão"]}},
@@ -33,7 +33,6 @@ jobs:
           if marker not in s:
               raise SystemExit('tone marker not found')
           s=s.replace(marker,showcase+marker,1)
-
           state='''  const [remaining,setRemaining]=useState<number|null>(null);'''
           repl='''  const [remaining,setRemaining]=useState<number|null>(null);
   const [showLibraryAll,setShowLibraryAll]=useState(false);
@@ -59,7 +58,6 @@ jobs:
           if state not in s:
               raise SystemExit('state marker not found')
           s=s.replace(state,repl,1)
-
           anchor='''    <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6"><h2 className="font-serif text-3xl sm:text-4xl">{t.choose}</h2>'''
           section='''    <section id="mini-library-showcase" className="border-b border-[#d6ad63]/20 bg-white py-12 sm:py-14">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
