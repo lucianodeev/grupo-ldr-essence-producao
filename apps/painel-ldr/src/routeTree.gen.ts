@@ -18,6 +18,7 @@ import { Route as AcessoCompraRouteImport } from './routes/acesso-compra'
 import { Route as AcoragemdecomecarRouteImport } from './routes/acoragemdecomecar'
 import { Route as AmostraGratisRouteImport } from './routes/amostra-gratis'
 import { Route as BootstrapRouteImport } from './routes/bootstrap'
+import { Route as ClinicaSocialRouteImport } from './routes/clinica-social'
 import { Route as EmpreendedoresRouteImport } from './routes/empreendedores'
 import { Route as FormacaoPsicanaliseRouteImport } from './routes/formacao-psicanalise'
 import { Route as FormularioRouteImport } from './routes/formulario'
@@ -56,6 +57,7 @@ import { Route as ApiTrainingOfferRouteImport } from './routes/api/training-offe
 import { Route as ClienteAtivarRouteImport } from './routes/cliente.ativar'
 import { Route as ClienteDefinirSenhaRouteImport } from './routes/cliente.definir-senha'
 import { Route as ClienteLoginRouteImport } from './routes/cliente.login'
+import { Route as ClinicaSocialProfissionaisRouteImport } from './routes/clinica-social.profissionais'
 import { Route as EmpresaLoginRouteImport } from './routes/empresa.login'
 import { Route as FuncionarioLoginRouteImport } from './routes/funcionario.login'
 import { Route as ProfissionaisCategoryRouteImport } from './routes/profissionais.$category'
@@ -66,6 +68,7 @@ import { Route as VendedorAcademiaRouteImport } from './routes/vendedor.academia
 import { Route as VendedorApresentacaoRouteImport } from './routes/vendedor.apresentacao'
 import { Route as AuthenticatedAdminAcessosRouteImport } from './routes/_authenticated/admin.acessos'
 import { Route as AuthenticatedAdminCatalogoRouteImport } from './routes/_authenticated/admin.catalogo'
+import { Route as AuthenticatedAdminClinicaSocialRouteImport } from './routes/_authenticated/admin.clinica-social'
 import { Route as AuthenticatedAdminEmpresasRouteImport } from './routes/_authenticated/admin.empresas'
 import { Route as AuthenticatedAdminEquipeRouteImport } from './routes/_authenticated/admin.equipe'
 import { Route as AuthenticatedAdminFinanceiroRouteImport } from './routes/_authenticated/admin.financeiro'
@@ -172,6 +175,11 @@ const AmostraGratisRoute = AmostraGratisRouteImport.update({
 const BootstrapRoute = BootstrapRouteImport.update({
   id: '/bootstrap',
   path: '/bootstrap',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClinicaSocialRoute = ClinicaSocialRouteImport.update({
+  id: '/clinica-social',
+  path: '/clinica-social',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EmpreendedoresRoute = EmpreendedoresRouteImport.update({
@@ -365,6 +373,12 @@ const ClienteLoginRoute = ClienteLoginRouteImport.update({
   path: '/cliente/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ClinicaSocialProfissionaisRoute =
+  ClinicaSocialProfissionaisRouteImport.update({
+    id: '/profissionais',
+    path: '/profissionais',
+    getParentRoute: () => ClinicaSocialRoute,
+  } as any)
 const EmpresaLoginRoute = EmpresaLoginRouteImport.update({
   id: '/empresa/login',
   path: '/empresa/login',
@@ -415,6 +429,12 @@ const AuthenticatedAdminCatalogoRoute =
   AuthenticatedAdminCatalogoRouteImport.update({
     id: '/catalogo',
     path: '/catalogo',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminClinicaSocialRoute =
+  AuthenticatedAdminClinicaSocialRouteImport.update({
+    id: '/clinica-social',
+    path: '/clinica-social',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
 const AuthenticatedAdminEmpresasRoute =
@@ -810,6 +830,7 @@ export interface FileRoutesByFullPath {
   '/acoragemdecomecar': typeof AcoragemdecomecarRoute
   '/amostra-gratis': typeof AmostraGratisRoute
   '/bootstrap': typeof BootstrapRoute
+  '/clinica-social': typeof ClinicaSocialRouteWithChildren
   '/empreendedores': typeof EmpreendedoresRoute
   '/formacao-psicanalise': typeof FormacaoPsicanaliseRoute
   '/formulario': typeof FormularioRoute
@@ -847,6 +868,7 @@ export interface FileRoutesByFullPath {
   '/cliente/ativar': typeof ClienteAtivarRoute
   '/cliente/definir-senha': typeof ClienteDefinirSenhaRoute
   '/cliente/login': typeof ClienteLoginRoute
+  '/clinica-social/profissionais': typeof ClinicaSocialProfissionaisRoute
   '/empresa/login': typeof EmpresaLoginRoute
   '/funcionario/login': typeof FuncionarioLoginRoute
   '/profissionais/$category': typeof ProfissionaisCategoryRoute
@@ -857,6 +879,7 @@ export interface FileRoutesByFullPath {
   '/vendedor/apresentacao': typeof VendedorApresentacaoRoute
   '/admin/acessos': typeof AuthenticatedAdminAcessosRoute
   '/admin/catalogo': typeof AuthenticatedAdminCatalogoRoute
+  '/admin/clinica-social': typeof AuthenticatedAdminClinicaSocialRoute
   '/admin/empresas': typeof AuthenticatedAdminEmpresasRoute
   '/admin/equipe': typeof AuthenticatedAdminEquipeRoute
   '/admin/financeiro': typeof AuthenticatedAdminFinanceiroRoute
@@ -930,6 +953,7 @@ export interface FileRoutesByTo {
   '/acoragemdecomecar': typeof AcoragemdecomecarRoute
   '/amostra-gratis': typeof AmostraGratisRoute
   '/bootstrap': typeof BootstrapRoute
+  '/clinica-social': typeof ClinicaSocialRouteWithChildren
   '/empreendedores': typeof EmpreendedoresRoute
   '/formacao-psicanalise': typeof FormacaoPsicanaliseRoute
   '/formulario': typeof FormularioRoute
@@ -965,6 +989,7 @@ export interface FileRoutesByTo {
   '/cliente/ativar': typeof ClienteAtivarRoute
   '/cliente/definir-senha': typeof ClienteDefinirSenhaRoute
   '/cliente/login': typeof ClienteLoginRoute
+  '/clinica-social/profissionais': typeof ClinicaSocialProfissionaisRoute
   '/empresa/login': typeof EmpresaLoginRoute
   '/funcionario/login': typeof FuncionarioLoginRoute
   '/profissionais/$category': typeof ProfissionaisCategoryRoute
@@ -975,6 +1000,7 @@ export interface FileRoutesByTo {
   '/vendedor/apresentacao': typeof VendedorApresentacaoRoute
   '/admin/acessos': typeof AuthenticatedAdminAcessosRoute
   '/admin/catalogo': typeof AuthenticatedAdminCatalogoRoute
+  '/admin/clinica-social': typeof AuthenticatedAdminClinicaSocialRoute
   '/admin/empresas': typeof AuthenticatedAdminEmpresasRoute
   '/admin/equipe': typeof AuthenticatedAdminEquipeRoute
   '/admin/financeiro': typeof AuthenticatedAdminFinanceiroRoute
@@ -1052,6 +1078,7 @@ export interface FileRoutesById {
   '/acoragemdecomecar': typeof AcoragemdecomecarRoute
   '/amostra-gratis': typeof AmostraGratisRoute
   '/bootstrap': typeof BootstrapRoute
+  '/clinica-social': typeof ClinicaSocialRouteWithChildren
   '/empreendedores': typeof EmpreendedoresRoute
   '/formacao-psicanalise': typeof FormacaoPsicanaliseRoute
   '/formulario': typeof FormularioRoute
@@ -1090,6 +1117,7 @@ export interface FileRoutesById {
   '/cliente/ativar': typeof ClienteAtivarRoute
   '/cliente/definir-senha': typeof ClienteDefinirSenhaRoute
   '/cliente/login': typeof ClienteLoginRoute
+  '/clinica-social/profissionais': typeof ClinicaSocialProfissionaisRoute
   '/empresa/login': typeof EmpresaLoginRoute
   '/funcionario/login': typeof FuncionarioLoginRoute
   '/profissionais/$category': typeof ProfissionaisCategoryRoute
@@ -1100,6 +1128,7 @@ export interface FileRoutesById {
   '/vendedor/apresentacao': typeof VendedorApresentacaoRoute
   '/_authenticated/admin/acessos': typeof AuthenticatedAdminAcessosRoute
   '/_authenticated/admin/catalogo': typeof AuthenticatedAdminCatalogoRoute
+  '/_authenticated/admin/clinica-social': typeof AuthenticatedAdminClinicaSocialRoute
   '/_authenticated/admin/empresas': typeof AuthenticatedAdminEmpresasRoute
   '/_authenticated/admin/equipe': typeof AuthenticatedAdminEquipeRoute
   '/_authenticated/admin/financeiro': typeof AuthenticatedAdminFinanceiroRoute
@@ -1175,6 +1204,7 @@ export interface FileRouteTypes {
     | '/acoragemdecomecar'
     | '/amostra-gratis'
     | '/bootstrap'
+    | '/clinica-social'
     | '/empreendedores'
     | '/formacao-psicanalise'
     | '/formulario'
@@ -1212,6 +1242,7 @@ export interface FileRouteTypes {
     | '/cliente/ativar'
     | '/cliente/definir-senha'
     | '/cliente/login'
+    | '/clinica-social/profissionais'
     | '/empresa/login'
     | '/funcionario/login'
     | '/profissionais/$category'
@@ -1222,6 +1253,7 @@ export interface FileRouteTypes {
     | '/vendedor/apresentacao'
     | '/admin/acessos'
     | '/admin/catalogo'
+    | '/admin/clinica-social'
     | '/admin/empresas'
     | '/admin/equipe'
     | '/admin/financeiro'
@@ -1295,6 +1327,7 @@ export interface FileRouteTypes {
     | '/acoragemdecomecar'
     | '/amostra-gratis'
     | '/bootstrap'
+    | '/clinica-social'
     | '/empreendedores'
     | '/formacao-psicanalise'
     | '/formulario'
@@ -1330,6 +1363,7 @@ export interface FileRouteTypes {
     | '/cliente/ativar'
     | '/cliente/definir-senha'
     | '/cliente/login'
+    | '/clinica-social/profissionais'
     | '/empresa/login'
     | '/funcionario/login'
     | '/profissionais/$category'
@@ -1340,6 +1374,7 @@ export interface FileRouteTypes {
     | '/vendedor/apresentacao'
     | '/admin/acessos'
     | '/admin/catalogo'
+    | '/admin/clinica-social'
     | '/admin/empresas'
     | '/admin/equipe'
     | '/admin/financeiro'
@@ -1416,6 +1451,7 @@ export interface FileRouteTypes {
     | '/acoragemdecomecar'
     | '/amostra-gratis'
     | '/bootstrap'
+    | '/clinica-social'
     | '/empreendedores'
     | '/formacao-psicanalise'
     | '/formulario'
@@ -1454,6 +1490,7 @@ export interface FileRouteTypes {
     | '/cliente/ativar'
     | '/cliente/definir-senha'
     | '/cliente/login'
+    | '/clinica-social/profissionais'
     | '/empresa/login'
     | '/funcionario/login'
     | '/profissionais/$category'
@@ -1464,6 +1501,7 @@ export interface FileRouteTypes {
     | '/vendedor/apresentacao'
     | '/_authenticated/admin/acessos'
     | '/_authenticated/admin/catalogo'
+    | '/_authenticated/admin/clinica-social'
     | '/_authenticated/admin/empresas'
     | '/_authenticated/admin/equipe'
     | '/_authenticated/admin/financeiro'
@@ -1541,6 +1579,7 @@ export interface RootRouteChildren {
   AcoragemdecomecarRoute: typeof AcoragemdecomecarRoute
   AmostraGratisRoute: typeof AmostraGratisRoute
   BootstrapRoute: typeof BootstrapRoute
+  ClinicaSocialRoute: typeof ClinicaSocialRouteWithChildren
   EmpreendedoresRoute: typeof EmpreendedoresRoute
   FormacaoPsicanaliseRoute: typeof FormacaoPsicanaliseRoute
   FormularioRoute: typeof FormularioRoute
@@ -1645,6 +1684,13 @@ declare module '@tanstack/react-router' {
       path: '/bootstrap'
       fullPath: '/bootstrap'
       preLoaderRoute: typeof BootstrapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/clinica-social': {
+      id: '/clinica-social'
+      path: '/clinica-social'
+      fullPath: '/clinica-social'
+      preLoaderRoute: typeof ClinicaSocialRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/empreendedores': {
@@ -1913,6 +1959,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClienteLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/clinica-social/profissionais': {
+      id: '/clinica-social/profissionais'
+      path: '/profissionais'
+      fullPath: '/clinica-social/profissionais'
+      preLoaderRoute: typeof ClinicaSocialProfissionaisRouteImport
+      parentRoute: typeof ClinicaSocialRoute
+    }
     '/empresa/login': {
       id: '/empresa/login'
       path: '/empresa/login'
@@ -1981,6 +2034,13 @@ declare module '@tanstack/react-router' {
       path: '/catalogo'
       fullPath: '/admin/catalogo'
       preLoaderRoute: typeof AuthenticatedAdminCatalogoRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/clinica-social': {
+      id: '/_authenticated/admin/clinica-social'
+      path: '/clinica-social'
+      fullPath: '/admin/clinica-social'
+      preLoaderRoute: typeof AuthenticatedAdminClinicaSocialRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
     '/_authenticated/admin/empresas': {
@@ -2444,6 +2504,7 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminAcessosRoute: typeof AuthenticatedAdminAcessosRoute
   AuthenticatedAdminCatalogoRoute: typeof AuthenticatedAdminCatalogoRoute
+  AuthenticatedAdminClinicaSocialRoute: typeof AuthenticatedAdminClinicaSocialRoute
   AuthenticatedAdminEmpresasRoute: typeof AuthenticatedAdminEmpresasRoute
   AuthenticatedAdminEquipeRoute: typeof AuthenticatedAdminEquipeRoute
   AuthenticatedAdminFinanceiroRoute: typeof AuthenticatedAdminFinanceiroRoute
@@ -2470,6 +2531,7 @@ interface AuthenticatedAdminRouteChildren {
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminAcessosRoute: AuthenticatedAdminAcessosRoute,
   AuthenticatedAdminCatalogoRoute: AuthenticatedAdminCatalogoRoute,
+  AuthenticatedAdminClinicaSocialRoute: AuthenticatedAdminClinicaSocialRoute,
   AuthenticatedAdminEmpresasRoute: AuthenticatedAdminEmpresasRoute,
   AuthenticatedAdminEquipeRoute: AuthenticatedAdminEquipeRoute,
   AuthenticatedAdminFinanceiroRoute: AuthenticatedAdminFinanceiroRoute,
@@ -2730,6 +2792,18 @@ const PortalRouteChildren: PortalRouteChildren = {
 const PortalRouteWithChildren =
   PortalRoute._addFileChildren(PortalRouteChildren)
 
+interface ClinicaSocialRouteChildren {
+  ClinicaSocialProfissionaisRoute: typeof ClinicaSocialProfissionaisRoute
+}
+
+const ClinicaSocialRouteChildren: ClinicaSocialRouteChildren = {
+  ClinicaSocialProfissionaisRoute: ClinicaSocialProfissionaisRoute,
+}
+
+const ClinicaSocialRouteWithChildren = ClinicaSocialRoute._addFileChildren(
+  ClinicaSocialRouteChildren,
+)
+
 interface ProfissionaisRouteChildren {
   ProfissionaisCategoryRoute: typeof ProfissionaisCategoryRoute
 }
@@ -2766,6 +2840,7 @@ const rootRouteChildren: RootRouteChildren = {
   AcoragemdecomecarRoute: AcoragemdecomecarRoute,
   AmostraGratisRoute: AmostraGratisRoute,
   BootstrapRoute: BootstrapRoute,
+  ClinicaSocialRoute: ClinicaSocialRouteWithChildren,
   EmpreendedoresRoute: EmpreendedoresRoute,
   FormacaoPsicanaliseRoute: FormacaoPsicanaliseRoute,
   FormularioRoute: FormularioRoute,

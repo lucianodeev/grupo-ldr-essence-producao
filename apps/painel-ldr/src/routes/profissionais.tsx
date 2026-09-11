@@ -10,6 +10,7 @@ import {
   Monitor,
   Search,
   UserRound,
+  HeartHandshake,
   X,
 } from "lucide-react";
 import { ProfessionalNetworkMap } from "@/components/professional-network-map";
@@ -194,6 +195,13 @@ const COPY = {
   },
 } as const;
 
+const HUB_COPY = {
+  pt: { title: "Profissionais LDR", sub: "Encontre atendimento, conheça nossa Clínica Social ou faça parte da Rede LDR.", clinic: "Clínica Social de Psicanálise", clinicText: "Atendimento psicanalítico com valor social: R$ 30 no Brasil e € 20 na Europa.", find: "Encontrar um profissional", join: "Sou profissional" },
+  en: { title: "LDR Professionals", sub: "Find care, discover our Social Clinic or join the LDR Network.", clinic: "Social Psychoanalysis Clinic", clinicText: "Psychoanalysis at a social rate: R$30 in Brazil and €20 in Europe.", find: "Find a professional", join: "I am a professional" },
+  fr: { title: "Professionnels LDR", sub: "Trouvez un accompagnement, découvrez notre Clinique Sociale ou rejoignez le Réseau LDR.", clinic: "Clinique Sociale de Psychanalyse", clinicText: "Psychanalyse à tarif social : 30 R$ au Brésil et 20 € en Europe.", find: "Trouver un professionnel", join: "Je suis professionnel" },
+  es: { title: "Profesionales LDR", sub: "Encuentra atención, conoce nuestra Clínica Social o forma parte de la Red LDR.", clinic: "Clínica Social de Psicoanálisis", clinicText: "Psicoanálisis con valor social: R$30 en Brasil y €20 en Europa.", find: "Encontrar un profesional", join: "Soy profesional" },
+} as const;
+
 const NAVY = "#0b1428";
 const GOLD = "#c9a63a";
 const CREAM = "#fbf8f1";
@@ -202,6 +210,7 @@ const MUTED = "#667085";
 function Directory() {
   const { locale } = useI18n();
   const c = COPY[locale];
+  const hub = HUB_COPY[locale];
   const data = Route.useLoaderData() as any;
   const [q, setQ] = useState("");
   const [cat, setCat] = useState("");
@@ -335,7 +344,21 @@ function Directory() {
           </div>
         </section>
 
-        <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
+        <section className="mx-auto max-w-7xl px-4 pt-8 sm:px-6">
+          <div className="rounded-[2rem] p-6 text-white sm:p-8" style={{ background: NAVY }}>
+            <p className="text-xs font-black uppercase tracking-[.2em]" style={{ color: GOLD }}>{hub.title}</p>
+            <h2 className="mt-2 max-w-3xl font-serif text-3xl sm:text-4xl">{hub.sub}</h2>
+            <div className="mt-6 grid gap-4 md:grid-cols-3">
+              <Link to="/clinica-social" className="rounded-2xl bg-white p-5 text-left transition hover:-translate-y-0.5" style={{ color: NAVY }}>
+                <HeartHandshake className="h-6 w-6" style={{ color: GOLD }}/><div className="mt-3 font-black">{hub.clinic}</div><p className="mt-2 text-sm" style={{ color: MUTED }}>{hub.clinicText}</p>
+              </Link>
+              <a href="#diretorio-profissionais" className="rounded-2xl border border-white/25 p-5 transition hover:bg-white/10"><Search className="h-6 w-6" style={{ color: GOLD }}/><div className="mt-3 font-black">{hub.find}</div><p className="mt-2 text-sm text-white/70">Mapa, filtros, especialidades, idiomas e disponibilidade.</p></a>
+              <Link to="/para-profissionais" className="rounded-2xl border border-white/25 p-5 transition hover:bg-white/10"><UserRound className="h-6 w-6" style={{ color: GOLD }}/><div className="mt-3 font-black">{hub.join}</div><p className="mt-2 text-sm text-white/70">Crie seu perfil na Rede LDR ou solicite participação na Clínica Social.</p></Link>
+            </div>
+          </div>
+        </section>
+
+        <section id="diretorio-profissionais" className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
           <div
             className="rounded-[2rem] border bg-white p-4 shadow-lg sm:p-6"
             style={{ borderColor: "rgba(201,166,58,.4)" }}
