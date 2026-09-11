@@ -52,7 +52,7 @@ export const autismPsychoanalysisModule:PsychoanalysisModule={
   lessons,
   deeper:[
     {title:"Autistic Disturbances of Affective Contact",author:"Leo Kanner",year:"1943",note:"Texto histórico fundador. Leia com contextualização crítica e sem transformar descrição histórica em critério atual."},
-    {title:"The Psychogenesis of a Case of Homosexuality in a Woman / writings on child analysis — contextualização do Caso Dick",author:"Melanie Klein",year:"1930",note:"Para o Caso Dick, consulte a publicação clássica de Klein sobre a importância da formação de símbolos no desenvolvimento do ego."},
+    {title:"The Importance of Symbol-Formation in the Development of the Ego",author:"Melanie Klein",year:"1930",note:"Para o Caso Dick, consulte a publicação clássica de Klein sobre a importância da formação de símbolos no desenvolvimento do ego."},
     {title:"Autistic States in Children",author:"Frances Tustin",year:"1981",note:"Obra histórica sobre encapsulamento, formas e objetos autísticos; exige leitura crítica contemporânea."},
     {title:"O Autista e sua Voz",author:"Jean-Claude Maleval",year:"2009",note:"Formulações lacanianas sobre voz, duplo, linguagem e borda autística."},
     {title:"A Batalha do Autismo",author:"Éric Laurent",year:"2012",note:"Discussão psicanalítica e política sobre singularidade e modelos de cuidado."},
