@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { Award, LockKeyhole, Printer } from "lucide-react";
-import { psychoanalysisModules } from "@/content/psychoanalysis-curriculum";
+import { psychoanalysisModules } from "@/content/psychoanalysis-curriculum-active";
 import { clientPsychoanalysisOffer } from "@/lib/psychoanalysis-commerce.functions";
 
 export const Route=createFileRoute("/_clientarea/cliente/treinamentos/psicanalise/certificado")({component:PsychoanalysisCertificate});
@@ -20,7 +20,7 @@ function PsychoanalysisCertificate(){
      <Award className="mx-auto h-12 w-12 text-[#c9a54a]"/>
      <p className="mt-4 text-xs font-black uppercase tracking-[.28em] text-[#7b4aa3]">Grupo LDR Essence · LDR RH & Estratégia</p>
      <h1 className="mt-5 font-serif text-4xl font-bold text-[#2f1457] sm:text-5xl">Certificado de Conclusão</h1>
-     <p className="mx-auto mt-6 max-w-3xl text-base leading-8 text-[#51445a]">Certificamos que <strong className="text-[#2f1457]">{offer.customerName}</strong> concluiu a <strong>Formação Online em Psicanálise</strong>, com carga horária formativa total de <strong>1.200 horas</strong>, após cumprir o período mínimo formativo de 180 dias e os requisitos obrigatórios previstos no percurso.</p>
+     <p className="mx-auto mt-6 max-w-3xl text-base leading-8 text-[#51445a]">Certificamos que <strong className="text-[#2f1457]">{offer.customerName}</strong> concluiu a <strong>Formação Online em Psicanálise</strong>, com carga horária formativa total de <strong>1.200 horas</strong>, após cumprir o período mínimo formativo de 200 dias e os requisitos obrigatórios previstos no percurso.</p>
      <p className="mx-auto mt-4 max-w-3xl text-sm leading-7 text-[#66576f]">Formação livre em Psicanálise, com carga horária declarada de 1.200 horas. O percurso inclui formação teórica, atividades, análise pessoal e prática clínica supervisionada. Este certificado comprova a conclusão do percurso formativo; não equivale a graduação universitária, licença estatal ou autorização automática para exercer atividade regulada. O exercício profissional deve observar as regras aplicáveis no local de atuação.</p>
      <div className="mt-8 grid gap-4 text-left sm:grid-cols-3"><div className="rounded-2xl border border-[#dfd3e8] p-4"><p className="text-xs font-black uppercase text-[#7b4aa3]">Carga horária</p><p className="mt-1 font-bold text-[#2f1457]">1.200 horas</p></div><div className="rounded-2xl border border-[#dfd3e8] p-4"><p className="text-xs font-black uppercase text-[#7b4aa3]">Data de matrícula</p><p className="mt-1 font-bold text-[#2f1457]">{offer.enrolledAt?new Date(offer.enrolledAt).toLocaleDateString("pt-BR"):"Registrada na plataforma"}</p></div><div className="rounded-2xl border border-[#dfd3e8] p-4"><p className="text-xs font-black uppercase text-[#7b4aa3]">Data de conclusão</p><p className="mt-1 font-bold text-[#2f1457]">{completionDate}</p></div></div>
      <div className="mt-8 text-left"><h2 className="font-serif text-2xl font-bold text-[#2f1457]">Matriz curricular</h2><div className="mt-4 grid gap-2 sm:grid-cols-2">{psychoanalysisModules.map(m=><div key={m.id} className="rounded-xl border border-[#eadff0] p-3"><strong className="text-sm text-[#5b2b86]">Módulo {m.id}</strong><p className="mt-1 text-xs leading-5 text-[#66576f]">{m.title} · {m.lessons.length} unidades de aprendizagem</p></div>)}</div></div>
