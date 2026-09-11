@@ -1,0 +1,25 @@
+name: Change book reader theme to wine
+on:
+  push:
+    paths:
+      - 'tools/change_book_reader_theme_to_wine.py'
+      - '.github/workflows/change-book-reader-theme-to-wine.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Apply wine reader theme
+        run: python tools/change_book_reader_theme_to_wine.py
+      - name: Commit change
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/components/digital-reader-v2.tsx
+          git diff --cached --quiet && exit 0
+          git commit -m "style: change book reader interior to wine"
+          git push origin main
