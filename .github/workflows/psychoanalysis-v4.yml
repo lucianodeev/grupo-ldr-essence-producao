@@ -1,0 +1,25 @@
+name: Psychoanalysis v4
+on:
+  push:
+    paths:
+      - 'tools/psychoanalysis_v4_patch.py'
+      - '.github/workflows/psychoanalysis-v4.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Apply psychoanalysis v4
+        run: python tools/psychoanalysis_v4_patch.py
+      - name: Commit changes
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/content/psychoanalysis-curriculum.ts apps/painel-ldr/src/components/psychoanalysis-training-page.tsx apps/painel-ldr/src/routes/_clientarea.cliente.treinamentos.psicanalise.tsx apps/painel-ldr/src/routes/_clientarea.cliente.treinamentos.psicanalise.certificado.tsx apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx apps/painel-ldr/src/lib/training-forum.server.ts
+          git diff --cached --quiet && exit 0
+          git commit -m "fix: finalize psychoanalysis pricing modules forum and certificate"
+          git push origin main
