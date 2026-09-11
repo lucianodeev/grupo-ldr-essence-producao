@@ -12,10 +12,13 @@ function origin() {
   return process.env["CLIENT_PANEL_URL"]?.replace(/\/$/, "") || (req ? new URL(req.url).origin : "https://painel.ldrrhestrategia.com");
 }
 
-async function getCommissionRate() {
-  const { data } = await db.from("platform_financial_config").select("numeric_value").eq("config_key", "platform_commission_rate").eq("active", true).maybeSingle();
-  const rate = Number(data?.numeric_value ?? 0.10);
-  return Number.isFinite(rate) && rate >= 0 && rate < 1 ? rate : 0.10;
+type ClientSource = "social_clinic" | "professional_direct" | "ldr_generated";
+async function getCommissionRate(source: ClientSource = "ldr_generated") {
+  const key = source === "social_clinic" ? "commission_social_clinic" : source === "professional_direct" ? "commission_professional_direct" : "commission_ldr_generated";
+  const fallback = source === "social_clinic" ? 0.07 : source === "professional_direct" ? 0.10 : 0.15;
+  const { data } = await db.from("platform_financial_config").select("numeric_value").eq("config_key", key).eq("active", true).maybeSingle();
+  const rate = Number(data?.numeric_value ?? fallback);
+  return Number.isFinite(rate) && rate >= 0 && rate < 1 ? rate : fallback;
 }
 
 async function ensureAccount(userId: string, email: string | null) {
@@ -212,7 +215,7 @@ export async function createProfessionalSubscriptionCheckout(userId: string, ema
   return { url: session.url, subscriptionId: pending.id };
 }
 
-export async function createMarketplaceBookingCheckout(input: { profileSlug: string; serviceId: string; startAt: string; customerName: string; customerEmail: string; timezone: string; modality: "online"|"in_person" }) {
+export async function createMarketplaceBookingCheckout(input: { profileSlug: string; serviceId: string; startAt: string; customerName: string; customerEmail: string; timezone: string; modality: "online"|"in_person"; clientSource?: ClientSource }) {
   const name = input.customerName.trim();
   const mail = normEmail(input.customerEmail);
   if (name.length < 2 || !mail?.includes("@")) fail("Informe nome e e-mail válidos.");
@@ -234,7 +237,8 @@ export async function createMarketplaceBookingCheckout(input: { profileSlug: str
   const { data: blocked } = await db.from("professional_unavailability").select("id").eq("professional_profile_id", profile.id).lt("starts_at", end.toISOString()).gt("ends_at", start.toISOString()).limit(1);
   if ((blocked ?? []).length) fail("Este horário está indisponível.");
   const gross = moneyInt(service.price_cents);
-  const rate = await getCommissionRate();
+  const clientSource: ClientSource = input.clientSource === "social_clinic" || input.clientSource === "professional_direct" ? input.clientSource : "ldr_generated";
+  const rate = await getCommissionRate(clientSource);
   const platformFee = Math.round(gross * rate);
   const providerNet = gross - platformFee;
   const { data: booking, error: bookingError } = await db.from("marketplace_bookings").insert({ professional_profile_id: profile.id, professional_service_id: service.id, customer_name: name, customer_email: mail, modality: input.modality, starts_at: start.toISOString(), ends_at: end.toISOString(), timezone: input.timezone || "Europe/Brussels", gross_amount_cents: gross, currency: service.currency, provider_label: profile.display_name, service_provider_type: "network_professional", checkout_expires_at: new Date(Date.now() + 30 * 60_000).toISOString() }).select("id").single();
@@ -258,13 +262,18 @@ export async function createMarketplaceBookingCheckout(input: { profileSlug: str
   params.set("metadata[booking_id]", booking.id);
   params.set("metadata[payment_id]", payment.id);
   params.set("metadata[professional_account_id]", profile.professional_account_id);
+  params.set("metadata[client_source]", clientSource);
+  params.set("metadata[commission_rate]", String(rate));
   params.set("payment_intent_data[metadata][checkout_kind]", "marketplace_booking");
   params.set("payment_intent_data[metadata][booking_id]", booking.id);
   params.set("payment_intent_data[metadata][payment_id]", payment.id);
   params.set("payment_intent_data[metadata][professional_account_id]", profile.professional_account_id);
+  params.set("payment_intent_data[metadata][client_source]", clientSource);
+  params.set("payment_intent_data[metadata][commission_rate]", String(rate));
   const response = await fetch("https://api.stripe.com/v1/checkout/sessions", { method: "POST", headers: { Authorization: `Bearer ${secret}`, "Content-Type": "application/x-www-form-urlencoded", "Idempotency-Key": `booking-${booking.id}` }, body: params });
   const session = await response.json() as { id?: string; url?: string; error?: { message?: string } };
   if (!response.ok || !session.id || !session.url) { await db.from("marketplace_bookings").update({ status: "cancelled_client" }).eq("id", booking.id); fail(session.error?.message || "Não foi possível abrir o checkout."); }
   await db.from("marketplace_payments").update({ stripe_checkout_session_id: session.id }).eq("id", payment.id);
+  await db.from("audit_logs").insert({ action: "professional_network.booking_source", target: booking.id, actor_email: mail, details: { client_source: clientSource, commission_rate: rate, platform_fee_cents: platformFee, professional_account_id: profile.professional_account_id } });
   return { url: session.url };
 }
