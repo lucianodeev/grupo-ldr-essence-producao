@@ -1,63 +1,126 @@
-export type MentorshipLesson={id:string;title:string;summary:string;content:string[]};
+export type MentorshipLesson={id:string;title:string;summary:string;content:string[];studyMinutes:number};
 export type MentorshipModule={id:number;title:string;lessons:MentorshipLesson[];activity:string};
 
-const lesson=(id:string,title:string,summary:string,...content:string[]):MentorshipLesson=>({id,title,summary,content});
+const lesson=(id:string,title:string,focus:string,practice:string,output:string):MentorshipLesson=>({
+  id,title,summary:focus,studyMinutes:40,
+  content:[
+    `BLOCO 1 · 8 MIN — CONCEITO CENTRAL. ${focus}. Nesta etapa, trabalhe o tema sem buscar respostas rápidas: identifique o problema que a aula resolve, observe como ele aparece na prática profissional e diferencie opinião pessoal de critério de trabalho. Faça anotações curtas com exemplos da sua própria trajetória para transformar o conceito em referência prática.`,
+    `BLOCO 2 · 8 MIN — APROFUNDAMENTO. Analise o tema “${title}” a partir de três perguntas: o que está sob controle do mentor, o que pertence ao mentorado e o que depende do contexto externo? Considere riscos de simplificação, promessas indevidas e decisões tomadas cedo demais. Releia suas anotações e destaque os pontos que exigem mais investigação antes de orientar alguém.`,
+    `BLOCO 3 · 8 MIN — APLICAÇÃO GUIADA. Para sair da teoria, ${practice}. Durante a aplicação, registre fatos, hipóteses e decisões em colunas separadas. Essa distinção reduz interpretações precipitadas e ajuda a construir uma atuação mais consistente, ética e verificável. Ao final, escreva qual informação adicional você precisaria obter antes de avançar.`,
+    `BLOCO 4 · 8 MIN — REFLEXÃO PROFISSIONAL. Observe como sua experiência pessoal influencia sua leitura deste tema. Experiência pode ampliar repertório, mas também pode levar o mentor a acreditar que o caminho que funcionou para ele serve para todos. Identifique um possível viés seu relacionado a “${title}” e escreva como você pode reduzi-lo por meio de perguntas, dados e escuta.`,
+    `BLOCO 5 · 8 MIN — ENTREGA DO DIA. ${output}. A entrega deve ser objetiva, utilizável em uma sessão real e coerente com os limites da mentoria profissional. Antes de encerrar, revise o material perguntando: está claro, é observável, respeita a autonomia do mentorado e pode ser acompanhado ao longo do processo? Guarde a versão final para compor seu portfólio de ferramentas da formação.`
+  ]
+});
 
 export const mentorshipCareerModules:MentorshipModule[]=[
- {id:1,title:"Fundamentos da Mentoria Profissional",activity:"Defina seu papel como mentor, seus limites e o perfil de pessoa que você pretende acompanhar.",lessons:[
-  lesson("m1-1","O que é mentoria","Compreenda a finalidade da mentoria e o que caracteriza um processo profissional.","Mentoria é um processo estruturado de desenvolvimento em que experiência, reflexão e direcionamento ajudam o mentorado a avançar em objetivos concretos.","O mentor não substitui profissionais de saúde, não promete resultados e trabalha com objetivos compatíveis com sua competência."),
-  lesson("m1-2","Papel e responsabilidades do mentor","Entenda responsabilidades, limites e postura profissional.","O mentor organiza o processo, ajuda o mentorado a ampliar possibilidades, acompanha decisões e favorece responsabilização.","Clareza de escopo, confidencialidade, registro e encaminhamento quando necessário protegem as duas partes."),
-  lesson("m1-3","Mentoria, consultoria, terapia e coaching","Diferencie práticas que podem parecer semelhantes.","Consultoria costuma entregar diagnóstico e recomendação especializada. Coaching usa metodologias próprias orientadas a desempenho. Terapias e psicoterapias possuem outros objetivos e referenciais.","Na mentoria profissional, a experiência do mentor e a construção conjunta de estratégia ocupam lugar central."),
-  lesson("m1-4","Ética e limites profissionais","Construa uma prática segura e responsável.","Defina contrato, objetivos, confidencialidade, canais de contato, limites de disponibilidade e critérios de encerramento.","Nunca use a mentoria para diagnosticar ou tratar condições de saúde quando isso estiver fora da sua habilitação.") ]},
- {id:2,title:"Diagnóstico e Definição de Objetivos",activity:"Crie um roteiro de primeiro encontro com diagnóstico inicial, objetivo principal e indicadores de avanço.",lessons:[
-  lesson("m2-1","Primeiro contato com o mentorado","Estruture uma entrada profissional e acolhedora.","O primeiro contato deve esclarecer objetivo, funcionamento, duração, investimento e limites do processo.","Evite prometer transformação antes de compreender a necessidade real."),
-  lesson("m2-2","Anamnese profissional","Mapeie trajetória, momento atual e expectativas.","Uma anamnese profissional pode incluir histórico de carreira, experiências relevantes, competências percebidas, dificuldades, contexto atual, recursos e metas.","Use perguntas abertas e organize as informações sem transformar a conversa em interrogatório."),
-  lesson("m2-3","Identificação de necessidades","Separe desejo imediato de necessidade estratégica.","O que a pessoa pede nem sempre é o que precisa priorizar. Investigue contexto, consequências e obstáculos antes de definir o foco.","Transforme queixas genéricas em problemas observáveis e trabalháveis."),
-  lesson("m2-4","Definição de objetivos","Converta intenção em direção concreta.","Objetivos úteis são específicos o suficiente para orientar ação e flexíveis o suficiente para serem revisados.","Defina também sinais de progresso para que mentor e mentorado saibam se o processo está avançando."),
-  lesson("m2-5","Plano de desenvolvimento","Organize prioridades e próximos passos.","O plano de desenvolvimento conecta objetivo, ações, responsáveis, prazos e critérios de acompanhamento.","Trabalhe com poucas prioridades por vez para aumentar execução.") ]},
- {id:3,title:"Carreira e Desenvolvimento Profissional",activity:"Monte um mapa de carreira com situação atual, direção desejada, competências e três próximos passos.",lessons:[
-  lesson("m3-1","Planejamento de carreira","Transforme carreira em projeto gerenciável.","Planejamento de carreira combina autoconhecimento profissional, leitura de mercado e decisões compatíveis com a realidade.","O mentor ajuda a pessoa a comparar caminhos sem decidir por ela."),
-  lesson("m3-2","Transição profissional","Conduza mudanças com menor improviso.","Transições podem envolver função, setor, país, modelo de trabalho ou empreendedorismo.","Mapeie riscos, recursos financeiros, lacunas de competência, rede de contatos e uma estratégia de transição gradual quando possível."),
-  lesson("m3-3","Competências e potencial","Reconheça recursos já disponíveis e lacunas reais.","Competência envolve conhecimentos, habilidades e comportamentos observáveis.","Evite avaliações vagas; peça exemplos concretos de situações em que a pessoa demonstrou determinada capacidade."),
-  lesson("m3-4","Tomada de decisão","Estruture escolhas profissionais complexas.","Compare opções por critérios relevantes: aprendizado, remuneração, mobilidade, estabilidade, alinhamento com objetivos e custo de oportunidade.","Decidir melhor não significa eliminar toda incerteza, mas torná-la consciente."),
-  lesson("m3-5","Metas profissionais","Conecte ambição a execução.","Quebre metas maiores em marcos mensais, semanais e ações de curto prazo.","Revise metas quando surgirem dados novos em vez de insistir em um plano que perdeu sentido.") ]},
- {id:4,title:"Comunicação e Condução da Mentoria",activity:"Prepare cinco perguntas estratégicas e um modelo de feedback para utilizar em um encontro real ou simulado.",lessons:[
-  lesson("m4-1","Escuta profissional","Escute para compreender, não apenas para responder.","A escuta profissional considera conteúdo, contexto, contradições, prioridades e aquilo que a pessoa evita decidir.","Resuma o que ouviu e confirme sua compreensão antes de orientar."),
-  lesson("m4-2","Perguntas estratégicas","Use perguntas que produzam reflexão e decisão.","Perguntas úteis ampliam consciência, testam pressupostos e aproximam o mentorado de uma ação concreta.","Evite perguntas manipulativas que já carregam a resposta desejada pelo mentor."),
-  lesson("m4-3","Comunicação assertiva","Seja claro sem ser agressivo.","Comunicação assertiva combina respeito, objetividade, limites e responsabilidade pelo que está sendo dito.","Diferencie fato, interpretação e recomendação ao conversar sobre decisões profissionais."),
-  lesson("m4-4","Feedback","Ofereça retorno que possa ser utilizado.","Um feedback de qualidade descreve comportamento ou resultado, explica impacto e sugere possibilidades de melhoria.","Evite rótulos pessoais e generalizações."),
-  lesson("m4-5","Condução dos encontros","Dê estrutura sem engessar o processo.","Um encontro pode incluir abertura, revisão de ações, tema principal, decisões, plano de ação e fechamento.","Reserve os minutos finais para sintetizar compromissos e próximos passos."),
-  lesson("m4-6","Situações difíceis","Mantenha o processo profissional diante de resistência ou impasse.","Quando houver resistência, volte ao objetivo contratado e explore o que está impedindo a ação.","Se a demanda ultrapassar o escopo da mentoria, sinalize o limite e encaminhe quando necessário.") ]},
- {id:5,title:"Método e Acompanhamento",activity:"Desenhe sua sessão-padrão de mentoria e um modelo simples de registro de progresso.",lessons:[
-  lesson("m5-1","Estrutura de uma sessão","Crie consistência na experiência do mentorado.","Ter uma estrutura-base ajuda a manter foco e continuidade entre encontros.","A estrutura pode ser adaptada, mas deve preservar objetivo, decisão e acompanhamento."),
-  lesson("m5-2","Plano de ação","Converta conversa em movimento.","Toda ação deve ser clara, realista e atribuída ao responsável correto.","Evite listas enormes; priorize o que realmente muda o processo."),
-  lesson("m5-3","Acompanhamento da evolução","Use evidências de avanço.","Acompanhe entregas, decisões, mudanças de comportamento profissional e indicadores definidos no início.","Progresso não precisa ser linear, mas deve ser observável."),
-  lesson("m5-4","Registro dos encontros","Documente apenas o necessário.","Registros profissionais podem conter data, objetivo, decisões, ações combinadas e pontos para acompanhamento.","Proteja os dados e evite registrar informações irrelevantes ou excessivamente sensíveis."),
-  lesson("m5-5","Indicadores e avaliação","Revise o processo com método.","Use indicadores adequados ao objetivo, como candidaturas realizadas, entrevistas, propostas, decisões tomadas ou entregas concluídas.","Periodicamente, avalie se o processo deve continuar, mudar de foco ou ser encerrado.") ]},
- {id:6,title:"Posicionamento Profissional do Mentor",activity:"Escreva em uma frase quem você ajuda, em qual problema e qual transformação profissional você facilita.",lessons:[
-  lesson("m6-1","Definição de público","Escolha com quem sua experiência gera mais valor.","Um público bem definido facilita comunicação, metodologia, conteúdo e indicação.","Comece por problemas que você conhece de forma concreta."),
-  lesson("m6-2","Nicho e posicionamento","Diferencie especialização de limitação.","Posicionamento é a associação que você quer construir na mente do mercado.","Ele pode evoluir conforme sua prática produz dados e resultados."),
-  lesson("m6-3","Construção da oferta","Transforme conhecimento em serviço compreensível.","Explique para quem é, qual problema aborda, como funciona, duração, entregáveis e limites.","Uma boa oferta reduz dúvidas sem criar promessas irreais."),
-  lesson("m6-4","Autoridade e presença digital","Construa confiança com consistência.","Autoridade é consequência de clareza, experiência demonstrável, conteúdo útil, prova social legítima e coerência profissional.","Evite depender apenas de estética ou frases de efeito."),
-  lesson("m6-5","Comunicação do serviço","Fale do benefício sem distorcer o processo.","Mostre situações que a mentoria ajuda a organizar e decisões que ela facilita.","Use linguagem concreta e inclua chamadas para ação simples.") ]},
- {id:7,title:"Mentoria de Carreira na Prática",activity:"Escolha um dos casos do módulo e produza diagnóstico, objetivo, plano de ação e forma de acompanhamento.",lessons:[
-  lesson("m7-1","Estudo de caso: estagnação","Trabalhe um caso de profissional sem perspectiva de crescimento.","Mapeie o que depende da empresa, o que depende do profissional e quais alternativas externas existem.","Construa ações que gerem informação antes de uma decisão definitiva."),
-  lesson("m7-2","Estudo de caso: transição","Organize mudança de área com critérios.","Identifique competências transferíveis, lacunas, experiências de teste e rede necessária.","Planeje uma transição que produza evidências antes de abandonar a trajetória atual quando possível."),
-  lesson("m7-3","Simulação de atendimento","Pratique abertura, diagnóstico e fechamento.","Simule um encontro de 30 a 50 minutos com foco em uma decisão profissional realista.","Ao final, avalie clareza, escuta, qualidade das perguntas e objetividade do plano de ação."),
-  lesson("m7-4","Construção de estratégias","Escolha estratégias compatíveis com o contexto.","Duas pessoas com o mesmo objetivo podem precisar de caminhos diferentes por recursos, rede, experiência e restrições.","Evite soluções-padrão sem diagnóstico."),
-  lesson("m7-5","Análise da evolução","Aprenda a revisar o processo.","Compare o estado atual com o objetivo inicial e registre mudanças concretas.","Use a revisão para decidir continuidade, encerramento ou novo ciclo de mentoria.") ]},
- {id:8,title:"Estruturando seu Serviço de Mentoria",activity:"Monte sua primeira oferta completa de mentoria com público, duração, frequência, entregáveis, preço e jornada do cliente.",lessons:[
-  lesson("m8-1","Modelo de atendimento","Escolha formato coerente com sua proposta.","Defina atendimento individual ou grupo, duração dos encontros, frequência, canais e materiais.","Mantenha o modelo simples no início e melhore com base na experiência."),
-  lesson("m8-2","Jornada do cliente","Organize a experiência do primeiro contato ao encerramento.","Mapeie descoberta, conversa inicial, contratação, onboarding, encontros, acompanhamento e fechamento.","Uma jornada clara reduz atrito e aumenta confiança."),
-  lesson("m8-3","Pacotes e programas","Estruture duração e entregas.","Venda um processo compreensível, não apenas horas soltas, quando isso fizer sentido para sua prática.","Deixe claro o que está e o que não está incluído."),
-  lesson("m8-4","Agenda e operação","Crie uma rotina sustentável.","Defina horários, política de reagendamento, intervalos, registros, pagamentos e acompanhamento.","Operação organizada protege a qualidade do serviço."),
-  lesson("m8-5","Experiência do mentorado","Cuide dos pontos que geram percepção de valor.","Pontualidade, clareza, continuidade, materiais úteis e acompanhamento consistente importam tanto quanto a conversa em si.","Colete feedback para ajustar o serviço."),
-  lesson("m8-6","Apresentação profissional","Prepare materiais essenciais para vender e entregar.","Crie uma apresentação curta, página ou mensagem de oferta, formulário inicial, contrato e roteiro de onboarding.","Mantenha linguagem simples e profissional.") ]},
- {id:9,title:"Prática e Conclusão",activity:"Entregue um caso final completo: diagnóstico, objetivos, plano de mentoria, duas sessões simuladas, acompanhamento e critérios de conclusão.",lessons:[
-  lesson("m9-1","Construção do processo completo","Integre tudo que foi estudado.","Escolha um caso real autorizado ou simulado e estruture o processo do primeiro contato ao encerramento.","Demonstre coerência entre diagnóstico, objetivo, metodologia e ações."),
-  lesson("m9-2","Aplicação prática","Transforme conhecimento em condução.","Execute ou simule encontros e registre decisões, dificuldades e ajustes.","Observe especialmente sua escuta, clareza de limites e capacidade de manter foco."),
-  lesson("m9-3","Avaliação final","Revise sua preparação para atuar.","Avalie seus pontos fortes, lacunas e temas que exigem estudo adicional.","Defina como seguirá desenvolvendo sua prática após a formação."),
-  lesson("m9-4","Conclusão","Organize os próximos passos profissionais.","Finalize sua oferta, materiais, rotina e plano de divulgação.","A conclusão da formação representa o início de uma prática que deve continuar sendo revisada e aprimorada.") ]}
+  {id:1,title:"Fundamentos da Mentoria Profissional",activity:"Consolidar identidade, limites e fundamentos da atuação do mentor.",lessons:[
+    lesson("m1-1","O que é mentoria","Definir mentoria como processo estruturado de desenvolvimento","mapear situações em que orientação experiente acelera decisões","escrever uma definição autoral de mentoria"),
+    lesson("m1-2","Origem e evolução da mentoria","Compreender como a mentoria passou de transmissão de experiência para desenvolvimento profissional","comparar modelos tradicionais e contemporâneos","criar uma linha do tempo com marcos da prática"),
+    lesson("m1-3","Papel do mentor","Delimitar a função de orientar sem assumir a vida do mentorado","analisar exemplos de excesso de direção e omissão","listar cinco responsabilidades centrais do mentor"),
+    lesson("m1-4","Responsabilidade do mentorado","Trabalhar autonomia, compromisso e corresponsabilidade","distinguir apoio de dependência no processo","formular regras de participação do mentorado"),
+    lesson("m1-5","Mentoria x consultoria","Separar construção conjunta de recomendação técnica pronta","comparar dois casos com a mesma demanda e abordagens diferentes","decidir quando atuar como mentor e quando indicar consultoria"),
+    lesson("m1-6","Mentoria x coaching","Reconhecer aproximações e diferenças de método, vínculo e repertório","analisar uma meta profissional por duas lentes","registrar critérios para não misturar propostas"),
+    lesson("m1-7","Mentoria x terapia","Preservar fronteiras entre desenvolvimento profissional e cuidado em saúde mental","identificar sinais de demanda que ultrapassa escopo","criar um protocolo de encaminhamento responsável"),
+    lesson("m1-8","Ética aplicada à mentoria","Transformar princípios éticos em decisões cotidianas","avaliar dilemas de confidencialidade, influência e conflito de interesse","redigir dez compromissos éticos pessoais"),
+    lesson("m1-9","Contrato e combinados","Estruturar expectativas, frequência, canais e regras","revisar um contrato hipotético com lacunas","montar checklist de contratação"),
+    lesson("m1-10","Identidade profissional do mentor","Integrar experiência, valores, competências e limites","analisar que histórias profissionais sustentam autoridade legítima","escrever seu posicionamento inicial como mentor"),
+  ]},
+  {id:2,title:"Diagnóstico e Definição de Objetivos",activity:"Aprender a compreender contexto, necessidade real e direção de trabalho.",lessons:[
+    lesson("m2-1","Primeiro contato com o mentorado","Conduzir uma entrada clara, acolhedora e comercialmente profissional","simular uma conversa inicial sem prometer resultados","criar roteiro de 15 minutos para triagem"),
+    lesson("m2-2","Anamnese profissional","Levantar trajetória, decisões, recursos, dificuldades e expectativas","organizar informações de um caso fictício","montar formulário de anamnese profissional"),
+    lesson("m2-3","Linha do tempo de carreira","Visualizar padrões de escolha, permanência, mudança e aprendizagem","desenhar a trajetória de um profissional em fases","criar perguntas para explorar transições passadas"),
+    lesson("m2-4","Leitura do momento atual","Distinguir sintomas do problema central na carreira","separar fatos, interpretações e pressões externas","produzir diagnóstico descritivo sem rotular"),
+    lesson("m2-5","Necessidade declarada x necessidade estratégica","Investigar o que está por trás do pedido inicial","comparar uma queixa de salário com possíveis causas estruturais","formular perguntas de aprofundamento"),
+    lesson("m2-6","Priorização de problemas","Evitar trabalhar muitas frentes ao mesmo tempo","usar impacto, urgência e governabilidade como critérios","montar matriz de prioridades"),
+    lesson("m2-7","Definição de objetivos","Converter desejos vagos em resultados observáveis","transformar frases genéricas em objetivos claros","escrever três objetivos de mentoria bem formulados"),
+    lesson("m2-8","Indicadores de progresso","Definir evidências concretas de avanço","escolher métricas para diferentes tipos de carreira","criar painel simples de acompanhamento"),
+    lesson("m2-9","Plano de desenvolvimento","Conectar objetivo, ação, prazo e evidência","organizar um plano de 30 dias para um caso simulado","montar modelo reutilizável de PDI"),
+    lesson("m2-10","Revisão do contrato de objetivo","Alinhar expectativas após o diagnóstico inicial","simular renegociação quando a demanda muda","escrever roteiro de revisão de escopo"),
+  ]},
+  {id:3,title:"Carreira e Desenvolvimento Profissional",activity:"Dominar ferramentas para planejamento, transição e tomada de decisão profissional.",lessons:[
+    lesson("m3-1","Carreira como projeto","Tratar carreira como sistema de escolhas, recursos e ciclos","mapear decisões controláveis e não controláveis","criar mapa atual da carreira"),
+    lesson("m3-2","Autoconhecimento profissional","Investigar interesses, competências, valores e condições reais","cruzar preferências com experiências concretas","produzir inventário profissional"),
+    lesson("m3-3","Mapeamento de competências","Identificar conhecimentos, habilidades e comportamentos observáveis","extrair competências de experiências anteriores","montar matriz de competências"),
+    lesson("m3-4","Potencial e lacunas","Diferenciar falta de oportunidade de falta de preparo","analisar distância entre perfil atual e objetivo","criar plano de desenvolvimento de lacunas"),
+    lesson("m3-5","Leitura de mercado","Usar vagas, tendências e conversas como fontes de evidência","comparar requisitos de dez oportunidades","montar quadro de sinais de mercado"),
+    lesson("m3-6","Planejamento de carreira","Organizar direção de médio prazo sem criar rigidez","desenhar cenários A, B e C","construir plano de 12 meses"),
+    lesson("m3-7","Transição profissional","Reduzir risco em mudanças de área, função ou país","planejar testes antes de uma ruptura","criar estratégia de transição gradual"),
+    lesson("m3-8","Tomada de decisão","Comparar opções usando critérios explícitos","aplicar matriz de decisão em uma proposta de emprego","registrar decisão e custos de oportunidade"),
+    lesson("m3-9","Metas e marcos","Transformar ambição em sequência executável","quebrar uma meta anual em marcos mensais","criar plano das próximas quatro semanas"),
+    lesson("m3-10","Carreira internacional e mobilidade","Incluir idioma, documentação, rede e adaptação no planejamento","avaliar viabilidade de mudança internacional","montar checklist de carreira internacional"),
+  ]},
+  {id:4,title:"Comunicação e Condução da Mentoria",activity:"Desenvolver escuta, perguntas, feedback e manejo de encontros.",lessons:[
+    lesson("m4-1","Escuta profissional","Escutar conteúdo, contexto, emoção e decisão sem antecipar resposta","praticar resumo e checagem de entendimento","criar roteiro de escuta em quatro níveis"),
+    lesson("m4-2","Silêncio e tempo de elaboração","Usar pausas sem preencher todo espaço com aconselhamento","observar como o silêncio muda a resposta em simulação","definir quando sustentar ou interromper uma pausa"),
+    lesson("m4-3","Perguntas abertas","Produzir reflexão sem induzir respostas","reformular perguntas fechadas em abertas","criar banco de vinte perguntas abertas"),
+    lesson("m4-4","Perguntas estratégicas","Levar da reflexão para decisão e responsabilidade","aplicar perguntas de consequência e possibilidade","montar sequência de cinco perguntas para um caso"),
+    lesson("m4-5","Perguntas de confronto respeitoso","Apontar incoerências sem humilhar ou atacar","simular confronto entre discurso e comportamento","escrever três formas de confronto profissional"),
+    lesson("m4-6","Comunicação assertiva","Dizer o necessário com clareza e respeito","separar fato, leitura e recomendação","reescrever mensagens ambíguas de forma assertiva"),
+    lesson("m4-7","Feedback baseado em evidências","Dar retorno observável e útil","usar situação, comportamento, impacto e próximo passo","produzir feedback completo para caso simulado"),
+    lesson("m4-8","Condução de abertura","Começar sessões recuperando foco e contexto","simular os primeiros sete minutos de um encontro","criar ritual de abertura"),
+    lesson("m4-9","Condução de fechamento","Encerrar com síntese, decisão e compromisso","comparar fechamentos vagos e objetivos","montar checklist dos últimos cinco minutos"),
+    lesson("m4-10","Resistência, impasse e evasão","Manejar adiamentos e baixa execução sem assumir controle","analisar causas possíveis da não ação","criar roteiro para uma conversa de responsabilização"),
+  ]},
+  {id:5,title:"Método e Acompanhamento",activity:"Criar consistência de processo, documentação e avaliação.",lessons:[
+    lesson("m5-1","Arquitetura de uma sessão","Distribuir tempo entre revisão, foco, exploração, decisão e fechamento","desenhar uma sessão de 50 minutos","criar sua estrutura-padrão"),
+    lesson("m5-2","Agenda da sessão","Definir pauta compartilhada sem engessar a conversa","comparar pauta do mentor e prioridade do mentorado","montar modelo de agenda"),
+    lesson("m5-3","Plano de ação","Converter insight em comportamento observável","reduzir listas extensas a poucas ações críticas","criar plano semanal com três prioridades"),
+    lesson("m5-4","Responsabilidade e follow-up","Cobrar execução sem criar dependência","simular acompanhamento entre encontros","definir política de follow-up"),
+    lesson("m5-5","Registro profissional","Documentar decisões e progresso com parcimônia","avaliar o que deve ou não ser registrado","criar ficha de sessão"),
+    lesson("m5-6","Proteção e privacidade de dados","Tratar dados profissionais com cuidado e finalidade","revisar riscos em anotações e ferramentas digitais","montar protocolo básico de privacidade"),
+    lesson("m5-7","Indicadores de processo","Medir presença, execução, decisões e entregas","escolher indicadores para objetivos distintos","criar quadro de métricas"),
+    lesson("m5-8","Revisão de progresso","Comparar estado atual com linha de base","conduzir uma revisão de metade do programa","montar roteiro de checkpoint"),
+    lesson("m5-9","Replanejamento","Ajustar rota quando contexto ou objetivo muda","analisar quando insistir e quando mudar","escrever critérios de replanejamento"),
+    lesson("m5-10","Encerramento do ciclo","Concluir com síntese, autonomia e próximos passos","simular uma sessão final","criar relatório de encerramento não clínico"),
+  ]},
+  {id:6,title:"Posicionamento Profissional do Mentor",activity:"Transformar competência em posicionamento, oferta e comunicação ética.",lessons:[
+    lesson("m6-1","Público prioritário","Escolher quem tende a se beneficiar mais da sua experiência","cruzar experiência, demanda e acesso ao público","definir um público inicial"),
+    lesson("m6-2","Problema central","Nomear o problema que sua mentoria ajuda a organizar","diferenciar problema amplo de dor específica","escrever três versões do problema central"),
+    lesson("m6-3","Nicho e diferenciação","Construir especialização percebida sem se aprisionar","analisar concorrentes e espaços de diferenciação","formular diferencial profissional"),
+    lesson("m6-4","Proposta de valor","Explicar para quem, para quê e como funciona","testar clareza de diferentes promessas","escrever proposta de valor em uma frase"),
+    lesson("m6-5","Desenho da oferta","Organizar formato, duração, entregas e limites","comparar oferta avulsa e programa estruturado","montar ficha completa da oferta"),
+    lesson("m6-6","Precificação","Relacionar preço a estrutura, mercado, capacidade e posicionamento","simular cenários de preço e carga de trabalho","definir faixa inicial com justificativa"),
+    lesson("m6-7","Autoridade profissional","Construir confiança por evidência e consistência","mapear experiências, casos e competências comunicáveis","criar inventário de prova de autoridade"),
+    lesson("m6-8","Conteúdo que educa e vende","Produzir conteúdo útil que aproxima da oferta sem manipulação","transformar dúvidas frequentes em pautas","criar calendário de sete conteúdos"),
+    lesson("m6-9","Conversa comercial ética","Conduzir venda com diagnóstico e liberdade de decisão","simular objeções de preço, tempo e prioridade","montar roteiro comercial"),
+    lesson("m6-10","Presença digital coerente","Alinhar bio, página, mensagens e chamada para ação","auditar pontos de contato digitais","produzir checklist de coerência de marca"),
+  ]},
+  {id:7,title:"Mentoria de Carreira na Prática",activity:"Aplicar raciocínio de mentoria a situações reais e simuladas.",lessons:[
+    lesson("m7-1","Caso: estagnação profissional","Distinguir falta de crescimento, reconhecimento e estratégia","mapear fatores internos e externos do caso","construir plano de investigação"),
+    lesson("m7-2","Caso: promoção desejada","Trabalhar prontidão, visibilidade e critérios de promoção","simular preparação para conversa com liderança","criar plano de evidências para promoção"),
+    lesson("m7-3","Caso: mudança de área","Testar hipóteses antes de abandonar trajetória atual","mapear competências transferíveis e lacunas","desenhar experimento de transição"),
+    lesson("m7-4","Caso: desemprego prolongado","Organizar estratégia sem reduzir a pessoa à busca de vagas","revisar posicionamento, canais e rotina","montar plano de busca de 30 dias"),
+    lesson("m7-5","Caso: carreira internacional","Combinar adaptação, documentação, idioma e mercado","analisar mudança de país com recursos limitados","criar sequência de preparação"),
+    lesson("m7-6","Caso: liderança iniciante","Apoiar passagem de especialista para gestor","identificar novos comportamentos exigidos","montar plano de primeiros 90 dias"),
+    lesson("m7-7","Caso: empreendedor em transição","Separar desejo de empreender de viabilidade imediata","avaliar recursos, teste de oferta e reserva","criar plano de validação"),
+    lesson("m7-8","Simulação de sessão completa","Integrar abertura, exploração, decisão e fechamento","realizar simulação de 40 a 50 minutos","usar rubrica de autoavaliação"),
+    lesson("m7-9","Supervisão do próprio atendimento","Revisar escolhas do mentor sem buscar perfeição","analisar gravação fictícia ou memória estruturada da sessão","registrar três ajustes para próxima sessão"),
+    lesson("m7-10","Avaliação de evolução do caso","Decidir continuidade, mudança de foco ou encerramento","comparar indicadores iniciais e atuais","produzir síntese de evolução"),
+  ]},
+  {id:8,title:"Estruturando seu Serviço de Mentoria",activity:"Organizar operação, jornada do cliente e entrega sustentável.",lessons:[
+    lesson("m8-1","Modelo individual","Desenhar atendimento um a um com clareza de frequência e escopo","simular agenda de clientes individuais","definir formato individual"),
+    lesson("m8-2","Modelo em grupo","Estruturar aprendizagem coletiva sem perder acompanhamento","comparar vantagens e riscos do grupo","desenhar uma turma piloto"),
+    lesson("m8-3","Jornada do cliente","Mapear descoberta, contratação, onboarding, entrega e encerramento","identificar atritos em cada etapa","criar mapa da jornada"),
+    lesson("m8-4","Onboarding","Começar o processo com alinhamento e preparação","simular envio de boas-vindas e coleta de dados","montar kit de onboarding"),
+    lesson("m8-5","Pacotes e programas","Agrupar encontros e entregas de forma compreensível","comparar pacote de sessões e programa com objetivo","desenhar duas opções comerciais"),
+    lesson("m8-6","Agenda e capacidade","Definir quantidade de clientes sem comprometer qualidade","calcular carga de atendimento e preparação","montar capacidade semanal"),
+    lesson("m8-7","Política de reagendamento","Criar regras que preservem respeito e previsibilidade","avaliar situações de atraso e falta","redigir política objetiva"),
+    lesson("m8-8","Materiais e ferramentas","Escolher formulários, modelos e recursos sem burocratizar","auditar materiais realmente necessários","montar kit mínimo operacional"),
+    lesson("m8-9","Experiência do mentorado","Aumentar percepção de valor por consistência e cuidado","mapear pontos de encantamento e fricção","criar padrão de experiência"),
+    lesson("m8-10","Qualidade e melhoria contínua","Usar feedback e dados para evoluir a entrega","construir perguntas de avaliação pós-programa","criar ciclo trimestral de melhoria"),
+  ]},
+  {id:9,title:"Prática, Avaliação e Conclusão",activity:"Integrar conhecimento em um processo completo e demonstrável.",lessons:[
+    lesson("m9-1","Escolha do caso final","Selecionar caso real autorizado ou simulado adequado à mentoria","avaliar escopo, complexidade e disponibilidade de dados","formalizar caso e objetivo"),
+    lesson("m9-2","Diagnóstico final","Construir leitura estruturada sem fazer diagnóstico clínico","organizar trajetória, contexto, necessidade e recursos","entregar diagnóstico profissional descritivo"),
+    lesson("m9-3","Objetivos e indicadores finais","Traduzir o diagnóstico em direção mensurável","definir indicadores compatíveis com o caso","registrar objetivos e linha de base"),
+    lesson("m9-4","Plano de mentoria","Desenhar sequência de encontros e prioridades","justificar ordem dos temas e atividades","montar plano completo"),
+    lesson("m9-5","Sessão simulada 1","Executar abertura, exploração e plano de ação","conduzir primeiro encontro do caso","registrar autoavaliação"),
+    lesson("m9-6","Sessão simulada 2","Acompanhar execução e aprofundar decisão","conduzir segundo encontro com base no progresso","registrar ajustes metodológicos"),
+    lesson("m9-7","Análise crítica do mentor","Reconhecer acertos, limites e pontos de desenvolvimento","revisar perguntas, intervenções e postura","produzir análise reflexiva"),
+    lesson("m9-8","Plano de encerramento","Preparar autonomia e continuidade do mentorado","definir critérios de conclusão e próximos passos","criar roteiro de sessão final"),
+    lesson("m9-9","Apresentação do projeto final","Comunicar raciocínio, método e resultados de forma profissional","estruturar apresentação de dez minutos","montar versão final do caso"),
+    lesson("m9-10","Plano de atuação pós-formação","Transformar aprendizagem em prática responsável","definir primeiros clientes, supervisão entre pares e rotina de estudo","criar plano de 90 dias após a formação"),
+  ]},
 ];
 
-export const MENTORSHIP_TOTAL_LESSONS=mentorshipCareerModules.reduce((sum,m)=>sum+m.lessons.length,0);
+export const MENTORSHIP_TOTAL_LESSONS=mentorshipCareerModules.reduce((sum,module)=>sum+module.lessons.length,0);
