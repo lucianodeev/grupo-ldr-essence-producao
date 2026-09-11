@@ -1,5 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { LibrarySalesHomeAccessChoice } from "@/components/library-sales-home-access-choice";
+import { EditorialSalesCards } from "@/components/editorial-sales-cards";
+
+function SalesHome(){
+  return <>
+    <LibrarySalesHomeAccessChoice />
+    <EditorialSalesCards />
+  </>;
+}
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -12,5 +20,5 @@ export const Route = createFileRoute("/")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: LibrarySalesHomeAccessChoice,
+  component: SalesHome,
 });
