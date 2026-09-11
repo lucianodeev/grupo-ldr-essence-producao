@@ -1,0 +1,25 @@
+name: Fix library personalized offer visibility
+on:
+  push:
+    paths:
+      - 'tools/fix_library_personalized_offer_visibility.py'
+      - '.github/workflows/fix-library-personalized-offer-visibility.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Apply personalized offer visibility
+        run: python tools/fix_library_personalized_offer_visibility.py
+      - name: Commit fix
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          git diff --cached --quiet && exit 0
+          git commit -m "fix: personalize library offers by owned products"
+          git push origin main
