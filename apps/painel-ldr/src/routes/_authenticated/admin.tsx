@@ -40,6 +40,7 @@ const sections = [
     ["Treinamentos", "/admin/treinamentos"],
     ["Fórum do treinamento", "/admin/forum-treinamento"],
     ["Interesses em Pós-Graduação", "/admin/interesses-pos"],
+    ["Graduações — Interessados", "/admin/interesses-graduacoes"],
   ]},
 ] as const;
 
