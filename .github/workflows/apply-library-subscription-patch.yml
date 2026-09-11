@@ -1,0 +1,39 @@
+name: Apply library subscription patch
+
+on:
+  push:
+    branches:
+      - feature/biblioteca-assinatura
+    paths:
+      - tools/patch_library_subscription.py
+      - .github/workflows/apply-library-subscription-patch.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/biblioteca-assinatura
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Apply patch
+        run: python tools/patch_library_subscription.py
+      - name: Commit changes
+        run: |
+          if git diff --quiet && [ -z "$(git status --porcelain --untracked-files=normal)" ]; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/painel-ldr/src/lib/library-subscription.server.ts apps/painel-ldr/src/lib/library-subscription.functions.ts apps/painel-ldr/src/routes/api/stripe/webhook.ts apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          git commit -m "feat(painel): add Biblioteca LDR monthly subscription"
+          git push origin HEAD:feature/biblioteca-assinatura
