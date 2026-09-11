@@ -38,6 +38,7 @@ const formations = [
   {tag:"RH · 600H",title:"Formação em Gestão de Pessoas e Recursos Humanos",desc:"600 horas · 100% online · leitura e atividades",free:true,href:"/cliente/formacoes/gestao-pessoas-rh",tone:"emerald"},
   {tag:"PSICANÁLISE",title:"Formação Online em Psicanálise",desc:"12 módulos · 1.200 horas · 180 unidades · 6 encontros ao vivo",price:"R$ 299,99 · € 49,90",href:"/formacao-psicanalise",tone:"violet"},
   {tag:"TERAPIA BREVE · 1.200H",title:"Formação em Terapia Breve Psicanalítica",desc:"15 módulos · 300 aulas · 1.200 horas · 6 encontros ao vivo",price:"R$ 299,99 · € 49,90",href:"/formacao-terapia-breve-psicanalitica",tone:"petrol"},
+  {tag:"NEGÓCIO EM 24H",title:"Formação Negócio em 24 Horas",desc:"9 módulos · 90 aulas · 360 horas · 100% online · projeto final avaliado",price:"R$ 299,99 · € 49,90",href:"/formacao-negocio-em-24-horas",tone:"gold"},
   {tag:"MENTORIA E CARREIRA",title:"Formação em Mentoria Profissional e de Carreira",desc:"3 meses · percurso estruturado · acesso digital",price:"R$ 299,99 · € 49,90",href:"/cliente/biblioteca",tone:"blue"},
   {tag:"LIDERANÇA",title:"Formação em Liderança e Gestão de Pessoas",desc:"3 meses · percurso estruturado · acesso digital",price:"R$ 299,99 · € 49,90",href:"/cliente/biblioteca",tone:"green"},
 ] as const;
