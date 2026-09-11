@@ -39,6 +39,7 @@ const sections = [
     ["Sistema S8", "/admin/s8"],
     ["Treinamentos", "/admin/treinamentos"],
     ["Fórum do treinamento", "/admin/forum-treinamento"],
+    ["Interesses em Pós-Graduação", "/admin/interesses-pos"],
   ]},
 ] as const;
 
