@@ -1,0 +1,45 @@
+name: One-time fix visible promo countdown
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/one-time-fix-promo-countdown-visible.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Insert visible countdown in promo card
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('apps/painel-ldr/src/components/library-sales-home-access-choice.tsx')
+          s=p.read_text(encoding='utf-8')
+          if 'data-promo-countdown="true"' not in s:
+              candidates=[
+                '<p className="mt-2 text-2xl font-black">{t.first}</p>',
+                '<p className="mt-2 text-2xl font-black">🇧🇷 R$ 19,95  ·  🇪🇺 € 4,95</p>'
+              ]
+              block='''<div data-promo-countdown="true" className="mt-4 rounded-2xl border-2 border-[#d6ad63] bg-black/30 p-4 text-center shadow-inner"><p className="text-[11px] font-black uppercase tracking-[.18em] text-[#f5cc82]">{countdownLabel}</p><p className="mt-1 font-mono text-3xl font-black tracking-wider text-white sm:text-4xl">{countdown}</p><p className="mt-1 text-[11px] text-white/65">HORAS · MINUTOS · SEGUNDOS</p></div>'''
+              for c in candidates:
+                  if c in s:
+                      s=s.replace(c,c+block,1)
+                      break
+              else:
+                  raise SystemExit('promo price anchor not found')
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit patch
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/components/library-sales-home-access-choice.tsx
+          git commit -m "fix: show live promo countdown on sales home" || exit 0
+          git push origin main
