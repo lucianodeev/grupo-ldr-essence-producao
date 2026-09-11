@@ -21,7 +21,7 @@ const COPY={
 
 const PRODUCT_THEME={
  ebook_coragem_comecar:{light:"bg-[#eef5ff] text-[#10233f]",dark:"bg-[#071423] text-[#eef5ff]",cardLight:"border-[#b8cce8] bg-white",cardDark:"border-[#29486d] bg-[#0d2036]",accent:"#153a68",soft:"#dceafb"},
- livro_menino_mamao:{light:"bg-[#fff4e8] text-[#4b2612]",dark:"bg-[#21120b] text-[#fff3e6]",cardLight:"border-[#e4bd93] bg-white",cardDark:"border-[#754726] bg-[#301b0f]",accent:"#a64b12",soft:"#f6dfc7"}
+ livro_menino_mamao:{light:"bg-[#fbf6f3] text-[#3f0d1d]",dark:"bg-[#2a0814] text-[#fff5f7]",cardLight:"border-[#d9b3bd] bg-[#fffafa]",cardDark:"border-[#7b2944] bg-[#3b0d1e]",accent:"#6f1632",soft:"#f0dbe2"}
 } as const;
 
 export function DigitalReaderV2({productKey}:{productKey:ProductKey}){
