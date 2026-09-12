@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { BookOpen, Check, GraduationCap, Library, Sparkles } from "lucide-react";
 import { LanguageSelect, useI18n } from "@/lib/i18n";
+import { SalesCatalog360 } from "@/components/sales-catalog-360";
 import { useEffect, useState } from "react";
 
 const PROMO_END_AT = new Date("2026-09-30T23:59:59+02:00").getTime();
@@ -75,6 +76,8 @@ export function LibrarySalesHomeAccessChoice(){
     <header className="sticky top-0 z-50 border-b border-[#d6ad63]/25 bg-[#071426]/95 text-white backdrop-blur"><div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6"><a href="#top" className="font-serif text-xl text-[#fff7e7]">{t.brand}</a><div className="flex items-center gap-2"><LanguageSelect/><Link to="/cliente/login" className="rounded-lg border border-white/15 px-3 py-2 text-xs font-black">{t.login}</Link></div></div></header>
 
     <section id="top" className="bg-gradient-to-br from-[#071426] via-[#0b2341] to-[#12365c] text-white"><div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:py-24"><p className="text-xs font-black uppercase tracking-[.24em] text-[#d6ad63]">{t.eyebrow}</p><h1 className="mt-5 max-w-4xl font-serif text-4xl leading-tight text-[#fff7e7] sm:text-6xl">{t.title}</h1><p className="mt-5 max-w-3xl text-base leading-7 text-white/80 sm:text-lg">{t.sub}</p><div className="mt-8 flex flex-col gap-3 sm:flex-row"><a href="#formacoes" className="rounded-xl bg-[#d6ad63] px-5 py-3 text-center text-sm font-black text-[#281605]">{t.see}</a><Link to="/cliente/biblioteca" className="rounded-xl border border-white/20 bg-white/10 px-5 py-3 text-center text-sm font-black">{t.subscribe}</Link></div></div></section>
+
+    <SalesCatalog360 />
 
     <section id="mini-library-showcase" className="bg-[#f7f3e9] py-10 sm:py-12">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
