@@ -1,5 +1,5 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 import { supabase } from "@/integrations/supabase/client";
@@ -39,8 +39,14 @@ function cameFromCorporateBenefits() {
   }
 }
 
+function academyDestination() {
+  if (typeof window === "undefined") return "/cliente";
+  return /(^|\.)ldracademy\.online$/i.test(window.location.hostname) ? "/biblioteca" : "/cliente";
+}
+
 function ClientLogin() {
   const [busy, setBusy] = useState(false);
+  const redirecting = useRef(false);
 
   useEffect(() => {
     if (cameFromCorporateBenefits()) {
@@ -51,14 +57,13 @@ function ClientLogin() {
     let active = true;
 
     const redirectToClient = () => {
-      window.location.replace("/cliente");
+      if (!active || redirecting.current) return;
+      redirecting.current = true;
+      setBusy(true);
+      window.location.replace(academyDestination());
     };
 
-    void supabase.auth.getSession().then(({ data }) => {
-      if (active && data.session) redirectToClient();
-    });
-
-    const { data } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
       if (
         active &&
         session &&
@@ -68,14 +73,20 @@ function ClientLogin() {
       }
     });
 
+    void supabase.auth.getSession().then(({ data }) => {
+      if (active && data.session) redirectToClient();
+    });
+
     return () => {
       active = false;
-      data.subscription.unsubscribe();
+      listener.subscription.unsubscribe();
     };
   }, []);
 
   async function handleGoogle() {
+    if (busy) return;
     setBusy(true);
+
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
@@ -83,13 +94,14 @@ function ClientLogin() {
         skipBrowserRedirect: true,
       },
     });
+
     if (error || !data.url) {
       setBusy(false);
       toast.error("Não foi possível entrar com o Google.");
       return;
     }
 
-    window.location.assign(data.url);
+    window.location.replace(data.url);
   }
 
   return (
@@ -101,9 +113,9 @@ function ClientLogin() {
         type="button"
         onClick={handleGoogle}
         disabled={busy}
-        className="w-full rounded-lg border border-border bg-card px-4 py-3 text-sm font-bold text-primary hover:bg-accent disabled:opacity-60"
+        className="w-full rounded-lg border border-border bg-card px-4 py-3 text-sm font-bold text-primary hover:bg-accent disabled:cursor-wait disabled:opacity-60"
       >
-        Entrar com Google
+        {busy ? "Entrando…" : "Entrar com Google"}
       </button>
 
       <p className="mt-2 text-xs text-muted-foreground">
