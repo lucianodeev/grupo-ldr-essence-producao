@@ -9,8 +9,9 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
-import { Building2, Check, LogIn, MessageCircle, Sparkles, UsersRound } from "lucide-react";
+import { Building2, Check, LogIn, Sparkles, UsersRound } from "lucide-react";
 
+import { AcademyChatbot } from "@/components/academy-chatbot";
 import { Toaster } from "@/components/ui/sonner";
 import { I18nProvider, useI18n } from "@/lib/i18n";
 import { supabase } from "@/integrations/supabase/client";
@@ -18,8 +19,6 @@ import { supabase } from "@/integrations/supabase/client";
 import appCss from "../styles.css?url";
 import responsiveCss from "../responsive-v3.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-
-const WHATSAPP_URL = "https://wa.me/32492923605?text=Olá%2C%20vim%20pelo%20Grupo%20LDR%20Essence%20e%20gostaria%20de%20mais%20informações.";
 
 const GLOBAL_COPY = {
   pt: { plansAria:"Planos empresariais", eyebrow:"Assinatura empresarial LDR", plansTitle:"Planos mensais para sua empresa", plansText:"A assinatura funciona com renovação mensal automática. O catálogo de serviços individuais continua disponível separadamente para compras extras, pacotes e futuros produtos.", manage:"Gerenciar assinatura", essentialRange:"Até 10 funcionários", month:"/mês", or:"ou", essentialCredit:"4 créditos mensais", employeeBenefits:"Gestão de funcionários e benefícios", subscribe:"Ver e assinar", proRange:"De 11 a 50 funcionários", proCredit:"12 créditos mensais", proBenefits:"Benefícios recorrentes para equipes em crescimento", customRange:"A partir de 51 funcionários", customPrice:"Calculado na plataforma", customHint:"conforme equipe, serviços e créditos", customServices:"Escolha de serviços e créditos", realtime:"Preço mensal calculado em tempo real", configure:"Configurar plano", enter:"Entrar", enterAria:"Entrar na plataforma", whatsappAria:"Falar com a LDR pelo WhatsApp" },
@@ -197,26 +196,17 @@ function PersistentActions() {
   const isProtectedArea = pathname === "/profissional/login" || protectedPrefixes.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`));
   const hasVisibleAccessHub = pathname === "/" || pathname === "/acesso";
 
+  if (isProtectedArea || hasVisibleAccessHub) return null;
+
   return (
-    <div className="fixed z-[80] flex flex-col items-end gap-2" style={{ bottom: "calc(1rem + env(safe-area-inset-bottom))", right: "calc(1rem + env(safe-area-inset-right))" }}>
-      {!isProtectedArea && !hasVisibleAccessHub && (
-        <Link
-          to="/acesso"
-          aria-label={copy.enterAria}
-          className="inline-flex min-h-11 items-center gap-2 rounded-full border bg-card px-4 py-3 text-sm font-black text-primary shadow-xl transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-        >
-          <LogIn className="h-5 w-5" /> <span>{copy.enter}</span>
-        </Link>
-      )}
-      <a
-        href={WHATSAPP_URL}
-        target="_blank"
-        rel="noreferrer"
-        aria-label={copy.whatsappAria}
-        className="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full bg-[#25D366] px-4 py-3 text-sm font-black text-white shadow-xl transition hover:-translate-y-0.5 hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2"
+    <div className="fixed z-[80] flex flex-col items-end gap-2" style={{ bottom: "calc(5.5rem + env(safe-area-inset-bottom))", right: "calc(1rem + env(safe-area-inset-right))" }}>
+      <Link
+        to="/acesso"
+        aria-label={copy.enterAria}
+        className="inline-flex min-h-11 items-center gap-2 rounded-full border bg-card px-4 py-3 text-sm font-black text-primary shadow-xl transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
       >
-        <MessageCircle className="h-5 w-5" /> <span className="hidden sm:inline">WhatsApp</span>
-      </a>
+        <LogIn className="h-5 w-5" /> <span>{copy.enter}</span>
+      </Link>
     </div>
   );
 }
@@ -254,6 +244,7 @@ function RootComponent() {
           {showCompanyPlans && <CompanyPlanCards />}
         </div>
         <PersistentActions />
+        <AcademyChatbot />
         <Toaster richColors position="top-center" />
       </I18nProvider>
     </QueryClientProvider>
