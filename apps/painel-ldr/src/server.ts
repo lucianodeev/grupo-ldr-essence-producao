@@ -22,21 +22,29 @@ function academyCanonicalRedirect(request: Request): Response | null {
   const url = new URL(request.url);
   const host = url.hostname.toLowerCase();
   const isAcademy = host === "ldracademy.online" || host === "www.ldracademy.online";
-  const isLegacyAcademyHost = [
-    "learn.lucianoconecta.online",
-    "painel.ldrrhestrategia.com",
-    "painel.lucianoconecta.online",
-  ].includes(host);
+  const isLegacyLearnHost = host === "learn.lucianoconecta.online";
+  const isLegacyPanelHost = host === "painel.ldrrhestrategia.com" || host === "painel.lucianoconecta.online";
 
-  if (isLegacyAcademyHost) {
+  if (isLegacyLearnHost) {
     const target = new URL("https://ldracademy.online");
     target.search = url.search;
     target.hash = url.hash;
 
-    if (url.pathname === "/cliente/login") {
-      target.pathname = "/cliente/login";
-      return Response.redirect(target.toString(), 308);
+    if (url.pathname === "/cliente") {
+      target.pathname = "/biblioteca";
+    } else if (url.pathname === "/cliente/biblioteca" || url.pathname.startsWith("/cliente/biblioteca/")) {
+      target.pathname = url.pathname.replace(/^\/cliente\/biblioteca/, "/biblioteca");
+    } else {
+      target.pathname = url.pathname;
     }
+
+    return Response.redirect(target.toString(), 308);
+  }
+
+  if (isLegacyPanelHost) {
+    const target = new URL("https://ldracademy.online");
+    target.search = url.search;
+    target.hash = url.hash;
 
     if (url.pathname === "/cliente") {
       target.pathname = "/biblioteca";
@@ -45,11 +53,6 @@ function academyCanonicalRedirect(request: Request): Response | null {
 
     if (url.pathname === "/cliente/biblioteca" || url.pathname.startsWith("/cliente/biblioteca/")) {
       target.pathname = url.pathname.replace(/^\/cliente\/biblioteca/, "/biblioteca");
-      return Response.redirect(target.toString(), 308);
-    }
-
-    if (url.pathname === "/biblioteca" || url.pathname.startsWith("/biblioteca/")) {
-      target.pathname = url.pathname;
       return Response.redirect(target.toString(), 308);
     }
   }
