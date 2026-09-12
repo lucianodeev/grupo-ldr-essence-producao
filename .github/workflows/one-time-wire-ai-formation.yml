@@ -1,0 +1,38 @@
+name: One-time wire AI formation
+on:
+  push:
+    paths:
+      - '.github/workflows/one-time-wire-ai-formation.yml'
+jobs:
+  wire:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Wire AI formation
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx')
+          s=p.read_text()
+          anchor='import { clientBusiness24Offer, clientCreateBusiness24Checkout } from "@/lib/business24-commerce.functions";'
+          add=anchor+'\nimport { clientAIFormationOffer, clientCreateAIFormationCheckout } from "@/lib/ai-formation-commerce.functions";'
+          if 'clientAIFormationOffer' not in s: s=s.replace(anchor,add)
+          s=s.replace('business24Fn=useServerFn(clientBusiness24Offer),','business24Fn=useServerFn(clientBusiness24Offer),\n    aiFn=useServerFn(clientAIFormationOffer),\n    aiCheckoutFn=useServerFn(clientCreateAIFormationCheckout),')
+          s=s.replace('const {data:business24}=useQuery({queryKey:["business24-offer"],queryFn:()=>business24Fn({})});','const {data:business24}=useQuery({queryKey:["business24-offer"],queryFn:()=>business24Fn({})});\n  const {data:ai}=useQuery({queryKey:["ai-formation-offer"],queryFn:()=>aiFn({})});')
+          s=s.replace('const business24Checkout=useMutation({mutationFn:(m:"BR"|"INTL")=>business24CheckoutFn({data:{market:m}}),onSuccess:r=>location.href=r.url});','const business24Checkout=useMutation({mutationFn:(m:"BR"|"INTL")=>business24CheckoutFn({data:{market:m}}),onSuccess:r=>location.href=r.url});\n  const aiCheckout=useMutation({mutationFn:(m:"BR"|"INTL")=>aiCheckoutFn({data:{market:m}}),onSuccess:r=>location.href=r.url});')
+          s=s.replace('business24:owner||!!business24?.entitled,mentor:', 'business24:owner||!!business24?.entitled,ai:owner||!!ai?.entitled,mentor:')
+          old='active==="ai"?<div className="rounded-2xl border border-[#9ec1d6] bg-gradient-to-br from-[#f5fbff] to-[#eef5f8] p-5"><span className="rounded-full bg-[#143d59] px-3 py-1 text-[10px] font-black uppercase tracking-[.14em] text-white">EM BREVE</span><h3 className="mt-4 font-serif text-2xl text-[#143d59]">🤖 Inteligência Artificial Aplicada ao Trabalho e aos Negócios</h3><p className="mt-3 text-base font-black text-[#143d59]">O melhor curso de Inteligência Artificial você vai encontrar aqui.</p><p className="mt-2 text-sm leading-6 text-muted-foreground">Do zero à aplicação prática da IA no trabalho, nos negócios e na produtividade.</p><div className="mt-4 w-full rounded-xl border border-[#143d59]/20 bg-white px-4 py-3 text-center text-sm font-black text-[#143d59]">🔒 Em breve na Biblioteca LDR</div></div>'
+          new='active==="ai"?<div className="rounded-2xl border border-[#9ec1d6] bg-gradient-to-br from-[#f5fbff] to-[#eef5f8] p-5"><span className="rounded-full bg-[#143d59] px-3 py-1 text-[10px] font-black uppercase tracking-[.14em] text-white">600H · 100% ONLINE · SEM AULAS AO VIVO</span><h3 className="mt-4 font-serif text-2xl text-[#143d59]">🤖 Formação em Inteligência Artificial Aplicada aos Negócios e à Carreira</h3><p className="mt-3 text-base font-black text-[#143d59]">15 módulos · 225 aulas · 5 projetos avaliativos + Projeto Final.</p><p className="mt-2 text-sm leading-6 text-muted-foreground">IA, conteúdo, marketing digital, vendas, gestão de cursos, programação moderna, sites e sistemas, automações, agentes, RH, produtividade, empreendedorismo e carreira.</p>{ent.ai?<a href="/cliente/treinamentos/ia-negocios-carreira" className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#143d59] px-4 py-3 text-sm font-black text-white">ACESSAR FORMAÇÃO</a>:<button disabled={aiCheckout.isPending} onClick={()=>aiCheckout.mutate(market)} className="mt-4 w-full rounded-xl bg-[#143d59] px-4 py-3 text-sm font-black text-white">{market==="BR"?money(ai?.priceBrlCents??29999,"BRL",locale):money(ai?.priceEurCents??4990,"EUR",locale)} · ACESSO VITALÍCIO</button>}</div>'
+          if old not in s: raise SystemExit('AI placeholder not found; refusing unsafe edit')
+          s=s.replace(old,new)
+          p.write_text(s)
+          PY
+      - name: Commit
+        run: |
+          git config user.name "LDR Automation"
+          git config user.email "actions@users.noreply.github.com"
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          git commit -m "feat(painel): activate AI formation library card"
+          git push
