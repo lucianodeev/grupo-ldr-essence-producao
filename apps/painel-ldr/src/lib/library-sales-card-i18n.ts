@@ -5,7 +5,7 @@ type Tone = "emerald" | "violet" | "petrol" | "gold" | "blue" | "green";
 const FORMATION_TEXT: Record<LibraryCardLocale, [string,string,string][]> = {
   pt: [
     ["RH · 600H","Formação em Gestão de Pessoas e Recursos Humanos","600 horas · 100% online · leitura e atividades"],
-    ["PSICANÁLISE","Formação Online em Psicanálise","14 módulos · 1.200 horas · 220 unidades · 6 encontros ao vivo"],
+    ["PSICANÁLISE","Formação em Psicanálise com Ênfase em Autismo e Atuação Internacional","15 módulos · 1.200 horas · 240 unidades · 6 encontros ao vivo"],
     ["TERAPIA BREVE · 1.200H","Formação em Terapia Breve Psicanalítica","15 módulos · 300 aulas · 1.200 horas · 6 encontros ao vivo"],
     ["NEGÓCIO EM 24H","Formação Negócio em 24 Horas","9 módulos · 90 aulas · 360 horas · 100% online · projeto final avaliado"],
     ["MENTORIA E CARREIRA","Formação em Mentoria Profissional e de Carreira","3 meses · percurso estruturado · acesso digital"],
