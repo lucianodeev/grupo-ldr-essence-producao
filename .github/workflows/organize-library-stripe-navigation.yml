@@ -1,0 +1,76 @@
+name: Organize library and Stripe labels
+on:
+  push:
+    paths:
+      - '.github/workflows/organize-library-stripe-navigation.yml'
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Organize library without changing products or prices
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('apps/painel-ldr/src/components/library-storefront.tsx')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace('type Item={title:string;subtitle:string;href:string;icon:string;price?:string;tag:string;group:Group;color:string;badge?:string};','type Item={title:string;subtitle:string;href:string;icon:string;price?:string;tag:string;group:Group;color:string;badge?:string;actionKey?:string};')
+          # Localized payment microcopy: display only where a price already exists. No values are modified.
+          s=s.replace('pt:{eyebrow:"BIBLIOTECA LDR",','pt:{stripe:"Pagamento seguro via Stripe.",otherPay:"Precisa de outra forma de pagamento? Entre em contato.",eyebrow:"BIBLIOTECA LDR",')
+          s=s.replace('en:{eyebrow:"LDR LIBRARY",','en:{stripe:"Secure payment via Stripe.",otherPay:"Need another payment method? Contact us.",eyebrow:"LDR LIBRARY",')
+          s=s.replace('fr:{eyebrow:"BIBLIOTHÈQUE LDR",','fr:{stripe:"Paiement sécurisé via Stripe.",otherPay:"Besoin d’un autre moyen de paiement ? Contactez-nous.",eyebrow:"BIBLIOTHÈQUE LDR",')
+          s=s.replace('es:{eyebrow:"BIBLIOTECA LDR",','es:{stripe:"Pago seguro mediante Stripe.",otherPay:"¿Necesitas otra forma de pago? Contáctanos.",eyebrow:"BIBLIOTECA LDR",')
+          # Preserve the products, but use the existing controlled access/checkout panels for the three core items and other known library products.
+          replacements={
+            'href:"/cliente/biblioteca/ebook_coragem_comecar",icon:"📘",price:"R$ 9,90 · € 4,90",tag:"ebook coragem começar",group:"livraria",color:"#5b0824",badge:"DESTAQUE"':'href:"#catalogo-ldr",icon:"📘",price:"R$ 9,90 · € 4,90",tag:"ebook coragem começar",group:"livraria",color:"#5b0824",badge:"EBOOK",actionKey:"ebook"',
+            'href:"/cliente/biblioteca/livro_menino_mamao",icon:"📕",price:"R$ 49,90 · € 20,00",tag:"livro menino vendia mamão coragem empreendedorismo",group:"livraria",color:"#7a3f16",badge:"LIVRO"':'href:"#catalogo-ldr",icon:"📕",price:"R$ 49,90 · € 20,00",tag:"livro menino vendia mamão coragem empreendedorismo",group:"livraria",color:"#7a3f16",badge:"LIVRO",actionKey:"book"',
+            'href:"/cliente/treinamentos/do-mamao-ao-negocio",icon:"🥭",tag:"mamão negocio empreendedorismo treinamento oferta vendas",group:"formacoes",color:"#9a4f13",badge:"TREINAMENTO"':'href:"#catalogo-ldr",icon:"🥭",tag:"mamão negocio empreendedorismo treinamento oferta vendas",group:"formacoes",color:"#9a4f13",badge:"TREINAMENTO",actionKey:"training"',
+            'href:"/formacao-psicanalise",icon:"🧠",tag:"psicanálise formação",group:"formacoes",color:"#5b2b86"':'href:"#catalogo-ldr",icon:"🧠",tag:"psicanálise formação",group:"formacoes",color:"#5b2b86",badge:"FORMAÇÃO",actionKey:"psycho"',
+            'href:"/cliente/treinamentos/ia-negocios-carreira",icon:"🤖",tag:"ia formação inteligência artificial",group:"formacoes",color:"#143d59"':'href:"#catalogo-ldr",icon:"🤖",tag:"ia formação inteligência artificial",group:"formacoes",color:"#143d59",badge:"FORMAÇÃO",actionKey:"ai"',
+            'href:"/cliente/formacoes/gestao-pessoas-rh",icon:"👥",price:"R$ 299,99 · € 49,90",tag:"rh formação gestão pessoas",group:"formacoes",color:"#047857"':'href:"#catalogo-ldr",icon:"👥",price:"R$ 299,99 · € 49,90",tag:"rh formação gestão pessoas",group:"formacoes",color:"#047857",badge:"FORMAÇÃO",actionKey:"hr"',
+          }
+          for a,b in replacements.items(): s=s.replace(a,b)
+          s=s.replace('badge:"NOVO · DESTAQUE"','badge:"REVISTA"')
+          s=s.replace('badge:"ACESSO SEMANAL"','badge:"JORNAL"',1)
+          # Make all paid card prices use identical supporting payment copy.
+          old='function ShelfCard({item,t,large=false}:{item:Item;t:(typeof COPY)[Locale];large?:boolean}){\n  return <a href={item.href}'
+          new='function ShelfCard({item,t,large=false,onSelect}:{item:Item;t:(typeof COPY)[Locale];large?:boolean;onSelect?:(key:string)=>void}){\n  const select=(e:React.MouseEvent<HTMLAnchorElement>)=>{if(!item.actionKey||!onSelect)return;e.preventDefault();onSelect(item.actionKey);requestAnimationFrame(()=>{const d=document.getElementById("catalogo-ldr") as HTMLDetailsElement|null;if(d){d.open=true;d.scrollIntoView({behavior:"smooth",block:"start"});}})};\n  return <a href={item.href} onClick={select}'
+          if old not in s: raise SystemExit('ShelfCard anchor not found')
+          s=s.replace(old,new,1)
+          s=s.replace('{item.price&&<p className="mt-3 break-normal text-sm font-black leading-5 text-[#0b2341]">{item.price}</p>}','{item.price&&<div className="mt-3"><p className="break-normal text-sm font-black leading-5 text-[#0b2341]">{item.price}</p><p className="mt-1 text-[10px] font-bold text-[#526579]">{t.stripe}</p><a href="https://wa.me/32492923605" onClick={e=>e.stopPropagation()} target="_blank" rel="noopener noreferrer" className="mt-1 block text-[10px] font-bold text-[#14518b] underline decoration-[#14518b]/30 underline-offset-2">{t.otherPay}</a></div>}')
+          # Wire selection through every ShelfCard call in this component.
+          s=s.replace('export function LibraryStorefront({locale,progress=[]}:{locale:Locale;progress?:any[]})','export function LibraryStorefront({locale,progress=[],onSelect}:{locale:Locale;progress?:any[];onSelect?:(key:string)=>void})')
+          s=s.replace('<ShelfCard key={item.title} item={item} t={t}','<ShelfCard key={item.title} item={item} t={t} onSelect={onSelect}')
+          p.write_text(s,encoding='utf-8')
+
+          p=Path('apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace('<LibraryStorefront locale={locale} progress={learning?.progress ?? []}/>','<LibraryStorefront locale={locale} progress={learning?.progress ?? []} onSelect={setActive}/>')
+          s=s.replace('+ Outros conteúdos e acessos','+ Detalhes, compras e acessos')
+          # Add the standardized Stripe/payment-contact note to the subscription price block without changing price logic.
+          anchor='          {subscriptionData?.active?<div className="mt-3"><p className="text-xs text-white/75">'
+          insert='          {!subscriptionData?.active&&<div className="mt-3 space-y-1 text-[10px] text-white/70"><p className="font-bold">Pagamento seguro via Stripe.</p><a href="https://wa.me/32492923605" target="_blank" rel="noopener noreferrer" className="font-bold text-[#f2cf83] underline underline-offset-2">Precisa de outra forma de pagamento? Entre em contato.</a></div>}\n'
+          if anchor in s and 'Pagamento seguro via Stripe.</p><a href="https://wa.me/32492923605"' not in s:
+              s=s.replace(anchor,insert+anchor,1)
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Build
+        run: |
+          npm install --no-package-lock
+          npm run build:painel
+      - name: Commit and remove one-shot workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/organize-library-stripe-navigation.yml
+          git add apps/painel-ldr/src/components/library-storefront.tsx apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          git commit -m "fix: organize library cards and restore controlled product access"
+          git push
