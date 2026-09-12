@@ -1,0 +1,47 @@
+name: One-time academic drawers integration
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/painel-ldr/src/components/academic-drawers.tsx'
+      - '.github/workflows/one-time-academic-drawers.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Integrate drawers safely
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx')
+          s=p.read_text(encoding='utf-8')
+          imp='import { LibraryStorefront } from "@/components/library-storefront";'
+          add='import { AcademicDrawers } from "@/components/academic-drawers";'
+          if add not in s:
+              if imp not in s: raise SystemExit('LibraryStorefront import anchor not found')
+              s=s.replace(imp,imp+'\n'+add,1)
+          anchor='    <details id="catalogo-ldr"'
+          if '<AcademicDrawers locale={locale}/>' not in s:
+              if anchor not in s: raise SystemExit('catalog details anchor not found')
+              s=s.replace(anchor,'    <AcademicDrawers locale={locale}/>\n\n'+anchor,1)
+          for marker in ('{ac.undergradSection}','{ac.postgradSection}'):
+              pos=s.find(marker)
+              if pos<0: continue
+              start=s.rfind('<section',0,pos)
+              if start<0: continue
+              cn=s.find('className="',start,pos)
+              if cn<0: continue
+              val_start=cn+len('className="')
+              if not s[val_start:val_start+7].startswith('hidden '):
+                  s=s[:val_start]+'hidden '+s[val_start:]
+          p.write_text(s,encoding='utf-8')
+      - name: Commit integration
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          git diff --cached --quiet || git commit -m "refactor(painel): turn academic catalogs into drawers"
+          git push
