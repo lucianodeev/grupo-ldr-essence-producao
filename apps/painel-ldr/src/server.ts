@@ -22,14 +22,24 @@ function academyCanonicalRedirect(request: Request): Response | null {
   const url = new URL(request.url);
   const host = url.hostname.toLowerCase();
   const isAcademy = host === "ldracademy.online" || host === "www.ldracademy.online";
-  const isLegacyAcademy = host === "learn.lucianoconecta.online";
+  const isLegacyAcademyHost = [
+    "learn.lucianoconecta.online",
+    "painel.ldrrhestrategia.com",
+    "painel.lucianoconecta.online",
+  ].includes(host);
 
-  if (isLegacyAcademy) {
+  if (isLegacyAcademyHost) {
     const target = new URL("https://ldracademy.online");
     target.search = url.search;
+    target.hash = url.hash;
 
     if (url.pathname === "/cliente/login") {
       target.pathname = "/cliente/login";
+      return Response.redirect(target.toString(), 308);
+    }
+
+    if (url.pathname === "/cliente") {
+      target.pathname = "/biblioteca";
       return Response.redirect(target.toString(), 308);
     }
 
@@ -42,6 +52,12 @@ function academyCanonicalRedirect(request: Request): Response | null {
       target.pathname = url.pathname;
       return Response.redirect(target.toString(), 308);
     }
+  }
+
+  if (isAcademy && url.pathname === "/cliente") {
+    url.hostname = "ldracademy.online";
+    url.pathname = "/biblioteca";
+    return Response.redirect(url.toString(), 308);
   }
 
   if (isAcademy && (url.pathname === "/cliente/biblioteca" || url.pathname.startsWith("/cliente/biblioteca/"))) {
