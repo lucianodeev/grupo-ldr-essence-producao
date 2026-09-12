@@ -48,6 +48,41 @@ function Heading({icon,title,desc,href,label}:{icon:React.ReactNode;title:string
   return <div className="mb-4 flex items-end justify-between gap-4"><div className="flex min-w-0 items-start gap-3"><div className="mt-1 shrink-0 text-[#b1842c]">{icon}</div><div className="min-w-0"><h2 className="break-normal font-serif text-3xl leading-tight text-[#0b2341]">{title}</h2><p className="mt-1 break-normal text-sm text-slate-500">{desc}</p></div></div>{href&&<a href={href} className="hidden shrink-0 rounded-full bg-[#f4efe3] px-4 py-2 text-xs font-black text-[#0b2341] sm:inline-flex">{label} →</a>}</div>;
 }
 
+
+const PROGRESS_META:Record<string,{title:string;href:string;cover:string;free?:boolean}>={
+  curso_gratuito_frances_negocios_a1:{title:"Francês para Negócios",href:"/cliente/cursos/frances-negocios-a1",cover:"/ldr/covers/frances-negocios.svg",free:true},
+  formacao_terapia_breve_psicanalitica:{title:"Formação em Terapia Breve Psicanalítica",href:"/cliente/treinamentos/terapia-breve-psicanalitica",cover:"/ldr/covers/terapia-breve.svg"},
+  ebook_coragem_comecar:{title:"eBook A Coragem de Começar",href:"/cliente/biblioteca/ebook_coragem_comecar",cover:"/ldr/covers/coragem-comecar.svg"},
+};
+const NOVELTY_COVERS:Record<string,string>={
+  "LDR Ciência":"/ldr/covers/ldr-ciencia.svg",
+  "Revista Negócios":"/ldr/covers/revista-negocios.svg",
+  "Jornal Europa":"/ldr/covers/jornal-europa.svg",
+  "Formação em IA":"/ldr/covers/formacao-ia.svg",
+};
+function progressLabel(locale:Locale,free:boolean){return free?(locale==="pt"?"CURSO GRATUITO":locale==="fr"?"COURS GRATUIT":locale==="es"?"CURSO GRATUITO":"FREE COURSE"):(locale==="pt"?"EM ANDAMENTO":locale==="fr"?"EN COURS":locale==="es"?"EN CURSO":"IN PROGRESS");}
+function ContinueCard({x,locale}:{x:any;locale:Locale}){
+  const meta=PROGRESS_META[x.product_key]||{title:(x.title||String(x.product_key||"").replaceAll("_"," ")),href:x.href||"/cliente/biblioteca",cover:"/ldr/covers/formacao-ia.svg"};
+  const pct=Math.max(0,Math.min(100,Number(x.progress_percent)||0));
+  return <a href={meta.href} className="group grid min-w-0 grid-cols-[88px_minmax(0,1fr)] gap-4 rounded-[24px] border border-slate-200 bg-white p-3 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md sm:grid-cols-[110px_minmax(0,1fr)] sm:p-4">
+    <img src={meta.cover} alt="" className="h-[122px] w-[88px] rounded-2xl object-cover shadow-sm sm:h-[150px] sm:w-[110px]"/>
+    <div className="min-w-0 self-center">
+      <span className="inline-flex max-w-full rounded-full bg-[#f8edd6] px-2.5 py-1 text-[9px] font-black uppercase tracking-[.08em] text-[#a66f12]">{progressLabel(locale,!!meta.free)}</span>
+      <h3 className="mt-2 line-clamp-2 break-normal font-serif text-[20px] leading-tight text-[#0b2341] sm:text-2xl">{meta.title}</h3>
+      <p className="mt-1 line-clamp-2 break-normal text-xs leading-5 text-slate-500 sm:text-sm">{x.current_location||""}</p>
+      <div className="mt-3 flex items-center gap-3"><div className="h-2 flex-1 overflow-hidden rounded-full bg-slate-100"><div className={`h-full ${pct>0?"bg-[#c08b25]":"bg-[#14518b]"}`} style={{width:`${pct}%`}}/></div><span className="shrink-0 text-xs font-black text-[#0b2341]">{pct}%</span></div>
+      <div className="mt-3 flex items-center justify-end"><span className="inline-flex rounded-full bg-[#14518b] px-4 py-2 text-[11px] font-black text-white">{locale==="pt"?"CONTINUAR →":locale==="fr"?"CONTINUER →":locale==="es"?"CONTINUAR →":"CONTINUE →"}</span></div>
+    </div>
+  </a>;
+}
+function NoveltyCard({item,locale,t}:{item:Item;locale:Locale;t:(typeof COPY)[Locale]}){
+  const cover=NOVELTY_COVERS[item.title];
+  return <a href={item.href} className="group flex min-w-0 flex-col overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg">
+    <div className="relative aspect-[16/10] overflow-hidden bg-[#071426]">{cover?<img src={cover} alt="" className="h-full w-full object-cover"/>:<div className="flex h-full items-center justify-center text-5xl">{item.icon}</div>}<span className="absolute right-3 top-3 rounded-full bg-[#d6ad63] px-2.5 py-1 text-[9px] font-black text-[#281605]">{locale==="pt"?"NOVO":locale==="fr"?"NOUVEAU":locale==="es"?"NUEVO":"NEW"}</span></div>
+    <div className="flex flex-1 flex-col p-4"><h3 className="break-normal font-serif text-xl leading-tight text-[#0b2341]">{item.title}</h3><p className="mt-2 line-clamp-2 break-normal text-sm leading-5 text-slate-500">{item.subtitle}</p>{item.price&&<p className="mt-3 break-normal text-sm font-black leading-5 text-[#0b2341]">{item.price}</p>}<span className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#14518b] px-4 py-2.5 text-xs font-black text-white">{t.open}</span></div>
+  </a>;
+}
+
 export function LibraryStorefront({locale,progress}:{locale:Locale;progress?:any[]}){
   const t=COPY[locale];
   const [q,setQ]=useState("");
@@ -67,13 +102,13 @@ export function LibraryStorefront({locale,progress}:{locale:Locale;progress?:any
     </div>
 
     {!searching && progress?.length ? <section id="continuar" className="scroll-mt-24">
-      <Heading icon={<GraduationCap className="h-7 w-7"/>} title={locale==="pt"?"Continue de onde parou":locale==="fr"?"Reprenez où vous en étiez":locale==="es"?"Continúa donde lo dejaste":"Continue where you left off"} desc={locale==="pt"?"Retome rapidamente seus conteúdos iniciados.":locale==="fr"?"Reprenez rapidement vos contenus commencés.":locale==="es"?"Retoma rápidamente tus contenidos iniciados.":"Quickly resume content you already started."} label={t.seeAll}/>
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">{progress.slice().sort((a:any,b:any)=>new Date(b.updated_at).getTime()-new Date(a.updated_at).getTime()).slice(0,3).map((x:any)=><a key={x.id||x.product_key} href={x.href||"/cliente/biblioteca"} className="rounded-[22px] border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"><p className="text-xs font-black uppercase tracking-[.14em] text-[#b1842c]">{locale==="pt"?"EM ANDAMENTO":locale==="fr"?"EN COURS":locale==="es"?"EN CURSO":"IN PROGRESS"}</p><h3 className="mt-2 font-serif text-xl text-[#0b2341]">{x.title||x.product_key}</h3><p className="mt-1 text-xs text-slate-500">{x.current_location||""}</p><div className="mt-4 h-2 overflow-hidden rounded-full bg-slate-100"><div className="h-full bg-[#b1842c]" style={{width:`${Math.max(0,Math.min(100,Number(x.progress_percent)||0))}%`}}/></div><div className="mt-2 flex items-center justify-between text-xs font-bold text-slate-600"><span>{Number(x.progress_percent)||0}%</span><span className="text-[#14518b]">{locale==="pt"?"CONTINUAR →":locale==="fr"?"CONTINUER →":locale==="es"?"CONTINUAR →":"CONTINUE →"}</span></div></a>)}</div>
+      <Heading icon={<GraduationCap className="h-7 w-7"/>} title={locale==="pt"?"Continue de onde parou":locale==="fr"?"Reprenez où vous en étiez":locale==="es"?"Continúa donde lo dejaste":"Continue where you left off"} desc={locale==="pt"?"Seus últimos conteúdos acessados. Retome seu aprendizado.":locale==="fr"?"Vos derniers contenus consultés. Reprenez votre apprentissage.":locale==="es"?"Tus últimos contenidos consultados. Retoma tu aprendizaje.":"Your latest content. Resume your learning."} label={t.seeAll}/>
+      <div className="grid min-w-0 gap-3">{progress.slice().sort((a:any,b:any)=>new Date(b.updated_at).getTime()-new Date(a.updated_at).getTime()).slice(0,3).map((x:any)=><ContinueCard key={x.id||x.product_key} x={x} locale={locale}/>)}</div>
     </section>:null}
 
     {!searching ? <section id="novidades" className="scroll-mt-24">
       <Heading icon={<Sparkles className="h-7 w-7"/>} title={locale==="pt"?"Novidades na Biblioteca":locale==="fr"?"Nouveautés de la Bibliothèque":locale==="es"?"Novedades en la Biblioteca":"New in the Library"} desc={locale==="pt"?"Publicações e conteúdos para descobrir agora.":locale==="fr"?"Publications et contenus à découvrir maintenant.":locale==="es"?"Publicaciones y contenidos para descubrir ahora.":"Fresh publications and content to discover now."} label={t.seeAll}/>
-      <div className="flex snap-x gap-3 overflow-x-auto pb-2 [scrollbar-width:none] sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible">{[ITEMS[2],ITEMS[3],ITEMS[4],ITEMS[8]].filter(Boolean).map(item=><div key={item.title} className="relative"><span className="absolute right-3 top-3 z-10 rounded-full bg-[#d6ad63] px-2 py-1 text-[8px] font-black text-[#281605]">{locale==="pt"?"NOVO":locale==="fr"?"NOUVEAU":locale==="es"?"NUEVO":"NEW"}</span><ShelfCard item={item} t={t}/></div>)}</div>
+      <div className="grid min-w-0 grid-cols-1 gap-4 min-[520px]:grid-cols-2 lg:grid-cols-4">{[ITEMS[2],ITEMS[3],ITEMS[4],ITEMS[8]].filter(Boolean).map(item=><NoveltyCard key={item.title} item={item} locale={locale} t={t}/>)}</div>
     </section>:null}
 
     {searching?<section><Heading icon={<Search className="h-6 w-6"/>} title={filter==="all"?t.all:filter==="banca"?t.newsstand:filter==="livraria"?t.bookstore:filter==="formacoes"?t.formations:t.free} desc={t.featuredDesc} label={t.seeAll}/><div className="grid min-w-0 grid-cols-1 gap-3 min-[480px]:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">{filtered.map(item=><ShelfCard key={item.title} item={item} t={t}/>)}</div></section>:<>
