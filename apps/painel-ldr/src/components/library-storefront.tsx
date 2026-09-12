@@ -24,6 +24,7 @@ const ITEMS:Item[]=[
   {title:"Filme LDR",subtitle:"Produção audiovisual do ecossistema.",href:"/cliente/biblioteca",icon:"🎬",tag:"filme produção",group:"livraria",color:"#35101e"},
   {title:"Formação em IA",subtitle:"IA aplicada aos negócios e à carreira.",href:"/cliente/treinamentos/ia-negocios-carreira",icon:"🤖",tag:"ia formação inteligência artificial",group:"formacoes",color:"#143d59"},
   {title:"Psicanálise",subtitle:"Formação online em Psicanálise.",href:"/formacao-psicanalise",icon:"🧠",tag:"psicanálise formação",group:"formacoes",color:"#5b2b86"},
+  {title:"Psicanalista de Alta Performance",subtitle:"Marketing, agenda, gestão e crescimento para uma prática clínica profissional e sustentável.",href:"/cliente/psicanalista-alta-performance",icon:"📈",price:"A partir de R$ 197 · € 39",tag:"psicanalista marketing agenda clínica gestão 10k trilogia alta performance",group:"formacoes",color:"#8a6a2d",badge:"NOVO"},
   {title:"Formações profissionais",subtitle:"Carreira, liderança, RH e outras formações.",href:"#formacoes-profissionais",icon:"🎓",tag:"formações cursos carreira liderança rh",group:"formacoes",color:"#0b5cab"},
   {title:"RH 600h",subtitle:"Formação profissional em Gestão de Pessoas e RH.",href:"/cliente/formacoes/gestao-pessoas-rh",icon:"👥",price:"R$ 299,99 · € 49,90",tag:"rh formação gestão pessoas",group:"formacoes",color:"#047857"},
   {title:"Carreira",subtitle:"Curso gratuito para organizar sua carreira.",href:"/cliente/cursos/organizar-carreira",icon:"💼",tag:"carreira gratuito",group:"gratis",color:"#b85c2e"},
@@ -48,7 +49,6 @@ function ShelfCard({item,t,large=false}:{item:Item;t:(typeof COPY)[Locale];large
 function Heading({icon,title,desc,href,label}:{icon:React.ReactNode;title:string;desc:string;href?:string;label:string}){
   return <div className="mb-4 flex items-end justify-between gap-4"><div className="flex min-w-0 items-start gap-3"><div className="mt-1 shrink-0 text-[#b1842c]">{icon}</div><div className="min-w-0"><h2 className="break-normal font-serif text-3xl leading-tight text-[#0b2341]">{title}</h2><p className="mt-1 break-normal text-sm text-slate-500">{desc}</p></div></div>{href&&<a href={href} className="hidden shrink-0 rounded-full bg-[#f4efe3] px-4 py-2 text-xs font-black text-[#0b2341] sm:inline-flex">{label} →</a>}</div>;
 }
-
 
 const PROGRESS_META:Record<string,{title:string;href:string;cover:string;free?:boolean}>={
   curso_gratuito_frances_negocios_a1:{title:"Francês para Negócios",href:"/cliente/cursos/frances-negocios-a1",cover:"/ldr/covers/frances-negocios.svg",free:true},
@@ -110,7 +110,7 @@ export function LibraryStorefront({locale,progress}:{locale:Locale;progress?:any
 
     {!searching ? <section id="novidades" className="scroll-mt-24">
       <Heading icon={<Sparkles className="h-7 w-7"/>} title={locale==="pt"?"Novidades na Biblioteca":locale==="fr"?"Nouveautés de la Bibliothèque":locale==="es"?"Novedades en la Biblioteca":"New in the Library"} desc={locale==="pt"?"Publicações e conteúdos para descobrir agora.":locale==="fr"?"Publications et contenus à découvrir maintenant.":locale==="es"?"Publicaciones y contenidos para descubrir ahora.":"Fresh publications and content to discover now."} label={t.seeAll}/>
-      <div className="grid min-w-0 grid-cols-1 gap-4 min-[520px]:grid-cols-2 lg:grid-cols-4">{[ITEMS[2],ITEMS[3],ITEMS[4],ITEMS[8]].filter(Boolean).map(item=><NoveltyCard key={item.title} item={item} locale={locale} t={t}/>)}</div>
+      <div className="grid min-w-0 grid-cols-1 gap-4 min-[520px]:grid-cols-2 lg:grid-cols-4">{[ITEMS[2],ITEMS[3],ITEMS[4],ITEMS[11]].filter(Boolean).map(item=><NoveltyCard key={item.title} item={item} locale={locale} t={t}/>)}</div>
     </section>:null}
 
     {searching?<section><Heading icon={<Search className="h-6 w-6"/>} title={filter==="all"?t.all:filter==="banca"?t.newsstand:filter==="livraria"?t.bookstore:filter==="formacoes"?t.formations:t.free} desc={t.featuredDesc} label={t.seeAll}/><div className="grid min-w-0 grid-cols-1 gap-3 min-[480px]:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">{filtered.map(item=><ShelfCard key={item.title} item={item} t={t}/>)}</div></section>:<>
