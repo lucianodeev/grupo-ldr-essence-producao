@@ -1,0 +1,46 @@
+name: Fix library core products
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-library-core-products.yml'
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Restore ebook book and training cards
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('apps/painel-ldr/src/components/library-storefront.tsx')
+          s=p.read_text(encoding='utf-8')
+
+          old='''  {title:"eBook A Coragem de Começar",subtitle:"Leitura digital para transformar coragem em ação.",href:"/acoragemdecomecar",icon:"📘",price:"R$ 9,90 · € 4,90",tag:"ebook coragem começar",group:"livraria",color:"#5b0824"},\n  {title:"Livros LDR",subtitle:"Livros e projetos editoriais do ecossistema.",href:"/livros",icon:"📚",tag:"livros editorial",group:"livraria",color:"#35101e"},'''
+          new='''  {title:"eBook A Coragem de Começar",subtitle:"Leitura digital para transformar coragem em ação.",href:"/cliente/biblioteca/ebook_coragem_comecar",icon:"📘",price:"R$ 9,90 · € 4,90",tag:"ebook coragem começar",group:"livraria",color:"#5b0824",badge:"DESTAQUE"},\n  {title:"O Menino que Vendia Mamão",subtitle:"Livro de Luciano Rodrigues Almeida sobre coragem, iniciativa e construção de oportunidades.",href:"/cliente/biblioteca/livro_menino_mamao",icon:"📕",price:"R$ 49,90 · € 20,00",tag:"livro menino vendia mamão coragem empreendedorismo",group:"livraria",color:"#7a3f16",badge:"LIVRO"},\n  {title:"Livros LDR",subtitle:"Livros e projetos editoriais do ecossistema.",href:"/livros",icon:"📚",tag:"livros editorial",group:"livraria",color:"#35101e"},'''
+          if old not in s:
+              raise SystemExit('Anchor ebook/livros not found')
+          s=s.replace(old,new,1)
+
+          anchor='''  {title:"Formação em IA",subtitle:"IA aplicada aos negócios e à carreira.",href:"/cliente/treinamentos/ia-negocios-carreira",icon:"🤖",tag:"ia formação inteligência artificial",group:"formacoes",color:"#143d59"},'''
+          insert=anchor+'\n  {title:"Do Mamão ao Negócio",subtitle:"Treinamento para transformar uma ideia em negócio, oferta e plano de execução.",href:"/cliente/treinamentos/do-mamao-ao-negocio",icon:"🥭",tag:"mamão negocio empreendedorismo treinamento oferta vendas",group:"formacoes",color:"#9a4f13",badge:"TREINAMENTO"},'
+          if anchor not in s:
+              raise SystemExit('Anchor formacao IA not found')
+          s=s.replace(anchor,insert,1)
+
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add apps/painel-ldr/src/components/library-storefront.tsx
+          git diff --cached --quiet && exit 0
+          git commit -m 'fix: restore ebook book and Do Mamao training in library'
+          git push
