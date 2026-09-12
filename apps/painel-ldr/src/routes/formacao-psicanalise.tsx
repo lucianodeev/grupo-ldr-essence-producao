@@ -3,8 +3,8 @@ import { PsychoanalysisTrainingPage } from "@/components/psychoanalysis-training
 
 export const Route = createFileRoute("/formacao-psicanalise")({
  head:()=>({meta:[
-  {title:"Formação Online em Psicanálise | Grupo LDR Essence"},
-  {name:"description",content:"Formação Online em Psicanálise: 14 módulos, 6 encontros ao vivo, leituras orientadas, atividades e acesso vitalício aos conteúdos digitais."},
+  {title:"Formação em Psicanálise · Autismo + Atuação Internacional | Grupo LDR Essence"},
+  {name:"description",content:"Formação em Psicanálise com 15 módulos, 1.200 horas, 240 unidades de aprendizagem, 6 encontros ao vivo, projetos e avaliações, com autismo, neurodiversidade e atuação internacional."},
  ]}),
  component:PsychoanalysisTrainingPage,
 });
