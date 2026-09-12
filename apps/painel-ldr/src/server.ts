@@ -30,7 +30,7 @@ function academyCanonicalRedirect(request: Request): Response | null {
     target.search = url.search;
     target.hash = url.hash;
 
-    if (url.pathname === "/cliente") {
+    if (url.pathname === "/" || url.pathname === "/cliente") {
       target.pathname = "/biblioteca";
     } else if (url.pathname === "/cliente/biblioteca" || url.pathname.startsWith("/cliente/biblioteca/")) {
       target.pathname = url.pathname.replace(/^\/cliente\/biblioteca/, "/biblioteca");
@@ -57,7 +57,7 @@ function academyCanonicalRedirect(request: Request): Response | null {
     }
   }
 
-  if (isAcademy && url.pathname === "/cliente") {
+  if (isAcademy && (url.pathname === "/" || url.pathname === "/cliente")) {
     url.hostname = "ldracademy.online";
     url.pathname = "/biblioteca";
     return Response.redirect(url.toString(), 308);
