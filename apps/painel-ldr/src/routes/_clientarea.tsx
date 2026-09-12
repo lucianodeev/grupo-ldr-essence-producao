@@ -16,7 +16,6 @@ export const Route = createFileRoute("/_clientarea")({
 function ClientAreaLayout() {
   return (
     <>
-      <FreeContentAds placement="top" />
       <Outlet />
       <FreeContentAds placement="bottom" />
     </>
