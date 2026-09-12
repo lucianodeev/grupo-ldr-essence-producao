@@ -35,6 +35,7 @@ function ClientShell() {
   const location = useLocation();
   const queryClient = useQueryClient();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [academyHost, setAcademyHost] = useState(false);
   const context = useClientContext();
   const {locale:raw}=useI18n();
   const locale=(raw==="en"||raw==="fr"||raw==="es"?raw:"pt") as L;
@@ -55,7 +56,9 @@ function ClientShell() {
       return;
     }
 
-    if (isAcademyHost() && (location.pathname === "/cliente" || location.pathname === "/cliente/")) {
+    const academy = isAcademyHost();
+    setAcademyHost(academy);
+    if (academy && (location.pathname === "/cliente" || location.pathname === "/cliente/")) {
       window.location.replace("https://ldracademy.online/biblioteca");
     }
   }, [location.pathname]);
@@ -67,6 +70,8 @@ function ClientShell() {
   }
 
   const status = context.data?.status;
+  const libraryHref = academyHost ? "/biblioteca" : "/cliente/biblioteca";
+
   return (
     <div className="min-h-screen lg:flex" style={{ background: "var(--cream)" }}>
       <aside className="no-print sticky top-0 z-40 text-primary-foreground lg:h-screen lg:w-72 lg:shrink-0" style={{ background: "linear-gradient(160deg, var(--wine-deep), var(--wine))" }}>
@@ -81,7 +86,7 @@ function ClientShell() {
               const isLibrary = item.to === "/cliente/biblioteca";
               const classes = `flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold transition ${"featured" in item && item.featured ? "mb-2 bg-secondary text-secondary-foreground shadow-sm" : "hover:bg-white/10"}`;
 
-              if (isLibrary && isAcademyHost()) {
+              if (isLibrary && academyHost) {
                 return <li key={item.to}><a href="/biblioteca" onClick={() => setMenuOpen(false)} className={classes}><Icon className="h-4 w-4" aria-hidden="true"/>{item.label}</a></li>;
               }
 
@@ -97,6 +102,20 @@ function ClientShell() {
         <main className="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
           {context.isLoading ? <p className="text-sm text-muted-foreground">{c.loading}</p> : status === "ok" ? <Outlet /> : <section className="s8-card"><h1 className="font-serif text-2xl">{c.unavailable}</h1><p className="mt-2 text-sm text-muted-foreground">{status === "blocked" ? c.blocked : c.missing}</p><button type="button" onClick={handleSignOut} className="mt-4 rounded-lg bg-primary px-4 py-2 text-sm font-bold text-primary-foreground">{c.signout}</button></section>}
         </main>
+      </div>
+
+      <div
+        className="no-print fixed z-[90]"
+        style={{ bottom: "calc(5.25rem + env(safe-area-inset-bottom))", right: "calc(1rem + env(safe-area-inset-right))" }}
+      >
+        <a
+          href={libraryHref}
+          aria-label={c.library}
+          className="inline-flex min-h-12 items-center gap-2 rounded-full bg-emerald-700 px-5 py-3 text-sm font-black text-white shadow-xl transition hover:-translate-y-0.5 hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+        >
+          <BookOpen className="h-5 w-5" aria-hidden="true" />
+          {c.library}
+        </a>
       </div>
     </div>
   );
