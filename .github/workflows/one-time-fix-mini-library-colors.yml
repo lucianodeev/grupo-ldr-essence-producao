@@ -1,0 +1,63 @@
+name: Fix mini-library colors
+on:
+  push:
+    paths:
+      - '.github/workflows/one-time-fix-mini-library-colors.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Improve card color contrast
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('apps/painel-ldr/src/components/library-sales-home-access-choice.tsx')
+          s=p.read_text(encoding='utf-8')
+
+          replacements={
+          'tone:"from-[#5a2a83] to-[#7a3dac]"':'tone:"border-violet-200 from-violet-50 to-white"',
+          'tone:"from-[#a73b11] to-[#d65a1d]"':'tone:"border-orange-200 from-orange-50 to-white"',
+          'tone:"from-[#0f6173] to-[#1581a0]"':'tone:"border-cyan-200 from-cyan-50 to-white"',
+          'tone:"from-[#0a5fae] to-[#1873cf]"':'tone:"border-amber-200 from-amber-50 to-white"',
+          'tone:"from-[#233f72] to-[#375d95]"':'tone:"border-[#d6ad63]/50 from-[#fff8e8] to-white"',
+          'tone:"from-[#075da7] to-[#1684dd]"':'tone:"border-rose-200 from-rose-50 to-white"',
+          'tone:"from-[#071426] to-[#163b67]"':'tone:"border-slate-300 from-slate-100 to-white"',
+          'tone:"from-[#630820] to-[#8d1236]"':'tone:"border-pink-200 from-pink-50 to-white"',
+          'tone:"from-[#6b0826] to-[#8a1037]"':'tone:"border-red-200 from-red-50 to-white"',
+          'tone:"from-[#6d0d2c] to-[#981443]"':'tone:"border-fuchsia-200 from-fuchsia-50 to-white"',
+          'tone:"from-[#12675d] to-[#1b897b]"':'tone:"border-emerald-200 from-emerald-50 to-white"',
+          'tone:"from-[#075c35] to-[#0b7a48]"':'tone:"border-lime-200 from-lime-50 to-white"',
+          'tone:"from-[#087255] to-[#0b9a70]"':'tone:"border-teal-200 from-teal-50 to-white"',
+          'tone:"from-[#b34d1c] to-[#d66a2c]"':'tone:"border-yellow-200 from-yellow-50 to-white"',
+          'tone:"from-[#123955] to-[#205b7d]"':'tone:"border-indigo-200 from-indigo-50 to-white"',
+          'tone:"from-[#3b0817] to-[#640d27]"':'tone:"border-stone-300 from-stone-100 to-white"',
+          'rounded-[32px] border border-slate-200 bg-[#f5f8fc] p-5':'rounded-[32px] border border-[#d6ad63]/30 bg-white p-5',
+          'className={`group relative min-h-[148px] overflow-hidden rounded-[24px] bg-gradient-to-br ${card.tone} p-4 text-white shadow-sm':'className={`group relative min-h-[148px] overflow-hidden rounded-[24px] border bg-gradient-to-br ${card.tone} p-4 text-[#071426] shadow-sm',
+          'text-white/70 sm:text-xs":"':'text-slate-600 sm:text-xs":"',
+          'text-white/70 sm:text-xs">{item[1]}':'text-slate-600 sm:text-xs">{item[1]}',
+          }
+          for old,new in replacements.items():
+              s=s.replace(old,new)
+
+          # exact fallback for the meta line in case the class string remains unchanged
+          s=s.replace('text-[11px] font-semibold uppercase tracking-[.08em] text-white/70 sm:text-xs','text-[11px] font-semibold uppercase tracking-[.08em] text-slate-600 sm:text-xs')
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Verify contrast patch
+        run: |
+          grep -q 'border-violet-200 from-violet-50 to-white' apps/painel-ldr/src/components/library-sales-home-access-choice.tsx
+          grep -q 'text-slate-600 sm:text-xs' apps/painel-ldr/src/components/library-sales-home-access-choice.tsx
+          grep -q 'border border-[#d6ad63]/30 bg-white' apps/painel-ldr/src/components/library-sales-home-access-choice.tsx
+      - name: Commit
+        run: |
+          if git diff --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/painel-ldr/src/components/library-sales-home-access-choice.tsx
+          git commit -m "fix(painel): improve mini-library card contrast and colors"
+          git push
