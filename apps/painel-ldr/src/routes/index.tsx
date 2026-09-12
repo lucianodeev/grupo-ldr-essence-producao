@@ -3,6 +3,7 @@ import { LibrarySalesHomeAccessChoice } from "@/components/library-sales-home-ac
 import { AIFormationSalesCard } from "@/components/ai-formation-sales-card";
 import { EditorialSalesCards } from "@/components/editorial-sales-cards";
 import { FiveProfessionalFormationCards } from "@/components/five-professional-formation-cards";
+import { PsychoanalystPerformanceCard } from "@/components/psychoanalyst-performance-card";
 
 function SalesHome(){
   return <>
@@ -23,6 +24,7 @@ function SalesHome(){
       }
     `}</style>
     <LibrarySalesHomeAccessChoice />
+    <PsychoanalystPerformanceCard />
     <AIFormationSalesCard />
     <FiveProfessionalFormationCards />
     <EditorialSalesCards />
@@ -32,10 +34,10 @@ function SalesHome(){
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Biblioteca LDR | Cursos, Formações e Treinamentos Online" },
-      { name: "description", content: "Cursos, formações profissionais, treinamentos, livros e conteúdos digitais com compra individual de acesso vitalício ou assinatura mensal. Destaque para a Formação em Psicanálise, Inteligência Artificial Aplicada aos Negócios e à Carreira e outros conteúdos profissionais." },
-      { property: "og:title", content: "Biblioteca LDR | Cursos e Formações Online" },
-      { property: "og:description", content: "Escolha entre pagamento único com acesso vitalício ou assinatura mensal para acessar conteúdos digitais pagos da Biblioteca LDR." },
+      { title: "LDR Academy | Cursos, Formações e Treinamentos Online" },
+      { name: "description", content: "Cursos, formações profissionais, treinamentos, livros e conteúdos digitais da LDR Academy. Destaque para Psicanalista de Alta Performance, Formação em Psicanálise e Inteligência Artificial Aplicada aos Negócios e à Carreira." },
+      { property: "og:title", content: "LDR Academy | Cursos e Formações Online" },
+      { property: "og:description", content: "Aprenda no seu tempo com cursos e formações profissionais da LDR Academy." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
