@@ -1,0 +1,55 @@
+name: Fix mini-library contrast final
+on:
+  push:
+    paths:
+      - '.github/workflows/one-time-fix-mini-library-contrast-final.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply high-contrast library palette
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('apps/painel-ldr/src/components/library-sales-home-access-choice.tsx')
+          s=p.read_text(encoding='utf-8')
+          replacements={
+            'from-[#5a2a83] to-[#7a3dac]':'from-[#f4edfb] to-[#eadcf8] border border-[#7a3dac]/25',
+            'from-[#a73b11] to-[#d65a1d]':'from-[#fff1e8] to-[#ffe2cf] border border-[#d65a1d]/25',
+            'from-[#0f6173] to-[#1581a0]':'from-[#eaf8fb] to-[#d7f0f6] border border-[#1581a0]/25',
+            'from-[#0a5fae] to-[#1873cf]':'from-[#fff7df] to-[#ffefbd] border border-[#c48a16]/25',
+            'from-[#233f72] to-[#375d95]':'from-[#f9f0df] to-[#f1dfbd] border border-[#a36d19]/25',
+            'from-[#075da7] to-[#1684dd]':'from-[#fff0f5] to-[#fbdbe7] border border-[#b33b68]/25',
+            'from-[#071426] to-[#163b67]':'from-[#f3f4f6] to-[#e5e7eb] border border-slate-300',
+            'from-[#630820] to-[#8d1236]':'from-[#fff0f4] to-[#f8dce5] border border-[#8d1236]/25',
+            'from-[#6b0826] to-[#8a1037]':'from-[#fff7ed] to-[#ffedd5] border border-[#c06b1b]/25',
+            'from-[#6d0d2c] to-[#981443]':'from-[#fdf2f8] to-[#fce7f3] border border-[#981443]/20',
+            'from-[#12675d] to-[#1b897b]':'from-[#ecfdf5] to-[#d1fae5] border border-[#1b897b]/25',
+            'from-[#075c35] to-[#0b7a48]':'from-[#f0fdf4] to-[#dcfce7] border border-[#0b7a48]/25',
+            'from-[#087255] to-[#0b9a70]':'from-[#ecfdf5] to-[#d1fae5] border border-[#0b9a70]/25',
+            'from-[#b34d1c] to-[#d66a2c]':'from-[#fff7ed] to-[#ffedd5] border border-[#d66a2c]/25',
+            'from-[#123955] to-[#205b7d]':'from-[#eef2ff] to-[#e0e7ff] border border-[#4f46e5]/20',
+            'from-[#3b0817] to-[#640d27]':'from-[#f8fafc] to-[#e2e8f0] border border-slate-300',
+          }
+          for a,b in replacements.items(): s=s.replace(a,b)
+          s=s.replace('p-4 text-white shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-lg','p-4 text-[#071426] shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-lg')
+          s=s.replace('text-white/70 sm:text-xs','text-slate-600 sm:text-xs')
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Verify no dark-on-dark mini-library card styling remains
+        run: |
+          grep -q 'text-[#071426] shadow-sm transition' apps/painel-ldr/src/components/library-sales-home-access-choice.tsx
+          ! grep -q 'p-4 text-white shadow-sm transition' apps/painel-ldr/src/components/library-sales-home-access-choice.tsx
+      - name: Commit and push
+        run: |
+          if git diff --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/painel-ldr/src/components/library-sales-home-access-choice.tsx
+          git commit -m "fix(painel): correct mini-library card contrast"
+          git push
