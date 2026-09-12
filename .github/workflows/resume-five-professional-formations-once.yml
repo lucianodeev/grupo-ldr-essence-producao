@@ -1,0 +1,39 @@
+name: Resume five professional formations once
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/resume-five-professional-formations-once.yml
+permissions:
+  contents: write
+jobs:
+  resume:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Reapply generation script
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          src=Path('.github/workflows/add-five-professional-formations-once.yml').read_text()
+          start=src.index("          python - <<'PY'\n")+len("          python - <<'PY'\n")
+          end=src.index("\n          PY\n",start)
+          code=src[start:end]
+          code='\n'.join(line[10:] if line.startswith('          ') else line for line in code.splitlines())
+          Path('/tmp/add_five.py').write_text(code)
+          PY
+          python /tmp/add_five.py
+      - name: Install and build
+        run: |
+          npm install --package-lock=false --no-audit --no-fund
+          npm run build --workspace=apps/painel-ldr
+      - name: Commit generated formation files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/painel-ldr/src
+          git commit -m "feat(painel): add five online professional formations"
+          git push
