@@ -46,22 +46,22 @@ export function LibrarySalesHomeAccessChoice(){
   const [showLibraryAll,setShowLibraryAll]=useState(false);
   const showcase=libraryShowcase[locale];
   const cardDefs=[
-    {k:"psycho",icon:"🎓",to:"/formacao-psicanalise",tone:"from-[#5a2a83] to-[#7a3dac]"},
-    {k:"business",icon:"📈",to:"/formacao-negocio-em-24-horas",tone:"from-[#a73b11] to-[#d65a1d]"},
-    {k:"massage",icon:"🌿",to:"/formacao-massoterapia",tone:"from-[#0f6173] to-[#1581a0]"},
-    {k:"mentor",icon:"💼",to:"/cliente/biblioteca",tone:"from-[#0a5fae] to-[#1873cf]"},
-    {k:"psychoWrite",icon:"✍️",to:"/cliente/orientacao-psicanalitica",tone:"from-[#233f72] to-[#375d95]"},
-    {k:"careerWrite",icon:"🧭",to:"/cliente/orientacao-profissional",tone:"from-[#075da7] to-[#1684dd]"},
-    {k:"news",icon:"📰",to:"/cliente/biblioteca/jornal-ldr",tone:"from-[#071426] to-[#163b67]"},
-    {k:"mag",icon:"📖",to:"/cliente/biblioteca/revista-ldr",tone:"from-[#630820] to-[#8d1236]"},
-    {k:"ebooks",icon:"📚",to:"/cliente/biblioteca",tone:"from-[#6b0826] to-[#8a1037]"},
-    {k:"books",icon:"📘",to:"/cliente/biblioteca",tone:"from-[#6d0d2c] to-[#981443]"},
-    {k:"brief",icon:"🧠",to:"/formacao-terapia-breve-psicanalitica",tone:"from-[#12675d] to-[#1b897b]"},
-    {k:"lead",icon:"👥",to:"/cliente/biblioteca",tone:"from-[#075c35] to-[#0b7a48]"},
-    {k:"rh",icon:"🎯",to:"/cliente/formacoes/gestao-pessoas-rh",tone:"from-[#087255] to-[#0b9a70]"},
-    {k:"free",icon:"🎁",to:"/cliente/biblioteca",tone:"from-[#b34d1c] to-[#d66a2c]"},
-    {k:"ai",icon:"🤖",to:"/cliente/biblioteca",tone:"from-[#123955] to-[#205b7d]"},
-    {k:"film",icon:"🎬",to:"/cliente/biblioteca",tone:"from-[#3b0817] to-[#640d27]"},
+    {k:"psycho",icon:"🎓",to:"/formacao-psicanalise",tone:"from-[#f4edfb] to-[#eadcf8] border border-[#7a3dac]/25"},
+    {k:"business",icon:"📈",to:"/formacao-negocio-em-24-horas",tone:"from-[#fff1e8] to-[#ffe2cf] border border-[#d65a1d]/25"},
+    {k:"massage",icon:"🌿",to:"/formacao-massoterapia",tone:"from-[#eaf8fb] to-[#d7f0f6] border border-[#1581a0]/25"},
+    {k:"mentor",icon:"💼",to:"/cliente/biblioteca",tone:"from-[#fff7df] to-[#ffefbd] border border-[#c48a16]/25"},
+    {k:"psychoWrite",icon:"✍️",to:"/cliente/orientacao-psicanalitica",tone:"from-[#f9f0df] to-[#f1dfbd] border border-[#a36d19]/25"},
+    {k:"careerWrite",icon:"🧭",to:"/cliente/orientacao-profissional",tone:"from-[#fff0f5] to-[#fbdbe7] border border-[#b33b68]/25"},
+    {k:"news",icon:"📰",to:"/cliente/biblioteca/jornal-ldr",tone:"from-[#f3f4f6] to-[#e5e7eb] border border-slate-300"},
+    {k:"mag",icon:"📖",to:"/cliente/biblioteca/revista-ldr",tone:"from-[#fff0f4] to-[#f8dce5] border border-[#8d1236]/25"},
+    {k:"ebooks",icon:"📚",to:"/cliente/biblioteca",tone:"from-[#fff7ed] to-[#ffedd5] border border-[#c06b1b]/25"},
+    {k:"books",icon:"📘",to:"/cliente/biblioteca",tone:"from-[#fdf2f8] to-[#fce7f3] border border-[#981443]/20"},
+    {k:"brief",icon:"🧠",to:"/formacao-terapia-breve-psicanalitica",tone:"from-[#ecfdf5] to-[#d1fae5] border border-[#1b897b]/25"},
+    {k:"lead",icon:"👥",to:"/cliente/biblioteca",tone:"from-[#f0fdf4] to-[#dcfce7] border border-[#0b7a48]/25"},
+    {k:"rh",icon:"🎯",to:"/cliente/formacoes/gestao-pessoas-rh",tone:"from-[#ecfdf5] to-[#d1fae5] border border-[#0b9a70]/25"},
+    {k:"free",icon:"🎁",to:"/cliente/biblioteca",tone:"from-[#fff7ed] to-[#ffedd5] border border-[#d66a2c]/25"},
+    {k:"ai",icon:"🤖",to:"/cliente/biblioteca",tone:"from-[#eef2ff] to-[#e0e7ff] border border-[#4f46e5]/20"},
+    {k:"film",icon:"🎬",to:"/cliente/biblioteca",tone:"from-[#f8fafc] to-[#e2e8f0] border border-slate-300"},
   ] as const;
   useEffect(()=>{
     const tick=()=>setRemaining(Math.max(0,PROMO_END_AT-Date.now()));
@@ -80,7 +80,7 @@ export function LibrarySalesHomeAccessChoice(){
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="rounded-[32px] border border-slate-200 bg-[#f5f8fc] p-5 shadow-sm sm:p-8">
         <div className="max-w-3xl text-left"><p className="text-xs font-black uppercase tracking-[.22em] text-[#a36d19]">{showcase.eyebrow}</p><h2 className="mt-3 font-serif text-3xl text-[#071426] sm:text-4xl">{showcase.title}</h2><p className="mt-3 text-sm leading-6 text-slate-600 sm:text-base">{showcase.sub}</p></div>
-        <div className="mt-7 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">{cardDefs.slice(0,showLibraryAll?cardDefs.length:8).map((card)=>{const item=showcase.items[card.k];return <Link key={card.k} to={card.to} className={`group relative min-h-[148px] overflow-hidden rounded-[24px] bg-gradient-to-br ${card.tone} p-4 text-white shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-lg focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#d6ad63]/40 sm:p-5`}><span className="text-3xl" aria-hidden="true">{card.icon}</span><h3 className="mt-5 pr-8 text-base font-black leading-tight sm:text-lg">{item[0]}</h3><p className="mt-1 text-[11px] font-semibold uppercase tracking-[.08em] text-white/70 sm:text-xs">{item[1]}</p><span className="absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-full bg-white/95 text-lg font-black text-[#071426] shadow-sm transition group-hover:translate-x-0.5">›</span><span className="sr-only">{showcase.cta}: {item[0]}</span></Link>})}</div>
+        <div className="mt-7 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">{cardDefs.slice(0,showLibraryAll?cardDefs.length:8).map((card)=>{const item=showcase.items[card.k];return <Link key={card.k} to={card.to} className={`group relative min-h-[148px] overflow-hidden rounded-[24px] bg-gradient-to-br ${card.tone} p-4 text-[#071426] shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-lg focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#d6ad63]/40 sm:p-5`}><span className="text-3xl" aria-hidden="true">{card.icon}</span><h3 className="mt-5 pr-8 text-base font-black leading-tight sm:text-lg">{item[0]}</h3><p className="mt-1 text-[11px] font-semibold uppercase tracking-[.08em] text-slate-600 sm:text-xs">{item[1]}</p><span className="absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-full bg-white/95 text-lg font-black text-[#071426] shadow-sm transition group-hover:translate-x-0.5">›</span><span className="sr-only">{showcase.cta}: {item[0]}</span></Link>})}</div>
         <div className="mt-6 text-center"><button type="button" onClick={()=>setShowLibraryAll(v=>!v)} className="inline-flex min-h-11 items-center justify-center rounded-xl border border-[#071426]/15 bg-[#f7f3e9] px-6 py-3 text-xs font-black uppercase tracking-[.08em] text-[#071426] transition hover:bg-[#efe7d6] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#d6ad63]/35">{showLibraryAll?showcase.less:showcase.more}<span className="ml-2">{showLibraryAll?'↑':'↓'}</span></button></div>
         </div>
       </div>
