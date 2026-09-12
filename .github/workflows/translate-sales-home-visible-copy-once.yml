@@ -13,6 +13,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Sync latest main
+        run: git pull --rebase origin main
       - name: Translate hardcoded storefront copy
         shell: bash
         run: |
@@ -33,7 +35,7 @@ jobs:
           '>TERAPIA BREVE PSICANALÍTICA<':'>{tx("TERAPIA BREVE PSICANALÍTICA","BRIEF PSYCHOANALYTIC THERAPY","THÉRAPIE BRÈVE PSYCHANALYTIQUE","TERAPIA BREVE PSICOANALÍTICA")}<',
           '>NEGÓCIO EM 24 HORAS<':'>{tx("NEGÓCIO EM 24 HORAS","BUSINESS IN 24 HOURS","BUSINESS EN 24 HEURES","NEGOCIO EN 24 HORAS")}<',
           '>Formação Negócio em 24 Horas<':'>{tx("Formação Negócio em 24 Horas","Business in 24 Hours Training","Formation Business en 24 Heures","Formación Negocio en 24 Horas")}<',
-          '>9 módulos · 90 aulas · 360 horas · sem encontros ao vivo · projeto final avaliado. Da ideia à primeira oferta pronta para vender.<':'>{tx("9 módulos · 90 aulas · 360 horas · sem encontros ao vivo · projeto final avaliado. Da ideia à primeira oferta pronta para vender.","9 modules · 90 lessons · 360 hours · final project assessed. From idea to a first offer ready to sell.","9 modules · 90 leçons · 360 heures · projet final évalué. De l’idée à une première offre prête à vendre.","9 módulos · 90 clases · 360 horas · proyecto final evaluado. De la idea a una primera oferta lista para vender.")}<',
+          '>9 módulos · 90 aulas · 360 horas · sem encontros ao vivo · projeto final avaliado. Da ideia à primeira oferta pronta para vender.<':'>{tx("9 módulos · 90 aulas · 360 horas · projeto final avaliado. Da ideia à primeira oferta pronta para vender.","9 modules · 90 lessons · 360 hours · final project assessed. From idea to a first offer ready to sell.","9 modules · 90 leçons · 360 heures · projet final évalué. De l’idée à une première offre prête à vendre.","9 módulos · 90 clases · 360 horas · proyecto final evaluado. De la idea a una primera oferta lista para vender.")}<',
           '>R$ 299,99 · € 49,90 · pagamento único · acesso vitalício<':'>{tx("R$ 299,99 · € 49,90 · pagamento único · acesso vitalício","R$ 299.99 · € 49.90 · one-time payment · lifetime access","R$ 299,99 · € 49,90 · paiement unique · accès à vie","R$ 299,99 · € 49,90 · pago único · acceso vitalicio")}<',
           '>CONHECER A FORMAÇÃO<':'>{tx("CONHECER A FORMAÇÃO","LEARN MORE","DÉCOUVRIR LA FORMATION","CONOCER LA FORMACIÓN")}<',
           '>MASSOTERAPIA · 1.200H<':'>{tx("MASSOTERAPIA · 1.200H","MASSAGE THERAPY · 1,200H","MASSOTHÉRAPIE · 1 200H","MASOTERAPIA · 1.200H")}<',
@@ -60,18 +62,18 @@ jobs:
           '>Cancele quando quiser<':'>{tx("Cancele quando quiser","Cancel anytime","Annulez quand vous voulez","Cancela cuando quieras")}<',
           '>VER FORMAÇÕES<':'>{tx("VER FORMAÇÕES","VIEW TRAINING","VOIR LES FORMATIONS","VER FORMACIONES")}<',
           }
-          for a,b in reps.items():
-              s=s.replace(a,b)
+          for a,b in reps.items(): s=s.replace(a,b)
           p.write_text(s)
           PY
       - name: Build
         run: |
           npm install --package-lock=false --no-audit --no-fund
           npm run build --workspace=apps/painel-ldr
-      - name: Commit
+      - name: Commit safely
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add apps/painel-ldr/src/components/library-sales-home-access-choice.tsx
           git commit -m "fix(painel): translate remaining public storefront labels"
+          git pull --rebase origin main
           git push
