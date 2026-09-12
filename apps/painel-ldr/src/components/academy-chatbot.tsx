@@ -141,7 +141,7 @@ export function AcademyChatbot() {
         </section>
       )}
 
-      <button type="button" onClick={() => { setOpen((value) => !value); setTeaser(false); }} aria-label={c.help} aria-expanded={open} className="ml-auto flex min-h-14 items-center gap-2 rounded-full border border-[#d5bd78]/70 bg-[#102a43] px-4 py-3 text-sm font-black text-white shadow-2xl transition hover:-translate-y-0.5 hover:bg-[#173b5f] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d5bd78] focus-visible:ring-offset-2">
+      <button type="button" onClick={() => { setOpen((value) => !value); setTeaser(false); }} aria-label={c.help} aria-expanded={open} className="ml-auto flex min-h-14 items-center gap-2 rounded-full border border-[#fff0c2] bg-[#F4B942] px-4 py-3 text-sm font-black text-[#071426] shadow-2xl transition hover:-translate-y-0.5 hover:bg-[#FFD36B] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F4B942] focus-visible:ring-offset-2">
         {open ? <X className="h-5 w-5" /> : <MessageCircle className="h-5 w-5" />}
         <span className="hidden sm:inline">{c.help}</span>
       </button>
