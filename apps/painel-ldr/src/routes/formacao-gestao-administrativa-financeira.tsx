@@ -1,0 +1,1 @@
+import { createFileRoute } from "@tanstack/react-router";import { ProfessionalFormationPublicPage } from "@/components/professional-formation-public-page";export const Route=createFileRoute("/formacao-gestao-administrativa-financeira")({component:()=> <ProfessionalFormationPublicPage slug="gestao-administrativa-financeira"/>});

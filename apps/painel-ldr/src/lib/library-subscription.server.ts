@@ -20,6 +20,11 @@ const INCLUDED_PRODUCTS = [
   ["formacao_negocio_24_horas", "Formação Negócio em 24 Horas"],
   ["formacao_mentoria_profissional_carreira", "Formação em Mentoria Profissional e de Carreira"],
   ["formacao_lideranca_gestao_pessoas", "Formação em Liderança e Gestão de Pessoas"],
+  ["formacao_vendas_negociacao_atendimento", "Formação em Vendas, Negociação e Atendimento ao Cliente"],
+  ["formacao_marketing_digital_redes_sociais", "Formação em Marketing Digital e Redes Sociais para Negócios"],
+  ["formacao_recrutamento_selecao_profissional", "Formação em Recrutamento e Seleção Profissional"],
+  ["formacao_gestao_administrativa_financeira", "Formação em Gestão Administrativa e Financeira para Pequenos Negócios"],
+  ["formacao_comunicacao_oratoria_inteligencia_emocional", "Formação em Comunicação, Oratória e Inteligência Emocional no Trabalho"],
 ] as const;
 
 type Market = "BR" | "INTL";

@@ -20,7 +20,15 @@ import { Route as AmostraGratisRouteImport } from './routes/amostra-gratis'
 import { Route as BootstrapRouteImport } from './routes/bootstrap'
 import { Route as ClinicaSocialRouteImport } from './routes/clinica-social'
 import { Route as EmpreendedoresRouteImport } from './routes/empreendedores'
+import { Route as FormacaoComunicacaoOratoriaRouteImport } from './routes/formacao-comunicacao-oratoria'
+import { Route as FormacaoGestaoAdministrativaFinanceiraRouteImport } from './routes/formacao-gestao-administrativa-financeira'
+import { Route as FormacaoMarketingDigitalRouteImport } from './routes/formacao-marketing-digital'
+import { Route as FormacaoMassoterapiaRouteImport } from './routes/formacao-massoterapia'
+import { Route as FormacaoNegocioEm24HorasRouteImport } from './routes/formacao-negocio-em-24-horas'
 import { Route as FormacaoPsicanaliseRouteImport } from './routes/formacao-psicanalise'
+import { Route as FormacaoRecrutamentoSelecaoRouteImport } from './routes/formacao-recrutamento-selecao'
+import { Route as FormacaoTerapiaBrevePsicanaliticaRouteImport } from './routes/formacao-terapia-breve-psicanalitica'
+import { Route as FormacaoVendasNegociacaoRouteImport } from './routes/formacao-vendas-negociacao'
 import { Route as FormularioRouteImport } from './routes/formulario'
 import { Route as LivrosRouteImport } from './routes/livros'
 import { Route as LoginRouteImport } from './routes/login'
@@ -57,7 +65,7 @@ import { Route as ApiTrainingOfferRouteImport } from './routes/api/training-offe
 import { Route as ClienteAtivarRouteImport } from './routes/cliente.ativar'
 import { Route as ClienteDefinirSenhaRouteImport } from './routes/cliente.definir-senha'
 import { Route as ClienteLoginRouteImport } from './routes/cliente.login'
-import { Route as ClinicaSocialProfissionaisRouteImport } from './routes/clinica-social.profissionais'
+import { Route as ClinicaSocialProfissionaisRouteImport } from './routes/clinica-social_.profissionais'
 import { Route as EmpresaLoginRouteImport } from './routes/empresa.login'
 import { Route as FuncionarioLoginRouteImport } from './routes/funcionario.login'
 import { Route as ProfissionaisCategoryRouteImport } from './routes/profissionais.$category'
@@ -73,12 +81,16 @@ import { Route as AuthenticatedAdminEmpresasRouteImport } from './routes/_authen
 import { Route as AuthenticatedAdminEquipeRouteImport } from './routes/_authenticated/admin.equipe'
 import { Route as AuthenticatedAdminFinanceiroRouteImport } from './routes/_authenticated/admin.financeiro'
 import { Route as AuthenticatedAdminForumTreinamentoRouteImport } from './routes/_authenticated/admin.forum-treinamento'
+import { Route as AuthenticatedAdminInteressesGraduacoesRouteImport } from './routes/_authenticated/admin.interesses-graduacoes'
+import { Route as AuthenticatedAdminInteressesPosRouteImport } from './routes/_authenticated/admin.interesses-pos'
 import { Route as AuthenticatedAdminMentoriaRouteImport } from './routes/_authenticated/admin.mentoria'
 import { Route as AuthenticatedAdminMeusAtendimentosRouteImport } from './routes/_authenticated/admin.meus-atendimentos'
 import { Route as AuthenticatedAdminMeusClientesRouteImport } from './routes/_authenticated/admin.meus-clientes'
 import { Route as AuthenticatedAdminMeusPedidosRouteImport } from './routes/_authenticated/admin.meus-pedidos'
 import { Route as AuthenticatedAdminMinhaAgendaRouteImport } from './routes/_authenticated/admin.minha-agenda'
 import { Route as AuthenticatedAdminNotificacoesRouteImport } from './routes/_authenticated/admin.notificacoes'
+import { Route as AuthenticatedAdminOrientacoesProfissionaisRouteImport } from './routes/_authenticated/admin.orientacoes-profissionais'
+import { Route as AuthenticatedAdminOrientacoesPsicanaliticasRouteImport } from './routes/_authenticated/admin.orientacoes-psicanaliticas'
 import { Route as AuthenticatedAdminProfissionaisRouteImport } from './routes/_authenticated/admin.profissionais'
 import { Route as AuthenticatedAdminProfissionaisConformidadeRouteImport } from './routes/_authenticated/admin.profissionais-conformidade'
 import { Route as AuthenticatedAdminProfissionaisConteudoRouteImport } from './routes/_authenticated/admin.profissionais-conteudo'
@@ -120,6 +132,8 @@ import { Route as ClientareaClienteBibliotecaRouteImport } from './routes/_clien
 import { Route as ClientareaClienteContratarRouteImport } from './routes/_clientarea.cliente.contratar'
 import { Route as ClientareaClienteEntregasRouteImport } from './routes/_clientarea.cliente.entregas'
 import { Route as ClientareaClienteMentoriaRouteImport } from './routes/_clientarea.cliente.mentoria'
+import { Route as ClientareaClienteOrientacaoProfissionalRouteImport } from './routes/_clientarea.cliente.orientacao-profissional'
+import { Route as ClientareaClienteOrientacaoPsicanaliticaRouteImport } from './routes/_clientarea.cliente.orientacao-psicanalitica'
 import { Route as ClientareaClientePedidosRouteImport } from './routes/_clientarea.cliente.pedidos'
 import { Route as ClientareaClientePerfilRouteImport } from './routes/_clientarea.cliente.perfil'
 import { Route as ClientareaClienteSessoesRouteImport } from './routes/_clientarea.cliente.sessoes'
@@ -128,10 +142,34 @@ import { Route as ApiHotmartWebhookRouteImport } from './routes/api/hotmart/webh
 import { Route as ApiIntegrationsSiteOrdersRouteImport } from './routes/api/integrations/site-orders'
 import { Route as ApiStripeWebhookRouteImport } from './routes/api/stripe/webhook'
 import { Route as ClientareaClienteBibliotecaProductKeyRouteImport } from './routes/_clientarea.cliente.biblioteca.$productKey'
+import { Route as ClientareaClienteBibliotecaArtigosCientificosRouteImport } from './routes/_clientarea.cliente.biblioteca.artigos-cientificos'
+import { Route as ClientareaClienteBibliotecaCursoGratuitoRouteImport } from './routes/_clientarea.cliente.biblioteca.curso-gratuito'
+import { Route as ClientareaClienteBibliotecaCursoGratuitoCarreiraRouteImport } from './routes/_clientarea.cliente.biblioteca.curso-gratuito-carreira'
+import { Route as ClientareaClienteBibliotecaCursosGratuitosRouteImport } from './routes/_clientarea.cliente.biblioteca.cursos-gratuitos'
+import { Route as ClientareaClienteBibliotecaGratuitoRouteImport } from './routes/_clientarea.cliente.biblioteca.gratuito'
+import { Route as ClientareaClienteBibliotecaJornalLdrRouteImport } from './routes/_clientarea.cliente.biblioteca.jornal-ldr'
+import { Route as ClientareaClienteBibliotecaLdrCienciaRouteImport } from './routes/_clientarea.cliente.biblioteca.ldr-ciencia'
+import { Route as ClientareaClienteBibliotecaPublicacoesRouteImport } from './routes/_clientarea.cliente.biblioteca.publicacoes'
+import { Route as ClientareaClienteBibliotecaRevistaLdrRouteImport } from './routes/_clientarea.cliente.biblioteca.revista-ldr'
+import { Route as ClientareaClienteCursosFrancesNegociosA1RouteImport } from './routes/_clientarea.cliente.cursos.frances-negocios-a1'
+import { Route as ClientareaClienteCursosOrganizarCarreiraRouteImport } from './routes/_clientarea.cliente.cursos.organizar-carreira'
+import { Route as ClientareaClienteCursosPrimeirosSocorrosRouteImport } from './routes/_clientarea.cliente.cursos.primeiros-socorros'
+import { Route as ClientareaClienteFormacoesGestaoPessoasRhRouteImport } from './routes/_clientarea.cliente.formacoes.gestao-pessoas-rh'
+import { Route as ClientareaClienteGraduacaoCourseKeyRouteImport } from './routes/_clientarea.cliente.graduacao.$courseKey'
+import { Route as ClientareaClienteInteressePosCourseKeyRouteImport } from './routes/_clientarea.cliente.interesse-pos.$courseKey'
 import { Route as ClientareaClientePedidoOrderIdRouteImport } from './routes/_clientarea.cliente.pedido.$orderId'
 import { Route as ClientareaClienteTreinamentosDoMamaoAoNegocioRouteImport } from './routes/_clientarea.cliente.treinamentos.do-mamao-ao-negocio'
+import { Route as ClientareaClienteTreinamentosIaNegociosCarreiraRouteImport } from './routes/_clientarea.cliente.treinamentos.ia-negocios-carreira'
+import { Route as ClientareaClienteTreinamentosLiderancaGestaoRouteImport } from './routes/_clientarea.cliente.treinamentos.lideranca-gestao'
+import { Route as ClientareaClienteTreinamentosLiderancaGestaoPessoasRouteImport } from './routes/_clientarea.cliente.treinamentos.lideranca-gestao-pessoas'
+import { Route as ClientareaClienteTreinamentosMassoterapiaRouteImport } from './routes/_clientarea.cliente.treinamentos.massoterapia'
+import { Route as ClientareaClienteTreinamentosMentoriaCarreiraRouteImport } from './routes/_clientarea.cliente.treinamentos.mentoria-carreira'
+import { Route as ClientareaClienteTreinamentosNegocio24HorasRouteImport } from './routes/_clientarea.cliente.treinamentos.negocio-24-horas'
 import { Route as ClientareaClienteTreinamentosPsicanaliseRouteImport } from './routes/_clientarea.cliente.treinamentos.psicanalise'
+import { Route as ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRouteImport } from './routes/_clientarea.cliente.treinamentos.terapia-breve-psicanalitica'
+import { Route as ClientareaClienteBibliotecaPublicacoesSlugRouteImport } from './routes/_clientarea.cliente.biblioteca.publicacoes.$slug'
 import { Route as ClientareaClienteTreinamentosDoMamaoAoNegocioForumRouteImport } from './routes/_clientarea.cliente.treinamentos.do-mamao-ao-negocio.forum'
+import { Route as ClientareaClienteTreinamentosFormacaoProfissionalSlugRouteImport } from './routes/_clientarea.cliente.treinamentos.formacao-profissional.$slug'
 import { Route as ClientareaClienteTreinamentosPsicanaliseCertificadoRouteImport } from './routes/_clientarea.cliente.treinamentos.psicanalise.certificado'
 import { Route as ClientareaClienteTreinamentosPsicanaliseForumRouteImport } from './routes/_clientarea.cliente.treinamentos.psicanalise.forum'
 
@@ -187,11 +225,58 @@ const EmpreendedoresRoute = EmpreendedoresRouteImport.update({
   path: '/empreendedores',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FormacaoComunicacaoOratoriaRoute =
+  FormacaoComunicacaoOratoriaRouteImport.update({
+    id: '/formacao-comunicacao-oratoria',
+    path: '/formacao-comunicacao-oratoria',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const FormacaoGestaoAdministrativaFinanceiraRoute =
+  FormacaoGestaoAdministrativaFinanceiraRouteImport.update({
+    id: '/formacao-gestao-administrativa-financeira',
+    path: '/formacao-gestao-administrativa-financeira',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const FormacaoMarketingDigitalRoute =
+  FormacaoMarketingDigitalRouteImport.update({
+    id: '/formacao-marketing-digital',
+    path: '/formacao-marketing-digital',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const FormacaoMassoterapiaRoute = FormacaoMassoterapiaRouteImport.update({
+  id: '/formacao-massoterapia',
+  path: '/formacao-massoterapia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FormacaoNegocioEm24HorasRoute =
+  FormacaoNegocioEm24HorasRouteImport.update({
+    id: '/formacao-negocio-em-24-horas',
+    path: '/formacao-negocio-em-24-horas',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const FormacaoPsicanaliseRoute = FormacaoPsicanaliseRouteImport.update({
   id: '/formacao-psicanalise',
   path: '/formacao-psicanalise',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FormacaoRecrutamentoSelecaoRoute =
+  FormacaoRecrutamentoSelecaoRouteImport.update({
+    id: '/formacao-recrutamento-selecao',
+    path: '/formacao-recrutamento-selecao',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const FormacaoTerapiaBrevePsicanaliticaRoute =
+  FormacaoTerapiaBrevePsicanaliticaRouteImport.update({
+    id: '/formacao-terapia-breve-psicanalitica',
+    path: '/formacao-terapia-breve-psicanalitica',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const FormacaoVendasNegociacaoRoute =
+  FormacaoVendasNegociacaoRouteImport.update({
+    id: '/formacao-vendas-negociacao',
+    path: '/formacao-vendas-negociacao',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const FormularioRoute = FormularioRouteImport.update({
   id: '/formulario',
   path: '/formulario',
@@ -375,9 +460,9 @@ const ClienteLoginRoute = ClienteLoginRouteImport.update({
 } as any)
 const ClinicaSocialProfissionaisRoute =
   ClinicaSocialProfissionaisRouteImport.update({
-    id: '/profissionais',
-    path: '/profissionais',
-    getParentRoute: () => ClinicaSocialRoute,
+    id: '/clinica-social_/profissionais',
+    path: '/clinica-social/profissionais',
+    getParentRoute: () => rootRouteImport,
   } as any)
 const EmpresaLoginRoute = EmpresaLoginRouteImport.update({
   id: '/empresa/login',
@@ -461,6 +546,18 @@ const AuthenticatedAdminForumTreinamentoRoute =
     path: '/forum-treinamento',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminInteressesGraduacoesRoute =
+  AuthenticatedAdminInteressesGraduacoesRouteImport.update({
+    id: '/interesses-graduacoes',
+    path: '/interesses-graduacoes',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminInteressesPosRoute =
+  AuthenticatedAdminInteressesPosRouteImport.update({
+    id: '/interesses-pos',
+    path: '/interesses-pos',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminMentoriaRoute =
   AuthenticatedAdminMentoriaRouteImport.update({
     id: '/mentoria',
@@ -495,6 +592,18 @@ const AuthenticatedAdminNotificacoesRoute =
   AuthenticatedAdminNotificacoesRouteImport.update({
     id: '/notificacoes',
     path: '/notificacoes',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminOrientacoesProfissionaisRoute =
+  AuthenticatedAdminOrientacoesProfissionaisRouteImport.update({
+    id: '/orientacoes-profissionais',
+    path: '/orientacoes-profissionais',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminOrientacoesPsicanaliticasRoute =
+  AuthenticatedAdminOrientacoesPsicanaliticasRouteImport.update({
+    id: '/orientacoes-psicanaliticas',
+    path: '/orientacoes-psicanaliticas',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
 const AuthenticatedAdminProfissionaisRoute =
@@ -741,6 +850,18 @@ const ClientareaClienteMentoriaRoute =
     path: '/mentoria',
     getParentRoute: () => ClientareaClienteRoute,
   } as any)
+const ClientareaClienteOrientacaoProfissionalRoute =
+  ClientareaClienteOrientacaoProfissionalRouteImport.update({
+    id: '/orientacao-profissional',
+    path: '/orientacao-profissional',
+    getParentRoute: () => ClientareaClienteRoute,
+  } as any)
+const ClientareaClienteOrientacaoPsicanaliticaRoute =
+  ClientareaClienteOrientacaoPsicanaliticaRouteImport.update({
+    id: '/orientacao-psicanalitica',
+    path: '/orientacao-psicanalitica',
+    getParentRoute: () => ClientareaClienteRoute,
+  } as any)
 const ClientareaClientePedidosRoute =
   ClientareaClientePedidosRouteImport.update({
     id: '/pedidos',
@@ -786,6 +907,96 @@ const ClientareaClienteBibliotecaProductKeyRoute =
     path: '/$productKey',
     getParentRoute: () => ClientareaClienteBibliotecaRoute,
   } as any)
+const ClientareaClienteBibliotecaArtigosCientificosRoute =
+  ClientareaClienteBibliotecaArtigosCientificosRouteImport.update({
+    id: '/artigos-cientificos',
+    path: '/artigos-cientificos',
+    getParentRoute: () => ClientareaClienteBibliotecaRoute,
+  } as any)
+const ClientareaClienteBibliotecaCursoGratuitoRoute =
+  ClientareaClienteBibliotecaCursoGratuitoRouteImport.update({
+    id: '/curso-gratuito',
+    path: '/curso-gratuito',
+    getParentRoute: () => ClientareaClienteBibliotecaRoute,
+  } as any)
+const ClientareaClienteBibliotecaCursoGratuitoCarreiraRoute =
+  ClientareaClienteBibliotecaCursoGratuitoCarreiraRouteImport.update({
+    id: '/curso-gratuito-carreira',
+    path: '/curso-gratuito-carreira',
+    getParentRoute: () => ClientareaClienteBibliotecaRoute,
+  } as any)
+const ClientareaClienteBibliotecaCursosGratuitosRoute =
+  ClientareaClienteBibliotecaCursosGratuitosRouteImport.update({
+    id: '/cursos-gratuitos',
+    path: '/cursos-gratuitos',
+    getParentRoute: () => ClientareaClienteBibliotecaRoute,
+  } as any)
+const ClientareaClienteBibliotecaGratuitoRoute =
+  ClientareaClienteBibliotecaGratuitoRouteImport.update({
+    id: '/gratuito',
+    path: '/gratuito',
+    getParentRoute: () => ClientareaClienteBibliotecaRoute,
+  } as any)
+const ClientareaClienteBibliotecaJornalLdrRoute =
+  ClientareaClienteBibliotecaJornalLdrRouteImport.update({
+    id: '/jornal-ldr',
+    path: '/jornal-ldr',
+    getParentRoute: () => ClientareaClienteBibliotecaRoute,
+  } as any)
+const ClientareaClienteBibliotecaLdrCienciaRoute =
+  ClientareaClienteBibliotecaLdrCienciaRouteImport.update({
+    id: '/ldr-ciencia',
+    path: '/ldr-ciencia',
+    getParentRoute: () => ClientareaClienteBibliotecaRoute,
+  } as any)
+const ClientareaClienteBibliotecaPublicacoesRoute =
+  ClientareaClienteBibliotecaPublicacoesRouteImport.update({
+    id: '/publicacoes',
+    path: '/publicacoes',
+    getParentRoute: () => ClientareaClienteBibliotecaRoute,
+  } as any)
+const ClientareaClienteBibliotecaRevistaLdrRoute =
+  ClientareaClienteBibliotecaRevistaLdrRouteImport.update({
+    id: '/revista-ldr',
+    path: '/revista-ldr',
+    getParentRoute: () => ClientareaClienteBibliotecaRoute,
+  } as any)
+const ClientareaClienteCursosFrancesNegociosA1Route =
+  ClientareaClienteCursosFrancesNegociosA1RouteImport.update({
+    id: '/cursos/frances-negocios-a1',
+    path: '/cursos/frances-negocios-a1',
+    getParentRoute: () => ClientareaClienteRoute,
+  } as any)
+const ClientareaClienteCursosOrganizarCarreiraRoute =
+  ClientareaClienteCursosOrganizarCarreiraRouteImport.update({
+    id: '/cursos/organizar-carreira',
+    path: '/cursos/organizar-carreira',
+    getParentRoute: () => ClientareaClienteRoute,
+  } as any)
+const ClientareaClienteCursosPrimeirosSocorrosRoute =
+  ClientareaClienteCursosPrimeirosSocorrosRouteImport.update({
+    id: '/cursos/primeiros-socorros',
+    path: '/cursos/primeiros-socorros',
+    getParentRoute: () => ClientareaClienteRoute,
+  } as any)
+const ClientareaClienteFormacoesGestaoPessoasRhRoute =
+  ClientareaClienteFormacoesGestaoPessoasRhRouteImport.update({
+    id: '/formacoes/gestao-pessoas-rh',
+    path: '/formacoes/gestao-pessoas-rh',
+    getParentRoute: () => ClientareaClienteRoute,
+  } as any)
+const ClientareaClienteGraduacaoCourseKeyRoute =
+  ClientareaClienteGraduacaoCourseKeyRouteImport.update({
+    id: '/graduacao/$courseKey',
+    path: '/graduacao/$courseKey',
+    getParentRoute: () => ClientareaClienteRoute,
+  } as any)
+const ClientareaClienteInteressePosCourseKeyRoute =
+  ClientareaClienteInteressePosCourseKeyRouteImport.update({
+    id: '/interesse-pos/$courseKey',
+    path: '/interesse-pos/$courseKey',
+    getParentRoute: () => ClientareaClienteRoute,
+  } as any)
 const ClientareaClientePedidoOrderIdRoute =
   ClientareaClientePedidoOrderIdRouteImport.update({
     id: '/pedido/$orderId',
@@ -798,17 +1009,71 @@ const ClientareaClienteTreinamentosDoMamaoAoNegocioRoute =
     path: '/do-mamao-ao-negocio',
     getParentRoute: () => ClientareaClienteTreinamentosRoute,
   } as any)
+const ClientareaClienteTreinamentosIaNegociosCarreiraRoute =
+  ClientareaClienteTreinamentosIaNegociosCarreiraRouteImport.update({
+    id: '/ia-negocios-carreira',
+    path: '/ia-negocios-carreira',
+    getParentRoute: () => ClientareaClienteTreinamentosRoute,
+  } as any)
+const ClientareaClienteTreinamentosLiderancaGestaoRoute =
+  ClientareaClienteTreinamentosLiderancaGestaoRouteImport.update({
+    id: '/lideranca-gestao',
+    path: '/lideranca-gestao',
+    getParentRoute: () => ClientareaClienteTreinamentosRoute,
+  } as any)
+const ClientareaClienteTreinamentosLiderancaGestaoPessoasRoute =
+  ClientareaClienteTreinamentosLiderancaGestaoPessoasRouteImport.update({
+    id: '/lideranca-gestao-pessoas',
+    path: '/lideranca-gestao-pessoas',
+    getParentRoute: () => ClientareaClienteTreinamentosRoute,
+  } as any)
+const ClientareaClienteTreinamentosMassoterapiaRoute =
+  ClientareaClienteTreinamentosMassoterapiaRouteImport.update({
+    id: '/massoterapia',
+    path: '/massoterapia',
+    getParentRoute: () => ClientareaClienteTreinamentosRoute,
+  } as any)
+const ClientareaClienteTreinamentosMentoriaCarreiraRoute =
+  ClientareaClienteTreinamentosMentoriaCarreiraRouteImport.update({
+    id: '/mentoria-carreira',
+    path: '/mentoria-carreira',
+    getParentRoute: () => ClientareaClienteTreinamentosRoute,
+  } as any)
+const ClientareaClienteTreinamentosNegocio24HorasRoute =
+  ClientareaClienteTreinamentosNegocio24HorasRouteImport.update({
+    id: '/negocio-24-horas',
+    path: '/negocio-24-horas',
+    getParentRoute: () => ClientareaClienteTreinamentosRoute,
+  } as any)
 const ClientareaClienteTreinamentosPsicanaliseRoute =
   ClientareaClienteTreinamentosPsicanaliseRouteImport.update({
     id: '/psicanalise',
     path: '/psicanalise',
     getParentRoute: () => ClientareaClienteTreinamentosRoute,
   } as any)
+const ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRoute =
+  ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRouteImport.update({
+    id: '/terapia-breve-psicanalitica',
+    path: '/terapia-breve-psicanalitica',
+    getParentRoute: () => ClientareaClienteTreinamentosRoute,
+  } as any)
+const ClientareaClienteBibliotecaPublicacoesSlugRoute =
+  ClientareaClienteBibliotecaPublicacoesSlugRouteImport.update({
+    id: '/$slug',
+    path: '/$slug',
+    getParentRoute: () => ClientareaClienteBibliotecaPublicacoesRoute,
+  } as any)
 const ClientareaClienteTreinamentosDoMamaoAoNegocioForumRoute =
   ClientareaClienteTreinamentosDoMamaoAoNegocioForumRouteImport.update({
     id: '/forum',
     path: '/forum',
     getParentRoute: () => ClientareaClienteTreinamentosDoMamaoAoNegocioRoute,
+  } as any)
+const ClientareaClienteTreinamentosFormacaoProfissionalSlugRoute =
+  ClientareaClienteTreinamentosFormacaoProfissionalSlugRouteImport.update({
+    id: '/formacao-profissional/$slug',
+    path: '/formacao-profissional/$slug',
+    getParentRoute: () => ClientareaClienteTreinamentosRoute,
   } as any)
 const ClientareaClienteTreinamentosPsicanaliseCertificadoRoute =
   ClientareaClienteTreinamentosPsicanaliseCertificadoRouteImport.update({
@@ -830,9 +1095,17 @@ export interface FileRoutesByFullPath {
   '/acoragemdecomecar': typeof AcoragemdecomecarRoute
   '/amostra-gratis': typeof AmostraGratisRoute
   '/bootstrap': typeof BootstrapRoute
-  '/clinica-social': typeof ClinicaSocialRouteWithChildren
+  '/clinica-social': typeof ClinicaSocialRoute
   '/empreendedores': typeof EmpreendedoresRoute
+  '/formacao-comunicacao-oratoria': typeof FormacaoComunicacaoOratoriaRoute
+  '/formacao-gestao-administrativa-financeira': typeof FormacaoGestaoAdministrativaFinanceiraRoute
+  '/formacao-marketing-digital': typeof FormacaoMarketingDigitalRoute
+  '/formacao-massoterapia': typeof FormacaoMassoterapiaRoute
+  '/formacao-negocio-em-24-horas': typeof FormacaoNegocioEm24HorasRoute
   '/formacao-psicanalise': typeof FormacaoPsicanaliseRoute
+  '/formacao-recrutamento-selecao': typeof FormacaoRecrutamentoSelecaoRoute
+  '/formacao-terapia-breve-psicanalitica': typeof FormacaoTerapiaBrevePsicanaliticaRoute
+  '/formacao-vendas-negociacao': typeof FormacaoVendasNegociacaoRoute
   '/formulario': typeof FormularioRoute
   '/livros': typeof LivrosRoute
   '/login': typeof LoginRoute
@@ -884,12 +1157,16 @@ export interface FileRoutesByFullPath {
   '/admin/equipe': typeof AuthenticatedAdminEquipeRoute
   '/admin/financeiro': typeof AuthenticatedAdminFinanceiroRoute
   '/admin/forum-treinamento': typeof AuthenticatedAdminForumTreinamentoRoute
+  '/admin/interesses-graduacoes': typeof AuthenticatedAdminInteressesGraduacoesRoute
+  '/admin/interesses-pos': typeof AuthenticatedAdminInteressesPosRoute
   '/admin/mentoria': typeof AuthenticatedAdminMentoriaRoute
   '/admin/meus-atendimentos': typeof AuthenticatedAdminMeusAtendimentosRoute
   '/admin/meus-clientes': typeof AuthenticatedAdminMeusClientesRoute
   '/admin/meus-pedidos': typeof AuthenticatedAdminMeusPedidosRoute
   '/admin/minha-agenda': typeof AuthenticatedAdminMinhaAgendaRoute
   '/admin/notificacoes': typeof AuthenticatedAdminNotificacoesRoute
+  '/admin/orientacoes-profissionais': typeof AuthenticatedAdminOrientacoesProfissionaisRoute
+  '/admin/orientacoes-psicanaliticas': typeof AuthenticatedAdminOrientacoesPsicanaliticasRoute
   '/admin/profissionais': typeof AuthenticatedAdminProfissionaisRoute
   '/admin/profissionais-conformidade': typeof AuthenticatedAdminProfissionaisConformidadeRoute
   '/admin/profissionais-conteudo': typeof AuthenticatedAdminProfissionaisConteudoRoute
@@ -929,6 +1206,8 @@ export interface FileRoutesByFullPath {
   '/cliente/contratar': typeof ClientareaClienteContratarRoute
   '/cliente/entregas': typeof ClientareaClienteEntregasRoute
   '/cliente/mentoria': typeof ClientareaClienteMentoriaRoute
+  '/cliente/orientacao-profissional': typeof ClientareaClienteOrientacaoProfissionalRoute
+  '/cliente/orientacao-psicanalitica': typeof ClientareaClienteOrientacaoPsicanaliticaRoute
   '/cliente/pedidos': typeof ClientareaClientePedidosRoute
   '/cliente/perfil': typeof ClientareaClientePerfilRoute
   '/cliente/sessoes': typeof ClientareaClienteSessoesRoute
@@ -939,10 +1218,34 @@ export interface FileRoutesByFullPath {
   '/painel-profissional/': typeof AuthenticatedPainelProfissionalIndexRoute
   '/cliente/': typeof ClientareaClienteIndexRoute
   '/cliente/biblioteca/$productKey': typeof ClientareaClienteBibliotecaProductKeyRoute
+  '/cliente/biblioteca/artigos-cientificos': typeof ClientareaClienteBibliotecaArtigosCientificosRoute
+  '/cliente/biblioteca/curso-gratuito': typeof ClientareaClienteBibliotecaCursoGratuitoRoute
+  '/cliente/biblioteca/curso-gratuito-carreira': typeof ClientareaClienteBibliotecaCursoGratuitoCarreiraRoute
+  '/cliente/biblioteca/cursos-gratuitos': typeof ClientareaClienteBibliotecaCursosGratuitosRoute
+  '/cliente/biblioteca/gratuito': typeof ClientareaClienteBibliotecaGratuitoRoute
+  '/cliente/biblioteca/jornal-ldr': typeof ClientareaClienteBibliotecaJornalLdrRoute
+  '/cliente/biblioteca/ldr-ciencia': typeof ClientareaClienteBibliotecaLdrCienciaRoute
+  '/cliente/biblioteca/publicacoes': typeof ClientareaClienteBibliotecaPublicacoesRouteWithChildren
+  '/cliente/biblioteca/revista-ldr': typeof ClientareaClienteBibliotecaRevistaLdrRoute
+  '/cliente/cursos/frances-negocios-a1': typeof ClientareaClienteCursosFrancesNegociosA1Route
+  '/cliente/cursos/organizar-carreira': typeof ClientareaClienteCursosOrganizarCarreiraRoute
+  '/cliente/cursos/primeiros-socorros': typeof ClientareaClienteCursosPrimeirosSocorrosRoute
+  '/cliente/formacoes/gestao-pessoas-rh': typeof ClientareaClienteFormacoesGestaoPessoasRhRoute
+  '/cliente/graduacao/$courseKey': typeof ClientareaClienteGraduacaoCourseKeyRoute
+  '/cliente/interesse-pos/$courseKey': typeof ClientareaClienteInteressePosCourseKeyRoute
   '/cliente/pedido/$orderId': typeof ClientareaClientePedidoOrderIdRoute
   '/cliente/treinamentos/do-mamao-ao-negocio': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioRouteWithChildren
+  '/cliente/treinamentos/ia-negocios-carreira': typeof ClientareaClienteTreinamentosIaNegociosCarreiraRoute
+  '/cliente/treinamentos/lideranca-gestao': typeof ClientareaClienteTreinamentosLiderancaGestaoRoute
+  '/cliente/treinamentos/lideranca-gestao-pessoas': typeof ClientareaClienteTreinamentosLiderancaGestaoPessoasRoute
+  '/cliente/treinamentos/massoterapia': typeof ClientareaClienteTreinamentosMassoterapiaRoute
+  '/cliente/treinamentos/mentoria-carreira': typeof ClientareaClienteTreinamentosMentoriaCarreiraRoute
+  '/cliente/treinamentos/negocio-24-horas': typeof ClientareaClienteTreinamentosNegocio24HorasRoute
   '/cliente/treinamentos/psicanalise': typeof ClientareaClienteTreinamentosPsicanaliseRouteWithChildren
+  '/cliente/treinamentos/terapia-breve-psicanalitica': typeof ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRoute
+  '/cliente/biblioteca/publicacoes/$slug': typeof ClientareaClienteBibliotecaPublicacoesSlugRoute
   '/cliente/treinamentos/do-mamao-ao-negocio/forum': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioForumRoute
+  '/cliente/treinamentos/formacao-profissional/$slug': typeof ClientareaClienteTreinamentosFormacaoProfissionalSlugRoute
   '/cliente/treinamentos/psicanalise/certificado': typeof ClientareaClienteTreinamentosPsicanaliseCertificadoRoute
   '/cliente/treinamentos/psicanalise/forum': typeof ClientareaClienteTreinamentosPsicanaliseForumRoute
 }
@@ -953,9 +1256,17 @@ export interface FileRoutesByTo {
   '/acoragemdecomecar': typeof AcoragemdecomecarRoute
   '/amostra-gratis': typeof AmostraGratisRoute
   '/bootstrap': typeof BootstrapRoute
-  '/clinica-social': typeof ClinicaSocialRouteWithChildren
+  '/clinica-social': typeof ClinicaSocialRoute
   '/empreendedores': typeof EmpreendedoresRoute
+  '/formacao-comunicacao-oratoria': typeof FormacaoComunicacaoOratoriaRoute
+  '/formacao-gestao-administrativa-financeira': typeof FormacaoGestaoAdministrativaFinanceiraRoute
+  '/formacao-marketing-digital': typeof FormacaoMarketingDigitalRoute
+  '/formacao-massoterapia': typeof FormacaoMassoterapiaRoute
+  '/formacao-negocio-em-24-horas': typeof FormacaoNegocioEm24HorasRoute
   '/formacao-psicanalise': typeof FormacaoPsicanaliseRoute
+  '/formacao-recrutamento-selecao': typeof FormacaoRecrutamentoSelecaoRoute
+  '/formacao-terapia-breve-psicanalitica': typeof FormacaoTerapiaBrevePsicanaliticaRoute
+  '/formacao-vendas-negociacao': typeof FormacaoVendasNegociacaoRoute
   '/formulario': typeof FormularioRoute
   '/livros': typeof LivrosRoute
   '/login': typeof LoginRoute
@@ -1005,12 +1316,16 @@ export interface FileRoutesByTo {
   '/admin/equipe': typeof AuthenticatedAdminEquipeRoute
   '/admin/financeiro': typeof AuthenticatedAdminFinanceiroRoute
   '/admin/forum-treinamento': typeof AuthenticatedAdminForumTreinamentoRoute
+  '/admin/interesses-graduacoes': typeof AuthenticatedAdminInteressesGraduacoesRoute
+  '/admin/interesses-pos': typeof AuthenticatedAdminInteressesPosRoute
   '/admin/mentoria': typeof AuthenticatedAdminMentoriaRoute
   '/admin/meus-atendimentos': typeof AuthenticatedAdminMeusAtendimentosRoute
   '/admin/meus-clientes': typeof AuthenticatedAdminMeusClientesRoute
   '/admin/meus-pedidos': typeof AuthenticatedAdminMeusPedidosRoute
   '/admin/minha-agenda': typeof AuthenticatedAdminMinhaAgendaRoute
   '/admin/notificacoes': typeof AuthenticatedAdminNotificacoesRoute
+  '/admin/orientacoes-profissionais': typeof AuthenticatedAdminOrientacoesProfissionaisRoute
+  '/admin/orientacoes-psicanaliticas': typeof AuthenticatedAdminOrientacoesPsicanaliticasRoute
   '/admin/profissionais': typeof AuthenticatedAdminProfissionaisRoute
   '/admin/profissionais-conformidade': typeof AuthenticatedAdminProfissionaisConformidadeRoute
   '/admin/profissionais-conteudo': typeof AuthenticatedAdminProfissionaisConteudoRoute
@@ -1050,6 +1365,8 @@ export interface FileRoutesByTo {
   '/cliente/contratar': typeof ClientareaClienteContratarRoute
   '/cliente/entregas': typeof ClientareaClienteEntregasRoute
   '/cliente/mentoria': typeof ClientareaClienteMentoriaRoute
+  '/cliente/orientacao-profissional': typeof ClientareaClienteOrientacaoProfissionalRoute
+  '/cliente/orientacao-psicanalitica': typeof ClientareaClienteOrientacaoPsicanaliticaRoute
   '/cliente/pedidos': typeof ClientareaClientePedidosRoute
   '/cliente/perfil': typeof ClientareaClientePerfilRoute
   '/cliente/sessoes': typeof ClientareaClienteSessoesRoute
@@ -1060,10 +1377,34 @@ export interface FileRoutesByTo {
   '/painel-profissional': typeof AuthenticatedPainelProfissionalIndexRoute
   '/cliente': typeof ClientareaClienteIndexRoute
   '/cliente/biblioteca/$productKey': typeof ClientareaClienteBibliotecaProductKeyRoute
+  '/cliente/biblioteca/artigos-cientificos': typeof ClientareaClienteBibliotecaArtigosCientificosRoute
+  '/cliente/biblioteca/curso-gratuito': typeof ClientareaClienteBibliotecaCursoGratuitoRoute
+  '/cliente/biblioteca/curso-gratuito-carreira': typeof ClientareaClienteBibliotecaCursoGratuitoCarreiraRoute
+  '/cliente/biblioteca/cursos-gratuitos': typeof ClientareaClienteBibliotecaCursosGratuitosRoute
+  '/cliente/biblioteca/gratuito': typeof ClientareaClienteBibliotecaGratuitoRoute
+  '/cliente/biblioteca/jornal-ldr': typeof ClientareaClienteBibliotecaJornalLdrRoute
+  '/cliente/biblioteca/ldr-ciencia': typeof ClientareaClienteBibliotecaLdrCienciaRoute
+  '/cliente/biblioteca/publicacoes': typeof ClientareaClienteBibliotecaPublicacoesRouteWithChildren
+  '/cliente/biblioteca/revista-ldr': typeof ClientareaClienteBibliotecaRevistaLdrRoute
+  '/cliente/cursos/frances-negocios-a1': typeof ClientareaClienteCursosFrancesNegociosA1Route
+  '/cliente/cursos/organizar-carreira': typeof ClientareaClienteCursosOrganizarCarreiraRoute
+  '/cliente/cursos/primeiros-socorros': typeof ClientareaClienteCursosPrimeirosSocorrosRoute
+  '/cliente/formacoes/gestao-pessoas-rh': typeof ClientareaClienteFormacoesGestaoPessoasRhRoute
+  '/cliente/graduacao/$courseKey': typeof ClientareaClienteGraduacaoCourseKeyRoute
+  '/cliente/interesse-pos/$courseKey': typeof ClientareaClienteInteressePosCourseKeyRoute
   '/cliente/pedido/$orderId': typeof ClientareaClientePedidoOrderIdRoute
   '/cliente/treinamentos/do-mamao-ao-negocio': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioRouteWithChildren
+  '/cliente/treinamentos/ia-negocios-carreira': typeof ClientareaClienteTreinamentosIaNegociosCarreiraRoute
+  '/cliente/treinamentos/lideranca-gestao': typeof ClientareaClienteTreinamentosLiderancaGestaoRoute
+  '/cliente/treinamentos/lideranca-gestao-pessoas': typeof ClientareaClienteTreinamentosLiderancaGestaoPessoasRoute
+  '/cliente/treinamentos/massoterapia': typeof ClientareaClienteTreinamentosMassoterapiaRoute
+  '/cliente/treinamentos/mentoria-carreira': typeof ClientareaClienteTreinamentosMentoriaCarreiraRoute
+  '/cliente/treinamentos/negocio-24-horas': typeof ClientareaClienteTreinamentosNegocio24HorasRoute
   '/cliente/treinamentos/psicanalise': typeof ClientareaClienteTreinamentosPsicanaliseRouteWithChildren
+  '/cliente/treinamentos/terapia-breve-psicanalitica': typeof ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRoute
+  '/cliente/biblioteca/publicacoes/$slug': typeof ClientareaClienteBibliotecaPublicacoesSlugRoute
   '/cliente/treinamentos/do-mamao-ao-negocio/forum': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioForumRoute
+  '/cliente/treinamentos/formacao-profissional/$slug': typeof ClientareaClienteTreinamentosFormacaoProfissionalSlugRoute
   '/cliente/treinamentos/psicanalise/certificado': typeof ClientareaClienteTreinamentosPsicanaliseCertificadoRoute
   '/cliente/treinamentos/psicanalise/forum': typeof ClientareaClienteTreinamentosPsicanaliseForumRoute
 }
@@ -1078,9 +1419,17 @@ export interface FileRoutesById {
   '/acoragemdecomecar': typeof AcoragemdecomecarRoute
   '/amostra-gratis': typeof AmostraGratisRoute
   '/bootstrap': typeof BootstrapRoute
-  '/clinica-social': typeof ClinicaSocialRouteWithChildren
+  '/clinica-social': typeof ClinicaSocialRoute
   '/empreendedores': typeof EmpreendedoresRoute
+  '/formacao-comunicacao-oratoria': typeof FormacaoComunicacaoOratoriaRoute
+  '/formacao-gestao-administrativa-financeira': typeof FormacaoGestaoAdministrativaFinanceiraRoute
+  '/formacao-marketing-digital': typeof FormacaoMarketingDigitalRoute
+  '/formacao-massoterapia': typeof FormacaoMassoterapiaRoute
+  '/formacao-negocio-em-24-horas': typeof FormacaoNegocioEm24HorasRoute
   '/formacao-psicanalise': typeof FormacaoPsicanaliseRoute
+  '/formacao-recrutamento-selecao': typeof FormacaoRecrutamentoSelecaoRoute
+  '/formacao-terapia-breve-psicanalitica': typeof FormacaoTerapiaBrevePsicanaliticaRoute
+  '/formacao-vendas-negociacao': typeof FormacaoVendasNegociacaoRoute
   '/formulario': typeof FormularioRoute
   '/livros': typeof LivrosRoute
   '/login': typeof LoginRoute
@@ -1117,7 +1466,7 @@ export interface FileRoutesById {
   '/cliente/ativar': typeof ClienteAtivarRoute
   '/cliente/definir-senha': typeof ClienteDefinirSenhaRoute
   '/cliente/login': typeof ClienteLoginRoute
-  '/clinica-social/profissionais': typeof ClinicaSocialProfissionaisRoute
+  '/clinica-social_/profissionais': typeof ClinicaSocialProfissionaisRoute
   '/empresa/login': typeof EmpresaLoginRoute
   '/funcionario/login': typeof FuncionarioLoginRoute
   '/profissionais/$category': typeof ProfissionaisCategoryRoute
@@ -1133,12 +1482,16 @@ export interface FileRoutesById {
   '/_authenticated/admin/equipe': typeof AuthenticatedAdminEquipeRoute
   '/_authenticated/admin/financeiro': typeof AuthenticatedAdminFinanceiroRoute
   '/_authenticated/admin/forum-treinamento': typeof AuthenticatedAdminForumTreinamentoRoute
+  '/_authenticated/admin/interesses-graduacoes': typeof AuthenticatedAdminInteressesGraduacoesRoute
+  '/_authenticated/admin/interesses-pos': typeof AuthenticatedAdminInteressesPosRoute
   '/_authenticated/admin/mentoria': typeof AuthenticatedAdminMentoriaRoute
   '/_authenticated/admin/meus-atendimentos': typeof AuthenticatedAdminMeusAtendimentosRoute
   '/_authenticated/admin/meus-clientes': typeof AuthenticatedAdminMeusClientesRoute
   '/_authenticated/admin/meus-pedidos': typeof AuthenticatedAdminMeusPedidosRoute
   '/_authenticated/admin/minha-agenda': typeof AuthenticatedAdminMinhaAgendaRoute
   '/_authenticated/admin/notificacoes': typeof AuthenticatedAdminNotificacoesRoute
+  '/_authenticated/admin/orientacoes-profissionais': typeof AuthenticatedAdminOrientacoesProfissionaisRoute
+  '/_authenticated/admin/orientacoes-psicanaliticas': typeof AuthenticatedAdminOrientacoesPsicanaliticasRoute
   '/_authenticated/admin/profissionais': typeof AuthenticatedAdminProfissionaisRoute
   '/_authenticated/admin/profissionais-conformidade': typeof AuthenticatedAdminProfissionaisConformidadeRoute
   '/_authenticated/admin/profissionais-conteudo': typeof AuthenticatedAdminProfissionaisConteudoRoute
@@ -1178,6 +1531,8 @@ export interface FileRoutesById {
   '/_clientarea/cliente/contratar': typeof ClientareaClienteContratarRoute
   '/_clientarea/cliente/entregas': typeof ClientareaClienteEntregasRoute
   '/_clientarea/cliente/mentoria': typeof ClientareaClienteMentoriaRoute
+  '/_clientarea/cliente/orientacao-profissional': typeof ClientareaClienteOrientacaoProfissionalRoute
+  '/_clientarea/cliente/orientacao-psicanalitica': typeof ClientareaClienteOrientacaoPsicanaliticaRoute
   '/_clientarea/cliente/pedidos': typeof ClientareaClientePedidosRoute
   '/_clientarea/cliente/perfil': typeof ClientareaClientePerfilRoute
   '/_clientarea/cliente/sessoes': typeof ClientareaClienteSessoesRoute
@@ -1188,10 +1543,34 @@ export interface FileRoutesById {
   '/_authenticated/painel-profissional/': typeof AuthenticatedPainelProfissionalIndexRoute
   '/_clientarea/cliente/': typeof ClientareaClienteIndexRoute
   '/_clientarea/cliente/biblioteca/$productKey': typeof ClientareaClienteBibliotecaProductKeyRoute
+  '/_clientarea/cliente/biblioteca/artigos-cientificos': typeof ClientareaClienteBibliotecaArtigosCientificosRoute
+  '/_clientarea/cliente/biblioteca/curso-gratuito': typeof ClientareaClienteBibliotecaCursoGratuitoRoute
+  '/_clientarea/cliente/biblioteca/curso-gratuito-carreira': typeof ClientareaClienteBibliotecaCursoGratuitoCarreiraRoute
+  '/_clientarea/cliente/biblioteca/cursos-gratuitos': typeof ClientareaClienteBibliotecaCursosGratuitosRoute
+  '/_clientarea/cliente/biblioteca/gratuito': typeof ClientareaClienteBibliotecaGratuitoRoute
+  '/_clientarea/cliente/biblioteca/jornal-ldr': typeof ClientareaClienteBibliotecaJornalLdrRoute
+  '/_clientarea/cliente/biblioteca/ldr-ciencia': typeof ClientareaClienteBibliotecaLdrCienciaRoute
+  '/_clientarea/cliente/biblioteca/publicacoes': typeof ClientareaClienteBibliotecaPublicacoesRouteWithChildren
+  '/_clientarea/cliente/biblioteca/revista-ldr': typeof ClientareaClienteBibliotecaRevistaLdrRoute
+  '/_clientarea/cliente/cursos/frances-negocios-a1': typeof ClientareaClienteCursosFrancesNegociosA1Route
+  '/_clientarea/cliente/cursos/organizar-carreira': typeof ClientareaClienteCursosOrganizarCarreiraRoute
+  '/_clientarea/cliente/cursos/primeiros-socorros': typeof ClientareaClienteCursosPrimeirosSocorrosRoute
+  '/_clientarea/cliente/formacoes/gestao-pessoas-rh': typeof ClientareaClienteFormacoesGestaoPessoasRhRoute
+  '/_clientarea/cliente/graduacao/$courseKey': typeof ClientareaClienteGraduacaoCourseKeyRoute
+  '/_clientarea/cliente/interesse-pos/$courseKey': typeof ClientareaClienteInteressePosCourseKeyRoute
   '/_clientarea/cliente/pedido/$orderId': typeof ClientareaClientePedidoOrderIdRoute
   '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioRouteWithChildren
+  '/_clientarea/cliente/treinamentos/ia-negocios-carreira': typeof ClientareaClienteTreinamentosIaNegociosCarreiraRoute
+  '/_clientarea/cliente/treinamentos/lideranca-gestao': typeof ClientareaClienteTreinamentosLiderancaGestaoRoute
+  '/_clientarea/cliente/treinamentos/lideranca-gestao-pessoas': typeof ClientareaClienteTreinamentosLiderancaGestaoPessoasRoute
+  '/_clientarea/cliente/treinamentos/massoterapia': typeof ClientareaClienteTreinamentosMassoterapiaRoute
+  '/_clientarea/cliente/treinamentos/mentoria-carreira': typeof ClientareaClienteTreinamentosMentoriaCarreiraRoute
+  '/_clientarea/cliente/treinamentos/negocio-24-horas': typeof ClientareaClienteTreinamentosNegocio24HorasRoute
   '/_clientarea/cliente/treinamentos/psicanalise': typeof ClientareaClienteTreinamentosPsicanaliseRouteWithChildren
+  '/_clientarea/cliente/treinamentos/terapia-breve-psicanalitica': typeof ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRoute
+  '/_clientarea/cliente/biblioteca/publicacoes/$slug': typeof ClientareaClienteBibliotecaPublicacoesSlugRoute
   '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio/forum': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioForumRoute
+  '/_clientarea/cliente/treinamentos/formacao-profissional/$slug': typeof ClientareaClienteTreinamentosFormacaoProfissionalSlugRoute
   '/_clientarea/cliente/treinamentos/psicanalise/certificado': typeof ClientareaClienteTreinamentosPsicanaliseCertificadoRoute
   '/_clientarea/cliente/treinamentos/psicanalise/forum': typeof ClientareaClienteTreinamentosPsicanaliseForumRoute
 }
@@ -1206,7 +1585,15 @@ export interface FileRouteTypes {
     | '/bootstrap'
     | '/clinica-social'
     | '/empreendedores'
+    | '/formacao-comunicacao-oratoria'
+    | '/formacao-gestao-administrativa-financeira'
+    | '/formacao-marketing-digital'
+    | '/formacao-massoterapia'
+    | '/formacao-negocio-em-24-horas'
     | '/formacao-psicanalise'
+    | '/formacao-recrutamento-selecao'
+    | '/formacao-terapia-breve-psicanalitica'
+    | '/formacao-vendas-negociacao'
     | '/formulario'
     | '/livros'
     | '/login'
@@ -1258,12 +1645,16 @@ export interface FileRouteTypes {
     | '/admin/equipe'
     | '/admin/financeiro'
     | '/admin/forum-treinamento'
+    | '/admin/interesses-graduacoes'
+    | '/admin/interesses-pos'
     | '/admin/mentoria'
     | '/admin/meus-atendimentos'
     | '/admin/meus-clientes'
     | '/admin/meus-pedidos'
     | '/admin/minha-agenda'
     | '/admin/notificacoes'
+    | '/admin/orientacoes-profissionais'
+    | '/admin/orientacoes-psicanaliticas'
     | '/admin/profissionais'
     | '/admin/profissionais-conformidade'
     | '/admin/profissionais-conteudo'
@@ -1303,6 +1694,8 @@ export interface FileRouteTypes {
     | '/cliente/contratar'
     | '/cliente/entregas'
     | '/cliente/mentoria'
+    | '/cliente/orientacao-profissional'
+    | '/cliente/orientacao-psicanalitica'
     | '/cliente/pedidos'
     | '/cliente/perfil'
     | '/cliente/sessoes'
@@ -1313,10 +1706,34 @@ export interface FileRouteTypes {
     | '/painel-profissional/'
     | '/cliente/'
     | '/cliente/biblioteca/$productKey'
+    | '/cliente/biblioteca/artigos-cientificos'
+    | '/cliente/biblioteca/curso-gratuito'
+    | '/cliente/biblioteca/curso-gratuito-carreira'
+    | '/cliente/biblioteca/cursos-gratuitos'
+    | '/cliente/biblioteca/gratuito'
+    | '/cliente/biblioteca/jornal-ldr'
+    | '/cliente/biblioteca/ldr-ciencia'
+    | '/cliente/biblioteca/publicacoes'
+    | '/cliente/biblioteca/revista-ldr'
+    | '/cliente/cursos/frances-negocios-a1'
+    | '/cliente/cursos/organizar-carreira'
+    | '/cliente/cursos/primeiros-socorros'
+    | '/cliente/formacoes/gestao-pessoas-rh'
+    | '/cliente/graduacao/$courseKey'
+    | '/cliente/interesse-pos/$courseKey'
     | '/cliente/pedido/$orderId'
     | '/cliente/treinamentos/do-mamao-ao-negocio'
+    | '/cliente/treinamentos/ia-negocios-carreira'
+    | '/cliente/treinamentos/lideranca-gestao'
+    | '/cliente/treinamentos/lideranca-gestao-pessoas'
+    | '/cliente/treinamentos/massoterapia'
+    | '/cliente/treinamentos/mentoria-carreira'
+    | '/cliente/treinamentos/negocio-24-horas'
     | '/cliente/treinamentos/psicanalise'
+    | '/cliente/treinamentos/terapia-breve-psicanalitica'
+    | '/cliente/biblioteca/publicacoes/$slug'
     | '/cliente/treinamentos/do-mamao-ao-negocio/forum'
+    | '/cliente/treinamentos/formacao-profissional/$slug'
     | '/cliente/treinamentos/psicanalise/certificado'
     | '/cliente/treinamentos/psicanalise/forum'
   fileRoutesByTo: FileRoutesByTo
@@ -1329,7 +1746,15 @@ export interface FileRouteTypes {
     | '/bootstrap'
     | '/clinica-social'
     | '/empreendedores'
+    | '/formacao-comunicacao-oratoria'
+    | '/formacao-gestao-administrativa-financeira'
+    | '/formacao-marketing-digital'
+    | '/formacao-massoterapia'
+    | '/formacao-negocio-em-24-horas'
     | '/formacao-psicanalise'
+    | '/formacao-recrutamento-selecao'
+    | '/formacao-terapia-breve-psicanalitica'
+    | '/formacao-vendas-negociacao'
     | '/formulario'
     | '/livros'
     | '/login'
@@ -1379,12 +1804,16 @@ export interface FileRouteTypes {
     | '/admin/equipe'
     | '/admin/financeiro'
     | '/admin/forum-treinamento'
+    | '/admin/interesses-graduacoes'
+    | '/admin/interesses-pos'
     | '/admin/mentoria'
     | '/admin/meus-atendimentos'
     | '/admin/meus-clientes'
     | '/admin/meus-pedidos'
     | '/admin/minha-agenda'
     | '/admin/notificacoes'
+    | '/admin/orientacoes-profissionais'
+    | '/admin/orientacoes-psicanaliticas'
     | '/admin/profissionais'
     | '/admin/profissionais-conformidade'
     | '/admin/profissionais-conteudo'
@@ -1424,6 +1853,8 @@ export interface FileRouteTypes {
     | '/cliente/contratar'
     | '/cliente/entregas'
     | '/cliente/mentoria'
+    | '/cliente/orientacao-profissional'
+    | '/cliente/orientacao-psicanalitica'
     | '/cliente/pedidos'
     | '/cliente/perfil'
     | '/cliente/sessoes'
@@ -1434,10 +1865,34 @@ export interface FileRouteTypes {
     | '/painel-profissional'
     | '/cliente'
     | '/cliente/biblioteca/$productKey'
+    | '/cliente/biblioteca/artigos-cientificos'
+    | '/cliente/biblioteca/curso-gratuito'
+    | '/cliente/biblioteca/curso-gratuito-carreira'
+    | '/cliente/biblioteca/cursos-gratuitos'
+    | '/cliente/biblioteca/gratuito'
+    | '/cliente/biblioteca/jornal-ldr'
+    | '/cliente/biblioteca/ldr-ciencia'
+    | '/cliente/biblioteca/publicacoes'
+    | '/cliente/biblioteca/revista-ldr'
+    | '/cliente/cursos/frances-negocios-a1'
+    | '/cliente/cursos/organizar-carreira'
+    | '/cliente/cursos/primeiros-socorros'
+    | '/cliente/formacoes/gestao-pessoas-rh'
+    | '/cliente/graduacao/$courseKey'
+    | '/cliente/interesse-pos/$courseKey'
     | '/cliente/pedido/$orderId'
     | '/cliente/treinamentos/do-mamao-ao-negocio'
+    | '/cliente/treinamentos/ia-negocios-carreira'
+    | '/cliente/treinamentos/lideranca-gestao'
+    | '/cliente/treinamentos/lideranca-gestao-pessoas'
+    | '/cliente/treinamentos/massoterapia'
+    | '/cliente/treinamentos/mentoria-carreira'
+    | '/cliente/treinamentos/negocio-24-horas'
     | '/cliente/treinamentos/psicanalise'
+    | '/cliente/treinamentos/terapia-breve-psicanalitica'
+    | '/cliente/biblioteca/publicacoes/$slug'
     | '/cliente/treinamentos/do-mamao-ao-negocio/forum'
+    | '/cliente/treinamentos/formacao-profissional/$slug'
     | '/cliente/treinamentos/psicanalise/certificado'
     | '/cliente/treinamentos/psicanalise/forum'
   id:
@@ -1453,7 +1908,15 @@ export interface FileRouteTypes {
     | '/bootstrap'
     | '/clinica-social'
     | '/empreendedores'
+    | '/formacao-comunicacao-oratoria'
+    | '/formacao-gestao-administrativa-financeira'
+    | '/formacao-marketing-digital'
+    | '/formacao-massoterapia'
+    | '/formacao-negocio-em-24-horas'
     | '/formacao-psicanalise'
+    | '/formacao-recrutamento-selecao'
+    | '/formacao-terapia-breve-psicanalitica'
+    | '/formacao-vendas-negociacao'
     | '/formulario'
     | '/livros'
     | '/login'
@@ -1490,7 +1953,7 @@ export interface FileRouteTypes {
     | '/cliente/ativar'
     | '/cliente/definir-senha'
     | '/cliente/login'
-    | '/clinica-social/profissionais'
+    | '/clinica-social_/profissionais'
     | '/empresa/login'
     | '/funcionario/login'
     | '/profissionais/$category'
@@ -1506,12 +1969,16 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/equipe'
     | '/_authenticated/admin/financeiro'
     | '/_authenticated/admin/forum-treinamento'
+    | '/_authenticated/admin/interesses-graduacoes'
+    | '/_authenticated/admin/interesses-pos'
     | '/_authenticated/admin/mentoria'
     | '/_authenticated/admin/meus-atendimentos'
     | '/_authenticated/admin/meus-clientes'
     | '/_authenticated/admin/meus-pedidos'
     | '/_authenticated/admin/minha-agenda'
     | '/_authenticated/admin/notificacoes'
+    | '/_authenticated/admin/orientacoes-profissionais'
+    | '/_authenticated/admin/orientacoes-psicanaliticas'
     | '/_authenticated/admin/profissionais'
     | '/_authenticated/admin/profissionais-conformidade'
     | '/_authenticated/admin/profissionais-conteudo'
@@ -1551,6 +2018,8 @@ export interface FileRouteTypes {
     | '/_clientarea/cliente/contratar'
     | '/_clientarea/cliente/entregas'
     | '/_clientarea/cliente/mentoria'
+    | '/_clientarea/cliente/orientacao-profissional'
+    | '/_clientarea/cliente/orientacao-psicanalitica'
     | '/_clientarea/cliente/pedidos'
     | '/_clientarea/cliente/perfil'
     | '/_clientarea/cliente/sessoes'
@@ -1561,10 +2030,34 @@ export interface FileRouteTypes {
     | '/_authenticated/painel-profissional/'
     | '/_clientarea/cliente/'
     | '/_clientarea/cliente/biblioteca/$productKey'
+    | '/_clientarea/cliente/biblioteca/artigos-cientificos'
+    | '/_clientarea/cliente/biblioteca/curso-gratuito'
+    | '/_clientarea/cliente/biblioteca/curso-gratuito-carreira'
+    | '/_clientarea/cliente/biblioteca/cursos-gratuitos'
+    | '/_clientarea/cliente/biblioteca/gratuito'
+    | '/_clientarea/cliente/biblioteca/jornal-ldr'
+    | '/_clientarea/cliente/biblioteca/ldr-ciencia'
+    | '/_clientarea/cliente/biblioteca/publicacoes'
+    | '/_clientarea/cliente/biblioteca/revista-ldr'
+    | '/_clientarea/cliente/cursos/frances-negocios-a1'
+    | '/_clientarea/cliente/cursos/organizar-carreira'
+    | '/_clientarea/cliente/cursos/primeiros-socorros'
+    | '/_clientarea/cliente/formacoes/gestao-pessoas-rh'
+    | '/_clientarea/cliente/graduacao/$courseKey'
+    | '/_clientarea/cliente/interesse-pos/$courseKey'
     | '/_clientarea/cliente/pedido/$orderId'
     | '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio'
+    | '/_clientarea/cliente/treinamentos/ia-negocios-carreira'
+    | '/_clientarea/cliente/treinamentos/lideranca-gestao'
+    | '/_clientarea/cliente/treinamentos/lideranca-gestao-pessoas'
+    | '/_clientarea/cliente/treinamentos/massoterapia'
+    | '/_clientarea/cliente/treinamentos/mentoria-carreira'
+    | '/_clientarea/cliente/treinamentos/negocio-24-horas'
     | '/_clientarea/cliente/treinamentos/psicanalise'
+    | '/_clientarea/cliente/treinamentos/terapia-breve-psicanalitica'
+    | '/_clientarea/cliente/biblioteca/publicacoes/$slug'
     | '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio/forum'
+    | '/_clientarea/cliente/treinamentos/formacao-profissional/$slug'
     | '/_clientarea/cliente/treinamentos/psicanalise/certificado'
     | '/_clientarea/cliente/treinamentos/psicanalise/forum'
   fileRoutesById: FileRoutesById
@@ -1579,9 +2072,17 @@ export interface RootRouteChildren {
   AcoragemdecomecarRoute: typeof AcoragemdecomecarRoute
   AmostraGratisRoute: typeof AmostraGratisRoute
   BootstrapRoute: typeof BootstrapRoute
-  ClinicaSocialRoute: typeof ClinicaSocialRouteWithChildren
+  ClinicaSocialRoute: typeof ClinicaSocialRoute
   EmpreendedoresRoute: typeof EmpreendedoresRoute
+  FormacaoComunicacaoOratoriaRoute: typeof FormacaoComunicacaoOratoriaRoute
+  FormacaoGestaoAdministrativaFinanceiraRoute: typeof FormacaoGestaoAdministrativaFinanceiraRoute
+  FormacaoMarketingDigitalRoute: typeof FormacaoMarketingDigitalRoute
+  FormacaoMassoterapiaRoute: typeof FormacaoMassoterapiaRoute
+  FormacaoNegocioEm24HorasRoute: typeof FormacaoNegocioEm24HorasRoute
   FormacaoPsicanaliseRoute: typeof FormacaoPsicanaliseRoute
+  FormacaoRecrutamentoSelecaoRoute: typeof FormacaoRecrutamentoSelecaoRoute
+  FormacaoTerapiaBrevePsicanaliticaRoute: typeof FormacaoTerapiaBrevePsicanaliticaRoute
+  FormacaoVendasNegociacaoRoute: typeof FormacaoVendasNegociacaoRoute
   FormularioRoute: typeof FormularioRoute
   LivrosRoute: typeof LivrosRoute
   LoginRoute: typeof LoginRoute
@@ -1611,6 +2112,7 @@ export interface RootRouteChildren {
   ClienteAtivarRoute: typeof ClienteAtivarRoute
   ClienteDefinirSenhaRoute: typeof ClienteDefinirSenhaRoute
   ClienteLoginRoute: typeof ClienteLoginRoute
+  ClinicaSocialProfissionaisRoute: typeof ClinicaSocialProfissionaisRoute
   EmpresaLoginRoute: typeof EmpresaLoginRoute
   FuncionarioLoginRoute: typeof FuncionarioLoginRoute
   ProfissionalSlugRoute: typeof ProfissionalSlugRoute
@@ -1700,11 +2202,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EmpreendedoresRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/formacao-comunicacao-oratoria': {
+      id: '/formacao-comunicacao-oratoria'
+      path: '/formacao-comunicacao-oratoria'
+      fullPath: '/formacao-comunicacao-oratoria'
+      preLoaderRoute: typeof FormacaoComunicacaoOratoriaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/formacao-gestao-administrativa-financeira': {
+      id: '/formacao-gestao-administrativa-financeira'
+      path: '/formacao-gestao-administrativa-financeira'
+      fullPath: '/formacao-gestao-administrativa-financeira'
+      preLoaderRoute: typeof FormacaoGestaoAdministrativaFinanceiraRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/formacao-marketing-digital': {
+      id: '/formacao-marketing-digital'
+      path: '/formacao-marketing-digital'
+      fullPath: '/formacao-marketing-digital'
+      preLoaderRoute: typeof FormacaoMarketingDigitalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/formacao-massoterapia': {
+      id: '/formacao-massoterapia'
+      path: '/formacao-massoterapia'
+      fullPath: '/formacao-massoterapia'
+      preLoaderRoute: typeof FormacaoMassoterapiaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/formacao-negocio-em-24-horas': {
+      id: '/formacao-negocio-em-24-horas'
+      path: '/formacao-negocio-em-24-horas'
+      fullPath: '/formacao-negocio-em-24-horas'
+      preLoaderRoute: typeof FormacaoNegocioEm24HorasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/formacao-psicanalise': {
       id: '/formacao-psicanalise'
       path: '/formacao-psicanalise'
       fullPath: '/formacao-psicanalise'
       preLoaderRoute: typeof FormacaoPsicanaliseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/formacao-recrutamento-selecao': {
+      id: '/formacao-recrutamento-selecao'
+      path: '/formacao-recrutamento-selecao'
+      fullPath: '/formacao-recrutamento-selecao'
+      preLoaderRoute: typeof FormacaoRecrutamentoSelecaoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/formacao-terapia-breve-psicanalitica': {
+      id: '/formacao-terapia-breve-psicanalitica'
+      path: '/formacao-terapia-breve-psicanalitica'
+      fullPath: '/formacao-terapia-breve-psicanalitica'
+      preLoaderRoute: typeof FormacaoTerapiaBrevePsicanaliticaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/formacao-vendas-negociacao': {
+      id: '/formacao-vendas-negociacao'
+      path: '/formacao-vendas-negociacao'
+      fullPath: '/formacao-vendas-negociacao'
+      preLoaderRoute: typeof FormacaoVendasNegociacaoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/formulario': {
@@ -1959,12 +2517,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClienteLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/clinica-social/profissionais': {
-      id: '/clinica-social/profissionais'
-      path: '/profissionais'
+    '/clinica-social_/profissionais': {
+      id: '/clinica-social_/profissionais'
+      path: '/clinica-social/profissionais'
       fullPath: '/clinica-social/profissionais'
       preLoaderRoute: typeof ClinicaSocialProfissionaisRouteImport
-      parentRoute: typeof ClinicaSocialRoute
+      parentRoute: typeof rootRouteImport
     }
     '/empresa/login': {
       id: '/empresa/login'
@@ -2071,6 +2629,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminForumTreinamentoRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/interesses-graduacoes': {
+      id: '/_authenticated/admin/interesses-graduacoes'
+      path: '/interesses-graduacoes'
+      fullPath: '/admin/interesses-graduacoes'
+      preLoaderRoute: typeof AuthenticatedAdminInteressesGraduacoesRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/interesses-pos': {
+      id: '/_authenticated/admin/interesses-pos'
+      path: '/interesses-pos'
+      fullPath: '/admin/interesses-pos'
+      preLoaderRoute: typeof AuthenticatedAdminInteressesPosRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/mentoria': {
       id: '/_authenticated/admin/mentoria'
       path: '/mentoria'
@@ -2111,6 +2683,20 @@ declare module '@tanstack/react-router' {
       path: '/notificacoes'
       fullPath: '/admin/notificacoes'
       preLoaderRoute: typeof AuthenticatedAdminNotificacoesRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/orientacoes-profissionais': {
+      id: '/_authenticated/admin/orientacoes-profissionais'
+      path: '/orientacoes-profissionais'
+      fullPath: '/admin/orientacoes-profissionais'
+      preLoaderRoute: typeof AuthenticatedAdminOrientacoesProfissionaisRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/orientacoes-psicanaliticas': {
+      id: '/_authenticated/admin/orientacoes-psicanaliticas'
+      path: '/orientacoes-psicanaliticas'
+      fullPath: '/admin/orientacoes-psicanaliticas'
+      preLoaderRoute: typeof AuthenticatedAdminOrientacoesPsicanaliticasRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
     '/_authenticated/admin/profissionais': {
@@ -2400,6 +2986,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClientareaClienteMentoriaRouteImport
       parentRoute: typeof ClientareaClienteRoute
     }
+    '/_clientarea/cliente/orientacao-profissional': {
+      id: '/_clientarea/cliente/orientacao-profissional'
+      path: '/orientacao-profissional'
+      fullPath: '/cliente/orientacao-profissional'
+      preLoaderRoute: typeof ClientareaClienteOrientacaoProfissionalRouteImport
+      parentRoute: typeof ClientareaClienteRoute
+    }
+    '/_clientarea/cliente/orientacao-psicanalitica': {
+      id: '/_clientarea/cliente/orientacao-psicanalitica'
+      path: '/orientacao-psicanalitica'
+      fullPath: '/cliente/orientacao-psicanalitica'
+      preLoaderRoute: typeof ClientareaClienteOrientacaoPsicanaliticaRouteImport
+      parentRoute: typeof ClientareaClienteRoute
+    }
     '/_clientarea/cliente/pedidos': {
       id: '/_clientarea/cliente/pedidos'
       path: '/pedidos'
@@ -2456,6 +3056,111 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClientareaClienteBibliotecaProductKeyRouteImport
       parentRoute: typeof ClientareaClienteBibliotecaRoute
     }
+    '/_clientarea/cliente/biblioteca/artigos-cientificos': {
+      id: '/_clientarea/cliente/biblioteca/artigos-cientificos'
+      path: '/artigos-cientificos'
+      fullPath: '/cliente/biblioteca/artigos-cientificos'
+      preLoaderRoute: typeof ClientareaClienteBibliotecaArtigosCientificosRouteImport
+      parentRoute: typeof ClientareaClienteBibliotecaRoute
+    }
+    '/_clientarea/cliente/biblioteca/curso-gratuito': {
+      id: '/_clientarea/cliente/biblioteca/curso-gratuito'
+      path: '/curso-gratuito'
+      fullPath: '/cliente/biblioteca/curso-gratuito'
+      preLoaderRoute: typeof ClientareaClienteBibliotecaCursoGratuitoRouteImport
+      parentRoute: typeof ClientareaClienteBibliotecaRoute
+    }
+    '/_clientarea/cliente/biblioteca/curso-gratuito-carreira': {
+      id: '/_clientarea/cliente/biblioteca/curso-gratuito-carreira'
+      path: '/curso-gratuito-carreira'
+      fullPath: '/cliente/biblioteca/curso-gratuito-carreira'
+      preLoaderRoute: typeof ClientareaClienteBibliotecaCursoGratuitoCarreiraRouteImport
+      parentRoute: typeof ClientareaClienteBibliotecaRoute
+    }
+    '/_clientarea/cliente/biblioteca/cursos-gratuitos': {
+      id: '/_clientarea/cliente/biblioteca/cursos-gratuitos'
+      path: '/cursos-gratuitos'
+      fullPath: '/cliente/biblioteca/cursos-gratuitos'
+      preLoaderRoute: typeof ClientareaClienteBibliotecaCursosGratuitosRouteImport
+      parentRoute: typeof ClientareaClienteBibliotecaRoute
+    }
+    '/_clientarea/cliente/biblioteca/gratuito': {
+      id: '/_clientarea/cliente/biblioteca/gratuito'
+      path: '/gratuito'
+      fullPath: '/cliente/biblioteca/gratuito'
+      preLoaderRoute: typeof ClientareaClienteBibliotecaGratuitoRouteImport
+      parentRoute: typeof ClientareaClienteBibliotecaRoute
+    }
+    '/_clientarea/cliente/biblioteca/jornal-ldr': {
+      id: '/_clientarea/cliente/biblioteca/jornal-ldr'
+      path: '/jornal-ldr'
+      fullPath: '/cliente/biblioteca/jornal-ldr'
+      preLoaderRoute: typeof ClientareaClienteBibliotecaJornalLdrRouteImport
+      parentRoute: typeof ClientareaClienteBibliotecaRoute
+    }
+    '/_clientarea/cliente/biblioteca/ldr-ciencia': {
+      id: '/_clientarea/cliente/biblioteca/ldr-ciencia'
+      path: '/ldr-ciencia'
+      fullPath: '/cliente/biblioteca/ldr-ciencia'
+      preLoaderRoute: typeof ClientareaClienteBibliotecaLdrCienciaRouteImport
+      parentRoute: typeof ClientareaClienteBibliotecaRoute
+    }
+    '/_clientarea/cliente/biblioteca/publicacoes': {
+      id: '/_clientarea/cliente/biblioteca/publicacoes'
+      path: '/publicacoes'
+      fullPath: '/cliente/biblioteca/publicacoes'
+      preLoaderRoute: typeof ClientareaClienteBibliotecaPublicacoesRouteImport
+      parentRoute: typeof ClientareaClienteBibliotecaRoute
+    }
+    '/_clientarea/cliente/biblioteca/revista-ldr': {
+      id: '/_clientarea/cliente/biblioteca/revista-ldr'
+      path: '/revista-ldr'
+      fullPath: '/cliente/biblioteca/revista-ldr'
+      preLoaderRoute: typeof ClientareaClienteBibliotecaRevistaLdrRouteImport
+      parentRoute: typeof ClientareaClienteBibliotecaRoute
+    }
+    '/_clientarea/cliente/cursos/frances-negocios-a1': {
+      id: '/_clientarea/cliente/cursos/frances-negocios-a1'
+      path: '/cursos/frances-negocios-a1'
+      fullPath: '/cliente/cursos/frances-negocios-a1'
+      preLoaderRoute: typeof ClientareaClienteCursosFrancesNegociosA1RouteImport
+      parentRoute: typeof ClientareaClienteRoute
+    }
+    '/_clientarea/cliente/cursos/organizar-carreira': {
+      id: '/_clientarea/cliente/cursos/organizar-carreira'
+      path: '/cursos/organizar-carreira'
+      fullPath: '/cliente/cursos/organizar-carreira'
+      preLoaderRoute: typeof ClientareaClienteCursosOrganizarCarreiraRouteImport
+      parentRoute: typeof ClientareaClienteRoute
+    }
+    '/_clientarea/cliente/cursos/primeiros-socorros': {
+      id: '/_clientarea/cliente/cursos/primeiros-socorros'
+      path: '/cursos/primeiros-socorros'
+      fullPath: '/cliente/cursos/primeiros-socorros'
+      preLoaderRoute: typeof ClientareaClienteCursosPrimeirosSocorrosRouteImport
+      parentRoute: typeof ClientareaClienteRoute
+    }
+    '/_clientarea/cliente/formacoes/gestao-pessoas-rh': {
+      id: '/_clientarea/cliente/formacoes/gestao-pessoas-rh'
+      path: '/formacoes/gestao-pessoas-rh'
+      fullPath: '/cliente/formacoes/gestao-pessoas-rh'
+      preLoaderRoute: typeof ClientareaClienteFormacoesGestaoPessoasRhRouteImport
+      parentRoute: typeof ClientareaClienteRoute
+    }
+    '/_clientarea/cliente/graduacao/$courseKey': {
+      id: '/_clientarea/cliente/graduacao/$courseKey'
+      path: '/graduacao/$courseKey'
+      fullPath: '/cliente/graduacao/$courseKey'
+      preLoaderRoute: typeof ClientareaClienteGraduacaoCourseKeyRouteImport
+      parentRoute: typeof ClientareaClienteRoute
+    }
+    '/_clientarea/cliente/interesse-pos/$courseKey': {
+      id: '/_clientarea/cliente/interesse-pos/$courseKey'
+      path: '/interesse-pos/$courseKey'
+      fullPath: '/cliente/interesse-pos/$courseKey'
+      preLoaderRoute: typeof ClientareaClienteInteressePosCourseKeyRouteImport
+      parentRoute: typeof ClientareaClienteRoute
+    }
     '/_clientarea/cliente/pedido/$orderId': {
       id: '/_clientarea/cliente/pedido/$orderId'
       path: '/pedido/$orderId'
@@ -2470,6 +3175,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClientareaClienteTreinamentosDoMamaoAoNegocioRouteImport
       parentRoute: typeof ClientareaClienteTreinamentosRoute
     }
+    '/_clientarea/cliente/treinamentos/ia-negocios-carreira': {
+      id: '/_clientarea/cliente/treinamentos/ia-negocios-carreira'
+      path: '/ia-negocios-carreira'
+      fullPath: '/cliente/treinamentos/ia-negocios-carreira'
+      preLoaderRoute: typeof ClientareaClienteTreinamentosIaNegociosCarreiraRouteImport
+      parentRoute: typeof ClientareaClienteTreinamentosRoute
+    }
+    '/_clientarea/cliente/treinamentos/lideranca-gestao': {
+      id: '/_clientarea/cliente/treinamentos/lideranca-gestao'
+      path: '/lideranca-gestao'
+      fullPath: '/cliente/treinamentos/lideranca-gestao'
+      preLoaderRoute: typeof ClientareaClienteTreinamentosLiderancaGestaoRouteImport
+      parentRoute: typeof ClientareaClienteTreinamentosRoute
+    }
+    '/_clientarea/cliente/treinamentos/lideranca-gestao-pessoas': {
+      id: '/_clientarea/cliente/treinamentos/lideranca-gestao-pessoas'
+      path: '/lideranca-gestao-pessoas'
+      fullPath: '/cliente/treinamentos/lideranca-gestao-pessoas'
+      preLoaderRoute: typeof ClientareaClienteTreinamentosLiderancaGestaoPessoasRouteImport
+      parentRoute: typeof ClientareaClienteTreinamentosRoute
+    }
+    '/_clientarea/cliente/treinamentos/massoterapia': {
+      id: '/_clientarea/cliente/treinamentos/massoterapia'
+      path: '/massoterapia'
+      fullPath: '/cliente/treinamentos/massoterapia'
+      preLoaderRoute: typeof ClientareaClienteTreinamentosMassoterapiaRouteImport
+      parentRoute: typeof ClientareaClienteTreinamentosRoute
+    }
+    '/_clientarea/cliente/treinamentos/mentoria-carreira': {
+      id: '/_clientarea/cliente/treinamentos/mentoria-carreira'
+      path: '/mentoria-carreira'
+      fullPath: '/cliente/treinamentos/mentoria-carreira'
+      preLoaderRoute: typeof ClientareaClienteTreinamentosMentoriaCarreiraRouteImport
+      parentRoute: typeof ClientareaClienteTreinamentosRoute
+    }
+    '/_clientarea/cliente/treinamentos/negocio-24-horas': {
+      id: '/_clientarea/cliente/treinamentos/negocio-24-horas'
+      path: '/negocio-24-horas'
+      fullPath: '/cliente/treinamentos/negocio-24-horas'
+      preLoaderRoute: typeof ClientareaClienteTreinamentosNegocio24HorasRouteImport
+      parentRoute: typeof ClientareaClienteTreinamentosRoute
+    }
     '/_clientarea/cliente/treinamentos/psicanalise': {
       id: '/_clientarea/cliente/treinamentos/psicanalise'
       path: '/psicanalise'
@@ -2477,12 +3224,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClientareaClienteTreinamentosPsicanaliseRouteImport
       parentRoute: typeof ClientareaClienteTreinamentosRoute
     }
+    '/_clientarea/cliente/treinamentos/terapia-breve-psicanalitica': {
+      id: '/_clientarea/cliente/treinamentos/terapia-breve-psicanalitica'
+      path: '/terapia-breve-psicanalitica'
+      fullPath: '/cliente/treinamentos/terapia-breve-psicanalitica'
+      preLoaderRoute: typeof ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRouteImport
+      parentRoute: typeof ClientareaClienteTreinamentosRoute
+    }
+    '/_clientarea/cliente/biblioteca/publicacoes/$slug': {
+      id: '/_clientarea/cliente/biblioteca/publicacoes/$slug'
+      path: '/$slug'
+      fullPath: '/cliente/biblioteca/publicacoes/$slug'
+      preLoaderRoute: typeof ClientareaClienteBibliotecaPublicacoesSlugRouteImport
+      parentRoute: typeof ClientareaClienteBibliotecaPublicacoesRoute
+    }
     '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio/forum': {
       id: '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio/forum'
       path: '/forum'
       fullPath: '/cliente/treinamentos/do-mamao-ao-negocio/forum'
       preLoaderRoute: typeof ClientareaClienteTreinamentosDoMamaoAoNegocioForumRouteImport
       parentRoute: typeof ClientareaClienteTreinamentosDoMamaoAoNegocioRoute
+    }
+    '/_clientarea/cliente/treinamentos/formacao-profissional/$slug': {
+      id: '/_clientarea/cliente/treinamentos/formacao-profissional/$slug'
+      path: '/formacao-profissional/$slug'
+      fullPath: '/cliente/treinamentos/formacao-profissional/$slug'
+      preLoaderRoute: typeof ClientareaClienteTreinamentosFormacaoProfissionalSlugRouteImport
+      parentRoute: typeof ClientareaClienteTreinamentosRoute
     }
     '/_clientarea/cliente/treinamentos/psicanalise/certificado': {
       id: '/_clientarea/cliente/treinamentos/psicanalise/certificado'
@@ -2509,12 +3277,16 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminEquipeRoute: typeof AuthenticatedAdminEquipeRoute
   AuthenticatedAdminFinanceiroRoute: typeof AuthenticatedAdminFinanceiroRoute
   AuthenticatedAdminForumTreinamentoRoute: typeof AuthenticatedAdminForumTreinamentoRoute
+  AuthenticatedAdminInteressesGraduacoesRoute: typeof AuthenticatedAdminInteressesGraduacoesRoute
+  AuthenticatedAdminInteressesPosRoute: typeof AuthenticatedAdminInteressesPosRoute
   AuthenticatedAdminMentoriaRoute: typeof AuthenticatedAdminMentoriaRoute
   AuthenticatedAdminMeusAtendimentosRoute: typeof AuthenticatedAdminMeusAtendimentosRoute
   AuthenticatedAdminMeusClientesRoute: typeof AuthenticatedAdminMeusClientesRoute
   AuthenticatedAdminMeusPedidosRoute: typeof AuthenticatedAdminMeusPedidosRoute
   AuthenticatedAdminMinhaAgendaRoute: typeof AuthenticatedAdminMinhaAgendaRoute
   AuthenticatedAdminNotificacoesRoute: typeof AuthenticatedAdminNotificacoesRoute
+  AuthenticatedAdminOrientacoesProfissionaisRoute: typeof AuthenticatedAdminOrientacoesProfissionaisRoute
+  AuthenticatedAdminOrientacoesPsicanaliticasRoute: typeof AuthenticatedAdminOrientacoesPsicanaliticasRoute
   AuthenticatedAdminProfissionaisRoute: typeof AuthenticatedAdminProfissionaisRoute
   AuthenticatedAdminProfissionaisConformidadeRoute: typeof AuthenticatedAdminProfissionaisConformidadeRoute
   AuthenticatedAdminProfissionaisConteudoRoute: typeof AuthenticatedAdminProfissionaisConteudoRoute
@@ -2537,6 +3309,9 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminFinanceiroRoute: AuthenticatedAdminFinanceiroRoute,
   AuthenticatedAdminForumTreinamentoRoute:
     AuthenticatedAdminForumTreinamentoRoute,
+  AuthenticatedAdminInteressesGraduacoesRoute:
+    AuthenticatedAdminInteressesGraduacoesRoute,
+  AuthenticatedAdminInteressesPosRoute: AuthenticatedAdminInteressesPosRoute,
   AuthenticatedAdminMentoriaRoute: AuthenticatedAdminMentoriaRoute,
   AuthenticatedAdminMeusAtendimentosRoute:
     AuthenticatedAdminMeusAtendimentosRoute,
@@ -2544,6 +3319,10 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminMeusPedidosRoute: AuthenticatedAdminMeusPedidosRoute,
   AuthenticatedAdminMinhaAgendaRoute: AuthenticatedAdminMinhaAgendaRoute,
   AuthenticatedAdminNotificacoesRoute: AuthenticatedAdminNotificacoesRoute,
+  AuthenticatedAdminOrientacoesProfissionaisRoute:
+    AuthenticatedAdminOrientacoesProfissionaisRoute,
+  AuthenticatedAdminOrientacoesPsicanaliticasRoute:
+    AuthenticatedAdminOrientacoesPsicanaliticasRoute,
   AuthenticatedAdminProfissionaisRoute: AuthenticatedAdminProfissionaisRoute,
   AuthenticatedAdminProfissionaisConformidadeRoute:
     AuthenticatedAdminProfissionaisConformidadeRoute,
@@ -2666,14 +3445,56 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface ClientareaClienteBibliotecaPublicacoesRouteChildren {
+  ClientareaClienteBibliotecaPublicacoesSlugRoute: typeof ClientareaClienteBibliotecaPublicacoesSlugRoute
+}
+
+const ClientareaClienteBibliotecaPublicacoesRouteChildren: ClientareaClienteBibliotecaPublicacoesRouteChildren =
+  {
+    ClientareaClienteBibliotecaPublicacoesSlugRoute:
+      ClientareaClienteBibliotecaPublicacoesSlugRoute,
+  }
+
+const ClientareaClienteBibliotecaPublicacoesRouteWithChildren =
+  ClientareaClienteBibliotecaPublicacoesRoute._addFileChildren(
+    ClientareaClienteBibliotecaPublicacoesRouteChildren,
+  )
+
 interface ClientareaClienteBibliotecaRouteChildren {
   ClientareaClienteBibliotecaProductKeyRoute: typeof ClientareaClienteBibliotecaProductKeyRoute
+  ClientareaClienteBibliotecaArtigosCientificosRoute: typeof ClientareaClienteBibliotecaArtigosCientificosRoute
+  ClientareaClienteBibliotecaCursoGratuitoRoute: typeof ClientareaClienteBibliotecaCursoGratuitoRoute
+  ClientareaClienteBibliotecaCursoGratuitoCarreiraRoute: typeof ClientareaClienteBibliotecaCursoGratuitoCarreiraRoute
+  ClientareaClienteBibliotecaCursosGratuitosRoute: typeof ClientareaClienteBibliotecaCursosGratuitosRoute
+  ClientareaClienteBibliotecaGratuitoRoute: typeof ClientareaClienteBibliotecaGratuitoRoute
+  ClientareaClienteBibliotecaJornalLdrRoute: typeof ClientareaClienteBibliotecaJornalLdrRoute
+  ClientareaClienteBibliotecaLdrCienciaRoute: typeof ClientareaClienteBibliotecaLdrCienciaRoute
+  ClientareaClienteBibliotecaPublicacoesRoute: typeof ClientareaClienteBibliotecaPublicacoesRouteWithChildren
+  ClientareaClienteBibliotecaRevistaLdrRoute: typeof ClientareaClienteBibliotecaRevistaLdrRoute
 }
 
 const ClientareaClienteBibliotecaRouteChildren: ClientareaClienteBibliotecaRouteChildren =
   {
     ClientareaClienteBibliotecaProductKeyRoute:
       ClientareaClienteBibliotecaProductKeyRoute,
+    ClientareaClienteBibliotecaArtigosCientificosRoute:
+      ClientareaClienteBibliotecaArtigosCientificosRoute,
+    ClientareaClienteBibliotecaCursoGratuitoRoute:
+      ClientareaClienteBibliotecaCursoGratuitoRoute,
+    ClientareaClienteBibliotecaCursoGratuitoCarreiraRoute:
+      ClientareaClienteBibliotecaCursoGratuitoCarreiraRoute,
+    ClientareaClienteBibliotecaCursosGratuitosRoute:
+      ClientareaClienteBibliotecaCursosGratuitosRoute,
+    ClientareaClienteBibliotecaGratuitoRoute:
+      ClientareaClienteBibliotecaGratuitoRoute,
+    ClientareaClienteBibliotecaJornalLdrRoute:
+      ClientareaClienteBibliotecaJornalLdrRoute,
+    ClientareaClienteBibliotecaLdrCienciaRoute:
+      ClientareaClienteBibliotecaLdrCienciaRoute,
+    ClientareaClienteBibliotecaPublicacoesRoute:
+      ClientareaClienteBibliotecaPublicacoesRouteWithChildren,
+    ClientareaClienteBibliotecaRevistaLdrRoute:
+      ClientareaClienteBibliotecaRevistaLdrRoute,
   }
 
 const ClientareaClienteBibliotecaRouteWithChildren =
@@ -2716,15 +3537,39 @@ const ClientareaClienteTreinamentosPsicanaliseRouteWithChildren =
 
 interface ClientareaClienteTreinamentosRouteChildren {
   ClientareaClienteTreinamentosDoMamaoAoNegocioRoute: typeof ClientareaClienteTreinamentosDoMamaoAoNegocioRouteWithChildren
+  ClientareaClienteTreinamentosIaNegociosCarreiraRoute: typeof ClientareaClienteTreinamentosIaNegociosCarreiraRoute
+  ClientareaClienteTreinamentosLiderancaGestaoRoute: typeof ClientareaClienteTreinamentosLiderancaGestaoRoute
+  ClientareaClienteTreinamentosLiderancaGestaoPessoasRoute: typeof ClientareaClienteTreinamentosLiderancaGestaoPessoasRoute
+  ClientareaClienteTreinamentosMassoterapiaRoute: typeof ClientareaClienteTreinamentosMassoterapiaRoute
+  ClientareaClienteTreinamentosMentoriaCarreiraRoute: typeof ClientareaClienteTreinamentosMentoriaCarreiraRoute
+  ClientareaClienteTreinamentosNegocio24HorasRoute: typeof ClientareaClienteTreinamentosNegocio24HorasRoute
   ClientareaClienteTreinamentosPsicanaliseRoute: typeof ClientareaClienteTreinamentosPsicanaliseRouteWithChildren
+  ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRoute: typeof ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRoute
+  ClientareaClienteTreinamentosFormacaoProfissionalSlugRoute: typeof ClientareaClienteTreinamentosFormacaoProfissionalSlugRoute
 }
 
 const ClientareaClienteTreinamentosRouteChildren: ClientareaClienteTreinamentosRouteChildren =
   {
     ClientareaClienteTreinamentosDoMamaoAoNegocioRoute:
       ClientareaClienteTreinamentosDoMamaoAoNegocioRouteWithChildren,
+    ClientareaClienteTreinamentosIaNegociosCarreiraRoute:
+      ClientareaClienteTreinamentosIaNegociosCarreiraRoute,
+    ClientareaClienteTreinamentosLiderancaGestaoRoute:
+      ClientareaClienteTreinamentosLiderancaGestaoRoute,
+    ClientareaClienteTreinamentosLiderancaGestaoPessoasRoute:
+      ClientareaClienteTreinamentosLiderancaGestaoPessoasRoute,
+    ClientareaClienteTreinamentosMassoterapiaRoute:
+      ClientareaClienteTreinamentosMassoterapiaRoute,
+    ClientareaClienteTreinamentosMentoriaCarreiraRoute:
+      ClientareaClienteTreinamentosMentoriaCarreiraRoute,
+    ClientareaClienteTreinamentosNegocio24HorasRoute:
+      ClientareaClienteTreinamentosNegocio24HorasRoute,
     ClientareaClienteTreinamentosPsicanaliseRoute:
       ClientareaClienteTreinamentosPsicanaliseRouteWithChildren,
+    ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRoute:
+      ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRoute,
+    ClientareaClienteTreinamentosFormacaoProfissionalSlugRoute:
+      ClientareaClienteTreinamentosFormacaoProfissionalSlugRoute,
   }
 
 const ClientareaClienteTreinamentosRouteWithChildren =
@@ -2738,11 +3583,19 @@ interface ClientareaClienteRouteChildren {
   ClientareaClienteContratarRoute: typeof ClientareaClienteContratarRoute
   ClientareaClienteEntregasRoute: typeof ClientareaClienteEntregasRoute
   ClientareaClienteMentoriaRoute: typeof ClientareaClienteMentoriaRoute
+  ClientareaClienteOrientacaoProfissionalRoute: typeof ClientareaClienteOrientacaoProfissionalRoute
+  ClientareaClienteOrientacaoPsicanaliticaRoute: typeof ClientareaClienteOrientacaoPsicanaliticaRoute
   ClientareaClientePedidosRoute: typeof ClientareaClientePedidosRoute
   ClientareaClientePerfilRoute: typeof ClientareaClientePerfilRoute
   ClientareaClienteSessoesRoute: typeof ClientareaClienteSessoesRoute
   ClientareaClienteTreinamentosRoute: typeof ClientareaClienteTreinamentosRouteWithChildren
   ClientareaClienteIndexRoute: typeof ClientareaClienteIndexRoute
+  ClientareaClienteCursosFrancesNegociosA1Route: typeof ClientareaClienteCursosFrancesNegociosA1Route
+  ClientareaClienteCursosOrganizarCarreiraRoute: typeof ClientareaClienteCursosOrganizarCarreiraRoute
+  ClientareaClienteCursosPrimeirosSocorrosRoute: typeof ClientareaClienteCursosPrimeirosSocorrosRoute
+  ClientareaClienteFormacoesGestaoPessoasRhRoute: typeof ClientareaClienteFormacoesGestaoPessoasRhRoute
+  ClientareaClienteGraduacaoCourseKeyRoute: typeof ClientareaClienteGraduacaoCourseKeyRoute
+  ClientareaClienteInteressePosCourseKeyRoute: typeof ClientareaClienteInteressePosCourseKeyRoute
   ClientareaClientePedidoOrderIdRoute: typeof ClientareaClientePedidoOrderIdRoute
 }
 
@@ -2753,12 +3606,28 @@ const ClientareaClienteRouteChildren: ClientareaClienteRouteChildren = {
   ClientareaClienteContratarRoute: ClientareaClienteContratarRoute,
   ClientareaClienteEntregasRoute: ClientareaClienteEntregasRoute,
   ClientareaClienteMentoriaRoute: ClientareaClienteMentoriaRoute,
+  ClientareaClienteOrientacaoProfissionalRoute:
+    ClientareaClienteOrientacaoProfissionalRoute,
+  ClientareaClienteOrientacaoPsicanaliticaRoute:
+    ClientareaClienteOrientacaoPsicanaliticaRoute,
   ClientareaClientePedidosRoute: ClientareaClientePedidosRoute,
   ClientareaClientePerfilRoute: ClientareaClientePerfilRoute,
   ClientareaClienteSessoesRoute: ClientareaClienteSessoesRoute,
   ClientareaClienteTreinamentosRoute:
     ClientareaClienteTreinamentosRouteWithChildren,
   ClientareaClienteIndexRoute: ClientareaClienteIndexRoute,
+  ClientareaClienteCursosFrancesNegociosA1Route:
+    ClientareaClienteCursosFrancesNegociosA1Route,
+  ClientareaClienteCursosOrganizarCarreiraRoute:
+    ClientareaClienteCursosOrganizarCarreiraRoute,
+  ClientareaClienteCursosPrimeirosSocorrosRoute:
+    ClientareaClienteCursosPrimeirosSocorrosRoute,
+  ClientareaClienteFormacoesGestaoPessoasRhRoute:
+    ClientareaClienteFormacoesGestaoPessoasRhRoute,
+  ClientareaClienteGraduacaoCourseKeyRoute:
+    ClientareaClienteGraduacaoCourseKeyRoute,
+  ClientareaClienteInteressePosCourseKeyRoute:
+    ClientareaClienteInteressePosCourseKeyRoute,
   ClientareaClientePedidoOrderIdRoute: ClientareaClientePedidoOrderIdRoute,
 }
 
@@ -2791,18 +3660,6 @@ const PortalRouteChildren: PortalRouteChildren = {
 
 const PortalRouteWithChildren =
   PortalRoute._addFileChildren(PortalRouteChildren)
-
-interface ClinicaSocialRouteChildren {
-  ClinicaSocialProfissionaisRoute: typeof ClinicaSocialProfissionaisRoute
-}
-
-const ClinicaSocialRouteChildren: ClinicaSocialRouteChildren = {
-  ClinicaSocialProfissionaisRoute: ClinicaSocialProfissionaisRoute,
-}
-
-const ClinicaSocialRouteWithChildren = ClinicaSocialRoute._addFileChildren(
-  ClinicaSocialRouteChildren,
-)
 
 interface ProfissionaisRouteChildren {
   ProfissionaisCategoryRoute: typeof ProfissionaisCategoryRoute
@@ -2840,9 +3697,19 @@ const rootRouteChildren: RootRouteChildren = {
   AcoragemdecomecarRoute: AcoragemdecomecarRoute,
   AmostraGratisRoute: AmostraGratisRoute,
   BootstrapRoute: BootstrapRoute,
-  ClinicaSocialRoute: ClinicaSocialRouteWithChildren,
+  ClinicaSocialRoute: ClinicaSocialRoute,
   EmpreendedoresRoute: EmpreendedoresRoute,
+  FormacaoComunicacaoOratoriaRoute: FormacaoComunicacaoOratoriaRoute,
+  FormacaoGestaoAdministrativaFinanceiraRoute:
+    FormacaoGestaoAdministrativaFinanceiraRoute,
+  FormacaoMarketingDigitalRoute: FormacaoMarketingDigitalRoute,
+  FormacaoMassoterapiaRoute: FormacaoMassoterapiaRoute,
+  FormacaoNegocioEm24HorasRoute: FormacaoNegocioEm24HorasRoute,
   FormacaoPsicanaliseRoute: FormacaoPsicanaliseRoute,
+  FormacaoRecrutamentoSelecaoRoute: FormacaoRecrutamentoSelecaoRoute,
+  FormacaoTerapiaBrevePsicanaliticaRoute:
+    FormacaoTerapiaBrevePsicanaliticaRoute,
+  FormacaoVendasNegociacaoRoute: FormacaoVendasNegociacaoRoute,
   FormularioRoute: FormularioRoute,
   LivrosRoute: LivrosRoute,
   LoginRoute: LoginRoute,
@@ -2872,6 +3739,7 @@ const rootRouteChildren: RootRouteChildren = {
   ClienteAtivarRoute: ClienteAtivarRoute,
   ClienteDefinirSenhaRoute: ClienteDefinirSenhaRoute,
   ClienteLoginRoute: ClienteLoginRoute,
+  ClinicaSocialProfissionaisRoute: ClinicaSocialProfissionaisRoute,
   EmpresaLoginRoute: EmpresaLoginRoute,
   FuncionarioLoginRoute: FuncionarioLoginRoute,
   ProfissionalSlugRoute: ProfissionalSlugRoute,

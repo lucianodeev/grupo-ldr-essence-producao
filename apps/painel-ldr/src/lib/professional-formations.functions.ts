@@ -1,0 +1,6 @@
+import { createServerFn } from "@tanstack/react-start";
+import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+function emailOf(c:Record<string,unknown>){return typeof c.email==="string"?c.email:null;}
+export const clientProfessionalFormationOffer=createServerFn({method:"GET"}).middleware([requireSupabaseAuth]).inputValidator((d:{slug:string})=>d).handler(async({context,data})=>{const m=await import("@/lib/professional-formations.server");return m.getProfessionalFormationOffer(context.userId,emailOf(context.claims),data.slug);});
+export const clientProfessionalFormationCheckout=createServerFn({method:"POST"}).middleware([requireSupabaseAuth]).inputValidator((d:{slug:string;market:"BR"|"INTL"})=>d).handler(async({context,data})=>{const m=await import("@/lib/professional-formations.server");return m.createProfessionalFormationCheckout(context.userId,emailOf(context.claims),data.slug,data.market);});
+export const clientSubmitProfessionalFormationProject=createServerFn({method:"POST"}).middleware([requireSupabaseAuth]).inputValidator((d:{slug:string;title:string;projectText?:string|null;projectUrl?:string|null})=>d).handler(async({context,data})=>{const m=await import("@/lib/professional-formations.server");return m.submitProfessionalFormationProject(context.userId,emailOf(context.claims),data);});

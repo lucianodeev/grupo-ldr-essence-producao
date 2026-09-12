@@ -2,11 +2,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import { LibrarySalesHomeAccessChoice } from "@/components/library-sales-home-access-choice";
 import { AIFormationSalesCard } from "@/components/ai-formation-sales-card";
 import { EditorialSalesCards } from "@/components/editorial-sales-cards";
+import { FiveProfessionalFormationCards } from "@/components/five-professional-formation-cards";
 
 function SalesHome(){
   return <>
     <LibrarySalesHomeAccessChoice />
     <AIFormationSalesCard />
+    <FiveProfessionalFormationCards />
     <EditorialSalesCards />
   </>;
 }
