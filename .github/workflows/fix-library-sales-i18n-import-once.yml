@@ -1,0 +1,33 @@
+name: Fix library sales i18n import once
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-library-sales-i18n-import-once.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Add missing import
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('apps/painel-ldr/src/components/library-sales-home.tsx')
+          s=p.read_text()
+          imp='import { LanguageSelect, useI18n } from "@/lib/i18n";'
+          add='import { librarySalesCardCatalog } from "@/lib/library-sales-card-i18n";'
+          if add not in s:
+              s=s.replace(imp, imp+'\n'+add, 1)
+          p.write_text(s)
+          PY
+      - name: Commit fix
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/painel-ldr/src/components/library-sales-home.tsx
+          git commit -m "fix(painel): wire translated sales cards"
+          git push
