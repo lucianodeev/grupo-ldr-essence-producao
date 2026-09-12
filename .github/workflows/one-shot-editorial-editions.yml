@@ -1,0 +1,45 @@
+name: Publish editorial editions
+on:
+  push:
+    paths:
+      - '.github/workflows/one-shot-editorial-editions.yml'
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Integrate editorial editions
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.publicacoes.$slug.tsx')
+          s=p.read_text(encoding='utf-8')
+          imp='import { getEditorialEdition } from "@/lib/editorial-editions";\n'
+          anchor='import { PSYCHO_EDITION } from "@/lib/psicanalise-no-mundo-edition";\n'
+          if imp not in s:
+              s=s.replace(anchor,anchor+imp)
+          old='''{psycho?<PsychoEdition/>:<section className="p-7 sm:p-10"><p className="text-[10px] font-black uppercase tracking-[.2em] text-[#a77b2e]">{t.inEdition}</p><h2 className="mt-2 font-serif text-3xl text-[#0b2341]">{t.editionTitle}</h2><div className="mt-6 grid gap-4 md:grid-cols-2">{item.topics.map((topic,i)=><div key={topic} className="rounded-2xl border bg-slate-50 p-5"><p className="text-[10px] font-black uppercase tracking-wider text-[#a77b2e]">{t.block} {i+1}</p><h3 className="mt-2 font-serif text-2xl text-[#0b2341]">{topic}</h3><p className="mt-2 text-sm leading-6 text-slate-600">{t.blockText}</p></div>)}</div>{item.notice&&<div className="mt-6 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-900">{item.notice}</div>}</section>}'''
+          new='''{psycho?<PsychoEdition/>:<EditorialEdition slug={slug} fallbackTopics={item.topics} notice={item.notice} t={t}/>}'''
+          if old not in s:
+              raise SystemExit('generic editorial block not found')
+          s=s.replace(old,new)
+          marker='function PublicationPage(){'
+          component='''function EditorialEdition({slug,fallbackTopics,notice,t}:{slug:string;fallbackTopics:string[];notice?:string;t:any}){const edition=getEditorialEdition(slug);if(!edition)return <section className="p-7 sm:p-10"><p className="text-[10px] font-black uppercase tracking-[.2em] text-[#a77b2e]">{t.inEdition}</p><h2 className="mt-2 font-serif text-3xl text-[#0b2341]">{t.editionTitle}</h2><div className="mt-6 grid gap-4 md:grid-cols-2">{fallbackTopics.map((topic,i)=><div key={topic} className="rounded-2xl border bg-slate-50 p-5"><p className="text-[10px] font-black uppercase tracking-wider text-[#a77b2e]">{t.block} {i+1}</p><h3 className="mt-2 font-serif text-2xl text-[#0b2341]">{topic}</h3><p className="mt-2 text-sm leading-6 text-slate-600">{t.blockText}</p></div>)}</div>{notice&&<div className="mt-6 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-900">{notice}</div>}</section>;return <section className="p-7 sm:p-10"><div className="border-b border-slate-200 pb-6"><p className="text-[10px] font-black uppercase tracking-[.2em] text-[#a77b2e]">EDIÇÃO #{edition.number} · {edition.date}</p><h2 className="mt-2 font-serif text-3xl text-[#0b2341]">{edition.headline}</h2><p className="mt-2 text-sm leading-6 text-slate-500">6 matérias nesta edição</p></div><nav className="my-6 rounded-2xl bg-[#f7f3e9] p-5"><p className="text-xs font-black uppercase tracking-wider text-[#0b2341]">Nesta edição</p><div className="mt-3 flex flex-wrap gap-2">{edition.stories.map((story,i)=><a key={story.title} href={`#editorial-${i+1}`} className="rounded-full bg-white px-3 py-2 text-xs font-bold text-[#0b2341] shadow-sm">{i+1}. {story.title}</a>)}</div></nav><div className="space-y-6">{edition.stories.map((story,i)=><article id={`editorial-${i+1}`} key={story.title} className="scroll-mt-24 rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm sm:p-8"><p className="text-[10px] font-black uppercase tracking-wider text-[#a77b2e]">MATÉRIA {i+1}</p><h3 className="mt-3 font-serif text-3xl leading-tight text-[#0b2341]">{story.title}</h3><p className="mt-3 text-sm font-bold leading-6 text-slate-500">{story.deck}</p><p className="mt-5 whitespace-pre-line text-[15px] leading-7 text-slate-700">{story.body}</p>{story.source&&<div className="mt-5 border-t pt-4 text-xs leading-5 text-slate-500"><b>Fonte:</b> {story.source}{story.sourceDate?` · ${story.sourceDate}`:''}{story.url&&<><br/><a href={story.url} target="_blank" rel="noreferrer" className="mt-1 inline-flex items-center gap-1 font-bold text-[#14518b]">Consultar fonte<ExternalLink className="h-3 w-3"/></a></>}</div>}</article>)}</div>{notice&&<div className="mt-6 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-900">{notice}</div>}<div className="mt-8 rounded-2xl bg-[#f7f3e9] p-5 text-sm leading-6 text-slate-600"><b>Nota editorial:</b> esta é a primeira edição da publicação. Conteúdos informativos não substituem orientação jurídica, médica, psicológica, financeira ou profissional individual.</div></section>}\n'''
+          if component not in s:
+              s=s.replace(marker,component+marker)
+          p.write_text(s,encoding='utf-8')
+          PY
+          git diff --check
+          grep -q 'getEditorialEdition' 'apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.publicacoes.$slug.tsx'
+          grep -q '6 matérias nesta edição' 'apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.publicacoes.$slug.tsx'
+      - name: Remove one-shot workflow
+        run: rm .github/workflows/one-shot-editorial-editions.yml
+      - name: Commit
+        run: |
+          git config user.name 'ldr-rh-campanhas'
+          git config user.email 'llucianouam@gmail.com'
+          git add -A
+          git commit -m 'feat: publish first editions across LDR publications'
+          git push
