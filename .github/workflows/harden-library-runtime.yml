@@ -26,23 +26,30 @@ jobs:
           s=route.read_text(encoding='utf-8')
           old='''  const market:"BR"|"INTL"=data.market==="BR"?"BR":"INTL";\n  const owner=(data.customer?.email??"").trim().toLowerCase()==="llucianouam@gmail.com";\n  const ebook=data.products.find(p=>p.key==="ebook_coragem_comecar"),book=data.products.find(p=>p.key==="livro_menino_mamao");'''
           new='''  const products=Array.isArray(data?.products)?data.products:[];\n  const market:"BR"|"INTL"=data?.market==="BR"?"BR":"INTL";\n  const owner=((data?.customer?.email??"").trim().toLowerCase()==="llucianouam@gmail.com");\n  const ebook=products.find((p:any)=>p?.key==="ebook_coragem_comecar"),book=products.find((p:any)=>p?.key==="livro_menino_mamao");'''
-          if old not in s:
+          if old in s:
+              s=s.replace(old,new,1)
+          elif 'const products=Array.isArray(data?.products)' not in s:
               raise SystemExit('route product block not found')
-          s=s.replace(old,new,1)
-          old='''  const comments=learning?.comments?.filter((c:any)=>c.product_key)??[];'''
-          new='''  const safeProgress=Array.isArray(learning?.progress)?learning.progress.filter(Boolean):[];\n  const comments=Array.isArray(learning?.comments)?learning.comments.filter((c:any)=>c?.product_key):[];'''
-          if old not in s:
+          old_comments='''  const comments=learning?.comments?.filter((c:any)=>c.product_key)??[];'''
+          new_comments='''  const safeProgress=Array.isArray(learning?.progress)?learning.progress.filter(Boolean):[];\n  const comments=Array.isArray(learning?.comments)?learning.comments.filter((c:any)=>c?.product_key):[];'''
+          if old_comments in s:
+              s=s.replace(old_comments,new_comments,1)
+          elif 'const safeProgress=Array.isArray(learning?.progress)' not in s:
               raise SystemExit('route comments block not found')
-          s=s.replace(old,new,1)
           s=s.replace('progress={learning?.progress ?? []}','progress={safeProgress}')
           route.write_text(s,encoding='utf-8')
 
           store=Path('apps/painel-ldr/src/components/library-storefront.tsx')
           s=store.read_text(encoding='utf-8')
-          marker='''export function LibraryStorefront({locale,progress=[]}:{locale:Locale;progress?:any[]}){'''
-          if marker not in s:
-              raise SystemExit('LibraryStorefront signature not found')
-          s=s.replace(marker,marker+'\n  const safeProgress=Array.isArray(progress)?progress.filter(Boolean):[];',1)
+          sig='''export function LibraryStorefront({locale,progress}:{locale:Locale;progress?:any[]}){'''
+          sig_default='''export function LibraryStorefront({locale,progress=[]}:{locale:Locale;progress?:any[]}){'''
+          if 'const safeProgress=Array.isArray(progress)' not in s:
+              if sig in s:
+                  s=s.replace(sig,sig+'\n  const safeProgress=Array.isArray(progress)?progress.filter(Boolean):[];',1)
+              elif sig_default in s:
+                  s=s.replace(sig_default,sig_default+'\n  const safeProgress=Array.isArray(progress)?progress.filter(Boolean):[];',1)
+              else:
+                  raise SystemExit('LibraryStorefront signature not found')
           s=s.replace('progress?.length','safeProgress.length')
           s=s.replace('progress.slice()','safeProgress.slice()')
           store.write_text(s,encoding='utf-8')
