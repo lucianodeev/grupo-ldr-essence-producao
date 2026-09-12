@@ -159,7 +159,6 @@ const pt: Dict = {
   "training.cta": "Conhecer a plataforma",
 };
 
-
 const en: Dict = {
   "brand.name": "Grupo LDR Essence",
   "brand.panel": "Operations Hub",
@@ -282,9 +281,9 @@ const en: Dict = {
   "contract.title": "Buy and schedule",
   "contract.subtitle": "Buy sessions or packages and schedule with a paid order.",
   "contract.step1": "Buy or unlock your session credits.",
-  "contract.step2": 'Schedule under "My schedule" using a paid order.',
-  "contract.discount": "5% off",
-  "contract.afterPayment": "Scheduling becomes available once the payment is confirmed.",
+  "contract.step2": 'Schedule in "My schedule" using a paid order.',
+  "contract.discount": "5% discount",
+  "contract.afterPayment": "Scheduling becomes available after payment confirmation.",
   "contract.refresh": "Refresh orders and credits",
   "contract.psychoanalysis": "Psychoanalysis",
   "contract.mentorship": "Mentorship",
@@ -292,20 +291,19 @@ const en: Dict = {
   "contract.session": "session",
   "contract.sessions": "sessions",
   "contract.buy": "Buy now",
-  "contract.unavailable": "Payment is unavailable right now.",
+  "contract.unavailable": "Payment is currently unavailable.",
   "support.whatsapp": "Chat on WhatsApp",
-  "support.website": "Go to the website",
+  "support.website": "Go to website",
   "training.title": "Training platform for entrepreneurs",
-  "training.description": "Content and training to organize ideas, develop skills and move business forward.",
-  "training.cta": "Discover the platform",
+  "training.description": "Content and training to organize ideas, build skills and move your business forward.",
+  "training.cta": "Explore the platform",
 };
-
 
 const fr: Dict = {
   "brand.name": "Grupo LDR Essence",
-  "brand.panel": "Centre d'opérations",
-  "brand.client": "Espace client",
-  "nav.overview": "Vue d'ensemble",
+  "brand.panel": "Centre des opérations",
+  "brand.client": "Espace Client",
+  "nav.overview": "Vue d’ensemble",
   "nav.orders": "Commandes",
   "nav.agenda": "Agenda",
   "nav.mentorship": "Mentorat",
@@ -325,9 +323,9 @@ const fr: Dict = {
   "nav.myProfile": "Mon profil",
   "nav.menu": "Menu",
   "action.signout": "Se déconnecter",
-  "action.join": "Rejoindre l'appel vidéo",
+  "action.join": "Rejoindre l’appel vidéo",
   "action.schedule": "Planifier",
-  "action.reschedule": "Reprogrammer",
+  "action.reschedule": "Replanifier",
   "action.confirm": "Confirmer",
   "action.cancel": "Annuler",
   "action.close": "Fermer",
@@ -338,7 +336,7 @@ const fr: Dict = {
   "action.search": "Rechercher",
   "action.all": "Toutes",
   "state.loading": "Chargement…",
-  "state.empty": "Rien pour le moment.",
+  "state.empty": "Rien ici pour le moment.",
   "state.denied": "Accès refusé.",
   "state.saving": "Enregistrement…",
   "credits.used": "Séances utilisées",
@@ -346,62 +344,59 @@ const fr: Dict = {
   "credits.available": "Séances disponibles",
   "language.label": "Langue",
   "agenda.title": "Mon agenda",
-  "agenda.subtitle": "Vos rendez-vous et le solde de séances de chaque service.",
-  "agenda.upcoming": "Prochains rendez-vous",
+  "agenda.subtitle": "Vos rendez-vous et le solde de séances pour chaque service.",
+  "agenda.upcoming": "À venir",
   "agenda.history": "Historique",
-  "agenda.requestTitle": "Demander un créneau",
+  "agenda.requestTitle": "Demander un horaire",
   "agenda.chooseOrder": "Service/commande",
   "agenda.dateTime": "Date et heure souhaitées",
-  "agenda.note": "Remarque (facultatif)",
-  "agenda.pendingInfo": "Votre demande reste en attente jusqu'à la confirmation de l'équipe.",
+  "agenda.note": "Observation (facultatif)",
+  "agenda.pendingInfo": "Votre demande reste en attente jusqu’à confirmation de l’équipe.",
   "agenda.meetingHidden":
-    "Le lien de l'appel vidéo apparaît après la confirmation du paiement et du créneau.",
+    "Le lien de l’appel vidéo apparaît après confirmation du paiement et de l’horaire.",
   "agenda.empty": "Aucun rendez-vous planifié",
-  "agenda.emptyHelp": "Dès qu'un créneau est confirmé, il apparaît ici avec le lien.",
-  "agenda.noneSchedulable": "Aucune commande payée disponible pour une réservation actuellement.",
+  "agenda.emptyHelp": "Dès qu’un horaire est confirmé, il apparaîtra ici avec le lien.",
+  "agenda.noneSchedulable": "Aucune commande payée disponible pour planifier un rendez-vous actuellement.",
   "agenda.singleUsed": "Séance déjà utilisée — une nouvelle commande payée est nécessaire.",
-  "agenda.packageExhausted": "Plus de séances dans ce forfait.",
-  "agenda.sent": "Demande envoyée. Attendez la confirmation de l'équipe.",
-  "agenda.rescheduled": "Report demandé. Attendez la confirmation de l'équipe.",
-  "agenda.rescheduleTitle": "Demander un nouveau créneau",
+  "agenda.packageExhausted": "Ce forfait n’a plus de séances disponibles.",
+  "agenda.sent": "Demande envoyée. Attendez la confirmation de l’équipe.",
+  "agenda.rescheduled": "Replanification demandée. Attendez la confirmation de l’équipe.",
+  "agenda.rescheduleTitle": "Demander un nouvel horaire",
   "calendar.title": "Google Agenda",
   "calendar.status.pendente": "Synchronisation en attente",
   "calendar.status.sincronizado": "Google Meet prêt",
-  "calendar.status.erro": "Échec de la synchronisation",
-  "calendar.status.conflito": "Conflit d'horaire",
+  "calendar.status.erro": "Échec de synchronisation",
+  "calendar.status.conflito": "Conflit d’horaire",
   "calendar.status.cancelado": "Événement annulé",
   "calendar.status.manual": "Lien manuel (équipe)",
   "calendar.status.none": "Non synchronisé",
   "calendar.confirmMeet": "Confirmer et créer Google Meet",
   "calendar.retry": "Réessayer",
-  "calendar.cancelEvent": "Annuler l'événement Google",
-  "calendar.manualHint": "Le lien manuel reste disponible comme solution de secours.",
-  "calendar.conflictHint": "Un rendez-vous existe déjà à cette heure. Choisissez un autre créneau.",
-  "calendar.errorHint": "Google est injoignable pour le moment. Réessayez.",
+  "calendar.cancelEvent": "Annuler l’événement Google",
+  "calendar.manualHint": "Le lien manuel reste disponible comme solution de secours de l’équipe.",
+  "calendar.conflictHint": "Un événement existe déjà à cette heure. Choisissez un autre créneau.",
+  "calendar.errorHint": "Google est indisponible pour le moment. Réessayez.",
   "calendar.err.nao_elegivel":
-    "Associez ce rendez-vous à une commande payée et au bon client avant de créer le Google Meet.",
-  "calendar.err.sem_email": "Ce rendez-vous n'a pas de client avec une adresse e-mail valide.",
+    "Associez ce rendez-vous à une commande payée et au bon client avant de créer Google Meet.",
+  "calendar.err.sem_email": "Ce rendez-vous n’a pas de client avec une adresse e-mail valide.",
   "calendar.err.conflito": "Un événement existe déjà à cette heure. Choisissez un autre créneau.",
   "calendar.err.ocupado": "Le calendrier est occupé à cette heure. Choisissez un autre créneau.",
-  "calendar.err.sem_horario": "Définissez la date et l'heure avant de créer le Google Meet.",
-  "calendar.err.nao_configurado": "L'intégration Google n'est pas encore configurée.",
-  "calendar.err.banco_indisponivel": "Impossible de lire l'état de la synchronisation. Réessayez.",
-  "calendar.err.indisponivel": "Impossible de joindre Google pour le moment. Réessayez.",
-  "calendar.err.fallback":
-    "La synchronisation n'a pas abouti. Vérifiez le rendez-vous et réessayez.",
-  "calendar.notEligible":
-    "Aucune commande payée associée : confirmation et Google Meet indisponibles.",
+  "calendar.err.sem_horario": "Définissez la date et l’heure avant de créer Google Meet.",
+  "calendar.err.nao_configurado": "L’intégration Google n’est pas encore configurée.",
+  "calendar.err.banco_indisponivel": "Impossible de lire l’état de synchronisation. Réessayez.",
+  "calendar.err.indisponivel": "Google est indisponible pour le moment. Réessayez.",
+  "calendar.err.fallback": "La synchronisation n’a pas pu être terminée. Vérifiez le rendez-vous et réessayez.",
+  "calendar.notEligible": "Aucune commande payée associée : confirmation et Google Meet indisponibles.",
   "calendar.link.title": "Associer une commande payée",
-  "calendar.link.hint":
-    "Choisissez une commande payée du bon client. L'association ne consomme aucun crédit.",
+  "calendar.link.hint": "Choisissez une commande payée du bon client. L’association ne consomme aucun crédit.",
   "calendar.link.order": "Commande payée",
   "calendar.link.submit": "Associer la commande",
   "calendar.link.done": "Commande associée au rendez-vous.",
-  "calendar.link.error": "Impossible d'associer cette commande.",
-  "meet.aguardando_pagamento": "En attente de la confirmation du paiement.",
-  "meet.aguardando_confirmacao": "En attente de la confirmation de l'horaire par l'équipe.",
-  "meet.preparando": "Préparation de la salle de visioconférence.",
-  "meet.pronto": "Visioconférence prête.",
+  "calendar.link.error": "Impossible d’associer cette commande.",
+  "meet.aguardando_pagamento": "En attente de confirmation du paiement.",
+  "meet.aguardando_confirmacao": "En attente de confirmation de l’horaire par l’équipe.",
+  "meet.preparando": "Préparation de la salle vidéo.",
+  "meet.pronto": "Appel vidéo prêt.",
   "catalog.title": "Catalogue de services",
   "catalog.subtitle": "Services, tarifs et liens de paiement officiels.",
   "catalog.service": "Service",
@@ -411,7 +406,7 @@ const fr: Dict = {
   "catalog.sessions": "Séances",
   "catalog.amount": "Montant",
   "catalog.payment": "Paiement",
-  "catalog.repeat": "Rachat",
+  "catalog.repeat": "Nouvel achat",
   "catalog.status": "Statut",
   "catalog.active": "Actif",
   "catalog.inactive": "Inactif",
@@ -423,11 +418,11 @@ const fr: Dict = {
   "catalog.link": "Lien",
   "nav.contract": "Acheter et planifier",
   "contract.title": "Acheter et planifier",
-  "contract.subtitle": "Achetez des séances ou des forfaits et planifiez avec une commande payée.",
+  "contract.subtitle": "Achetez des séances ou forfaits puis planifiez avec une commande payée.",
   "contract.step1": "Achetez ou débloquez vos crédits de séance.",
-  "contract.step2": "Planifiez dans « Mon agenda » avec une commande payée.",
-  "contract.discount": "5 % de réduction",
-  "contract.afterPayment": "La planification est disponible après la confirmation du paiement.",
+  "contract.step2": 'Planifiez dans "Mon agenda" avec une commande payée.',
+  "contract.discount": "5 % de remise",
+  "contract.afterPayment": "La planification devient disponible après confirmation du paiement.",
   "contract.refresh": "Actualiser commandes et crédits",
   "contract.psychoanalysis": "Psychanalyse",
   "contract.mentorship": "Mentorat",
@@ -436,19 +431,18 @@ const fr: Dict = {
   "contract.sessions": "séances",
   "contract.buy": "Acheter maintenant",
   "contract.unavailable": "Paiement indisponible pour le moment.",
-  "support.whatsapp": "Écrire sur WhatsApp",
+  "support.whatsapp": "Parler sur WhatsApp",
   "support.website": "Aller sur le site",
   "training.title": "Plateforme de formation pour entrepreneurs",
-  "training.description": "Contenus et formations pour organiser les idées, développer les compétences et faire avancer les affaires.",
+  "training.description": "Des contenus et formations pour organiser vos idées, développer vos compétences et faire avancer votre activité.",
   "training.cta": "Découvrir la plateforme",
 };
 
-
 const es: Dict = {
   "brand.name": "Grupo LDR Essence",
-  "brand.panel": "Central de Operación",
+  "brand.panel": "Centro de Operaciones",
   "brand.client": "Área del Cliente",
-  "nav.overview": "Vista general",
+  "nav.overview": "Resumen",
   "nav.orders": "Pedidos",
   "nav.agenda": "Agenda",
   "nav.mentorship": "Mentoría",
@@ -468,7 +462,7 @@ const es: Dict = {
   "nav.myProfile": "Mi perfil",
   "nav.menu": "Menú",
   "action.signout": "Salir",
-  "action.join": "Entrar a la videollamada",
+  "action.join": "Entrar en la videollamada",
   "action.schedule": "Agendar",
   "action.reschedule": "Reprogramar",
   "action.confirm": "Confirmar",
@@ -477,7 +471,7 @@ const es: Dict = {
   "action.open": "Abrir",
   "action.send": "Enviar solicitud",
   "action.complete": "Completar",
-  "action.payNext": "Pagar la próxima sesión",
+  "action.payNext": "Pagar próxima sesión",
   "action.search": "Buscar",
   "action.all": "Todas",
   "state.loading": "Cargando…",
@@ -586,7 +580,6 @@ const es: Dict = {
   "training.cta": "Conocer la plataforma",
 };
 
-
 const DICTS: Record<Locale, Dict> = { pt, en, fr, es };
 const STORAGE_KEY = "ldr.locale";
 
@@ -604,12 +597,18 @@ function detect(): Locale {
   return (LOCALES as readonly string[]).includes(nav ?? "") ? (nav as Locale) : "pt";
 }
 
+function htmlLang(l: Locale) {
+  return l === "pt" ? "pt-BR" : l;
+}
+
 export function I18nProvider({ children }: { children: ReactNode }) {
   // Hidrata sempre em PT e ajusta após o mount (evita mismatch de SSR).
   const [locale, setLocaleState] = useState<Locale>("pt");
 
   useEffect(() => {
-    setLocaleState(detect());
+    const detected = detect();
+    setLocaleState(detected);
+    document.documentElement.lang = htmlLang(detected);
   }, []);
 
   const setLocale = useCallback((l: Locale) => {
@@ -619,7 +618,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
       const url = new URL(window.location.href);
       url.searchParams.set("lang", l);
       window.history.replaceState(window.history.state, "", `${url.pathname}${url.search}${url.hash}`);
-      document.documentElement.lang = l;
+      document.documentElement.lang = htmlLang(l);
     } catch {
       /* armazenamento/URL indisponível */
     }
