@@ -25,6 +25,11 @@ function cameFromCorporateBenefits() {
   } catch { return false; }
 }
 
+function isAcademyHost() {
+  if (typeof window === "undefined") return false;
+  return /(^|\.)ldracademy\.online$/i.test(window.location.hostname);
+}
+
 function ClientShell() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -45,8 +50,15 @@ function ClientShell() {
   ] as const;
 
   useEffect(() => {
-    if (cameFromCorporateBenefits()) window.location.replace("/empresa");
-  }, []);
+    if (cameFromCorporateBenefits()) {
+      window.location.replace("/empresa");
+      return;
+    }
+
+    if (isAcademyHost() && (location.pathname === "/cliente" || location.pathname === "/cliente/")) {
+      window.location.replace("https://ldracademy.online/biblioteca");
+    }
+  }, [location.pathname]);
   useEffect(()=>{ if(typeof document!=="undefined") document.documentElement.lang=locale; },[locale]);
 
   async function handleSignOut() {
@@ -64,7 +76,17 @@ function ClientShell() {
         </div>
         <nav className={`${menuOpen ? "block" : "hidden"} px-3 pb-4 lg:block`} aria-label={c.navLabel}>
           <ul className="space-y-1">
-            {NAV.map((item) => { const Icon = item.icon; return <li key={item.to}><Link to={item.to} activeOptions={{ exact: "exact" in item ? item.exact : false }} onClick={() => setMenuOpen(false)} className={`flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold transition ${"featured" in item && item.featured ? "mb-2 bg-secondary text-secondary-foreground shadow-sm" : "hover:bg-white/10"}`} activeProps={{ className: "flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-bold bg-white/15" }}><Icon className="h-4 w-4" aria-hidden="true"/>{item.label}</Link></li>; })}
+            {NAV.map((item) => {
+              const Icon = item.icon;
+              const isLibrary = item.to === "/cliente/biblioteca";
+              const classes = `flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold transition ${"featured" in item && item.featured ? "mb-2 bg-secondary text-secondary-foreground shadow-sm" : "hover:bg-white/10"}`;
+
+              if (isLibrary && isAcademyHost()) {
+                return <li key={item.to}><a href="/biblioteca" onClick={() => setMenuOpen(false)} className={classes}><Icon className="h-4 w-4" aria-hidden="true"/>{item.label}</a></li>;
+              }
+
+              return <li key={item.to}><Link to={item.to} activeOptions={{ exact: "exact" in item ? item.exact : false }} onClick={() => setMenuOpen(false)} className={classes} activeProps={{ className: "flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-bold bg-white/15" }}><Icon className="h-4 w-4" aria-hidden="true"/>{item.label}</Link></li>;
+            })}
           </ul>
           <div className="mt-5 border-t border-white/20 pt-4"><p className="mb-2 text-xs font-bold uppercase tracking-wide opacity-70">{c.ecosystem}</p><a className="block rounded-lg px-3 py-2 text-sm hover:bg-white/10" href="https://ldrrhestrategia.com/" target="_blank" rel="noreferrer">Grupo LDR Essence</a><a className="block rounded-lg px-3 py-2 text-sm hover:bg-white/10" href={`https://ldrrhestrategia.com/treinamento?lang=${locale}`} target="_blank" rel="noreferrer">{c.entrepreneurs}</a></div>
           <div className="mt-5 border-t border-white/20 pt-4"><LanguageSelect /><button type="button" onClick={handleSignOut} className="mt-3 w-full rounded-lg border border-white/30 px-3 py-2 text-sm font-bold">{c.signout}</button></div>
@@ -75,10 +97,6 @@ function ClientShell() {
         <main className="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
           {context.isLoading ? <p className="text-sm text-muted-foreground">{c.loading}</p> : status === "ok" ? <Outlet /> : <section className="s8-card"><h1 className="font-serif text-2xl">{c.unavailable}</h1><p className="mt-2 text-sm text-muted-foreground">{status === "blocked" ? c.blocked : c.missing}</p><button type="button" onClick={handleSignOut} className="mt-4 rounded-lg bg-primary px-4 py-2 text-sm font-bold text-primary-foreground">{c.signout}</button></section>}
         </main>
-      </div>
-
-      <div className="fixed z-50 flex flex-col items-end gap-2" style={{ bottom: "calc(5rem + env(safe-area-inset-bottom))", right: "calc(1rem + env(safe-area-inset-right))" }}>
-        <Link to="/cliente/biblioteca" className="rounded-full bg-primary px-4 py-3 text-sm font-bold text-primary-foreground shadow-lg">{c.library}</Link>
       </div>
     </div>
   );
