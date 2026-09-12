@@ -1,0 +1,46 @@
+name: Fix Psychoanalysis Stripe Button Mobile
+
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-psychoanalysis-stripe-button-mobile.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fix Stripe CTA visibility on mobile
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('apps/painel-ldr/src/components/psychoanalysis-training-page.tsx')
+          s=p.read_text(encoding='utf-8')
+          old='className="inline-flex min-h-12 items-center justify-center rounded-2xl bg-[#d6b86d] px-5 text-center text-sm font-black text-[#32155c] transition hover:brightness-105"'
+          new='className="relative z-10 inline-flex min-h-[56px] w-full items-center justify-center rounded-2xl bg-[#d6b86d] px-5 py-3 text-center text-sm font-black leading-snug text-[#32155c] transition hover:brightness-105"'
+          if old not in s:
+              raise SystemExit('Stripe CTA class not found')
+          s=s.replace(old,new,1)
+          old2='className="inline-flex min-h-11 items-center justify-center rounded-2xl border border-white/25 px-4 text-center text-xs font-bold text-white"'
+          new2='className="relative z-10 inline-flex min-h-[52px] w-full items-center justify-center rounded-2xl border border-white/25 px-4 py-3 text-center text-xs font-bold leading-snug text-white"'
+          if old2 not in s:
+              raise SystemExit('Secondary payment CTA class not found')
+          s=s.replace(old2,new2,1)
+          p.write_text(s,encoding='utf-8')
+          PY
+          git diff --check
+          grep -F 'min-h-[56px] w-full' apps/painel-ldr/src/components/psychoanalysis-training-page.tsx
+      - name: Commit fix
+        shell: bash
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/components/psychoanalysis-training-page.tsx
+          git commit -m "fix: keep psychoanalysis Stripe CTA fully visible on mobile"
+          git push
