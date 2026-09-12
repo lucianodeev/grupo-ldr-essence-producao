@@ -44,7 +44,7 @@ function specialRule(slug:PFSlug,locale:PFLocale){
   "educacao-financeira":{pt:"Trate exemplos como educação financeira, nunca como recomendação individual de investimento.",en:"Treat examples as financial education, never individualized investment advice.",fr:"Traitez les exemples comme éducation financière, jamais comme conseil d’investissement individualisé.",es:"Trata los ejemplos como educación financiera, nunca como recomendación individual de inversión."},
   "mediacao-conflitos":{pt:"Diferencie formação livre de requisitos legais para mediação judicial e verifique a jurisdição aplicável.",en:"Distinguish non-degree training from legal requirements for court mediation and check the applicable jurisdiction.",fr:"Distinguez la formation libre des exigences légales de la médiation judiciaire et vérifiez les règles de la juridiction concernée.",es:"Diferencia la formación libre de los requisitos legales de mediación judicial y verifica la jurisdicción aplicable."},
  };
- return rules[slug]?.[locale]??(locale==="pt"?"Verifique fontes atuais quando uma decisão depender de regra legal, técnica ou profissional.":locale==="fr"?"Vérifiez les sources actuelles lorsqu’une décision dépend d’une règle légale, technique ou professionnelle.":locale==="es"?"Verifica fuentes actuales cuando una decisión dependa de una norma legal, técnica o profesional.":"Check current sources whenever a decision depends on a legal, technical or professional rule.");
+ return rules[slug]?.[locale]??(locale==="pt"?"Verifique fontes atuais quando uma decisão depender de regra legal, técnica ou profissional.":locale==="fr"?"Vérifiez les sources actuelles lorsqu’une décision dépend d’une règle légale, technique ou professionnelle.":locale==="es"?"Verifica fuentes actuales cuando una decisión dependa de una norma legal, técnica o profissional.":"Check current sources whenever a decision depends on a legal, technical or professional rule.");
 }
 
 export function buildProfessionalFormationLessons(f:PF,locale:PFLocale){
@@ -52,25 +52,29 @@ export function buildProfessionalFormationLessons(f:PF,locale:PFLocale){
  const perModule=Math.max(1,Math.floor(f.lessons/f.modulesCount));
  const L=labels[locale],S=stages[locale];
  const join=(a:string,b:string)=>`${a}: ${b}`;
- return t.modules.map((moduleTitle,mi)=>({id:mi+1,title:moduleTitle,lessons:Array.from({length:perModule},(_,li)=>{
-  const n=mi*perModule+li+1,[focus,task]=S[li%S.length];
-  const previous=t.modules[Math.max(0,mi-1)],next=t.modules[Math.min(t.modules.length-1,mi+1)];
-  return {
-   id:`${f.slug}-m${mi+1}-l${li+1}`,
-   title:`${L.lesson} ${n} · ${moduleTitle} — ${focus}`,
-   summary:`${moduleTitle}: ${focus}.`,
-   content:[
-    join(L.objective,`${focus}; compreender o tema dentro de “${moduleTitle}” e produzir uma evidência de aprendizagem útil ao projeto “${t.project}”.`),
-    join(L.question,`o que precisa ser compreendido, verificado ou decidido em “${moduleTitle}” quando o foco é ${focus}?`),
-    join(L.concepts,`defina os termos centrais do módulo antes de aplicá-los; contraste conceitos próximos, registre pressupostos e diferencie fato, interpretação, hipótese e decisão profissional.`),
-    join(L.context,`relacione “${moduleTitle}” ao percurso da formação. Recupere o que foi construído em “${previous}” e identifique o que esta aula prepara para “${next}”.`),
-    join(L.caseLabel,`analise uma situação plausível centrada em “${moduleTitle}”. Liste fatos disponíveis, informação ausente, pessoas afetadas, restrições, riscos e critérios antes de escolher uma ação.`),
-    join(L.critical,`compare alternativas e explicite vantagens, limites, efeitos não intencionais e evidências necessárias. Não transforme opinião, hábito de mercado ou preferência pessoal em regra universal.`),
-    join(L.practice,`${task}. A entrega deve mencionar “${moduleTitle}”, os critérios utilizados, o que foi verificado e como poderá ser revisada.`),
-    join(L.errors,`evite respostas genéricas, modelos copiados sem adaptação, dados sem fonte, promessas de resultado e extrapolação de competência. ${specialRule(f.slug,locale)}`),
-    join(L.synthesis,`registre três aprendizados específicos de “${moduleTitle}”, uma decisão que você revisaria após esta aula e a conexão concreta com o projeto final.`),
-    join(L.refs,`use somente fontes reais e verificáveis: livros de autores identificáveis, artigos acadêmicos, documentos técnicos e fontes oficiais pertinentes a “${moduleTitle}”. Registre autoria ou instituição, título e data; nunca invente referência para preencher a atividade.`),
-   ],
-  };
- }))}));
+ return t.modules.map((moduleTitle,mi)=>({
+  id:mi+1,
+  title:moduleTitle,
+  lessons:Array.from({length:perModule},(_,li)=>{
+   const n=mi*perModule+li+1,[focus,task]=S[li%S.length];
+   const previous=t.modules[Math.max(0,mi-1)],next=t.modules[Math.min(t.modules.length-1,mi+1)];
+   return {
+    id:`${f.slug}-m${mi+1}-l${li+1}`,
+    title:`${L.lesson} ${n} · ${moduleTitle} — ${focus}`,
+    summary:`${moduleTitle}: ${focus}.`,
+    content:[
+     join(L.objective,`${focus}; compreender o tema dentro de “${moduleTitle}” e produzir uma evidência de aprendizagem útil ao projeto “${t.project}”.`),
+     join(L.question,`o que precisa ser compreendido, verificado ou decidido em “${moduleTitle}” quando o foco é ${focus}?`),
+     join(L.concepts,`defina os termos centrais do módulo antes de aplicá-los; contraste conceitos próximos, registre pressupostos e diferencie fato, interpretação, hipótese e decisão profissional.`),
+     join(L.context,`relacione “${moduleTitle}” ao percurso da formação. Recupere o que foi construído em “${previous}” e identifique o que esta aula prepara para “${next}”.`),
+     join(L.caseLabel,`analise uma situação plausível centrada em “${moduleTitle}”. Liste fatos disponíveis, informação ausente, pessoas afetadas, restrições, riscos e critérios antes de escolher uma ação.`),
+     join(L.critical,`compare alternativas e explicite vantagens, limites, efeitos não intencionais e evidências necessárias. Não transforme opinião, hábito de mercado ou preferência pessoal em regra universal.`),
+     join(L.practice,`${task}. A entrega deve mencionar “${moduleTitle}”, os critérios utilizados, o que foi verificado e como poderá ser revisada.`),
+     join(L.errors,`evite respostas genéricas, modelos copiados sem adaptação, dados sem fonte, promessas de resultado e extrapolação de competência. ${specialRule(f.slug,locale)}`),
+     join(L.synthesis,`registre três aprendizados específicos de “${moduleTitle}”, uma decisão que você revisaria após esta aula e a conexão concreta com o projeto final.`),
+     join(L.refs,`use somente fontes reais e verificáveis: livros de autores identificáveis, artigos acadêmicos, documentos técnicos e fontes oficiais pertinentes a “${moduleTitle}”. Registre autoria ou instituição, título e data; nunca invente referência para preencher a atividade.`),
+    ],
+   };
+  }),
+ }));
 }
