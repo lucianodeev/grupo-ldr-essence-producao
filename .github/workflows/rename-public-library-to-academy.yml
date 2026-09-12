@@ -1,0 +1,80 @@
+name: Rename public Library references to LDR Academy
+
+on:
+  push:
+    paths:
+      - '.github/workflows/rename-public-library-to-academy.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update only public LDR Academy wording
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          files = {
+            Path('apps/painel-ldr/src/components/library-sales-home-access-choice.tsx'): [
+              ('Na Biblioteca LDR, você pode comprar uma formação individualmente e ter acesso vitalício ao conteúdo comprado, ou assinar mensalmente e acessar os conteúdos digitais pagos enquanto a assinatura estiver ativa.', 'Na LDR Academy, você pode comprar uma formação individualmente e ter acesso vitalício ao conteúdo comprado, ou assinar mensalmente e acessar os conteúdos digitais pagos enquanto a assinatura estiver ativa.'),
+              ('subscribe:"ASSINAR A BIBLIOTECA"', 'subscribe:"ASSINAR A LDR ACADEMY"'),
+              ('incluídos na Biblioteca. Cancele quando quiser.', 'incluídos na LDR Academy. Cancele quando quiser.'),
+              ('assinatura mensal para explorar a Biblioteca LDR.', 'assinatura mensal para explorar a LDR Academy.'),
+              ('monthly access to explore the LDR Library.', 'monthly access to explore LDR Academy.'),
+              ('abonnement mensuel à la Bibliothèque LDR.', 'abonnement mensuel à LDR Academy.'),
+              ('suscripción mensual a la Biblioteca LDR.', 'suscripción mensual a LDR Academy.'),
+            ],
+            Path('apps/painel-ldr/src/components/sales-catalog-360.tsx'): [
+              ('VISÃO 360° DA BIBLIOTECA', 'VISÃO 360° DA LDR ACADEMY'),
+              ('360° LIBRARY VIEW', '360° LDR ACADEMY VIEW'),
+              ('VUE 360° DE LA BIBLIOTHÈQUE', 'VUE 360° DE LDR ACADEMY'),
+              ('VISTA 360° DE LA BIBLIOTECA', 'VISTA 360° DE LDR ACADEMY'),
+              ('Biblioteca LDR.', 'LDR Academy.'),
+              ('LDR Library.', 'LDR Academy.'),
+              ('Bibliothèque LDR.', 'LDR Academy.'),
+              ('Biblioteca LDR.', 'LDR Academy.'),
+            ],
+          }
+
+          changed=[]
+          for p,repls in files.items():
+              s=p.read_text(encoding='utf-8')
+              original=s
+              for old,new in repls:
+                  s=s.replace(old,new)
+              if s != original:
+                  p.write_text(s,encoding='utf-8')
+                  changed.append(str(p))
+
+          expected=set(str(p) for p in files)
+          if not changed:
+              raise SystemExit('No public wording changed')
+          if not set(changed).issubset(expected):
+              raise SystemExit(f'Unexpected changed files: {changed}')
+
+          # Safety validation: keep routes/links/prices untouched and ensure key wording is present.
+          home=Path('apps/painel-ldr/src/components/library-sales-home-access-choice.tsx').read_text(encoding='utf-8')
+          catalog=Path('apps/painel-ldr/src/components/sales-catalog-360.tsx').read_text(encoding='utf-8')
+          assert 'Na LDR Academy, você pode comprar uma formação individualmente' in home
+          assert 'ASSINAR A LDR ACADEMY' in home
+          assert 'VISÃO 360° DA LDR ACADEMY' in catalog
+          assert 'R$ 19,95' in home and '€ 4,95' in home
+          assert '/cliente/biblioteca' in home
+          PY
+
+          git diff --check
+          changed="$(git diff --name-only)"
+          printf '%s\n' "$changed"
+          test "$(printf '%s\n' "$changed" | wc -l)" -le 2
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/components/library-sales-home-access-choice.tsx apps/painel-ldr/src/components/sales-catalog-360.tsx
+          git commit -m "fix: use LDR Academy as public brand name"
+          git push
