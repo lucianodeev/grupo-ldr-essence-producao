@@ -3,8 +3,6 @@ name: Run integrated LDR Academy expansion
 on:
   push:
     branches: [main]
-    paths:
-      - 'tools/execute_integrated_ldr_academy.py'
 
 permissions:
   contents: write
