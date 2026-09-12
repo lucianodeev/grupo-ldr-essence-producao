@@ -53,6 +53,7 @@ function Heading({icon,title,desc,href,label}:{icon:React.ReactNode;title:string
 const PROGRESS_META:Record<string,{title:string;href:string;cover:string;free?:boolean}>={
   curso_gratuito_frances_negocios_a1:{title:"Francês para Negócios",href:"/cliente/cursos/frances-negocios-a1",cover:"/ldr/covers/frances-negocios.svg",free:true},
   formacao_terapia_breve_psicanalitica:{title:"Formação em Terapia Breve Psicanalítica",href:"/cliente/treinamentos/terapia-breve-psicanalitica",cover:"/ldr/covers/terapia-breve.svg"},
+  curso_psicanalise_internacional_neurodiversidade_autismo:{title:"Psicanálise Internacional, Neurodiversidade e Autismo",href:"/cliente/treinamentos/psicanalise-internacional",cover:"/ldr/covers/psicanalise-internacional.svg"},
   ebook_coragem_comecar:{title:"eBook A Coragem de Começar",href:"/cliente/biblioteca/ebook_coragem_comecar",cover:"/ldr/covers/coragem-comecar.svg"},
 };
 const NOVELTY_COVERS:Record<string,string>={

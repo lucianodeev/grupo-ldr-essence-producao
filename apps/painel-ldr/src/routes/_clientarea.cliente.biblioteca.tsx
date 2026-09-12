@@ -9,6 +9,7 @@ import { clientAddLibraryComment, clientLearningHub } from "@/lib/learning.funct
 import { clientCreateDoMamaoTrainingCheckout, clientDoMamaoTrainingOffer } from "@/lib/training-commerce.functions";
 import { clientCreatePsychoanalysisCheckout, clientPsychoanalysisOffer } from "@/lib/psychoanalysis-commerce.functions";
 import { clientCreateBriefTherapyCheckout, clientBriefTherapyOffer } from "@/lib/brief-therapy-commerce.functions";
+import { clientCreateInternationalPsychoanalysisCheckout, clientInternationalPsychoanalysisOffer } from "@/lib/international-psychoanalysis-commerce.functions";
 import { clientCreateMassotherapyCheckout, clientMassotherapyOffer } from "@/lib/massotherapy-commerce.functions";
 import { clientBusiness24Offer, clientCreateBusiness24Checkout } from "@/lib/business24-commerce.functions";
 import { clientAIFormationOffer, clientCreateAIFormationCheckout } from "@/lib/ai-formation-commerce.functions";
@@ -69,12 +70,14 @@ function ClientLibrary(){
     trainingCheckoutFn=useServerFn(clientCreateDoMamaoTrainingCheckout),
     psychoFn=useServerFn(clientPsychoanalysisOffer),
     briefFn=useServerFn(clientBriefTherapyOffer),
+    intlPsychoFn=useServerFn(clientInternationalPsychoanalysisOffer),
     massageFn=useServerFn(clientMassotherapyOffer),
     business24Fn=useServerFn(clientBusiness24Offer),
     aiFn=useServerFn(clientAIFormationOffer),
     aiCheckoutFn=useServerFn(clientCreateAIFormationCheckout),
     psychoCheckoutFn=useServerFn(clientCreatePsychoanalysisCheckout),
     briefCheckoutFn=useServerFn(clientCreateBriefTherapyCheckout),
+    intlPsychoCheckoutFn=useServerFn(clientCreateInternationalPsychoanalysisCheckout),
     massageCheckoutFn=useServerFn(clientCreateMassotherapyCheckout),
     business24CheckoutFn=useServerFn(clientCreateBusiness24Checkout),
     mentorFn=useServerFn(clientMentorshipOffer),
@@ -100,6 +103,7 @@ function ClientLibrary(){
   const {data:training}=useQuery({queryKey:["training-offer"],queryFn:()=>trainingFn({})});
   const {data:psycho}=useQuery({queryKey:["psycho-offer"],queryFn:()=>psychoFn({})});
   const {data:brief}=useQuery({queryKey:["brief-therapy-offer"],queryFn:()=>briefFn({})});
+  const {data:intlPsycho}=useQuery({queryKey:["international-psychoanalysis-offer-library"],queryFn:()=>intlPsychoFn({})});
   const {data:massage}=useQuery({queryKey:["massotherapy-offer"],queryFn:()=>massageFn({})});
   const {data:business24}=useQuery({queryKey:["business24-offer"],queryFn:()=>business24Fn({})});
   const {data:ai}=useQuery({queryKey:["ai-formation-offer"],queryFn:()=>aiFn({})});
@@ -116,6 +120,7 @@ function ClientLibrary(){
   const trainingCheckout=useMutation({mutationFn:(m:"BR"|"INTL")=>trainingCheckoutFn({data:{market:m}}),onSuccess:r=>location.href=r.url});
   const psychoCheckout=useMutation({mutationFn:(m:"BR"|"INTL")=>psychoCheckoutFn({data:{market:m}}),onSuccess:r=>location.href=r.url});
   const briefCheckout=useMutation({mutationFn:(m:"BR"|"INTL")=>briefCheckoutFn({data:{market:m}}),onSuccess:r=>location.href=r.url});
+  const intlPsychoCheckout=useMutation({mutationFn:(m:"BR"|"INTL")=>intlPsychoCheckoutFn({data:{market:m}}),onSuccess:r=>location.href=r.url});
   const massageCheckout=useMutation({mutationFn:(m:"BR"|"INTL")=>massageCheckoutFn({data:{market:m}}),onSuccess:r=>location.href=r.url});
   const business24Checkout=useMutation({mutationFn:(m:"BR"|"INTL")=>business24CheckoutFn({data:{market:m}}),onSuccess:r=>location.href=r.url});
   const aiCheckout=useMutation({mutationFn:(m:"BR"|"INTL")=>aiCheckoutFn({data:{market:m}}),onSuccess:r=>location.href=r.url});
@@ -131,7 +136,7 @@ function ClientLibrary(){
   const market:"BR"|"INTL"=data.market==="BR"?"BR":"INTL";
   const owner=(data.customer?.email??"").trim().toLowerCase()==="llucianouam@gmail.com";
   const ebook=data.products.find(p=>p.key==="ebook_coragem_comecar"),book=data.products.find(p=>p.key==="livro_menino_mamao");
-  const ent={ebook:owner||!!ebook?.entitled,book:owner||!!book?.entitled,training:owner||!!training?.entitled,psycho:owner||!!psycho?.entitled,brief:owner||!!brief?.entitled,massage:owner||!!massage?.entitled,business24:owner||!!business24?.entitled,ai:owner||!!ai?.entitled,mentor:owner||!!mentor?.entitled,leader:owner||!!leader?.entitled,free:owner||!!free?.entitled,french:owner||!!french?.entitled,firstAid:owner||!!firstAid?.entitled};
+  const ent={ebook:owner||!!ebook?.entitled,book:owner||!!book?.entitled,training:owner||!!training?.entitled,psycho:owner||!!psycho?.entitled,brief:owner||!!brief?.entitled,intlPsycho:owner||!!intlPsycho?.entitled,massage:owner||!!massage?.entitled,business24:owner||!!business24?.entitled,ai:owner||!!ai?.entitled,mentor:owner||!!mentor?.entitled,leader:owner||!!leader?.entitled,free:owner||!!free?.entitled,french:owner||!!french?.entitled,firstAid:owner||!!firstAid?.entitled};
   const comments=learning?.comments?.filter((c:any)=>c.product_key)??[];
   const card=(key:string,label:string,bg:string,icon="grad")=><button onClick={()=>setActive(active===key?null:key)} className={`min-w-0 rounded-2xl px-1 py-4 text-center text-white shadow-sm ${bg} ${active===key?"ring-2 ring-[#d6ad63]":""}`}>{icon==="book"?<BookOpen className="mx-auto h-5 w-5"/>:icon==="film"?<Film className="mx-auto h-5 w-5"/>:<GraduationCap className="mx-auto h-5 w-5"/>}<p className="mt-2 text-[8px] font-black leading-none sm:text-[10px]">{label}</p></button>;
   const buyFormation=(kind:"psycho"|"brief"|"massage"|"mentor"|"leader",mut:any,color:string)=><button onClick={()=>mut.mutate(market)} className={`mt-3 w-full rounded-xl ${color} px-4 py-3 text-sm font-black text-white`}><ShoppingCart className="mr-2 inline h-4 w-4"/>{ct.startFormation}</button>;

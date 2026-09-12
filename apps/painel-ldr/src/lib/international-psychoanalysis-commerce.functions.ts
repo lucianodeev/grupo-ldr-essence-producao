@@ -1,0 +1,5 @@
+import { createServerFn } from "@tanstack/react-start";
+import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+function emailOf(claims:Record<string,unknown>):string|null{const v=claims["email"];return typeof v==="string"?v:null;}
+export const clientInternationalPsychoanalysisOffer=createServerFn({method:"GET"}).middleware([requireSupabaseAuth]).handler(async({context})=>{const {getInternationalPsychoanalysisOffer}=await import("@/lib/international-psychoanalysis-commerce.server");return getInternationalPsychoanalysisOffer(context.userId,emailOf(context.claims));});
+export const clientCreateInternationalPsychoanalysisCheckout=createServerFn({method:"POST"}).middleware([requireSupabaseAuth]).inputValidator((data:{market:"BR"|"INTL"})=>data).handler(async({context,data})=>{const {createInternationalPsychoanalysisCheckout}=await import("@/lib/international-psychoanalysis-commerce.server");return createInternationalPsychoanalysisCheckout(context.userId,emailOf(context.claims),data.market);});

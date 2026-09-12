@@ -38,6 +38,7 @@ const COPY = {
 const formations = [
   {tag:"RH · 600H",title:"Formação em Gestão de Pessoas e Recursos Humanos",desc:"600 horas · 100% online · leitura e atividades",price:"R$ 299,99 · € 49,90",href:"/cliente/formacoes/gestao-pessoas-rh",tone:"emerald"},
   {tag:"PSICANÁLISE",title:"Formação Online em Psicanálise",desc:"12 módulos · 1.200 horas · 180 unidades · 6 encontros ao vivo",price:"R$ 299,99 · € 49,90",href:"/formacao-psicanalise",tone:"violet"},
+  {tag:"🌍 INTERNACIONAL · PREMIUM",title:"Psicanálise Internacional, Neurodiversidade e Autismo",desc:"21 módulos · 6–12 meses · 2 encontros ao vivo/mês · produto independente",price:"De R$ 697 por R$ 497 · De € 119 por € 89",href:"/formacao-psicanalise-internacional",tone:"blue"},
   {tag:"TERAPIA BREVE · 1.200H",title:"Formação em Terapia Breve Psicanalítica",desc:"15 módulos · 300 aulas · 1.200 horas · 6 encontros ao vivo",price:"R$ 299,99 · € 49,90",href:"/formacao-terapia-breve-psicanalitica",tone:"petrol"},
   {tag:"NEGÓCIO EM 24H",title:"Formação Negócio em 24 Horas",desc:"9 módulos · 90 aulas · 360 horas · 100% online · projeto final avaliado",price:"R$ 299,99 · € 49,90",href:"/formacao-negocio-em-24-horas",tone:"gold"},
   {tag:"MENTORIA E CARREIRA",title:"Formação em Mentoria Profissional e de Carreira",desc:"3 meses · percurso estruturado · acesso digital",price:"R$ 299,99 · € 49,90",href:"/cliente/biblioteca",tone:"blue"},
