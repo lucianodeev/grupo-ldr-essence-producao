@@ -18,6 +18,21 @@ async function getServerEntry(): Promise<ServerEntry> {
   return serverEntryPromise;
 }
 
+function rewriteAcademyLibraryRequest(request: Request): Request {
+  const url = new URL(request.url);
+  const host = url.hostname.toLowerCase();
+  const isAcademy = host === "ldracademy.online" || host === "www.ldracademy.online";
+
+  if (!isAcademy) return request;
+
+  if (url.pathname === "/biblioteca" || url.pathname.startsWith("/biblioteca/")) {
+    url.pathname = `/cliente${url.pathname}`;
+    return new Request(url.toString(), request);
+  }
+
+  return request;
+}
+
 // h3 swallows in-handler throws into a normal 500 Response with body
 // {"unhandled":true,"message":"HTTPError"} — try/catch alone never fires for those.
 async function normalizeCatastrophicSsrResponse(response: Response): Promise<Response> {
@@ -48,7 +63,8 @@ export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
       const handler = await getServerEntry();
-      const response = await handler.fetch(request, env, ctx);
+      const routedRequest = rewriteAcademyLibraryRequest(request);
+      const response = await handler.fetch(routedRequest, env, ctx);
       return await normalizeCatastrophicSsrResponse(response);
     } catch (error) {
       console.error(error);
