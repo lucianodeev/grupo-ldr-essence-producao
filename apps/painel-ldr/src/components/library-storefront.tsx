@@ -13,6 +13,7 @@ const COPY={
 } as const;
 
 const ITEMS:Item[]=[
+  {title:"Revista Psicanálise no Mundo",subtitle:"Psicanálise contemporânea, clínica, teoria, cultura e sociedade.",href:"/cliente/biblioteca/publicacoes/revista-psicanalise-no-mundo",icon:"🧠",price:"R$ 3,90 · € 3,90 / semana",tag:"revista psicanálise psicanalise mundo clínica teoria cultura sociedade",group:"banca",color:"#6b2145",badge:"NOVO · DESTAQUE"},
   {title:"Jornal LDR",subtitle:"Notícias, economia, tecnologia e mundo.",href:"/cliente/biblioteca/jornal-ldr",icon:"📰",price:"R$ 0,90 · € 0,90 / semana",tag:"jornal notícias economia tecnologia",group:"banca",color:"#0b2341",badge:"ACESSO SEMANAL"},
   {title:"Revista LDR",subtitle:"Carreira, bem-estar, negócios e tendências.",href:"/cliente/biblioteca/revista-ldr",icon:"📖",price:"R$ 0,90 · € 0,90 / semana",tag:"revista carreira negócios tendências",group:"banca",color:"#5b0824",badge:"ACESSO SEMANAL"},
   {title:"LDR Ciência",subtitle:"Artigos científicos, pesquisas e análises.",href:"/cliente/biblioteca/ldr-ciencia",icon:"🔬",price:"R$ 0,90 · € 0,90 / semana",tag:"ciência artigos pesquisa",group:"banca",color:"#403566",badge:"ACESSO SEMANAL"},
