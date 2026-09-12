@@ -18,6 +18,41 @@ async function getServerEntry(): Promise<ServerEntry> {
   return serverEntryPromise;
 }
 
+function academyCanonicalRedirect(request: Request): Response | null {
+  const url = new URL(request.url);
+  const host = url.hostname.toLowerCase();
+  const isAcademy = host === "ldracademy.online" || host === "www.ldracademy.online";
+  const isLegacyAcademy = host === "learn.lucianoconecta.online";
+
+  if (isLegacyAcademy) {
+    const target = new URL("https://ldracademy.online");
+    target.search = url.search;
+
+    if (url.pathname === "/cliente/login") {
+      target.pathname = "/cliente/login";
+      return Response.redirect(target.toString(), 308);
+    }
+
+    if (url.pathname === "/cliente/biblioteca" || url.pathname.startsWith("/cliente/biblioteca/")) {
+      target.pathname = url.pathname.replace(/^\/cliente\/biblioteca/, "/biblioteca");
+      return Response.redirect(target.toString(), 308);
+    }
+
+    if (url.pathname === "/biblioteca" || url.pathname.startsWith("/biblioteca/")) {
+      target.pathname = url.pathname;
+      return Response.redirect(target.toString(), 308);
+    }
+  }
+
+  if (isAcademy && (url.pathname === "/cliente/biblioteca" || url.pathname.startsWith("/cliente/biblioteca/"))) {
+    url.hostname = "ldracademy.online";
+    url.pathname = url.pathname.replace(/^\/cliente\/biblioteca/, "/biblioteca");
+    return Response.redirect(url.toString(), 308);
+  }
+
+  return null;
+}
+
 function rewriteAcademyLibraryRequest(request: Request): Request {
   const url = new URL(request.url);
   const host = url.hostname.toLowerCase();
@@ -62,6 +97,9 @@ function isH3SwallowedErrorBody(body: string): boolean {
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
+      const canonicalRedirect = academyCanonicalRedirect(request);
+      if (canonicalRedirect) return canonicalRedirect;
+
       const handler = await getServerEntry();
       const routedRequest = rewriteAcademyLibraryRequest(request);
       const response = await handler.fetch(routedRequest, env, ctx);
