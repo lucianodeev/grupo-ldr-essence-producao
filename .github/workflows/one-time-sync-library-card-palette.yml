@@ -1,0 +1,61 @@
+name: Sync library card palette
+on:
+  push:
+    paths:
+      - '.github/workflows/one-time-sync-library-card-palette.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply matching light card palette inside library
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx')
+          s=p.read_text(encoding='utf-8')
+
+          s=s.replace('className={`min-w-0 rounded-2xl px-1 py-4 text-center text-white shadow-sm ${bg} ${active===key?"ring-2 ring-[#d6ad63]":""}`}', 'className={`min-w-0 rounded-2xl border px-1 py-4 text-center text-[#071426] shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${bg} ${active===key?"ring-2 ring-[#d6ad63]":""}`}')
+
+          replacements={
+            'bg-[#5b0824]':'bg-gradient-to-br from-[#fff7ed] to-[#ffedd5] border-[#c06b1b]/25',
+            'bg-[#d6ad63]':'bg-gradient-to-br from-[#fff7df] to-[#ffefbd] border-[#c48a16]/25',
+            'bg-[#5b2b86]':'bg-gradient-to-br from-[#f4edfb] to-[#eadcf8] border-[#7a3dac]/25',
+            'bg-[#17645e]':'bg-gradient-to-br from-[#ecfdf5] to-[#d1fae5] border-[#1b897b]/25',
+            'bg-[#0F5E7A]':'bg-gradient-to-br from-[#eaf8fb] to-[#d7f0f6] border-[#1581a0]/25',
+            'bg-[#c85a24]':'bg-gradient-to-br from-[#fff1e8] to-[#ffe2cf] border-[#d65a1d]/25',
+            'bg-[#0b5cab]':'bg-gradient-to-br from-[#fff7df] to-[#ffefbd] border-[#c48a16]/25',
+            'bg-[#0f5132]':'bg-gradient-to-br from-[#f0fdf4] to-[#dcfce7] border-[#0b7a48]/25',
+            'bg-[#047857]':'bg-gradient-to-br from-[#ecfdf5] to-[#d1fae5] border-[#0b9a70]/25',
+            'bg-[#b85c2e]':'bg-gradient-to-br from-[#fff7ed] to-[#ffedd5] border-[#d66a2c]/25',
+            'bg-[#143d59]':'bg-gradient-to-br from-[#eef2ff] to-[#e0e7ff] border-[#4f46e5]/20',
+            'bg-[#35101e]':'bg-gradient-to-br from-[#f8fafc] to-[#e2e8f0] border-slate-300',
+          }
+          for a,b in replacements.items():
+              s=s.replace(a,b)
+
+          s=s.replace('className="min-w-0 rounded-2xl bg-[#0b2341] px-1 py-4 text-center !text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"', 'className="min-w-0 rounded-2xl border border-slate-300 bg-gradient-to-br from-[#f3f4f6] to-[#e5e7eb] px-1 py-4 text-center !text-[#071426] shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"')
+          s=s.replace('className="mt-2 text-[8px] font-black leading-tight !text-white sm:text-[10px]"', 'className="mt-2 text-[8px] font-black leading-tight !text-[#071426] sm:text-[10px]"')
+          s=s.replace('className="mt-1 text-[7px] !text-white/80"', 'className="mt-1 text-[7px] !text-slate-600"')
+          s=s.replace('className="min-w-0 rounded-2xl bg-[#263b63] px-1 py-4 text-center text-white shadow-sm"', 'className="min-w-0 rounded-2xl border border-[#a36d19]/25 bg-gradient-to-br from-[#f9f0df] to-[#f1dfbd] px-1 py-4 text-center text-[#071426] shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"')
+          s=s.replace('className="min-w-0 rounded-2xl bg-[#0b5cab] px-1 py-4 text-center text-white shadow-sm"', 'className="min-w-0 rounded-2xl border border-[#b33b68]/25 bg-gradient-to-br from-[#fff0f5] to-[#fbdbe7] px-1 py-4 text-center text-[#071426] shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"')
+
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Verify library cards use light palette
+        run: |
+          grep -q 'from-[#f4edfb] to-[#eadcf8]' apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          grep -q 'from-[#fff0f5] to-[#fbdbe7]' apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          grep -q 'text-[#071426] shadow-sm transition' apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+      - name: Commit and push
+        run: |
+          if git diff --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          git commit -m "style(painel): sync library cards with light sales palette"
+          git push
