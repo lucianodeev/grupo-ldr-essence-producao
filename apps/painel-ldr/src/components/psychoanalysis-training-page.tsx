@@ -38,7 +38,7 @@ function PriceBlock({compact=false}:{compact?:boolean}){
    <strong className="block text-2xl text-[#efd58d] sm:text-3xl">🇪🇺 € 49,90</strong>
   </div>
   <p className="mt-3 text-xs leading-5 text-white/70">Pagamento único pelo Stripe: Brasil R$ 299,99 ou Europa € 49,90.</p>
-  <div className="mt-5 grid gap-2"><Link to="/cliente/biblioteca" search={{product:"psychoanalysis"} as any} className="inline-flex min-h-12 items-center justify-center rounded-2xl bg-[#d6b86d] px-5 text-center text-sm font-black text-[#32155c] transition hover:brightness-105">PAGAMENTO ÚNICO PELO STRIPE</Link><a href={WHATSAPP} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center justify-center rounded-2xl border border-white/25 px-4 text-center text-xs font-bold text-white">Outras formas de pagamento: entre em contato conosco</a></div>
+  <div className="mt-5 grid gap-2"><Link to="/cliente/biblioteca" search={{product:"psychoanalysis"} as any} className="relative z-10 inline-flex min-h-[56px] w-full items-center justify-center rounded-2xl bg-[#d6b86d] px-5 py-3 text-center text-sm font-black leading-snug text-[#32155c] transition hover:brightness-105">PAGAMENTO ÚNICO PELO STRIPE</Link><a href={WHATSAPP} target="_blank" rel="noopener noreferrer" className="relative z-10 inline-flex min-h-[52px] w-full items-center justify-center rounded-2xl border border-white/25 px-4 py-3 text-center text-xs font-bold leading-snug text-white">Outras formas de pagamento: entre em contato conosco</a></div>
  </div>
 }
 
