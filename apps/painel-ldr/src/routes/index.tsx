@@ -1,11 +1,52 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect } from "react";
 import { LibrarySalesHomeAccessChoice } from "@/components/library-sales-home-access-choice";
 import { AIFormationSalesCard } from "@/components/ai-formation-sales-card";
 import { EditorialSalesCards } from "@/components/editorial-sales-cards";
 import { FiveProfessionalFormationCards } from "@/components/five-professional-formation-cards";
+import { supabase } from "@/integrations/supabase/client";
 
 function SalesHome(){
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (!/(^|\.)ldracademy\.online$/i.test(window.location.hostname)) return;
+
+    let active = true;
+    const openLibrary = () => {
+      if (active) window.location.replace("/biblioteca");
+    };
+
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session) openLibrary();
+    });
+
+    void supabase.auth.getSession().then(({ data }) => {
+      if (data.session) openLibrary();
+    });
+
+    return () => {
+      active = false;
+      listener.subscription.unsubscribe();
+    };
+  }, []);
+
   return <>
+    <style>{`
+      @media (max-width: 640px) {
+        header a[href="/cliente/login"] {
+          min-height: 44px;
+          min-width: 92px;
+          padding: 0 16px !important;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          white-space: nowrap;
+          border-radius: 14px !important;
+          font-size: 14px !important;
+          line-height: 1 !important;
+        }
+      }
+    `}</style>
     <LibrarySalesHomeAccessChoice />
     <AIFormationSalesCard />
     <FiveProfessionalFormationCards />
