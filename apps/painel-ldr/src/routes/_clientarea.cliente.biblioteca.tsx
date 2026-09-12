@@ -153,7 +153,7 @@ function ClientLibrary(){
       <a href="/cliente/pedidos" className="mt-5 inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-3 text-sm font-bold"><ReceiptText className="h-4 w-4"/>{t.orders}</a>
     </section>
 
-    <LibraryStorefront locale={locale}/>
+    <LibraryStorefront locale={locale} progress={learning?.progress ?? []}/>
 
     <section className="rounded-[28px] border border-[#d6ad63]/40 bg-white p-5 shadow-sm sm:p-6">
       <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
