@@ -1,0 +1,41 @@
+name: One-time library catalog dedupe
+on:
+  push:
+    paths:
+      - '.github/workflows/one-time-library-dedupe.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Reduce duplicated library navigation safely
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx')
+          s=p.read_text()
+          old='    <section id="catalogo-ldr" className="scroll-mt-24 rounded-[28px] border bg-background/90 p-4 shadow-sm sm:p-6">\n      <h2 className="font-serif text-2xl">{t.title}</h2>\n      <p className="mb-4 mt-1 text-sm text-muted-foreground">{t.intro}</p>'
+          new='    <details id="catalogo-ldr" className="scroll-mt-24 rounded-[24px] border border-slate-200 bg-white shadow-sm">\n      <summary className="cursor-pointer list-none px-5 py-4 text-sm font-black text-[#0b2341] [&::-webkit-details-marker]:hidden">+ Outros conteúdos e acessos</summary>\n      <div className="border-t border-slate-100 p-4 sm:p-6">'
+          if old in s:
+              s=s.replace(old,new,1)
+              marker='    </section>\n\n        <FiveProfessionalFormationCards compact />'
+              repl='      </div>\n    </details>\n\n        <div id="formacoes-profissionais" className="scroll-mt-24"><FiveProfessionalFormationCards compact /></div>'
+              if marker not in s: raise SystemExit('catalog close marker not found')
+              s=s.replace(marker,repl,1)
+          elif '<details id="catalogo-ldr"' not in s:
+              raise SystemExit('catalog opening marker not found')
+          p.write_text(s)
+          PY
+      - name: Commit catalog cleanup
+        run: |
+          git config user.name 'ldr-rh-campanhas'
+          git config user.email 'llucianouam@gmail.com'
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'refactor(painel): remove duplicated library navigation'
+          git push
