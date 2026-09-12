@@ -1,0 +1,74 @@
+name: Harden library runtime
+on:
+  push:
+    paths:
+      - '.github/workflows/harden-library-runtime.yml'
+permissions:
+  contents: write
+jobs:
+  harden:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Sync main
+        run: |
+          git fetch origin main
+          git checkout main
+          git reset --hard origin/main
+      - name: Apply defensive runtime guards
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          route=Path('apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx')
+          s=route.read_text(encoding='utf-8')
+          old='''  const market:"BR"|"INTL"=data.market==="BR"?"BR":"INTL";\n  const owner=(data.customer?.email??"").trim().toLowerCase()==="llucianouam@gmail.com";\n  const ebook=data.products.find(p=>p.key==="ebook_coragem_comecar"),book=data.products.find(p=>p.key==="livro_menino_mamao");'''
+          new='''  const products=Array.isArray(data?.products)?data.products:[];\n  const market:"BR"|"INTL"=data?.market==="BR"?"BR":"INTL";\n  const owner=((data?.customer?.email??"").trim().toLowerCase()==="llucianouam@gmail.com");\n  const ebook=products.find((p:any)=>p?.key==="ebook_coragem_comecar"),book=products.find((p:any)=>p?.key==="livro_menino_mamao");'''
+          if old not in s:
+              raise SystemExit('route product block not found')
+          s=s.replace(old,new,1)
+          old='''  const comments=learning?.comments?.filter((c:any)=>c.product_key)??[];'''
+          new='''  const safeProgress=Array.isArray(learning?.progress)?learning.progress.filter(Boolean):[];\n  const comments=Array.isArray(learning?.comments)?learning.comments.filter((c:any)=>c?.product_key):[];'''
+          if old not in s:
+              raise SystemExit('route comments block not found')
+          s=s.replace(old,new,1)
+          s=s.replace('progress={learning?.progress ?? []}','progress={safeProgress}')
+          route.write_text(s,encoding='utf-8')
+
+          store=Path('apps/painel-ldr/src/components/library-storefront.tsx')
+          s=store.read_text(encoding='utf-8')
+          marker='''export function LibraryStorefront({locale,progress=[]}:{locale:Locale;progress?:any[]}){'''
+          if marker not in s:
+              raise SystemExit('LibraryStorefront signature not found')
+          s=s.replace(marker,marker+'\n  const safeProgress=Array.isArray(progress)?progress.filter(Boolean):[];',1)
+          s=s.replace('progress?.length','safeProgress.length')
+          s=s.replace('progress.slice()','safeProgress.slice()')
+          store.write_text(s,encoding='utf-8')
+          PY
+      - name: Verify safety guards and preserved products
+        run: |
+          grep -q 'const products=Array.isArray' apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          grep -q 'const safeProgress=Array.isArray' apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          grep -q 'ebook_coragem_comecar' apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          grep -q 'livro_menino_mamao' apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          grep -q 'do_mamao_ao_negocio' apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          grep -q '/cliente/treinamentos/do-mamao-ao-negocio' apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          grep -q 'safeProgress.length' apps/painel-ldr/src/components/library-storefront.tsx
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install dependencies
+        run: npm install --no-package-lock
+      - name: Full panel build
+        run: npm run build:painel
+      - name: Commit fix
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx apps/painel-ldr/src/components/library-storefront.tsx
+          git commit -m 'fix: guard library against malformed runtime data'
+          git pull --rebase origin main
+          git push origin main
