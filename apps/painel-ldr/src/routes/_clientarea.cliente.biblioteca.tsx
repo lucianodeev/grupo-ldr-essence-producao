@@ -22,6 +22,7 @@ import { UNDERGRADUATE_COURSES } from "@/lib/undergraduate.catalog";
 import { libraryCardText, postgraduateCardTitle, undergraduateCardTitle } from "@/lib/library-card-i18n";
 import { libraryAcademicCardText } from "@/lib/library-academic-card-i18n";
 import { FiveProfessionalFormationCards } from "@/components/five-professional-formation-cards";
+import { LibraryStorefront } from "@/components/library-storefront";
 
 export const Route=createFileRoute("/_clientarea/cliente/biblioteca")({component:ClientLibraryRoute});
 
@@ -151,6 +152,8 @@ function ClientLibrary(){
       <a href="/cliente/pedidos" className="mt-5 inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-3 text-sm font-bold"><ReceiptText className="h-4 w-4"/>{t.orders}</a>
     </section>
 
+    <LibraryStorefront locale={locale}/>
+
     <section className="rounded-[28px] border border-[#d6ad63]/40 bg-white p-5 shadow-sm sm:p-6">
       <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
         <div className="min-w-0">
@@ -171,7 +174,7 @@ function ClientLibrary(){
       </div>
     </section>
 
-    <section className="rounded-[28px] border bg-background/90 p-4 shadow-sm sm:p-6">
+    <section id="catalogo-ldr" className="scroll-mt-24 rounded-[28px] border bg-background/90 p-4 shadow-sm sm:p-6">
       <h2 className="font-serif text-2xl">{t.title}</h2>
       <p className="mb-4 mt-1 text-sm text-muted-foreground">{t.intro}</p>
       <div className="grid grid-cols-4 gap-1.5 sm:grid-cols-10 sm:gap-3">
