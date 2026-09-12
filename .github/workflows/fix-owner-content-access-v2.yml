@@ -1,0 +1,115 @@
+name: Corrigir acesso owner e conteúdo LDR
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/fix-owner-content-access-v2.yml
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Aplicar correções de acesso, conteúdo e imagens
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          root=Path('apps/painel-ldr/src')
+
+          # 1) Biblioteca: Psicanálise deve abrir a experiência interna do aluno.
+          p=root/'components/library-storefront.tsx'
+          t=p.read_text()
+          t=t.replace('href:"/formacao-psicanalise",icon:"🧠",tag:"psicanálise formação"','href:"/cliente/treinamentos/psicanalise",icon:"🧠",tag:"psicanálise formação"')
+          p.write_text(t)
+
+          # 2) eBook/livro: owner não depende de cadastro comercial nem de pedido.
+          p=root/'lib/digital-content.server.ts'
+          t=p.read_text()
+          old='''  const customerId = await resolveCustomer(userId, email);\n  if (!hasOwnerDigitalAccess(email, userId)) await assertEntitlement(customerId, productKey);'''
+          new='''  const owner = hasOwnerDigitalAccess(email, userId);\n  if (!owner) {\n    const customerId = await resolveCustomer(userId, email);\n    await assertEntitlement(customerId, productKey);\n  }'''
+          if old not in t:
+              raise SystemExit('Bloco digital-content não encontrado')
+          t=t.replace(old,new,1)
+          p.write_text(t)
+
+          # 3) Cursos pagos: owner é resolvido antes da consulta de compra e usa também o e-mail do cadastro vinculado.
+          files=[
+            'lib/psychoanalysis-commerce.server.ts',
+            'lib/brief-therapy-commerce.server.ts',
+            'lib/massotherapy-commerce.server.ts',
+            'lib/mentorship-commerce.server.ts',
+            'lib/leadership-commerce.server.ts',
+            'lib/business24-commerce.server.ts',
+            'lib/ai-formation-commerce.server.ts',
+            'lib/international-psychoanalysis-commerce.server.ts',
+          ]
+          for rel in files:
+              p=root/rel
+              t=p.read_text()
+              # multiline or minified variants
+              t=re.sub(
+                r'const order=await paidOrder\(customer\.id\);\s*const owner=hasOwnerDigitalAccess\(email,userId\);',
+                'const owner=hasOwnerDigitalAccess(email??customer.email,userId);\n  const order=owner?null:await paidOrder(customer.id);',
+                t
+              )
+              t=t.replace('const owner=hasOwnerDigitalAccess(email,userId);','const owner=hasOwnerDigitalAccess(email??customer.email,userId);')
+              p.write_text(t)
+
+          # 4) Formações profissionais: owner pelo e-mail vinculado também.
+          p=root/'lib/professional-formations.server.ts'
+          t=p.read_text().replace('hasOwnerDigitalAccess(email,userId)','hasOwnerDigitalAccess(email??customer.email,userId)')
+          p.write_text(t)
+
+          # 5) Cursos gratuitos: mesma robustez de owner.
+          for rel in ['lib/free-career-course.server.ts','lib/free-french-a1.server.ts','lib/free-first-aid.server.ts']:
+              p=root/rel
+              if p.exists():
+                  t=p.read_text().replace('hasOwnerDigitalAccess(email,userId)','hasOwnerDigitalAccess(email??customer.email,userId)')
+                  p.write_text(t)
+
+          # 6) Do Mamão: recursos secundários nunca podem impedir abertura das aulas.
+          p=root/'lib/training-commerce.server.ts'
+          t=p.read_text()
+          t=t.replace('if (error) fail("Não foi possível preparar as avaliações mensais incluídas.");','if (error) console.warn("do-mamao included review credits provisioning skipped", error);')
+          p.write_text(t)
+
+          # 7) Fallback global para imagens quebradas em qualquer página.
+          fallback=Path('apps/painel-ldr/public/ldr/image-placeholder.svg')
+          fallback.write_text('''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect width="1200" height="800" fill="#0b2341"/><circle cx="600" cy="360" r="150" fill="#d6ad63" opacity=".16"/><text x="600" y="390" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="110" font-weight="700" fill="#fff7e7">LDR</text><text x="600" y="475" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="32" fill="#d6ad63">Grupo LDR Essence</text></svg>''')
+
+          p=root/'routes/__root.tsx'
+          t=p.read_text()
+          anchor='''  useEffect(() => {\n    const { data } = supabase.auth.onAuthStateChange((event) => {'''
+          effect='''  useEffect(() => {\n    if (typeof window === "undefined") return;\n    const onImageError = (event: Event) => {\n      const img = event.target as HTMLImageElement | null;\n      if (!img || img.tagName !== "IMG" || img.dataset.ldrFallback === "1") return;\n      img.dataset.ldrFallback = "1";\n      img.src = "/ldr/image-placeholder.svg";\n    };\n    window.addEventListener("error", onImageError, true);\n    return () => window.removeEventListener("error", onImageError, true);\n  }, []);\n\n'''
+          if effect.strip() not in t:
+              if anchor not in t:
+                  raise SystemExit('Âncora do root não encontrada')
+              t=t.replace(anchor,effect+anchor,1)
+          p.write_text(t)
+
+          # 8) Remove este workflow após aplicar, evitando lixo técnico.
+          Path('.github/workflows/fix-owner-content-access-v2.yml').unlink()
+          PY
+
+      - name: Commit e publicar correções
+        shell: bash
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Sem alterações"
+            exit 0
+          fi
+          git commit -m "fix: restore owner direct access to courses books and ebook"
+          git push origin main
