@@ -38,14 +38,14 @@ const FORMATION_TEXT: Record<LibraryCardLocale, [string,string,string][]> = {
 };
 
 const FREE_TEXT: Record<LibraryCardLocale, [string,string][]> = {
-  pt: [["Gestão de Pessoas e RH","600h · formação livre profissional"],["Organize sua Carreira","7 aulas · leitura · sem expiração"],["Francês Básico para Negócios — A1","30 aulas · 10 horas"],["Primeiros Socorros — Noções Básicas","30 aulas · 10 horas"]],
-  en: [["People Management & HR","600h · professional open course"],["Organize Your Career","7 lessons · reading · no expiry"],["Basic French for Business — A1","30 lessons · 10 hours"],["First Aid — Basic Concepts","30 lessons · 10 hours"]],
-  fr: [["Gestion des Personnes et RH","600h · formation professionnelle libre"],["Organisez votre Carrière","7 leçons · lecture · sans expiration"],["Français Basique des Affaires — A1","30 leçons · 10 heures"],["Premiers Secours — Notions de Base","30 leçons · 10 heures"]],
-  es: [["Gestión de Personas y RR. HH.","600h · formación profesional libre"],["Organiza tu Carrera","7 clases · lectura · sin caducidad"],["Francés Básico para Negocios — A1","30 clases · 10 horas"],["Primeros Auxilios — Conceptos Básicos","30 clases · 10 horas"]],
+  pt: [["Organize sua Carreira","7 aulas · leitura · sem expiração"],["Francês Básico para Negócios — A1","30 aulas · 10 horas"],["Primeiros Socorros — Noções Básicas","30 aulas · 10 horas"]],
+  en: [["Organize Your Career","7 lessons · reading · no expiry"],["Basic French for Business — A1","30 lessons · 10 hours"],["First Aid — Basic Concepts","30 lessons · 10 hours"]],
+  fr: [["Organisez votre Carrière","7 leçons · lecture · sans expiration"],["Français Basique des Affaires — A1","30 leçons · 10 heures"],["Premiers Secours — Notions de Base","30 leçons · 10 heures"]],
+  es: [["Organiza tu Carrera","7 clases · lectura · sin caducidad"],["Francés Básico para Negocios — A1","30 clases · 10 horas"],["Primeros Auxilios — Conceptos Básicos","30 clases · 10 horas"]],
 };
 
 const FORMATION_BASE: {free?: boolean; price?: string; href: string; tone: Tone}[] = [
-  { free:true, href:"/cliente/formacoes/gestao-pessoas-rh", tone:"emerald" },
+  { price:"R$ 299,99 · € 49,90", href:"/cliente/formacoes/gestao-pessoas-rh", tone:"emerald" },
   { price:"R$ 299,99 · € 49,90", href:"/formacao-psicanalise", tone:"violet" },
   { price:"R$ 299,99 · € 49,90", href:"/formacao-terapia-breve-psicanalitica", tone:"petrol" },
   { price:"R$ 299,99 · € 49,90", href:"/formacao-negocio-em-24-horas", tone:"gold" },
@@ -54,7 +54,6 @@ const FORMATION_BASE: {free?: boolean; price?: string; href: string; tone: Tone}
 ];
 
 export const FREE_ROUTES = [
-  "/cliente/formacoes/gestao-pessoas-rh",
   "/cliente/cursos/organizar-carreira",
   "/cliente/cursos/frances-negocios-a1",
   "/cliente/cursos/primeiros-socorros",
