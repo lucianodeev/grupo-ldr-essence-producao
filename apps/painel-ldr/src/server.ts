@@ -24,6 +24,8 @@ function temporaryRedirect(url: string): Response {
     headers: {
       location: url,
       "cache-control": "no-store, max-age=0",
+      pragma: "no-cache",
+      expires: "0",
     },
   });
 }
@@ -35,15 +37,20 @@ function academyCanonicalRedirect(request: Request): Response | null {
   const isLegacyLearnHost = host === "learn.lucianoconecta.online";
   const isLegacyPanelHost = host === "painel.ldrrhestrategia.com" || host === "painel.lucianoconecta.online";
 
-  if (isLegacyLearnHost) {
+  if (isLegacyLearnHost || isLegacyPanelHost) {
     const target = new URL("https://ldracademy.online");
     target.search = url.search;
     target.hash = url.hash;
 
-    if (url.pathname === "/" || url.pathname === "/cliente") {
-      target.pathname = "/biblioteca";
-    } else if (url.pathname === "/cliente/biblioteca" || url.pathname.startsWith("/cliente/biblioteca/")) {
-      target.pathname = url.pathname.replace(/^\/cliente\/biblioteca/, "/biblioteca");
+    if (
+      url.pathname === "/" ||
+      url.pathname === "/cliente" ||
+      url.pathname === "/biblioteca" ||
+      url.pathname === "/cliente/biblioteca"
+    ) {
+      target.pathname = "/cliente/biblioteca";
+    } else if (url.pathname.startsWith("/biblioteca/")) {
+      target.pathname = `/cliente${url.pathname}`;
     } else {
       target.pathname = url.pathname;
     }
@@ -51,50 +58,24 @@ function academyCanonicalRedirect(request: Request): Response | null {
     return temporaryRedirect(target.toString());
   }
 
-  if (isLegacyPanelHost) {
-    const target = new URL("https://ldracademy.online");
-    target.search = url.search;
-    target.hash = url.hash;
+  if (!isAcademy) return null;
 
-    if (url.pathname === "/cliente") {
-      target.pathname = "/biblioteca";
-      return temporaryRedirect(target.toString());
-    }
-
-    if (url.pathname === "/cliente/biblioteca" || url.pathname.startsWith("/cliente/biblioteca/")) {
-      target.pathname = url.pathname.replace(/^\/cliente\/biblioteca/, "/biblioteca");
-      return temporaryRedirect(target.toString());
-    }
-  }
-
-  if (isAcademy && (url.pathname === "/" || url.pathname === "/cliente")) {
+  // Use the real TanStack route in the browser. Keeping /biblioteca visible while
+  // internally rendering /cliente/biblioteca caused the server and client routers
+  // to hydrate different route trees, which could leave a white screen.
+  if (url.pathname === "/" || url.pathname === "/cliente" || url.pathname === "/biblioteca") {
     url.hostname = "ldracademy.online";
-    url.pathname = "/biblioteca";
+    url.pathname = "/cliente/biblioteca";
     return temporaryRedirect(url.toString());
   }
 
-  if (isAcademy && (url.pathname === "/cliente/biblioteca" || url.pathname.startsWith("/cliente/biblioteca/"))) {
+  if (url.pathname.startsWith("/biblioteca/")) {
     url.hostname = "ldracademy.online";
-    url.pathname = url.pathname.replace(/^\/cliente\/biblioteca/, "/biblioteca");
+    url.pathname = `/cliente${url.pathname}`;
     return temporaryRedirect(url.toString());
   }
 
   return null;
-}
-
-function rewriteAcademyLibraryRequest(request: Request): Request {
-  const url = new URL(request.url);
-  const host = url.hostname.toLowerCase();
-  const isAcademy = host === "ldracademy.online" || host === "www.ldracademy.online";
-
-  if (!isAcademy) return request;
-
-  if (url.pathname === "/biblioteca" || url.pathname.startsWith("/biblioteca/")) {
-    url.pathname = `/cliente${url.pathname}`;
-    return new Request(url.toString(), request);
-  }
-
-  return request;
 }
 
 function withFreshDocumentHeaders(request: Request, response: Response): Response {
@@ -149,8 +130,7 @@ export default {
       if (canonicalRedirect) return canonicalRedirect;
 
       const handler = await getServerEntry();
-      const routedRequest = rewriteAcademyLibraryRequest(request);
-      const response = await handler.fetch(routedRequest, env, ctx);
+      const response = await handler.fetch(request, env, ctx);
       const normalized = await normalizeCatastrophicSsrResponse(response);
       return withFreshDocumentHeaders(request, normalized);
     } catch (error) {
