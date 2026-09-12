@@ -4,7 +4,7 @@ import { useLocation } from "@tanstack/react-router";
 import { isFreeContentRoute } from "@/lib/library-sales-card-i18n";
 
 const ADSENSE_CLIENT = "ca-pub-4298173894748549";
-const ADSENSE_SLOT = import.meta.env.VITE_ADSENSE_FREE_CONTENT_SLOT?.trim();
+const ADSENSE_SLOT = "2744421637";
 
 declare global {
   interface Window {
