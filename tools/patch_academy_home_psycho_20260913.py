@@ -1,3 +1,4 @@
+# exact one-line production-safe patch
 from pathlib import Path
 p=Path('apps/painel-ldr/src/components/academy-university-home.tsx')
 s=p.read_text(encoding='utf-8')
