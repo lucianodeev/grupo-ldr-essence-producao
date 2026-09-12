@@ -2,10 +2,10 @@ import { useI18n } from "@/lib/i18n";
 import { PROFESSIONAL_FORMATIONS,pfText,type PFLocale } from "@/lib/professional-formations.catalog";
 
 const UI={
-  pt:{eyebrow:"NOVAS FORMAÇÕES",title:"Formações profissionais 100% online",online:"100% ONLINE",hours:"600H",lessons:"AULAS",modules:"MÓDULOS",project:"PROJETO FINAL"},
-  en:{eyebrow:"NEW TRAINING PROGRAMS",title:"100% online professional training",online:"100% ONLINE",hours:"600H",lessons:"LESSONS",modules:"MODULES",project:"FINAL PROJECT"},
-  fr:{eyebrow:"NOUVELLES FORMATIONS",title:"Formations professionnelles 100% en ligne",online:"100% EN LIGNE",hours:"600H",lessons:"LEÇONS",modules:"MODULES",project:"PROJET FINAL"},
-  es:{eyebrow:"NUEVAS FORMACIONES",title:"Formaciones profesionales 100% online",online:"100% ONLINE",hours:"600H",lessons:"CLASES",modules:"MÓDULOS",project:"PROYECTO FINAL"}
+  pt:{eyebrow:"FORMAÇÕES PROFISSIONAIS",title:"Formações profissionais 100% online",online:"100% ONLINE",hours:"600H",lessons:"AULAS",modules:"MÓDULOS",project:"PROJETO FINAL"},
+  en:{eyebrow:"PROFESSIONAL TRAINING",title:"100% online professional training",online:"100% ONLINE",hours:"600H",lessons:"LESSONS",modules:"MODULES",project:"FINAL PROJECT"},
+  fr:{eyebrow:"FORMATIONS PROFESSIONNELLES",title:"Formations professionnelles 100% en ligne",online:"100% EN LIGNE",hours:"600H",lessons:"LEÇONS",modules:"MODULES",project:"PROJET FINAL"},
+  es:{eyebrow:"FORMACIONES PROFESIONALES",title:"Formaciones profesionales 100% online",online:"100% ONLINE",hours:"600H",lessons:"CLASES",modules:"MÓDULOS",project:"PROYECTO FINAL"}
 } as const;
 
 export function FiveProfessionalFormationCards({compact=false}:{compact?:boolean}){
