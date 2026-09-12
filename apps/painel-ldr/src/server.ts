@@ -18,6 +18,16 @@ async function getServerEntry(): Promise<ServerEntry> {
   return serverEntryPromise;
 }
 
+function temporaryRedirect(url: string): Response {
+  return new Response("Redirecting...\n", {
+    status: 307,
+    headers: {
+      location: url,
+      "cache-control": "no-store, max-age=0",
+    },
+  });
+}
+
 function academyCanonicalRedirect(request: Request): Response | null {
   const url = new URL(request.url);
   const host = url.hostname.toLowerCase();
@@ -38,7 +48,7 @@ function academyCanonicalRedirect(request: Request): Response | null {
       target.pathname = url.pathname;
     }
 
-    return Response.redirect(target.toString(), 308);
+    return temporaryRedirect(target.toString());
   }
 
   if (isLegacyPanelHost) {
@@ -48,25 +58,25 @@ function academyCanonicalRedirect(request: Request): Response | null {
 
     if (url.pathname === "/cliente") {
       target.pathname = "/biblioteca";
-      return Response.redirect(target.toString(), 308);
+      return temporaryRedirect(target.toString());
     }
 
     if (url.pathname === "/cliente/biblioteca" || url.pathname.startsWith("/cliente/biblioteca/")) {
       target.pathname = url.pathname.replace(/^\/cliente\/biblioteca/, "/biblioteca");
-      return Response.redirect(target.toString(), 308);
+      return temporaryRedirect(target.toString());
     }
   }
 
   if (isAcademy && (url.pathname === "/" || url.pathname === "/cliente")) {
     url.hostname = "ldracademy.online";
     url.pathname = "/biblioteca";
-    return Response.redirect(url.toString(), 308);
+    return temporaryRedirect(url.toString());
   }
 
   if (isAcademy && (url.pathname === "/cliente/biblioteca" || url.pathname.startsWith("/cliente/biblioteca/"))) {
     url.hostname = "ldracademy.online";
     url.pathname = url.pathname.replace(/^\/cliente\/biblioteca/, "/biblioteca");
-    return Response.redirect(url.toString(), 308);
+    return temporaryRedirect(url.toString());
   }
 
   return null;
@@ -85,6 +95,25 @@ function rewriteAcademyLibraryRequest(request: Request): Request {
   }
 
   return request;
+}
+
+function withFreshDocumentHeaders(request: Request, response: Response): Response {
+  const accept = request.headers.get("accept") ?? "";
+  const contentType = response.headers.get("content-type") ?? "";
+  const isDocument = accept.includes("text/html") || contentType.includes("text/html");
+
+  if (!isDocument) return response;
+
+  const headers = new Headers(response.headers);
+  headers.set("cache-control", "no-store, max-age=0, must-revalidate");
+  headers.set("pragma", "no-cache");
+  headers.set("expires", "0");
+
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
 }
 
 // h3 swallows in-handler throws into a normal 500 Response with body
@@ -122,12 +151,16 @@ export default {
       const handler = await getServerEntry();
       const routedRequest = rewriteAcademyLibraryRequest(request);
       const response = await handler.fetch(routedRequest, env, ctx);
-      return await normalizeCatastrophicSsrResponse(response);
+      const normalized = await normalizeCatastrophicSsrResponse(response);
+      return withFreshDocumentHeaders(request, normalized);
     } catch (error) {
       console.error(error);
       return new Response(renderErrorPage(), {
         status: 500,
-        headers: { "content-type": "text/html; charset=utf-8" },
+        headers: {
+          "content-type": "text/html; charset=utf-8",
+          "cache-control": "no-store, max-age=0, must-revalidate",
+        },
       });
     }
   },
