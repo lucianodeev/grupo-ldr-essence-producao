@@ -1,0 +1,44 @@
+name: One-time rename header to LDR Academy
+on:
+  push:
+    paths:
+      - '.github/workflows/one-time-rename-header-ldr-academy.yml'
+permissions:
+  contents: write
+jobs:
+  rename:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Rename only public header brand
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          paths=[
+            Path('apps/painel-ldr/src/components/library-sales-home-access-choice.tsx'),
+            Path('apps/painel-ldr/src/components/library-sales-home.tsx'),
+          ]
+          replacements={
+            'brand:"Biblioteca LDR"':'brand:"LDR Academy"',
+            'brand:"LDR Library"':'brand:"LDR Academy"',
+            'brand:"Bibliothèque LDR"':'brand:"LDR Academy"',
+          }
+          for p in paths:
+            s=p.read_text(encoding='utf-8')
+            before=s
+            for a,b in replacements.items():
+              s=s.replace(a,b)
+            if s!=before:
+              p.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add apps/painel-ldr/src/components/library-sales-home-access-choice.tsx apps/painel-ldr/src/components/library-sales-home.tsx
+          git diff --cached --quiet && exit 0
+          git commit -m 'refactor(painel): rename public header to LDR Academy'
+          git pull --rebase origin main
+          git push origin HEAD:main
