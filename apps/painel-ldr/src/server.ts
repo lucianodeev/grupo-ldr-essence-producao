@@ -42,8 +42,9 @@ function academyCanonicalRedirect(request: Request): Response | null {
     target.search = url.search;
     target.hash = url.hash;
 
-    if (
-      url.pathname === "/" ||
+    if (url.pathname === "/") {
+      target.pathname = "/";
+    } else if (
       url.pathname === "/cliente" ||
       url.pathname === "/biblioteca" ||
       url.pathname === "/cliente/biblioteca"
@@ -60,10 +61,10 @@ function academyCanonicalRedirect(request: Request): Response | null {
 
   if (!isAcademy) return null;
 
-  // Use the real TanStack route in the browser. Keeping /biblioteca visible while
-  // internally rendering /cliente/biblioteca caused the server and client routers
-  // to hydrate different route trees, which could leave a white screen.
-  if (url.pathname === "/" || url.pathname === "/cliente" || url.pathname === "/biblioteca") {
+  // The academy root is the public sales page. Keep the library on the real
+  // authenticated client route so the public storefront and private library
+  // remain separate and hydration uses the same route on server and browser.
+  if (url.pathname === "/cliente" || url.pathname === "/biblioteca") {
     url.hostname = "ldracademy.online";
     url.pathname = "/cliente/biblioteca";
     return temporaryRedirect(url.toString());
