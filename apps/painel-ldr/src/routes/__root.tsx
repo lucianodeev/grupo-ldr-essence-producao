@@ -225,6 +225,18 @@ function RootComponent() {
   }, []);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+    const onImageError = (event: Event) => {
+      const img = event.target as HTMLImageElement | null;
+      if (!img || img.tagName !== "IMG" || img.dataset.ldrFallback === "1") return;
+      img.dataset.ldrFallback = "1";
+      img.src = "/ldr/image-placeholder.svg";
+    };
+    window.addEventListener("error", onImageError, true);
+    return () => window.removeEventListener("error", onImageError, true);
+  }, []);
+
+  useEffect(() => {
     const { data } = supabase.auth.onAuthStateChange((event) => {
       if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
       router.invalidate();

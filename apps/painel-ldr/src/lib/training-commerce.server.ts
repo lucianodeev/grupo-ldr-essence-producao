@@ -231,7 +231,7 @@ export async function getDoMamaoTrainingExperience(userId: string, email: string
   if (missingIncluded) {
     const rows = Array.from({length:missingIncluded},()=>({training_id:training.id,enrollment_id:currentEnrollment.id,customer_id:customer.id,source:"manual",status:"available"}));
     const { error } = await db.from("training_project_review_credits").insert(rows);
-    if (error) fail("Não foi possível preparar as avaliações mensais incluídas.");
+    if (error) console.warn("do-mamao included review credits provisioning skipped", error);
   }
 
   await syncPaidProjectReviewCredits(customer.id, training.id);

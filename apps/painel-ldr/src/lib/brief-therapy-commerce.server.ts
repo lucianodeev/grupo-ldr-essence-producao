@@ -83,8 +83,8 @@ async function savedProgress(customerId:string){
 
 export async function getBriefTherapyOffer(userId:string,email:string|null){
   const customer=await customerFor(userId,email);
-  const order=await paidOrder(customer.id);
-  const owner=hasOwnerDigitalAccess(email,userId);
+  const owner=hasOwnerDigitalAccess(email??customer.email,userId);
+  const order=owner?null:await paidOrder(customer.id);
   const entitled=Boolean(order)||owner;
   const enrollment=await ensureEnrollment(customer.id,entitled);
   const progress=await savedProgress(customer.id);

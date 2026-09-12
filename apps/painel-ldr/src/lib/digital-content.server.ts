@@ -73,8 +73,11 @@ export async function getProtectedDigitalContent(
   productKey: DigitalReaderProductKey,
   locale: DigitalReaderLocale,
 ) {
-  const customerId = await resolveCustomer(userId, email);
-  if (!hasOwnerDigitalAccess(email, userId)) await assertEntitlement(customerId, productKey);
+  const owner = hasOwnerDigitalAccess(email, userId);
+  if (!owner) {
+    const customerId = await resolveCustomer(userId, email);
+    await assertEntitlement(customerId, productKey);
+  }
 
   let { data, error } = await supabaseAdmin
     .from("digital_product_content")
