@@ -23,6 +23,7 @@ import { libraryCardText, postgraduateCardTitle, undergraduateCardTitle } from "
 import { libraryAcademicCardText } from "@/lib/library-academic-card-i18n";
 import { FiveProfessionalFormationCards } from "@/components/five-professional-formation-cards";
 import { LibraryStorefront } from "@/components/library-storefront";
+import { AcademicDrawers } from "@/components/academic-drawers";
 
 export const Route=createFileRoute("/_clientarea/cliente/biblioteca")({component:ClientLibraryRoute});
 
@@ -174,6 +175,8 @@ function ClientLibrary(){
       </div>
     </section>
 
+    <AcademicDrawers locale={locale}/>
+
     <details id="catalogo-ldr" className="scroll-mt-24 rounded-[24px] border border-slate-200 bg-white shadow-sm">
       <summary className="cursor-pointer list-none px-5 py-4 text-sm font-black text-[#0b2341] [&::-webkit-details-marker]:hidden">+ Outros conteúdos e acessos</summary>
       <div className="border-t border-slate-100 p-4 sm:p-6">
@@ -215,13 +218,13 @@ function ClientLibrary(){
 
         <div id="formacoes-profissionais" className="scroll-mt-24"><FiveProfessionalFormationCards compact /></div>
 
-        <section className="rounded-[28px] border border-[#d6ad63]/40 bg-gradient-to-br from-[#071426] via-[#0b2341] to-[#163b67] p-5 text-white shadow-lg sm:p-7">
+        <section className="hidden rounded-[28px] border border-[#d6ad63]/40 bg-gradient-to-br from-[#071426] via-[#0b2341] to-[#163b67] p-5 text-white shadow-lg sm:p-7">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between"><div><span className="rounded-full bg-[#d6ad63] px-3 py-1 text-[10px] font-black uppercase tracking-[.15em] text-[#281605]">{ac.undergradSection}</span><h2 className="mt-4 font-serif text-3xl text-[#fff7e7]">{ac.undergradTitle}</h2><p className="mt-2 max-w-3xl text-sm leading-6 text-white/75">{ac.undergradIntro}</p></div><span className="rounded-full border border-white/20 bg-white/10 px-3 py-2 text-xs font-bold">A partir de R$ 99,90/mês*</span></div>
       <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">{UNDERGRADUATE_COURSES.map(course=><article key={course.key} className="rounded-2xl border border-white/15 bg-white/10 p-5 shadow-sm backdrop-blur"><div className="flex items-start justify-between gap-3"><div className="text-3xl">{course.icon}</div><span className="rounded-full bg-[#d6ad63] px-2.5 py-1 text-[9px] font-black uppercase tracking-[.12em] text-[#281605]">{ct.postgrad}</span></div><h3 className="mt-4 font-serif text-xl leading-snug text-white">{undergraduateCardTitle(locale,course.key,course.title)}</h3><div className="mt-4 space-y-1.5 text-xs text-white/78"><p><b className="text-white">{ac.duration}</b> {course.years} {ac.years} · {course.semesters} {ac.semesters}</p><p><b className="text-white">{ac.modality}</b> {ac.live}</p><p><b className="text-white">{ac.value}</b> {ac.from}</p></div><a href={`/cliente/graduacao/${course.key}`} className="mt-5 inline-flex w-full items-center justify-center rounded-xl bg-[#d6ad63] px-4 py-3 text-sm font-black text-[#281605]">{ac.know}</a></article>)}</div>
       <p className="mt-5 text-[11px] leading-5 text-white/60">*Valor de referência para pré-lançamento. Duração, modalidade, grade e condições poderão mudar antes da eventual abertura oficial de matrículas. Oferta futura sujeita a instituição de ensino superior devidamente credenciada e às exigências regulatórias aplicáveis.</p>
     </section>
 
-<section className="rounded-[28px] border border-[#d6ad63]/35 bg-gradient-to-br from-[#071426] via-[#0b2341] to-[#102d50] p-5 text-white shadow-lg sm:p-7">
+<section className="hidden rounded-[28px] border border-[#d6ad63]/35 bg-gradient-to-br from-[#071426] via-[#0b2341] to-[#102d50] p-5 text-white shadow-lg sm:p-7">
       <div className="max-w-3xl"><span className="rounded-full bg-[#d6ad63] px-3 py-1 text-[10px] font-black uppercase tracking-[.15em] text-[#281605]">{ac.postgradSection}</span><h2 className="mt-4 font-serif text-3xl text-[#fff7e7]">{ac.postgradTitle}</h2><p className="mt-2 text-sm leading-6 text-white/75">{ac.postgradIntro}</p></div>
       <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">{postgrads.map(course=><article key={postgraduateCardTitle(locale,course.key,course.title)} className={`relative rounded-2xl border p-5 ${course.highlight?"border-[#d6ad63] bg-[#fff7e7] text-[#071426] shadow-lg":"border-white/15 bg-white/5 text-white"}`}>{course.highlight?<span className="absolute right-4 top-4 rounded-full bg-[#d6ad63] px-2.5 py-1 text-[9px] font-black uppercase tracking-[.12em] text-[#281605]">{ac.featured}</span>:null}<div className="text-2xl">{course.icon}</div><p className={`mt-4 text-[10px] font-black uppercase tracking-[.14em] ${course.highlight?"text-[#9a6d20]":"text-[#d6ad63]"}`}>{ac.postgradLabel}</p><h3 className="mt-2 font-serif text-xl leading-snug">{postgraduateCardTitle(locale,course.key,course.title)}</h3><a href={`/cliente/interesse-pos/${course.key}`} className={`mt-5 block rounded-xl border px-3 py-2 text-center text-xs font-black transition hover:-translate-y-0.5 ${course.highlight?"border-[#d6ad63]/60 bg-white text-[#0b2341] hover:bg-[#fff3cf]":"border-white/15 bg-white/10 text-white hover:bg-white/15"}`}>{ac.interested}</a></article>)}</div>
       <p className="mt-5 text-[11px] leading-5 text-white/60">Programas em desenvolvimento · oferta futura sujeita à parceria e validação acadêmica da instituição de ensino responsável.</p>
