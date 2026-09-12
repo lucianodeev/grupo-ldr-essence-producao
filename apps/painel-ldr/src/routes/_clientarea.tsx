@@ -1,5 +1,6 @@
 import { Outlet, createFileRoute, redirect } from "@tanstack/react-router";
 
+import { FreeContentAds } from "@/components/free-content-ads";
 import { getClientAuthState } from "@/integrations/supabase/session.functions";
 
 export const Route = createFileRoute("/_clientarea")({
@@ -9,5 +10,15 @@ export const Route = createFileRoute("/_clientarea")({
       throw redirect({ to: "/cliente/login" });
     }
   },
-  component: () => <Outlet />,
+  component: ClientAreaLayout,
 });
+
+function ClientAreaLayout() {
+  return (
+    <>
+      <FreeContentAds placement="top" />
+      <Outlet />
+      <FreeContentAds placement="bottom" />
+    </>
+  );
+}
