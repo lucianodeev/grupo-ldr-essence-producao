@@ -200,9 +200,9 @@ function ClientLibrary(){
       </div>
       {active?<div className="mt-4 rounded-2xl border bg-white p-5 shadow-inner">
         {active==="hr"?<div className="rounded-2xl border border-[#a7d7c1] bg-gradient-to-br from-[#f3fbf7] to-[#ecfdf5] p-5">
-          <span className="rounded-full bg-[#047857] px-3 py-1 text-[10px] font-black uppercase tracking-[.14em] text-white">100% GRATUITA · 600 HORAS</span>
+          <span className="rounded-full bg-[#047857] px-3 py-1 text-[10px] font-black uppercase tracking-[.14em] text-white">600 HORAS · 100% ONLINE</span>
           <h3 className="mt-4 font-serif text-2xl text-[#065f46]">Formação em Gestão de Pessoas e Recursos Humanos</h3>
-          <p className="mt-2 text-sm leading-6 text-muted-foreground">12 módulos · 600 horas · 100% online · leitura e atividades · estude no seu ritmo.</p>
+          <p className="mt-2 text-sm leading-6 text-muted-foreground">12 módulos · 600 horas · 100% online · compra individual R$ 299,99 / € 49,90 ou acesso pela assinatura ativa da Biblioteca LDR.</p>
           <a href="/cliente/formacoes/gestao-pessoas-rh" className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#047857] px-4 py-3 text-sm font-black text-white">COMEÇAR GRATUITAMENTE</a>
         </div>:active==="free"?<div>
           <div className="mb-4 flex items-center justify-between gap-3"><div><span className="rounded-full bg-[#fff0e8] px-3 py-1 text-[10px] font-black uppercase tracking-[.12em] text-[#9a4828]">Cursos gratuitos</span><h3 className="mt-3 font-serif text-2xl text-[#5d2917]">Escolha seu curso gratuito</h3></div><span className="rounded-full bg-[#0b2341] px-3 py-1 text-xs font-black text-white">3 cursos</span></div>

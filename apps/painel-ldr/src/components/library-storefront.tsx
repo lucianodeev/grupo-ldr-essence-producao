@@ -24,7 +24,7 @@ const ITEMS:Item[]=[
   {title:"Formação em IA",subtitle:"IA aplicada aos negócios e à carreira.",href:"/cliente/treinamentos/ia-negocios-carreira",icon:"🤖",tag:"ia formação inteligência artificial",group:"formacoes",color:"#143d59"},
   {title:"Psicanálise",subtitle:"Formação online em Psicanálise.",href:"/formacao-psicanalise",icon:"🧠",tag:"psicanálise formação",group:"formacoes",color:"#5b2b86"},
   {title:"Formações profissionais",subtitle:"Carreira, liderança, RH e outras formações.",href:"#formacoes-profissionais",icon:"🎓",tag:"formações cursos carreira liderança rh",group:"formacoes",color:"#0b5cab"},
-  {title:"RH 600h",subtitle:"Formação gratuita em Gestão de Pessoas e RH.",href:"/cliente/formacoes/gestao-pessoas-rh",icon:"👥",tag:"rh gratuito gestão pessoas",group:"gratis",color:"#047857"},
+  {title:"RH 600h",subtitle:"Formação profissional em Gestão de Pessoas e RH.",href:"/cliente/formacoes/gestao-pessoas-rh",icon:"👥",price:"R$ 299,99 · € 49,90",tag:"rh formação gestão pessoas",group:"formacoes",color:"#047857"},
   {title:"Carreira",subtitle:"Curso gratuito para organizar sua carreira.",href:"/cliente/cursos/organizar-carreira",icon:"💼",tag:"carreira gratuito",group:"gratis",color:"#b85c2e"},
   {title:"Francês A1",subtitle:"Francês básico para negócios.",href:"/cliente/cursos/frances-negocios-a1",icon:"🇫🇷",tag:"francês gratuito a1",group:"gratis",color:"#123f73"},
   {title:"Primeiros Socorros",subtitle:"Noções básicas de primeiros socorros.",href:"/cliente/cursos/primeiros-socorros",icon:"⛑️",tag:"primeiros socorros gratuito",group:"gratis",color:"#b4232a"}
