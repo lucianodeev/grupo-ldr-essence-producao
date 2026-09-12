@@ -1,4 +1,5 @@
 name: Finalize LDR Academy incremental 20260913
+# one-shot audited finalizer
 on:
   push:
     branches: [main]
