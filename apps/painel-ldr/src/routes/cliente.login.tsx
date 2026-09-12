@@ -39,9 +39,29 @@ function cameFromCorporateBenefits() {
   }
 }
 
+function isAcademyHost() {
+  if (typeof window === "undefined") return false;
+  return /(^|\.)ldracademy\.online$/i.test(window.location.hostname);
+}
+
 function academyDestination() {
-  if (typeof window === "undefined") return "/cliente";
-  return /(^|\.)ldracademy\.online$/i.test(window.location.hostname) ? "/biblioteca" : "/cliente";
+  return isAcademyHost() ? "https://ldracademy.online/biblioteca" : "/cliente";
+}
+
+function oauthReturnUrl() {
+  if (typeof window === "undefined") return "/cliente/login";
+
+  // Supabase may fall back to its configured Site URL when a newly-added
+  // custom domain is not yet present in the redirect allow-list. The legacy
+  // learn host is already part of the established auth flow; server.ts then
+  // immediately canonicalizes it back to ldracademy.online while preserving
+  // the OAuth query parameters. The PKCE verifier remains on the academy
+  // domain, where the code is exchanged after the redirect.
+  if (isAcademyHost()) {
+    return "https://learn.lucianoconecta.online/cliente/login?academy=1";
+  }
+
+  return `${window.location.origin}/cliente/login`;
 }
 
 function ClientLogin() {
@@ -55,12 +75,17 @@ function ClientLogin() {
     }
 
     let active = true;
+    let retryTimer: number | undefined;
 
     const redirectToClient = () => {
       if (!active || redirecting.current) return;
       redirecting.current = true;
       setBusy(true);
-      window.location.replace(academyDestination());
+      // Give @supabase/ssr a brief moment to persist the session cookies before
+      // the protected library route is requested by the browser.
+      window.setTimeout(() => {
+        window.location.replace(academyDestination());
+      }, 150);
     };
 
     const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
@@ -73,12 +98,27 @@ function ClientLogin() {
       }
     });
 
-    void supabase.auth.getSession().then(({ data }) => {
-      if (active && data.session) redirectToClient();
-    });
+    const verifySession = async (attempt = 0) => {
+      const { data } = await supabase.auth.getSession();
+      if (!active) return;
+      if (data.session) {
+        redirectToClient();
+        return;
+      }
+
+      const hasOAuthCode = new URLSearchParams(window.location.search).has("code");
+      if (hasOAuthCode && attempt < 5) {
+        retryTimer = window.setTimeout(() => {
+          void verifySession(attempt + 1);
+        }, 300);
+      }
+    };
+
+    void verifySession();
 
     return () => {
       active = false;
+      if (retryTimer) window.clearTimeout(retryTimer);
       listener.subscription.unsubscribe();
     };
   }, []);
@@ -90,7 +130,7 @@ function ClientLogin() {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${window.location.origin}/cliente/login`,
+        redirectTo: oauthReturnUrl(),
         skipBrowserRedirect: true,
       },
     });
@@ -113,14 +153,14 @@ function ClientLogin() {
         type="button"
         onClick={handleGoogle}
         disabled={busy}
-        className="w-full rounded-lg border border-border bg-card px-4 py-3 text-sm font-bold text-primary hover:bg-accent disabled:cursor-wait disabled:opacity-60"
+        className="w-full rounded-xl border border-border bg-card px-5 py-3.5 text-sm font-bold text-primary shadow-sm transition hover:bg-accent disabled:cursor-wait disabled:opacity-60"
       >
         {busy ? "Entrando…" : "Entrar com Google"}
       </button>
 
-      <p className="mt-2 text-xs text-muted-foreground">
+      <p className="mt-3 text-center text-xs leading-5 text-muted-foreground">
         Use a mesma conta Google informada na sua compra.{" "}
-        <Link to="/" className="underline">
+        <Link to="/" className="font-semibold underline underline-offset-2">
           Voltar ao início
         </Link>
       </p>
@@ -152,7 +192,7 @@ export function ClientAuthShell({
         <section className="s8-card">
           <h1 className="font-serif text-2xl">{title}</h1>
           <p className="mt-2 text-sm text-muted-foreground">{subtitle}</p>
-          <div className="mt-4">{children}</div>
+          <div className="mt-5">{children}</div>
         </section>
       </main>
     </div>
