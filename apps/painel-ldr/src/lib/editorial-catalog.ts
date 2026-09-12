@@ -2,12 +2,9 @@ export type EditorialKind="jornal"|"revista";
 export type EditorialProduct=
   |"jornal_ldr"|"revista_ldr"
   |"jornal_negocios_economia"|"jornal_politica_economia"|"jornal_europa"|"jornal_migracao_mobilidade"
-  |"revista_fofoca"|"revista_robotica_ia"|"revista_gastronomia"|"revista_negocios"|"revista_saude_mental"|"revista_saude_bem_estar"|"revista_estetica"|"revista_rural"|"revista_viagem"|"revista_migracao_exterior"|"revista_carreira_trabalho_internacional"|"revista_vida_luciano";
+  |"revista_fofoca"|"revista_robotica_ia"|"revista_gastronomia"|"revista_negocios"|"revista_saude_mental"|"revista_saude_bem_estar"|"revista_estetica"|"revista_rural"|"revista_viagem"|"revista_migracao_exterior"|"revista_carreira_trabalho_internacional"|"revista_vida_luciano"|"revista_psicanalise_no_mundo";
 
-export type EditorialEntry={
-  productKey:EditorialProduct;slug:string;kind:EditorialKind;icon:string;title:string;subtitle:string;description:string;topics:string[];priceBrlCents:number;priceEurCents:number;color:string;notice?:string;
-};
-
+export type EditorialEntry={productKey:EditorialProduct;slug:string;kind:EditorialKind;icon:string;title:string;subtitle:string;description:string;topics:string[];priceBrlCents:number;priceEurCents:number;color:string;notice?:string;};
 const standard=(x:Omit<EditorialEntry,"priceBrlCents"|"priceEurCents">):EditorialEntry=>({...x,priceBrlCents:90,priceEurCents:90});
 
 export const EDITORIAL_CATALOG:EditorialEntry[]=[
@@ -27,10 +24,10 @@ export const EDITORIAL_CATALOG:EditorialEntry[]=[
   standard({productKey:"revista_migracao_exterior",slug:"revista-migracao-vida-exterior",kind:"revista",icon:"🌍",title:"Revista Migração & Vida no Exterior",subtitle:"Viver, trabalhar e se adaptar fora do país",description:"Documentação, trabalho, adaptação, cultura, integração e oportunidades internacionais.",topics:["Vida no exterior","Documentação","Trabalho","Adaptação","Integração"],color:"#3d5f73",notice:"Conteúdo informativo e baseado em fontes oficiais quando tratar de regras migratórias."}),
   standard({productKey:"revista_carreira_trabalho_internacional",slug:"revista-carreira-trabalho-internacional",kind:"revista",icon:"🌐",title:"Revista Carreira & Trabalho Internacional",subtitle:"Carreira global, recrutamento e oportunidades",description:"Carreira internacional, currículo, entrevistas, mercado de trabalho, recrutamento, competências e adaptação profissional em diferentes países.",topics:["Carreira internacional","Currículo","Entrevistas","Recrutamento","Mercado de trabalho","Competências"],color:"#164a72"}),
   {productKey:"revista_vida_luciano",slug:"a-vida-de-luciano",kind:"revista",icon:"📖",title:"A Vida de Luciano",subtitle:"Uma história real em novos capítulos toda semana",description:"Revista semanal em capítulos sobre trajetória, mudanças, empreendedorismo, psicanálise, negócios, aprendizados e bastidores dos projetos.",topics:["Trajetória","Empreendedorismo","Psicanálise","Negócios","Bastidores","Aprendizados"],priceBrlCents:2990,priceEurCents:500,color:"#5b0824"},
+  {productKey:"revista_psicanalise_no_mundo",slug:"psicanalise-no-mundo",kind:"revista",icon:"🧠",title:"Revista Psicanálise no Mundo",subtitle:"Clínica, teoria, cultura e psicanálise em diferentes contextos",description:"Uma publicação semanal dedicada à psicanálise contemporânea, com teoria, clínica, estudos de caso para reflexão, cultura, sociedade, pesquisas e debates sobre a psicanálise no mundo.",topics:["Psicanálise contemporânea","Clínica","Teoria","Estudos de caso","Cultura e sociedade","Pesquisa","Psicanálise no mundo"],priceBrlCents:390,priceEurCents:390,color:"#183d63",notice:"Conteúdo editorial e educacional. Estudos de caso devem preservar a confidencialidade e não substituir supervisão clínica ou atendimento profissional."},
 ];
-
 export function findEditorialBySlug(slug:string){return EDITORIAL_CATALOG.find(x=>x.slug===slug)??null;}
 export function findEditorialByProductKey(productKey:string){return EDITORIAL_CATALOG.find(x=>x.productKey===productKey)??null;}
 export function editorialPath(productKey:EditorialProduct){if(productKey==="jornal_ldr")return "/cliente/biblioteca/jornal-ldr";if(productKey==="revista_ldr")return "/cliente/biblioteca/revista-ldr";const item=findEditorialByProductKey(productKey);return item?`/cliente/biblioteca/publicacoes/${item.slug}`:"/cliente/biblioteca/publicacoes";}
 export function editorialTitle(productKey:EditorialProduct){if(productKey==="jornal_ldr")return "Jornal LDR";if(productKey==="revista_ldr")return "Revista LDR";return findEditorialByProductKey(productKey)?.title??"Publicação LDR";}
-export function editorialPrices(productKey:EditorialProduct){if(productKey==="revista_vida_luciano")return {priceBrlCents:2990,priceEurCents:500};return {priceBrlCents:90,priceEurCents:90};}
+export function editorialPrices(productKey:EditorialProduct){const item=findEditorialByProductKey(productKey);if(item)return {priceBrlCents:item.priceBrlCents,priceEurCents:item.priceEurCents};return {priceBrlCents:90,priceEurCents:90};}
