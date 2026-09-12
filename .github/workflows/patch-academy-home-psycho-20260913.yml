@@ -1,0 +1,29 @@
+name: Patch Academy Home Psycho 20260913
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/patch_academy_home_psycho_20260913.py'
+      - '.github/workflows/patch-academy-home-psycho-20260913.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: python3 tools/patch_academy_home_psycho_20260913.py
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build:painel
+      - run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add apps/painel-ldr/src/components/academy-university-home.tsx
+          git commit -m 'fix: align LDR Academy home psychoanalysis card'
+          git push origin main
