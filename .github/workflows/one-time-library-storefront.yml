@@ -1,0 +1,47 @@
+name: One-time library storefront integration
+
+on:
+  push:
+    paths:
+      - '.github/workflows/one-time-library-storefront.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch-library:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Patch library safely
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx')
+          s=p.read_text()
+          old='import { FiveProfessionalFormationCards } from "@/components/five-professional-formation-cards";'
+          new=old+'\nimport { LibraryStorefront } from "@/components/library-storefront";'
+          if 'LibraryStorefront' not in s:
+              if old not in s: raise SystemExit('import anchor not found')
+              s=s.replace(old,new,1)
+          anchor='    <section className="rounded-[28px] border border-[#d6ad63]/40 bg-white p-5 shadow-sm sm:p-6">'
+          insert='    <LibraryStorefront locale={locale}/>\n\n'+anchor
+          if '<LibraryStorefront locale={locale}/>' not in s:
+              if anchor not in s: raise SystemExit('subscription anchor not found')
+              s=s.replace(anchor,insert,1)
+          catalog='    <section className="rounded-[28px] border bg-background/90 p-4 shadow-sm sm:p-6">'
+          catalog_new='    <section id="catalogo-ldr" className="scroll-mt-24 rounded-[28px] border bg-background/90 p-4 shadow-sm sm:p-6">'
+          if catalog in s:
+              s=s.replace(catalog,catalog_new,1)
+          p.write_text(s)
+          PY
+      - name: Commit integration
+        run: |
+          git config user.name 'ldr-rh-campanhas'
+          git config user.email 'llucianouam@gmail.com'
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'feat(painel): integrate library newsstand storefront'
+          git push
