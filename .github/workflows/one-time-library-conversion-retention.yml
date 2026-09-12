@@ -1,0 +1,57 @@
+name: One-time library conversion retention
+on:
+  push:
+    paths:
+      - '.github/workflows/one-time-library-conversion-retention.yml'
+permissions:
+  contents: write
+jobs:
+  improve:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Apply safe UX improvements
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          # 1) Biblioteca: use real existing learning progress; hide when absent.
+          p=Path('apps/painel-ldr/src/components/library-storefront.tsx')
+          s=p.read_text()
+          s=s.replace('export function LibraryStorefront({locale}:{locale:Locale}){','export function LibraryStorefront({locale,progress}:{locale:Locale;progress?:any[]}){',1)
+          anchor='    {searching?<section>'
+          block='''    {!searching && progress?.length ? <section id="continuar" className="scroll-mt-24">\n      <Heading icon={<GraduationCap className="h-7 w-7"/>} title={locale==="pt"?"Continue de onde parou":locale==="fr"?"Reprenez où vous en étiez":locale==="es"?"Continúa donde lo dejaste":"Continue where you left off"} desc={locale==="pt"?"Retome rapidamente seus conteúdos iniciados.":locale==="fr"?"Reprenez rapidement vos contenus commencés.":locale==="es"?"Retoma rápidamente tus contenidos iniciados.":"Quickly resume content you already started."} label={t.seeAll}/>\n      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">{progress.slice().sort((a:any,b:any)=>new Date(b.updated_at).getTime()-new Date(a.updated_at).getTime()).slice(0,3).map((x:any)=><a key={x.id||x.product_key} href={x.href||"/cliente/biblioteca"} className="rounded-[22px] border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"><p className="text-xs font-black uppercase tracking-[.14em] text-[#b1842c]">{locale==="pt"?"EM ANDAMENTO":locale==="fr"?"EN COURS":locale==="es"?"EN CURSO":"IN PROGRESS"}</p><h3 className="mt-2 font-serif text-xl text-[#0b2341]">{x.title||x.product_key}</h3><p className="mt-1 text-xs text-slate-500">{x.current_location||""}</p><div className="mt-4 h-2 overflow-hidden rounded-full bg-slate-100"><div className="h-full bg-[#b1842c]" style={{width:`${Math.max(0,Math.min(100,Number(x.progress_percent)||0))}%`}}/></div><div className="mt-2 flex items-center justify-between text-xs font-bold text-slate-600"><span>{Number(x.progress_percent)||0}%</span><span className="text-[#14518b]">{locale==="pt"?"CONTINUAR →":locale==="fr"?"CONTINUER →":locale==="es"?"CONTINUAR →":"CONTINUE →"}</span></div></a>)}</div>\n    </section>:null}\n\n    {!searching ? <section id="novidades" className="scroll-mt-24">\n      <Heading icon={<Sparkles className="h-7 w-7"/>} title={locale==="pt"?"Novidades na Biblioteca":locale==="fr"?"Nouveautés de la Bibliothèque":locale==="es"?"Novedades en la Biblioteca":"New in the Library"} desc={locale==="pt"?"Publicações e conteúdos para descobrir agora.":locale==="fr"?"Publications et contenus à découvrir maintenant.":locale==="es"?"Publicaciones y contenidos para descubrir ahora.":"Fresh publications and content to discover now."} label={t.seeAll}/>\n      <div className="flex snap-x gap-3 overflow-x-auto pb-2 [scrollbar-width:none] sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible">{[ITEMS[2],ITEMS[3],ITEMS[4],ITEMS[8]].filter(Boolean).map(item=><div key={item.title} className="relative"><span className="absolute right-3 top-3 z-10 rounded-full bg-[#d6ad63] px-2 py-1 text-[8px] font-black text-[#281605]">{locale==="pt"?"NOVO":locale==="fr"?"NOUVEAU":locale==="es"?"NUEVO":"NEW"}</span><ShelfCard item={item} t={t}/></div>)}</div>\n    </section>:null}\n\n'''
+          if 'id="continuar"' not in s:
+              if anchor not in s: raise SystemExit('storefront anchor missing')
+              s=s.replace(anchor,block+anchor,1)
+          p.write_text(s)
+
+          # Pass only real progress already returned by the existing learning hub.
+          p=Path('apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx')
+          s=p.read_text()
+          s=s.replace('<LibraryStorefront locale={locale}/>','<LibraryStorefront locale={locale} progress={learning?.progress ?? []}/>',1)
+          p.write_text(s)
+
+          # 2) Public sales home: replace generic category chooser with goal-based conversion navigation.
+          p=Path('apps/painel-ldr/src/components/library-sales-home.tsx')
+          s=p.read_text()
+          old='''    <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6"><div className="text-center"><h2 className="font-serif text-3xl">{t.choose}</h2><p className="mt-2 text-sm text-slate-600">{t.chooseSub}</p></div><div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">{[[t.formations,"#formacoes",GraduationCap],[t.free,"#gratuitos",Sparkles],[t.business,"#negocios",BriefcaseBusiness],[t.books,"#livros",BookOpen],[t.languages,"#gratuitos",Languages]].map(([label,href,Icon]:any)=><a key={label} href={href} className="group flex items-center justify-between rounded-2xl border border-[#d9cfba] bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"><span className="flex items-center gap-3 font-black"><Icon className="h-5 w-5 text-[#a77b2e]"/>{label}</span><ChevronRight className="h-4 w-4 text-slate-400"/></a>)}</div></section>'''
+          new='''    <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6"><div className="text-center"><h2 className="font-serif text-3xl">{locale==="pt"?"O que você quer fazer hoje?":locale==="fr"?"Que voulez-vous faire aujourd’hui ?":locale==="es"?"¿Qué quieres hacer hoy?":"What do you want to do today?"}</h2><p className="mt-2 text-sm text-slate-600">{locale==="pt"?"Escolha seu objetivo e encontre o conteúdo certo para você.":locale==="fr"?"Choisissez votre objectif et trouvez le contenu qui vous convient.":locale==="es"?"Elige tu objetivo y encuentra el contenido adecuado para ti.":"Choose your goal and find the right content for you."}</p></div><div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">{[[locale==="pt"?"Aprender uma profissão":locale==="fr"?"Apprendre un métier":locale==="es"?"Aprender una profesión":"Learn a profession","#formacoes",GraduationCap],[locale==="pt"?"Melhorar meu negócio":locale==="fr"?"Développer mon activité":locale==="es"?"Mejorar mi negocio":"Grow my business","#negocios",BriefcaseBusiness],[locale==="pt"?"Desenvolver minha carreira":locale==="fr"?"Développer ma carrière":locale==="es"?"Desarrollar mi carrera":"Develop my career","#formacoes",Sparkles],[locale==="pt"?"Ler e me atualizar":locale==="fr"?"Lire et m’informer":locale==="es"?"Leer y actualizarme":"Read and stay informed","#editorial-ldr",BookOpen],[locale==="pt"?"Começar gratuitamente":locale==="fr"?"Commencer gratuitement":locale==="es"?"Empezar gratis":"Start for free","#gratuitos",Languages]].map(([label,href,Icon]:any)=><a key={label} href={href} className="group flex items-center justify-between rounded-2xl border border-[#d9cfba] bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"><span className="flex items-center gap-3 font-black"><Icon className="h-5 w-5 text-[#a77b2e]"/>{label}</span><ChevronRight className="h-4 w-4 text-slate-400"/></a>)}</div></section>'''
+          if old not in s: raise SystemExit('sales chooser anchor missing')
+          s=s.replace(old,new,1)
+          p.write_text(s)
+          PY
+      - name: Commit
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add apps/painel-ldr/src/components/library-storefront.tsx apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx apps/painel-ldr/src/components/library-sales-home.tsx
+          git diff --cached --quiet && exit 0
+          git commit -m 'feat(painel): improve library retention and sales navigation'
+          git pull --rebase origin main
+          git push origin HEAD:main
