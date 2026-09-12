@@ -6,7 +6,7 @@ const FORMATION_TEXT: Record<LibraryCardLocale, [string,string,string][]> = {
   pt: [
     ["RH · 600H","Formação em Gestão de Pessoas e Recursos Humanos","600 horas · 100% online · leitura e atividades"],
     ["PSICANÁLISE","Formação em Psicanálise com Ênfase em Autismo e Atuação Internacional","15 módulos · 1.200 horas · 240 unidades · 6 encontros ao vivo"],
-    ["🌍 INTERNACIONAL · PREMIUM","Psicanálise Internacional, Neurodiversidade e Autismo","21 módulos · 6–12 meses · 2 encontros ao vivo/mês · fora da assinatura"],
+    ["🌍 INTERNACIONAL · PREMIUM","Psicanálise Internacional, Neurodiversidade e Autismo","21 módulos · 6–12 meses · 100% online · projetos e avaliação · fora da assinatura"],
     ["TERAPIA BREVE · 1.200H","Formação em Terapia Breve Psicanalítica","15 módulos · 300 aulas · 1.200 horas · 100% online · projetos e avaliação"],
     ["NEGÓCIO EM 24H","Formação Negócio em 24 Horas","9 módulos · 90 aulas · 360 horas · 100% online · projeto final avaliado"],
     ["MENTORIA E CARREIRA","Formação em Mentoria Profissional e de Carreira","3 meses · percurso estruturado · acesso digital"],
@@ -14,8 +14,8 @@ const FORMATION_TEXT: Record<LibraryCardLocale, [string,string,string][]> = {
   ],
   en: [
     ["HR · 600H","People & Human Resources Management Training","600 hours · 100% online · reading and activities"],
-    ["PSYCHOANALYSIS","Online Psychoanalysis Training","14 modules · 1,200 hours · 220 units · 6 live meetings"],
-    ["🌍 INTERNATIONAL · PREMIUM","International Psychoanalysis, Neurodiversity and Autism","21 modules · 6–12 months · 2 live meetings/month · outside subscription"],
+    ["PSYCHOANALYSIS","Psychoanalysis Training with Emphasis on Autism and International Practice","15 modules · 1,200 hours · 240 units · 6 live meetings"],
+    ["🌍 INTERNATIONAL · PREMIUM","International Psychoanalysis, Neurodiversity and Autism","21 modules · 6–12 months · 100% online · projects and assessment · outside subscription"],
     ["BRIEF THERAPY · 1,200H","Psychoanalytic Brief Therapy Training","15 modules · 300 lessons · 1,200 hours · 100% online · projects and assessment"],
     ["BUSINESS IN 24H","Business in 24 Hours Training","9 modules · 90 lessons · 360 hours · 100% online · assessed final project"],
     ["MENTORING & CAREER","Professional & Career Mentoring Training","3 months · structured pathway · digital access"],
@@ -23,8 +23,8 @@ const FORMATION_TEXT: Record<LibraryCardLocale, [string,string,string][]> = {
   ],
   fr: [
     ["RH · 600H","Formation en Gestion des Personnes et Ressources Humaines","600 heures · 100 % en ligne · lecture et activités"],
-    ["PSYCHANALYSE","Formation en Ligne en Psychanalyse","14 modules · 1 200 heures · 220 unités · 6 rencontres en direct"],
-    ["🌍 INTERNATIONAL · PREMIUM","Psychanalyse internationale, neurodiversité et autisme","21 modules · 6–12 mois · 2 rencontres en direct/mois · hors abonnement"],
+    ["PSYCHANALYSE","Formation en Psychanalyse avec Accent sur l’Autisme et la Pratique Internationale","15 modules · 1 200 heures · 240 unités · 6 rencontres en direct"],
+    ["🌍 INTERNATIONAL · PREMIUM","Psychanalyse internationale, neurodiversité et autisme","21 modules · 6–12 mois · 100% en ligne · projets et évaluation · hors abonnement"],
     ["THÉRAPIE BRÈVE · 1 200H","Formation en Thérapie Brève Psychanalytique","15 modules · 300 leçons · 1 200 heures · 100% en ligne · projets et évaluation"],
     ["ENTREPRISE EN 24H","Formation Entreprise en 24 Heures","9 modules · 90 leçons · 360 heures · 100 % en ligne · projet final évalué"],
     ["MENTORAT & CARRIÈRE","Formation en Mentorat Professionnel et de Carrière","3 mois · parcours structuré · accès numérique"],
@@ -32,8 +32,8 @@ const FORMATION_TEXT: Record<LibraryCardLocale, [string,string,string][]> = {
   ],
   es: [
     ["RR. HH. · 600H","Formación en Gestión de Personas y Recursos Humanos","600 horas · 100 % online · lectura y actividades"],
-    ["PSICOANÁLISIS","Formación Online en Psicoanálisis","14 módulos · 1.200 horas · 220 unidades · 6 encuentros en vivo"],
-    ["🌍 INTERNACIONAL · PREMIUM","Psicoanálisis Internacional, Neurodiversidad y Autismo","21 módulos · 6–12 meses · 2 encuentros en vivo/mes · fuera de suscripción"],
+    ["PSICOANÁLISIS","Formación en Psicoanálisis con Énfasis en Autismo y Actuación Internacional","15 módulos · 1.200 horas · 240 unidades · 6 encuentros en vivo"],
+    ["🌍 INTERNACIONAL · PREMIUM","Psicoanálisis Internacional, Neurodiversidad y Autismo","21 módulos · 6–12 meses · 100% online · proyectos y evaluación · fuera de suscripción"],
     ["TERAPIA BREVE · 1.200H","Formación en Terapia Breve Psicoanalítica","15 módulos · 300 clases · 1.200 horas · 100% online · proyectos y evaluación"],
     ["NEGOCIO EN 24H","Formación Negocio en 24 Horas","9 módulos · 90 clases · 360 horas · 100 % online · proyecto final evaluado"],
     ["MENTORÍA Y CARRERA","Formación en Mentoría Profesional y de Carrera","3 meses · recorrido estructurado · acceso digital"],
