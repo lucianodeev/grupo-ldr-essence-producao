@@ -1,0 +1,51 @@
+name: Restore known-good library route
+on:
+  push:
+    paths:
+      - '.github/workflows/restore-library-route-known-good.yml'
+permissions:
+  contents: write
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Sync latest main
+        run: |
+          git fetch origin main
+          git checkout main
+          git reset --hard origin/main
+      - name: Restore library route from last known-good version before international-course patch
+        run: |
+          git checkout f4774390eeba9633857fbaae291e7d469ddd4e94 -- apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+      - name: Validate critical library references
+        run: |
+          test -s apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          grep -q 'ebook_coragem_comecar' apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          grep -q 'livro_menino_mamao' apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          grep -q 'do_mamao_ao_negocio' apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          grep -q 'clientCreateDigitalCheckout' apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          grep -q 'clientCreateDoMamaoTrainingCheckout' apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          grep -q 'clientLibrarySubscription' apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          grep -q 'LibraryStorefront' apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          grep -q 'AcademicDrawers' apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          ! grep -q 'clientInternationalPsychoanalysisOffer' apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install dependencies
+        run: npm install --no-package-lock
+      - name: Full panel build
+        run: npm run build:painel
+      - name: Commit restored route and remove workflow
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm .github/workflows/restore-library-route-known-good.yml
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          git commit -m 'fix: restore stable client library route'
+          git pull --rebase origin main
+          git push origin main
