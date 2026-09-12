@@ -15,48 +15,14 @@ jobs:
           fetch-depth: 0
       - name: Sync latest main
         run: git pull --rebase origin main
-      - name: Convert RH formation commerce and copy
+      - name: Finish RH paid conversion
         shell: bash
         run: |
           python - <<'PY'
           from pathlib import Path
 
-          server=Path('apps/painel-ldr/src/lib/free-hr-formation.server.ts')
-          server.write_text(r'''import { getRequest } from "@tanstack/react-start/server";
-import { supabaseAdmin } from "@/integrations/supabase/client.server";
-import { resolveClient } from "@/lib/client-portal.server";
-import { hasOwnerDigitalAccess } from "@/lib/owner-digital-access.server";
-import { hasActiveLibrarySubscription } from "@/lib/library-subscription.server";
-const PRODUCT_KEY="formacao_gestao_pessoas_rh",SLUG="formacao-gratuita-gestao-pessoas-rh",TITLE="Formação em Gestão de Pessoas e Recursos Humanos",HOURS=600,PRICE_BRL=29_999,PRICE_EUR=4_990;const db=supabaseAdmin as any;type Market="BR"|"INTL";
-function fail(m:string):never{throw new Error(m)}
-async function customerFor(uid:string,email:string|null){const c=await resolveClient(uid,email);if(c.status!=="ok")fail("Acesso do cliente não disponível.");return c.customer;}
-function matches(order:any){const m=(order?.metadata??{}) as Record<string,unknown>;const key=typeof m.product_key==="string"?m.product_key:"";return order?.catalog_key===PRODUCT_KEY||key===PRODUCT_KEY||key===SLUG;}
-async function paidOrder(cid:string){const {data,error}=await db.from("orders").select("id,catalog_key,payment_status,metadata,created_at").eq("customer_id",cid).eq("payment_status","pago").order("created_at",{ascending:false});if(error)fail("Não foi possível verificar a compra da formação.");return(data??[]).find(matches)??null;}
-function appOrigin(){const request=getRequest();return process.env.CLIENT_PANEL_URL?.replace(/\/$/,"")||(request?new URL(request.url).origin:"https://painel.ldrrhestrategia.com");}
-async function ensureProgram(){const description="Formação livre de caráter profissional em Gestão de Pessoas e Recursos Humanos, 600 horas e 100% online, disponível por compra individual ou pela assinatura ativa da Biblioteca LDR.";const {data:e}=await db.from("training_programs").select("id,slug,status").eq("slug",SLUG).maybeSingle();if(e){await db.from("training_programs").update({status:"published",description,title:TITLE}).eq("id",e.id);return{...e,status:"published"};}const {data,error}=await db.from("training_programs").insert({slug:SLUG,title:TITLE,description,status:"published"}).select("id,slug,status").single();if(error||!data)throw error??new Error("Falha ao preparar formação de RH.");return data;}
-async function enrollment(cid:string){try{const training=await ensureProgram();const {data}=await db.from("training_enrollments").select("id,enrolled_at,progress_percent,completed_at,product_key,active").eq("training_id",training.id).eq("customer_id",cid).eq("active",true).order("enrolled_at",{ascending:false}).limit(1).maybeSingle();return{training,data:data??null};}catch(e){console.warn("HR formation enrollment lookup skipped",e);return{training:null,data:null};}}
-async function ensureEnrollment(cid:string,entitled:boolean){if(!entitled)return null;const x=await enrollment(cid);if(x.data)return x.data;if(!x.training)return null;const {data,error}=await db.from("training_enrollments").insert({training_id:x.training.id,customer_id:cid,active:true,product_key:PRODUCT_KEY}).select("id,enrolled_at,progress_percent,completed_at,product_key,active").single();if(error){console.warn("HR formation enrollment provisioning skipped",error);return null;}return data;}
-export async function getFreeHrFormation(uid:string,email:string|null){const c=await customerFor(uid,email),x=await enrollment(c.id),owner=hasOwnerDigitalAccess(email,uid),order=await paidOrder(c.id);const legacy=!!x.data&&!x.data.product_key;const subscription=!legacy&&!owner&&!order?await hasActiveLibrarySubscription(c.id):false;const entitled=owner||legacy||!!order||subscription;const e=await ensureEnrollment(c.id,entitled);return{productKey:PRODUCT_KEY,slug:SLUG,title:TITLE,free:false,priceBrlCents:PRICE_BRL,priceEurCents:PRICE_EUR,readingOnly:true,hours:HOURS,totalModules:12,totalUnits:65,entitled,lifetimeAccess:owner||legacy||!!order,subscriptionAccess:subscription,grandfathered:legacy,enrolledAt:e?.enrolled_at??x.data?.enrolled_at??null,progressPercent:e?.progress_percent??x.data?.progress_percent??0,completedAt:e?.completed_at??x.data?.completed_at??null};}
-export async function createHrFormationCheckout(uid:string,email:string|null,market:Market){const c=await customerFor(uid,email),offer=await getFreeHrFormation(uid,email);if(offer.entitled)fail("Esta formação já está disponível para sua conta.");const amount=market==="BR"?PRICE_BRL:PRICE_EUR,currency=market==="BR"?"BRL":"EUR",metadata={product_key:PRODUCT_KEY,training_slug:SLUG,market,auth_user_id:uid};const {data:order,error}=await db.from("orders").insert({order_number:"",customer_id:c.id,contact_email:c.email,contact_phone:c.phone,service_type:"produto_digital",title:TITLE,description:"Formação em Gestão de Pessoas e Recursos Humanos · 600 horas · 100% online · pagamento único · acesso vitalício",quantity:1,amount_cents:amount,currency,payment_status:"pendente",status:"novo",priority:"media",catalog_key:PRODUCT_KEY,metadata}).select("id").single();if(error||!order)fail("Não foi possível iniciar o pedido da formação.");const secret=process.env.STRIPE_SECRET_KEY;if(!secret){await db.from("orders").delete().eq("id",order.id);fail("Pagamento temporariamente indisponível.");}const params=new URLSearchParams();params.set("mode","payment");params.set("line_items[0][price_data][currency]",currency.toLowerCase());params.set("line_items[0][price_data][unit_amount]",String(amount));params.set("line_items[0][price_data][product_data][name]",TITLE);params.set("line_items[0][quantity]","1");params.set("success_url",`${appOrigin()}/cliente/formacoes/gestao-pessoas-rh?payment=success&session_id={CHECKOUT_SESSION_ID}`);params.set("cancel_url",`${appOrigin()}/cliente/formacoes/gestao-pessoas-rh?payment=cancel`);params.set("client_reference_id",uid);params.set("metadata[order_id]",order.id);params.set("metadata[product_key]",PRODUCT_KEY);params.set("metadata[training_slug]",SLUG);params.set("metadata[user_id]",uid);params.set("metadata[market]",market);params.set("payment_intent_data[metadata][order_id]",order.id);params.set("payment_intent_data[metadata][product_key]",PRODUCT_KEY);if(c.email)params.set("customer_email",c.email);let response:Response;try{response=await fetch("https://api.stripe.com/v1/checkout/sessions",{method:"POST",headers:{Authorization:`Bearer ${secret}`,"Content-Type":"application/x-www-form-urlencoded"},body:params});}catch{await db.from("orders").delete().eq("id",order.id);fail("Não foi possível abrir o checkout.");}const session=await response.json() as {id?:string;url?:string;error?:{message?:string}};if(!response.ok||!session.id||!session.url){await db.from("orders").delete().eq("id",order.id);fail(session.error?.message||"Não foi possível abrir o checkout.");}await db.from("orders").update({stripe_checkout_session_id:session.id,metadata}).eq("id",order.id);return{url:session.url};}
-''')
-
-          funcs=Path('apps/painel-ldr/src/lib/free-hr-formation.functions.ts')
-          funcs.write_text(r'''import { createServerFn } from "@tanstack/react-start";
-import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
-function emailOf(c:Record<string,unknown>){return typeof c.email==="string"?c.email:null;}
-export const clientFreeHrFormation=createServerFn({method:"GET"}).middleware([requireSupabaseAuth]).handler(async({context})=>{const {getFreeHrFormation}=await import("@/lib/free-hr-formation.server");return getFreeHrFormation(context.userId,emailOf(context.claims));});
-export const clientCreateHrFormationCheckout=createServerFn({method:"POST"}).middleware([requireSupabaseAuth]).inputValidator((data:{market:"BR"|"INTL"})=>data).handler(async({context,data})=>{const {createHrFormationCheckout}=await import("@/lib/free-hr-formation.server");return createHrFormationCheckout(context.userId,emailOf(context.claims),data.market);});
-''')
-
-          route=Path('apps/painel-ldr/src/routes/_clientarea.cliente.formacoes.gestao-pessoas-rh.tsx')
-          route.write_text(r'''import{createFileRoute,Link}from"@tanstack/react-router";import{useMutation,useQuery}from"@tanstack/react-query";import{useServerFn}from"@tanstack/react-start";import{BookOpen,CheckCircle2,ChevronLeft,ChevronRight,GraduationCap,ShoppingCart}from"lucide-react";import{useEffect,useState}from"react";import{FREE_HR_HOURS,FREE_HR_NOTICE,FREE_HR_TITLE,FREE_HR_UNITS}from"@/content/free-hr-formation";import{clientCreateHrFormationCheckout,clientFreeHrFormation}from"@/lib/free-hr-formation.functions";
-export const Route=createFileRoute("/_clientarea/cliente/formacoes/gestao-pessoas-rh")({component:Course});
-type S={completed:string[];unit:number};const KEY="ldr-free-hr-600h-v1",EMPTY:S={completed:[],unit:0};function load():S{if(typeof window==="undefined")return EMPTY;try{return JSON.parse(localStorage.getItem(KEY)||"")||EMPTY}catch{return EMPTY}}
-function Course(){const offerFn=useServerFn(clientFreeHrFormation),checkoutFn=useServerFn(clientCreateHrFormationCheckout);const{data,refetch}=useQuery({queryKey:["hr-formation"],queryFn:()=>offerFn({})});const checkout=useMutation({mutationFn:(market:"BR"|"INTL")=>checkoutFn({data:{market}}),onSuccess:r=>{window.location.href=r.url}});const[s,setS]=useState<S>(EMPTY);useEffect(()=>setS(load()),[]);useEffect(()=>{if(typeof window!=="undefined")localStorage.setItem(KEY,JSON.stringify(s))},[s]);useEffect(()=>{if(new URLSearchParams(window.location.search).get("payment")==="success")refetch()},[refetch]);const u=FREE_HR_UNITS[Math.min(s.unit,FREE_HR_UNITS.length-1)],pct=Math.round(s.completed.length/FREE_HR_UNITS.length*100);if(!data)return <p>Carregando formação…</p>;if(!data.entitled)return <div className="mx-auto max-w-3xl space-y-5"><section className="rounded-[28px] bg-gradient-to-br from-[#064e3b] to-[#047857] p-7 text-white"><p className="text-xs font-black uppercase tracking-[.2em] text-emerald-200">FORMAÇÃO PROFISSIONAL · {FREE_HR_HOURS} HORAS · 100% ONLINE</p><h1 className="mt-3 font-serif text-4xl">{FREE_HR_TITLE}</h1><p className="mt-3 text-sm leading-6 text-white/85">Leitura e atividades · estude no seu ritmo · compra individual com acesso vitalício.</p><p className="mt-5 text-2xl font-black">R$ 299,99 · € 49,90</p><div className="mt-5 grid gap-3 sm:grid-cols-2"><button onClick={()=>checkout.mutate("BR")} disabled={checkout.isPending} className="rounded-xl bg-white px-5 py-3 text-sm font-black text-[#065f46]"><ShoppingCart className="mr-2 inline h-4 w-4"/>COMPRAR NO BRASIL</button><button onClick={()=>checkout.mutate("INTL")} disabled={checkout.isPending} className="rounded-xl border border-white/35 bg-white/10 px-5 py-3 text-sm font-black text-white"><ShoppingCart className="mr-2 inline h-4 w-4"/>COMPRAR NA EUROPA</button></div><p className="mt-4 text-sm text-white/85">Também incluída na assinatura ativa da Biblioteca LDR.</p><Link to="/cliente/biblioteca" className="mt-3 inline-flex text-sm font-black text-white underline underline-offset-4">VER ASSINATURA DA BIBLIOTECA</Link></section><p className="rounded-xl border p-4 text-xs leading-5 text-muted-foreground">{FREE_HR_NOTICE}</p></div>;return <div className="mx-auto max-w-5xl space-y-5"><header className="rounded-[28px] bg-gradient-to-br from-[#064e3b] to-[#047857] p-6 text-white"><div className="flex items-center gap-2 text-xs font-black uppercase tracking-[.18em] text-emerald-200"><GraduationCap className="h-4 w-4"/>600H · FORMAÇÃO PROFISSIONAL · 100% ONLINE</div><h1 className="mt-2 font-serif text-3xl">{FREE_HR_TITLE}</h1><div className="mt-4 h-2 overflow-hidden rounded-full bg-white/20"><div className="h-full bg-white" style={{width:`${pct}%`}}/></div><p className="mt-2 text-xs">{pct}% concluído · {s.completed.length}/{FREE_HR_UNITS.length} unidades</p></header><div className="grid gap-5 lg:grid-cols-[280px_1fr]"><aside className="max-h-[70vh] overflow-auto rounded-2xl border bg-white p-3">{FREE_HR_UNITS.map((x,i)=><button key={x.id} onClick={()=>setS(v=>({...v,unit:i}))} className={`mb-1 flex w-full gap-2 rounded-xl p-2 text-left text-xs ${i===s.unit?"bg-emerald-50 font-bold":""}`}><span>{s.completed.includes(x.id)?"✓":"○"}</span><span><b>{x.module}</b><br/>{x.title}</span></button>)}</aside><main className="rounded-2xl border bg-white p-6"><p className="text-xs font-bold uppercase tracking-wide text-emerald-700">{u.module}</p><h2 className="mt-2 text-2xl font-black text-[#0b2341]">{u.title}</h2><div className="mt-5 flex gap-2 text-sm font-bold"><BookOpen className="h-5 w-5"/>Leitura</div><p className="mt-3 whitespace-pre-line text-sm leading-7 text-slate-700">{u.reading}</p><div className="mt-6 rounded-xl bg-emerald-50 p-4"><p className="font-bold text-emerald-900">Atividade de fixação</p><p className="mt-2 text-sm leading-6 text-emerald-950">{u.activity}</p></div><button onClick={()=>setS(v=>({...v,completed:v.completed.includes(u.id)?v.completed:[...v.completed,u.id]}))} className="mt-5 rounded-xl bg-[#047857] px-4 py-3 text-sm font-black text-white"><CheckCircle2 className="mr-2 inline h-4 w-4"/>{s.completed.includes(u.id)?"UNIDADE CONCLUÍDA":"MARCAR COMO CONCLUÍDA"}</button><div className="mt-6 flex justify-between"><button disabled={s.unit===0} onClick={()=>setS(v=>({...v,unit:Math.max(0,v.unit-1)}))} className="rounded-lg border px-3 py-2 text-sm disabled:opacity-30"><ChevronLeft className="inline h-4 w-4"/> Anterior</button><button disabled={s.unit>=FREE_HR_UNITS.length-1} onClick={()=>setS(v=>({...v,unit:Math.min(FREE_HR_UNITS.length-1,v.unit+1)}))} className="rounded-lg border px-3 py-2 text-sm disabled:opacity-30">Próxima <ChevronRight className="inline h-4 w-4"/></button></div></main></div><p className="rounded-xl border p-4 text-xs leading-5 text-muted-foreground">{FREE_HR_NOTICE}</p></div>}
-''')
-
-          # Subscription: make RH an included paid formation.
-          p=Path('apps/painel-ldr/src/lib/library-subscription.server.ts');s=p.read_text()
+          p=Path('apps/painel-ldr/src/lib/library-subscription.server.ts')
+          s=p.read_text()
           anchor='  ["formacao_lideranca_gestao_pessoas", "Formação em Liderança e Gestão de Pessoas"],\n'
           item='  ["formacao_gestao_pessoas_rh", "Formação em Gestão de Pessoas e Recursos Humanos"],\n'
           if item not in s:
@@ -64,25 +30,25 @@ function Course(){const offerFn=useServerFn(clientFreeHrFormation),checkoutFn=us
               s=s.replace(anchor,anchor+item,1)
           p.write_text(s)
 
-          # Card catalogue: RH is paid and no longer listed among free courses.
-          p=Path('apps/painel-ldr/src/lib/library-sales-card-i18n.ts');s=p.read_text()
+          p=Path('apps/painel-ldr/src/lib/library-sales-card-i18n.ts')
+          s=p.read_text()
           s=s.replace('{ free:true, href:"/cliente/formacoes/gestao-pessoas-rh", tone:"emerald" }','{ price:"R$ 299,99 · € 49,90", href:"/cliente/formacoes/gestao-pessoas-rh", tone:"emerald" }',1)
-          for old,new in [
-            ('pt: [["Gestão de Pessoas e RH","600h · formação livre profissional"],["Organize sua Carreira"','pt: [["Organize sua Carreira"'),
-            ('en: [["People Management & HR","600h · professional open course"],["Organize Your Career"','en: [["Organize Your Career"'),
-            ('fr: [["Gestion des Personnes et RH","600h · formation professionnelle libre"],["Organisez votre Carrière"','fr: [["Organisez votre Carrière"'),
-            ('es: [["Gestión de Personas y RR. HH.","600h · formación profesional libre"],["Organiza tu Carrera"','es: [["Organiza tu Carrera"')]: s=s.replace(old,new)
           s=s.replace('  "/cliente/formacoes/gestao-pessoas-rh",\n','',1)
+          for prefix,title in [('pt','Gestão de Pessoas e RH'),('en','People Management & HR'),('fr','Gestion des Personnes et RH'),('es','Gestión de Personas y RR. HH.')]:
+              import re
+              s=re.sub(rf'{prefix}: \[\["{re.escape(title)}","[^"]+"\],',f'{prefix}: [',s,count=1)
           p.write_text(s)
 
-          # Storefront shelf: move RH from free to paid formations and show price.
-          p=Path('apps/painel-ldr/src/components/library-storefront.tsx');s=p.read_text()
-          s=s.replace('{title:"RH 600h",subtitle:"Formação gratuita em Gestão de Pessoas e RH.",href:"/cliente/formacoes/gestao-pessoas-rh",icon:"👥",tag:"rh gratuito gestão pessoas",group:"gratis",color:"#047857"}', '{title:"RH 600h",subtitle:"Formação profissional em Gestão de Pessoas e RH.",href:"/cliente/formacoes/gestao-pessoas-rh",icon:"👥",price:"R$ 299,99 · € 49,90",tag:"rh formação gestão pessoas",group:"formacoes",color:"#047857"}')
+          p=Path('apps/painel-ldr/src/components/library-storefront.tsx')
+          s=p.read_text()
+          old='{title:"RH 600h",subtitle:"Formação gratuita em Gestão de Pessoas e RH.",href:"/cliente/formacoes/gestao-pessoas-rh",icon:"👥",tag:"rh gratuito gestão pessoas",group:"gratis",color:"#047857"}'
+          new='{title:"RH 600h",subtitle:"Formação profissional em Gestão de Pessoas e RH.",href:"/cliente/formacoes/gestao-pessoas-rh",icon:"👥",price:"R$ 299,99 · € 49,90",tag:"rh formação gestão pessoas",group:"formacoes",color:"#047857"}'
+          s=s.replace(old,new)
           p.write_text(s)
 
-          # Public sales home copy: no more free badge for RH.
-          p=Path('apps/painel-ldr/src/components/library-sales-home-access-choice.tsx');s=p.read_text()
-          reps={
+          p=Path('apps/painel-ldr/src/components/library-sales-home-access-choice.tsx')
+          s=p.read_text()
+          replacements={
             'rhMeta:"600 horas · 100% online · formação livre profissional", free:"100% GRATUITA", start:"COMEÇAR GRATUITAMENTE"':'rhMeta:"600 horas · 100% online · formação livre profissional", free:"R$ 299,99 · € 49,90", start:"CONHECER A FORMAÇÃO"',
             'rhMeta:"600 hours · 100% online · professional free course", free:"100% FREE", start:"START FREE"':'rhMeta:"600 hours · 100% online · professional training", free:"R$ 299.99 · € 49.90", start:"LEARN MORE"',
             'rhMeta:"600 heures · 100% en ligne · formation libre professionnelle", free:"100% GRATUIT", start:"COMMENCER GRATUITEMENT"':'rhMeta:"600 heures · 100% en ligne · formation professionnelle", free:"R$ 299,99 · € 49,90", start:"DÉCOUVRIR"',
@@ -92,17 +58,17 @@ function Course(){const offerFn=useServerFn(clientFreeHrFormation),checkoutFn=us
             'rh:["RH 600h","Formation gratuite en Gestion des Personnes et RH"]':'rh:["RH 600h","Formation professionnelle en Gestion des Personnes et RH"]',
             'rh:["RRHH 600h","Formación gratuita en Gestión de Personas y RRHH"]':'rh:["RRHH 600h","Formación profesional en Gestión de Personas y RRHH"]'
           }
-          for a,b in reps.items(): s=s.replace(a,b)
+          for a,b in replacements.items(): s=s.replace(a,b)
           p.write_text(s)
 
-          # Older sales component static fallback should also stop advertising RH as free.
-          p=Path('apps/painel-ldr/src/components/library-sales-home.tsx');s=p.read_text()
-          s=s.replace('{tag:"RH · 600H",title:"Formação em Gestão de Pessoas e Recursos Humanos",desc:"600 horas · 100% online · leitura e atividades",free:true,href:"/cliente/formacoes/gestao-pessoas-rh",tone:"emerald"}', '{tag:"RH · 600H",title:"Formação em Gestão de Pessoas e Recursos Humanos",desc:"600 horas · 100% online · leitura e atividades",price:"R$ 299,99 · € 49,90",href:"/cliente/formacoes/gestao-pessoas-rh",tone:"emerald"}')
+          p=Path('apps/painel-ldr/src/components/library-sales-home.tsx')
+          s=p.read_text()
+          s=s.replace('{tag:"RH · 600H",title:"Formação em Gestão de Pessoas e Recursos Humanos",desc:"600 horas · 100% online · leitura e atividades",free:true,href:"/cliente/formacoes/gestao-pessoas-rh",tone:"emerald"}','{tag:"RH · 600H",title:"Formação em Gestão de Pessoas e Recursos Humanos",desc:"600 horas · 100% online · leitura e atividades",price:"R$ 299,99 · € 49,90",href:"/cliente/formacoes/gestao-pessoas-rh",tone:"emerald"}')
           s=s.replace('  ["Gestão de Pessoas e RH","600h · formação livre profissional","/cliente/formacoes/gestao-pessoas-rh"],\n','')
           p.write_text(s)
 
-          # Library detail panel: paid/subscription messaging.
-          p=Path('apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx');s=p.read_text()
+          p=Path('apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx')
+          s=p.read_text()
           s=s.replace('100% GRATUITA · 600 HORAS','600 HORAS · 100% ONLINE',1)
           s=s.replace('12 módulos · 600 horas · 100% online · leitura e atividades · estude no seu ritmo.','12 módulos · 600 horas · 100% online · compra individual R$ 299,99 / € 49,90 ou acesso pela assinatura ativa da Biblioteca LDR.',1)
           p.write_text(s)
@@ -115,7 +81,7 @@ function Course(){const offerFn=useServerFn(clientFreeHrFormation),checkoutFn=us
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add apps/painel-ldr/src/lib/free-hr-formation.server.ts apps/painel-ldr/src/lib/free-hr-formation.functions.ts apps/painel-ldr/src/routes/_clientarea.cliente.formacoes.gestao-pessoas-rh.tsx apps/painel-ldr/src/lib/library-subscription.server.ts apps/painel-ldr/src/lib/library-sales-card-i18n.ts apps/painel-ldr/src/components/library-storefront.tsx apps/painel-ldr/src/components/library-sales-home-access-choice.tsx apps/painel-ldr/src/components/library-sales-home.tsx apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
-          git commit -m "feat(painel): make RH formation paid and subscription included"
+          git add apps/painel-ldr/src/lib/library-subscription.server.ts apps/painel-ldr/src/lib/library-sales-card-i18n.ts apps/painel-ldr/src/components/library-storefront.tsx apps/painel-ldr/src/components/library-sales-home-access-choice.tsx apps/painel-ldr/src/components/library-sales-home.tsx apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          git commit -m "feat(painel): finish RH paid subscription conversion"
           git pull --rebase origin main
           git push
