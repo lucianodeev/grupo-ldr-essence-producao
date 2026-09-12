@@ -1,4 +1,5 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
+import type { Session } from "@supabase/supabase-js";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
@@ -45,23 +46,35 @@ function isAcademyHost() {
 }
 
 function academyDestination() {
-  return isAcademyHost() ? "https://ldracademy.online/biblioteca" : "/cliente";
+  return isAcademyHost() ? "https://ldracademy.online/cliente/biblioteca" : "/cliente";
 }
 
 function oauthReturnUrl() {
-  if (typeof window === "undefined") return "/cliente/login";
+  if (typeof window === "undefined") return "/api/auth/callback";
 
-  // Supabase may fall back to its configured Site URL when a newly-added
-  // custom domain is not yet present in the redirect allow-list. The legacy
-  // learn host is already part of the established auth flow; server.ts then
-  // immediately canonicalizes it back to ldracademy.online while preserving
-  // the OAuth query parameters. The PKCE verifier remains on the academy
-  // domain, where the code is exchanged after the redirect.
+  // Keep the provider redirect on the established allow-listed host, then let
+  // server.ts canonicalize the callback back to ldracademy.online. The actual
+  // PKCE code exchange happens server-side at /api/auth/callback and persists
+  // the Supabase session cookies before the protected library is requested.
   if (isAcademyHost()) {
-    return "https://learn.lucianoconecta.online/cliente/login?academy=1";
+    return "https://learn.lucianoconecta.online/api/auth/callback?academy=1";
   }
 
-  return `${window.location.origin}/cliente/login`;
+  return `${window.location.origin}/api/auth/callback`;
+}
+
+async function syncBrowserSession(session: Session) {
+  const response = await fetch("/api/auth/session-sync", {
+    method: "POST",
+    credentials: "include",
+    cache: "no-store",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      access_token: session.access_token,
+      refresh_token: session.refresh_token,
+    }),
+  });
+  return response.ok;
 }
 
 function ClientLogin() {
@@ -75,17 +88,28 @@ function ClientLogin() {
     }
 
     let active = true;
-    let retryTimer: number | undefined;
 
-    const redirectToClient = () => {
+    const redirectToClient = async (session: Session) => {
       if (!active || redirecting.current) return;
       redirecting.current = true;
       setBusy(true);
-      // Give @supabase/ssr a brief moment to persist the session cookies before
-      // the protected library route is requested by the browser.
-      window.setTimeout(() => {
+
+      try {
+        const synced = await syncBrowserSession(session);
+        if (!active) return;
+        if (!synced) {
+          redirecting.current = false;
+          setBusy(false);
+          toast.error("Sua sessão precisa ser renovada. Entre novamente com o Google.");
+          return;
+        }
         window.location.replace(academyDestination());
-      }, 150);
+      } catch {
+        if (!active) return;
+        redirecting.current = false;
+        setBusy(false);
+        toast.error("Não foi possível sincronizar sua sessão. Tente entrar novamente.");
+      }
     };
 
     const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
@@ -94,31 +118,16 @@ function ClientLogin() {
         session &&
         (event === "INITIAL_SESSION" || event === "SIGNED_IN" || event === "TOKEN_REFRESHED")
       ) {
-        redirectToClient();
+        void redirectToClient(session);
       }
     });
 
-    const verifySession = async (attempt = 0) => {
-      const { data } = await supabase.auth.getSession();
-      if (!active) return;
-      if (data.session) {
-        redirectToClient();
-        return;
-      }
-
-      const hasOAuthCode = new URLSearchParams(window.location.search).has("code");
-      if (hasOAuthCode && attempt < 5) {
-        retryTimer = window.setTimeout(() => {
-          void verifySession(attempt + 1);
-        }, 300);
-      }
-    };
-
-    void verifySession();
+    void supabase.auth.getSession().then(({ data }) => {
+      if (active && data.session) void redirectToClient(data.session);
+    });
 
     return () => {
       active = false;
-      if (retryTimer) window.clearTimeout(retryTimer);
       listener.subscription.unsubscribe();
     };
   }, []);
