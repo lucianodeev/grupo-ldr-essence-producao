@@ -52,7 +52,17 @@ const FORMATION_BASE: {free?: boolean; price?: string; href: string; tone: Tone}
   { price:"R$ 299,99 · € 49,90", href:"/cliente/biblioteca", tone:"blue" },
   { price:"R$ 299,99 · € 49,90", href:"/cliente/biblioteca", tone:"green" },
 ];
-const FREE_ROUTES = ["/cliente/formacoes/gestao-pessoas-rh","/cliente/cursos/organizar-carreira","/cliente/cursos/frances-negocios-a1","/cliente/cursos/primeiros-socorros"] as const;
+
+export const FREE_ROUTES = [
+  "/cliente/formacoes/gestao-pessoas-rh",
+  "/cliente/cursos/organizar-carreira",
+  "/cliente/cursos/frances-negocios-a1",
+  "/cliente/cursos/primeiros-socorros",
+] as const;
+
+export function isFreeContentRoute(pathname: string) {
+  return FREE_ROUTES.some((route) => pathname === route || pathname.startsWith(`${route}/`));
+}
 
 export function librarySalesCardCatalog(locale: LibraryCardLocale) {
   return {
