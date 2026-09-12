@@ -1,0 +1,35 @@
+name: Run integrated LDR Academy expansion
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/execute_integrated_ldr_academy.py'
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply integrated Academy changes
+        run: python tools/execute_integrated_ldr_academy.py
+      - name: Install dependencies
+        run: npm install
+      - name: Validate Painel LDR build
+        run: npm run build:painel
+      - name: Commit generated changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/painel-ldr
+          if git diff --cached --quiet; then
+            echo "No generated changes"
+            exit 0
+          fi
+          git commit -m "feat: expand LDR Academy advanced professional formations"
+          git push origin main
