@@ -1,0 +1,90 @@
+name: Update psychoanalysis international emphasis
+on:
+  push:
+    paths:
+      - '.github/workflows/update-psychoanalysis-international-emphasis.yml'
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Apply surgical updates
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          def replace(path, pairs):
+              p=Path(path)
+              s=p.read_text()
+              old=s
+              for a,b in pairs:
+                  if a not in s:
+                      print(f'WARN not found in {path}: {a[:100]}')
+                  s=s.replace(a,b)
+              if s!=old:
+                  p.write_text(s)
+                  print('updated', path)
+
+          page='apps/painel-ldr/src/components/psychoanalysis-training-page.tsx'
+          replace(page,[
+            ('["14","Supervisão Clínica e Construção da Escuta","Apresentação de caso, hipótese clínica, transferência, manejo, confidencialidade, encaminhamento e preparação para a prática."],',
+             '["14","Supervisão Clínica e Construção da Escuta","Apresentação de caso, hipótese clínica, transferência, manejo, confidencialidade, encaminhamento e preparação para a prática."],\n["15","Psicanálise Internacional, Neurodiversidade e Autismo","Atuação internacional, carreira no exterior, ética, GDPR, migração, neurodiversidade, autismo e trabalho interdisciplinar."],'),
+            ('Formação online em Psicanálise','Formação em Psicanálise · Autismo + Atuação Internacional'),
+            ('14 módulos','15 módulos'),
+            ('220 unidades de aprendizagem','240 unidades de aprendizagem'),
+            ('14 módulos · 220 unidades de aprendizagem','15 módulos · 240 unidades de aprendizagem'),
+            ('220 unidades de aprendizagem organizadas em 14 módulos','240 unidades de aprendizagem organizadas em 15 módulos'),
+            ('220 dias de percurso estruturado','240 dias de percurso estruturado'),
+          ])
+
+          route='apps/painel-ldr/src/routes/_clientarea.cliente.treinamentos.psicanalise.tsx'
+          replace(route,[
+            ('Formação Online em Psicanálise','Formação em Psicanálise com Ênfase em Autismo e Atuação Internacional'),
+            ('14 módulos, 220 unidades de aprendizagem','15 módulos, 240 unidades de aprendizagem'),
+            ('14 módulos · 220 unidades','15 módulos · 240 unidades'),
+            ('Conclusão mínima: 220 dias','Conclusão mínima: 240 dias'),
+            ('220 dias de percurso estruturado','240 dias de percurso estruturado'),
+            ('Cumprir o período mínimo de 220 dias','Cumprir o período mínimo de 240 dias'),
+          ])
+
+          home='apps/painel-ldr/src/components/library-sales-home-access-choice.tsx'
+          replace(home,[
+            ('psycho:"Formação Online em Psicanálise"','psycho:"Formação em Psicanálise com Ênfase em Autismo e Atuação Internacional"'),
+            ('psychoMeta:"12 módulos · 1.200 horas · 180 unidades · 6 encontros ao vivo"','psychoMeta:"15 módulos · 1.200 horas · 240 unidades · 6 encontros ao vivo"'),
+            ('psychoAutism:"Autismo na Clínica Psicanalítica: Teoria, Manejo e Casos Clínicos"','psychoAutism:"NOVO · Psicanálise Internacional, Neurodiversidade e Autismo"'),
+            ('psychoText:"A formação inclui um módulo específico dedicado ao estudo do autismo na clínica psicanalítica, articulando fundamentos teóricos, manejo clínico e discussão de casos clínicos."','psychoText:"A formação agora também aborda atuação internacional, carreira no exterior, migração, neurodiversidade e autismo, com atenção à ética, proteção de dados, adaptação cultural e trabalho interdisciplinar."'),
+            ('psycho:"Online Psychoanalysis Program"','psycho:"Psychoanalysis Program with Emphasis on Autism and International Practice"'),
+            ('psychoMeta:"12 modules · 1,200 hours · 180 units · 6 live meetings"','psychoMeta:"15 modules · 1,200 hours · 240 units · 6 live meetings"'),
+            ('psychoAutism:"Autism in Psychoanalytic Clinic: Theory, Clinical Management and Cases"','psychoAutism:"NEW · International Psychoanalysis, Neurodiversity and Autism"'),
+            ('psychoText:"The program includes a specific module on autism in psychoanalytic clinical practice, combining theory, clinical management and case discussion."','psychoText:"The program now also covers international practice, career building abroad, migration, neurodiversity and autism, with attention to ethics, data protection, cultural adaptation and interdisciplinary work."'),
+            ('psycho:"Formation en Psychanalyse"','psycho:"Formation en Psychanalyse avec accent sur l’Autisme et la Pratique Internationale"'),
+            ('psychoMeta:"12 modules · 1 200 heures · 180 unités · 6 rencontres en direct"','psychoMeta:"15 modules · 1 200 heures · 240 unités · 6 rencontres en direct"'),
+            ('psychoAutism:"Autisme en clinique psychanalytique : théorie, maniement clinique et cas cliniques"','psychoAutism:"NOUVEAU · Psychanalyse internationale, neurodiversité et autisme"'),
+            ('psychoText:"La formation comprend un module spécifique consacré à l’autisme en clinique psychanalytique, avec théorie, maniement clinique et discussion de cas."','psychoText:"La formation aborde désormais aussi la pratique internationale, la carrière à l’étranger, la migration, la neurodiversité et l’autisme, avec une attention à l’éthique, à la protection des données, à l’adaptation culturelle et au travail interdisciplinaire."'),
+            ('psycho:"Formación Online en Psicoanálisis"','psycho:"Formación en Psicoanálisis con Énfasis en Autismo y Actuación Internacional"'),
+            ('psychoMeta:"12 módulos · 1.200 horas · 180 unidades · 6 encuentros en vivo"','psychoMeta:"15 módulos · 1.200 horas · 240 unidades · 6 encuentros en vivo"'),
+            ('psychoAutism:"Autismo en la Clínica Psicoanalítica: Teoría, Manejo y Casos Clínicos"','psychoAutism:"NUEVO · Psicoanálisis Internacional, Neurodiversidad y Autismo"'),
+            ('psychoText:"La formación incluye un módulo específico sobre autismo en la clínica psicoanalítica, articulando teoría, manejo clínico y discusión de casos."','psychoText:"La formación ahora también aborda actuación internacional, carrera en el exterior, migración, neurodiversidad y autismo, con atención a la ética, protección de datos, adaptación cultural y trabajo interdisciplinario."'),
+          ])
+
+          cards='apps/painel-ldr/src/lib/library-sales-card-i18n.ts'
+          replace(cards,[
+            ('["PSICANÁLISE","Formação Online em Psicanálise","14 módulos · 1.200 horas · 220 unidades · 6 encontros ao vivo"]','["PSICANÁLISE","Formação em Psicanálise com Ênfase em Autismo e Atuação Internacional","15 módulos · 1.200 horas · 240 unidades · 6 encontros ao vivo"]'),
+          ])
+
+          Path('.github/workflows/update-psychoanalysis-international-emphasis.yml').unlink()
+          PY
+      - name: Commit changes
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'feat: update psychoanalysis program positioning and module counts' || exit 0
+          git push
