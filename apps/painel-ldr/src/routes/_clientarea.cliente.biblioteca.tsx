@@ -18,6 +18,7 @@ import { clientEnrollFreeFrenchA1, clientFreeFrenchA1 } from "@/lib/free-french-
 import { clientEnrollFreeFirstAid, clientFreeFirstAid } from "@/lib/free-first-aid.functions";
 import { useI18n } from "@/lib/i18n";
 import { UNDERGRADUATE_COURSES } from "@/lib/undergraduate.catalog";
+import { libraryCardText, postgraduateCardTitle, undergraduateCardTitle } from "@/lib/library-card-i18n";
 
 export const Route=createFileRoute("/_clientarea/cliente/biblioteca")({component:ClientLibraryRoute});
 
@@ -52,6 +53,7 @@ function ClientLibrary(){
   const {locale:raw}=useI18n();
   const locale=(raw==="pt"||raw==="en"||raw==="fr"||raw==="es"?raw:"pt") as Locale;
   const t=TXT[locale];
+  const ct=libraryCardText(locale);
   const subscriptionFn=useServerFn(clientLibrarySubscription),
     subscriptionCheckoutFn=useServerFn(clientCreateLibrarySubscriptionCheckout),
     subscriptionCancelFn=useServerFn(clientSetLibrarySubscriptionCancellation),
@@ -114,7 +116,7 @@ function ClientLibrary(){
   const enrollFirstAid=useMutation({mutationFn:()=>firstAidEnrollFn({}),onSuccess:()=>refetchFirstAid()});
   const addComment=useMutation({mutationFn:()=>commentFn({data:{body:comment,productKey}}),onSuccess:async()=>{setComment("");await qc.invalidateQueries({queryKey:["client-learning-hub"]})}});
 
-  if(isLoading||!data)return <p className="text-sm text-muted-foreground">Carregando biblioteca…</p>;
+  if(isLoading||!data)return <p className="text-sm text-muted-foreground">{ct.loading}</p>;
 
   const market:"BR"|"INTL"=data.market==="BR"?"BR":"INTL";
   const owner=(data.customer?.email??"").trim().toLowerCase()==="llucianouam@gmail.com";
@@ -122,7 +124,7 @@ function ClientLibrary(){
   const ent={ebook:owner||!!ebook?.entitled,book:owner||!!book?.entitled,training:owner||!!training?.entitled,psycho:owner||!!psycho?.entitled,brief:owner||!!brief?.entitled,massage:owner||!!massage?.entitled,business24:owner||!!business24?.entitled,mentor:owner||!!mentor?.entitled,leader:owner||!!leader?.entitled,free:owner||!!free?.entitled,french:owner||!!french?.entitled,firstAid:owner||!!firstAid?.entitled};
   const comments=learning?.comments?.filter((c:any)=>c.product_key)??[];
   const card=(key:string,label:string,bg:string,icon="grad")=><button onClick={()=>setActive(active===key?null:key)} className={`min-w-0 rounded-2xl px-1 py-4 text-center text-white shadow-sm ${bg} ${active===key?"ring-2 ring-[#d6ad63]":""}`}>{icon==="book"?<BookOpen className="mx-auto h-5 w-5"/>:icon==="film"?<Film className="mx-auto h-5 w-5"/>:<GraduationCap className="mx-auto h-5 w-5"/>}<p className="mt-2 text-[8px] font-black leading-none sm:text-[10px]">{label}</p></button>;
-  const buyFormation=(kind:"psycho"|"brief"|"massage"|"mentor"|"leader",mut:any,color:string)=><button onClick={()=>mut.mutate(market)} className={`mt-3 w-full rounded-xl ${color} px-4 py-3 text-sm font-black text-white`}><ShoppingCart className="mr-2 inline h-4 w-4"/>Quero começar minha formação</button>;
+  const buyFormation=(kind:"psycho"|"brief"|"massage"|"mentor"|"leader",mut:any,color:string)=><button onClick={()=>mut.mutate(market)} className={`mt-3 w-full rounded-xl ${color} px-4 py-3 text-sm font-black text-white`}><ShoppingCart className="mr-2 inline h-4 w-4"/>{ct.startFormation}</button>;
   const postgrads=[
     {key:"ia-negocios-gestao",icon:"🤖",title:"Inteligência Artificial Aplicada aos Negócios e à Gestão",highlight:true},
     {key:"gestao-pessoas-lideranca-rh",icon:"👥",title:"Gestão Estratégica de Pessoas, Liderança e RH"},
@@ -165,20 +167,20 @@ function ClientLibrary(){
       <h2 className="font-serif text-2xl">{t.title}</h2>
       <p className="mb-4 mt-1 text-sm text-muted-foreground">Seus conteúdos e próximos passos em um só lugar.</p>
       <div className="grid grid-cols-4 gap-1.5 sm:grid-cols-10 sm:gap-3">
-        {card("ebook","eBooks","bg-[#5b0824]","book")}
-        {card("book","Livros","bg-[#5b0824]","book")}
-        <a href="/cliente/biblioteca/publicacoes" className="min-w-0 rounded-2xl bg-[#0b2341] px-1 py-4 text-center !text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md" aria-label="Abrir todos os jornais e revistas"><div className="mx-auto text-lg leading-none">📰</div><p className="mt-2 text-[8px] font-black leading-tight !text-white sm:text-[10px]">Jornais & Revistas</p><p className="mt-1 text-[7px] !text-white/80">Todos em um só lugar</p></a>
-        {card("training","Negócios","bg-[#d6ad63]")}
-        {card("psycho","Psicanálise","bg-[#5b2b86]")}
-        {card("brief","Terapia Breve","bg-[#17645e]")}
-        {card("massage","Massoterapia","bg-[#0F5E7A]")}
-        <a href="/cliente/orientacao-psicanalitica" className="min-w-0 rounded-2xl bg-[#263b63] px-1 py-4 text-center text-white shadow-sm"><span className="mx-auto block text-lg">✍️</span><p className="mt-2 text-[8px] font-black leading-none sm:text-[10px]">Orientação Escrita</p></a>
-        <a href="/cliente/orientacao-profissional" className="min-w-0 rounded-2xl bg-[#0b5cab] px-1 py-4 text-center text-white shadow-sm"><span className="mx-auto block text-lg">💼</span><p className="mt-2 text-[8px] font-black leading-none sm:text-[10px]">Orientação Profissional</p></a>
-        {card("business24","Negócio 24h","bg-[#c85a24]")}
-        {card("mentor","Mentoria","bg-[#0b5cab]")}
-        {card("leader","Liderança","bg-[#0f5132]")}
-        {card("hr","RH 600h","bg-[#047857]")}
-        {card("free","Gratuito","bg-[#b85c2e]","book")}
+        {card("ebook",ct.ebooks,"bg-[#5b0824]","book")}
+        {card("book",ct.books,"bg-[#5b0824]","book")}
+        <a href="/cliente/biblioteca/publicacoes" className="min-w-0 rounded-2xl bg-[#0b2341] px-1 py-4 text-center !text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md" aria-label="Abrir todos os jornais e revistas"><div className="mx-auto text-lg leading-none">📰</div><p className="mt-2 text-[8px] font-black leading-tight !text-white sm:text-[10px]">{ct.editorial}</p><p className="mt-1 text-[7px] !text-white/80">{ct.editorialSub}</p></a>
+        {card("training",ct.business,"bg-[#d6ad63]")}
+        {card("psycho",ct.psycho,"bg-[#5b2b86]")}
+        {card("brief",ct.brief,"bg-[#17645e]")}
+        {card("massage",ct.massage,"bg-[#0F5E7A]")}
+        <a href="/cliente/orientacao-psicanalitica" className="min-w-0 rounded-2xl bg-[#263b63] px-1 py-4 text-center text-white shadow-sm"><span className="mx-auto block text-lg">✍️</span><p className="mt-2 text-[8px] font-black leading-none sm:text-[10px]">{ct.writtenPsycho}</p></a>
+        <a href="/cliente/orientacao-profissional" className="min-w-0 rounded-2xl bg-[#0b5cab] px-1 py-4 text-center text-white shadow-sm"><span className="mx-auto block text-lg">💼</span><p className="mt-2 text-[8px] font-black leading-none sm:text-[10px]">{ct.writtenCareer}</p></a>
+        {card("business24",ct.business24,"bg-[#c85a24]")}
+        {card("mentor",ct.mentorship,"bg-[#0b5cab]")}
+        {card("leader",ct.leadership,"bg-[#0f5132]")}
+        {card("hr",ct.hr,"bg-[#047857]")}
+        {card("free",ct.free,"bg-[#b85c2e]","book")}
         {card("ai","IA","bg-[#143d59]")}
         {card("film","Filme","bg-[#35101e]","film")}
       </div>
@@ -201,13 +203,13 @@ function ClientLibrary(){
 
         <section className="rounded-[28px] border border-[#d6ad63]/40 bg-gradient-to-br from-[#071426] via-[#0b2341] to-[#163b67] p-5 text-white shadow-lg sm:p-7">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between"><div><span className="rounded-full bg-[#d6ad63] px-3 py-1 text-[10px] font-black uppercase tracking-[.15em] text-[#281605]">🎓 Graduações · Em breve</span><h2 className="mt-4 font-serif text-3xl text-[#fff7e7]">Futuras graduações LDR</h2><p className="mt-2 max-w-3xl text-sm leading-6 text-white/75">Propostas acadêmicas preliminares em modelo Live Semipresencial. Conheça as grades e registre seu interesse no lançamento.</p></div><span className="rounded-full border border-white/20 bg-white/10 px-3 py-2 text-xs font-bold">A partir de R$ 99,90/mês*</span></div>
-      <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">{UNDERGRADUATE_COURSES.map(course=><article key={course.key} className="rounded-2xl border border-white/15 bg-white/10 p-5 shadow-sm backdrop-blur"><div className="flex items-start justify-between gap-3"><div className="text-3xl">{course.icon}</div><span className="rounded-full bg-[#d6ad63] px-2.5 py-1 text-[9px] font-black uppercase tracking-[.12em] text-[#281605]">Em breve</span></div><h3 className="mt-4 font-serif text-xl leading-snug text-white">{course.title}</h3><div className="mt-4 space-y-1.5 text-xs text-white/78"><p><b className="text-white">Duração prevista:</b> {course.years} anos · {course.semesters} semestres</p><p><b className="text-white">Modalidade:</b> 🔴 Live + 🏫 Semipresencial</p><p><b className="text-white">Valor:</b> a partir de R$ 99,90/mês*</p></div><a href={`/cliente/graduacao/${course.key}`} className="mt-5 inline-flex w-full items-center justify-center rounded-xl bg-[#d6ad63] px-4 py-3 text-sm font-black text-[#281605]">CONHECER A PROPOSTA</a></article>)}</div>
+      <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">{UNDERGRADUATE_COURSES.map(course=><article key={course.key} className="rounded-2xl border border-white/15 bg-white/10 p-5 shadow-sm backdrop-blur"><div className="flex items-start justify-between gap-3"><div className="text-3xl">{course.icon}</div><span className="rounded-full bg-[#d6ad63] px-2.5 py-1 text-[9px] font-black uppercase tracking-[.12em] text-[#281605]">{ct.postgrad}</span></div><h3 className="mt-4 font-serif text-xl leading-snug text-white">{undergraduateCardTitle(locale,course.key,course.title)}</h3><div className="mt-4 space-y-1.5 text-xs text-white/78"><p><b className="text-white">Duração prevista:</b> {course.years} anos · {course.semesters} semestres</p><p><b className="text-white">Modalidade:</b> 🔴 Live + 🏫 Semipresencial</p><p><b className="text-white">Valor:</b> a partir de R$ 99,90/mês*</p></div><a href={`/cliente/graduacao/${course.key}`} className="mt-5 inline-flex w-full items-center justify-center rounded-xl bg-[#d6ad63] px-4 py-3 text-sm font-black text-[#281605]">CONHECER A PROPOSTA</a></article>)}</div>
       <p className="mt-5 text-[11px] leading-5 text-white/60">*Valor de referência para pré-lançamento. Duração, modalidade, grade e condições poderão mudar antes da eventual abertura oficial de matrículas. Oferta futura sujeita a instituição de ensino superior devidamente credenciada e às exigências regulatórias aplicáveis.</p>
     </section>
 
 <section className="rounded-[28px] border border-[#d6ad63]/35 bg-gradient-to-br from-[#071426] via-[#0b2341] to-[#102d50] p-5 text-white shadow-lg sm:p-7">
       <div className="max-w-3xl"><span className="rounded-full bg-[#d6ad63] px-3 py-1 text-[10px] font-black uppercase tracking-[.15em] text-[#281605]">🎓 Pós-Graduações · Lançamento em breve</span><h2 className="mt-4 font-serif text-3xl text-[#fff7e7]">Sua próxima especialização pode começar aqui.</h2><p className="mt-2 text-sm leading-6 text-white/75">Novas pós-graduações online estão sendo desenvolvidas para unir conhecimento, mercado e aplicação prática.</p></div>
-      <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">{postgrads.map(course=><article key={course.title} className={`relative rounded-2xl border p-5 ${course.highlight?"border-[#d6ad63] bg-[#fff7e7] text-[#071426] shadow-lg":"border-white/15 bg-white/5 text-white"}`}>{course.highlight?<span className="absolute right-4 top-4 rounded-full bg-[#d6ad63] px-2.5 py-1 text-[9px] font-black uppercase tracking-[.12em] text-[#281605]">DESTAQUE</span>:null}<div className="text-2xl">{course.icon}</div><p className={`mt-4 text-[10px] font-black uppercase tracking-[.14em] ${course.highlight?"text-[#9a6d20]":"text-[#d6ad63]"}`}>Pós-Graduação · Em breve</p><h3 className="mt-2 font-serif text-xl leading-snug">{course.title}</h3><a href={`/cliente/interesse-pos/${course.key}`} className={`mt-5 block rounded-xl border px-3 py-2 text-center text-xs font-black transition hover:-translate-y-0.5 ${course.highlight?"border-[#d6ad63]/60 bg-white text-[#0b2341] hover:bg-[#fff3cf]":"border-white/15 bg-white/10 text-white hover:bg-white/15"}`}>Tenho interesse</a></article>)}</div>
+      <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">{postgrads.map(course=><article key={undergraduateCardTitle(locale,course.key,course.title)} className={`relative rounded-2xl border p-5 ${course.highlight?"border-[#d6ad63] bg-[#fff7e7] text-[#071426] shadow-lg":"border-white/15 bg-white/5 text-white"}`}>{course.highlight?<span className="absolute right-4 top-4 rounded-full bg-[#d6ad63] px-2.5 py-1 text-[9px] font-black uppercase tracking-[.12em] text-[#281605]">DESTAQUE</span>:null}<div className="text-2xl">{course.icon}</div><p className={`mt-4 text-[10px] font-black uppercase tracking-[.14em] ${course.highlight?"text-[#9a6d20]":"text-[#d6ad63]"}`}>Pós-Graduação · Em breve</p><h3 className="mt-2 font-serif text-xl leading-snug">{undergraduateCardTitle(locale,course.key,course.title)}</h3><a href={`/cliente/interesse-pos/${course.key}`} className={`mt-5 block rounded-xl border px-3 py-2 text-center text-xs font-black transition hover:-translate-y-0.5 ${course.highlight?"border-[#d6ad63]/60 bg-white text-[#0b2341] hover:bg-[#fff3cf]":"border-white/15 bg-white/10 text-white hover:bg-white/15"}`}>Tenho interesse</a></article>)}</div>
       <p className="mt-5 text-[11px] leading-5 text-white/60">Programas em desenvolvimento · oferta futura sujeita à parceria e validação acadêmica da instituição de ensino responsável.</p>
     </section>
 

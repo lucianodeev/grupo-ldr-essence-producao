@@ -50,7 +50,7 @@ const freeCourses=[
 ] as const;
 
 export function LibrarySalesHome(){
-  const {locale:raw}=useI18n(); const locale=(raw==="pt"||raw==="en"||raw==="fr"||raw==="es"?raw:"pt") as Locale; const t=COPY[locale]; const promo=Date.now()<PROMO_END_AT;
+  const {locale:raw}=useI18n(); const locale=(raw==="pt"||raw==="en"||raw==="fr"||raw==="es"?raw:"pt") as Locale; const t=COPY[locale]; const {formations,freeCourses}=librarySalesCardCatalog(locale); const promo=Date.now()<PROMO_END_AT;
   const faq = locale==="pt" ? [
     ["Preciso pagar para entrar na Biblioteca?","Não. Há conteúdos gratuitos. Os conteúdos pagos podem ser comprados individualmente ou acessados pela assinatura enquanto ela estiver ativa."],
     ["Posso comprar uma formação sem assinar?","Sim. A compra individual é independente da assinatura e mantém acesso vitalício ao conteúdo comprado."],
