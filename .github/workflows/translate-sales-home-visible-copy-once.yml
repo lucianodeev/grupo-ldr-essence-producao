@@ -1,0 +1,77 @@
+name: Translate remaining sales home copy once
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/translate-sales-home-visible-copy-once.yml
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Translate hardcoded storefront copy
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('apps/painel-ldr/src/components/library-sales-home-access-choice.tsx')
+          s=p.read_text()
+          anchor='  const t=copy[locale];\n'
+          helper='''  const tx=(pt:string,en:string,fr:string,es:string)=>locale==="en"?en:locale==="fr"?fr:locale==="es"?es:pt;\n'''
+          if helper.strip() not in s:
+              if anchor not in s: raise SystemExit('component anchor missing')
+              s=s.replace(anchor,anchor+helper,1)
+          reps={
+          '— nas formações pagas atuais':'{tx("— nas formações pagas atuais","— for current paid programs","— pour les formations payantes actuelles","— para las formaciones de pago actuales")}',
+          '{promo?t.promo:"ASSINATURA BIBLIOTECA LDR"}':'{promo?t.promo:tx("ASSINATURA BIBLIOTECA LDR","LDR LIBRARY SUBSCRIPTION","ABONNEMENT BIBLIOTHÈQUE LDR","SUSCRIPCIÓN BIBLIOTECA LDR")}',
+          'DIAS · HORAS · MINUTOS · SEGUNDOS':'{tx("DIAS · HORAS · MINUTOS · SEGUNDOS","DAYS · HOURS · MINUTES · SECONDS","JOURS · HEURES · MINUTES · SECONDES","DÍAS · HORAS · MINUTOS · SEGUNDOS")}',
+          '{promo?"ASSINAR COM 50% OFF":t.subscribe}':'{promo?tx("ASSINAR COM 50% OFF","SUBSCRIBE WITH 50% OFF","S’ABONNER AVEC -50%","SUSCRIBIRME CON 50% OFF"):t.subscribe}',
+          '>TERAPIA BREVE PSICANALÍTICA<':'>{tx("TERAPIA BREVE PSICANALÍTICA","BRIEF PSYCHOANALYTIC THERAPY","THÉRAPIE BRÈVE PSYCHANALYTIQUE","TERAPIA BREVE PSICOANALÍTICA")}<',
+          '>NEGÓCIO EM 24 HORAS<':'>{tx("NEGÓCIO EM 24 HORAS","BUSINESS IN 24 HOURS","BUSINESS EN 24 HEURES","NEGOCIO EN 24 HORAS")}<',
+          '>Formação Negócio em 24 Horas<':'>{tx("Formação Negócio em 24 Horas","Business in 24 Hours Training","Formation Business en 24 Heures","Formación Negocio en 24 Horas")}<',
+          '>9 módulos · 90 aulas · 360 horas · sem encontros ao vivo · projeto final avaliado. Da ideia à primeira oferta pronta para vender.<':'>{tx("9 módulos · 90 aulas · 360 horas · sem encontros ao vivo · projeto final avaliado. Da ideia à primeira oferta pronta para vender.","9 modules · 90 lessons · 360 hours · final project assessed. From idea to a first offer ready to sell.","9 modules · 90 leçons · 360 heures · projet final évalué. De l’idée à une première offre prête à vendre.","9 módulos · 90 clases · 360 horas · proyecto final evaluado. De la idea a una primera oferta lista para vender.")}<',
+          '>R$ 299,99 · € 49,90 · pagamento único · acesso vitalício<':'>{tx("R$ 299,99 · € 49,90 · pagamento único · acesso vitalício","R$ 299.99 · € 49.90 · one-time payment · lifetime access","R$ 299,99 · € 49,90 · paiement unique · accès à vie","R$ 299,99 · € 49,90 · pago único · acceso vitalicio")}<',
+          '>CONHECER A FORMAÇÃO<':'>{tx("CONHECER A FORMAÇÃO","LEARN MORE","DÉCOUVRIR LA FORMATION","CONOCER LA FORMACIÓN")}<',
+          '>MASSOTERAPIA · 1.200H<':'>{tx("MASSOTERAPIA · 1.200H","MASSAGE THERAPY · 1,200H","MASSOTHÉRAPIE · 1 200H","MASOTERAPIA · 1.200H")}<',
+          '>Formação Completa em Massoterapia<':'>{tx("Formação Completa em Massoterapia","Complete Massage Therapy Training","Formation Complète en Massothérapie","Formación Completa en Masoterapia")}<',
+          '>15 módulos · 300 aulas · 1.200 horas · 100% online · 6 a 12 meses · sem encontros ao vivo nesta etapa.<':'>{tx("15 módulos · 300 aulas · 1.200 horas · 100% online · 6 a 12 meses.","15 modules · 300 lessons · 1,200 hours · 100% online · 6 to 12 months.","15 modules · 300 leçons · 1 200 heures · 100% en ligne · 6 à 12 mois.","15 módulos · 300 clases · 1.200 horas · 100% online · 6 a 12 meses.")}<',
+          '>Também incluída na assinatura ativa da Biblioteca LDR.<':'>{tx("Também incluída na assinatura ativa da Biblioteca LDR.","Also included with an active LDR Library subscription.","Également incluse avec un abonnement actif à la Bibliothèque LDR.","También incluida con una suscripción activa a la Biblioteca LDR.")}<',
+          '>ATENDIMENTO POR TEXTO<':'>{tx("ATENDIMENTO POR TEXTO","TEXT-BASED SERVICE","SERVICE PAR ÉCRIT","ATENCIÓN POR TEXTO")}<',
+          '>ORIENTAÇÃO PSICANALÍTICA ESCRITA<':'>{tx("ORIENTAÇÃO PSICANALÍTICA ESCRITA","WRITTEN PSYCHOANALYTIC GUIDANCE","ORIENTATION PSYCHANALYTIQUE ÉCRITE","ORIENTACIÓN PSICOANALÍTICA ESCRITA")}<',
+          '>Orientação breve, privada e por escrito<':'>{tx("Orientação breve, privada e por escrito","Brief, private written guidance","Orientation brève, privée et par écrit","Orientación breve, privada y por escrito")}<',
+          '>Converse por texto com um psicanalista em um espaço privado, com fundamentação psicanalítica e científica quando pertinente. O tempo fica pausado enquanto você aguarda a resposta do profissional.<':'>{tx("Converse por texto com um psicanalista em um espaço privado, com fundamentação psicanalítica e científica quando pertinente. O tempo fica pausado enquanto você aguarda a resposta do profissional.","Talk by text with a psychoanalyst in a private space, with psychoanalytic and scientific grounding when relevant. Time pauses while you wait for the professional’s reply.","Échangez par écrit avec un psychanalyste dans un espace privé, avec un cadre psychanalytique et scientifique lorsque pertinent. Le temps est suspendu pendant l’attente de la réponse.","Habla por texto con un psicoanalista en un espacio privado, con fundamentos psicoanalíticos y científicos cuando corresponda. El tiempo se pausa mientras esperas la respuesta.")}<',
+          '>Promoção válida por 30 dias a partir da primeira compra. Depois, € 0,90 a cada 2 minutos, com pacotes disponíveis. Não substitui atendimento de urgência, médico ou psiquiátrico.<':'>{tx("Promoção válida por 30 dias a partir da primeira compra. Depois, € 0,90 a cada 2 minutos, com pacotes disponíveis. Não substitui atendimento de urgência, médico ou psiquiátrico.","Promotion valid for 30 days from the first purchase. Afterwards, €0.90 per 2 minutes, with packages available. It does not replace emergency, medical or psychiatric care.","Promotion valable 30 jours à compter du premier achat. Ensuite, 0,90 € toutes les 2 minutes, avec des forfaits disponibles. Ne remplace pas les soins d’urgence, médicaux ou psychiatriques.","Promoción válida durante 30 días desde la primera compra. Después, €0,90 cada 2 minutos, con paquetes disponibles. No sustituye atención de urgencia, médica o psiquiátrica.")}<',
+          '>INICIAR ORIENTAÇÃO<':'>{tx("INICIAR ORIENTAÇÃO","START GUIDANCE","COMMENCER L’ORIENTATION","INICIAR ORIENTACIÓN")}<',
+          '>ORIENTAÇÃO PROFISSIONAL ESCRITA<':'>{tx("ORIENTAÇÃO PROFISSIONAL ESCRITA","WRITTEN CAREER GUIDANCE","ORIENTATION PROFESSIONNELLE ÉCRITE","ORIENTACIÓN PROFESIONAL ESCRITA")}<',
+          '>Está perdido profissionalmente? Saia com uma direção mais clara.<':'>{tx("Está perdido profissionalmente? Saia com uma direção mais clara.","Feeling lost professionally? Leave with a clearer direction.","Vous vous sentez perdu professionnellement ? Repartez avec une direction plus claire.","¿Te sientes perdido profesionalmente? Sal con una dirección más clara.")}<',
+          '>Converse por texto sobre currículo, entrevistas, carreira, transição profissional, posicionamento e próximos passos. O tempo fica pausado enquanto você aguarda a resposta.<':'>{tx("Converse por texto sobre currículo, entrevistas, carreira, transição profissional, posicionamento e próximos passos. O tempo fica pausado enquanto você aguarda a resposta.","Talk by text about CVs, interviews, career, transitions, positioning and next steps. Time pauses while you wait for the reply.","Échangez par écrit sur le CV, les entretiens, la carrière, la transition, le positionnement et les prochaines étapes. Le temps est suspendu pendant l’attente de la réponse.","Habla por texto sobre currículum, entrevistas, carrera, transición profesional, posicionamiento y próximos pasos. El tiempo se pausa mientras esperas la respuesta.")}<',
+          '>Promoção válida por 30 dias a partir da primeira compra. Serviço separado da assinatura da Biblioteca.<':'>{tx("Promoção válida por 30 dias a partir da primeira compra. Serviço separado da assinatura da Biblioteca.","Promotion valid for 30 days from the first purchase. This service is separate from the Library subscription.","Promotion valable 30 jours à compter du premier achat. Service séparé de l’abonnement à la Bibliothèque.","Promoción válida durante 30 días desde la primera compra. Servicio separado de la suscripción de la Biblioteca.")}<',
+          '>FALAR SOBRE MINHA CARREIRA<':'>{tx("FALAR SOBRE MINHA CARREIRA","TALK ABOUT MY CAREER","PARLER DE MA CARRIÈRE","HABLAR SOBRE MI CARRERA")}<',
+          '>NEGÓCIOS E EMPREENDEDORISMO<':'>{tx("NEGÓCIOS E EMPREENDEDORISMO","BUSINESS & ENTREPRENEURSHIP","BUSINESS ET ENTREPRENEURIAT","NEGOCIOS Y EMPRENDIMIENTO")}<',
+          '>R$ 299,99 · € 49,90 · acesso vitalício<':'>R$ 299,99 · € 49,90 · {tx("acesso vitalício","lifetime access","accès à vie","acceso vitalicio")}<',
+          '>Também disponível pela assinatura ativa<':'>{tx("Também disponível pela assinatura ativa","Also available with an active subscription","Également disponible avec un abonnement actif","También disponible con una suscripción activa")}<',
+          '>CONHECER TREINAMENTO<':'>{tx("CONHECER TREINAMENTO","VIEW TRAINING","DÉCOUVRIR LA FORMATION","CONOCER FORMACIÓN")}<',
+          '>Pagamento único<':'>{tx("Pagamento único","One-time payment","Paiement unique","Pago único")}<',
+          '>Acesso vitalício ao conteúdo comprado<':'>{tx("Acesso vitalício ao conteúdo comprado","Lifetime access to purchased content","Accès à vie au contenu acheté","Acceso vitalicio al contenido comprado")}<',
+          '>Cancele quando quiser<':'>{tx("Cancele quando quiser","Cancel anytime","Annulez quand vous voulez","Cancela cuando quieras")}<',
+          '>VER FORMAÇÕES<':'>{tx("VER FORMAÇÕES","VIEW TRAINING","VOIR LES FORMATIONS","VER FORMACIONES")}<',
+          }
+          for a,b in reps.items():
+              s=s.replace(a,b)
+          p.write_text(s)
+          PY
+      - name: Build
+        run: |
+          npm install --package-lock=false --no-audit --no-fund
+          npm run build --workspace=apps/painel-ldr
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/painel-ldr/src/components/library-sales-home-access-choice.tsx
+          git commit -m "fix(painel): translate remaining public storefront labels"
+          git push
