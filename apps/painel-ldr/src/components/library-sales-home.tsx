@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { BookOpen, BriefcaseBusiness, Check, ChevronRight, GraduationCap, Languages, Library, Sparkles } from "lucide-react";
 import { LanguageSelect, useI18n } from "@/lib/i18n";
+import { librarySalesCardCatalog } from "@/lib/library-sales-card-i18n";
 
 const PROMO_END_AT = new Date("2026-09-30T23:59:59+02:00").getTime();
 
