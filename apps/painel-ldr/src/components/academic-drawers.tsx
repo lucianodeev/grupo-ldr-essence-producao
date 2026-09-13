@@ -6,6 +6,7 @@ import { POSTGRADUATE_COURSES } from "@/lib/postgraduate-interest.catalog";
 import { postgraduateCardTitle, undergraduateCardTitle } from "@/lib/library-card-i18n";
 import { PROFESSIONAL_FORMATIONS, pfText } from "@/lib/academy-professional-formations.catalog";
 import { PSYCHOANALYSIS_EBOOKS } from "@/lib/psychoanalysis-ebooks.catalog";
+import { ACADEMY_FREE_COURSES } from "@/lib/academy-free-courses.catalog";
 
 type Locale="pt"|"en"|"fr"|"es";
 type CourseCategoryKey="psycho"|"beauty"|"business"|"career"|"technology"|"humanities";
@@ -86,38 +87,47 @@ const UTILITY_CATEGORY_COPY:Record<Locale,Record<UtilityCategoryKey,{icon:string
   }
 };
 
+const FREE_COURSE_STYLE:Record<string,{icon:string;tone:string}>={
+  "clinica-psicanalitica-sigmund-freud":{icon:"🛋️",tone:"#5b2b86"},
+  "orientacao-trabalho-cientifico":{icon:"📚",tone:"#0F5E7A"},
+  "modelos-documentos-psicanaliticos":{icon:"📄",tone:"#6F4E37"},
+  "ingles-basico-a1":{icon:"🇬🇧",tone:"#1F4E79"},
+  "espanhol-basico-a1":{icon:"🇪🇸",tone:"#AA151B"},
+  "portugues-para-falantes-de-outras-linguas-a1":{icon:"🇵🇹",tone:"#046A38"},
+  "neerlandes-basico-a1":{icon:"🇳🇱",tone:"#21468B"},
+  "alemao-basico-a1":{icon:"🇩🇪",tone:"#6B4A2D"}
+};
+
+const academyFreeFor=(locale:Locale):DrawerCourse[]=>ACADEMY_FREE_COURSES.map(course=>{
+  const style=FREE_COURSE_STYLE[course.slug]??{icon:"🎓",tone:"#315F86"};
+  const hourLabel=course.hours?`${course.hours}h · ${locale==="pt"?"gratuito":locale==="fr"?"gratuit":locale==="es"?"gratis":"free"}`:(locale==="pt"?"Conteúdo gratuito":locale==="fr"?"Contenu gratuit":locale==="es"?"Contenido gratis":"Free content");
+  return {icon:style.icon,title:course.name[locale],meta:hourLabel,href:`/cliente/cursos/academy/${course.slug}`,tone:style.tone};
+});
+
 const FREE_COURSES:Record<Locale,DrawerCourse[]>={
   pt:[
     {icon:"💼",title:"Como Organizar sua Carreira e Dar o Próximo Passo Profissional",meta:"7 aulas · 7 dias · acesso gratuito",href:"/cliente/biblioteca/curso-gratuito-carreira",tone:"#b85c2e"},
     {icon:"🇫🇷",title:"Francês Básico para Negócios — Nível A1",meta:"30 aulas · 10 horas · acesso gratuito",href:"/cliente/cursos/frances-negocios-a1",tone:"#123f73"},
     {icon:"⛑️",title:"Primeiros Socorros — Noções Básicas",meta:"30 aulas · 10 horas · acesso gratuito",href:"/cliente/cursos/primeiros-socorros",tone:"#b4232a"},
-    {icon:"🛋️",title:"Clínica Psicanalítica: Sigmund Freud",meta:"120h · gratuito",href:"/cliente/cursos/academy/clinica-psicanalitica-sigmund-freud",tone:"#5b2b86"},
-    {icon:"📚",title:"Orientação do Trabalho Científico",meta:"120h · gratuito",href:"/cliente/cursos/academy/orientacao-trabalho-cientifico",tone:"#0F5E7A"},
-    {icon:"📄",title:"Modelos de Documentos Psicanalíticos",meta:"Conteúdo gratuito",href:"/cliente/cursos/academy/modelos-documentos-psicanaliticos",tone:"#6F4E37"}
+    ...academyFreeFor("pt")
   ],
   en:[
     {icon:"💼",title:"Organize Your Career and Take the Next Professional Step",meta:"7 lessons · 7 days · free access",href:"/cliente/biblioteca/curso-gratuito-carreira",tone:"#b85c2e"},
     {icon:"🇫🇷",title:"Basic French for Business — Level A1",meta:"30 lessons · 10 hours · free access",href:"/cliente/cursos/frances-negocios-a1",tone:"#123f73"},
     {icon:"⛑️",title:"First Aid — Basic Concepts",meta:"30 lessons · 10 hours · free access",href:"/cliente/cursos/primeiros-socorros",tone:"#b4232a"},
-    {icon:"🛋️",title:"Psychoanalytic Clinic: Sigmund Freud",meta:"120h · free",href:"/cliente/cursos/academy/clinica-psicanalitica-sigmund-freud",tone:"#5b2b86"},
-    {icon:"📚",title:"Scientific Work Guidance",meta:"120h · free",href:"/cliente/cursos/academy/orientacao-trabalho-cientifico",tone:"#0F5E7A"},
-    {icon:"📄",title:"Psychoanalytic Document Models",meta:"Free content",href:"/cliente/cursos/academy/modelos-documentos-psicanaliticos",tone:"#6F4E37"}
+    ...academyFreeFor("en")
   ],
   fr:[
     {icon:"💼",title:"Organiser sa carrière et franchir la prochaine étape professionnelle",meta:"7 leçons · 7 jours · accès gratuit",href:"/cliente/biblioteca/curso-gratuito-carreira",tone:"#b85c2e"},
     {icon:"🇫🇷",title:"Français de base pour les affaires — Niveau A1",meta:"30 leçons · 10 heures · accès gratuit",href:"/cliente/cursos/frances-negocios-a1",tone:"#123f73"},
     {icon:"⛑️",title:"Premiers secours — Notions de base",meta:"30 leçons · 10 heures · accès gratuit",href:"/cliente/cursos/primeiros-socorros",tone:"#b4232a"},
-    {icon:"🛋️",title:"Clinique psychanalytique : Sigmund Freud",meta:"120h · gratuit",href:"/cliente/cursos/academy/clinica-psicanalitica-sigmund-freud",tone:"#5b2b86"},
-    {icon:"📚",title:"Orientation du travail scientifique",meta:"120h · gratuit",href:"/cliente/cursos/academy/orientacao-trabalho-cientifico",tone:"#0F5E7A"},
-    {icon:"📄",title:"Modèles de documents psychanalytiques",meta:"Contenu gratuit",href:"/cliente/cursos/academy/modelos-documentos-psicanaliticos",tone:"#6F4E37"}
+    ...academyFreeFor("fr")
   ],
   es:[
     {icon:"💼",title:"Cómo organizar tu carrera y dar el siguiente paso profesional",meta:"7 clases · 7 días · acceso gratis",href:"/cliente/biblioteca/curso-gratuito-carreira",tone:"#b85c2e"},
     {icon:"🇫🇷",title:"Francés básico para negocios — Nivel A1",meta:"30 clases · 10 horas · acceso gratis",href:"/cliente/cursos/frances-negocios-a1",tone:"#123f73"},
     {icon:"⛑️",title:"Primeros auxilios — Nociones básicas",meta:"30 clases · 10 horas · acceso gratis",href:"/cliente/cursos/primeiros-socorros",tone:"#b4232a"},
-    {icon:"🛋️",title:"Clínica psicoanalítica: Sigmund Freud",meta:"120h · gratis",href:"/cliente/cursos/academy/clinica-psicanalitica-sigmund-freud",tone:"#5b2b86"},
-    {icon:"📚",title:"Orientación del trabajo científico",meta:"120h · gratis",href:"/cliente/cursos/academy/orientacao-trabalho-cientifico",tone:"#0F5E7A"},
-    {icon:"📄",title:"Modelos de documentos psicoanalíticos",meta:"Contenido gratis",href:"/cliente/cursos/academy/modelos-documentos-psicanaliticos",tone:"#6F4E37"}
+    ...academyFreeFor("es")
   ]
 };
 
