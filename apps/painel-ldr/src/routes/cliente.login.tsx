@@ -73,10 +73,10 @@ function oauthReturnUrl() {
     return "https://learn.lucianoconecta.online/api/auth/callback?academy=1";
   }
 
-  // Preserve the service context through Google's OAuth round trip so the
-  // server callback returns service clients to their portal, never Academy.
+  // Use one exact production callback for the Services Portal. Supabase Auth
+  // requires redirectTo URLs to be present in Authentication > URL Configuration.
   if (isServicePortalHost()) {
-    return `${window.location.origin}/api/auth/callback?portal=services`;
+    return "https://portal.ldrrhestrategia.com/api/auth/callback";
   }
 
   return `${window.location.origin}/api/auth/callback`;
