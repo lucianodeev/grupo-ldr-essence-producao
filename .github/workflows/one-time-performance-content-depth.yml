@@ -1,0 +1,30 @@
+name: One time performance content depth
+on:
+  push:
+    paths: ['.github/workflows/one-time-performance-content-depth.yml']
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enrich lessons
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('apps/painel-ldr/src/routes/_clientarea.cliente.psicanalista-alta-performance.$key.tsx');s=p.read_text()
+          anchor='const STAGES=["Fundamentos","Diagnóstico","Estratégia","Aplicação","Indicadores e revisão"];\n'
+          helper='''function lessonBody(courseKey:string,module:string,stage:string){const specific=courseKey==="marketing-psicanalistas"?"posicionamento, comunicação educativa, jornada de contato, canais, consentimento e métricas éticas":courseKey==="agenda-clinica"?"capacidade semanal, horários, pausas, faltas, comunicação administrativa, pagamentos e sustentabilidade":"receitas, custos, capacidade, ocupação, precificação, processos, reputação e cenários de crescimento";const stageText=stage==="Fundamentos"?"Defina termos, finalidade e limites antes de escolher ferramentas.":stage==="Diagnóstico"?"Separe percepção de evidência e identifique quais dados ainda faltam.":stage==="Estratégia"?"Escolha até três prioridades, com prazo, critério e risco associado.":stage==="Aplicação"?"Teste uma ação proporcional, documente o processo e preserve a autonomia do paciente.":"Compare indicadores, efeitos indesejados e ajuste o plano sem promessas de resultado.";return[`Objetivo: dominar ${module.toLowerCase()} dentro de uma prática profissional responsável. ${stageText}`,`Questão central: como trabalhar ${module.toLowerCase()} sem confundir gestão, comunicação e condução clínica?`,`Eixos para análise: ${specific}. O foco é tornar decisões explícitas e verificáveis, nunca transformar sofrimento ou vínculo clínico em argumento comercial.`,`Caso aplicado: um profissional percebe dificuldade ligada a ${module.toLowerCase()}, mas possui apenas impressões. Levante hipóteses, dados necessários, limites éticos, alternativas e uma ação de baixo risco.`,`Análise crítica: compare benefício esperado, custo, tempo, riscos de exposição, proteção de dados e possíveis efeitos sobre a relação profissional.`,`Síntese: registre decisão, indicador, prazo de revisão e condição para interromper ou corrigir a estratégia. Resultados financeiros são cenários educacionais, não garantias.`];}\n'''
+          if 'function lessonBody(' not in s:s=s.replace(anchor,anchor+helper,1)
+          old='body:[`Objetivo: compreender ${m.toLowerCase()} e aplicar o tema com critérios observáveis.`,`Questão central: o que precisa ser compreendido, medido ou decidido neste tema antes de agir?`,`Aplicação: registre situação atual, objetivo, evidências disponíveis, uma decisão e um indicador.`,`Estudo de caso: analise uma situação profissional relacionada a ${m.toLowerCase()}, sem utilizar dados identificáveis de pacientes.`,`Síntese: combine clareza, limites profissionais, execução proporcional e revisão.`],activity:`Atividade: produza um registro de uma página sobre ${m.toLowerCase()} com objetivo, três evidências, decisão, indicador e data de revisão.`'
+          new='body:lessonBody(key,m,stage),activity:`Atividade aplicada: elabore uma página sobre ${m.toLowerCase()} com diagnóstico, objetivo, três evidências, ação escolhida, limite ético, indicador e data de revisão. Não inclua dados identificáveis de pacientes.`'
+          if old not in s: raise SystemExit('lesson pattern not found')
+          p.write_text(s.replace(old,new,1))
+      - name: Commit
+        run: |
+          git config user.name ldr-rh-campanhas
+          git config user.email llucianouam@gmail.com
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.psicanalista-alta-performance.$key.tsx
+          git commit -m "feat: deepen high performance lesson content" || exit 0
+          git push
