@@ -31,6 +31,9 @@ const FREE=[
  {title:"Organizar minha Carreira",desc:"Planejamento e próximos passos profissionais.",href:"/cliente/cursos/organizar-carreira",icon:"💼"},
  {title:"Francês para Negócios A1",desc:"Francês básico aplicado a situações profissionais.",href:"/cliente/cursos/frances-negocios-a1",icon:"🇫🇷"},
  {title:"Primeiros Socorros",desc:"Noções essenciais para situações de emergência.",href:"/cliente/cursos/primeiros-socorros",icon:"⛑️"},
+ {title:"Clínica Psicanalítica: Sigmund Freud",desc:"120h · curso gratuito sobre fundamentos da clínica freudiana.",href:"/cliente/cursos/academy/clinica-psicanalitica-sigmund-freud",icon:"🛋️"},
+ {title:"Orientação do Trabalho Científico",desc:"120h · pesquisa, metodologia e escrita científica.",href:"/cliente/cursos/academy/orientacao-trabalho-cientifico",icon:"📚"},
+ {title:"Modelos de Documentos Psicanalíticos",desc:"Modelos educacionais e organização da prática psicanalítica.",href:"/cliente/cursos/academy/modelos-documentos-psicanaliticos",icon:"📄"},
 ];
 
 const EDITORIAL=[["Revista Psicanálise no Mundo","/cliente/biblioteca/publicacoes/revista-psicanalise-no-mundo","🧠"]] as const;
@@ -45,7 +48,7 @@ export function AcademyUniversityHome(){
  const [q,setQ]=useState("");
  const pfLocale=locale as PFLocale;
  const themeAccent:Record<string,string>={navy:"#0b3764",wine:"#7a1835",green:"#047857",petrol:"#0f766e",purple:"#6D3FA0",rose:"#b76e79",gold:"#a06f1c",terracotta:"#A85132"};
- const professional:Course[]=PROFESSIONAL_FORMATIONS.map((f,i)=>{const tx=pfText(f,pfLocale);const kinds:Exclude<Kind,"all">[]=["negocios","negocios","rh","negocios","carreira"];const kind=f.slug==="aba-autismo"||f.slug==="saude-mental-praticas-clinicas"?"psicanalise":f.slug==="ciencia-politica"||f.slug==="sociologia"||f.slug==="filosofia-clinica"||f.slug==="ciencias-felicidade"?"carreira":kinds[i]??"carreira";return {id:f.slug,title:tx.name,desc:tx.description,meta:`${f.hours}h · ${f.modulesCount} ${locale==="en"?"modules":locale==="fr"?"modules":locale==="es"?"módulos":"módulos"}`,price:"R$ 299,99 · € 49,90",href:f.publicPath,kind,icon:f.icon,accent:themeAccent[f.theme]??"#6D3FA0"};});
+ const professional:Course[]=PROFESSIONAL_FORMATIONS.map((f,i)=>{const tx=pfText(f,pfLocale);const kinds:Exclude<Kind,"all">[]=["negocios","negocios","rh","negocios","carreira"];const kind=f.slug==="aba-autismo"||f.slug==="saude-mental-praticas-clinicas"?"psicanalise":f.slug==="ciencia-politica"||f.slug==="sociologia"||f.slug==="filosofia-clinica"||f.slug==="ciencias-felicidade"?"carreira":kinds[i]??"carreira";return {id:f.slug,title:tx.name,desc:tx.description,meta:`${f.hours}h · ${f.modulesCount} ${locale==="en"?"modules":locale==="fr"?"modules":locale==="es"?"módulos":"módulos"}`,price:`R$ ${(f.priceBrlCents/100).toFixed(2).replace(".",",")} · € ${(f.priceEurCents/100).toFixed(2).replace(".",",")}`,href:f.publicPath,kind,icon:f.icon,accent:themeAccent[f.theme]??"#6D3FA0"};});
  const courses=[...CORE,...professional];
  const filtered=useMemo(()=>courses.filter(c=>(kind==="all"||c.kind===kind)&&(`${c.title} ${c.desc}`).toLowerCase().includes(q.trim().toLowerCase())),[courses,kind,q]);
  const chips:[[Kind,string],...[Kind,string][]]=[["all",t.all],["psicanalise",t.psy],["negocios",t.business],["carreira",t.career],["rh",t.rh],["ia",t.ai]];

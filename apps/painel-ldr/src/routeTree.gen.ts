@@ -80,6 +80,7 @@ import { Route as ClienteLoginRouteImport } from './routes/cliente.login'
 import { Route as ClinicaSocialProfissionaisRouteImport } from './routes/clinica-social_.profissionais'
 import { Route as EmpresaLoginRouteImport } from './routes/empresa.login'
 import { Route as FormacaoSlugRouteImport } from './routes/formacao.$slug'
+import { Route as FormacoesSlugRouteImport } from './routes/formacoes.$slug'
 import { Route as FuncionarioLoginRouteImport } from './routes/funcionario.login'
 import { Route as ProfissionaisCategoryRouteImport } from './routes/profissionais.$category'
 import { Route as ProfissionalSlugRouteImport } from './routes/profissional.$slug'
@@ -187,6 +188,8 @@ import { Route as ClientareaClienteTreinamentosPsicanaliseRouteImport } from './
 import { Route as ClientareaClienteTreinamentosPsicanaliseInternacionalRouteImport } from './routes/_clientarea.cliente.treinamentos.psicanalise-internacional'
 import { Route as ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRouteImport } from './routes/_clientarea.cliente.treinamentos.terapia-breve-psicanalitica'
 import { Route as ClientareaClienteBibliotecaPublicacoesSlugRouteImport } from './routes/_clientarea.cliente.biblioteca.publicacoes.$slug'
+import { Route as ClientareaClienteCursosAcademySlugRouteImport } from './routes/_clientarea.cliente.cursos.academy.$slug'
+import { Route as ClientareaClienteTreinamentosCursoAvulsoSlugRouteImport } from './routes/_clientarea.cliente.treinamentos.curso-avulso.$slug'
 import { Route as ClientareaClienteTreinamentosDoMamaoAoNegocioForumRouteImport } from './routes/_clientarea.cliente.treinamentos.do-mamao-ao-negocio.forum'
 import { Route as ClientareaClienteTreinamentosFormacaoProfissionalSlugRouteImport } from './routes/_clientarea.cliente.treinamentos.formacao-profissional.$slug'
 import { Route as ClientareaClienteTreinamentosPsicanaliseCertificadoRouteImport } from './routes/_clientarea.cliente.treinamentos.psicanalise.certificado'
@@ -559,6 +562,11 @@ const EmpresaLoginRoute = EmpresaLoginRouteImport.update({
 const FormacaoSlugRoute = FormacaoSlugRouteImport.update({
   id: '/formacao/$slug',
   path: '/formacao/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FormacoesSlugRoute = FormacoesSlugRouteImport.update({
+  id: '/formacoes/$slug',
+  path: '/formacoes/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FuncionarioLoginRoute = FuncionarioLoginRouteImport.update({
@@ -1189,6 +1197,18 @@ const ClientareaClienteBibliotecaPublicacoesSlugRoute =
     path: '/$slug',
     getParentRoute: () => ClientareaClienteBibliotecaPublicacoesRoute,
   } as any)
+const ClientareaClienteCursosAcademySlugRoute =
+  ClientareaClienteCursosAcademySlugRouteImport.update({
+    id: '/cursos/academy/$slug',
+    path: '/cursos/academy/$slug',
+    getParentRoute: () => ClientareaClienteRoute,
+  } as any)
+const ClientareaClienteTreinamentosCursoAvulsoSlugRoute =
+  ClientareaClienteTreinamentosCursoAvulsoSlugRouteImport.update({
+    id: '/curso-avulso/$slug',
+    path: '/curso-avulso/$slug',
+    getParentRoute: () => ClientareaClienteTreinamentosRoute,
+  } as any)
 const ClientareaClienteTreinamentosDoMamaoAoNegocioForumRoute =
   ClientareaClienteTreinamentosDoMamaoAoNegocioForumRouteImport.update({
     id: '/forum',
@@ -1282,6 +1302,7 @@ export interface FileRoutesByFullPath {
   '/clinica-social/profissionais': typeof ClinicaSocialProfissionaisRoute
   '/empresa/login': typeof EmpresaLoginRoute
   '/formacao/$slug': typeof FormacaoSlugRoute
+  '/formacoes/$slug': typeof FormacoesSlugRoute
   '/funcionario/login': typeof FuncionarioLoginRoute
   '/profissionais/$category': typeof ProfissionaisCategoryRoute
   '/profissional/$slug': typeof ProfissionalSlugRoute
@@ -1389,6 +1410,8 @@ export interface FileRoutesByFullPath {
   '/cliente/treinamentos/psicanalise-internacional': typeof ClientareaClienteTreinamentosPsicanaliseInternacionalRoute
   '/cliente/treinamentos/terapia-breve-psicanalitica': typeof ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRoute
   '/cliente/biblioteca/publicacoes/$slug': typeof ClientareaClienteBibliotecaPublicacoesSlugRoute
+  '/cliente/cursos/academy/$slug': typeof ClientareaClienteCursosAcademySlugRoute
+  '/cliente/treinamentos/curso-avulso/$slug': typeof ClientareaClienteTreinamentosCursoAvulsoSlugRoute
   '/cliente/treinamentos/do-mamao-ao-negocio/forum': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioForumRoute
   '/cliente/treinamentos/formacao-profissional/$slug': typeof ClientareaClienteTreinamentosFormacaoProfissionalSlugRoute
   '/cliente/treinamentos/psicanalise/certificado': typeof ClientareaClienteTreinamentosPsicanaliseCertificadoRoute
@@ -1460,6 +1483,7 @@ export interface FileRoutesByTo {
   '/clinica-social/profissionais': typeof ClinicaSocialProfissionaisRoute
   '/empresa/login': typeof EmpresaLoginRoute
   '/formacao/$slug': typeof FormacaoSlugRoute
+  '/formacoes/$slug': typeof FormacoesSlugRoute
   '/funcionario/login': typeof FuncionarioLoginRoute
   '/profissionais/$category': typeof ProfissionaisCategoryRoute
   '/profissional/$slug': typeof ProfissionalSlugRoute
@@ -1567,6 +1591,8 @@ export interface FileRoutesByTo {
   '/cliente/treinamentos/psicanalise-internacional': typeof ClientareaClienteTreinamentosPsicanaliseInternacionalRoute
   '/cliente/treinamentos/terapia-breve-psicanalitica': typeof ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRoute
   '/cliente/biblioteca/publicacoes/$slug': typeof ClientareaClienteBibliotecaPublicacoesSlugRoute
+  '/cliente/cursos/academy/$slug': typeof ClientareaClienteCursosAcademySlugRoute
+  '/cliente/treinamentos/curso-avulso/$slug': typeof ClientareaClienteTreinamentosCursoAvulsoSlugRoute
   '/cliente/treinamentos/do-mamao-ao-negocio/forum': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioForumRoute
   '/cliente/treinamentos/formacao-profissional/$slug': typeof ClientareaClienteTreinamentosFormacaoProfissionalSlugRoute
   '/cliente/treinamentos/psicanalise/certificado': typeof ClientareaClienteTreinamentosPsicanaliseCertificadoRoute
@@ -1645,6 +1671,7 @@ export interface FileRoutesById {
   '/clinica-social_/profissionais': typeof ClinicaSocialProfissionaisRoute
   '/empresa/login': typeof EmpresaLoginRoute
   '/formacao/$slug': typeof FormacaoSlugRoute
+  '/formacoes/$slug': typeof FormacoesSlugRoute
   '/funcionario/login': typeof FuncionarioLoginRoute
   '/profissionais/$category': typeof ProfissionaisCategoryRoute
   '/profissional/$slug': typeof ProfissionalSlugRoute
@@ -1752,6 +1779,8 @@ export interface FileRoutesById {
   '/_clientarea/cliente/treinamentos/psicanalise-internacional': typeof ClientareaClienteTreinamentosPsicanaliseInternacionalRoute
   '/_clientarea/cliente/treinamentos/terapia-breve-psicanalitica': typeof ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRoute
   '/_clientarea/cliente/biblioteca/publicacoes/$slug': typeof ClientareaClienteBibliotecaPublicacoesSlugRoute
+  '/_clientarea/cliente/cursos/academy/$slug': typeof ClientareaClienteCursosAcademySlugRoute
+  '/_clientarea/cliente/treinamentos/curso-avulso/$slug': typeof ClientareaClienteTreinamentosCursoAvulsoSlugRoute
   '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio/forum': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioForumRoute
   '/_clientarea/cliente/treinamentos/formacao-profissional/$slug': typeof ClientareaClienteTreinamentosFormacaoProfissionalSlugRoute
   '/_clientarea/cliente/treinamentos/psicanalise/certificado': typeof ClientareaClienteTreinamentosPsicanaliseCertificadoRoute
@@ -1827,6 +1856,7 @@ export interface FileRouteTypes {
     | '/clinica-social/profissionais'
     | '/empresa/login'
     | '/formacao/$slug'
+    | '/formacoes/$slug'
     | '/funcionario/login'
     | '/profissionais/$category'
     | '/profissional/$slug'
@@ -1934,6 +1964,8 @@ export interface FileRouteTypes {
     | '/cliente/treinamentos/psicanalise-internacional'
     | '/cliente/treinamentos/terapia-breve-psicanalitica'
     | '/cliente/biblioteca/publicacoes/$slug'
+    | '/cliente/cursos/academy/$slug'
+    | '/cliente/treinamentos/curso-avulso/$slug'
     | '/cliente/treinamentos/do-mamao-ao-negocio/forum'
     | '/cliente/treinamentos/formacao-profissional/$slug'
     | '/cliente/treinamentos/psicanalise/certificado'
@@ -2005,6 +2037,7 @@ export interface FileRouteTypes {
     | '/clinica-social/profissionais'
     | '/empresa/login'
     | '/formacao/$slug'
+    | '/formacoes/$slug'
     | '/funcionario/login'
     | '/profissionais/$category'
     | '/profissional/$slug'
@@ -2112,6 +2145,8 @@ export interface FileRouteTypes {
     | '/cliente/treinamentos/psicanalise-internacional'
     | '/cliente/treinamentos/terapia-breve-psicanalitica'
     | '/cliente/biblioteca/publicacoes/$slug'
+    | '/cliente/cursos/academy/$slug'
+    | '/cliente/treinamentos/curso-avulso/$slug'
     | '/cliente/treinamentos/do-mamao-ao-negocio/forum'
     | '/cliente/treinamentos/formacao-profissional/$slug'
     | '/cliente/treinamentos/psicanalise/certificado'
@@ -2189,6 +2224,7 @@ export interface FileRouteTypes {
     | '/clinica-social_/profissionais'
     | '/empresa/login'
     | '/formacao/$slug'
+    | '/formacoes/$slug'
     | '/funcionario/login'
     | '/profissionais/$category'
     | '/profissional/$slug'
@@ -2296,6 +2332,8 @@ export interface FileRouteTypes {
     | '/_clientarea/cliente/treinamentos/psicanalise-internacional'
     | '/_clientarea/cliente/treinamentos/terapia-breve-psicanalitica'
     | '/_clientarea/cliente/biblioteca/publicacoes/$slug'
+    | '/_clientarea/cliente/cursos/academy/$slug'
+    | '/_clientarea/cliente/treinamentos/curso-avulso/$slug'
     | '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio/forum'
     | '/_clientarea/cliente/treinamentos/formacao-profissional/$slug'
     | '/_clientarea/cliente/treinamentos/psicanalise/certificado'
@@ -2367,6 +2405,7 @@ export interface RootRouteChildren {
   ClinicaSocialProfissionaisRoute: typeof ClinicaSocialProfissionaisRoute
   EmpresaLoginRoute: typeof EmpresaLoginRoute
   FormacaoSlugRoute: typeof FormacaoSlugRoute
+  FormacoesSlugRoute: typeof FormacoesSlugRoute
   FuncionarioLoginRoute: typeof FuncionarioLoginRoute
   ProfissionalSlugRoute: typeof ProfissionalSlugRoute
   ProfissionalLoginRoute: typeof ProfissionalLoginRoute
@@ -2875,6 +2914,13 @@ declare module '@tanstack/react-router' {
       path: '/formacao/$slug'
       fullPath: '/formacao/$slug'
       preLoaderRoute: typeof FormacaoSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/formacoes/$slug': {
+      id: '/formacoes/$slug'
+      path: '/formacoes/$slug'
+      fullPath: '/formacoes/$slug'
+      preLoaderRoute: typeof FormacoesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/funcionario/login': {
@@ -3626,6 +3672,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClientareaClienteBibliotecaPublicacoesSlugRouteImport
       parentRoute: typeof ClientareaClienteBibliotecaPublicacoesRoute
     }
+    '/_clientarea/cliente/cursos/academy/$slug': {
+      id: '/_clientarea/cliente/cursos/academy/$slug'
+      path: '/cursos/academy/$slug'
+      fullPath: '/cliente/cursos/academy/$slug'
+      preLoaderRoute: typeof ClientareaClienteCursosAcademySlugRouteImport
+      parentRoute: typeof ClientareaClienteRoute
+    }
+    '/_clientarea/cliente/treinamentos/curso-avulso/$slug': {
+      id: '/_clientarea/cliente/treinamentos/curso-avulso/$slug'
+      path: '/curso-avulso/$slug'
+      fullPath: '/cliente/treinamentos/curso-avulso/$slug'
+      preLoaderRoute: typeof ClientareaClienteTreinamentosCursoAvulsoSlugRouteImport
+      parentRoute: typeof ClientareaClienteTreinamentosRoute
+    }
     '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio/forum': {
       id: '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio/forum'
       path: '/forum'
@@ -3949,6 +4009,7 @@ interface ClientareaClienteTreinamentosRouteChildren {
   ClientareaClienteTreinamentosPsicanaliseRoute: typeof ClientareaClienteTreinamentosPsicanaliseRouteWithChildren
   ClientareaClienteTreinamentosPsicanaliseInternacionalRoute: typeof ClientareaClienteTreinamentosPsicanaliseInternacionalRoute
   ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRoute: typeof ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRoute
+  ClientareaClienteTreinamentosCursoAvulsoSlugRoute: typeof ClientareaClienteTreinamentosCursoAvulsoSlugRoute
   ClientareaClienteTreinamentosFormacaoProfissionalSlugRoute: typeof ClientareaClienteTreinamentosFormacaoProfissionalSlugRoute
 }
 
@@ -3974,6 +4035,8 @@ const ClientareaClienteTreinamentosRouteChildren: ClientareaClienteTreinamentosR
       ClientareaClienteTreinamentosPsicanaliseInternacionalRoute,
     ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRoute:
       ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRoute,
+    ClientareaClienteTreinamentosCursoAvulsoSlugRoute:
+      ClientareaClienteTreinamentosCursoAvulsoSlugRoute,
     ClientareaClienteTreinamentosFormacaoProfissionalSlugRoute:
       ClientareaClienteTreinamentosFormacaoProfissionalSlugRoute,
   }
@@ -4005,6 +4068,7 @@ interface ClientareaClienteRouteChildren {
   ClientareaClienteGraduacaoCourseKeyRoute: typeof ClientareaClienteGraduacaoCourseKeyRoute
   ClientareaClienteInteressePosCourseKeyRoute: typeof ClientareaClienteInteressePosCourseKeyRoute
   ClientareaClientePedidoOrderIdRoute: typeof ClientareaClientePedidoOrderIdRoute
+  ClientareaClienteCursosAcademySlugRoute: typeof ClientareaClienteCursosAcademySlugRoute
 }
 
 const ClientareaClienteRouteChildren: ClientareaClienteRouteChildren = {
@@ -4041,6 +4105,8 @@ const ClientareaClienteRouteChildren: ClientareaClienteRouteChildren = {
   ClientareaClienteInteressePosCourseKeyRoute:
     ClientareaClienteInteressePosCourseKeyRoute,
   ClientareaClientePedidoOrderIdRoute: ClientareaClientePedidoOrderIdRoute,
+  ClientareaClienteCursosAcademySlugRoute:
+    ClientareaClienteCursosAcademySlugRoute,
 }
 
 const ClientareaClienteRouteWithChildren =
@@ -4166,6 +4232,7 @@ const rootRouteChildren: RootRouteChildren = {
   ClinicaSocialProfissionaisRoute: ClinicaSocialProfissionaisRoute,
   EmpresaLoginRoute: EmpresaLoginRoute,
   FormacaoSlugRoute: FormacaoSlugRoute,
+  FormacoesSlugRoute: FormacoesSlugRoute,
   FuncionarioLoginRoute: FuncionarioLoginRoute,
   ProfissionalSlugRoute: ProfissionalSlugRoute,
   ProfissionalLoginRoute: ProfissionalLoginRoute,

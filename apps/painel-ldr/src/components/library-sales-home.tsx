@@ -48,6 +48,9 @@ const freeCourses=[
   ["Organize sua Carreira","7 aulas · leitura · sem expiração","/cliente/cursos/organizar-carreira"],
   ["Francês Básico para Negócios — A1","30 aulas · 10 horas","/cliente/cursos/frances-negocios-a1"],
   ["Primeiros Socorros — Noções Básicas","30 aulas · 10 horas","/cliente/cursos/primeiros-socorros"],
+  ["Clínica Psicanalítica: Sigmund Freud","120 horas · gratuito","/cliente/cursos/academy/clinica-psicanalitica-sigmund-freud"],
+  ["Orientação do Trabalho Científico","120 horas · gratuito","/cliente/cursos/academy/orientacao-trabalho-cientifico"],
+  ["Modelos de Documentos Psicanalíticos","modelos práticos · gratuito","/cliente/cursos/academy/modelos-documentos-psicanaliticos"],
 ] as const;
 
 export function LibrarySalesHome(){
