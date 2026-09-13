@@ -1,6 +1,5 @@
-import { Minus, Moon, Plus, RotateCcw, Sun } from "lucide-react";
+import { Minus, Moon, Plus, RotateCcw, Sun, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import { createPortal } from "react-dom";
 
 import { useI18n } from "@/lib/i18n";
 
@@ -13,10 +12,10 @@ type Props = {
 };
 
 const COPY = {
-  pt: { decrease: "Diminuir texto", reset: "Tamanho padrão", increase: "Aumentar texto", light: "Claro", dark: "Escuro", language: "Idioma", popular: "MAIS PROCURADO" },
-  en: { decrease: "Decrease text", reset: "Default size", increase: "Increase text", light: "Light", dark: "Dark", language: "Language", popular: "MOST POPULAR" },
-  fr: { decrease: "Réduire le texte", reset: "Taille par défaut", increase: "Agrandir le texte", light: "Clair", dark: "Sombre", language: "Langue", popular: "LE PLUS RECHERCHÉ" },
-  es: { decrease: "Reducir texto", reset: "Tamaño predeterminado", increase: "Aumentar texto", light: "Claro", dark: "Oscuro", language: "Idioma", popular: "MÁS BUSCADO" },
+  pt: { decrease: "Diminuir texto", reset: "Tamanho padrão", increase: "Aumentar texto", light: "Claro", dark: "Escuro", language: "Idioma", popular: "MAIS PROCURADO", accessibility: "Acessibilidade", close: "Fechar acessibilidade" },
+  en: { decrease: "Decrease text", reset: "Default size", increase: "Increase text", light: "Light", dark: "Dark", language: "Language", popular: "MOST POPULAR", accessibility: "Accessibility", close: "Close accessibility" },
+  fr: { decrease: "Réduire le texte", reset: "Taille par défaut", increase: "Agrandir le texte", light: "Clair", dark: "Sombre", language: "Langue", popular: "LE PLUS RECHERCHÉ", accessibility: "Accessibilité", close: "Fermer l’accessibilité" },
+  es: { decrease: "Reducir texto", reset: "Tamaño predeterminado", increase: "Aumentar texto", light: "Claro", dark: "Oscuro", language: "Idioma", popular: "MÁS BUSCADO", accessibility: "Accesibilidad", close: "Cerrar accesibilidad" },
 } as const;
 
 const POPULAR_HREFS = [
@@ -70,13 +69,15 @@ function markPopularCards(label: string) {
 }
 
 function ensureLibraryCardPolish() {
-  if (document.getElementById(CARD_STYLE_ID)) return;
+  document.getElementById(CARD_STYLE_ID)?.remove();
   const style = document.createElement("style");
   style.id = CARD_STYLE_ID;
   style.textContent = `
     #catalogo-ldr .grid.grid-cols-4 {
       align-items: stretch !important;
       grid-auto-rows: 1fr;
+      column-gap: 0.55rem !important;
+      row-gap: 0.7rem !important;
     }
     #catalogo-ldr .grid.grid-cols-4 > a,
     #catalogo-ldr .grid.grid-cols-4 > button {
@@ -84,56 +85,67 @@ function ensureLibraryCardPolish() {
       height: 100% !important;
       min-height: 7.6rem !important;
       aspect-ratio: 0.78 / 1 !important;
-      padding: 0.85rem 0.42rem !important;
+      padding: 0.9rem 0.5rem !important;
       justify-content: center !important;
       touch-action: manipulation;
     }
     #catalogo-ldr .grid.grid-cols-4 > a > p,
     #catalogo-ldr .grid.grid-cols-4 > button > p {
-      min-height: 3.35em !important;
-      padding-inline: 0.1rem;
-      font-size: 0.58rem !important;
-      line-height: 1.15 !important;
-      letter-spacing: -0.005em;
+      min-height: 3.45em !important;
+      padding-inline: 0.18rem !important;
+      font-size: 0.62rem !important;
+      line-height: 1.2 !important;
+      letter-spacing: 0 !important;
       -webkit-line-clamp: 3 !important;
     }
     #catalogo-ldr .grid.grid-cols-4 > a > span,
     #catalogo-ldr .grid.grid-cols-4 > button > span {
-      margin-top: 0.42rem !important;
-      padding: 0.22rem 0.42rem !important;
-      font-size: 0.49rem !important;
+      margin-top: 0.48rem !important;
+      padding: 0.24rem 0.46rem !important;
+      font-size: 0.5rem !important;
       line-height: 1.05 !important;
       white-space: nowrap;
     }
     #catalogo-ldr [data-ldr-popular="true"] {
-      padding-top: 2.25rem !important;
+      padding-top: 2.4rem !important;
     }
     #catalogo-ldr [data-ldr-popular="true"]::before {
-      top: 0.52rem !important;
-      max-width: calc(100% - 0.95rem) !important;
-      padding: 0.28rem 0.5rem !important;
-      font-size: 0.5rem !important;
+      top: 0.48rem !important;
+      left: 50% !important;
+      right: auto !important;
+      transform: translateX(-50%) !important;
+      width: max-content !important;
+      max-width: calc(100% - 0.9rem) !important;
+      padding: 0.3rem 0.48rem !important;
+      font-size: 0.48rem !important;
       line-height: 1.05 !important;
-      letter-spacing: 0.03em !important;
+      letter-spacing: 0.025em !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
     }
     #catalogo-ldr [data-ldr-popular="true"]::after {
-      top: 0.56rem !important;
+      top: 0.53rem !important;
       right: 0.42rem !important;
     }
     @media (min-width: 641px) {
+      #catalogo-ldr .grid.grid-cols-4 {
+        column-gap: 0.75rem !important;
+        row-gap: 0.9rem !important;
+      }
       #catalogo-ldr .grid.grid-cols-4 > a,
       #catalogo-ldr .grid.grid-cols-4 > button {
         min-height: 8.4rem !important;
-        padding-inline: 0.55rem !important;
+        padding-inline: 0.6rem !important;
       }
       #catalogo-ldr .grid.grid-cols-4 > a > p,
       #catalogo-ldr .grid.grid-cols-4 > button > p {
-        font-size: 0.66rem !important;
-        line-height: 1.18 !important;
+        font-size: 0.68rem !important;
+        line-height: 1.2 !important;
       }
       #catalogo-ldr .grid.grid-cols-4 > a > span,
       #catalogo-ldr .grid.grid-cols-4 > button > span {
-        font-size: 0.53rem !important;
+        font-size: 0.54rem !important;
       }
       #catalogo-ldr [data-ldr-popular="true"]::before {
         font-size: 0.54rem !important;
@@ -143,61 +155,13 @@ function ensureLibraryCardPolish() {
   document.head.appendChild(style);
 }
 
-function textOf(node: Element) {
-  return (node.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
-}
-
-function isCompactProgressNode(node: HTMLElement) {
-  const text = textOf(node);
-  if (!text || text.length > 180) return false;
-  return /progresso|progress|progression|progressión|concluído|concluída|completed|terminée|completada|\b\d{1,3}%\b/.test(text);
-}
-
-function findProductAnchor() {
-  const shell = document.querySelector<HTMLElement>(".academy-accessibility-shell");
-  if (!shell) return null;
-
-  const heading = Array.from(shell.querySelectorAll<HTMLElement>("h1")).find(
-    (node) => !node.closest("[data-academy-accessibility-host]"),
-  );
-  if (!heading) return null;
-
-  const scopes: HTMLElement[] = [];
-  const semantic = heading.closest<HTMLElement>("header, section, article");
-  if (semantic && semantic !== shell) scopes.push(semantic);
-
-  let parent = heading.parentElement;
-  for (let depth = 0; parent && parent !== shell && depth < 3; depth += 1, parent = parent.parentElement) {
-    if (!scopes.includes(parent)) scopes.push(parent);
-  }
-
-  for (const scope of scopes) {
-    const candidates = Array.from(scope.querySelectorAll<HTMLElement>("p, span, div")).filter(
-      (node) => !node.closest("[data-academy-accessibility-host]") && isCompactProgressNode(node),
-    );
-    if (candidates.length) {
-      candidates.sort((a, b) => textOf(a).length - textOf(b).length);
-      return candidates[0];
-    }
-  }
-
-  if (semantic && semantic !== shell) {
-    const progressInSemantic = Array.from(semantic.children).find(
-      (node): node is HTMLElement => node instanceof HTMLElement && isCompactProgressNode(node),
-    );
-    if (progressInSemantic) return progressInSemantic;
-  }
-
-  return heading;
-}
-
-export function AcademyAccessibilityControls({ visible = true, inline = false }: Props) {
+export function AcademyAccessibilityControls({ visible = true }: Props) {
   const { locale: rawLocale, setLocale } = useI18n();
   const locale = (rawLocale === "pt" || rawLocale === "en" || rawLocale === "fr" || rawLocale === "es" ? rawLocale : "pt") as Locale;
   const t = COPY[locale];
   const [theme, setTheme] = useState<Theme>("light");
   const [scale, setScale] = useState(1);
-  const [portalHost, setPortalHost] = useState<HTMLElement | null>(null);
+  const [open, setOpen] = useState(false);
   const scaleIndex = useMemo(() => Math.max(0, SCALES.indexOf(scale as (typeof SCALES)[number])), [scale]);
 
   useEffect(() => {
@@ -249,90 +213,67 @@ export function AcademyAccessibilityControls({ visible = true, inline = false }:
   }, [t.popular]);
 
   useEffect(() => {
-    if (!visible || !inline) {
-      setPortalHost(null);
-      return;
-    }
-
-    let host: HTMLElement | null = null;
-    let scheduled = false;
-
-    const place = () => {
-      scheduled = false;
-      if (host?.isConnected) return;
-
-      const anchor = findProductAnchor();
-      if (!anchor) return;
-
-      document.querySelectorAll<HTMLElement>("[data-academy-accessibility-host='true']").forEach((node) => node.remove());
-
-      host = document.createElement("div");
-      host.dataset.academyAccessibilityHost = "true";
-      host.className = "academy-product-accessibility-host";
-      anchor.insertAdjacentElement("afterend", host);
-      setPortalHost(host);
-    };
-
-    const schedulePlace = () => {
-      if (scheduled) return;
-      scheduled = true;
-      window.requestAnimationFrame(place);
-    };
-
-    schedulePlace();
-    const shell = document.querySelector<HTMLElement>(".academy-accessibility-shell") ?? document.body;
-    const observer = new MutationObserver(() => {
-      if (!host?.isConnected) schedulePlace();
-    });
-    observer.observe(shell, { childList: true, subtree: true });
-
-    return () => {
-      observer.disconnect();
-      host?.remove();
-      setPortalHost(null);
-    };
-  }, [visible, inline]);
+    if (!visible) setOpen(false);
+  }, [visible]);
 
   const decrease = () => setScale(SCALES[Math.max(0, scaleIndex - 1)]);
   const increase = () => setScale(SCALES[Math.min(SCALES.length - 1, scaleIndex + 1)]);
 
   if (!visible) return null;
 
-  if (inline) {
-    const buttonClass = "inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-current/35 px-4 py-3 text-sm font-black transition hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-40 sm:min-w-[132px]";
-    const controls = (
-      <section className="no-print mx-auto my-4 w-full rounded-[28px] border border-slate-300/35 bg-[#0d263d] p-4 text-white shadow-sm sm:my-5 sm:p-5" aria-label="Academy accessibility controls">
-        <div className="flex flex-wrap items-center gap-3" role="group">
-          <button type="button" onClick={() => setTheme("light")} aria-pressed={theme === "light"} className={`${buttonClass} ${theme === "light" ? "bg-white/12 ring-1 ring-white/35" : ""}`}>
-            <Sun className="h-5 w-5" aria-hidden="true" /><strong>{t.light}</strong>
-          </button>
-          <button type="button" onClick={() => setTheme("dark")} aria-pressed={theme === "dark"} className={`${buttonClass} ${theme === "dark" ? "bg-white/12 ring-1 ring-white/35" : ""}`}>
-            <Moon className="h-5 w-5" aria-hidden="true" /><strong>{t.dark}</strong>
-          </button>
-          <button type="button" onClick={decrease} disabled={scaleIndex === 0} aria-label={t.decrease} title={t.decrease} className={buttonClass}>
-            <Minus className="h-5 w-5" aria-hidden="true" /><strong>A−</strong>
-          </button>
-          <button type="button" onClick={increase} disabled={scaleIndex === SCALES.length - 1} aria-label={t.increase} title={t.increase} className={buttonClass}>
-            <Plus className="h-5 w-5" aria-hidden="true" /><strong>A+</strong>
-          </button>
-          <button type="button" onClick={() => setScale(1)} aria-label={t.reset} title={t.reset} className="inline-flex min-h-12 min-w-12 items-center justify-center rounded-2xl border border-current/35 px-3 py-3 transition hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2">
-            <RotateCcw className="h-5 w-5" aria-hidden="true" />
-          </button>
-        </div>
-        <label className="mt-3 inline-flex min-h-12 min-w-[190px] items-center gap-4 rounded-2xl border border-white/35 px-4 py-3 text-sm font-black">
-          <span className="whitespace-nowrap">{t.language}</span>
-          <select value={locale} onChange={(event) => setLocale(event.target.value as Locale)} aria-label={t.language} className="min-w-20 bg-transparent font-black text-white outline-none">
-            <option className="text-slate-950" value="pt">PT</option>
-            <option className="text-slate-950" value="en">EN</option>
-            <option className="text-slate-950" value="fr">FR</option>
-            <option className="text-slate-950" value="es">ES</option>
-          </select>
-        </label>
-      </section>
-    );
+  const buttonClass = "inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-white/30 px-3 py-2.5 text-sm font-black text-white transition hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-40";
 
-    return portalHost ? createPortal(controls, portalHost) : null;
-  }
+  return (
+    <div className="no-print fixed right-3 top-[36vh] z-[65] flex items-start justify-end" data-academy-accessibility-drawer="true">
+      {!open ? (
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          aria-label={t.accessibility}
+          title={t.accessibility}
+          className="flex h-12 w-12 items-center justify-center rounded-full border border-white/30 bg-[#0d263d] text-xl text-white shadow-xl transition hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2"
+        >
+          <span aria-hidden="true">♿</span>
+        </button>
+      ) : (
+        <aside className="w-[min(300px,calc(100vw-32px))] rounded-[24px] border border-white/20 bg-[#0d263d] p-4 text-white shadow-2xl" aria-label={t.accessibility}>
+          <div className="flex items-center justify-between gap-3">
+            <strong className="text-sm uppercase tracking-[0.12em]">{t.accessibility}</strong>
+            <button type="button" onClick={() => setOpen(false)} aria-label={t.close} title={t.close} className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/25 hover:bg-white/10">
+              <X className="h-4 w-4" aria-hidden="true" />
+            </button>
+          </div>
 
-  return null;
+          <div className="mt-4 grid grid-cols-2 gap-2">
+            <button type="button" onClick={() => setTheme("light")} aria-pressed={theme === "light"} className={`${buttonClass} ${theme === "light" ? "bg-white/15 ring-1 ring-white/35" : ""}`}>
+              <Sun className="h-4 w-4" aria-hidden="true" />{t.light}
+            </button>
+            <button type="button" onClick={() => setTheme("dark")} aria-pressed={theme === "dark"} className={`${buttonClass} ${theme === "dark" ? "bg-white/15 ring-1 ring-white/35" : ""}`}>
+              <Moon className="h-4 w-4" aria-hidden="true" />{t.dark}
+            </button>
+            <button type="button" onClick={decrease} disabled={scaleIndex === 0} aria-label={t.decrease} title={t.decrease} className={buttonClass}>
+              <Minus className="h-4 w-4" aria-hidden="true" /><span>A−</span>
+            </button>
+            <button type="button" onClick={increase} disabled={scaleIndex === SCALES.length - 1} aria-label={t.increase} title={t.increase} className={buttonClass}>
+              <Plus className="h-4 w-4" aria-hidden="true" /><span>A+</span>
+            </button>
+          </div>
+
+          <button type="button" onClick={() => setScale(1)} aria-label={t.reset} title={t.reset} className={`${buttonClass} mt-2 w-full`}>
+            <RotateCcw className="h-4 w-4" aria-hidden="true" />{t.reset}
+          </button>
+
+          <label className="mt-3 flex min-h-11 w-full items-center justify-between gap-4 rounded-xl border border-white/30 px-3 py-2.5 text-sm font-black">
+            <span className="whitespace-nowrap">{t.language}</span>
+            <select value={locale} onChange={(event) => setLocale(event.target.value as Locale)} aria-label={t.language} className="min-w-20 bg-transparent text-right font-black text-white outline-none">
+              <option className="text-slate-950" value="pt">PT</option>
+              <option className="text-slate-950" value="en">EN</option>
+              <option className="text-slate-950" value="fr">FR</option>
+              <option className="text-slate-950" value="es">ES</option>
+            </select>
+          </label>
+        </aside>
+      )}
+    </div>
+  );
 }
