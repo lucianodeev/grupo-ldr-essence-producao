@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect } from "react";
 import { AcademyUniversityHome } from "@/components/academy-university-home";
 
 export const Route = createFileRoute("/")({
@@ -12,5 +13,15 @@ export const Route = createFileRoute("/")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: AcademyUniversityHome,
+  component: PublicHome,
 });
+
+function PublicHome() {
+  useEffect(() => {
+    if (typeof window !== "undefined" && /^portal\.ldrrhestrategia\.com$/i.test(window.location.hostname)) {
+      window.location.replace("/cliente/login");
+    }
+  }, []);
+
+  return <AcademyUniversityHome />;
+}
