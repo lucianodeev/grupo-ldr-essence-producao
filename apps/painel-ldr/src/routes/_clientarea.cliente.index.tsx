@@ -1,7 +1,8 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { Bell, BookOpen, CalendarDays, ClipboardList, GraduationCap, MessageCircle, PlayCircle, ShoppingBag } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Bell, BookOpen, CalendarDays, ClipboardList, GraduationCap, MessageCircle, PlayCircle, ShoppingBag, UserRound } from "lucide-react";
 
 import { EmptyState, PageHeader, StatCard } from "@/components/central/ui";
 import { useClientOverview } from "@/lib/client-portal-data";
@@ -21,12 +22,26 @@ const QUICK = [
   { to: "/cliente/treinamentos", title: "Fórum e comentários", text: "Converse com a equipe", icon: MessageCircle },
 ] as const;
 
+const SERVICE_QUICK = [
+  { to: "/cliente/contratar", title: "Contratar e agendar", text: "Escolha o serviço, profissional, data e horário", icon: ShoppingBag, featured: true },
+  { to: "/cliente/agenda", title: "Minha agenda", text: "Veja seus próximos agendamentos", icon: CalendarDays },
+  { to: "/cliente/sessoes", title: "Meus atendimentos", text: "Acompanhe seus atendimentos e sessões", icon: ClipboardList },
+  { to: "/cliente/perfil", title: "Meus dados", text: "Confira e mantenha seus dados atualizados", icon: UserRound },
+] as const;
+
 function ClientHome() {
   const { data, isLoading } = useClientOverview();
   const learningFn = useServerFn(clientLearningHub);
   const notificationsFn = useServerFn(portalNotifications);
   const { data: learning } = useQuery({ queryKey: ["client-learning-hub"], queryFn: () => learningFn({}) });
   const { data: notifications } = useQuery({ queryKey: ["portal-notifications-client"], queryFn: () => notificationsFn({}) });
+  const [servicePortal, setServicePortal] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setServicePortal(/^portal\.ldrrhestrategia\.com$/i.test(window.location.hostname));
+    }
+  }, []);
 
   if (isLoading) return <p className="text-sm text-muted-foreground">Carregando…</p>;
   if (!data) return <p className="text-sm text-muted-foreground">Não foi possível carregar seus dados.</p>;
@@ -36,6 +51,25 @@ function ClientHome() {
   const pendingApproval = data.deliveries.filter((d) => d.needs_client_approval && (d.status === "entregue" || d.status === "em_revisao"));
   const progress = learning?.progress?.slice().sort((a:any,b:any)=>new Date(b.updated_at).getTime()-new Date(a.updated_at).getTime())[0];
   const nextLive = learning?.sessions?.find((s:any)=>new Date(s.starts_at)>=new Date());
+
+  if (servicePortal) {
+    return <div className="space-y-6">
+      <PageHeader title={`Olá, ${data.customer.fullName.split(" ")[0]}`} subtitle="Seu Portal de Serviços LDR: agende e acompanhe seus atendimentos em um único lugar." />
+
+      <section className="rounded-2xl border border-primary/25 bg-primary/5 p-5">
+        <p className="text-xs font-bold uppercase tracking-[.16em] text-primary">Portal de Serviços</p>
+        <h2 className="mt-1 font-serif text-2xl">O que você precisa fazer hoje?</h2>
+        <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">Agende um serviço, confira seus próximos horários ou acompanhe seus atendimentos. A LDR Academy e a biblioteca permanecem em um ambiente separado.</p>
+        <div className="mt-4 flex flex-wrap gap-2"><Link to="/cliente/contratar" className="rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground">Contratar e agendar</Link><Link to="/cliente/agenda" className="rounded-xl border border-primary px-4 py-2.5 text-sm font-bold text-primary">Ver minha agenda</Link></div>
+      </section>
+
+      <section><h2 className="mb-3 font-serif text-xl">Acessos rápidos</h2><div className="grid gap-3 sm:grid-cols-2">{SERVICE_QUICK.map(item=>{const Icon=item.icon;return <Link key={item.title} to={item.to} className={`rounded-2xl border p-5 transition hover:-translate-y-0.5 hover:shadow-md ${"featured" in item && item.featured ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card"}`}><Icon className="h-6 w-6"/><h3 className="mt-3 font-bold">{item.title}</h3><p className={`mt-1 text-sm ${"featured" in item && item.featured ? "opacity-85" : "text-muted-foreground"}`}>{item.text}</p></Link>})}</div></section>
+
+      <div className="grid gap-3 sm:grid-cols-2"><StatCard label="Pedidos em andamento" value={openOrders.length} tone="info"/><StatCard label="Aguardando você" value={waitingClient.length} tone="gold"/></div>
+
+      <section className="s8-card"><div className="flex items-center gap-2"><Bell className="h-5 w-5 text-primary"/><h2 className="font-serif text-xl">Notificações</h2></div><div className="mt-3 space-y-2">{(notifications as any[] | undefined)?.length ? (notifications as any[]).slice(0,6).map(n=><div key={n.id} className="rounded-xl border bg-card p-3"><p className="text-sm font-bold">{n.subject || "Aviso do Grupo LDR Essence"}</p><p className="mt-1 text-sm text-muted-foreground">{n.body}</p></div>) : <p className="text-sm text-muted-foreground">Nenhuma notificação nova.</p>}</div></section>
+    </div>;
+  }
 
   return <div className="space-y-6">
     <PageHeader title={`Olá, ${data.customer.fullName.split(" ")[0]}`} subtitle="Sua área foi organizada para você encontrar rapidamente o que precisa e continuar de onde parou." />
