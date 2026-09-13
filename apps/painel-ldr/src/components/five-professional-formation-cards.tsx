@@ -1,5 +1,5 @@
 import { useI18n } from "@/lib/i18n";
-import { PROFESSIONAL_FORMATIONS,pfText,type PFLocale } from "@/lib/professional-formations.catalog";
+import { PROFESSIONAL_FORMATIONS,pfText,type PFLocale } from "@/lib/academy-professional-formations.catalog";
 
 const UI={
   pt:{eyebrow:"FORMAÇÕES PROFISSIONAIS",title:"Formações profissionais 100% online",online:"100% ONLINE",hours:"600H",lessons:"AULAS",modules:"MÓDULOS",project:"PROJETO FINAL"},
