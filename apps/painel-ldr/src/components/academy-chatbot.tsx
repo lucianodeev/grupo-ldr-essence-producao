@@ -102,7 +102,7 @@ export function AcademyChatbot() {
   return (
     <>
       {showAnnouncement && (
-        <div className="relative z-[70] overflow-hidden border-y border-[#d6ad63]/30 bg-[#071426] py-2 text-white" role="status" aria-live="polite">
+        <div className="fixed inset-x-0 top-0 z-[110] overflow-hidden border-b border-[#d6ad63]/30 bg-[#071426] py-2 text-white shadow-sm" role="status" aria-live="polite">
           <div className="ldr-academy-ticker flex w-max min-w-full items-center motion-reduce:animate-none">
             {[0,1].map((item) => (
               <div key={item} className="flex shrink-0 items-center gap-4 px-4 text-[11px] font-bold tracking-[.04em] sm:px-8 sm:text-xs">
