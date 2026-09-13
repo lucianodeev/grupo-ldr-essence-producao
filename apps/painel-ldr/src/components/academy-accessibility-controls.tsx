@@ -6,10 +6,7 @@ import { useI18n } from "@/lib/i18n";
 type Theme = "light" | "dark";
 type Locale = "pt" | "en" | "fr" | "es";
 
-type Props = {
-  visible?: boolean;
-  inline?: boolean;
-};
+type Props = { visible?: boolean; inline?: boolean };
 
 const COPY = {
   pt: { decrease: "Diminuir texto", reset: "Tamanho padrão", increase: "Aumentar texto", light: "Claro", dark: "Escuro", language: "Idioma", popular: "MAIS PROCURADO", accessibility: "Acessibilidade", close: "Fechar acessibilidade" },
@@ -122,6 +119,53 @@ function ensureLibraryCardPolish() {
       white-space: nowrap !important;
     }
     #catalogo-ldr [data-ldr-popular="true"]::after { top: 0.53rem !important; right: 0.4rem !important; }
+
+    html[data-academy-theme="dark"] .academy-accessibility-shell {
+      background-color: #0b1220 !important;
+      color: #e2e8f0 !important;
+      --academy-bg: #0b1220;
+      --academy-surface: #111827;
+      --academy-text: #f8fafc;
+      --academy-text-muted: #cbd5e1;
+      --academy-border: rgba(255,255,255,.12);
+    }
+    html[data-academy-theme="dark"] .academy-accessibility-shell .bg-white,
+    html[data-academy-theme="dark"] .academy-accessibility-shell .bg-slate-50,
+    html[data-academy-theme="dark"] .academy-accessibility-shell .bg-\[\#fff8ef\],
+    html[data-academy-theme="dark"] .academy-accessibility-shell .bg-\[\#f4f9fc\],
+    html[data-academy-theme="dark"] .academy-accessibility-shell .bg-\[\#eff6ff\],
+    html[data-academy-theme="dark"] .academy-accessibility-shell .bg-\[\#eef8ff\],
+    html[data-academy-theme="dark"] .academy-accessibility-shell .bg-\[\#fff7e7\] {
+      background-color: #111827 !important;
+    }
+    html[data-academy-theme="dark"] .academy-accessibility-shell .text-slate-900,
+    html[data-academy-theme="dark"] .academy-accessibility-shell .text-slate-800,
+    html[data-academy-theme="dark"] .academy-accessibility-shell .text-slate-700,
+    html[data-academy-theme="dark"] .academy-accessibility-shell .text-\[\#071426\],
+    html[data-academy-theme="dark"] .academy-accessibility-shell .text-\[\#0f2f57\] {
+      color: #f8fafc !important;
+    }
+    html[data-academy-theme="dark"] .academy-accessibility-shell .text-slate-600,
+    html[data-academy-theme="dark"] .academy-accessibility-shell .text-slate-500,
+    html[data-academy-theme="dark"] .academy-accessibility-shell .text-\[\#475569\],
+    html[data-academy-theme="dark"] .academy-accessibility-shell .text-\[\#64748b\] {
+      color: #cbd5e1 !important;
+    }
+    html[data-academy-theme="dark"] .academy-accessibility-shell article,
+    html[data-academy-theme="dark"] .academy-accessibility-shell main section:not([class*="bg-gradient"]),
+    html[data-academy-theme="dark"] .academy-accessibility-shell aside:not([data-academy-accessibility-drawer]) {
+      border-color: rgba(255,255,255,.12);
+    }
+    html[data-academy-theme="dark"] .academy-accessibility-shell input,
+    html[data-academy-theme="dark"] .academy-accessibility-shell textarea,
+    html[data-academy-theme="dark"] .academy-accessibility-shell select {
+      background-color: #111827;
+      color: #f8fafc;
+      border-color: rgba(255,255,255,.16);
+    }
+    html[data-academy-theme="dark"] .academy-accessibility-shell input::placeholder,
+    html[data-academy-theme="dark"] .academy-accessibility-shell textarea::placeholder { color: #94a3b8; }
+
     @media (min-width: 641px) {
       #catalogo-ldr .grid.grid-cols-4 { column-gap: 12px !important; row-gap: 14px !important; padding-inline: 4px !important; }
       #catalogo-ldr .grid.grid-cols-4 > a,
@@ -154,34 +198,20 @@ export function AcademyAccessibilityControls({ visible = true }: Props) {
 
   useEffect(() => {
     const root = document.documentElement;
-    if (!visible) {
-      root.classList.remove("dark");
-      delete root.dataset.academyTheme;
-      return;
-    }
+    if (!visible) { root.classList.remove("dark"); delete root.dataset.academyTheme; return; }
     root.classList.toggle("dark", theme === "dark");
     root.dataset.academyTheme = theme;
     window.localStorage.setItem(STORAGE_THEME, theme);
-    return () => {
-      root.classList.remove("dark");
-      delete root.dataset.academyTheme;
-    };
+    return () => { root.classList.remove("dark"); delete root.dataset.academyTheme; };
   }, [theme, visible]);
 
   useEffect(() => {
     const root = document.documentElement;
-    if (!visible) {
-      delete root.dataset.academyFontScale;
-      root.style.removeProperty("--academy-font-scale");
-      return;
-    }
+    if (!visible) { delete root.dataset.academyFontScale; root.style.removeProperty("--academy-font-scale"); return; }
     root.dataset.academyFontScale = String(Math.round(scale * 100));
     root.style.setProperty("--academy-font-scale", String(scale));
     window.localStorage.setItem(STORAGE_SCALE, String(scale));
-    return () => {
-      delete root.dataset.academyFontScale;
-      root.style.removeProperty("--academy-font-scale");
-    };
+    return () => { delete root.dataset.academyFontScale; root.style.removeProperty("--academy-font-scale"); };
   }, [scale, visible]);
 
   useEffect(() => {
@@ -194,13 +224,11 @@ export function AcademyAccessibilityControls({ visible = true }: Props) {
   }, [t.popular]);
 
   useEffect(() => { if (!visible) setOpen(false); }, [visible]);
-
   const decrease = () => setScale(SCALES[Math.max(0, scaleIndex - 1)]);
   const increase = () => setScale(SCALES[Math.min(SCALES.length - 1, scaleIndex + 1)]);
   if (!visible) return null;
 
   const buttonClass = "inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-white/30 px-3 py-2.5 text-sm font-black text-white transition hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-40";
-
   return (
     <div className="no-print fixed right-3 top-[36vh] z-[65] flex items-start justify-end" data-academy-accessibility-drawer="true">
       {!open ? (
