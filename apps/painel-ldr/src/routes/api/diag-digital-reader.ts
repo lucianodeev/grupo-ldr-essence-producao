@@ -55,24 +55,41 @@ export const Route = createFileRoute("/api/diag-digital-reader")({
             } catch (error) {
               strictError = error instanceof Error ? error.message : "strict_error";
             }
-            const text = gunzipSync(bytes, { finishFlush: constants.Z_SYNC_FLUSH }).toString("utf8");
+            const text = gunzipSync(bytes, { finishFlush: constants.Z_SYNC_FLUSH }).toString("utf8").replace(/^\uFEFF/, "");
             let parsed: any = null;
             let parseError: string | null = null;
             try {
-              parsed = JSON.parse(text.replace(/^\uFEFF/, ""));
+              parsed = JSON.parse(text);
             } catch (error) {
               parseError = error instanceof Error ? error.message : "parse_error";
             }
+
+            let trimmed: any = null;
+            let trimError: string | null = null;
+            let trimmedChars = 0;
+            const lastBrace = text.lastIndexOf("}");
+            if (!parsed && lastBrace >= 0) {
+              const candidate = text.slice(0, lastBrace + 1);
+              trimmedChars = text.length - candidate.length;
+              try {
+                trimmed = JSON.parse(candidate);
+              } catch (error) {
+                trimError = error instanceof Error ? error.message : "trim_parse_error";
+              }
+            }
+            const recovered = parsed ?? trimmed;
             return new Response(JSON.stringify({
-              ok: Boolean(parsed),
+              ok: Boolean(recovered),
               stage: "recover",
               strictError,
               recoveredChars: text.length,
               parseError,
-              kind: parsed?.kind ?? null,
-              pages: Array.isArray(parsed?.pages) ? parsed.pages.length : null,
-              firstTitle: Array.isArray(parsed?.pages) ? parsed.pages[0]?.titulo ?? null : null,
-              lastTitle: Array.isArray(parsed?.pages) ? parsed.pages.at(-1)?.titulo ?? null : null,
+              trimmedChars,
+              trimError,
+              kind: recovered?.kind ?? null,
+              pages: Array.isArray(recovered?.pages) ? recovered.pages.length : null,
+              firstTitle: Array.isArray(recovered?.pages) ? recovered.pages[0]?.titulo ?? null : null,
+              lastTitle: Array.isArray(recovered?.pages) ? recovered.pages.at(-1)?.titulo ?? null : null,
             }), {
               status: 200,
               headers: { "content-type": "application/json", "cache-control": "no-store" },
