@@ -72,40 +72,37 @@ function findProductHero() {
   const shell = document.querySelector<HTMLElement>(".academy-accessibility-shell");
   if (!shell) return null;
 
-  const nodes = new Set<HTMLElement>();
-  shell.querySelectorAll<HTMLElement>("header, section").forEach((node) => nodes.add(node));
+  const headings = Array.from(shell.querySelectorAll<HTMLElement>("h1")).filter(
+    (heading) => !heading.closest("[data-academy-accessibility-host]"),
+  );
 
-  shell.querySelectorAll<HTMLElement>("h1").forEach((heading) => {
+  for (const heading of headings) {
     let node: HTMLElement | null = heading.parentElement;
-    for (let depth = 0; node && node !== shell && depth < 5; depth += 1, node = node.parentElement) {
-      nodes.add(node);
+    let semanticFallback: HTMLElement | null = heading.closest<HTMLElement>("header, section, article");
+
+    for (let depth = 0; node && node !== shell && depth < 7; depth += 1, node = node.parentElement) {
+      if (node.closest("[data-academy-accessibility-host]")) continue;
+      const text = (node.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
+      const hasProgress = /progresso|progress|progression|progressión|concluído|concluída|completed|terminée|completada/.test(text);
+      const hasPercent = /\b\d{1,3}%\b/.test(text);
+
+      if (node.querySelector("h1") && (hasProgress || hasPercent)) return node;
+      if (!semanticFallback && /^(HEADER|SECTION|ARTICLE)$/.test(node.tagName)) semanticFallback = node;
     }
-  });
 
-  let best: HTMLElement | null = null;
-  let bestScore = 0;
-
-  for (const node of nodes) {
-    if (node.closest("[data-academy-accessibility-host]")) continue;
-
-    const text = (node.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
-    if (!text) continue;
-
-    let score = 0;
-    if (node.querySelector("h1")) score += 2;
-    if (/progresso|progress|progression|progressión|concluído|concluída|completed|terminée|completada/.test(text)) score += 6;
-    if (/\b\d{1,3}%\b/.test(text)) score += 3;
-    if (/acesso liberado|access granted|accès autorisé|acceso liberado/.test(text)) score += 5;
-    if (/módulos|modules|module|aulas|lessons|leçons|clases|unidades|units|unités|unidades/.test(text)) score += 3;
-    if (/formação|formation|training|curso|course|treinamento/.test(text)) score += 2;
-
-    if (score > bestScore) {
-      best = node;
-      bestScore = score;
-    }
+    if (semanticFallback) return semanticFallback;
   }
 
-  return bestScore >= 4 ? best : null;
+  const fallbackNodes = Array.from(shell.querySelectorAll<HTMLElement>("header, section")).filter(
+    (node) => !node.closest("[data-academy-accessibility-host]"),
+  );
+
+  for (const node of fallbackNodes) {
+    const text = (node.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
+    if (/progresso|progress|progression|progressión|\b\d{1,3}%\b/.test(text)) return node;
+  }
+
+  return null;
 }
 
 export function AcademyAccessibilityControls({ visible = true, inline = false }: Props) {
