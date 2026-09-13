@@ -68,6 +68,11 @@ function markPopularCards(label: string) {
   });
 }
 
+function hasProgressSignal(node: HTMLElement) {
+  const text = (node.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
+  return /progresso|progress|progression|progressión|concluído|concluída|completed|terminée|completada|\b\d{1,3}%\b/.test(text);
+}
+
 function findProductHero() {
   const shell = document.querySelector<HTMLElement>(".academy-accessibility-shell");
   if (!shell) return null;
@@ -77,30 +82,30 @@ function findProductHero() {
   );
 
   for (const heading of headings) {
+    const header = heading.closest<HTMLElement>("header");
+    if (header && header !== shell && hasProgressSignal(header)) return header;
+
+    const section = heading.closest<HTMLElement>("section");
+    if (section && section !== shell && hasProgressSignal(section)) return section;
+
+    const article = heading.closest<HTMLElement>("article");
+    if (article && article !== shell && hasProgressSignal(article)) return article;
+
     let node: HTMLElement | null = heading.parentElement;
-    let semanticFallback: HTMLElement | null = heading.closest<HTMLElement>("header, section, article");
-
-    for (let depth = 0; node && node !== shell && depth < 7; depth += 1, node = node.parentElement) {
+    for (let depth = 0; node && node !== shell && depth < 4; depth += 1, node = node.parentElement) {
       if (node.closest("[data-academy-accessibility-host]")) continue;
-      const text = (node.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
-      const hasProgress = /progresso|progress|progression|progressión|concluído|concluída|completed|terminée|completada/.test(text);
-      const hasPercent = /\b\d{1,3}%\b/.test(text);
-
-      if (node.querySelector("h1") && (hasProgress || hasPercent)) return node;
-      if (!semanticFallback && /^(HEADER|SECTION|ARTICLE)$/.test(node.tagName)) semanticFallback = node;
+      if (hasProgressSignal(node)) return node;
     }
 
-    if (semanticFallback) return semanticFallback;
+    if (header && header !== shell) return header;
+    if (section && section !== shell) return section;
+    if (article && article !== shell) return article;
   }
 
-  const fallbackNodes = Array.from(shell.querySelectorAll<HTMLElement>("header, section")).filter(
-    (node) => !node.closest("[data-academy-accessibility-host]"),
+  const semanticWithProgress = Array.from(shell.querySelectorAll<HTMLElement>("header, section")).find(
+    (node) => !node.closest("[data-academy-accessibility-host]") && hasProgressSignal(node),
   );
-
-  for (const node of fallbackNodes) {
-    const text = (node.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
-    if (/progresso|progress|progression|progressión|\b\d{1,3}%\b/.test(text)) return node;
-  }
+  if (semanticWithProgress) return semanticWithProgress;
 
   return null;
 }
