@@ -974,7 +974,7 @@ export async function getClientContractCatalog(userId: string, email: string | n
 // ---------------------------------------------------------------- biblioteca digital
 
 export type ClientLibraryProduct = {
-  key: "ebook_coragem_comecar" | "livro_menino_mamao";
+  key: "ebook_coragem_comecar" | "livro_menino_mamao" | "ebook_pratica_clinica_psicanalise" | "ebook_psicanalise_no_mundo" | "ebook_estudos_caso_psicanalise" | "ebook_psicanalise_autismo";
   title: string;
   description: string;
   priceBrlCents: number;
@@ -1001,7 +1001,10 @@ const DIGITAL_LIBRARY_PRODUCTS: Omit<ClientLibraryProduct, "entitled">[] = [
     priceBrlCents: 4990,
     priceEurCents: 2000,
     purchaseUrl: "https://ldrrhestrategia.com/livros?lang=pt",
-  },
+  },  { key:"ebook_pratica_clinica_psicanalise", title:"A Prática Clínica da Psicanálise", description:"Estrutura, manejo, ética e construção da clínica psicanalítica.", priceBrlCents:2000, priceEurCents:399, purchaseUrl:"/ebook-pratica-clinica-psicanalise" },
+  { key:"ebook_psicanalise_no_mundo", title:"A Psicanálise no Mundo", description:"Panorama global, regulamentação e atuação internacional em perspectiva comparada.", priceBrlCents:2000, priceEurCents:399, purchaseUrl:"/ebook-psicanalise-no-mundo" },
+  { key:"ebook_estudos_caso_psicanalise", title:"Estudos de Caso", description:"Casos ficcionais ou compostos sobre vínculos, desejo, trabalho e impasses contemporâneos.", priceBrlCents:2000, priceEurCents:399, purchaseUrl:"/ebook-estudos-caso-psicanalise" },
+  { key:"ebook_psicanalise_autismo", title:"Psicanálise e Autismo", description:"Escuta, manejo, neurodiversidade e debate crítico com a ABA.", priceBrlCents:2000, priceEurCents:399, purchaseUrl:"/ebook-psicanalise-autismo" },
 ];
 
 /**
@@ -1034,6 +1037,10 @@ export async function getClientDigitalLibrary(userId: string, email: string | nu
   const aliases: Record<ClientLibraryProduct["key"], string[]> = {
     ebook_coragem_comecar: ["ebook_coragem_comecar", "a_coragem_de_comecar", "ebook", "combo_empreendedor"],
     livro_menino_mamao: ["livro_menino_mamao", "menino_mamao", "livro", "combo_empreendedor"],
+    ebook_pratica_clinica_psicanalise:["ebook_pratica_clinica_psicanalise"],
+    ebook_psicanalise_no_mundo:["ebook_psicanalise_no_mundo"],
+    ebook_estudos_caso_psicanalise:["ebook_estudos_caso_psicanalise"],
+    ebook_psicanalise_autismo:["ebook_psicanalise_autismo"],
   };
 
   return {
@@ -1045,7 +1052,7 @@ export async function getClientDigitalLibrary(userId: string, email: string | nu
   };
 }
 
-export type DigitalProductKey = "ebook_coragem_comecar" | "livro_menino_mamao";
+export type DigitalProductKey = "ebook_coragem_comecar" | "livro_menino_mamao" | "ebook_pratica_clinica_psicanalise" | "ebook_psicanalise_no_mundo" | "ebook_estudos_caso_psicanalise" | "ebook_psicanalise_autismo";
 export type DigitalMarket = "BR" | "INTL";
 
 function logDigitalCheckout(
@@ -1066,6 +1073,7 @@ const DIGITAL_CHECKOUT_CONFIG: Record<
     eurPriceEnv: string;
     fallbackBrlPrice?: string;
     fallbackEurPrice?: string;
+    dynamicPrice?: boolean;
   }
 > = {
   ebook_coragem_comecar: {
@@ -1084,14 +1092,19 @@ const DIGITAL_CHECKOUT_CONFIG: Record<
     fallbackBrlPrice: "price_1U5T7FKlx2LyNGeBMxRYLiDS",
     fallbackEurPrice: "price_1U5T6zKlx2LyNGeBuv7dJJsI",
   },
+  ebook_pratica_clinica_psicanalise:{title:"A Prática Clínica da Psicanálise",brlCents:2000,eurCents:399,brlPriceEnv:"STRIPE_EBOOK_PRACTICE_PRICE_BRL",eurPriceEnv:"STRIPE_EBOOK_PRACTICE_PRICE_EUR",dynamicPrice:true},
+  ebook_psicanalise_no_mundo:{title:"A Psicanálise no Mundo",brlCents:2000,eurCents:399,brlPriceEnv:"STRIPE_EBOOK_WORLD_PRICE_BRL",eurPriceEnv:"STRIPE_EBOOK_WORLD_PRICE_EUR",dynamicPrice:true},
+  ebook_estudos_caso_psicanalise:{title:"Estudos de Caso",brlCents:2000,eurCents:399,brlPriceEnv:"STRIPE_EBOOK_CASES_PRICE_BRL",eurPriceEnv:"STRIPE_EBOOK_CASES_PRICE_EUR",dynamicPrice:true},
+  ebook_psicanalise_autismo:{title:"Psicanálise e Autismo",brlCents:2000,eurCents:399,brlPriceEnv:"STRIPE_EBOOK_AUTISM_PRICE_BRL",eurPriceEnv:"STRIPE_EBOOK_AUTISM_PRICE_EUR",dynamicPrice:true},
 };
 
-function stripePriceFor(productKey: DigitalProductKey, market: DigitalMarket): string {
+function stripePriceFor(productKey: DigitalProductKey, market: DigitalMarket): string | null {
   const cfg = DIGITAL_CHECKOUT_CONFIG[productKey];
   const envName = market === "BR" ? cfg.brlPriceEnv : cfg.eurPriceEnv;
   const fallback = market === "BR" ? cfg.fallbackBrlPrice : cfg.fallbackEurPrice;
   const value = process.env[envName] || fallback;
-  if (!value || !value.startsWith("price_")) fail(`${envName} não configurada.`);
+  if (!value) { if (cfg.dynamicPrice) return null; fail(`${envName} não configurada.`); }
+  if (!value.startsWith("price_")) fail(`${envName} inválida.`);
   return value;
 }
 
@@ -1211,7 +1224,12 @@ export async function createClientDigitalCheckout(
 
   const params = new URLSearchParams();
   params.set("mode", "payment");
-  params.set("line_items[0][price]", priceId);
+  if (priceId) params.set("line_items[0][price]", priceId);
+  else {
+    params.set("line_items[0][price_data][currency]", currency.toLowerCase());
+    params.set("line_items[0][price_data][unit_amount]", String(amountCents));
+    params.set("line_items[0][price_data][product_data][name]", config.title);
+  }
   params.set("line_items[0][quantity]", "1");
   params.set(
     "success_url",

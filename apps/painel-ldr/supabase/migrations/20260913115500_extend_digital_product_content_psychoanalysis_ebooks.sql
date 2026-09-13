@@ -1,0 +1,2 @@
+alter table public.digital_product_content drop constraint if exists digital_product_content_product_key_check;
+alter table public.digital_product_content add constraint digital_product_content_product_key_check check (product_key = any (array['ebook_coragem_comecar'::text,'livro_menino_mamao'::text,'ebook_pratica_clinica_psicanalise'::text,'ebook_psicanalise_no_mundo'::text,'ebook_estudos_caso_psicanalise'::text,'ebook_psicanalise_autismo'::text]));

@@ -20,6 +20,10 @@ import { Route as AmostraGratisRouteImport } from './routes/amostra-gratis'
 import { Route as BioRouteImport } from './routes/bio'
 import { Route as BootstrapRouteImport } from './routes/bootstrap'
 import { Route as ClinicaSocialRouteImport } from './routes/clinica-social'
+import { Route as EbookEstudosCasoPsicanaliseRouteImport } from './routes/ebook-estudos-caso-psicanalise'
+import { Route as EbookPraticaClinicaPsicanaliseRouteImport } from './routes/ebook-pratica-clinica-psicanalise'
+import { Route as EbookPsicanaliseAutismoRouteImport } from './routes/ebook-psicanalise-autismo'
+import { Route as EbookPsicanaliseNoMundoRouteImport } from './routes/ebook-psicanalise-no-mundo'
 import { Route as EmpreendedoresRouteImport } from './routes/empreendedores'
 import { Route as FormacaoComunicacaoOratoriaRouteImport } from './routes/formacao-comunicacao-oratoria'
 import { Route as FormacaoCopywritingVendasRouteImport } from './routes/formacao-copywriting-vendas'
@@ -75,6 +79,7 @@ import { Route as ClienteDefinirSenhaRouteImport } from './routes/cliente.defini
 import { Route as ClienteLoginRouteImport } from './routes/cliente.login'
 import { Route as ClinicaSocialProfissionaisRouteImport } from './routes/clinica-social_.profissionais'
 import { Route as EmpresaLoginRouteImport } from './routes/empresa.login'
+import { Route as FormacaoSlugRouteImport } from './routes/formacao.$slug'
 import { Route as FuncionarioLoginRouteImport } from './routes/funcionario.login'
 import { Route as ProfissionaisCategoryRouteImport } from './routes/profissionais.$category'
 import { Route as ProfissionalSlugRouteImport } from './routes/profissional.$slug'
@@ -147,6 +152,8 @@ import { Route as ClientareaClientePerfilRouteImport } from './routes/_clientare
 import { Route as ClientareaClientePsicanalistaAltaPerformanceRouteImport } from './routes/_clientarea.cliente.psicanalista-alta-performance'
 import { Route as ClientareaClienteSessoesRouteImport } from './routes/_clientarea.cliente.sessoes'
 import { Route as ClientareaClienteTreinamentosRouteImport } from './routes/_clientarea.cliente.treinamentos'
+import { Route as ApiAuthCallbackRouteImport } from './routes/api/auth/callback'
+import { Route as ApiAuthSessionSyncRouteImport } from './routes/api/auth/session-sync'
 import { Route as ApiHotmartWebhookRouteImport } from './routes/api/hotmart/webhook'
 import { Route as ApiIntegrationsSiteOrdersRouteImport } from './routes/api/integrations/site-orders'
 import { Route as ApiStripeWebhookRouteImport } from './routes/api/stripe/webhook'
@@ -163,10 +170,12 @@ import { Route as ClientareaClienteBibliotecaRevistaLdrRouteImport } from './rou
 import { Route as ClientareaClienteCursosFrancesNegociosA1RouteImport } from './routes/_clientarea.cliente.cursos.frances-negocios-a1'
 import { Route as ClientareaClienteCursosOrganizarCarreiraRouteImport } from './routes/_clientarea.cliente.cursos.organizar-carreira'
 import { Route as ClientareaClienteCursosPrimeirosSocorrosRouteImport } from './routes/_clientarea.cliente.cursos.primeiros-socorros'
+import { Route as ClientareaClienteEbooksProductKeyRouteImport } from './routes/_clientarea.cliente.ebooks.$productKey'
 import { Route as ClientareaClienteFormacoesGestaoPessoasRhRouteImport } from './routes/_clientarea.cliente.formacoes.gestao-pessoas-rh'
 import { Route as ClientareaClienteGraduacaoCourseKeyRouteImport } from './routes/_clientarea.cliente.graduacao.$courseKey'
 import { Route as ClientareaClienteInteressePosCourseKeyRouteImport } from './routes/_clientarea.cliente.interesse-pos.$courseKey'
 import { Route as ClientareaClientePedidoOrderIdRouteImport } from './routes/_clientarea.cliente.pedido.$orderId'
+import { Route as ClientareaClientePsicanalistaAltaPerformanceKeyRouteImport } from './routes/_clientarea.cliente.psicanalista-alta-performance.$key'
 import { Route as ClientareaClienteTreinamentosDoMamaoAoNegocioRouteImport } from './routes/_clientarea.cliente.treinamentos.do-mamao-ao-negocio'
 import { Route as ClientareaClienteTreinamentosIaNegociosCarreiraRouteImport } from './routes/_clientarea.cliente.treinamentos.ia-negocios-carreira'
 import { Route as ClientareaClienteTreinamentosLiderancaGestaoRouteImport } from './routes/_clientarea.cliente.treinamentos.lideranca-gestao'
@@ -233,6 +242,28 @@ const BootstrapRoute = BootstrapRouteImport.update({
 const ClinicaSocialRoute = ClinicaSocialRouteImport.update({
   id: '/clinica-social',
   path: '/clinica-social',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EbookEstudosCasoPsicanaliseRoute =
+  EbookEstudosCasoPsicanaliseRouteImport.update({
+    id: '/ebook-estudos-caso-psicanalise',
+    path: '/ebook-estudos-caso-psicanalise',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const EbookPraticaClinicaPsicanaliseRoute =
+  EbookPraticaClinicaPsicanaliseRouteImport.update({
+    id: '/ebook-pratica-clinica-psicanalise',
+    path: '/ebook-pratica-clinica-psicanalise',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const EbookPsicanaliseAutismoRoute = EbookPsicanaliseAutismoRouteImport.update({
+  id: '/ebook-psicanalise-autismo',
+  path: '/ebook-psicanalise-autismo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EbookPsicanaliseNoMundoRoute = EbookPsicanaliseNoMundoRouteImport.update({
+  id: '/ebook-psicanalise-no-mundo',
+  path: '/ebook-psicanalise-no-mundo',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EmpreendedoresRoute = EmpreendedoresRouteImport.update({
@@ -523,6 +554,11 @@ const ClinicaSocialProfissionaisRoute =
 const EmpresaLoginRoute = EmpresaLoginRouteImport.update({
   id: '/empresa/login',
   path: '/empresa/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FormacaoSlugRoute = FormacaoSlugRouteImport.update({
+  id: '/formacao/$slug',
+  path: '/formacao/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FuncionarioLoginRoute = FuncionarioLoginRouteImport.update({
@@ -947,6 +983,16 @@ const ClientareaClienteTreinamentosRoute =
     path: '/treinamentos',
     getParentRoute: () => ClientareaClienteRoute,
   } as any)
+const ApiAuthCallbackRoute = ApiAuthCallbackRouteImport.update({
+  id: '/api/auth/callback',
+  path: '/api/auth/callback',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAuthSessionSyncRoute = ApiAuthSessionSyncRouteImport.update({
+  id: '/api/auth/session-sync',
+  path: '/api/auth/session-sync',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiHotmartWebhookRoute = ApiHotmartWebhookRouteImport.update({
   id: '/api/hotmart/webhook',
   path: '/api/hotmart/webhook',
@@ -1041,6 +1087,12 @@ const ClientareaClienteCursosPrimeirosSocorrosRoute =
     path: '/cursos/primeiros-socorros',
     getParentRoute: () => ClientareaClienteRoute,
   } as any)
+const ClientareaClienteEbooksProductKeyRoute =
+  ClientareaClienteEbooksProductKeyRouteImport.update({
+    id: '/ebooks/$productKey',
+    path: '/ebooks/$productKey',
+    getParentRoute: () => ClientareaClienteRoute,
+  } as any)
 const ClientareaClienteFormacoesGestaoPessoasRhRoute =
   ClientareaClienteFormacoesGestaoPessoasRhRouteImport.update({
     id: '/formacoes/gestao-pessoas-rh',
@@ -1064,6 +1116,12 @@ const ClientareaClientePedidoOrderIdRoute =
     id: '/pedido/$orderId',
     path: '/pedido/$orderId',
     getParentRoute: () => ClientareaClienteRoute,
+  } as any)
+const ClientareaClientePsicanalistaAltaPerformanceKeyRoute =
+  ClientareaClientePsicanalistaAltaPerformanceKeyRouteImport.update({
+    id: '/$key',
+    path: '/$key',
+    getParentRoute: () => ClientareaClientePsicanalistaAltaPerformanceRoute,
   } as any)
 const ClientareaClienteTreinamentosDoMamaoAoNegocioRoute =
   ClientareaClienteTreinamentosDoMamaoAoNegocioRouteImport.update({
@@ -1165,6 +1223,10 @@ export interface FileRoutesByFullPath {
   '/bio': typeof BioRoute
   '/bootstrap': typeof BootstrapRoute
   '/clinica-social': typeof ClinicaSocialRoute
+  '/ebook-estudos-caso-psicanalise': typeof EbookEstudosCasoPsicanaliseRoute
+  '/ebook-pratica-clinica-psicanalise': typeof EbookPraticaClinicaPsicanaliseRoute
+  '/ebook-psicanalise-autismo': typeof EbookPsicanaliseAutismoRoute
+  '/ebook-psicanalise-no-mundo': typeof EbookPsicanaliseNoMundoRoute
   '/empreendedores': typeof EmpreendedoresRoute
   '/formacao-comunicacao-oratoria': typeof FormacaoComunicacaoOratoriaRoute
   '/formacao-copywriting-vendas': typeof FormacaoCopywritingVendasRoute
@@ -1219,6 +1281,7 @@ export interface FileRoutesByFullPath {
   '/cliente/login': typeof ClienteLoginRoute
   '/clinica-social/profissionais': typeof ClinicaSocialProfissionaisRoute
   '/empresa/login': typeof EmpresaLoginRoute
+  '/formacao/$slug': typeof FormacaoSlugRoute
   '/funcionario/login': typeof FuncionarioLoginRoute
   '/profissionais/$category': typeof ProfissionaisCategoryRoute
   '/profissional/$slug': typeof ProfissionalSlugRoute
@@ -1286,9 +1349,11 @@ export interface FileRoutesByFullPath {
   '/cliente/orientacao-psicanalitica': typeof ClientareaClienteOrientacaoPsicanaliticaRoute
   '/cliente/pedidos': typeof ClientareaClientePedidosRoute
   '/cliente/perfil': typeof ClientareaClientePerfilRoute
-  '/cliente/psicanalista-alta-performance': typeof ClientareaClientePsicanalistaAltaPerformanceRoute
+  '/cliente/psicanalista-alta-performance': typeof ClientareaClientePsicanalistaAltaPerformanceRouteWithChildren
   '/cliente/sessoes': typeof ClientareaClienteSessoesRoute
   '/cliente/treinamentos': typeof ClientareaClienteTreinamentosRouteWithChildren
+  '/api/auth/callback': typeof ApiAuthCallbackRoute
+  '/api/auth/session-sync': typeof ApiAuthSessionSyncRoute
   '/api/hotmart/webhook': typeof ApiHotmartWebhookRoute
   '/api/integrations/site-orders': typeof ApiIntegrationsSiteOrdersRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
@@ -1307,10 +1372,12 @@ export interface FileRoutesByFullPath {
   '/cliente/cursos/frances-negocios-a1': typeof ClientareaClienteCursosFrancesNegociosA1Route
   '/cliente/cursos/organizar-carreira': typeof ClientareaClienteCursosOrganizarCarreiraRoute
   '/cliente/cursos/primeiros-socorros': typeof ClientareaClienteCursosPrimeirosSocorrosRoute
+  '/cliente/ebooks/$productKey': typeof ClientareaClienteEbooksProductKeyRoute
   '/cliente/formacoes/gestao-pessoas-rh': typeof ClientareaClienteFormacoesGestaoPessoasRhRoute
   '/cliente/graduacao/$courseKey': typeof ClientareaClienteGraduacaoCourseKeyRoute
   '/cliente/interesse-pos/$courseKey': typeof ClientareaClienteInteressePosCourseKeyRoute
   '/cliente/pedido/$orderId': typeof ClientareaClientePedidoOrderIdRoute
+  '/cliente/psicanalista-alta-performance/$key': typeof ClientareaClientePsicanalistaAltaPerformanceKeyRoute
   '/cliente/treinamentos/do-mamao-ao-negocio': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioRouteWithChildren
   '/cliente/treinamentos/ia-negocios-carreira': typeof ClientareaClienteTreinamentosIaNegociosCarreiraRoute
   '/cliente/treinamentos/lideranca-gestao': typeof ClientareaClienteTreinamentosLiderancaGestaoRoute
@@ -1336,6 +1403,10 @@ export interface FileRoutesByTo {
   '/bio': typeof BioRoute
   '/bootstrap': typeof BootstrapRoute
   '/clinica-social': typeof ClinicaSocialRoute
+  '/ebook-estudos-caso-psicanalise': typeof EbookEstudosCasoPsicanaliseRoute
+  '/ebook-pratica-clinica-psicanalise': typeof EbookPraticaClinicaPsicanaliseRoute
+  '/ebook-psicanalise-autismo': typeof EbookPsicanaliseAutismoRoute
+  '/ebook-psicanalise-no-mundo': typeof EbookPsicanaliseNoMundoRoute
   '/empreendedores': typeof EmpreendedoresRoute
   '/formacao-comunicacao-oratoria': typeof FormacaoComunicacaoOratoriaRoute
   '/formacao-copywriting-vendas': typeof FormacaoCopywritingVendasRoute
@@ -1388,6 +1459,7 @@ export interface FileRoutesByTo {
   '/cliente/login': typeof ClienteLoginRoute
   '/clinica-social/profissionais': typeof ClinicaSocialProfissionaisRoute
   '/empresa/login': typeof EmpresaLoginRoute
+  '/formacao/$slug': typeof FormacaoSlugRoute
   '/funcionario/login': typeof FuncionarioLoginRoute
   '/profissionais/$category': typeof ProfissionaisCategoryRoute
   '/profissional/$slug': typeof ProfissionalSlugRoute
@@ -1455,9 +1527,11 @@ export interface FileRoutesByTo {
   '/cliente/orientacao-psicanalitica': typeof ClientareaClienteOrientacaoPsicanaliticaRoute
   '/cliente/pedidos': typeof ClientareaClientePedidosRoute
   '/cliente/perfil': typeof ClientareaClientePerfilRoute
-  '/cliente/psicanalista-alta-performance': typeof ClientareaClientePsicanalistaAltaPerformanceRoute
+  '/cliente/psicanalista-alta-performance': typeof ClientareaClientePsicanalistaAltaPerformanceRouteWithChildren
   '/cliente/sessoes': typeof ClientareaClienteSessoesRoute
   '/cliente/treinamentos': typeof ClientareaClienteTreinamentosRouteWithChildren
+  '/api/auth/callback': typeof ApiAuthCallbackRoute
+  '/api/auth/session-sync': typeof ApiAuthSessionSyncRoute
   '/api/hotmart/webhook': typeof ApiHotmartWebhookRoute
   '/api/integrations/site-orders': typeof ApiIntegrationsSiteOrdersRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
@@ -1476,10 +1550,12 @@ export interface FileRoutesByTo {
   '/cliente/cursos/frances-negocios-a1': typeof ClientareaClienteCursosFrancesNegociosA1Route
   '/cliente/cursos/organizar-carreira': typeof ClientareaClienteCursosOrganizarCarreiraRoute
   '/cliente/cursos/primeiros-socorros': typeof ClientareaClienteCursosPrimeirosSocorrosRoute
+  '/cliente/ebooks/$productKey': typeof ClientareaClienteEbooksProductKeyRoute
   '/cliente/formacoes/gestao-pessoas-rh': typeof ClientareaClienteFormacoesGestaoPessoasRhRoute
   '/cliente/graduacao/$courseKey': typeof ClientareaClienteGraduacaoCourseKeyRoute
   '/cliente/interesse-pos/$courseKey': typeof ClientareaClienteInteressePosCourseKeyRoute
   '/cliente/pedido/$orderId': typeof ClientareaClientePedidoOrderIdRoute
+  '/cliente/psicanalista-alta-performance/$key': typeof ClientareaClientePsicanalistaAltaPerformanceKeyRoute
   '/cliente/treinamentos/do-mamao-ao-negocio': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioRouteWithChildren
   '/cliente/treinamentos/ia-negocios-carreira': typeof ClientareaClienteTreinamentosIaNegociosCarreiraRoute
   '/cliente/treinamentos/lideranca-gestao': typeof ClientareaClienteTreinamentosLiderancaGestaoRoute
@@ -1509,6 +1585,10 @@ export interface FileRoutesById {
   '/bio': typeof BioRoute
   '/bootstrap': typeof BootstrapRoute
   '/clinica-social': typeof ClinicaSocialRoute
+  '/ebook-estudos-caso-psicanalise': typeof EbookEstudosCasoPsicanaliseRoute
+  '/ebook-pratica-clinica-psicanalise': typeof EbookPraticaClinicaPsicanaliseRoute
+  '/ebook-psicanalise-autismo': typeof EbookPsicanaliseAutismoRoute
+  '/ebook-psicanalise-no-mundo': typeof EbookPsicanaliseNoMundoRoute
   '/empreendedores': typeof EmpreendedoresRoute
   '/formacao-comunicacao-oratoria': typeof FormacaoComunicacaoOratoriaRoute
   '/formacao-copywriting-vendas': typeof FormacaoCopywritingVendasRoute
@@ -1564,6 +1644,7 @@ export interface FileRoutesById {
   '/cliente/login': typeof ClienteLoginRoute
   '/clinica-social_/profissionais': typeof ClinicaSocialProfissionaisRoute
   '/empresa/login': typeof EmpresaLoginRoute
+  '/formacao/$slug': typeof FormacaoSlugRoute
   '/funcionario/login': typeof FuncionarioLoginRoute
   '/profissionais/$category': typeof ProfissionaisCategoryRoute
   '/profissional/$slug': typeof ProfissionalSlugRoute
@@ -1631,9 +1712,11 @@ export interface FileRoutesById {
   '/_clientarea/cliente/orientacao-psicanalitica': typeof ClientareaClienteOrientacaoPsicanaliticaRoute
   '/_clientarea/cliente/pedidos': typeof ClientareaClientePedidosRoute
   '/_clientarea/cliente/perfil': typeof ClientareaClientePerfilRoute
-  '/_clientarea/cliente/psicanalista-alta-performance': typeof ClientareaClientePsicanalistaAltaPerformanceRoute
+  '/_clientarea/cliente/psicanalista-alta-performance': typeof ClientareaClientePsicanalistaAltaPerformanceRouteWithChildren
   '/_clientarea/cliente/sessoes': typeof ClientareaClienteSessoesRoute
   '/_clientarea/cliente/treinamentos': typeof ClientareaClienteTreinamentosRouteWithChildren
+  '/api/auth/callback': typeof ApiAuthCallbackRoute
+  '/api/auth/session-sync': typeof ApiAuthSessionSyncRoute
   '/api/hotmart/webhook': typeof ApiHotmartWebhookRoute
   '/api/integrations/site-orders': typeof ApiIntegrationsSiteOrdersRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
@@ -1652,10 +1735,12 @@ export interface FileRoutesById {
   '/_clientarea/cliente/cursos/frances-negocios-a1': typeof ClientareaClienteCursosFrancesNegociosA1Route
   '/_clientarea/cliente/cursos/organizar-carreira': typeof ClientareaClienteCursosOrganizarCarreiraRoute
   '/_clientarea/cliente/cursos/primeiros-socorros': typeof ClientareaClienteCursosPrimeirosSocorrosRoute
+  '/_clientarea/cliente/ebooks/$productKey': typeof ClientareaClienteEbooksProductKeyRoute
   '/_clientarea/cliente/formacoes/gestao-pessoas-rh': typeof ClientareaClienteFormacoesGestaoPessoasRhRoute
   '/_clientarea/cliente/graduacao/$courseKey': typeof ClientareaClienteGraduacaoCourseKeyRoute
   '/_clientarea/cliente/interesse-pos/$courseKey': typeof ClientareaClienteInteressePosCourseKeyRoute
   '/_clientarea/cliente/pedido/$orderId': typeof ClientareaClientePedidoOrderIdRoute
+  '/_clientarea/cliente/psicanalista-alta-performance/$key': typeof ClientareaClientePsicanalistaAltaPerformanceKeyRoute
   '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioRouteWithChildren
   '/_clientarea/cliente/treinamentos/ia-negocios-carreira': typeof ClientareaClienteTreinamentosIaNegociosCarreiraRoute
   '/_clientarea/cliente/treinamentos/lideranca-gestao': typeof ClientareaClienteTreinamentosLiderancaGestaoRoute
@@ -1683,6 +1768,10 @@ export interface FileRouteTypes {
     | '/bio'
     | '/bootstrap'
     | '/clinica-social'
+    | '/ebook-estudos-caso-psicanalise'
+    | '/ebook-pratica-clinica-psicanalise'
+    | '/ebook-psicanalise-autismo'
+    | '/ebook-psicanalise-no-mundo'
     | '/empreendedores'
     | '/formacao-comunicacao-oratoria'
     | '/formacao-copywriting-vendas'
@@ -1737,6 +1826,7 @@ export interface FileRouteTypes {
     | '/cliente/login'
     | '/clinica-social/profissionais'
     | '/empresa/login'
+    | '/formacao/$slug'
     | '/funcionario/login'
     | '/profissionais/$category'
     | '/profissional/$slug'
@@ -1807,6 +1897,8 @@ export interface FileRouteTypes {
     | '/cliente/psicanalista-alta-performance'
     | '/cliente/sessoes'
     | '/cliente/treinamentos'
+    | '/api/auth/callback'
+    | '/api/auth/session-sync'
     | '/api/hotmart/webhook'
     | '/api/integrations/site-orders'
     | '/api/stripe/webhook'
@@ -1825,10 +1917,12 @@ export interface FileRouteTypes {
     | '/cliente/cursos/frances-negocios-a1'
     | '/cliente/cursos/organizar-carreira'
     | '/cliente/cursos/primeiros-socorros'
+    | '/cliente/ebooks/$productKey'
     | '/cliente/formacoes/gestao-pessoas-rh'
     | '/cliente/graduacao/$courseKey'
     | '/cliente/interesse-pos/$courseKey'
     | '/cliente/pedido/$orderId'
+    | '/cliente/psicanalista-alta-performance/$key'
     | '/cliente/treinamentos/do-mamao-ao-negocio'
     | '/cliente/treinamentos/ia-negocios-carreira'
     | '/cliente/treinamentos/lideranca-gestao'
@@ -1854,6 +1948,10 @@ export interface FileRouteTypes {
     | '/bio'
     | '/bootstrap'
     | '/clinica-social'
+    | '/ebook-estudos-caso-psicanalise'
+    | '/ebook-pratica-clinica-psicanalise'
+    | '/ebook-psicanalise-autismo'
+    | '/ebook-psicanalise-no-mundo'
     | '/empreendedores'
     | '/formacao-comunicacao-oratoria'
     | '/formacao-copywriting-vendas'
@@ -1906,6 +2004,7 @@ export interface FileRouteTypes {
     | '/cliente/login'
     | '/clinica-social/profissionais'
     | '/empresa/login'
+    | '/formacao/$slug'
     | '/funcionario/login'
     | '/profissionais/$category'
     | '/profissional/$slug'
@@ -1976,6 +2075,8 @@ export interface FileRouteTypes {
     | '/cliente/psicanalista-alta-performance'
     | '/cliente/sessoes'
     | '/cliente/treinamentos'
+    | '/api/auth/callback'
+    | '/api/auth/session-sync'
     | '/api/hotmart/webhook'
     | '/api/integrations/site-orders'
     | '/api/stripe/webhook'
@@ -1994,10 +2095,12 @@ export interface FileRouteTypes {
     | '/cliente/cursos/frances-negocios-a1'
     | '/cliente/cursos/organizar-carreira'
     | '/cliente/cursos/primeiros-socorros'
+    | '/cliente/ebooks/$productKey'
     | '/cliente/formacoes/gestao-pessoas-rh'
     | '/cliente/graduacao/$courseKey'
     | '/cliente/interesse-pos/$courseKey'
     | '/cliente/pedido/$orderId'
+    | '/cliente/psicanalista-alta-performance/$key'
     | '/cliente/treinamentos/do-mamao-ao-negocio'
     | '/cliente/treinamentos/ia-negocios-carreira'
     | '/cliente/treinamentos/lideranca-gestao'
@@ -2026,6 +2129,10 @@ export interface FileRouteTypes {
     | '/bio'
     | '/bootstrap'
     | '/clinica-social'
+    | '/ebook-estudos-caso-psicanalise'
+    | '/ebook-pratica-clinica-psicanalise'
+    | '/ebook-psicanalise-autismo'
+    | '/ebook-psicanalise-no-mundo'
     | '/empreendedores'
     | '/formacao-comunicacao-oratoria'
     | '/formacao-copywriting-vendas'
@@ -2081,6 +2188,7 @@ export interface FileRouteTypes {
     | '/cliente/login'
     | '/clinica-social_/profissionais'
     | '/empresa/login'
+    | '/formacao/$slug'
     | '/funcionario/login'
     | '/profissionais/$category'
     | '/profissional/$slug'
@@ -2151,6 +2259,8 @@ export interface FileRouteTypes {
     | '/_clientarea/cliente/psicanalista-alta-performance'
     | '/_clientarea/cliente/sessoes'
     | '/_clientarea/cliente/treinamentos'
+    | '/api/auth/callback'
+    | '/api/auth/session-sync'
     | '/api/hotmart/webhook'
     | '/api/integrations/site-orders'
     | '/api/stripe/webhook'
@@ -2169,10 +2279,12 @@ export interface FileRouteTypes {
     | '/_clientarea/cliente/cursos/frances-negocios-a1'
     | '/_clientarea/cliente/cursos/organizar-carreira'
     | '/_clientarea/cliente/cursos/primeiros-socorros'
+    | '/_clientarea/cliente/ebooks/$productKey'
     | '/_clientarea/cliente/formacoes/gestao-pessoas-rh'
     | '/_clientarea/cliente/graduacao/$courseKey'
     | '/_clientarea/cliente/interesse-pos/$courseKey'
     | '/_clientarea/cliente/pedido/$orderId'
+    | '/_clientarea/cliente/psicanalista-alta-performance/$key'
     | '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio'
     | '/_clientarea/cliente/treinamentos/ia-negocios-carreira'
     | '/_clientarea/cliente/treinamentos/lideranca-gestao'
@@ -2202,6 +2314,10 @@ export interface RootRouteChildren {
   BioRoute: typeof BioRoute
   BootstrapRoute: typeof BootstrapRoute
   ClinicaSocialRoute: typeof ClinicaSocialRoute
+  EbookEstudosCasoPsicanaliseRoute: typeof EbookEstudosCasoPsicanaliseRoute
+  EbookPraticaClinicaPsicanaliseRoute: typeof EbookPraticaClinicaPsicanaliseRoute
+  EbookPsicanaliseAutismoRoute: typeof EbookPsicanaliseAutismoRoute
+  EbookPsicanaliseNoMundoRoute: typeof EbookPsicanaliseNoMundoRoute
   EmpreendedoresRoute: typeof EmpreendedoresRoute
   FormacaoComunicacaoOratoriaRoute: typeof FormacaoComunicacaoOratoriaRoute
   FormacaoCopywritingVendasRoute: typeof FormacaoCopywritingVendasRoute
@@ -2250,10 +2366,13 @@ export interface RootRouteChildren {
   ClienteLoginRoute: typeof ClienteLoginRoute
   ClinicaSocialProfissionaisRoute: typeof ClinicaSocialProfissionaisRoute
   EmpresaLoginRoute: typeof EmpresaLoginRoute
+  FormacaoSlugRoute: typeof FormacaoSlugRoute
   FuncionarioLoginRoute: typeof FuncionarioLoginRoute
   ProfissionalSlugRoute: typeof ProfissionalSlugRoute
   ProfissionalLoginRoute: typeof ProfissionalLoginRoute
   RedeProfissionaisTermosRoute: typeof RedeProfissionaisTermosRoute
+  ApiAuthCallbackRoute: typeof ApiAuthCallbackRoute
+  ApiAuthSessionSyncRoute: typeof ApiAuthSessionSyncRoute
   ApiHotmartWebhookRoute: typeof ApiHotmartWebhookRoute
   ApiIntegrationsSiteOrdersRoute: typeof ApiIntegrationsSiteOrdersRoute
   ApiStripeWebhookRoute: typeof ApiStripeWebhookRoute
@@ -2336,6 +2455,34 @@ declare module '@tanstack/react-router' {
       path: '/clinica-social'
       fullPath: '/clinica-social'
       preLoaderRoute: typeof ClinicaSocialRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ebook-estudos-caso-psicanalise': {
+      id: '/ebook-estudos-caso-psicanalise'
+      path: '/ebook-estudos-caso-psicanalise'
+      fullPath: '/ebook-estudos-caso-psicanalise'
+      preLoaderRoute: typeof EbookEstudosCasoPsicanaliseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ebook-pratica-clinica-psicanalise': {
+      id: '/ebook-pratica-clinica-psicanalise'
+      path: '/ebook-pratica-clinica-psicanalise'
+      fullPath: '/ebook-pratica-clinica-psicanalise'
+      preLoaderRoute: typeof EbookPraticaClinicaPsicanaliseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ebook-psicanalise-autismo': {
+      id: '/ebook-psicanalise-autismo'
+      path: '/ebook-psicanalise-autismo'
+      fullPath: '/ebook-psicanalise-autismo'
+      preLoaderRoute: typeof EbookPsicanaliseAutismoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ebook-psicanalise-no-mundo': {
+      id: '/ebook-psicanalise-no-mundo'
+      path: '/ebook-psicanalise-no-mundo'
+      fullPath: '/ebook-psicanalise-no-mundo'
+      preLoaderRoute: typeof EbookPsicanaliseNoMundoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/empreendedores': {
@@ -2721,6 +2868,13 @@ declare module '@tanstack/react-router' {
       path: '/empresa/login'
       fullPath: '/empresa/login'
       preLoaderRoute: typeof EmpresaLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/formacao/$slug': {
+      id: '/formacao/$slug'
+      path: '/formacao/$slug'
+      fullPath: '/formacao/$slug'
+      preLoaderRoute: typeof FormacaoSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/funcionario/login': {
@@ -3227,6 +3381,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClientareaClienteTreinamentosRouteImport
       parentRoute: typeof ClientareaClienteRoute
     }
+    '/api/auth/callback': {
+      id: '/api/auth/callback'
+      path: '/api/auth/callback'
+      fullPath: '/api/auth/callback'
+      preLoaderRoute: typeof ApiAuthCallbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/auth/session-sync': {
+      id: '/api/auth/session-sync'
+      path: '/api/auth/session-sync'
+      fullPath: '/api/auth/session-sync'
+      preLoaderRoute: typeof ApiAuthSessionSyncRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/hotmart/webhook': {
       id: '/api/hotmart/webhook'
       path: '/api/hotmart/webhook'
@@ -3339,6 +3507,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClientareaClienteCursosPrimeirosSocorrosRouteImport
       parentRoute: typeof ClientareaClienteRoute
     }
+    '/_clientarea/cliente/ebooks/$productKey': {
+      id: '/_clientarea/cliente/ebooks/$productKey'
+      path: '/ebooks/$productKey'
+      fullPath: '/cliente/ebooks/$productKey'
+      preLoaderRoute: typeof ClientareaClienteEbooksProductKeyRouteImport
+      parentRoute: typeof ClientareaClienteRoute
+    }
     '/_clientarea/cliente/formacoes/gestao-pessoas-rh': {
       id: '/_clientarea/cliente/formacoes/gestao-pessoas-rh'
       path: '/formacoes/gestao-pessoas-rh'
@@ -3366,6 +3541,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/cliente/pedido/$orderId'
       preLoaderRoute: typeof ClientareaClientePedidoOrderIdRouteImport
       parentRoute: typeof ClientareaClienteRoute
+    }
+    '/_clientarea/cliente/psicanalista-alta-performance/$key': {
+      id: '/_clientarea/cliente/psicanalista-alta-performance/$key'
+      path: '/$key'
+      fullPath: '/cliente/psicanalista-alta-performance/$key'
+      preLoaderRoute: typeof ClientareaClientePsicanalistaAltaPerformanceKeyRouteImport
+      parentRoute: typeof ClientareaClientePsicanalistaAltaPerformanceRoute
     }
     '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio': {
       id: '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio'
@@ -3708,6 +3890,21 @@ const ClientareaClienteBibliotecaRouteWithChildren =
     ClientareaClienteBibliotecaRouteChildren,
   )
 
+interface ClientareaClientePsicanalistaAltaPerformanceRouteChildren {
+  ClientareaClientePsicanalistaAltaPerformanceKeyRoute: typeof ClientareaClientePsicanalistaAltaPerformanceKeyRoute
+}
+
+const ClientareaClientePsicanalistaAltaPerformanceRouteChildren: ClientareaClientePsicanalistaAltaPerformanceRouteChildren =
+  {
+    ClientareaClientePsicanalistaAltaPerformanceKeyRoute:
+      ClientareaClientePsicanalistaAltaPerformanceKeyRoute,
+  }
+
+const ClientareaClientePsicanalistaAltaPerformanceRouteWithChildren =
+  ClientareaClientePsicanalistaAltaPerformanceRoute._addFileChildren(
+    ClientareaClientePsicanalistaAltaPerformanceRouteChildren,
+  )
+
 interface ClientareaClienteTreinamentosDoMamaoAoNegocioRouteChildren {
   ClientareaClienteTreinamentosDoMamaoAoNegocioForumRoute: typeof ClientareaClienteTreinamentosDoMamaoAoNegocioForumRoute
 }
@@ -3796,13 +3993,14 @@ interface ClientareaClienteRouteChildren {
   ClientareaClienteOrientacaoPsicanaliticaRoute: typeof ClientareaClienteOrientacaoPsicanaliticaRoute
   ClientareaClientePedidosRoute: typeof ClientareaClientePedidosRoute
   ClientareaClientePerfilRoute: typeof ClientareaClientePerfilRoute
-  ClientareaClientePsicanalistaAltaPerformanceRoute: typeof ClientareaClientePsicanalistaAltaPerformanceRoute
+  ClientareaClientePsicanalistaAltaPerformanceRoute: typeof ClientareaClientePsicanalistaAltaPerformanceRouteWithChildren
   ClientareaClienteSessoesRoute: typeof ClientareaClienteSessoesRoute
   ClientareaClienteTreinamentosRoute: typeof ClientareaClienteTreinamentosRouteWithChildren
   ClientareaClienteIndexRoute: typeof ClientareaClienteIndexRoute
   ClientareaClienteCursosFrancesNegociosA1Route: typeof ClientareaClienteCursosFrancesNegociosA1Route
   ClientareaClienteCursosOrganizarCarreiraRoute: typeof ClientareaClienteCursosOrganizarCarreiraRoute
   ClientareaClienteCursosPrimeirosSocorrosRoute: typeof ClientareaClienteCursosPrimeirosSocorrosRoute
+  ClientareaClienteEbooksProductKeyRoute: typeof ClientareaClienteEbooksProductKeyRoute
   ClientareaClienteFormacoesGestaoPessoasRhRoute: typeof ClientareaClienteFormacoesGestaoPessoasRhRoute
   ClientareaClienteGraduacaoCourseKeyRoute: typeof ClientareaClienteGraduacaoCourseKeyRoute
   ClientareaClienteInteressePosCourseKeyRoute: typeof ClientareaClienteInteressePosCourseKeyRoute
@@ -3823,7 +4021,7 @@ const ClientareaClienteRouteChildren: ClientareaClienteRouteChildren = {
   ClientareaClientePedidosRoute: ClientareaClientePedidosRoute,
   ClientareaClientePerfilRoute: ClientareaClientePerfilRoute,
   ClientareaClientePsicanalistaAltaPerformanceRoute:
-    ClientareaClientePsicanalistaAltaPerformanceRoute,
+    ClientareaClientePsicanalistaAltaPerformanceRouteWithChildren,
   ClientareaClienteSessoesRoute: ClientareaClienteSessoesRoute,
   ClientareaClienteTreinamentosRoute:
     ClientareaClienteTreinamentosRouteWithChildren,
@@ -3834,6 +4032,8 @@ const ClientareaClienteRouteChildren: ClientareaClienteRouteChildren = {
     ClientareaClienteCursosOrganizarCarreiraRoute,
   ClientareaClienteCursosPrimeirosSocorrosRoute:
     ClientareaClienteCursosPrimeirosSocorrosRoute,
+  ClientareaClienteEbooksProductKeyRoute:
+    ClientareaClienteEbooksProductKeyRoute,
   ClientareaClienteFormacoesGestaoPessoasRhRoute:
     ClientareaClienteFormacoesGestaoPessoasRhRoute,
   ClientareaClienteGraduacaoCourseKeyRoute:
@@ -3911,6 +4111,10 @@ const rootRouteChildren: RootRouteChildren = {
   BioRoute: BioRoute,
   BootstrapRoute: BootstrapRoute,
   ClinicaSocialRoute: ClinicaSocialRoute,
+  EbookEstudosCasoPsicanaliseRoute: EbookEstudosCasoPsicanaliseRoute,
+  EbookPraticaClinicaPsicanaliseRoute: EbookPraticaClinicaPsicanaliseRoute,
+  EbookPsicanaliseAutismoRoute: EbookPsicanaliseAutismoRoute,
+  EbookPsicanaliseNoMundoRoute: EbookPsicanaliseNoMundoRoute,
   EmpreendedoresRoute: EmpreendedoresRoute,
   FormacaoComunicacaoOratoriaRoute: FormacaoComunicacaoOratoriaRoute,
   FormacaoCopywritingVendasRoute: FormacaoCopywritingVendasRoute,
@@ -3961,10 +4165,13 @@ const rootRouteChildren: RootRouteChildren = {
   ClienteLoginRoute: ClienteLoginRoute,
   ClinicaSocialProfissionaisRoute: ClinicaSocialProfissionaisRoute,
   EmpresaLoginRoute: EmpresaLoginRoute,
+  FormacaoSlugRoute: FormacaoSlugRoute,
   FuncionarioLoginRoute: FuncionarioLoginRoute,
   ProfissionalSlugRoute: ProfissionalSlugRoute,
   ProfissionalLoginRoute: ProfissionalLoginRoute,
   RedeProfissionaisTermosRoute: RedeProfissionaisTermosRoute,
+  ApiAuthCallbackRoute: ApiAuthCallbackRoute,
+  ApiAuthSessionSyncRoute: ApiAuthSessionSyncRoute,
   ApiHotmartWebhookRoute: ApiHotmartWebhookRoute,
   ApiIntegrationsSiteOrdersRoute: ApiIntegrationsSiteOrdersRoute,
   ApiStripeWebhookRoute: ApiStripeWebhookRoute,

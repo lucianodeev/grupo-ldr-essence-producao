@@ -7,7 +7,7 @@ import { clientSaveProgress } from "@/lib/learning.functions";
 import { useI18n } from "@/lib/i18n";
 
 type Locale="pt"|"en"|"fr"|"es";
-type ProductKey="ebook_coragem_comecar"|"livro_menino_mamao";
+type ProductKey="ebook_coragem_comecar"|"livro_menino_mamao"|"ebook_pratica_clinica_psicanalise"|"ebook_psicanalise_no_mundo"|"ebook_estudos_caso_psicanalise"|"ebook_psicanalise_autismo";
 type EbookPage={titulo?:string;texto?:string};
 type BookChapter=[string|number,string,string[]];
 type ReaderPayload={kind:"ebook";pages:EbookPage[]}|{kind:"book";data:{title?:string;subtitle?:string;chapters?:BookChapter[]}};

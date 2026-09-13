@@ -3,7 +3,7 @@ import { gunzipSync } from "node:zlib";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { hasOwnerDigitalAccess } from "@/lib/owner-digital-access.server";
 
-export type DigitalReaderProductKey = "ebook_coragem_comecar" | "livro_menino_mamao";
+export type DigitalReaderProductKey = "ebook_coragem_comecar" | "livro_menino_mamao" | "ebook_pratica_clinica_psicanalise" | "ebook_psicanalise_no_mundo" | "ebook_estudos_caso_psicanalise" | "ebook_psicanalise_autismo";
 export type DigitalReaderLocale = "pt" | "en" | "fr" | "es";
 
 const ALIASES: Record<DigitalReaderProductKey, string[]> = {
