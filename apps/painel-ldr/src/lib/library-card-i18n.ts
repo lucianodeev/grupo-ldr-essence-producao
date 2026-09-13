@@ -2,7 +2,7 @@ export type LibraryCardLocale = "pt" | "en" | "fr" | "es";
 
 const CARD_TEXT = {
   pt: {
-    ebooks: "eBooks", books: "Livros", editorial: "Jornais & Revistas", editorialSub: "Todos em um só lugar",
+    ebooks: "A Coragem de Começar", books: "O Menino que Vendia Mamão", editorial: "Jornais & Revistas", editorialSub: "Todos em um só lugar",
     business: "Negócios", psycho: "Psicanálise", brief: "Terapia Breve", massage: "Massoterapia",
     writtenPsycho: "Orientação Escrita", writtenPsychoSub: "psicanalítica", writtenCareer: "Orientação Profissional", writtenCareerSub: "carreira",
     business24: "Negócio 24h", mentorship: "Mentoria", leadership: "Liderança", hr: "RH 600h", free: "Gratuito", film: "Filme (em breve)",
@@ -10,7 +10,7 @@ const CARD_TEXT = {
     postgrad: "Em breve", register: "INSCREVER INTERESSE", startFormation: "Quero começar minha formação", loading: "Carregando biblioteca…",
   },
   en: {
-    ebooks: "eBooks", books: "Books", editorial: "Newspapers & Magazines", editorialSub: "Everything in one place",
+    ebooks: "A Coragem de Começar", books: "O Menino que Vendia Mamão", editorial: "Newspapers & Magazines", editorialSub: "Everything in one place",
     business: "Business", psycho: "Psychoanalysis", brief: "Brief Therapy", massage: "Massage Therapy",
     writtenPsycho: "Written Guidance", writtenPsychoSub: "psychoanalytic", writtenCareer: "Career Guidance", writtenCareerSub: "career",
     business24: "Business 24h", mentorship: "Mentoring", leadership: "Leadership", hr: "HR 600h", free: "Free", film: "Film (coming soon)",
@@ -18,7 +18,7 @@ const CARD_TEXT = {
     postgrad: "Coming soon", register: "REGISTER INTEREST", startFormation: "Start my training", loading: "Loading library…",
   },
   fr: {
-    ebooks: "eBooks", books: "Livres", editorial: "Journaux & Magazines", editorialSub: "Tout au même endroit",
+    ebooks: "A Coragem de Começar", books: "O Menino que Vendia Mamão", editorial: "Journaux & Magazines", editorialSub: "Tout au même endroit",
     business: "Affaires", psycho: "Psychanalyse", brief: "Thérapie Brève", massage: "Massothérapie",
     writtenPsycho: "Orientation Écrite", writtenPsychoSub: "psychanalytique", writtenCareer: "Orientation Professionnelle", writtenCareerSub: "carrière",
     business24: "Entreprise 24h", mentorship: "Mentorat", leadership: "Leadership", hr: "RH 600h", free: "Gratuit", film: "Film (bientôt)",
@@ -26,7 +26,7 @@ const CARD_TEXT = {
     postgrad: "Bientôt", register: "SIGNALER MON INTÉRÊT", startFormation: "Commencer ma formation", loading: "Chargement de la bibliothèque…",
   },
   es: {
-    ebooks: "eBooks", books: "Libros", editorial: "Periódicos & Revistas", editorialSub: "Todo en un solo lugar",
+    ebooks: "A Coragem de Começar", books: "O Menino que Vendia Mamão", editorial: "Periódicos & Revistas", editorialSub: "Todo en un solo lugar",
     business: "Negocios", psycho: "Psicoanálisis", brief: "Terapia Breve", massage: "Masoterapia",
     writtenPsycho: "Orientación Escrita", writtenPsychoSub: "psicoanalítica", writtenCareer: "Orientación Profesional", writtenCareerSub: "carrera",
     business24: "Negocio 24h", mentorship: "Mentoría", leadership: "Liderazgo", hr: "RR. HH. 600h", free: "Gratis", film: "Película (próximamente)",
