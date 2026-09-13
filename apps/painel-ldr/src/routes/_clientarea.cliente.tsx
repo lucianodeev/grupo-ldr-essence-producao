@@ -100,7 +100,7 @@ function ClientShell() {
     <div className="min-h-screen lg:flex" style={{ background: "var(--cream)" }}>
       <aside className="no-print sticky top-0 z-40 text-primary-foreground lg:h-screen lg:w-72 lg:shrink-0" style={{ background: "linear-gradient(160deg, var(--wine-deep), var(--wine))" }}>
         <div className="flex items-center justify-between gap-3 px-4 py-4 lg:block">
-          <div><p className="font-serif text-lg leading-tight">Grupo LDR Essence</p><p className="text-xs opacity-80">{servicePortal ? c.serviceArea : c.area}</p></div>
+          <div><p className="font-serif text-lg leading-tight">{academyHost ? "LDR Academy" : "Grupo LDR Essence"}</p><p className="text-xs opacity-80">{servicePortal ? c.serviceArea : c.area}</p></div>
           <button type="button" className="rounded-lg border border-white/30 p-2 lg:hidden" onClick={() => setMenuOpen(v => !v)} aria-label={c.openMenu}>{menuOpen ? <X className="h-5 w-5"/> : <Menu className="h-5 w-5"/>}</button>
         </div>
         <nav className={`${menuOpen ? "block" : "hidden"} px-3 pb-4 lg:block`} aria-label={c.navLabel}>
