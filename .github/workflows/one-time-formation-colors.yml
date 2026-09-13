@@ -18,8 +18,6 @@ jobs:
         run: |
           python3 - <<'PY'
           from pathlib import Path
-
-          # Public formation page: use each formation theme instead of the same navy hero for every course.
           p=Path('apps/painel-ldr/src/components/professional-formation-public-page.tsx')
           s=p.read_text()
           needle='const UI='
@@ -30,7 +28,6 @@ jobs:
           s=s.replace(old,new)
           p.write_text(s)
 
-          # Library compact cards: use the catalog theme so ABA stays purple and every new course keeps its identity.
           p=Path('apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx')
           s=p.read_text()
           old='const colors=["#0b2341","#5b0824","#17645e","#0F5E7A","#5b2b86","#047857","#9a4f13","#143d59","#7c3aed","#92400e","#374151"]'
