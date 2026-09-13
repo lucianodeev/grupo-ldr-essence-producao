@@ -18,6 +18,33 @@ function isServicePortalCallback(url: URL) {
   );
 }
 
+type OAuthPortal = "company" | "employee" | "professional" | null;
+
+function portalFromCookies(cookies: ReturnType<typeof parseCookieHeader>): OAuthPortal {
+  const value = cookies.find(({ name }) => name === "ldr_portal_oauth")?.value;
+  return value === "company" || value === "employee" || value === "professional" ? value : null;
+}
+
+function clearTemporaryCookie(headers: Headers, name: string) {
+  headers.append(
+    "set-cookie",
+    serializeCookieHeader(name, "", {
+      path: "/",
+      maxAge: 0,
+      sameSite: "lax",
+      secure: true,
+    }),
+  );
+}
+
+function portalLoginDestination(portal: OAuthPortal, error?: "missing_code" | "exchange_failed") {
+  const suffix = error ? `?auth_error=${error}` : "?auth_complete=1";
+  if (portal === "company") return `/empresa/login${suffix}`;
+  if (portal === "employee") return `/funcionario/login${suffix}`;
+  if (portal === "professional") return `/profissional/login${suffix}`;
+  return error ? `/cliente/login?auth_error=${error}` : "/cliente/biblioteca";
+}
+
 export const Route = createFileRoute("/api/auth/callback")({
   server: {
     handlers: {
@@ -29,6 +56,7 @@ export const Route = createFileRoute("/api/auth/callback")({
         const adminFlow =
           url.searchParams.get("admin") === "1" ||
           requestCookies.some(({ name, value }) => name === "ldr_admin_oauth" && value === "1");
+        const portalFlow = portalFromCookies(requestCookies);
         const { supabaseUrl, supabasePublishableKey } = config();
         const responseHeaders = new Headers({
           "cache-control": "no-store, max-age=0, must-revalidate",
@@ -57,20 +85,13 @@ export const Route = createFileRoute("/api/auth/callback")({
         if (!code) {
           const missingCodeDestination = adminFlow
             ? "/login?auth_error=missing_code"
-            : servicePortal
-            ? "/cliente/login?portal=services&auth_error=missing_code"
-            : "/cliente/login?auth_error=missing_code";
-          if (adminFlow) {
-            responseHeaders.append(
-              "set-cookie",
-              serializeCookieHeader("ldr_admin_oauth", "", {
-                path: "/",
-                maxAge: 0,
-                sameSite: "lax",
-                secure: true,
-              }),
-            );
-          }
+            : portalFlow
+              ? portalLoginDestination(portalFlow, "missing_code")
+              : servicePortal
+                ? "/cliente/login?portal=services&auth_error=missing_code"
+                : "/cliente/login?auth_error=missing_code";
+          if (adminFlow) clearTemporaryCookie(responseHeaders, "ldr_admin_oauth");
+          if (portalFlow) clearTemporaryCookie(responseHeaders, "ldr_portal_oauth");
           responseHeaders.set("location", missingCodeDestination);
           return new Response(null, { status: 303, headers: responseHeaders });
         }
@@ -79,25 +100,21 @@ export const Route = createFileRoute("/api/auth/callback")({
         const destination = error
           ? adminFlow
             ? "/login?auth_error=exchange_failed"
-            : servicePortal
-            ? "/cliente/login?portal=services&auth_error=exchange_failed"
-            : "/cliente/login?auth_error=exchange_failed"
+            : portalFlow
+              ? portalLoginDestination(portalFlow, "exchange_failed")
+              : servicePortal
+                ? "/cliente/login?portal=services&auth_error=exchange_failed"
+                : "/cliente/login?auth_error=exchange_failed"
           : adminFlow
             ? "/admin"
-            : servicePortal
-            ? "/cliente?portal=services&v=4"
-            : "/cliente/biblioteca";
-        if (adminFlow) {
-          responseHeaders.append(
-            "set-cookie",
-            serializeCookieHeader("ldr_admin_oauth", "", {
-              path: "/",
-              maxAge: 0,
-              sameSite: "lax",
-              secure: true,
-            }),
-          );
-        }
+            : portalFlow
+              ? portalLoginDestination(portalFlow)
+              : servicePortal
+                ? "/cliente?portal=services&v=4"
+                : "/cliente/biblioteca";
+
+        if (adminFlow) clearTemporaryCookie(responseHeaders, "ldr_admin_oauth");
+        if (portalFlow) clearTemporaryCookie(responseHeaders, "ldr_portal_oauth");
         responseHeaders.set("location", destination);
         return new Response(null, { status: 303, headers: responseHeaders });
       },
