@@ -26,6 +26,7 @@ function temporaryRedirect(url: string): Response {
       "cache-control": "no-store, max-age=0",
       pragma: "no-cache",
       expires: "0",
+      vary: "Host",
     },
   });
 }
@@ -38,12 +39,29 @@ function academyCanonicalRedirect(request: Request): Response | null {
   const isLegacyLearnHost = host === "learn.lucianoconecta.online";
   const isLegacyPanelHost = host === "painel.ldrrhestrategia.com" || host === "painel.lucianoconecta.online";
 
-  // The services portal shares the same application deployment as the Academy,
-  // but its public root must never render the Academy storefront. Redirect on
-  // the server before SSR so the user lands directly on the services login.
-  if (isServicePortal && url.pathname === "/") {
-    url.pathname = "/cliente/login";
-    return temporaryRedirect(url.toString());
+  // The services portal shares the same deployment as the Academy, but it must
+  // always carry an explicit services context before SSR. This prevents the
+  // Academy storefront/client learning state from being rendered on this host,
+  // including on stale browser/CDN navigations.
+  if (isServicePortal) {
+    if (url.pathname === "/") {
+      url.pathname = "/cliente/login";
+      url.searchParams.set("portal", "services");
+      url.searchParams.set("v", "3");
+      return temporaryRedirect(url.toString());
+    }
+
+    if (url.pathname === "/cliente/login" && url.searchParams.get("portal") !== "services") {
+      url.searchParams.set("portal", "services");
+      url.searchParams.set("v", "3");
+      return temporaryRedirect(url.toString());
+    }
+
+    if (url.pathname === "/cliente" && url.searchParams.get("portal") !== "services") {
+      url.searchParams.set("portal", "services");
+      url.searchParams.set("v", "3");
+      return temporaryRedirect(url.toString());
+    }
   }
 
   if (isLegacyLearnHost || isLegacyPanelHost) {
@@ -99,6 +117,7 @@ function withFreshDocumentHeaders(request: Request, response: Response): Respons
   headers.set("cache-control", "no-store, max-age=0, must-revalidate");
   headers.set("pragma", "no-cache");
   headers.set("expires", "0");
+  headers.set("vary", "Host");
 
   return new Response(response.body, {
     status: response.status,
@@ -150,6 +169,7 @@ export default {
         headers: {
           "content-type": "text/html; charset=utf-8",
           "cache-control": "no-store, max-age=0, must-revalidate",
+          vary: "Host",
         },
       });
     }
