@@ -42,10 +42,46 @@ const FORMATION_TEXT: Record<LibraryCardLocale, [string,string,string][]> = {
 };
 
 const FREE_TEXT: Record<LibraryCardLocale, [string,string][]> = {
-  pt: [["Organize sua Carreira","7 aulas · leitura · sem expiração"],["Francês Básico para Negócios — A1","30 aulas · 10 horas"],["Primeiros Socorros — Noções Básicas","30 aulas · 10 horas"]],
-  en: [["Organize Your Career","7 lessons · reading · no expiry"],["Basic French for Business — A1","30 lessons · 10 hours"],["First Aid — Basic Concepts","30 lessons · 10 hours"]],
-  fr: [["Organisez votre Carrière","7 leçons · lecture · sans expiration"],["Français Basique des Affaires — A1","30 leçons · 10 heures"],["Premiers Secours — Notions de Base","30 leçons · 10 heures"]],
-  es: [["Organiza tu Carrera","7 clases · lectura · sin caducidad"],["Francés Básico para Negocios — A1","30 clases · 10 horas"],["Primeros Auxilios — Conceptos Básicos","30 clases · 10 horas"]],
+  pt: [
+    ["Organize sua Carreira","7 aulas · leitura · sem expiração"],
+    ["Francês Básico para Negócios — A1","30 aulas · 10 horas"],
+    ["Primeiros Socorros — Noções Básicas","30 aulas · 10 horas"],
+    ["Inglês Básico — A1","30 horas · nível iniciante"],
+    ["Espanhol Básico — A1","30 horas · nível iniciante"],
+    ["Português para Falantes de Outras Línguas — A1","30 horas · português como língua estrangeira"],
+    ["Neerlandês Básico — A1","30 horas · nível iniciante"],
+    ["Alemão Básico — A1","30 horas · nível iniciante"],
+  ],
+  en: [
+    ["Organize Your Career","7 lessons · reading · no expiry"],
+    ["Basic French for Business — A1","30 lessons · 10 hours"],
+    ["First Aid — Basic Concepts","30 lessons · 10 hours"],
+    ["Basic English — A1","30 hours · beginner"],
+    ["Basic Spanish — A1","30 hours · beginner"],
+    ["Portuguese for Speakers of Other Languages — A1","30 hours · Portuguese as a foreign language"],
+    ["Basic Dutch — A1","30 hours · beginner"],
+    ["Basic German — A1","30 hours · beginner"],
+  ],
+  fr: [
+    ["Organisez votre Carrière","7 leçons · lecture · sans expiration"],
+    ["Français Basique des Affaires — A1","30 leçons · 10 heures"],
+    ["Premiers Secours — Notions de Base","30 leçons · 10 heures"],
+    ["Anglais Débutant — A1","30 heures · débutant"],
+    ["Espagnol Débutant — A1","30 heures · débutant"],
+    ["Portugais pour Locuteurs d’Autres Langues — A1","30 heures · portugais langue étrangère"],
+    ["Néerlandais Débutant — A1","30 heures · débutant"],
+    ["Allemand Débutant — A1","30 heures · débutant"],
+  ],
+  es: [
+    ["Organiza tu Carrera","7 clases · lectura · sin caducidad"],
+    ["Francés Básico para Negocios — A1","30 clases · 10 horas"],
+    ["Primeros Auxilios — Conceptos Básicos","30 clases · 10 horas"],
+    ["Inglés Básico — A1","30 horas · nivel inicial"],
+    ["Español Básico — A1","30 horas · nivel inicial"],
+    ["Portugués para Hablantes de Otras Lenguas — A1","30 horas · portugués como lengua extranjera"],
+    ["Neerlandés Básico — A1","30 horas · nivel inicial"],
+    ["Alemán Básico — A1","30 horas · nivel inicial"],
+  ],
 };
 
 const FORMATION_BASE: {free?: boolean; price?: string; href: string; tone: Tone}[] = [
@@ -62,6 +98,11 @@ export const FREE_ROUTES = [
   "/cliente/cursos/organizar-carreira",
   "/cliente/cursos/frances-negocios-a1",
   "/cliente/cursos/primeiros-socorros",
+  "/cliente/cursos/academy/ingles-basico-a1",
+  "/cliente/cursos/academy/espanhol-basico-a1",
+  "/cliente/cursos/academy/portugues-para-falantes-de-outras-linguas-a1",
+  "/cliente/cursos/academy/neerlandes-basico-a1",
+  "/cliente/cursos/academy/alemao-basico-a1",
 ] as const;
 
 export function isFreeContentRoute(pathname: string) {
