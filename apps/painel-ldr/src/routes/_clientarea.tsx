@@ -24,9 +24,6 @@ async function syncSession(session: Session) {
 
 export const Route = createFileRoute("/_clientarea")({
   beforeLoad: async () => {
-    // A browser session can be valid before its SSR cookie has been repaired.
-    // Do not redirect during SSR in that case: the client gate below syncs the
-    // browser session first. Protected serverFns remain independently guarded.
     if (typeof window === "undefined") return;
 
     const auth = await getClientAuthState();
@@ -50,10 +47,19 @@ const PROJECT_ROUTE_MAP={
   "/cliente/formacoes/gestao-pessoas-rh":"formacao-gratuita-gestao-pessoas-rh",
 } as const;
 
+function isProductRoute(pathname:string){
+  if(pathname.startsWith("/cliente/treinamentos/"))return true;
+  if(pathname.startsWith("/cliente/cursos/"))return true;
+  if(pathname.startsWith("/cliente/formacoes/"))return true;
+  if(pathname==="/cliente/psicanalista-alta-performance")return true;
+  return false;
+}
+
 function ClientAreaLayout() {
   const location=useLocation();
   const pathname=location.pathname.replace(/\/+$/,"")||"/";
   const projectSlug=PROJECT_ROUTE_MAP[pathname as keyof typeof PROJECT_ROUTE_MAP];
+  const showProductAccessibility=isProductRoute(pathname);
   const [ready,setReady]=useState(false);
   const [failed,setFailed]=useState(false);
 
@@ -95,7 +101,7 @@ function ClientAreaLayout() {
 
   return (
     <div className="academy-accessibility-shell">
-      <AcademyAccessibilityControls />
+      <AcademyAccessibilityControls visible={showProductAccessibility} inline />
       <Outlet />
       {projectSlug ? <LegacyTrainingProjectPanel slug={projectSlug}/> : null}
       <FreeContentAds placement="bottom" />
