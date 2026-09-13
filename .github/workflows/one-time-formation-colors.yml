@@ -1,0 +1,50 @@
+name: One-time align formation colors
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/one-time-formation-colors.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Patch colors
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          # Public formation page: use each formation theme instead of the same navy hero for every course.
+          p=Path('apps/painel-ldr/src/components/professional-formation-public-page.tsx')
+          s=p.read_text()
+          needle='const UI='
+          if 'const THEME_COLORS=' not in s:
+            s=s.replace(needle,'const THEME_COLORS:Record<string,string>={navy:"#0b3764",wine:"#7a1835",green:"#047857",petrol:"#0F5E7A",purple:"#6D3FA0",rose:"#b76e79",gold:"#a06f1c",terracotta:"#A85132"};\n'+needle,1)
+          old='<section className="bg-gradient-to-br from-[#071426] via-[#0b2341] to-[#163b67] px-4 py-16 text-white">'
+          new='<section className="px-4 py-16 text-white" style={{background:`linear-gradient(135deg, ${THEME_COLORS[f.theme]??"#071426"}, #071426)`}}>'
+          s=s.replace(old,new)
+          p.write_text(s)
+
+          # Library compact cards: use the catalog theme so ABA stays purple and every new course keeps its identity.
+          p=Path('apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx')
+          s=p.read_text()
+          old='const colors=["#0b2341","#5b0824","#17645e","#0F5E7A","#5b2b86","#047857","#9a4f13","#143d59","#7c3aed","#92400e","#374151"]'
+          theme='const colors:Record<string,string>={navy:"#0b3764",wine:"#7a1835",green:"#047857",petrol:"#0F5E7A",purple:"#6D3FA0",rose:"#b76e79",gold:"#a06f1c",terracotta:"#A85132"}'
+          if old in s:
+            s=s.replace(old,theme)
+          s=s.replace('backgroundColor:colors[i%colors.length]','backgroundColor:colors[f.theme]??"#0b2341"')
+          p.write_text(s)
+          PY
+      - name: Remove workflow and commit
+        run: |
+          rm .github/workflows/one-time-formation-colors.yml
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add -A
+          git commit -m "fix: preserve formation color identity across academy"
+          git push origin main
