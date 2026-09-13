@@ -69,27 +69,43 @@ function markPopularCards(label: string) {
 }
 
 function findProductHero() {
-  const shell = document.querySelector(".academy-accessibility-shell");
+  const shell = document.querySelector<HTMLElement>(".academy-accessibility-shell");
   if (!shell) return null;
 
-  const candidates = [
-    ".academy-accessibility-shell main > section",
-    ".academy-accessibility-shell main section",
-    ".academy-accessibility-shell > div > section",
-    ".academy-accessibility-shell section",
-  ];
+  const nodes = new Set<HTMLElement>();
+  shell.querySelectorAll<HTMLElement>("header, section").forEach((node) => nodes.add(node));
 
-  for (const selector of candidates) {
-    const section = document.querySelector<HTMLElement>(selector);
-    if (!section || section.closest("[data-academy-accessibility-host]")) continue;
+  shell.querySelectorAll<HTMLElement>("h1").forEach((heading) => {
+    let node: HTMLElement | null = heading.parentElement;
+    for (let depth = 0; node && node !== shell && depth < 5; depth += 1, node = node.parentElement) {
+      nodes.add(node);
+    }
+  });
 
-    const text = (section.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
-    const hasProgress = /progresso|progress|progression|progressión/.test(text);
-    const hasProductSignal = /acesso liberado|access granted|accès autorisé|acceso liberado|módulos|modules|leçons|clases/.test(text);
-    if (hasProgress || hasProductSignal) return section;
+  let best: HTMLElement | null = null;
+  let bestScore = 0;
+
+  for (const node of nodes) {
+    if (node.closest("[data-academy-accessibility-host]")) continue;
+
+    const text = (node.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
+    if (!text) continue;
+
+    let score = 0;
+    if (node.querySelector("h1")) score += 2;
+    if (/progresso|progress|progression|progressión|concluído|concluída|completed|terminée|completada/.test(text)) score += 6;
+    if (/\b\d{1,3}%\b/.test(text)) score += 3;
+    if (/acesso liberado|access granted|accès autorisé|acceso liberado/.test(text)) score += 5;
+    if (/módulos|modules|module|aulas|lessons|leçons|clases|unidades|units|unités|unidades/.test(text)) score += 3;
+    if (/formação|formation|training|curso|course|treinamento/.test(text)) score += 2;
+
+    if (score > bestScore) {
+      best = node;
+      bestScore = score;
+    }
   }
 
-  return null;
+  return bestScore >= 4 ? best : null;
 }
 
 export function AcademyAccessibilityControls({ visible = true, inline = false }: Props) {
