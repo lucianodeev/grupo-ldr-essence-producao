@@ -11,6 +11,7 @@ export const LEGACY_PROJECT_CONFIG={
   "formacao-mentoria-profissional-carreira":{productKey:"formacao_mentoria_profissional_carreira",title:"Formação em Mentoria Profissional e de Carreira"},
   "formacao-lideranca-gestao-pessoas":{productKey:"formacao_lideranca_gestao_pessoas",title:"Formação em Liderança e Gestão de Pessoas"},
   "psicanalise-internacional-neurodiversidade-autismo":{productKey:"curso_psicanalise_internacional_neurodiversidade_autismo",title:"Psicanálise Internacional, Neurodiversidade e Autismo"},
+  "formacao-gratuita-gestao-pessoas-rh":{productKey:"formacao_gestao_pessoas_rh",title:"Formação em Gestão de Pessoas e Recursos Humanos"},
 } as const;
 
 export type LegacyProjectSlug=keyof typeof LEGACY_PROJECT_CONFIG;
