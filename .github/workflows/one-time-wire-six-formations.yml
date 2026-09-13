@@ -1,0 +1,64 @@
+name: One-time wire six formations
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/one-time-wire-six-formations.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  wire:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Wire combined catalog and public route
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          old='@/lib/professional-formations.catalog'
+          new='@/lib/academy-professional-formations.catalog'
+          targets=[
+            'apps/painel-ldr/src/components/academy-university-home.tsx',
+            'apps/painel-ldr/src/components/professional-formation-public-page.tsx',
+            'apps/painel-ldr/src/lib/professional-formations-lessons.ts',
+            'apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx',
+            'apps/painel-ldr/src/routes/_clientarea.cliente.treinamentos.formacao-profissional.$slug.tsx',
+          ]
+          for f in targets:
+            p=Path(f)
+            s=p.read_text()
+            if old in s:
+              p.write_text(s.replace(old,new))
+
+          route=Path('apps/painel-ldr/src/routes/formacao.$slug.tsx')
+          route.write_text('''import { createFileRoute } from "@tanstack/react-router";\nimport { ProfessionalFormationPublicPage } from "@/components/professional-formation-public-page";\n\nexport const Route=createFileRoute("/formacao/$slug")({component:FormationPublicRoute});\n\nfunction FormationPublicRoute(){\n  const {slug}=Route.useParams();\n  return <ProfessionalFormationPublicPage slug={slug}/>;\n}\n''')
+
+          # Make Home colors deterministic for every formation, including the new ones.
+          hp=Path('apps/painel-ldr/src/components/academy-university-home.tsx')
+          hs=hp.read_text()
+          old_line=' const professional:Course[]=PROFESSIONAL_FORMATIONS.map((f,i)=>{const tx=pfText(f,pfLocale);const kinds:Exclude<Kind,"all">[]=["negocios","negocios","rh","negocios","carreira"];return {id:f.slug,title:tx.name,desc:tx.description,meta:`${f.hours}h · ${f.modulesCount} ${locale==="en"?"modules":locale==="fr"?"modules":locale==="es"?"módulos":"módulos"}`,price:"R$ 299,99 · € 49,90",href:f.publicPath,kind:kinds[i]??"carreira",icon:f.icon,accent:["#0b3764","#7a1835","#047857","#0f766e","#6d28d9"][i]};});'
+          new_line=' const themeAccent:Record<string,string>={navy:"#0b3764",wine:"#7a1835",green:"#047857",petrol:"#0f766e",purple:"#6D3FA0",rose:"#b76e79",gold:"#a06f1c",terracotta:"#A85132"};\n const professional:Course[]=PROFESSIONAL_FORMATIONS.map((f,i)=>{const tx=pfText(f,pfLocale);const kinds:Exclude<Kind,"all">[]=["negocios","negocios","rh","negocios","carreira"];const kind=f.slug==="aba-autismo"||f.slug==="saude-mental-praticas-clinicas"?"psicanalise":f.slug==="ciencia-politica"||f.slug==="sociologia"||f.slug==="filosofia-clinica"||f.slug==="ciencias-felicidade"?"carreira":kinds[i]??"carreira";return {id:f.slug,title:tx.name,desc:tx.description,meta:`${f.hours}h · ${f.modulesCount} ${locale==="en"?"modules":locale==="fr"?"modules":locale==="es"?"módulos":"módulos"}`,price:"R$ 299,99 · € 49,90",href:f.publicPath,kind,icon:f.icon,accent:themeAccent[f.theme]??"#6D3FA0"};});'
+          if old_line in hs:
+            hs=hs.replace(old_line,new_line)
+            hp.write_text(hs)
+          PY
+      - name: Remove one-time workflow
+        run: rm .github/workflows/one-time-wire-six-formations.yml
+      - name: Commit
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+          git commit -m "feat: publish six advanced formations across academy"
+          git push origin main
