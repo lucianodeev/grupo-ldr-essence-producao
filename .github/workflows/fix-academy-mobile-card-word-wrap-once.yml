@@ -1,0 +1,53 @@
+name: Fix Academy mobile card word wrap once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/fix-academy-mobile-card-word-wrap-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply typography-only mobile card fix
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path('apps/painel-ldr/src/components/academy-accessibility-controls.tsx')
+          s = p.read_text(encoding='utf-8')
+
+          old = '''      font-size: 0.62rem !important;\n      line-height: 1.16 !important;\n      letter-spacing: 0 !important;\n      word-break: normal !important;\n      overflow-wrap: normal !important;\n      hyphens: none !important;\n      -webkit-line-clamp: 3 !important;'''
+
+          new = '''      font-size: 0.52rem !important;\n      line-height: 1.16 !important;\n      letter-spacing: 0 !important;\n      word-break: keep-all !important;\n      overflow-wrap: normal !important;\n      hyphens: none !important;\n      white-space: normal !important;\n      -webkit-line-clamp: 3 !important;'''
+
+          if old not in s:
+              raise SystemExit('Expected mobile card title typography block not found; aborting safely.')
+
+          s = s.replace(old, new, 1)
+          p.write_text(s, encoding='utf-8')
+          PY
+
+      - name: Verify scope
+        shell: bash
+        run: |
+          git diff --check
+          test "$(git diff --name-only | tr -d '\r')" = "apps/painel-ldr/src/components/academy-accessibility-controls.tsx"
+
+      - name: Commit typography-only fix
+        shell: bash
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/components/academy-accessibility-controls.tsx
+          git commit -m "fix(academy): prevent mobile library card titles breaking mid-word"
+          git push origin main
