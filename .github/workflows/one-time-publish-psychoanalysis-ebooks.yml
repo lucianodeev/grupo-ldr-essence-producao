@@ -1,0 +1,118 @@
+name: One-time publish psychoanalysis ebooks
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/one-time-publish-psychoanalysis-ebooks.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main, fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm, cache-dependency-path: apps/painel-ldr/package-lock.json }
+      - name: Patch academy
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          keys=['ebook_pratica_clinica_psicanalise','ebook_psicanalise_no_mundo','ebook_estudos_caso_psicanalise','ebook_psicanalise_autismo']
+
+          # reader server
+          p=Path('apps/painel-ldr/src/lib/digital-content.server.ts'); s=p.read_text()
+          s=s.replace('export type DigitalReaderProductKey = "ebook_coragem_comecar" | "livro_menino_mamao";','export type DigitalReaderProductKey = "ebook_coragem_comecar" | "livro_menino_mamao" | "ebook_pratica_clinica_psicanalise" | "ebook_psicanalise_no_mundo" | "ebook_estudos_caso_psicanalise" | "ebook_psicanalise_autismo";')
+          old='''    livro_menino_mamao: ["livro_menino_mamao", "menino_mamao", "livro", "combo_empreendedor"],\n  };'''
+          new='''    livro_menino_mamao: ["livro_menino_mamao", "menino_mamao", "livro", "combo_empreendedor"],\n    ebook_pratica_clinica_psicanalise: ["ebook_pratica_clinica_psicanalise"],\n    ebook_psicanalise_no_mundo: ["ebook_psicanalise_no_mundo"],\n    ebook_estudos_caso_psicanalise: ["ebook_estudos_caso_psicanalise"],\n    ebook_psicanalise_autismo: ["ebook_psicanalise_autismo"],\n  };'''
+          if old in s: s=s.replace(old,new,1)
+          p.write_text(s)
+
+          # reader functions allowed keys
+          p=Path('apps/painel-ldr/src/lib/digital-content.functions.ts'); s=p.read_text()
+          s=s.replace('new Set(["ebook_coragem_comecar","livro_menino_mamao"])','new Set(["ebook_coragem_comecar","livro_menino_mamao","ebook_pratica_clinica_psicanalise","ebook_psicanalise_no_mundo","ebook_estudos_caso_psicanalise","ebook_psicanalise_autismo"])')
+          p.write_text(s)
+
+          # reader component type + themes
+          p=Path('apps/painel-ldr/src/components/digital-reader-v2.tsx'); s=p.read_text()
+          s=s.replace('type ProductKey="ebook_coragem_comecar"|"livro_menino_mamao";','type ProductKey="ebook_coragem_comecar"|"livro_menino_mamao"|"ebook_pratica_clinica_psicanalise"|"ebook_psicanalise_no_mundo"|"ebook_estudos_caso_psicanalise"|"ebook_psicanalise_autismo";')
+          theme_anchor='''livro_menino_mamao:{'''
+          if 'ebook_pratica_clinica_psicanalise:{' not in s:
+              # append new theme entries before closing theme map using known final entry pattern
+              m=re.search(r'(livro_menino_mamao:\{[^\n]+\}\s*)(\};)',s)
+              if m:
+                  extra='''\n  ebook_pratica_clinica_psicanalise:{light:"bg-[#eef4f4] text-[#172728]",dark:"bg-[#101b1c] text-[#edf6f6]",cardLight:"bg-white border-[#c5d4d4]",cardDark:"bg-[#172728] border-[#314E52]",accent:"#314E52"},\n  ebook_psicanalise_no_mundo:{light:"bg-[#eef4fa] text-[#10263b]",dark:"bg-[#0d1b29] text-[#eef6ff]",cardLight:"bg-white border-[#bdd0e2]",cardDark:"bg-[#152d45] border-[#1F4E79]",accent:"#1F4E79"},\n  ebook_estudos_caso_psicanalise:{light:"bg-[#f8f0f4] text-[#351829]",dark:"bg-[#24121d] text-[#fff1f8]",cardLight:"bg-white border-[#dcc2d0]",cardDark:"bg-[#3a1e2d] border-[#7C3A5D]",accent:"#7C3A5D"},\n  ebook_psicanalise_autismo:{light:"bg-[#f7f7ed] text-[#323414]",dark:"bg-[#20210f] text-[#fafae9]",cardLight:"bg-white border-[#d6d7b3]",cardDark:"bg-[#353718] border-[#6B6F2A]",accent:"#6B6F2A"}'''
+                  s=s[:m.start(2)]+','+extra+'\n'+s[m.start(2):]
+          p.write_text(s)
+
+          # reader route
+          p=Path('apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.$productKey.tsx'); s=p.read_text()
+          old='if(productKey!=="ebook_coragem_comecar"&&productKey!=="livro_menino_mamao"){'
+          new='if(!new Set(["ebook_coragem_comecar","livro_menino_mamao","ebook_pratica_clinica_psicanalise","ebook_psicanalise_no_mundo","ebook_estudos_caso_psicanalise","ebook_psicanalise_autismo"]).has(productKey)){'
+          s=s.replace(old,new)
+          s=s.replace('return <DigitalReaderV2 productKey={productKey}/>;','return <DigitalReaderV2 productKey={productKey as any}/>;')
+          p.write_text(s)
+
+          # client portal server catalog/checkout
+          p=Path('apps/painel-ldr/src/lib/client-portal.server.ts'); s=p.read_text()
+          s=s.replace('key: "ebook_coragem_comecar" | "livro_menino_mamao";','key: "ebook_coragem_comecar" | "livro_menino_mamao" | "ebook_pratica_clinica_psicanalise" | "ebook_psicanalise_no_mundo" | "ebook_estudos_caso_psicanalise" | "ebook_psicanalise_autismo";')
+          arr_anchor='''  {\n    key: "livro_menino_mamao",\n    title: "O Menino que Vendia Mamão",\n    description:\n      "Livro autobiográfico sobre trabalho, recomeços, estratégia e a coragem de continuar construindo.",\n    priceBrlCents: 4990,\n    priceEurCents: 2000,\n    purchaseUrl: "https://ldrrhestrategia.com/livros?lang=pt",\n  },\n];'''
+          if 'key: "ebook_pratica_clinica_psicanalise"' not in s:
+              add='''  { key:"ebook_pratica_clinica_psicanalise", title:"A Prática Clínica da Psicanálise", description:"Estrutura, manejo, ética e construção da clínica psicanalítica.", priceBrlCents:2000, priceEurCents:399, purchaseUrl:"/ebook-pratica-clinica-psicanalise" },\n  { key:"ebook_psicanalise_no_mundo", title:"A Psicanálise no Mundo", description:"Panorama global, regulamentação e atuação internacional em perspectiva comparada.", priceBrlCents:2000, priceEurCents:399, purchaseUrl:"/ebook-psicanalise-no-mundo" },\n  { key:"ebook_estudos_caso_psicanalise", title:"Estudos de Caso", description:"Casos ficcionais ou compostos sobre vínculos, desejo, trabalho e impasses contemporâneos.", priceBrlCents:2000, priceEurCents:399, purchaseUrl:"/ebook-estudos-caso-psicanalise" },\n  { key:"ebook_psicanalise_autismo", title:"Psicanálise e Autismo", description:"Escuta, manejo, neurodiversidade e debate crítico com a ABA.", priceBrlCents:2000, priceEurCents:399, purchaseUrl:"/ebook-psicanalise-autismo" },\n];'''
+              if arr_anchor not in s: raise SystemExit('digital library product anchor not found')
+              s=s.replace(arr_anchor,arr_anchor[:-3]+add,1)
+          alias_anchor='''    livro_menino_mamao: ["livro_menino_mamao", "menino_mamao", "livro", "combo_empreendedor"],\n  };'''
+          alias_new='''    livro_menino_mamao: ["livro_menino_mamao", "menino_mamao", "livro", "combo_empreendedor"],\n    ebook_pratica_clinica_psicanalise:["ebook_pratica_clinica_psicanalise"],\n    ebook_psicanalise_no_mundo:["ebook_psicanalise_no_mundo"],\n    ebook_estudos_caso_psicanalise:["ebook_estudos_caso_psicanalise"],\n    ebook_psicanalise_autismo:["ebook_psicanalise_autismo"],\n  };'''
+          if alias_anchor in s: s=s.replace(alias_anchor,alias_new,1)
+          s=s.replace('export type DigitalProductKey = "ebook_coragem_comecar" | "livro_menino_mamao";','export type DigitalProductKey = "ebook_coragem_comecar" | "livro_menino_mamao" | "ebook_pratica_clinica_psicanalise" | "ebook_psicanalise_no_mundo" | "ebook_estudos_caso_psicanalise" | "ebook_psicanalise_autismo";')
+          s=s.replace('''    fallbackEurPrice?: string;\n  }\n> = {''','''    fallbackEurPrice?: string;\n    dynamicPrice?: boolean;\n  }\n> = {''')
+          config_anchor='''  livro_menino_mamao: {\n    title: "O Menino que Vendia Mamão",\n    brlCents: 4990,\n    eurCents: 2000,\n    brlPriceEnv: "STRIPE_BOOK_PRICE_BRL",\n    eurPriceEnv: "STRIPE_BOOK_PRICE_EUR",\n    fallbackBrlPrice: "price_1U5T7FKlx2LyNGeBMxRYLiDS",\n    fallbackEurPrice: "price_1U5T6zKlx2LyNGeBuv7dJJsI",\n  },\n};'''
+          if 'STRIPE_EBOOK_PRACTICE_PRICE_BRL' not in s:
+              cfg='''  livro_menino_mamao: {\n    title: "O Menino que Vendia Mamão",\n    brlCents: 4990,\n    eurCents: 2000,\n    brlPriceEnv: "STRIPE_BOOK_PRICE_BRL",\n    eurPriceEnv: "STRIPE_BOOK_PRICE_EUR",\n    fallbackBrlPrice: "price_1U5T7FKlx2LyNGeBMxRYLiDS",\n    fallbackEurPrice: "price_1U5T6zKlx2LyNGeBuv7dJJsI",\n  },\n  ebook_pratica_clinica_psicanalise:{title:"A Prática Clínica da Psicanálise",brlCents:2000,eurCents:399,brlPriceEnv:"STRIPE_EBOOK_PRACTICE_PRICE_BRL",eurPriceEnv:"STRIPE_EBOOK_PRACTICE_PRICE_EUR",dynamicPrice:true},\n  ebook_psicanalise_no_mundo:{title:"A Psicanálise no Mundo",brlCents:2000,eurCents:399,brlPriceEnv:"STRIPE_EBOOK_WORLD_PRICE_BRL",eurPriceEnv:"STRIPE_EBOOK_WORLD_PRICE_EUR",dynamicPrice:true},\n  ebook_estudos_caso_psicanalise:{title:"Estudos de Caso",brlCents:2000,eurCents:399,brlPriceEnv:"STRIPE_EBOOK_CASES_PRICE_BRL",eurPriceEnv:"STRIPE_EBOOK_CASES_PRICE_EUR",dynamicPrice:true},\n  ebook_psicanalise_autismo:{title:"Psicanálise e Autismo",brlCents:2000,eurCents:399,brlPriceEnv:"STRIPE_EBOOK_AUTISM_PRICE_BRL",eurPriceEnv:"STRIPE_EBOOK_AUTISM_PRICE_EUR",dynamicPrice:true},\n};'''
+              if config_anchor not in s: raise SystemExit('checkout config anchor not found')
+              s=s.replace(config_anchor,cfg,1)
+          s=s.replace('function stripePriceFor(productKey: DigitalProductKey, market: DigitalMarket): string {','function stripePriceFor(productKey: DigitalProductKey, market: DigitalMarket): string | null {')
+          s=s.replace('''  if (!value || !value.startsWith("price_")) fail(`${envName} não configurada.`);\n  return value;''','''  if (!value) { if (cfg.dynamicPrice) return null; fail(`${envName} não configurada.`); }\n  if (!value.startsWith("price_")) fail(`${envName} inválida.`);\n  return value;''')
+          oldparam='''  params.set("line_items[0][price]", priceId);\n  params.set("line_items[0][quantity]", "1");'''
+          newparam='''  if (priceId) params.set("line_items[0][price]", priceId);\n  else {\n    params.set("line_items[0][price_data][currency]", currency.toLowerCase());\n    params.set("line_items[0][price_data][unit_amount]", String(amountCents));\n    params.set("line_items[0][price_data][product_data][name]", config.title);\n  }\n  params.set("line_items[0][quantity]", "1");'''
+          s=s.replace(oldparam,newparam)
+          p.write_text(s)
+
+          # function input validator
+          p=Path('apps/painel-ldr/src/lib/client-portal.functions.ts'); s=p.read_text()
+          s=s.replace('productKey: "ebook_coragem_comecar" | "livro_menino_mamao"; market: "BR" | "INTL"','productKey: "ebook_coragem_comecar" | "livro_menino_mamao" | "ebook_pratica_clinica_psicanalise" | "ebook_psicanalise_no_mundo" | "ebook_estudos_caso_psicanalise" | "ebook_psicanalise_autismo"; market: "BR" | "INTL"')
+          p.write_text(s)
+
+          # library cards
+          p=Path('apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx'); s=p.read_text()
+          imp='import { PSYCHOANALYSIS_EBOOKS } from "@/lib/psychoanalysis-ebooks.catalog";\n'
+          if imp not in s: s=s.replace('import { PROFESSIONAL_FORMATIONS, pfText } from "@/lib/academy-professional-formations.catalog";\n','import { PROFESSIONAL_FORMATIONS, pfText } from "@/lib/academy-professional-formations.catalog";\n'+imp)
+          marker='''        {card("book",ct.books,"bg-[#7A3E12]","book",accessLabels.included)}'''
+          if marker not in s:
+              marker='''        {card("book",ct.books,"bg-[#5b0824]","book",accessLabels.included)}'''
+          cards='''\n        {PSYCHOANALYSIS_EBOOKS.map((e)=>{const product=data.products.find(p=>p.key===e.key);const href=owner||product?.entitled?e.readerPath:`/cliente/ebooks/${e.key}`;return <a key={e.key} href={href} className="min-w-0 rounded-2xl px-1 py-4 text-center text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md" style={{backgroundColor:e.color}}><BookOpen className="mx-auto h-5 w-5"/><p className="mt-2 text-[8px] font-black leading-tight sm:text-[10px]">eBook: {e.short}</p><span className="mt-2 inline-flex rounded-full bg-white/15 px-1.5 py-0.5 text-[6px] font-black uppercase text-white sm:text-[7px]">{accessLabels.single}</span></a>})}'''
+          if 'PSYCHOANALYSIS_EBOOKS.map' not in s:
+              if marker not in s: raise SystemExit('library book card anchor not found')
+              s=s.replace(marker,marker+cards,1)
+          p.write_text(s)
+
+          # repo migration mirrors production DB migration
+          Path('apps/painel-ldr/supabase/migrations/20260913115500_extend_digital_product_content_psychoanalysis_ebooks.sql').write_text("""alter table public.digital_product_content drop constraint if exists digital_product_content_product_key_check;\nalter table public.digital_product_content add constraint digital_product_content_product_key_check check (product_key = any (array['ebook_coragem_comecar'::text,'livro_menino_mamao'::text,'ebook_pratica_clinica_psicanalise'::text,'ebook_psicanalise_no_mundo'::text,'ebook_estudos_caso_psicanalise'::text,'ebook_psicanalise_autismo'::text]));\n""")
+          PY
+      - name: Install and build
+        working-directory: apps/painel-ldr
+        run: npm ci && npm run build
+      - name: Verify ebook wiring
+        run: |
+          grep -q 'ebook_psicanalise_autismo' apps/painel-ldr/src/lib/client-portal.server.ts
+          grep -q 'PSYCHOANALYSIS_EBOOKS.map' apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          grep -q 'dynamicPrice:true' apps/painel-ldr/src/lib/client-portal.server.ts
+      - name: Commit result
+        run: |
+          rm .github/workflows/one-time-publish-psychoanalysis-ebooks.yml
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add -A
+          git commit -m "feat: publish four psychoanalysis ebooks in academy"
+          git push origin main
