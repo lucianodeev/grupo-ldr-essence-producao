@@ -1,0 +1,39 @@
+name: Apply LDR Academy new courses
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/patch_ldr_academy_new_courses.py'
+      - '.github/workflows/apply-ldr-academy-new-courses.yml'
+permissions:
+  contents: write
+jobs:
+  patch-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: apps/painel-ldr/package-lock.json
+      - name: Apply storefront patch
+        run: python tools/patch_ldr_academy_new_courses.py
+      - name: Install dependencies
+        working-directory: apps/painel-ldr
+        run: npm ci
+      - name: Build
+        working-directory: apps/painel-ldr
+        run: npm run build
+      - name: Lint changed academy files
+        working-directory: apps/painel-ldr
+        run: npx eslint src/lib/health-psychoanalysis-formations.catalog.ts src/lib/academy-free-courses.catalog.ts 'src/routes/formacoes.$slug.tsx' 'src/routes/_clientarea.cliente.treinamentos.curso-avulso.$slug.tsx' 'src/routes/_clientarea.cliente.cursos.academy.$slug.tsx' src/components/academy-university-home.tsx src/components/library-sales-home.tsx src/routes/_clientarea.cliente.biblioteca.tsx || true
+      - name: Commit generated storefront integration
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add apps/painel-ldr/src/components/academy-university-home.tsx apps/painel-ldr/src/components/library-sales-home.tsx apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          if ! git diff --cached --quiet; then
+            git commit -m 'feat(academy): surface new formations and free courses'
+            git push origin main
+          fi
