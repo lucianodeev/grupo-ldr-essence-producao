@@ -1,0 +1,63 @@
+name: Fix Academy library card spacing once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/fix-library-card-spacing-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply minimal library-only spacing fix
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path('apps/painel-ldr/src/components/academy-accessibility-controls.tsx')
+          s = p.read_text(encoding='utf-8')
+
+          old_grid = '''    #catalogo-ldr .grid.grid-cols-4 {\n      align-items: stretch !important;\n      grid-auto-rows: 1fr;\n      column-gap: 8px !important;\n      row-gap: 10px !important;\n      padding-inline: 2px !important;\n    }'''
+          new_grid = '''    #catalogo-ldr .grid.grid-cols-4 {\n      display: grid !important;\n      grid-template-columns: repeat(4, minmax(0, 1fr)) !important;\n      align-items: stretch !important;\n      grid-auto-rows: 1fr;\n      column-gap: 10px !important;\n      row-gap: 12px !important;\n      padding-inline: 10px !important;\n      box-sizing: border-box !important;\n    }'''
+
+          old_card = '''    #catalogo-ldr .grid.grid-cols-4 > a,\n    #catalogo-ldr .grid.grid-cols-4 > button {\n      width: 100%;\n      height: 100% !important;\n      min-height: 7.6rem !important;\n      aspect-ratio: 0.72 / 1 !important;\n      padding: 0.9rem 0.5rem !important;\n      justify-content: center !important;\n      border-radius: 18px !important;\n      touch-action: manipulation;\n    }'''
+          new_card = '''    #catalogo-ldr .grid.grid-cols-4 > a,\n    #catalogo-ldr .grid.grid-cols-4 > button {\n      width: 100% !important;\n      max-width: 100% !important;\n      min-width: 0 !important;\n      height: auto !important;\n      min-height: 7.6rem !important;\n      aspect-ratio: 0.72 / 1 !important;\n      margin: 0 !important;\n      transform: none !important;\n      box-sizing: border-box !important;\n      padding: 0.9rem 0.5rem !important;\n      justify-self: stretch !important;\n      justify-content: center !important;\n      border-radius: 18px !important;\n      overflow: hidden !important;\n      background-clip: padding-box !important;\n      touch-action: manipulation;\n    }'''
+
+          old_desktop = '''      #catalogo-ldr .grid.grid-cols-4 { column-gap: 12px !important; row-gap: 14px !important; padding-inline: 4px !important; }'''
+          new_desktop = '''      #catalogo-ldr .grid.grid-cols-4 { column-gap: 12px !important; row-gap: 14px !important; padding-inline: 12px !important; }'''
+
+          for old, new, label in [
+              (old_grid, new_grid, 'grid'),
+              (old_card, new_card, 'card'),
+              (old_desktop, new_desktop, 'desktop'),
+          ]:
+              if old not in s:
+                  raise SystemExit(f'Expected {label} block not found; aborting without modifying anything.')
+              s = s.replace(old, new, 1)
+
+          p.write_text(s, encoding='utf-8')
+          PY
+
+      - name: Verify only intended file changed
+        shell: bash
+        run: |
+          test "$(git diff --name-only | tr -d '\r')" = "apps/painel-ldr/src/components/academy-accessibility-controls.tsx"
+          git diff --check
+
+      - name: Commit minimal fix
+        shell: bash
+        run: |
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add apps/painel-ldr/src/components/academy-accessibility-controls.tsx
+          git commit -m "fix(academy): enforce visible spacing between library cards"
+          git push origin main
