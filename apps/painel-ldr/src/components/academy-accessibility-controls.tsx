@@ -6,11 +6,16 @@ import { useI18n } from "@/lib/i18n";
 type Theme = "light" | "dark";
 type Locale = "pt" | "en" | "fr" | "es";
 
+type Props = {
+  visible?: boolean;
+  inline?: boolean;
+};
+
 const COPY = {
-  pt: { decrease: "Diminuir texto", reset: "Tamanho padrão", increase: "Aumentar texto", light: "Modo claro", dark: "Modo escuro", popular: "MAIS PROCURADO" },
-  en: { decrease: "Decrease text", reset: "Default size", increase: "Increase text", light: "Light mode", dark: "Dark mode", popular: "MOST POPULAR" },
-  fr: { decrease: "Réduire le texte", reset: "Taille par défaut", increase: "Agrandir le texte", light: "Mode clair", dark: "Mode sombre", popular: "LE PLUS RECHERCHÉ" },
-  es: { decrease: "Reducir texto", reset: "Tamaño predeterminado", increase: "Aumentar texto", light: "Modo claro", dark: "Modo oscuro", popular: "MÁS BUSCADO" },
+  pt: { decrease: "Diminuir texto", reset: "Tamanho padrão", increase: "Aumentar texto", light: "Claro", dark: "Escuro", language: "Idioma", popular: "MAIS PROCURADO" },
+  en: { decrease: "Decrease text", reset: "Default size", increase: "Increase text", light: "Light", dark: "Dark", language: "Language", popular: "MOST POPULAR" },
+  fr: { decrease: "Réduire le texte", reset: "Taille par défaut", increase: "Agrandir le texte", light: "Clair", dark: "Sombre", language: "Langue", popular: "LE PLUS RECHERCHÉ" },
+  es: { decrease: "Reducir texto", reset: "Tamaño predeterminado", increase: "Aumentar texto", light: "Claro", dark: "Oscuro", language: "Idioma", popular: "MÁS BUSCADO" },
 } as const;
 
 const POPULAR_HREFS = [
@@ -52,7 +57,6 @@ function markPopularCards(label: string) {
     });
   }
 
-  // A formação de IA pode ser um link (acesso liberado) ou botão (oferta fechada).
   catalog.querySelectorAll<HTMLElement>("a,button").forEach((node) => {
     const href = node.getAttribute("href") || "";
     const text = (node.textContent || "").replace(/\s+/g, " ").trim();
@@ -63,8 +67,8 @@ function markPopularCards(label: string) {
   });
 }
 
-export function AcademyAccessibilityControls() {
-  const { locale: rawLocale } = useI18n();
+export function AcademyAccessibilityControls({ visible = true, inline = false }: Props) {
+  const { locale: rawLocale, setLocale } = useI18n();
   const locale = (rawLocale === "pt" || rawLocale === "en" || rawLocale === "fr" || rawLocale === "es" ? rawLocale : "pt") as Locale;
   const t = COPY[locale];
   const [theme, setTheme] = useState<Theme>("light");
@@ -111,6 +115,41 @@ export function AcademyAccessibilityControls() {
   const decrease = () => setScale(SCALES[Math.max(0, scaleIndex - 1)]);
   const increase = () => setScale(SCALES[Math.min(SCALES.length - 1, scaleIndex + 1)]);
 
+  if (!visible) return null;
+
+  if (inline) {
+    return (
+      <section className="academy-product-accessibility no-print" aria-label="Academy accessibility controls">
+        <div className="academy-product-accessibility__buttons" role="group">
+          <button type="button" onClick={() => setTheme("light")} aria-pressed={theme === "light"} className={theme === "light" ? "is-active" : ""}>
+            <Sun aria-hidden="true" /><strong>{t.light}</strong>
+          </button>
+          <button type="button" onClick={() => setTheme("dark")} aria-pressed={theme === "dark"} className={theme === "dark" ? "is-active" : ""}>
+            <Moon aria-hidden="true" /><strong>{t.dark}</strong>
+          </button>
+          <button type="button" onClick={decrease} disabled={scaleIndex === 0} aria-label={t.decrease} title={t.decrease}>
+            <Minus aria-hidden="true" /><strong>A−</strong>
+          </button>
+          <button type="button" onClick={increase} disabled={scaleIndex === SCALES.length - 1} aria-label={t.increase} title={t.increase}>
+            <Plus aria-hidden="true" /><strong>A+</strong>
+          </button>
+          <button type="button" onClick={() => setScale(1)} aria-label={t.reset} title={t.reset} className="academy-product-accessibility__reset">
+            <RotateCcw aria-hidden="true" />
+          </button>
+        </div>
+        <label className="academy-product-accessibility__language">
+          <span>{t.language}</span>
+          <select value={locale} onChange={(event) => setLocale(event.target.value as Locale)} aria-label={t.language}>
+            <option value="pt">PT</option>
+            <option value="en">EN</option>
+            <option value="fr">FR</option>
+            <option value="es">ES</option>
+          </select>
+        </label>
+      </section>
+    );
+  }
+
   return (
     <div className="academy-accessibility-controls no-print" role="group" aria-label="Academy accessibility controls">
       <button type="button" onClick={decrease} disabled={scaleIndex === 0} aria-label={t.decrease} title={t.decrease}>
@@ -122,12 +161,7 @@ export function AcademyAccessibilityControls() {
       <button type="button" onClick={increase} disabled={scaleIndex === SCALES.length - 1} aria-label={t.increase} title={t.increase}>
         <Plus aria-hidden="true" /> <span>A</span>
       </button>
-      <button
-        type="button"
-        onClick={() => setTheme((current) => (current === "dark" ? "light" : "dark"))}
-        aria-label={theme === "dark" ? t.light : t.dark}
-        title={theme === "dark" ? t.light : t.dark}
-      >
+      <button type="button" onClick={() => setTheme((current) => (current === "dark" ? "light" : "dark"))} aria-label={theme === "dark" ? t.light : t.dark} title={theme === "dark" ? t.light : t.dark}>
         {theme === "dark" ? <Sun aria-hidden="true" /> : <Moon aria-hidden="true" />}
       </button>
     </div>
