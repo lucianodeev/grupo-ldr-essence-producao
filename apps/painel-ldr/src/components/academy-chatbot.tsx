@@ -13,16 +13,16 @@ const COPY: Record<Locale, {
   noResult: string; human: string; visit: string; open: string; topics: Record<Topic, string>;
 }> = {
   pt: {
-    help: "Posso ajudar?", title: "LDR Essence Academy", subtitle: "Assistente virtual", hello: "Olá 👋 Sou o assistente da LDR Essence Academy.", prompt: "Posso te ajudar a encontrar cursos, formações, conteúdos gratuitos, livros, revistas e outros conteúdos. O que você procura?", search: "Digite o que você procura…", back: "Voltar", close: "Fechar", noResult: "Não encontrei exatamente o que você procura. Posso te encaminhar para nosso atendimento.", human: "Falar com atendimento no WhatsApp", visit: "Ver opções", open: "Abrir", topics: { courses:"🎓 Cursos", formations:"📚 Formações", free:"🎁 Cursos gratuitos", business:"💼 Empreendedorismo", psychoanalysis:"🧠 Psicanálise", career:"🌍 Carreira", books:"📖 Livros e eBooks", editorial:"📰 Revistas e jornais", library:"🔎 Explorar biblioteca", human:"💬 Falar com atendimento" }
+    help: "Posso ajudar?", title: "LDR Essence Academy", subtitle: "Assistente virtual", hello: "Olá 👋 Sou o assistente da LDR Essence Academy.", prompt: "Posso te ajudar a encontrar cursos, formações, conteúdos gratuitos, livros, a Revista Psicanálise no Mundo e outros conteúdos. O que você procura?", search: "Digite o que você procura…", back: "Voltar", close: "Fechar", noResult: "Não encontrei exatamente o que você procura. Posso te encaminhar para nosso atendimento.", human: "Falar com atendimento no WhatsApp", visit: "Ver opções", open: "Abrir", topics: { courses:"🎓 Cursos", formations:"📚 Formações", free:"🎁 Cursos gratuitos", business:"💼 Empreendedorismo", psychoanalysis:"🧠 Psicanálise", career:"🌍 Carreira", books:"📖 Livros e eBooks", editorial:"📖 Revista Psicanálise no Mundo", library:"🔎 Explorar biblioteca", human:"💬 Falar com atendimento" }
   },
   en: {
-    help: "Can I help?", title: "LDR Essence Academy", subtitle: "Virtual assistant", hello: "Hi 👋 I’m the LDR Essence Academy assistant.", prompt: "I can help you find courses, professional programs, free content, books, magazines and more. What are you looking for?", search: "Type what you are looking for…", back: "Back", close: "Close", noResult: "I couldn’t find exactly what you are looking for. I can connect you with our support team.", human: "Talk to support on WhatsApp", visit: "See options", open: "Open", topics: { courses:"🎓 Courses", formations:"📚 Programs", free:"🎁 Free courses", business:"💼 Entrepreneurship", psychoanalysis:"🧠 Psychoanalysis", career:"🌍 Career", books:"📖 Books & eBooks", editorial:"📰 Magazines & news", library:"🔎 Explore library", human:"💬 Talk to support" }
+    help: "Can I help?", title: "LDR Essence Academy", subtitle: "Virtual assistant", hello: "Hi 👋 I’m the LDR Essence Academy assistant.", prompt: "I can help you find courses, professional programs, free content, books, the Revista Psicanálise no Mundo and more. What are you looking for?", search: "Type what you are looking for…", back: "Back", close: "Close", noResult: "I couldn’t find exactly what you are looking for. I can connect you with our support team.", human: "Talk to support on WhatsApp", visit: "See options", open: "Open", topics: { courses:"🎓 Courses", formations:"📚 Programs", free:"🎁 Free courses", business:"💼 Entrepreneurship", psychoanalysis:"🧠 Psychoanalysis", career:"🌍 Career", books:"📖 Books & eBooks", editorial:"📖 Revista Psicanálise no Mundo", library:"🔎 Explore library", human:"💬 Talk to support" }
   },
   fr: {
-    help: "Besoin d’aide ?", title: "LDR Essence Academy", subtitle: "Assistant virtuel", hello: "Bonjour 👋 Je suis l’assistant de LDR Essence Academy.", prompt: "Je peux vous aider à trouver des cours, formations, contenus gratuits, livres, magazines et autres contenus. Que recherchez-vous ?", search: "Écrivez ce que vous recherchez…", back: "Retour", close: "Fermer", noResult: "Je n’ai pas trouvé exactement ce que vous recherchez. Je peux vous orienter vers notre service d’assistance.", human: "Parler au service client sur WhatsApp", visit: "Voir les options", open: "Ouvrir", topics: { courses:"🎓 Cours", formations:"📚 Formations", free:"🎁 Cours gratuits", business:"💼 Entrepreneuriat", psychoanalysis:"🧠 Psychanalyse", career:"🌍 Carrière", books:"📖 Livres et eBooks", editorial:"📰 Revues et journaux", library:"🔎 Explorer la bibliothèque", human:"💬 Parler au service client" }
+    help: "Besoin d’aide ?", title: "LDR Essence Academy", subtitle: "Assistant virtuel", hello: "Bonjour 👋 Je suis l’assistant de LDR Essence Academy.", prompt: "Je peux vous aider à trouver des cours, formations, contenus gratuits, livres, la Revista Psicanálise no Mundo et autres contenus. Que recherchez-vous ?", search: "Écrivez ce que vous recherchez…", back: "Retour", close: "Fermer", noResult: "Je n’ai pas trouvé exactement ce que vous recherchez. Je peux vous orienter vers notre service d’assistance.", human: "Parler au service client sur WhatsApp", visit: "Voir les options", open: "Ouvrir", topics: { courses:"🎓 Cours", formations:"📚 Formations", free:"🎁 Cours gratuits", business:"💼 Entrepreneuriat", psychoanalysis:"🧠 Psychanalyse", career:"🌍 Carrière", books:"📖 Livres et eBooks", editorial:"📖 Revista Psicanálise no Mundo", library:"🔎 Explorer la bibliothèque", human:"💬 Parler au service client" }
   },
   es: {
-    help: "¿Puedo ayudarte?", title: "LDR Essence Academy", subtitle: "Asistente virtual", hello: "Hola 👋 Soy el asistente de LDR Essence Academy.", prompt: "Puedo ayudarte a encontrar cursos, formaciones, contenidos gratuitos, libros, revistas y otros contenidos. ¿Qué buscas?", search: "Escribe lo que buscas…", back: "Volver", close: "Cerrar", noResult: "No encontré exactamente lo que buscas. Puedo derivarte a nuestro equipo de atención.", human: "Hablar con atención por WhatsApp", visit: "Ver opciones", open: "Abrir", topics: { courses:"🎓 Cursos", formations:"📚 Formaciones", free:"🎁 Cursos gratuitos", business:"💼 Emprendimiento", psychoanalysis:"🧠 Psicoanálisis", career:"🌍 Carrera", books:"📖 Libros y eBooks", editorial:"📰 Revistas y periódicos", library:"🔎 Explorar biblioteca", human:"💬 Hablar con atención" }
+    help: "¿Puedo ayudarte?", title: "LDR Essence Academy", subtitle: "Asistente virtual", hello: "Hola 👋 Soy el asistente de LDR Essence Academy.", prompt: "Puedo ayudarte a encontrar cursos, formaciones, contenidos gratuitos, libros, la Revista Psicanálise no Mundo y otros contenidos. ¿Qué buscas?", search: "Escribe lo que buscas…", back: "Volver", close: "Cerrar", noResult: "No encontré exactamente lo que buscas. Puedo derivarte a nuestro equipo de atención.", human: "Hablar con atención por WhatsApp", visit: "Ver opciones", open: "Abrir", topics: { courses:"🎓 Cursos", formations:"📚 Formaciones", free:"🎁 Cursos gratuitos", business:"💼 Emprendimiento", psychoanalysis:"🧠 Psicoanálisis", career:"🌍 Carrera", books:"📖 Libros y eBooks", editorial:"📖 Revista Psicanálise no Mundo", library:"🔎 Explorar biblioteca", human:"💬 Hablar con atención" }
   },
 };
 
@@ -34,7 +34,7 @@ const DESTINATIONS: Record<Exclude<Topic, "human">, { href: string; icon: typeof
   psychoanalysis: { href: "/formacao-psicanalise", icon: BookOpen },
   career: { href: "/cliente/biblioteca", icon: GraduationCap },
   books: { href: "/cliente/biblioteca", icon: BookOpen },
-  editorial: { href: "/cliente/biblioteca/revista-ldr", icon: BookOpen },
+  editorial: { href: "/cliente/biblioteca/publicacoes/revista-psicanalise-no-mundo", icon: BookOpen },
   library: { href: "/cliente/biblioteca", icon: BookOpen },
 };
 
@@ -46,7 +46,14 @@ const KEYWORDS: Record<Exclude<Topic, "human" | "library">, string[]> = {
   psychoanalysis: ["psicanálise", "psicanalise", "psychoanalysis", "psychanalyse", "psicoanálisis", "psicoanalisis"],
   career: ["carreira", "career", "carrière", "carrera", "mentoria", "mentoring"],
   books: ["livro", "ebook", "book", "livre", "libro"],
-  editorial: ["revista", "jornal", "magazine", "journal", "revue", "periódico", "periodico"],
+  editorial: ["revista", "jornal", "magazine", "journal", "revue", "periódico", "periodico", "psicanálise no mundo", "psicanalise no mundo"],
+};
+
+const EDITORIAL_INFO: Record<Locale, string> = {
+  pt: "Revista Psicanálise no Mundo · 🇧🇷 R$ 3,90 por semana · 🇪🇺 € 3,90 por semana. Assinatura semanal recorrente, separada da assinatura principal da biblioteca.",
+  en: "Revista Psicanálise no Mundo · 🇧🇷 R$ 3.90 per week · 🇪🇺 € 3.90 per week. Recurring weekly subscription, separate from the main library subscription.",
+  fr: "Revista Psicanálise no Mundo · 🇧🇷 R$ 3,90 par semaine · 🇪🇺 3,90 € par semaine. Abonnement hebdomadaire récurrent, séparé de l’abonnement principal à la bibliothèque.",
+  es: "Revista Psicanálise no Mundo · 🇧🇷 R$ 3,90 por semana · 🇪🇺 € 3,90 por semana. Suscripción semanal recurrente, separada de la suscripción principal de la biblioteca.",
 };
 
 export function AcademyChatbot() {
@@ -127,6 +134,7 @@ export function AcademyChatbot() {
                       <div className="grid h-10 w-10 place-items-center rounded-xl bg-[#102a43] text-white"><destination.icon className="h-5 w-5" /></div>
                       <div><p className="text-xs font-black uppercase tracking-[.12em] text-[#9a7a2f]">LDR Essence Academy</p><p className="font-black text-slate-900">{c.topics[activeTopic]}</p></div>
                     </div>
+                    {activeTopic === "editorial" && <p className="mt-3 text-sm leading-6 text-slate-700">{EDITORIAL_INFO[lang]}</p>}
                     <a href={destination.href} className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#102a43] px-4 py-3 text-sm font-black text-white hover:bg-[#173b5f]">{c.open}<ExternalLink className="h-4 w-4" /></a>
                   </article>
                 ) : query ? (
