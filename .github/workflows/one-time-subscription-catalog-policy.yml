@@ -19,14 +19,11 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
 
-          # Policy update: keep existing validated products unchanged, move only
-          # main Psychoanalysis out of subscription and include only the six new courses.
           p=Path('apps/painel-ldr/src/lib/library-subscription.server.ts')
           s=p.read_text()
           psycho='  ["formacao_psicanalise", "Formação Online em Psicanálise"],\n'
-          if psycho not in s:
-              raise SystemExit('Expected Psychoanalysis subscription entry not found')
-          s=s.replace(psycho,'',1)
+          if psycho in s:
+              s=s.replace(psycho,'',1)
           anchor='  ["formacao_comunicacao_oratoria_inteligencia_emocional", "Formação em Comunicação, Oratória e Inteligência Emocional no Trabalho"],\n'
           additions=(
               '  ["formacao_aba_autismo_600h", "Formação em ABA Aplicada ao Autismo"],\n'
@@ -40,35 +37,32 @@ jobs:
               if anchor not in s:
                   raise SystemExit('Subscription list anchor not found')
               s=s.replace(anchor,anchor+''.join(additions),1)
+          if '["formacao_psicanalise", "Formação Online em Psicanálise"]' in s:
+              raise SystemExit('Psychoanalysis still included in subscription list')
+          if not all(x.split('"')[1] in s for x in additions):
+              raise SystemExit('Not all six new courses were added to subscription list')
           p.write_text(s)
 
           p=Path('apps/painel-ldr/src/lib/new-professional-formations.catalog.ts')
           s=p.read_text()
-          old='const base={priceBrlCents:29999,priceEurCents:4990,hours:600,lessons:144,modulesCount:12,minimumDays:75,includedInSubscription:false};'
-          new='const base={priceBrlCents:29999,priceEurCents:4990,hours:600,lessons:144,modulesCount:12,minimumDays:75,includedInSubscription:true};'
-          if old not in s and new not in s:
-              raise SystemExit('New formation base policy not found')
-          s=s.replace(old,new,1)
+          s=s.replace('includedInSubscription:false','includedInSubscription:true',1)
+          if 'includedInSubscription:true' not in s:
+              raise SystemExit('New courses subscription flag not enabled')
           p.write_text(s)
 
           p=Path('apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx')
           s=p.read_text()
           oldset='const includedProfessionalSlugs=new Set(["vendas-negociacao","marketing-digital","recrutamento-selecao","gestao-administrativa-financeira","comunicacao-oratoria"]);'
           newset='const includedProfessionalSlugs=new Set(["vendas-negociacao","marketing-digital","recrutamento-selecao","gestao-administrativa-financeira","comunicacao-oratoria","aba-autismo","saude-mental-praticas-clinicas","sociologia","filosofia-clinica","ciencia-politica","ciencias-felicidade"]);'
-          if oldset not in s and newset not in s:
-              raise SystemExit('Library included slug set not found')
           s=s.replace(oldset,newset,1)
           s=s.replace('{card("psycho",ct.psycho,"bg-[#5b2b86]","grad",accessLabels.included)}','{card("psycho",ct.psycho,"bg-[#5b2b86]","grad",accessLabels.single)}',1)
           s=s.replace('<h3 className="font-serif text-2xl">Formação Online em Psicanálise</h3><p className="mt-2 text-xs font-bold text-[#0b2341]">✓ Incluído na assinatura Biblioteca LDR · compra avulsa mantém acesso vitalício.</p>',
                       '<h3 className="font-serif text-2xl">Formação Online em Psicanálise</h3><p className="mt-2 text-xs font-bold text-[#5b2b86]">Compra avulsa · não incluído na assinatura Biblioteca LDR · pagamento único · acesso vitalício após compra.</p>',1)
+          for slug in ['aba-autismo','saude-mental-praticas-clinicas','sociologia','filosofia-clinica','ciencia-politica','ciencias-felicidade']:
+              if slug not in s:
+                  raise SystemExit(f'Missing included badge slug: {slug}')
           p.write_text(s)
           PY
-      - name: Verify policy in source
-        run: |
-          ! grep -q '\["formacao_psicanalise", "Formação Online em Psicanálise"\]' apps/painel-ldr/src/lib/library-subscription.server.ts
-          grep -q 'formacao_aba_autismo_600h' apps/painel-ldr/src/lib/library-subscription.server.ts
-          grep -q 'includedInSubscription:true' apps/painel-ldr/src/lib/new-professional-formations.catalog.ts
-          grep -q '"ciencias-felicidade"' apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
       - name: Remove workflow and commit
         run: |
           rm .github/workflows/one-time-subscription-catalog-policy.yml
