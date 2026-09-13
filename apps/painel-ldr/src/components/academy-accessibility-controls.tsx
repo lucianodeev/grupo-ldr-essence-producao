@@ -181,6 +181,87 @@ function ensureLibraryCardPolish() {
     html[data-academy-theme="dark"] .academy-accessibility-shell input::placeholder,
     html[data-academy-theme="dark"] .academy-accessibility-shell textarea::placeholder { color: #94a3b8; }
 
+    @media (max-width: 640px) {
+      #catalogo-ldr .grid.grid-cols-4 {
+        grid-template-columns: 1fr !important;
+        grid-auto-rows: auto !important;
+        column-gap: 0 !important;
+        row-gap: 10px !important;
+        padding-inline: 10px !important;
+      }
+      #catalogo-ldr .grid.grid-cols-4 > a,
+      #catalogo-ldr .grid.grid-cols-4 > button {
+        min-height: 88px !important;
+        height: auto !important;
+        aspect-ratio: auto !important;
+        padding: 14px 16px !important;
+        display: grid !important;
+        grid-template-columns: 40px minmax(0, 1fr) auto !important;
+        align-items: center !important;
+        column-gap: 12px !important;
+        justify-content: stretch !important;
+        text-align: left !important;
+      }
+      #catalogo-ldr .grid.grid-cols-4 > a > svg,
+      #catalogo-ldr .grid.grid-cols-4 > button > svg {
+        grid-column: 1 !important;
+        grid-row: 1 !important;
+        margin: 0 auto !important;
+      }
+      #catalogo-ldr .grid.grid-cols-4 > a > span:first-child,
+      #catalogo-ldr .grid.grid-cols-4 > button > span:first-child {
+        grid-column: 1 !important;
+        grid-row: 1 !important;
+        margin: 0 auto !important;
+        padding: 0 !important;
+        background: transparent !important;
+        font-size: 1.25rem !important;
+        line-height: 1 !important;
+      }
+      #catalogo-ldr .grid.grid-cols-4 > a > p,
+      #catalogo-ldr .grid.grid-cols-4 > button > p {
+        grid-column: 2 !important;
+        grid-row: 1 !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        font-size: 0.875rem !important;
+        line-height: 1.2 !important;
+        text-align: left !important;
+        word-break: normal !important;
+        overflow-wrap: normal !important;
+        hyphens: none !important;
+        white-space: normal !important;
+        -webkit-line-clamp: 3 !important;
+      }
+      #catalogo-ldr .grid.grid-cols-4 > a > span:not(:first-child),
+      #catalogo-ldr .grid.grid-cols-4 > button > span:not(:first-child) {
+        grid-column: 3 !important;
+        grid-row: 1 !important;
+        margin: 0 !important;
+        padding: 0.32rem 0.52rem !important;
+        font-size: 0.56rem !important;
+        line-height: 1.05 !important;
+        white-space: nowrap !important;
+      }
+      #catalogo-ldr [data-ldr-popular="true"] {
+        min-height: 96px !important;
+        padding-top: 2.2rem !important;
+      }
+      #catalogo-ldr [data-ldr-popular="true"]::before {
+        top: 0.45rem !important;
+        left: auto !important;
+        right: 0.6rem !important;
+        transform: none !important;
+        max-width: calc(100% - 1.2rem) !important;
+        font-size: 0.5rem !important;
+      }
+      #catalogo-ldr [data-ldr-popular="true"]::after {
+        top: 0.5rem !important;
+        right: 0.45rem !important;
+      }
+    }
+
     @media (min-width: 641px) {
       #catalogo-ldr .grid.grid-cols-4 { column-gap: 12px !important; row-gap: 14px !important; padding-inline: 12px !important; }
       #catalogo-ldr .grid.grid-cols-4 > a,
