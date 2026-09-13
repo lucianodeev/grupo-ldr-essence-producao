@@ -1,0 +1,100 @@
+name: One-time single psychoanalysis magazine
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/one-time-single-psychoanalysis-magazine.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main, fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Apply focused editorial changes
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          # 1) Main compact library card: reuse existing editorial card, rename and point directly to magazine.
+          p=Path('apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx'); s=p.read_text()
+          s=s.replace('href="/cliente/biblioteca/publicacoes" className="min-w-0 rounded-2xl bg-[#0b2341]', 'href="/cliente/biblioteca/publicacoes/revista-psicanalise-no-mundo" className="min-w-0 rounded-2xl bg-[#0b2341]', 1)
+          p.write_text(s)
+
+          # 2) Localized compact card naming becomes singular and specific.
+          p=Path('apps/painel-ldr/src/lib/library-card-i18n.ts'); s=p.read_text()
+          repl={
+            'editorial: "Jornais & Revistas", editorialSub: "Todos em um só lugar"':'editorial: "Revista Psicanálise no Mundo", editorialSub: "Assinatura semanal"',
+            'editorial: "Newspapers & Magazines", editorialSub: "Everything in one place"':'editorial: "Psychoanalysis Around the World", editorialSub: "Weekly magazine"',
+            'editorial: "Journaux & Magazines", editorialSub: "Tout au même endroit"':'editorial: "Revue Psychanalyse dans le Monde", editorialSub: "Abonnement hebdomadaire"',
+            'editorial: "Periódicos & Revistas", editorialSub: "Todo en un solo lugar"':'editorial: "Revista Psicoanálisis en el Mundo", editorialSub: "Suscripción semanal"',
+          }
+          for a,b in repl.items(): s=s.replace(a,b)
+          p.write_text(s)
+
+          # 3) Storefront: only this editorial item remains visible in the newsstand group. Preserve all non-editorial items.
+          p=Path('apps/painel-ldr/src/components/library-storefront.tsx'); s=p.read_text()
+          remove_titles=['Jornal LDR','Revista LDR','LDR Ciência','Revista Negócios','Jornal Europa']
+          lines=s.splitlines()
+          lines=[ln for ln in lines if not any(f'title:"{t}"' in ln and 'group:"banca"' in ln for t in remove_titles)]
+          s='\n'.join(lines)+'\n'
+          s=s.replace('newsstand:"Banca LDR",newsstandDesc:"Jornais, revistas e publicações especiais."','newsstand:"Revista Psicanálise no Mundo",newsstandDesc:"A única revista editorial da LDR Academy, com edição semanal."')
+          s=s.replace('newsstand:"LDR Newsstand",newsstandDesc:"Newspapers, magazines and special publications."','newsstand:"Psychoanalysis Around the World",newsstandDesc:"The LDR Academy weekly editorial magazine."')
+          s=s.replace('newsstand:"Kiosque LDR",newsstandDesc:"Journaux, magazines et publications spéciales."','newsstand:"Revue Psychanalyse dans le Monde",newsstandDesc:"La revue éditoriale hebdomadaire de LDR Academy."')
+          s=s.replace('newsstand:"Quiosco LDR",newsstandDesc:"Periódicos, revistas y publicaciones especiales."','newsstand:"Revista Psicoanálisis en el Mundo",newsstandDesc:"La revista editorial semanal de LDR Academy."')
+          p.write_text(s)
+
+          # 4) Academy home editorial discovery: keep only the single magazine.
+          p=Path('apps/painel-ldr/src/components/academy-university-home.tsx'); s=p.read_text()
+          s=re.sub(r'const EDITORIAL=\[\s*\["Jornal LDR".*?\]\s*as const;', 'const EDITORIAL=[["Revista Psicanálise no Mundo","/cliente/biblioteca/publicacoes/revista-psicanalise-no-mundo","🧠"]] as const;', s, flags=re.S)
+          p.write_text(s)
+
+          # 5) Public editorial sales block: show only the magazine; retain its existing R$3,90 / €3,90 weekly price and route.
+          p=Path('apps/painel-ldr/src/components/editorial-sales-cards.tsx'); s=p.read_text()
+          s=s.replace('desc:"Assinaturas editoriais independentes da Biblioteca LDR. Jornal, Revista, LDR Ciência e Revista Psicanálise no Mundo são contratados separadamente."','desc:"A Revista Psicanálise no Mundo é a publicação editorial semanal da LDR Academy e possui assinatura independente da Biblioteca LDR."')
+          s=s.replace('desc:"Editorial subscriptions are separate from the LDR Library. Newspaper, Magazine, LDR Science and Psychoanalysis Around the World Magazine are subscribed to separately."','desc:"Psychoanalysis Around the World is LDR Academy’s weekly editorial magazine and has a subscription separate from the LDR Library."')
+          s=s.replace('desc:"Les abonnements éditoriaux sont séparés de la Bibliothèque LDR. Le Journal, le Magazine, LDR Science et la Revue Psychanalyse dans le Monde sont souscrits séparément."','desc:"La Revue Psychanalyse dans le Monde est la publication éditoriale hebdomadaire de LDR Academy, avec un abonnement indépendant de la Bibliothèque LDR."')
+          s=s.replace('desc:"Las suscripciones editoriales son independientes de la Biblioteca LDR. Periódico, Revista, LDR Ciencia y Revista Psicoanálisis en el Mundo se contratan por separado."','desc:"Revista Psicoanálisis en el Mundo es la publicación editorial semanal de LDR Academy y tiene una suscripción independiente de la Biblioteca LDR."')
+          # remove three legacy cards grid without touching featured magazine
+          s=re.sub(r'\n\s*<div className="grid gap-5 lg:grid-cols-3">.*?</div>\n\s*<p className="mt-4 text-xs text-slate-500">\{t.footer\}</p>', '\n      <p className="mt-4 text-xs text-slate-500">{locale==="pt"?"Assinatura semanal independente da Biblioteca LDR.":locale==="fr"?"Abonnement hebdomadaire indépendant de la Bibliothèque LDR.":locale==="es"?"Suscripción semanal independiente de la Biblioteca LDR.":"Weekly subscription independent from the LDR Library."}</p>', s, flags=re.S)
+          p.write_text(s)
+
+          # 6) Legacy /publicacoes hub remains compatible but shows only the magazine if it renders the full catalog.
+          p=Path('apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.publicacoes.tsx'); s=p.read_text()
+          # filter the catalog at render/load level without deleting old records/routes
+          if 'revista-psicanalise-no-mundo' not in s or '.filter(' not in s:
+              # Replace common catalog mapping patterns conservatively.
+              s=s.replace('EDITORIAL_CATALOG.map(', 'EDITORIAL_CATALOG.filter((x)=>x.slug==="revista-psicanalise-no-mundo").map(')
+              s=s.replace('EDITORIAL_ITEMS.map(', 'EDITORIAL_ITEMS.filter((x)=>x.slug==="revista-psicanalise-no-mundo").map(')
+          p.write_text(s)
+
+          # Sanity checks
+          assert '/cliente/biblioteca/publicacoes/revista-psicanalise-no-mundo' in Path('apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx').read_text()
+          storefront=Path('apps/painel-ldr/src/components/library-storefront.tsx').read_text()
+          for t in remove_titles:
+              assert not (f'title:"{t}"' in storefront and 'group:"banca"' in storefront)
+          assert 'R$ 3,90' in Path('apps/painel-ldr/src/components/editorial-sales-cards.tsx').read_text()
+          assert '€ 3,90' in Path('apps/painel-ldr/src/components/editorial-sales-cards.tsx').read_text()
+          PY
+      - name: Install and build
+        working-directory: apps/painel-ldr
+        run: npm ci && npm run build
+      - name: Verify focused change
+        run: |
+          grep -q 'Revista Psicanálise no Mundo' apps/painel-ldr/src/lib/library-card-i18n.ts
+          grep -q 'publicacoes/revista-psicanalise-no-mundo' apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx
+          grep -q 'R$ 3,90' apps/painel-ldr/src/components/editorial-sales-cards.tsx
+          grep -q '€ 3,90' apps/painel-ldr/src/components/editorial-sales-cards.tsx
+      - name: Commit result
+        run: |
+          rm .github/workflows/one-time-single-psychoanalysis-magazine.yml
+          git restore apps/painel-ldr/package-lock.json 2>/dev/null || true
+          git config user.name "ldr-rh-campanhas"
+          git config user.email "llucianouam@gmail.com"
+          git add -A
+          git commit -m "feat: make psychoanalysis magazine the single editorial publication"
+          git push origin main
