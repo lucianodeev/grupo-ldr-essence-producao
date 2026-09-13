@@ -1,22 +1,22 @@
 import { Outlet, createFileRoute, redirect, useLocation } from "@tanstack/react-router";
+import type { Session } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
-import { AppHeader } from "@/components/app-header";
-import { NotificationCenter } from "@/components/notification-center";
-import { supabase } from "@/integrations/supabase/client";
+
+import { FreeContentAds } from "@/components/free-content-ads";
 import { LegacyTrainingProjectPanel } from "@/components/legacy-training-project-panel";
-import type { LegacyProjectSlug } from "@/lib/legacy-training-projects.server";
+import { supabase } from "@/integrations/supabase/client";
+import { getClientAuthState } from "@/integrations/supabase/session.functions";
 
-async function getClientAuthState() {
-  const response = await fetch("/api/auth/session", { credentials: "include" });
-  return response.ok;
-}
-
-async function syncSession(session: { access_token: string; refresh_token: string }) {
+async function syncSession(session: Session) {
   const response = await fetch("/api/auth/session-sync", {
     method: "POST",
     credentials: "include",
+    cache: "no-store",
     headers: { "content-type": "application/json" },
-    body: JSON.stringify({ accessToken: session.access_token, refreshToken: session.refresh_token }),
+    body: JSON.stringify({
+      access_token: session.access_token,
+      refresh_token: session.refresh_token,
+    }),
   });
   return response.ok;
 }
@@ -52,7 +52,7 @@ const PROJECT_ROUTE_MAP={
 function ClientAreaLayout() {
   const location=useLocation();
   const pathname=location.pathname.replace(/\/+$/,"")||"/";
-  const projectSlug=PROJECT_ROUTE_MAP[pathname as keyof typeof PROJECT_ROUTE_MAP] as LegacyProjectSlug|undefined;
+  const projectSlug=PROJECT_ROUTE_MAP[pathname as keyof typeof PROJECT_ROUTE_MAP];
   const [ready,setReady]=useState(false);
   const [failed,setFailed]=useState(false);
 
@@ -66,16 +66,37 @@ function ClientAreaLayout() {
 
         const {data}=await supabase.auth.getSession();
         if(!active)return;
-        if(data.session&&await syncSession(data.session)){setReady(true);return;}
-      }catch(error){console.warn("client session preparation failed",error);}
-      if(active)setFailed(true);
+        if(!data.session){window.location.replace("/cliente/login");return;}
+
+        const ok=await syncSession(data.session);
+        if(!active)return;
+        if(!ok){setFailed(true);return;}
+
+        const verified=await getClientAuthState();
+        if(!active)return;
+        if(!verified.authenticated){setFailed(true);return;}
+        setReady(true);
+      }catch{
+        if(active)setFailed(true);
+      }
     };
     void prepare();
     return()=>{active=false};
   },[]);
 
-  if(failed)return <div className="min-h-screen bg-background"><AppHeader/><main className="mx-auto max-w-xl px-4 py-16 text-center"><h1 className="font-serif text-3xl text-[#0b2341]">Sua sessão precisa ser atualizada</h1><p className="mt-3 text-sm text-muted-foreground">Entre novamente para continuar acessando seus conteúdos.</p><a href="/cliente/login" className="mt-6 inline-flex rounded-xl bg-[#0b2341] px-5 py-3 text-sm font-black text-white">ENTRAR NOVAMENTE</a></main></div>;
-  if(!ready)return <div className="min-h-screen bg-background"><AppHeader/><main className="mx-auto max-w-5xl px-4 py-12"><p className="text-sm text-muted-foreground">Preparando sua área…</p></main></div>;
+  if(failed){
+    return <main className="mx-auto max-w-3xl px-4 py-8 sm:px-6"><section className="s8-card"><p className="font-semibold">Não foi possível validar sua sessão.</p><button type="button" onClick={()=>window.location.replace("/cliente/login")} className="mt-4 rounded-xl bg-primary px-4 py-3 text-sm font-bold text-primary-foreground">Entrar novamente</button></section></main>;
+  }
 
-  return <div className="min-h-screen bg-background"><AppHeader/><NotificationCenter/><main className="mx-auto max-w-[1440px] px-3 py-5 sm:px-5"><Outlet/>{projectSlug?<LegacyTrainingProjectPanel slug={projectSlug}/>:null}</main></div>;
+  if(!ready){
+    return <main className="mx-auto max-w-3xl px-4 py-8 sm:px-6"><section className="s8-card">Validando acesso…</section></main>;
+  }
+
+  return (
+    <>
+      <Outlet />
+      {projectSlug ? <LegacyTrainingProjectPanel slug={projectSlug}/> : null}
+      <FreeContentAds placement="bottom" />
+    </>
+  );
 }
