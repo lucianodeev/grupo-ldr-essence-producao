@@ -1,0 +1,22 @@
+import type { PF } from "@/lib/professional-formations.catalog";
+export const TRICHOLOGY_FORMATION=[{
+ slug:"tricologia-terapia-capilar",
+ productKey:"formacao_tricologia_terapia_capilar",
+ publicPath:"/formacao-tricologia-terapia-capilar",
+ learnerPath:"/cliente/treinamentos/tricologia-terapia-capilar",
+ icon:"🧴",
+ theme:"petrol",
+ priceBrlCents:41993,
+ priceEurCents:6993,
+ hours:600,
+ lessons:30,
+ modulesCount:6,
+ minimumDays:0,
+ includedInSubscription:false,
+ i18n:{
+  pt:{name:"Formação em Tricologia e Terapia Capilar",short:"Tricologia e Terapia Capilar",category:"Beleza & Terapia Capilar",description:"Formação profissional de 600 horas e 6 meses para profissionais da beleza, com ciência capilar, prática progressiva, protocolos, gestão de salão, carreira e Diário de Evolução Capilar.",project:"Jornada de Evolução Capilar",disclaimer:"Formação livre profissional. Não habilita diagnóstico médico, prescrição medicamentosa, tratamento médico ou procedimentos invasivos. Cada profissional deve respeitar os limites legais, éticos e técnicos de sua profissão e da legislação local.",modules:["Fundamentos da Tricologia e Ciência Capilar","Avaliação Capilar e Alterações do Couro Cabeludo","Cosmetologia e Protocolos de Terapia Capilar","Tecnologias e Prática Profissional","Gestão de Salão, Clínica e Negócio Capilar","Carreira de Terapeuta Capilar e Projeto Final"]},
+  en:{name:"Trichology and Hair Therapy Professional Training",short:"Trichology & Hair Therapy",category:"Beauty & Hair Therapy",description:"600-hour, 6-month professional training for beauty professionals covering hair science, progressive practice, protocols, salon management, career development and a Hair Evolution Journal.",project:"Hair Evolution Journey",disclaimer:"Professional non-degree training. It does not authorize medical diagnosis, prescription drugs, medical treatment or invasive procedures. Professionals must respect the legal, ethical and technical limits of their profession and local law.",modules:["Foundations of Trichology and Hair Science","Hair and Scalp Assessment","Cosmetology and Hair Therapy Protocols","Technologies and Professional Practice","Salon, Clinic and Hair Business Management","Hair Therapist Career and Final Project"]},
+  fr:{name:"Formation en Trichologie et Thérapie Capillaire",short:"Trichologie & Thérapie Capillaire",category:"Beauté & Thérapie Capillaire",description:"Formation professionnelle de 600 heures sur 6 mois pour les professionnels de la beauté : science capillaire, pratique progressive, protocoles, gestion du salon, carrière et Journal d’Évolution Capillaire.",project:"Parcours d’Évolution Capillaire",disclaimer:"Formation professionnelle libre. Elle n’autorise pas le diagnostic médical, la prescription de médicaments, les traitements médicaux ni les actes invasifs. Chaque professionnel doit respecter les limites légales, éthiques et techniques de sa profession et la législation locale.",modules:["Fondements de la Trichologie et Science Capillaire","Évaluation Capillaire et Cuir Chevelu","Cosmétologie et Protocoles de Thérapie Capillaire","Technologies et Pratique Professionnelle","Gestion du Salon, de la Clinique et de l’Activité Capillaire","Carrière de Thérapeute Capillaire et Projet Final"]},
+  es:{name:"Formación en Tricología y Terapia Capilar",short:"Tricología y Terapia Capilar",category:"Belleza & Terapia Capilar",description:"Formación profesional de 600 horas y 6 meses para profesionales de la belleza, con ciencia capilar, práctica progresiva, protocolos, gestión de salón, carrera y Diario de Evolución Capilar.",project:"Jornada de Evolución Capilar",disclaimer:"Formación profesional libre. No habilita para diagnóstico médico, prescripción de medicamentos, tratamiento médico ni procedimientos invasivos. Cada profesional debe respetar los límites legales, éticos y técnicos de su profesión y la legislación local.",modules:["Fundamentos de Tricología y Ciencia Capilar","Evaluación Capilar y Alteraciones del Cuero Cabelludo","Cosmetología y Protocolos de Terapia Capilar","Tecnologías y Práctica Profesional","Gestión de Salón, Clínica y Negocio Capilar","Carrera de Terapeuta Capilar y Proyecto Final"]}
+ }
+}] as unknown as PF[];
