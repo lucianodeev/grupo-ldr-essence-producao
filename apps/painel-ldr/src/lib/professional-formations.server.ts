@@ -2,7 +2,7 @@ import { getRequest } from "@tanstack/react-start/server";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { resolveClient } from "@/lib/client-portal.server";
 import { hasOwnerDigitalAccess } from "@/lib/owner-digital-access.server";
-import { getProfessionalFormation } from "@/lib/professional-formations.catalog";
+import { getProfessionalFormation } from "@/lib/academy-professional-formations.catalog";
 const db=supabaseAdmin as any; type Market="BR"|"INTL";
 function fail(m:string):never{throw new Error(m)}
 async function customerFor(userId:string,email:string|null){const x=await resolveClient(userId,email);if(x.status!=="ok")fail("Acesso do cliente não disponível.");return x.customer;}
