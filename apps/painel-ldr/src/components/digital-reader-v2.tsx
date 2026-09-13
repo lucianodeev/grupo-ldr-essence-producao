@@ -19,10 +19,14 @@ const COPY={
  es:{back:"Volver a la Biblioteca",light:"Claro",dark:"Oscuro",smaller:"Reducir letra",larger:"Aumentar letra",language:"Idioma",chapter:"Capítulo",page:"Página",previous:"Anterior",next:"Siguiente",loading:"Cargando contenido…",unavailable:"No fue posible abrir este contenido.",fallback:"La traducción seleccionada no está disponible; mostrando la versión original.",progress:"Progreso"}
 } as const;
 
-const PRODUCT_THEME={
+const PRODUCT_THEME:Record<ProductKey,{light:string;dark:string;cardLight:string;cardDark:string;accent:string;soft:string}>={
  ebook_coragem_comecar:{light:"bg-[#eef5ff] text-[#10233f]",dark:"bg-[#071423] text-[#eef5ff]",cardLight:"border-[#b8cce8] bg-white",cardDark:"border-[#29486d] bg-[#0d2036]",accent:"#153a68",soft:"#dceafb"},
- livro_menino_mamao:{light:"bg-[#fbf6f3] text-[#3f0d1d]",dark:"bg-[#2a0814] text-[#fff5f7]",cardLight:"border-[#d9b3bd] bg-[#fffafa]",cardDark:"border-[#7b2944] bg-[#3b0d1e]",accent:"#6f1632",soft:"#f0dbe2"}
-} as const;
+ livro_menino_mamao:{light:"bg-[#fbf6f3] text-[#3f0d1d]",dark:"bg-[#2a0814] text-[#fff5f7]",cardLight:"border-[#d9b3bd] bg-[#fffafa]",cardDark:"border-[#7b2944] bg-[#3b0d1e]",accent:"#6f1632",soft:"#f0dbe2"},
+ ebook_pratica_clinica_psicanalise:{light:"bg-[#f4f7f7] text-[#14282a]",dark:"bg-[#0b191b] text-[#eef7f7]",cardLight:"border-[#bed0d1] bg-white",cardDark:"border-[#365d60] bg-[#102628]",accent:"#314E52",soft:"#e1ebeb"},
+ ebook_psicanalise_no_mundo:{light:"bg-[#f2f6fb] text-[#10243a]",dark:"bg-[#071522] text-[#eef5fb]",cardLight:"border-[#b9cce0] bg-white",cardDark:"border-[#28547a] bg-[#0d2235]",accent:"#1F4E79",soft:"#dce8f4"},
+ ebook_estudos_caso_psicanalise:{light:"bg-[#fbf5f8] text-[#351629]",dark:"bg-[#24101d] text-[#fff4fa]",cardLight:"border-[#d8bbca] bg-white",cardDark:"border-[#70405a] bg-[#341729]",accent:"#7C3A5D",soft:"#f0dce7"},
+ ebook_psicanalise_autismo:{light:"bg-[#fafaf3] text-[#303114]",dark:"bg-[#20210d] text-[#fafae9]",cardLight:"border-[#d6d7b8] bg-white",cardDark:"border-[#66682c] bg-[#2e3013]",accent:"#6B6F2A",soft:"#ececcf"}
+};
 
 export function DigitalReaderV2({productKey}:{productKey:ProductKey}){
  const {locale:appLocale,setLocale:setGlobalLocale}=useI18n();const initial=(appLocale==="pt"||appLocale==="en"||appLocale==="fr"||appLocale==="es"?appLocale:"pt") as Locale;
@@ -31,7 +35,7 @@ export function DigitalReaderV2({productKey}:{productKey:ProductKey}){
  useEffect(()=>{try{const t=localStorage.getItem(`ldr-reader-${productKey}-theme`);if(t==="light"||t==="dark")setTheme(t);const s=Number(localStorage.getItem(`ldr-reader-${productKey}-scale`));if(s>=.9&&s<=1.4)setScale(s);}catch{}},[productKey]);
  useEffect(()=>{try{localStorage.setItem(`ldr-reader-${productKey}-theme`,theme);localStorage.setItem(`ldr-reader-${productKey}-scale`,String(scale));}catch{}},[theme,scale,productKey]);
  useEffect(()=>{if((appLocale==="pt"||appLocale==="en"||appLocale==="fr"||appLocale==="es")&&appLocale!==locale)setLocale(appLocale as Locale)},[appLocale,locale]);
- const query=useQuery({queryKey:["digital-reader",productKey,locale],queryFn:()=>contentFn({data:{productKey,locale}})});
+ const query=useQuery({queryKey:["digital-reader",productKey,locale],queryFn:()=>contentFn({data:{productKey,locale}}),retry:false,staleTime:5*60*1000,refetchOnWindowFocus:false});
  useEffect(()=>{setChapterIndex(0);setPageIndex(0)},[locale,productKey]);
  const payload=query.data?.content as ReaderPayload|undefined;const book=payload?.kind==="book"?payload.data:null;const ebookPages=payload?.kind==="ebook"&&Array.isArray(payload.pages)?payload.pages:[];const chapters=book?.chapters??[];const activeChapter=chapters[chapterIndex];const bookPages=Array.isArray(activeChapter?.[2])?activeChapter[2]:[];
  const totalUnits=payload?.kind==="ebook"?Math.max(ebookPages.length,1):Math.max(chapters.reduce((n,c)=>n+(Array.isArray(c?.[2])?c[2].length:0),0),1);
