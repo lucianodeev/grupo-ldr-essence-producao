@@ -3,6 +3,7 @@ import { Link, Outlet, createFileRoute, useRouterState } from "@tanstack/react-r
 import { useServerFn } from "@tanstack/react-start";
 
 import { useAccess, useAppointments, useCustomers, useOrders, useTeam } from "@/lib/central-data";
+import { adminAcademyEnrollmentSummary } from "@/lib/admin-academy-enrollments.functions";
 import { ownerDashboardSummary } from "@/lib/owner-dashboard.functions";
 
 export const Route = createFileRoute("/_authenticated/admin")({ component: MasterAdmin });
@@ -38,6 +39,7 @@ const sections = [
     ["Mentoria", "/admin/mentoria"],
     ["Sistema S8", "/admin/s8"],
     ["Treinamentos", "/admin/treinamentos"],
+    ["Alunos e Matrículas", "/admin/alunos-matriculas"],
     ["Fórum do treinamento", "/admin/forum-treinamento"],
     ["Interesses em Pós-Graduação", "/admin/interesses-pos"],
     ["Graduações — Interessados", "/admin/interesses-graduacoes"],
@@ -51,6 +53,7 @@ const ownerActions = [
   ["Revisar profissionais", "Aprovar perfis e acompanhar pendências de conformidade.", "/admin/rede"],
   ["Acompanhar financeiro", "Consultar pagamentos, comissões e repasses da Rede.", "/admin/financeiro"],
   ["Administrar empresas", "Gerenciar empresas, funcionários e benefícios ativos.", "/admin/empresas"],
+  ["Ver alunos matriculados", "Consultar todos os alunos, cursos, acessos e progresso da Academy.", "/admin/alunos-matriculas"],
   ["Enviar notificações", "Abrir a central global de comunicação da administração.", "/admin/notificacoes"],
 ] as const;
 
@@ -95,9 +98,15 @@ function MasterAdminContent() {
   const orders = useOrders();
   const team = useTeam();
   const fetchOwnerDashboard = useServerFn(ownerDashboardSummary);
+  const fetchAcademySummary = useServerFn(adminAcademyEnrollmentSummary);
   const ownerDashboard = useQuery({
     queryKey: ["owner-dashboard-summary"],
     queryFn: () => fetchOwnerDashboard({}),
+    staleTime: 60_000,
+  });
+  const academySummary = useQuery({
+    queryKey: ["admin-academy-enrollment-summary"],
+    queryFn: () => fetchAcademySummary({}),
     staleTime: 60_000,
   });
   const now = new Date();
@@ -160,6 +169,12 @@ function MasterAdminContent() {
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {operationalMetrics.map(([label,value]) => <article key={label} className="rounded-2xl border border-[#C7A33B]/35 bg-white p-5 shadow-sm"><p className="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">{label}</p><p className="mt-2 font-serif text-4xl text-[#0B1F3A]">{value}</p></article>)}
       </div>
+    </section>
+
+    <section aria-labelledby="academy-title" className="rounded-2xl border border-[#C7A33B]/45 bg-white p-5 shadow-sm sm:p-6">
+      <div className="flex flex-wrap items-end justify-between gap-3"><div><p className="text-xs font-bold uppercase tracking-[0.16em] text-[#C7A33B]">LDR Essence Academy</p><h2 id="academy-title" className="mt-1 font-serif text-2xl text-[#0B1F3A]">Alunos e Matrículas</h2><p className="mt-2 text-sm text-slate-600">Cursos gratuitos, compras avulsas e acessos por assinatura em uma única visão.</p></div><Link to="/admin/alunos-matriculas" className="rounded-xl bg-[#0B1F3A] px-4 py-3 text-sm font-bold text-white">Ver todos os alunos</Link></div>
+      {academySummary.isError ? <p className="mt-4 text-sm text-red-700">Os indicadores da Academy estão temporariamente indisponíveis.</p> : null}
+      <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">{[["Alunos",academySummary.data?.metrics.totalStudents],["Matrículas",academySummary.data?.metrics.totalEnrollments],["Gratuitas",academySummary.data?.metrics.freeEnrollments],["Avulsas",academySummary.data?.metrics.oneTimeEnrollments],["Assinatura",academySummary.data?.metrics.subscriptionEnrollments]].map(([label,value])=><Link key={String(label)} to="/admin/alunos-matriculas" className="rounded-2xl border border-[#C7A33B]/35 bg-[#F8F3E8] p-4"><p className="text-xs font-bold uppercase tracking-[.1em] text-slate-500">{label}</p><p className="mt-2 font-serif text-3xl text-[#0B1F3A]">{value ?? "—"}</p></Link>)}</div>
     </section>
 
     <section aria-labelledby="negocio-title" className="rounded-2xl border border-[#C7A33B]/45 bg-[#F8F3E8] p-5 shadow-sm sm:p-6">
