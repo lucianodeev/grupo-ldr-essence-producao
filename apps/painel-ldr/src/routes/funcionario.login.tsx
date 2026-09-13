@@ -1,5 +1,6 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import type { Session } from "@supabase/supabase-js";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { LanguageSelect, useI18n } from "@/lib/i18n";
@@ -16,21 +17,65 @@ const COPY = {
   es: { portal: "Beneficios corporativos", title: "Mi Área", subtitle: "Entra con la misma cuenta de Google del correo registrado por tu empresa.", opening: "Abriendo…", google: "Continuar con Google", privacy: "Tu acceso solo muestra los beneficios que tienes asignados.", back: "Volver a los accesos", error: "No fue posible iniciar sesión con Google." },
 } as const;
 
+function oauthReturnUrl() {
+  if (typeof window === "undefined") return "/api/auth/callback";
+  if (/(^|\.)ldracademy\.online$/i.test(window.location.hostname)) {
+    return "https://learn.lucianoconecta.online/api/auth/callback?academy=1";
+  }
+  return `${window.location.origin}/api/auth/callback`;
+}
+
+async function syncBrowserSession(session: Session) {
+  const response = await fetch("/api/auth/session-sync", {
+    method: "POST",
+    credentials: "include",
+    cache: "no-store",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ access_token: session.access_token, refresh_token: session.refresh_token }),
+  });
+  return response.ok;
+}
+
 function EmployeeLogin() {
   const { locale } = useI18n();
   const copy = COPY[locale];
   const [busy, setBusy] = useState(false);
+  const redirecting = useRef(false);
+
   useEffect(() => {
     let active = true;
-    void supabase.auth.getSession().then(({ data }) => { if (active && data.session) window.location.replace("/funcionario"); });
-    const { data } = supabase.auth.onAuthStateChange((event, session) => { if (active && session && (event === "SIGNED_IN" || event === "INITIAL_SESSION" || event === "TOKEN_REFRESHED")) window.location.replace("/funcionario"); });
+    const finish = async (session: Session) => {
+      if (!active || redirecting.current) return;
+      redirecting.current = true;
+      setBusy(true);
+      const synced = await syncBrowserSession(session).catch(() => false);
+      if (!active) return;
+      if (!synced) {
+        redirecting.current = false;
+        setBusy(false);
+        toast.error(copy.error);
+        return;
+      }
+      window.location.replace("/funcionario");
+    };
+
+    void supabase.auth.getSession().then(({ data }) => { if (active && data.session) void finish(data.session); });
+    const { data } = supabase.auth.onAuthStateChange((event, session) => {
+      if (active && session && (event === "SIGNED_IN" || event === "INITIAL_SESSION" || event === "TOKEN_REFRESHED")) void finish(session);
+    });
     return () => { active = false; data.subscription.unsubscribe(); };
-  }, []);
+  }, [copy.error]);
 
   async function signIn() {
     setBusy(true);
-    const { data, error } = await supabase.auth.signInWithOAuth({ provider: "google", options: { redirectTo: `${window.location.origin}/funcionario/login`, skipBrowserRedirect: true } });
-    if (error || !data.url) { setBusy(false); toast.error(copy.error); return; }
+    document.cookie = "ldr_portal_oauth=employee; Max-Age=600; Path=/; SameSite=Lax; Secure";
+    const { data, error } = await supabase.auth.signInWithOAuth({ provider: "google", options: { redirectTo: oauthReturnUrl(), skipBrowserRedirect: true } });
+    if (error || !data.url) {
+      document.cookie = "ldr_portal_oauth=; Max-Age=0; Path=/; SameSite=Lax; Secure";
+      setBusy(false);
+      toast.error(copy.error);
+      return;
+    }
     window.location.assign(data.url);
   }
 
