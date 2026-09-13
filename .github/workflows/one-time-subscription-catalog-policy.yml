@@ -25,22 +25,23 @@ jobs:
           if psycho in s:
               s=s.replace(psycho,'',1)
           anchor='  ["formacao_comunicacao_oratoria_inteligencia_emocional", "Formação em Comunicação, Oratória e Inteligência Emocional no Trabalho"],\n'
-          additions=(
-              '  ["formacao_aba_autismo_600h", "Formação em ABA Aplicada ao Autismo"],\n'
-              '  ["formacao_saude_mental_praticas_clinicas_600h", "Saúde Mental e Práticas Clínicas Baseadas em Evidências"],\n'
-              '  ["formacao_sociologia_600h", "Sociologia — Teorias, Métodos e Desigualdades Contemporâneas"],\n'
-              '  ["formacao_filosofia_clinica_600h", "Filosofia Clínica — Método, Escuta e Filosofia Aplicada"],\n'
-              '  ["formacao_ciencia_politica_600h", "Ciência Política — Teoria, Instituições e Democracia"],\n'
-              '  ["formacao_ciencias_felicidade_600h", "Ciências da Felicidade e Bem-Estar — Da Neurociência à Prática"],\n'
-          )
-          if additions[0] not in s:
+          additions=[
+              '  ["formacao_aba_autismo_600h", "Formação em ABA Aplicada ao Autismo"],\n',
+              '  ["formacao_saude_mental_praticas_clinicas_600h", "Saúde Mental e Práticas Clínicas Baseadas em Evidências"],\n',
+              '  ["formacao_sociologia_600h", "Sociologia — Teorias, Métodos e Desigualdades Contemporâneas"],\n',
+              '  ["formacao_filosofia_clinica_600h", "Filosofia Clínica — Método, Escuta e Filosofia Aplicada"],\n',
+              '  ["formacao_ciencia_politica_600h", "Ciência Política — Teoria, Instituições e Democracia"],\n',
+              '  ["formacao_ciencias_felicidade_600h", "Ciências da Felicidade e Bem-Estar — Da Neurociência à Prática"],\n',
+          ]
+          if 'formacao_aba_autismo_600h' not in s:
               if anchor not in s:
                   raise SystemExit('Subscription list anchor not found')
               s=s.replace(anchor,anchor+''.join(additions),1)
           if '["formacao_psicanalise", "Formação Online em Psicanálise"]' in s:
               raise SystemExit('Psychoanalysis still included in subscription list')
-          if not all(x.split('"')[1] in s for x in additions):
-              raise SystemExit('Not all six new courses were added to subscription list')
+          for key in ['formacao_aba_autismo_600h','formacao_saude_mental_praticas_clinicas_600h','formacao_sociologia_600h','formacao_filosofia_clinica_600h','formacao_ciencia_politica_600h','formacao_ciencias_felicidade_600h']:
+              if key not in s:
+                  raise SystemExit(f'Missing subscription product: {key}')
           p.write_text(s)
 
           p=Path('apps/painel-ldr/src/lib/new-professional-formations.catalog.ts')
