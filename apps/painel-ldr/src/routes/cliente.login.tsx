@@ -45,8 +45,14 @@ function isAcademyHost() {
   return /(^|\.)ldracademy\.online$/i.test(window.location.hostname);
 }
 
-function academyDestination() {
-  return isAcademyHost() ? "https://ldracademy.online/cliente/biblioteca" : "/cliente";
+function isServicePortalHost() {
+  if (typeof window === "undefined") return false;
+  return /^portal\.ldrrhestrategia\.com$/i.test(window.location.hostname);
+}
+
+function clientDestination() {
+  if (isAcademyHost()) return "https://ldracademy.online/cliente/biblioteca";
+  return "/cliente";
 }
 
 function oauthReturnUrl() {
@@ -79,6 +85,7 @@ async function syncBrowserSession(session: Session) {
 
 function ClientLogin() {
   const [busy, setBusy] = useState(false);
+  const [servicePortal, setServicePortal] = useState(false);
   const redirecting = useRef(false);
 
   useEffect(() => {
@@ -87,6 +94,7 @@ function ClientLogin() {
       return;
     }
 
+    setServicePortal(isServicePortalHost());
     let active = true;
 
     const redirectToClient = async (session: Session) => {
@@ -103,7 +111,7 @@ function ClientLogin() {
           toast.error("Sua sessão precisa ser renovada. Entre novamente com o Google.");
           return;
         }
-        window.location.replace(academyDestination());
+        window.location.replace(clientDestination());
       } catch {
         if (!active) return;
         redirecting.current = false;
@@ -153,11 +161,13 @@ function ClientLogin() {
     window.location.replace(data.url);
   }
 
+  const title = servicePortal ? "Portal de Serviços" : "Minha Área";
+  const subtitle = servicePortal
+    ? "Entre com sua conta Google para agendar serviços e acompanhar seus atendimentos."
+    : "Entre com sua conta Google para acessar biblioteca, formações, agenda, atendimentos, pedidos e serviços.";
+
   return (
-    <ClientAuthShell
-      title="Minha Área"
-      subtitle="Entre com sua conta Google para acessar biblioteca, formações, agenda, atendimentos, pedidos e serviços."
-    >
+    <ClientAuthShell title={title} subtitle={subtitle} areaLabel={title}>
       <button
         type="button"
         onClick={handleGoogle}
@@ -180,10 +190,12 @@ function ClientLogin() {
 export function ClientAuthShell({
   title,
   subtitle,
+  areaLabel = "Minha Área",
   children,
 }: {
   title: string;
   subtitle: string;
+  areaLabel?: string;
   children: React.ReactNode;
 }) {
   return (
@@ -194,7 +206,7 @@ export function ClientAuthShell({
       >
         <div className="mx-auto max-w-6xl px-4 py-5 sm:px-6">
           <p className="font-serif text-xl leading-tight sm:text-2xl">Grupo LDR Essence</p>
-          <p className="text-sm opacity-85">Minha Área</p>
+          <p className="text-sm opacity-85">{areaLabel}</p>
         </div>
       </header>
       <main className="mx-auto flex max-w-md flex-col px-4 py-10 sm:px-6">
