@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { constants, gunzipSync } from "node:zlib";
+import { constants, gzipSync, gunzipSync } from "node:zlib";
 
 import { getProtectedDigitalContent } from "@/lib/digital-content.server";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
@@ -11,6 +11,7 @@ export const Route = createFileRoute("/api/diag-digital-reader")({
         const url = new URL(request.url);
         const productKey = url.searchParams.get("product") ?? "ebook_estudos_caso_psicanalise";
         const recover = url.searchParams.get("recover") === "1";
+        const repair = url.searchParams.get("repair") === "1";
         const allowed = new Set([
           "ebook_coragem_comecar",
           "livro_menino_mamao",
@@ -26,16 +27,16 @@ export const Route = createFileRoute("/api/diag-digital-reader")({
           });
         }
 
-        if (recover && productKey === "ebook_estudos_caso_psicanalise") {
+        if ((recover || repair) && productKey === "ebook_estudos_caso_psicanalise") {
           const { data, error } = await supabaseAdmin
             .from("digital_product_content")
-            .select("content")
+            .select("content, version")
             .eq("product_key", productKey)
             .eq("locale", "pt")
             .eq("active", true)
             .maybeSingle();
           if (error || !data) {
-            return new Response(JSON.stringify({ ok: false, stage: "load", error: error?.message ?? "missing" }), {
+            return new Response(JSON.stringify({ ok: false, stage: "load" }), {
               status: 200,
               headers: { "content-type": "application/json", "cache-control": "no-store" },
             });
@@ -49,53 +50,75 @@ export const Route = createFileRoute("/api/diag-digital-reader")({
           }
           try {
             const bytes = Buffer.from(raw.payload, "base64");
-            let strictError: string | null = null;
+            let strictParsed: any = null;
             try {
-              gunzipSync(bytes);
-            } catch (error) {
-              strictError = error instanceof Error ? error.message : "strict_error";
-            }
-            const text = gunzipSync(bytes, { finishFlush: constants.Z_SYNC_FLUSH }).toString("utf8").replace(/^\uFEFF/, "");
-            let parsed: any = null;
-            let parseError: string | null = null;
-            try {
-              parsed = JSON.parse(text);
-            } catch (error) {
-              parseError = error instanceof Error ? error.message : "parse_error";
+              strictParsed = JSON.parse(gunzipSync(bytes).toString("utf8").replace(/^\uFEFF/, ""));
+            } catch {
+              // The known broken row is recovered below.
             }
 
-            let trimmed: any = null;
-            let trimError: string | null = null;
+            let recovered = strictParsed;
             let trimmedChars = 0;
-            const lastBrace = text.lastIndexOf("}");
-            if (!parsed && lastBrace >= 0) {
+            if (!recovered) {
+              const text = gunzipSync(bytes, { finishFlush: constants.Z_SYNC_FLUSH }).toString("utf8").replace(/^\uFEFF/, "");
+              const lastBrace = text.lastIndexOf("}");
+              if (lastBrace < 0) throw new Error("missing_json_end");
               const candidate = text.slice(0, lastBrace + 1);
               trimmedChars = text.length - candidate.length;
-              try {
-                trimmed = JSON.parse(candidate);
-              } catch (error) {
-                trimError = error instanceof Error ? error.message : "trim_parse_error";
-              }
+              recovered = JSON.parse(candidate);
             }
-            const recovered = parsed ?? trimmed;
+
+            const valid =
+              recovered?.kind === "ebook" &&
+              Array.isArray(recovered?.pages) &&
+              recovered.pages.length === 23 &&
+              recovered.pages[0]?.titulo === "Introdução" &&
+              recovered.pages.at(-1)?.titulo === "Bibliografia geral";
+            if (!valid) {
+              return new Response(JSON.stringify({ ok: false, stage: "validation_failed" }), {
+                status: 200,
+                headers: { "content-type": "application/json", "cache-control": "no-store" },
+              });
+            }
+
+            if (repair && !strictParsed) {
+              const cleanJson = JSON.stringify(recovered);
+              const payload = gzipSync(Buffer.from(cleanJson, "utf8")).toString("base64");
+              const nextVersion = Math.max(Number(data.version ?? 1) + 1, 2);
+              const { error: updateError } = await supabaseAdmin
+                .from("digital_product_content")
+                .update({
+                  content: { encoding: "gzip-base64", payload },
+                  version: nextVersion,
+                })
+                .eq("product_key", productKey)
+                .eq("locale", "pt")
+                .eq("active", true);
+              if (updateError) {
+                return new Response(JSON.stringify({ ok: false, stage: "update_failed" }), {
+                  status: 200,
+                  headers: { "content-type": "application/json", "cache-control": "no-store" },
+                });
+              }
+              return new Response(JSON.stringify({ ok: true, stage: "repaired", pages: 23, trimmedChars, version: nextVersion }), {
+                status: 200,
+                headers: { "content-type": "application/json", "cache-control": "no-store" },
+              });
+            }
+
             return new Response(JSON.stringify({
-              ok: Boolean(recovered),
-              stage: "recover",
-              strictError,
-              recoveredChars: text.length,
-              parseError,
+              ok: true,
+              stage: strictParsed ? "already_clean" : "recover",
+              pages: 23,
               trimmedChars,
-              trimError,
-              kind: recovered?.kind ?? null,
-              pages: Array.isArray(recovered?.pages) ? recovered.pages.length : null,
-              firstTitle: Array.isArray(recovered?.pages) ? recovered.pages[0]?.titulo ?? null : null,
-              lastTitle: Array.isArray(recovered?.pages) ? recovered.pages.at(-1)?.titulo ?? null : null,
+              firstTitle: "Introdução",
+              lastTitle: "Bibliografia geral",
             }), {
               status: 200,
               headers: { "content-type": "application/json", "cache-control": "no-store" },
             });
-          } catch (error) {
-            return new Response(JSON.stringify({ ok: false, stage: "recover_throw", error: error instanceof Error ? error.message : "unknown" }), {
+          } catch {
+            return new Response(JSON.stringify({ ok: false, stage: "recover_throw" }), {
               status: 200,
               headers: { "content-type": "application/json", "cache-control": "no-store" },
             });
@@ -122,12 +145,9 @@ export const Route = createFileRoute("/api/diag-digital-reader")({
             }),
             { status: 200, headers: { "content-type": "application/json", "cache-control": "no-store" } },
           );
-        } catch (error) {
+        } catch {
           return new Response(
-            JSON.stringify({
-              ok: false,
-              error: error instanceof Error ? error.message : "unknown_error",
-            }),
+            JSON.stringify({ ok: false, error: "reader_failed" }),
             { status: 200, headers: { "content-type": "application/json", "cache-control": "no-store" } },
           );
         }
