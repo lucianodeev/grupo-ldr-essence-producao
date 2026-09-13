@@ -19,8 +19,8 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
 
-          # 1) Subscription source of truth: main Psychoanalysis becomes one-time only;
-          # six newly published 600h formations become included.
+          # Policy update: keep existing validated products unchanged, move only
+          # main Psychoanalysis out of subscription and include only the six new courses.
           p=Path('apps/painel-ldr/src/lib/library-subscription.server.ts')
           s=p.read_text()
           psycho='  ["formacao_psicanalise", "Formação Online em Psicanálise"],\n'
@@ -42,7 +42,6 @@ jobs:
               s=s.replace(anchor,anchor+''.join(additions),1)
           p.write_text(s)
 
-          # 2) Mark only the six new courses as included in monthly subscription.
           p=Path('apps/painel-ldr/src/lib/new-professional-formations.catalog.ts')
           s=p.read_text()
           old='const base={priceBrlCents:29999,priceEurCents:4990,hours:600,lessons:144,modulesCount:12,minimumDays:75,includedInSubscription:false};'
@@ -52,7 +51,6 @@ jobs:
           s=s.replace(old,new,1)
           p.write_text(s)
 
-          # 3) Library badges/status copy.
           p=Path('apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx')
           s=p.read_text()
           oldset='const includedProfessionalSlugs=new Set(["vendas-negociacao","marketing-digital","recrutamento-selecao","gestao-administrativa-financeira","comunicacao-oratoria"]);'
@@ -60,9 +58,7 @@ jobs:
           if oldset not in s and newset not in s:
               raise SystemExit('Library included slug set not found')
           s=s.replace(oldset,newset,1)
-          # Main psycho card is now avulso.
           s=s.replace('{card("psycho",ct.psycho,"bg-[#5b2b86]","grad",accessLabels.included)}','{card("psycho",ct.psycho,"bg-[#5b2b86]","grad",accessLabels.single)}',1)
-          # Main psycho detail copy: change only the matching heading block wording.
           s=s.replace('<h3 className="font-serif text-2xl">Formação Online em Psicanálise</h3><p className="mt-2 text-xs font-bold text-[#0b2341]">✓ Incluído na assinatura Biblioteca LDR · compra avulsa mantém acesso vitalício.</p>',
                       '<h3 className="font-serif text-2xl">Formação Online em Psicanálise</h3><p className="mt-2 text-xs font-bold text-[#5b2b86]">Compra avulsa · não incluído na assinatura Biblioteca LDR · pagamento único · acesso vitalício após compra.</p>',1)
           p.write_text(s)
