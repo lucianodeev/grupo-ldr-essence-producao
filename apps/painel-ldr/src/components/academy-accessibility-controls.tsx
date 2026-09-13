@@ -68,21 +68,32 @@ function ensureLibraryCardPolish() {
   style.id = CARD_STYLE_ID;
   style.textContent = `
     #catalogo-ldr .grid.grid-cols-4 {
+      display: grid !important;
+      grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
       align-items: stretch !important;
       grid-auto-rows: 1fr;
-      column-gap: 8px !important;
-      row-gap: 10px !important;
-      padding-inline: 2px !important;
+      column-gap: 10px !important;
+      row-gap: 12px !important;
+      padding-inline: 10px !important;
+      box-sizing: border-box !important;
     }
     #catalogo-ldr .grid.grid-cols-4 > a,
     #catalogo-ldr .grid.grid-cols-4 > button {
-      width: 100%;
-      height: 100% !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      height: auto !important;
       min-height: 7.6rem !important;
       aspect-ratio: 0.72 / 1 !important;
+      margin: 0 !important;
+      transform: none !important;
+      box-sizing: border-box !important;
       padding: 0.9rem 0.5rem !important;
+      justify-self: stretch !important;
       justify-content: center !important;
       border-radius: 18px !important;
+      overflow: hidden !important;
+      background-clip: padding-box !important;
       touch-action: manipulation;
     }
     #catalogo-ldr .grid.grid-cols-4 > a > p,
@@ -167,7 +178,7 @@ function ensureLibraryCardPolish() {
     html[data-academy-theme="dark"] .academy-accessibility-shell textarea::placeholder { color: #94a3b8; }
 
     @media (min-width: 641px) {
-      #catalogo-ldr .grid.grid-cols-4 { column-gap: 12px !important; row-gap: 14px !important; padding-inline: 4px !important; }
+      #catalogo-ldr .grid.grid-cols-4 { column-gap: 12px !important; row-gap: 14px !important; padding-inline: 12px !important; }
       #catalogo-ldr .grid.grid-cols-4 > a,
       #catalogo-ldr .grid.grid-cols-4 > button { min-height: 8.4rem !important; padding-inline: 0.6rem !important; }
       #catalogo-ldr .grid.grid-cols-4 > a > p,
