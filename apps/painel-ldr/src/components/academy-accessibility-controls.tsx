@@ -84,6 +84,11 @@ export function AcademyAccessibilityControls({ visible = true, inline = false }:
 
   useEffect(() => {
     const root = document.documentElement;
+    if (!visible) {
+      root.classList.remove("dark");
+      delete root.dataset.academyTheme;
+      return;
+    }
     root.classList.toggle("dark", theme === "dark");
     root.dataset.academyTheme = theme;
     window.localStorage.setItem(STORAGE_THEME, theme);
@@ -91,10 +96,15 @@ export function AcademyAccessibilityControls({ visible = true, inline = false }:
       root.classList.remove("dark");
       delete root.dataset.academyTheme;
     };
-  }, [theme]);
+  }, [theme, visible]);
 
   useEffect(() => {
     const root = document.documentElement;
+    if (!visible) {
+      delete root.dataset.academyFontScale;
+      root.style.removeProperty("--academy-font-scale");
+      return;
+    }
     root.dataset.academyFontScale = String(Math.round(scale * 100));
     root.style.setProperty("--academy-font-scale", String(scale));
     window.localStorage.setItem(STORAGE_SCALE, String(scale));
@@ -102,7 +112,7 @@ export function AcademyAccessibilityControls({ visible = true, inline = false }:
       delete root.dataset.academyFontScale;
       root.style.removeProperty("--academy-font-scale");
     };
-  }, [scale]);
+  }, [scale, visible]);
 
   useEffect(() => {
     const apply = () => markPopularCards(t.popular);
@@ -118,52 +128,38 @@ export function AcademyAccessibilityControls({ visible = true, inline = false }:
   if (!visible) return null;
 
   if (inline) {
+    const buttonClass = "inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-current/35 px-4 py-3 text-sm font-black transition hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-40 sm:min-w-[132px]";
     return (
-      <section className="academy-product-accessibility no-print" aria-label="Academy accessibility controls">
-        <div className="academy-product-accessibility__buttons" role="group">
-          <button type="button" onClick={() => setTheme("light")} aria-pressed={theme === "light"} className={theme === "light" ? "is-active" : ""}>
-            <Sun aria-hidden="true" /><strong>{t.light}</strong>
+      <section className="no-print mx-auto mb-4 w-[calc(100%-2rem)] max-w-6xl rounded-[28px] border border-slate-300/35 bg-[#0d263d] p-4 text-white shadow-sm sm:mb-5 sm:p-5" aria-label="Academy accessibility controls">
+        <div className="flex flex-wrap items-center gap-3" role="group">
+          <button type="button" onClick={() => setTheme("light")} aria-pressed={theme === "light"} className={`${buttonClass} ${theme === "light" ? "bg-white/12 ring-1 ring-white/35" : ""}`}>
+            <Sun className="h-5 w-5" aria-hidden="true" /><strong>{t.light}</strong>
           </button>
-          <button type="button" onClick={() => setTheme("dark")} aria-pressed={theme === "dark"} className={theme === "dark" ? "is-active" : ""}>
-            <Moon aria-hidden="true" /><strong>{t.dark}</strong>
+          <button type="button" onClick={() => setTheme("dark")} aria-pressed={theme === "dark"} className={`${buttonClass} ${theme === "dark" ? "bg-white/12 ring-1 ring-white/35" : ""}`}>
+            <Moon className="h-5 w-5" aria-hidden="true" /><strong>{t.dark}</strong>
           </button>
-          <button type="button" onClick={decrease} disabled={scaleIndex === 0} aria-label={t.decrease} title={t.decrease}>
-            <Minus aria-hidden="true" /><strong>A−</strong>
+          <button type="button" onClick={decrease} disabled={scaleIndex === 0} aria-label={t.decrease} title={t.decrease} className={buttonClass}>
+            <Minus className="h-5 w-5" aria-hidden="true" /><strong>A−</strong>
           </button>
-          <button type="button" onClick={increase} disabled={scaleIndex === SCALES.length - 1} aria-label={t.increase} title={t.increase}>
-            <Plus aria-hidden="true" /><strong>A+</strong>
+          <button type="button" onClick={increase} disabled={scaleIndex === SCALES.length - 1} aria-label={t.increase} title={t.increase} className={buttonClass}>
+            <Plus className="h-5 w-5" aria-hidden="true" /><strong>A+</strong>
           </button>
-          <button type="button" onClick={() => setScale(1)} aria-label={t.reset} title={t.reset} className="academy-product-accessibility__reset">
-            <RotateCcw aria-hidden="true" />
+          <button type="button" onClick={() => setScale(1)} aria-label={t.reset} title={t.reset} className="inline-flex min-h-12 min-w-12 items-center justify-center rounded-2xl border border-current/35 px-3 py-3 transition hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2">
+            <RotateCcw className="h-5 w-5" aria-hidden="true" />
           </button>
         </div>
-        <label className="academy-product-accessibility__language">
+        <label className="mt-3 inline-flex min-h-12 items-center gap-4 rounded-2xl border border-white/35 px-4 py-3 text-sm font-black">
           <span>{t.language}</span>
-          <select value={locale} onChange={(event) => setLocale(event.target.value as Locale)} aria-label={t.language}>
-            <option value="pt">PT</option>
-            <option value="en">EN</option>
-            <option value="fr">FR</option>
-            <option value="es">ES</option>
+          <select value={locale} onChange={(event) => setLocale(event.target.value as Locale)} aria-label={t.language} className="min-w-20 bg-transparent font-black text-white outline-none">
+            <option className="text-slate-950" value="pt">PT</option>
+            <option className="text-slate-950" value="en">EN</option>
+            <option className="text-slate-950" value="fr">FR</option>
+            <option className="text-slate-950" value="es">ES</option>
           </select>
         </label>
       </section>
     );
   }
 
-  return (
-    <div className="academy-accessibility-controls no-print" role="group" aria-label="Academy accessibility controls">
-      <button type="button" onClick={decrease} disabled={scaleIndex === 0} aria-label={t.decrease} title={t.decrease}>
-        <Minus aria-hidden="true" /> <span>A</span>
-      </button>
-      <button type="button" onClick={() => setScale(1)} aria-label={t.reset} title={t.reset}>
-        <RotateCcw aria-hidden="true" />
-      </button>
-      <button type="button" onClick={increase} disabled={scaleIndex === SCALES.length - 1} aria-label={t.increase} title={t.increase}>
-        <Plus aria-hidden="true" /> <span>A</span>
-      </button>
-      <button type="button" onClick={() => setTheme((current) => (current === "dark" ? "light" : "dark"))} aria-label={theme === "dark" ? t.light : t.dark} title={theme === "dark" ? t.light : t.dark}>
-        {theme === "dark" ? <Sun aria-hidden="true" /> : <Moon aria-hidden="true" />}
-      </button>
-    </div>
-  );
+  return null;
 }
