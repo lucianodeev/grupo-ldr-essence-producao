@@ -2,6 +2,7 @@ import { Outlet, createFileRoute, redirect, useLocation } from "@tanstack/react-
 import type { Session } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
 
+import { AcademyAccessibilityControls } from "@/components/academy-accessibility-controls";
 import { FreeContentAds } from "@/components/free-content-ads";
 import { LegacyTrainingProjectPanel } from "@/components/legacy-training-project-panel";
 import { supabase } from "@/integrations/supabase/client";
@@ -93,10 +94,11 @@ function ClientAreaLayout() {
   }
 
   return (
-    <>
+    <div className="academy-accessibility-shell">
+      <AcademyAccessibilityControls />
       <Outlet />
       {projectSlug ? <LegacyTrainingProjectPanel slug={projectSlug}/> : null}
       <FreeContentAds placement="bottom" />
-    </>
+    </div>
   );
 }
