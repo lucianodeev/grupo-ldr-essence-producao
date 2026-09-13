@@ -254,13 +254,20 @@ html[data-academy-font-scale="120"] .academy-accessibility-shell { font-size: 12
 .dark .academy-accessibility-shell .text-slate-900 { color: var(--foreground) !important; }
 
 /* Biblioteca: cards na mesma ordem e posição, apenas com dimensões uniformes. */
+#catalogo-ldr .grid.grid-cols-4 {
+  column-gap: 0.75rem;
+  row-gap: 0.9rem;
+  align-items: start;
+}
+
 #catalogo-ldr .grid.grid-cols-4 > a,
 #catalogo-ldr .grid.grid-cols-4 > button {
   position: relative;
   display: flex;
   min-width: 0;
-  min-height: 8.75rem;
-  height: 100%;
+  min-height: 0;
+  height: auto;
+  aspect-ratio: 0.72 / 1;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -326,7 +333,13 @@ html[data-academy-font-scale="120"] .academy-accessibility-shell { font-size: 12
     padding: 0.2rem;
   }
   .academy-accessibility-controls button { min-width: 2.15rem; min-height: 2.15rem; }
+  #catalogo-ldr .grid.grid-cols-4 {
+    column-gap: 0.5rem;
+    row-gap: 0.7rem;
+  }
   #catalogo-ldr .grid.grid-cols-4 > a,
-  #catalogo-ldr .grid.grid-cols-4 > button { min-height: 8.55rem; }
+  #catalogo-ldr .grid.grid-cols-4 > button {
+    aspect-ratio: 0.72 / 1;
+  }
   #catalogo-ldr [data-ldr-popular="true"]::before { font-size: 0.46rem; padding-inline: 0.38rem; }
 }
