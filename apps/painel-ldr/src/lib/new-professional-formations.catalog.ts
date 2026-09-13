@@ -1,6 +1,6 @@
 import type { PF } from "@/lib/professional-formations.catalog";
 
-const base={priceBrlCents:29999,priceEurCents:4990,hours:600,lessons:144,modulesCount:12,minimumDays:75,includedInSubscription:false};
+const base={priceBrlCents:29999,priceEurCents:4990,hours:600,lessons:144,modulesCount:12,minimumDays:75,includedInSubscription:true};
 
 export const NEW_PROFESSIONAL_FORMATIONS = [
 {

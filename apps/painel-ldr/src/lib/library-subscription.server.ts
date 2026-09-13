@@ -14,7 +14,6 @@ const INCLUDED_PRODUCTS = [
   ["ebook_coragem_comecar", "A Coragem de Começar"],
   ["livro_menino_mamao", "O Menino que Vendia Mamão"],
   ["do_mamao_ao_negocio", "Do Mamão ao Negócio"],
-  ["formacao_psicanalise", "Formação Online em Psicanálise"],
   ["formacao_terapia_breve_psicanalitica", "Formação em Terapia Breve Psicanalítica"],
   ["formacao_massoterapia", "Formação Completa em Massoterapia"],
   ["formacao_negocio_24_horas", "Formação Negócio em 24 Horas"],
@@ -26,6 +25,12 @@ const INCLUDED_PRODUCTS = [
   ["formacao_recrutamento_selecao_profissional", "Formação em Recrutamento e Seleção Profissional"],
   ["formacao_gestao_administrativa_financeira", "Formação em Gestão Administrativa e Financeira para Pequenos Negócios"],
   ["formacao_comunicacao_oratoria_inteligencia_emocional", "Formação em Comunicação, Oratória e Inteligência Emocional no Trabalho"],
+  ["formacao_aba_autismo_600h", "Formação em ABA Aplicada ao Autismo"],
+  ["formacao_saude_mental_praticas_clinicas_600h", "Saúde Mental e Práticas Clínicas Baseadas em Evidências"],
+  ["formacao_sociologia_600h", "Sociologia — Teorias, Métodos e Desigualdades Contemporâneas"],
+  ["formacao_filosofia_clinica_600h", "Filosofia Clínica — Método, Escuta e Filosofia Aplicada"],
+  ["formacao_ciencia_politica_600h", "Ciência Política — Teoria, Instituições e Democracia"],
+  ["formacao_ciencias_felicidade_600h", "Ciências da Felicidade e Bem-Estar — Da Neurociência à Prática"],
 ] as const;
 
 type Market = "BR" | "INTL";
