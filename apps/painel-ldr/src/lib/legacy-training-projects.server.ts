@@ -10,6 +10,7 @@ export const LEGACY_PROJECT_CONFIG={
   "formacao-completa-massoterapia":{productKey:"formacao_massoterapia",title:"Formação Completa em Massoterapia"},
   "formacao-mentoria-profissional-carreira":{productKey:"formacao_mentoria_profissional_carreira",title:"Formação em Mentoria Profissional e de Carreira"},
   "formacao-lideranca-gestao-pessoas":{productKey:"formacao_lideranca_gestao_pessoas",title:"Formação em Liderança e Gestão de Pessoas"},
+  "psicanalise-internacional-neurodiversidade-autismo":{productKey:"curso_psicanalise_internacional_neurodiversidade_autismo",title:"Psicanálise Internacional, Neurodiversidade e Autismo"},
 } as const;
 
 export type LegacyProjectSlug=keyof typeof LEGACY_PROJECT_CONFIG;

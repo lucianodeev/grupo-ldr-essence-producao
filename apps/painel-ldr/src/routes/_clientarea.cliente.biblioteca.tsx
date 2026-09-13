@@ -170,6 +170,7 @@ function ClientLibrary(){
         {card("psycho",ct.psycho,"bg-[#5b2b86]","grad",accessLabels.included)}
         {card("brief",ct.brief,"bg-[#17645e]","grad",accessLabels.included)}
         {card("massage",ct.massage,"bg-[#0F5E7A]","grad",accessLabels.included)}
+        <a href="/clinica-social" className="min-w-0 rounded-2xl bg-[#0b2341] px-1 py-4 text-center text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"><span className="mx-auto block text-lg">🤝</span><p className="mt-2 text-[8px] font-black leading-tight sm:text-[10px]">Clínica Social</p></a>
         <a href="/cliente/orientacao-psicanalitica" className="min-w-0 rounded-2xl bg-[#263b63] px-1 py-4 text-center text-white shadow-sm"><span className="mx-auto block text-lg">✍️</span><p className="mt-2 text-[8px] font-black leading-none sm:text-[10px]">{ct.writtenPsycho}</p></a>
         <a href="/cliente/orientacao-profissional" className="min-w-0 rounded-2xl bg-[#0b5cab] px-1 py-4 text-center text-white shadow-sm"><span className="mx-auto block text-lg">💼</span><p className="mt-2 text-[8px] font-black leading-none sm:text-[10px]">{ct.writtenCareer}</p></a>
         {card("business24",ct.business24,"bg-[#c85a24]","grad",accessLabels.included)}
