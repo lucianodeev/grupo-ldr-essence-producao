@@ -6,13 +6,6 @@ export const Route = createFileRoute("/api/diag-digital-reader")({
   server: {
     handlers: {
       GET: async ({ request }) => {
-        if (process.env.VERCEL_ENV === "production") {
-          return new Response(JSON.stringify({ ok: false, disabled: true }), {
-            status: 404,
-            headers: { "content-type": "application/json" },
-          });
-        }
-
         const url = new URL(request.url);
         const productKey = url.searchParams.get("product") ?? "ebook_estudos_caso_psicanalise";
         const allowed = new Set([
@@ -26,7 +19,7 @@ export const Route = createFileRoute("/api/diag-digital-reader")({
         if (!allowed.has(productKey)) {
           return new Response(JSON.stringify({ ok: false, error: "invalid_product" }), {
             status: 400,
-            headers: { "content-type": "application/json" },
+            headers: { "content-type": "application/json", "cache-control": "no-store" },
           });
         }
 
@@ -48,7 +41,7 @@ export const Route = createFileRoute("/api/diag-digital-reader")({
               pages: Array.isArray(content?.pages) ? content.pages.length : null,
               chapters: Array.isArray(content?.data?.chapters) ? content.data.chapters.length : null,
             }),
-            { status: 200, headers: { "content-type": "application/json" } },
+            { status: 200, headers: { "content-type": "application/json", "cache-control": "no-store" } },
           );
         } catch (error) {
           return new Response(
@@ -56,7 +49,7 @@ export const Route = createFileRoute("/api/diag-digital-reader")({
               ok: false,
               error: error instanceof Error ? error.message : "unknown_error",
             }),
-            { status: 200, headers: { "content-type": "application/json" } },
+            { status: 200, headers: { "content-type": "application/json", "cache-control": "no-store" } },
           );
         }
       },
