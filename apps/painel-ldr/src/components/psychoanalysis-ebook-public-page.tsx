@@ -15,7 +15,7 @@ export function PsychoanalysisEbookPublicPage({productKey}:{productKey:Psychoana
     <section className="px-4 py-16 text-white" style={{background:`linear-gradient(135deg, ${book.color}, #071426)`}}>
       <div className="mx-auto max-w-6xl">
         <BookOpen className="h-12 w-12 text-[#fff7e7]"/>
-        <p className="mt-5 text-xs font-black tracking-[.2em] text-[#d6ad63]">{premium?"EBOOK PREMIUM · LDR ACADEMY":"eBOOK · LDR ACADEMY"}</p>
+        <p className="mt-5 text-xs font-black tracking-[.2em] text-[#d6ad63]">{premium?"EBOOK PREMIUM · LDR ESSENCE ACADEMY":"eBOOK · LDR ESSENCE ACADEMY"}</p>
         <h1 className="mt-3 max-w-5xl font-serif text-4xl text-[#fff7e7] sm:text-6xl">{book.title}</h1>
         <p className="mt-3 max-w-4xl text-xl text-white/85">{book.subtitle}</p>
         <p className="mt-5 max-w-3xl text-sm leading-7 text-white/75">{book.description}</p>
@@ -30,7 +30,7 @@ export function PsychoanalysisEbookPublicPage({productKey}:{productKey:Psychoana
       {premium&&<section className="mt-10 rounded-3xl border bg-white p-7"><p className="text-xs font-black uppercase tracking-[.16em]" style={{color:book.color}}>ESTUDO AVANÇADO</p><h2 className="mt-3 font-serif text-3xl">Da construção do caso à leitura crítica</h2><p className="mt-3 max-w-4xl leading-7 text-slate-700">A obra articula fundamentos da técnica, transferência e contratransferência, casos clássicos de Freud, formulação contemporânea por diferentes escolas, manejo, supervisão, epistemologia e ética da escrita clínica. O caso contemporâneo é apresentado como material composto e substancialmente descaracterizado, sem reprodução de prontuário ou identificadores.</p></section>}
       <h2 className="mt-10 font-serif text-3xl">Sumário — {book.chapters.length} capítulos</h2>
       <div className="mt-7 grid gap-3 md:grid-cols-2">{book.chapters.map((c,i)=><article key={c} className="rounded-2xl border bg-white p-4"><p className="text-xs font-black" style={{color:book.color}}>{String(i+1).padStart(2,"0")}</p><h3 className="mt-1 font-bold leading-6">{c}</h3></article>)}</div>
-      <section className="mt-10 rounded-3xl bg-[#071426] p-7 text-white"><CheckCircle2 className="h-8 w-8 text-[#d6ad63]"/><h2 className="mt-4 font-serif text-3xl text-[#fff7e7]">Leitura dentro da LDR Academy</h2><p className="mt-3 max-w-3xl text-white/75">O leitor digital é o formato principal. Após a confirmação do pagamento, o conteúdo fica disponível na conta do comprador com acesso vitalício.</p></section>
+      <section className="mt-10 rounded-3xl bg-[#071426] p-7 text-white"><CheckCircle2 className="h-8 w-8 text-[#d6ad63]"/><h2 className="mt-4 font-serif text-3xl text-[#fff7e7]">Leitura dentro da LDR Essence Academy</h2><p className="mt-3 max-w-3xl text-white/75">O leitor digital é o formato principal. Após a confirmação do pagamento, o conteúdo fica disponível na conta do comprador com acesso vitalício.</p></section>
     </section>
   </main>;
 }

@@ -50,7 +50,7 @@ function CreatorContentAdmin() {
 
   return <div className="space-y-6">
     <header>
-      <p className="text-xs font-black uppercase tracking-[.18em] text-[#a77b2e]">LDR ACADEMY · MASTER</p>
+      <p className="text-xs font-black uppercase tracking-[.18em] text-[#a77b2e]">LDR ESSENCE ACADEMY · MASTER</p>
       <h1 className="mt-1 font-serif text-3xl">Conteúdos de Criadores</h1>
       <p className="mt-2 text-sm text-muted-foreground">Analise, aprove e acompanhe produtos enviados para publicação. Regra atual: 85% criador / 15% LDR.</p>
     </header>

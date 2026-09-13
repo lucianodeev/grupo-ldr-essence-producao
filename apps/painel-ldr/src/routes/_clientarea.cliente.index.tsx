@@ -59,7 +59,7 @@ function ClientHome() {
       <section className="rounded-2xl border border-primary/25 bg-primary/5 p-5">
         <p className="text-xs font-bold uppercase tracking-[.16em] text-primary">Portal de Serviços</p>
         <h2 className="mt-1 font-serif text-2xl">O que você precisa fazer hoje?</h2>
-        <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">Agende um serviço, confira seus próximos horários ou acompanhe seus atendimentos. A LDR Academy e a biblioteca permanecem em um ambiente separado.</p>
+        <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">Agende um serviço, confira seus próximos horários ou acompanhe seus atendimentos. A LDR Essence Academy e a biblioteca permanecem em um ambiente separado.</p>
         <div className="mt-4 flex flex-wrap gap-2"><Link to="/cliente/contratar" className="rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground">Contratar e agendar</Link><Link to="/cliente/agenda" className="rounded-xl border border-primary px-4 py-2.5 text-sm font-bold text-primary">Ver minha agenda</Link></div>
       </section>
 
