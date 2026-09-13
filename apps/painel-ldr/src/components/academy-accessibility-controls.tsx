@@ -36,6 +36,7 @@ const POPULAR_HREFS = [
 const STORAGE_THEME = "ldr_academy_theme";
 const STORAGE_SCALE = "ldr_academy_font_scale";
 const SCALES = [0.9, 1, 1.1, 1.2] as const;
+const CARD_STYLE_ID = "ldr-academy-library-card-polish";
 
 function safeScale(value: string | null) {
   const parsed = Number(value);
@@ -68,46 +69,126 @@ function markPopularCards(label: string) {
   });
 }
 
-function hasProgressSignal(node: HTMLElement) {
-  const text = (node.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
+function ensureLibraryCardPolish() {
+  if (document.getElementById(CARD_STYLE_ID)) return;
+  const style = document.createElement("style");
+  style.id = CARD_STYLE_ID;
+  style.textContent = `
+    #catalogo-ldr .grid.grid-cols-4 {
+      align-items: stretch !important;
+      grid-auto-rows: 1fr;
+    }
+    #catalogo-ldr .grid.grid-cols-4 > a,
+    #catalogo-ldr .grid.grid-cols-4 > button {
+      width: 100%;
+      height: 100% !important;
+      min-height: 7.6rem !important;
+      aspect-ratio: 0.78 / 1 !important;
+      padding: 0.85rem 0.42rem !important;
+      justify-content: center !important;
+      touch-action: manipulation;
+    }
+    #catalogo-ldr .grid.grid-cols-4 > a > p,
+    #catalogo-ldr .grid.grid-cols-4 > button > p {
+      min-height: 3.35em !important;
+      padding-inline: 0.1rem;
+      font-size: 0.58rem !important;
+      line-height: 1.15 !important;
+      letter-spacing: -0.005em;
+      -webkit-line-clamp: 3 !important;
+    }
+    #catalogo-ldr .grid.grid-cols-4 > a > span,
+    #catalogo-ldr .grid.grid-cols-4 > button > span {
+      margin-top: 0.42rem !important;
+      padding: 0.22rem 0.42rem !important;
+      font-size: 0.49rem !important;
+      line-height: 1.05 !important;
+      white-space: nowrap;
+    }
+    #catalogo-ldr [data-ldr-popular="true"] {
+      padding-top: 2.25rem !important;
+    }
+    #catalogo-ldr [data-ldr-popular="true"]::before {
+      top: 0.52rem !important;
+      max-width: calc(100% - 0.95rem) !important;
+      padding: 0.28rem 0.5rem !important;
+      font-size: 0.5rem !important;
+      line-height: 1.05 !important;
+      letter-spacing: 0.03em !important;
+    }
+    #catalogo-ldr [data-ldr-popular="true"]::after {
+      top: 0.56rem !important;
+      right: 0.42rem !important;
+    }
+    @media (min-width: 641px) {
+      #catalogo-ldr .grid.grid-cols-4 > a,
+      #catalogo-ldr .grid.grid-cols-4 > button {
+        min-height: 8.4rem !important;
+        padding-inline: 0.55rem !important;
+      }
+      #catalogo-ldr .grid.grid-cols-4 > a > p,
+      #catalogo-ldr .grid.grid-cols-4 > button > p {
+        font-size: 0.66rem !important;
+        line-height: 1.18 !important;
+      }
+      #catalogo-ldr .grid.grid-cols-4 > a > span,
+      #catalogo-ldr .grid.grid-cols-4 > button > span {
+        font-size: 0.53rem !important;
+      }
+      #catalogo-ldr [data-ldr-popular="true"]::before {
+        font-size: 0.54rem !important;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+function textOf(node: Element) {
+  return (node.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
+}
+
+function isCompactProgressNode(node: HTMLElement) {
+  const text = textOf(node);
+  if (!text || text.length > 180) return false;
   return /progresso|progress|progression|progressión|concluído|concluída|completed|terminée|completada|\b\d{1,3}%\b/.test(text);
 }
 
-function findProductHero() {
+function findProductAnchor() {
   const shell = document.querySelector<HTMLElement>(".academy-accessibility-shell");
   if (!shell) return null;
 
-  const headings = Array.from(shell.querySelectorAll<HTMLElement>("h1")).filter(
-    (heading) => !heading.closest("[data-academy-accessibility-host]"),
+  const heading = Array.from(shell.querySelectorAll<HTMLElement>("h1")).find(
+    (node) => !node.closest("[data-academy-accessibility-host]"),
   );
+  if (!heading) return null;
 
-  for (const heading of headings) {
-    const header = heading.closest<HTMLElement>("header");
-    if (header && header !== shell && hasProgressSignal(header)) return header;
+  const scopes: HTMLElement[] = [];
+  const semantic = heading.closest<HTMLElement>("header, section, article");
+  if (semantic && semantic !== shell) scopes.push(semantic);
 
-    const section = heading.closest<HTMLElement>("section");
-    if (section && section !== shell && hasProgressSignal(section)) return section;
-
-    const article = heading.closest<HTMLElement>("article");
-    if (article && article !== shell && hasProgressSignal(article)) return article;
-
-    let node: HTMLElement | null = heading.parentElement;
-    for (let depth = 0; node && node !== shell && depth < 4; depth += 1, node = node.parentElement) {
-      if (node.closest("[data-academy-accessibility-host]")) continue;
-      if (hasProgressSignal(node)) return node;
-    }
-
-    if (header && header !== shell) return header;
-    if (section && section !== shell) return section;
-    if (article && article !== shell) return article;
+  let parent = heading.parentElement;
+  for (let depth = 0; parent && parent !== shell && depth < 3; depth += 1, parent = parent.parentElement) {
+    if (!scopes.includes(parent)) scopes.push(parent);
   }
 
-  const semanticWithProgress = Array.from(shell.querySelectorAll<HTMLElement>("header, section")).find(
-    (node) => !node.closest("[data-academy-accessibility-host]") && hasProgressSignal(node),
-  );
-  if (semanticWithProgress) return semanticWithProgress;
+  for (const scope of scopes) {
+    const candidates = Array.from(scope.querySelectorAll<HTMLElement>("p, span, div")).filter(
+      (node) => !node.closest("[data-academy-accessibility-host]") && isCompactProgressNode(node),
+    );
+    if (candidates.length) {
+      candidates.sort((a, b) => textOf(a).length - textOf(b).length);
+      return candidates[0];
+    }
+  }
 
-  return null;
+  if (semantic && semantic !== shell) {
+    const progressInSemantic = Array.from(semantic.children).find(
+      (node): node is HTMLElement => node instanceof HTMLElement && isCompactProgressNode(node),
+    );
+    if (progressInSemantic) return progressInSemantic;
+  }
+
+  return heading;
 }
 
 export function AcademyAccessibilityControls({ visible = true, inline = false }: Props) {
@@ -159,6 +240,7 @@ export function AcademyAccessibilityControls({ visible = true, inline = false }:
   }, [scale, visible]);
 
   useEffect(() => {
+    ensureLibraryCardPolish();
     const apply = () => markPopularCards(t.popular);
     apply();
     const observer = new MutationObserver(apply);
@@ -173,32 +255,39 @@ export function AcademyAccessibilityControls({ visible = true, inline = false }:
     }
 
     let host: HTMLElement | null = null;
-    let observer: MutationObserver | null = null;
+    let scheduled = false;
 
     const place = () => {
-      const hero = findProductHero();
-      if (!hero) return false;
+      scheduled = false;
+      if (host?.isConnected) return;
 
-      const existing = document.querySelector<HTMLElement>("[data-academy-accessibility-host='true']");
-      if (existing) existing.remove();
+      const anchor = findProductAnchor();
+      if (!anchor) return;
+
+      document.querySelectorAll<HTMLElement>("[data-academy-accessibility-host='true']").forEach((node) => node.remove());
 
       host = document.createElement("div");
       host.dataset.academyAccessibilityHost = "true";
       host.className = "academy-product-accessibility-host";
-      hero.insertAdjacentElement("afterend", host);
+      anchor.insertAdjacentElement("afterend", host);
       setPortalHost(host);
-      return true;
     };
 
-    if (!place()) {
-      observer = new MutationObserver(() => {
-        if (place()) observer?.disconnect();
-      });
-      observer.observe(document.body, { childList: true, subtree: true });
-    }
+    const schedulePlace = () => {
+      if (scheduled) return;
+      scheduled = true;
+      window.requestAnimationFrame(place);
+    };
+
+    schedulePlace();
+    const shell = document.querySelector<HTMLElement>(".academy-accessibility-shell") ?? document.body;
+    const observer = new MutationObserver(() => {
+      if (!host?.isConnected) schedulePlace();
+    });
+    observer.observe(shell, { childList: true, subtree: true });
 
     return () => {
-      observer?.disconnect();
+      observer.disconnect();
       host?.remove();
       setPortalHost(null);
     };
