@@ -1,24 +1,29 @@
 import { createServerFn } from "@tanstack/react-start";
 
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import type { DigitalReaderLocale, DigitalReaderProductKey } from "@/lib/digital-content.server";
 
 function emailOf(claims: Record<string, unknown>): string | null {
   const value = claims["email"];
   return typeof value === "string" ? value : null;
 }
 
-const PRODUCTS = new Set(["ebook_coragem_comecar", "livro_menino_mamao"]);
-const LOCALES = new Set(["pt", "en", "fr", "es"]);
+const PRODUCTS = new Set<DigitalReaderProductKey>([
+  "ebook_coragem_comecar",
+  "livro_menino_mamao",
+  "ebook_pratica_clinica_psicanalise",
+  "ebook_psicanalise_no_mundo",
+  "ebook_estudos_caso_psicanalise",
+  "ebook_psicanalise_autismo",
+]);
+const LOCALES = new Set<DigitalReaderLocale>(["pt", "en", "fr", "es"]);
 
 export const clientDigitalProductContent = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input: { productKey: string; locale: string }) => {
-    if (!PRODUCTS.has(input.productKey)) throw new Error("Produto inválido.");
-    if (!LOCALES.has(input.locale)) throw new Error("Idioma inválido.");
-    return input as {
-      productKey: "ebook_coragem_comecar" | "livro_menino_mamao";
-      locale: "pt" | "en" | "fr" | "es";
-    };
+    if (!PRODUCTS.has(input.productKey as DigitalReaderProductKey)) throw new Error("Produto inválido.");
+    if (!LOCALES.has(input.locale as DigitalReaderLocale)) throw new Error("Idioma inválido.");
+    return input as { productKey: DigitalReaderProductKey; locale: DigitalReaderLocale };
   })
   .handler(async ({ context, data }) => {
     const { getProtectedDigitalContent } = await import("@/lib/digital-content.server");
