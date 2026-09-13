@@ -11,7 +11,7 @@ type Props = { visible?: boolean; inline?: boolean };
 const COPY = {
   pt: { decrease: "Diminuir texto", reset: "Tamanho padrão", increase: "Aumentar texto", light: "Claro", dark: "Escuro", language: "Idioma", popular: "MAIS PROCURADO", accessibility: "Acessibilidade", close: "Fechar acessibilidade" },
   en: { decrease: "Decrease text", reset: "Default size", increase: "Increase text", light: "Light", dark: "Dark", language: "Language", popular: "MOST POPULAR", accessibility: "Accessibility", close: "Close accessibility" },
-  fr: { decrease: "Réduire le texte", reset: "Taille par défaut", increase: "Agrandir texte", light: "Clair", dark: "Sombre", language: "Langue", popular: "LE PLUS RECHERCHÉ", accessibility: "Accessibilité", close: "Fermer l’accessibilité" },
+  fr: { decrease: "Réduire le texte", reset: "Taille par défaut", increase: "Agrandir texto", light: "Clair", dark: "Sombre", language: "Langue", popular: "LE PLUS RECHERCHÉ", accessibility: "Accessibilité", close: "Fermer l’accessibilité" },
   es: { decrease: "Reducir texto", reset: "Tamaño predeterminado", increase: "Aumentar texto", light: "Claro", dark: "Oscuro", language: "Idioma", popular: "MÁS BUSCADO", accessibility: "Accesibilidad", close: "Cerrar accesibilidad" },
 } as const;
 
@@ -243,6 +243,37 @@ function ensureLibraryCardPolish() {
         font-size: 0.56rem !important;
         line-height: 1.05 !important;
         white-space: nowrap !important;
+      }
+      #catalogo-ldr a[href="/cliente/biblioteca/publicacoes/revista-psicanalise-no-mundo"] {
+        grid-template-rows: auto auto !important;
+        row-gap: 0.18rem !important;
+      }
+      #catalogo-ldr a[href="/cliente/biblioteca/publicacoes/revista-psicanalise-no-mundo"] > div {
+        grid-column: 1 !important;
+        grid-row: 1 / span 2 !important;
+        align-self: center !important;
+        margin: 0 auto !important;
+      }
+      #catalogo-ldr a[href="/cliente/biblioteca/publicacoes/revista-psicanalise-no-mundo"] > p:first-of-type {
+        grid-column: 2 !important;
+        grid-row: 1 !important;
+        align-self: end !important;
+        margin: 0 !important;
+      }
+      #catalogo-ldr a[href="/cliente/biblioteca/publicacoes/revista-psicanalise-no-mundo"] > p:nth-of-type(2) {
+        grid-column: 2 !important;
+        grid-row: 2 !important;
+        align-self: start !important;
+        margin: 0.12rem 0 0 !important;
+        font-size: 0.72rem !important;
+        font-weight: 400 !important;
+        line-height: 1.15 !important;
+        opacity: 0.84 !important;
+      }
+      #catalogo-ldr a[href="/cliente/biblioteca/publicacoes/revista-psicanalise-no-mundo"] > span {
+        grid-column: 3 !important;
+        grid-row: 1 / span 2 !important;
+        align-self: center !important;
       }
       #catalogo-ldr [data-ldr-popular="true"] {
         min-height: 96px !important;
