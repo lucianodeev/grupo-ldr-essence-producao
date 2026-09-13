@@ -102,7 +102,7 @@ function ClientAreaLayout() {
 
   return (
     <div className="academy-accessibility-shell">
-      <AcademyAccessibilityControls visible={showProductAccessibility} inline />
+      <AcademyAccessibilityControls key={pathname} visible={showProductAccessibility} inline />
       <Outlet />
       {projectSlug ? <LegacyTrainingProjectPanel slug={projectSlug}/> : null}
       <FreeContentAds placement="bottom" />
