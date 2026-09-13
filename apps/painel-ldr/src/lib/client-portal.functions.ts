@@ -139,8 +139,8 @@ export const clientCreateDigitalCheckout = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((data: { productKey: "ebook_coragem_comecar" | "livro_menino_mamao" | "ebook_pratica_clinica_psicanalise" | "ebook_psicanalise_no_mundo" | "ebook_estudos_caso_psicanalise" | "ebook_psicanalise_autismo"; market: "BR" | "INTL" }) => data)
   .handler(async ({ context, data }) => {
-    const { createClientDigitalCheckout } = await import("@/lib/client-portal.server");
-    return createClientDigitalCheckout(context.userId, emailOf(context.claims), data);
+    const { createDigitalCheckoutWithFixedBrlEbooks } = await import("@/lib/fixed-brl-ebook-checkout.server");
+    return createDigitalCheckoutWithFixedBrlEbooks(context.userId, emailOf(context.claims), data);
   });
 
 
