@@ -2,6 +2,7 @@ import { BookOpen, GraduationCap, Library, Newspaper, Search, Sparkles } from "l
 import { useMemo, useState } from "react";
 import { useI18n } from "@/lib/i18n";
 import { PROFESSIONAL_FORMATIONS, pfText, type PFLocale } from "@/lib/academy-professional-formations.catalog";
+import { AcademyGiveawayBanner } from "@/components/academy-giveaway-banner";
 
 type L="pt"|"en"|"fr"|"es";
 type Kind="all"|"psicanalise"|"negocios"|"carreira"|"rh"|"ia";
@@ -54,6 +55,8 @@ export function AcademyUniversityHome(){
  const chips:[[Kind,string],...[Kind,string][]]=[["all",t.all],["psicanalise",t.psy],["negocios",t.business],["carreira",t.career],["rh",t.rh],["ia",t.ai]];
  return <main className="bg-[#fbfaf6] text-[#071426]">
   <section className="border-b border-[#d6ad63]/25 bg-gradient-to-br from-[#071426] via-[#0d2d4d] to-[#173f6b] text-white"><div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12"><p className="text-[10px] font-black uppercase tracking-[.24em] text-[#d6ad63]">{t.eyebrow}</p><div className="mt-3 grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end"><div><h1 className="font-serif text-4xl leading-tight !text-white sm:text-5xl">{t.brand}</h1><h2 className="mt-3 max-w-3xl text-2xl font-black leading-tight !text-white sm:text-3xl">{t.hero}</h2><p className="mt-3 max-w-3xl text-sm leading-7 !text-white/75 sm:text-base">{t.sub}</p></div><div className="grid gap-2 sm:grid-cols-2 lg:w-[390px]"><a href="#cursos" className="rounded-xl bg-[#d6ad63] px-4 py-3 text-center text-xs font-black text-[#281605]">{t.explore}</a><a href="/cliente/biblioteca" className="rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-center text-xs font-black !text-white">{t.library}</a></div></div></div></section>
+
+  <AcademyGiveawayBanner />
 
   <section className="sticky top-0 z-20 border-b border-slate-200 bg-[#fbfaf6]/95 backdrop-blur"><div className="mx-auto max-w-7xl px-4 py-3 sm:px-6"><div className="flex gap-2 overflow-x-auto [scrollbar-width:none]">{chips.map(([k,l])=><button key={k} onClick={()=>{setKind(k);document.getElementById('cursos')?.scrollIntoView({behavior:'smooth',block:'start'})}} className={`shrink-0 rounded-full px-4 py-2 text-xs font-black ${kind===k?"bg-[#071426] text-white":"border border-slate-200 bg-white text-[#071426]"}`}>{l}</button>)}</div></div></section>
 
