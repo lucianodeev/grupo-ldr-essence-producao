@@ -1,5 +1,6 @@
 import { Minus, Moon, Plus, RotateCcw, Sun } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 
 import { useI18n } from "@/lib/i18n";
 
@@ -67,12 +68,37 @@ function markPopularCards(label: string) {
   });
 }
 
+function findProductHero() {
+  const shell = document.querySelector(".academy-accessibility-shell");
+  if (!shell) return null;
+
+  const candidates = [
+    ".academy-accessibility-shell main > section",
+    ".academy-accessibility-shell main section",
+    ".academy-accessibility-shell > div > section",
+    ".academy-accessibility-shell section",
+  ];
+
+  for (const selector of candidates) {
+    const section = document.querySelector<HTMLElement>(selector);
+    if (!section || section.closest("[data-academy-accessibility-host]")) continue;
+
+    const text = (section.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
+    const hasProgress = /progresso|progress|progression|progressión/.test(text);
+    const hasProductSignal = /acesso liberado|access granted|accès autorisé|acceso liberado|módulos|modules|leçons|clases/.test(text);
+    if (hasProgress || hasProductSignal) return section;
+  }
+
+  return null;
+}
+
 export function AcademyAccessibilityControls({ visible = true, inline = false }: Props) {
   const { locale: rawLocale, setLocale } = useI18n();
   const locale = (rawLocale === "pt" || rawLocale === "en" || rawLocale === "fr" || rawLocale === "es" ? rawLocale : "pt") as Locale;
   const t = COPY[locale];
   const [theme, setTheme] = useState<Theme>("light");
   const [scale, setScale] = useState(1);
+  const [portalHost, setPortalHost] = useState<HTMLElement | null>(null);
   const scaleIndex = useMemo(() => Math.max(0, SCALES.indexOf(scale as (typeof SCALES)[number])), [scale]);
 
   useEffect(() => {
@@ -122,6 +148,44 @@ export function AcademyAccessibilityControls({ visible = true, inline = false }:
     return () => observer.disconnect();
   }, [t.popular]);
 
+  useEffect(() => {
+    if (!visible || !inline) {
+      setPortalHost(null);
+      return;
+    }
+
+    let host: HTMLElement | null = null;
+    let observer: MutationObserver | null = null;
+
+    const place = () => {
+      const hero = findProductHero();
+      if (!hero) return false;
+
+      const existing = document.querySelector<HTMLElement>("[data-academy-accessibility-host='true']");
+      if (existing) existing.remove();
+
+      host = document.createElement("div");
+      host.dataset.academyAccessibilityHost = "true";
+      host.className = "academy-product-accessibility-host";
+      hero.insertAdjacentElement("afterend", host);
+      setPortalHost(host);
+      return true;
+    };
+
+    if (!place()) {
+      observer = new MutationObserver(() => {
+        if (place()) observer?.disconnect();
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+    }
+
+    return () => {
+      observer?.disconnect();
+      host?.remove();
+      setPortalHost(null);
+    };
+  }, [visible, inline]);
+
   const decrease = () => setScale(SCALES[Math.max(0, scaleIndex - 1)]);
   const increase = () => setScale(SCALES[Math.min(SCALES.length - 1, scaleIndex + 1)]);
 
@@ -129,8 +193,8 @@ export function AcademyAccessibilityControls({ visible = true, inline = false }:
 
   if (inline) {
     const buttonClass = "inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-current/35 px-4 py-3 text-sm font-black transition hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-40 sm:min-w-[132px]";
-    return (
-      <section className="no-print mx-auto mb-4 w-[calc(100%-2rem)] max-w-6xl rounded-[28px] border border-slate-300/35 bg-[#0d263d] p-4 text-white shadow-sm sm:mb-5 sm:p-5" aria-label="Academy accessibility controls">
+    const controls = (
+      <section className="no-print mx-auto my-4 w-full rounded-[28px] border border-slate-300/35 bg-[#0d263d] p-4 text-white shadow-sm sm:my-5 sm:p-5" aria-label="Academy accessibility controls">
         <div className="flex flex-wrap items-center gap-3" role="group">
           <button type="button" onClick={() => setTheme("light")} aria-pressed={theme === "light"} className={`${buttonClass} ${theme === "light" ? "bg-white/12 ring-1 ring-white/35" : ""}`}>
             <Sun className="h-5 w-5" aria-hidden="true" /><strong>{t.light}</strong>
@@ -148,8 +212,8 @@ export function AcademyAccessibilityControls({ visible = true, inline = false }:
             <RotateCcw className="h-5 w-5" aria-hidden="true" />
           </button>
         </div>
-        <label className="mt-3 inline-flex min-h-12 items-center gap-4 rounded-2xl border border-white/35 px-4 py-3 text-sm font-black">
-          <span>{t.language}</span>
+        <label className="mt-3 inline-flex min-h-12 min-w-[190px] items-center gap-4 rounded-2xl border border-white/35 px-4 py-3 text-sm font-black">
+          <span className="whitespace-nowrap">{t.language}</span>
           <select value={locale} onChange={(event) => setLocale(event.target.value as Locale)} aria-label={t.language} className="min-w-20 bg-transparent font-black text-white outline-none">
             <option className="text-slate-950" value="pt">PT</option>
             <option className="text-slate-950" value="en">EN</option>
@@ -159,6 +223,8 @@ export function AcademyAccessibilityControls({ visible = true, inline = false }:
         </label>
       </section>
     );
+
+    return portalHost ? createPortal(controls, portalHost) : null;
   }
 
   return null;
