@@ -1,0 +1,45 @@
+name: One time paid certificate project policy
+on:
+  push:
+    paths: ['.github/workflows/one-time-paid-cert-project-policy.yml']
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch legacy paid certificates
+        shell: python
+        run: |
+          from pathlib import Path
+          files={
+           'psychoanalysis-commerce.server.ts':'formacao-psicanalise',
+           'brief-therapy-commerce.server.ts':'formacao-terapia-breve-psicanalitica',
+           'massotherapy-commerce.server.ts':'formacao-completa-massoterapia',
+           'mentorship-commerce.server.ts':'formacao-mentoria-profissional-carreira',
+           'leadership-commerce.server.ts':'formacao-lideranca-gestao-pessoas',
+           'international-psychoanalysis-commerce.server.ts':'psicanalise-internacional-neurodiversidade-autismo',
+          }
+          base=Path('apps/painel-ldr/src/lib')
+          for name,slug in files.items():
+            p=base/name;s=p.read_text()
+            imp='import { paidCourseProjectApproved } from "@/lib/paid-course-project-policy.server";\n'
+            if imp not in s:
+              pos=s.find('\n',s.find('import '))+1
+              s=s[:pos]+imp+s[pos:]
+            if 'const projectApproved=await paidCourseProjectApproved' not in s:
+              needle='const progressPercent=Number(progress?.progress_percent??enrollment?.progress_percent??0);'
+              if needle in s:s=s.replace(needle,needle+f'\n  const projectApproved=await paidCourseProjectApproved(customer.id,"{slug}");',1)
+              else:
+                needle='const progressPercent=Number(progress?.progress_percent??e?.progress_percent??0);'
+                if needle in s:s=s.replace(needle,needle+f'const projectApproved=await paidCourseProjectApproved(c.id,"{slug}");',1)
+            s=s.replace('&&progressPercent>=100;','&&progressPercent>=100&&projectApproved;',1)
+            p.write_text(s)
+      - name: Commit
+        run: |
+          git config user.name ldr-rh-campanhas
+          git config user.email llucianouam@gmail.com
+          git add apps/painel-ldr/src/lib
+          git commit -m "fix: require approved project for paid course certificates" || exit 0
+          git push
