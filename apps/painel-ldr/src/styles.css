@@ -343,3 +343,21 @@ html[data-academy-font-scale="120"] .academy-accessibility-shell { font-size: 12
   }
   #catalogo-ldr [data-ldr-popular="true"]::before { font-size: 0.46rem; padding-inline: 0.38rem; }
 }
+
+
+/* Academy public hero — desktop-only final sizing */
+@media (min-width: 1024px) {
+  .academy-home-hero-actions > a {
+    min-height: 54px;
+    padding-inline: 1.5rem;
+    padding-block: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8125rem;
+    line-height: 1.15;
+    font-weight: 800;
+    text-align: center;
+    white-space: normal;
+  }
+}

@@ -103,6 +103,9 @@ function ensureLibraryCardPolish() {
       font-size: 0.62rem !important;
       line-height: 1.16 !important;
       letter-spacing: 0 !important;
+      word-break: normal !important;
+      overflow-wrap: normal !important;
+      hyphens: none !important;
       -webkit-line-clamp: 3 !important;
     }
     #catalogo-ldr .grid.grid-cols-4 > a > span,
