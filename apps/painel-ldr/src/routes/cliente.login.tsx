@@ -5,7 +5,16 @@ import { toast } from "sonner";
 
 import { supabase } from "@/integrations/supabase/client";
 
+type ClientLoginSearch = {
+  portal?: "services";
+  v?: string;
+};
+
 export const Route = createFileRoute("/cliente/login")({
+  validateSearch: (search: Record<string, unknown>): ClientLoginSearch => ({
+    portal: search.portal === "services" ? "services" : undefined,
+    v: typeof search.v === "string" ? search.v : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "Minha Área — Grupo LDR Essence" },
@@ -52,6 +61,7 @@ function isServicePortalHost() {
 
 function clientDestination() {
   if (isAcademyHost()) return "https://ldracademy.online/cliente/biblioteca";
+  if (isServicePortalHost()) return "/cliente?portal=services&v=3";
   return "/cliente";
 }
 
@@ -84,8 +94,9 @@ async function syncBrowserSession(session: Session) {
 }
 
 function ClientLogin() {
+  const search = Route.useSearch();
   const [busy, setBusy] = useState(false);
-  const [servicePortal, setServicePortal] = useState(false);
+  const [servicePortal, setServicePortal] = useState(search.portal === "services");
   const redirecting = useRef(false);
 
   useEffect(() => {
@@ -94,7 +105,7 @@ function ClientLogin() {
       return;
     }
 
-    setServicePortal(isServicePortalHost());
+    if (isServicePortalHost()) setServicePortal(true);
     let active = true;
 
     const redirectToClient = async (session: Session) => {
