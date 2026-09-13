@@ -26,9 +26,10 @@ function oauthReturnUrl() {
   if (typeof window === "undefined") return "/api/auth/callback?admin=1";
 
   // This host is already allow-listed in Supabase and is canonicalized back
-  // to ldracademy.online while preserving the OAuth code and admin context.
+  // to ldracademy.online while preserving the OAuth code. The temporary
+  // admin-intent cookie keeps the destination separate from the client login.
   if (/(^|\.)ldracademy\.online$/i.test(window.location.hostname)) {
-    return "https://learn.lucianoconecta.online/api/auth/callback?admin=1";
+    return "https://learn.lucianoconecta.online/api/auth/callback?academy=1";
   }
 
   return `${window.location.origin}/api/auth/callback?admin=1`;
@@ -69,8 +70,9 @@ function LoginPage() {
   async function handleSignIn(event:React.FormEvent){event.preventDefault();setBusy(true);const {data,error}=await supabase.auth.signInWithPassword({email:email.trim().toLowerCase(),password});if(error||!data.session){setBusy(false);toast.error(copy.loginError);return;}await routeAfterAuth(data.session);}
   async function handleGoogle(){
     setBusy(true);
+    document.cookie = "ldr_admin_oauth=1; Max-Age=600; Path=/; SameSite=Lax; Secure";
     const {data,error}=await supabase.auth.signInWithOAuth({provider:"google",options:{redirectTo:oauthReturnUrl(),skipBrowserRedirect:true}});
-    if(error||!data.url){setBusy(false);toast.error(copy.googleError);return;}
+    if(error||!data.url){document.cookie="ldr_admin_oauth=; Max-Age=0; Path=/; SameSite=Lax; Secure";setBusy(false);toast.error(copy.googleError);return;}
     window.location.assign(data.url);
   }
   async function handleRecover(event:React.FormEvent){event.preventDefault();setBusy(true);await supabase.auth.resetPasswordForEmail(email.trim().toLowerCase(),{redirectTo:`${window.location.origin}/reset-password`});setBusy(false);toast.success(copy.recoverDone);}

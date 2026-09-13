@@ -25,7 +25,10 @@ export const Route = createFileRoute("/api/auth/callback")({
         const url = new URL(request.url);
         const code = url.searchParams.get("code");
         const servicePortal = isServicePortalCallback(url);
-        const adminFlow = url.searchParams.get("admin") === "1";
+        const requestCookies = parseCookieHeader(request.headers.get("cookie") ?? "");
+        const adminFlow =
+          url.searchParams.get("admin") === "1" ||
+          requestCookies.some(({ name, value }) => name === "ldr_admin_oauth" && value === "1");
         const { supabaseUrl, supabasePublishableKey } = config();
         const responseHeaders = new Headers({
           "cache-control": "no-store, max-age=0, must-revalidate",
@@ -57,10 +60,19 @@ export const Route = createFileRoute("/api/auth/callback")({
             : servicePortal
             ? "/cliente/login?portal=services&auth_error=missing_code"
             : "/cliente/login?auth_error=missing_code";
-          return new Response(null, {
-            status: 303,
-            headers: new Headers({ ...Object.fromEntries(responseHeaders), location: missingCodeDestination }),
-          });
+          if (adminFlow) {
+            responseHeaders.append(
+              "set-cookie",
+              serializeCookieHeader("ldr_admin_oauth", "", {
+                path: "/",
+                maxAge: 0,
+                sameSite: "lax",
+                secure: true,
+              }),
+            );
+          }
+          responseHeaders.set("location", missingCodeDestination);
+          return new Response(null, { status: 303, headers: responseHeaders });
         }
 
         const { error } = await supabase.auth.exchangeCodeForSession(code);
@@ -75,6 +87,17 @@ export const Route = createFileRoute("/api/auth/callback")({
             : servicePortal
             ? "/cliente?portal=services&v=4"
             : "/cliente/biblioteca";
+        if (adminFlow) {
+          responseHeaders.append(
+            "set-cookie",
+            serializeCookieHeader("ldr_admin_oauth", "", {
+              path: "/",
+              maxAge: 0,
+              sameSite: "lax",
+              secure: true,
+            }),
+          );
+        }
         responseHeaders.set("location", destination);
         return new Response(null, { status: 303, headers: responseHeaders });
       },
