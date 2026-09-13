@@ -61,19 +61,22 @@ function isServicePortalHost() {
 
 function clientDestination() {
   if (isAcademyHost()) return "https://ldracademy.online/cliente/biblioteca";
-  if (isServicePortalHost()) return "/cliente?portal=services&v=3";
+  if (isServicePortalHost()) return "/cliente?portal=services&v=4";
   return "/cliente";
 }
 
 function oauthReturnUrl() {
   if (typeof window === "undefined") return "/api/auth/callback";
 
-  // Keep the provider redirect on the established allow-listed host, then let
-  // server.ts canonicalize the callback back to ldracademy.online. The actual
-  // PKCE code exchange happens server-side at /api/auth/callback and persists
-  // the Supabase session cookies before the protected library is requested.
+  // Keep the Academy provider redirect on its established allow-listed host.
   if (isAcademyHost()) {
     return "https://learn.lucianoconecta.online/api/auth/callback?academy=1";
+  }
+
+  // Preserve the service context through Google's OAuth round trip so the
+  // server callback returns service clients to their portal, never Academy.
+  if (isServicePortalHost()) {
+    return `${window.location.origin}/api/auth/callback?portal=services`;
   }
 
   return `${window.location.origin}/api/auth/callback`;

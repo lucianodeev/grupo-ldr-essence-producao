@@ -11,12 +11,20 @@ function config() {
   return { supabaseUrl, supabasePublishableKey };
 }
 
+function isServicePortalCallback(url: URL) {
+  return (
+    url.searchParams.get("portal") === "services" ||
+    /^portal\.ldrrhestrategia\.com$/i.test(url.hostname)
+  );
+}
+
 export const Route = createFileRoute("/api/auth/callback")({
   server: {
     handlers: {
       GET: async ({ request }) => {
         const url = new URL(request.url);
         const code = url.searchParams.get("code");
+        const servicePortal = isServicePortalCallback(url);
         const { supabaseUrl, supabasePublishableKey } = config();
         const responseHeaders = new Headers({
           "cache-control": "no-store, max-age=0, must-revalidate",
@@ -43,14 +51,23 @@ export const Route = createFileRoute("/api/auth/callback")({
         );
 
         if (!code) {
+          const missingCodeDestination = servicePortal
+            ? "/cliente/login?portal=services&auth_error=missing_code"
+            : "/cliente/login?auth_error=missing_code";
           return new Response(null, {
             status: 303,
-            headers: new Headers({ ...Object.fromEntries(responseHeaders), location: "/cliente/login?auth_error=missing_code" }),
+            headers: new Headers({ ...Object.fromEntries(responseHeaders), location: missingCodeDestination }),
           });
         }
 
         const { error } = await supabase.auth.exchangeCodeForSession(code);
-        const destination = error ? "/cliente/login?auth_error=exchange_failed" : "/cliente/biblioteca";
+        const destination = error
+          ? servicePortal
+            ? "/cliente/login?portal=services&auth_error=exchange_failed"
+            : "/cliente/login?auth_error=exchange_failed"
+          : servicePortal
+            ? "/cliente?portal=services&v=4"
+            : "/cliente/biblioteca";
         responseHeaders.set("location", destination);
         return new Response(null, { status: 303, headers: responseHeaders });
       },
