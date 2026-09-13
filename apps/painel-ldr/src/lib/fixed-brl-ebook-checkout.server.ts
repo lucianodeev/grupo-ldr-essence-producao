@@ -21,8 +21,10 @@ export async function createDigitalCheckoutWithFixedBrlEbooks(
   email: string | null,
   input: { productKey: DigitalProductKey; market: DigitalMarket },
 ) {
-  // EUR e todos os demais produtos continuam exatamente no fluxo já validado.
-  if (input.market !== "BR" || !isFixedBrlEbook(input.productKey)) {
+  const isPremiumCases = input.productKey === "ebook_estudos_caso_psicanalise";
+  // Estudos de Caso possui preço promocional próprio nos dois mercados.
+  // Os demais eBooks fixos continuam interceptados somente no BRL.
+  if ((!isPremiumCases && input.market !== "BR") || !isFixedBrlEbook(input.productKey)) {
     return createClientDigitalCheckout(userId, email, input);
   }
 
@@ -35,8 +37,9 @@ export async function createDigitalCheckoutWithFixedBrlEbooks(
     fail("Este produto já está disponível na sua biblioteca.");
   }
 
-  const amountCents = 2000;
-  const currency = "BRL";
+  const amountCents = isPremiumCases ? (input.market === "BR" ? 7990 : 1490) : 2000;
+  const currency = input.market === "BR" ? "BRL" : "EUR";
+  const stripeCurrency = input.market === "BR" ? "brl" : "eur";
   const title = FIXED_BRL_EBOOKS[input.productKey];
 
   const { data: order, error: orderError } = await supabaseAdmin
@@ -48,7 +51,7 @@ export async function createDigitalCheckoutWithFixedBrlEbooks(
       contact_phone: customer.phone,
       service_type: "produto_digital",
       title,
-      description: "Compra digital pela Biblioteca / Plataforma",
+      description: isPremiumCases ? "eBook Premium · compra digital pela Biblioteca / Plataforma" : "Compra digital pela Biblioteca / Plataforma",
       quantity: 1,
       amount_cents: amountCents,
       currency,
@@ -56,7 +59,7 @@ export async function createDigitalCheckoutWithFixedBrlEbooks(
       status: "novo",
       priority: "media",
       catalog_key: input.productKey,
-      metadata: { product_key: input.productKey, market: input.market, auth_user_id: userId, fixed_brl_price: true },
+      metadata: { product_key: input.productKey, market: input.market, auth_user_id: userId, fixed_price: true, premium: isPremiumCases },
     } as never)
     .select("id, order_number")
     .single();
@@ -75,10 +78,9 @@ export async function createDigitalCheckoutWithFixedBrlEbooks(
 
   const params = new URLSearchParams();
   params.set("mode", "payment");
-  // Regra comercial: estes três eBooks custam exatamente R$ 20,00 no Brasil.
-  // Não usar Price ID antigo da Stripe no BRL, evitando divergência de valor.
-  params.set("line_items[0][price_data][currency]", "brl");
-  params.set("line_items[0][price_data][unit_amount]", "2000");
+  // price_data evita reutilizar Price IDs antigos com valores divergentes.
+  params.set("line_items[0][price_data][currency]", stripeCurrency);
+  params.set("line_items[0][price_data][unit_amount]", String(amountCents));
   params.set("line_items[0][price_data][product_data][name]", title);
   params.set("line_items[0][quantity]", "1");
   params.set("success_url", `${appOrigin}/cliente/biblioteca?payment=success&session_id={CHECKOUT_SESSION_ID}`);
@@ -113,7 +115,7 @@ export async function createDigitalCheckoutWithFixedBrlEbooks(
 
   await supabaseAdmin.from("orders").update({
     stripe_checkout_session_id: session.id,
-    metadata: { product_key: input.productKey, market: input.market, auth_user_id: userId, stripe_price_id: null, fixed_brl_price: true },
+    metadata: { product_key: input.productKey, market: input.market, auth_user_id: userId, stripe_price_id: null, fixed_price: true, premium: isPremiumCases },
   } as never).eq("id", order.id);
 
   return { url: session.url, orderId: order.id, orderNumber: order.order_number };
