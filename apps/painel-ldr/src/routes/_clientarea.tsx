@@ -51,7 +51,8 @@ function isProductRoute(pathname:string){
   if(pathname.startsWith("/cliente/treinamentos/"))return true;
   if(pathname.startsWith("/cliente/cursos/"))return true;
   if(pathname.startsWith("/cliente/formacoes/"))return true;
-  if(pathname==="/cliente/psicanalista-alta-performance")return true;
+  if(pathname.startsWith("/cliente/psicanalista-alta-performance"))return true;
+  if(pathname==="/cliente/biblioteca/curso-gratuito-carreira")return true;
   return false;
 }
 
