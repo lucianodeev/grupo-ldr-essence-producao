@@ -1,7 +1,7 @@
 import { Link, Outlet, createFileRoute, useLocation, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { BookOpen, CalendarDays, ClipboardList, GraduationCap, Home, Menu, MessageCircle, UserRound, X } from "lucide-react";
+import { BookOpen, CalendarDays, ClipboardList, FileUp, GraduationCap, Home, Menu, MessageCircle, UserRound, X } from "lucide-react";
 
 import { supabase } from "@/integrations/supabase/client";
 import { useClientContext } from "@/lib/client-portal-data";
@@ -11,10 +11,10 @@ export const Route = createFileRoute("/_clientarea/cliente")({ component: Client
 
 type L="pt"|"en"|"fr"|"es";
 const SHELL={
-  pt:{area:"Minha Área",serviceArea:"Portal de Serviços",home:"Início",library:"Minha Biblioteca",training:"Treinamentos",agenda:"Minha agenda",orders:"Meus pedidos",sessions:"Atendimentos",contract:"Contratar e agendar",profile:"Meu perfil",ecosystem:"Ecossistema",entrepreneurs:"Treinamento para empreendedores",signout:"Sair",openMenu:"Abrir menu",navLabel:"Navegação da Minha Área",loading:"Carregando…",unavailable:"Acesso indisponível",blocked:"Seu acesso está temporariamente desativado. Fale com a equipe do Grupo LDR Essence.",missing:"Ainda não localizamos um cadastro de cliente vinculado a este e-mail. Use o mesmo e-mail informado na sua compra ou fale com a nossa equipe."},
-  en:{area:"My Area",serviceArea:"Services Portal",home:"Home",library:"My Library",training:"Training",agenda:"My schedule",orders:"My orders",sessions:"Appointments",contract:"Buy and schedule",profile:"My profile",ecosystem:"Ecosystem",entrepreneurs:"Entrepreneur training",signout:"Sign out",openMenu:"Open menu",navLabel:"My Area navigation",loading:"Loading…",unavailable:"Access unavailable",blocked:"Your access is temporarily disabled. Contact the Grupo LDR Essence team.",missing:"We could not find a client account linked to this email yet. Use the same email used for your purchase or contact our team."},
-  fr:{area:"Mon Espace",serviceArea:"Portail de Services",home:"Accueil",library:"Ma Bibliothèque",training:"Formations",agenda:"Mon agenda",orders:"Mes commandes",sessions:"Rendez-vous",contract:"Acheter et planifier",profile:"Mon profil",ecosystem:"Écosystème",entrepreneurs:"Formation pour entrepreneurs",signout:"Se déconnecter",openMenu:"Ouvrir le menu",navLabel:"Navigation de Mon Espace",loading:"Chargement…",unavailable:"Accès indisponible",blocked:"Votre accès est temporairement désactivé. Contactez l’équipe du Grupo LDR Essence.",missing:"Nous n’avons pas encore trouvé de compte client associé à cet e-mail. Utilisez le même e-mail que lors de votre achat ou contactez notre équipe."},
-  es:{area:"Mi Área",serviceArea:"Portal de Servicios",home:"Inicio",library:"Mi Biblioteca",training:"Formaciones",agenda:"Mi agenda",orders:"Mis pedidos",sessions:"Atenciones",contract:"Comprar y agendar",profile:"Mi perfil",ecosystem:"Ecosistema",entrepreneurs:"Formación para emprendedores",signout:"Salir",openMenu:"Abrir menú",navLabel:"Navegación de Mi Área",loading:"Cargando…",unavailable:"Acceso no disponible",blocked:"Tu acceso está temporalmente desactivado. Contacta al equipo de Grupo LDR Essence.",missing:"Todavía no encontramos una cuenta de cliente vinculada a este correo. Usa el mismo correo de tu compra o contacta a nuestro equipo."}
+  pt:{area:"Minha Área",serviceArea:"Portal de Serviços",home:"Início",library:"Minha Biblioteca",training:"Treinamentos",agenda:"Minha agenda",orders:"Meus pedidos",sessions:"Atendimentos",contract:"Contratar e agendar",publish:"Publique na LDR Academy",profile:"Meu perfil",ecosystem:"Ecossistema",entrepreneurs:"Treinamento para empreendedores",signout:"Sair",openMenu:"Abrir menu",navLabel:"Navegação da Minha Área",loading:"Carregando…",unavailable:"Acesso indisponível",blocked:"Seu acesso está temporariamente desativado. Fale com a equipe do Grupo LDR Essence.",missing:"Ainda não localizamos um cadastro de cliente vinculado a este e-mail. Use o mesmo e-mail informado na sua compra ou fale com a nossa equipe.",creatorTitle:"Tem um conteúdo para vender?",creatorText:"Publique seu eBook, livro, curso ou formação na LDR Academy. Sem mensalidade. Você recebe 85% das vendas.",creatorButton:"QUERO PUBLICAR"},
+  en:{area:"My Area",serviceArea:"Services Portal",home:"Home",library:"My Library",training:"Training",agenda:"My schedule",orders:"My orders",sessions:"Appointments",contract:"Buy and schedule",publish:"Publish on LDR Academy",profile:"My profile",ecosystem:"Ecosystem",entrepreneurs:"Entrepreneur training",signout:"Sign out",openMenu:"Open menu",navLabel:"My Area navigation",loading:"Loading…",unavailable:"Access unavailable",blocked:"Your access is temporarily disabled. Contact the Grupo LDR Essence team.",missing:"We could not find a client account linked to this email yet. Use the same email used for your purchase or contact our team.",creatorTitle:"Have content to sell?",creatorText:"Publish your eBook, book, course or training on LDR Academy. No monthly fee. You receive 85% of sales.",creatorButton:"I WANT TO PUBLISH"},
+  fr:{area:"Mon Espace",serviceArea:"Portail de Services",home:"Accueil",library:"Ma Bibliothèque",training:"Formations",agenda:"Mon agenda",orders:"Mes commandes",sessions:"Rendez-vous",contract:"Acheter et planifier",publish:"Publiez sur LDR Academy",profile:"Mon profil",ecosystem:"Écosystème",entrepreneurs:"Formation pour entrepreneurs",signout:"Se déconnecter",openMenu:"Ouvrir le menu",navLabel:"Navigation de Mon Espace",loading:"Chargement…",unavailable:"Accès indisponible",blocked:"Votre accès est temporairement désactivé. Contactez l’équipe du Grupo LDR Essence.",missing:"Nous n’avons pas encore trouvé de compte client associé à cet e-mail. Utilisez le même e-mail que lors de votre achat ou contactez notre équipe.",creatorTitle:"Vous avez un contenu à vendre ?",creatorText:"Publiez votre eBook, livre, cours ou formation sur LDR Academy. Sans abonnement. Vous recevez 85 % des ventes.",creatorButton:"JE VEUX PUBLIER"},
+  es:{area:"Mi Área",serviceArea:"Portal de Servicios",home:"Inicio",library:"Mi Biblioteca",training:"Formaciones",agenda:"Mi agenda",orders:"Mis pedidos",sessions:"Atenciones",contract:"Comprar y agendar",publish:"Publica en LDR Academy",profile:"Mi perfil",ecosystem:"Ecosistema",entrepreneurs:"Formación para emprendedores",signout:"Salir",openMenu:"Abrir menú",navLabel:"Navegación de Mi Área",loading:"Cargando…",unavailable:"Acceso no disponible",blocked:"Tu acceso está temporalmente desactivado. Contacta al equipo de Grupo LDR Essence.",missing:"Todavía no encontramos una cuenta de cliente vinculada a este correo. Usa el mismo correo de tu compra o contacta a nuestro equipo.",creatorTitle:"¿Tienes contenido para vender?",creatorText:"Publica tu eBook, libro, curso o formación en LDR Academy. Sin mensualidad. Recibes el 85 % de las ventas.",creatorButton:"QUIERO PUBLICAR"}
 } as const;
 
 function cameFromCorporateBenefits() {
@@ -55,6 +55,13 @@ function ClientShell() {
     { to: "/cliente/contratar", label: c.contract, icon: MessageCircle },
     { to: "/cliente/perfil", label: c.profile, icon: UserRound },
   ] as const;
+  const academyNav = [
+    { to: "/cliente", label: c.home, exact: true, icon: Home },
+    { to: "/cliente/biblioteca", label: c.library, icon: BookOpen, featured: true },
+    { to: "/cliente/treinamentos", label: c.training, icon: GraduationCap },
+    { to: "/cliente/publicar", label: c.publish, icon: FileUp },
+    { to: "/cliente/perfil", label: c.profile, icon: UserRound },
+  ] as const;
   const serviceNav = [
     { to: "/cliente", label: c.home, exact: true, icon: Home },
     { to: "/cliente/contratar", label: c.contract, icon: MessageCircle, featured: true },
@@ -62,7 +69,7 @@ function ClientShell() {
     { to: "/cliente/sessoes", label: c.sessions, icon: ClipboardList },
     { to: "/cliente/perfil", label: c.profile, icon: UserRound },
   ] as const;
-  const NAV = servicePortal ? serviceNav : defaultNav;
+  const NAV = servicePortal ? serviceNav : academyHost ? academyNav : defaultNav;
 
   useEffect(() => {
     if (cameFromCorporateBenefits()) {
@@ -87,6 +94,7 @@ function ClientShell() {
 
   const status = context.data?.status;
   const libraryHref = academyHost ? "/biblioteca" : "/cliente/biblioteca";
+  const showCreatorCta = academyHost && location.pathname.replace(/\/+$/, "") === "/cliente/biblioteca";
 
   return (
     <div className="min-h-screen lg:flex" style={{ background: "var(--cream)" }}>
@@ -116,6 +124,10 @@ function ClientShell() {
 
       <div className="min-w-0 flex-1">
         <main className="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
+          {showCreatorCta ? <section className="mb-6 rounded-[24px] border border-[#d6ad63]/50 bg-[#071426] p-5 text-white shadow-sm sm:flex sm:items-center sm:justify-between sm:gap-6">
+            <div><p className="text-xs font-black uppercase tracking-[.18em] text-[#d6ad63]">LDR CREATORS</p><h2 className="mt-1 font-serif text-2xl">{c.creatorTitle}</h2><p className="mt-2 max-w-2xl text-sm leading-6 text-white/75">{c.creatorText}</p></div>
+            <Link to="/cliente/publicar" className="mt-4 inline-flex min-h-11 shrink-0 items-center justify-center rounded-xl bg-[#d6ad63] px-5 py-3 text-sm font-black text-[#071426] sm:mt-0">{c.creatorButton}</Link>
+          </section> : null}
           {context.isLoading ? <p className="text-sm text-muted-foreground">{c.loading}</p> : status === "ok" ? <Outlet /> : <section className="s8-card"><h1 className="font-serif text-2xl">{c.unavailable}</h1><p className="mt-2 text-sm text-muted-foreground">{status === "blocked" ? c.blocked : c.missing}</p><button type="button" onClick={handleSignOut} className="mt-4 rounded-lg bg-primary px-4 py-2 text-sm font-bold text-primary-foreground">{c.signout}</button></section>}
         </main>
       </div>
