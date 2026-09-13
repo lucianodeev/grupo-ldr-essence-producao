@@ -1,0 +1,46 @@
+name: One time academy links
+on:
+  push:
+    paths: ['.github/workflows/one-time-clinic-project-links.yml']
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - name: Patch
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx')
+          s=p.read_text()
+          anchor='<a href="/cliente/orientacao-psicanalitica"'
+          clinic='''<a href="/clinica-social" className="min-w-0 rounded-2xl bg-[#0b2341] px-1 py-4 text-center text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"><span className="mx-auto block text-lg">🤝</span><p className="mt-2 text-[8px] font-black leading-tight sm:text-[10px]">Clínica Social</p></a>\n        '''
+          if '/clinica-social" className="min-w-0 rounded-2xl' not in s:
+              s=s.replace(anchor,clinic+anchor,1)
+          p.write_text(s)
+
+          p=Path('apps/painel-ldr/src/lib/legacy-training-projects.server.ts')
+          s=p.read_text()
+          marker='  "formacao-lideranca-gestao-pessoas":{productKey:"formacao_lideranca_gestao_pessoas",title:"Formação em Liderança e Gestão de Pessoas"},\n'
+          add='  "psicanalise-internacional-neurodiversidade-autismo":{productKey:"curso_psicanalise_internacional_neurodiversidade_autismo",title:"Psicanálise Internacional, Neurodiversidade e Autismo"},\n'
+          if '"psicanalise-internacional-neurodiversidade-autismo"' not in s:
+              s=s.replace(marker,marker+add,1)
+          p.write_text(s)
+
+          p=Path('apps/painel-ldr/src/routes/_clientarea.tsx')
+          s=p.read_text()
+          marker='  if(pathname==="/cliente/treinamentos/lideranca-gestao")return "formacao-lideranca-gestao-pessoas";\n'
+          add='  if(pathname==="/cliente/treinamentos/psicanalise-internacional")return "psicanalise-internacional-neurodiversidade-autismo";\n'
+          if 'return "psicanalise-internacional-neurodiversidade-autismo"' not in s:
+              s=s.replace(marker,marker+add,1)
+          p.write_text(s)
+      - name: Commit
+        run: |
+          git config user.name ldr-rh-campanhas
+          git config user.email llucianouam@gmail.com
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx apps/painel-ldr/src/lib/legacy-training-projects.server.ts apps/painel-ldr/src/routes/_clientarea.tsx
+          git commit -m "fix: add clinic access and international project flow" || exit 0
+          git push
