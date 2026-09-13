@@ -33,9 +33,7 @@ const FREE=[
  {title:"Primeiros Socorros",desc:"Noções essenciais para situações de emergência.",href:"/cliente/cursos/primeiros-socorros",icon:"⛑️"},
 ];
 
-const EDITORIAL=[
- ["Jornal LDR","/cliente/biblioteca/jornal-ldr","📰"],["Revista LDR","/cliente/biblioteca/revista-ldr","📖"],["LDR Ciência","/cliente/biblioteca/ldr-ciencia","🔬"],["Revista Negócios","/cliente/biblioteca/publicacoes/revista-negocios","💼"],["Jornal Europa","/cliente/biblioteca/publicacoes/jornal-europa","🇪🇺"],["Revista Psicanálise no Mundo","/cliente/biblioteca/publicacoes/revista-psicanalise-no-mundo","🧠"]
-] as const;
+const EDITORIAL=[["Revista Psicanálise no Mundo","/cliente/biblioteca/publicacoes/revista-psicanalise-no-mundo","🧠"]] as const;
 
 function CourseCard({c,cta}:{c:Course;cta:string}){return <a href={c.href} className="group flex min-h-[300px] flex-col overflow-hidden rounded-[22px] border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg"><div className="h-2" style={{background:c.accent}}/><div className="flex flex-1 flex-col p-5"><div className="flex items-start justify-between gap-3"><span className="text-3xl">{c.icon}</span><span className="rounded-full bg-[#f5f0e6] px-2.5 py-1 text-[9px] font-black uppercase tracking-[.08em] text-[#7a5a22]">{c.meta}</span></div><h3 className="mt-4 font-serif text-xl leading-tight text-[#071426]">{c.title}</h3><p className="mt-2 text-sm leading-6 text-slate-600">{c.desc}</p><div className="mt-auto pt-5"><p className="text-sm font-black text-[#071426]">{c.price}</p><span className="mt-3 inline-flex w-full justify-center rounded-xl bg-[#071426] px-4 py-3 text-xs font-black text-white">{cta} →</span></div></div></a>}
 

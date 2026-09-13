@@ -23,7 +23,7 @@ function PublicacoesHub(){
   const t=COPY[locale];
   const [q,setQ]=useState("");
   const [tab,setTab]=useState<"todos"|"jornal"|"revista">("todos");
-  const catalog=useMemo(()=>EDITORIAL_CATALOG.map(x=>localizeEditorial(x,locale)),[locale]);
+  const catalog=useMemo(()=>EDITORIAL_CATALOG.filter((x)=>x.slug==="revista-psicanalise-no-mundo").map(x=>localizeEditorial(x,locale)),[locale]);
   const items=useMemo(()=>catalog.filter(x=>(tab==="todos"||x.kind===tab)&&(`${x.title} ${x.description} ${x.topics.join(" ")}`).toLowerCase().includes(q.toLowerCase())),[q,tab,catalog]);
   return <div className="space-y-7 pb-10">
     <div className="flex flex-wrap items-center justify-between gap-3"><Link to="/cliente/biblioteca" className="text-sm font-black text-[#0b2341]">{t.back}</Link><Link to="/cliente/biblioteca/artigos-cientificos" className="rounded-full border border-[#d6ad63] px-4 py-2 text-xs font-black text-[#0b2341]">{t.articles}</Link></div>
