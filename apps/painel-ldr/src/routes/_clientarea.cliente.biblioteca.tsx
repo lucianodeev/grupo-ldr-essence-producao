@@ -23,7 +23,7 @@ import { UNDERGRADUATE_COURSES } from "@/lib/undergraduate.catalog";
 import { libraryCardText, postgraduateCardTitle, undergraduateCardTitle } from "@/lib/library-card-i18n";
 import { libraryAcademicCardText } from "@/lib/library-academic-card-i18n";
 import { AcademicDrawers } from "@/components/academic-drawers";
-import { PROFESSIONAL_FORMATIONS, pfText } from "@/lib/professional-formations.catalog";
+import { PROFESSIONAL_FORMATIONS, pfText } from "@/lib/academy-professional-formations.catalog";
 
 export const Route=createFileRoute("/_clientarea/cliente/biblioteca")({component:ClientLibraryRoute});
 

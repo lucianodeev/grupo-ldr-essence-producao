@@ -1,4 +1,4 @@
-import type { PF, PFLocale, PFSlug } from "@/lib/professional-formations.catalog";
+import type { PF, PFLocale, PFSlug } from "@/lib/academy-professional-formations.catalog";
 
 const labels={
  pt:{lesson:"Aula",objective:"Objetivo",question:"Pergunta central",concepts:"Conceitos e teoria",context:"Contexto",caseLabel:"Caso aplicado",critical:"Análise crítica",practice:"Atividade",errors:"Erros comuns e limites",synthesis:"Síntese",refs:"Referências"},

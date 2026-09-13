@@ -1,7 +1,7 @@
 import { BookOpen, GraduationCap, Library, Newspaper, Search, Sparkles } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useI18n } from "@/lib/i18n";
-import { PROFESSIONAL_FORMATIONS, pfText, type PFLocale } from "@/lib/professional-formations.catalog";
+import { PROFESSIONAL_FORMATIONS, pfText, type PFLocale } from "@/lib/academy-professional-formations.catalog";
 
 type L="pt"|"en"|"fr"|"es";
 type Kind="all"|"psicanalise"|"negocios"|"carreira"|"rh"|"ia";
@@ -46,7 +46,8 @@ export function AcademyUniversityHome(){
  const [kind,setKind]=useState<Kind>("all");
  const [q,setQ]=useState("");
  const pfLocale=locale as PFLocale;
- const professional:Course[]=PROFESSIONAL_FORMATIONS.map((f,i)=>{const tx=pfText(f,pfLocale);const kinds:Exclude<Kind,"all">[]=["negocios","negocios","rh","negocios","carreira"];return {id:f.slug,title:tx.name,desc:tx.description,meta:`${f.hours}h · ${f.modulesCount} ${locale==="en"?"modules":locale==="fr"?"modules":locale==="es"?"módulos":"módulos"}`,price:"R$ 299,99 · € 49,90",href:f.publicPath,kind:kinds[i]??"carreira",icon:f.icon,accent:["#0b3764","#7a1835","#047857","#0f766e","#6d28d9"][i]};});
+ const themeAccent:Record<string,string>={navy:"#0b3764",wine:"#7a1835",green:"#047857",petrol:"#0f766e",purple:"#6D3FA0",rose:"#b76e79",gold:"#a06f1c",terracotta:"#A85132"};
+ const professional:Course[]=PROFESSIONAL_FORMATIONS.map((f,i)=>{const tx=pfText(f,pfLocale);const kinds:Exclude<Kind,"all">[]=["negocios","negocios","rh","negocios","carreira"];const kind=f.slug==="aba-autismo"||f.slug==="saude-mental-praticas-clinicas"?"psicanalise":f.slug==="ciencia-politica"||f.slug==="sociologia"||f.slug==="filosofia-clinica"||f.slug==="ciencias-felicidade"?"carreira":kinds[i]??"carreira";return {id:f.slug,title:tx.name,desc:tx.description,meta:`${f.hours}h · ${f.modulesCount} ${locale==="en"?"modules":locale==="fr"?"modules":locale==="es"?"módulos":"módulos"}`,price:"R$ 299,99 · € 49,90",href:f.publicPath,kind,icon:f.icon,accent:themeAccent[f.theme]??"#6D3FA0"};});
  const courses=[...CORE,...professional];
  const filtered=useMemo(()=>courses.filter(c=>(kind==="all"||c.kind===kind)&&(`${c.title} ${c.desc}`).toLowerCase().includes(q.trim().toLowerCase())),[courses,kind,q]);
  const chips:[[Kind,string],...[Kind,string][]]=[["all",t.all],["psicanalise",t.psy],["negocios",t.business],["carreira",t.career],["rh",t.rh],["ia",t.ai]];
