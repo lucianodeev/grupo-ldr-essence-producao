@@ -34,8 +34,17 @@ function academyCanonicalRedirect(request: Request): Response | null {
   const url = new URL(request.url);
   const host = url.hostname.toLowerCase();
   const isAcademy = host === "ldracademy.online" || host === "www.ldracademy.online";
+  const isServicePortal = host === "portal.ldrrhestrategia.com";
   const isLegacyLearnHost = host === "learn.lucianoconecta.online";
   const isLegacyPanelHost = host === "painel.ldrrhestrategia.com" || host === "painel.lucianoconecta.online";
+
+  // The services portal shares the same application deployment as the Academy,
+  // but its public root must never render the Academy storefront. Redirect on
+  // the server before SSR so the user lands directly on the services login.
+  if (isServicePortal && url.pathname === "/") {
+    url.pathname = "/cliente/login";
+    return temporaryRedirect(url.toString());
+  }
 
   if (isLegacyLearnHost || isLegacyPanelHost) {
     const target = new URL("https://ldracademy.online");
