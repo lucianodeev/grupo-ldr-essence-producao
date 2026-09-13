@@ -35,6 +35,10 @@ article .whitespace-pre-line{overflow-wrap:break-word!important;word-break:norma
 .text-base{font-size:.95rem!important}
 .text-sm{font-size:.86rem!important}
 
+/* Academy library: keep legacy cards in the DOM for their validated access/checkout behavior,
+   but show only the new category-drawer block in the primary catalog grid. */
+#catalogo-ldr > div > .grid.grid-cols-4 > :not(.order-first){display:none!important}
+
 @media(max-width:1024px){
   .s8-card{padding:1.05rem}
   [class*='xl:grid-cols-4'],[class*='lg:grid-cols-4']{grid-template-columns:repeat(2,minmax(0,1fr))!important}
