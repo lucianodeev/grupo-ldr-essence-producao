@@ -9,6 +9,10 @@ export type DigitalReaderLocale = "pt" | "en" | "fr" | "es";
 const ALIASES: Record<DigitalReaderProductKey, string[]> = {
   ebook_coragem_comecar: ["ebook_coragem_comecar", "a_coragem_de_comecar", "ebook", "combo_empreendedor"],
   livro_menino_mamao: ["livro_menino_mamao", "menino_mamao", "livro", "combo_empreendedor"],
+  ebook_pratica_clinica_psicanalise: ["ebook_pratica_clinica_psicanalise"],
+  ebook_psicanalise_no_mundo: ["ebook_psicanalise_no_mundo"],
+  ebook_estudos_caso_psicanalise: ["ebook_estudos_caso_psicanalise"],
+  ebook_psicanalise_autismo: ["ebook_psicanalise_autismo"],
 };
 
 function fail(message: string): never {
@@ -87,7 +91,6 @@ export async function getProtectedDigitalContent(
     .eq("active", true)
     .maybeSingle();
 
-  // Fallback somente quando a tradução ainda não foi cadastrada; nunca duplica visualmente.
   if (!data && locale !== "pt") {
     const fallback = await supabaseAdmin
       .from("digital_product_content")
