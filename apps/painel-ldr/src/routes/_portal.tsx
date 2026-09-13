@@ -1,20 +1,46 @@
 import { Link, Outlet, createFileRoute, redirect, useRouterState } from "@tanstack/react-router";
+import type { Session } from "@supabase/supabase-js";
 import { CreditCard, Building2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 import { getClientAuthState } from "@/integrations/supabase/session.functions";
 import { useI18n } from "@/lib/i18n";
+
+async function syncSession(session: Session) {
+  const response = await fetch("/api/auth/session-sync", {
+    method: "POST",
+    credentials: "include",
+    cache: "no-store",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      access_token: session.access_token,
+      refresh_token: session.refresh_token,
+    }),
+  });
+  return response.ok;
+}
+
+function loginDestination(path: string) {
+  return path === "/empresa" || path.startsWith("/empresa/") || path === "/assinatura-empresa"
+    ? "/empresa/login"
+    : path === "/funcionario" || path.startsWith("/funcionario/")
+      ? "/funcionario/login"
+      : "/acesso";
+}
 
 export const Route = createFileRoute("/_portal")({
   beforeLoad: async ({ location }) => {
     const auth = await getClientAuthState();
-    if (!auth.authenticated) {
-      const path = location.pathname;
-      const destination = path === "/empresa" || path.startsWith("/empresa/") || path === "/assinatura-empresa"
-        ? "/empresa/login"
-        : path === "/funcionario" || path.startsWith("/funcionario/")
-          ? "/funcionario/login"
-          : "/acesso";
-      throw redirect({ to: destination });
+    if (auth.authenticated) return;
+
+    if (typeof window !== "undefined") {
+      const { data } = await supabase.auth.getSession();
+      if (data.session && (await syncSession(data.session).catch(() => false))) {
+        const verified = await getClientAuthState();
+        if (verified.authenticated) return;
+      }
     }
+
+    throw redirect({ to: loginDestination(location.pathname) });
   },
   component: PortalLayout,
 });
