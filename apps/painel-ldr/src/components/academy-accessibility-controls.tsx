@@ -11,7 +11,7 @@ type Props = { visible?: boolean; inline?: boolean };
 const COPY = {
   pt: { decrease: "Diminuir texto", reset: "Tamanho padrão", increase: "Aumentar texto", light: "Claro", dark: "Escuro", language: "Idioma", popular: "MAIS PROCURADO", accessibility: "Acessibilidade", close: "Fechar acessibilidade" },
   en: { decrease: "Decrease text", reset: "Default size", increase: "Increase text", light: "Light", dark: "Dark", language: "Language", popular: "MOST POPULAR", accessibility: "Accessibility", close: "Close accessibility" },
-  fr: { decrease: "Réduire le texte", reset: "Taille par défaut", increase: "Agrandir texto", light: "Clair", dark: "Sombre", language: "Langue", popular: "LE PLUS RECHERCHÉ", accessibility: "Accessibilité", close: "Fermer l’accessibilité" },
+  fr: { decrease: "Réduire le texte", reset: "Taille par défaut", increase: "Agrandir texte", light: "Clair", dark: "Sombre", language: "Langue", popular: "LE PLUS RECHERCHÉ", accessibility: "Accessibilité", close: "Fermer l’accessibilité" },
   es: { decrease: "Reducir texto", reset: "Tamaño predeterminado", increase: "Aumentar texto", light: "Claro", dark: "Oscuro", language: "Idioma", popular: "MÁS BUSCADO", accessibility: "Accesibilidad", close: "Cerrar accesibilidad" },
 } as const;
 
