@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import type { Session } from "@supabase/supabase-js";
 import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -21,21 +22,54 @@ const COPY = {
   es:{title:"Acceso profesional",recover:"Recuperar contraseña",intro:"Entra con tu contraseña o con una cuenta de Google autorizada.",email:"Correo electrónico",password:"Contraseña",wait:"Espera…",send:"Enviar instrucciones",enter:"Entrar con contraseña",google:"Entrar con Google",or:"o",back:"Volver al inicio de sesión",forgot:"Olvidé mi contraseña",noAccess:"¿Aún no tienes acceso? Solicítalo a un superadministrador del Grupo LDR Essence.",home:"Volver al inicio",loginError:"No fue posible entrar. Verifica tus credenciales.",googleError:"No fue posible iniciar el acceso con Google.",recoverDone:"Si este correo está registrado, recibirás las instrucciones en unos instantes."},
 } as const;
 
+function oauthReturnUrl() {
+  if (typeof window === "undefined") return "/api/auth/callback?admin=1";
+
+  // This host is already allow-listed in Supabase and is canonicalized back
+  // to ldracademy.online while preserving the OAuth code and admin context.
+  if (/(^|\.)ldracademy\.online$/i.test(window.location.hostname)) {
+    return "https://learn.lucianoconecta.online/api/auth/callback?admin=1";
+  }
+
+  return `${window.location.origin}/api/auth/callback?admin=1`;
+}
+
+async function syncBrowserSession(session: Session) {
+  const response = await fetch("/api/auth/session-sync", {
+    method: "POST",
+    credentials: "include",
+    cache: "no-store",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      access_token: session.access_token,
+      refresh_token: session.refresh_token,
+    }),
+  });
+  return response.ok;
+}
+
 function LoginPage() {
   const { locale } = useI18n(); const copy = COPY[locale];
   const fetchAccess = useServerFn(getMyAccess); const logEvent = useServerFn(logAuthEvent);
   const [email,setEmail]=useState(""); const [password,setPassword]=useState(""); const [busy,setBusy]=useState(false); const [recovering,setRecovering]=useState(false);
 
-  async function routeAfterAuth(){
+  async function routeAfterAuth(session: Session){
+    const synced = await syncBrowserSession(session).catch(() => false);
+    if (!synced) {
+      setBusy(false);
+      toast.error(copy.loginError);
+      return;
+    }
+
     let target="/painel-profissional";
     try { const access=await fetchAccess({}); if(access.authorized&&access.role==="superadmin") target="/admin"; } catch {}
     try { await logEvent({data:{action:"auth.login"}}); } catch {}
     window.location.replace(target);
   }
-  async function handleSignIn(event:React.FormEvent){event.preventDefault();setBusy(true);const {error}=await supabase.auth.signInWithPassword({email:email.trim().toLowerCase(),password});if(error){setBusy(false);toast.error(copy.loginError);return;}await routeAfterAuth();}
+  async function handleSignIn(event:React.FormEvent){event.preventDefault();setBusy(true);const {data,error}=await supabase.auth.signInWithPassword({email:email.trim().toLowerCase(),password});if(error||!data.session){setBusy(false);toast.error(copy.loginError);return;}await routeAfterAuth(data.session);}
   async function handleGoogle(){
     setBusy(true);
-    const {data,error}=await supabase.auth.signInWithOAuth({provider:"google",options:{redirectTo:`${window.location.origin}/login`,skipBrowserRedirect:true}});
+    const {data,error}=await supabase.auth.signInWithOAuth({provider:"google",options:{redirectTo:oauthReturnUrl(),skipBrowserRedirect:true}});
     if(error||!data.url){setBusy(false);toast.error(copy.googleError);return;}
     window.location.assign(data.url);
   }

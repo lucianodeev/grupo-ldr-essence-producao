@@ -25,6 +25,7 @@ export const Route = createFileRoute("/api/auth/callback")({
         const url = new URL(request.url);
         const code = url.searchParams.get("code");
         const servicePortal = isServicePortalCallback(url);
+        const adminFlow = url.searchParams.get("admin") === "1";
         const { supabaseUrl, supabasePublishableKey } = config();
         const responseHeaders = new Headers({
           "cache-control": "no-store, max-age=0, must-revalidate",
@@ -51,7 +52,9 @@ export const Route = createFileRoute("/api/auth/callback")({
         );
 
         if (!code) {
-          const missingCodeDestination = servicePortal
+          const missingCodeDestination = adminFlow
+            ? "/login?auth_error=missing_code"
+            : servicePortal
             ? "/cliente/login?portal=services&auth_error=missing_code"
             : "/cliente/login?auth_error=missing_code";
           return new Response(null, {
@@ -62,10 +65,14 @@ export const Route = createFileRoute("/api/auth/callback")({
 
         const { error } = await supabase.auth.exchangeCodeForSession(code);
         const destination = error
-          ? servicePortal
+          ? adminFlow
+            ? "/login?auth_error=exchange_failed"
+            : servicePortal
             ? "/cliente/login?portal=services&auth_error=exchange_failed"
             : "/cliente/login?auth_error=exchange_failed"
-          : servicePortal
+          : adminFlow
+            ? "/admin"
+            : servicePortal
             ? "/cliente?portal=services&v=4"
             : "/cliente/biblioteca";
         responseHeaders.set("location", destination);
