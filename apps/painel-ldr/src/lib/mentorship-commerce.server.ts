@@ -1,4 +1,5 @@
 import { getRequest } from "@tanstack/react-start/server";
+import { paidCourseProjectApproved } from "@/lib/paid-course-project-policy.server";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { resolveClient } from "@/lib/client-portal.server";
 import { hasOwnerDigitalAccess } from "@/lib/owner-digital-access.server";
@@ -37,7 +38,8 @@ async function savedProgress(customerId:string){const {data}=await db.from("libr
 
 export async function getMentorshipOffer(userId:string,email:string|null){
   const customer=await customerFor(userId,email);const owner=hasOwnerDigitalAccess(email??customer.email,userId);
-  const order=owner?null:await paidOrder(customer.id);const entitled=Boolean(order)||owner;const enrollment=await ensureEnrollment(customer.id,entitled);const progress=await savedProgress(customer.id);const enrolledAt=(enrollment?.enrolled_at??order?.created_at??null) as string|null;const elapsedDays=owner?MINIMUM_DAYS:daysSince(enrolledAt);const progressPercent=Number(progress?.progress_percent??enrollment?.progress_percent??0);const certificateEligible=entitled&&elapsedDays>=MINIMUM_DAYS&&progressPercent>=100;
+  const order=owner?null:await paidOrder(customer.id);const entitled=Boolean(order)||owner;const enrollment=await ensureEnrollment(customer.id,entitled);const progress=await savedProgress(customer.id);const enrolledAt=(enrollment?.enrolled_at??order?.created_at??null) as string|null;const elapsedDays=owner?MINIMUM_DAYS:daysSince(enrolledAt);const progressPercent=Number(progress?.progress_percent??enrollment?.progress_percent??0);
+  const projectApproved=await paidCourseProjectApproved(customer.id,"formacao-mentoria-profissional-carreira");const certificateEligible=entitled&&elapsedDays>=MINIMUM_DAYS&&progressPercent>=100&&projectApproved;
   return {productKey:PRODUCT_KEY,slug:PRODUCT_SLUG,title:TITLE,priceBrlCents:PRICE_BRL,priceEurCents:PRICE_EUR,regularPriceBrlCents:PRICE_BRL,regularPriceEurCents:PRICE_EUR,entitled,lifetimeAccess:true,durationMonths:3,minimumDays:MINIMUM_DAYS,totalModules:TOTAL_MODULES,progressPercent,enrolledAt,elapsedDays,certificateEligible,certificateAvailableAt:certificateEligible?new Date().toISOString():enrollment?.certificate_available_at??null,customerName:customer.fullName??customer.full_name??customer.email??"Aluno"};
 }
 

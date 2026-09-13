@@ -1,4 +1,5 @@
 import { getRequest } from "@tanstack/react-start/server";
+import { paidCourseProjectApproved } from "@/lib/paid-course-project-policy.server";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { resolveClient } from "@/lib/client-portal.server";
 import { hasOwnerDigitalAccess } from "@/lib/owner-digital-access.server";
@@ -92,7 +93,8 @@ export async function getBriefTherapyOffer(userId:string,email:string|null){
   const elapsedDays=owner?MINIMUM_DAYS:daysSince(enrolledAt);
   const maxUnlockedLesson=owner?TOTAL_LESSONS:Math.min(TOTAL_LESSONS,elapsedDays+1);
   const progressPercent=Number(progress?.progress_percent??enrollment?.progress_percent??0);
-  const certificateEligible=entitled&&elapsedDays>=MINIMUM_DAYS&&progressPercent>=100;
+  const projectApproved=await paidCourseProjectApproved(customer.id,"formacao-terapia-breve-psicanalitica");
+  const certificateEligible=entitled&&elapsedDays>=MINIMUM_DAYS&&progressPercent>=100&&projectApproved;
   return {productKey:PRODUCT_KEY,slug:PRODUCT_SLUG,title:TITLE,priceBrlCents:PRICE_BRL,priceEurCents:PRICE_EUR,regularPriceBrlCents:PRICE_BRL,regularPriceEurCents:PRICE_EUR,launchPromotionActive:false,launchMonths:0,launchStart:null,launchEnd:null,entitled,lifetimeAccess:true,minimumMonths:6,maximumMonths:MAXIMUM_MONTHS,minimumDays:MINIMUM_DAYS,liveSessionsIncluded:6,totalModules:15,totalLessons:TOTAL_LESSONS,totalHours:TOTAL_HOURS,enrolledAt,elapsedDays,maxUnlockedLesson,progressPercent,cohortNumber:enrollment?.training_cohorts?.cohort_number??null,cohortCapacity:enrollment?.training_cohorts?.capacity??COHORT_CAPACITY,certificateEligible,certificateAvailableAt:certificateEligible?new Date().toISOString():enrollment?.certificate_available_at??null,customerName:customer.fullName??customer.full_name??customer.email??"Aluno"};
 }
 
