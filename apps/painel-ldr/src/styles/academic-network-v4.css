@@ -1,0 +1,311 @@
+/* Rede Acadêmica LDR — UX/UI V4
+   Scoped visual polish. No business logic lives here. */
+
+.academic-social-v4 {
+  --ldr-navy: #07315a;
+  --ldr-navy-deep: #061426;
+  --ldr-gold: #b78927;
+  --ldr-gold-soft: #f3dfaa;
+  --ldr-card-radius: 20px;
+  --ldr-mobile-gutter: 14px;
+  --ldr-touch: 44px;
+  overflow-x: clip;
+}
+
+.academic-social-v4 *,
+.academic-social-v4 *::before,
+.academic-social-v4 *::after {
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.academic-social-v4 img,
+.academic-social-v4 video {
+  max-width: 100%;
+}
+
+.academic-social-v4 p,
+.academic-social-v4 h1,
+.academic-social-v4 h2,
+.academic-social-v4 h3,
+.academic-social-v4 a,
+.academic-social-v4 button,
+.academic-social-v4 span,
+.academic-social-v4 label {
+  overflow-wrap: break-word;
+}
+
+.academic-social-v4 input,
+.academic-social-v4 textarea,
+.academic-social-v4 select {
+  font-size: 16px;
+}
+
+.academic-v4-feed {
+  width: 100%;
+  min-width: 0;
+}
+
+.academic-v4-composer,
+.academic-v4-post,
+.academic-v4-panel {
+  border-radius: var(--ldr-card-radius);
+}
+
+.academic-v4-composer {
+  overflow: hidden;
+}
+
+.academic-v4-composer-main {
+  min-height: 52px;
+}
+
+.academic-v4-quick-grid > * {
+  min-height: var(--ldr-touch);
+}
+
+.academic-v4-tabs,
+.academic-v4-world {
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+  overscroll-behavior-x: contain;
+}
+
+.academic-v4-tabs button,
+.academic-v4-world button {
+  scroll-snap-align: start;
+  min-height: 40px;
+  flex: 0 0 auto;
+}
+
+.academic-v4-post {
+  contain: layout paint;
+}
+
+.academic-v4-post-body {
+  font-size: 15px;
+  line-height: 1.62;
+  white-space: pre-wrap;
+}
+
+.academic-v4-post-actions {
+  gap: 4px;
+}
+
+.academic-v4-post-actions button {
+  min-height: var(--ldr-touch);
+  font-size: 11px;
+}
+
+.academic-v4-post-actions svg {
+  width: 18px;
+  height: 18px;
+}
+
+.academic-v4-comment-input {
+  min-height: 46px;
+  font-size: 16px;
+}
+
+.academic-v4-mobile-nav {
+  padding-left: max(6px, env(safe-area-inset-left));
+  padding-right: max(6px, env(safe-area-inset-right));
+}
+
+.academic-v4-mobile-nav > * {
+  min-height: 58px;
+  min-width: 0;
+}
+
+.academic-v4-mobile-nav span {
+  max-width: 100%;
+  font-size: 9px;
+  letter-spacing: -0.015em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.academic-social-v4 button,
+.academic-social-v4 a {
+  touch-action: manipulation;
+}
+
+.academic-social-v4 button:focus-visible,
+.academic-social-v4 a:focus-visible,
+.academic-social-v4 input:focus-visible,
+.academic-social-v4 textarea:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--ldr-gold) 58%, transparent);
+  outline-offset: 2px;
+}
+
+@media (max-width: 639px) {
+  .academic-social-v4 {
+    width: 100%;
+    padding-left: var(--ldr-mobile-gutter) !important;
+    padding-right: var(--ldr-mobile-gutter) !important;
+    padding-top: 12px !important;
+    padding-bottom: calc(86px + env(safe-area-inset-bottom)) !important;
+  }
+
+  .academic-social-v4 > header {
+    border-radius: 22px !important;
+    padding: 16px !important;
+  }
+
+  .academic-social-v4 > header h1 {
+    margin-top: 8px !important;
+    font-size: clamp(1.65rem, 8vw, 2rem) !important;
+    line-height: 1.08 !important;
+  }
+
+  .academic-social-v4 > header p {
+    line-height: 1.5;
+  }
+
+  .academic-v4-composer {
+    padding: 10px !important;
+  }
+
+  .academic-v4-quick-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 6px !important;
+  }
+
+  .academic-v4-quick-grid a {
+    justify-content: flex-start !important;
+    padding-inline: 10px !important;
+    font-size: 11px !important;
+  }
+
+  .academic-v4-post {
+    padding: 14px !important;
+    border-radius: 18px !important;
+    box-shadow: 0 3px 14px rgba(7, 20, 38, .045) !important;
+  }
+
+  .academic-v4-post header {
+    gap: 8px !important;
+  }
+
+  .academic-v4-post header img,
+  .academic-v4-post header > div > span:first-child,
+  .academic-v4-post header > div > a:first-child {
+    flex-shrink: 0;
+  }
+
+  .academic-v4-post-body {
+    margin-top: 12px !important;
+    font-size: 15px !important;
+    line-height: 1.62 !important;
+  }
+
+  .academic-v4-post-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 3px !important;
+    padding-top: 8px !important;
+  }
+
+  .academic-v4-post-actions button {
+    justify-content: flex-start !important;
+    padding-inline: 10px !important;
+    font-size: 11px !important;
+  }
+
+  .academic-v4-comment-row {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    gap: 8px !important;
+  }
+
+  .academic-v4-comment-row input {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .academic-v4-world {
+    margin-inline: 0;
+  }
+
+  .academic-v4-world > b {
+    font-size: 9px !important;
+    letter-spacing: .08em !important;
+  }
+
+  .academic-v4-tabs button {
+    font-size: 11px !important;
+    padding-inline: 15px !important;
+  }
+
+  .academic-v4-search input {
+    min-height: 48px;
+    font-size: 16px;
+  }
+
+  .academic-v4-search > button {
+    width: 48px;
+    height: 48px;
+  }
+
+  .academic-social-v4 [class*="lg:grid-cols-"] {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .academic-social-v4 textarea {
+    width: 100%;
+  }
+
+  .academic-social-v4 [role="dialog"] {
+    width: calc(100vw - 24px) !important;
+    max-width: calc(100vw - 24px) !important;
+    max-height: calc(100dvh - 24px) !important;
+    overflow-y: auto;
+  }
+}
+
+@media (max-width: 359px) {
+  .academic-social-v4 {
+    --ldr-mobile-gutter: 10px;
+  }
+
+  .academic-v4-mobile-nav span {
+    font-size: 8px;
+  }
+
+  .academic-v4-post-actions button {
+    padding-inline: 7px !important;
+    font-size: 10px !important;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .academic-v4-feed {
+    max-width: 760px;
+    margin-inline: auto;
+  }
+
+  .academic-social-v4 [class*="lg:grid-cols-"] {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .academic-social-v4 {
+    max-width: 1180px;
+  }
+
+  .academic-v4-post-body {
+    font-size: 15.5px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .academic-social-v4 *,
+  .academic-social-v4 *::before,
+  .academic-social-v4 *::after {
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
