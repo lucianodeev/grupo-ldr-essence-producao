@@ -70,8 +70,23 @@ jobs:
               raise SystemExit('Patch increased any usage')
           PY
       - name: TypeScript
+        id: typecheck
+        continue-on-error: true
         working-directory: apps/painel-ldr
-        run: npm run typecheck
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run typecheck 2>&1 | tee ../../tools/academic-functional-typecheck.log
+      - name: Persist TypeScript diagnostics on failure
+        if: steps.typecheck.outcome == 'failure'
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add tools/academic-functional-typecheck.log
+          git commit -m 'ci(academic): record functional typecheck failure'
+          git push origin main
+          exit 1
       - name: Production build
         working-directory: apps/painel-ldr
         run: npm run build
