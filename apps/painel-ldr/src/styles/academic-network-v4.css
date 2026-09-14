@@ -333,3 +333,135 @@
 @media (prefers-reduced-motion: reduce) {
   .academic-social-v4 *,.academic-social-v4 *::before,.academic-social-v4 *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }
+
+/* Composer V4.1 — UX/UI only. Keeps all existing handlers and publication logic intact. */
+.academic-v4-composer {
+  position: relative;
+  padding: 16px !important;
+  border-radius: 22px !important;
+  border-color: color-mix(in srgb, var(--ldr-border) 74%, var(--ldr-navy) 26%) !important;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, hsl(var(--card)) 98%, #f6fbff 2%), hsl(var(--card))) !important;
+  box-shadow: 0 12px 34px rgba(7,20,38,.075), 0 1px 0 rgba(255,255,255,.62) inset !important;
+}
+.academic-v4-composer::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--ldr-gold), color-mix(in srgb, var(--ldr-navy) 74%, var(--ldr-gold)));
+  opacity: .72;
+  pointer-events: none;
+}
+.academic-v4-composer:focus-within {
+  border-color: color-mix(in srgb, var(--ldr-navy) 58%, var(--ldr-border)) !important;
+  box-shadow: 0 16px 42px rgba(7,49,90,.13), 0 0 0 3px rgba(7,49,90,.055) !important;
+}
+.academic-v4-composer > div:first-child {
+  align-items: flex-start !important;
+  gap: 12px !important;
+}
+.academic-v4-composer > div:first-child > span:first-child {
+  width: 42px !important;
+  height: 42px !important;
+  margin-top: 2px;
+  box-shadow: 0 0 0 3px hsl(var(--background)), 0 0 0 4px rgba(183,137,39,.25) !important;
+}
+.academic-v4-composer textarea {
+  min-height: 74px !important;
+  padding: 14px 15px !important;
+  border-radius: 16px !important;
+  border: 1px solid color-mix(in srgb, var(--ldr-border) 78%, transparent) !important;
+  background: color-mix(in srgb, hsl(var(--muted)) 48%, hsl(var(--background)) 52%) !important;
+  line-height: 1.55 !important;
+  box-shadow: inset 0 1px 2px rgba(7,20,38,.025);
+}
+.academic-v4-composer textarea::placeholder {
+  color: color-mix(in srgb, hsl(var(--muted-foreground)) 86%, var(--ldr-navy) 14%);
+  opacity: .9;
+}
+.academic-v4-composer textarea:focus {
+  background: hsl(var(--background)) !important;
+  border-color: color-mix(in srgb, var(--ldr-navy) 44%, var(--ldr-border)) !important;
+  box-shadow: 0 0 0 3px rgba(7,49,90,.06), inset 0 1px 2px rgba(7,20,38,.02) !important;
+}
+.academic-v4-composer > div:nth-child(2) {
+  margin-top: 12px !important;
+  padding-top: 12px;
+  gap: 8px !important;
+  border-top: 1px solid color-mix(in srgb, var(--ldr-border) 66%, transparent);
+}
+.academic-v4-composer > div:nth-child(2) > select,
+.academic-v4-composer > div:nth-child(2) > button {
+  min-height: 42px !important;
+  border-radius: 13px !important;
+  background: color-mix(in srgb, hsl(var(--background)) 94%, #eef6fc 6%) !important;
+  font-size: 11px !important;
+  letter-spacing: .01em;
+  box-shadow: 0 2px 8px rgba(7,20,38,.035);
+}
+.academic-v4-composer > div:nth-child(2) > select {
+  padding-inline: 12px !important;
+}
+.academic-v4-composer > div:nth-child(2) > button:not(:last-child) {
+  padding-inline: 13px !important;
+}
+.academic-v4-composer > div:nth-child(2) > button:last-child {
+  min-width: 112px;
+  min-height: 44px !important;
+  border: 0 !important;
+  background: linear-gradient(135deg, #07315a, #164f7f) !important;
+  color: #fff !important;
+  box-shadow: 0 8px 18px rgba(7,49,90,.19) !important;
+  letter-spacing: .055em;
+}
+.academic-v4-composer > div:nth-child(2) > button:last-child:not(:disabled):hover {
+  transform: translateY(-1px) scale(1.01);
+  box-shadow: 0 10px 22px rgba(7,49,90,.24) !important;
+}
+.academic-v4-composer > div:nth-child(2) > button:last-child:disabled {
+  background: color-mix(in srgb, var(--ldr-navy) 42%, hsl(var(--muted))) !important;
+  box-shadow: none !important;
+  opacity: .55 !important;
+}
+.academic-v4-composer > input,
+.academic-v4-composer > div:nth-child(n+3) {
+  animation: composer-reveal .16s ease-out;
+}
+@keyframes composer-reveal {
+  from { opacity: 0; transform: translateY(-3px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 639px) {
+  .academic-v4-composer {
+    padding: 12px !important;
+    border-radius: 20px !important;
+  }
+  .academic-v4-composer::before { width: 2px; }
+  .academic-v4-composer > div:first-child { gap: 10px !important; }
+  .academic-v4-composer > div:first-child > span:first-child {
+    width: 38px !important;
+    height: 38px !important;
+  }
+  .academic-v4-composer textarea {
+    min-height: 68px !important;
+    padding: 12px 13px !important;
+    border-radius: 15px !important;
+  }
+  .academic-v4-composer > div:nth-child(2) {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 7px !important;
+  }
+  .academic-v4-composer > div:nth-child(2) > select,
+  .academic-v4-composer > div:nth-child(2) > button {
+    width: 100%;
+    min-height: 44px !important;
+    margin-left: 0 !important;
+  }
+  .academic-v4-composer > div:nth-child(2) > button:last-child {
+    grid-column: 1 / -1;
+    min-height: 46px !important;
+  }
+}
