@@ -1,4 +1,4 @@
-name: Academic Social V2 Feed Final Build 2026-09-14
+name: Academic Social V2 Final Consolidated Build 2026-09-14
 on:
   push:
     branches: [feature/rede-academica-social-v2-20260914]
@@ -21,7 +21,7 @@ jobs:
           node-version: 20
           cache: npm
           cache-dependency-path: package-lock.json
-      - name: Apply feed pagination and filters patch
+      - name: Apply validated feed pagination and filters patch
         run: python tools/patch_academic_social_v2_feed_20260914.py
       - name: Install dependencies
         working-directory: apps/painel-ldr
@@ -40,3 +40,5 @@ jobs:
             git commit -m "feat(academy): finalize paginated academic feed"
             git push origin HEAD:${{ github.ref_name }}
           fi
+      - name: Confirm clean generated integration
+        run: git status --short
