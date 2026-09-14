@@ -7,6 +7,7 @@ import { postgraduateCardTitle, undergraduateCardTitle } from "@/lib/library-car
 import { PROFESSIONAL_FORMATIONS, pfText } from "@/lib/academy-professional-formations.catalog";
 import { PSYCHOANALYSIS_EBOOKS } from "@/lib/psychoanalysis-ebooks.catalog";
 import { ACADEMY_FREE_COURSES } from "@/lib/academy-free-courses.catalog";
+import { ACADEMY_SUBSCRIPTION_COURSES } from "@/lib/academy-subscription-courses.catalog";
 
 type Locale="pt"|"en"|"fr"|"es";
 type CourseCategoryKey="psycho"|"beauty"|"business"|"career"|"technology"|"humanities";
@@ -200,6 +201,20 @@ function CatalogOrganizer({locale}:{locale:Locale}){
       const ft=pfText(formation,locale);
       const category=categoryFor(formation.slug,ft.name);
       result[category].push({icon:formation.icon,title:ft.name,meta:`${formation.hours}h · ${formation.modulesCount} ${locale==="pt"?"módulos":locale==="fr"?"modules":locale==="es"?"módulos":"modules"}`,href:formation.learnerPath,tone:formation.theme==="green"?"#047857":formation.theme==="wine"?"#7A3651":"#315F86",triggerText:ft.short});
+    }
+    const courseCategory=(category:string):CourseCategoryKey=>{
+      if(category==="psicanalise")return "psycho";
+      if(category==="marketing"||category==="gestao")return "business";
+      if(category==="comportamento"||category==="educacao"||category==="direito")return "humanities";
+      return "business";
+    };
+    const courseIcon=(category:string)=>category==="psicanalise"?"🧠":category==="marketing"?"📣":category==="gestao"?"📊":category==="educacao"?"📚":category==="direito"?"⚖️":"🌱";
+    const courseTone=(category:string)=>category==="psicanalise"?"#5b2b86":category==="marketing"?"#985014":category==="gestao"?"#17645e":category==="direito"?"#6E102A":"#3D4778";
+    const includedLabel=locale==="pt"?"Incluído na assinatura":locale==="fr"?"Inclus dans l’abonnement":locale==="es"?"Incluido en la suscripción":"Included in subscription";
+    const courseLabel=locale==="pt"?"Curso Livre":locale==="fr"?"Cours libre":locale==="es"?"Curso libre":"Non-degree course";
+    for(const course of ACADEMY_SUBSCRIPTION_COURSES){
+      const category=courseCategory(course.category);
+      result[category].push({icon:courseIcon(course.category),title:course.name[locale],meta:`60h · ${courseLabel} · ${includedLabel}`,href:`/cliente/cursos/assinatura/${course.slug}`,tone:courseTone(course.category),triggerText:course.name[locale]});
     }
     return result;
   },[locale]);
