@@ -32,7 +32,7 @@ function Page(){
 
   useEffect(()=>{
     let alive=true;
-    getSubscription().then((result)=>{if(alive)setActive(Boolean(result.active));}).catch(()=>{if(alive)setActive(false);}).finally(()=>{if(alive)setChecking(false);});
+    getSubscription({}).then((result)=>{if(alive)setActive(Boolean(result.active));}).catch(()=>{if(alive)setActive(false);}).finally(()=>{if(alive)setChecking(false);});
     return()=>{alive=false;};
   },[getSubscription]);
 
