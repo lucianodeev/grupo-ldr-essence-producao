@@ -60,6 +60,7 @@ import { Route as ProfissionalPainelRouteImport } from './routes/profissional-pa
 import { Route as ProfissionalPerfilRouteImport } from './routes/profissional-perfil'
 import { Route as ProfissionalRepassesRouteImport } from './routes/profissional-repasses'
 import { Route as ProfissionalServicosRouteImport } from './routes/profissional-servicos'
+import { Route as RedeAcademicaRouteImport } from './routes/rede-academica'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SellerReferralRouteImport } from './routes/seller-referral'
 import { Route as TreinamentoRouteImport } from './routes/treinamento'
@@ -117,6 +118,7 @@ import { Route as AuthenticatedAdminProfissionaisPlanosRouteImport } from './rou
 import { Route as AuthenticatedAdminProfissionaisRepassesRouteImport } from './routes/_authenticated/admin.profissionais-repasses'
 import { Route as AuthenticatedAdminProfissionaisServicosRouteImport } from './routes/_authenticated/admin.profissionais-servicos'
 import { Route as AuthenticatedAdminRedeRouteImport } from './routes/_authenticated/admin.rede'
+import { Route as AuthenticatedAdminRedeAcademicaRouteImport } from './routes/_authenticated/admin.rede-academica'
 import { Route as AuthenticatedAdminS8RouteImport } from './routes/_authenticated/admin.s8'
 import { Route as AuthenticatedAdminTreinamentosRouteImport } from './routes/_authenticated/admin.treinamentos'
 import { Route as AuthenticatedAdminVendedoresRouteImport } from './routes/_authenticated/admin.vendedores'
@@ -158,6 +160,7 @@ import { Route as ClientareaClientePedidosRouteImport } from './routes/_clientar
 import { Route as ClientareaClientePerfilRouteImport } from './routes/_clientarea.cliente.perfil'
 import { Route as ClientareaClientePsicanalistaAltaPerformanceRouteImport } from './routes/_clientarea.cliente.psicanalista-alta-performance'
 import { Route as ClientareaClientePublicarRouteImport } from './routes/_clientarea.cliente.publicar'
+import { Route as ClientareaClienteRedeAcademicaRouteImport } from './routes/_clientarea.cliente.rede-academica'
 import { Route as ClientareaClienteSessoesRouteImport } from './routes/_clientarea.cliente.sessoes'
 import { Route as ClientareaClienteTreinamentosRouteImport } from './routes/_clientarea.cliente.treinamentos'
 import { Route as ApiAuthCallbackRouteImport } from './routes/api/auth/callback'
@@ -472,6 +475,11 @@ const ProfissionalServicosRoute = ProfissionalServicosRouteImport.update({
   path: '/profissional-servicos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RedeAcademicaRoute = RedeAcademicaRouteImport.update({
+  id: '/rede-academica',
+  path: '/rede-academica',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
@@ -784,6 +792,12 @@ const AuthenticatedAdminRedeRoute = AuthenticatedAdminRedeRouteImport.update({
   path: '/rede',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
+const AuthenticatedAdminRedeAcademicaRoute =
+  AuthenticatedAdminRedeAcademicaRouteImport.update({
+    id: '/rede-academica',
+    path: '/rede-academica',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminS8Route = AuthenticatedAdminS8RouteImport.update({
   id: '/s8',
   path: '/s8',
@@ -1026,6 +1040,12 @@ const ClientareaClientePublicarRoute =
   ClientareaClientePublicarRouteImport.update({
     id: '/publicar',
     path: '/publicar',
+    getParentRoute: () => ClientareaClienteRoute,
+  } as any)
+const ClientareaClienteRedeAcademicaRoute =
+  ClientareaClienteRedeAcademicaRouteImport.update({
+    id: '/rede-academica',
+    path: '/rede-academica',
     getParentRoute: () => ClientareaClienteRoute,
   } as any)
 const ClientareaClienteSessoesRoute =
@@ -1344,6 +1364,7 @@ export interface FileRoutesByFullPath {
   '/profissional-perfil': typeof ProfissionalPerfilRoute
   '/profissional-repasses': typeof ProfissionalRepassesRoute
   '/profissional-servicos': typeof ProfissionalServicosRoute
+  '/rede-academica': typeof RedeAcademicaRoute
   '/reset-password': typeof ResetPasswordRoute
   '/seller-referral': typeof SellerReferralRoute
   '/treinamento': typeof TreinamentoRoute
@@ -1400,6 +1421,7 @@ export interface FileRoutesByFullPath {
   '/admin/profissionais-repasses': typeof AuthenticatedAdminProfissionaisRepassesRoute
   '/admin/profissionais-servicos': typeof AuthenticatedAdminProfissionaisServicosRoute
   '/admin/rede': typeof AuthenticatedAdminRedeRoute
+  '/admin/rede-academica': typeof AuthenticatedAdminRedeAcademicaRoute
   '/admin/s8': typeof AuthenticatedAdminS8Route
   '/admin/treinamentos': typeof AuthenticatedAdminTreinamentosRoute
   '/admin/vendedores': typeof AuthenticatedAdminVendedoresRoute
@@ -1439,6 +1461,7 @@ export interface FileRoutesByFullPath {
   '/cliente/perfil': typeof ClientareaClientePerfilRoute
   '/cliente/psicanalista-alta-performance': typeof ClientareaClientePsicanalistaAltaPerformanceRouteWithChildren
   '/cliente/publicar': typeof ClientareaClientePublicarRoute
+  '/cliente/rede-academica': typeof ClientareaClienteRedeAcademicaRoute
   '/cliente/sessoes': typeof ClientareaClienteSessoesRoute
   '/cliente/treinamentos': typeof ClientareaClienteTreinamentosRouteWithChildren
   '/api/auth/callback': typeof ApiAuthCallbackRoute
@@ -1536,6 +1559,7 @@ export interface FileRoutesByTo {
   '/profissional-perfil': typeof ProfissionalPerfilRoute
   '/profissional-repasses': typeof ProfissionalRepassesRoute
   '/profissional-servicos': typeof ProfissionalServicosRoute
+  '/rede-academica': typeof RedeAcademicaRoute
   '/reset-password': typeof ResetPasswordRoute
   '/seller-referral': typeof SellerReferralRoute
   '/treinamento': typeof TreinamentoRoute
@@ -1590,6 +1614,7 @@ export interface FileRoutesByTo {
   '/admin/profissionais-repasses': typeof AuthenticatedAdminProfissionaisRepassesRoute
   '/admin/profissionais-servicos': typeof AuthenticatedAdminProfissionaisServicosRoute
   '/admin/rede': typeof AuthenticatedAdminRedeRoute
+  '/admin/rede-academica': typeof AuthenticatedAdminRedeAcademicaRoute
   '/admin/s8': typeof AuthenticatedAdminS8Route
   '/admin/treinamentos': typeof AuthenticatedAdminTreinamentosRoute
   '/admin/vendedores': typeof AuthenticatedAdminVendedoresRoute
@@ -1629,6 +1654,7 @@ export interface FileRoutesByTo {
   '/cliente/perfil': typeof ClientareaClientePerfilRoute
   '/cliente/psicanalista-alta-performance': typeof ClientareaClientePsicanalistaAltaPerformanceRouteWithChildren
   '/cliente/publicar': typeof ClientareaClientePublicarRoute
+  '/cliente/rede-academica': typeof ClientareaClienteRedeAcademicaRoute
   '/cliente/sessoes': typeof ClientareaClienteSessoesRoute
   '/cliente/treinamentos': typeof ClientareaClienteTreinamentosRouteWithChildren
   '/api/auth/callback': typeof ApiAuthCallbackRoute
@@ -1730,6 +1756,7 @@ export interface FileRoutesById {
   '/profissional-perfil': typeof ProfissionalPerfilRoute
   '/profissional-repasses': typeof ProfissionalRepassesRoute
   '/profissional-servicos': typeof ProfissionalServicosRoute
+  '/rede-academica': typeof RedeAcademicaRoute
   '/reset-password': typeof ResetPasswordRoute
   '/seller-referral': typeof SellerReferralRoute
   '/treinamento': typeof TreinamentoRoute
@@ -1787,6 +1814,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/profissionais-repasses': typeof AuthenticatedAdminProfissionaisRepassesRoute
   '/_authenticated/admin/profissionais-servicos': typeof AuthenticatedAdminProfissionaisServicosRoute
   '/_authenticated/admin/rede': typeof AuthenticatedAdminRedeRoute
+  '/_authenticated/admin/rede-academica': typeof AuthenticatedAdminRedeAcademicaRoute
   '/_authenticated/admin/s8': typeof AuthenticatedAdminS8Route
   '/_authenticated/admin/treinamentos': typeof AuthenticatedAdminTreinamentosRoute
   '/_authenticated/admin/vendedores': typeof AuthenticatedAdminVendedoresRoute
@@ -1826,6 +1854,7 @@ export interface FileRoutesById {
   '/_clientarea/cliente/perfil': typeof ClientareaClientePerfilRoute
   '/_clientarea/cliente/psicanalista-alta-performance': typeof ClientareaClientePsicanalistaAltaPerformanceRouteWithChildren
   '/_clientarea/cliente/publicar': typeof ClientareaClientePublicarRoute
+  '/_clientarea/cliente/rede-academica': typeof ClientareaClienteRedeAcademicaRoute
   '/_clientarea/cliente/sessoes': typeof ClientareaClienteSessoesRoute
   '/_clientarea/cliente/treinamentos': typeof ClientareaClienteTreinamentosRouteWithChildren
   '/api/auth/callback': typeof ApiAuthCallbackRoute
@@ -1925,6 +1954,7 @@ export interface FileRouteTypes {
     | '/profissional-perfil'
     | '/profissional-repasses'
     | '/profissional-servicos'
+    | '/rede-academica'
     | '/reset-password'
     | '/seller-referral'
     | '/treinamento'
@@ -1981,6 +2011,7 @@ export interface FileRouteTypes {
     | '/admin/profissionais-repasses'
     | '/admin/profissionais-servicos'
     | '/admin/rede'
+    | '/admin/rede-academica'
     | '/admin/s8'
     | '/admin/treinamentos'
     | '/admin/vendedores'
@@ -2020,6 +2051,7 @@ export interface FileRouteTypes {
     | '/cliente/perfil'
     | '/cliente/psicanalista-alta-performance'
     | '/cliente/publicar'
+    | '/cliente/rede-academica'
     | '/cliente/sessoes'
     | '/cliente/treinamentos'
     | '/api/auth/callback'
@@ -2117,6 +2149,7 @@ export interface FileRouteTypes {
     | '/profissional-perfil'
     | '/profissional-repasses'
     | '/profissional-servicos'
+    | '/rede-academica'
     | '/reset-password'
     | '/seller-referral'
     | '/treinamento'
@@ -2171,6 +2204,7 @@ export interface FileRouteTypes {
     | '/admin/profissionais-repasses'
     | '/admin/profissionais-servicos'
     | '/admin/rede'
+    | '/admin/rede-academica'
     | '/admin/s8'
     | '/admin/treinamentos'
     | '/admin/vendedores'
@@ -2210,6 +2244,7 @@ export interface FileRouteTypes {
     | '/cliente/perfil'
     | '/cliente/psicanalista-alta-performance'
     | '/cliente/publicar'
+    | '/cliente/rede-academica'
     | '/cliente/sessoes'
     | '/cliente/treinamentos'
     | '/api/auth/callback'
@@ -2310,6 +2345,7 @@ export interface FileRouteTypes {
     | '/profissional-perfil'
     | '/profissional-repasses'
     | '/profissional-servicos'
+    | '/rede-academica'
     | '/reset-password'
     | '/seller-referral'
     | '/treinamento'
@@ -2367,6 +2403,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/profissionais-repasses'
     | '/_authenticated/admin/profissionais-servicos'
     | '/_authenticated/admin/rede'
+    | '/_authenticated/admin/rede-academica'
     | '/_authenticated/admin/s8'
     | '/_authenticated/admin/treinamentos'
     | '/_authenticated/admin/vendedores'
@@ -2406,6 +2443,7 @@ export interface FileRouteTypes {
     | '/_clientarea/cliente/perfil'
     | '/_clientarea/cliente/psicanalista-alta-performance'
     | '/_clientarea/cliente/publicar'
+    | '/_clientarea/cliente/rede-academica'
     | '/_clientarea/cliente/sessoes'
     | '/_clientarea/cliente/treinamentos'
     | '/api/auth/callback'
@@ -2507,6 +2545,7 @@ export interface RootRouteChildren {
   ProfissionalPerfilRoute: typeof ProfissionalPerfilRoute
   ProfissionalRepassesRoute: typeof ProfissionalRepassesRoute
   ProfissionalServicosRoute: typeof ProfissionalServicosRoute
+  RedeAcademicaRoute: typeof RedeAcademicaRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SellerReferralRoute: typeof SellerReferralRoute
   TreinamentoRoute: typeof TreinamentoRoute
@@ -2892,6 +2931,13 @@ declare module '@tanstack/react-router' {
       path: '/profissional-servicos'
       fullPath: '/profissional-servicos'
       preLoaderRoute: typeof ProfissionalServicosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rede-academica': {
+      id: '/rede-academica'
+      path: '/rede-academica'
+      fullPath: '/rede-academica'
+      preLoaderRoute: typeof RedeAcademicaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reset-password': {
@@ -3293,6 +3339,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminRedeRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/rede-academica': {
+      id: '/_authenticated/admin/rede-academica'
+      path: '/rede-academica'
+      fullPath: '/admin/rede-academica'
+      preLoaderRoute: typeof AuthenticatedAdminRedeAcademicaRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/s8': {
       id: '/_authenticated/admin/s8'
       path: '/s8'
@@ -3578,6 +3631,13 @@ declare module '@tanstack/react-router' {
       path: '/publicar'
       fullPath: '/cliente/publicar'
       preLoaderRoute: typeof ClientareaClientePublicarRouteImport
+      parentRoute: typeof ClientareaClienteRoute
+    }
+    '/_clientarea/cliente/rede-academica': {
+      id: '/_clientarea/cliente/rede-academica'
+      path: '/rede-academica'
+      fullPath: '/cliente/rede-academica'
+      preLoaderRoute: typeof ClientareaClienteRedeAcademicaRouteImport
       parentRoute: typeof ClientareaClienteRoute
     }
     '/_clientarea/cliente/sessoes': {
@@ -3925,6 +3985,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminProfissionaisRepassesRoute: typeof AuthenticatedAdminProfissionaisRepassesRoute
   AuthenticatedAdminProfissionaisServicosRoute: typeof AuthenticatedAdminProfissionaisServicosRoute
   AuthenticatedAdminRedeRoute: typeof AuthenticatedAdminRedeRoute
+  AuthenticatedAdminRedeAcademicaRoute: typeof AuthenticatedAdminRedeAcademicaRoute
   AuthenticatedAdminS8Route: typeof AuthenticatedAdminS8Route
   AuthenticatedAdminTreinamentosRoute: typeof AuthenticatedAdminTreinamentosRoute
   AuthenticatedAdminVendedoresRoute: typeof AuthenticatedAdminVendedoresRoute
@@ -3969,6 +4030,7 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminProfissionaisServicosRoute:
     AuthenticatedAdminProfissionaisServicosRoute,
   AuthenticatedAdminRedeRoute: AuthenticatedAdminRedeRoute,
+  AuthenticatedAdminRedeAcademicaRoute: AuthenticatedAdminRedeAcademicaRoute,
   AuthenticatedAdminS8Route: AuthenticatedAdminS8Route,
   AuthenticatedAdminTreinamentosRoute: AuthenticatedAdminTreinamentosRoute,
   AuthenticatedAdminVendedoresRoute: AuthenticatedAdminVendedoresRoute,
@@ -4249,6 +4311,7 @@ interface ClientareaClienteRouteChildren {
   ClientareaClientePerfilRoute: typeof ClientareaClientePerfilRoute
   ClientareaClientePsicanalistaAltaPerformanceRoute: typeof ClientareaClientePsicanalistaAltaPerformanceRouteWithChildren
   ClientareaClientePublicarRoute: typeof ClientareaClientePublicarRoute
+  ClientareaClienteRedeAcademicaRoute: typeof ClientareaClienteRedeAcademicaRoute
   ClientareaClienteSessoesRoute: typeof ClientareaClienteSessoesRoute
   ClientareaClienteTreinamentosRoute: typeof ClientareaClienteTreinamentosRouteWithChildren
   ClientareaClienteIndexRoute: typeof ClientareaClienteIndexRoute
@@ -4282,6 +4345,7 @@ const ClientareaClienteRouteChildren: ClientareaClienteRouteChildren = {
   ClientareaClientePsicanalistaAltaPerformanceRoute:
     ClientareaClientePsicanalistaAltaPerformanceRouteWithChildren,
   ClientareaClientePublicarRoute: ClientareaClientePublicarRoute,
+  ClientareaClienteRedeAcademicaRoute: ClientareaClienteRedeAcademicaRoute,
   ClientareaClienteSessoesRoute: ClientareaClienteSessoesRoute,
   ClientareaClienteTreinamentosRoute:
     ClientareaClienteTreinamentosRouteWithChildren,
@@ -4417,6 +4481,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProfissionalPerfilRoute: ProfissionalPerfilRoute,
   ProfissionalRepassesRoute: ProfissionalRepassesRoute,
   ProfissionalServicosRoute: ProfissionalServicosRoute,
+  RedeAcademicaRoute: RedeAcademicaRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SellerReferralRoute: SellerReferralRoute,
   TreinamentoRoute: TreinamentoRoute,

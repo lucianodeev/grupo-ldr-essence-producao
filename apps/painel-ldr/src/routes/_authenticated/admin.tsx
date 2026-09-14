@@ -40,6 +40,7 @@ const sections = [
     ["Sistema S8", "/admin/s8"],
     ["Treinamentos", "/admin/treinamentos"],
     ["Alunos e Matrículas", "/admin/alunos-matriculas"],
+    ["Rede Acadêmica", "/admin/rede-academica"],
     ["Fórum do treinamento", "/admin/forum-treinamento"],
     ["Interesses em Pós-Graduação", "/admin/interesses-pos"],
     ["Graduações — Interessados", "/admin/interesses-graduacoes"],
