@@ -24,27 +24,12 @@ jobs:
           cache: npm
       - name: Install
         run: npm install --no-audit --no-fund
-      - name: Apply social core patch
-        run: python tools/patch_academic_social_core_20260914.py
-      - name: Apply create route PDF patch
-        run: python tools/patch_academic_create_pdf_20260914.py
       - name: Make create buttons focus feed composer
         run: python tools/patch_academic_create_button_focus_20260914.py
-      - name: Lint changed academic social files
+      - name: Lint changed Academic Network route
         continue-on-error: true
         working-directory: apps/painel-ldr
-        run: >-
-          npx eslint
-          src/components/academic-social-v3-feed.tsx
-          src/lib/academic-network.functions.ts
-          src/lib/academic-network.server.ts
-          src/lib/academic-media-v2.functions.ts
-          src/lib/academic-media-v2.server.ts
-          src/lib/academic-dm.functions.ts
-          src/lib/academic-dm.server.ts
-          src/routes/_clientarea.cliente.rede-academica.tsx
-          src/routes/_clientarea.cliente.rede-academica.criar.tsx
-          src/routes/_clientarea.cliente.rede-academica.chat.tsx
+        run: npx eslint src/routes/_clientarea.cliente.rede-academica.tsx
       - name: Generate route tree and production build
         working-directory: apps/painel-ldr
         run: npm run build
@@ -83,17 +68,17 @@ jobs:
             exit 1
           fi
           echo 'Academic social TypeScript gate passed.'
-      - name: Commit validated social functionality
+      - name: Commit validated create-button behavior
         shell: bash
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add apps/painel-ldr/src
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.rede-academica.tsx apps/painel-ldr/src/routeTree.gen.ts
           if git diff --cached --quiet; then
-            echo 'No social functionality changes to commit.'
+            echo 'No create-button changes to commit.'
             exit 0
           fi
           git commit -m 'feat(academic): focus create buttons on compact composer'
           git push origin main
 
-# validate create button focus: 2026-09-14T23:28+02:00
+# validate only current-main create behavior: 2026-09-14T23:31+02:00
