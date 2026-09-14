@@ -9,13 +9,15 @@ async function queue(targetUserId:string,actor:string,subject:string,body:string
 async function baseName(userId:string){const {data}=await db.from("profiles").select("full_name").eq("id",userId).maybeSingle();return data?.full_name||"Membro LDR"}
 async function actorProfile(userId:string){const [{data:base},{data:academic}]=await Promise.all([db.from("profiles").select("full_name").eq("id",userId).maybeSingle(),db.from("academic_profiles").select("username,show_name").eq("user_id",userId).maybeSingle()]);return {name:academic?.show_name===false?"Membro LDR":base?.full_name||"Membro LDR",username:academic?.username??null}}
 async function signedAvatar(path:string|null){if(!path)return null;const {data}=await db.storage.from("academic-network").createSignedUrl(path,3600);return data?.signedUrl??null}
+async function ensureAcademicProfile(userId:string){const {data:existing,error}=await db.from("academic_profiles").select("id").eq("user_id",userId).maybeSingle();if(error)fail("Não foi possível carregar o perfil acadêmico.");if(existing)return existing;const {data,error:insertError}=await db.from("academic_profiles").insert({user_id:userId}).select("id").single();if(insertError||!data)fail("Não foi possível criar o perfil acadêmico.");return data}
 
 export async function updateSocialProfile(userId:string,input:{username?:string;bio?:string;profession?:string;country?:string;city?:string;interests?:string[];courses?:string[];showName?:boolean;showLocation?:boolean}){
+  await ensureAcademicProfile(userId);
   const username=usernameOf(clean(input.username,30));if(username&&username.length<3)fail("O @username precisa ter ao menos 3 caracteres.");
   if(username){const {data:used}=await db.from("academic_profiles").select("user_id").ilike("username",username).neq("user_id",userId).maybeSingle();if(used)fail("Este @username já está em uso.")}
   const patch:any={bio:clean(input.bio,1200),profession:clean(input.profession,120),country:clean(input.country,80),city:clean(input.city,80),interests:(input.interests??[]).map(x=>clean(x,80)).filter(Boolean).slice(0,12),courses:(input.courses??[]).map(x=>clean(x,120)).filter(Boolean).slice(0,20),show_name:Boolean(input.showName),show_location:Boolean(input.showLocation),updated_at:new Date().toISOString()};
   if(username)patch.username=username;
-  const {data,error}=await db.from("academic_profiles").update(patch).eq("user_id",userId).select("id,username").maybeSingle();if(error||!data)fail("Não foi possível atualizar o perfil.");return data;
+  const {data,error}=await db.from("academic_profiles").update(patch).eq("user_id",userId).select("id,username,bio,profession,country,city,interests,courses,show_name,show_location,avatar_path").maybeSingle();if(error||!data)fail("Não foi possível atualizar o perfil.");return data;
 }
 
 export async function toggleFollow(userId:string,targetProfileId:string){
