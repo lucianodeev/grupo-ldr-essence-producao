@@ -17,11 +17,13 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Apply scoped Academy update
-        run: python scripts/apply-premium-storefront-pricing-20260914.py
+      - name: Apply eBooks filter only
+        run: python scripts/add-home-ebooks-filter-20260914.py
 
-      - name: Validate diff
-        run: git diff --check
+      - name: Validate scoped diff
+        run: |
+          git diff --check
+          git diff -- apps/painel-ldr/src/components/academy-university-home.tsx
 
       - uses: actions/setup-node@v4
         with:
@@ -35,20 +37,13 @@ jobs:
       - name: Build Academy
         run: npm run build:painel
 
-      - name: Commit after successful build
+      - name: Commit only after successful build
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add apps/painel-ldr/src/lib/psychoanalysis-ebooks.catalog.ts \
-                  apps/painel-ldr/src/lib/client-portal.server.ts \
-                  apps/painel-ldr/src/lib/fixed-brl-ebook-checkout.server.ts \
-                  apps/painel-ldr/src/components/academy-accessibility-controls.tsx \
-                  apps/painel-ldr/src/components/academy-university-home.tsx
-          if git diff --cached --quiet; then
-            echo "No application changes to commit"
-            exit 0
-          fi
-          git commit -m "feat(academy): premium storefront and normalized ebook pricing"
-          git push
+          git add apps/painel-ldr/src/components/academy-university-home.tsx
+          git rm scripts/add-home-ebooks-filter-20260914.py
+          git commit -m "feat(academy): add eBooks filter to main storefront"
+          git push origin HEAD:main
 
-# trigger 2026-09-14 premium storefront
+# trigger ebooks-filter-20260914
