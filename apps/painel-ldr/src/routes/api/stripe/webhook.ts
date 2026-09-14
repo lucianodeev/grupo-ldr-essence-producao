@@ -286,19 +286,82 @@ async function refundMarketplacePayment(object: StripeObject, eventId: string) {
     payment = data;
   }
   if (!payment) return false;
-  const amountRefunded = Math.max(Number(object.amount_refunded ?? object.amount ?? 0), 0);
-  const oldRefund = Number(payment.refund_amount_cents ?? 0);
-  const delta = Math.max(amountRefunded - oldRefund, 0);
-  if (!delta) return true;
-  const gross = Number(payment.gross_amount_cents ?? 0);
+
+  const gross = Math.max(Math.trunc(Number(payment.gross_amount_cents ?? 0)), 0);
+  const amountRefunded = Math.min(Math.max(Math.trunc(Number(object.amount_refunded ?? object.amount ?? 0)), 0), gross);
+  const oldRefund = Math.min(Math.max(Math.trunc(Number(payment.refund_amount_cents ?? 0)), 0), gross);
+  const refundDelta = Math.max(amountRefunded - oldRefund, 0);
+  if (!refundDelta) return true;
+
+  // Recalcula somente o valor efetivamente liquidado. A taxa congelada na
+  // transação preserva o histórico, mesmo se a configuração global mudar.
+  const feePercent = Number(
+    payment.platform_fee_percent_at_transaction ??
+      Number(payment.platform_fee_rate ?? 0) * 100,
+  );
+  if (!Number.isFinite(feePercent) || feePercent < 0 || feePercent > 100) {
+    throw new Error("Snapshot da taxa da plataforma inválido.");
+  }
+
+  const settledGross = gross - amountRefunded;
+  const newPlatformFee = Math.round((settledGross * feePercent) / 100);
+  const newNet = settledGross - newPlatformFee;
+  const oldPlatformFee = Math.max(Math.trunc(Number(payment.platform_fee_cents ?? 0)), 0);
+  const oldNet = Math.max(Math.trunc(Number(payment.provider_net_cents ?? gross - oldPlatformFee)), 0);
+  const platformFeeRefundDelta = Math.max(oldPlatformFee - newPlatformFee, 0);
+  const providerRefundDelta = Math.max(oldNet - newNet, 0);
   const full = amountRefunded >= gross;
-  const newNet = Math.max(Number(payment.provider_net_cents ?? 0) - delta, 0);
-  await db.from("marketplace_payments").update({ status: full ? "refunded" : "partially_refunded", refund_amount_cents: amountRefunded, provider_net_cents: newNet, stripe_charge_id: object.id ?? payment.stripe_charge_id, updated_at: new Date().toISOString() }).eq("id", payment.id);
-  if (payment.booking_id) await db.from("marketplace_bookings").update({ status: full ? "refunded" : "partially_refunded", updated_at: new Date().toISOString() }).eq("id", payment.booking_id);
-  const { error: ledgerError } = await db.from("marketplace_ledger").upsert({ professional_account_id: payment.professional_account_id, booking_id: payment.booking_id, payment_id: payment.id, entry_type: "refund", amount_cents: -delta, currency: payment.currency, stripe_event_id: eventId, idempotency_key: `${eventId}:refund`, description: "Reembolso do atendimento" }, { onConflict: "idempotency_key", ignoreDuplicates: true });
+
+  const { error: paymentUpdate } = await db.from("marketplace_payments").update({
+    status: full ? "refunded" : "partially_refunded",
+    refund_amount_cents: amountRefunded,
+    platform_fee_cents: newPlatformFee,
+    provider_net_cents: newNet,
+    stripe_charge_id: object.id ?? payment.stripe_charge_id,
+    updated_at: new Date().toISOString(),
+  }).eq("id", payment.id);
+  if (paymentUpdate) throw paymentUpdate;
+
+  if (payment.booking_id) {
+    const { error: bookingUpdate } = await db.from("marketplace_bookings").update({
+      status: full ? "refunded" : "partially_refunded",
+      updated_at: new Date().toISOString(),
+    }).eq("id", payment.booking_id);
+    if (bookingUpdate) throw bookingUpdate;
+  }
+
+  const { error: ledgerError } = await db.from("marketplace_ledger").upsert({
+    professional_account_id: payment.professional_account_id,
+    booking_id: payment.booking_id,
+    payment_id: payment.id,
+    entry_type: "refund",
+    amount_cents: -refundDelta,
+    currency: payment.currency,
+    stripe_event_id: eventId,
+    idempotency_key: `${eventId}:refund`,
+    description: `Reembolso do atendimento (profissional: ${providerRefundDelta}; taxa LDR: ${platformFeeRefundDelta})`,
+  }, { onConflict: "idempotency_key", ignoreDuplicates: true });
   if (ledgerError) throw ledgerError;
-  const { data: balance } = await db.from("provider_balances").select("available_cents,pending_cents,lifetime_gross_cents,lifetime_platform_fee_cents,lifetime_refunds_cents").eq("professional_account_id", payment.professional_account_id).eq("currency", payment.currency).maybeSingle();
-  if (balance) await db.from("provider_balances").update({ available_cents: Number(balance.available_cents ?? 0) - delta, lifetime_refunds_cents: Number(balance.lifetime_refunds_cents ?? 0) + delta, updated_at: new Date().toISOString() }).eq("professional_account_id", payment.professional_account_id).eq("currency", payment.currency);
+
+  const { data: balance, error: balanceReadError } = await db.from("provider_balances")
+    .select("available_cents,pending_cents,lifetime_gross_cents,lifetime_platform_fee_cents,lifetime_refunds_cents")
+    .eq("professional_account_id", payment.professional_account_id)
+    .eq("currency", payment.currency)
+    .maybeSingle();
+  if (balanceReadError) throw balanceReadError;
+  if (balance) {
+    const { error: balanceUpdateError } = await db.from("provider_balances").update({
+      available_cents: Number(balance.available_cents ?? 0) - providerRefundDelta,
+      lifetime_platform_fee_cents: Math.max(
+        Number(balance.lifetime_platform_fee_cents ?? 0) - platformFeeRefundDelta,
+        0,
+      ),
+      lifetime_refunds_cents: Number(balance.lifetime_refunds_cents ?? 0) + refundDelta,
+      updated_at: new Date().toISOString(),
+    }).eq("professional_account_id", payment.professional_account_id)
+      .eq("currency", payment.currency);
+    if (balanceUpdateError) throw balanceUpdateError;
+  }
   return true;
 }
 
