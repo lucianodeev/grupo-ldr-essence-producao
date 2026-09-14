@@ -115,3 +115,5 @@ jobs:
           git rm -f tools/academic-network-typecheck-current.log tools/patch_academic_functional_20260914.py tools/sync_academic_supabase_types_20260914.py .github/workflows/academic-functional-final-20260914.yml
           git commit -m 'fix(academic): finalize social actions publishing and dm'
           git push origin main
+
+# retriggered 2026-09-15: validate current main after schema-type diagnosis
