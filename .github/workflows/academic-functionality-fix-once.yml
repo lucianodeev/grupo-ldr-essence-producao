@@ -34,6 +34,8 @@ jobs:
           exit 0
       - name: Apply targeted Academic Network functional repair
         run: python tools/patch_academic_functionality_20260914.py
+      - name: Apply targeted Academic Network typecheck repair
+        run: python tools/patch_academic_typecheck_20260914.py
       - name: Lint audit for changed Academic Network files
         continue-on-error: true
         working-directory: apps/painel-ldr
@@ -42,6 +44,8 @@ jobs:
           src/lib/academic-network.functions.ts
           src/lib/academic-network.server.ts
           src/components/academic-social-v3-feed.tsx
+          src/components/academic-challenges-admin.tsx
+          src/components/academic-onboarding-v3.tsx
           src/routes/_clientarea.cliente.rede-academica.tsx
           src/routes/_clientarea.cliente.rede-academica.criar.tsx
           src/routes/_clientarea.cliente.rede-academica.editar-perfil.tsx
@@ -78,7 +82,7 @@ jobs:
             echo 'No Academic Network changes to commit.'
             exit 0
           fi
-          git commit -m 'fix(academic): restore publishing interactions avatars and internal sharing'
+          git commit -m 'fix(academic): finish targeted type safety repairs'
           git push origin main
 
-# validation rerun: 2026-09-14T22:14+02:00
+# validation rerun: 2026-09-14T22:47+02:00
