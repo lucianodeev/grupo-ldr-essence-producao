@@ -12,7 +12,7 @@ const REPORT_REASONS = new Set(["offensive","harassment","hate","privacy","spam"
 function fail(message:string):never{ throw new Error(message); }
 function clean(value:unknown,max:number){ return String(value??"").trim().slice(0,max); }
 function topicSlug(value:string){ return value.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/^#+/,"").replace(/[^a-z0-9]+/g,"").slice(0,50); }
-function mentionedUsernames(body:string){ return [...new Set([...body.matchAll(/(^|\s)@([a-zA-Z0-9._]{3,30})\b/g)].map(m=>m[2].toLowerCase()))].slice(0,20); }
+function mentionedUsernames(body:string){ return [...new Set([...body.matchAll(/(^|\s)@([a-zA-Z0-9._]{3,30})\b/g)].map(m=>m[2]).filter((name):name is string=>Boolean(name)).map(name=>name.toLowerCase()))].slice(0,20); }
 async function createMentions(userId:string,body:string,target:{postId?:string;commentId?:string},anonymous:boolean){
   if(anonymous)return;
   const names=mentionedUsernames(body); if(!names.length)return;
@@ -22,7 +22,7 @@ async function createMentions(userId:string,body:string,target:{postId?:string;c
 async function signedUrlMap(paths:string[]){
   const unique=[...new Set(paths.filter(Boolean))]; const out=new Map<string,string>(); if(!unique.length)return out;
   const {data}=await db.storage.from("academic-network").createSignedUrls(unique,3600);
-  (data??[]).forEach((x:any,i:number)=>{ if(x?.signedUrl)out.set(unique[i],x.signedUrl); }); return out;
+  (data??[]).forEach((x:any,i:number)=>{ const path=unique[i];if(x?.signedUrl&&path)out.set(path,x.signedUrl); }); return out;
 }
 
 async function rateLimit(userId:string,table:"academic_posts"|"academic_comments",seconds:number){

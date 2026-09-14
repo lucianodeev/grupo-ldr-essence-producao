@@ -42,8 +42,8 @@ export async function socialProfileByUsername(viewerUserId:string,rawUsername:st
   ]);
   const postRows=posts??[]; const postIds=postRows.map((x:any)=>x.id);
   const {data:mediaRows}=postIds.length?await db.from("academic_post_media").select("id,post_id,storage_path,alt_text,mime_type,sort_order").in("post_id",postIds).order("sort_order"):{data:[]};
-  const mediaPaths=[...new Set((mediaRows??[]).map((x:any)=>x.storage_path).filter(Boolean))]; const mediaUrlMap=new Map<string,string>();
-  if(mediaPaths.length){const {data:signed}=await db.storage.from("academic-network").createSignedUrls(mediaPaths,3600);(signed??[]).forEach((x:any,i:number)=>{if(x?.signedUrl)mediaUrlMap.set(mediaPaths[i],x.signedUrl)});}
+  const mediaPaths:string[]=[...new Set<string>((mediaRows??[]).map((x:any)=>String(x.storage_path??"")).filter(Boolean))]; const mediaUrlMap=new Map<string,string>();
+  if(mediaPaths.length){const {data:signed}=await db.storage.from("academic-network").createSignedUrls(mediaPaths,3600);(signed??[]).forEach((x:any,i:number)=>{const path=mediaPaths[i];if(x?.signedUrl&&path)mediaUrlMap.set(path,x.signedUrl)});}
   const mediaByPost=new Map<string,any[]>(); for(const m of mediaRows??[]){const list=mediaByPost.get(m.post_id)??[];list.push({id:m.id,url:mediaUrlMap.get(m.storage_path)??null,altText:m.alt_text,mimeType:m.mime_type});mediaByPost.set(m.post_id,list)}
   const safePosts=postRows.map((x:any)=>({...x,media:mediaByPost.get(x.id)??[]}));
   return {profile:{id:p.id,username:p.username,name:p.show_name===false?"Membro LDR":await baseName(p.user_id),avatarUrl:await signedAvatar(p.avatar_path),bio:p.bio,profession:p.profession,role:p.display_role,country:p.show_location?p.country:"",city:p.show_location?p.city:"",interests:p.interests??[],courses:p.courses??[],own,followed:followRow?.status==="accepted",followStatus:followRow?.status??null,followers:followers??0,following:following??0,postCount:postCount??0,articleCount:articleCount??0},posts:safePosts,articles:articles??[]};

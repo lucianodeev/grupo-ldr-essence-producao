@@ -16,7 +16,8 @@ import {
   academicToggleSave, academicToggleSupport, academicUpdateProfile
 } from "@/lib/academic-network.functions";
 
-export const Route=createFileRoute("/_clientarea/cliente/rede-academica")({validateSearch:(search:Record<string,unknown>)=>({tab:typeof search.tab==="string"?search.tab:undefined}),component:AcademicNetworkPage});
+type AcademicNetworkSearch={tab?:string};
+export const Route=createFileRoute("/_clientarea/cliente/rede-academica")({validateSearch:(search:Record<string,unknown>):AcademicNetworkSearch=>{const tab=search["tab"];return typeof tab==="string"?{tab}:{}},component:AcademicNetworkPage});
 type Tab="feed"|"communities"|"diary"|"saved"|"profile";
 type Locale="pt"|"en"|"fr"|"es";
 

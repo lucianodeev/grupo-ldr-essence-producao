@@ -21,7 +21,7 @@ export async function editorialSnapshot(userId:string,input?:{limit?:number;coun
     const real7=(real7Rows??[]).length;const activeUsers=new Set((real7Rows??[]).map((x:any)=>x.user_id)).size;
     const automatic=real7<20?(settings?.low_activity_percent??35):real7<120?(settings?.medium_activity_percent??20):(settings?.high_activity_percent??8);
     const editorialPercent=settings?.mode==="manual"?Math.min(Number(settings?.manual_max_percent??30),automatic||40):automatic;
-    const followedIds=new Set((follows??[]).map((x:any)=>x.editorial_profile_id));
+    const followedIds=new Set<string>((follows??[]).map((x:any)=>String(x.editorial_profile_id??"")).filter(Boolean));
     let pq=db.from("academic_editorial_profiles").select("id,username,display_name,avatar_url,country,city,language,profession,specialty,bio,interests,active").eq("active",true);
     if(input?.country)pq=pq.eq("country",clean(input.country,50));
     const {data:profiles}=await pq.order("display_name").limit(100);
