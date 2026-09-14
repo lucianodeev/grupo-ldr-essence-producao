@@ -144,5 +144,28 @@ export async function respondAcademicConnection(userId:string,id:string,status:"
 export async function reportAcademicContent(userId:string,input:{postId?:string;commentId?:string;reason:string;details?:string}){ await requirePremium(userId); if(Boolean(input.postId)===Boolean(input.commentId))fail("Conteúdo inválido."); const reason=REPORT_REASONS.has(input.reason)?input.reason:"other"; const {data,error}=await db.from("academic_reports").insert({reporter_user_id:userId,post_id:input.postId||null,comment_id:input.commentId||null,reason,details:clean(input.details,1200)}).select("id").single(); if(error)fail("Não foi possível enviar a denúncia."); return data; }
 
 async function requireAdmin(userId:string){ if(!(await isAdmin(userId)))fail("Acesso negado."); }
-export async function getAcademicAdmin(userId:string){ await requireAdmin(userId); const [{data:posts},{data:comments},{data:reports},{data:communities}]=await Promise.all([db.from("academic_posts").select("id,user_id,body,post_type,anonymous,status,is_pinned,created_at").order("created_at",{ascending:false}).limit(150),db.from("academic_comments").select("id,post_id,user_id,body,anonymous,status,created_at").order("created_at",{ascending:false}).limit(200),db.from("academic_reports").select("id,reporter_user_id,post_id,comment_id,reason,details,status,created_at").order("created_at",{ascending:false}).limit(200),db.from("academic_communities").select("id,slug,name,active").order("name")]); return {posts:posts??[],comments:comments??[],reports:reports??[],communities:communities??[]}; }
+export async function getAcademicAdmin(userId:string){
+  await requireAdmin(userId);
+  const [{data:posts},{data:comments},{data:reports},{data:communities},{data:academicProfiles}]=await Promise.all([
+    db.from("academic_posts").select("id,user_id,body,post_type,anonymous,status,is_pinned,created_at").order("created_at",{ascending:false}).limit(150),
+    db.from("academic_comments").select("id,post_id,user_id,body,anonymous,status,created_at").order("created_at",{ascending:false}).limit(200),
+    db.from("academic_reports").select("id,reporter_user_id,post_id,comment_id,reason,details,status,created_at").order("created_at",{ascending:false}).limit(200),
+    db.from("academic_communities").select("id,slug,name,active").order("name"),
+    db.from("academic_profiles").select("id,user_id,bio,profession,country,city,display_role,show_name,show_location,created_at").order("created_at",{ascending:false}).limit(250)
+  ]);
+  const ids=(academicProfiles??[]).map((p:any)=>p.user_id);
+  const {data:baseProfiles}=ids.length?await db.from("profiles").select("id,full_name").in("id",ids):{data:[]};
+  const names=new Map((baseProfiles??[]).map((p:any)=>[p.id,p.full_name]));
+  const profiles=(academicProfiles??[]).map((p:any)=>({...p,user_id:undefined,name:names.get(p.user_id)||"Membro LDR"}));
+  return {posts:posts??[],comments:comments??[],reports:reports??[],communities:communities??[],profiles};
+}
 export async function moderateAcademic(userId:string,input:{kind:"post"|"comment"|"report";id:string;action:"hide"|"restore"|"pin"|"unpin"|"resolve"|"dismiss"}){ await requireAdmin(userId); if(input.kind==="post"){const patch:any={updated_at:new Date().toISOString()}; if(input.action==="hide")patch.status="hidden"; else if(input.action==="restore")patch.status="active"; else if(input.action==="pin"){ const {count}=await db.from("academic_posts").select("id",{count:"exact",head:true}).eq("is_pinned",true).eq("status","active"); const {data:target}=await db.from("academic_posts").select("is_pinned").eq("id",input.id).maybeSingle(); if(!target?.is_pinned&&(count??0)>=3) fail("Limite de 3 publicações fixadas atingido."); patch.is_pinned=true; } else if(input.action==="unpin")patch.is_pinned=false; else fail("Ação inválida."); await db.from("academic_posts").update(patch).eq("id",input.id);} else if(input.kind==="comment"){if(!["hide","restore"].includes(input.action))fail("Ação inválida."); await db.from("academic_comments").update({status:input.action==="hide"?"hidden":"active",updated_at:new Date().toISOString()}).eq("id",input.id);} else {if(!["resolve","dismiss"].includes(input.action))fail("Ação inválida."); await db.from("academic_reports").update({status:input.action==="resolve"?"resolved":"dismissed",reviewed_by:userId,reviewed_at:new Date().toISOString()}).eq("id",input.id);} return {ok:true}; }
+
+export async function setAcademicProfileRole(userId:string,input:{profileId:string;role:"member"|"student"|"professor"|"mentor"}){
+  await requireAdmin(userId);
+  const allowed=new Set(["member","student","professor","mentor"]);
+  if(!allowed.has(input.role))fail("Função acadêmica inválida.");
+  const {data,error}=await db.from("academic_profiles").update({display_role:input.role,updated_at:new Date().toISOString()}).eq("id",input.profileId).select("id,display_role").maybeSingle();
+  if(error||!data)fail("Perfil acadêmico não encontrado.");
+  return data;
+}
