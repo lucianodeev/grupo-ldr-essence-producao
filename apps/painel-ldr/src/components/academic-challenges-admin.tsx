@@ -10,7 +10,7 @@ export function AcademicChallengesAdmin(){
   const qc=useQueryClient();const snapshot=useServerFn(academicAdminChallengeSnapshot),saveFn=useServerFn(academicSaveChallenge),scoreFn=useServerFn(academicScoreChallengeEntry),resultFn=useServerFn(academicSetChallengeEntryResult);const [form,setForm]=useState(EMPTY);const [editingId,setEditingId]=useState<string|undefined>();
   const {data,isLoading}=useQuery({queryKey:["academic-challenges-admin"],queryFn:()=>snapshot()});
   const refresh=()=>qc.invalidateQueries({queryKey:["academic-challenges-admin"]});
-  const save=useMutation({mutationFn:()=>saveFn({data:{...form,id:editingId}}),onSuccess:()=>{setForm(EMPTY);setEditingId(undefined);refresh()}});
+  const save=useMutation({mutationFn:()=>saveFn({data:{...form,...(editingId?{id:editingId}:{})}}),onSuccess:()=>{setForm(EMPTY);setEditingId(undefined);refresh()}});
   const score=useMutation({mutationFn:(x:{entryId:string;score:number})=>scoreFn({data:x}),onSuccess:refresh});
   const result=useMutation({mutationFn:(x:{entryId:string;status:"winner"|"highlighted"|"eligible"|"ineligible";badge?:"article_highlight"|"community_choice"|"ldr_academic_highlight"|null})=>resultFn({data:x}),onSuccess:refresh});
   const edit=(c:any)=>{setEditingId(c.id);setForm({title:c.title,theme:c.theme,description:c.description??"",rules:c.rules??"",startsAt:String(c.starts_at).slice(0,16),endsAt:String(c.ends_at).slice(0,16),status:c.status,category:c.category??"",communityWeight:Number(c.community_weight??40),juryWeight:Number(c.jury_weight??60)})};
