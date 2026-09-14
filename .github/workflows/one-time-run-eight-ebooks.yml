@@ -20,15 +20,15 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22.12.0'
           cache: npm
       - name: Load scoped patch from isolated branch
         run: |
           git fetch origin codex/add-eight-ebooks-20260914
           git show origin/codex/add-eight-ebooks-20260914:scripts/apply-eight-contemporary-ebooks.py > scripts/apply-eight-contemporary-ebooks.py
-          git show origin/codex/add-eight-ebooks-20260914:scripts/apply-eight-contemporary-ebooks-wrapper-v2.py > scripts/apply-eight-contemporary-ebooks-wrapper-v2.py
+          git show origin/codex/add-eight-ebooks-20260914:scripts/apply-eight-contemporary-ebooks-wrapper-v3.py > scripts/apply-eight-contemporary-ebooks-wrapper-v3.py
       - name: Apply only the eight new ebooks
-        run: python scripts/apply-eight-contemporary-ebooks-wrapper-v2.py
+        run: python scripts/apply-eight-contemporary-ebooks-wrapper-v3.py
       - name: Validate diff
         run: git diff --check
       - name: Install dependencies
@@ -37,7 +37,7 @@ jobs:
         run: npm run build:painel
       - name: Commit only after successful build
         run: |
-          rm -f scripts/apply-eight-contemporary-ebooks.py scripts/apply-eight-contemporary-ebooks-wrapper-v2.py
+          rm -f scripts/apply-eight-contemporary-ebooks.py scripts/apply-eight-contemporary-ebooks-wrapper-v3.py
           git rm .github/workflows/one-time-run-eight-ebooks.yml
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
