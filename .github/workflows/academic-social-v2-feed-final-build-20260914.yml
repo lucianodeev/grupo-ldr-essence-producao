@@ -4,6 +4,7 @@ on:
     branches: [feature/rede-academica-social-v2-20260914]
     paths:
       - 'tools/patch_academic_social_v2_feed_20260914.py'
+      - 'apps/painel-ldr/supabase/migrations/20260914183500_academic_diary_anon_hardening.sql'
       - '.github/workflows/academic-social-v2-feed-final-build-20260914.yml'
   workflow_dispatch:
 permissions:
