@@ -466,3 +466,29 @@
     min-height: 46px !important;
   }
 }
+
+/* Composer avatar fallback: preserve real profile photo; remove institutional LDR badge when no photo exists. */
+.academic-v4-composer > div:first-child > span:first-child:not(:has(img)) {
+  width: 36px !important;
+  height: 36px !important;
+  color: transparent !important;
+  background: #eef3f7 !important;
+  border: 1px solid #d8e1ea;
+  box-shadow: 0 0 0 2px hsl(var(--background)) !important;
+  position: relative;
+}
+.academic-v4-composer > div:first-child > span:first-child:not(:has(img))::after {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 27%, #6c8194 0 3.5px, transparent 3.8px),
+    radial-gradient(ellipse at 50% 94%, #6c8194 0 8px, transparent 8.4px);
+}
+@media (max-width: 639px) {
+  .academic-v4-composer > div:first-child > span:first-child:not(:has(img)) {
+    width: 34px !important;
+    height: 34px !important;
+  }
+}
