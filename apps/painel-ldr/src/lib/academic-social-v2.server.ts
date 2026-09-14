@@ -7,6 +7,7 @@ function usernameOf(v:string){return v.toLowerCase().replace(/^@/,"").replace(/[
 async function customerId(userId:string){const {data}=await db.from("customers").select("id").eq("auth_user_id",userId).maybeSingle();return data?.id??null}
 async function queue(targetUserId:string,actor:string,subject:string,body:string,metadata:Record<string,unknown>={}){if(!targetUserId||targetUserId===actor)return;const target=await customerId(targetUserId);if(!target)return;await db.from("notification_outbox").insert({audience_type:"client",target_id:target,channel:"in_app",event_type:"manual",subject,body,metadata:{source:"academic_network",...metadata},created_by:actor,status:"pending"})}
 async function baseName(userId:string){const {data}=await db.from("profiles").select("full_name").eq("id",userId).maybeSingle();return data?.full_name||"Membro LDR"}
+async function actorProfile(userId:string){const [{data:base},{data:academic}]=await Promise.all([db.from("profiles").select("full_name").eq("id",userId).maybeSingle(),db.from("academic_profiles").select("username,show_name").eq("user_id",userId).maybeSingle()]);return {name:academic?.show_name===false?"Membro LDR":base?.full_name||"Membro LDR",username:academic?.username??null}}
 async function signedAvatar(path:string|null){if(!path)return null;const {data}=await db.storage.from("academic-network").createSignedUrl(path,3600);return data?.signedUrl??null}
 
 export async function updateSocialProfile(userId:string,input:{username?:string;bio?:string;profession?:string;country?:string;city?:string;interests?:string[];courses?:string[];showName?:boolean;showLocation?:boolean}){
@@ -22,7 +23,7 @@ export async function toggleFollow(userId:string,targetProfileId:string){
   const {data:existing}=await db.from("academic_follows").select("status").eq("follower_user_id",userId).eq("followed_user_id",target.user_id).maybeSingle();
   if(existing){await db.from("academic_follows").delete().eq("follower_user_id",userId).eq("followed_user_id",target.user_id);return {following:false,status:null}}
   const status=target.profile_visibility==="private"?"pending":"accepted";const {error}=await db.from("academic_follows").insert({follower_user_id:userId,followed_user_id:target.user_id,status});if(error)fail("Não foi possível seguir este perfil.");
-  if(status==="accepted")await queue(target.user_id,userId,"Novo seguidor","Uma pessoa começou a seguir seu perfil acadêmico.",{kind:"follow",profileId:targetProfileId});
+  if(status==="accepted"){const actor=await actorProfile(userId);await queue(target.user_id,userId,"Novo seguidor",`${actor.name} começou a seguir você.`,{kind:"follow",profileId:targetProfileId,actorUsername:actor.username});}
   return {following:status==="accepted",status};
 }
 
