@@ -1,0 +1,56 @@
+name: Validate Academic Network Notification Target
+on:
+  push:
+    branches:
+      - feature/rede-academica-notification-target-20260914
+    paths:
+      - .github/workflows/rede-academica-notification-target-build.yml
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
+        with:
+          ref: feature/rede-academica-notification-target-20260914
+          fetch-depth: 0
+      - name: Patch notification target mapping
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('apps/painel-ldr/src/lib/academic-network.server.ts')
+          s=p.read_text(encoding='utf-8')
+          old='''async function queueInAppNotification(targetUserId:string,createdBy:string,subject:string,body:string,metadata:Record<string,unknown>={}){\n  if(!targetUserId||targetUserId===createdBy)return;\n  await db.from("notification_outbox").insert({\n    audience_type:"client",target_id:targetUserId,channel:"in_app",event_type:"manual",\n    subject,body,metadata:{source:"academic_network",...metadata},created_by:createdBy,status:"pending"\n  });\n}'''
+          new='''async function queueInAppNotification(targetUserId:string,createdBy:string,subject:string,body:string,metadata:Record<string,unknown>={}){\n  if(!targetUserId||targetUserId===createdBy)return;\n  const {data:customer}=await db.from("customers").select("id").eq("auth_user_id",targetUserId).maybeSingle();\n  if(!customer?.id)return;\n  await db.from("notification_outbox").insert({\n    audience_type:"client",target_id:customer.id,channel:"in_app",event_type:"manual",\n    subject,body,metadata:{source:"academic_network",target_auth_user_id:targetUserId,...metadata},created_by:createdBy,status:"pending"\n  });\n}'''
+          if old not in s:
+              raise SystemExit('Expected notification helper not found; refusing unsafe patch')
+          s=s.replace(old,new,1)
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Validate scoped diff
+        shell: bash
+        run: |
+          git diff -- apps/painel-ldr/src/lib/academic-network.server.ts
+          test "$(git diff --name-only | wc -l)" -eq 1
+          grep -q 'target_id:customer.id' apps/painel-ldr/src/lib/academic-network.server.ts
+          grep -q 'auth_user_id' apps/painel-ldr/src/lib/academic-network.server.ts
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Build Academy
+        run: npm run build:painel
+      - name: Commit validated notification target fix
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add apps/painel-ldr/src/lib/academic-network.server.ts
+          git commit -m 'fix(academy): route academic notifications to client customer id'
+          git push origin HEAD:feature/rede-academica-notification-target-20260914
