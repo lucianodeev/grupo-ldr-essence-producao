@@ -1,0 +1,46 @@
+name: Academic Social V2 Mobile Build 2026-09-14
+
+on:
+  push:
+    branches:
+      - feature/rede-academica-social-v2-20260914
+    paths:
+      - 'tools/patch_academic_social_v2_mobile_20260914.py'
+      - '.github/workflows/academic-social-v2-mobile-build-20260914.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Apply incremental mobile social patch
+        run: python tools/patch_academic_social_v2_mobile_20260914.py
+      - name: Install dependencies
+        working-directory: apps/painel-ldr
+        run: npm ci
+      - name: Build Academy
+        working-directory: apps/painel-ldr
+        run: npm run build
+      - name: Commit validated mobile integration
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.rede-academica.tsx apps/painel-ldr/src/components/academy-chatbot.tsx
+          if git diff --cached --quiet; then
+            echo "No generated changes to commit."
+          else
+            git commit -m "feat(academy): add safe-area mobile academic navigation"
+            git push origin HEAD:${{ github.ref_name }}
+          fi
