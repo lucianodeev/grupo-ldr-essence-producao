@@ -37,6 +37,9 @@
 .academic-social-v4 select { font-size: 16px; }
 
 .academic-v4-feed { width: 100%; min-width: 0; }
+.academic-v4-utility-strip { -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
+.academic-v4-utility-strip span { white-space: nowrap; overflow-wrap: normal; }
+.academic-social-v4 textarea,.academic-social-v4 input { pointer-events: auto; user-select: text; }
 .academic-v4-composer,.academic-v4-post,.academic-v4-panel { border-radius: var(--ldr-card-radius); }
 .academic-v4-composer { overflow: hidden; }
 .academic-v4-composer-main { min-height: 52px; }

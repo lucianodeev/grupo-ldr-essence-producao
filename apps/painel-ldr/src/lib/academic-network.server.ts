@@ -92,7 +92,9 @@ function safeAuthor(raw:any,anonymous:boolean){
 
 export async function getAcademicNetwork(userId:string,email:string|null,opts?:{communityId?:string|null;search?:string|null;savedOnly?:boolean;offset?:number}){
   const access=await accessFor(userId);
-  const profile=await ensureProfile(userId);
+  const profileRaw=await ensureProfile(userId);
+  const ownAvatarUrls=await signedUrlMap(profileRaw?.avatar_path?[profileRaw.avatar_path]:[]);
+  const profile={...profileRaw,avatarUrl:profileRaw?.avatar_path?(ownAvatarUrls.get(profileRaw.avatar_path)??null):null};
   const [{data:communities},{data:memberships},{data:diary},{data:prompts},{data:saved},{data:reacted},{data:connections},{data:follows},{data:latestArticles}]=await Promise.all([
     db.from("academic_communities").select("id,slug,name,description,is_open,active").eq("active",true).order("name"),
     db.from("academic_community_members").select("community_id").eq("user_id",userId),
@@ -160,6 +162,21 @@ export async function deleteAcademicComment(userId:string,id:string){ await db.f
 
 export async function toggleAcademicSave(userId:string,postId:string){ await requirePremium(userId); const {data}=await db.from("academic_saved_posts").select("post_id").eq("user_id",userId).eq("post_id",postId).maybeSingle(); if(data)await db.from("academic_saved_posts").delete().eq("user_id",userId).eq("post_id",postId); else await db.from("academic_saved_posts").insert({user_id:userId,post_id:postId}); return {saved:!data}; }
 export async function toggleAcademicSupport(userId:string,postId:string){ await requirePremium(userId); const {data}=await db.from("academic_reactions").select("post_id").eq("user_id",userId).eq("post_id",postId).eq("reaction_type","support").maybeSingle(); if(data)await db.from("academic_reactions").delete().eq("user_id",userId).eq("post_id",postId).eq("reaction_type","support"); else {await db.from("academic_reactions").insert({user_id:userId,post_id:postId,reaction_type:"support"}); const {data:post}=await db.from("academic_posts").select("user_id").eq("id",postId).maybeSingle(); if(post?.user_id)await queueInAppNotification(post.user_id,userId,"Publicação acolhida","Sua publicação recebeu um Acolher.",{kind:"support",postId});} return {supported:!data}; }
+export async function shareAcademicPost(userId:string,input:{postId:string;targetProfileId:string}){
+  await requirePremium(userId);
+  const [{data:post},{data:target},{data:links}]=await Promise.all([
+    db.from("academic_posts").select("id,status").eq("id",input.postId).eq("status","active").maybeSingle(),
+    db.from("academic_profiles").select("id,user_id,username").eq("id",input.targetProfileId).maybeSingle(),
+    db.from("academic_connections").select("requester_user_id,receiver_user_id,status").eq("status","accepted").or(`requester_user_id.eq.${userId},receiver_user_id.eq.${userId}`)
+  ]);
+  if(!post)fail("Publicação não encontrada.");
+  if(!target?.user_id||target.user_id===userId)fail("Destinatário inválido.");
+  const connected=(links??[]).some((x:any)=>(x.requester_user_id===userId&&x.receiver_user_id===target.user_id)||(x.receiver_user_id===userId&&x.requester_user_id===target.user_id));
+  if(!connected)fail("Compartilhamento interno disponível para conexões aceitas.");
+  const authors=await authorMap([userId]);const actor=safeAuthor(authors.get(userId),false);
+  await queueInAppNotification(target.user_id,userId,"Publicação compartilhada",`${actor.name||"Uma conexão"} compartilhou uma publicação com você.`,{kind:"shared_post",postId:input.postId,post_id:input.postId,actorUsername:actor.username});
+  return {ok:true};
+}
 export async function toggleAcademicMembership(userId:string,communityId:string){ await requirePremium(userId); const {data}=await db.from("academic_community_members").select("community_id").eq("user_id",userId).eq("community_id",communityId).maybeSingle(); if(data)await db.from("academic_community_members").delete().eq("user_id",userId).eq("community_id",communityId); else await db.from("academic_community_members").insert({user_id:userId,community_id:communityId}); return {joined:!data}; }
 
 export async function updateAcademicProfile(userId:string,input:{bio?:string;profession?:string;country?:string;city?:string;interests?:string[];showName?:boolean;showLocation?:boolean}){

@@ -86,8 +86,8 @@ function AcademicUtilityStrip({locale}:{locale:Locale}){
   const labels={pt:{library:"Biblioteca",accessibility:"Acessibilidade",chat:"Chat"},en:{library:"Library",accessibility:"Accessibility",chat:"Chat"},fr:{library:"Bibliothèque",accessibility:"Accessibilité",chat:"Chat"},es:{library:"Biblioteca",accessibility:"Accesibilidad",chat:"Chat"}}[locale];
   const openAccessibility=()=>document.querySelector<HTMLButtonElement>('[data-academy-accessibility-drawer="true"] > button')?.click();
   const openChat=()=>{const buttons=Array.from(document.querySelectorAll<HTMLButtonElement>('button[aria-expanded]'));buttons.find((button)=>String(button.className).includes('F4B942'))?.click()};
-  const item="flex min-h-11 min-w-0 flex-1 items-center justify-center gap-2 rounded-xl px-2 text-[10px] font-black transition hover:bg-muted sm:flex-none sm:px-4";
-  return <section aria-label={locale==="pt"?"Acessos rápidos":locale==="en"?"Quick access":locale==="fr"?"Accès rapides":"Accesos rápidos"} className="academic-v4-utility-strip flex items-center gap-1 rounded-[20px] border bg-card p-1.5 shadow-sm">
+  const item="flex min-h-11 shrink-0 items-center justify-center gap-1.5 rounded-xl px-2.5 text-[9px] font-black transition hover:bg-muted sm:gap-2 sm:px-4 sm:text-[10px]";
+  return <section aria-label={locale==="pt"?"Acessos rápidos":locale==="en"?"Quick access":locale==="fr"?"Accès rapides":"Accesos rápidos"} className="academic-v4-utility-strip flex items-center gap-1 overflow-x-auto rounded-[20px] border bg-card p-1.5 shadow-sm [scrollbar-width:none]">
     <Link to="/cliente/biblioteca" className={item}><BookHeart className="h-4 w-4 shrink-0 text-[#b78927]"/><span>{labels.library}</span></Link>
     <button type="button" onClick={openAccessibility} className={item}><Shield className="h-4 w-4 shrink-0 text-[#b78927]"/><span>{labels.accessibility}</span></button>
     <button type="button" onClick={openChat} className={item}><MessageCircle className="h-4 w-4 shrink-0 text-[#b78927]"/><span>{labels.chat}</span></button>

@@ -187,6 +187,13 @@ import { Route as ClientareaClienteGraduacaoCourseKeyRouteImport } from './route
 import { Route as ClientareaClienteInteressePosCourseKeyRouteImport } from './routes/_clientarea.cliente.interesse-pos.$courseKey'
 import { Route as ClientareaClientePedidoOrderIdRouteImport } from './routes/_clientarea.cliente.pedido.$orderId'
 import { Route as ClientareaClientePsicanalistaAltaPerformanceKeyRouteImport } from './routes/_clientarea.cliente.psicanalista-alta-performance.$key'
+import { Route as ClientareaClienteRedeAcademicaBuscarRouteImport } from './routes/_clientarea.cliente.rede-academica.buscar'
+import { Route as ClientareaClienteRedeAcademicaCriarRouteImport } from './routes/_clientarea.cliente.rede-academica.criar'
+import { Route as ClientareaClienteRedeAcademicaCriarArtigoRouteImport } from './routes/_clientarea.cliente.rede-academica.criar-artigo'
+import { Route as ClientareaClienteRedeAcademicaDesafiosRouteImport } from './routes/_clientarea.cliente.rede-academica.desafios'
+import { Route as ClientareaClienteRedeAcademicaEditarPerfilRouteImport } from './routes/_clientarea.cliente.rede-academica.editar-perfil'
+import { Route as ClientareaClienteRedeAcademicaNotificacoesRouteImport } from './routes/_clientarea.cliente.rede-academica.notificacoes'
+import { Route as ClientareaClienteRedeAcademicaSalvosRouteImport } from './routes/_clientarea.cliente.rede-academica.salvos'
 import { Route as ClientareaClienteTreinamentosDoMamaoAoNegocioRouteImport } from './routes/_clientarea.cliente.treinamentos.do-mamao-ao-negocio'
 import { Route as ClientareaClienteTreinamentosIaNegociosCarreiraRouteImport } from './routes/_clientarea.cliente.treinamentos.ia-negocios-carreira'
 import { Route as ClientareaClienteTreinamentosLiderancaGestaoRouteImport } from './routes/_clientarea.cliente.treinamentos.lideranca-gestao'
@@ -201,6 +208,12 @@ import { Route as ClientareaClienteTreinamentosTricologiaTerapiaCapilarRouteImpo
 import { Route as ClientareaClienteBibliotecaPublicacoesSlugRouteImport } from './routes/_clientarea.cliente.biblioteca.publicacoes.$slug'
 import { Route as ClientareaClienteCursosAcademySlugRouteImport } from './routes/_clientarea.cliente.cursos.academy.$slug'
 import { Route as ClientareaClienteCursosAssinaturaSlugRouteImport } from './routes/_clientarea.cliente.cursos.assinatura.$slug'
+import { Route as ClientareaClienteRedeAcademicaArtigoEditorialSlugRouteImport } from './routes/_clientarea.cliente.rede-academica.artigo-editorial.$slug'
+import { Route as ClientareaClienteRedeAcademicaArtigoSlugRouteImport } from './routes/_clientarea.cliente.rede-academica.artigo.$slug'
+import { Route as ClientareaClienteRedeAcademicaDesafioSlugRouteImport } from './routes/_clientarea.cliente.rede-academica.desafio.$slug'
+import { Route as ClientareaClienteRedeAcademicaPerfilEditorialUsernameRouteImport } from './routes/_clientarea.cliente.rede-academica.perfil-editorial.$username'
+import { Route as ClientareaClienteRedeAcademicaPerfilUsernameRouteImport } from './routes/_clientarea.cliente.rede-academica.perfil.$username'
+import { Route as ClientareaClienteRedeAcademicaPostIdRouteImport } from './routes/_clientarea.cliente.rede-academica.post.$id'
 import { Route as ClientareaClienteTreinamentosCursoAvulsoSlugRouteImport } from './routes/_clientarea.cliente.treinamentos.curso-avulso.$slug'
 import { Route as ClientareaClienteTreinamentosDoMamaoAoNegocioForumRouteImport } from './routes/_clientarea.cliente.treinamentos.do-mamao-ao-negocio.forum'
 import { Route as ClientareaClienteTreinamentosFormacaoProfissionalSlugRouteImport } from './routes/_clientarea.cliente.treinamentos.formacao-profissional.$slug'
@@ -1200,6 +1213,48 @@ const ClientareaClientePsicanalistaAltaPerformanceKeyRoute =
     path: '/$key',
     getParentRoute: () => ClientareaClientePsicanalistaAltaPerformanceRoute,
   } as any)
+const ClientareaClienteRedeAcademicaBuscarRoute =
+  ClientareaClienteRedeAcademicaBuscarRouteImport.update({
+    id: '/buscar',
+    path: '/buscar',
+    getParentRoute: () => ClientareaClienteRedeAcademicaRoute,
+  } as any)
+const ClientareaClienteRedeAcademicaCriarRoute =
+  ClientareaClienteRedeAcademicaCriarRouteImport.update({
+    id: '/criar',
+    path: '/criar',
+    getParentRoute: () => ClientareaClienteRedeAcademicaRoute,
+  } as any)
+const ClientareaClienteRedeAcademicaCriarArtigoRoute =
+  ClientareaClienteRedeAcademicaCriarArtigoRouteImport.update({
+    id: '/criar-artigo',
+    path: '/criar-artigo',
+    getParentRoute: () => ClientareaClienteRedeAcademicaRoute,
+  } as any)
+const ClientareaClienteRedeAcademicaDesafiosRoute =
+  ClientareaClienteRedeAcademicaDesafiosRouteImport.update({
+    id: '/desafios',
+    path: '/desafios',
+    getParentRoute: () => ClientareaClienteRedeAcademicaRoute,
+  } as any)
+const ClientareaClienteRedeAcademicaEditarPerfilRoute =
+  ClientareaClienteRedeAcademicaEditarPerfilRouteImport.update({
+    id: '/editar-perfil',
+    path: '/editar-perfil',
+    getParentRoute: () => ClientareaClienteRedeAcademicaRoute,
+  } as any)
+const ClientareaClienteRedeAcademicaNotificacoesRoute =
+  ClientareaClienteRedeAcademicaNotificacoesRouteImport.update({
+    id: '/notificacoes',
+    path: '/notificacoes',
+    getParentRoute: () => ClientareaClienteRedeAcademicaRoute,
+  } as any)
+const ClientareaClienteRedeAcademicaSalvosRoute =
+  ClientareaClienteRedeAcademicaSalvosRouteImport.update({
+    id: '/salvos',
+    path: '/salvos',
+    getParentRoute: () => ClientareaClienteRedeAcademicaRoute,
+  } as any)
 const ClientareaClienteTreinamentosDoMamaoAoNegocioRoute =
   ClientareaClienteTreinamentosDoMamaoAoNegocioRouteImport.update({
     id: '/do-mamao-ao-negocio',
@@ -1283,6 +1338,42 @@ const ClientareaClienteCursosAssinaturaSlugRoute =
     id: '/cursos/assinatura/$slug',
     path: '/cursos/assinatura/$slug',
     getParentRoute: () => ClientareaClienteRoute,
+  } as any)
+const ClientareaClienteRedeAcademicaArtigoEditorialSlugRoute =
+  ClientareaClienteRedeAcademicaArtigoEditorialSlugRouteImport.update({
+    id: '/artigo-editorial/$slug',
+    path: '/artigo-editorial/$slug',
+    getParentRoute: () => ClientareaClienteRedeAcademicaRoute,
+  } as any)
+const ClientareaClienteRedeAcademicaArtigoSlugRoute =
+  ClientareaClienteRedeAcademicaArtigoSlugRouteImport.update({
+    id: '/artigo/$slug',
+    path: '/artigo/$slug',
+    getParentRoute: () => ClientareaClienteRedeAcademicaRoute,
+  } as any)
+const ClientareaClienteRedeAcademicaDesafioSlugRoute =
+  ClientareaClienteRedeAcademicaDesafioSlugRouteImport.update({
+    id: '/desafio/$slug',
+    path: '/desafio/$slug',
+    getParentRoute: () => ClientareaClienteRedeAcademicaRoute,
+  } as any)
+const ClientareaClienteRedeAcademicaPerfilEditorialUsernameRoute =
+  ClientareaClienteRedeAcademicaPerfilEditorialUsernameRouteImport.update({
+    id: '/perfil-editorial/$username',
+    path: '/perfil-editorial/$username',
+    getParentRoute: () => ClientareaClienteRedeAcademicaRoute,
+  } as any)
+const ClientareaClienteRedeAcademicaPerfilUsernameRoute =
+  ClientareaClienteRedeAcademicaPerfilUsernameRouteImport.update({
+    id: '/perfil/$username',
+    path: '/perfil/$username',
+    getParentRoute: () => ClientareaClienteRedeAcademicaRoute,
+  } as any)
+const ClientareaClienteRedeAcademicaPostIdRoute =
+  ClientareaClienteRedeAcademicaPostIdRouteImport.update({
+    id: '/post/$id',
+    path: '/post/$id',
+    getParentRoute: () => ClientareaClienteRedeAcademicaRoute,
   } as any)
 const ClientareaClienteTreinamentosCursoAvulsoSlugRoute =
   ClientareaClienteTreinamentosCursoAvulsoSlugRouteImport.update({
@@ -1461,7 +1552,7 @@ export interface FileRoutesByFullPath {
   '/cliente/perfil': typeof ClientareaClientePerfilRoute
   '/cliente/psicanalista-alta-performance': typeof ClientareaClientePsicanalistaAltaPerformanceRouteWithChildren
   '/cliente/publicar': typeof ClientareaClientePublicarRoute
-  '/cliente/rede-academica': typeof ClientareaClienteRedeAcademicaRoute
+  '/cliente/rede-academica': typeof ClientareaClienteRedeAcademicaRouteWithChildren
   '/cliente/sessoes': typeof ClientareaClienteSessoesRoute
   '/cliente/treinamentos': typeof ClientareaClienteTreinamentosRouteWithChildren
   '/api/auth/callback': typeof ApiAuthCallbackRoute
@@ -1490,6 +1581,13 @@ export interface FileRoutesByFullPath {
   '/cliente/interesse-pos/$courseKey': typeof ClientareaClienteInteressePosCourseKeyRoute
   '/cliente/pedido/$orderId': typeof ClientareaClientePedidoOrderIdRoute
   '/cliente/psicanalista-alta-performance/$key': typeof ClientareaClientePsicanalistaAltaPerformanceKeyRoute
+  '/cliente/rede-academica/buscar': typeof ClientareaClienteRedeAcademicaBuscarRoute
+  '/cliente/rede-academica/criar': typeof ClientareaClienteRedeAcademicaCriarRoute
+  '/cliente/rede-academica/criar-artigo': typeof ClientareaClienteRedeAcademicaCriarArtigoRoute
+  '/cliente/rede-academica/desafios': typeof ClientareaClienteRedeAcademicaDesafiosRoute
+  '/cliente/rede-academica/editar-perfil': typeof ClientareaClienteRedeAcademicaEditarPerfilRoute
+  '/cliente/rede-academica/notificacoes': typeof ClientareaClienteRedeAcademicaNotificacoesRoute
+  '/cliente/rede-academica/salvos': typeof ClientareaClienteRedeAcademicaSalvosRoute
   '/cliente/treinamentos/do-mamao-ao-negocio': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioRouteWithChildren
   '/cliente/treinamentos/ia-negocios-carreira': typeof ClientareaClienteTreinamentosIaNegociosCarreiraRoute
   '/cliente/treinamentos/lideranca-gestao': typeof ClientareaClienteTreinamentosLiderancaGestaoRoute
@@ -1504,6 +1602,12 @@ export interface FileRoutesByFullPath {
   '/cliente/biblioteca/publicacoes/$slug': typeof ClientareaClienteBibliotecaPublicacoesSlugRoute
   '/cliente/cursos/academy/$slug': typeof ClientareaClienteCursosAcademySlugRoute
   '/cliente/cursos/assinatura/$slug': typeof ClientareaClienteCursosAssinaturaSlugRoute
+  '/cliente/rede-academica/artigo-editorial/$slug': typeof ClientareaClienteRedeAcademicaArtigoEditorialSlugRoute
+  '/cliente/rede-academica/artigo/$slug': typeof ClientareaClienteRedeAcademicaArtigoSlugRoute
+  '/cliente/rede-academica/desafio/$slug': typeof ClientareaClienteRedeAcademicaDesafioSlugRoute
+  '/cliente/rede-academica/perfil-editorial/$username': typeof ClientareaClienteRedeAcademicaPerfilEditorialUsernameRoute
+  '/cliente/rede-academica/perfil/$username': typeof ClientareaClienteRedeAcademicaPerfilUsernameRoute
+  '/cliente/rede-academica/post/$id': typeof ClientareaClienteRedeAcademicaPostIdRoute
   '/cliente/treinamentos/curso-avulso/$slug': typeof ClientareaClienteTreinamentosCursoAvulsoSlugRoute
   '/cliente/treinamentos/do-mamao-ao-negocio/forum': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioForumRoute
   '/cliente/treinamentos/formacao-profissional/$slug': typeof ClientareaClienteTreinamentosFormacaoProfissionalSlugRoute
@@ -1654,7 +1758,7 @@ export interface FileRoutesByTo {
   '/cliente/perfil': typeof ClientareaClientePerfilRoute
   '/cliente/psicanalista-alta-performance': typeof ClientareaClientePsicanalistaAltaPerformanceRouteWithChildren
   '/cliente/publicar': typeof ClientareaClientePublicarRoute
-  '/cliente/rede-academica': typeof ClientareaClienteRedeAcademicaRoute
+  '/cliente/rede-academica': typeof ClientareaClienteRedeAcademicaRouteWithChildren
   '/cliente/sessoes': typeof ClientareaClienteSessoesRoute
   '/cliente/treinamentos': typeof ClientareaClienteTreinamentosRouteWithChildren
   '/api/auth/callback': typeof ApiAuthCallbackRoute
@@ -1683,6 +1787,13 @@ export interface FileRoutesByTo {
   '/cliente/interesse-pos/$courseKey': typeof ClientareaClienteInteressePosCourseKeyRoute
   '/cliente/pedido/$orderId': typeof ClientareaClientePedidoOrderIdRoute
   '/cliente/psicanalista-alta-performance/$key': typeof ClientareaClientePsicanalistaAltaPerformanceKeyRoute
+  '/cliente/rede-academica/buscar': typeof ClientareaClienteRedeAcademicaBuscarRoute
+  '/cliente/rede-academica/criar': typeof ClientareaClienteRedeAcademicaCriarRoute
+  '/cliente/rede-academica/criar-artigo': typeof ClientareaClienteRedeAcademicaCriarArtigoRoute
+  '/cliente/rede-academica/desafios': typeof ClientareaClienteRedeAcademicaDesafiosRoute
+  '/cliente/rede-academica/editar-perfil': typeof ClientareaClienteRedeAcademicaEditarPerfilRoute
+  '/cliente/rede-academica/notificacoes': typeof ClientareaClienteRedeAcademicaNotificacoesRoute
+  '/cliente/rede-academica/salvos': typeof ClientareaClienteRedeAcademicaSalvosRoute
   '/cliente/treinamentos/do-mamao-ao-negocio': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioRouteWithChildren
   '/cliente/treinamentos/ia-negocios-carreira': typeof ClientareaClienteTreinamentosIaNegociosCarreiraRoute
   '/cliente/treinamentos/lideranca-gestao': typeof ClientareaClienteTreinamentosLiderancaGestaoRoute
@@ -1697,6 +1808,12 @@ export interface FileRoutesByTo {
   '/cliente/biblioteca/publicacoes/$slug': typeof ClientareaClienteBibliotecaPublicacoesSlugRoute
   '/cliente/cursos/academy/$slug': typeof ClientareaClienteCursosAcademySlugRoute
   '/cliente/cursos/assinatura/$slug': typeof ClientareaClienteCursosAssinaturaSlugRoute
+  '/cliente/rede-academica/artigo-editorial/$slug': typeof ClientareaClienteRedeAcademicaArtigoEditorialSlugRoute
+  '/cliente/rede-academica/artigo/$slug': typeof ClientareaClienteRedeAcademicaArtigoSlugRoute
+  '/cliente/rede-academica/desafio/$slug': typeof ClientareaClienteRedeAcademicaDesafioSlugRoute
+  '/cliente/rede-academica/perfil-editorial/$username': typeof ClientareaClienteRedeAcademicaPerfilEditorialUsernameRoute
+  '/cliente/rede-academica/perfil/$username': typeof ClientareaClienteRedeAcademicaPerfilUsernameRoute
+  '/cliente/rede-academica/post/$id': typeof ClientareaClienteRedeAcademicaPostIdRoute
   '/cliente/treinamentos/curso-avulso/$slug': typeof ClientareaClienteTreinamentosCursoAvulsoSlugRoute
   '/cliente/treinamentos/do-mamao-ao-negocio/forum': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioForumRoute
   '/cliente/treinamentos/formacao-profissional/$slug': typeof ClientareaClienteTreinamentosFormacaoProfissionalSlugRoute
@@ -1854,7 +1971,7 @@ export interface FileRoutesById {
   '/_clientarea/cliente/perfil': typeof ClientareaClientePerfilRoute
   '/_clientarea/cliente/psicanalista-alta-performance': typeof ClientareaClientePsicanalistaAltaPerformanceRouteWithChildren
   '/_clientarea/cliente/publicar': typeof ClientareaClientePublicarRoute
-  '/_clientarea/cliente/rede-academica': typeof ClientareaClienteRedeAcademicaRoute
+  '/_clientarea/cliente/rede-academica': typeof ClientareaClienteRedeAcademicaRouteWithChildren
   '/_clientarea/cliente/sessoes': typeof ClientareaClienteSessoesRoute
   '/_clientarea/cliente/treinamentos': typeof ClientareaClienteTreinamentosRouteWithChildren
   '/api/auth/callback': typeof ApiAuthCallbackRoute
@@ -1883,6 +2000,13 @@ export interface FileRoutesById {
   '/_clientarea/cliente/interesse-pos/$courseKey': typeof ClientareaClienteInteressePosCourseKeyRoute
   '/_clientarea/cliente/pedido/$orderId': typeof ClientareaClientePedidoOrderIdRoute
   '/_clientarea/cliente/psicanalista-alta-performance/$key': typeof ClientareaClientePsicanalistaAltaPerformanceKeyRoute
+  '/_clientarea/cliente/rede-academica/buscar': typeof ClientareaClienteRedeAcademicaBuscarRoute
+  '/_clientarea/cliente/rede-academica/criar': typeof ClientareaClienteRedeAcademicaCriarRoute
+  '/_clientarea/cliente/rede-academica/criar-artigo': typeof ClientareaClienteRedeAcademicaCriarArtigoRoute
+  '/_clientarea/cliente/rede-academica/desafios': typeof ClientareaClienteRedeAcademicaDesafiosRoute
+  '/_clientarea/cliente/rede-academica/editar-perfil': typeof ClientareaClienteRedeAcademicaEditarPerfilRoute
+  '/_clientarea/cliente/rede-academica/notificacoes': typeof ClientareaClienteRedeAcademicaNotificacoesRoute
+  '/_clientarea/cliente/rede-academica/salvos': typeof ClientareaClienteRedeAcademicaSalvosRoute
   '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioRouteWithChildren
   '/_clientarea/cliente/treinamentos/ia-negocios-carreira': typeof ClientareaClienteTreinamentosIaNegociosCarreiraRoute
   '/_clientarea/cliente/treinamentos/lideranca-gestao': typeof ClientareaClienteTreinamentosLiderancaGestaoRoute
@@ -1897,6 +2021,12 @@ export interface FileRoutesById {
   '/_clientarea/cliente/biblioteca/publicacoes/$slug': typeof ClientareaClienteBibliotecaPublicacoesSlugRoute
   '/_clientarea/cliente/cursos/academy/$slug': typeof ClientareaClienteCursosAcademySlugRoute
   '/_clientarea/cliente/cursos/assinatura/$slug': typeof ClientareaClienteCursosAssinaturaSlugRoute
+  '/_clientarea/cliente/rede-academica/artigo-editorial/$slug': typeof ClientareaClienteRedeAcademicaArtigoEditorialSlugRoute
+  '/_clientarea/cliente/rede-academica/artigo/$slug': typeof ClientareaClienteRedeAcademicaArtigoSlugRoute
+  '/_clientarea/cliente/rede-academica/desafio/$slug': typeof ClientareaClienteRedeAcademicaDesafioSlugRoute
+  '/_clientarea/cliente/rede-academica/perfil-editorial/$username': typeof ClientareaClienteRedeAcademicaPerfilEditorialUsernameRoute
+  '/_clientarea/cliente/rede-academica/perfil/$username': typeof ClientareaClienteRedeAcademicaPerfilUsernameRoute
+  '/_clientarea/cliente/rede-academica/post/$id': typeof ClientareaClienteRedeAcademicaPostIdRoute
   '/_clientarea/cliente/treinamentos/curso-avulso/$slug': typeof ClientareaClienteTreinamentosCursoAvulsoSlugRoute
   '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio/forum': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioForumRoute
   '/_clientarea/cliente/treinamentos/formacao-profissional/$slug': typeof ClientareaClienteTreinamentosFormacaoProfissionalSlugRoute
@@ -2080,6 +2210,13 @@ export interface FileRouteTypes {
     | '/cliente/interesse-pos/$courseKey'
     | '/cliente/pedido/$orderId'
     | '/cliente/psicanalista-alta-performance/$key'
+    | '/cliente/rede-academica/buscar'
+    | '/cliente/rede-academica/criar'
+    | '/cliente/rede-academica/criar-artigo'
+    | '/cliente/rede-academica/desafios'
+    | '/cliente/rede-academica/editar-perfil'
+    | '/cliente/rede-academica/notificacoes'
+    | '/cliente/rede-academica/salvos'
     | '/cliente/treinamentos/do-mamao-ao-negocio'
     | '/cliente/treinamentos/ia-negocios-carreira'
     | '/cliente/treinamentos/lideranca-gestao'
@@ -2094,6 +2231,12 @@ export interface FileRouteTypes {
     | '/cliente/biblioteca/publicacoes/$slug'
     | '/cliente/cursos/academy/$slug'
     | '/cliente/cursos/assinatura/$slug'
+    | '/cliente/rede-academica/artigo-editorial/$slug'
+    | '/cliente/rede-academica/artigo/$slug'
+    | '/cliente/rede-academica/desafio/$slug'
+    | '/cliente/rede-academica/perfil-editorial/$username'
+    | '/cliente/rede-academica/perfil/$username'
+    | '/cliente/rede-academica/post/$id'
     | '/cliente/treinamentos/curso-avulso/$slug'
     | '/cliente/treinamentos/do-mamao-ao-negocio/forum'
     | '/cliente/treinamentos/formacao-profissional/$slug'
@@ -2273,6 +2416,13 @@ export interface FileRouteTypes {
     | '/cliente/interesse-pos/$courseKey'
     | '/cliente/pedido/$orderId'
     | '/cliente/psicanalista-alta-performance/$key'
+    | '/cliente/rede-academica/buscar'
+    | '/cliente/rede-academica/criar'
+    | '/cliente/rede-academica/criar-artigo'
+    | '/cliente/rede-academica/desafios'
+    | '/cliente/rede-academica/editar-perfil'
+    | '/cliente/rede-academica/notificacoes'
+    | '/cliente/rede-academica/salvos'
     | '/cliente/treinamentos/do-mamao-ao-negocio'
     | '/cliente/treinamentos/ia-negocios-carreira'
     | '/cliente/treinamentos/lideranca-gestao'
@@ -2287,6 +2437,12 @@ export interface FileRouteTypes {
     | '/cliente/biblioteca/publicacoes/$slug'
     | '/cliente/cursos/academy/$slug'
     | '/cliente/cursos/assinatura/$slug'
+    | '/cliente/rede-academica/artigo-editorial/$slug'
+    | '/cliente/rede-academica/artigo/$slug'
+    | '/cliente/rede-academica/desafio/$slug'
+    | '/cliente/rede-academica/perfil-editorial/$username'
+    | '/cliente/rede-academica/perfil/$username'
+    | '/cliente/rede-academica/post/$id'
     | '/cliente/treinamentos/curso-avulso/$slug'
     | '/cliente/treinamentos/do-mamao-ao-negocio/forum'
     | '/cliente/treinamentos/formacao-profissional/$slug'
@@ -2472,6 +2628,13 @@ export interface FileRouteTypes {
     | '/_clientarea/cliente/interesse-pos/$courseKey'
     | '/_clientarea/cliente/pedido/$orderId'
     | '/_clientarea/cliente/psicanalista-alta-performance/$key'
+    | '/_clientarea/cliente/rede-academica/buscar'
+    | '/_clientarea/cliente/rede-academica/criar'
+    | '/_clientarea/cliente/rede-academica/criar-artigo'
+    | '/_clientarea/cliente/rede-academica/desafios'
+    | '/_clientarea/cliente/rede-academica/editar-perfil'
+    | '/_clientarea/cliente/rede-academica/notificacoes'
+    | '/_clientarea/cliente/rede-academica/salvos'
     | '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio'
     | '/_clientarea/cliente/treinamentos/ia-negocios-carreira'
     | '/_clientarea/cliente/treinamentos/lideranca-gestao'
@@ -2486,6 +2649,12 @@ export interface FileRouteTypes {
     | '/_clientarea/cliente/biblioteca/publicacoes/$slug'
     | '/_clientarea/cliente/cursos/academy/$slug'
     | '/_clientarea/cliente/cursos/assinatura/$slug'
+    | '/_clientarea/cliente/rede-academica/artigo-editorial/$slug'
+    | '/_clientarea/cliente/rede-academica/artigo/$slug'
+    | '/_clientarea/cliente/rede-academica/desafio/$slug'
+    | '/_clientarea/cliente/rede-academica/perfil-editorial/$username'
+    | '/_clientarea/cliente/rede-academica/perfil/$username'
+    | '/_clientarea/cliente/rede-academica/post/$id'
     | '/_clientarea/cliente/treinamentos/curso-avulso/$slug'
     | '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio/forum'
     | '/_clientarea/cliente/treinamentos/formacao-profissional/$slug'
@@ -3822,6 +3991,55 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClientareaClientePsicanalistaAltaPerformanceKeyRouteImport
       parentRoute: typeof ClientareaClientePsicanalistaAltaPerformanceRoute
     }
+    '/_clientarea/cliente/rede-academica/buscar': {
+      id: '/_clientarea/cliente/rede-academica/buscar'
+      path: '/buscar'
+      fullPath: '/cliente/rede-academica/buscar'
+      preLoaderRoute: typeof ClientareaClienteRedeAcademicaBuscarRouteImport
+      parentRoute: typeof ClientareaClienteRedeAcademicaRoute
+    }
+    '/_clientarea/cliente/rede-academica/criar': {
+      id: '/_clientarea/cliente/rede-academica/criar'
+      path: '/criar'
+      fullPath: '/cliente/rede-academica/criar'
+      preLoaderRoute: typeof ClientareaClienteRedeAcademicaCriarRouteImport
+      parentRoute: typeof ClientareaClienteRedeAcademicaRoute
+    }
+    '/_clientarea/cliente/rede-academica/criar-artigo': {
+      id: '/_clientarea/cliente/rede-academica/criar-artigo'
+      path: '/criar-artigo'
+      fullPath: '/cliente/rede-academica/criar-artigo'
+      preLoaderRoute: typeof ClientareaClienteRedeAcademicaCriarArtigoRouteImport
+      parentRoute: typeof ClientareaClienteRedeAcademicaRoute
+    }
+    '/_clientarea/cliente/rede-academica/desafios': {
+      id: '/_clientarea/cliente/rede-academica/desafios'
+      path: '/desafios'
+      fullPath: '/cliente/rede-academica/desafios'
+      preLoaderRoute: typeof ClientareaClienteRedeAcademicaDesafiosRouteImport
+      parentRoute: typeof ClientareaClienteRedeAcademicaRoute
+    }
+    '/_clientarea/cliente/rede-academica/editar-perfil': {
+      id: '/_clientarea/cliente/rede-academica/editar-perfil'
+      path: '/editar-perfil'
+      fullPath: '/cliente/rede-academica/editar-perfil'
+      preLoaderRoute: typeof ClientareaClienteRedeAcademicaEditarPerfilRouteImport
+      parentRoute: typeof ClientareaClienteRedeAcademicaRoute
+    }
+    '/_clientarea/cliente/rede-academica/notificacoes': {
+      id: '/_clientarea/cliente/rede-academica/notificacoes'
+      path: '/notificacoes'
+      fullPath: '/cliente/rede-academica/notificacoes'
+      preLoaderRoute: typeof ClientareaClienteRedeAcademicaNotificacoesRouteImport
+      parentRoute: typeof ClientareaClienteRedeAcademicaRoute
+    }
+    '/_clientarea/cliente/rede-academica/salvos': {
+      id: '/_clientarea/cliente/rede-academica/salvos'
+      path: '/salvos'
+      fullPath: '/cliente/rede-academica/salvos'
+      preLoaderRoute: typeof ClientareaClienteRedeAcademicaSalvosRouteImport
+      parentRoute: typeof ClientareaClienteRedeAcademicaRoute
+    }
     '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio': {
       id: '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio'
       path: '/do-mamao-ao-negocio'
@@ -3919,6 +4137,48 @@ declare module '@tanstack/react-router' {
       fullPath: '/cliente/cursos/assinatura/$slug'
       preLoaderRoute: typeof ClientareaClienteCursosAssinaturaSlugRouteImport
       parentRoute: typeof ClientareaClienteRoute
+    }
+    '/_clientarea/cliente/rede-academica/artigo-editorial/$slug': {
+      id: '/_clientarea/cliente/rede-academica/artigo-editorial/$slug'
+      path: '/artigo-editorial/$slug'
+      fullPath: '/cliente/rede-academica/artigo-editorial/$slug'
+      preLoaderRoute: typeof ClientareaClienteRedeAcademicaArtigoEditorialSlugRouteImport
+      parentRoute: typeof ClientareaClienteRedeAcademicaRoute
+    }
+    '/_clientarea/cliente/rede-academica/artigo/$slug': {
+      id: '/_clientarea/cliente/rede-academica/artigo/$slug'
+      path: '/artigo/$slug'
+      fullPath: '/cliente/rede-academica/artigo/$slug'
+      preLoaderRoute: typeof ClientareaClienteRedeAcademicaArtigoSlugRouteImport
+      parentRoute: typeof ClientareaClienteRedeAcademicaRoute
+    }
+    '/_clientarea/cliente/rede-academica/desafio/$slug': {
+      id: '/_clientarea/cliente/rede-academica/desafio/$slug'
+      path: '/desafio/$slug'
+      fullPath: '/cliente/rede-academica/desafio/$slug'
+      preLoaderRoute: typeof ClientareaClienteRedeAcademicaDesafioSlugRouteImport
+      parentRoute: typeof ClientareaClienteRedeAcademicaRoute
+    }
+    '/_clientarea/cliente/rede-academica/perfil-editorial/$username': {
+      id: '/_clientarea/cliente/rede-academica/perfil-editorial/$username'
+      path: '/perfil-editorial/$username'
+      fullPath: '/cliente/rede-academica/perfil-editorial/$username'
+      preLoaderRoute: typeof ClientareaClienteRedeAcademicaPerfilEditorialUsernameRouteImport
+      parentRoute: typeof ClientareaClienteRedeAcademicaRoute
+    }
+    '/_clientarea/cliente/rede-academica/perfil/$username': {
+      id: '/_clientarea/cliente/rede-academica/perfil/$username'
+      path: '/perfil/$username'
+      fullPath: '/cliente/rede-academica/perfil/$username'
+      preLoaderRoute: typeof ClientareaClienteRedeAcademicaPerfilUsernameRouteImport
+      parentRoute: typeof ClientareaClienteRedeAcademicaRoute
+    }
+    '/_clientarea/cliente/rede-academica/post/$id': {
+      id: '/_clientarea/cliente/rede-academica/post/$id'
+      path: '/post/$id'
+      fullPath: '/cliente/rede-academica/post/$id'
+      preLoaderRoute: typeof ClientareaClienteRedeAcademicaPostIdRouteImport
+      parentRoute: typeof ClientareaClienteRedeAcademicaRoute
     }
     '/_clientarea/cliente/treinamentos/curso-avulso/$slug': {
       id: '/_clientarea/cliente/treinamentos/curso-avulso/$slug'
@@ -4214,6 +4474,57 @@ const ClientareaClientePsicanalistaAltaPerformanceRouteWithChildren =
     ClientareaClientePsicanalistaAltaPerformanceRouteChildren,
   )
 
+interface ClientareaClienteRedeAcademicaRouteChildren {
+  ClientareaClienteRedeAcademicaBuscarRoute: typeof ClientareaClienteRedeAcademicaBuscarRoute
+  ClientareaClienteRedeAcademicaCriarRoute: typeof ClientareaClienteRedeAcademicaCriarRoute
+  ClientareaClienteRedeAcademicaCriarArtigoRoute: typeof ClientareaClienteRedeAcademicaCriarArtigoRoute
+  ClientareaClienteRedeAcademicaDesafiosRoute: typeof ClientareaClienteRedeAcademicaDesafiosRoute
+  ClientareaClienteRedeAcademicaEditarPerfilRoute: typeof ClientareaClienteRedeAcademicaEditarPerfilRoute
+  ClientareaClienteRedeAcademicaNotificacoesRoute: typeof ClientareaClienteRedeAcademicaNotificacoesRoute
+  ClientareaClienteRedeAcademicaSalvosRoute: typeof ClientareaClienteRedeAcademicaSalvosRoute
+  ClientareaClienteRedeAcademicaArtigoEditorialSlugRoute: typeof ClientareaClienteRedeAcademicaArtigoEditorialSlugRoute
+  ClientareaClienteRedeAcademicaArtigoSlugRoute: typeof ClientareaClienteRedeAcademicaArtigoSlugRoute
+  ClientareaClienteRedeAcademicaDesafioSlugRoute: typeof ClientareaClienteRedeAcademicaDesafioSlugRoute
+  ClientareaClienteRedeAcademicaPerfilEditorialUsernameRoute: typeof ClientareaClienteRedeAcademicaPerfilEditorialUsernameRoute
+  ClientareaClienteRedeAcademicaPerfilUsernameRoute: typeof ClientareaClienteRedeAcademicaPerfilUsernameRoute
+  ClientareaClienteRedeAcademicaPostIdRoute: typeof ClientareaClienteRedeAcademicaPostIdRoute
+}
+
+const ClientareaClienteRedeAcademicaRouteChildren: ClientareaClienteRedeAcademicaRouteChildren =
+  {
+    ClientareaClienteRedeAcademicaBuscarRoute:
+      ClientareaClienteRedeAcademicaBuscarRoute,
+    ClientareaClienteRedeAcademicaCriarRoute:
+      ClientareaClienteRedeAcademicaCriarRoute,
+    ClientareaClienteRedeAcademicaCriarArtigoRoute:
+      ClientareaClienteRedeAcademicaCriarArtigoRoute,
+    ClientareaClienteRedeAcademicaDesafiosRoute:
+      ClientareaClienteRedeAcademicaDesafiosRoute,
+    ClientareaClienteRedeAcademicaEditarPerfilRoute:
+      ClientareaClienteRedeAcademicaEditarPerfilRoute,
+    ClientareaClienteRedeAcademicaNotificacoesRoute:
+      ClientareaClienteRedeAcademicaNotificacoesRoute,
+    ClientareaClienteRedeAcademicaSalvosRoute:
+      ClientareaClienteRedeAcademicaSalvosRoute,
+    ClientareaClienteRedeAcademicaArtigoEditorialSlugRoute:
+      ClientareaClienteRedeAcademicaArtigoEditorialSlugRoute,
+    ClientareaClienteRedeAcademicaArtigoSlugRoute:
+      ClientareaClienteRedeAcademicaArtigoSlugRoute,
+    ClientareaClienteRedeAcademicaDesafioSlugRoute:
+      ClientareaClienteRedeAcademicaDesafioSlugRoute,
+    ClientareaClienteRedeAcademicaPerfilEditorialUsernameRoute:
+      ClientareaClienteRedeAcademicaPerfilEditorialUsernameRoute,
+    ClientareaClienteRedeAcademicaPerfilUsernameRoute:
+      ClientareaClienteRedeAcademicaPerfilUsernameRoute,
+    ClientareaClienteRedeAcademicaPostIdRoute:
+      ClientareaClienteRedeAcademicaPostIdRoute,
+  }
+
+const ClientareaClienteRedeAcademicaRouteWithChildren =
+  ClientareaClienteRedeAcademicaRoute._addFileChildren(
+    ClientareaClienteRedeAcademicaRouteChildren,
+  )
+
 interface ClientareaClienteTreinamentosDoMamaoAoNegocioRouteChildren {
   ClientareaClienteTreinamentosDoMamaoAoNegocioForumRoute: typeof ClientareaClienteTreinamentosDoMamaoAoNegocioForumRoute
 }
@@ -4311,7 +4622,7 @@ interface ClientareaClienteRouteChildren {
   ClientareaClientePerfilRoute: typeof ClientareaClientePerfilRoute
   ClientareaClientePsicanalistaAltaPerformanceRoute: typeof ClientareaClientePsicanalistaAltaPerformanceRouteWithChildren
   ClientareaClientePublicarRoute: typeof ClientareaClientePublicarRoute
-  ClientareaClienteRedeAcademicaRoute: typeof ClientareaClienteRedeAcademicaRoute
+  ClientareaClienteRedeAcademicaRoute: typeof ClientareaClienteRedeAcademicaRouteWithChildren
   ClientareaClienteSessoesRoute: typeof ClientareaClienteSessoesRoute
   ClientareaClienteTreinamentosRoute: typeof ClientareaClienteTreinamentosRouteWithChildren
   ClientareaClienteIndexRoute: typeof ClientareaClienteIndexRoute
@@ -4345,7 +4656,8 @@ const ClientareaClienteRouteChildren: ClientareaClienteRouteChildren = {
   ClientareaClientePsicanalistaAltaPerformanceRoute:
     ClientareaClientePsicanalistaAltaPerformanceRouteWithChildren,
   ClientareaClientePublicarRoute: ClientareaClientePublicarRoute,
-  ClientareaClienteRedeAcademicaRoute: ClientareaClienteRedeAcademicaRoute,
+  ClientareaClienteRedeAcademicaRoute:
+    ClientareaClienteRedeAcademicaRouteWithChildren,
   ClientareaClienteSessoesRoute: ClientareaClienteSessoesRoute,
   ClientareaClienteTreinamentosRoute:
     ClientareaClienteTreinamentosRouteWithChildren,
