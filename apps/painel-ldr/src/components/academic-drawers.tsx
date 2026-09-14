@@ -231,12 +231,18 @@ function CatalogOrganizer({locale}:{locale:Locale}){
   },[open]);
 
   const activate=(course:DrawerCourse)=>{
+    if(course.href==="/cliente/treinamentos/psicanalise"){
+      setOpen(null);
+      location.href=course.href;
+      return;
+    }
     if(target){
       const candidates=Array.from(target.querySelectorAll("a,button"));
+      const exact=candidates.find(el=>(el.getAttribute("href")||"")===course.href);
+      if(exact){setOpen(null);(exact as HTMLElement).click();return;}
       const original=candidates.find(el=>{
-        const href=el.getAttribute("href")||"";
         const text=(el.textContent||"").trim();
-        return href===course.href||Boolean(course.triggerText&&text.includes(course.triggerText));
+        return Boolean(course.triggerText&&text.includes(course.triggerText));
       });
       if(original){setOpen(null);(original as HTMLElement).click();return;}
     }
