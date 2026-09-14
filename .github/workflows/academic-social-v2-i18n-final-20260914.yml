@@ -1,0 +1,28 @@
+name: Academic Social V2 I18n Final Build 2026-09-14
+on:
+  push:
+    branches: [fix/rede-academica-i18n-final-20260914]
+    paths:
+      - 'apps/painel-ldr/src/routes/_clientarea.cliente.rede-academica*'
+      - '.github/workflows/academic-social-v2-i18n-final-20260914.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Install dependencies
+        working-directory: apps/painel-ldr
+        run: npm ci
+      - name: Build Academy
+        working-directory: apps/painel-ldr
+        run: npm run build
