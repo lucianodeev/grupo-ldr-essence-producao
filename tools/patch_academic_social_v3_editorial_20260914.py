@@ -4,10 +4,14 @@ from pathlib import Path
 root=Path('apps/painel-ldr/src/routes/_clientarea.cliente.rede-academica.tsx')
 s=root.read_text()
 anchor='import { useI18n } from "@/lib/i18n";'
-imp='import { AcademicSocialV3Feed } from "@/components/academic-social-v3-feed";'
-if imp not in s:
+feed_imp='import { AcademicSocialV3Feed } from "@/components/academic-social-v3-feed";'
+onboarding_imp='import { AcademicOnboardingV3 } from "@/components/academic-onboarding-v3";'
+if feed_imp not in s:
     if anchor not in s: raise SystemExit('root import anchor missing')
-    s=s.replace(anchor,anchor+'\n'+imp,1)
+    s=s.replace(anchor,anchor+'\n'+feed_imp,1)
+if onboarding_imp not in s:
+    if feed_imp not in s: raise SystemExit('feed import anchor missing')
+    s=s.replace(feed_imp,feed_imp+'\n'+onboarding_imp,1)
 start=s.find('function Feed(')
 end=s.find('function ActionButton',start)
 if start<0 or end<0: raise SystemExit('feed boundaries not found')
@@ -15,6 +19,12 @@ replacement='function Feed(props:any){return <AcademicSocialV3Feed {...props}/>}
 current=s[start:end]
 if current != replacement:
     s=s[:start]+replacement+s[end:]
+onboarding_render='{tab==="feed"&&<AcademicOnboardingV3 locale={locale}/>}'
+feed_anchor='{(tab==="feed"||tab==="saved")&&<Feed'
+if onboarding_render not in s:
+    pos=s.find(feed_anchor)
+    if pos<0: raise SystemExit('feed render anchor missing')
+    s=s[:pos]+onboarding_render+'\n    '+s[pos:]
 old_nav='flex min-h-[54px] min-w-0 flex-col items-center justify-center gap-1 rounded-xl px-0.5 text-[8px] font-black leading-none tracking-[-.02em]'
 new_nav='flex min-h-[54px] min-w-0 overflow-hidden flex-col items-center justify-center gap-1 rounded-xl px-0.5 text-[7px] font-black leading-none tracking-[-.03em]'
 if old_nav in s:
