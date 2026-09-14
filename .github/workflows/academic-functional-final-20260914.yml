@@ -85,6 +85,8 @@ jobs:
             d=d.replace(old_value,new_value,1)
           dm.write_text(d)
           PY
+      - name: Stabilize DM query result typing
+        run: python tools/fix_academic_dm_never_20260915.py
       - name: Ensure no new any usage
         run: |
           python - <<'PY'
@@ -112,8 +114,8 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add apps/painel-ldr/src/components/academic-social-v3-feed.tsx apps/painel-ldr/src/lib/academic-network.server.ts apps/painel-ldr/src/lib/academic-dm.server.ts apps/painel-ldr/src/integrations/supabase/types.ts tools/academic-functional-typecheck.log
-          git rm -f tools/academic-network-typecheck-current.log tools/patch_academic_functional_20260914.py tools/sync_academic_supabase_types_20260914.py .github/workflows/academic-functional-final-20260914.yml
+          git rm -f tools/academic-network-typecheck-current.log tools/patch_academic_functional_20260914.py tools/sync_academic_supabase_types_20260914.py tools/fix_academic_dm_never_20260915.py .github/workflows/academic-functional-final-20260914.yml
           git commit -m 'fix(academic): finalize social actions publishing and dm'
           git push origin main
 
-# retriggered 2026-09-15: validate current main after schema-type diagnosis
+# retriggered 2026-09-15: strict DM query-boundary typing after never inference diagnosis
