@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { Eye, EyeOff, Flag, Pin, PinOff, ShieldCheck } from "lucide-react";
 import { academicAdminSnapshot, academicModerate } from "@/lib/academic-network.functions";
-import { useAccess } from "@/lib/access";
+import { useAccess } from "@/lib/central-data";
 
 export const Route=createFileRoute("/_authenticated/admin/rede-academica")({component:AcademicNetworkAdmin});
 
