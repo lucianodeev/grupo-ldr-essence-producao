@@ -20,9 +20,11 @@ async function rateLimit(userId:string,table:"academic_posts"|"academic_comments
 
 async function queueInAppNotification(targetUserId:string,createdBy:string,subject:string,body:string,metadata:Record<string,unknown>={}){
   if(!targetUserId||targetUserId===createdBy)return;
+  const {data:customer}=await db.from("customers").select("id").eq("auth_user_id",targetUserId).maybeSingle();
+  if(!customer?.id)return;
   await db.from("notification_outbox").insert({
-    audience_type:"client",target_id:targetUserId,channel:"in_app",event_type:"manual",
-    subject,body,metadata:{source:"academic_network",...metadata},created_by:createdBy,status:"pending"
+    audience_type:"client",target_id:customer.id,channel:"in_app",event_type:"manual",
+    subject,body,metadata:{source:"academic_network",target_auth_user_id:targetUserId,...metadata},created_by:createdBy,status:"pending"
   });
 }
 
