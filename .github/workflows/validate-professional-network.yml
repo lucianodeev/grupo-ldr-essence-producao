@@ -1,30 +1,44 @@
-name: Validate Professional Network
+name: Validate LDR Essence Professional Network
 
 on:
   push:
     branches: [main]
     paths:
       - 'apps/painel-ldr/src/lib/professional-*.ts'
+      - 'apps/painel-ldr/src/lib/platform-fee*.ts'
       - 'apps/painel-ldr/src/routes/profissional*.tsx'
       - 'apps/painel-ldr/src/routes/profissionais*.tsx'
       - 'apps/painel-ldr/src/routes/para-profissionais.tsx'
-      - 'apps/painel-ldr/src/routes/rede-profissionais.termos.tsx'
+      - 'apps/painel-ldr/src/routes/clinica-social*.tsx'
+      - 'apps/painel-ldr/src/routes/_authenticated/admin.clinica-social.tsx'
       - 'apps/painel-ldr/src/routes/api/stripe/webhook.ts'
       - 'apps/painel-ldr/src/routes/_authenticated/painel-profissional*.tsx'
       - '.github/workflows/validate-professional-network.yml'
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
-  build:
+  quality:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: npm
       - name: Install
-        working-directory: apps/painel-ldr
         run: npm install --no-audit --no-fund
-      - name: Build
+      - name: Lint
+        working-directory: apps/painel-ldr
+        run: npm run lint
+      - name: Typecheck
+        working-directory: apps/painel-ldr
+        run: npm run typecheck
+      - name: Financial tests
+        working-directory: apps/painel-ldr
+        run: npm test
+      - name: Production build
         working-directory: apps/painel-ldr
         run: npm run build
