@@ -61,6 +61,16 @@ export function PsychoanalysisAudioMoments({moduleIndex,module,lessonIndex}:{mod
  const audioLessons=moments.map(m=>m.position+1);
  const label=[...new Set(audioLessons)].join(", ");
  return <>
+  <section className="rounded-[22px] border-2 border-[#d9c77f] bg-[#fffaf0] p-4 shadow-sm sm:p-5">
+   <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+     <p className="text-[11px] font-black uppercase tracking-[.14em] text-[#8a6816]">🎧 ÁUDIOS DO MÓDULO</p>
+     <p className="mt-1 text-sm font-bold text-[#2f1457]">Este módulo possui 3 áudios complementares nas aulas {label}.</p>
+     <p className="mt-1 text-xs leading-5 text-[#75677e]">Abertura · aprofundamento · síntese e reflexão</p>
+    </div>
+    {visible.length?<a href="#audio-complementar" className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-xl bg-[#5b2b86] px-4 py-2 text-xs font-black text-white shadow-sm">🎧 OUVIR ÁUDIO DESTA AULA</a>:<span className="inline-flex min-h-10 shrink-0 items-center justify-center rounded-xl border border-[#d9c77f] bg-white px-4 py-2 text-xs font-black text-[#5b2b86]">🎧 ÁUDIO NAS AULAS {label}</span>}
+   </div>
+  </section>
   <div className="fixed bottom-4 right-4 z-[60] max-w-[calc(100vw-2rem)] sm:bottom-6 sm:right-6">
    {visible.length?<a href="#audio-complementar" className="inline-flex min-h-11 items-center gap-2 rounded-full border border-[#e0c16f] bg-[#2f1457] px-4 py-2 text-xs font-black text-white shadow-xl">🎧 ÁUDIO DISPONÍVEL</a>:<div className="rounded-full border border-[#d9c77f] bg-[#fffaf0] px-4 py-2 text-[11px] font-black text-[#5b2b86] shadow-lg">🎧 ÁUDIO · aulas {label}</div>}
   </div>
