@@ -197,6 +197,7 @@ import { Route as ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRouteImp
 import { Route as ClientareaClienteTreinamentosTricologiaTerapiaCapilarRouteImport } from './routes/_clientarea.cliente.treinamentos.tricologia-terapia-capilar'
 import { Route as ClientareaClienteBibliotecaPublicacoesSlugRouteImport } from './routes/_clientarea.cliente.biblioteca.publicacoes.$slug'
 import { Route as ClientareaClienteCursosAcademySlugRouteImport } from './routes/_clientarea.cliente.cursos.academy.$slug'
+import { Route as ClientareaClienteCursosAssinaturaSlugRouteImport } from './routes/_clientarea.cliente.cursos.assinatura.$slug'
 import { Route as ClientareaClienteTreinamentosCursoAvulsoSlugRouteImport } from './routes/_clientarea.cliente.treinamentos.curso-avulso.$slug'
 import { Route as ClientareaClienteTreinamentosDoMamaoAoNegocioForumRouteImport } from './routes/_clientarea.cliente.treinamentos.do-mamao-ao-negocio.forum'
 import { Route as ClientareaClienteTreinamentosFormacaoProfissionalSlugRouteImport } from './routes/_clientarea.cliente.treinamentos.formacao-profissional.$slug'
@@ -1257,6 +1258,12 @@ const ClientareaClienteCursosAcademySlugRoute =
     path: '/cursos/academy/$slug',
     getParentRoute: () => ClientareaClienteRoute,
   } as any)
+const ClientareaClienteCursosAssinaturaSlugRoute =
+  ClientareaClienteCursosAssinaturaSlugRouteImport.update({
+    id: '/cursos/assinatura/$slug',
+    path: '/cursos/assinatura/$slug',
+    getParentRoute: () => ClientareaClienteRoute,
+  } as any)
 const ClientareaClienteTreinamentosCursoAvulsoSlugRoute =
   ClientareaClienteTreinamentosCursoAvulsoSlugRouteImport.update({
     id: '/curso-avulso/$slug',
@@ -1473,6 +1480,7 @@ export interface FileRoutesByFullPath {
   '/cliente/treinamentos/tricologia-terapia-capilar': typeof ClientareaClienteTreinamentosTricologiaTerapiaCapilarRoute
   '/cliente/biblioteca/publicacoes/$slug': typeof ClientareaClienteBibliotecaPublicacoesSlugRoute
   '/cliente/cursos/academy/$slug': typeof ClientareaClienteCursosAcademySlugRoute
+  '/cliente/cursos/assinatura/$slug': typeof ClientareaClienteCursosAssinaturaSlugRoute
   '/cliente/treinamentos/curso-avulso/$slug': typeof ClientareaClienteTreinamentosCursoAvulsoSlugRoute
   '/cliente/treinamentos/do-mamao-ao-negocio/forum': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioForumRoute
   '/cliente/treinamentos/formacao-profissional/$slug': typeof ClientareaClienteTreinamentosFormacaoProfissionalSlugRoute
@@ -1662,6 +1670,7 @@ export interface FileRoutesByTo {
   '/cliente/treinamentos/tricologia-terapia-capilar': typeof ClientareaClienteTreinamentosTricologiaTerapiaCapilarRoute
   '/cliente/biblioteca/publicacoes/$slug': typeof ClientareaClienteBibliotecaPublicacoesSlugRoute
   '/cliente/cursos/academy/$slug': typeof ClientareaClienteCursosAcademySlugRoute
+  '/cliente/cursos/assinatura/$slug': typeof ClientareaClienteCursosAssinaturaSlugRoute
   '/cliente/treinamentos/curso-avulso/$slug': typeof ClientareaClienteTreinamentosCursoAvulsoSlugRoute
   '/cliente/treinamentos/do-mamao-ao-negocio/forum': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioForumRoute
   '/cliente/treinamentos/formacao-profissional/$slug': typeof ClientareaClienteTreinamentosFormacaoProfissionalSlugRoute
@@ -1858,6 +1867,7 @@ export interface FileRoutesById {
   '/_clientarea/cliente/treinamentos/tricologia-terapia-capilar': typeof ClientareaClienteTreinamentosTricologiaTerapiaCapilarRoute
   '/_clientarea/cliente/biblioteca/publicacoes/$slug': typeof ClientareaClienteBibliotecaPublicacoesSlugRoute
   '/_clientarea/cliente/cursos/academy/$slug': typeof ClientareaClienteCursosAcademySlugRoute
+  '/_clientarea/cliente/cursos/assinatura/$slug': typeof ClientareaClienteCursosAssinaturaSlugRoute
   '/_clientarea/cliente/treinamentos/curso-avulso/$slug': typeof ClientareaClienteTreinamentosCursoAvulsoSlugRoute
   '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio/forum': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioForumRoute
   '/_clientarea/cliente/treinamentos/formacao-profissional/$slug': typeof ClientareaClienteTreinamentosFormacaoProfissionalSlugRoute
@@ -2051,6 +2061,7 @@ export interface FileRouteTypes {
     | '/cliente/treinamentos/tricologia-terapia-capilar'
     | '/cliente/biblioteca/publicacoes/$slug'
     | '/cliente/cursos/academy/$slug'
+    | '/cliente/cursos/assinatura/$slug'
     | '/cliente/treinamentos/curso-avulso/$slug'
     | '/cliente/treinamentos/do-mamao-ao-negocio/forum'
     | '/cliente/treinamentos/formacao-profissional/$slug'
@@ -2240,6 +2251,7 @@ export interface FileRouteTypes {
     | '/cliente/treinamentos/tricologia-terapia-capilar'
     | '/cliente/biblioteca/publicacoes/$slug'
     | '/cliente/cursos/academy/$slug'
+    | '/cliente/cursos/assinatura/$slug'
     | '/cliente/treinamentos/curso-avulso/$slug'
     | '/cliente/treinamentos/do-mamao-ao-negocio/forum'
     | '/cliente/treinamentos/formacao-profissional/$slug'
@@ -2435,6 +2447,7 @@ export interface FileRouteTypes {
     | '/_clientarea/cliente/treinamentos/tricologia-terapia-capilar'
     | '/_clientarea/cliente/biblioteca/publicacoes/$slug'
     | '/_clientarea/cliente/cursos/academy/$slug'
+    | '/_clientarea/cliente/cursos/assinatura/$slug'
     | '/_clientarea/cliente/treinamentos/curso-avulso/$slug'
     | '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio/forum'
     | '/_clientarea/cliente/treinamentos/formacao-profissional/$slug'
@@ -3840,6 +3853,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClientareaClienteCursosAcademySlugRouteImport
       parentRoute: typeof ClientareaClienteRoute
     }
+    '/_clientarea/cliente/cursos/assinatura/$slug': {
+      id: '/_clientarea/cliente/cursos/assinatura/$slug'
+      path: '/cursos/assinatura/$slug'
+      fullPath: '/cliente/cursos/assinatura/$slug'
+      preLoaderRoute: typeof ClientareaClienteCursosAssinaturaSlugRouteImport
+      parentRoute: typeof ClientareaClienteRoute
+    }
     '/_clientarea/cliente/treinamentos/curso-avulso/$slug': {
       id: '/_clientarea/cliente/treinamentos/curso-avulso/$slug'
       path: '/curso-avulso/$slug'
@@ -4241,6 +4261,7 @@ interface ClientareaClienteRouteChildren {
   ClientareaClienteInteressePosCourseKeyRoute: typeof ClientareaClienteInteressePosCourseKeyRoute
   ClientareaClientePedidoOrderIdRoute: typeof ClientareaClientePedidoOrderIdRoute
   ClientareaClienteCursosAcademySlugRoute: typeof ClientareaClienteCursosAcademySlugRoute
+  ClientareaClienteCursosAssinaturaSlugRoute: typeof ClientareaClienteCursosAssinaturaSlugRoute
 }
 
 const ClientareaClienteRouteChildren: ClientareaClienteRouteChildren = {
@@ -4282,6 +4303,8 @@ const ClientareaClienteRouteChildren: ClientareaClienteRouteChildren = {
   ClientareaClientePedidoOrderIdRoute: ClientareaClientePedidoOrderIdRoute,
   ClientareaClienteCursosAcademySlugRoute:
     ClientareaClienteCursosAcademySlugRoute,
+  ClientareaClienteCursosAssinaturaSlugRoute:
+    ClientareaClienteCursosAssinaturaSlugRoute,
 }
 
 const ClientareaClienteRouteWithChildren =

@@ -25,6 +25,7 @@ import { libraryAcademicCardText } from "@/lib/library-academic-card-i18n";
 import { AcademicDrawers } from "@/components/academic-drawers";
 import { PROFESSIONAL_FORMATIONS, pfText } from "@/lib/academy-professional-formations.catalog";
 import { PSYCHOANALYSIS_EBOOKS } from "@/lib/psychoanalysis-ebooks.catalog";
+import { AcademySubscriptionCourseShelf } from "@/components/academy-subscription-course-shelf";
 
 export const Route=createFileRoute("/_clientarea/cliente/biblioteca")({component:ClientLibraryRoute});
 
@@ -139,7 +140,7 @@ function ClientLibrary(){
   const ent={ebook:owner||!!ebook?.entitled,book:owner||!!book?.entitled,training:owner||!!training?.entitled,psycho:owner||!!psycho?.entitled,brief:owner||!!brief?.entitled,intlPsycho:owner||!!intlPsycho?.entitled,massage:owner||!!massage?.entitled,business24:owner||!!business24?.entitled,ai:owner||!!ai?.entitled,mentor:owner||!!mentor?.entitled,leader:owner||!!leader?.entitled,free:owner||!!free?.entitled,french:owner||!!french?.entitled,firstAid:owner||!!firstAid?.entitled};
   const comments=learning?.comments?.filter((c:any)=>c.product_key)??[];
   const accessLabels=locale==="pt"?{included:"INCLUÍDO",single:"AVULSO",free:"GRÁTIS",editorial:"EDITORIAL"}:locale==="fr"?{included:"INCLUS",single:"À L’UNITÉ",free:"GRATUIT",editorial:"ÉDITORIAL"}:locale==="es"?{included:"INCLUIDO",single:"INDIVIDUAL",free:"GRATIS",editorial:"EDITORIAL"}:{included:"INCLUDED",single:"ONE-TIME",free:"FREE",editorial:"EDITORIAL"};
-  const includedProfessionalSlugs=new Set(["vendas-negociacao","marketing-digital","recrutamento-selecao","gestao-administrativa-financeira","comunicacao-oratoria","aba-autismo","saude-mental-praticas-clinicas","sociologia","filosofia-clinica","ciencia-politica","ciencias-felicidade"]);
+  const includedProfessionalSlugs=new Set(["vendas-negociacao","marketing-digital","recrutamento-selecao","gestao-administrativa-financeira","comunicacao-oratoria","aba-autismo","saude-mental-praticas-clinicas","sociologia","filosofia-clinica","ciencia-politica","ciencias-felicidade","gestao-projetos-600h"]);
   const card=(key:string,label:string,bg:string,icon="grad",status?:string)=>{const paths:Record<string,string>={ebook:"/cliente/biblioteca/ebook_coragem_comecar",book:"/cliente/biblioteca/livro_menino_mamao",training:"/cliente/treinamentos/do-mamao-ao-negocio",psycho:"/cliente/treinamentos/psicanalise",brief:"/cliente/treinamentos/terapia-breve-psicanalitica",massage:"/cliente/treinamentos/massoterapia",business24:"/cliente/treinamentos/negocio-24-horas",mentor:"/cliente/treinamentos/mentoria-carreira",leader:"/cliente/treinamentos/lideranca-gestao",ai:"/cliente/treinamentos/ia-negocios-carreira",hr:"/cliente/formacoes/gestao-pessoas-rh"};const allowed=key==="hr"||Boolean((ent as any)[key]);const body=<>{icon==="book"?<BookOpen className="mx-auto h-5 w-5"/>:icon==="film"?<Film className="mx-auto h-5 w-5"/>:<GraduationCap className="mx-auto h-5 w-5"/>}<p className="mt-2 text-[8px] font-black leading-none sm:text-[10px]">{label}</p>{status?<span className="mt-2 inline-flex rounded-full bg-white/15 px-1.5 py-0.5 text-[6px] font-black uppercase tracking-wide text-white sm:text-[7px]">{status}</span>:null}</>;return paths[key]&&allowed?<a href={paths[key]} className={`min-w-0 rounded-2xl px-1 py-4 text-center text-white shadow-sm transition hover:-translate-y-0.5 ${bg}`}>{body}</a>:<button onClick={()=>setActive(active===key?null:key)} className={`min-w-0 rounded-2xl px-1 py-4 text-center text-white shadow-sm ${bg} ${active===key?"ring-2 ring-[#d6ad63]":""}`}>{body}</button>};
   const buyFormation=(kind:"psycho"|"brief"|"massage"|"mentor"|"leader",mut:any,color:string)=><button onClick={()=>mut.mutate(market)} className={`mt-3 w-full rounded-xl ${color} px-4 py-3 text-sm font-black text-white`}><ShoppingCart className="mr-2 inline h-4 w-4"/>{ct.startFormation}</button>;
   const postgrads=[
@@ -159,6 +160,7 @@ function ClientLibrary(){
       <p className="mt-2 text-sm text-white/75">{t.intro}</p>
       <a href="/cliente/pedidos" className="mt-5 inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-3 text-sm font-bold"><ReceiptText className="h-4 w-4"/>{t.orders}</a>
     </section>
+    <AcademySubscriptionCourseShelf locale={locale} active={owner||Boolean(subscriptionData?.active)} />
 
     <details id="catalogo-ldr" open className="scroll-mt-24 rounded-[24px] border border-slate-200 bg-white shadow-sm">
       <summary className="cursor-pointer list-none px-5 py-4 text-sm font-black text-[#0b2341] [&::-webkit-details-marker]:hidden">{locale==="pt"?"Cursos, conteúdos e acessos":locale==="fr"?"Cours, contenus et accès":locale==="es"?"Cursos, contenidos y accesos":"Courses, content and access"}</summary>

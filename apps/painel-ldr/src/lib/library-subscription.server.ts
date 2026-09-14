@@ -1,4 +1,5 @@
 import { getRequest } from "@tanstack/react-start/server";
+import { ACADEMY_SUBSCRIPTION_COURSES } from "@/lib/academy-subscription-courses.catalog";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { resolveClient } from "@/lib/client-portal.server";
 
@@ -10,7 +11,7 @@ const PROMO_FIRST_EUR = 495;
 const PROMO_END_AT = "2026-09-30T23:59:59+02:00";
 const PRODUCT_NAME = "Biblioteca LDR — Assinatura Mensal";
 function libraryPromoActive(){ return Date.now() < Date.parse(PROMO_END_AT); }
-const INCLUDED_PRODUCTS = [
+const CORE_INCLUDED_PRODUCTS = [
   ["ebook_coragem_comecar", "A Coragem de Começar"],
   ["livro_menino_mamao", "O Menino que Vendia Mamão"],
   ["do_mamao_ao_negocio", "Do Mamão ao Negócio"],
@@ -32,6 +33,11 @@ const INCLUDED_PRODUCTS = [
   ["formacao_ciencia_politica_600h", "Ciência Política — Teoria, Instituições e Democracia"],
   ["formacao_ciencias_felicidade_600h", "Ciências da Felicidade e Bem-Estar — Da Neurociência à Prática"],
 ] as const;
+const INCLUDED_PRODUCTS: ReadonlyArray<readonly [string,string]> = [
+  ...CORE_INCLUDED_PRODUCTS,
+  ...ACADEMY_SUBSCRIPTION_COURSES.map((course)=>[course.productKey, course.name.pt] as const),
+  ["formacao_gestao_projetos_600h", "Formação em Gestão de Projetos"],
+];
 
 type Market = "BR" | "INTL";
 type StripeObject = {
