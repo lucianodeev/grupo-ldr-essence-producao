@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { useI18n } from "@/lib/i18n";
+import "@/styles/academic-network-v4.css";
 import { AcademicSocialV3Feed } from "@/components/academic-social-v3-feed";
 import { AcademicOnboardingV3 } from "@/components/academic-onboarding-v3";
 import {
@@ -44,8 +45,8 @@ function AcademicNetworkPage(){
   if(error||!data)return <div className="mx-auto max-w-3xl p-6"><div className="rounded-2xl border p-5">{t.error}</div></div>;
   const access=data.access;
   const nav:[Tab,any,string][]=[["feed",Home,t.feed],["communities",Users,t.communities],["diary",BookOpen,t.diary],["saved",Bookmark,t.saved],["profile",UserRound,t.profile]];
-  return <div className="academic-social mx-auto max-w-6xl space-y-5 px-3 pb-32 pt-4 sm:px-6 sm:pb-24 sm:pt-6">
-    <header className="relative overflow-hidden rounded-[30px] border border-[#d7c596]/50 bg-gradient-to-br from-[#061426] via-[#0b2a4b] to-[#154b7a] p-5 text-white shadow-[0_18px_50px_rgba(7,20,38,.18)] sm:p-8">
+  return <div className="academic-social academic-social-v4 mx-auto max-w-6xl space-y-4 px-3 pb-32 pt-4 sm:space-y-5 sm:px-6 sm:pb-24 sm:pt-6">
+    <header className="relative overflow-hidden rounded-[24px] border border-[#d7c596]/50 bg-gradient-to-br from-[#061426] via-[#0b2a4b] to-[#154b7a] p-4 text-white shadow-[0_14px_38px_rgba(7,20,38,.14)] sm:rounded-[28px] sm:p-7">
       <div className="pointer-events-none absolute -right-16 -top-28 h-72 w-72 rounded-full border border-[#e9c66f]/55"/>
       <p className="relative text-[10px] font-black tracking-[.28em] text-[#efcf7d] sm:text-xs">{t.network}</p>
       <h1 className="relative mt-3 max-w-3xl font-serif text-[2rem] leading-[1.05] sm:text-5xl"><span className="text-white">{t.hero.split(". ")[0]}.</span> <span className="text-[#efc56d]">{t.hero.split(". ").slice(1).join(". ")}</span></h1>
@@ -80,11 +81,11 @@ function AcademicNetworkPage(){
 }
 
 function MobileAcademicNav({tab,setTab,t,locale}:any){
-  const item=(active:boolean)=>`flex min-h-[54px] min-w-0 overflow-hidden flex-col items-center justify-center gap-1 rounded-xl px-0.5 text-[7px] font-black leading-none tracking-[-.03em] ${active?"bg-[#07315a] text-white":"text-foreground"}`;
-  return <nav aria-label={locale==="pt"?"Navegação móvel da Rede Acadêmica":locale==="en"?"Academic Network mobile navigation":locale==="fr"?"Navigation mobile du Réseau Académique":"Navegación móvil de la Red Académica"} className="fixed inset-x-0 bottom-0 z-[100] grid grid-cols-5 gap-1 border-t bg-background/95 px-1 pt-1 shadow-[0_-8px_30px_rgba(7,20,38,.12)] backdrop-blur sm:hidden" style={{paddingBottom:"max(env(safe-area-inset-bottom), .35rem)"}}>
+  const item=(active:boolean)=>`flex min-h-[58px] min-w-0 overflow-hidden flex-col items-center justify-center gap-1 rounded-xl px-0.5 text-[9px] font-black leading-none tracking-[-.02em] ${active?"bg-[#07315a] text-white":"text-foreground"}`;
+  return <nav aria-label={locale==="pt"?"Navegação móvel da Rede Acadêmica":locale==="en"?"Academic Network mobile navigation":locale==="fr"?"Navigation mobile du Réseau Académique":"Navegación móvil de la Red Académica"} className="academic-v4-mobile-nav fixed inset-x-0 bottom-0 z-[100] grid grid-cols-5 gap-1 border-t bg-background/95 px-1.5 pt-1.5 shadow-[0_-8px_30px_rgba(7,20,38,.12)] backdrop-blur sm:hidden" style={{paddingBottom:"max(env(safe-area-inset-bottom), .35rem)"}}>
     <button type="button" onClick={()=>setTab("feed")} className={item(tab==="feed")}><Home className={`h-5 w-5 ${tab==="feed"?"text-[#efc56d]":""}`}/><span className="block max-w-full truncate whitespace-nowrap">{locale==="pt"?"INÍCIO":locale==="en"?"HOME":locale==="fr"?"ACCUEIL":"INICIO"}</span></button>
     <button type="button" onClick={()=>setTab("communities")} className={item(tab==="communities")}><Users className={`h-5 w-5 ${tab==="communities"?"text-[#efc56d]":""}`}/><span className="block max-w-full truncate whitespace-nowrap">{t.communities}</span></button>
-    <Link to="/cliente/rede-academica/criar" className="flex min-h-[54px] min-w-0 flex-col items-center justify-center gap-1 rounded-xl bg-[#d5ad55] px-0.5 text-[8px] font-black leading-none text-[#071426] shadow-sm"><span className="grid h-7 w-7 place-items-center rounded-full bg-[#071426] text-[#efc56d]"><Plus className="h-5 w-5"/></span><span className="block max-w-full truncate whitespace-nowrap">{locale==="pt"?"CRIAR":locale==="en"?"CREATE":locale==="fr"?"CRÉER":"CREAR"}</span></Link>
+    <Link to="/cliente/rede-academica/criar" className="flex min-h-[58px] min-w-0 flex-col items-center justify-center gap-1 rounded-xl bg-[#d5ad55] px-0.5 text-[9px] font-black leading-none text-[#071426] shadow-sm"><span className="grid h-7 w-7 place-items-center rounded-full bg-[#071426] text-[#efc56d]"><Plus className="h-5 w-5"/></span><span className="block max-w-full truncate whitespace-nowrap">{locale==="pt"?"CRIAR":locale==="en"?"CREATE":locale==="fr"?"CRÉER":"CREAR"}</span></Link>
     <Link to="/cliente/rede-academica/notificacoes" className={item(false)}><Bell className="h-5 w-5"/><span className="block max-w-full truncate whitespace-nowrap">{locale==="pt"?"NOTIFICAÇÕES":locale==="en"?"NOTIFICATIONS":locale==="fr"?"NOTIFICATIONS":"NOTIFICACIONES"}</span></Link>
     <button type="button" onClick={()=>setTab("profile")} className={item(tab==="profile")}><UserRound className={`h-5 w-5 ${tab==="profile"?"text-[#efc56d]":""}`}/><span className="block max-w-full truncate whitespace-nowrap">{locale==="pt"?"PERFIL":locale==="en"?"PROFILE":locale==="fr"?"PROFIL":"PERFIL"}</span></button>
   </nav>
