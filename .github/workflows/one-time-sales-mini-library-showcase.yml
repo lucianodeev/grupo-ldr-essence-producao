@@ -50,3 +50,5 @@ jobs:
           fi
           git commit -m "feat(academy): premium storefront and normalized ebook pricing"
           git push
+
+# trigger 2026-09-14 premium storefront
