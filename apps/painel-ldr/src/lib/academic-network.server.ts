@@ -90,24 +90,26 @@ function safeAuthor(raw:any,anonymous:boolean){
   return {profileId:a?.id??null,username:a?.username??null,avatarUrl:a?.avatarUrl??null,name:showName?(raw?.full_name||"Membro LDR"):"Membro LDR",role:a?.display_role??"member",profession:a?.profession??"",country:showLocation?(a?.country??""):"",city:showLocation?(a?.city??""):"",anonymous:false};
 }
 
-export async function getAcademicNetwork(userId:string,email:string|null,opts?:{communityId?:string|null;search?:string|null;savedOnly?:boolean}){
+export async function getAcademicNetwork(userId:string,email:string|null,opts?:{communityId?:string|null;search?:string|null;savedOnly?:boolean;offset?:number}){
   const access=await accessFor(userId);
   const profile=await ensureProfile(userId);
-  const [{data:communities},{data:memberships},{data:diary},{data:prompts},{data:saved},{data:reacted},{data:connections}]=await Promise.all([
+  const [{data:communities},{data:memberships},{data:diary},{data:prompts},{data:saved},{data:reacted},{data:connections},{data:follows},{data:latestArticles}]=await Promise.all([
     db.from("academic_communities").select("id,slug,name,description,is_open,active").eq("active",true).order("name"),
     db.from("academic_community_members").select("community_id").eq("user_id",userId),
     db.from("academic_diary_entries").select("id,body,prompt,created_at,updated_at").eq("user_id",userId).order("created_at",{ascending:false}).limit(100),
     db.from("academic_reflection_prompts").select("id,text").eq("active",true).order("created_at"),
     db.from("academic_saved_posts").select("post_id").eq("user_id",userId),
     db.from("academic_reactions").select("post_id").eq("user_id",userId).eq("reaction_type","support"),
-    db.from("academic_connections").select("id,requester_user_id,receiver_user_id,status,created_at").or(`requester_user_id.eq.${userId},receiver_user_id.eq.${userId}`).order("created_at",{ascending:false})
+    db.from("academic_connections").select("id,requester_user_id,receiver_user_id,status,created_at").or(`requester_user_id.eq.${userId},receiver_user_id.eq.${userId}`).order("created_at",{ascending:false}),
+    db.from("academic_follows").select("followed_user_id").eq("follower_user_id",userId).eq("status","accepted"),
+    db.from("academic_articles").select("id,slug,title,summary,category,created_at").eq("status","active").order("created_at",{ascending:false}).limit(20)
   ]);
-  const savedIds=new Set((saved??[]).map((x:any)=>x.post_id));
-  let q=db.from("academic_posts").select("id,user_id,community_id,body,post_type,anonymous,status,is_pinned,location_label,location_city,location_country,share_slug,created_at,updated_at").eq("status","active").order("is_pinned",{ascending:false}).order("created_at",{ascending:false}).limit(access.premium?40:8);
+  const savedIds=new Set((saved??[]).map((x:any)=>x.post_id)); const followedIds=new Set((follows??[]).map((x:any)=>x.followed_user_id)); const offset=Math.max(0,Number(opts?.offset??0)); const pageSize=access.premium?20:8;
+  let q=db.from("academic_posts").select("id,user_id,community_id,body,post_type,anonymous,status,is_pinned,location_label,location_city,location_country,share_slug,created_at,updated_at").eq("status","active").order("is_pinned",{ascending:false}).order("created_at",{ascending:false}).range(offset,offset+pageSize);
   if(opts?.communityId)q=q.eq("community_id",opts.communityId);
   if(opts?.search)q=q.ilike("body",`%${clean(opts.search,100)}%`);
   const {data:rawPosts}=await q;
-  let posts=(rawPosts??[]).filter((p:any)=>!opts?.savedOnly||savedIds.has(p.id));
+  const rawPage=rawPosts??[]; const hasMore=rawPage.length>pageSize; let posts=rawPage.slice(0,pageSize).filter((p:any)=>!opts?.savedOnly||savedIds.has(p.id));
   const postIds=posts.map((p:any)=>p.id);
   const {data:rawComments}=postIds.length?await db.from("academic_comments").select("id,post_id,user_id,body,anonymous,status,created_at,updated_at").in("post_id",postIds).eq("status","active").order("created_at",{ascending:true}):{data:[]};
   const authorIds=[...posts.map((p:any)=>p.user_id),...(rawComments??[]).map((c:any)=>c.user_id),...(connections??[]).flatMap((c:any)=>[c.requester_user_id,c.receiver_user_id])];
@@ -125,7 +127,7 @@ export async function getAcademicNetwork(userId:string,email:string|null,opts?:{
   const counts=new Map<string,number>(); for(const r of reactionRows??[])counts.set(r.post_id,(counts.get(r.post_id)??0)+1);
   const commentsBy=new Map<string,any[]>();
   for(const c of rawComments??[]){ const arr=commentsBy.get(c.post_id)??[]; arr.push({...c,user_id:undefined,own:c.user_id===userId,author:safeAuthor(authors.get(c.user_id),c.anonymous)}); commentsBy.set(c.post_id,arr); }
-  posts=posts.map((p:any)=>({...p,user_id:undefined,author:safeAuthor(authors.get(p.user_id),p.anonymous),comments:commentsBy.get(p.id)??[],media:mediaBy.get(p.id)??[],topics:topicsBy.get(p.id)??[],saved:savedIds.has(p.id),supported:(reacted??[]).some((r:any)=>r.post_id===p.id),supportCount:counts.get(p.id)??0,own:p.user_id===userId}));
+  posts=posts.map((p:any)=>({...p,user_id:undefined,author:safeAuthor(authors.get(p.user_id),p.anonymous),comments:commentsBy.get(p.id)??[],media:mediaBy.get(p.id)??[],topics:topicsBy.get(p.id)??[],saved:savedIds.has(p.id),supported:(reacted??[]).some((r:any)=>r.post_id===p.id),supportCount:counts.get(p.id)??0,own:p.user_id===userId,followedAuthor:followedIds.has(p.user_id),memberCommunity:Boolean(p.community_id&&(memberships??[]).some((m:any)=>m.community_id===p.community_id))}));
   const connectionsSafe=(connections??[]).map((c:any)=>{const other=c.requester_user_id===userId?c.receiver_user_id:c.requester_user_id;return {id:c.id,status:c.status,direction:c.requester_user_id===userId?"outgoing":"incoming",profile:safeAuthor(authors.get(other),false),created_at:c.created_at};});
   const promptList=prompts??[]; const prompt=promptList.length?promptList[Math.floor(new Date().getDate()%promptList.length)]:null;
   let directoryQuery=db.from("academic_profiles").select("id,user_id,bio,profession,country,city,interests,display_role,show_name,show_location").neq("user_id",userId).limit(access.premium?24:6);
@@ -133,7 +135,7 @@ export async function getAcademicNetwork(userId:string,email:string|null,opts?:{
   const {data:directoryRaw}=await directoryQuery;
   const directoryAuthors=await authorMap((directoryRaw??[]).map((x:any)=>x.user_id));
   const directory=(directoryRaw??[]).map((x:any)=>({ ...safeAuthor(directoryAuthors.get(x.user_id),false), bio:x.bio,interests:x.interests??[] })).filter((x:any)=>x.profileId);
-  return {access:{...access,freeDiary:true},profile,communities:communities??[],memberships:(memberships??[]).map((x:any)=>x.community_id),diary:diary??[],prompt,posts,connections:connectionsSafe,directory,userEmail:email??null};
+  return {access:{...access,freeDiary:true},profile,communities:communities??[],memberships:(memberships??[]).map((x:any)=>x.community_id),diary:diary??[],prompt,posts,hasMore,nextOffset:offset+posts.length,latestArticles:latestArticles??[],connections:connectionsSafe,directory,userEmail:email??null};
 }
 
 export async function saveDiaryEntry(userId:string,input:{id?:string;body:string;prompt?:string|null}){
