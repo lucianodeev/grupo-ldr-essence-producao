@@ -70,3 +70,4 @@ elif 'if(!publicView)return null;' not in q:
 shelf.write_text(q)
 
 # Idempotent patch: only the two Academy presentation components above may be changed.
+# Revalidated from the current branch head before merge.
