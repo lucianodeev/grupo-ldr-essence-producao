@@ -47,8 +47,8 @@ function AudioCard({moment}:{moment:AudioMoment}){
  const pause=()=>{if(typeof window==="undefined")return;window.speechSynthesis.pause();setPlaying(false);setPaused(true);};
  const stop=()=>{if(typeof window==="undefined")return;window.speechSynthesis.cancel();setPlaying(false);setPaused(false);};
  const changeRate=(next:number)=>{setRate(next);if(playing||paused){stop();}};
- return <section className="rounded-[24px] border border-[#d9c77f] bg-gradient-to-br from-[#fffaf0] to-white p-5 shadow-sm sm:p-6">
-  <div className="flex items-start gap-3"><div className="rounded-2xl bg-[#2f1457] p-3 text-[#e0c16f]"><Volume2 className="h-5 w-5"/></div><div className="min-w-0"><p className="text-[10px] font-black uppercase tracking-[.14em] text-[#8a6816]">{moment.eyebrow}</p><h3 className="mt-1 font-serif text-xl font-bold text-[#2f1457]">{moment.title}</h3><p className="mt-1 text-sm leading-6 text-[#6c5c72]">{moment.description}</p></div></div>
+ return <section id="audio-complementar" className="scroll-mt-24 rounded-[24px] border border-[#d9c77f] bg-gradient-to-br from-[#fffaf0] to-white p-5 shadow-sm sm:p-6">
+  <div className="flex items-start gap-3"><div className="rounded-2xl bg-[#2f1457] p-3 text-[#e0c16f]"><Volume2 className="h-5 w-5"/></div><div className="min-w-0"><p className="text-[10px] font-black uppercase tracking-[.14em] text-[#8a6816]">🎧 {moment.eyebrow}</p><h3 className="mt-1 font-serif text-xl font-bold text-[#2f1457]">{moment.title}</h3><p className="mt-1 text-sm leading-6 text-[#6c5c72]">{moment.description}</p></div></div>
   <div className="mt-4 flex flex-wrap items-center gap-2"><button type="button" onClick={playing?pause:play} className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#5b2b86] px-4 py-2 text-sm font-black text-white">{playing?<><Pause className="h-4 w-4"/>Pausar</>:<><Play className="h-4 w-4"/>{paused?"Continuar":"Ouvir áudio"}</>}</button><button type="button" onClick={stop} className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-[#d8c9e3] px-4 py-2 text-sm font-bold text-[#5b2b86]"><RotateCcw className="h-4 w-4"/>Reiniciar</button><label className="ml-auto flex items-center gap-2 text-xs font-bold text-[#6c5c72]">Velocidade<select value={rate} onChange={e=>changeRate(Number(e.target.value))} className="rounded-lg border border-[#d8c9e3] bg-white px-2 py-2 text-xs"><option value={0.75}>0,75x</option><option value={0.9}>0,9x</option><option value={1}>1x</option><option value={1.25}>1,25x</option><option value={1.5}>1,5x</option><option value={2}>2x</option></select></label></div>
   <p className="mt-3 text-[11px] leading-5 text-[#85788c]">Narração complementar. Não altera o progresso nem a carga horária da formação.</p>
   <details className="mt-4 rounded-xl border border-[#eadba9] bg-white p-3"><summary className="cursor-pointer text-sm font-black text-[#5b2b86]">Ler transcrição</summary><p className="mt-3 whitespace-pre-line text-sm leading-7 text-[#64596b]">{moment.transcript}</p></details>
@@ -58,6 +58,12 @@ function AudioCard({moment}:{moment:AudioMoment}){
 export function PsychoanalysisAudioMoments({moduleIndex,module,lessonIndex}:{moduleIndex:number;module:ModuleLike;lessonIndex:number}){
  const moments=useMemo(()=>buildMoments(moduleIndex,module),[moduleIndex,module]);
  const visible=moments.filter(m=>m.position===lessonIndex);
- if(!visible.length)return null;
- return <div className="space-y-4">{visible.map(m=><AudioCard key={m.key} moment={m}/>)}</div>;
+ const audioLessons=moments.map(m=>m.position+1);
+ const label=[...new Set(audioLessons)].join(", ");
+ return <>
+  <div className="fixed bottom-4 right-4 z-[60] max-w-[calc(100vw-2rem)] sm:bottom-6 sm:right-6">
+   {visible.length?<a href="#audio-complementar" className="inline-flex min-h-11 items-center gap-2 rounded-full border border-[#e0c16f] bg-[#2f1457] px-4 py-2 text-xs font-black text-white shadow-xl">🎧 ÁUDIO DISPONÍVEL</a>:<div className="rounded-full border border-[#d9c77f] bg-[#fffaf0] px-4 py-2 text-[11px] font-black text-[#5b2b86] shadow-lg">🎧 ÁUDIO · aulas {label}</div>}
+  </div>
+  {visible.length?<div className="space-y-4">{visible.map(m=><AudioCard key={m.key} moment={m}/>)}</div>:null}
+ </>;
 }
