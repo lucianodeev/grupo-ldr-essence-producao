@@ -17,13 +17,13 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Apply eBooks filter only
-        run: python scripts/add-home-ebooks-filter-20260914.py
+      - name: Apply Psicanálise vs. Psiquiatria ebook integration
+        run: python scripts/add-psicanalise-vs-psiquiatria-ebook-20260914.py
 
       - name: Validate scoped diff
         run: |
           git diff --check
-          git diff -- apps/painel-ldr/src/components/academy-university-home.tsx
+          git diff --stat
 
       - uses: actions/setup-node@v4
         with:
@@ -41,9 +41,17 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add apps/painel-ldr/src/components/academy-university-home.tsx
-          git rm scripts/add-home-ebooks-filter-20260914.py
-          git commit -m "feat(academy): add eBooks filter to main storefront"
+          git add apps/painel-ldr/src/lib/psychoanalysis-ebooks.catalog.ts \
+                  apps/painel-ldr/src/lib/digital-content.server.ts \
+                  apps/painel-ldr/src/lib/digital-content.functions.ts \
+                  'apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.$productKey.tsx' \
+                  apps/painel-ldr/src/lib/client-portal.server.ts \
+                  apps/painel-ldr/src/lib/client-portal.functions.ts \
+                  apps/painel-ldr/src/components/digital-reader-v2.tsx \
+                  apps/painel-ldr/src/lib/fixed-brl-ebook-checkout.server.ts \
+                  apps/painel-ldr/supabase/migrations/20260914130500_add_psicanalise_vs_psiquiatria_ebook.sql
+          git rm scripts/add-psicanalise-vs-psiquiatria-ebook-20260914.py
+          git commit -m "feat(academy): add Psicanálise vs. Psiquiatria ebook"
           git push origin HEAD:main
 
-# trigger ebooks-filter-20260914
+# trigger psicanalise-vs-psiquiatria-20260914
