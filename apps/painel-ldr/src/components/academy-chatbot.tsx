@@ -70,6 +70,7 @@ export function AcademyChatbot() {
   const lang = (locale in COPY ? locale : "pt") as Locale;
   const c = COPY[lang];
   const showAnnouncement = location.pathname === "/" || location.pathname === "/cliente/biblioteca";
+  const academicNetwork = location.pathname.startsWith("/cliente/rede-academica");
   const [open, setOpen] = useState(false);
   const [teaser, setTeaser] = useState(false);
   const [selected, setSelected] = useState<Topic | null>(null);
@@ -117,7 +118,7 @@ export function AcademyChatbot() {
       )}
 
       <div className="fixed z-[95]" style={{ bottom: location.pathname.startsWith("/cliente/rede-academica") ? "calc(5.4rem + env(safe-area-inset-bottom))" : "calc(1rem + env(safe-area-inset-bottom))", right: "calc(1rem + env(safe-area-inset-right))" }}>
-        {!open && teaser && (
+        {!open && teaser && !academicNetwork && (
           <div className="mb-3 ml-auto flex max-w-[18rem] items-start gap-2 rounded-2xl border border-[#d5bd78]/50 bg-white p-3 text-sm text-slate-800 shadow-2xl">
             <Bot className="mt-0.5 h-5 w-5 shrink-0 text-[#102a43]" aria-hidden="true" />
             <button type="button" onClick={() => { setOpen(true); setTeaser(false); }} className="text-left font-semibold leading-5">{c.help}</button>
@@ -175,7 +176,7 @@ export function AcademyChatbot() {
           </section>
         )}
 
-        <button type="button" onClick={() => { setOpen((value) => !value); setTeaser(false); }} aria-label={c.help} aria-expanded={open} className="ml-auto flex min-h-14 items-center gap-2 rounded-full border border-[#fff0c2] bg-[#F4B942] px-4 py-3 text-sm font-black text-[#071426] shadow-2xl transition hover:-translate-y-0.5 hover:bg-[#FFD36B] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F4B942] focus-visible:ring-offset-2">
+        <button type="button" onClick={() => { setOpen((value) => !value); setTeaser(false); }} aria-label={c.help} aria-expanded={open} className={`ml-auto flex items-center justify-center gap-2 rounded-full border border-[#fff0c2] bg-[#F4B942] text-sm font-black text-[#071426] shadow-2xl transition hover:-translate-y-0.5 hover:bg-[#FFD36B] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F4B942] focus-visible:ring-offset-2 ${academicNetwork ? "h-12 w-12 p-0 sm:h-14 sm:w-auto sm:px-4 sm:py-3" : "min-h-14 px-4 py-3"}`}>
           {open ? <X className="h-5 w-5" /> : <MessageCircle className="h-5 w-5" />}
           <span className="hidden sm:inline">{c.help}</span>
         </button>

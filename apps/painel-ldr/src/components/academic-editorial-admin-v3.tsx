@@ -1,0 +1,22 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import { useState } from "react";
+import { BarChart3, Bot, Globe2, Users } from "lucide-react";
+import { academicEditorialAdminSnapshot, academicUpdateEditorialSettings } from "@/lib/academic-editorial-v3.functions";
+
+export function AcademicEditorialAdminV3(){
+  const qc=useQueryClient();const snapshotFn=useServerFn(academicEditorialAdminSnapshot),saveFn=useServerFn(academicUpdateEditorialSettings);
+  const {data,isLoading}=useQuery({queryKey:["academic-editorial-admin-v3"],queryFn:()=>snapshotFn()});
+  const [mode,setMode]=useState<"automatic"|"manual">("automatic");const [pct,setPct]=useState(30);
+  const effectiveMode=(data?.settings?.mode??mode) as "automatic"|"manual";const effectivePct=Number(data?.settings?.manual_max_percent??pct);
+  const save=useMutation({mutationFn:(next:{mode:"automatic"|"manual";manualMaxPercent:number})=>saveFn({data:next}),onSuccess:()=>qc.invalidateQueries({queryKey:["academic-editorial-admin-v3"]})});
+  if(isLoading)return <section className="rounded-2xl border bg-card p-5 text-sm text-muted-foreground">Carregando conteúdo editorial…</section>;
+  return <section className="rounded-2xl border bg-card p-5 shadow-sm">
+    <div className="flex flex-wrap items-start justify-between gap-3"><div><div className="flex items-center gap-2"><Bot className="h-5 w-5 text-[#b78927]"/><h2 className="text-lg font-bold">Conteúdo Editorial LDR</h2></div><p className="mt-1 max-w-2xl text-xs leading-5 text-muted-foreground">Perfis editoriais são identificados publicamente e servem apenas para iniciar discussões. A presença deles diminui automaticamente conforme a atividade real cresce.</p></div><span className="rounded-full border bg-muted/40 px-3 py-1 text-[10px] font-black">TRANSPARENTE · SEM SEGUIDORES FICTÍCIOS</span></div>
+    <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4"><Metric icon={Users} label="Perfis editoriais" value={data?.counts?.profiles??0}/><Metric icon={Globe2} label="Posts editoriais" value={data?.counts?.posts??0}/><Metric icon={BarChart3} label="Artigos editoriais" value={data?.counts?.articles??0}/><Metric icon={Bot} label="Comentários editoriais" value={data?.counts?.comments??0}/></div>
+    <div className="mt-5 grid gap-4 lg:grid-cols-[1fr_1fr]"><div className="rounded-2xl bg-muted/35 p-4"><b className="text-sm">Distribuição atual</b><div className="mt-3 grid grid-cols-2 gap-3 text-xs"><Stat label="Editorial atual" value={`${data?.stats?.editorialPercent??0}%`}/><Stat label="Usuários ativos · 7d" value={data?.stats?.activeUsers??0}/><Stat label="Posts reais · 24h" value={data?.stats?.real24??0}/><Stat label="Posts reais · 7d" value={data?.stats?.real7??0}/></div></div>
+      <div className="rounded-2xl border p-4"><b className="text-sm">Controle editorial</b><div className="mt-3 flex flex-wrap gap-2"><button onClick={()=>{setMode("automatic");save.mutate({mode:"automatic",manualMaxPercent:effectivePct})}} className={`min-h-11 rounded-xl border px-4 text-xs font-black ${effectiveMode==="automatic"?"bg-[#07315a] text-white":""}`}>AUTOMÁTICO</button><button onClick={()=>setMode("manual")} className={`min-h-11 rounded-xl border px-4 text-xs font-black ${(mode==="manual"||effectiveMode==="manual")?"bg-[#07315a] text-white":""}`}>MANUAL</button></div><div className="mt-3 flex flex-wrap gap-2">{[5,10,20,30,40].map(n=><button key={n} disabled={mode!=="manual"&&effectiveMode!=="manual"} onClick={()=>{setMode("manual");setPct(n);save.mutate({mode:"manual",manualMaxPercent:n})}} className={`min-h-10 rounded-xl border px-3 text-xs font-black disabled:opacity-40 ${effectiveMode==="manual"&&effectivePct===n?"border-[#c8a657] bg-[#f9f2df] text-[#6f531b]":""}`}>{n}%</button>)}</div><p className="mt-3 text-[11px] leading-5 text-muted-foreground">Automático: atividade baixa ≈35%, média ≈20%, alta ≈8%. Conteúdo real nunca é ocultado para cumprir cota editorial.</p></div></div>
+  </section>
+}
+function Metric({icon:Icon,label,value}:any){return <div className="rounded-2xl border bg-background p-4"><Icon className="h-4 w-4 text-[#b78927]"/><b className="mt-2 block text-2xl">{value}</b><span className="text-[11px] text-muted-foreground">{label}</span></div>}
+function Stat({label,value}:any){return <div><b className="block text-lg">{value}</b><span className="text-[10px] text-muted-foreground">{label}</span></div>}
