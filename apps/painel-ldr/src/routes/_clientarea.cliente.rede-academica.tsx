@@ -8,6 +8,7 @@ import {
 import { useState } from "react";
 import { useI18n } from "@/lib/i18n";
 import { AcademicSocialV3Feed } from "@/components/academic-social-v3-feed";
+import { AcademicOnboardingV3 } from "@/components/academic-onboarding-v3";
 import {
   academicCreateComment, academicCreatePost, academicDeleteComment, academicDeleteDiary, academicDeletePost, academicFeedMore, academicNetworkSnapshot,
   academicReport, academicRequestConnection, academicRespondConnection, academicSaveDiary, academicToggleMembership, academicUpdateComment, academicUpdatePost,
@@ -68,6 +69,7 @@ function AcademicNetworkPage(){
     </div>
 
     {!access.premium&&tab!=="diary"&&tab!=="profile"&&<div className="rounded-2xl border border-amber-300/60 bg-amber-50 p-4 text-sm text-amber-950 dark:bg-amber-950/20 dark:text-amber-100"><b>{t.freeTitle}</b> {t.freeText} <Link to="/cliente/biblioteca" className="ml-1 font-black underline">{t.subscription}</Link></div>}
+    {tab==="feed"&&<AcademicOnboardingV3 locale={locale}/>}
     {(tab==="feed"||tab==="saved")&&<Feed t={t} locale={locale} data={data} search={search} setSearch={setSearch} communityId={communityId} setCommunityId={setCommunityId} premium={access.premium} post={post} comment={comment} save={save} support={support} connect={connect} report={report} delPost={delPost} delComment={delComment} updatePost={updatePost} updateComment={updateComment} savedOnly={tab==="saved"} extraPosts={extraPosts} more={more}/>} 
     {tab==="communities"&&<Communities t={t} data={data} premium={access.premium} member={member} setCommunityId={(id:string)=>{setCommunityId(id);setTab("feed")}}/>}
     {tab==="diary"&&<Diary t={t} locale={locale} data={data} diary={diary} delDiary={delDiary}/>} 
