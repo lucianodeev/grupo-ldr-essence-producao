@@ -37,4 +37,3 @@ replacement='''function DiscoveryStrip({c,editorial,eFollow,data,setCommunityId}
 '''
 s=s[:start]+replacement+s[end:]
 feed.write_text(s)
-'''
