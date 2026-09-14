@@ -48,6 +48,7 @@ const PROJECT_ROUTE_MAP={
 } as const;
 
 function isProductRoute(pathname:string){
+  if(pathname==="/cliente/rede-academica")return true;
   if(pathname.startsWith("/cliente/treinamentos/"))return true;
   if(pathname.startsWith("/cliente/cursos/"))return true;
   if(pathname.startsWith("/cliente/formacoes/"))return true;
