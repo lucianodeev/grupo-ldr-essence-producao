@@ -40,7 +40,17 @@ jobs:
           src/routes/_clientarea.cliente.rede-academica.notificacoes.tsx
       - name: Typecheck
         working-directory: apps/painel-ldr
-        run: npm run typecheck
+        shell: bash
+        run: |
+          set +e
+          npm run typecheck > /tmp/typecheck.log 2>&1
+          status=$?
+          echo '--- TypeScript diagnostics ---'
+          grep -E 'error TS|TS[0-9]{4}' /tmp/typecheck.log | tail -n 160 || true
+          if [ "$status" -ne 0 ]; then
+            echo 'TYPECHECK_FAILED'
+            exit "$status"
+          fi
       - name: Production build
         working-directory: apps/painel-ldr
         run: npm run build
