@@ -146,7 +146,7 @@ function ClientShell() {
 
       {!servicePortal ? <div
         className="no-print fixed z-[90]"
-        style={{ bottom: "calc(5.25rem + env(safe-area-inset-bottom))", right: "calc(1rem + env(safe-area-inset-right))" }}
+        style={{ bottom: "calc(7.5rem + env(safe-area-inset-bottom))", right: "calc(1rem + env(safe-area-inset-right))" }}
       >
         <a
           href={libraryHref}
