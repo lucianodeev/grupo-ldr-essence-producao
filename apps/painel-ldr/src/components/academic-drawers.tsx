@@ -134,7 +134,7 @@ const FREE_COURSES:Record<Locale,DrawerCourse[]>={
 const SPECIAL:Record<Locale,Record<CourseCategoryKey,DrawerCourse[]>>={
   pt:{
     psycho:[
-      {icon:"🧠",title:"Formação Online em Psicanálise",meta:"Formação profissional",href:"/cliente/treinamentos/psicanalise",tone:"#5b2b86",triggerText:"Psicanálise"},
+      {icon:"🧠",title:"Formação em Psicanálise com Ênfase em Autismo e Atuação Internacional",meta:"1.200h · 15 módulos · 240 unidades · 🎧 3 áudios por módulo",href:"/cliente/treinamentos/psicanalise",tone:"#5b2b86",triggerText:"Psicanálise"},
       {icon:"🛋️",title:"Formação em Terapia Breve Psicanalítica",meta:"1.200h · formação",href:"/cliente/treinamentos/terapia-breve-psicanalitica",tone:"#17645e",triggerText:"Terapia Breve"},
       {icon:"🌍",title:"Psicanálise Internacional",meta:"Formação especializada",href:"/cliente/treinamentos/psicanalise-internacional",tone:"#24476f",triggerText:"Psicanálise Internacional"},
       {icon:"📈",title:"Psicanalista de Alta Performance",meta:"Aperfeiçoamento profissional",href:"/cliente/psicanalista-alta-performance",tone:"#8a6a2d",triggerText:"Alta Performance"}
