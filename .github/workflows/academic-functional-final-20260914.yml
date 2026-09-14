@@ -47,10 +47,11 @@ jobs:
           PY
       - name: Apply targeted functional corrections
         run: python tools/patch_academic_functional_20260914.py
-      - name: Complete strict state and location patch
+      - name: Complete strict state location and DM compatibility patch
         run: |
           python - <<'PY'
           from pathlib import Path
+
           p=Path('apps/painel-ldr/src/components/academic-social-v3-feed.tsx')
           text=p.read_text()
           old='typeof row.count==="number"?row.count:null'
@@ -60,6 +61,18 @@ jobs:
           badge='''</div>}{!locationOpen&&location&&<div className="mt-2 flex items-center gap-2 rounded-xl border bg-muted/30 px-3 py-2 text-xs"><MapPin className="h-4 w-4 shrink-0 text-[#b78927]"/><span className="min-w-0 flex-1 truncate">{location}</span><button type="button" aria-label="Remover localização" onClick={()=>{setLocation("");setLocationCity("");setLocationCountry("")}} className="shrink-0 rounded-lg border px-2 py-1 text-[10px] font-black">REMOVER</button></div>}{file&&<div className="mt-2 rounded-xl border bg-muted/30 p-2">'''
           if marker not in text: raise SystemExit('selected location marker not found')
           p.write_text(text.replace(marker,badge,1))
+
+          dm=Path('apps/painel-ldr/src/lib/academic-dm.server.ts')
+          d=dm.read_text()
+          replacements=[
+            (',created_by:createdBy,status:"pending"',',status:"pending"'),
+            ('select("id,user_one_id,user_two_id,last_message_at,created_at").or(`user_one_id.eq.${userId},user_two_id.eq.${userId}`).order("last_message_at",{ascending:false,nullsFirst:false}).order("created_at",{ascending:false})','select("id,user_one_id,user_two_id,updated_at,created_at").or(`user_one_id.eq.${userId},user_two_id.eq.${userId}`).order("updated_at",{ascending:false}).order("created_at",{ascending:false})'),
+            ('update({last_message_at:now,updated_at:now})','update({updated_at:now})')
+          ]
+          for old_value,new_value in replacements:
+            if old_value not in d: raise SystemExit(f'DM compatibility target not found: {old_value[:60]}')
+            d=d.replace(old_value,new_value,1)
+          dm.write_text(d)
           PY
       - name: Ensure no new any usage
         run: |
