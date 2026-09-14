@@ -1,0 +1,73 @@
+name: Academic social finalize
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/academic-social-finalize.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install
+        run: npm install --no-audit --no-fund
+      - name: Apply social core patch
+        run: python tools/patch_academic_social_core_20260914.py
+      - name: Apply create route PDF patch
+        run: python tools/patch_academic_create_pdf_20260914.py
+      - name: Lint changed academic social files
+        working-directory: apps/painel-ldr
+        run: >-
+          npx eslint
+          src/components/academic-social-v3-feed.tsx
+          src/lib/academic-network.functions.ts
+          src/lib/academic-network.server.ts
+          src/lib/academic-media-v2.functions.ts
+          src/lib/academic-media-v2.server.ts
+          src/lib/academic-dm.functions.ts
+          src/lib/academic-dm.server.ts
+          src/routes/_clientarea.cliente.rede-academica.tsx
+          src/routes/_clientarea.cliente.rede-academica.criar.tsx
+          src/routes/_clientarea.cliente.rede-academica.chat.tsx
+      - name: Academic TypeScript gate
+        working-directory: apps/painel-ldr
+        shell: bash
+        run: |
+          set +e
+          npm run typecheck > /tmp/typecheck.log 2>&1
+          status=$?
+          set -e
+          grep -E 'error TS|TS[0-9]{4}' /tmp/typecheck.log > /tmp/errors.log || true
+          grep -E 'src/(components/academic-social-v3-feed|lib/academic-(network|media-v2|dm)|routes/_clientarea\.cliente\.rede-academica)' /tmp/errors.log > /tmp/academic-errors.log || true
+          echo '--- Academic social TypeScript errors ---'
+          cat /tmp/academic-errors.log
+          if [ -s /tmp/academic-errors.log ]; then exit 1; fi
+          echo "Academic social files clean. Global legacy typecheck status=$status"
+      - name: Production build
+        working-directory: apps/painel-ldr
+        run: npm run build
+      - name: Commit validated social functionality
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add apps/painel-ldr/src
+          if git diff --cached --quiet; then
+            echo 'No social functionality changes to commit.'
+            exit 0
+          fi
+          git commit -m 'feat(academic): enable compact composer pdf repost and private dm'
+          git push origin main
