@@ -35,7 +35,7 @@ jobs:
           cmp /tmp/v4-first.patch /tmp/v4-second.patch
       - name: Install dependencies
         working-directory: apps/painel-ldr
-        run: npm ci
+        run: npm ci --no-audit --no-fund
       - name: Build Academy
         working-directory: apps/painel-ldr
         run: npm run build
