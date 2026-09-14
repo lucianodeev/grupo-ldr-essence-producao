@@ -5,6 +5,7 @@ import { createClientDigitalCheckout, getClientDigitalLibrary, resolveClient, ty
 const FIXED_BRL_EBOOKS = {
   ebook_pratica_clinica_psicanalise: "A Prática Clínica da Psicanálise",
   ebook_psicanalise_no_mundo: "A Psicanálise no Mundo",
+  ebook_psicanalise_autismo: "Psicanálise e Autismo",
   ebook_estudos_caso_psicanalise: "Estudos de Caso",
   ebook_psicologia_psicanalise_terapias: 'Psicologia, Psicanálise e Terapias Integrativas',
   ebook_jornalismo_era_digital: 'Jornalismo na Era Digital',
@@ -39,7 +40,7 @@ export async function createDigitalCheckoutWithFixedBrlEbooks(
   const isPremiumCollectionOne = premiumCollectionOne.has(input.productKey);
   // Estudos de Caso mantém o preço atual. A Coleção 1 é dividida em padrão e Premium.
   const isCollectionOne = ['ebook_psicologia_psicanalise_terapias', 'ebook_jornalismo_era_digital', 'ebook_corpo_trabalho_escuta', 'ebook_comportamento_humano', 'ebook_estetica_bem_estar', 'ebook_tricologia_cuidado', 'ebook_ia_novos_milionarios', 'ebook_imigracao_efeitos_psicologicos'].includes(input.productKey as any);
-  if ((!isPremiumCases && !isCollectionOne && input.market !== "BR") || !isFixedBrlEbook(input.productKey)) {
+  if (!isFixedBrlEbook(input.productKey)) {
     return createClientDigitalCheckout(userId, email, input);
   }
 

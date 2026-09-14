@@ -19,6 +19,8 @@ const POPULAR_HREFS = [
   "/cliente/biblioteca/ebook_estudos_caso_psicanalise",
   "/cliente/ebooks/ebook_estudos_caso_psicanalise",
   "/cliente/cursos/academy/clinica-psicanalitica-sigmund-freud",
+  "/cliente/cursos/academy/orientacao-trabalho-cientifico",
+  "/cliente/cursos/academy/modelos-documentos-psicanaliticos",
   "/cliente/treinamentos/psicanalise-internacional",
   "/cliente/psicanalista-alta-performance",
   "/cliente/treinamentos/formacao-profissional/aba-autismo",
