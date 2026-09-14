@@ -43,6 +43,9 @@ jobs:
           src/routes/_clientarea.cliente.rede-academica.tsx
           src/routes/_clientarea.cliente.rede-academica.criar.tsx
           src/routes/_clientarea.cliente.rede-academica.chat.tsx
+      - name: Generate route tree and production build
+        working-directory: apps/painel-ldr
+        run: npm run build
       - name: Capture Academic TypeScript diagnostics
         working-directory: apps/painel-ldr
         shell: bash
@@ -78,9 +81,6 @@ jobs:
             exit 1
           fi
           echo 'Academic social TypeScript gate passed.'
-      - name: Production build
-        working-directory: apps/painel-ldr
-        run: npm run build
       - name: Commit validated social functionality
         shell: bash
         run: |
@@ -94,4 +94,4 @@ jobs:
           git commit -m 'feat(academic): enable compact composer pdf repost and private dm'
           git push origin main
 
-# diagnostics capture rerun: 2026-09-14T23:16+02:00
+# route-tree generation before typecheck: 2026-09-14T23:20+02:00
