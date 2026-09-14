@@ -26,6 +26,17 @@ jobs:
         run: npm install --no-audit --no-fund
       - name: Sync current Academic Network table types
         run: python tools/sync_academic_supabase_types_20260914.py
+      - name: Verify Academic Network type sync
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('apps/painel-ldr/src/integrations/supabase/types.ts')
+          text=p.read_text()
+          required=['academic_comments','academic_connections','academic_conversations','academic_messages','academic_post_media','academic_posts','academic_profiles','academic_reactions','academic_saved_posts']
+          missing=[name for name in required if f'      {name}: {{' not in text]
+          if missing: raise SystemExit(f'Missing synced Academic Network types: {missing}')
+          print('Academic Network schema type gate: OK')
+          PY
       - name: Record existing any usage
         run: |
           python - <<'PY' > /tmp/any-before.txt
