@@ -58,6 +58,8 @@ function AcademicNetworkPage(){
       </div>
     </header>
 
+    <AcademicUtilityStrip locale={locale}/>
+
     <nav aria-label="Academic network" className="hidden grid-cols-5 overflow-hidden rounded-[24px] border bg-card shadow-sm sm:grid">
       {nav.map(([key,Icon,label])=><button key={key} onClick={()=>setTab(key)} aria-current={tab===key?"page":undefined} className={`min-w-0 px-1 py-3 text-[9px] font-black transition sm:px-3 sm:text-xs ${tab===key?"bg-[#07315a] text-white shadow-inner":"text-foreground hover:bg-muted/70"}`}><Icon className={`mx-auto mb-1 h-5 w-5 ${tab===key?"text-[#efc56d]":""}`}/><span className="block whitespace-normal">{label}</span></button>)}
     </nav>
@@ -70,7 +72,7 @@ function AcademicNetworkPage(){
     </div>
 
     {!access.premium&&tab!=="diary"&&tab!=="profile"&&<div className="rounded-2xl border border-amber-300/60 bg-amber-50 p-4 text-sm text-amber-950 dark:bg-amber-950/20 dark:text-amber-100"><b>{t.freeTitle}</b> {t.freeText} <Link to="/cliente/biblioteca" className="ml-1 font-black underline">{t.subscription}</Link></div>}
-    {tab==="feed"&&<AcademicOnboardingV3 locale={locale}/>}
+    {tab==="feed"&&<AcademicOnboardingV3 locale={locale}/>} 
     {(tab==="feed"||tab==="saved")&&<Feed t={t} locale={locale} data={data} search={search} setSearch={setSearch} communityId={communityId} setCommunityId={setCommunityId} premium={access.premium} post={post} comment={comment} save={save} support={support} connect={connect} report={report} delPost={delPost} delComment={delComment} updatePost={updatePost} updateComment={updateComment} savedOnly={tab==="saved"} extraPosts={extraPosts} more={more}/>} 
     {tab==="communities"&&<Communities t={t} data={data} premium={access.premium} member={member} setCommunityId={(id:string)=>{setCommunityId(id);setTab("feed")}}/>}
     {tab==="diary"&&<Diary t={t} locale={locale} data={data} diary={diary} delDiary={delDiary}/>} 
@@ -78,6 +80,18 @@ function AcademicNetworkPage(){
     <p className="pb-6 text-center text-[11px] leading-5 text-muted-foreground">{t.safety}</p>
     <MobileAcademicNav tab={tab} setTab={setTab} t={t} locale={locale} />
   </div>
+}
+
+function AcademicUtilityStrip({locale}:{locale:Locale}){
+  const labels={pt:{library:"Biblioteca",accessibility:"Acessibilidade",chat:"Chat"},en:{library:"Library",accessibility:"Accessibility",chat:"Chat"},fr:{library:"Bibliothèque",accessibility:"Accessibilité",chat:"Chat"},es:{library:"Biblioteca",accessibility:"Accesibilidad",chat:"Chat"}}[locale];
+  const openAccessibility=()=>document.querySelector<HTMLButtonElement>('[data-academy-accessibility-drawer="true"] > button')?.click();
+  const openChat=()=>{const buttons=Array.from(document.querySelectorAll<HTMLButtonElement>('button[aria-expanded]'));buttons.find((button)=>String(button.className).includes('F4B942'))?.click()};
+  const item="flex min-h-11 min-w-0 flex-1 items-center justify-center gap-2 rounded-xl px-2 text-[10px] font-black transition hover:bg-muted sm:flex-none sm:px-4";
+  return <section aria-label={locale==="pt"?"Acessos rápidos":locale==="en"?"Quick access":locale==="fr"?"Accès rapides":"Accesos rápidos"} className="academic-v4-utility-strip flex items-center gap-1 rounded-[20px] border bg-card p-1.5 shadow-sm">
+    <Link to="/cliente/biblioteca" className={item}><BookHeart className="h-4 w-4 shrink-0 text-[#b78927]"/><span>{labels.library}</span></Link>
+    <button type="button" onClick={openAccessibility} className={item}><Shield className="h-4 w-4 shrink-0 text-[#b78927]"/><span>{labels.accessibility}</span></button>
+    <button type="button" onClick={openChat} className={item}><MessageCircle className="h-4 w-4 shrink-0 text-[#b78927]"/><span>{labels.chat}</span></button>
+  </section>
 }
 
 function MobileAcademicNav({tab,setTab,t,locale}:any){
