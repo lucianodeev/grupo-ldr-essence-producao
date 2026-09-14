@@ -68,3 +68,5 @@ elif 'if(!publicView)return null;' not in q:
     raise SystemExit("Shelf function anchor not found")
 
 shelf.write_text(q)
+
+# Idempotent patch: only the two Academy presentation components above may be changed.
