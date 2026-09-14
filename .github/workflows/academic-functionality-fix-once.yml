@@ -32,8 +32,6 @@ jobs:
           npm run typecheck > /tmp/typecheck-baseline.log 2>&1
           grep -E 'error TS|TS[0-9]{4}' /tmp/typecheck-baseline.log | sed -E 's/\([0-9]+,[0-9]+\):/:/' | sort -u > /tmp/typecheck-baseline-errors.log || true
           exit 0
-      - name: Apply targeted Academic Network functional repair
-        run: python tools/patch_academic_functionality_20260914.py
       - name: Apply targeted Academic Network component typecheck repair
         run: python tools/patch_academic_typecheck_20260914.py
       - name: Apply targeted Academic Network route typecheck repair
@@ -89,4 +87,4 @@ jobs:
           git commit -m 'fix(academic): finish route type safety repairs'
           git push origin main
 
-# validation rerun: 2026-09-14T22:58+02:00
+# validation rerun: 2026-09-14T23:01+02:00
