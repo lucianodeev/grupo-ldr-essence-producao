@@ -43,7 +43,7 @@ jobs:
           src/routes/_clientarea.cliente.rede-academica.tsx
           src/routes/_clientarea.cliente.rede-academica.criar.tsx
           src/routes/_clientarea.cliente.rede-academica.chat.tsx
-      - name: Academic TypeScript gate
+      - name: Capture Academic TypeScript diagnostics
         working-directory: apps/painel-ldr
         shell: bash
         run: |
@@ -53,10 +53,31 @@ jobs:
           set -e
           grep -E 'error TS|TS[0-9]{4}' /tmp/typecheck.log > /tmp/errors.log || true
           grep -E 'src/(components/academic-social-v3-feed|lib/academic-(network|media-v2|dm)|routes/_clientarea\.cliente\.rede-academica)' /tmp/errors.log > /tmp/academic-errors.log || true
+          cp /tmp/typecheck.log ../../tools/academic-social-typecheck-full.log
+          cp /tmp/academic-errors.log ../../tools/academic-social-typecheck-errors.log
+          echo "Global legacy typecheck status=$status"
           echo '--- Academic social TypeScript errors ---'
           cat /tmp/academic-errors.log
-          if [ -s /tmp/academic-errors.log ]; then exit 1; fi
-          echo "Academic social files clean. Global legacy typecheck status=$status"
+      - name: Persist Academic TypeScript diagnostics
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add tools/academic-social-typecheck-full.log tools/academic-social-typecheck-errors.log
+          if git diff --cached --quiet; then
+            echo 'Diagnostics unchanged.'
+          else
+            git commit -m 'ci(academic): capture social typecheck diagnostics'
+            git push origin main
+          fi
+      - name: Academic TypeScript gate
+        shell: bash
+        run: |
+          if [ -s tools/academic-social-typecheck-errors.log ]; then
+            cat tools/academic-social-typecheck-errors.log
+            exit 1
+          fi
+          echo 'Academic social TypeScript gate passed.'
       - name: Production build
         working-directory: apps/painel-ldr
         run: npm run build
@@ -73,4 +94,4 @@ jobs:
           git commit -m 'feat(academic): enable compact composer pdf repost and private dm'
           git push origin main
 
-# rerun after lint audit unblock: 2026-09-14T23:12+02:00
+# diagnostics capture rerun: 2026-09-14T23:16+02:00
