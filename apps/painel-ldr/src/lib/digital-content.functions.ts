@@ -23,6 +23,7 @@ const PRODUCTS = new Set<DigitalReaderProductKey>([
   "ebook_tricologia_cuidado",
   "ebook_ia_novos_milionarios",
   "ebook_imigracao_efeitos_psicologicos",
+  "ebook_psicanalise_vs_psiquiatria",
 ]);
 const LOCALES = new Set<DigitalReaderLocale>(["pt", "en", "fr", "es"]);
 

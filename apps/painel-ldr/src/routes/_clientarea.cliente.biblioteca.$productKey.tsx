@@ -5,7 +5,7 @@ export const Route = createFileRoute("/_clientarea/cliente/biblioteca/$productKe
 
 function DigitalReaderRoute(){
   const {productKey}=Route.useParams();
-  if(!new Set(["ebook_coragem_comecar","livro_menino_mamao","ebook_pratica_clinica_psicanalise","ebook_psicanalise_no_mundo","ebook_estudos_caso_psicanalise","ebook_psicanalise_autismo","ebook_psicologia_psicanalise_terapias","ebook_jornalismo_era_digital","ebook_corpo_trabalho_escuta","ebook_comportamento_humano","ebook_estetica_bem_estar","ebook_tricologia_cuidado","ebook_ia_novos_milionarios","ebook_imigracao_efeitos_psicologicos"]).has(productKey)){
+  if(!new Set(["ebook_coragem_comecar","livro_menino_mamao","ebook_pratica_clinica_psicanalise","ebook_psicanalise_no_mundo","ebook_estudos_caso_psicanalise","ebook_psicanalise_autismo","ebook_psicologia_psicanalise_terapias","ebook_jornalismo_era_digital","ebook_corpo_trabalho_escuta","ebook_comportamento_humano","ebook_estetica_bem_estar","ebook_tricologia_cuidado","ebook_ia_novos_milionarios","ebook_imigracao_efeitos_psicologicos","ebook_psicanalise_vs_psiquiatria"]).has(productKey)){
     return <section className="s8-card">Produto inválido.</section>;
   }
   return <DigitalReaderV2 productKey={productKey as any}/>;

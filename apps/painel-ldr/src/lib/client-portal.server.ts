@@ -974,7 +974,7 @@ export async function getClientContractCatalog(userId: string, email: string | n
 // ---------------------------------------------------------------- biblioteca digital
 
 export type ClientLibraryProduct = {
-  key: "ebook_coragem_comecar" | "livro_menino_mamao" | "ebook_pratica_clinica_psicanalise" | "ebook_psicanalise_no_mundo" | "ebook_estudos_caso_psicanalise" | "ebook_psicanalise_autismo" | "ebook_psicologia_psicanalise_terapias" | "ebook_jornalismo_era_digital" | "ebook_corpo_trabalho_escuta" | "ebook_comportamento_humano" | "ebook_estetica_bem_estar" | "ebook_tricologia_cuidado" | "ebook_ia_novos_milionarios" | "ebook_imigracao_efeitos_psicologicos";
+  key: "ebook_coragem_comecar" | "livro_menino_mamao" | "ebook_pratica_clinica_psicanalise" | "ebook_psicanalise_no_mundo" | "ebook_estudos_caso_psicanalise" | "ebook_psicanalise_autismo" | "ebook_psicologia_psicanalise_terapias" | "ebook_jornalismo_era_digital" | "ebook_corpo_trabalho_escuta" | "ebook_comportamento_humano" | "ebook_estetica_bem_estar" | "ebook_tricologia_cuidado" | "ebook_ia_novos_milionarios" | "ebook_imigracao_efeitos_psicologicos" | "ebook_psicanalise_vs_psiquiatria";
   title: string;
   description: string;
   priceBrlCents: number;
@@ -1013,6 +1013,7 @@ const DIGITAL_LIBRARY_PRODUCTS: Omit<ClientLibraryProduct, "entitled">[] = [
   { key:"ebook_tricologia_cuidado", title:'Tricologia Capilar Aplicada ao Cuidado', description:'Prática, Acompanhamento e Resultados', priceBrlCents:1990, priceEurCents:490, purchaseUrl:"/ebooks/tricologia-cuidado" },
   { key:"ebook_ia_novos_milionarios", title:'Como a Inteligência Artificial Pode Criar Novos Milionários', description:'Oportunidades, Negócios e Profissões na Nova Economia da IA', priceBrlCents:4990, priceEurCents:990, purchaseUrl:"/ebooks/ia-novos-milionarios" },
   { key:"ebook_imigracao_efeitos_psicologicos", title:'Entre Dois Mundos', description:'Imigração e os Efeitos Psicológicos da Experiência Migratória', priceBrlCents:4990, priceEurCents:990, purchaseUrl:"/ebooks/imigracao-efeitos-psicologicos" },
+  { key:"ebook_psicanalise_vs_psiquiatria", title:'Psicanálise vs. Psiquiatria', description:'Do diagnóstico à escuta: como duas tradições compreendem o sofrimento psíquico e podem dialogar na clínica', priceBrlCents:1990, priceEurCents:490, purchaseUrl:"/ebooks/psicanalise-vs-psiquiatria" },
 ];
 
 /**
@@ -1057,6 +1058,7 @@ export async function getClientDigitalLibrary(userId: string, email: string | nu
     ebook_tricologia_cuidado:["ebook_tricologia_cuidado"],
     ebook_ia_novos_milionarios:["ebook_ia_novos_milionarios"],
     ebook_imigracao_efeitos_psicologicos:["ebook_imigracao_efeitos_psicologicos"],
+    ebook_psicanalise_vs_psiquiatria:["ebook_psicanalise_vs_psiquiatria"],
 
   };
 
@@ -1069,7 +1071,7 @@ export async function getClientDigitalLibrary(userId: string, email: string | nu
   };
 }
 
-export type DigitalProductKey = "ebook_coragem_comecar" | "livro_menino_mamao" | "ebook_pratica_clinica_psicanalise" | "ebook_psicanalise_no_mundo" | "ebook_estudos_caso_psicanalise" | "ebook_psicanalise_autismo" | "ebook_psicologia_psicanalise_terapias" | "ebook_jornalismo_era_digital" | "ebook_corpo_trabalho_escuta" | "ebook_comportamento_humano" | "ebook_estetica_bem_estar" | "ebook_tricologia_cuidado" | "ebook_ia_novos_milionarios" | "ebook_imigracao_efeitos_psicologicos";
+export type DigitalProductKey = "ebook_coragem_comecar" | "livro_menino_mamao" | "ebook_pratica_clinica_psicanalise" | "ebook_psicanalise_no_mundo" | "ebook_estudos_caso_psicanalise" | "ebook_psicanalise_autismo" | "ebook_psicologia_psicanalise_terapias" | "ebook_jornalismo_era_digital" | "ebook_corpo_trabalho_escuta" | "ebook_comportamento_humano" | "ebook_estetica_bem_estar" | "ebook_tricologia_cuidado" | "ebook_ia_novos_milionarios" | "ebook_imigracao_efeitos_psicologicos" | "ebook_psicanalise_vs_psiquiatria";
 export type DigitalMarket = "BR" | "INTL";
 
 function logDigitalCheckout(
@@ -1121,6 +1123,7 @@ const DIGITAL_CHECKOUT_CONFIG: Record<
   ebook_tricologia_cuidado:{title:'Tricologia Capilar Aplicada ao Cuidado',brlCents:2000,eurCents:399,brlPriceEnv:"STRIPE_EBOOK_COLLECTION_PRICE_BRL",eurPriceEnv:"STRIPE_EBOOK_COLLECTION_PRICE_EUR",dynamicPrice:true},
   ebook_ia_novos_milionarios:{title:'Como a Inteligência Artificial Pode Criar Novos Milionários',brlCents:2000,eurCents:399,brlPriceEnv:"STRIPE_EBOOK_COLLECTION_PRICE_BRL",eurPriceEnv:"STRIPE_EBOOK_COLLECTION_PRICE_EUR",dynamicPrice:true},
   ebook_imigracao_efeitos_psicologicos:{title:'Entre Dois Mundos',brlCents:2000,eurCents:399,brlPriceEnv:"STRIPE_EBOOK_COLLECTION_PRICE_BRL",eurPriceEnv:"STRIPE_EBOOK_COLLECTION_PRICE_EUR",dynamicPrice:true},
+  ebook_psicanalise_vs_psiquiatria:{title:'Psicanálise vs. Psiquiatria',brlCents:1990,eurCents:490,brlPriceEnv:"STRIPE_EBOOK_COLLECTION_PRICE_BRL",eurPriceEnv:"STRIPE_EBOOK_COLLECTION_PRICE_EUR",dynamicPrice:true},
 };
 
 function stripePriceFor(productKey: DigitalProductKey, market: DigitalMarket): string | null {

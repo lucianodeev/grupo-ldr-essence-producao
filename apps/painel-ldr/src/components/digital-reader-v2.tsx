@@ -7,7 +7,7 @@ import { clientSaveProgress } from "@/lib/learning.functions";
 import { useI18n } from "@/lib/i18n";
 
 type Locale="pt"|"en"|"fr"|"es";
-type ProductKey="ebook_coragem_comecar" | "livro_menino_mamao" | "ebook_pratica_clinica_psicanalise" | "ebook_psicanalise_no_mundo" | "ebook_estudos_caso_psicanalise" | "ebook_psicanalise_autismo" | "ebook_psicologia_psicanalise_terapias" | "ebook_jornalismo_era_digital" | "ebook_corpo_trabalho_escuta" | "ebook_comportamento_humano" | "ebook_estetica_bem_estar" | "ebook_tricologia_cuidado" | "ebook_ia_novos_milionarios" | "ebook_imigracao_efeitos_psicologicos";
+type ProductKey="ebook_coragem_comecar" | "livro_menino_mamao" | "ebook_pratica_clinica_psicanalise" | "ebook_psicanalise_no_mundo" | "ebook_estudos_caso_psicanalise" | "ebook_psicanalise_autismo" | "ebook_psicologia_psicanalise_terapias" | "ebook_jornalismo_era_digital" | "ebook_corpo_trabalho_escuta" | "ebook_comportamento_humano" | "ebook_estetica_bem_estar" | "ebook_tricologia_cuidado" | "ebook_ia_novos_milionarios" | "ebook_imigracao_efeitos_psicologicos" | "ebook_psicanalise_vs_psiquiatria";
 type EbookPage={titulo?:string;texto?:string};
 type BookChapter=[string|number,string,string[]];
 type ReaderPayload={kind:"ebook";pages:EbookPage[]}|{kind:"book";data:{title?:string;subtitle?:string;chapters?:BookChapter[]}};
@@ -33,7 +33,8 @@ const PRODUCT_THEME:Record<ProductKey,{light:string;dark:string;cardLight:string
   ebook_estetica_bem_estar:{light:"bg-[#fcf7f8] text-[#3c252b]",dark:"bg-[#241519] text-[#fff7f9]",cardLight:"border-[#dfc5cb] bg-white",cardDark:"border-[#875261] bg-[#321d23]",accent:"#8A5965",soft:"#f2e3e7"},
   ebook_tricologia_cuidado:{light:"bg-[#f4f8f5] text-[#213129]",dark:"bg-[#111d17] text-[#f2faf5]",cardLight:"border-[#bfd0c6] bg-white",cardDark:"border-[#476956] bg-[#18281f]",accent:"#48665A",soft:"#dfeae4"},
   ebook_ia_novos_milionarios:{light:"bg-[#f2f5fa] text-[#17253c]",dark:"bg-[#091321] text-[#f1f6ff]",cardLight:"border-[#bec9db] bg-white",cardDark:"border-[#34547f] bg-[#102039]",accent:"#273F66",soft:"#dce5f2"},
-  ebook_imigracao_efeitos_psicologicos:{light:"bg-[#f8f6f8] text-[#332b34]",dark:"bg-[#1d171e] text-[#fbf6fb]",cardLight:"border-[#d5cbd6] bg-white",cardDark:"border-[#69586b] bg-[#291f2a]",accent:"#6A586B",soft:"#ebe3ec"}
+  ebook_imigracao_efeitos_psicologicos:{light:"bg-[#f8f6f8] text-[#332b34]",dark:"bg-[#1d171e] text-[#fbf6fb]",cardLight:"border-[#d5cbd6] bg-white",cardDark:"border-[#69586b] bg-[#291f2a]",accent:"#6A586B",soft:"#ebe3ec"},
+  ebook_psicanalise_vs_psiquiatria:{light:"bg-[#f5f6f8] text-[#202733]",dark:"bg-[#11161f] text-[#f5f7fa]",cardLight:"border-[#c7ccd4] bg-white",cardDark:"border-[#4c5a6d] bg-[#19212d]",accent:"#39485F",soft:"#e6e9ef"}
 };
 
 export function DigitalReaderV2({productKey}:{productKey:ProductKey}){

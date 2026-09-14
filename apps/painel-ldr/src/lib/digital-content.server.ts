@@ -3,7 +3,7 @@ import { gunzipSync } from "node:zlib";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { hasOwnerDigitalAccess } from "@/lib/owner-digital-access.server";
 
-export type DigitalReaderProductKey = "ebook_coragem_comecar" | "livro_menino_mamao" | "ebook_pratica_clinica_psicanalise" | "ebook_psicanalise_no_mundo" | "ebook_estudos_caso_psicanalise" | "ebook_psicanalise_autismo" | "ebook_psicologia_psicanalise_terapias" | "ebook_jornalismo_era_digital" | "ebook_corpo_trabalho_escuta" | "ebook_comportamento_humano" | "ebook_estetica_bem_estar" | "ebook_tricologia_cuidado" | "ebook_ia_novos_milionarios" | "ebook_imigracao_efeitos_psicologicos";
+export type DigitalReaderProductKey = "ebook_coragem_comecar" | "livro_menino_mamao" | "ebook_pratica_clinica_psicanalise" | "ebook_psicanalise_no_mundo" | "ebook_estudos_caso_psicanalise" | "ebook_psicanalise_autismo" | "ebook_psicologia_psicanalise_terapias" | "ebook_jornalismo_era_digital" | "ebook_corpo_trabalho_escuta" | "ebook_comportamento_humano" | "ebook_estetica_bem_estar" | "ebook_tricologia_cuidado" | "ebook_ia_novos_milionarios" | "ebook_imigracao_efeitos_psicologicos" | "ebook_psicanalise_vs_psiquiatria";
 export type DigitalReaderLocale = "pt" | "en" | "fr" | "es";
 
 const ALIASES: Record<DigitalReaderProductKey, string[]> = {
@@ -21,6 +21,7 @@ const ALIASES: Record<DigitalReaderProductKey, string[]> = {
   ebook_tricologia_cuidado: ["ebook_tricologia_cuidado"],
   ebook_ia_novos_milionarios: ["ebook_ia_novos_milionarios"],
   ebook_imigracao_efeitos_psicologicos: ["ebook_imigracao_efeitos_psicologicos"],
+  ebook_psicanalise_vs_psiquiatria: ["ebook_psicanalise_vs_psiquiatria"],
 
 };
 

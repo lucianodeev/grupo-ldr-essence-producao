@@ -95,6 +95,15 @@ export const PSYCHOANALYSIS_EBOOKS = [
     priceBrlCents:4990, priceEurCents:990,
     chapters:['Por que partimos', 'A decisão de deixar o país', 'O último dia antes da partida', 'A chegada', 'Choque cultural', 'Língua e identidade', 'Saudade', 'Solidão', 'Família à distância', 'Relacionamentos depois da imigração', 'Trabalho e sobrevivência', 'Qualificação profissional e recomeço', 'Preconceito e exclusão', 'Pertencimento', 'Viver entre duas culturas', 'Construção de novas redes sociais', 'Adaptação', 'Quando voltar também é difícil', 'Quando procurar apoio profissional', 'Construindo pertencimento sem apagar as origens']
   },
+  {
+    key:'ebook_psicanalise_vs_psiquiatria', slug:'psicanalise-vs-psiquiatria', publicPath:'/ebooks/psicanalise-vs-psiquiatria', readerPath:'/cliente/biblioteca/ebook_psicanalise_vs_psiquiatria', color:'#39485F',
+    title:'Psicanálise vs. Psiquiatria', subtitle:'Do diagnóstico à escuta: como duas tradições compreendem o sofrimento psíquico e podem dialogar na clínica', short:'Psicanálise vs. Psiquiatria',
+    description:'Uma análise crítica das diferenças, limites e possibilidades de diálogo entre Psicanálise e Psiquiatria, do diagnóstico e da psicofarmacologia à escuta, subjetividade e trabalho interdisciplinar.',
+    audience:'Leitores, estudantes e profissionais interessados em Psicanálise, Psiquiatria, saúde mental e cuidado interdisciplinar.',
+    priceBrlCents:1990, priceEurCents:490,
+    chapters:['Duas formas de entrar na história da saúde mental', 'O que é Psiquiatria?', 'O que é Psicanálise?', 'Freud era médico: da Neurologia à Psicanálise', 'O que cada campo chama de sintoma?', 'Diagnóstico psiquiátrico', 'Diagnóstico e construção do caso na Psicanálise', 'O inconsciente entra no consultório médico?', 'Psiquiatras que também se tornaram psicanalistas', 'A Psiquiatria psicodinâmica', 'Medicamento e palavra precisam ser adversários?', 'O que um medicamento pode fazer — e o que não pode prometer', 'A escuta do paciente em Psiquiatria', 'Transferência e relação clínica', 'Ansiedade: duas lentes sobre um mesmo sofrimento?', 'Depressão: diagnóstico, história e singularidade', 'Quando o caso exige Psiquiatria', 'Quando o psicanalista encaminha para o psiquiatra', 'Um paciente, dois profissionais', 'Psicanálise e Psiquiatria no século XXI']
+  },
+
 ] as const;
 
 export type PsychoanalysisEbookKey = typeof PSYCHOANALYSIS_EBOOKS[number]["key"];

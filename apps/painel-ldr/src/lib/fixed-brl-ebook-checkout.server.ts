@@ -15,6 +15,7 @@ const FIXED_BRL_EBOOKS = {
   ebook_tricologia_cuidado: 'Tricologia Capilar Aplicada ao Cuidado',
   ebook_ia_novos_milionarios: 'Como a Inteligência Artificial Pode Criar Novos Milionários',
   ebook_imigracao_efeitos_psicologicos: 'Entre Dois Mundos',
+  ebook_psicanalise_vs_psiquiatria: 'Psicanálise vs. Psiquiatria',
 } as const;
 
 type FixedBrlEbookKey = keyof typeof FIXED_BRL_EBOOKS;
