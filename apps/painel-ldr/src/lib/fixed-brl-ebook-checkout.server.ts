@@ -30,8 +30,14 @@ export async function createDigitalCheckoutWithFixedBrlEbooks(
   input: { productKey: DigitalProductKey; market: DigitalMarket },
 ) {
   const isPremiumCases = input.productKey === "ebook_estudos_caso_psicanalise";
-  // Estudos de Caso possui preço promocional próprio nos dois mercados.
-  // Os demais eBooks fixos continuam interceptados somente no BRL.
+  const premiumCollectionOne = new Set<DigitalProductKey>([
+    "ebook_psicologia_psicanalise_terapias",
+    "ebook_corpo_trabalho_escuta",
+    "ebook_ia_novos_milionarios",
+    "ebook_imigracao_efeitos_psicologicos",
+  ]);
+  const isPremiumCollectionOne = premiumCollectionOne.has(input.productKey);
+  // Estudos de Caso mantém o preço atual. A Coleção 1 é dividida em padrão e Premium.
   const isCollectionOne = ['ebook_psicologia_psicanalise_terapias', 'ebook_jornalismo_era_digital', 'ebook_corpo_trabalho_escuta', 'ebook_comportamento_humano', 'ebook_estetica_bem_estar', 'ebook_tricologia_cuidado', 'ebook_ia_novos_milionarios', 'ebook_imigracao_efeitos_psicologicos'].includes(input.productKey as any);
   if ((!isPremiumCases && !isCollectionOne && input.market !== "BR") || !isFixedBrlEbook(input.productKey)) {
     return createClientDigitalCheckout(userId, email, input);
@@ -46,7 +52,7 @@ export async function createDigitalCheckoutWithFixedBrlEbooks(
     fail("Este produto já está disponível na sua biblioteca.");
   }
 
-  const amountCents = isPremiumCases ? (input.market === "BR" ? 7990 : 1490) : (input.market === "BR" ? 2000 : 399);
+  const amountCents = isPremiumCases ? (input.market === "BR" ? 7990 : 1490) : isPremiumCollectionOne ? (input.market === "BR" ? 4990 : 990) : (input.market === "BR" ? 1990 : 490);
   const currency = input.market === "BR" ? "BRL" : "EUR";
   const stripeCurrency = input.market === "BR" ? "brl" : "eur";
   const title = FIXED_BRL_EBOOKS[input.productKey];
@@ -60,7 +66,7 @@ export async function createDigitalCheckoutWithFixedBrlEbooks(
       contact_phone: customer.phone,
       service_type: "produto_digital",
       title,
-      description: isPremiumCases ? "eBook Premium · compra digital pela Biblioteca / Plataforma" : "Compra digital pela Biblioteca / Plataforma",
+      description: (isPremiumCases || isPremiumCollectionOne) ? "eBook Premium · compra digital pela Biblioteca / Plataforma" : "Compra digital pela Biblioteca / Plataforma",
       quantity: 1,
       amount_cents: amountCents,
       currency,
@@ -68,7 +74,7 @@ export async function createDigitalCheckoutWithFixedBrlEbooks(
       status: "novo",
       priority: "media",
       catalog_key: input.productKey,
-      metadata: { product_key: input.productKey, market: input.market, auth_user_id: userId, fixed_price: true, premium: isPremiumCases },
+      metadata: { product_key: input.productKey, market: input.market, auth_user_id: userId, fixed_price: true, premium: isPremiumCases || isPremiumCollectionOne },
     } as never)
     .select("id, order_number")
     .single();
@@ -124,7 +130,7 @@ export async function createDigitalCheckoutWithFixedBrlEbooks(
 
   await supabaseAdmin.from("orders").update({
     stripe_checkout_session_id: session.id,
-    metadata: { product_key: input.productKey, market: input.market, auth_user_id: userId, stripe_price_id: null, fixed_price: true, premium: isPremiumCases },
+    metadata: { product_key: input.productKey, market: input.market, auth_user_id: userId, stripe_price_id: null, fixed_price: true, premium: isPremiumCases || isPremiumCollectionOne },
   } as never).eq("id", order.id);
 
   return { url: session.url, orderId: order.id, orderNumber: order.order_number };

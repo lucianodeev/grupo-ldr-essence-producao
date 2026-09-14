@@ -36,7 +36,7 @@ export const PSYCHOANALYSIS_EBOOKS = [
     title:'Psicologia, Psicanálise e Terapias Integrativas', subtitle:'Diálogos, Diferenças e Possibilidades', short:'Psicologia, Psicanálise e Terapias Integrativas',
     description:'Obra da Coleção Estudos Contemporâneos com 20 capítulos sobre psicologia, psicanálise e terapias integrativas, escrita para estudo aprofundado, aplicação responsável e reflexão crítica.',
     audience:'Leitores, estudantes e profissionais interessados em aprofundamento contemporâneo e aplicação responsável.',
-    priceBrlCents:2000, priceEurCents:399,
+    priceBrlCents:4990, priceEurCents:990,
     chapters:['O nascimento das diferentes formas de compreender o ser humano', 'O que é Psicologia', 'As principais abordagens da Psicologia', 'O nascimento da Psicanálise', 'Freud e a descoberta do inconsciente', 'A Psicanálise depois de Freud', 'O que são Terapias Integrativas', 'Corpo, mente e subjetividade', 'Sintoma e sofrimento humano', 'Escuta e vínculo', 'Emoções e comportamento', 'O lugar da história individual', 'Diferentes formas de compreender ansiedade e sofrimento', 'Complementaridade e seus limites', 'O problema das promessas de cura', 'Ética e responsabilidade profissional', 'Limites de atuação', 'Trabalho interdisciplinar', 'Situações práticas comparadas', 'O futuro do cuidado humano']
   },
   {
@@ -44,7 +44,7 @@ export const PSYCHOANALYSIS_EBOOKS = [
     title:'Jornalismo na Era Digital', subtitle:'Informação, Sociedade e Novas Tecnologias', short:'Jornalismo na Era Digital',
     description:'Obra da Coleção Estudos Contemporâneos com 20 capítulos sobre jornalismo na era digital, escrita para estudo aprofundado, aplicação responsável e reflexão crítica.',
     audience:'Leitores, estudantes e profissionais interessados em aprofundamento contemporâneo e aplicação responsável.',
-    priceBrlCents:2000, priceEurCents:399,
+    priceBrlCents:1990, priceEurCents:490,
     chapters:['Por que o jornalismo existe', 'História do jornalismo', 'Notícia, informação e interesse público', 'Como nasce uma pauta', 'Apuração jornalística', 'Fontes jornalísticas', 'A entrevista', 'Escrita jornalística', 'Reportagem', 'Jornalismo investigativo', 'Jornalismo digital', 'Redes sociais e distribuição da informação', 'Jornalismo de dados', 'Fake news e desinformação', 'Fact-checking e verificação', 'Ética jornalística', 'Inteligência artificial nas redações', 'Algoritmos e circulação da informação', 'Novos modelos de negócio para jornalistas', 'O jornalista do futuro']
   },
   {
@@ -52,7 +52,7 @@ export const PSYCHOANALYSIS_EBOOKS = [
     title:'Corpo, Trabalho e Escuta', subtitle:'Massagem e Psicanálise no Bem-Estar do Trabalhador', short:'Corpo, Trabalho e Escuta',
     description:'Obra sobre corpo, trabalho, massagem de bem-estar e Psicanálise como práticas distintas, com limites profissionais explícitos e sem atendimento híbrido.',
     audience:'Leitores, estudantes e profissionais interessados em aprofundamento contemporâneo e aplicação responsável.',
-    priceBrlCents:2000, priceEurCents:399,
+    priceBrlCents:4990, priceEurCents:990,
     chapters:['O trabalhador e seu corpo', 'Trabalho, corpo e sociedade', 'O corpo submetido à rotina', 'Tensão e sobrecarga', 'Estresse relacionado ao trabalho', 'Introdução às práticas de massagem', 'Massagem de bem-estar', 'Massagem laboral', 'Ambiente e experiência de cuidado', 'Psicanálise e trabalho', 'Inconsciente e vida profissional', 'Trabalho, identidade e reconhecimento', 'Sofrimento relacionado ao trabalho', 'Corpo e subjetividade', 'O que Massagem e Psicanálise podem ensinar separadamente', 'Duas atuações, limites bem definidos', 'Por que não atendo massagem em clientes de Psicanálise', 'Transferência, contato corporal e limites', 'Ética, encaminhamento e conflitos de interesse', 'Construindo políticas responsáveis de bem-estar']
   },
   {
@@ -60,7 +60,7 @@ export const PSYCHOANALYSIS_EBOOKS = [
     title:'Como Mudar o Comportamento Humano', subtitle:'Hábitos, Ambiente e Processos de Mudança', short:'Como Mudar o Comportamento Humano',
     description:'Obra da Coleção Estudos Contemporâneos com 20 capítulos sobre como mudar o comportamento humano, escrita para estudo aprofundado, aplicação responsável e reflexão crítica.',
     audience:'Leitores, estudantes e profissionais interessados em aprofundamento contemporâneo e aplicação responsável.',
-    priceBrlCents:2000, priceEurCents:399,
+    priceBrlCents:1990, priceEurCents:490,
     chapters:['O que chamamos de comportamento', 'Natureza, ambiente e aprendizagem', 'Como hábitos são formados', 'Recompensa', 'Motivação', 'Emoções', 'Pensamento e ação', 'Ambiente', 'Relações sociais', 'Identidade', 'Tomada de decisão', 'Autocontrole', 'Procrastinação', 'Resistência à mudança', 'Repetição de padrões', 'Construção de novos hábitos', 'Mudanças no ambiente', 'Mudança sustentável', 'Por que algumas mudanças fracassam', 'Construindo um projeto pessoal de mudança']
   },
   {
@@ -68,7 +68,7 @@ export const PSYCHOANALYSIS_EBOOKS = [
     title:'Estética Aplicada ao Bem-Estar', subtitle:'Práticas, Experiência e Cuidado', short:'Estética Aplicada ao Bem-Estar',
     description:'Obra da Coleção Estudos Contemporâneos com 20 capítulos sobre estética aplicada ao bem-estar, escrita para estudo aprofundado, aplicação responsável e reflexão crítica.',
     audience:'Leitores, estudantes e profissionais interessados em aprofundamento contemporâneo e aplicação responsável.',
-    priceBrlCents:2000, priceEurCents:399,
+    priceBrlCents:1990, priceEurCents:490,
     chapters:['História da estética', 'Estética contemporânea', 'Beleza, cultura e sociedade', 'Imagem corporal', 'Autoimagem', 'Experiência de cuidado', 'Acolhimento do cliente', 'Ambiente', 'Comunicação profissional', 'Experiência sensorial', 'Rotinas de atendimento', 'Biossegurança', 'Limites profissionais', 'Expectativas do cliente', 'Promessas e resultados', 'Ética', 'Experiência premium', 'Fidelização responsável', 'Gestão de serviços de estética', 'O futuro da estética e do bem-estar']
   },
   {
@@ -76,7 +76,7 @@ export const PSYCHOANALYSIS_EBOOKS = [
     title:'Tricologia Capilar Aplicada ao Cuidado', subtitle:'Prática, Acompanhamento e Resultados', short:'Tricologia Capilar Aplicada ao Cuidado',
     description:'Obra da Coleção Estudos Contemporâneos com 20 capítulos sobre tricologia capilar aplicada ao cuidado, escrita para estudo aprofundado, aplicação responsável e reflexão crítica.',
     audience:'Leitores, estudantes e profissionais interessados em aprofundamento contemporâneo e aplicação responsável.',
-    priceBrlCents:2000, priceEurCents:399,
+    priceBrlCents:1990, priceEurCents:490,
     chapters:['Introdução à tricologia', 'Anatomia do cabelo', 'Estrutura do fio', 'Couro cabeludo', 'Ciclo capilar', 'Avaliação inicial', 'Anamnese', 'Alterações do couro cabeludo', 'Alterações dos fios', 'Rotinas de cuidado', 'Cosméticos capilares', 'Procedimentos e limites', 'Registro fotográfico', 'Construção de protocolos de acompanhamento', 'Avaliação da evolução', 'Como interpretar resultados', 'Expectativa versus resultado', 'Quando encaminhar para profissional de saúde', 'Ética e responsabilidade', 'Construindo uma prática profissional de cuidado capilar']
   },
   {
@@ -84,7 +84,7 @@ export const PSYCHOANALYSIS_EBOOKS = [
     title:'Como a Inteligência Artificial Pode Criar Novos Milionários', subtitle:'Oportunidades, Negócios e Profissões na Nova Economia da IA', short:'Como a Inteligência Artificial Pode Criar Novos Milionários',
     description:'Análise crítica das oportunidades econômicas abertas pela IA, sem promessa de enriquecimento ou resultado financeiro garantido.',
     audience:'Leitores, estudantes e profissionais interessados em aprofundamento contemporâneo e aplicação responsável.',
-    priceBrlCents:2000, priceEurCents:399,
+    priceBrlCents:4990, priceEurCents:990,
     chapters:['A nova revolução tecnológica', 'Como chegamos à IA generativa', 'O que a IA realmente consegue fazer', 'Automação do trabalho', 'Novas profissões', 'Profissões em transformação', 'O empreendedor individual aumentado por IA', 'Empresas operadas com equipes menores', 'Produtos digitais', 'Serviços baseados em IA', 'Agentes de IA', 'Automação empresarial', 'IA aplicada às vendas', 'IA aplicada ao marketing', 'IA aplicada à educação', 'Modelos de monetização', 'Como identificar oportunidades', 'Riscos, bolhas e falsas promessas', 'Construindo um negócio baseado em IA', 'Quem poderá capturar valor na nova economia']
   },
   {
@@ -92,7 +92,7 @@ export const PSYCHOANALYSIS_EBOOKS = [
     title:'Entre Dois Mundos', subtitle:'Imigração e os Efeitos Psicológicos da Experiência Migratória', short:'Entre Dois Mundos',
     description:'Obra da Coleção Estudos Contemporâneos com 20 capítulos sobre entre dois mundos, escrita para estudo aprofundado, aplicação responsável e reflexão crítica.',
     audience:'Leitores, estudantes e profissionais interessados em aprofundamento contemporâneo e aplicação responsável.',
-    priceBrlCents:2000, priceEurCents:399,
+    priceBrlCents:4990, priceEurCents:990,
     chapters:['Por que partimos', 'A decisão de deixar o país', 'O último dia antes da partida', 'A chegada', 'Choque cultural', 'Língua e identidade', 'Saudade', 'Solidão', 'Família à distância', 'Relacionamentos depois da imigração', 'Trabalho e sobrevivência', 'Qualificação profissional e recomeço', 'Preconceito e exclusão', 'Pertencimento', 'Viver entre duas culturas', 'Construção de novas redes sociais', 'Adaptação', 'Quando voltar também é difícil', 'Quando procurar apoio profissional', 'Construindo pertencimento sem apagar as origens']
   },
 ] as const;
