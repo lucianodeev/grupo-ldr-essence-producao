@@ -1,0 +1,56 @@
+name: Academic Network functionality fix once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/academic-functionality-fix-once.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Apply targeted Academic Network functional repair
+        run: python tools/patch_academic_functionality_20260914.py
+      - name: Install
+        run: npm install --no-audit --no-fund
+      - name: Lint changed Academic Network files
+        working-directory: apps/painel-ldr
+        run: >-
+          npx eslint
+          src/lib/academic-network.functions.ts
+          src/lib/academic-network.server.ts
+          src/components/academic-social-v3-feed.tsx
+          src/routes/_clientarea.cliente.rede-academica.tsx
+          src/routes/_clientarea.cliente.rede-academica.criar.tsx
+          src/routes/_clientarea.cliente.rede-academica.editar-perfil.tsx
+          src/routes/_clientarea.cliente.rede-academica.notificacoes.tsx
+      - name: Typecheck
+        working-directory: apps/painel-ldr
+        run: npm run typecheck
+      - name: Production build
+        working-directory: apps/painel-ldr
+        run: npm run build
+      - name: Commit validated repair
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add apps/painel-ldr/src
+          if git diff --cached --quiet; then
+            echo 'No Academic Network changes to commit.'
+            exit 0
+          fi
+          git commit -m 'fix(academic): restore publishing interactions avatars and internal sharing'
+          git push origin main
