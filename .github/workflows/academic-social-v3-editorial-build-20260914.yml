@@ -7,8 +7,11 @@ on:
       - 'tools/patch_academic_social_v3_editorial_20260914.py'
       - '.github/workflows/academic-social-v3-editorial-build-20260914.yml'
   workflow_dispatch:
+concurrency:
+  group: academic-social-v3-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
-  contents: write
+  contents: read
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -23,22 +26,13 @@ jobs:
           cache-dependency-path: package-lock.json
       - name: Apply Social V3 targeted patch
         run: python tools/patch_academic_social_v3_editorial_20260914.py
+      - name: Confirm patch is idempotent before build
+        run: |
+          python tools/patch_academic_social_v3_editorial_20260914.py
+          git diff --exit-code -- apps/painel-ldr/src/routes/_clientarea.cliente.rede-academica.tsx apps/painel-ldr/src/routes/_authenticated/admin.rede-academica.tsx apps/painel-ldr/src/components/academy-chatbot.tsx
       - name: Install dependencies
         working-directory: apps/painel-ldr
         run: npm ci
       - name: Build Academy
         working-directory: apps/painel-ldr
         run: npm run build
-      - name: Commit validated integration
-        run: |
-          if [[ -n "$(git status --porcelain)" ]]; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add apps/painel-ldr/src/routes/_clientarea.cliente.rede-academica.tsx apps/painel-ldr/src/routes/_authenticated/admin.rede-academica.tsx apps/painel-ldr/src/components/academy-chatbot.tsx
-            git commit -m "feat(academy): integrate academic social v3 editorial experience"
-            git push origin HEAD:${{ github.ref_name }}
-          fi
-      - name: Confirm clean generated integration
-        run: |
-          python tools/patch_academic_social_v3_editorial_20260914.py
-          git diff --exit-code
