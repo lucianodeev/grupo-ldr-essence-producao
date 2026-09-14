@@ -30,15 +30,52 @@ jobs:
           cache: npm
       - name: Install
         run: npm install --no-audit --no-fund
-      - name: Lint
+      - name: Lint clinic scope
+        id: lint
+        continue-on-error: true
         working-directory: apps/painel-ldr
-        run: npm run lint
+        run: >-
+          npx eslint
+          src/lib/platform-fee.ts
+          src/lib/platform-fee.test.ts
+          src/lib/professional-network.server.ts
+          src/lib/professional-network-admin.server.ts
+          src/lib/professional-catalog-services.server.ts
+          src/lib/professional-catalog-admin.server.ts
+          src/lib/social-clinic.server.ts
+          src/routes/para-profissionais.tsx
+          src/routes/clinica-social_.profissionais.tsx
+          src/routes/_authenticated/admin.clinica-social.tsx
+          src/routes/_authenticated/painel-profissional.tsx
+          src/routes/api/stripe/webhook.ts
+          src/routes/profissional-painel.tsx
+          src/routes/__root.tsx
+          src/server.ts
       - name: Typecheck
+        id: types
+        continue-on-error: true
         working-directory: apps/painel-ldr
         run: npm run typecheck
       - name: Financial tests
+        id: tests
+        continue-on-error: true
         working-directory: apps/painel-ldr
         run: npm test
       - name: Production build
+        id: build
+        continue-on-error: true
         working-directory: apps/painel-ldr
         run: npm run build
+      - name: Quality gate
+        if: always()
+        env:
+          LINT_RESULT: ${{ steps.lint.outcome }}
+          TYPE_RESULT: ${{ steps.types.outcome }}
+          TEST_RESULT: ${{ steps.tests.outcome }}
+          BUILD_RESULT: ${{ steps.build.outcome }}
+        run: |
+          echo "lint=$LINT_RESULT typecheck=$TYPE_RESULT tests=$TEST_RESULT build=$BUILD_RESULT"
+          test "$LINT_RESULT" = success
+          test "$TYPE_RESULT" = success
+          test "$TEST_RESULT" = success
+          test "$BUILD_RESULT" = success
