@@ -1,0 +1,73 @@
+name: Academic Network final functional corrections
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/academic-functional-final-20260914.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch-test-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Record existing any usage in touched runtime files
+        shell: bash
+        run: |
+          python - <<'PY' > /tmp/any-before.txt
+          from pathlib import Path
+          import re
+          files=[
+            Path('apps/painel-ldr/src/components/academic-social-v3-feed.tsx'),
+            Path('apps/painel-ldr/src/lib/academic-network.server.ts'),
+            Path('apps/painel-ldr/src/lib/academic-dm.server.ts'),
+          ]
+          print(sum(len(re.findall(r'\bany\b', p.read_text())) for p in files))
+          PY
+      - name: Apply targeted functional corrections
+        run: python tools/patch_academic_functional_20260914.py
+      - name: Ensure patch did not add any usage
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          files=[
+            Path('apps/painel-ldr/src/components/academic-social-v3-feed.tsx'),
+            Path('apps/painel-ldr/src/lib/academic-network.server.ts'),
+            Path('apps/painel-ldr/src/lib/academic-dm.server.ts'),
+          ]
+          before=int(Path('/tmp/any-before.txt').read_text().strip())
+          after=sum(len(re.findall(r'\bany\b', p.read_text())) for p in files)
+          print(f'any usage touched runtime files: before={before}, after={after}')
+          if after>before:
+              raise SystemExit('Patch increased any usage')
+          PY
+      - name: TypeScript
+        working-directory: apps/painel-ldr
+        run: npm run typecheck
+      - name: Production build
+        working-directory: apps/painel-ldr
+        run: npm run build
+      - name: Commit validated functional corrections
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add apps/painel-ldr/src/components/academic-social-v3-feed.tsx apps/painel-ldr/src/lib/academic-network.server.ts apps/painel-ldr/src/lib/academic-dm.server.ts
+          git rm tools/patch_academic_functional_20260914.py .github/workflows/academic-functional-final-20260914.yml
+          git commit -m 'fix(academic): finalize social actions publishing and dm'
+          git push origin main
