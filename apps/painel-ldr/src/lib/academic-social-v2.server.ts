@@ -7,6 +7,7 @@ function usernameOf(v:string){return v.toLowerCase().replace(/^@/,"").replace(/[
 async function customerId(userId:string){const {data}=await db.from("customers").select("id").eq("auth_user_id",userId).maybeSingle();return data?.id??null}
 async function queue(targetUserId:string,actor:string,subject:string,body:string,metadata:Record<string,unknown>={}){if(!targetUserId||targetUserId===actor)return;const target=await customerId(targetUserId);if(!target)return;await db.from("notification_outbox").insert({audience_type:"client",target_id:target,channel:"in_app",event_type:"manual",subject,body,metadata:{source:"academic_network",...metadata},created_by:actor,status:"pending"})}
 async function baseName(userId:string){const {data}=await db.from("profiles").select("full_name").eq("id",userId).maybeSingle();return data?.full_name||"Membro LDR"}
+async function signedAvatar(path:string|null){if(!path)return null;const {data}=await db.storage.from("academic-network").createSignedUrl(path,3600);return data?.signedUrl??null}
 
 export async function updateSocialProfile(userId:string,input:{username?:string;bio?:string;profession?:string;country?:string;city?:string;interests?:string[];courses?:string[];showName?:boolean;showLocation?:boolean}){
   const username=usernameOf(clean(input.username,30));if(username&&username.length<3)fail("O @username precisa ter ao menos 3 caracteres.");
@@ -27,7 +28,7 @@ export async function toggleFollow(userId:string,targetProfileId:string){
 
 export async function socialProfileByUsername(viewerUserId:string,rawUsername:string){
   const username=usernameOf(rawUsername);if(!username)fail("Perfil não encontrado.");
-  const {data:p}=await db.from("academic_profiles").select("id,user_id,username,bio,profession,country,city,interests,courses,display_role,show_name,show_location,profile_visibility").ilike("username",username).maybeSingle();if(!p)fail("Perfil não encontrado.");
+  const {data:p}=await db.from("academic_profiles").select("id,user_id,username,avatar_path,bio,profession,country,city,interests,courses,display_role,show_name,show_location,profile_visibility").ilike("username",username).maybeSingle();if(!p)fail("Perfil não encontrado.");
   const own=p.user_id===viewerUserId;
   const [{count:followers},{count:following},{count:postCount},{count:articleCount},{data:followRow},{data:posts},{data:articles}]=await Promise.all([
     db.from("academic_follows").select("followed_user_id",{count:"exact",head:true}).eq("followed_user_id",p.user_id).eq("status","accepted"),
@@ -38,7 +39,7 @@ export async function socialProfileByUsername(viewerUserId:string,rawUsername:st
     db.from("academic_posts").select("id,body,post_type,created_at,location_label,share_slug").eq("user_id",p.user_id).eq("status","active").eq("anonymous",false).order("created_at",{ascending:false}).limit(24),
     db.from("academic_articles").select("id,slug,title,summary,category,created_at").eq("user_id",p.user_id).eq("status","active").order("created_at",{ascending:false}).limit(24)
   ]);
-  return {profile:{id:p.id,username:p.username,name:p.show_name===false?"Membro LDR":await baseName(p.user_id),bio:p.bio,profession:p.profession,role:p.display_role,country:p.show_location?p.country:"",city:p.show_location?p.city:"",interests:p.interests??[],courses:p.courses??[],own,followed:followRow?.status==="accepted",followStatus:followRow?.status??null,followers:followers??0,following:following??0,postCount:postCount??0,articleCount:articleCount??0},posts:posts??[],articles:articles??[]};
+  return {profile:{id:p.id,username:p.username,name:p.show_name===false?"Membro LDR":await baseName(p.user_id),avatarUrl:await signedAvatar(p.avatar_path),bio:p.bio,profession:p.profession,role:p.display_role,country:p.show_location?p.country:"",city:p.show_location?p.city:"",interests:p.interests??[],courses:p.courses??[],own,followed:followRow?.status==="accepted",followStatus:followRow?.status??null,followers:followers??0,following:following??0,postCount:postCount??0,articleCount:articleCount??0},posts:posts??[],articles:articles??[]};
 }
 
 export async function notificationsFor(userId:string){const cid=await customerId(userId);if(!cid)return [];const {data}=await db.from("notification_outbox").select("id,subject,body,status,metadata,created_at").eq("audience_type","client").eq("target_id",cid).eq("channel","in_app").order("created_at",{ascending:false}).limit(100);const rows=data??[];if(!rows.length)return rows;const {data:reads}=await db.from("academic_notification_reads").select("notification_id,read_at").eq("user_id",userId).in("notification_id",rows.map((x:any)=>x.id));const readMap=new Map((reads??[]).map((x:any)=>[x.notification_id,x.read_at]));return rows.map((x:any)=>({...x,readAt:readMap.get(x.id)??null,isRead:readMap.has(x.id)}))}
