@@ -41,14 +41,22 @@
 .academic-v4-composer { overflow: hidden; }
 .academic-v4-composer-main { min-height: 52px; }
 .academic-v4-quick-grid > * { min-height: var(--ldr-touch); }
-.academic-v4-tabs,.academic-v4-world { -webkit-overflow-scrolling: touch; scroll-snap-type: x proximity; overscroll-behavior-x: contain; }
-.academic-v4-tabs button,.academic-v4-world button { scroll-snap-align: start; min-height: 40px; flex: 0 0 auto; }
-.academic-v4-post { contain: layout paint; }
+.academic-v4-tabs,.academic-v4-country-strip,.academic-v4-filter-panel > div:last-child { -webkit-overflow-scrolling: touch; scroll-snap-type: x proximity; overscroll-behavior-x: contain; }
+.academic-v4-tabs button,.academic-v4-country-strip button,.academic-v4-filter-panel button { scroll-snap-align: start; flex: 0 0 auto; }
+.academic-v4-world { display: grid; grid-template-columns: auto minmax(0,1fr); align-items: center; gap: 10px; }
+.academic-v4-world-label { white-space: nowrap; }
+.academic-v4-country-strip { min-width: 0; padding-bottom: 1px; }
+.academic-v4-filter-panel { overflow: hidden; }
+.academic-v4-post { contain: layout paint; overflow: visible; }
 .academic-v4-post-body { font-size: 15px; line-height: 1.62; white-space: pre-wrap; }
-.academic-v4-post-actions { gap: 4px; }
-.academic-v4-post-actions button { min-height: var(--ldr-touch); font-size: 11px; }
-.academic-v4-post-actions svg { width: 18px; height: 18px; }
+.academic-v4-post-actions { gap: 2px; }
+.academic-v4-post-actions button { min-height: var(--ldr-touch); font-size: 10px; }
+.academic-v4-post-actions svg { width: 17px; height: 17px; }
+.academic-v4-post-menu summary::-webkit-details-marker { display: none; }
+.academic-v4-post-menu[open] summary { background: hsl(var(--muted)); }
+.academic-v4-post-menu > div { max-width: min(210px, calc(100vw - 40px)); }
 .academic-v4-comment-input { min-height: 46px; font-size: 16px; }
+.academic-v4-utility-strip { overflow: hidden; }
 .academic-v4-mobile-nav {
   bottom: 0 !important;
   padding-left: max(6px, env(safe-area-inset-left));
@@ -89,33 +97,33 @@
   .academic-v4-post header { gap: 8px !important; }
   .academic-v4-post header img,.academic-v4-post header > div > span:first-child,.academic-v4-post header > div > a:first-child { flex-shrink: 0; }
   .academic-v4-post-body { margin-top: 12px !important; font-size: 15px !important; line-height: 1.62 !important; }
-  .academic-v4-post-actions { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 3px !important; padding-top: 8px !important; }
-  .academic-v4-post-actions button { justify-content: flex-start !important; padding-inline: 10px !important; font-size: 11px !important; }
+  .academic-v4-post-actions { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: 0 !important; padding-top: 7px !important; }
+  .academic-v4-post-actions button { min-height: 42px !important; flex-direction: column; justify-content: center !important; gap: 2px !important; padding-inline: 2px !important; font-size: 8.5px !important; line-height: 1 !important; }
+  .academic-v4-post-actions button span { max-width: 100%; }
+  .academic-v4-post-actions svg { width: 18px !important; height: 18px !important; }
   .academic-v4-comment-row { display: grid !important; grid-template-columns: minmax(0, 1fr) auto !important; gap: 8px !important; }
   .academic-v4-comment-row input { width: 100%; min-width: 0; }
 
-  /* Mobile: keep the international heading readable and let country chips flow below it. */
   .academic-v4-world {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    align-items: center !important;
-    gap: 8px !important;
+    display: block !important;
     margin-inline: 0;
-    overflow-x: visible !important;
+    overflow: hidden !important;
     padding: 10px 12px !important;
   }
-  .academic-v4-world > svg { flex: 0 0 auto; }
-  .academic-v4-world > b {
-    flex: 1 1 calc(100% - 32px);
-    min-width: 0;
+  .academic-v4-world-label { margin-bottom: 8px; }
+  .academic-v4-world-label > b {
     font-size: 10px !important;
     line-height: 1.2 !important;
     letter-spacing: .06em !important;
-    white-space: normal !important;
-    overflow-wrap: normal !important;
   }
-  .academic-v4-world > button {
+  .academic-v4-country-strip {
+    width: 100%;
+    overflow-x: auto !important;
+    padding-bottom: 2px;
+  }
+  .academic-v4-country-strip > button {
     min-width: max-content;
+    min-height: 38px;
     padding-inline: 12px !important;
   }
 
@@ -128,6 +136,7 @@
   .academic-v4-search input { width: 100%; min-height: 48px; font-size: 16px; }
   .academic-v4-search > button { width: 48px; height: 48px; flex: 0 0 48px; }
 
+  .academic-v4-utility-strip { border-radius: 18px !important; }
   .academic-v4-mobile-nav {
     min-height: calc(var(--ldr-mobile-nav-height) + env(safe-area-inset-bottom));
     gap: 2px !important;
@@ -153,8 +162,8 @@
   .academic-social-v4 { --ldr-mobile-gutter: 10px; --ldr-mobile-nav-height: 82px; }
   .academic-v4-mobile-nav span { font-size: 7.5px !important; }
   .academic-v4-mobile-nav > * { padding-inline: 2px !important; }
-  .academic-v4-post-actions button { padding-inline: 7px !important; font-size: 10px !important; }
-  .academic-v4-world > button { padding-inline: 9px !important; font-size: 10px !important; }
+  .academic-v4-post-actions button { font-size: 7.5px !important; }
+  .academic-v4-country-strip > button { padding-inline: 9px !important; font-size: 10px !important; }
 }
 
 @media (min-width: 640px) and (max-width: 1023px) {
