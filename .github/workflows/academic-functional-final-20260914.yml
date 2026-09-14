@@ -95,11 +95,17 @@ jobs:
         run: |
           set -o pipefail
           npm run typecheck 2>&1 | tee ../../tools/academic-functional-typecheck.log
-      - name: Reject new Academic Network TypeScript errors
+      - name: Reject and persist new Academic Network TypeScript errors
         shell: bash
         run: |
-          if grep -E 'src/(components/academic-social-v3-feed|lib/academic-(network|dm|location)|routes/_clientarea\.cliente\.rede-academica)' tools/academic-functional-typecheck.log; then
-            echo 'Academic Network TypeScript error detected.'
+          grep -E 'src/(components/academic-social-v3-feed|lib/academic-(network|dm|location)|routes/_clientarea\.cliente\.rede-academica)' tools/academic-functional-typecheck.log > tools/academic-network-typecheck-current.log || true
+          if [ -s tools/academic-network-typecheck-current.log ]; then
+            cat tools/academic-network-typecheck-current.log
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add tools/academic-network-typecheck-current.log
+            git commit -m 'ci(academic): record scoped typecheck diagnostics'
+            git push origin main
             exit 1
           fi
           echo 'No Academic Network TypeScript errors; remaining diagnostics are legacy modules outside this scope.'
