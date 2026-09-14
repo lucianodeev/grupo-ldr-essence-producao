@@ -11,9 +11,16 @@ if imp not in s:
 start=s.find('function Feed(')
 end=s.find('function ActionButton',start)
 if start<0 or end<0: raise SystemExit('feed boundaries not found')
-s=s[:start]+'function Feed(props:any){return <AcademicSocialV3Feed {...props}/>}\n\n'+s[end:]
-s=s.replace('flex min-h-[54px] min-w-0 flex-col items-center justify-center gap-1 rounded-xl px-0.5 text-[8px] font-black leading-none tracking-[-.02em]', 'flex min-h-[54px] min-w-0 overflow-hidden flex-col items-center justify-center gap-1 rounded-xl px-0.5 text-[7px] font-black leading-none tracking-[-.03em]')
-s=s.replace('className="whitespace-nowrap"', 'className="block max-w-full truncate whitespace-nowrap"')
+replacement='function Feed(props:any){return <AcademicSocialV3Feed {...props}/>}\n\n'
+current=s[start:end]
+if current != replacement:
+    s=s[:start]+replacement+s[end:]
+old_nav='flex min-h-[54px] min-w-0 flex-col items-center justify-center gap-1 rounded-xl px-0.5 text-[8px] font-black leading-none tracking-[-.02em]'
+new_nav='flex min-h-[54px] min-w-0 overflow-hidden flex-col items-center justify-center gap-1 rounded-xl px-0.5 text-[7px] font-black leading-none tracking-[-.03em]'
+if old_nav in s:
+    s=s.replace(old_nav,new_nav)
+if 'className="whitespace-nowrap"' in s:
+    s=s.replace('className="whitespace-nowrap"', 'className="block max-w-full truncate whitespace-nowrap"')
 root.write_text(s)
 
 # Master Admin: add transparent editorial controls without replacing existing moderation/challenges.
@@ -37,9 +44,15 @@ anchor='  const showAnnouncement = location.pathname === "/" || location.pathnam
 if 'const academicNetwork =' not in s:
     if anchor not in s: raise SystemExit('chat location anchor missing')
     s=s.replace(anchor,anchor+'\n  const academicNetwork = location.pathname.startsWith("/cliente/rede-academica");',1)
-s=s.replace('{!open && teaser && (','{!open && teaser && !academicNetwork && (',1)
+if '{!open && teaser && !academicNetwork && (' not in s:
+    if '{!open && teaser && (' in s:
+        s=s.replace('{!open && teaser && (','{!open && teaser && !academicNetwork && (',1)
+    else:
+        raise SystemExit('chat teaser anchor missing')
 old='className="ml-auto flex min-h-14 items-center gap-2 rounded-full border border-[#fff0c2] bg-[#F4B942] px-4 py-3 text-sm font-black text-[#071426] shadow-2xl transition hover:-translate-y-0.5 hover:bg-[#FFD36B] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F4B942] focus-visible:ring-offset-2"'
 new='className={`ml-auto flex items-center justify-center gap-2 rounded-full border border-[#fff0c2] bg-[#F4B942] text-sm font-black text-[#071426] shadow-2xl transition hover:-translate-y-0.5 hover:bg-[#FFD36B] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F4B942] focus-visible:ring-offset-2 ${academicNetwork ? "h-12 w-12 p-0 sm:h-14 sm:w-auto sm:px-4 sm:py-3" : "min-h-14 px-4 py-3"}`}'
-if old not in s: raise SystemExit('chat button class anchor missing')
-s=s.replace(old,new,1)
+if old in s:
+    s=s.replace(old,new,1)
+elif 'academicNetwork ? "h-12 w-12 p-0 sm:h-14 sm:w-auto sm:px-4 sm:py-3"' not in s:
+    raise SystemExit('chat button class anchor missing')
 chat.write_text(s)
