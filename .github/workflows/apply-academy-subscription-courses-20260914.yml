@@ -1,5 +1,15 @@
 name: Apply Academy subscription courses 2026-09-14
 on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'tools/patch_academy_subscription_courses_20260914.py'
+      - 'apps/painel-ldr/src/lib/academy-subscription-courses.catalog.ts'
+      - 'apps/painel-ldr/src/components/academy-subscription-course-shelf.tsx'
+      - 'apps/painel-ldr/src/lib/project-management-formation.catalog.ts'
+      - 'apps/painel-ldr/src/lib/academy-professional-formations.catalog.ts'
+      - 'apps/painel-ldr/src/routes/_clientarea.cliente.cursos.assinatura.$slug.tsx'
+      - '.github/workflows/apply-academy-subscription-courses-20260914.yml'
   push:
     branches: [main]
     paths:
@@ -28,7 +38,8 @@ jobs:
       - name: Build Academy
         working-directory: apps/painel-ldr
         run: npm run build
-      - name: Commit generated integration only when build succeeds
+      - name: Commit generated integration only when build succeeds on main
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
