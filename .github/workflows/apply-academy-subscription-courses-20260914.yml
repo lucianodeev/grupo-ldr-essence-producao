@@ -1,0 +1,54 @@
+name: Apply Academy subscription courses 2026-09-14
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'tools/patch_academy_subscription_courses_20260914.py'
+      - 'apps/painel-ldr/src/lib/academy-subscription-courses.catalog.ts'
+      - 'apps/painel-ldr/src/components/academy-subscription-course-shelf.tsx'
+      - 'apps/painel-ldr/src/lib/project-management-formation.catalog.ts'
+      - 'apps/painel-ldr/src/lib/academy-professional-formations.catalog.ts'
+      - 'apps/painel-ldr/src/routes/_clientarea.cliente.cursos.assinatura.$slug.tsx'
+      - '.github/workflows/apply-academy-subscription-courses-20260914.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'tools/patch_academy_subscription_courses_20260914.py'
+      - 'apps/painel-ldr/src/lib/academy-subscription-courses.catalog.ts'
+      - 'apps/painel-ldr/src/components/academy-subscription-course-shelf.tsx'
+      - 'apps/painel-ldr/src/lib/project-management-formation.catalog.ts'
+      - 'apps/painel-ldr/src/lib/academy-professional-formations.catalog.ts'
+      - 'apps/painel-ldr/src/routes/_clientarea.cliente.cursos.assinatura.$slug.tsx'
+      - '.github/workflows/apply-academy-subscription-courses-20260914.yml'
+permissions:
+  contents: write
+jobs:
+  integrate-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Apply idempotent integration patch
+        run: python tools/patch_academy_subscription_courses_20260914.py
+      - name: Install dependencies
+        working-directory: apps/painel-ldr
+        run: npm install --no-audit --no-fund
+      - name: Build Academy
+        working-directory: apps/painel-ldr
+        run: npm run build
+      - name: Commit generated integration only when build succeeds on main
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add \
+            apps/painel-ldr/src/lib/library-subscription.server.ts \
+            apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx \
+            apps/painel-ldr/src/components/library-sales-home.tsx \
+            apps/painel-ldr/src/routeTree.gen.ts
+          if ! git diff --cached --quiet; then
+            git commit -m 'feat(academy): integrate subscription-only course collection'
+            git push origin main
+          fi
