@@ -1,11 +1,14 @@
-# trigger 2026-09-12
 name: Sales mini-library showcase
+
 on:
   push:
+    branches: [main]
     paths:
       - '.github/workflows/one-time-sales-mini-library-showcase.yml'
+
 permissions:
   contents: write
+
 jobs:
   patch:
     runs-on: ubuntu-latest
@@ -13,76 +16,163 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Apply UX sales showcase
+
+      - name: Apply scoped Academy storefront and pricing update
         run: |
           python - <<'PY'
           from pathlib import Path
-          p=Path('apps/painel-ldr/src/components/library-sales-home-access-choice.tsx')
+          import re
+
+          def sub_once(text, pattern, repl, label, flags=0):
+              out, n = re.subn(pattern, repl, text, count=1, flags=flags)
+              if n != 1:
+                  raise SystemExit(f'{label}: expected 1 replacement, got {n}')
+              return out
+
+          p=Path('apps/painel-ldr/src/lib/psychoanalysis-ebooks.catalog.ts')
           s=p.read_text(encoding='utf-8')
-          if 'id="mini-library-showcase"' in s:
-              raise SystemExit(0)
-          marker='''const tone = { violet:"border-violet-200 bg-violet-50", blue:"border-blue-200 bg-blue-50", emerald:"border-emerald-200 bg-emerald-50", gold:"border-[#d6ad63]/40 bg-[#fff9ed]" } as const;'''
-          showcase='''const libraryShowcase = {
-  pt:{eyebrow:"POR DENTRO DA BIBLIOTECA",title:"Veja o que você encontra antes de escolher.",sub:"Uma prévia visual da experiência da Biblioteca LDR. Escolha um caminho e avance para a oferta correspondente.",more:"VER TODOS OS CONTEÚDOS",less:"MOSTRAR MENOS",cta:"Explorar",items:{psycho:["Psicanálise","Formação completa para aprofundar teoria e prática"],business:["Negócio 24h","Da ideia à primeira oferta pronta para vender"],massage:["Massoterapia","Formação completa e prática profissional"],mentor:["Mentoria","Desenvolvimento profissional e de carreira"],psychoWrite:["Orientação Psicanalítica Escrita","Orientação privada por texto"],careerWrite:["Orientação Profissional Escrita","Carreira, currículo e próximos passos"],news:["Jornal LDR","Notícias, negócios, ciência e mundo"],mag:["Revista LDR","Carreira, comportamento, inovação e histórias"],ebooks:["eBooks","Conteúdos digitais para ler no seu ritmo"],books:["Livros","Histórias, conhecimento e desenvolvimento"],brief:["Terapia Breve","Formação em Terapia Breve Psicanalítica"],lead:["Liderança","Gestão de pessoas e desenvolvimento de equipes"],rh:["RH 600h","Formação gratuita em Gestão de Pessoas e RH"],free:["Conteúdo Gratuito","Comece a aprender sem pagar"],ai:["IA","Conteúdos e ferramentas para o futuro"],film:["Filme","Conteúdo audiovisual e reflexão"]}},
-  en:{eyebrow:"INSIDE THE LIBRARY",title:"See what you can access before choosing.",sub:"A visual preview of the LDR Library experience. Choose a path and continue to the corresponding offer.",more:"VIEW ALL CONTENT",less:"SHOW LESS",cta:"Explore",items:{psycho:["Psychoanalysis","Complete training in theory and clinical practice"],business:["Business in 24h","From idea to a first offer ready to sell"],massage:["Massage Therapy","Complete training and professional practice"],mentor:["Mentoring","Professional and career development"],psychoWrite:["Written Psychoanalytic Guidance","Private guidance by text"],careerWrite:["Written Career Guidance","Career, résumé and next steps"],news:["LDR Newspaper","News, business, science and world"],mag:["LDR Magazine","Career, behavior, innovation and stories"],ebooks:["eBooks","Digital content to read at your own pace"],books:["Books","Stories, knowledge and development"],brief:["Brief Therapy","Brief Psychoanalytic Therapy training"],lead:["Leadership","People management and team development"],rh:["HR 600h","Free People Management and HR training"],free:["Free Content","Start learning at no cost"],ai:["AI","Content and tools for the future"],film:["Film","Audiovisual content and reflection"]}},
-  fr:{eyebrow:"À L’INTÉRIEUR DE LA BIBLIOTHÈQUE",title:"Découvrez ce que vous pouvez trouver avant de choisir.",sub:"Un aperçu visuel de l’expérience Bibliothèque LDR. Choisissez un parcours et continuez vers l’offre correspondante.",more:"VOIR TOUS LES CONTENUS",less:"AFFICHER MOINS",cta:"Découvrir",items:{psycho:["Psychanalyse","Formation complète en théorie et pratique clinique"],business:["Business en 24h","De l’idée à une première offre prête à vendre"],massage:["Massothérapie","Formation complète et pratique professionnelle"],mentor:["Mentorat","Développement professionnel et carrière"],psychoWrite:["Orientation Psychanalytique Écrite","Orientation privée par écrit"],careerWrite:["Orientation Professionnelle Écrite","Carrière, CV et prochaines étapes"],news:["Journal LDR","Actualités, business, science et monde"],mag:["Magazine LDR","Carrière, comportement, innovation et histoires"],ebooks:["eBooks","Contenus numériques à lire à votre rythme"],books:["Livres","Histoires, savoir et développement"],brief:["Thérapie Brève","Formation en Thérapie Brève Psychanalytique"],lead:["Leadership","Gestion des personnes et développement d’équipes"],rh:["RH 600h","Formation gratuite en Gestion des Personnes et RH"],free:["Contenu Gratuit","Commencez à apprendre gratuitement"],ai:["IA","Contenus et outils pour l’avenir"],film:["Film","Contenu audiovisuel et réflexion"]}},
-  es:{eyebrow:"DENTRO DE LA BIBLIOTECA",title:"Mira lo que encontrarás antes de elegir.",sub:"Una vista previa visual de la experiencia de Biblioteca LDR. Elige un camino y continúa a la oferta correspondiente.",more:"VER TODOS LOS CONTENIDOS",less:"MOSTRAR MENOS",cta:"Explorar",items:{psycho:["Psicoanálisis","Formación completa en teoría y práctica clínica"],business:["Negocio 24h","De la idea a una primera oferta lista para vender"],massage:["Masoterapia","Formación completa y práctica profesional"],mentor:["Mentoría","Desarrollo profesional y de carrera"],psychoWrite:["Orientación Psicoanalítica Escrita","Orientación privada por texto"],careerWrite:["Orientación Profesional Escrita","Carrera, currículum y próximos pasos"],news:["Periódico LDR","Noticias, negocios, ciencia y mundo"],mag:["Revista LDR","Carrera, comportamiento, innovación e historias"],ebooks:["eBooks","Contenido digital para leer a tu ritmo"],books:["Libros","Historias, conocimiento y desarrollo"],brief:["Terapia Breve","Formación en Terapia Breve Psicoanalítica"],lead:["Liderazgo","Gestión de personas y desarrollo de equipos"],rh:["RRHH 600h","Formación gratuita en Gestión de Personas y RRHH"],free:["Contenido Gratuito","Empieza a aprender sin pagar"],ai:["IA","Contenidos y herramientas para el futuro"],film:["Película","Contenido audiovisual y reflexión"]}}
-} as const;
-
-'''
-          if marker not in s:
-              raise SystemExit('tone marker not found')
-          s=s.replace(marker,showcase+marker,1)
-          state='''  const [remaining,setRemaining]=useState<number|null>(null);'''
-          repl='''  const [remaining,setRemaining]=useState<number|null>(null);
-  const [showLibraryAll,setShowLibraryAll]=useState(false);
-  const showcase=libraryShowcase[locale];
-  const cardDefs=[
-    {k:"psycho",icon:"🎓",to:"/formacao-psicanalise",tone:"from-[#5a2a83] to-[#7a3dac]"},
-    {k:"business",icon:"📈",to:"/formacao-negocio-em-24-horas",tone:"from-[#a73b11] to-[#d65a1d]"},
-    {k:"massage",icon:"🌿",to:"/formacao-massoterapia",tone:"from-[#0f6173] to-[#1581a0]"},
-    {k:"mentor",icon:"💼",to:"/cliente/biblioteca",tone:"from-[#0a5fae] to-[#1873cf]"},
-    {k:"psychoWrite",icon:"✍️",to:"/cliente/orientacao-psicanalitica",tone:"from-[#233f72] to-[#375d95]"},
-    {k:"careerWrite",icon:"🧭",to:"/cliente/orientacao-profissional",tone:"from-[#075da7] to-[#1684dd]"},
-    {k:"news",icon:"📰",to:"/cliente/biblioteca/jornal-ldr",tone:"from-[#071426] to-[#163b67]"},
-    {k:"mag",icon:"📖",to:"/cliente/biblioteca/revista-ldr",tone:"from-[#630820] to-[#8d1236]"},
-    {k:"ebooks",icon:"📚",to:"/cliente/biblioteca",tone:"from-[#6b0826] to-[#8a1037]"},
-    {k:"books",icon:"📘",to:"/cliente/biblioteca",tone:"from-[#6d0d2c] to-[#981443]"},
-    {k:"brief",icon:"🧠",to:"/formacao-terapia-breve-psicanalitica",tone:"from-[#12675d] to-[#1b897b]"},
-    {k:"lead",icon:"👥",to:"/cliente/biblioteca",tone:"from-[#075c35] to-[#0b7a48]"},
-    {k:"rh",icon:"🎯",to:"/cliente/formacoes/gestao-pessoas-rh",tone:"from-[#087255] to-[#0b9a70]"},
-    {k:"free",icon:"🎁",to:"/cliente/biblioteca",tone:"from-[#b34d1c] to-[#d66a2c]"},
-    {k:"ai",icon:"🤖",to:"/cliente/biblioteca",tone:"from-[#123955] to-[#205b7d]"},
-    {k:"film",icon:"🎬",to:"/cliente/biblioteca",tone:"from-[#3b0817] to-[#640d27]"},
-  ] as const;'''
-          if state not in s:
-              raise SystemExit('state marker not found')
-          s=s.replace(state,repl,1)
-          anchor='''    <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6"><h2 className="font-serif text-3xl sm:text-4xl">{t.choose}</h2>'''
-          section='''    <section id="mini-library-showcase" className="border-b border-[#d6ad63]/20 bg-white py-12 sm:py-14">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <div className="mx-auto max-w-3xl text-center"><p className="text-xs font-black uppercase tracking-[.22em] text-[#a36d19]">{showcase.eyebrow}</p><h2 className="mt-3 font-serif text-3xl text-[#071426] sm:text-4xl">{showcase.title}</h2><p className="mt-3 text-sm leading-6 text-slate-600 sm:text-base">{showcase.sub}</p></div>
-        <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">{cardDefs.slice(0,showLibraryAll?cardDefs.length:8).map((card)=>{const item=showcase.items[card.k];return <Link key={card.k} to={card.to} className={`group relative min-h-[168px] overflow-hidden rounded-[24px] bg-gradient-to-br ${card.tone} p-5 text-white shadow-md transition duration-200 hover:-translate-y-1 hover:shadow-xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#d6ad63]/40`}><span className="text-3xl" aria-hidden="true">{card.icon}</span><h3 className="mt-5 text-base font-black leading-tight sm:text-lg">{item[0]}</h3><p className="mt-2 text-xs leading-5 text-white/75 sm:text-sm">{item[1]}</p><span className="absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-full bg-white/95 text-lg font-black text-[#071426] shadow-sm transition group-hover:translate-x-0.5">›</span><span className="sr-only">{showcase.cta}: {item[0]}</span></Link>})}</div>
-        <div className="mt-7 text-center"><button type="button" onClick={()=>setShowLibraryAll(v=>!v)} className="inline-flex min-h-11 items-center justify-center rounded-xl border border-[#071426]/15 bg-[#f7f3e9] px-6 py-3 text-xs font-black uppercase tracking-[.08em] text-[#071426] transition hover:bg-[#efe7d6] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#d6ad63]/35">{showLibraryAll?showcase.less:showcase.more}<span className="ml-2">{showLibraryAll?'↑':'↓'}</span></button></div>
-      </div>
-    </section>
-
-'''
-          if anchor not in s:
-              raise SystemExit('choose section marker not found')
-          s=s.replace(anchor,section+anchor,1)
+          for key in ['ebook_pratica_clinica_psicanalise','ebook_psicanalise_no_mundo','ebook_psicanalise_autismo']:
+              s=sub_once(s,rf'(key:"{re.escape(key)}".*?priceBrlCents:)2000(, priceEurCents:)399',r'\g<1>1990\g<2>490',f'catalog {key}',re.S)
           p.write_text(s,encoding='utf-8')
+
+          p=Path('apps/painel-ldr/src/lib/client-portal.server.ts')
+          s=p.read_text(encoding='utf-8')
+          for key in ['ebook_pratica_clinica_psicanalise','ebook_psicanalise_no_mundo','ebook_psicanalise_autismo']:
+              s=sub_once(s,rf'(key:"{re.escape(key)}".*?priceBrlCents:)2000(, priceEurCents:)399',r'\g<1>1990\g<2>490',f'client {key}',re.S)
+          s=sub_once(s,r'(key:"ebook_estudos_caso_psicanalise".*?priceBrlCents:)2000(, priceEurCents:)399',r'\g<1>7990\g<2>1490','Estudos de Caso metadata',re.S)
+          p.write_text(s,encoding='utf-8')
+
+          p=Path('apps/painel-ldr/src/lib/fixed-brl-ebook-checkout.server.ts')
+          s=p.read_text(encoding='utf-8')
+          if 'ebook_psicanalise_autismo: "Psicanálise e Autismo"' not in s:
+              anchor='  ebook_psicanalise_no_mundo: "A Psicanálise no Mundo",\n'
+              if anchor not in s: raise SystemExit('checkout map anchor missing')
+              s=s.replace(anchor,anchor+'  ebook_psicanalise_autismo: "Psicanálise e Autismo",\n',1)
+          old='  if ((!isPremiumCases && !isCollectionOne && input.market !== "BR") || !isFixedBrlEbook(input.productKey)) {'
+          if old not in s: raise SystemExit('checkout market condition missing')
+          s=s.replace(old,'  if (!isFixedBrlEbook(input.productKey)) {',1)
+          p.write_text(s,encoding='utf-8')
+
+          p=Path('apps/painel-ldr/src/components/academy-accessibility-controls.tsx')
+          s=p.read_text(encoding='utf-8')
+          anchor='  "/cliente/cursos/academy/clinica-psicanalitica-sigmund-freud",\n'
+          if anchor not in s: raise SystemExit('popular free anchor missing')
+          if '"/cliente/cursos/academy/orientacao-trabalho-cientifico"' not in s:
+              s=s.replace(anchor,anchor+'  "/cliente/cursos/academy/orientacao-trabalho-cientifico",\n',1)
+          anchor2='  "/cliente/cursos/academy/orientacao-trabalho-cientifico",\n'
+          if '"/cliente/cursos/academy/modelos-documentos-psicanaliticos"' not in s:
+              s=s.replace(anchor2,anchor2+'  "/cliente/cursos/academy/modelos-documentos-psicanaliticos",\n',1)
+          p.write_text(s,encoding='utf-8')
+
+          p=Path('apps/painel-ldr/src/components/academy-university-home.tsx')
+          s=p.read_text(encoding='utf-8')
+          imp='import { PSYCHOANALYSIS_EBOOKS } from "@/lib/psychoanalysis-ebooks.catalog";\n'
+          if 'import { ACADEMY_FREE_COURSES }' not in s:
+              if imp not in s: raise SystemExit('home import anchor missing')
+              s=s.replace(imp,imp+'import { ACADEMY_FREE_COURSES } from "@/lib/academy-free-courses.catalog";\n',1)
+
+          old_type='type Course={id:string;title:string;desc:string;meta:string;price:string;href:string;kind:Exclude<Kind,"all">;icon:string;accent:string};'
+          new_type='type Course={id:string;title:string;desc:string;meta:string;price:string;href:string;kind:Exclude<Kind,"all">;icon:string;accent:string;popular?:boolean};'
+          if old_type in s: s=s.replace(old_type,new_type,1)
+          elif new_type not in s: raise SystemExit('Course type missing')
+
+          for cid in ['psy-intl','performance','ai']:
+              old=f'{{id:"{cid}",'
+              new=f'{{id:"{cid}",popular:true,'
+              if new not in s:
+                  if old not in s: raise SystemExit(f'CORE course missing {cid}')
+                  s=s.replace(old,new,1)
+
+          old_prof='href:f.publicPath,kind,icon:f.icon,accent:themeAccent[f.theme]??"#6D3FA0"};});'
+          new_prof='href:f.publicPath,kind,icon:f.icon,accent:themeAccent[f.theme]??"#6D3FA0",popular:["aba-autismo","ciencias-felicidade","tricologia-terapia-capilar"].includes(f.slug)};});'
+          if old_prof in s: s=s.replace(old_prof,new_prof,1)
+          elif new_prof not in s: raise SystemExit('professional map missing')
+
+          s=sub_once(s,r'const FREE=\[.*?\n\];','''const LEGACY_FREE=[
+ {title:"Organizar minha Carreira",desc:"Planejamento e próximos passos profissionais.",href:"/cliente/cursos/organizar-carreira",icon:"💼"},
+ {title:"Francês para Negócios A1",desc:"Francês básico aplicado a situações profissionais.",href:"/cliente/cursos/frances-negocios-a1",icon:"🇫🇷"},
+ {title:"Primeiros Socorros",desc:"Noções essenciais para situações de emergência.",href:"/cliente/cursos/primeiros-socorros",icon:"⛑️"},
+] as const;''','free list',re.S)
+
+          marker=' const courses=[...CORE,...professional];\n'
+          if marker not in s: raise SystemExit('home courses marker missing')
+          logic=''' const popularLabel=locale==="pt"?"MAIS PROCURADO":locale==="fr"?"LE PLUS RECHERCHÉ":locale==="es"?"MÁS BUSCADO":"MOST POPULAR";
+ const freeBadge=locale==="pt"?"GRÁTIS":locale==="fr"?"GRATUIT":locale==="es"?"GRATIS":"FREE";
+ const freeCourses=[
+   ...LEGACY_FREE.map(x=>({...x,popular:false})),
+   ...ACADEMY_FREE_COURSES.map(c=>({title:c.name[locale],desc:c.description[locale],href:`/cliente/cursos/academy/${c.slug}`,icon:"🎓",popular:["clinica-psicanalitica-sigmund-freud","orientacao-trabalho-cientifico","modelos-documentos-psicanaliticos"].includes(c.slug)})),
+ ].sort((a,b)=>Number(Boolean(b.popular))-Number(Boolean(a.popular)));
+'''
+          if ' const freeCourses=[' not in s: s=s.replace(marker,logic+marker,1)
+
+          old_filtered=' const filtered=useMemo(()=>courses.filter(c=>(kind==="all"||c.kind===kind)&&(`${c.title} ${c.desc}`).toLowerCase().includes(q.trim().toLowerCase())),[courses,kind,q]);'
+          new_filtered=' const filtered=useMemo(()=>courses.filter(c=>(kind==="all"||c.kind===kind)&&(`${c.title} ${c.desc}`).toLowerCase().includes(q.trim().toLowerCase())).sort((a,b)=>Number(Boolean(b.popular))-Number(Boolean(a.popular))),[courses,kind,q]);'
+          if old_filtered in s: s=s.replace(old_filtered,new_filtered,1)
+          elif new_filtered not in s: raise SystemExit('filtered expression missing')
+
+          old_sig='function CourseCard({c,cta}:{c:Course;cta:string})'
+          new_sig='function CourseCard({c,cta,popularLabel}:{c:Course;cta:string;popularLabel:string})'
+          if old_sig in s: s=s.replace(old_sig,new_sig,1)
+          elif new_sig not in s: raise SystemExit('CourseCard signature missing')
+
+          card_anchor='<div className="flex flex-1 flex-col p-5"><div className="flex items-start justify-between gap-3">'
+          card_new='<div className="flex flex-1 flex-col p-5">{c.popular&&<span className="mb-3 w-fit rounded-full bg-[#071426] px-2.5 py-1 text-[9px] font-black uppercase tracking-[.08em] text-white">{popularLabel}</span>}<div className="flex items-start justify-between gap-3">'
+          if card_anchor in s: s=s.replace(card_anchor,card_new,1)
+          elif card_new not in s: raise SystemExit('CourseCard body missing')
+          if '<CourseCard key={c.id} c={c} cta={t.know}/>' in s:
+              s=s.replace('<CourseCard key={c.id} c={c} cta={t.know}/>','<CourseCard key={c.id} c={c} cta={t.know} popularLabel={popularLabel}/>',1)
+
+          if '{FREE.map(x=>' in s: s=s.replace('{FREE.map(x=>','{freeCourses.map(x=>',1)
+          free_anchor='className="rounded-2xl border border-slate-200 bg-[#fbfaf6] p-5 transition hover:-translate-y-1 hover:shadow-md"><span className="text-3xl">{x.icon}</span>'
+          free_new='className="rounded-2xl border border-slate-200 bg-[#fbfaf6] p-5 transition hover:-translate-y-1 hover:shadow-md"><div className="mb-3 flex flex-wrap gap-2">{x.popular&&<span className="rounded-full bg-[#071426] px-2.5 py-1 text-[9px] font-black uppercase tracking-[.08em] text-white">{popularLabel}</span>}<span className="rounded-full bg-emerald-700 px-2.5 py-1 text-[9px] font-black uppercase tracking-[.08em] text-white">{freeBadge}</span></div><span className="block text-3xl">{x.icon}</span>'
+          if free_anchor in s: s=s.replace(free_anchor,free_new,1)
+          elif free_new not in s: raise SystemExit('free card body missing')
+
+          old_book='<a href="/cliente/biblioteca" className="rounded-xl bg-[#071426] p-5 text-white"><span className="text-3xl">📱</span><h3 className="mt-4 font-serif text-xl">eBooks LDR</h3><p className="mt-2 text-sm text-white/70">Conteúdo digital</p></a>'
+          new_book='<a href="#ebooks-home" className="rounded-xl bg-[#071426] p-5 text-white"><span className="text-3xl">📚</span><h3 className="mt-4 font-serif text-xl">{locale==="pt"?"Ver todos os eBooks":locale==="fr"?"Voir tous les eBooks":locale==="es"?"Ver todos los eBooks":"View all eBooks"}</h3><p className="mt-2 text-sm text-white/70">{locale==="pt"?"Conheça a coleção completa da LDR Essence Academy.":locale==="fr"?"Découvrez la collection complète de la LDR Essence Academy.":locale==="es"?"Conoce la colección completa de LDR Essence Academy.":"Discover the complete LDR Essence Academy collection."}</p></a>'
+          if old_book in s: s=s.replace(old_book,new_book,1)
+          elif new_book not in s: raise SystemExit('bookstore ebook CTA missing')
+
+          sub_start=s.rfind('  <section className="bg-[#071426] text-white">')
+          ebook_start=s.find('  <section id="ebooks-home"')
+          main_end=s.rfind(' </main>;')
+          if sub_start!=-1 and ebook_start!=-1 and main_end!=-1 and sub_start<ebook_start:
+              subscription=s[sub_start:ebook_start]
+              ebook_block=s[ebook_start:main_end]
+              s=s[:sub_start]+ebook_block+'\n'+subscription+s[main_end:]
+
+          p.write_text(s,encoding='utf-8')
+
+          cat=Path('apps/painel-ldr/src/lib/psychoanalysis-ebooks.catalog.ts').read_text(encoding='utf-8')
+          if cat.count('priceBrlCents:1990, priceEurCents:490') < 7: raise SystemExit('standard prices not normalized')
+          if cat.count('priceBrlCents:4990, priceEurCents:990') < 4: raise SystemExit('premium prices changed')
+          if 'priceBrlCents:7990, priceEurCents:1490' not in cat: raise SystemExit('Estudos price changed')
           PY
-      - name: Verify patch
+
+      - name: Validate diff
+        run: git diff --check
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Academy
+        run: npm run build:painel
+
+      - name: Commit after successful build
         run: |
-          grep -q 'mini-library-showcase' apps/painel-ldr/src/components/library-sales-home-access-choice.tsx
-          grep -q 'libraryShowcase' apps/painel-ldr/src/components/library-sales-home-access-choice.tsx
-          grep -q 'showLibraryAll' apps/painel-ldr/src/components/library-sales-home-access-choice.tsx
-      - name: Commit
-        run: |
-          if git diff --quiet; then exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add apps/painel-ldr/src/components/library-sales-home-access-choice.tsx
-          git commit -m "feat(painel): add multilingual mini-library sales showcase"
+          git add apps/painel-ldr/src/lib/psychoanalysis-ebooks.catalog.ts \
+                  apps/painel-ldr/src/lib/client-portal.server.ts \
+                  apps/painel-ldr/src/lib/fixed-brl-ebook-checkout.server.ts \
+                  apps/painel-ldr/src/components/academy-accessibility-controls.tsx \
+                  apps/painel-ldr/src/components/academy-university-home.tsx
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "feat(academy): premium storefront and normalized ebook pricing"
           git push
