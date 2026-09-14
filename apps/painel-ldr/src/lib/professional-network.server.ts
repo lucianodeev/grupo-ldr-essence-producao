@@ -8,6 +8,30 @@ const PLATFORM = "LDR Essence — Rede Multidisciplinar de Saúde Mental e Bem-E
 function fail(message: string): never { throw new Error(message); }
 function normEmail(value: string | null | undefined) { return value?.trim().toLowerCase() ?? null; }
 function moneyInt(value: unknown) { const n = Number(value); return Number.isFinite(n) ? Math.round(n) : 0; }
+function localSlotParts(date: Date, timeZone: string) {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone,
+    weekday: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+  }).formatToParts(date);
+  const value = (type: Intl.DateTimeFormatPartTypes) =>
+    parts.find((part) => part.type === type)?.value ?? "";
+  const weekdays: Record<string, number> = {
+    Sun: 0,
+    Mon: 1,
+    Tue: 2,
+    Wed: 3,
+    Thu: 4,
+    Fri: 5,
+    Sat: 6,
+  };
+  return {
+    weekday: weekdays[value("weekday")] ?? -1,
+    time: `${value("hour")}:${value("minute")}`,
+  };
+}
 function origin() {
   const req = getRequest();
   return process.env["CLIENT_PANEL_URL"]?.replace(/\/$/, "") || (req ? new URL(req.url).origin : "https://painel.ldrrhestrategia.com");
