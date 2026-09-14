@@ -24,7 +24,7 @@ jobs:
         with:
           node-version: 20
           cache: npm
-          cache-dependency-path: apps/painel-ldr/package-lock.json
+          cache-dependency-path: package-lock.json
       - name: Apply responsive UX V4 patch
         run: python tools/patch_academic_ux_v4_20260914.py
       - name: Verify patch idempotence
