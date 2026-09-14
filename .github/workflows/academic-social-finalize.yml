@@ -28,6 +28,8 @@ jobs:
         run: python tools/patch_academic_social_core_20260914.py
       - name: Apply create route PDF patch
         run: python tools/patch_academic_create_pdf_20260914.py
+      - name: Make create buttons focus feed composer
+        run: python tools/patch_academic_create_button_focus_20260914.py
       - name: Lint changed academic social files
         continue-on-error: true
         working-directory: apps/painel-ldr
@@ -91,7 +93,7 @@ jobs:
             echo 'No social functionality changes to commit.'
             exit 0
           fi
-          git commit -m 'feat(academic): enable compact composer pdf repost and private dm'
+          git commit -m 'feat(academic): focus create buttons on compact composer'
           git push origin main
 
-# route-tree generation before typecheck: 2026-09-14T23:20+02:00
+# validate create button focus: 2026-09-14T23:28+02:00
