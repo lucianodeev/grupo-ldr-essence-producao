@@ -1,0 +1,223 @@
+name: One-time premium storefront and ebook pricing
+
+on:
+  push:
+    branches: [codex/premium-storefront-pricing-20260914]
+    paths:
+      - '.github/workflows/one-time-premium-storefront-pricing-20260914.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: codex/premium-storefront-pricing-20260914
+
+      - name: Apply pricing and storefront updates
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          def sub_once(text, pattern, repl, label, flags=0):
+              out, n = re.subn(pattern, repl, text, count=1, flags=flags)
+              if n != 1:
+                  raise SystemExit(f'{label}: expected 1 replacement, got {n}')
+              return out
+
+          # 1) Canonical ebook catalog: old standard ebooks -> R$19,90 / €4,90.
+          p = Path('apps/painel-ldr/src/lib/psychoanalysis-ebooks.catalog.ts')
+          s = p.read_text(encoding='utf-8')
+          for key in ['ebook_pratica_clinica_psicanalise','ebook_psicanalise_no_mundo','ebook_psicanalise_autismo']:
+              pat = rf'(key:"{re.escape(key)}".*?priceBrlCents:)2000(, priceEurCents:)399'
+              s = sub_once(s, pat, r'\g<1>1990\g<2>490', f'catalog price {key}', re.S)
+          p.write_text(s, encoding='utf-8')
+
+          # 2) Client library metadata must match the canonical price and checkout.
+          p = Path('apps/painel-ldr/src/lib/client-portal.server.ts')
+          s = p.read_text(encoding='utf-8')
+          for key in ['ebook_pratica_clinica_psicanalise','ebook_psicanalise_no_mundo','ebook_psicanalise_autismo']:
+              pat = rf'(key:"{re.escape(key)}".*?priceBrlCents:)2000(, priceEurCents:)399'
+              s = sub_once(s, pat, r'\g<1>1990\g<2>490', f'client price {key}', re.S)
+          # Estudos de Caso keeps its existing premium commercial rule; align stale library metadata with that rule.
+          pat = r'(key:"ebook_estudos_caso_psicanalise".*?priceBrlCents:)2000(, priceEurCents:)399'
+          s = sub_once(s, pat, r'\g<1>7990\g<2>1490', 'align Estudos de Caso metadata', re.S)
+          p.write_text(s, encoding='utf-8')
+
+          # 3) Dynamic Stripe checkout: intercept every fixed ebook in both BR and EUR.
+          p = Path('apps/painel-ldr/src/lib/fixed-brl-ebook-checkout.server.ts')
+          s = p.read_text(encoding='utf-8')
+          if 'ebook_psicanalise_autismo: "Psicanálise e Autismo"' not in s:
+              needle = '  ebook_psicanalise_no_mundo: "A Psicanálise no Mundo",\n'
+              if needle not in s:
+                  raise SystemExit('checkout map insertion point not found')
+              s = s.replace(needle, needle + '  ebook_psicanalise_autismo: "Psicanálise e Autismo",\n', 1)
+          old = '  if ((!isPremiumCases && !isCollectionOne && input.market !== "BR") || !isFixedBrlEbook(input.productKey)) {'
+          if old not in s:
+              raise SystemExit('checkout market condition not found')
+          s = s.replace(old, '  if (!isFixedBrlEbook(input.productKey)) {', 1)
+          p.write_text(s, encoding='utf-8')
+
+          # 4) Keep library + home popular labels consistent for exactly three free Academy courses.
+          p = Path('apps/painel-ldr/src/components/academy-accessibility-controls.tsx')
+          s = p.read_text(encoding='utf-8')
+          anchor = '  "/cliente/cursos/academy/clinica-psicanalitica-sigmund-freud",\n'
+          additions = (
+              '  "/cliente/cursos/academy/orientacao-trabalho-cientifico",\n'
+              '  "/cliente/cursos/academy/modelos-documentos-psicanaliticos",\n'
+          )
+          if anchor not in s:
+              raise SystemExit('popular free-course anchor not found')
+          for item in additions:
+              if item.strip() not in s:
+                  s = s.replace(anchor, anchor + item, 1)
+                  anchor += item
+          p.write_text(s, encoding='utf-8')
+
+          # 5) Main sales home: premium storefront, all Academy free courses, consistent popular badges.
+          p = Path('apps/painel-ldr/src/components/academy-university-home.tsx')
+          s = p.read_text(encoding='utf-8')
+
+          imp = 'import { PSYCHOANALYSIS_EBOOKS } from "@/lib/psychoanalysis-ebooks.catalog";\n'
+          if 'ACADEMY_FREE_COURSES' not in s:
+              if imp not in s:
+                  raise SystemExit('home ebook import anchor not found')
+              s = s.replace(imp, imp + 'import { ACADEMY_FREE_COURSES } from "@/lib/academy-free-courses.catalog";\n', 1)
+
+          s = s.replace('type Course={id:string;title:string;desc:string;meta:string;price:string;href:string;kind:Exclude<Kind,"all">;icon:string;accent:string};',
+                        'type Course={id:string;title:string;desc:string;meta:string;price:string;href:string;kind:Exclude<Kind,"all">;icon:string;accent:string;popular?:boolean};', 1)
+
+          for cid in ['psy-intl','performance','ai']:
+              needle = f'{{id:"{cid}",'
+              if needle not in s:
+                  raise SystemExit(f'home CORE id not found: {cid}')
+              if f'{{id:"{cid}",popular:true,' not in s:
+                  s = s.replace(needle, f'{{id:"{cid}",popular:true,', 1)
+
+          old_prof = 'href:f.publicPath,kind,icon:f.icon,accent:themeAccent[f.theme]??"#6D3FA0"};});'
+          new_prof = 'href:f.publicPath,kind,icon:f.icon,accent:themeAccent[f.theme]??"#6D3FA0",popular:["aba-autismo","ciencias-felicidade","tricologia-terapia-capilar"].includes(f.slug)};});'
+          if old_prof in s:
+              s = s.replace(old_prof, new_prof, 1)
+          elif new_prof not in s:
+              raise SystemExit('professional formation mapping anchor not found')
+
+          # Keep the three legacy free entries and source the complete Academy-free collection from its real catalog.
+          s = sub_once(
+              s,
+              r'const FREE=\[.*?\n\];',
+              '''const LEGACY_FREE=[
+ {title:"Organizar minha Carreira",desc:"Planejamento e próximos passos profissionais.",href:"/cliente/cursos/organizar-carreira",icon:"💼"},
+ {title:"Francês para Negócios A1",desc:"Francês básico aplicado a situações profissionais.",href:"/cliente/cursos/frances-negocios-a1",icon:"🇫🇷"},
+ {title:"Primeiros Socorros",desc:"Noções essenciais para situações de emergência.",href:"/cliente/cursos/primeiros-socorros",icon:"⛑️"},
+] as const;''',
+              'replace legacy FREE block', re.S
+          )
+
+          marker = ' const courses=[...CORE,...professional];\n'
+          if marker not in s:
+              raise SystemExit('home courses marker not found')
+          free_logic = ''' const popularLabel=locale==="pt"?"MAIS PROCURADO":locale==="fr"?"LE PLUS RECHERCHÉ":locale==="es"?"MÁS BUSCADO":"MOST POPULAR";
+ const freeBadge=locale==="pt"?"GRÁTIS":locale==="fr"?"GRATUIT":locale==="es"?"GRATIS":"FREE";
+ const freeCourses=[
+   ...LEGACY_FREE.map(x=>({...x,popular:false})),
+   ...ACADEMY_FREE_COURSES.map(c=>({title:c.name[locale],desc:c.description[locale],href:`/cliente/cursos/academy/${c.slug}`,icon:"🎓",popular:["clinica-psicanalitica-sigmund-freud","orientacao-trabalho-cientifico","modelos-documentos-psicanaliticos"].includes(c.slug)})),
+ ].sort((a,b)=>Number(Boolean(b.popular))-Number(Boolean(a.popular)));
+'''
+          if 'const freeCourses=[' not in s:
+              s = s.replace(marker, free_logic + marker, 1)
+
+          old_filtered = ' const filtered=useMemo(()=>courses.filter(c=>(kind==="all"||c.kind===kind)&&(`${c.title} ${c.desc}`).toLowerCase().includes(q.trim().toLowerCase())),[courses,kind,q]);'
+          new_filtered = ' const filtered=useMemo(()=>courses.filter(c=>(kind==="all"||c.kind===kind)&&(`${c.title} ${c.desc}`).toLowerCase().includes(q.trim().toLowerCase())).sort((a,b)=>Number(Boolean(b.popular))-Number(Boolean(a.popular))),[courses,kind,q]);'
+          if old_filtered in s:
+              s = s.replace(old_filtered, new_filtered, 1)
+          elif new_filtered not in s:
+              raise SystemExit('filtered courses expression not found')
+
+          # CourseCard gets the same premium popular badge language used across Academy.
+          old_sig = 'function CourseCard({c,cta}:{c:Course;cta:string})'
+          new_sig = 'function CourseCard({c,cta,popularLabel}:{c:Course;cta:string;popularLabel:string})'
+          if old_sig in s:
+              s = s.replace(old_sig, new_sig, 1)
+          elif new_sig not in s:
+              raise SystemExit('CourseCard signature not found')
+          card_anchor = '<div className="flex flex-1 flex-col p-5"><div className="flex items-start justify-between gap-3">'
+          card_new = '<div className="flex flex-1 flex-col p-5">{c.popular&&<span className="mb-3 w-fit rounded-full bg-[#071426] px-2.5 py-1 text-[9px] font-black uppercase tracking-[.08em] text-white">{popularLabel}</span>}<div className="flex items-start justify-between gap-3">'
+          if card_anchor in s:
+              s = s.replace(card_anchor, card_new, 1)
+          elif card_new not in s:
+              raise SystemExit('CourseCard body anchor not found')
+          s = s.replace('<CourseCard key={c.id} c={c} cta={t.know}/>', '<CourseCard key={c.id} c={c} cta={t.know} popularLabel={popularLabel}/>', 1)
+
+          # Free cards: all real free products + exactly three popular labels, with FREE badge.
+          s = s.replace('{FREE.map(x=>', '{freeCourses.map(x=>', 1)
+          free_anchor = 'className="rounded-2xl border border-slate-200 bg-[#fbfaf6] p-5 transition hover:-translate-y-1 hover:shadow-md"><span className="text-3xl">{x.icon}</span>'
+          free_new = 'className="rounded-2xl border border-slate-200 bg-[#fbfaf6] p-5 transition hover:-translate-y-1 hover:shadow-md"><div className="mb-3 flex flex-wrap gap-2">{x.popular&&<span className="rounded-full bg-[#071426] px-2.5 py-1 text-[9px] font-black uppercase tracking-[.08em] text-white">{popularLabel}</span>}<span className="rounded-full bg-emerald-700 px-2.5 py-1 text-[9px] font-black uppercase tracking-[.08em] text-white">{freeBadge}</span></div><span className="block text-3xl">{x.icon}</span>'
+          if free_anchor in s:
+              s = s.replace(free_anchor, free_new, 1)
+          elif free_new not in s:
+              raise SystemExit('free card anchor not found')
+
+          # Remove generic ebook card redundancy; keep the book and make the second card a scroll-to-showcase CTA.
+          old_book_card = '<a href="/cliente/biblioteca" className="rounded-xl bg-[#071426] p-5 text-white"><span className="text-3xl">📱</span><h3 className="mt-4 font-serif text-xl">eBooks LDR</h3><p className="mt-2 text-sm text-white/70">Conteúdo digital</p></a>'
+          new_book_card = '<a href="#ebooks-home" className="rounded-xl bg-[#071426] p-5 text-white"><span className="text-3xl">📚</span><h3 className="mt-4 font-serif text-xl">{locale==="pt"?"Ver todos os eBooks":locale==="fr"?"Voir tous les eBooks":locale==="es"?"Ver todos los eBooks":"View all eBooks"}</h3><p className="mt-2 text-sm text-white/70">{locale==="pt"?"Conheça a coleção completa da LDR Essence Academy.":locale==="fr"?"Découvrez la collection complète de la LDR Essence Academy.":locale==="es"?"Conoce la colección completa de LDR Essence Academy.":"Discover the complete LDR Essence Academy collection."}</p></a>'
+          if old_book_card in s:
+              s = s.replace(old_book_card, new_book_card, 1)
+          elif new_book_card not in s:
+              raise SystemExit('generic ebook bookstore card not found')
+
+          # Place subscription after the ebook showcase when current layout has it before the showcase.
+          sub_start = s.rfind('  <section className="bg-[#071426] text-white">')
+          ebook_start = s.find('  <section id="ebooks-home"')
+          main_end = s.rfind(' </main>;')
+          if sub_start != -1 and ebook_start != -1 and main_end != -1 and sub_start < ebook_start:
+              subscription = s[sub_start:ebook_start]
+              ebook_block = s[ebook_start:main_end]
+              s = s[:sub_start] + ebook_block + '\n' + subscription + s[main_end:]
+
+          p.write_text(s, encoding='utf-8')
+
+          # Sanity checks: premium prices remain untouched; standard prices are normalized.
+          final_catalog = Path('apps/painel-ldr/src/lib/psychoanalysis-ebooks.catalog.ts').read_text(encoding='utf-8')
+          for expected in ['priceBrlCents:4990, priceEurCents:990','priceBrlCents:7990, priceEurCents:1490','priceBrlCents:1990, priceEurCents:490']:
+              if expected not in final_catalog:
+                  raise SystemExit(f'missing expected price pattern: {expected}')
+          PY
+
+      - name: Validate diff
+        run: |
+          git diff --check
+          git diff -- apps/painel-ldr/src/lib/psychoanalysis-ebooks.catalog.ts apps/painel-ldr/src/lib/client-portal.server.ts apps/painel-ldr/src/lib/fixed-brl-ebook-checkout.server.ts apps/painel-ldr/src/components/academy-accessibility-controls.tsx apps/painel-ldr/src/components/academy-university-home.tsx
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Academy
+        run: npm run build:painel
+
+      - name: Commit only after successful build
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add apps/painel-ldr/src/lib/psychoanalysis-ebooks.catalog.ts \
+                  apps/painel-ldr/src/lib/client-portal.server.ts \
+                  apps/painel-ldr/src/lib/fixed-brl-ebook-checkout.server.ts \
+                  apps/painel-ldr/src/components/academy-accessibility-controls.tsx \
+                  apps/painel-ldr/src/components/academy-university-home.tsx
+          if git diff --cached --quiet; then
+            echo 'No application changes to commit'
+            exit 0
+          fi
+          git commit -m 'feat(academy): premium storefront and normalized ebook pricing'
+          git push origin HEAD:codex/premium-storefront-pricing-20260914
