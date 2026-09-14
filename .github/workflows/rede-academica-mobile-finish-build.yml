@@ -1,0 +1,62 @@
+name: Validate Academic Network Mobile Finish
+
+on:
+  push:
+    branches:
+      - feature/rede-academica-mobile-finish-20260914
+    paths:
+      - .github/workflows/rede-academica-mobile-finish-build.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
+        with:
+          ref: feature/rede-academica-mobile-finish-20260914
+          fetch-depth: 0
+
+      - name: Apply scoped mobile finish patch
+        run: python3 scripts/patch-academic-network-mobile-finish-20260914.py
+
+      - name: Validate scoped diff
+        run: |
+          git status --short
+          python3 - <<'PY'
+          import subprocess
+          allowed={'apps/painel-ldr/src/routes/_clientarea.cliente.rede-academica.tsx'}
+          changed=set(subprocess.check_output(['git','diff','--name-only'],text=True).splitlines())
+          unexpected=changed-allowed
+          if unexpected:
+              raise SystemExit(f'Unexpected files changed: {sorted(unexpected)}')
+          if not changed:
+              raise SystemExit('Patch produced no route changes')
+          print('Scoped mobile patch validated:', sorted(changed))
+          PY
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Academy
+        run: npm --prefix apps/painel-ldr run build
+
+      - name: Commit validated mobile finish
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.rede-academica.tsx apps/painel-ldr/src/routeTree.gen.ts
+          if ! git diff --cached --quiet; then
+            git commit -m 'fix(academy): keep academic network actions responsive on mobile'
+            git push origin HEAD:feature/rede-academica-mobile-finish-20260914
+          fi
