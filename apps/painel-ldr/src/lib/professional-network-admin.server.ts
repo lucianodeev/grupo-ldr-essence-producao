@@ -125,24 +125,7 @@ export async function reviewProfessional(
       .maybeSingle();
     if (!rule)
       fail("Regra de conformidade ainda não configurada e ativa para esta categoria e país.");
-    const { data: account } = await db
-      .from("professional_accounts")
-      .select("engagement_model")
-      .eq("id", p.professional_account_id)
-      .maybeSingle();
-    if (
-      p.slug !== "luciano-rodrigues-almeida" &&
-      (account?.engagement_model ?? "subscription") === "subscription"
-    ) {
-      const { data: activeSub } = await db
-        .from("professional_subscriptions")
-        .select("id")
-        .eq("professional_account_id", p.professional_account_id)
-        .eq("status", "active")
-        .limit(1);
-      if (!(activeSub ?? []).length)
-        fail("A assinatura precisa estar ativa antes da aprovação do perfil.");
-    }
+
     if (rule.requires_registration) {
       const { data: cred } = await db
         .from("professional_credentials")
@@ -210,7 +193,7 @@ export async function reviewProfessional(
   return { ok: true as const };
 }
 
-type EngagementModel = "subscription" | "commission" | "exempt";
+type EngagementModel = "commission";
 type AdminProfessionalInput = {
   profileId?: string;
   email?: string;
@@ -259,19 +242,12 @@ export async function upsertProfessionalByAdmin(
   const professionalTitle = input.professionalTitle?.trim();
   const categoryId = input.categoryId?.trim();
   const countryCode = input.countryCode?.trim().toUpperCase();
-  const engagementModel = input.engagementModel;
+  const engagementModel: EngagementModel = "commission";
   if (displayName.length < 2 || professionalTitle.length < 2)
     fail("Informe nome e título profissional.");
   if (!categoryId) fail("Selecione a área de atuação.");
   if (!/^[A-Z]{2}$/.test(countryCode)) fail("Informe o país com o código de duas letras.");
-  if (!(["subscription", "commission", "exempt"] as string[]).includes(engagementModel))
-    fail("Modelo comercial inválido.");
-  const commissionPercent = Number(input.commissionPercent);
-  if (
-    engagementModel === "commission" &&
-    (!Number.isFinite(commissionPercent) || commissionPercent < 10 || commissionPercent > 20)
-  )
-    fail("A comissão deve estar entre 10% e 20%.");
+  const commissionPercent = 20;
   const { data: category } = await db
     .from("professional_categories")
     .select("id")
@@ -355,7 +331,7 @@ export async function upsertProfessionalByAdmin(
       country_code: countryCode,
       preferred_currency: countryCode === "BR" ? "BRL" : "EUR",
       engagement_model: engagementModel,
-      custom_commission_rate: engagementModel === "commission" ? commissionPercent / 100 : null,
+      custom_commission_rate: null,
       managed_by_admin: true,
       updated_at: now,
     })
@@ -415,7 +391,7 @@ export async function upsertProfessionalByAdmin(
     details: {
       authUserId,
       engagementModel,
-      commissionPercent: engagementModel === "commission" ? commissionPercent : null,
+      commissionPercent,
       published: Boolean(input.publish),
     },
   });
@@ -434,16 +410,16 @@ export async function updateNetworkFinancialConfig(
   const actor = await requireInternal(supabase, userId, true);
   if (input.commissionPercent != null) {
     const pct = Number(input.commissionPercent);
-    if (!Number.isFinite(pct) || pct < 0 || pct > 50) fail("Comissão deve estar entre 0% e 50%.");
+    if (!Number.isFinite(pct) || pct !== 20) fail("A taxa global está definida em 20%.");
     await db
       .from("platform_financial_config")
       .update({
-        numeric_value: pct / 100,
+        numeric_value: pct,
         text_value: `${pct}%`,
         updated_at: new Date().toISOString(),
         updated_by: userId,
       })
-      .eq("config_key", "platform_commission_rate");
+      .eq("config_key", "platform_fee_percent");
   }
   if (input.payoutFrequencyDays != null) {
     const d = Math.round(Number(input.payoutFrequencyDays));

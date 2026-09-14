@@ -1,8 +1,9 @@
 import { getRequest } from "@tanstack/react-start/server";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { calculatePlatformSplit, DEFAULT_PLATFORM_FEE_PERCENT } from "@/lib/platform-fee";
 
 const db = supabaseAdmin as unknown as { from: (table: string) => any; rpc: (name: string, args: Record<string, unknown>) => Promise<{ data: any; error: { message?: string } | null }> };
-const PLATFORM = "Rede de Profissionais LDR";
+const PLATFORM = "LDR Essence — Rede Multidisciplinar de Saúde Mental e Bem-Estar";
 
 function fail(message: string): never { throw new Error(message); }
 function normEmail(value: string | null | undefined) { return value?.trim().toLowerCase() ?? null; }
@@ -13,12 +14,10 @@ function origin() {
 }
 
 type ClientSource = "social_clinic" | "professional_direct" | "ldr_generated";
-async function getCommissionRate(source: ClientSource = "ldr_generated") {
-  const key = source === "social_clinic" ? "commission_social_clinic" : source === "professional_direct" ? "commission_professional_direct" : "commission_ldr_generated";
-  const fallback = source === "social_clinic" ? 0.07 : source === "professional_direct" ? 0.10 : 0.15;
-  const { data } = await db.from("platform_financial_config").select("numeric_value").eq("config_key", key).eq("active", true).maybeSingle();
-  const rate = Number(data?.numeric_value ?? fallback);
-  return Number.isFinite(rate) && rate >= 0 && rate < 1 ? rate : fallback;
+async function getPlatformFeePercent() {
+  const { data } = await db.from("platform_financial_config").select("numeric_value").eq("config_key", "platform_fee_percent").eq("active", true).maybeSingle();
+  const percent = Number(data?.numeric_value ?? DEFAULT_PLATFORM_FEE_PERCENT);
+  return Number.isFinite(percent) && percent >= 0 && percent <= 100 ? percent : DEFAULT_PLATFORM_FEE_PERCENT;
 }
 
 async function ensureAccount(userId: string, email: string | null) {
@@ -33,7 +32,7 @@ async function ensureAccount(userId: string, email: string | null) {
 export async function getNetworkLanding() {
   const [{ data: categories }, { data: plans }, { data: profiles }, { data: events }, { data: config }] = await Promise.all([
     db.from("professional_categories").select("id,slug,name_pt,name_en,name_fr,name_es,active,sort_order").eq("active", true).order("sort_order"),
-    db.from("subscription_plans").select("id,market,plan_code,name,currency,amount_cents,interval,benefits,active,sort_order").eq("active", true).order("market").order("sort_order"),
+    Promise.resolve({ data: [] }),
     db.from("professional_profiles").select("id,slug,display_name,professional_title,category_id,city,country_code,languages,online_enabled,in_person_enabled,public_region,photo_url,about,specialties,identity_verified,documents_verified,profile_verified,view_count").eq("is_public", true).eq("profile_status", "active").eq("compliance_status", "approved").order("display_name"),
     db.from("professional_events").select("id,event_type,title,description,instructor,starts_at,ends_at,timezone,published,access_tier").eq("published", true).eq("access_tier", "free").gte("starts_at", new Date().toISOString()).order("starts_at").limit(8),
     db.from("platform_financial_config").select("config_key,numeric_value,text_value").eq("active", true),
@@ -58,8 +57,8 @@ export async function getProfessionalDashboard(userId: string, email: string | n
   const account = await ensureAccount(userId, email);
   const { data: profile } = await db.from("professional_profiles").select("*").eq("professional_account_id", account.id).maybeSingle();
   const [{ data: subscription }, { data: plans }, { data: bookings }, { data: payments }, { data: balances }, { data: payouts }, { data: documents }, { data: events }, { data: community }, { data: services }, { data: availability }, { data: categories }, { data: config }] = await Promise.all([
-    db.from("professional_subscriptions").select("*,subscription_plans(name,market,plan_code,currency,amount_cents,benefits)").eq("professional_account_id", account.id).order("created_at", { ascending: false }).limit(1).maybeSingle(),
-    db.from("subscription_plans").select("id,market,plan_code,name,currency,amount_cents,interval,benefits").eq("active", true).order("market").order("sort_order"),
+    Promise.resolve({ data: null }),
+    Promise.resolve({ data: [] }),
     profile ? db.from("marketplace_bookings").select("id,customer_name,service_provider_type,modality,starts_at,ends_at,status,gross_amount_cents,currency,professional_services(name)").eq("professional_profile_id", profile.id).order("starts_at", { ascending: false }).limit(50) : Promise.resolve({ data: [] }),
     db.from("marketplace_payments").select("id,status,gross_amount_cents,platform_fee_cents,payment_fee_cents,refund_amount_cents,adjustment_cents,provider_net_cents,currency,paid_at,created_at").eq("professional_account_id", account.id).order("created_at", { ascending: false }).limit(100),
     db.from("provider_balances").select("*").eq("professional_account_id", account.id),
@@ -72,13 +71,10 @@ export async function getProfessionalDashboard(userId: string, email: string | n
     db.from("professional_categories").select("id,slug,name_pt,name_en,name_fr,name_es,regulated_by_default,requires_admin_review").eq("active", true).order("sort_order"),
     db.from("platform_financial_config").select("config_key,numeric_value,text_value,json_value").eq("active", true),
   ]);
-  const planCode = subscription?.status === "active" ? subscription?.subscription_plans?.plan_code : null;
-  const allowedTiers = new Set<string>(["free"]);
-  if (planCode === "pro" || planCode === "360") allowedTiers.add("pro");
-  if (planCode === "360") allowedTiers.add("360");
-  const visibleEvents = (events ?? []).filter((item: any) => allowedTiers.has(item.access_tier || "pro"));
-  const visibleCommunity = (community ?? []).filter((item: any) => allowedTiers.has(item.access_tier || "pro"));
-  const access = { planCode, free: true, community: planCode === "pro" || planCode === "360", liveTraining: planCode === "pro" || planCode === "360", mentoriaS8: planCode === "360" };
+  const planCode = null;
+  const visibleEvents = events ?? [];
+  const visibleCommunity = community ?? [];
+  const access = { planCode, free: true, community: true, liveTraining: true, mentoriaS8: true };
   return { account, profile, subscription: subscription ?? null, plans: plans ?? [], bookings: bookings ?? [], payments: payments ?? [], balances: balances ?? [], payouts: payouts ?? [], documents: documents ?? [], events: visibleEvents, community: visibleCommunity, services: services ?? [], availability: availability ?? [], categories: categories ?? [], config: config ?? [], access };
 }
 
@@ -88,7 +84,7 @@ export async function saveProfessionalOnboarding(userId: string, email: string |
   const accountPatch: Record<string, unknown> = { onboarding_step: step, updated_at: new Date().toISOString() };
   if (input.countryCode) accountPatch.country_code = input.countryCode.toUpperCase();
   if (input.currency) accountPatch.preferred_currency = input.currency;
-  if (step >= 7) { accountPatch.onboarding_completed = true; accountPatch.status = "subscription_pending"; }
+  if (step >= 7) { accountPatch.onboarding_completed = true; accountPatch.status = "under_review"; }
   await db.from("professional_accounts").update(accountPatch).eq("id", account.id);
 
   if (input.displayName && input.professionalTitle && input.categoryId) {
@@ -124,95 +120,8 @@ export async function addProfessionalAvailability(userId: string, email: string 
   return { ok: true as const };
 }
 
-export async function createProfessionalSubscriptionCheckout(userId: string, email: string | null, planId: string, sellerReferral: string | null = null) {
-  const account = await ensureAccount(userId, email);
-  const mail = normEmail(email);
-  if (!mail) fail("Sua conta precisa ter um e-mail válido.");
-  const { data: existingSubscription } = await db.from("professional_subscriptions")
-    .select("id,status,current_period_end,cancel_at_period_end")
-    .eq("professional_account_id", account.id)
-    .eq("status", "active")
-    .order("created_at", { ascending: false })
-    .limit(1)
-    .maybeSingle();
-  if (existingSubscription) {
-    const end = existingSubscription.current_period_end ? new Date(existingSubscription.current_period_end).getTime() : 0;
-    if (!end || end > Date.now()) {
-      fail(existingSubscription.cancel_at_period_end
-        ? "Você já possui uma assinatura ativa até o fim do ciclo pago. Reative a renovação em Minha Assinatura se quiser continuar no próximo mês."
-        : "Você já possui uma assinatura mensal ativa. Gerencie sua assinatura atual em Minha Assinatura.");
-    }
-  }
-  const { data: plan } = await db.from("subscription_plans").select("id,market,plan_code,name,currency,amount_cents,interval,active").eq("id", planId).eq("active", true).maybeSingle();
-  if (!plan) fail("Plano indisponível.");
-  const referral = sellerReferral?.trim() || null;
-  if (referral) {
-    const { error } = await db.rpc("ldr_seller_referral_validate_service", {
-      p_ref: referral,
-      p_portal_kind: "professional",
-      p_plan_code: String(plan.plan_code),
-      p_market: String(plan.market),
-      p_email: mail,
-    });
-    if (error) fail(error.message || "Não foi possível validar o link do vendedor.");
-  }
-  const secret = process.env["STRIPE_SECRET_KEY"];
-  if (!secret) fail("Assinatura indisponível no momento.");
-  const { data: pending, error: pendingError } = await db.from("professional_subscriptions").insert({ professional_account_id: account.id, plan_id: plan.id, status: "pending" }).select("id").single();
-  if (pendingError || !pending) fail("Não foi possível preparar sua assinatura.");
-  const params = new URLSearchParams();
-  params.set("mode", "subscription");
-  params.append("payment_method_types[]", "card");
-  params.set("line_items[0][price_data][currency]", String(plan.currency).toLowerCase());
-  params.set("line_items[0][price_data][unit_amount]", String(plan.amount_cents));
-  params.set("line_items[0][price_data][recurring][interval]", String(plan.interval));
-  params.set("line_items[0][price_data][product_data][name]", String(plan.name));
-  params.set("line_items[0][quantity]", "1");
-  params.set("success_url", referral ? `${origin()}/profissional-painel?subscription=success&seller_ref=${encodeURIComponent(referral)}` : `${origin()}/profissional-painel?subscription=success&session_id={CHECKOUT_SESSION_ID}`);
-  params.set("cancel_url", referral ? `${origin()}/profissional-onboarding?subscription=cancel&seller_ref=${encodeURIComponent(referral)}` : `${origin()}/profissional-painel?subscription=cancel`);
-  params.set("client_reference_id", userId);
-  params.set("customer_email", mail);
-  params.set("metadata[checkout_kind]", "professional_subscription");
-  params.set("metadata[professional_account_id]", account.id);
-  params.set("metadata[professional_subscription_id]", pending.id);
-  params.set("metadata[plan_id]", plan.id);
-  params.set("subscription_data[metadata][checkout_kind]", "professional_subscription");
-  params.set("subscription_data[metadata][professional_account_id]", account.id);
-  params.set("subscription_data[metadata][professional_subscription_id]", pending.id);
-  params.set("subscription_data[metadata][plan_id]", plan.id);
-  if (referral) {
-    params.set("metadata[source]", "seller_portal_referral");
-    params.set("metadata[ldr_seller_referral_id]", referral);
-    params.set("metadata[seller_commission_scope]", "initial_checkout");
-    params.set("subscription_data[metadata][source]", "seller_portal_referral");
-    params.set("subscription_data[metadata][ldr_seller_referral_id]", referral);
-    params.set("subscription_data[metadata][seller_commission_scope]", "initial_checkout");
-  }
-  const response = await fetch("https://api.stripe.com/v1/checkout/sessions", {
-    method: "POST",
-    headers: { Authorization: `Bearer ${secret}`, "Content-Type": "application/x-www-form-urlencoded", "Idempotency-Key": `pro-sub-${pending.id}` },
-    body: params,
-  });
-  const session = await response.json() as { id?: string; url?: string; error?: { message?: string } };
-  if (!response.ok || !session.id || !session.url) {
-    await db.from("professional_subscriptions").delete().eq("id", pending.id).eq("professional_account_id", account.id);
-    fail(session.error?.message || "Não foi possível abrir o pagamento.");
-  }
-  if (referral) {
-    const { error: bindError } = await db.rpc("ldr_seller_referral_bind_checkout_service", {
-      p_ref: referral,
-      p_checkout_session_id: session.id,
-      p_amount_cents: Number(plan.amount_cents),
-      p_currency: String(plan.currency),
-    });
-    if (bindError) {
-      await db.from("professional_subscriptions").delete().eq("id", pending.id).eq("professional_account_id", account.id);
-      fail(bindError.message || "Não foi possível vincular a venda ao vendedor.");
-    }
-  }
-  await db.from("professional_subscriptions").update({ stripe_checkout_session_id: session.id, updated_at: new Date().toISOString() }).eq("id", pending.id);
-  await db.from("audit_logs").insert({ actor_id: userId, actor_email: mail, action: "professional_network.subscription_checkout_created", target: pending.id, details: { plan_id: plan.id, seller_referral: referral } });
-  return { url: session.url, subscriptionId: pending.id };
+export async function createProfessionalSubscriptionCheckout(_userId: string, _email: string | null, _planId: string, _sellerReferral: string | null = null) {
+  fail("A participação profissional é gratuita e não possui mensalidade. Cadastre seus serviços e aguarde a verificação do perfil.");
 }
 
 export async function createMarketplaceBookingCheckout(input: { profileSlug: string; serviceId: string; startAt: string; customerName: string; customerEmail: string; timezone: string; modality: "online"|"in_person"; clientSource?: ClientSource }) {
@@ -238,13 +147,15 @@ export async function createMarketplaceBookingCheckout(input: { profileSlug: str
   if ((blocked ?? []).length) fail("Este horário está indisponível.");
   const gross = moneyInt(service.price_cents);
   const clientSource: ClientSource = input.clientSource === "social_clinic" || input.clientSource === "professional_direct" ? input.clientSource : "ldr_generated";
-  const rate = await getCommissionRate(clientSource);
-  const platformFee = Math.round(gross * rate);
-  const providerNet = gross - platformFee;
+  const feePercent = await getPlatformFeePercent();
+  const split = calculatePlatformSplit(gross, feePercent);
+  const rate = feePercent / 100;
+  const platformFee = split.platformFeeCents;
+  const providerNet = split.professionalNetCents;
   const { data: booking, error: bookingError } = await db.from("marketplace_bookings").insert({ professional_profile_id: profile.id, professional_service_id: service.id, customer_name: name, customer_email: mail, modality: input.modality, starts_at: start.toISOString(), ends_at: end.toISOString(), timezone: input.timezone || "Europe/Brussels", gross_amount_cents: gross, currency: service.currency, provider_label: profile.display_name, service_provider_type: "network_professional", checkout_expires_at: new Date(Date.now() + 30 * 60_000).toISOString() }).select("id").single();
   if (bookingError?.code === "23505") fail("Esse horário acabou de ser reservado. Escolha outro.");
   if (bookingError || !booking) fail("Não foi possível reservar o horário.");
-  const { data: payment, error: paymentError } = await db.from("marketplace_payments").insert({ booking_id: booking.id, professional_account_id: profile.professional_account_id, status: "pending", gross_amount_cents: gross, platform_fee_cents: platformFee, provider_net_cents: providerNet, platform_fee_rate: rate, currency: service.currency }).select("id").single();
+  const { data: payment, error: paymentError } = await db.from("marketplace_payments").insert({ booking_id: booking.id, professional_account_id: profile.professional_account_id, status: "pending", gross_amount_cents: gross, platform_fee_cents: platformFee, provider_net_cents: providerNet, platform_fee_rate: rate, platform_fee_percent_at_transaction: feePercent, currency: service.currency }).select("id").single();
   if (paymentError || !payment) { await db.from("marketplace_bookings").delete().eq("id", booking.id); fail("Não foi possível preparar o pagamento."); }
   const secret = process.env["STRIPE_SECRET_KEY"];
   if (!secret) fail("Checkout indisponível.");

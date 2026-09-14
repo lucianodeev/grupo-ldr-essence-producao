@@ -24,8 +24,8 @@ export async function getCatalogServicesForProfessional(userId:string){
   const [{data:elig},{data:current},{data:config},{data:sub}]=await Promise.all([
     db.from("professional_service_eligibility").select("catalog_key,country_code,allowed_modalities,requires_admin_review,notes").eq("category_id",profile.category_id).eq("active",true),
     db.from("professional_services").select("id,catalog_key,name,modality,duration_minutes,currency,price_cents,public_location,booking_enabled,active,source_type,approval_status,requires_admin_review").eq("professional_profile_id",profile.id).order("sort_order"),
-    db.from("platform_financial_config").select("numeric_value").eq("config_key","platform_commission_rate").eq("active",true).maybeSingle(),
-    activeSubscription(account.id),
+    db.from("platform_financial_config").select("numeric_value").eq("config_key","platform_fee_percent").eq("active",true).maybeSingle(),
+    Promise.resolve(null),
   ]);
   const allowedRows=(elig??[]).filter((e:any)=>!e.country_code||e.country_code===profile.country_code);
   const keys=[...new Set(allowedRows.map((e:any)=>e.catalog_key))];
@@ -39,7 +39,7 @@ export async function getCatalogServicesForProfessional(userId:string){
     eligibility:eligibilityByKey.get(service.catalog_key)??null,
     selected:currentByKey.get(service.catalog_key)??null,
   }));
-  return {profile,account,subscription:sub??null,currency,commissionRate:Number(config?.numeric_value??0.10),options,current:current??[]};
+  return {profile,account,subscription:sub??null,currency,commissionRate:Number(config?.numeric_value??20)/100,options,current:current??[]};
 }
 
 export async function addCatalogServiceForProfessional(userId:string,input:{catalogKey:string;durationMinutes:number;modality:"online"|"in_person"|"both";publicLocation?:string|null}){
@@ -57,9 +57,8 @@ export async function addCatalogServiceForProfessional(userId:string,input:{cata
   if(input.modality==="in_person"&&!input.publicLocation?.trim())fail("Informe cidade/região ou local público para o atendimento presencial.");
   const requiresReview=Boolean(eligibility.requires_admin_review||catalog.is_clinical);
   const approvalStatus=requiresReview?"pending_review":"approved";
-  const subscription=await activeSubscription(account.id);
   const profileReady=profile.compliance_status==="approved"&&profile.profile_status==="active"&&profile.is_public;
-  const bookingEnabled=Boolean(subscription)&&profileReady&&!requiresReview&&Number(catalog.amount_cents)>0;
+  const bookingEnabled=profileReady&&!requiresReview&&Number(catalog.amount_cents)>0;
   const payload={
     professional_profile_id:profile.id,
     catalog_key:catalog.catalog_key,

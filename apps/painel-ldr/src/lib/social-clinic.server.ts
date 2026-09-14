@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import { getRequest } from "@tanstack/react-start/server";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { resolveAccess, writeAudit } from "@/lib/access.server";
+import { DEFAULT_PLATFORM_FEE_PERCENT } from "@/lib/platform-fee";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/integrations/supabase/types";
 
@@ -23,6 +24,10 @@ async function configNumber(key: string, fallback: number) {
   const n = Number(data?.numeric_value);
   return Number.isFinite(n) && n >= 0 ? n : fallback;
 }
+async function platformFeePercent() {
+  return configNumber("platform_fee_percent", DEFAULT_PLATFORM_FEE_PERCENT);
+}
+
 async function configText(key: string) {
   const { data } = await db.from("platform_financial_config").select("text_value").eq("config_key", key).eq("active", true).maybeSingle();
   return data?.text_value ? String(data.text_value) : null;
@@ -106,9 +111,9 @@ export async function getSocialClinicLanding() {
     reviews,
     pricing: { brlCents: Math.round(brlCents), eurCents: Math.round(eurCents) },
     commissions: {
-      social: await configNumber("commission_social_clinic", 0.07),
-      professionalDirect: await configNumber("commission_professional_direct", 0.10),
-      ldrGenerated: await configNumber("commission_ldr_generated", 0.15),
+      social: (await platformFeePercent()) / 100,
+      professionalDirect: (await platformFeePercent()) / 100,
+      ldrGenerated: (await platformFeePercent()) / 100,
     },
     stripe,
   };
@@ -159,14 +164,14 @@ export async function submitSocialClinicProfessional(input: ProfessionalInput) {
   const fullName = clean(input.fullName, 120);
   const email = clean(input.email, 180).toLowerCase();
   if (fullName.length < 3 || !email.includes("@") || !clean(input.phone, 50) || !clean(input.country, 80) || !clean(input.education, 500)) fail("Preencha os dados profissionais obrigatórios.");
-  if (!input.acceptsCommission || !input.privacyConsent) fail("É necessário aceitar a comissão social de 7% e a política de privacidade.");
+  if (!input.acceptsCommission || !input.privacyConsent) fail("É necessário aceitar a comissão única de 20% e a política de privacidade.");
   const protocol = `CSPRO-${new Date().getUTCFullYear()}-${randomUUID().replace(/-/g, "").slice(0, 8).toUpperCase()}`;
   const details = {
     protocol, status: "new", full_name: fullName, email, phone: clean(input.phone, 50), country: clean(input.country, 80), city: clean(input.city, 100) || null,
     languages: clean(input.languages, 200) || null, education: clean(input.education, 800), experience: clean(input.experience, 1200) || null,
     modalities: clean(input.modalities, 100) || null, availability: clean(input.availability, 500) || null,
     max_patients: Math.max(1, Math.min(50, Number(input.maxPatients || 5))), profile_slug: clean(input.profileSlug, 100) || null,
-    accepts_social_commission: true, commission_rate: 0.07, privacy_consent: true, consented_at: new Date().toISOString(),
+    accepts_social_commission: true, commission_rate: DEFAULT_PLATFORM_FEE_PERCENT / 100, privacy_consent: true, consented_at: new Date().toISOString(),
   };
   const { error } = await db.from("audit_logs").insert({ action: "social_clinic.professional_application_submitted", target: protocol, details, actor_email: email });
   if (error) throw error;
@@ -203,19 +208,18 @@ export async function updateSocialClinicStatus(supabase: Client, userId: string,
   return { ok: true as const };
 }
 
-export async function updateSocialClinicConfig(supabase: Client, userId: string, input: { brlCents: number; eurCents: number; socialPct: number; directPct: number; ldrPct: number }) {
+export async function updateSocialClinicConfig(supabase: Client, userId: string, input: { brlCents: number; eurCents: number; socialPct?: number; directPct?: number; ldrPct?: number }) {
   const actor = await requireSuperadmin(supabase, userId);
   const entries = [
-    ["social_clinic_brl_cents", Math.round(Number(input.brlCents))], ["social_clinic_eur_cents", Math.round(Number(input.eurCents))],
-    ["commission_social_clinic", Number(input.socialPct) / 100], ["commission_professional_direct", Number(input.directPct) / 100], ["commission_ldr_generated", Number(input.ldrPct) / 100],
+    ["social_clinic_brl_cents", Math.round(Number(input.brlCents))],
+    ["social_clinic_eur_cents", Math.round(Number(input.eurCents))],
   ] as const;
-  if (entries.some(([,v]) => !Number.isFinite(v) || v < 0)) fail("Configuração financeira inválida.");
-  if (input.brlCents < 100 || input.eurCents < 100 || input.socialPct > 50 || input.directPct > 50 || input.ldrPct > 50) fail("Valores fora do limite permitido.");
+  if (entries.some(([, value]) => !Number.isFinite(value) || value < 100)) fail("Valores sociais inválidos.");
   for (const [config_key, numeric_value] of entries) {
     const { data: existing } = await db.from("platform_financial_config").select("config_key").eq("config_key", config_key).maybeSingle();
-    if (existing) await db.from("platform_financial_config").update({ numeric_value, text_value: config_key.includes("commission") ? `${numeric_value * 100}%` : String(numeric_value), active: true }).eq("config_key", config_key);
-    else await db.from("platform_financial_config").insert({ config_key, numeric_value, text_value: config_key.includes("commission") ? `${numeric_value * 100}%` : String(numeric_value), active: true });
+    if (existing) await db.from("platform_financial_config").update({ numeric_value, text_value: String(numeric_value), active: true, updated_at: new Date().toISOString(), updated_by: userId }).eq("config_key", config_key);
+    else await db.from("platform_financial_config").insert({ config_key, numeric_value, text_value: String(numeric_value), active: true, updated_by: userId });
   }
-  await writeAudit({ actorId: userId, actorEmail: actor.email, action: "social_clinic.financial_config_updated", target: "social_clinic", details: { brl_cents: input.brlCents, eur_cents: input.eurCents, social_pct: input.socialPct, direct_pct: input.directPct, ldr_pct: input.ldrPct } });
+  await writeAudit({ actorId: userId, actorEmail: actor.email, action: "social_clinic.pricing_updated", target: "social_clinic", details: { brl_cents: input.brlCents, eur_cents: input.eurCents, platform_fee_percent: DEFAULT_PLATFORM_FEE_PERCENT } });
   return { ok: true as const };
 }

@@ -37,7 +37,7 @@ function academyCanonicalRedirect(request: Request): Response | null {
   const isAcademy = host === "ldracademy.online" || host === "www.ldracademy.online";
   const isServicePortal = host === "portal.ldrrhestrategia.com";
   const isLegacyLearnHost = host === "learn.lucianoconecta.online";
-  const isLegacyPanelHost = host === "painel.ldrrhestrategia.com" || host === "painel.lucianoconecta.online";
+  const isLegacyPanelHost = host === "painel.lucianoconecta.online";
 
   // The services portal shares the same deployment as the Academy, but it must
   // always carry an explicit services context before SSR. This prevents the
