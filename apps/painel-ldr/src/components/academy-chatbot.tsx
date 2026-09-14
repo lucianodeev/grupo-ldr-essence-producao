@@ -117,7 +117,7 @@ export function AcademyChatbot() {
         </div>
       )}
 
-      <div className="fixed z-[95]" style={{ bottom: academicNetwork ? "calc(9.75rem + env(safe-area-inset-bottom))" : "calc(1rem + env(safe-area-inset-bottom))", right: "calc(1rem + env(safe-area-inset-right))" }}>
+      <div className="fixed z-[95]" style={{ bottom: academicNetwork ? "calc(11rem + env(safe-area-inset-bottom))" : "calc(1rem + env(safe-area-inset-bottom))", right: "calc(1rem + env(safe-area-inset-right))" }}>
         {!open && teaser && !academicNetwork && (
           <div className="mb-3 ml-auto flex max-w-[18rem] items-start gap-2 rounded-2xl border border-[#d5bd78]/50 bg-white p-3 text-sm text-slate-800 shadow-2xl">
             <Bot className="mt-0.5 h-5 w-5 shrink-0 text-[#102a43]" aria-hidden="true" />
