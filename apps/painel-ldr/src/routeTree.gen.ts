@@ -188,6 +188,7 @@ import { Route as ClientareaClienteInteressePosCourseKeyRouteImport } from './ro
 import { Route as ClientareaClientePedidoOrderIdRouteImport } from './routes/_clientarea.cliente.pedido.$orderId'
 import { Route as ClientareaClientePsicanalistaAltaPerformanceKeyRouteImport } from './routes/_clientarea.cliente.psicanalista-alta-performance.$key'
 import { Route as ClientareaClienteRedeAcademicaBuscarRouteImport } from './routes/_clientarea.cliente.rede-academica.buscar'
+import { Route as ClientareaClienteRedeAcademicaChatRouteImport } from './routes/_clientarea.cliente.rede-academica.chat'
 import { Route as ClientareaClienteRedeAcademicaCriarRouteImport } from './routes/_clientarea.cliente.rede-academica.criar'
 import { Route as ClientareaClienteRedeAcademicaCriarArtigoRouteImport } from './routes/_clientarea.cliente.rede-academica.criar-artigo'
 import { Route as ClientareaClienteRedeAcademicaDesafiosRouteImport } from './routes/_clientarea.cliente.rede-academica.desafios'
@@ -1219,6 +1220,12 @@ const ClientareaClienteRedeAcademicaBuscarRoute =
     path: '/buscar',
     getParentRoute: () => ClientareaClienteRedeAcademicaRoute,
   } as any)
+const ClientareaClienteRedeAcademicaChatRoute =
+  ClientareaClienteRedeAcademicaChatRouteImport.update({
+    id: '/chat',
+    path: '/chat',
+    getParentRoute: () => ClientareaClienteRedeAcademicaRoute,
+  } as any)
 const ClientareaClienteRedeAcademicaCriarRoute =
   ClientareaClienteRedeAcademicaCriarRouteImport.update({
     id: '/criar',
@@ -1582,6 +1589,7 @@ export interface FileRoutesByFullPath {
   '/cliente/pedido/$orderId': typeof ClientareaClientePedidoOrderIdRoute
   '/cliente/psicanalista-alta-performance/$key': typeof ClientareaClientePsicanalistaAltaPerformanceKeyRoute
   '/cliente/rede-academica/buscar': typeof ClientareaClienteRedeAcademicaBuscarRoute
+  '/cliente/rede-academica/chat': typeof ClientareaClienteRedeAcademicaChatRoute
   '/cliente/rede-academica/criar': typeof ClientareaClienteRedeAcademicaCriarRoute
   '/cliente/rede-academica/criar-artigo': typeof ClientareaClienteRedeAcademicaCriarArtigoRoute
   '/cliente/rede-academica/desafios': typeof ClientareaClienteRedeAcademicaDesafiosRoute
@@ -1788,6 +1796,7 @@ export interface FileRoutesByTo {
   '/cliente/pedido/$orderId': typeof ClientareaClientePedidoOrderIdRoute
   '/cliente/psicanalista-alta-performance/$key': typeof ClientareaClientePsicanalistaAltaPerformanceKeyRoute
   '/cliente/rede-academica/buscar': typeof ClientareaClienteRedeAcademicaBuscarRoute
+  '/cliente/rede-academica/chat': typeof ClientareaClienteRedeAcademicaChatRoute
   '/cliente/rede-academica/criar': typeof ClientareaClienteRedeAcademicaCriarRoute
   '/cliente/rede-academica/criar-artigo': typeof ClientareaClienteRedeAcademicaCriarArtigoRoute
   '/cliente/rede-academica/desafios': typeof ClientareaClienteRedeAcademicaDesafiosRoute
@@ -2001,6 +2010,7 @@ export interface FileRoutesById {
   '/_clientarea/cliente/pedido/$orderId': typeof ClientareaClientePedidoOrderIdRoute
   '/_clientarea/cliente/psicanalista-alta-performance/$key': typeof ClientareaClientePsicanalistaAltaPerformanceKeyRoute
   '/_clientarea/cliente/rede-academica/buscar': typeof ClientareaClienteRedeAcademicaBuscarRoute
+  '/_clientarea/cliente/rede-academica/chat': typeof ClientareaClienteRedeAcademicaChatRoute
   '/_clientarea/cliente/rede-academica/criar': typeof ClientareaClienteRedeAcademicaCriarRoute
   '/_clientarea/cliente/rede-academica/criar-artigo': typeof ClientareaClienteRedeAcademicaCriarArtigoRoute
   '/_clientarea/cliente/rede-academica/desafios': typeof ClientareaClienteRedeAcademicaDesafiosRoute
@@ -2211,6 +2221,7 @@ export interface FileRouteTypes {
     | '/cliente/pedido/$orderId'
     | '/cliente/psicanalista-alta-performance/$key'
     | '/cliente/rede-academica/buscar'
+    | '/cliente/rede-academica/chat'
     | '/cliente/rede-academica/criar'
     | '/cliente/rede-academica/criar-artigo'
     | '/cliente/rede-academica/desafios'
@@ -2417,6 +2428,7 @@ export interface FileRouteTypes {
     | '/cliente/pedido/$orderId'
     | '/cliente/psicanalista-alta-performance/$key'
     | '/cliente/rede-academica/buscar'
+    | '/cliente/rede-academica/chat'
     | '/cliente/rede-academica/criar'
     | '/cliente/rede-academica/criar-artigo'
     | '/cliente/rede-academica/desafios'
@@ -2629,6 +2641,7 @@ export interface FileRouteTypes {
     | '/_clientarea/cliente/pedido/$orderId'
     | '/_clientarea/cliente/psicanalista-alta-performance/$key'
     | '/_clientarea/cliente/rede-academica/buscar'
+    | '/_clientarea/cliente/rede-academica/chat'
     | '/_clientarea/cliente/rede-academica/criar'
     | '/_clientarea/cliente/rede-academica/criar-artigo'
     | '/_clientarea/cliente/rede-academica/desafios'
@@ -3998,6 +4011,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClientareaClienteRedeAcademicaBuscarRouteImport
       parentRoute: typeof ClientareaClienteRedeAcademicaRoute
     }
+    '/_clientarea/cliente/rede-academica/chat': {
+      id: '/_clientarea/cliente/rede-academica/chat'
+      path: '/chat'
+      fullPath: '/cliente/rede-academica/chat'
+      preLoaderRoute: typeof ClientareaClienteRedeAcademicaChatRouteImport
+      parentRoute: typeof ClientareaClienteRedeAcademicaRoute
+    }
     '/_clientarea/cliente/rede-academica/criar': {
       id: '/_clientarea/cliente/rede-academica/criar'
       path: '/criar'
@@ -4476,6 +4496,7 @@ const ClientareaClientePsicanalistaAltaPerformanceRouteWithChildren =
 
 interface ClientareaClienteRedeAcademicaRouteChildren {
   ClientareaClienteRedeAcademicaBuscarRoute: typeof ClientareaClienteRedeAcademicaBuscarRoute
+  ClientareaClienteRedeAcademicaChatRoute: typeof ClientareaClienteRedeAcademicaChatRoute
   ClientareaClienteRedeAcademicaCriarRoute: typeof ClientareaClienteRedeAcademicaCriarRoute
   ClientareaClienteRedeAcademicaCriarArtigoRoute: typeof ClientareaClienteRedeAcademicaCriarArtigoRoute
   ClientareaClienteRedeAcademicaDesafiosRoute: typeof ClientareaClienteRedeAcademicaDesafiosRoute
@@ -4494,6 +4515,8 @@ const ClientareaClienteRedeAcademicaRouteChildren: ClientareaClienteRedeAcademic
   {
     ClientareaClienteRedeAcademicaBuscarRoute:
       ClientareaClienteRedeAcademicaBuscarRoute,
+    ClientareaClienteRedeAcademicaChatRoute:
+      ClientareaClienteRedeAcademicaChatRoute,
     ClientareaClienteRedeAcademicaCriarRoute:
       ClientareaClienteRedeAcademicaCriarRoute,
     ClientareaClienteRedeAcademicaCriarArtigoRoute:

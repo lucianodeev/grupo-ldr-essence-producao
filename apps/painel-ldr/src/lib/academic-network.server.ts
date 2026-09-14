@@ -6,8 +6,8 @@ const TRIAL_DAYS = 7;
 const ACTIVE_SUBSCRIPTION = new Set(["active", "trialing"]);
 
 type Access = { premium:boolean; trialActive:boolean; trialEndsAt:string|null; subscriptionActive:boolean; isAdmin:boolean };
-type PostType = "reflection"|"question"|"debate"|"study"|"recommendation"|"photo";
-const POST_TYPES = new Set<PostType>(["reflection","question","debate","study","recommendation","photo"]);
+type PostType = "reflection"|"question"|"debate"|"study"|"recommendation"|"photo"|"share";
+const POST_TYPES = new Set<PostType>(["reflection","question","debate","study","recommendation","photo","share"]);
 const REPORT_REASONS = new Set(["offensive","harassment","hate","privacy","spam","inappropriate","other"]);
 function fail(message:string):never{ throw new Error(message); }
 function clean(value:unknown,max:number){ return String(value??"").trim().slice(0,max); }
@@ -107,7 +107,7 @@ export async function getAcademicNetwork(userId:string,email:string|null,opts?:{
     db.from("academic_articles").select("id,slug,title,summary,category,created_at").eq("status","active").order("created_at",{ascending:false}).limit(20)
   ]);
   const savedIds=new Set((saved??[]).map((x:any)=>x.post_id)); const followedIds=new Set((follows??[]).map((x:any)=>x.followed_user_id)); const offset=Math.max(0,Number(opts?.offset??0)); const pageSize=access.premium?20:8;
-  let q=db.from("academic_posts").select("id,user_id,community_id,body,post_type,anonymous,status,is_pinned,location_label,location_city,location_country,share_slug,created_at,updated_at").eq("status","active").order("is_pinned",{ascending:false}).order("created_at",{ascending:false}).range(offset,offset+pageSize);
+  let q=db.from("academic_posts").select("id,user_id,community_id,body,post_type,anonymous,status,is_pinned,location_label,location_city,location_country,share_slug,original_post_id,share_comment,created_at,updated_at").eq("status","active").order("is_pinned",{ascending:false}).order("created_at",{ascending:false}).range(offset,offset+pageSize);
   if(opts?.communityId)q=q.eq("community_id",opts.communityId);
   if(opts?.search)q=q.ilike("body",`%${clean(opts.search,100)}%`);
   const {data:rawPosts}=await q;
@@ -119,17 +119,28 @@ export async function getAcademicNetwork(userId:string,email:string|null,opts?:{
   const avatarPaths=[...authors.values()].map((x:any)=>x.academic?.avatar_path).filter(Boolean); const avatarUrls=await signedUrlMap(avatarPaths); for(const x of authors.values())if(x.academic?.avatar_path)x.academic.avatarUrl=avatarUrls.get(x.academic.avatar_path)??null;
   const [{data:reactionRows},{data:mediaRows},{data:topicLinks}]=postIds.length?await Promise.all([
     db.from("academic_reactions").select("post_id").in("post_id",postIds).eq("reaction_type","support"),
-    db.from("academic_post_media").select("id,post_id,storage_path,alt_text,mime_type,sort_order").in("post_id",postIds).order("sort_order"),
+    db.from("academic_post_media").select("id,post_id,storage_path,alt_text,mime_type,file_name,sort_order").in("post_id",postIds).order("sort_order"),
     db.from("academic_post_topics").select("post_id,topic_id").in("post_id",postIds)
   ]):[{data:[]},{data:[]},{data:[]}];
   const mediaUrls=await signedUrlMap((mediaRows??[]).map((x:any)=>x.storage_path));
   const topicIds=[...new Set((topicLinks??[]).map((x:any)=>x.topic_id))]; const {data:topicRows}=topicIds.length?await db.from("academic_topics").select("id,slug,label").in("id",topicIds):{data:[]}; const topicMap=new Map((topicRows??[]).map((x:any)=>[x.id,x]));
-  const mediaBy=new Map<string,any[]>(); for(const m of mediaRows??[]){const a=mediaBy.get(m.post_id)??[];a.push({id:m.id,url:mediaUrls.get(m.storage_path)??null,altText:m.alt_text,mimeType:m.mime_type});mediaBy.set(m.post_id,a)}
+  const mediaBy=new Map<string,any[]>(); for(const m of mediaRows??[]){const a=mediaBy.get(m.post_id)??[];a.push({id:m.id,url:mediaUrls.get(m.storage_path)??null,altText:m.alt_text,mimeType:m.mime_type,fileName:m.file_name});mediaBy.set(m.post_id,a)}
   const topicsBy=new Map<string,any[]>(); for(const l of topicLinks??[]){const t=topicMap.get(l.topic_id);if(t){const a=topicsBy.get(l.post_id)??[];a.push(t);topicsBy.set(l.post_id,a)}}
   const counts=new Map<string,number>(); for(const r of reactionRows??[])counts.set(r.post_id,(counts.get(r.post_id)??0)+1);
   const commentsBy=new Map<string,any[]>();
   for(const c of rawComments??[]){ const arr=commentsBy.get(c.post_id)??[]; arr.push({...c,user_id:undefined,own:c.user_id===userId,author:safeAuthor(authors.get(c.user_id),c.anonymous)}); commentsBy.set(c.post_id,arr); }
   posts=posts.map((p:any)=>({...p,user_id:undefined,author:safeAuthor(authors.get(p.user_id),p.anonymous),comments:commentsBy.get(p.id)??[],media:mediaBy.get(p.id)??[],topics:topicsBy.get(p.id)??[],saved:savedIds.has(p.id),supported:(reacted??[]).some((r:any)=>r.post_id===p.id),supportCount:counts.get(p.id)??0,own:p.user_id===userId,followedAuthor:followedIds.has(p.user_id),memberCommunity:Boolean(p.community_id&&(memberships??[]).some((m:any)=>m.community_id===p.community_id))}));
+  const originalIds=[...new Set(posts.map((x:any)=>x.original_post_id).filter(Boolean))];
+  const originalMap=new Map<string,any>();
+  if(originalIds.length){
+    const {data:originalRows}=await db.from("academic_posts").select("id,user_id,body,post_type,anonymous,status,location_label,created_at").in("id",originalIds).eq("status","active");
+    const originalAuthors=await authorMap((originalRows??[]).map((x:any)=>x.user_id));
+    const originalAvatarPaths=[...originalAuthors.values()].map((x:any)=>x.academic?.avatar_path).filter(Boolean);const originalAvatarUrls=await signedUrlMap(originalAvatarPaths);for(const x of originalAuthors.values())if(x.academic?.avatar_path)x.academic.avatarUrl=originalAvatarUrls.get(x.academic.avatar_path)??null;
+    const {data:originalMedia}=await db.from("academic_post_media").select("id,post_id,storage_path,alt_text,mime_type,file_name,sort_order").in("post_id",originalIds).order("sort_order");
+    const originalMediaUrls=await signedUrlMap((originalMedia??[]).map((x:any)=>x.storage_path));const originalMediaBy=new Map<string,any[]>();for(const m of originalMedia??[]){const a=originalMediaBy.get(m.post_id)??[];a.push({id:m.id,url:originalMediaUrls.get(m.storage_path)??null,altText:m.alt_text,mimeType:m.mime_type,fileName:m.file_name});originalMediaBy.set(m.post_id,a)}
+    for(const op of originalRows??[])originalMap.set(op.id,{...op,user_id:undefined,author:safeAuthor(originalAuthors.get(op.user_id),op.anonymous),media:originalMediaBy.get(op.id)??[]});
+  }
+  posts=posts.map((x:any)=>({...x,originalPost:x.original_post_id?(originalMap.get(x.original_post_id)??null):null}));
   const connectionsSafe=(connections??[]).map((c:any)=>{const other=c.requester_user_id===userId?c.receiver_user_id:c.requester_user_id;return {id:c.id,status:c.status,direction:c.requester_user_id===userId?"outgoing":"incoming",profile:safeAuthor(authors.get(other),false),created_at:c.created_at};});
   const promptList=prompts??[]; const prompt=promptList.length?promptList[Math.floor(new Date().getDate()%promptList.length)]:null;
   let directoryQuery=db.from("academic_profiles").select("id,user_id,bio,profession,country,city,interests,display_role,show_name,show_location").neq("user_id",userId).limit(access.premium?24:6);
@@ -147,8 +158,8 @@ export async function saveDiaryEntry(userId:string,input:{id?:string;body:string
 }
 export async function deleteDiaryEntry(userId:string,id:string){ await db.from("academic_diary_entries").delete().eq("id",id).eq("user_id",userId); return {ok:true}; }
 
-export async function createAcademicPost(userId:string,input:{body:string;postType:PostType;anonymous:boolean;communityId?:string|null;locationLabel?:string;locationCity?:string;locationCountry?:string;topics?:string[]}){
-  await requirePremium(userId); await rateLimit(userId,"academic_posts",15); const body=clean(input.body,12000); if(!body)fail("Escreva algo antes de publicar."); if(!POST_TYPES.has(input.postType))fail("Tipo inválido.");
+export async function createAcademicPost(userId:string,input:{body:string;postType:PostType;anonymous:boolean;communityId?:string|null;locationLabel?:string;locationCity?:string;locationCountry?:string;topics?:string[];hasAttachment?:boolean}){
+  await requirePremium(userId); await rateLimit(userId,"academic_posts",15); const body=clean(input.body,12000); if(!body&&!input.hasAttachment)fail("Escreva algo ou anexe um arquivo antes de publicar."); if(!POST_TYPES.has(input.postType)||input.postType==="share")fail("Tipo inválido.");
   const {data,error}=await db.from("academic_posts").insert({user_id:userId,body,post_type:input.postType,anonymous:Boolean(input.anonymous),community_id:input.communityId||null,location_label:clean(input.locationLabel,160)||null,location_city:clean(input.locationCity,80)||null,location_country:clean(input.locationCountry,80)||null}).select("id").single(); if(error)fail("Não foi possível publicar.");
   const normalized=[...new Set((input.topics??[]).map(x=>topicSlug(clean(x,60))).filter(Boolean))].slice(0,8); if(normalized.length){const labels=new Map((input.topics??[]).map(x=>[topicSlug(clean(x,60)),clean(x.replace(/^#+/,""),60)]));await db.from("academic_topics").upsert(normalized.map(slug=>({slug,label:labels.get(slug)||slug})),{onConflict:"slug",ignoreDuplicates:true});const {data:topics}=await db.from("academic_topics").select("id,slug").in("slug",normalized);if(topics?.length)await db.from("academic_post_topics").insert(topics.map((t:any)=>({post_id:data.id,topic_id:t.id})));}
   await createMentions(userId,body,{postId:data.id},Boolean(input.anonymous)); return data;
@@ -177,6 +188,15 @@ export async function shareAcademicPost(userId:string,input:{postId:string;targe
   await queueInAppNotification(target.user_id,userId,"Publicação compartilhada",`${actor.name||"Uma conexão"} compartilhou uma publicação com você.`,{kind:"shared_post",postId:input.postId,post_id:input.postId,actorUsername:actor.username});
   return {ok:true};
 }
+export async function repostAcademicPost(userId:string,input:{postId:string;comment?:string}){
+  await requirePremium(userId);await rateLimit(userId,"academic_posts",8);
+  const {data:source}=await db.from("academic_posts").select("id,user_id,original_post_id,status").eq("id",input.postId).eq("status","active").maybeSingle();if(!source)fail("Publicação não encontrada.");
+  const originalId=source.original_post_id||source.id;const comment=clean(input.comment,2000);
+  const {data,error}=await db.from("academic_posts").insert({user_id:userId,body:comment,share_comment:comment||null,post_type:"share",anonymous:false,original_post_id:originalId,status:"active"}).select("id").single();if(error||!data)fail("Não foi possível compartilhar no seu perfil.");
+  const {data:original}=await db.from("academic_posts").select("user_id").eq("id",originalId).maybeSingle();if(original?.user_id)await queueInAppNotification(original.user_id,userId,"Sua publicação foi compartilhada","Uma conexão compartilhou sua publicação no próprio perfil.",{kind:"repost",postId:data.id,post_id:data.id,original_post_id:originalId});
+  return data;
+}
+
 export async function toggleAcademicMembership(userId:string,communityId:string){ await requirePremium(userId); const {data}=await db.from("academic_community_members").select("community_id").eq("user_id",userId).eq("community_id",communityId).maybeSingle(); if(data)await db.from("academic_community_members").delete().eq("user_id",userId).eq("community_id",communityId); else await db.from("academic_community_members").insert({user_id:userId,community_id:communityId}); return {joined:!data}; }
 
 export async function updateAcademicProfile(userId:string,input:{bio?:string;profession?:string;country?:string;city?:string;interests?:string[];showName?:boolean;showLocation?:boolean}){
