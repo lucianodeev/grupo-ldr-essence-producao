@@ -1,0 +1,44 @@
+name: one-time-add-eight-contemporary-ebooks
+
+on:
+  push:
+    branches:
+      - codex/add-eight-ebooks-20260914
+    paths:
+      - scripts/apply-eight-contemporary-ebooks.py
+      - .github/workflows/one-time-add-eight-contemporary-ebooks.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: codex/add-eight-ebooks-20260914
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+      - name: Apply scoped ebook patch
+        run: python scripts/apply-eight-contemporary-ebooks.py
+      - name: Validate patch formatting
+        run: git diff --check
+      - name: Install app dependencies
+        run: npm ci
+      - name: Build Academy app
+        run: npm run build:painel
+      - name: Commit validated changes
+        run: |
+          if git diff --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/painel-ldr
+          git commit -m "feat: add eight contemporary Academy ebooks"
+          git push origin HEAD:codex/add-eight-ebooks-20260914
