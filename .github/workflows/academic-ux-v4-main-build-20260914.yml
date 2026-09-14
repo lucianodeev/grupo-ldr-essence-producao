@@ -1,0 +1,54 @@
+name: Academic Network UX V4 Main Build 2026-09-14
+on:
+  push:
+    branches: [feature/rede-academica-ux-v4-main-20260914]
+    paths:
+      - 'apps/painel-ldr/**'
+      - 'tools/patch_academic_ux_v4_20260914.py'
+      - '.github/workflows/academic-ux-v4-main-build-20260914.yml'
+  workflow_dispatch:
+concurrency:
+  group: academic-ux-v4-main-${{ github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Apply responsive UX V4 patch
+        run: python tools/patch_academic_ux_v4_20260914.py
+      - name: Verify patch idempotence
+        run: |
+          git diff --binary -- apps/painel-ldr/src/routes/_clientarea.cliente.rede-academica.tsx apps/painel-ldr/src/components/academic-social-v3-feed.tsx > /tmp/v4-first.patch
+          python tools/patch_academic_ux_v4_20260914.py
+          git diff --binary -- apps/painel-ldr/src/routes/_clientarea.cliente.rede-academica.tsx apps/painel-ldr/src/components/academic-social-v3-feed.tsx > /tmp/v4-second.patch
+          cmp /tmp/v4-first.patch /tmp/v4-second.patch
+      - name: Install dependencies
+        working-directory: apps/painel-ldr
+        run: npm ci --no-audit --no-fund
+      - name: Build Academy
+        working-directory: apps/painel-ldr
+        run: npm run build
+      - name: Persist validated UX V4 integration
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.rede-academica.tsx apps/painel-ldr/src/components/academic-social-v3-feed.tsx apps/painel-ldr/src/styles/academic-network-v4.css
+          if ! git diff --cached --quiet; then
+            git commit -m "style(academy): finalize responsive Academic Network UX V4"
+            git push origin HEAD:${{ github.ref_name }}
+          fi
+      - name: Confirm committed integration is stable
+        run: |
+          python tools/patch_academic_ux_v4_20260914.py
+          git diff --exit-code -- apps/painel-ldr/src/routes/_clientarea.cliente.rede-academica.tsx apps/painel-ldr/src/components/academic-social-v3-feed.tsx apps/painel-ldr/src/styles/academic-network-v4.css
