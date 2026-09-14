@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BookOpen, CheckCircle2 } from "lucide-react";
 
-export const Route=createFileRoute("/livros/$slug")({component:Page});
+export const Route=createFileRoute("/livros_/$slug")({component:Page});
 
 function Page(){
   const {slug}=Route.useParams();

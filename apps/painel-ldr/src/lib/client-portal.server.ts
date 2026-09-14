@@ -974,7 +974,7 @@ export async function getClientContractCatalog(userId: string, email: string | n
 // ---------------------------------------------------------------- biblioteca digital
 
 export type ClientLibraryProduct = {
-  key: "ebook_coragem_comecar" | "livro_menino_mamao" | "ebook_pratica_clinica_psicanalise" | "ebook_psicanalise_no_mundo" | "ebook_estudos_caso_psicanalise" | "ebook_psicanalise_autismo";
+  key: "ebook_coragem_comecar" | "livro_menino_mamao" | "ebook_pratica_clinica_psicanalise" | "ebook_psicanalise_no_mundo" | "ebook_estudos_caso_psicanalise" | "ebook_psicanalise_autismo" | "ebook_psicologia_psicanalise_terapias" | "ebook_jornalismo_era_digital" | "ebook_corpo_trabalho_escuta" | "ebook_comportamento_humano" | "ebook_estetica_bem_estar" | "ebook_tricologia_cuidado" | "ebook_ia_novos_milionarios" | "ebook_imigracao_efeitos_psicologicos";
   title: string;
   description: string;
   priceBrlCents: number;
@@ -1005,6 +1005,14 @@ const DIGITAL_LIBRARY_PRODUCTS: Omit<ClientLibraryProduct, "entitled">[] = [
   { key:"ebook_psicanalise_no_mundo", title:"A Psicanálise no Mundo", description:"Panorama global, regulamentação e atuação internacional em perspectiva comparada.", priceBrlCents:2000, priceEurCents:399, purchaseUrl:"/ebook-psicanalise-no-mundo" },
   { key:"ebook_estudos_caso_psicanalise", title:"Estudos de Caso", description:"Casos ficcionais ou compostos sobre vínculos, desejo, trabalho e impasses contemporâneos.", priceBrlCents:2000, priceEurCents:399, purchaseUrl:"/ebook-estudos-caso-psicanalise" },
   { key:"ebook_psicanalise_autismo", title:"Psicanálise e Autismo", description:"Escuta, manejo, neurodiversidade e debate crítico com a ABA.", priceBrlCents:2000, priceEurCents:399, purchaseUrl:"/ebook-psicanalise-autismo" },
+  { key:"ebook_psicologia_psicanalise_terapias", title:'Psicologia, Psicanálise e Terapias Integrativas', description:'Diálogos, Diferenças e Possibilidades', priceBrlCents:2000, priceEurCents:399, purchaseUrl:"/ebooks/psicologia-psicanalise-terapias-integrativas" },
+  { key:"ebook_jornalismo_era_digital", title:'Jornalismo na Era Digital', description:'Informação, Sociedade e Novas Tecnologias', priceBrlCents:2000, priceEurCents:399, purchaseUrl:"/ebooks/jornalismo-era-digital" },
+  { key:"ebook_corpo_trabalho_escuta", title:'Corpo, Trabalho e Escuta', description:'Massagem e Psicanálise no Bem-Estar do Trabalhador', priceBrlCents:2000, priceEurCents:399, purchaseUrl:"/ebooks/corpo-trabalho-escuta" },
+  { key:"ebook_comportamento_humano", title:'Como Mudar o Comportamento Humano', description:'Hábitos, Ambiente e Processos de Mudança', priceBrlCents:2000, priceEurCents:399, purchaseUrl:"/ebooks/comportamento-humano" },
+  { key:"ebook_estetica_bem_estar", title:'Estética Aplicada ao Bem-Estar', description:'Práticas, Experiência e Cuidado', priceBrlCents:2000, priceEurCents:399, purchaseUrl:"/ebooks/estetica-bem-estar" },
+  { key:"ebook_tricologia_cuidado", title:'Tricologia Capilar Aplicada ao Cuidado', description:'Prática, Acompanhamento e Resultados', priceBrlCents:2000, priceEurCents:399, purchaseUrl:"/ebooks/tricologia-cuidado" },
+  { key:"ebook_ia_novos_milionarios", title:'Como a Inteligência Artificial Pode Criar Novos Milionários', description:'Oportunidades, Negócios e Profissões na Nova Economia da IA', priceBrlCents:2000, priceEurCents:399, purchaseUrl:"/ebooks/ia-novos-milionarios" },
+  { key:"ebook_imigracao_efeitos_psicologicos", title:'Entre Dois Mundos', description:'Imigração e os Efeitos Psicológicos da Experiência Migratória', priceBrlCents:2000, priceEurCents:399, purchaseUrl:"/ebooks/imigracao-efeitos-psicologicos" },
 ];
 
 /**
@@ -1041,6 +1049,15 @@ export async function getClientDigitalLibrary(userId: string, email: string | nu
     ebook_psicanalise_no_mundo:["ebook_psicanalise_no_mundo"],
     ebook_estudos_caso_psicanalise:["ebook_estudos_caso_psicanalise"],
     ebook_psicanalise_autismo:["ebook_psicanalise_autismo"],
+    ebook_psicologia_psicanalise_terapias:["ebook_psicologia_psicanalise_terapias"],
+    ebook_jornalismo_era_digital:["ebook_jornalismo_era_digital"],
+    ebook_corpo_trabalho_escuta:["ebook_corpo_trabalho_escuta"],
+    ebook_comportamento_humano:["ebook_comportamento_humano"],
+    ebook_estetica_bem_estar:["ebook_estetica_bem_estar"],
+    ebook_tricologia_cuidado:["ebook_tricologia_cuidado"],
+    ebook_ia_novos_milionarios:["ebook_ia_novos_milionarios"],
+    ebook_imigracao_efeitos_psicologicos:["ebook_imigracao_efeitos_psicologicos"],
+
   };
 
   return {
@@ -1052,7 +1069,7 @@ export async function getClientDigitalLibrary(userId: string, email: string | nu
   };
 }
 
-export type DigitalProductKey = "ebook_coragem_comecar" | "livro_menino_mamao" | "ebook_pratica_clinica_psicanalise" | "ebook_psicanalise_no_mundo" | "ebook_estudos_caso_psicanalise" | "ebook_psicanalise_autismo";
+export type DigitalProductKey = "ebook_coragem_comecar" | "livro_menino_mamao" | "ebook_pratica_clinica_psicanalise" | "ebook_psicanalise_no_mundo" | "ebook_estudos_caso_psicanalise" | "ebook_psicanalise_autismo" | "ebook_psicologia_psicanalise_terapias" | "ebook_jornalismo_era_digital" | "ebook_corpo_trabalho_escuta" | "ebook_comportamento_humano" | "ebook_estetica_bem_estar" | "ebook_tricologia_cuidado" | "ebook_ia_novos_milionarios" | "ebook_imigracao_efeitos_psicologicos";
 export type DigitalMarket = "BR" | "INTL";
 
 function logDigitalCheckout(
@@ -1096,6 +1113,14 @@ const DIGITAL_CHECKOUT_CONFIG: Record<
   ebook_psicanalise_no_mundo:{title:"A Psicanálise no Mundo",brlCents:2000,eurCents:399,brlPriceEnv:"STRIPE_EBOOK_WORLD_PRICE_BRL",eurPriceEnv:"STRIPE_EBOOK_WORLD_PRICE_EUR",dynamicPrice:true},
   ebook_estudos_caso_psicanalise:{title:"Estudos de Caso",brlCents:2000,eurCents:399,brlPriceEnv:"STRIPE_EBOOK_CASES_PRICE_BRL",eurPriceEnv:"STRIPE_EBOOK_CASES_PRICE_EUR",dynamicPrice:true},
   ebook_psicanalise_autismo:{title:"Psicanálise e Autismo",brlCents:2000,eurCents:399,brlPriceEnv:"STRIPE_EBOOK_AUTISM_PRICE_BRL",eurPriceEnv:"STRIPE_EBOOK_AUTISM_PRICE_EUR",dynamicPrice:true},
+  ebook_psicologia_psicanalise_terapias:{title:'Psicologia, Psicanálise e Terapias Integrativas',brlCents:2000,eurCents:399,brlPriceEnv:"STRIPE_EBOOK_COLLECTION_PRICE_BRL",eurPriceEnv:"STRIPE_EBOOK_COLLECTION_PRICE_EUR",dynamicPrice:true},
+  ebook_jornalismo_era_digital:{title:'Jornalismo na Era Digital',brlCents:2000,eurCents:399,brlPriceEnv:"STRIPE_EBOOK_COLLECTION_PRICE_BRL",eurPriceEnv:"STRIPE_EBOOK_COLLECTION_PRICE_EUR",dynamicPrice:true},
+  ebook_corpo_trabalho_escuta:{title:'Corpo, Trabalho e Escuta',brlCents:2000,eurCents:399,brlPriceEnv:"STRIPE_EBOOK_COLLECTION_PRICE_BRL",eurPriceEnv:"STRIPE_EBOOK_COLLECTION_PRICE_EUR",dynamicPrice:true},
+  ebook_comportamento_humano:{title:'Como Mudar o Comportamento Humano',brlCents:2000,eurCents:399,brlPriceEnv:"STRIPE_EBOOK_COLLECTION_PRICE_BRL",eurPriceEnv:"STRIPE_EBOOK_COLLECTION_PRICE_EUR",dynamicPrice:true},
+  ebook_estetica_bem_estar:{title:'Estética Aplicada ao Bem-Estar',brlCents:2000,eurCents:399,brlPriceEnv:"STRIPE_EBOOK_COLLECTION_PRICE_BRL",eurPriceEnv:"STRIPE_EBOOK_COLLECTION_PRICE_EUR",dynamicPrice:true},
+  ebook_tricologia_cuidado:{title:'Tricologia Capilar Aplicada ao Cuidado',brlCents:2000,eurCents:399,brlPriceEnv:"STRIPE_EBOOK_COLLECTION_PRICE_BRL",eurPriceEnv:"STRIPE_EBOOK_COLLECTION_PRICE_EUR",dynamicPrice:true},
+  ebook_ia_novos_milionarios:{title:'Como a Inteligência Artificial Pode Criar Novos Milionários',brlCents:2000,eurCents:399,brlPriceEnv:"STRIPE_EBOOK_COLLECTION_PRICE_BRL",eurPriceEnv:"STRIPE_EBOOK_COLLECTION_PRICE_EUR",dynamicPrice:true},
+  ebook_imigracao_efeitos_psicologicos:{title:'Entre Dois Mundos',brlCents:2000,eurCents:399,brlPriceEnv:"STRIPE_EBOOK_COLLECTION_PRICE_BRL",eurPriceEnv:"STRIPE_EBOOK_COLLECTION_PRICE_EUR",dynamicPrice:true},
 };
 
 function stripePriceFor(productKey: DigitalProductKey, market: DigitalMarket): string | null {

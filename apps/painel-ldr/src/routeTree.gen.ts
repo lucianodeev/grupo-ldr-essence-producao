@@ -40,6 +40,7 @@ import { Route as FormacaoPsicanaliseInternacionalRouteImport } from './routes/f
 import { Route as FormacaoRecrutamentoSelecaoRouteImport } from './routes/formacao-recrutamento-selecao'
 import { Route as FormacaoTerapiaBrevePsicanaliticaRouteImport } from './routes/formacao-terapia-breve-psicanalitica'
 import { Route as FormacaoTerapiasContemporaneasRouteImport } from './routes/formacao-terapias-contemporaneas'
+import { Route as FormacaoTricologiaTerapiaCapilarRouteImport } from './routes/formacao-tricologia-terapia-capilar'
 import { Route as FormacaoVendasNegociacaoRouteImport } from './routes/formacao-vendas-negociacao'
 import { Route as FormularioRouteImport } from './routes/formulario'
 import { Route as LivrosRouteImport } from './routes/livros'
@@ -78,10 +79,12 @@ import { Route as ClienteAtivarRouteImport } from './routes/cliente.ativar'
 import { Route as ClienteDefinirSenhaRouteImport } from './routes/cliente.definir-senha'
 import { Route as ClienteLoginRouteImport } from './routes/cliente.login'
 import { Route as ClinicaSocialProfissionaisRouteImport } from './routes/clinica-social_.profissionais'
+import { Route as EbooksSlugRouteImport } from './routes/ebooks.$slug'
 import { Route as EmpresaLoginRouteImport } from './routes/empresa.login'
 import { Route as FormacaoSlugRouteImport } from './routes/formacao.$slug'
 import { Route as FormacoesSlugRouteImport } from './routes/formacoes.$slug'
 import { Route as FuncionarioLoginRouteImport } from './routes/funcionario.login'
+import { Route as LivrosSlugRouteImport } from './routes/livros_.$slug'
 import { Route as ProfissionaisCategoryRouteImport } from './routes/profissionais.$category'
 import { Route as ProfissionalSlugRouteImport } from './routes/profissional.$slug'
 import { Route as ProfissionalLoginRouteImport } from './routes/profissional.login'
@@ -89,6 +92,7 @@ import { Route as RedeProfissionaisTermosRouteImport } from './routes/rede-profi
 import { Route as VendedorAcademiaRouteImport } from './routes/vendedor.academia'
 import { Route as VendedorApresentacaoRouteImport } from './routes/vendedor.apresentacao'
 import { Route as AuthenticatedAdminAcessosRouteImport } from './routes/_authenticated/admin.acessos'
+import { Route as AuthenticatedAdminAlunosMatriculasRouteImport } from './routes/_authenticated/admin.alunos-matriculas'
 import { Route as AuthenticatedAdminCatalogoRouteImport } from './routes/_authenticated/admin.catalogo'
 import { Route as AuthenticatedAdminClinicaSocialRouteImport } from './routes/_authenticated/admin.clinica-social'
 import { Route as AuthenticatedAdminEmpresasRouteImport } from './routes/_authenticated/admin.empresas'
@@ -122,6 +126,7 @@ import { Route as AuthenticatedPainelProfissionalAgendaRouteImport } from './rou
 import { Route as AuthenticatedPainelProfissionalCatalogoRouteImport } from './routes/_authenticated/painel-profissional.catalogo'
 import { Route as AuthenticatedPainelProfissionalClientesRouteImport } from './routes/_authenticated/painel-profissional.clientes'
 import { Route as AuthenticatedPainelProfissionalComentariosRouteImport } from './routes/_authenticated/painel-profissional.comentarios'
+import { Route as AuthenticatedPainelProfissionalConteudosCriadoresRouteImport } from './routes/_authenticated/painel-profissional.conteudos-criadores'
 import { Route as AuthenticatedPainelProfissionalDisponibilidadeRouteImport } from './routes/_authenticated/painel-profissional.disponibilidade'
 import { Route as AuthenticatedPainelProfissionalEmpresasRouteImport } from './routes/_authenticated/painel-profissional.empresas'
 import { Route as AuthenticatedPainelProfissionalEntregasRouteImport } from './routes/_authenticated/painel-profissional.entregas'
@@ -146,11 +151,13 @@ import { Route as ClientareaClienteBibliotecaRouteImport } from './routes/_clien
 import { Route as ClientareaClienteContratarRouteImport } from './routes/_clientarea.cliente.contratar'
 import { Route as ClientareaClienteEntregasRouteImport } from './routes/_clientarea.cliente.entregas'
 import { Route as ClientareaClienteMentoriaRouteImport } from './routes/_clientarea.cliente.mentoria'
+import { Route as ClientareaClienteMinhaBibliotecaPessoalRouteImport } from './routes/_clientarea.cliente.minha-biblioteca-pessoal'
 import { Route as ClientareaClienteOrientacaoProfissionalRouteImport } from './routes/_clientarea.cliente.orientacao-profissional'
 import { Route as ClientareaClienteOrientacaoPsicanaliticaRouteImport } from './routes/_clientarea.cliente.orientacao-psicanalitica'
 import { Route as ClientareaClientePedidosRouteImport } from './routes/_clientarea.cliente.pedidos'
 import { Route as ClientareaClientePerfilRouteImport } from './routes/_clientarea.cliente.perfil'
 import { Route as ClientareaClientePsicanalistaAltaPerformanceRouteImport } from './routes/_clientarea.cliente.psicanalista-alta-performance'
+import { Route as ClientareaClientePublicarRouteImport } from './routes/_clientarea.cliente.publicar'
 import { Route as ClientareaClienteSessoesRouteImport } from './routes/_clientarea.cliente.sessoes'
 import { Route as ClientareaClienteTreinamentosRouteImport } from './routes/_clientarea.cliente.treinamentos'
 import { Route as ApiAuthCallbackRouteImport } from './routes/api/auth/callback'
@@ -187,6 +194,7 @@ import { Route as ClientareaClienteTreinamentosNegocio24HorasRouteImport } from 
 import { Route as ClientareaClienteTreinamentosPsicanaliseRouteImport } from './routes/_clientarea.cliente.treinamentos.psicanalise'
 import { Route as ClientareaClienteTreinamentosPsicanaliseInternacionalRouteImport } from './routes/_clientarea.cliente.treinamentos.psicanalise-internacional'
 import { Route as ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRouteImport } from './routes/_clientarea.cliente.treinamentos.terapia-breve-psicanalitica'
+import { Route as ClientareaClienteTreinamentosTricologiaTerapiaCapilarRouteImport } from './routes/_clientarea.cliente.treinamentos.tricologia-terapia-capilar'
 import { Route as ClientareaClienteBibliotecaPublicacoesSlugRouteImport } from './routes/_clientarea.cliente.biblioteca.publicacoes.$slug'
 import { Route as ClientareaClienteCursosAcademySlugRouteImport } from './routes/_clientarea.cliente.cursos.academy.$slug'
 import { Route as ClientareaClienteTreinamentosCursoAvulsoSlugRouteImport } from './routes/_clientarea.cliente.treinamentos.curso-avulso.$slug'
@@ -359,6 +367,12 @@ const FormacaoTerapiasContemporaneasRoute =
   FormacaoTerapiasContemporaneasRouteImport.update({
     id: '/formacao-terapias-contemporaneas',
     path: '/formacao-terapias-contemporaneas',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const FormacaoTricologiaTerapiaCapilarRoute =
+  FormacaoTricologiaTerapiaCapilarRouteImport.update({
+    id: '/formacao-tricologia-terapia-capilar',
+    path: '/formacao-tricologia-terapia-capilar',
     getParentRoute: () => rootRouteImport,
   } as any)
 const FormacaoVendasNegociacaoRoute =
@@ -554,6 +568,11 @@ const ClinicaSocialProfissionaisRoute =
     path: '/clinica-social/profissionais',
     getParentRoute: () => rootRouteImport,
   } as any)
+const EbooksSlugRoute = EbooksSlugRouteImport.update({
+  id: '/ebooks/$slug',
+  path: '/ebooks/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EmpresaLoginRoute = EmpresaLoginRouteImport.update({
   id: '/empresa/login',
   path: '/empresa/login',
@@ -572,6 +591,11 @@ const FormacoesSlugRoute = FormacoesSlugRouteImport.update({
 const FuncionarioLoginRoute = FuncionarioLoginRouteImport.update({
   id: '/funcionario/login',
   path: '/funcionario/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LivrosSlugRoute = LivrosSlugRouteImport.update({
+  id: '/livros_/$slug',
+  path: '/livros/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProfissionaisCategoryRoute = ProfissionaisCategoryRouteImport.update({
@@ -608,6 +632,12 @@ const AuthenticatedAdminAcessosRoute =
   AuthenticatedAdminAcessosRouteImport.update({
     id: '/acessos',
     path: '/acessos',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminAlunosMatriculasRoute =
+  AuthenticatedAdminAlunosMatriculasRouteImport.update({
+    id: '/alunos-matriculas',
+    path: '/alunos-matriculas',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
 const AuthenticatedAdminCatalogoRoute =
@@ -806,6 +836,12 @@ const AuthenticatedPainelProfissionalComentariosRoute =
     path: '/comentarios',
     getParentRoute: () => AuthenticatedPainelProfissionalRoute,
   } as any)
+const AuthenticatedPainelProfissionalConteudosCriadoresRoute =
+  AuthenticatedPainelProfissionalConteudosCriadoresRouteImport.update({
+    id: '/conteudos-criadores',
+    path: '/conteudos-criadores',
+    getParentRoute: () => AuthenticatedPainelProfissionalRoute,
+  } as any)
 const AuthenticatedPainelProfissionalDisponibilidadeRoute =
   AuthenticatedPainelProfissionalDisponibilidadeRouteImport.update({
     id: '/disponibilidade',
@@ -950,6 +986,12 @@ const ClientareaClienteMentoriaRoute =
     path: '/mentoria',
     getParentRoute: () => ClientareaClienteRoute,
   } as any)
+const ClientareaClienteMinhaBibliotecaPessoalRoute =
+  ClientareaClienteMinhaBibliotecaPessoalRouteImport.update({
+    id: '/minha-biblioteca-pessoal',
+    path: '/minha-biblioteca-pessoal',
+    getParentRoute: () => ClientareaClienteRoute,
+  } as any)
 const ClientareaClienteOrientacaoProfissionalRoute =
   ClientareaClienteOrientacaoProfissionalRouteImport.update({
     id: '/orientacao-profissional',
@@ -977,6 +1019,12 @@ const ClientareaClientePsicanalistaAltaPerformanceRoute =
   ClientareaClientePsicanalistaAltaPerformanceRouteImport.update({
     id: '/psicanalista-alta-performance',
     path: '/psicanalista-alta-performance',
+    getParentRoute: () => ClientareaClienteRoute,
+  } as any)
+const ClientareaClientePublicarRoute =
+  ClientareaClientePublicarRouteImport.update({
+    id: '/publicar',
+    path: '/publicar',
     getParentRoute: () => ClientareaClienteRoute,
   } as any)
 const ClientareaClienteSessoesRoute =
@@ -1191,6 +1239,12 @@ const ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRoute =
     path: '/terapia-breve-psicanalitica',
     getParentRoute: () => ClientareaClienteTreinamentosRoute,
   } as any)
+const ClientareaClienteTreinamentosTricologiaTerapiaCapilarRoute =
+  ClientareaClienteTreinamentosTricologiaTerapiaCapilarRouteImport.update({
+    id: '/tricologia-terapia-capilar',
+    path: '/tricologia-terapia-capilar',
+    getParentRoute: () => ClientareaClienteTreinamentosRoute,
+  } as any)
 const ClientareaClienteBibliotecaPublicacoesSlugRoute =
   ClientareaClienteBibliotecaPublicacoesSlugRouteImport.update({
     id: '/$slug',
@@ -1263,6 +1317,7 @@ export interface FileRoutesByFullPath {
   '/formacao-recrutamento-selecao': typeof FormacaoRecrutamentoSelecaoRoute
   '/formacao-terapia-breve-psicanalitica': typeof FormacaoTerapiaBrevePsicanaliticaRoute
   '/formacao-terapias-contemporaneas': typeof FormacaoTerapiasContemporaneasRoute
+  '/formacao-tricologia-terapia-capilar': typeof FormacaoTricologiaTerapiaCapilarRoute
   '/formacao-vendas-negociacao': typeof FormacaoVendasNegociacaoRoute
   '/formulario': typeof FormularioRoute
   '/livros': typeof LivrosRoute
@@ -1300,10 +1355,12 @@ export interface FileRoutesByFullPath {
   '/cliente/definir-senha': typeof ClienteDefinirSenhaRoute
   '/cliente/login': typeof ClienteLoginRoute
   '/clinica-social/profissionais': typeof ClinicaSocialProfissionaisRoute
+  '/ebooks/$slug': typeof EbooksSlugRoute
   '/empresa/login': typeof EmpresaLoginRoute
   '/formacao/$slug': typeof FormacaoSlugRoute
   '/formacoes/$slug': typeof FormacoesSlugRoute
   '/funcionario/login': typeof FuncionarioLoginRoute
+  '/livros/$slug': typeof LivrosSlugRoute
   '/profissionais/$category': typeof ProfissionaisCategoryRoute
   '/profissional/$slug': typeof ProfissionalSlugRoute
   '/profissional/login': typeof ProfissionalLoginRoute
@@ -1311,6 +1368,7 @@ export interface FileRoutesByFullPath {
   '/vendedor/academia': typeof VendedorAcademiaRoute
   '/vendedor/apresentacao': typeof VendedorApresentacaoRoute
   '/admin/acessos': typeof AuthenticatedAdminAcessosRoute
+  '/admin/alunos-matriculas': typeof AuthenticatedAdminAlunosMatriculasRoute
   '/admin/catalogo': typeof AuthenticatedAdminCatalogoRoute
   '/admin/clinica-social': typeof AuthenticatedAdminClinicaSocialRoute
   '/admin/empresas': typeof AuthenticatedAdminEmpresasRoute
@@ -1343,6 +1401,7 @@ export interface FileRoutesByFullPath {
   '/painel-profissional/catalogo': typeof AuthenticatedPainelProfissionalCatalogoRoute
   '/painel-profissional/clientes': typeof AuthenticatedPainelProfissionalClientesRoute
   '/painel-profissional/comentarios': typeof AuthenticatedPainelProfissionalComentariosRoute
+  '/painel-profissional/conteudos-criadores': typeof AuthenticatedPainelProfissionalConteudosCriadoresRoute
   '/painel-profissional/disponibilidade': typeof AuthenticatedPainelProfissionalDisponibilidadeRoute
   '/painel-profissional/empresas': typeof AuthenticatedPainelProfissionalEmpresasRoute
   '/painel-profissional/entregas': typeof AuthenticatedPainelProfissionalEntregasRoute
@@ -1366,11 +1425,13 @@ export interface FileRoutesByFullPath {
   '/cliente/contratar': typeof ClientareaClienteContratarRoute
   '/cliente/entregas': typeof ClientareaClienteEntregasRoute
   '/cliente/mentoria': typeof ClientareaClienteMentoriaRoute
+  '/cliente/minha-biblioteca-pessoal': typeof ClientareaClienteMinhaBibliotecaPessoalRoute
   '/cliente/orientacao-profissional': typeof ClientareaClienteOrientacaoProfissionalRoute
   '/cliente/orientacao-psicanalitica': typeof ClientareaClienteOrientacaoPsicanaliticaRoute
   '/cliente/pedidos': typeof ClientareaClientePedidosRoute
   '/cliente/perfil': typeof ClientareaClientePerfilRoute
   '/cliente/psicanalista-alta-performance': typeof ClientareaClientePsicanalistaAltaPerformanceRouteWithChildren
+  '/cliente/publicar': typeof ClientareaClientePublicarRoute
   '/cliente/sessoes': typeof ClientareaClienteSessoesRoute
   '/cliente/treinamentos': typeof ClientareaClienteTreinamentosRouteWithChildren
   '/api/auth/callback': typeof ApiAuthCallbackRoute
@@ -1409,6 +1470,7 @@ export interface FileRoutesByFullPath {
   '/cliente/treinamentos/psicanalise': typeof ClientareaClienteTreinamentosPsicanaliseRouteWithChildren
   '/cliente/treinamentos/psicanalise-internacional': typeof ClientareaClienteTreinamentosPsicanaliseInternacionalRoute
   '/cliente/treinamentos/terapia-breve-psicanalitica': typeof ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRoute
+  '/cliente/treinamentos/tricologia-terapia-capilar': typeof ClientareaClienteTreinamentosTricologiaTerapiaCapilarRoute
   '/cliente/biblioteca/publicacoes/$slug': typeof ClientareaClienteBibliotecaPublicacoesSlugRoute
   '/cliente/cursos/academy/$slug': typeof ClientareaClienteCursosAcademySlugRoute
   '/cliente/treinamentos/curso-avulso/$slug': typeof ClientareaClienteTreinamentosCursoAvulsoSlugRoute
@@ -1446,6 +1508,7 @@ export interface FileRoutesByTo {
   '/formacao-recrutamento-selecao': typeof FormacaoRecrutamentoSelecaoRoute
   '/formacao-terapia-breve-psicanalitica': typeof FormacaoTerapiaBrevePsicanaliticaRoute
   '/formacao-terapias-contemporaneas': typeof FormacaoTerapiasContemporaneasRoute
+  '/formacao-tricologia-terapia-capilar': typeof FormacaoTricologiaTerapiaCapilarRoute
   '/formacao-vendas-negociacao': typeof FormacaoVendasNegociacaoRoute
   '/formulario': typeof FormularioRoute
   '/livros': typeof LivrosRoute
@@ -1481,10 +1544,12 @@ export interface FileRoutesByTo {
   '/cliente/definir-senha': typeof ClienteDefinirSenhaRoute
   '/cliente/login': typeof ClienteLoginRoute
   '/clinica-social/profissionais': typeof ClinicaSocialProfissionaisRoute
+  '/ebooks/$slug': typeof EbooksSlugRoute
   '/empresa/login': typeof EmpresaLoginRoute
   '/formacao/$slug': typeof FormacaoSlugRoute
   '/formacoes/$slug': typeof FormacoesSlugRoute
   '/funcionario/login': typeof FuncionarioLoginRoute
+  '/livros/$slug': typeof LivrosSlugRoute
   '/profissionais/$category': typeof ProfissionaisCategoryRoute
   '/profissional/$slug': typeof ProfissionalSlugRoute
   '/profissional/login': typeof ProfissionalLoginRoute
@@ -1492,6 +1557,7 @@ export interface FileRoutesByTo {
   '/vendedor/academia': typeof VendedorAcademiaRoute
   '/vendedor/apresentacao': typeof VendedorApresentacaoRoute
   '/admin/acessos': typeof AuthenticatedAdminAcessosRoute
+  '/admin/alunos-matriculas': typeof AuthenticatedAdminAlunosMatriculasRoute
   '/admin/catalogo': typeof AuthenticatedAdminCatalogoRoute
   '/admin/clinica-social': typeof AuthenticatedAdminClinicaSocialRoute
   '/admin/empresas': typeof AuthenticatedAdminEmpresasRoute
@@ -1524,6 +1590,7 @@ export interface FileRoutesByTo {
   '/painel-profissional/catalogo': typeof AuthenticatedPainelProfissionalCatalogoRoute
   '/painel-profissional/clientes': typeof AuthenticatedPainelProfissionalClientesRoute
   '/painel-profissional/comentarios': typeof AuthenticatedPainelProfissionalComentariosRoute
+  '/painel-profissional/conteudos-criadores': typeof AuthenticatedPainelProfissionalConteudosCriadoresRoute
   '/painel-profissional/disponibilidade': typeof AuthenticatedPainelProfissionalDisponibilidadeRoute
   '/painel-profissional/empresas': typeof AuthenticatedPainelProfissionalEmpresasRoute
   '/painel-profissional/entregas': typeof AuthenticatedPainelProfissionalEntregasRoute
@@ -1547,11 +1614,13 @@ export interface FileRoutesByTo {
   '/cliente/contratar': typeof ClientareaClienteContratarRoute
   '/cliente/entregas': typeof ClientareaClienteEntregasRoute
   '/cliente/mentoria': typeof ClientareaClienteMentoriaRoute
+  '/cliente/minha-biblioteca-pessoal': typeof ClientareaClienteMinhaBibliotecaPessoalRoute
   '/cliente/orientacao-profissional': typeof ClientareaClienteOrientacaoProfissionalRoute
   '/cliente/orientacao-psicanalitica': typeof ClientareaClienteOrientacaoPsicanaliticaRoute
   '/cliente/pedidos': typeof ClientareaClientePedidosRoute
   '/cliente/perfil': typeof ClientareaClientePerfilRoute
   '/cliente/psicanalista-alta-performance': typeof ClientareaClientePsicanalistaAltaPerformanceRouteWithChildren
+  '/cliente/publicar': typeof ClientareaClientePublicarRoute
   '/cliente/sessoes': typeof ClientareaClienteSessoesRoute
   '/cliente/treinamentos': typeof ClientareaClienteTreinamentosRouteWithChildren
   '/api/auth/callback': typeof ApiAuthCallbackRoute
@@ -1590,6 +1659,7 @@ export interface FileRoutesByTo {
   '/cliente/treinamentos/psicanalise': typeof ClientareaClienteTreinamentosPsicanaliseRouteWithChildren
   '/cliente/treinamentos/psicanalise-internacional': typeof ClientareaClienteTreinamentosPsicanaliseInternacionalRoute
   '/cliente/treinamentos/terapia-breve-psicanalitica': typeof ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRoute
+  '/cliente/treinamentos/tricologia-terapia-capilar': typeof ClientareaClienteTreinamentosTricologiaTerapiaCapilarRoute
   '/cliente/biblioteca/publicacoes/$slug': typeof ClientareaClienteBibliotecaPublicacoesSlugRoute
   '/cliente/cursos/academy/$slug': typeof ClientareaClienteCursosAcademySlugRoute
   '/cliente/treinamentos/curso-avulso/$slug': typeof ClientareaClienteTreinamentosCursoAvulsoSlugRoute
@@ -1631,6 +1701,7 @@ export interface FileRoutesById {
   '/formacao-recrutamento-selecao': typeof FormacaoRecrutamentoSelecaoRoute
   '/formacao-terapia-breve-psicanalitica': typeof FormacaoTerapiaBrevePsicanaliticaRoute
   '/formacao-terapias-contemporaneas': typeof FormacaoTerapiasContemporaneasRoute
+  '/formacao-tricologia-terapia-capilar': typeof FormacaoTricologiaTerapiaCapilarRoute
   '/formacao-vendas-negociacao': typeof FormacaoVendasNegociacaoRoute
   '/formulario': typeof FormularioRoute
   '/livros': typeof LivrosRoute
@@ -1669,10 +1740,12 @@ export interface FileRoutesById {
   '/cliente/definir-senha': typeof ClienteDefinirSenhaRoute
   '/cliente/login': typeof ClienteLoginRoute
   '/clinica-social_/profissionais': typeof ClinicaSocialProfissionaisRoute
+  '/ebooks/$slug': typeof EbooksSlugRoute
   '/empresa/login': typeof EmpresaLoginRoute
   '/formacao/$slug': typeof FormacaoSlugRoute
   '/formacoes/$slug': typeof FormacoesSlugRoute
   '/funcionario/login': typeof FuncionarioLoginRoute
+  '/livros_/$slug': typeof LivrosSlugRoute
   '/profissionais/$category': typeof ProfissionaisCategoryRoute
   '/profissional/$slug': typeof ProfissionalSlugRoute
   '/profissional/login': typeof ProfissionalLoginRoute
@@ -1680,6 +1753,7 @@ export interface FileRoutesById {
   '/vendedor/academia': typeof VendedorAcademiaRoute
   '/vendedor/apresentacao': typeof VendedorApresentacaoRoute
   '/_authenticated/admin/acessos': typeof AuthenticatedAdminAcessosRoute
+  '/_authenticated/admin/alunos-matriculas': typeof AuthenticatedAdminAlunosMatriculasRoute
   '/_authenticated/admin/catalogo': typeof AuthenticatedAdminCatalogoRoute
   '/_authenticated/admin/clinica-social': typeof AuthenticatedAdminClinicaSocialRoute
   '/_authenticated/admin/empresas': typeof AuthenticatedAdminEmpresasRoute
@@ -1712,6 +1786,7 @@ export interface FileRoutesById {
   '/_authenticated/painel-profissional/catalogo': typeof AuthenticatedPainelProfissionalCatalogoRoute
   '/_authenticated/painel-profissional/clientes': typeof AuthenticatedPainelProfissionalClientesRoute
   '/_authenticated/painel-profissional/comentarios': typeof AuthenticatedPainelProfissionalComentariosRoute
+  '/_authenticated/painel-profissional/conteudos-criadores': typeof AuthenticatedPainelProfissionalConteudosCriadoresRoute
   '/_authenticated/painel-profissional/disponibilidade': typeof AuthenticatedPainelProfissionalDisponibilidadeRoute
   '/_authenticated/painel-profissional/empresas': typeof AuthenticatedPainelProfissionalEmpresasRoute
   '/_authenticated/painel-profissional/entregas': typeof AuthenticatedPainelProfissionalEntregasRoute
@@ -1735,11 +1810,13 @@ export interface FileRoutesById {
   '/_clientarea/cliente/contratar': typeof ClientareaClienteContratarRoute
   '/_clientarea/cliente/entregas': typeof ClientareaClienteEntregasRoute
   '/_clientarea/cliente/mentoria': typeof ClientareaClienteMentoriaRoute
+  '/_clientarea/cliente/minha-biblioteca-pessoal': typeof ClientareaClienteMinhaBibliotecaPessoalRoute
   '/_clientarea/cliente/orientacao-profissional': typeof ClientareaClienteOrientacaoProfissionalRoute
   '/_clientarea/cliente/orientacao-psicanalitica': typeof ClientareaClienteOrientacaoPsicanaliticaRoute
   '/_clientarea/cliente/pedidos': typeof ClientareaClientePedidosRoute
   '/_clientarea/cliente/perfil': typeof ClientareaClientePerfilRoute
   '/_clientarea/cliente/psicanalista-alta-performance': typeof ClientareaClientePsicanalistaAltaPerformanceRouteWithChildren
+  '/_clientarea/cliente/publicar': typeof ClientareaClientePublicarRoute
   '/_clientarea/cliente/sessoes': typeof ClientareaClienteSessoesRoute
   '/_clientarea/cliente/treinamentos': typeof ClientareaClienteTreinamentosRouteWithChildren
   '/api/auth/callback': typeof ApiAuthCallbackRoute
@@ -1778,6 +1855,7 @@ export interface FileRoutesById {
   '/_clientarea/cliente/treinamentos/psicanalise': typeof ClientareaClienteTreinamentosPsicanaliseRouteWithChildren
   '/_clientarea/cliente/treinamentos/psicanalise-internacional': typeof ClientareaClienteTreinamentosPsicanaliseInternacionalRoute
   '/_clientarea/cliente/treinamentos/terapia-breve-psicanalitica': typeof ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRoute
+  '/_clientarea/cliente/treinamentos/tricologia-terapia-capilar': typeof ClientareaClienteTreinamentosTricologiaTerapiaCapilarRoute
   '/_clientarea/cliente/biblioteca/publicacoes/$slug': typeof ClientareaClienteBibliotecaPublicacoesSlugRoute
   '/_clientarea/cliente/cursos/academy/$slug': typeof ClientareaClienteCursosAcademySlugRoute
   '/_clientarea/cliente/treinamentos/curso-avulso/$slug': typeof ClientareaClienteTreinamentosCursoAvulsoSlugRoute
@@ -1817,6 +1895,7 @@ export interface FileRouteTypes {
     | '/formacao-recrutamento-selecao'
     | '/formacao-terapia-breve-psicanalitica'
     | '/formacao-terapias-contemporaneas'
+    | '/formacao-tricologia-terapia-capilar'
     | '/formacao-vendas-negociacao'
     | '/formulario'
     | '/livros'
@@ -1854,10 +1933,12 @@ export interface FileRouteTypes {
     | '/cliente/definir-senha'
     | '/cliente/login'
     | '/clinica-social/profissionais'
+    | '/ebooks/$slug'
     | '/empresa/login'
     | '/formacao/$slug'
     | '/formacoes/$slug'
     | '/funcionario/login'
+    | '/livros/$slug'
     | '/profissionais/$category'
     | '/profissional/$slug'
     | '/profissional/login'
@@ -1865,6 +1946,7 @@ export interface FileRouteTypes {
     | '/vendedor/academia'
     | '/vendedor/apresentacao'
     | '/admin/acessos'
+    | '/admin/alunos-matriculas'
     | '/admin/catalogo'
     | '/admin/clinica-social'
     | '/admin/empresas'
@@ -1897,6 +1979,7 @@ export interface FileRouteTypes {
     | '/painel-profissional/catalogo'
     | '/painel-profissional/clientes'
     | '/painel-profissional/comentarios'
+    | '/painel-profissional/conteudos-criadores'
     | '/painel-profissional/disponibilidade'
     | '/painel-profissional/empresas'
     | '/painel-profissional/entregas'
@@ -1920,11 +2003,13 @@ export interface FileRouteTypes {
     | '/cliente/contratar'
     | '/cliente/entregas'
     | '/cliente/mentoria'
+    | '/cliente/minha-biblioteca-pessoal'
     | '/cliente/orientacao-profissional'
     | '/cliente/orientacao-psicanalitica'
     | '/cliente/pedidos'
     | '/cliente/perfil'
     | '/cliente/psicanalista-alta-performance'
+    | '/cliente/publicar'
     | '/cliente/sessoes'
     | '/cliente/treinamentos'
     | '/api/auth/callback'
@@ -1963,6 +2048,7 @@ export interface FileRouteTypes {
     | '/cliente/treinamentos/psicanalise'
     | '/cliente/treinamentos/psicanalise-internacional'
     | '/cliente/treinamentos/terapia-breve-psicanalitica'
+    | '/cliente/treinamentos/tricologia-terapia-capilar'
     | '/cliente/biblioteca/publicacoes/$slug'
     | '/cliente/cursos/academy/$slug'
     | '/cliente/treinamentos/curso-avulso/$slug'
@@ -2000,6 +2086,7 @@ export interface FileRouteTypes {
     | '/formacao-recrutamento-selecao'
     | '/formacao-terapia-breve-psicanalitica'
     | '/formacao-terapias-contemporaneas'
+    | '/formacao-tricologia-terapia-capilar'
     | '/formacao-vendas-negociacao'
     | '/formulario'
     | '/livros'
@@ -2035,10 +2122,12 @@ export interface FileRouteTypes {
     | '/cliente/definir-senha'
     | '/cliente/login'
     | '/clinica-social/profissionais'
+    | '/ebooks/$slug'
     | '/empresa/login'
     | '/formacao/$slug'
     | '/formacoes/$slug'
     | '/funcionario/login'
+    | '/livros/$slug'
     | '/profissionais/$category'
     | '/profissional/$slug'
     | '/profissional/login'
@@ -2046,6 +2135,7 @@ export interface FileRouteTypes {
     | '/vendedor/academia'
     | '/vendedor/apresentacao'
     | '/admin/acessos'
+    | '/admin/alunos-matriculas'
     | '/admin/catalogo'
     | '/admin/clinica-social'
     | '/admin/empresas'
@@ -2078,6 +2168,7 @@ export interface FileRouteTypes {
     | '/painel-profissional/catalogo'
     | '/painel-profissional/clientes'
     | '/painel-profissional/comentarios'
+    | '/painel-profissional/conteudos-criadores'
     | '/painel-profissional/disponibilidade'
     | '/painel-profissional/empresas'
     | '/painel-profissional/entregas'
@@ -2101,11 +2192,13 @@ export interface FileRouteTypes {
     | '/cliente/contratar'
     | '/cliente/entregas'
     | '/cliente/mentoria'
+    | '/cliente/minha-biblioteca-pessoal'
     | '/cliente/orientacao-profissional'
     | '/cliente/orientacao-psicanalitica'
     | '/cliente/pedidos'
     | '/cliente/perfil'
     | '/cliente/psicanalista-alta-performance'
+    | '/cliente/publicar'
     | '/cliente/sessoes'
     | '/cliente/treinamentos'
     | '/api/auth/callback'
@@ -2144,6 +2237,7 @@ export interface FileRouteTypes {
     | '/cliente/treinamentos/psicanalise'
     | '/cliente/treinamentos/psicanalise-internacional'
     | '/cliente/treinamentos/terapia-breve-psicanalitica'
+    | '/cliente/treinamentos/tricologia-terapia-capilar'
     | '/cliente/biblioteca/publicacoes/$slug'
     | '/cliente/cursos/academy/$slug'
     | '/cliente/treinamentos/curso-avulso/$slug'
@@ -2184,6 +2278,7 @@ export interface FileRouteTypes {
     | '/formacao-recrutamento-selecao'
     | '/formacao-terapia-breve-psicanalitica'
     | '/formacao-terapias-contemporaneas'
+    | '/formacao-tricologia-terapia-capilar'
     | '/formacao-vendas-negociacao'
     | '/formulario'
     | '/livros'
@@ -2222,10 +2317,12 @@ export interface FileRouteTypes {
     | '/cliente/definir-senha'
     | '/cliente/login'
     | '/clinica-social_/profissionais'
+    | '/ebooks/$slug'
     | '/empresa/login'
     | '/formacao/$slug'
     | '/formacoes/$slug'
     | '/funcionario/login'
+    | '/livros_/$slug'
     | '/profissionais/$category'
     | '/profissional/$slug'
     | '/profissional/login'
@@ -2233,6 +2330,7 @@ export interface FileRouteTypes {
     | '/vendedor/academia'
     | '/vendedor/apresentacao'
     | '/_authenticated/admin/acessos'
+    | '/_authenticated/admin/alunos-matriculas'
     | '/_authenticated/admin/catalogo'
     | '/_authenticated/admin/clinica-social'
     | '/_authenticated/admin/empresas'
@@ -2265,6 +2363,7 @@ export interface FileRouteTypes {
     | '/_authenticated/painel-profissional/catalogo'
     | '/_authenticated/painel-profissional/clientes'
     | '/_authenticated/painel-profissional/comentarios'
+    | '/_authenticated/painel-profissional/conteudos-criadores'
     | '/_authenticated/painel-profissional/disponibilidade'
     | '/_authenticated/painel-profissional/empresas'
     | '/_authenticated/painel-profissional/entregas'
@@ -2288,11 +2387,13 @@ export interface FileRouteTypes {
     | '/_clientarea/cliente/contratar'
     | '/_clientarea/cliente/entregas'
     | '/_clientarea/cliente/mentoria'
+    | '/_clientarea/cliente/minha-biblioteca-pessoal'
     | '/_clientarea/cliente/orientacao-profissional'
     | '/_clientarea/cliente/orientacao-psicanalitica'
     | '/_clientarea/cliente/pedidos'
     | '/_clientarea/cliente/perfil'
     | '/_clientarea/cliente/psicanalista-alta-performance'
+    | '/_clientarea/cliente/publicar'
     | '/_clientarea/cliente/sessoes'
     | '/_clientarea/cliente/treinamentos'
     | '/api/auth/callback'
@@ -2331,6 +2432,7 @@ export interface FileRouteTypes {
     | '/_clientarea/cliente/treinamentos/psicanalise'
     | '/_clientarea/cliente/treinamentos/psicanalise-internacional'
     | '/_clientarea/cliente/treinamentos/terapia-breve-psicanalitica'
+    | '/_clientarea/cliente/treinamentos/tricologia-terapia-capilar'
     | '/_clientarea/cliente/biblioteca/publicacoes/$slug'
     | '/_clientarea/cliente/cursos/academy/$slug'
     | '/_clientarea/cliente/treinamentos/curso-avulso/$slug'
@@ -2372,6 +2474,7 @@ export interface RootRouteChildren {
   FormacaoRecrutamentoSelecaoRoute: typeof FormacaoRecrutamentoSelecaoRoute
   FormacaoTerapiaBrevePsicanaliticaRoute: typeof FormacaoTerapiaBrevePsicanaliticaRoute
   FormacaoTerapiasContemporaneasRoute: typeof FormacaoTerapiasContemporaneasRoute
+  FormacaoTricologiaTerapiaCapilarRoute: typeof FormacaoTricologiaTerapiaCapilarRoute
   FormacaoVendasNegociacaoRoute: typeof FormacaoVendasNegociacaoRoute
   FormularioRoute: typeof FormularioRoute
   LivrosRoute: typeof LivrosRoute
@@ -2403,10 +2506,12 @@ export interface RootRouteChildren {
   ClienteDefinirSenhaRoute: typeof ClienteDefinirSenhaRoute
   ClienteLoginRoute: typeof ClienteLoginRoute
   ClinicaSocialProfissionaisRoute: typeof ClinicaSocialProfissionaisRoute
+  EbooksSlugRoute: typeof EbooksSlugRoute
   EmpresaLoginRoute: typeof EmpresaLoginRoute
   FormacaoSlugRoute: typeof FormacaoSlugRoute
   FormacoesSlugRoute: typeof FormacoesSlugRoute
   FuncionarioLoginRoute: typeof FuncionarioLoginRoute
+  LivrosSlugRoute: typeof LivrosSlugRoute
   ProfissionalSlugRoute: typeof ProfissionalSlugRoute
   ProfissionalLoginRoute: typeof ProfissionalLoginRoute
   RedeProfissionaisTermosRoute: typeof RedeProfissionaisTermosRoute
@@ -2634,6 +2739,13 @@ declare module '@tanstack/react-router' {
       path: '/formacao-terapias-contemporaneas'
       fullPath: '/formacao-terapias-contemporaneas'
       preLoaderRoute: typeof FormacaoTerapiasContemporaneasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/formacao-tricologia-terapia-capilar': {
+      id: '/formacao-tricologia-terapia-capilar'
+      path: '/formacao-tricologia-terapia-capilar'
+      fullPath: '/formacao-tricologia-terapia-capilar'
+      preLoaderRoute: typeof FormacaoTricologiaTerapiaCapilarRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/formacao-vendas-negociacao': {
@@ -2902,6 +3014,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClinicaSocialProfissionaisRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ebooks/$slug': {
+      id: '/ebooks/$slug'
+      path: '/ebooks/$slug'
+      fullPath: '/ebooks/$slug'
+      preLoaderRoute: typeof EbooksSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/empresa/login': {
       id: '/empresa/login'
       path: '/empresa/login'
@@ -2928,6 +3047,13 @@ declare module '@tanstack/react-router' {
       path: '/funcionario/login'
       fullPath: '/funcionario/login'
       preLoaderRoute: typeof FuncionarioLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/livros_/$slug': {
+      id: '/livros_/$slug'
+      path: '/livros/$slug'
+      fullPath: '/livros/$slug'
+      preLoaderRoute: typeof LivrosSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/profissionais/$category': {
@@ -2977,6 +3103,13 @@ declare module '@tanstack/react-router' {
       path: '/acessos'
       fullPath: '/admin/acessos'
       preLoaderRoute: typeof AuthenticatedAdminAcessosRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/alunos-matriculas': {
+      id: '/_authenticated/admin/alunos-matriculas'
+      path: '/alunos-matriculas'
+      fullPath: '/admin/alunos-matriculas'
+      preLoaderRoute: typeof AuthenticatedAdminAlunosMatriculasRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
     '/_authenticated/admin/catalogo': {
@@ -3210,6 +3343,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPainelProfissionalComentariosRouteImport
       parentRoute: typeof AuthenticatedPainelProfissionalRoute
     }
+    '/_authenticated/painel-profissional/conteudos-criadores': {
+      id: '/_authenticated/painel-profissional/conteudos-criadores'
+      path: '/conteudos-criadores'
+      fullPath: '/painel-profissional/conteudos-criadores'
+      preLoaderRoute: typeof AuthenticatedPainelProfissionalConteudosCriadoresRouteImport
+      parentRoute: typeof AuthenticatedPainelProfissionalRoute
+    }
     '/_authenticated/painel-profissional/disponibilidade': {
       id: '/_authenticated/painel-profissional/disponibilidade'
       path: '/disponibilidade'
@@ -3378,6 +3518,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClientareaClienteMentoriaRouteImport
       parentRoute: typeof ClientareaClienteRoute
     }
+    '/_clientarea/cliente/minha-biblioteca-pessoal': {
+      id: '/_clientarea/cliente/minha-biblioteca-pessoal'
+      path: '/minha-biblioteca-pessoal'
+      fullPath: '/cliente/minha-biblioteca-pessoal'
+      preLoaderRoute: typeof ClientareaClienteMinhaBibliotecaPessoalRouteImport
+      parentRoute: typeof ClientareaClienteRoute
+    }
     '/_clientarea/cliente/orientacao-profissional': {
       id: '/_clientarea/cliente/orientacao-profissional'
       path: '/orientacao-profissional'
@@ -3411,6 +3558,13 @@ declare module '@tanstack/react-router' {
       path: '/psicanalista-alta-performance'
       fullPath: '/cliente/psicanalista-alta-performance'
       preLoaderRoute: typeof ClientareaClientePsicanalistaAltaPerformanceRouteImport
+      parentRoute: typeof ClientareaClienteRoute
+    }
+    '/_clientarea/cliente/publicar': {
+      id: '/_clientarea/cliente/publicar'
+      path: '/publicar'
+      fullPath: '/cliente/publicar'
+      preLoaderRoute: typeof ClientareaClientePublicarRouteImport
       parentRoute: typeof ClientareaClienteRoute
     }
     '/_clientarea/cliente/sessoes': {
@@ -3665,6 +3819,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRouteImport
       parentRoute: typeof ClientareaClienteTreinamentosRoute
     }
+    '/_clientarea/cliente/treinamentos/tricologia-terapia-capilar': {
+      id: '/_clientarea/cliente/treinamentos/tricologia-terapia-capilar'
+      path: '/tricologia-terapia-capilar'
+      fullPath: '/cliente/treinamentos/tricologia-terapia-capilar'
+      preLoaderRoute: typeof ClientareaClienteTreinamentosTricologiaTerapiaCapilarRouteImport
+      parentRoute: typeof ClientareaClienteTreinamentosRoute
+    }
     '/_clientarea/cliente/biblioteca/publicacoes/$slug': {
       id: '/_clientarea/cliente/biblioteca/publicacoes/$slug'
       path: '/$slug'
@@ -3719,6 +3880,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminAcessosRoute: typeof AuthenticatedAdminAcessosRoute
+  AuthenticatedAdminAlunosMatriculasRoute: typeof AuthenticatedAdminAlunosMatriculasRoute
   AuthenticatedAdminCatalogoRoute: typeof AuthenticatedAdminCatalogoRoute
   AuthenticatedAdminClinicaSocialRoute: typeof AuthenticatedAdminClinicaSocialRoute
   AuthenticatedAdminEmpresasRoute: typeof AuthenticatedAdminEmpresasRoute
@@ -3750,6 +3912,8 @@ interface AuthenticatedAdminRouteChildren {
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminAcessosRoute: AuthenticatedAdminAcessosRoute,
+  AuthenticatedAdminAlunosMatriculasRoute:
+    AuthenticatedAdminAlunosMatriculasRoute,
   AuthenticatedAdminCatalogoRoute: AuthenticatedAdminCatalogoRoute,
   AuthenticatedAdminClinicaSocialRoute: AuthenticatedAdminClinicaSocialRoute,
   AuthenticatedAdminEmpresasRoute: AuthenticatedAdminEmpresasRoute,
@@ -3799,6 +3963,7 @@ interface AuthenticatedPainelProfissionalRouteChildren {
   AuthenticatedPainelProfissionalCatalogoRoute: typeof AuthenticatedPainelProfissionalCatalogoRoute
   AuthenticatedPainelProfissionalClientesRoute: typeof AuthenticatedPainelProfissionalClientesRoute
   AuthenticatedPainelProfissionalComentariosRoute: typeof AuthenticatedPainelProfissionalComentariosRoute
+  AuthenticatedPainelProfissionalConteudosCriadoresRoute: typeof AuthenticatedPainelProfissionalConteudosCriadoresRoute
   AuthenticatedPainelProfissionalDisponibilidadeRoute: typeof AuthenticatedPainelProfissionalDisponibilidadeRoute
   AuthenticatedPainelProfissionalEmpresasRoute: typeof AuthenticatedPainelProfissionalEmpresasRoute
   AuthenticatedPainelProfissionalEntregasRoute: typeof AuthenticatedPainelProfissionalEntregasRoute
@@ -3832,6 +3997,8 @@ const AuthenticatedPainelProfissionalRouteChildren: AuthenticatedPainelProfissio
       AuthenticatedPainelProfissionalClientesRoute,
     AuthenticatedPainelProfissionalComentariosRoute:
       AuthenticatedPainelProfissionalComentariosRoute,
+    AuthenticatedPainelProfissionalConteudosCriadoresRoute:
+      AuthenticatedPainelProfissionalConteudosCriadoresRoute,
     AuthenticatedPainelProfissionalDisponibilidadeRoute:
       AuthenticatedPainelProfissionalDisponibilidadeRoute,
     AuthenticatedPainelProfissionalEmpresasRoute:
@@ -4009,6 +4176,7 @@ interface ClientareaClienteTreinamentosRouteChildren {
   ClientareaClienteTreinamentosPsicanaliseRoute: typeof ClientareaClienteTreinamentosPsicanaliseRouteWithChildren
   ClientareaClienteTreinamentosPsicanaliseInternacionalRoute: typeof ClientareaClienteTreinamentosPsicanaliseInternacionalRoute
   ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRoute: typeof ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRoute
+  ClientareaClienteTreinamentosTricologiaTerapiaCapilarRoute: typeof ClientareaClienteTreinamentosTricologiaTerapiaCapilarRoute
   ClientareaClienteTreinamentosCursoAvulsoSlugRoute: typeof ClientareaClienteTreinamentosCursoAvulsoSlugRoute
   ClientareaClienteTreinamentosFormacaoProfissionalSlugRoute: typeof ClientareaClienteTreinamentosFormacaoProfissionalSlugRoute
 }
@@ -4035,6 +4203,8 @@ const ClientareaClienteTreinamentosRouteChildren: ClientareaClienteTreinamentosR
       ClientareaClienteTreinamentosPsicanaliseInternacionalRoute,
     ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRoute:
       ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRoute,
+    ClientareaClienteTreinamentosTricologiaTerapiaCapilarRoute:
+      ClientareaClienteTreinamentosTricologiaTerapiaCapilarRoute,
     ClientareaClienteTreinamentosCursoAvulsoSlugRoute:
       ClientareaClienteTreinamentosCursoAvulsoSlugRoute,
     ClientareaClienteTreinamentosFormacaoProfissionalSlugRoute:
@@ -4052,11 +4222,13 @@ interface ClientareaClienteRouteChildren {
   ClientareaClienteContratarRoute: typeof ClientareaClienteContratarRoute
   ClientareaClienteEntregasRoute: typeof ClientareaClienteEntregasRoute
   ClientareaClienteMentoriaRoute: typeof ClientareaClienteMentoriaRoute
+  ClientareaClienteMinhaBibliotecaPessoalRoute: typeof ClientareaClienteMinhaBibliotecaPessoalRoute
   ClientareaClienteOrientacaoProfissionalRoute: typeof ClientareaClienteOrientacaoProfissionalRoute
   ClientareaClienteOrientacaoPsicanaliticaRoute: typeof ClientareaClienteOrientacaoPsicanaliticaRoute
   ClientareaClientePedidosRoute: typeof ClientareaClientePedidosRoute
   ClientareaClientePerfilRoute: typeof ClientareaClientePerfilRoute
   ClientareaClientePsicanalistaAltaPerformanceRoute: typeof ClientareaClientePsicanalistaAltaPerformanceRouteWithChildren
+  ClientareaClientePublicarRoute: typeof ClientareaClientePublicarRoute
   ClientareaClienteSessoesRoute: typeof ClientareaClienteSessoesRoute
   ClientareaClienteTreinamentosRoute: typeof ClientareaClienteTreinamentosRouteWithChildren
   ClientareaClienteIndexRoute: typeof ClientareaClienteIndexRoute
@@ -4078,6 +4250,8 @@ const ClientareaClienteRouteChildren: ClientareaClienteRouteChildren = {
   ClientareaClienteContratarRoute: ClientareaClienteContratarRoute,
   ClientareaClienteEntregasRoute: ClientareaClienteEntregasRoute,
   ClientareaClienteMentoriaRoute: ClientareaClienteMentoriaRoute,
+  ClientareaClienteMinhaBibliotecaPessoalRoute:
+    ClientareaClienteMinhaBibliotecaPessoalRoute,
   ClientareaClienteOrientacaoProfissionalRoute:
     ClientareaClienteOrientacaoProfissionalRoute,
   ClientareaClienteOrientacaoPsicanaliticaRoute:
@@ -4086,6 +4260,7 @@ const ClientareaClienteRouteChildren: ClientareaClienteRouteChildren = {
   ClientareaClientePerfilRoute: ClientareaClientePerfilRoute,
   ClientareaClientePsicanalistaAltaPerformanceRoute:
     ClientareaClientePsicanalistaAltaPerformanceRouteWithChildren,
+  ClientareaClientePublicarRoute: ClientareaClientePublicarRoute,
   ClientareaClienteSessoesRoute: ClientareaClienteSessoesRoute,
   ClientareaClienteTreinamentosRoute:
     ClientareaClienteTreinamentosRouteWithChildren,
@@ -4199,6 +4374,7 @@ const rootRouteChildren: RootRouteChildren = {
   FormacaoTerapiaBrevePsicanaliticaRoute:
     FormacaoTerapiaBrevePsicanaliticaRoute,
   FormacaoTerapiasContemporaneasRoute: FormacaoTerapiasContemporaneasRoute,
+  FormacaoTricologiaTerapiaCapilarRoute: FormacaoTricologiaTerapiaCapilarRoute,
   FormacaoVendasNegociacaoRoute: FormacaoVendasNegociacaoRoute,
   FormularioRoute: FormularioRoute,
   LivrosRoute: LivrosRoute,
@@ -4230,10 +4406,12 @@ const rootRouteChildren: RootRouteChildren = {
   ClienteDefinirSenhaRoute: ClienteDefinirSenhaRoute,
   ClienteLoginRoute: ClienteLoginRoute,
   ClinicaSocialProfissionaisRoute: ClinicaSocialProfissionaisRoute,
+  EbooksSlugRoute: EbooksSlugRoute,
   EmpresaLoginRoute: EmpresaLoginRoute,
   FormacaoSlugRoute: FormacaoSlugRoute,
   FormacoesSlugRoute: FormacoesSlugRoute,
   FuncionarioLoginRoute: FuncionarioLoginRoute,
+  LivrosSlugRoute: LivrosSlugRoute,
   ProfissionalSlugRoute: ProfissionalSlugRoute,
   ProfissionalLoginRoute: ProfissionalLoginRoute,
   RedeProfissionaisTermosRoute: RedeProfissionaisTermosRoute,

@@ -7,7 +7,7 @@ import { clientSaveProgress } from "@/lib/learning.functions";
 import { useI18n } from "@/lib/i18n";
 
 type Locale="pt"|"en"|"fr"|"es";
-type ProductKey="ebook_coragem_comecar"|"livro_menino_mamao"|"ebook_pratica_clinica_psicanalise"|"ebook_psicanalise_no_mundo"|"ebook_estudos_caso_psicanalise"|"ebook_psicanalise_autismo";
+type ProductKey="ebook_coragem_comecar" | "livro_menino_mamao" | "ebook_pratica_clinica_psicanalise" | "ebook_psicanalise_no_mundo" | "ebook_estudos_caso_psicanalise" | "ebook_psicanalise_autismo" | "ebook_psicologia_psicanalise_terapias" | "ebook_jornalismo_era_digital" | "ebook_corpo_trabalho_escuta" | "ebook_comportamento_humano" | "ebook_estetica_bem_estar" | "ebook_tricologia_cuidado" | "ebook_ia_novos_milionarios" | "ebook_imigracao_efeitos_psicologicos";
 type EbookPage={titulo?:string;texto?:string};
 type BookChapter=[string|number,string,string[]];
 type ReaderPayload={kind:"ebook";pages:EbookPage[]}|{kind:"book";data:{title?:string;subtitle?:string;chapters?:BookChapter[]}};
@@ -25,7 +25,15 @@ const PRODUCT_THEME:Record<ProductKey,{light:string;dark:string;cardLight:string
  ebook_pratica_clinica_psicanalise:{light:"bg-[#f4f7f7] text-[#14282a]",dark:"bg-[#0b191b] text-[#eef7f7]",cardLight:"border-[#bed0d1] bg-white",cardDark:"border-[#365d60] bg-[#102628]",accent:"#314E52",soft:"#e1ebeb"},
  ebook_psicanalise_no_mundo:{light:"bg-[#f2f6fb] text-[#10243a]",dark:"bg-[#071522] text-[#eef5fb]",cardLight:"border-[#b9cce0] bg-white",cardDark:"border-[#28547a] bg-[#0d2235]",accent:"#1F4E79",soft:"#dce8f4"},
  ebook_estudos_caso_psicanalise:{light:"bg-[#fbf5f8] text-[#351629]",dark:"bg-[#24101d] text-[#fff4fa]",cardLight:"border-[#d8bbca] bg-white",cardDark:"border-[#70405a] bg-[#341729]",accent:"#7C3A5D",soft:"#f0dce7"},
- ebook_psicanalise_autismo:{light:"bg-[#fafaf3] text-[#303114]",dark:"bg-[#20210d] text-[#fafae9]",cardLight:"border-[#d6d7b8] bg-white",cardDark:"border-[#66682c] bg-[#2e3013]",accent:"#6B6F2A",soft:"#ececcf"}
+  ebook_psicanalise_autismo:{light:"bg-[#fafaf3] text-[#303114]",dark:"bg-[#20210d] text-[#fafae9]",cardLight:"border-[#d6d7b8] bg-white",cardDark:"border-[#66682c] bg-[#2e3013]",accent:"#6B6F2A",soft:"#ececcf"},
+  ebook_psicologia_psicanalise_terapias:{light:"bg-[#f5f6fa] text-[#20283a]",dark:"bg-[#121621] text-[#f4f6fb]",cardLight:"border-[#c6cbd8] bg-white",cardDark:"border-[#46516c] bg-[#1a2030]",accent:"#4C5B7A",soft:"#e4e7ef"},
+  ebook_jornalismo_era_digital:{light:"bg-[#f3f8f8] text-[#183033]",dark:"bg-[#0d1c1e] text-[#eef8f8]",cardLight:"border-[#bdd0d2] bg-white",cardDark:"border-[#37676c] bg-[#12282b]",accent:"#315D68",soft:"#ddebec"},
+  ebook_corpo_trabalho_escuta:{light:"bg-[#faf7f4] text-[#33251d]",dark:"bg-[#211710] text-[#fff7f1]",cardLight:"border-[#d9c9bd] bg-white",cardDark:"border-[#735640] bg-[#302118]",accent:"#6A4E3B",soft:"#eee3db"},
+  ebook_comportamento_humano:{light:"bg-[#f8f6fb] text-[#2b2237]",dark:"bg-[#1b1522] text-[#faf6ff]",cardLight:"border-[#d0c5da] bg-white",cardDark:"border-[#624f76] bg-[#271d32]",accent:"#5B4A73",soft:"#e9e1ef"},
+  ebook_estetica_bem_estar:{light:"bg-[#fcf7f8] text-[#3c252b]",dark:"bg-[#241519] text-[#fff7f9]",cardLight:"border-[#dfc5cb] bg-white",cardDark:"border-[#875261] bg-[#321d23]",accent:"#8A5965",soft:"#f2e3e7"},
+  ebook_tricologia_cuidado:{light:"bg-[#f4f8f5] text-[#213129]",dark:"bg-[#111d17] text-[#f2faf5]",cardLight:"border-[#bfd0c6] bg-white",cardDark:"border-[#476956] bg-[#18281f]",accent:"#48665A",soft:"#dfeae4"},
+  ebook_ia_novos_milionarios:{light:"bg-[#f2f5fa] text-[#17253c]",dark:"bg-[#091321] text-[#f1f6ff]",cardLight:"border-[#bec9db] bg-white",cardDark:"border-[#34547f] bg-[#102039]",accent:"#273F66",soft:"#dce5f2"},
+  ebook_imigracao_efeitos_psicologicos:{light:"bg-[#f8f6f8] text-[#332b34]",dark:"bg-[#1d171e] text-[#fbf6fb]",cardLight:"border-[#d5cbd6] bg-white",cardDark:"border-[#69586b] bg-[#291f2a]",accent:"#6A586B",soft:"#ebe3ec"}
 };
 
 export function DigitalReaderV2({productKey}:{productKey:ProductKey}){

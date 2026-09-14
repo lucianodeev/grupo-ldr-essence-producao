@@ -15,6 +15,14 @@ const PRODUCTS = new Set<DigitalReaderProductKey>([
   "ebook_psicanalise_no_mundo",
   "ebook_estudos_caso_psicanalise",
   "ebook_psicanalise_autismo",
+  "ebook_psicologia_psicanalise_terapias",
+  "ebook_jornalismo_era_digital",
+  "ebook_corpo_trabalho_escuta",
+  "ebook_comportamento_humano",
+  "ebook_estetica_bem_estar",
+  "ebook_tricologia_cuidado",
+  "ebook_ia_novos_milionarios",
+  "ebook_imigracao_efeitos_psicologicos",
 ]);
 const LOCALES = new Set<DigitalReaderLocale>(["pt", "en", "fr", "es"]);
 

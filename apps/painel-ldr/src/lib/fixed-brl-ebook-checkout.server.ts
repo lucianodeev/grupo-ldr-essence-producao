@@ -6,6 +6,14 @@ const FIXED_BRL_EBOOKS = {
   ebook_pratica_clinica_psicanalise: "A Prática Clínica da Psicanálise",
   ebook_psicanalise_no_mundo: "A Psicanálise no Mundo",
   ebook_estudos_caso_psicanalise: "Estudos de Caso",
+  ebook_psicologia_psicanalise_terapias: 'Psicologia, Psicanálise e Terapias Integrativas',
+  ebook_jornalismo_era_digital: 'Jornalismo na Era Digital',
+  ebook_corpo_trabalho_escuta: 'Corpo, Trabalho e Escuta',
+  ebook_comportamento_humano: 'Como Mudar o Comportamento Humano',
+  ebook_estetica_bem_estar: 'Estética Aplicada ao Bem-Estar',
+  ebook_tricologia_cuidado: 'Tricologia Capilar Aplicada ao Cuidado',
+  ebook_ia_novos_milionarios: 'Como a Inteligência Artificial Pode Criar Novos Milionários',
+  ebook_imigracao_efeitos_psicologicos: 'Entre Dois Mundos',
 } as const;
 
 type FixedBrlEbookKey = keyof typeof FIXED_BRL_EBOOKS;
@@ -24,7 +32,8 @@ export async function createDigitalCheckoutWithFixedBrlEbooks(
   const isPremiumCases = input.productKey === "ebook_estudos_caso_psicanalise";
   // Estudos de Caso possui preço promocional próprio nos dois mercados.
   // Os demais eBooks fixos continuam interceptados somente no BRL.
-  if ((!isPremiumCases && input.market !== "BR") || !isFixedBrlEbook(input.productKey)) {
+  const isCollectionOne = ['ebook_psicologia_psicanalise_terapias', 'ebook_jornalismo_era_digital', 'ebook_corpo_trabalho_escuta', 'ebook_comportamento_humano', 'ebook_estetica_bem_estar', 'ebook_tricologia_cuidado', 'ebook_ia_novos_milionarios', 'ebook_imigracao_efeitos_psicologicos'].includes(input.productKey as any);
+  if ((!isPremiumCases && !isCollectionOne && input.market !== "BR") || !isFixedBrlEbook(input.productKey)) {
     return createClientDigitalCheckout(userId, email, input);
   }
 
@@ -37,7 +46,7 @@ export async function createDigitalCheckoutWithFixedBrlEbooks(
     fail("Este produto já está disponível na sua biblioteca.");
   }
 
-  const amountCents = isPremiumCases ? (input.market === "BR" ? 7990 : 1490) : 2000;
+  const amountCents = isPremiumCases ? (input.market === "BR" ? 7990 : 1490) : (input.market === "BR" ? 2000 : 399);
   const currency = input.market === "BR" ? "BRL" : "EUR";
   const stripeCurrency = input.market === "BR" ? "brl" : "eur";
   const title = FIXED_BRL_EBOOKS[input.productKey];
