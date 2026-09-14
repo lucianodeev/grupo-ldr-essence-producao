@@ -80,3 +80,5 @@ jobs:
           fi
           git commit -m 'fix(academic): restore publishing interactions avatars and internal sharing'
           git push origin main
+
+# validation rerun: 2026-09-14T22:14+02:00
