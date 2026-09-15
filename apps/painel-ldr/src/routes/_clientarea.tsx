@@ -3,7 +3,7 @@ import type { Session } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
 
 import { AcademyAccessibilityControls } from "@/components/academy-accessibility-controls";
-import { academicLoginHref } from "@/lib/academic-login-return";
+import { academicLoginHref, academicReturnPath } from "@/lib/academic-login-return";
 import { FreeContentAds } from "@/components/free-content-ads";
 import { LegacyTrainingProjectPanel } from "@/components/legacy-training-project-panel";
 import { supabase } from "@/integrations/supabase/client";
@@ -24,7 +24,7 @@ async function syncSession(session: Session) {
 }
 
 export const Route = createFileRoute("/_clientarea")({
-  beforeLoad: async () => {
+  beforeLoad: async ({ location }) => {
     if (typeof window === "undefined") return;
 
     const auth = await getClientAuthState();
@@ -33,7 +33,8 @@ export const Route = createFileRoute("/_clientarea")({
     const { data } = await supabase.auth.getSession();
     if (data.session && (await syncSession(data.session))) return;
 
-    throw redirect({ to: "/cliente/login" });
+    const next = academicReturnPath(location.href);
+    throw redirect({ to: "/cliente/login", search: next ? { next } : {} });
   },
   component: ClientAreaLayout,
 });
