@@ -4,3 +4,32 @@
 
 [functions]
   node_bundler = "esbuild"
+
+# Nova porta de entrada: LDR Essence — Rede Multidisciplinar de Saúde Mental e Bem-Estar.
+# Mantém o arquivo legado intacto para rollback e histórico, mas a raiz pública passa
+# a servir a experiência clínica sem alterar domínio, DNS, Stripe, Supabase ou autenticação.
+[[redirects]]
+  from = "/"
+  to = "/clinica.html"
+  status = 200
+  force = true
+
+# Rotas de posicionamento antigo deixam de ser pontos públicos de entrada.
+[[redirects]]
+  from = "/rh"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/solucoes"
+  to = "/"
+  status = 301
+  force = true
+
+# Serviços individuais passam a ser apresentados pelos perfis profissionais da rede.
+[[redirects]]
+  from = "/mentoria"
+  to = "https://painel.ldrrhestrategia.com/profissionais"
+  status = 301
+  force = true
