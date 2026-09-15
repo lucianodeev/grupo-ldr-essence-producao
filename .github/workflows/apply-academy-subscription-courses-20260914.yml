@@ -4,20 +4,24 @@ on:
     branches: [main]
     paths:
       - 'tools/patch_academy_subscription_courses_20260914.py'
+      - 'tools/patch_hiv_academy_20260915.py'
       - 'apps/painel-ldr/src/lib/academy-subscription-courses.catalog.ts'
       - 'apps/painel-ldr/src/components/academy-subscription-course-shelf.tsx'
       - 'apps/painel-ldr/src/lib/project-management-formation.catalog.ts'
       - 'apps/painel-ldr/src/lib/academy-professional-formations.catalog.ts'
+      - 'apps/painel-ldr/src/lib/hiv-science-formation.catalog.ts'
       - 'apps/painel-ldr/src/routes/_clientarea.cliente.cursos.assinatura.$slug.tsx'
       - '.github/workflows/apply-academy-subscription-courses-20260914.yml'
   push:
     branches: [main]
     paths:
       - 'tools/patch_academy_subscription_courses_20260914.py'
+      - 'tools/patch_hiv_academy_20260915.py'
       - 'apps/painel-ldr/src/lib/academy-subscription-courses.catalog.ts'
       - 'apps/painel-ldr/src/components/academy-subscription-course-shelf.tsx'
       - 'apps/painel-ldr/src/lib/project-management-formation.catalog.ts'
       - 'apps/painel-ldr/src/lib/academy-professional-formations.catalog.ts'
+      - 'apps/painel-ldr/src/lib/hiv-science-formation.catalog.ts'
       - 'apps/painel-ldr/src/routes/_clientarea.cliente.cursos.assinatura.$slug.tsx'
       - '.github/workflows/apply-academy-subscription-courses-20260914.yml'
 permissions:
@@ -30,8 +34,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Apply idempotent integration patch
+      - name: Apply existing subscription integration
         run: python tools/patch_academy_subscription_courses_20260914.py
+      - name: Apply additive HIV integration
+        run: python tools/patch_hiv_academy_20260915.py
       - name: Install dependencies
         working-directory: apps/painel-ldr
         run: npm install --no-audit --no-fund
@@ -47,8 +53,11 @@ jobs:
             apps/painel-ldr/src/lib/library-subscription.server.ts \
             apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx \
             apps/painel-ldr/src/components/library-sales-home.tsx \
-            apps/painel-ldr/src/routeTree.gen.ts
+            apps/painel-ldr/src/routeTree.gen.ts \
+            apps/painel-ldr/src/lib/academy-subscription-courses.catalog.ts \
+            apps/painel-ldr/src/lib/hiv-science-formation.catalog.ts \
+            apps/painel-ldr/src/lib/academy-professional-formations.catalog.ts
           if ! git diff --cached --quiet; then
-            git commit -m 'feat(academy): integrate subscription-only course collection'
+            git commit -m 'feat(academy): integrate subscription courses and HIV science course'
             git push origin main
           fi
