@@ -1,7 +1,0 @@
-/* Rede Acadêmica LDR — hotfix visual isolado do botão Salvo.
-   Não altera lógica, layout, handlers ou persistência. */
-.academic-social-v4 .academic-v4-post-actions button[aria-pressed="true"].bg-\[\#07315a\],
-.academic-social-v4 .academic-v4-post-actions button[aria-pressed="true"].bg-\[\#07315a\] svg,
-.academic-social-v4 .academic-v4-post-actions button[aria-pressed="true"].bg-\[\#07315a\] span {
-  color: #fff !important;
-}
