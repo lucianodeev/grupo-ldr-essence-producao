@@ -91,3 +91,10 @@ a.group[href='/rede-academica']{
   background-color:#7c3aed!important;
   border-color:#7c3aed!important;
 }
+
+/* Rede Acadêmica: destaque branco somente dos títulos dos dois banners. */
+a.group[href='/cliente/rede-academica'] h2,
+a.group[href='/rede-academica'] h2{
+  color:#fff!important;
+  font-weight:700!important;
+}
