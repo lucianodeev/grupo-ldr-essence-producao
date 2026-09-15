@@ -68,9 +68,14 @@ async function accessFor(userId:string):Promise<Access>{
 async function requirePremium(userId:string){ const access=await accessFor(userId); if(!access.premium)fail("Este recurso faz parte da assinatura da LDR Essence Academy."); return access; }
 
 async function ensureProfile(userId:string){
-  let {data}=await db.from("academic_profiles").select("*").eq("user_id",userId).maybeSingle();
-  if(!data){ const created=await db.from("academic_profiles").insert({user_id:userId}).select("*").single(); data=created.data; }
-  return data;
+  const current=await db.from("academic_profiles").select("*").eq("user_id",userId).maybeSingle();
+  if(current.error)fail("Não foi possível carregar o perfil acadêmico.");
+  if(current.data)return current.data;
+  const created=await db.from("academic_profiles").upsert({user_id:userId},{onConflict:"user_id",ignoreDuplicates:true});
+  if(created.error)fail("Não foi possível criar o perfil acadêmico.");
+  const result=await db.from("academic_profiles").select("*").eq("user_id",userId).single();
+  if(result.error||!result.data)fail("Não foi possível carregar o perfil acadêmico.");
+  return result.data;
 }
 
 async function authorMap(userIds:string[]){
@@ -110,8 +115,10 @@ export async function getAcademicNetwork(userId:string,email:string|null,opts?:{
   let q=db.from("academic_posts").select("id,user_id,community_id,body,post_type,anonymous,status,is_pinned,location_label,location_city,location_country,share_slug,original_post_id,share_comment,created_at,updated_at").eq("status","active").order("is_pinned",{ascending:false}).order("created_at",{ascending:false}).range(offset,offset+pageSize);
   if(opts?.communityId)q=q.eq("community_id",opts.communityId);
   if(opts?.search)q=q.ilike("body",`%${clean(opts.search,100)}%`);
-  const {data:rawPosts}=await q;
-  const rawPage=rawPosts??[]; const hasMore=rawPage.length>pageSize; let posts=rawPage.slice(0,pageSize).filter((p:any)=>!opts?.savedOnly||savedIds.has(p.id));
+  if(opts?.savedOnly)q=q.in("id",savedIds.size?[...savedIds]:["00000000-0000-0000-0000-000000000000"]);
+  const {data:rawPosts,error:postsError}=await q;
+  if(postsError)fail("Não foi possível carregar as publicações.");
+  const rawPage=rawPosts??[]; const hasMore=rawPage.length>pageSize; let posts=rawPage.slice(0,pageSize);
   const postIds=posts.map((p:any)=>p.id);
   const {data:rawComments}=postIds.length?await db.from("academic_comments").select("id,post_id,user_id,body,anonymous,status,created_at,updated_at").in("post_id",postIds).eq("status","active").order("created_at",{ascending:true}):{data:[]};
   const authorIds=[...posts.map((p:any)=>p.user_id),...(rawComments??[]).map((c:any)=>c.user_id),...(connections??[]).flatMap((c:any)=>[c.requester_user_id,c.receiver_user_id])];
@@ -158,9 +165,23 @@ export async function saveDiaryEntry(userId:string,input:{id?:string;body:string
 }
 export async function deleteDiaryEntry(userId:string,id:string){ await db.from("academic_diary_entries").delete().eq("id",id).eq("user_id",userId); return {ok:true}; }
 
-export async function createAcademicPost(userId:string,input:{body:string;postType:PostType;anonymous:boolean;communityId?:string|null;locationLabel?:string;locationCity?:string;locationCountry?:string;topics?:string[];hasAttachment?:boolean}){
+export async function createAcademicPost(userId:string,input:{body:string;postType:PostType;anonymous:boolean;communityId?:string|null;locationLabel?:string;locationCity?:string;locationCountry?:string;topics?:string[];hasAttachment?:boolean;attachment?:{path:string;fileName?:string;altText?:string}}){
   await requirePremium(userId); await rateLimit(userId,"academic_posts",15); const body=clean(input.body,12000); if(!body&&!input.hasAttachment)fail("Escreva algo ou anexe um arquivo antes de publicar."); if(!POST_TYPES.has(input.postType)||input.postType==="share")fail("Tipo inválido.");
-  const {data,error}=await db.from("academic_posts").insert({user_id:userId,body,post_type:input.postType,anonymous:Boolean(input.anonymous),community_id:input.communityId||null,location_label:clean(input.locationLabel,160)||null,location_city:clean(input.locationCity,80)||null,location_country:clean(input.locationCountry,80)||null}).select("id").single(); if(error)fail("Não foi possível publicar.");
+  // Upload and validate before creating a row; publish only after media is linked.
+  const media=input.attachment?await import("@/lib/academic-media-v2.server"):null;
+  if(input.attachment)await media!.verifyOwnedFile(userId,input.attachment.path,"posts");
+  const {data,error}=await db.from("academic_posts").insert({user_id:userId,body,status:input.attachment?"hidden":"active",post_type:input.postType,anonymous:Boolean(input.anonymous),community_id:input.communityId||null,location_label:clean(input.locationLabel,160)||null,location_city:clean(input.locationCity,80)||null,location_country:clean(input.locationCountry,80)||null}).select("id").single(); if(error)fail("Não foi possível publicar.");
+  if(input.attachment){
+    try{
+      await media!.finalizeAcademicPostMedia(userId,{...input.attachment,postId:data.id},true);
+      const published=await db.from("academic_posts").update({status:"active"}).eq("id",data.id).eq("user_id",userId).eq("status","hidden").select("id").single();
+      if(published.error||!published.data)fail("Não foi possível concluir a publicação.");
+    }catch(error){
+      const cleanup=await db.from("academic_posts").delete().eq("id",data.id).eq("user_id",userId).eq("status","hidden");
+      if(cleanup.error)console.error("Academic pending post cleanup failed",data.id,cleanup.error.code);
+      throw error;
+    }
+  }
   const normalized=[...new Set((input.topics??[]).map(x=>topicSlug(clean(x,60))).filter(Boolean))].slice(0,8); if(normalized.length){const labels=new Map((input.topics??[]).map(x=>[topicSlug(clean(x,60)),clean(x.replace(/^#+/,""),60)]));await db.from("academic_topics").upsert(normalized.map(slug=>({slug,label:labels.get(slug)||slug})),{onConflict:"slug",ignoreDuplicates:true});const {data:topics}=await db.from("academic_topics").select("id,slug").in("slug",normalized);if(topics?.length)await db.from("academic_post_topics").insert(topics.map((t:any)=>({post_id:data.id,topic_id:t.id})));}
   await createMentions(userId,body,{postId:data.id},Boolean(input.anonymous)); return data;
 }
@@ -197,7 +218,14 @@ export async function repostAcademicPost(userId:string,input:{postId:string;comm
   return data;
 }
 
-export async function toggleAcademicMembership(userId:string,communityId:string){ await requirePremium(userId); const {data}=await db.from("academic_community_members").select("community_id").eq("user_id",userId).eq("community_id",communityId).maybeSingle(); if(data)await db.from("academic_community_members").delete().eq("user_id",userId).eq("community_id",communityId); else await db.from("academic_community_members").insert({user_id:userId,community_id:communityId}); return {joined:!data}; }
+export async function toggleAcademicMembership(userId:string,communityId:string){
+  await requirePremium(userId);
+  const current=await db.from("academic_community_members").select("community_id").eq("user_id",userId).eq("community_id",communityId).maybeSingle();
+  if(current.error)fail("Não foi possível verificar sua participação.");
+  const result=current.data?await db.from("academic_community_members").delete().eq("user_id",userId).eq("community_id",communityId):await db.from("academic_community_members").upsert({user_id:userId,community_id:communityId},{onConflict:"community_id,user_id",ignoreDuplicates:true});
+  if(result.error)fail("Não foi possível atualizar sua participação na comunidade.");
+  return {joined:!current.data};
+}
 
 export async function updateAcademicProfile(userId:string,input:{bio?:string;profession?:string;country?:string;city?:string;interests?:string[];showName?:boolean;showLocation?:boolean}){
   await ensureProfile(userId); const patch={bio:clean(input.bio,1200),profession:clean(input.profession,120),country:clean(input.country,80),city:clean(input.city,80),interests:(input.interests??[]).map(x=>clean(x,80)).filter(Boolean).slice(0,12),show_name:Boolean(input.showName),show_location:Boolean(input.showLocation),updated_at:new Date().toISOString()}; const {data,error}=await db.from("academic_profiles").update(patch).eq("user_id",userId).select("*").single(); if(error)fail("Não foi possível atualizar o perfil."); return data;

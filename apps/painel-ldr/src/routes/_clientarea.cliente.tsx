@@ -93,13 +93,14 @@ function ClientShell() {
     navigate({ to: "/cliente/login", replace: true });
   }
 
+  const academicNetwork = location.pathname === "/cliente/rede-academica" || location.pathname.startsWith("/cliente/rede-academica/");
   const status = context.data?.status;
   const libraryHref = academyHost ? "/biblioteca" : "/cliente/biblioteca";
   const showLibraryActions = academyHost && location.pathname.replace(/\/+$/, "") === "/cliente/biblioteca";
 
   return (
     <div className="min-h-screen lg:flex" style={{ background: "var(--cream)" }}>
-      <aside className="no-print sticky top-0 z-40 text-primary-foreground lg:h-screen lg:w-72 lg:shrink-0" style={{ background: "linear-gradient(160deg, var(--wine-deep), var(--wine))" }}>
+      {!academicNetwork && <aside className="no-print sticky top-0 z-40 text-primary-foreground lg:h-screen lg:w-72 lg:shrink-0" style={{ background: "linear-gradient(160deg, var(--wine-deep), var(--wine))" }}>
         <div className="flex items-center justify-between gap-3 px-4 py-4 lg:block">
           <div><p className="font-serif text-lg leading-tight">{academyHost ? "LDR Essence Academy" : "Grupo LDR Essence"}</p><p className="text-xs opacity-80">{servicePortal ? c.serviceArea : c.area}</p></div>
           <button type="button" className="rounded-lg border border-white/30 p-2 lg:hidden" onClick={() => setMenuOpen(v => !v)} aria-label={c.openMenu}>{menuOpen ? <X className="h-5 w-5"/> : <Menu className="h-5 w-5"/>}</button>
@@ -121,10 +122,11 @@ function ClientShell() {
           {!servicePortal ? <div className="mt-5 border-t border-white/20 pt-4"><p className="mb-2 text-xs font-bold uppercase tracking-wide opacity-70">{c.ecosystem}</p><a className="block rounded-lg px-3 py-2 text-sm hover:bg-white/10" href="https://ldrrhestrategia.com/" target="_blank" rel="noreferrer">Grupo LDR Essence</a></div> : null}
           <div className="mt-5 border-t border-white/20 pt-4"><LanguageSelect /><button type="button" onClick={handleSignOut} className="mt-3 w-full rounded-lg border border-white/30 px-3 py-2 text-sm font-bold">{c.signout}</button></div>
         </nav>
-      </aside>
+      </aside>}
 
       <div className="min-w-0 flex-1">
-        <main className="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
+        <main className={academicNetwork?"mx-auto max-w-6xl":"mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8"}>
+          {academicNetwork&&<div className="flex items-center justify-end gap-3 px-3 pt-2"><LanguageSelect/><button type="button" onClick={handleSignOut} className="min-h-10 rounded-xl border px-3 text-xs font-bold">{c.signout}</button></div>}
           {showLibraryActions ? <AcademyGiveawayBanner compact /> : null}
           {showLibraryActions ? <div className="mb-6 grid gap-3 lg:grid-cols-3">
             <section className="rounded-[24px] border border-[#d6ad63]/50 bg-[#071426] p-5 text-white shadow-sm">
@@ -144,7 +146,7 @@ function ClientShell() {
         </main>
       </div>
 
-      {!servicePortal ? <div
+      {!servicePortal && !academicNetwork ? <div
         className="no-print fixed z-[90]"
         style={{ bottom: "calc(7.5rem + env(safe-area-inset-bottom))", right: "calc(1rem + env(safe-area-inset-right))" }}
       >

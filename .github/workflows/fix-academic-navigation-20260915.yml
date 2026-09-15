@@ -1,0 +1,43 @@
+name: Fix Academic Navigation 2026-09-15
+on:
+  push:
+    branches: [fix/academic-regressions-20260915]
+    paths:
+      - 'tools/fix_academic_navigation_20260915.py'
+      - '.github/workflows/fix-academic-navigation-20260915.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  fix-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Apply minimal navigation fix
+        run: python tools/fix_academic_navigation_20260915.py
+      - name: Verify patch scope
+        run: |
+          git diff --check
+          git diff --name-only
+          test "$(git diff --name-only | tr -d '\n')" = "apps/painel-ldr/src/routes/_clientarea.cliente.rede-academica.tsx"
+      - name: Install dependencies
+        working-directory: apps/painel-ldr
+        run: npm ci --no-audit --no-fund
+      - name: Build
+        working-directory: apps/painel-ldr
+        run: npm run build
+      - name: Commit validated fix
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.rede-academica.tsx
+          git commit -m "fix(academic): remove duplicate desktop actions and preserve routes"
+          git push origin HEAD:${{ github.ref_name }}

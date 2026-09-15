@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { Bookmark, BookOpen, HeartHandshake, MapPin, MessageCircle, Share2, UserPlus } from "lucide-react";
@@ -17,10 +17,10 @@ const COPY={
 } as const;
 function AcademicSocialProfilePage(){
   const {locale:raw}=useI18n();const locale=(raw==="en"||raw==="fr"||raw==="es"?raw:"pt") as L,t=COPY[locale];
-  const {username}=Route.useParams();const qc=useQueryClient();const getProfile=useServerFn(academicSocialProfile),toggleFollow=useServerFn(academicToggleFollow),openDm=useServerFn(academicDmOpen);const [tab,setTab]=useState<Tab>("posts");
+  const navigate=useNavigate();const {username}=Route.useParams();const qc=useQueryClient();const getProfile=useServerFn(academicSocialProfile),toggleFollow=useServerFn(academicToggleFollow),openDm=useServerFn(academicDmOpen);const [tab,setTab]=useState<Tab>("posts");
   const {data,isLoading,error}=useQuery({queryKey:["academic-social-profile",username],queryFn:()=>getProfile({data:{username}})});
   const follow=useMutation({mutationFn:(id:string)=>toggleFollow({data:{targetProfileId:id}}),onSuccess:()=>qc.invalidateQueries({queryKey:["academic-social-profile",username]})});
-  const message=useMutation({mutationFn:(id:string)=>openDm({data:{targetProfileId:id}}),onSuccess:()=>window.location.assign("/cliente/rede-academica/chat")});
+  const message=useMutation({mutationFn:(id:string)=>openDm({data:{targetProfileId:id}}),onSuccess:(conversation)=>navigate({to:"/cliente/rede-academica/chat",search:{conversation:conversation.id}})});
   if(isLoading)return <div className="mx-auto max-w-5xl p-6 text-sm text-muted-foreground">{t.loading}</div>;
   if(error||!data)return <div className="mx-auto max-w-3xl p-6"><div className="rounded-2xl border p-5">{t.unavailable}</div></div>;
   const p=data.profile;const share=async()=>{const url=window.location.href;if(navigator.share)await navigator.share({title:`@${p.username} · LDR`,url});else await navigator.clipboard.writeText(url)};
