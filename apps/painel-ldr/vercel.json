@@ -9,5 +9,29 @@
       "source": "/biblioteca/:path*",
       "destination": "/cliente/biblioteca/:path*"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/rede-academica",
+      "has": [
+        {
+          "type": "host",
+          "value": "painel.ldrrhestrategia.com"
+        }
+      ],
+      "destination": "https://ldracademy.online/rede-academica",
+      "permanent": false
+    },
+    {
+      "source": "/cliente/rede-academica/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "painel.ldrrhestrategia.com"
+        }
+      ],
+      "destination": "https://ldracademy.online/cliente/rede-academica/:path*",
+      "permanent": false
+    }
   ]
 }

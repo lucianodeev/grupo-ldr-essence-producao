@@ -62,7 +62,7 @@
 .academic-v4-post-menu[open] summary { background: hsl(var(--muted)); }
 .academic-v4-post-menu > div { max-width: min(210px, calc(100vw - 40px)); }
 .academic-v4-comment-input { min-height: 46px; font-size: 16px; }
-.academic-v4-utility-strip { overflow: hidden; }
+.academic-v4-utility-strip { overflow-x: auto; overflow-y: hidden; }
 .academic-v4-mobile-nav {
   bottom: 0 !important;
   padding-left: max(6px, env(safe-area-inset-left));
