@@ -592,3 +592,8 @@
 .academic-v4-post-actions button[aria-pressed="true"].bg-\[\#07315a\]:not(:disabled):hover {
   color: #fff !important;
 }
+/* Acolhido ativo — texto e ícone brancos */
+.academic-v4-post-actions button[aria-pressed="true"].bg-violet-600,
+.academic-v4-post-actions button[aria-pressed="true"].bg-violet-600:not(:disabled):hover {
+  color: #fff !important;
+}
