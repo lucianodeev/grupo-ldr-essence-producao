@@ -83,3 +83,11 @@ article .whitespace-pre-line{overflow-wrap:break-word!important;word-break:norma
   .text-3xl{font-size:1.32rem!important}
   .text-2xl{font-size:1.12rem!important}
 }
+
+/* Rede Acadêmica: mudança exclusivamente visual dos dois banners validados. */
+a.group[href='/cliente/rede-academica'],
+a.group[href='/rede-academica']{
+  background-image:none!important;
+  background-color:#7c3aed!important;
+  border-color:#7c3aed!important;
+}
