@@ -16,7 +16,7 @@ export async function getProfessionalServiceCatalog(userId: string) {
 
   const { data: profile } = await db
     .from("professional_profiles")
-    .select("id,category_id,country_code,professional_title,compliance_status,profile_status,is_public")
+    .select("id,category_id,country_code,city,languages,professional_title,compliance_status,profile_status,is_public,documents_verified,profile_verified")
     .eq("professional_account_id", account.id)
     .maybeSingle();
   if (!profile) fail("Complete seu perfil antes de escolher serviços.");
