@@ -1,20 +1,29 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import type { Session } from "@supabase/supabase-js";
+import { serializeCookieHeader } from "@supabase/ssr";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 import { supabase } from "@/integrations/supabase/client";
+import { ACADEMIC_RETURN_COOKIE, ACADEMY_ORIGIN, academicLoginHref, academicReturnPath } from "@/lib/academic-login-return";
 
 type ClientLoginSearch = {
   portal?: "services";
   v?: string;
+  next?: string;
+  auth_error?: string;
 };
 
 export const Route = createFileRoute("/cliente/login")({
-  validateSearch: (search: Record<string, unknown>): ClientLoginSearch => ({
-    portal: search.portal === "services" ? "services" : undefined,
-    v: typeof search.v === "string" ? search.v : undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>): ClientLoginSearch => {
+    const next = academicReturnPath(search["next"]);
+    return {
+      ...(search["portal"] === "services" ? { portal: "services" as const } : {}),
+      ...(typeof search["v"] === "string" ? { v: search["v"] } : {}),
+      ...(next ? { next } : {}),
+      ...(typeof search["auth_error"] === "string" ? { auth_error: search["auth_error"] } : {}),
+    };
+  },
   head: () => ({
     meta: [
       { title: "Minha Área — Grupo LDR Essence" },
@@ -59,7 +68,8 @@ function isServicePortalHost() {
   return /^portal\.ldrrhestrategia\.com$/i.test(window.location.hostname);
 }
 
-function clientDestination() {
+function clientDestination(next: string | null) {
+  if (isAcademyHost() && next) return next;
   if (isAcademyHost()) return "https://ldracademy.online/cliente/biblioteca";
   if (isServicePortalHost()) return "/cliente?portal=services&v=4";
   return "/cliente";
@@ -68,9 +78,9 @@ function clientDestination() {
 function oauthReturnUrl() {
   if (typeof window === "undefined") return "/api/auth/callback";
 
-  // Keep the Academy provider redirect on its established allow-listed host.
+  // PKCE must return to the origin that owns the verifier cookie.
   if (isAcademyHost()) {
-    return "https://learn.lucianoconecta.online/api/auth/callback?academy=1";
+    return `${ACADEMY_ORIGIN}/api/auth/callback`;
   }
 
   // Use one exact production callback for the Services Portal. Supabase Auth
@@ -98,11 +108,16 @@ async function syncBrowserSession(session: Session) {
 
 function ClientLogin() {
   const search = Route.useSearch();
+  const academicNext = academicReturnPath(search.next);
   const [busy, setBusy] = useState(false);
   const [servicePortal, setServicePortal] = useState(search.portal === "services");
   const redirecting = useRef(false);
 
   useEffect(() => {
+    if (isAcademyHost() && window.location.origin !== ACADEMY_ORIGIN) {
+      window.location.replace(`${ACADEMY_ORIGIN}${academicLoginHref(academicNext)}`);
+      return;
+    }
     if (cameFromCorporateBenefits()) {
       window.location.replace("/empresa/login");
       return;
@@ -125,7 +140,7 @@ function ClientLogin() {
           toast.error("Sua sessão precisa ser renovada. Entre novamente com o Google.");
           return;
         }
-        window.location.replace(clientDestination());
+        window.location.replace(clientDestination(academicNext));
       } catch {
         if (!active) return;
         redirecting.current = false;
@@ -152,11 +167,23 @@ function ClientLogin() {
       active = false;
       listener.subscription.unsubscribe();
     };
-  }, []);
+  }, [academicNext]);
 
   async function handleGoogle() {
     if (busy) return;
     setBusy(true);
+
+    if (isAcademyHost()) {
+      document.cookie = serializeCookieHeader(ACADEMIC_RETURN_COOKIE, academicNext ?? "", {
+        path: "/", sameSite: "lax", secure: true, maxAge: academicNext ? 600 : 0,
+      });
+      if (academicNext) {
+        // A fresh academic login supersedes an abandoned portal login on this origin.
+        for (const name of ["ldr_admin_oauth", "ldr_portal_oauth"]) {
+          document.cookie = serializeCookieHeader(name, "", { path: "/", sameSite: "lax", secure: true, maxAge: 0 });
+        }
+      }
+    }
 
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
@@ -182,6 +209,7 @@ function ClientLogin() {
 
   return (
     <ClientAuthShell title={title} subtitle={subtitle} areaLabel={title}>
+      {search.auth_error && <p role="alert" className="mb-3 text-sm text-destructive">Não foi possível concluir o login. Entre novamente com o Google para continuar.</p>}
       <button
         type="button"
         onClick={handleGoogle}

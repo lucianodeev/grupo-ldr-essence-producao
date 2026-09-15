@@ -3,6 +3,7 @@ import type { Session } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
 
 import { AcademyAccessibilityControls } from "@/components/academy-accessibility-controls";
+import { academicLoginHref } from "@/lib/academic-login-return";
 import { FreeContentAds } from "@/components/free-content-ads";
 import { LegacyTrainingProjectPanel } from "@/components/legacy-training-project-panel";
 import { supabase } from "@/integrations/supabase/client";
@@ -75,7 +76,7 @@ function ClientAreaLayout() {
 
         const {data}=await supabase.auth.getSession();
         if(!active)return;
-        if(!data.session){window.location.replace("/cliente/login");return;}
+        if(!data.session){window.location.replace(academicLoginHref(window.location.pathname+window.location.search+window.location.hash));return;}
 
         const ok=await syncSession(data.session);
         if(!active)return;
@@ -94,7 +95,7 @@ function ClientAreaLayout() {
   },[]);
 
   if(failed){
-    return <main className="mx-auto max-w-3xl px-4 py-8 sm:px-6"><section className="s8-card"><p className="font-semibold">Não foi possível validar sua sessão.</p><button type="button" onClick={()=>window.location.replace("/cliente/login")} className="mt-4 rounded-xl bg-primary px-4 py-3 text-sm font-bold text-primary-foreground">Entrar novamente</button></section></main>;
+    return <main className="mx-auto max-w-3xl px-4 py-8 sm:px-6"><section className="s8-card"><p className="font-semibold">Não foi possível validar sua sessão.</p><button type="button" onClick={()=>window.location.replace(academicLoginHref(window.location.pathname+window.location.search+window.location.hash))} className="mt-4 rounded-xl bg-primary px-4 py-3 text-sm font-bold text-primary-foreground">Entrar novamente</button></section></main>;
   }
 
   if(!ready){

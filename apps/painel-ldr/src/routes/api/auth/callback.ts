@@ -3,6 +3,7 @@ import { createServerClient, parseCookieHeader, serializeCookieHeader } from "@s
 
 import { normalizeSupabaseUrl } from "@/integrations/supabase/config";
 import type { Database } from "@/integrations/supabase/types";
+import { ACADEMIC_RETURN_COOKIE, ACADEMY_ORIGIN, academicLoginHref, academicReturnPath } from "@/lib/academic-login-return";
 
 function config() {
   const supabaseUrl = process.env["SUPABASE_URL"];
@@ -53,6 +54,9 @@ export const Route = createFileRoute("/api/auth/callback")({
         const code = url.searchParams.get("code");
         const servicePortal = isServicePortalCallback(url);
         const requestCookies = parseCookieHeader(request.headers.get("cookie") ?? "");
+        const academicReturn = url.origin === ACADEMY_ORIGIN
+          ? academicReturnPath(requestCookies.find(({ name }) => name === ACADEMIC_RETURN_COOKIE)?.value)
+          : null;
         const adminFlow =
           url.searchParams.get("admin") === "1" ||
           requestCookies.some(({ name, value }) => name === "ldr_admin_oauth" && value === "1");
@@ -83,7 +87,9 @@ export const Route = createFileRoute("/api/auth/callback")({
         );
 
         if (!code) {
-          const missingCodeDestination = adminFlow
+          const missingCodeDestination = academicReturn && !adminFlow && !portalFlow && !servicePortal
+            ? `${academicLoginHref(academicReturn)}&auth_error=missing_code`
+            : adminFlow
             ? "/login?auth_error=missing_code"
             : portalFlow
               ? portalLoginDestination(portalFlow, "missing_code")
@@ -92,12 +98,15 @@ export const Route = createFileRoute("/api/auth/callback")({
                 : "/cliente/login?auth_error=missing_code";
           if (adminFlow) clearTemporaryCookie(responseHeaders, "ldr_admin_oauth");
           if (portalFlow) clearTemporaryCookie(responseHeaders, "ldr_portal_oauth");
+          if (academicReturn) clearTemporaryCookie(responseHeaders, ACADEMIC_RETURN_COOKIE);
           responseHeaders.set("location", missingCodeDestination);
           return new Response(null, { status: 303, headers: responseHeaders });
         }
 
         const { error } = await supabase.auth.exchangeCodeForSession(code);
-        const destination = error
+        const destination = academicReturn && !adminFlow && !portalFlow && !servicePortal
+          ? error ? `${academicLoginHref(academicReturn)}&auth_error=exchange_failed` : academicReturn
+          : error
           ? adminFlow
             ? "/login?auth_error=exchange_failed"
             : portalFlow
@@ -115,6 +124,7 @@ export const Route = createFileRoute("/api/auth/callback")({
 
         if (adminFlow) clearTemporaryCookie(responseHeaders, "ldr_admin_oauth");
         if (portalFlow) clearTemporaryCookie(responseHeaders, "ldr_portal_oauth");
+        if (academicReturn) clearTemporaryCookie(responseHeaders, ACADEMIC_RETURN_COOKIE);
         responseHeaders.set("location", destination);
         return new Response(null, { status: 303, headers: responseHeaders });
       },
