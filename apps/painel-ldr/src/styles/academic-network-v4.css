@@ -587,3 +587,8 @@
     grid-column: 1 / -1;
   }
 }
+/* Salvo ativo — texto e ícone brancos */
+.academic-v4-post-actions button[aria-pressed="true"].bg-\[\#07315a\],
+.academic-v4-post-actions button[aria-pressed="true"].bg-\[\#07315a\]:not(:disabled):hover {
+  color: #fff !important;
+}
