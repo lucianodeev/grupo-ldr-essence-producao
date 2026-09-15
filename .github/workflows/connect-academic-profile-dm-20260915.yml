@@ -1,0 +1,41 @@
+name: Connect Academic profile DM safely
+on:
+  push:
+    branches: [safety/academy-actions-cards-20260915]
+    paths:
+      - '.github/workflows/connect-academic-profile-dm-20260915.yml'
+permissions:
+  contents: write
+jobs:
+  patch-build-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: safety/academy-actions-cards-20260915
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Connect profile to existing DM
+        run: python tools/connect_academic_profile_dm_20260915.py
+      - name: Diff check
+        run: git diff --check
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Typecheck affected route
+        working-directory: apps/painel-ldr
+        run: |
+          npm run typecheck 2>&1 | tee /tmp/typecheck.log || true
+          if grep -F 'src/routes/_clientarea.cliente.rede-academica.perfil.$username.tsx' /tmp/typecheck.log; then exit 1; fi
+      - name: Production build
+        working-directory: apps/painel-ldr
+        run: npm run build
+      - name: Commit validated profile DM patch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add 'apps/painel-ldr/src/routes/_clientarea.cliente.rede-academica.perfil.$username.tsx'
+          git commit -m 'feat(academic): connect profile message action to DM'
+          git push origin safety/academy-actions-cards-20260915
