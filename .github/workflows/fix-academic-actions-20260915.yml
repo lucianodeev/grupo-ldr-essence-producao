@@ -39,3 +39,4 @@ jobs:
           git add apps/painel-ldr/src/components/academic-social-v3-feed.tsx apps/painel-ldr/src/lib/academic-network.server.ts
           git commit -m 'fix(academic): stabilize support and save toggles'
           git push origin safety/academy-actions-cards-20260915
+# retry 2: aligned current notification API
