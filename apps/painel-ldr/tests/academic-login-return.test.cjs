@@ -144,3 +144,21 @@ test('failed login presents an accessible retry message instead of a silent loop
   const alert = page.tree.props.children.find(child => child?.props?.role === 'alert');
   assert.match(alert.props.children, /Não foi possível concluir o login/);
 });
+
+test('client-side entry preserves the destination route before the browser URL changes', async () => {
+  const route = load('routes/_clientarea.tsx', {
+    '@tanstack/react-router': { createFileRoute: () => options => options, redirect: options => options },
+    '@/components/academy-accessibility-controls': {},
+    '@/components/free-content-ads': {},
+    '@/components/legacy-training-project-panel': {},
+    '@/integrations/supabase/session.functions': { getClientAuthState: async () => ({ authenticated: false }) },
+    '@/integrations/supabase/client': { supabase: { auth: { getSession: async () => ({ data: { session: null } }) } } },
+  }, { window: { location: { pathname: '/rede-academica' } } }).Route;
+  for (const destination of ['/cliente/rede-academica', next, '/cliente/biblioteca']) {
+    await assert.rejects(route.beforeLoad({ location: { href: destination } }), error => {
+      assert.equal(error.to, '/cliente/login');
+      assert.equal(error.search.next, helper.academicReturnPath(destination) ?? undefined);
+      return true;
+    });
+  }
+});
