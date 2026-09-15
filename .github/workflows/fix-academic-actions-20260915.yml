@@ -1,0 +1,41 @@
+name: Fix Academic actions safely
+on:
+  push:
+    branches: [safety/academy-actions-cards-20260915]
+    paths:
+      - '.github/workflows/fix-academic-actions-20260915.yml'
+permissions:
+  contents: write
+jobs:
+  patch-build-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: safety/academy-actions-cards-20260915
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Apply minimal patch
+        run: python tools/fix_academic_actions_20260915.py
+      - name: Diff check
+        run: git diff --check
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Typecheck targeted files
+        working-directory: apps/painel-ldr
+        run: |
+          npm run typecheck 2>&1 | tee /tmp/typecheck.log || true
+          if grep -E 'src/(components/academic-social-v3-feed|lib/academic-network\.server)' /tmp/typecheck.log; then exit 1; fi
+      - name: Production build
+        working-directory: apps/painel-ldr
+        run: npm run build
+      - name: Commit validated patch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add apps/painel-ldr/src/components/academic-social-v3-feed.tsx apps/painel-ldr/src/lib/academic-network.server.ts
+          git commit -m 'fix(academic): stabilize support and save toggles'
+          git push origin safety/academy-actions-cards-20260915
