@@ -21,7 +21,13 @@ export async function getProfessionalServiceCatalog(userId: string) {
     .maybeSingle();
   if (!profile) fail("Complete seu perfil antes de escolher serviços.");
 
-  const [{ data: category }, { data: catalog }, { data: mappings }, { data: config }] = await Promise.all([
+  const [
+    { data: category },
+    { data: catalog },
+    { data: mappings },
+    { data: config },
+    { data: existingServices },
+  ] = await Promise.all([
     db
       .from("professional_categories")
       .select("id,slug,name_pt,name_en,name_fr,name_es,network_group,regulated_by_default,requires_admin_review,requires_license,requires_documents,fee_compliance_status")
@@ -44,6 +50,11 @@ export async function getProfessionalServiceCatalog(userId: string) {
       .eq("config_key", "platform_fee_percent")
       .eq("active", true)
       .maybeSingle(),
+    db
+      .from("professional_services")
+      .select("professional_catalog_key")
+      .eq("professional_profile_id", profile.id)
+      .not("professional_catalog_key", "is", null),
   ]);
 
   const specialties = (mappings ?? [])
@@ -51,11 +62,20 @@ export async function getProfessionalServiceCatalog(userId: string) {
     .filter((row: any) => row?.active !== false)
     .sort((a: any, b: any) => Number(a?.sort_order ?? 100) - Number(b?.sort_order ?? 100));
 
+  const existingCatalogKeys = new Set(
+    (existingServices ?? [])
+      .map((row: any) => row?.professional_catalog_key)
+      .filter(Boolean),
+  );
+  const availableCatalog = (catalog ?? []).filter(
+    (service: any) => !existingCatalogKeys.has(service.catalog_key),
+  );
+
   return {
     account,
     profile,
     category,
-    catalog: catalog ?? [],
+    catalog: availableCatalog,
     specialties,
     platformFeePercent: Number(config?.numeric_value ?? 20),
   };
