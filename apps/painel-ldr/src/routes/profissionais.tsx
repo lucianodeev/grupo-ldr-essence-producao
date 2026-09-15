@@ -196,10 +196,10 @@ const COPY = {
 } as const;
 
 const HUB_COPY = {
-  pt: { title: "Profissionais LDR", sub: "Encontre atendimento, conheça nossa Clínica Social ou faça parte da Rede LDR.", clinic: "Clínica Social de Psicanálise", clinicText: "Atendimento psicanalítico com valor social: R$ 30 no Brasil e € 20 na Europa.", find: "Encontrar um profissional", join: "Sou profissional" },
-  en: { title: "LDR Professionals", sub: "Find care, discover our Social Clinic or join the LDR Network.", clinic: "Social Psychoanalysis Clinic", clinicText: "Psychoanalysis at a social rate: R$30 in Brazil and €20 in Europe.", find: "Find a professional", join: "I am a professional" },
-  fr: { title: "Professionnels LDR", sub: "Trouvez un accompagnement, découvrez notre Clinique Sociale ou rejoignez le Réseau LDR.", clinic: "Clinique Sociale de Psychanalyse", clinicText: "Psychanalyse à tarif social : 30 R$ au Brésil et 20 € en Europe.", find: "Trouver un professionnel", join: "Je suis professionnel" },
-  es: { title: "Profesionales LDR", sub: "Encuentra atención, conoce nuestra Clínica Social o forma parte de la Red LDR.", clinic: "Clínica Social de Psicoanálisis", clinicText: "Psicoanálisis con valor social: R$30 en Brasil y €20 en Europa.", find: "Encontrar un profesional", join: "Soy profesional" },
+  pt: { title: "Profissionais LDR", sub: "Encontre atendimento, conheça nossa Clínica Social ou faça parte da Rede LDR.", clinic: "Clínica Social de Psicanálise", clinicText: "Atendimento psicanalítico com valor social: R$ 80 no Brasil e € 25 na Europa.", find: "Encontrar um profissional", join: "Sou profissional" },
+  en: { title: "LDR Professionals", sub: "Find care, discover our Social Clinic or join the LDR Network.", clinic: "Social Psychoanalysis Clinic", clinicText: "Psychoanalysis at a social rate: R$80 in Brazil and €25 in Europe.", find: "Find a professional", join: "I am a professional" },
+  fr: { title: "Professionnels LDR", sub: "Trouvez un accompagnement, découvrez notre Clinique Sociale ou rejoignez le Réseau LDR.", clinic: "Clinique Sociale de Psychanalyse", clinicText: "Psychanalyse à tarif social : 80 R$ au Brésil et 25 € en Europe.", find: "Trouver un professionnel", join: "Je suis professionnel" },
+  es: { title: "Profesionales LDR", sub: "Encuentra atención, conoce nuestra Clínica Social o forma parte de la Red LDR.", clinic: "Clínica Social de Psicoanálisis", clinicText: "Psicoanálisis con valor social: R$80 en Brasil y €25 en Europa.", find: "Encontrar un profesional", join: "Soy profesional" },
 } as const;
 
 const NAVY = "#0b1428";

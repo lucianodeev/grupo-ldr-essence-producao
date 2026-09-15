@@ -21,20 +21,36 @@ test("€100 divide €20/€80", () =>
     professionalNetCents: 8000,
   }));
 
-test("R$30 da Clínica Social divide R$6/R$24", () =>
-  assert.deepEqual(calculatePlatformSplit(3000), {
-    grossAmountCents: 3000,
+test("R$80 da Clínica Social divide R$16/R$64", () =>
+  assert.deepEqual(calculatePlatformSplit(8000), {
+    grossAmountCents: 8000,
     platformFeePercent: 20,
-    platformFeeCents: 600,
-    professionalNetCents: 2400,
+    platformFeeCents: 1600,
+    professionalNetCents: 6400,
   }));
 
-test("€20 da Clínica Social divide €4/€16", () =>
-  assert.deepEqual(calculatePlatformSplit(2000), {
-    grossAmountCents: 2000,
+test("€25 da Clínica Social divide €5/€20", () =>
+  assert.deepEqual(calculatePlatformSplit(2500), {
+    grossAmountCents: 2500,
     platformFeePercent: 20,
-    platformFeeCents: 400,
-    professionalNetCents: 1600,
+    platformFeeCents: 500,
+    professionalNetCents: 2000,
+  }));
+
+test("R$180 da sessão padrão divide R$36/R$144", () =>
+  assert.deepEqual(calculatePlatformSplit(18000), {
+    grossAmountCents: 18000,
+    platformFeePercent: 20,
+    platformFeeCents: 3600,
+    professionalNetCents: 14400,
+  }));
+
+test("€50 da sessão padrão divide €10/€40", () =>
+  assert.deepEqual(calculatePlatformSplit(5000), {
+    grossAmountCents: 5000,
+    platformFeePercent: 20,
+    platformFeeCents: 1000,
+    professionalNetCents: 4000,
   }));
 
 test("estorno integral não cobra comissão", () =>

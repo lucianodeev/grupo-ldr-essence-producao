@@ -10,8 +10,8 @@ type Client = SupabaseClient<Database>;
 const db = supabaseAdmin as unknown as { from: (table: string) => any };
 const LUCIANO_SLUG = "luciano-rodrigues-almeida";
 const SOCIAL_PRODUCT_KEY = "social_clinic_psychoanalysis_session";
-const BRL_FALLBACK = 3000;
-const EUR_FALLBACK = 2000;
+const BRL_FALLBACK = 8000;
+const EUR_FALLBACK = 2500;
 
 function fail(message: string): never { throw new Error(message); }
 function clean(value: unknown, max = 300) { return String(value ?? "").trim().slice(0, max); }
