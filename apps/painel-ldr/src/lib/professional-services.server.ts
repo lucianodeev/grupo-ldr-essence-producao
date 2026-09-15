@@ -142,7 +142,7 @@ export async function saveProfessionalService(userId: string, input: SaveInput) 
   const languageCodes = (input.languageCodes ?? []).map((value) => String(value).trim().toLowerCase()).filter(Boolean);
 
   const payload = {
-    catalog_key: catalog?.catalog_key ?? null,
+    professional_catalog_key: catalog?.catalog_key ?? null,
     source_type: sourceType,
     name,
     description,
@@ -185,6 +185,7 @@ export async function saveProfessionalService(userId: string, input: SaveInput) 
     .insert({ professional_profile_id: profile.id, ...payload, sort_order: 100 })
     .select("id")
     .single();
+  if (error?.code === "23505" && catalog?.catalog_key) fail("Este serviço já está cadastrado no seu perfil.");
   if (error || !data) fail("Não foi possível criar o serviço.");
 
   return { ok: true as const, id: data.id, bookingEnabled, approvalStatus, feeComplianceStatus };
