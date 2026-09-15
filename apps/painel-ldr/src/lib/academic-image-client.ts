@@ -17,7 +17,9 @@ export async function optimizeAcademicImage(file:File,maxDimension:number){
     const blob=await new Promise<Blob|null>(resolve=>canvas.toBlob(resolve,"image/webp",0.86));
     if(!blob)throw new Error("Não foi possível comprimir a imagem.");
     if(blob.size>5*1024*1024)throw new Error("A imagem otimizada ainda excede 5 MB.");
+    const actualType=ACCEPTED.has(blob.type.toLowerCase())?blob.type.toLowerCase():type;
+    const ext=actualType==="image/jpeg"?"jpg":actualType==="image/png"?"png":"webp";
     const base=file.name.replace(/\.[^.]+$/i,"")||"academic-image";
-    return new File([blob],`${base}.webp`,{type:"image/webp",lastModified:Date.now()});
+    return new File([blob],`${base}.${ext}`,{type:actualType,lastModified:Date.now()});
   }finally{URL.revokeObjectURL(url)}
 }
