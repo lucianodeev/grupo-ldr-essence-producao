@@ -64,13 +64,6 @@ function AcademicNetworkPage(){
     <nav aria-label="Academic network" className="hidden grid-cols-5 overflow-hidden rounded-[24px] border bg-card shadow-sm sm:grid">
       {nav.map(([key,Icon,label])=><button key={key} onClick={()=>setTab(key)} aria-current={tab===key?"page":undefined} className={`min-w-0 px-1 py-3 text-[9px] font-black transition sm:px-3 sm:text-xs ${tab===key?"bg-[#07315a] text-white shadow-inner":"text-foreground hover:bg-muted/70"}`}><Icon className={`mx-auto mb-1 h-5 w-5 ${tab===key?"text-[#efc56d]":""}`}/><span className="block whitespace-normal">{label}</span></button>)}
     </nav>
-    <div className="hidden flex-wrap items-center gap-2 sm:flex">
-      <button type="button" onClick={()=>{setTab("feed");setTimeout(()=>{const el=document.getElementById("academic-composer");el?.scrollIntoView({behavior:"smooth",block:"center"});el?.querySelector<HTMLTextAreaElement>("textarea")?.focus()},0)}} className="min-h-11 rounded-xl bg-[#07315a] px-4 py-3 text-[10px] font-black text-white"><Plus className="mr-1 inline h-4 w-4"/>{locale==="pt"?"CRIAR":locale==="en"?"CREATE":locale==="fr"?"CRÉER":"CREAR"}</button>
-      <Link to="/cliente/rede-academica/buscar" className="min-h-11 rounded-xl border bg-card px-4 py-3 text-[10px] font-black"><Search className="mr-1 inline h-4 w-4"/>{locale==="pt"?"BUSCAR":locale==="en"?"SEARCH":locale==="fr"?"RECHERCHER":"BUSCAR"}</Link>
-      <Link to="/cliente/rede-academica/notificacoes" className="min-h-11 rounded-xl border bg-card px-4 py-3 text-[10px] font-black"><Bell className="mr-1 inline h-4 w-4"/>{locale==="pt"?"NOTIFICAÇÕES":locale==="en"?"NOTIFICATIONS":locale==="fr"?"NOTIFICATIONS":"NOTIFICACIONES"}</Link>
-      <Link to="/cliente/rede-academica/desafios" className="min-h-11 rounded-xl border bg-card px-4 py-3 text-[10px] font-black">{locale==="pt"?"DESAFIOS":locale==="en"?"CHALLENGES":locale==="fr"?"DÉFIS":"DESAFÍOS"}</Link>
-      <Link to="/cliente/rede-academica/salvos" className="min-h-11 rounded-xl border bg-card px-4 py-3 text-[10px] font-black">{t.saved}</Link>
-    </div>
 
     {!access.premium&&tab!=="diary"&&tab!=="profile"&&<div className="rounded-2xl border border-amber-300/60 bg-amber-50 p-4 text-sm text-amber-950 dark:bg-amber-950/20 dark:text-amber-100"><b>{t.freeTitle}</b> {t.freeText} <Link to="/cliente/biblioteca" className="ml-1 font-black underline">{t.subscription}</Link></div>}
     {tab==="feed"&&<AcademicOnboardingV3 locale={locale}/>} 
@@ -84,13 +77,16 @@ function AcademicNetworkPage(){
 }
 
 function AcademicUtilityStrip({locale}:{locale:Locale}){
-  const labels={pt:{library:"Biblioteca",accessibility:"Acessibilidade",chat:"Chat"},en:{library:"Library",accessibility:"Accessibility",chat:"Chat"},fr:{library:"Bibliothèque",accessibility:"Accessibilité",chat:"Chat"},es:{library:"Biblioteca",accessibility:"Accesibilidad",chat:"Chat"}}[locale];
+  const labels={pt:{library:"Biblioteca",accessibility:"Acessibilidade",chat:"Chat",search:"Buscar",notifications:"Notificações",challenges:"Desafios"},en:{library:"Library",accessibility:"Accessibility",chat:"Chat",search:"Search",notifications:"Notifications",challenges:"Challenges"},fr:{library:"Bibliothèque",accessibility:"Accessibilité",chat:"Chat",search:"Rechercher",notifications:"Notifications",challenges:"Défis"},es:{library:"Biblioteca",accessibility:"Accesibilidad",chat:"Chat",search:"Buscar",notifications:"Notificaciones",challenges:"Desafíos"}}[locale];
   const openAccessibility=()=>document.querySelector<HTMLButtonElement>('[data-academy-accessibility-drawer="true"] > button')?.click();
   const item="flex min-h-11 shrink-0 items-center justify-center gap-1.5 rounded-xl px-2.5 text-[9px] font-black transition hover:bg-muted sm:gap-2 sm:px-4 sm:text-[10px]";
   return <section aria-label={locale==="pt"?"Acessos rápidos":locale==="en"?"Quick access":locale==="fr"?"Accès rapides":"Accesos rápidos"} className="academic-v4-utility-strip flex items-center gap-1 overflow-x-auto rounded-[20px] border bg-card p-1.5 shadow-sm [scrollbar-width:none]">
     <Link to="/cliente/biblioteca" className={item}><BookHeart className="h-4 w-4 shrink-0 text-[#b78927]"/><span>{labels.library}</span></Link>
     <button type="button" onClick={openAccessibility} className={item}><Shield className="h-4 w-4 shrink-0 text-[#b78927]"/><span>{labels.accessibility}</span></button>
     <Link to="/cliente/rede-academica/chat" className={item}><MessageCircle className="h-4 w-4 shrink-0 text-[#b78927]"/><span>{labels.chat}</span></Link>
+    <Link to="/cliente/rede-academica/buscar" className={item}><Search className="h-4 w-4 shrink-0 text-[#b78927]"/><span>{labels.search}</span></Link>
+    <Link to="/cliente/rede-academica/notificacoes" className={item}><Bell className="h-4 w-4 shrink-0 text-[#b78927]"/><span>{labels.notifications}</span></Link>
+    <Link to="/cliente/rede-academica/desafios" className={item}><Network className="h-4 w-4 shrink-0 text-[#b78927]"/><span>{labels.challenges}</span></Link>
   </section>
 }
 
