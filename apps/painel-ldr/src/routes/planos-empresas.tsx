@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { ArrowRight, Building2, Check, LockKeyhole, SlidersHorizontal, Sparkles, UsersRound } from "lucide-react";
+import { ArrowRight, BadgeCheck, Building2, Check, LockKeyhole, ShieldCheck, SlidersHorizontal, Sparkles, UsersRound, WalletCards } from "lucide-react";
 import { LanguageSelect, useI18n } from "@/lib/i18n";
 import {
   calculateCustomCompanyPlan,
@@ -70,6 +70,20 @@ const COPY = {
     confidential: "Confidencialidade preservada",
     confidentialText: "A empresa não acessa conteúdo de sessões, anotações, motivo do atendimento ou informações clínicas. Visualiza apenas dados administrativos necessários à gestão do benefício.",
     presencial: "Serviços presenciais e ações corporativas seguem disponibilidade, localização, logística e regras específicas de contratação.",
+    plansTitle: "Escolha com calma o plano que combina com sua empresa.",
+    plansText: "Os planos foram organizados por tamanho de equipe para facilitar a comparação. Você pode alterar a região de cobrança e ver os valores antes de continuar.",
+    pricesFor: "Ver preços para",
+    essentialsDesc: "Uma entrada simples para pequenas equipes que querem oferecer cuidado e desenvolvimento com gestão centralizada.",
+    proDesc: "Mais créditos mensais para empresas em crescimento, mantendo a mesma experiência simples para empresa e funcionários.",
+    customDesc: "Para equipes maiores, monte uma configuração sob medida e acompanhe a estimativa mensal em tempo real.",
+    chooseEssential: "Escolher Essencial",
+    choosePro: "Escolher Pro",
+    simulatePlan: "Simular plano personalizado",
+    monthlyBilling: "Cobrança mensal com gestão pela Área da Empresa.",
+    trustPrivacy: "Conteúdo dos atendimentos permanece confidencial",
+    trustFlexibility: "Benefícios flexíveis conforme a necessidade da equipe",
+    trustManagement: "Gestão simples em um único painel",
+    livePricing: "Estimativa atualizada em tempo real",
   },
   en: {
     eyebrow: "LDR corporate benefits",
@@ -114,6 +128,20 @@ const COPY = {
     confidential: "Confidentiality preserved",
     confidentialText: "The company cannot access session content, notes, reasons for care or clinical information. It only sees the administrative data needed to manage the benefit.",
     presencial: "On-site services and corporate actions depend on availability, location, logistics and specific contracting rules.",
+    plansTitle: "Choose the plan that feels right for your company.",
+    plansText: "Plans are organized by team size to make comparison easier. Change the billing region and review prices before continuing.",
+    pricesFor: "Show prices for",
+    essentialsDesc: "A simple starting point for small teams that want to offer care and development with centralized management.",
+    proDesc: "More monthly credits for growing companies while keeping the same simple experience for companies and employees.",
+    customDesc: "For larger teams, build a tailored setup and follow the monthly estimate in real time.",
+    chooseEssential: "Choose Essential",
+    choosePro: "Choose Pro",
+    simulatePlan: "Simulate a custom plan",
+    monthlyBilling: "Monthly billing managed through the Company Area.",
+    trustPrivacy: "Care content remains confidential",
+    trustFlexibility: "Flexible benefits based on team needs",
+    trustManagement: "Simple management in one dashboard",
+    livePricing: "Estimate updates in real time",
   },
   fr: {
     eyebrow: "Avantages entreprise LDR",
@@ -158,6 +186,20 @@ const COPY = {
     confidential: "Confidentialité préservée",
     confidentialText: "L’entreprise n’accède ni au contenu des séances, ni aux notes, ni au motif de consultation, ni aux informations cliniques. Elle ne voit que les données administratives nécessaires.",
     presencial: "Les services sur site et actions corporate dépendent de la disponibilité, du lieu, de la logistique et de règles spécifiques.",
+    plansTitle: "Choisissez sereinement le plan adapté à votre entreprise.",
+    plansText: "Les plans sont organisés par taille d’équipe pour faciliter la comparaison. Modifiez la région de facturation et consultez les tarifs avant de continuer.",
+    pricesFor: "Voir les tarifs pour",
+    essentialsDesc: "Une formule simple pour les petites équipes souhaitant proposer soin et développement avec une gestion centralisée.",
+    proDesc: "Davantage de crédits mensuels pour les entreprises en croissance, avec la même expérience simple pour tous.",
+    customDesc: "Pour les grandes équipes, créez une configuration sur mesure et suivez l’estimation mensuelle en temps réel.",
+    chooseEssential: "Choisir Essentiel",
+    choosePro: "Choisir Pro",
+    simulatePlan: "Simuler un plan personnalisé",
+    monthlyBilling: "Facturation mensuelle gérée depuis l’Espace Entreprise.",
+    trustPrivacy: "Le contenu des accompagnements reste confidentiel",
+    trustFlexibility: "Des avantages flexibles selon les besoins de l’équipe",
+    trustManagement: "Une gestion simple depuis un seul espace",
+    livePricing: "Estimation mise à jour en temps réel",
   },
   es: {
     eyebrow: "Beneficios corporativos LDR",
@@ -202,6 +244,20 @@ const COPY = {
     confidential: "Confidencialidad preservada",
     confidentialText: "La empresa no accede al contenido de sesiones, notas, motivo de atención ni información clínica. Solo ve los datos administrativos necesarios para gestionar el beneficio.",
     presencial: "Los servicios presenciales y acciones corporativas dependen de disponibilidad, ubicación, logística y reglas específicas de contratación.",
+    plansTitle: "Elige con calma el plan que mejor encaja con tu empresa.",
+    plansText: "Los planes están organizados por tamaño de equipo para facilitar la comparación. Cambia la región de facturación y revisa los precios antes de continuar.",
+    pricesFor: "Ver precios para",
+    essentialsDesc: "Una opción sencilla para equipos pequeños que quieren ofrecer cuidado y desarrollo con gestión centralizada.",
+    proDesc: "Más créditos mensuales para empresas en crecimiento, manteniendo una experiencia simple para empresa y empleados.",
+    customDesc: "Para equipos más grandes, crea una configuración a medida y consulta la estimación mensual en tiempo real.",
+    chooseEssential: "Elegir Esencial",
+    choosePro: "Elegir Pro",
+    simulatePlan: "Simular plan personalizado",
+    monthlyBilling: "Facturación mensual gestionada desde el Área de Empresa.",
+    trustPrivacy: "El contenido de las atenciones permanece confidencial",
+    trustFlexibility: "Beneficios flexibles según las necesidades del equipo",
+    trustManagement: "Gestión sencilla desde un único panel",
+    livePricing: "Estimación actualizada en tiempo real",
   },
 } as const;
 
@@ -229,25 +285,77 @@ function CompanyPlans() {
   const toggle = (key: CompanyServiceKey) => setServices((current) => current.includes(key) ? current.filter((item) => item !== key) : [...current, key]);
 
   return <div className="min-h-screen bg-background text-foreground">
-    <header className="border-b bg-card/95"><div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-6"><Link to="/" className="font-serif text-xl font-bold">Grupo LDR Essence</Link><div className="flex items-center gap-3"><LanguageSelect/><Link to="/empresa/login" className="rounded-xl border px-4 py-2 text-sm font-black text-primary">{copy.login}</Link></div></div></header>
+    <header className="sticky top-0 z-40 border-b bg-card/90 backdrop-blur-xl">
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-6">
+        <Link to="/" className="font-serif text-xl font-bold">Grupo LDR Essence</Link>
+        <div className="flex items-center gap-3"><LanguageSelect/><Link to="/empresa/login" className="rounded-xl border border-primary/15 bg-white px-4 py-2 text-sm font-black text-primary transition hover:border-primary/35 hover:bg-primary/5">{copy.login}</Link></div>
+      </div>
+    </header>
     <main>
-      <section className="bg-primary text-primary-foreground"><div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20"><p className="text-xs font-black uppercase tracking-[.18em] text-secondary">{copy.eyebrow}</p><h1 className="mt-3 max-w-4xl font-serif text-4xl leading-tight sm:text-5xl">{copy.title}</h1><p className="mt-5 max-w-3xl text-base leading-7 opacity-85 sm:text-lg">{copy.intro}</p></div></section>
+      <section className="relative overflow-hidden bg-primary text-primary-foreground">
+        <div className="absolute -right-24 -top-24 h-80 w-80 rounded-full bg-secondary/15 blur-3xl"/>
+        <div className="absolute -bottom-32 left-1/4 h-72 w-72 rounded-full bg-white/5 blur-3xl"/>
+        <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20">
+          <p className="text-xs font-black uppercase tracking-[.18em] text-secondary">{copy.eyebrow}</p>
+          <h1 className="mt-3 max-w-4xl font-serif text-4xl leading-tight sm:text-5xl">{copy.title}</h1>
+          <p className="mt-5 max-w-3xl text-base leading-7 text-white/80 sm:text-lg">{copy.intro}</p>
+          <div className="mt-8 grid max-w-4xl gap-3 sm:grid-cols-3">
+            <div className="flex items-start gap-3 rounded-2xl border border-white/15 bg-white/7 p-4"><ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-secondary"/><span className="text-sm leading-6 text-white/85">{copy.trustPrivacy}</span></div>
+            <div className="flex items-start gap-3 rounded-2xl border border-white/15 bg-white/7 p-4"><Sparkles className="mt-0.5 h-5 w-5 shrink-0 text-secondary"/><span className="text-sm leading-6 text-white/85">{copy.trustFlexibility}</span></div>
+            <div className="flex items-start gap-3 rounded-2xl border border-white/15 bg-white/7 p-4"><WalletCards className="mt-0.5 h-5 w-5 shrink-0 text-secondary"/><span className="text-sm leading-6 text-white/85">{copy.trustManagement}</span></div>
+          </div>
+        </div>
+      </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6"><div className="grid gap-5 lg:grid-cols-3">
-        <PlanCard title={copy.essentials} range={`1–10 ${copy.employees}`} price={money(pricing.essentials.monthlyCents, pricing.currency, locale)} credits={`${pricing.essentials.credits} ${copy.credits}`} bullets={[copy.panel, copy.services, copy.privacy]} cta={copy.start}/>
-        <PlanCard title={copy.pro} range={`11–50 ${copy.employees}`} price={money(pricing.pro.monthlyCents, pricing.currency, locale)} credits={`${pricing.pro.credits} ${copy.credits}`} bullets={[copy.panel, copy.services, copy.privacy]} cta={copy.start} badge={copy.recommended}/>
-        <PlanCard title={copy.custom} range={`51+ ${copy.employees}`} price={copy.configure} credits={copy.customOnly} bullets={[copy.panel, copy.chooseServices, copy.privacy]} cta={copy.configure}/>
-      </div></section>
-
-      <section className="border-y bg-muted/35"><div className="mx-auto max-w-7xl px-4 py-12 sm:px-6"><div className="grid gap-8 lg:grid-cols-[1fr_.78fr]">
-        <div className="s8-card"><div className="flex items-center gap-3"><SlidersHorizontal className="h-6 w-6 text-primary"/><div><p className="text-xs font-black uppercase tracking-[.16em] text-primary">51+ {copy.employees}</p><h2 className="font-serif text-3xl">{copy.configure}</h2></div></div><p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">{copy.configureText}</p>
-          <div className="mt-6 grid gap-5 sm:grid-cols-2"><div><label className="s8-label">{copy.region}</label><div className="grid grid-cols-2 gap-2"><button type="button" onClick={()=>setRegion("EU")} className={`rounded-xl border px-4 py-3 text-sm font-bold ${region==="EU"?"bg-primary text-primary-foreground":"bg-card"}`}>{copy.europe}</button><button type="button" onClick={()=>setRegion("BR")} className={`rounded-xl border px-4 py-3 text-sm font-bold ${region==="BR"?"bg-primary text-primary-foreground":"bg-card"}`}>{copy.brazil}</button></div></div><div><label className="s8-label">{copy.employeeCount}</label><input type="number" min={51} value={employees} onChange={(event)=>setEmployees(Math.max(51, Number(event.target.value)||51))} className="s8-field"/></div></div>
-          <div className="mt-6"><p className="s8-label">{copy.chooseServices}</p><div className="grid gap-2 sm:grid-cols-2">{COMPANY_SERVICE_KEYS.map((key)=><button type="button" key={key} onClick={()=>toggle(key)} className={`flex items-center justify-between gap-3 rounded-xl border px-4 py-3 text-left text-sm font-bold transition ${services.includes(key)?"border-primary bg-primary/5 text-primary":"bg-card"}`}><span>{SERVICE_LABELS[key][locale]}</span>{services.includes(key)&&<Check className="h-4 w-4 shrink-0"/>}</button>)}</div></div>
-          <div className="mt-6"><p className="s8-label">{copy.extraCredits}</p><div className="grid grid-cols-2 gap-2 sm:grid-cols-4">{([0,5,10,25] as const).map((qty)=><button key={qty} type="button" onClick={()=>setExtraCredits(qty)} className={`rounded-xl border px-3 py-3 text-sm font-black ${extraCredits===qty?"bg-primary text-primary-foreground":"bg-card"}`}>{qty===0?copy.none:`+${qty}`}</button>)}</div></div>
+      <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
+        <div className="mb-8 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+          <div className="max-w-3xl">
+            <p className="text-xs font-black uppercase tracking-[.18em] text-primary">{copy.eyebrow}</p>
+            <h2 className="mt-2 font-serif text-3xl leading-tight sm:text-4xl">{copy.plansTitle}</h2>
+            <p className="mt-3 text-sm leading-7 text-muted-foreground sm:text-base">{copy.plansText}</p>
+          </div>
+          <div className="w-full rounded-2xl border bg-card p-2 shadow-sm lg:w-auto">
+            <p className="px-2 pb-2 text-xs font-black uppercase tracking-[.12em] text-muted-foreground">{copy.pricesFor}</p>
+            <div className="grid grid-cols-2 gap-2" role="group" aria-label={copy.pricesFor}>
+              <button type="button" aria-pressed={region === "EU"} onClick={()=>setRegion("EU")} className={`min-h-11 rounded-xl px-4 py-2.5 text-sm font-black transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary ${region==="EU"?"bg-primary text-primary-foreground shadow-sm":"bg-muted/45 text-foreground hover:bg-muted"}`}>{copy.europe}</button>
+              <button type="button" aria-pressed={region === "BR"} onClick={()=>setRegion("BR")} className={`min-h-11 rounded-xl px-4 py-2.5 text-sm font-black transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary ${region==="BR"?"bg-primary text-primary-foreground shadow-sm":"bg-muted/45 text-foreground hover:bg-muted"}`}>{copy.brazil}</button>
+            </div>
+          </div>
         </div>
 
-        <aside className="s8-card h-fit lg:sticky lg:top-5"><div className="flex items-center gap-3"><Building2 className="h-6 w-6 text-primary"/><h2 className="font-serif text-2xl">{copy.custom}</h2></div><div className="mt-5 space-y-3 text-sm"><SummaryRow label={`${custom.employees} ${copy.employees}`} value={`${money(custom.employeeRateCents, custom.currency, locale)} × ${custom.employees}`}/><SummaryRow label={copy.base} value={money(custom.employeeBaseCents, custom.currency, locale)}/><SummaryRow label={copy.addServices} value={money(custom.servicesCents, custom.currency, locale)}/><SummaryRow label={copy.addCredits} value={money(custom.creditsCents, custom.currency, locale)}/></div><div className="mt-5 border-t pt-5"><p className="text-sm font-bold text-muted-foreground">{copy.total}</p><p className="mt-1 font-serif text-4xl font-bold text-primary">{money(custom.monthlyCents, custom.currency, locale)}<span className="text-sm font-sans text-muted-foreground"> {copy.month}</span></p><p className="mt-2 text-xs text-muted-foreground">{copy.perEmployee}: <strong>{money(custom.perEmployeeCents, custom.currency, locale)}</strong></p></div><Link to="/empresa/login" className="mt-6 flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 font-black text-primary-foreground">{copy.continue}<ArrowRight className="h-4 w-4"/></Link><p className="mt-3 text-xs leading-5 text-muted-foreground">{copy.checkoutNote}</p></aside>
-      </div></div></section>
+        <div className="grid gap-6 lg:grid-cols-3">
+          <PlanCard title={copy.essentials} range={`1–10 ${copy.employees}`} description={copy.essentialsDesc} price={money(pricing.essentials.monthlyCents, pricing.currency, locale)} month={copy.month} credits={`${pricing.essentials.credits} ${copy.credits}`} bullets={[copy.panel, copy.services, copy.privacy]} cta={copy.chooseEssential} microcopy={copy.monthlyBilling} kind="essential"/>
+          <PlanCard title={copy.pro} range={`11–50 ${copy.employees}`} description={copy.proDesc} price={money(pricing.pro.monthlyCents, pricing.currency, locale)} month={copy.month} credits={`${pricing.pro.credits} ${copy.credits}`} bullets={[copy.panel, copy.services, copy.privacy]} cta={copy.choosePro} microcopy={copy.monthlyBilling} badge={copy.recommended} kind="pro"/>
+          <PlanCard title={copy.custom} range={`51+ ${copy.employees}`} description={copy.customDesc} price={copy.configure} credits={copy.customOnly} bullets={[copy.panel, copy.chooseServices, copy.privacy]} cta={copy.simulatePlan} microcopy={copy.livePricing} kind="custom"/>
+        </div>
+      </section>
+
+      <section id="personalizar-plano" className="scroll-mt-24 border-y bg-muted/35">
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
+          <div className="grid gap-8 lg:grid-cols-[1fr_.78fr]">
+            <div className="rounded-[2rem] border bg-card p-5 shadow-sm sm:p-7">
+              <div className="flex items-start gap-3"><div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-primary/7 text-primary"><SlidersHorizontal className="h-5 w-5"/></div><div><p className="text-xs font-black uppercase tracking-[.16em] text-primary">51+ {copy.employees}</p><h2 className="mt-1 font-serif text-3xl">{copy.configure}</h2></div></div>
+              <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">{copy.configureText}</p>
+              <div className="mt-6 rounded-2xl border bg-muted/25 p-4 sm:p-5">
+                <div className="grid gap-5 sm:grid-cols-2">
+                  <div><label className="s8-label">{copy.region}</label><div className="grid grid-cols-2 gap-2"><button type="button" aria-pressed={region === "EU"} onClick={()=>setRegion("EU")} className={`min-h-11 rounded-xl border px-4 py-3 text-sm font-bold transition ${region==="EU"?"border-primary bg-primary text-primary-foreground":"bg-card hover:border-primary/35"}`}>{copy.europe}</button><button type="button" aria-pressed={region === "BR"} onClick={()=>setRegion("BR")} className={`min-h-11 rounded-xl border px-4 py-3 text-sm font-bold transition ${region==="BR"?"border-primary bg-primary text-primary-foreground":"bg-card hover:border-primary/35"}`}>{copy.brazil}</button></div></div>
+                  <div><label className="s8-label">{copy.employeeCount}</label><input type="number" min={51} value={employees} onChange={(event)=>setEmployees(Math.max(51, Number(event.target.value)||51))} className="s8-field min-h-11"/></div>
+                </div>
+              </div>
+              <div className="mt-6"><p className="s8-label">{copy.chooseServices}</p><div className="grid gap-2 sm:grid-cols-2">{COMPANY_SERVICE_KEYS.map((key)=><button type="button" key={key} aria-pressed={services.includes(key)} onClick={()=>toggle(key)} className={`flex min-h-12 items-center justify-between gap-3 rounded-xl border px-4 py-3 text-left text-sm font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary ${services.includes(key)?"border-primary bg-primary/5 text-primary shadow-sm":"bg-card hover:border-primary/35 hover:bg-muted/25"}`}><span>{SERVICE_LABELS[key][locale]}</span>{services.includes(key)&&<span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-primary text-primary-foreground"><Check className="h-3.5 w-3.5"/></span>}</button>)}</div></div>
+              <div className="mt-6"><p className="s8-label">{copy.extraCredits}</p><div className="grid grid-cols-2 gap-2 sm:grid-cols-4">{([0,5,10,25] as const).map((qty)=><button key={qty} type="button" aria-pressed={extraCredits===qty} onClick={()=>setExtraCredits(qty)} className={`min-h-11 rounded-xl border px-3 py-3 text-sm font-black transition ${extraCredits===qty?"border-primary bg-primary text-primary-foreground":"bg-card hover:border-primary/35"}`}>{qty===0?copy.none:`+${qty}`}</button>)}</div></div>
+            </div>
+
+            <aside className="h-fit rounded-[2rem] border border-primary/15 bg-card p-5 shadow-lg shadow-primary/5 sm:p-7 lg:sticky lg:top-24">
+              <div className="flex items-start gap-3"><div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-primary text-primary-foreground"><Building2 className="h-5 w-5"/></div><div><p className="text-xs font-black uppercase tracking-[.14em] text-muted-foreground">{copy.livePricing}</p><h2 className="mt-1 font-serif text-2xl">{copy.custom}</h2></div></div>
+              <div className="mt-6 space-y-3 rounded-2xl bg-muted/35 p-4 text-sm"><SummaryRow label={`${custom.employees} ${copy.employees}`} value={`${money(custom.employeeRateCents, custom.currency, locale)} × ${custom.employees}`}/><SummaryRow label={copy.base} value={money(custom.employeeBaseCents, custom.currency, locale)}/><SummaryRow label={copy.addServices} value={money(custom.servicesCents, custom.currency, locale)}/><SummaryRow label={copy.addCredits} value={money(custom.creditsCents, custom.currency, locale)}/></div>
+              <div className="mt-5 border-t pt-5"><p className="text-sm font-bold text-muted-foreground">{copy.total}</p><p className="mt-1 font-serif text-4xl font-bold text-primary">{money(custom.monthlyCents, custom.currency, locale)}<span className="text-sm font-sans text-muted-foreground"> {copy.month}</span></p><p className="mt-2 text-xs text-muted-foreground">{copy.perEmployee}: <strong>{money(custom.perEmployeeCents, custom.currency, locale)}</strong></p></div>
+              <Link to="/empresa/login" className="mt-6 flex min-h-12 items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 font-black text-primary-foreground transition hover:-translate-y-0.5 hover:shadow-lg">{copy.continue}<ArrowRight className="h-4 w-4"/></Link>
+              <p className="mt-3 text-xs leading-5 text-muted-foreground">{copy.checkoutNote}</p>
+            </aside>
+          </div>
+        </div>
+      </section>
 
       <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6"><div className="s8-card"><div className="grid gap-8 lg:grid-cols-[.9fr_1.1fr] lg:items-center"><div><Sparkles className="h-7 w-7 text-primary"/><h2 className="mt-3 font-serif text-3xl">{copy.benefitTitle}</h2><p className="mt-3 text-sm leading-7 text-muted-foreground">{copy.benefitText}</p></div><div className="grid gap-3 sm:grid-cols-5">{[copy.flow1,copy.flow2,copy.flow3,copy.flow4,copy.flow5].map((item,index)=><div key={item} className="rounded-2xl border bg-card p-4"><span className="grid h-8 w-8 place-items-center rounded-full bg-primary text-xs font-black text-primary-foreground">{index+1}</span><p className="mt-3 text-sm font-bold leading-5">{item}</p></div>)}</div></div></div>
         <div className="mt-5 grid gap-5 md:grid-cols-2"><div className="s8-card"><div className="flex items-center gap-3"><LockKeyhole className="h-6 w-6 text-primary"/><h3 className="font-serif text-2xl">{copy.confidential}</h3></div><p className="mt-3 text-sm leading-7 text-muted-foreground">{copy.confidentialText}</p></div><div className="s8-card"><div className="flex items-center gap-3"><UsersRound className="h-6 w-6 text-primary"/><h3 className="font-serif text-2xl">{copy.chooseServices}</h3></div><p className="mt-3 text-sm leading-7 text-muted-foreground">{copy.presencial}</p></div></div>
@@ -256,8 +364,19 @@ function CompanyPlans() {
   </div>;
 }
 
-function PlanCard({ title, range, price, credits, bullets, cta, badge }: { title:string; range:string; price:string; credits:string; bullets:string[]; cta:string; badge?:string }) {
-  return <article className={`relative s8-card flex min-h-full flex-col ${badge?"border-primary shadow-lg shadow-primary/10":""}`}>{badge&&<span className="absolute -top-3 left-5 rounded-full bg-secondary px-3 py-1 text-xs font-black text-secondary-foreground">{badge}</span>}<p className="text-xs font-black uppercase tracking-[.15em] text-muted-foreground">{range}</p><h2 className="mt-2 font-serif text-3xl">{title}</h2><p className="mt-5 font-serif text-4xl font-bold text-primary">{price}</p><p className="mt-2 text-sm font-bold text-muted-foreground">{credits}</p><div className="mt-5 space-y-3">{bullets.map((item)=><p key={item} className="flex gap-2 text-sm leading-6"><Check className="mt-1 h-4 w-4 shrink-0 text-primary"/><span>{item}</span></p>)}</div><Link to="/empresa/login" className="mt-6 inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 font-black text-primary-foreground">{cta}<ArrowRight className="h-4 w-4"/></Link></article>;
+function PlanCard({ title, range, description, price, month, credits, bullets, cta, microcopy, badge, kind }: { title:string; range:string; description:string; price:string; month?:string; credits:string; bullets:string[]; cta:string; microcopy:string; badge?:string; kind:"essential"|"pro"|"custom" }) {
+  const Icon = kind === "custom" ? SlidersHorizontal : kind === "pro" ? BadgeCheck : ShieldCheck;
+  const featured = kind === "pro";
+  const buttonClass = "flex min-h-12 w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-center text-sm font-black transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2";
+  return <article className={`relative flex min-h-full flex-col overflow-hidden rounded-[2rem] border bg-card p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl sm:p-7 ${featured?"border-secondary/70 ring-1 ring-secondary/25 shadow-secondary/10":"border-border"}`}>
+    {featured&&<div className="absolute inset-x-0 top-0 h-1 bg-secondary"/>}
+    <div className="flex items-start justify-between gap-3"><div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-primary/7 text-primary"><Icon className="h-5 w-5"/></div>{badge&&<span className="rounded-full bg-secondary px-3 py-1.5 text-[11px] font-black text-secondary-foreground">{badge}</span>}</div>
+    <div className="mt-5"><span className="inline-flex rounded-full border border-primary/10 bg-muted/35 px-3 py-1 text-xs font-black uppercase tracking-[.1em] text-muted-foreground">{range}</span><h2 className="mt-3 font-serif text-2xl leading-tight sm:text-3xl">{title}</h2><p className="mt-3 min-h-[4.5rem] text-sm leading-6 text-muted-foreground">{description}</p></div>
+    <div className="mt-5 rounded-2xl bg-primary/[.045] p-4"><div className="flex flex-wrap items-end gap-x-2 gap-y-1"><p className={`font-serif font-bold text-primary ${kind==="custom"?"text-3xl":"text-4xl"}`}>{price}</p>{month&&<span className="pb-1 text-sm font-bold text-muted-foreground">{month}</span>}</div><p className="mt-2 text-sm font-bold text-muted-foreground">{credits}</p></div>
+    <div className="my-5 h-px bg-border"/>
+    <ul className="space-y-3">{bullets.map((item)=><li key={item} className="flex gap-3 text-sm leading-6"><span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-primary/7 text-primary"><Check className="h-3.5 w-3.5"/></span><span>{item}</span></li>)}</ul>
+    <div className="mt-auto pt-6">{kind === "custom" ? <a href="#personalizar-plano" className={`${buttonClass} border border-primary bg-white text-primary hover:bg-primary/5`}>{cta}<ArrowRight className="h-4 w-4"/></a> : <Link to="/empresa/login" className={`${buttonClass} bg-primary text-primary-foreground hover:shadow-lg`}>{cta}<ArrowRight className="h-4 w-4"/></Link>}<p className="mt-3 text-center text-xs leading-5 text-muted-foreground">{microcopy}</p></div>
+  </article>;
 }
 
 function SummaryRow({label,value}:{label:string;value:string}) { return <div className="flex items-start justify-between gap-4"><span className="text-muted-foreground">{label}</span><strong className="text-right">{value}</strong></div>; }
