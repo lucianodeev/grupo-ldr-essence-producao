@@ -7,6 +7,7 @@ import { ACADEMIC_RETURN_COOKIE, academicLoginHref, academicReturnPath } from "@
 
 function config(){const supabaseUrl=process.env["SUPABASE_URL"];const supabasePublishableKey=process.env["SUPABASE_PUBLISHABLE_KEY"];if(!supabaseUrl||!supabasePublishableKey)throw new Error("Missing Supabase server configuration");return{supabaseUrl,supabasePublishableKey}}
 function isServicePortalCallback(url:URL){return url.searchParams.get("portal")==="services"||/^portal\.ldrrhestrategia\.com$/i.test(url.hostname)}
+function isAcademicCallbackHost(url:URL){return /(^|\.)ldracademy\.online$/i.test(url.hostname)||/\.vercel\.app$/i.test(url.hostname)}
 type OAuthPortal="company"|"employee"|"professional"|null;
 function portalFromCookies(cookies:ReturnType<typeof parseCookieHeader>):OAuthPortal{const value=cookies.find(({name})=>name==="ldr_portal_oauth")?.value;return value==="company"||value==="employee"||value==="professional"?value:null}
 function clearTemporaryCookie(headers:Headers,name:string){headers.append("set-cookie",serializeCookieHeader(name,"",{path:"/",maxAge:0,sameSite:"lax",secure:true}))}
@@ -14,9 +15,9 @@ function portalLoginDestination(portal:OAuthPortal,error?:"missing_code"|"exchan
 
 export const Route=createFileRoute("/api/auth/callback")({server:{handlers:{GET:async({request})=>{
  const url=new URL(request.url),code=url.searchParams.get("code"),servicePortal=isServicePortalCallback(url),requestCookies=parseCookieHeader(request.headers.get("cookie")??"");
- // Academic return is a same-origin relative path. Accept it on Academy and Vercel
- // previews alike; the path validator prevents external/open redirects.
- const academicReturn=academicReturnPath(requestCookies.find(({name})=>name===ACADEMIC_RETURN_COOKIE)?.value);
+ // Academic return is accepted only on Academy and its Vercel previews. The
+ // path validator additionally prevents external/open redirects.
+ const academicReturn=isAcademicCallbackHost(url)?academicReturnPath(requestCookies.find(({name})=>name===ACADEMIC_RETURN_COOKIE)?.value):null;
  const adminFlow=url.searchParams.get("admin")==="1"||requestCookies.some(({name,value})=>name==="ldr_admin_oauth"&&value==="1");
  const portalFlow=portalFromCookies(requestCookies),{supabaseUrl,supabasePublishableKey}=config();
  const responseHeaders=new Headers({"cache-control":"no-store, max-age=0, must-revalidate",pragma:"no-cache",expires:"0"});
