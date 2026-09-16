@@ -120,7 +120,7 @@ export async function getAcademicNetwork(userId:string,email:string|null,opts?:{
   if(postsError)fail("Não foi possível carregar as publicações.");
   const rawPage=rawPosts??[]; const hasMore=rawPage.length>pageSize; let posts=rawPage.slice(0,pageSize);
   const postIds=posts.map((p:any)=>p.id);
-  const {data:rawComments}=postIds.length?await db.from("academic_comments").select("id,post_id,user_id,body,anonymous,status,created_at,updated_at").in("post_id",postIds).eq("status","active").order("created_at",{ascending:true}):{data:[]};
+  const {data:rawComments}=postIds.length?await db.from("academic_comments").select("id,post_id,user_id,body,anonymous,status,created_at,updated_at,parent_comment_id").in("post_id",postIds).eq("status","active").order("created_at",{ascending:true}):{data:[]};
   const authorIds=[...posts.map((p:any)=>p.user_id),...(rawComments??[]).map((c:any)=>c.user_id),...(connections??[]).flatMap((c:any)=>[c.requester_user_id,c.receiver_user_id])];
   const authors=await authorMap(authorIds);
   const avatarPaths=[...authors.values()].map((x:any)=>x.academic?.avatar_path).filter(Boolean); const avatarUrls=await signedUrlMap(avatarPaths); for(const x of authors.values())if(x.academic?.avatar_path)x.academic.avatarUrl=avatarUrls.get(x.academic.avatar_path)??null;
