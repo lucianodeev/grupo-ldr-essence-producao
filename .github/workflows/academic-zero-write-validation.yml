@@ -1,0 +1,39 @@
+name: Academic Zero-Write Validation
+on:
+  push:
+    branches:
+      - feat/academic-profile-v1-preview-integration
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      SUPABASE_URL: ""
+      SUPABASE_SERVICE_ROLE_KEY: ""
+      VITE_SUPABASE_URL: ""
+      VITE_SUPABASE_ANON_KEY: ""
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Install dependencies
+        working-directory: apps/painel-ldr
+        run: npm ci --no-audit --no-fund
+      - name: Academic auth zero-write tests
+        working-directory: apps/painel-ldr
+        run: node --test tests/academic-login-return.test.cjs
+      - name: Academic profile zero-write contract
+        working-directory: apps/painel-ldr
+        run: node --test tests/academic-profile-v1-contract.test.cjs
+      - name: Academic threaded comments mock contract
+        working-directory: apps/painel-ldr
+        run: node --test tests/academic-threaded-comments-contract.test.cjs
+      - name: Build
+        working-directory: apps/painel-ldr
+        run: npm run build
