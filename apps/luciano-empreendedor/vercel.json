@@ -33,9 +33,45 @@
       ],
       "destination": "https://www.lucianoempreendendor.com/:path*",
       "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "lucianoempreendedor-plataforma.vercel.app"
+        }
+      ],
+      "destination": "https://clinicasocial.ldrrhestrategia.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/index.html",
+      "destination": "https://clinicasocial.ldrrhestrategia.com/",
+      "permanent": true
+    },
+    {
+      "source": "/clinica.html",
+      "destination": "https://clinicasocial.ldrrhestrategia.com/",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/clinica.html"
     }
   ],
   "headers": [
+    {
+      "source": "/",
+      "headers": [
+        {
+          "key": "Link",
+          "value": "<https://clinicasocial.ldrrhestrategia.com/>; rel=\"canonical\""
+        }
+      ]
+    },
     {
       "source": "/robots.txt",
       "headers": [
