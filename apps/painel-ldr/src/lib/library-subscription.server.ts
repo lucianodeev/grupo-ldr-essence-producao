@@ -8,9 +8,9 @@ const PRICE_BRL = 3990;
 const PRICE_EUR = 990;
 const PROMO_FIRST_BRL = 1995;
 const PROMO_FIRST_EUR = 495;
-const PROMO_END_AT = "2026-09-30T23:59:59+02:00";
+const PROMOTION_ENABLED = true;
 const PRODUCT_NAME = "Biblioteca LDR — Assinatura Mensal";
-function libraryPromoActive(){ return Date.now() < Date.parse(PROMO_END_AT); }
+function libraryPromoActive(){ return PROMOTION_ENABLED; }
 const CORE_INCLUDED_PRODUCTS = [
   ["ebook_coragem_comecar", "A Coragem de Começar"],
   ["livro_menino_mamao", "O Menino que Vendia Mamão"],
@@ -131,7 +131,7 @@ export async function getLibrarySubscriptionContext(userId: string, email: strin
   const customer = await customerFor(userId, email);
   const row = await currentRow(customer.id);
   const subscription = row ? await syncRowFromStripe(row) : null;
-  return { customer, subscription, active: accessActive(subscription?.status), priceBrlCents: PRICE_BRL, priceEurCents: PRICE_EUR, promoActive: libraryPromoActive(), promoEndsAt: PROMO_END_AT, promoFirstBrlCents: PROMO_FIRST_BRL, promoFirstEurCents: PROMO_FIRST_EUR };
+  return { customer, subscription, active: accessActive(subscription?.status), priceBrlCents: PRICE_BRL, priceEurCents: PRICE_EUR, promoActive: libraryPromoActive(), promoEndsAt: null, promoFirstBrlCents: PROMO_FIRST_BRL, promoFirstEurCents: PROMO_FIRST_EUR };
 }
 
 export async function hasActiveLibrarySubscription(customerId: string) {
@@ -166,13 +166,13 @@ export async function createLibrarySubscriptionCheckout(userId: string, email: s
     const couponParams = new URLSearchParams();
     couponParams.set("duration", "once");
     couponParams.set("percent_off", "50");
-    couponParams.set("name", "Biblioteca LDR — 50% primeiro mês — 24h");
+    couponParams.set("name", "Biblioteca LDR — 50% primeiro mês");
     const couponResponse = await fetch("https://api.stripe.com/v1/coupons", { method: "POST", headers: { Authorization: `Bearer ${secret}`, "Content-Type": "application/x-www-form-urlencoded" }, body: couponParams });
     const coupon = await couponResponse.json() as { id?: string; error?: { message?: string } };
     if (!couponResponse.ok || !coupon.id) { await db.from("library_subscriptions").delete().eq("id", row.id); fail(coupon.error?.message || "Não foi possível aplicar a promoção de 50%."); }
     params.set("discounts[0][coupon]", coupon.id);
-    params.set("metadata[promotion]", "library_50_first_month_24h");
-    params.set("subscription_data[metadata][promotion]", "library_50_first_month_24h");
+    params.set("metadata[promotion]", "library_50_first_month");
+    params.set("subscription_data[metadata][promotion]", "library_50_first_month");
   }
   params.set("success_url", `${appOrigin()}/cliente/biblioteca?subscription=success&session_id={CHECKOUT_SESSION_ID}`);
   params.set("cancel_url", `${appOrigin()}/cliente/biblioteca?subscription=cancel`);
