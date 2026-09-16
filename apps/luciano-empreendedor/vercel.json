@@ -1,88 +1,52 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "redirects": [
+  "routes": [
     {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "lucianoempreendendor.com"
-        }
-      ],
-      "destination": "https://www.lucianoempreendendor.com/:path*",
-      "permanent": true
+      "src": "/(.*)",
+      "has": [{ "type": "host", "value": "lucianoempreendendor.com" }],
+      "status": 308,
+      "headers": { "Location": "https://www.lucianoempreendendor.com/$1" }
     },
     {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "lucianoempreendedor.com"
-        }
-      ],
-      "destination": "https://www.lucianoempreendendor.com/:path*",
-      "permanent": true
+      "src": "/(.*)",
+      "has": [{ "type": "host", "value": "lucianoempreendedor.com" }],
+      "status": 308,
+      "headers": { "Location": "https://www.lucianoempreendendor.com/$1" }
     },
     {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.lucianoempreendedor.com"
-        }
-      ],
-      "destination": "https://www.lucianoempreendendor.com/:path*",
-      "permanent": true
+      "src": "/(.*)",
+      "has": [{ "type": "host", "value": "www.lucianoempreendedor.com" }],
+      "status": 308,
+      "headers": { "Location": "https://www.lucianoempreendendor.com/$1" }
     },
     {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "lucianoempreendedor-plataforma.vercel.app"
-        }
-      ],
-      "destination": "https://clinicasocial.ldrrhestrategia.com/:path*",
-      "permanent": true
+      "src": "/(.*)",
+      "has": [{ "type": "host", "value": "lucianoempreendedor-plataforma.vercel.app" }],
+      "status": 308,
+      "headers": { "Location": "https://clinicasocial.ldrrhestrategia.com/$1" }
     },
     {
-      "source": "/index.html",
-      "destination": "https://clinicasocial.ldrrhestrategia.com/",
-      "permanent": true
+      "src": "/(?:index|clinica)\\.html",
+      "status": 308,
+      "headers": { "Location": "https://clinicasocial.ldrrhestrategia.com/" }
     },
     {
-      "source": "/clinica.html",
-      "destination": "https://clinicasocial.ldrrhestrategia.com/",
-      "permanent": true
-    }
-  ],
-  "headers": [
-    {
-      "source": "/",
-      "headers": [
-        {
-          "key": "Link",
-          "value": "<https://clinicasocial.ldrrhestrategia.com/>; rel=\"canonical\""
-        }
-      ]
+      "src": "/",
+      "dest": "/index.html",
+      "headers": {
+        "Link": "<https://clinicasocial.ldrrhestrategia.com/>; rel=\"canonical\""
+      }
     },
     {
-      "source": "/robots.txt",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "text/plain; charset=utf-8"
-        }
-      ]
+      "src": "/robots.txt",
+      "dest": "/robots.txt",
+      "headers": { "Content-Type": "text/plain; charset=utf-8" }
     },
     {
-      "source": "/sitemap.xml",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "application/xml; charset=utf-8"
-        }
-      ]
-    }
+      "src": "/sitemap.xml",
+      "dest": "/sitemap.xml",
+      "headers": { "Content-Type": "application/xml; charset=utf-8" }
+    },
+    { "handle": "filesystem" }
   ]
 }
