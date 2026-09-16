@@ -56,12 +56,6 @@
       "permanent": true
     }
   ],
-  "rewrites": [
-    {
-      "source": "/",
-      "destination": "/clinica.html"
-    }
-  ],
   "headers": [
     {
       "source": "/",
