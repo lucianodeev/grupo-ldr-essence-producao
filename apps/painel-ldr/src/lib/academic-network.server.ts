@@ -186,7 +186,7 @@ export async function deleteAcademicComment(userId:string,id:string){return (awa
 export async function toggleAcademicSave(userId:string,postId:string){ const current=await db.from("academic_saved_posts").select("post_id").eq("user_id",userId).eq("post_id",postId).maybeSingle(); if(current.error)fail("Não foi possível verificar a publicação salva."); if(current.data){const removed=await db.from("academic_saved_posts").delete().eq("user_id",userId).eq("post_id",postId);if(removed.error)fail("Não foi possível remover a publicação dos salvos.")}else{const added=await db.from("academic_saved_posts").insert({user_id:userId,post_id:postId});if(added.error)fail("Não foi possível salvar a publicação.")} const canonical=await db.from("academic_saved_posts").select("post_id").eq("user_id",userId).eq("post_id",postId).maybeSingle();if(canonical.error)fail("Não foi possível confirmar a publicação salva.");return {saved:Boolean(canonical.data)}; }
 export async function toggleAcademicSupport(userId:string,postId:string){ const current=await db.from("academic_reactions").select("post_id").eq("user_id",userId).eq("post_id",postId).eq("reaction_type","support").maybeSingle();if(current.error)fail("Não foi possível verificar o acolhimento.");if(current.data){const removed=await db.from("academic_reactions").delete().eq("user_id",userId).eq("post_id",postId).eq("reaction_type","support");if(removed.error)fail("Não foi possível remover o acolhimento.")}else{const added=await db.from("academic_reactions").insert({user_id:userId,post_id:postId,reaction_type:"support"});if(added.error)fail("Não foi possível acolher a publicação.");const {data:post}=await db.from("academic_posts").select("user_id").eq("id",postId).maybeSingle();if(post?.user_id)await queueInAppNotification(post.user_id,userId,"Publicação acolhida","Sua publicação recebeu um Acolher.",{kind:"support",postId})}const canonical=await db.from("academic_reactions").select("post_id").eq("user_id",userId).eq("post_id",postId).eq("reaction_type","support").maybeSingle();if(canonical.error)fail("Não foi possível confirmar o acolhimento.");const counted=await db.from("academic_reactions").select("post_id",{count:"exact",head:true}).eq("post_id",postId).eq("reaction_type","support");if(counted.error)fail("Não foi possível atualizar a contagem de acolhimentos.");return {supported:Boolean(canonical.data),supportCount:Math.max(0,counted.count??0)}; }
 export async function shareAcademicPost(userId:string,input:{postId:string;targetProfileId:string}){
-  
+
   const [{data:post},{data:target},{data:links}]=await Promise.all([
     db.from("academic_posts").select("id,status").eq("id",input.postId).eq("status","active").maybeSingle(),
     db.from("academic_profiles").select("id,user_id,username").eq("id",input.targetProfileId).maybeSingle(),
@@ -210,7 +210,7 @@ export async function repostAcademicPost(userId:string,input:{postId:string;comm
 }
 
 export async function toggleAcademicMembership(userId:string,communityId:string){
-  
+
   const current=await db.from("academic_community_members").select("community_id").eq("user_id",userId).eq("community_id",communityId).maybeSingle();
   if(current.error)fail("Não foi possível verificar sua participação.");
   const result=current.data?await db.from("academic_community_members").delete().eq("user_id",userId).eq("community_id",communityId):await db.from("academic_community_members").upsert({user_id:userId,community_id:communityId},{onConflict:"community_id,user_id",ignoreDuplicates:true});
