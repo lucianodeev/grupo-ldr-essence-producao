@@ -66,6 +66,15 @@ test('successful academic callback receives same-origin verifier and returns to 
   assert.match(response.headers.get('cache-control'), /no-store/);
 });
 
+test('preview academic callback stays on the preview origin and returns to exact route', async () => {
+  const previewOrigin = 'https://example-preview.vercel.app';
+  const handler = callback();
+  const response = await handler.run(`${previewOrigin}/api/auth/callback?code=test-only`, `${cookie}; test-code-verifier=fixture`);
+  assert.equal(response.status, 303);
+  assert.equal(response.headers.get('location'), next);
+  assert.equal(handler.exchanges.length, 1);
+});
+
 test('failed and missing OAuth code return to academic login with a visible error and preserved destination', async () => {
   for (const [suffix, error, expected] of [['?code=test-only', { message: 'expired' }, 'exchange_failed'], ['', null, 'missing_code']]) {
     const handler = callback(error);
@@ -111,7 +120,7 @@ function login(host, search = {}, session = null) {
   return { tree, effects, oauth, redirects, cookies, click: () => button.props.onClick() };
 }
 
-test('Google login uses canonical callback and bounded academic return cookie before leaving the domain', async () => {
+test('Google login uses canonical callback and bounded academic return cookie before leaving production', async () => {
   const page = login('ldracademy.online', { next });
   await page.click();
   assert.equal(page.oauth[0].options.redirectTo, `${helper.ACADEMY_ORIGIN}/api/auth/callback`);
@@ -121,15 +130,22 @@ test('Google login uses canonical callback and bounded academic return cookie be
   assert.deepEqual(page.redirects, ['https://accounts.google.com/test-only']);
 });
 
-test('existing authenticated session returns to requested academic route; aliases canonicalize before auth', async () => {
-  const page = login('ldracademy.online', { next }, { access_token: 'fixture', refresh_token: 'fixture' });
-  page.effects.forEach(effect => effect());
-  await new Promise(resolve => setImmediate(resolve));
-  assert.deepEqual(page.redirects, [next]);
-  const alias = login('www.ldracademy.online', { next });
-  alias.effects.forEach(effect => effect());
-  assert.deepEqual(alias.redirects, [`${helper.ACADEMY_ORIGIN}${helper.academicLoginHref(next)}`]);
-  assert.equal(alias.oauth.length, 0);
+test('Google login on Vercel preview uses the same preview callback origin', async () => {
+  const page = login('example-preview.vercel.app', { next });
+  await page.click();
+  assert.equal(page.oauth[0].options.redirectTo, 'https://example-preview.vercel.app/api/auth/callback');
+  assert.match(page.cookies[0], /Max-Age=600; Path=\/; Secure; SameSite=Lax/);
+  assert.equal(ssr.parseCookieHeader(page.cookies[0])[0].value, next);
+  assert.deepEqual(page.redirects, ['https://accounts.google.com/test-only']);
+});
+
+test('existing authenticated session returns to requested academic route on production and preview', async () => {
+  for (const host of ['ldracademy.online', 'example-preview.vercel.app']) {
+    const page = login(host, { next }, { access_token: 'fixture', refresh_token: 'fixture' });
+    page.effects.forEach(effect => effect());
+    await new Promise(resolve => setImmediate(resolve));
+    assert.deepEqual(page.redirects, [next]);
+  }
 });
 
 test('services OAuth callback and absence of academic cookies are preserved', async () => {

@@ -19,7 +19,7 @@ function load(name, mocks = {}, globals = {}) {
     if (Object.hasOwn(mocks, id)) return mocks[id];
     if (id === '@tanstack/react-start') return { useServerFn: fn => fn };
     if (id.endsWith('.css')) return {};
-    if (id.startsWith('@/')) return load(id.slice(2) + '.ts', mocks, globals);
+    if (id.startsWith('@/')) return load(id.slice(2) + (fs.existsSync(path.resolve(ROOT,id.slice(2)+'.ts'))?'.ts':'.tsx'), mocks, globals);
     return require(id);
   };
   vm.runInNewContext(output, { module, exports: module.exports, require: resolve, console, Blob, File, Uint8Array, URL, setTimeout, clearTimeout, ...globals }, { filename });
@@ -285,8 +285,9 @@ test('PDF-only and captioned attachments retain their actual media type', async 
 test('legacy academic domain redirects do not affect other applications', () => {
   const config = JSON.parse(fs.readFileSync(path.resolve(ROOT, '../vercel.json')));
   assert.equal(config.rewrites[0].destination, '/cliente/biblioteca');
-  for (const rule of config.redirects) {
-    assert.ok(rule.source.includes('rede-academica'));
+  const academicRedirects=config.redirects.filter(rule=>rule.source.includes('rede-academica'));
+  assert.equal(academicRedirects.length,2);
+  for (const rule of academicRedirects) {
     assert.equal(rule.has[0].value, 'painel.ldrrhestrategia.com');
     assert.ok(rule.destination.startsWith('https://ldracademy.online/'));
   }
@@ -321,4 +322,49 @@ test('editorial toggle reports failed deletion instead of pretending it succeede
   const api = load('lib/academic-editorial-v3.server.ts', { '@/integrations/supabase/client.server': { supabaseAdmin: db }, '@/lib/access.server': {} });
   await assert.rejects(api.toggleEditorialSave('test-user', 'e1'), /atualizar os salvos/);
   assert.equal(db.rows.academic_saved_editorial_posts.length, 1);
+});
+
+
+test('free authenticated feed keeps full pagination without trial or subscription writes', async () => {
+  const data=seed();data.academic_access_trials=[];
+  data.academic_posts=Array.from({length:25},(_,i)=>({id:`free-${i}`,user_id:'test-user',body:'Post',status:'active',created_at:'2020-01-01',is_pinned:false}));
+  const db=database(data),result=await backend(db).getAcademicNetwork('test-user',null);
+  assert.equal(result.posts.length,20);assert.equal(result.hasMore,true);
+  assert.equal(result.access.premium,true);assert.equal(result.access.subscriptionActive,false);
+  assert.equal(db.events.some(e=>e.table==='academic_access_trials'),false);
+  assert.equal(db.events.some(e=>e.table==='library_subscriptions'&&e.operation!=='select'),false);
+});
+
+test('real and editorial comment mutations reject nonowners, inactive and missing rows',async()=>{
+  for(const editorial of [false,true]){
+    const table=editorial?'academic_editorial_user_comments':'academic_comments';
+    const db=database({[table]:[{id:'own',user_id:'me',status:'active',body:'before'},{id:'other',user_id:'other',status:'active',body:'keep'},{id:'inactive',user_id:'me',status:'hidden',body:'keep'}]});
+    const mocks={'@/integrations/supabase/client.server':{supabaseAdmin:db},'@/lib/access.server':{resolveAccess:async()=>({authorized:false})}};
+    const service=editorial?load('lib/academic-editorial-v3.server.ts',mocks):backend(db);
+    const remove=editorial?id=>service.deleteEditorialUserComment('me',id):id=>load('lib/academic-comment-delete.server.ts',mocks).deleteOwnedAcademicComment('me',id);
+    const update=editorial?id=>service.updateEditorialUserComment('me',id,'after'):id=>service.updateAcademicComment('me',{id,body:'after'});
+    for(const id of ['other','missing','inactive']){await assert.rejects(update(id));await assert.rejects(remove(id));}
+    await update('own');assert.equal(db.rows[table][0].body,'after');
+    await remove('own');assert.notEqual(db.rows[table][0].status,'active');
+    await assert.rejects(remove('own'));assert.equal(db.rows[table][1].body,'keep');
+  }
+});
+
+test('comment actions render only for strict own true; replies remain blocked',()=>{
+  const {AcademicThreadedComments}=load('components/academic-threaded-comments.tsx');
+  for(const own of [true,false,undefined,'true']){
+    const html=renderToStaticMarkup(React.createElement(AcademicThreadedComments,{postId:'post',comments:[{id:'c',body:'hello',own,author:{name:'Member'}}],premium:true,comment:{},updateComment:{},delComment:{},t:{edit:'EDIT',remove:'DELETE'},locale:'en'}));
+    assert.equal(html.includes('EDIT'),own===true);assert.equal(html.includes('DELETE'),own===true);assert.equal(html.includes('>Reply<'),false);
+  }
+});
+
+test('threaded backend validates parent and keeps replies on soft delete in isolated mock',async()=>{
+  const db=database({academic_posts:[{id:'post',status:'active'}],academic_comments:[{id:'parent',post_id:'post',user_id:'me',status:'active',created_at:'2020-01-01'},{id:'inactive',post_id:'post',status:'deleted',created_at:'2020-01-01'},{id:'foreign',post_id:'another',status:'active',created_at:'2020-01-01'}]});
+  const mocks={'@/integrations/supabase/client.server':{supabaseAdmin:db},'@/lib/academic-network.server':{createAcademicComment:async(_user,input)=>({id:'root',...input})}};
+  const service=load('lib/academic-discussion-replies.server.ts',mocks);
+  for(const parentCommentId of ['missing','inactive','foreign'])await assert.rejects(service.createAcademicThreadedComment('me',{postId:'post',body:'reply',anonymous:false,parentCommentId}));
+  await assert.rejects(service.createAcademicThreadedComment('',{postId:'post',body:'reply',anonymous:false,parentCommentId:'parent'}));
+  const root=await service.createAcademicThreadedComment('me',{postId:'post',body:'root',anonymous:false});assert.equal(root.id,'root');
+  const reply=await service.createAcademicThreadedComment('me',{postId:'post',body:'reply',anonymous:false,parentCommentId:'parent'});assert.equal(reply.parent_comment_id,'parent');assert.notEqual(reply.id,'parent');
+  await load('lib/academic-comment-delete.server.ts',mocks).deleteOwnedAcademicComment('me','parent');assert.equal(db.rows.academic_comments.find(x=>x.id===reply.id).status,'active');
 });
