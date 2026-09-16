@@ -1,0 +1,58 @@
+name: Patch Clinica Social Domain Once
+
+on:
+  push:
+    branches:
+      - hotfix/clinica-social-dominio-oficial
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: hotfix/clinica-social-dominio-oficial
+          fetch-depth: 0
+      - name: Patch public clinic home safely
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('apps/luciano-empreendedor/clinica.html')
+          s=p.read_text(encoding='utf-8')
+          old_canonical='<link rel="canonical" href="https://ldrrhestrategia.com/">'
+          new_canonical='<link rel="canonical" href="https://clinicasocial.ldrrhestrategia.com/">\n  <meta property="og:url" content="https://clinicasocial.ldrrhestrategia.com/">'
+          if old_canonical in s:
+              s=s.replace(old_canonical,new_canonical,1)
+          elif 'href="https://clinicasocial.ldrrhestrategia.com/"' not in s:
+              raise SystemExit('canonical anchor not found')
+          old_cta='<a class="btn primary" href="https://painel.ldrrhestrategia.com/clinica-social" data-i18n="requestSocial">'
+          new_cta='<a class="btn primary" href="https://painel.ldrrhestrategia.com/clinica-social/solicitar" data-i18n="requestSocial">'
+          if old_cta in s:
+              s=s.replace(old_cta,new_cta,1)
+          elif new_cta not in s:
+              raise SystemExit('social application CTA anchor not found')
+          s=s.replace('https://painel.ldrrhestrategia.com/clinica-social','https://clinicasocial.ldrrhestrategia.com/#clinica-social')
+          # Restore the dedicated functional application route if the generic replacement touched it.
+          s=s.replace('https://clinicasocial.ldrrhestrategia.com/#clinica-social/solicitar','https://painel.ldrrhestrategia.com/clinica-social/solicitar')
+          if 'https://painel.ldrrhestrategia.com/clinica-social"' in s:
+              raise SystemExit('stale public clinic landing link remains')
+          if 'https://painel.ldrrhestrategia.com/clinica-social/solicitar' not in s:
+              raise SystemExit('dedicated application link missing')
+          if '<link rel="canonical" href="https://clinicasocial.ldrrhestrategia.com/">' not in s:
+              raise SystemExit('official canonical missing')
+          p.write_text(s,encoding='utf-8')
+          PY
+          git rm .github/workflows/patch-clinica-social-domain-once.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add apps/luciano-empreendedor/clinica.html
+          if git diff --cached --quiet; then
+            echo 'No patch needed.'
+            exit 0
+          fi
+          git commit -m 'fix(clinica-social): alinhar links e canonical ao domínio oficial'
+          git push origin HEAD:hotfix/clinica-social-dominio-oficial
