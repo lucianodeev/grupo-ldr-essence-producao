@@ -6,6 +6,7 @@ on:
       - automation/academic-free-access-implementation
     paths:
       - 'tools/apply_academic_free_access_20260917.py'
+      - 'tools/fix_academic_free_access_runner_20260917.py'
       - '.github/workflows/academic-free-access-20260917.yml'
   workflow_dispatch:
 
@@ -25,13 +26,15 @@ jobs:
           node-version: 20
           cache: npm
           cache-dependency-path: package-lock.json
+      - name: Normalize free-access runner
+        run: python tools/fix_academic_free_access_runner_20260917.py
       - name: Apply free-access patch
         run: python tools/apply_academic_free_access_20260917.py
       - name: Verify no Academic Network paywall remains
         run: |
           ! grep -n 'academic_access_trials' apps/painel-ldr/src/lib/academic-network.server.ts
           ! grep -n 'requirePremium(userId)' apps/painel-ldr/src/lib/academic-network.server.ts
-          ! grep -nE '7 DIAS COMPLETOS|7 FULL DAYS|7 JOURS COMPLETS|7 DÍAS COMPLETOS|Assine para publicar|Subscribe to post|Abonnez-vous pour publier|Suscríbete para publicar' apps/painel-ldr/src/routes/_clientarea.cliente.rede-academica.tsx apps/painel-ldr/src/routes/rede-academica.tsx
+          ! grep -nE '7 DIAS COMPLETOS|7 FULL DAYS|7 JOURS COMPLETOS|7 DÍAS COMPLETOS|Assine para publicar|Subscribe to post|Abonnez-vous pour publier|Suscríbete para publicar' apps/painel-ldr/src/routes/_clientarea.cliente.rede-academica.tsx apps/painel-ldr/src/routes/rede-academica.tsx
       - name: Install dependencies
         working-directory: apps/painel-ldr
         run: npm ci
