@@ -12,6 +12,17 @@
   ],
   "redirects": [
     {
+      "source": "/clinica-social",
+      "has": [
+        {
+          "type": "host",
+          "value": "painel.ldrrhestrategia.com"
+        }
+      ],
+      "destination": "https://clinicasocial.ldrrhestrategia.com/",
+      "permanent": true
+    },
+    {
       "source": "/rede-academica",
       "has": [
         {
