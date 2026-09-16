@@ -17,6 +17,7 @@ new='''async function accessFor(userId:string):Promise<Access>{\n  // The Academ
 if old not in s: raise SystemExit('missing anchor: accessFor trial gate')
 s=s.replace(old,new)
 s=s.replace('await requirePremium(userId); ','')
+s=s.replace('await requirePremium(userId);','')
 s=s.replace('const pageSize=access.premium?20:8;','const pageSize=20;')
 if 'requirePremium(userId)' in s: raise SystemExit('requirePremium call remains in academic network server')
 if 'academic_access_trials' in s: raise SystemExit('academic_access_trials gate remains in academic network server')
