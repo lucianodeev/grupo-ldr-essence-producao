@@ -1,0 +1,53 @@
+name: Academic Mobile Overflow Guarded Patch
+on:
+  push:
+    branches:
+      - feat/academic-profile-v1-preview-integration
+    paths:
+      - '.github/workflows/academic-mobile-overflow-once.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      SUPABASE_URL: ""
+      SUPABASE_SERVICE_ROLE_KEY: ""
+      VITE_SUPABASE_URL: ""
+      VITE_SUPABASE_ANON_KEY: ""
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Apply exact guarded patch
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('apps/painel-ldr/src/routes/_clientarea.cliente.rede-academica.tsx')
+          s=p.read_text()
+          old='className="academic-v4-utility-strip flex items-center gap-1 overflow-x-auto rounded-[20px] border bg-card p-1.5 shadow-sm [scrollbar-width:none]"'
+          new='className="academic-v4-utility-strip flex w-full min-w-0 max-w-full flex-nowrap items-center gap-1 overflow-x-auto overscroll-x-contain rounded-[20px] border bg-card p-1.5 shadow-sm [scrollbar-width:none] [-webkit-overflow-scrolling:touch]"'
+          assert s.count(old)==1, f'expected exactly one utility strip marker, found {s.count(old)}'
+          p.write_text(s.replace(old,new,1))
+          PY
+          git diff --check
+          test "$(git diff --name-only)" = "apps/painel-ldr/src/routes/_clientarea.cliente.rede-academica.tsx"
+      - name: Install dependencies
+        working-directory: apps/painel-ldr
+        run: npm ci --no-audit --no-fund
+      - name: Build before commit
+        working-directory: apps/painel-ldr
+        run: npm run build
+      - name: Commit validated route only
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/painel-ldr/src/routes/_clientarea.cliente.rede-academica.tsx
+          git commit -m "fix(academic): prevent utility strip mobile overflow"
+          git push origin HEAD:${{ github.ref_name }}
