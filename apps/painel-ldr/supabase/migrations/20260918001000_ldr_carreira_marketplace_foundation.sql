@@ -91,3 +91,102 @@ create policy career_applications_candidate_insert on public.career_applications
 );
 grant select on public.career_applications to authenticated;
 create policy career_applications_candidate_select on public.career_applications for select to authenticated using (candidate_user_id=(select auth.uid()));
+
+
+-- Free ATS foundation: recruitment stages, private company notes and auditable stage history.
+create table if not exists public.career_recruitment_stages (
+  id uuid primary key default gen_random_uuid(),
+  application_id uuid not null references public.career_applications(id) on delete cascade,
+  company_id uuid not null references public.career_companies(id) on delete cascade,
+  stage text not null default 'new' check (stage in ('new','review','interview','final','selected','not_selected','withdrawn')),
+  interview_at timestamptz,
+  interview_mode text check (interview_mode is null or interview_mode in ('online','onsite')),
+  updated_by uuid references auth.users(id) on delete set null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  unique(application_id)
+);
+
+create table if not exists public.career_application_notes (
+  id uuid primary key default gen_random_uuid(),
+  application_id uuid not null references public.career_applications(id) on delete cascade,
+  company_id uuid not null references public.career_companies(id) on delete cascade,
+  author_user_id uuid not null references auth.users(id) on delete restrict,
+  note text not null check (char_length(note) between 1 and 3000),
+  created_at timestamptz not null default now()
+);
+
+create table if not exists public.career_application_history (
+  id uuid primary key default gen_random_uuid(),
+  application_id uuid not null references public.career_applications(id) on delete cascade,
+  company_id uuid not null references public.career_companies(id) on delete cascade,
+  event_type text not null check (event_type in ('application_received','stage_changed','interview_scheduled','selected','not_selected','withdrawn','process_closed')),
+  from_stage text,
+  to_stage text,
+  actor_user_id uuid references auth.users(id) on delete set null,
+  created_at timestamptz not null default now()
+);
+
+create index if not exists career_recruitment_company_idx on public.career_recruitment_stages(company_id, stage, updated_at desc);
+create index if not exists career_notes_application_idx on public.career_application_notes(application_id, created_at desc);
+create index if not exists career_history_application_idx on public.career_application_history(application_id, created_at desc);
+
+alter table public.career_recruitment_stages enable row level security;
+alter table public.career_application_notes enable row level security;
+alter table public.career_application_history enable row level security;
+
+revoke all on public.career_recruitment_stages from anon, authenticated;
+revoke all on public.career_application_notes from anon, authenticated;
+revoke all on public.career_application_history from anon, authenticated;
+
+grant select, insert, update on public.career_recruitment_stages to authenticated;
+grant select, insert on public.career_application_notes to authenticated;
+grant select on public.career_application_history to authenticated;
+
+create policy career_recruitment_company_select on public.career_recruitment_stages for select to authenticated using (
+  exists (select 1 from public.career_companies c where c.id=company_id and c.owner_user_id=(select auth.uid()))
+);
+create policy career_recruitment_company_insert on public.career_recruitment_stages for insert to authenticated with check (
+  updated_by=(select auth.uid()) and exists (
+    select 1 from public.career_applications a
+    join public.career_jobs j on j.id=a.job_id
+    join public.career_companies c on c.id=j.company_id
+    where a.id=application_id and c.id=company_id and c.owner_user_id=(select auth.uid())
+  )
+);
+create policy career_recruitment_company_update on public.career_recruitment_stages for update to authenticated using (
+  exists (select 1 from public.career_companies c where c.id=company_id and c.owner_user_id=(select auth.uid()))
+) with check (
+  updated_by=(select auth.uid()) and exists (
+    select 1 from public.career_applications a
+    join public.career_jobs j on j.id=a.job_id
+    where a.id=application_id and j.company_id=company_id
+  )
+);
+
+create policy career_notes_company_select on public.career_application_notes for select to authenticated using (
+  exists (select 1 from public.career_companies c where c.id=company_id and c.owner_user_id=(select auth.uid()))
+);
+create policy career_notes_company_insert on public.career_application_notes for insert to authenticated with check (
+  author_user_id=(select auth.uid()) and exists (
+    select 1 from public.career_applications a
+    join public.career_jobs j on j.id=a.job_id
+    join public.career_companies c on c.id=j.company_id
+    where a.id=application_id and c.id=company_id and c.owner_user_id=(select auth.uid())
+  )
+);
+
+create policy career_history_company_select on public.career_application_history for select to authenticated using (
+  exists (select 1 from public.career_companies c where c.id=company_id and c.owner_user_id=(select auth.uid()))
+);
+
+-- Company access to applications is limited to applications received by its own jobs.
+create policy career_applications_company_select on public.career_applications for select to authenticated using (
+  exists (
+    select 1 from public.career_jobs j
+    join public.career_companies c on c.id=j.company_id
+    where j.id=job_id and c.owner_user_id=(select auth.uid())
+  )
+);
+
+-- Candidate-visible history is intentionally NOT granted. Internal notes/history remain company-private.
