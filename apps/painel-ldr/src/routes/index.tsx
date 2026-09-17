@@ -27,7 +27,22 @@ function PublicHome() {
 
   return <>
     <AcademyInstitutionalIntro />
-    <AcademyUniversityHome />
     <AcademyEcosystemSection />
+    <div className="academy-integrated-legacy">
+      <AcademyUniversityHome />
+    </div>
+    <style>{`
+      /* The institutional experience is now the single public introduction.
+         Keep the mature catalogue functionality, but remove duplicated legacy promo surfaces. */
+      .academy-integrated-legacy > main > section:first-child {
+        display: none;
+      }
+      .academy-integrated-legacy > main > section:nth-of-type(3) {
+        display: none;
+      }
+      .academy-integrated-legacy > main > section:nth-of-type(2) {
+        border-top: 1px solid rgb(214 173 99 / 0.2);
+      }
+    `}</style>
   </>;
 }
