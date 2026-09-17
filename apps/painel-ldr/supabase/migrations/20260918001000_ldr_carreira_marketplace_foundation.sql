@@ -241,3 +241,46 @@ with check (bucket_id='career-resumes' and (storage.foldername(name))[1]=(select
 
 create policy career_resume_owner_delete on storage.objects for delete to authenticated
 using (bucket_id='career-resumes' and (storage.foldername(name))[1]=(select auth.uid())::text);
+
+
+-- Part 3 moderation hardening. Publication/rejection remains an administrative action.
+create or replace function public.career_admin_set_job_status(p_job_id uuid, p_status text)
+returns void
+language plpgsql
+security invoker
+set search_path = ''
+as $$
+begin
+  if p_status not in ('published','rejected') then
+    raise exception 'invalid moderation status';
+  end if;
+  if not public.is_admin() then
+    raise exception 'not authorized';
+  end if;
+  update public.career_jobs
+     set status=p_status,
+         published_at=case when p_status='published' then coalesce(published_at,now()) else published_at end,
+         updated_at=now()
+   where id=p_job_id and status='pending_review';
+  if not found then raise exception 'job is not pending review'; end if;
+end;
+$$;
+revoke all on function public.career_admin_set_job_status(uuid,text) from public, anon;
+grant execute on function public.career_admin_set_job_status(uuid,text) to authenticated;
+
+-- Explicit admin visibility for moderation queue; company-owner policies remain separate.
+create policy career_jobs_admin_select on public.career_jobs
+for select to authenticated using (public.is_admin());
+
+-- Prevent direct client UPDATE into moderation-only states even when an existing owner policy is broadened later.
+create or replace function public.career_jobs_block_owner_moderation()
+returns trigger language plpgsql security invoker set search_path='' as $$
+begin
+ if new.status in ('published','rejected') and old.status is distinct from new.status then
+   if not public.is_admin() then raise exception 'moderation status requires admin'; end if;
+ end if;
+ return new;
+end; $$;
+drop trigger if exists career_jobs_block_owner_moderation_trigger on public.career_jobs;
+create trigger career_jobs_block_owner_moderation_trigger
+before update on public.career_jobs for each row execute function public.career_jobs_block_owner_moderation();
