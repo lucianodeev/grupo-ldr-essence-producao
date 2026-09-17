@@ -384,6 +384,31 @@ revoke all on function public.career_my_applications() from public, anon;
 grant execute on function public.career_my_applications() to authenticated;
 
 
+-- Candidate-controlled withdrawal. Companies cannot assign the withdrawn stage.
+create or replace function public.career_withdraw_application(p_application_id uuid)
+returns void
+language plpgsql
+security definer
+set search_path=''
+as $
+declare
+ v_company_id uuid;
+begin
+ if (select auth.uid()) is null then raise exception 'not authenticated'; end if;
+ select j.company_id into v_company_id
+ from public.career_applications a
+ join public.career_jobs j on j.id=a.job_id
+ where a.id=p_application_id and a.candidate_user_id=(select auth.uid());
+ if v_company_id is null then raise exception 'application not found'; end if;
+ insert into public.career_recruitment_stages(application_id,company_id,stage,updated_by)
+ values(p_application_id,v_company_id,'withdrawn',(select auth.uid()))
+ on conflict(application_id) do update
+ set stage='withdrawn',updated_by=(select auth.uid()),updated_at=now();
+end;
+$;
+revoke all on function public.career_withdraw_application(uuid) from public, anon;
+grant execute on function public.career_withdraw_application(uuid) to authenticated;
+
 -- Additive freelancer opportunity metadata. Existing employment/ATS records remain unchanged.
 alter table public.career_jobs add column if not exists freelance_project_type text
  check (freelance_project_type is null or freelance_project_type in ('one_off','recurring'));
