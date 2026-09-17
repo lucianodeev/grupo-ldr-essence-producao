@@ -384,6 +384,26 @@ revoke all on function public.career_my_applications() from public, anon;
 grant execute on function public.career_my_applications() to authenticated;
 
 
+-- Owner-only process closure. Closure is terminal for applications because candidate INSERT requires a published job.
+create or replace function public.career_close_job(p_job_id uuid,p_reason text)
+returns void
+language plpgsql
+security invoker
+set search_path=''
+as $
+begin
+ if p_reason not in ('filled','process_closed','cancelled') then raise exception 'invalid close reason'; end if;
+ update public.career_jobs j
+ set status='closed',close_reason=p_reason,closed_at=now(),updated_at=now()
+ where j.id=p_job_id
+   and j.status in ('draft','pending_review','published','paused')
+   and exists(select 1 from public.career_companies c where c.id=j.company_id and c.owner_user_id=(select auth.uid()));
+ if not found then raise exception 'job not found or not closable'; end if;
+end;
+$;
+revoke all on function public.career_close_job(uuid,text) from public, anon;
+grant execute on function public.career_close_job(uuid,text) to authenticated;
+
 -- Candidate-controlled withdrawal. Companies cannot assign the withdrawn stage.
 create or replace function public.career_withdraw_application(p_application_id uuid)
 returns void
