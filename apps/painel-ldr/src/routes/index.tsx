@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { AcademyUniversityHome } from "@/components/academy-university-home";
+import { AcademyEcosystemSection } from "@/components/academy-ecosystem-section";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -23,5 +24,8 @@ function PublicHome() {
     }
   }, []);
 
-  return <AcademyUniversityHome />;
+  return <>
+    <AcademyUniversityHome />
+    <AcademyEcosystemSection />
+  </>;
 }
