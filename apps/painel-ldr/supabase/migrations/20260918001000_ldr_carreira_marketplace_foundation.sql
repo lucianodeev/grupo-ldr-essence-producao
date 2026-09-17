@@ -351,18 +351,37 @@ on public.career_recruitment_stages for each row execute function public.career_
 -- Audit writes are trigger-only. The definer function is not a client API.
 revoke all on function public.career_log_stage_change() from public, anon, authenticated;
 
--- Candidate may see only a deliberately safe status projection through a security-invoker view.
-create or replace view public.career_my_applications
-with (security_invoker=true) as
-select a.id,a.candidate_user_id,a.created_at,j.title,j.status as job_status,c.name as company_name,
-       coalesce(s.stage,'new') as application_stage,s.updated_at
-from public.career_applications a
-join public.career_jobs j on j.id=a.job_id
-join public.career_companies c on c.id=j.company_id
-left join public.career_recruitment_stages s on s.application_id=a.id
-where a.candidate_user_id=(select auth.uid());
-revoke all on public.career_my_applications from anon,authenticated;
-grant select on public.career_my_applications to authenticated;
+-- Candidate-safe projection. A narrowly scoped definer function is used because a
+-- security-invoker view would inherit company/stage RLS and hide the candidate's own status.
+-- The function performs its own auth.uid ownership predicate and exposes no notes/history/contact data.
+drop view if exists public.career_my_applications;
+create or replace function public.career_my_applications()
+returns table (
+ id uuid,
+ candidate_user_id uuid,
+ created_at timestamptz,
+ title text,
+ job_status text,
+ company_name text,
+ application_stage text,
+ updated_at timestamptz
+)
+language sql
+stable
+security definer
+set search_path=''
+as $
+ select a.id,a.candidate_user_id,a.created_at,j.title,j.status,c.name,
+        coalesce(s.stage,'new'),s.updated_at
+ from public.career_applications a
+ join public.career_jobs j on j.id=a.job_id
+ join public.career_companies c on c.id=j.company_id
+ left join public.career_recruitment_stages s on s.application_id=a.id
+ where a.candidate_user_id=(select auth.uid())
+   and (select auth.uid()) is not null;
+$;
+revoke all on function public.career_my_applications() from public, anon;
+grant execute on function public.career_my_applications() to authenticated;
 
 
 -- Additive freelancer opportunity metadata. Existing employment/ATS records remain unchanged.
