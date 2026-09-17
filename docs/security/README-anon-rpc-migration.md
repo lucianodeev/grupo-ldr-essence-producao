@@ -1,0 +1,1 @@
+Security migration branch note: production grants remain unchanged. Anonymous SECURITY DEFINER RPCs are migrated only after caller/dependency verification and replacement-flow testing.
