@@ -190,3 +190,54 @@ create policy career_applications_company_select on public.career_applications f
 );
 
 -- Candidate-visible history is intentionally NOT granted. Internal notes/history remain company-private.
+
+
+-- Candidate profile foundation for Part 2/7. Private by default; no public candidate directory.
+create table if not exists public.career_candidate_profiles (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  display_name text not null check (char_length(display_name) between 2 and 120),
+  professional_title text check (professional_title is null or char_length(professional_title) <= 160),
+  professional_summary text check (professional_summary is null or char_length(professional_summary) <= 3000),
+  country text not null check (char_length(country) between 2 and 100),
+  city text,
+  skills text[] not null default '{}',
+  languages text[] not null default '{}',
+  availability text check (availability is null or availability in ('available','open','unavailable')),
+  work_modes text[] not null default '{}',
+  resume_path text,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  constraint career_candidate_work_modes check (work_modes <@ array['onsite','hybrid','remote','remote_international']::text[])
+);
+
+alter table public.career_candidate_profiles enable row level security;
+revoke all on public.career_candidate_profiles from anon, authenticated;
+grant select, insert, update on public.career_candidate_profiles to authenticated;
+
+create policy career_candidate_profiles_owner_select on public.career_candidate_profiles
+for select to authenticated using (user_id=(select auth.uid()));
+
+create policy career_candidate_profiles_owner_insert on public.career_candidate_profiles
+for insert to authenticated with check (user_id=(select auth.uid()));
+
+create policy career_candidate_profiles_owner_update on public.career_candidate_profiles
+for update to authenticated using (user_id=(select auth.uid()))
+with check (user_id=(select auth.uid()));
+
+-- Resume bucket remains private. Storage object access is scoped to a top-level folder named with auth.uid().
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values ('career-resumes','career-resumes',false,5242880,array['application/pdf','application/vnd.openxmlformats-officedocument.wordprocessingml.document'])
+on conflict (id) do update set public=false, file_size_limit=excluded.file_size_limit, allowed_mime_types=excluded.allowed_mime_types;
+
+create policy career_resume_owner_insert on storage.objects for insert to authenticated
+with check (bucket_id='career-resumes' and (storage.foldername(name))[1]=(select auth.uid())::text);
+
+create policy career_resume_owner_select on storage.objects for select to authenticated
+using (bucket_id='career-resumes' and (storage.foldername(name))[1]=(select auth.uid())::text);
+
+create policy career_resume_owner_update on storage.objects for update to authenticated
+using (bucket_id='career-resumes' and (storage.foldername(name))[1]=(select auth.uid())::text)
+with check (bucket_id='career-resumes' and (storage.foldername(name))[1]=(select auth.uid())::text);
+
+create policy career_resume_owner_delete on storage.objects for delete to authenticated
+using (bucket_id='career-resumes' and (storage.foldername(name))[1]=(select auth.uid())::text);
