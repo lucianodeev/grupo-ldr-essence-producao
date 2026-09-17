@@ -272,6 +272,13 @@ grant execute on function public.career_admin_set_job_status(uuid,text) to authe
 create policy career_jobs_admin_select on public.career_jobs
 for select to authenticated using (public.is_admin());
 
+-- The moderation RPC is SECURITY INVOKER, so admins also need an RLS UPDATE path.
+-- This remains admin-only; companies cannot self-elevate through career tables.
+create policy career_jobs_admin_update on public.career_jobs
+for update to authenticated
+using (public.is_admin())
+with check (public.is_admin());
+
 -- Prevent direct client UPDATE into moderation-only states even when an existing owner policy is broadened later.
 create or replace function public.career_jobs_block_owner_moderation()
 returns trigger language plpgsql security invoker set search_path='' as $$
