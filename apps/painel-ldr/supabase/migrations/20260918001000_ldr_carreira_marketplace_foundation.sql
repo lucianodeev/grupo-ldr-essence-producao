@@ -242,6 +242,22 @@ with check (bucket_id='career-resumes' and (storage.foldername(name))[1]=(select
 create policy career_resume_owner_delete on storage.objects for delete to authenticated
 using (bucket_id='career-resumes' and (storage.foldername(name))[1]=(select auth.uid())::text);
 
+-- Recruiters may read only resume objects attached to applications for jobs owned by their company.
+-- This enables short-lived signed URLs without making the bucket or resume public.
+create policy career_resume_authorized_recruiter_select on storage.objects
+for select to authenticated
+using (
+  bucket_id='career-resumes'
+  and exists (
+    select 1
+    from public.career_applications a
+    join public.career_jobs j on j.id=a.job_id
+    join public.career_companies c on c.id=j.company_id
+    where a.resume_path=storage.objects.name
+      and c.owner_user_id=(select auth.uid())
+  )
+);
+
 
 -- Part 3 moderation hardening. Publication/rejection remains an administrative action.
 create or replace function public.career_admin_set_job_status(p_job_id uuid, p_status text)
