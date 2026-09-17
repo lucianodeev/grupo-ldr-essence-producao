@@ -337,6 +337,16 @@ with check (
 alter table public.career_jobs add column if not exists close_reason text
  check (close_reason is null or close_reason in ('filled','process_closed','cancelled'));
 
+-- Public, company-declared accessibility metadata for each opportunity.
+-- No candidate disability or health data is stored here.
+alter table public.career_jobs add column if not exists accessibility_inclusive boolean not null default false;
+alter table public.career_jobs add column if not exists accessibility_designated_disability boolean not null default false;
+alter table public.career_jobs add column if not exists accessibility_features text[] not null default '{}';
+alter table public.career_jobs add column if not exists accessibility_details text
+ check (accessibility_details is null or char_length(accessibility_details) <= 1200);
+alter table public.career_jobs add constraint career_jobs_accessibility_features_check
+ check (accessibility_features <@ array['physical_access','text_communication','captions','sign_language_interpreter','assistive_technology','reasonable_accommodation','accessible_interview']::text[]);
+
 -- Company closes only its own job; publication remains moderation-only.
 create policy career_jobs_owner_close on public.career_jobs
 for update to authenticated
