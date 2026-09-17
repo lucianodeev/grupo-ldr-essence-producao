@@ -66,6 +66,15 @@ export function AcademyUniversityHome(){
 
   <AcademyGiveawayBanner />
 
+  <section className="mx-auto max-w-7xl px-4 pt-8 sm:px-6">
+    <a href="/carreira" className="group block overflow-hidden rounded-[24px] border border-[#d8cba9] bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg">
+      <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+        <div><div className="flex flex-wrap gap-2 text-[9px] font-black tracking-[.08em]"><span className="rounded-full bg-[#071426] px-2.5 py-1 text-white">100% GRATUITO</span><span className="rounded-full bg-[#f5f0e6] px-2.5 py-1 text-[#7a5a22]">PROFISSIONAIS + EMPRESAS</span></div><h2 className="mt-3 font-serif text-2xl text-[#071426] sm:text-3xl">LDR Carreira</h2><p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">Oportunidades encontram talentos. Conecte-se gratuitamente a oportunidades profissionais e empresas.</p></div>
+        <span className="inline-flex shrink-0 items-center justify-center rounded-xl bg-[#071426] px-4 py-3 text-xs font-black text-white">ACESSAR LDR CARREIRA →</span>
+      </div>
+    </a>
+  </section>
+
   <section className="sticky top-0 z-20 border-b border-slate-200 bg-[#fbfaf6]/95 backdrop-blur"><div className="mx-auto max-w-7xl px-4 py-3 sm:px-6"><div className="flex gap-2 overflow-x-auto [scrollbar-width:none]">{chips.map(([k,l])=><button key={k} onClick={()=>{setKind(k);document.getElementById('cursos')?.scrollIntoView({behavior:'smooth',block:'start'})}} className={`shrink-0 rounded-full px-4 py-2 text-xs font-black ${kind===k?"bg-[#071426] text-white":"border border-slate-200 bg-white text-[#071426]"}`}>{l}</button>)}</div></div></section>
 
   <section className="mx-auto max-w-7xl px-4 pt-8 sm:px-6"><a href="/rede-academica" className="group block overflow-hidden rounded-[24px] border border-[#d8cba9] bg-gradient-to-r from-[#071426] via-[#102a4a] to-[#193b62] p-6 text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"><div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between"><div><div className="flex flex-wrap gap-2 text-[9px] font-black tracking-[.08em]"><span className="rounded-full bg-white/10 px-2.5 py-1">DIÁRIO GRÁTIS</span><span className="rounded-full bg-white/10 px-2.5 py-1">7 DIAS COMPLETOS</span><span className="rounded-full bg-[#e6c873] px-2.5 py-1 text-[#071426]">INCLUÍDO NA ASSINATURA</span></div><h2 className="mt-3 font-serif text-2xl sm:text-3xl">Rede Acadêmica LDR</h2><p className="mt-2 max-w-2xl text-sm leading-6 text-slate-200">Estude. Escreva. Compartilhe. Conecte-se. Uma rede acadêmica com Diário privado, comunidades e troca de conhecimento.</p></div><span className="inline-flex shrink-0 items-center justify-center rounded-xl bg-white px-4 py-3 text-xs font-black text-[#071426]">CONHECER A REDE →</span></div></a></section>

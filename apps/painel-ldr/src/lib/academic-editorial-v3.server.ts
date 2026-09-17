@@ -4,19 +4,21 @@ import { resolveAccess } from "@/lib/access.server";
 const db=supabaseAdmin as any;
 function clean(v:unknown,max:number){return String(v??"").trim().slice(0,max)}
 function fail(m:string):never{throw new Error(m)}
-async function requireAdmin(userId:string){const a=await resolveAccess(db,userId);if(!(a.authorized&&a.role==="superadmin"))fail("Acesso administrativo necessário.")}
+async function canManageEditorial(userId:string){try{const a=await resolveAccess(db,userId);return Boolean(a.authorized&&a.role==="superadmin")}catch{return false}}
+async function requireAdmin(userId:string){if(!(await canManageEditorial(userId)))fail("Acesso administrativo necessário.")}
 
 export async function editorialSnapshot(userId:string,input?:{limit?:number;country?:string|null;followingOnly?:boolean;savedOnly?:boolean}){
   try{
     const limit=Math.min(30,Math.max(3,Number(input?.limit??12)));
     const since24=new Date(Date.now()-86400000).toISOString(),since7=new Date(Date.now()-7*86400000).toISOString();
-    const [{data:settings},{count:real24},{data:real7Rows},{data:follows},{data:saved},{data:reacted}]=await Promise.all([
+    const [{data:settings},{count:real24},{data:real7Rows},{data:follows},{data:saved},{data:reacted},canManage]=await Promise.all([
       db.from("academic_editorial_settings").select("*").eq("id",true).maybeSingle(),
       db.from("academic_posts").select("id",{count:"exact",head:true}).eq("status","active").gte("created_at",since24),
       db.from("academic_posts").select("id,user_id").eq("status","active").gte("created_at",since7).limit(2000),
       db.from("academic_editorial_follows").select("editorial_profile_id").eq("user_id",userId),
       db.from("academic_saved_editorial_posts").select("post_id").eq("user_id",userId).order("created_at",{ascending:false}),
-      db.from("academic_editorial_reactions").select("post_id").eq("user_id",userId).eq("reaction_type","support")
+      db.from("academic_editorial_reactions").select("post_id").eq("user_id",userId).eq("reaction_type","support"),
+      canManageEditorial(userId)
     ]);
     const real7=(real7Rows??[]).length;const activeUsers=new Set((real7Rows??[]).map((x:any)=>x.user_id)).size;
     const automatic=real7<20?(settings?.low_activity_percent??35):real7<120?(settings?.medium_activity_percent??20):(settings?.high_activity_percent??8);
@@ -45,8 +47,8 @@ export async function editorialSnapshot(userId:string,input?:{limit?:number;coun
     const {data:realNames}=realCommentUserIds.length?await db.from("profiles").select("id,full_name").in("id",realCommentUserIds):{data:[]};
     const nameMap=new Map((realNames??[]).map((x:any)=>[x.id,x.full_name||"Membro LDR"]));
     const commentsBy=new Map<string,any[]>();
-    for(const c of editorComments??[]){const a=commentsBy.get(c.post_id)??[];a.push({...c,editorial:true,author:profileMap.get(c.profile_id)});commentsBy.set(c.post_id,a)}
-    for(const c of userComments??[]){const a=commentsBy.get(c.post_id)??[];a.push({...c,editorial:false,author:{display_name:nameMap.get(c.user_id)||"Membro LDR"}});commentsBy.set(c.post_id,a)}
+    for(const c of editorComments??[]){const a=commentsBy.get(c.post_id)??[];a.push({...c,own:canManage,editorial:true,author:profileMap.get(c.profile_id)});commentsBy.set(c.post_id,a)}
+    for(const c of userComments??[]){const a=commentsBy.get(c.post_id)??[];a.push({...c,own:c.user_id===userId,editorial:false,author:{display_name:nameMap.get(c.user_id)||"Membro LDR"}});commentsBy.set(c.post_id,a)}
     const counts=new Map<string,number>();for(const r of reactionRows??[])counts.set(r.post_id,(counts.get(r.post_id)??0)+1);
     const savedSet=new Set((saved??[]).map((x:any)=>x.post_id)),reactedSet=new Set((reacted??[]).map((x:any)=>x.post_id));
     const safePosts=picked.map((p:any)=>({...p,editorial:true,profile:profileMap.get(p.profile_id),comments:commentsBy.get(p.id)??[],supportCount:counts.get(p.id)??0,supported:reactedSet.has(p.id),saved:savedSet.has(p.id),followed:followedIds.has(p.profile_id)}));
@@ -72,6 +74,23 @@ export async function toggleEditorialSave(userId:string,postId:string){
 }
 export async function toggleEditorialFollow(userId:string,profileId:string){const {data}=await db.from("academic_editorial_follows").select("editorial_profile_id").eq("editorial_profile_id",profileId).eq("user_id",userId).maybeSingle();if(data){await db.from("academic_editorial_follows").delete().eq("editorial_profile_id",profileId).eq("user_id",userId);return {following:false}}const {error}=await db.from("academic_editorial_follows").insert({editorial_profile_id:profileId,user_id:userId});if(error)fail("Não foi possível seguir este perfil.");return {following:true}}
 export async function addEditorialUserComment(userId:string,postId:string,bodyRaw:string){const body=clean(bodyRaw,4000);if(!body)fail("Escreva um comentário.");const since=new Date(Date.now()-15000).toISOString();const {count}=await db.from("academic_editorial_user_comments").select("id",{count:"exact",head:true}).eq("user_id",userId).gte("created_at",since);if((count??0)>0)fail("Aguarde alguns segundos antes de comentar novamente.");const {data,error}=await db.from("academic_editorial_user_comments").insert({post_id:postId,user_id:userId,body}).select("id").single();if(error)fail("Não foi possível comentar.");return data}
+
+export async function updateEditorialUserComment(userId:string,commentId:string,bodyRaw:string){
+ if(!userId)fail("Autenticação obrigatória.");const body=clean(bodyRaw,4000);if(!body)fail("Escreva um comentário.");
+ const own=await db.from("academic_editorial_user_comments").update({body,updated_at:new Date().toISOString()}).eq("id",commentId).eq("user_id",userId).eq("status","active").select("id").maybeSingle();
+ if(own.error)fail("Não foi possível editar este comentário.");if(own.data)return {ok:true,id:own.data.id};
+ await requireAdmin(userId);
+ const editorial=await db.from("academic_editorial_comments").update({body}).eq("id",commentId).eq("status","active").select("id").maybeSingle();
+ if(editorial.error||!editorial.data)fail("Não foi possível editar este comentário editorial.");return {ok:true,id:editorial.data.id};
+}
+export async function deleteEditorialUserComment(userId:string,commentId:string){
+ if(!userId)fail("Autenticação obrigatória.");
+ const own=await db.from("academic_editorial_user_comments").update({status:"hidden",updated_at:new Date().toISOString()}).eq("id",commentId).eq("user_id",userId).eq("status","active").select("id").maybeSingle();
+ if(own.error)fail("Não foi possível excluir este comentário.");if(own.data)return {ok:true,id:own.data.id};
+ await requireAdmin(userId);
+ const editorial=await db.from("academic_editorial_comments").update({status:"hidden"}).eq("id",commentId).eq("status","active").select("id").maybeSingle();
+ if(editorial.error||!editorial.data)fail("Não foi possível excluir este comentário editorial.");return {ok:true,id:editorial.data.id};
+}
 
 export async function editorialAdminSnapshot(userId:string){await requireAdmin(userId);const [{data:settings},{count:profiles},{count:posts},{count:articles},{count:comments}]=await Promise.all([db.from("academic_editorial_settings").select("*").eq("id",true).maybeSingle(),db.from("academic_editorial_profiles").select("id",{count:"exact",head:true}),db.from("academic_editorial_posts").select("id",{count:"exact",head:true}),db.from("academic_editorial_articles").select("id",{count:"exact",head:true}),db.from("academic_editorial_comments").select("id",{count:"exact",head:true})]);const publicView=await editorialSnapshot(userId,{limit:3});return {settings,counts:{profiles:profiles??0,posts:posts??0,articles:articles??0,comments:comments??0},stats:publicView.stats}}
 export async function updateEditorialSettings(userId:string,input:{mode:"automatic"|"manual";manualMaxPercent:number}){await requireAdmin(userId);const allowed=new Set([5,10,20,30,40]);const pct=allowed.has(Number(input.manualMaxPercent))?Number(input.manualMaxPercent):30;const mode=input.mode==="manual"?"manual":"automatic";const {data,error}=await db.from("academic_editorial_settings").update({mode,manual_max_percent:pct,updated_at:new Date().toISOString()}).eq("id",true).select("*").single();if(error)fail("Não foi possível atualizar a distribuição editorial.");return data}

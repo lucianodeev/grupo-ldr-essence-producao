@@ -4,6 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
 import { getMyAccess, listTeam } from "@/lib/access.functions";
+import { listSessionCredits } from "@/lib/session-credits.functions";
 
 export type Customer = Tables<"customers">;
 export type Order = Tables<"orders">;
@@ -225,11 +226,9 @@ export function useAppointmentEvents(appointmentId: string | null) {
 }
 
 export function useSessionCredits() {
+  const fetchSessionCredits = useServerFn(listSessionCredits);
   return useQuery({
     queryKey: ["session-credits"],
-    queryFn: async () => {
-      const { data, error } = await supabase.from("session_credits").select("*");
-      return guard<SessionCredit[]>(data, error, "Não foi possível carregar os créditos.");
-    },
+    queryFn: async () => (await fetchSessionCredits({})) as SessionCredit[],
   });
 }

@@ -68,7 +68,10 @@ export function AcademyChatbot() {
   const { locale } = useI18n();
   const location = useLocation();
   const lang = (locale in COPY ? locale : "pt") as Locale;
-  const c = COPY[lang];
+  const baseCopy = COPY[lang];
+  const careerCopy = { pt:{title:"LDR Carreira",hello:"Olá 👋 Sou o assistente do LDR Carreira.",prompt:"Você é profissional ou representa uma empresa? Posso orientar seu cadastro ou conectar você ao atendimento.",help:"Dúvidas sobre o LDR Carreira?"}, en:{title:"LDR Carreira",hello:"Hi 👋 I’m the LDR Carreira assistant.",prompt:"Are you a professional or representing a company? I can guide your registration or connect you with support.",help:"Questions about LDR Carreira?"}, fr:{title:"LDR Carreira",hello:"Bonjour 👋 Je suis l’assistant LDR Carreira.",prompt:"Êtes-vous professionnel ou représentez-vous une entreprise ? Je peux vous guider dans l’inscription ou vous mettre en contact avec notre équipe.",help:"Des questions sur LDR Carreira ?"}, es:{title:"LDR Carreira",hello:"Hola 👋 Soy el asistente de LDR Carreira.",prompt:"¿Eres profesional o representas a una empresa? Puedo orientarte con el registro o conectarte con nuestro equipo.",help:"¿Dudas sobre LDR Carreira?"} } as const;
+  const careerPage = location.pathname === "/carreira";
+  const c = careerPage ? {...baseCopy,...careerCopy[lang]} : baseCopy;
   const showAnnouncement = location.pathname === "/" || location.pathname === "/cliente/biblioteca";
   const academicNetwork = location.pathname.startsWith("/cliente/rede-academica");
   const [open, setOpen] = useState(false);
@@ -93,7 +96,8 @@ export function AcademyChatbot() {
 
   function choose(topic: Topic) {
     if (topic === "human") {
-      window.open(WHATSAPP_URL, "_blank", "noopener,noreferrer");
+      const url = careerPage ? "https://wa.me/32492923605?text=Ol%C3%A1%2C%20vim%20pelo%20LDR%20Carreira%20e%20gostaria%20de%20ajuda." : WHATSAPP_URL;
+      window.open(url, "_blank", "noopener,noreferrer");
       return;
     }
     setQuery("");
