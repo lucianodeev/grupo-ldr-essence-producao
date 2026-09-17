@@ -354,3 +354,17 @@ left join public.career_recruitment_stages s on s.application_id=a.id
 where a.candidate_user_id=(select auth.uid());
 revoke all on public.career_my_applications from anon,authenticated;
 grant select on public.career_my_applications to authenticated;
+
+
+-- Additive freelancer opportunity metadata. Existing employment/ATS records remain unchanged.
+alter table public.career_jobs add column if not exists freelance_project_type text
+ check (freelance_project_type is null or freelance_project_type in ('one_off','recurring'));
+alter table public.career_jobs add column if not exists timezone text;
+alter table public.career_jobs add column if not exists expected_start_date date;
+alter table public.career_jobs add column if not exists estimated_duration text;
+alter table public.career_jobs add column if not exists availability_details text;
+alter table public.career_jobs add column if not exists estimated_workload text;
+
+-- Keep freelancer as a job/application flow, not a marketplace service offer.
+comment on column public.career_jobs.freelance_project_type is
+'Optional metadata for freelancer job opportunities handled through the existing moderated ATS.';
