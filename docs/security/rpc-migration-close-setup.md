@@ -1,0 +1,1 @@
+Close setup stage.
