@@ -284,3 +284,43 @@ end; $$;
 drop trigger if exists career_jobs_block_owner_moderation_trigger on public.career_jobs;
 create trigger career_jobs_block_owner_moderation_trigger
 before update on public.career_jobs for each row execute function public.career_jobs_block_owner_moderation();
+
+
+-- Part 4 ATS hardening: stage rows cannot be reassigned across companies/applications.
+drop policy if exists career_recruitment_company_update on public.career_recruitment_stages;
+create policy career_recruitment_company_update on public.career_recruitment_stages
+for update to authenticated
+using (
+ exists (
+  select 1 from public.career_companies c
+  join public.career_jobs j on j.company_id=c.id
+  join public.career_applications a on a.job_id=j.id
+  where c.id=career_recruitment_stages.company_id
+    and a.id=career_recruitment_stages.application_id
+    and c.owner_user_id=(select auth.uid())
+ )
+)
+with check (
+ exists (
+  select 1 from public.career_companies c
+  join public.career_jobs j on j.company_id=c.id
+  join public.career_applications a on a.job_id=j.id
+  where c.id=career_recruitment_stages.company_id
+    and a.id=career_recruitment_stages.application_id
+    and c.owner_user_id=(select auth.uid())
+ )
+);
+
+alter table public.career_jobs add column if not exists close_reason text
+ check (close_reason is null or close_reason in ('filled','process_closed','cancelled'));
+
+-- Company closes only its own job; publication remains moderation-only.
+create policy career_jobs_owner_close on public.career_jobs
+for update to authenticated
+using (
+ exists(select 1 from public.career_companies c where c.id=career_jobs.company_id and c.owner_user_id=(select auth.uid()))
+)
+with check (
+ status in ('draft','pending_review','paused','closed')
+ and exists(select 1 from public.career_companies c where c.id=career_jobs.company_id and c.owner_user_id=(select auth.uid()))
+);
