@@ -138,6 +138,10 @@ export async function saveProfessionalMediaAndIdentity(
     openToPartnerships?: boolean;
     internationalPositioning?: string | null;
     showPassportBadge?: boolean;
+    availableForPress?: boolean;
+    pressTopics?: string[];
+    pressLanguages?: string[];
+    pressContactConsent?: boolean;
   },
 ) {
   const { data: account } = await db
@@ -176,6 +180,10 @@ export async function saveProfessionalMediaAndIdentity(
     patch.international_positioning = input.internationalPositioning?.trim().slice(0, 500) || null;
   if (input.showPassportBadge !== undefined)
     patch.show_passport_badge = Boolean(input.showPassportBadge);
+  if (input.availableForPress !== undefined) patch.available_for_press = Boolean(input.availableForPress);
+  if (input.pressTopics !== undefined) patch.press_topics = [...new Set(input.pressTopics.map((x) => x.trim()).filter(Boolean))].slice(0, 30);
+  if (input.pressLanguages !== undefined) patch.press_languages = [...new Set(input.pressLanguages.map((x) => x.trim()).filter(Boolean))].slice(0, 12);
+  if (input.pressContactConsent !== undefined) patch.press_contact_consent = Boolean(input.pressContactConsent);
   const { error } = await db
     .from("professional_profiles")
     .update(patch)
