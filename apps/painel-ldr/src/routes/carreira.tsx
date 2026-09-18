@@ -1,5 +1,7 @@
+import { useEffect, useState, type FormEvent, type ReactNode } from "react";
 import { createFileRoute, Link, useLocation } from "@tanstack/react-router";
 import { BriefcaseBusiness, Building2, ClipboardCheck, FileText, Globe2, Search, ShieldCheck, UserRound } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 import { LanguageSelect, useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/carreira")({
@@ -15,120 +17,26 @@ export const Route = createFileRoute("/carreira")({
 
 const copy = {
   pt: {
-    brand: "LDR Carreira",
-    badge: "100% gratuito para profissionais e empresas",
-    heroTitle: "Oportunidades encontram talentos, onde quer que estejam.",
-    heroSub: "Conectamos pessoas que procuram oportunidades a empresas que querem encontrar talentos — com uma experiência simples, humana, segura e inclusiva.",
-    free: "Sem mensalidade",
-    privacy: "Dados protegidos",
-    global: "Preparado para oportunidades internacionais",
-    companyTitle: "Área da empresa",
-    companySub: "Publique vagas gratuitamente, organize o processo seletivo e informe condições reais de acessibilidade e inclusão.",
-    jobsTitle: "Vagas abertas",
-    jobsSub: "Consulte oportunidades publicadas na LDR Carreira e prepare sua candidatura com mais segurança.",
-    applicationsTitle: "Candidaturas e triagem",
-    applicationsSub: "Acompanhe candidaturas, organize etapas e use critérios responsáveis para reduzir erros no processo seletivo.",
-    guideTitle: "Guia de triagem responsável",
-    guideSub: "Orientações para uma seleção ética, inclusiva e baseada em critérios claros.",
-    verified: "Ambiente LDR Carreira",
-    candidate: "Sou profissional",
-    company: "Sou empresa",
-    publish: "Publicar vaga",
-    seeJobs: "Ver vagas abertas",
-    seeApplications: "Acessar candidaturas",
-    openGuide: "Abrir guia",
-    companyPanel: "Entrar no painel da empresa",
-    back: "Voltar para LDR Carreira",
-    proof: "Escolha uma ação abaixo para continuar.",
+    brand: "LDR Carreira", badge: "100% gratuito para profissionais e empresas", heroTitle: "Oportunidades encontram talentos, onde quer que estejam.", heroSub: "Conectamos pessoas que procuram oportunidades a empresas que querem encontrar talentos — com uma experiência simples, humana, segura e inclusiva.", free: "Sem mensalidade", privacy: "Dados protegidos", global: "Preparado para oportunidades internacionais", companyTitle: "Área da empresa", companySub: "Publique vagas gratuitamente, organize o processo seletivo e informe condições reais de acessibilidade e inclusão.", jobsTitle: "Vagas abertas", jobsSub: "Consulte oportunidades publicadas na LDR Carreira e prepare sua candidatura com mais segurança.", applicationsTitle: "Candidaturas e triagem", applicationsSub: "Acompanhe candidaturas, organize etapas e use critérios responsáveis para reduzir erros no processo seletivo.", guideTitle: "Guia de triagem responsável", guideSub: "Orientações para uma seleção ética, inclusiva e baseada em critérios claros.", verified: "Ambiente LDR Carreira", candidate: "Sou profissional", company: "Sou empresa", publish: "Publicar vaga", seeJobs: "Ver vagas abertas", seeApplications: "Acessar candidaturas", openGuide: "Abrir guia", companyPanel: "Entrar no painel da empresa", back: "Voltar para LDR Carreira", proof: "Escolha uma ação abaixo para continuar.", loginNeeded: "Entre com Google para publicar uma vaga.", login: "Entrar para publicar", saved: "Vaga salva. A publicação pública depende de validação da LDR.", error: "Não foi possível salvar agora. Confira os campos obrigatórios.", companyName: "Empresa", email: "E-mail profissional", country: "País", city: "Cidade", jobTitle: "Título da vaga", category: "Categoria", description: "Descrição da vaga", saveDraft: "Salvar rascunho", sendReview: "Enviar para análise"
   },
   en: {
-    brand: "LDR Career",
-    badge: "100% free for professionals and companies",
-    heroTitle: "Opportunities meet talent, wherever they are.",
-    heroSub: "We connect people looking for opportunities with companies looking for talent — through a simple, human, secure and inclusive experience.",
-    free: "No subscription",
-    privacy: "Protected data",
-    global: "Ready for international opportunities",
-    companyTitle: "Company area",
-    companySub: "Post jobs for free, organize the selection process and state real accessibility and inclusion conditions.",
-    jobsTitle: "Open jobs",
-    jobsSub: "Browse opportunities published on LDR Career and prepare your application more safely.",
-    applicationsTitle: "Applications and screening",
-    applicationsSub: "Track applications, organize steps and use responsible criteria to reduce selection-process errors.",
-    guideTitle: "Responsible screening guide",
-    guideSub: "Guidelines for ethical, inclusive selection based on clear criteria.",
-    verified: "LDR Career environment",
-    candidate: "I'm a professional",
-    company: "I'm a company",
-    publish: "Post a job",
-    seeJobs: "See open jobs",
-    seeApplications: "Access applications",
-    openGuide: "Open guide",
-    companyPanel: "Enter company panel",
-    back: "Back to LDR Career",
-    proof: "Choose an action below to continue.",
+    brand: "LDR Career", badge: "100% free for professionals and companies", heroTitle: "Opportunities meet talent, wherever they are.", heroSub: "We connect people looking for opportunities with companies looking for talent — through a simple, human, secure and inclusive experience.", free: "No subscription", privacy: "Protected data", global: "Ready for international opportunities", companyTitle: "Company area", companySub: "Post jobs for free, organize the selection process and state real accessibility and inclusion conditions.", jobsTitle: "Open jobs", jobsSub: "Browse opportunities published on LDR Career and prepare your application more safely.", applicationsTitle: "Applications and screening", applicationsSub: "Track applications, organize steps and use responsible criteria to reduce selection-process errors.", guideTitle: "Responsible screening guide", guideSub: "Guidelines for ethical, inclusive selection based on clear criteria.", verified: "LDR Career environment", candidate: "I'm a professional", company: "I'm a company", publish: "Post a job", seeJobs: "See open jobs", seeApplications: "Access applications", openGuide: "Open guide", companyPanel: "Enter company panel", back: "Back to LDR Career", proof: "Choose an action below to continue.", loginNeeded: "Sign in with Google to post a job.", login: "Sign in to post", saved: "Job saved. Public publication requires LDR validation.", error: "Unable to save now. Check the required fields.", companyName: "Company", email: "Professional email", country: "Country", city: "City", jobTitle: "Job title", category: "Category", description: "Job description", saveDraft: "Save draft", sendReview: "Submit for review"
   },
   fr: {
-    brand: "LDR Carrière",
-    badge: "100 % gratuit pour les professionnels et les entreprises",
-    heroTitle: "Les opportunités rencontrent les talents, où qu’ils soient.",
-    heroSub: "Nous mettons en relation les personnes à la recherche d’opportunités et les entreprises à la recherche de talents, dans une expérience simple, humaine, sécurisée et inclusive.",
-    free: "Sans abonnement",
-    privacy: "Données protégées",
-    global: "Prêt pour les opportunités internationales",
-    companyTitle: "Espace entreprise",
-    companySub: "Publiez gratuitement des offres, organisez le processus de sélection et indiquez les conditions réelles d’accessibilité et d’inclusion.",
-    jobsTitle: "Offres ouvertes",
-    jobsSub: "Consultez les opportunités publiées sur LDR Carrière et préparez votre candidature avec plus de sécurité.",
-    applicationsTitle: "Candidatures et triage",
-    applicationsSub: "Suivez les candidatures, organisez les étapes et utilisez des critères responsables.",
-    guideTitle: "Guide de triage responsable",
-    guideSub: "Orientations pour une sélection éthique, inclusive et fondée sur des critères clairs.",
-    verified: "Environnement LDR Carrière",
-    candidate: "Je suis professionnel",
-    company: "Je suis une entreprise",
-    publish: "Publier une offre",
-    seeJobs: "Voir les offres",
-    seeApplications: "Accéder aux candidatures",
-    openGuide: "Ouvrir le guide",
-    companyPanel: "Entrer dans le panneau entreprise",
-    back: "Retour à LDR Carrière",
-    proof: "Choisissez une action ci-dessous pour continuer.",
+    brand: "LDR Carrière", badge: "100 % gratuit pour les professionnels et les entreprises", heroTitle: "Les opportunités rencontrent les talents, où qu’ils soient.", heroSub: "Nous mettons en relation les personnes à la recherche d’opportunités et les entreprises à la recherche de talents, dans une expérience simple, humaine, sécurisée et inclusive.", free: "Sans abonnement", privacy: "Données protégées", global: "Prêt pour les opportunités internationales", companyTitle: "Espace entreprise", companySub: "Publiez gratuitement des offres, organisez le processus de sélection et indiquez les conditions réelles d’accessibilité et d’inclusion.", jobsTitle: "Offres ouvertes", jobsSub: "Consultez les opportunités publiées sur LDR Carrière et préparez votre candidature avec plus de sécurité.", applicationsTitle: "Candidatures et triage", applicationsSub: "Suivez les candidatures, organisez les étapes et utilisez des critères responsables.", guideTitle: "Guide de triage responsable", guideSub: "Orientations pour une sélection éthique, inclusive et fondée sur des critères clairs.", verified: "Environnement LDR Carrière", candidate: "Je suis professionnel", company: "Je suis une entreprise", publish: "Publier une offre", seeJobs: "Voir les offres", seeApplications: "Accéder aux candidatures", openGuide: "Ouvrir le guide", companyPanel: "Entrer dans le panneau entreprise", back: "Retour à LDR Carrière", proof: "Choisissez une action ci-dessous pour continuer.", loginNeeded: "Connectez-vous avec Google pour publier une offre.", login: "Se connecter pour publier", saved: "Offre enregistrée. La publication publique nécessite une validation LDR.", error: "Impossible d’enregistrer maintenant. Vérifiez les champs obligatoires.", companyName: "Entreprise", email: "E-mail professionnel", country: "Pays", city: "Ville", jobTitle: "Titre du poste", category: "Catégorie", description: "Description de l’offre", saveDraft: "Enregistrer le brouillon", sendReview: "Envoyer pour validation"
   },
   es: {
-    brand: "LDR Carrera",
-    badge: "100% gratuito para profesionales y empresas",
-    heroTitle: "Las oportunidades encuentran talento, dondequiera que esté.",
-    heroSub: "Conectamos personas que buscan oportunidades con empresas que buscan talento, mediante una experiencia sencilla, humana, segura e inclusiva.",
-    free: "Sin mensualidad",
-    privacy: "Datos protegidos",
-    global: "Preparado para oportunidades internacionales",
-    companyTitle: "Área de empresa",
-    companySub: "Publica vacantes gratis, organiza el proceso de selección e informa condiciones reales de accesibilidad e inclusión.",
-    jobsTitle: "Vacantes abiertas",
-    jobsSub: "Consulta oportunidades publicadas en LDR Carrera y prepara tu candidatura con más seguridad.",
-    applicationsTitle: "Candidaturas y selección",
-    applicationsSub: "Acompaña candidaturas, organiza etapas y usa criterios responsables.",
-    guideTitle: "Guía de selección responsable",
-    guideSub: "Orientaciones para una selección ética, inclusiva y basada en criterios claros.",
-    verified: "Ambiente LDR Carrera",
-    candidate: "Soy profesional",
-    company: "Soy empresa",
-    publish: "Publicar vacante",
-    seeJobs: "Ver vacantes",
-    seeApplications: "Acceder a candidaturas",
-    openGuide: "Abrir guía",
-    companyPanel: "Entrar al panel de empresa",
-    back: "Volver a LDR Carrera",
-    proof: "Elige una acción abajo para continuar.",
+    brand: "LDR Carrera", badge: "100% gratuito para profesionales y empresas", heroTitle: "Las oportunidades encuentran talento, dondequiera que esté.", heroSub: "Conectamos personas que buscan oportunidades con empresas que buscan talento, mediante una experiencia sencilla, humana, segura e inclusiva.", free: "Sin mensualidad", privacy: "Datos protegidos", global: "Preparado para oportunidades internacionales", companyTitle: "Área de empresa", companySub: "Publica vacantes gratis, organiza el proceso de selección e informa condiciones reales de accesibilidad e inclusión.", jobsTitle: "Vacantes abiertas", jobsSub: "Consulta oportunidades publicadas en LDR Carrera y prepara tu candidatura con más seguridad.", applicationsTitle: "Candidaturas y selección", applicationsSub: "Acompaña candidaturas, organiza etapas y usa criterios responsables.", guideTitle: "Guía de selección responsable", guideSub: "Orientaciones para una selección ética, inclusiva y basada en criterios claros.", verified: "Ambiente LDR Carrera", candidate: "Soy profesional", company: "Soy empresa", publish: "Publicar vacante", seeJobs: "Ver vacantes", seeApplications: "Acceder a candidaturas", openGuide: "Abrir guía", companyPanel: "Entrar al panel de empresa", back: "Volver a LDR Carrera", proof: "Elige una acción abajo para continuar.", loginNeeded: "Inicia sesión con Google para publicar una vacante.", login: "Entrar para publicar", saved: "Vacante guardada. La publicación pública requiere validación LDR.", error: "No fue posible guardar ahora. Revisa los campos obligatorios.", companyName: "Empresa", email: "Correo profesional", country: "País", city: "Ciudad", jobTitle: "Título", category: "Categoría", description: "Descripción de la vacante", saveDraft: "Guardar borrador", sendReview: "Enviar a revisión"
   },
 } as const;
 
 type Locale = keyof typeof copy;
 
-function companyLogin(next: string) {
-  return `/empresa/login?next=${encodeURIComponent(next)}`;
-}
+type FormState = { companyName: string; email: string; country: string; city: string; title: string; category: string; description: string };
+const emptyForm: FormState = { companyName: "", email: "", country: "", city: "", title: "", category: "", description: "" };
+
+function companyLogin(next: string) { return `/empresa/login?next=${encodeURIComponent(next)}`; }
+function normalizePath(pathname: string) { const cleaned = pathname.replace(/\/+$/, ""); return cleaned || "/carreira"; }
 
 function CareerRouterGuard() {
   const location = useLocation();
@@ -136,97 +44,54 @@ function CareerRouterGuard() {
   const t = copy[locale as Locale] ?? copy.pt;
   const pathname = normalizePath(location.pathname);
 
-  if (pathname === "/carreira/empresa") {
-    return <SubPage t={t} icon="company" title={t.companyTitle} subtitle={t.companySub} primary={t.publish} primaryTo={companyLogin("/carreira/empresa")} secondary={t.seeApplications} secondaryTo="/carreira/empresa/candidaturas" tertiary={t.openGuide} tertiaryTo="/carreira/empresa/guia-triagem-responsavel" />;
-  }
-  if (pathname === "/carreira/vagas") {
-    return <SubPage t={t} icon="jobs" title={t.jobsTitle} subtitle={t.jobsSub} primary={t.candidate} primaryTo="/carreira/vagas" secondary={t.company} secondaryTo="/carreira/empresa" tertiary={t.back} tertiaryTo="/carreira" />;
-  }
-  if (pathname === "/carreira/empresa/candidaturas") {
-    return <SubPage t={t} icon="applications" title={t.applicationsTitle} subtitle={t.applicationsSub} primary={t.seeApplications} primaryTo={companyLogin("/carreira/empresa/candidaturas")} secondary={t.publish} secondaryTo={companyLogin("/carreira/empresa")} tertiary={t.back} tertiaryTo="/carreira" />;
-  }
-  if (pathname === "/carreira/empresa/guia-triagem-responsavel") {
-    return <SubPage t={t} icon="guide" title={t.guideTitle} subtitle={t.guideSub} primary={t.companyPanel} primaryTo={companyLogin("/carreira/empresa")} secondary={t.seeApplications} secondaryTo="/carreira/empresa/candidaturas" tertiary={t.back} tertiaryTo="/carreira" />;
-  }
+  if (pathname === "/carreira/empresa" || pathname === "/carreira/empresa/publicar") return <PublishJobPage t={t} />;
+  if (pathname === "/carreira/vagas") return <SubPage t={t} icon="jobs" title={t.jobsTitle} subtitle={t.jobsSub} primary={t.candidate} primaryTo="/carreira/vagas" secondary={t.company} secondaryTo="/carreira/empresa" tertiary={t.back} tertiaryTo="/carreira" />;
+  if (pathname === "/carreira/empresa/candidaturas") return <SubPage t={t} icon="applications" title={t.applicationsTitle} subtitle={t.applicationsSub} primary={t.seeApplications} primaryTo={companyLogin("/carreira/empresa/candidaturas")} secondary={t.publish} secondaryTo="/carreira/empresa/publicar" tertiary={t.back} tertiaryTo="/carreira" />;
+  if (pathname === "/carreira/empresa/guia-triagem-responsavel") return <SubPage t={t} icon="guide" title={t.guideTitle} subtitle={t.guideSub} primary={t.companyPanel} primaryTo="/carreira/empresa/publicar" secondary={t.seeApplications} secondaryTo="/carreira/empresa/candidaturas" tertiary={t.back} tertiaryTo="/carreira" />;
 
   return <Landing t={t} />;
 }
 
-function normalizePath(pathname: string) {
-  const cleaned = pathname.replace(/\/+$/, "");
-  return cleaned || "/carreira";
-}
-
 function Header({ t }: { t: (typeof copy)[Locale] }) {
-  return (
-    <header className="border-b border-slate-200 bg-white">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
-        <Link to="/carreira" className="flex items-center gap-3 font-semibold text-[#07345b]">
-          <BriefcaseBusiness aria-hidden="true" /> {t.brand}
-        </Link>
-        <LanguageSelect />
-      </div>
-    </header>
-  );
+  return <header className="border-b border-slate-200 bg-white"><div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4"><Link to="/carreira" className="flex items-center gap-3 font-semibold text-[#07345b]"><BriefcaseBusiness aria-hidden="true" /> {t.brand}</Link><LanguageSelect /></div></header>;
 }
 
 function Landing({ t }: { t: (typeof copy)[Locale] }) {
-  return (
-    <main className="min-h-screen bg-[#f8fafc] pb-28 text-slate-900">
-      <Header t={t} />
-      <section className="bg-gradient-to-br from-[#031d34] via-[#07345b] to-[#0b477a] text-white">
-        <div className="mx-auto max-w-6xl px-5 py-16 md:py-24">
-          <span className="inline-flex rounded-full bg-white px-4 py-2 text-sm font-bold text-[#07345b] shadow-sm">{t.badge}</span>
-          <h1 className="mt-6 max-w-4xl text-4xl font-black tracking-tight text-white md:text-6xl">{t.heroTitle}</h1>
-          <p className="mt-5 max-w-3xl text-lg leading-8 text-white/90">{t.heroSub}</p>
-          <div className="mt-8 flex flex-wrap gap-3 text-sm">
-            {[t.free, t.privacy, t.global].map((item) => <span key={item} className="rounded-full bg-white/14 px-4 py-2 text-white">✓ {item}</span>)}
-          </div>
-        </div>
-      </section>
-      <section className="mx-auto grid max-w-6xl gap-5 px-5 py-12 md:grid-cols-3">
-        <ActionCard icon={<UserRound />} title={t.candidate} to="/carreira/vagas" />
-        <ActionCard icon={<Building2 />} title={t.companyTitle} to="/carreira/empresa" />
-        <ActionCard icon={<Search />} title={t.jobsTitle} to="/carreira/vagas" />
-      </section>
-    </main>
-  );
+  return <main className="min-h-screen bg-[#f8fafc] pb-28 text-slate-900"><Header t={t} /><section className="bg-gradient-to-br from-[#031d34] via-[#07345b] to-[#0b477a] text-white"><div className="mx-auto max-w-6xl px-5 py-16 md:py-24"><span className="inline-flex rounded-full bg-white px-4 py-2 text-sm font-bold text-[#07345b] shadow-sm">{t.badge}</span><h1 className="mt-6 max-w-4xl text-4xl font-black tracking-tight text-white md:text-6xl">{t.heroTitle}</h1><p className="mt-5 max-w-3xl text-lg leading-8 text-white/90">{t.heroSub}</p><div className="mt-8 flex flex-wrap gap-3 text-sm">{[t.free, t.privacy, t.global].map((item) => <span key={item} className="rounded-full bg-white/14 px-4 py-2 text-white">✓ {item}</span>)}</div></div></section><section className="mx-auto grid max-w-6xl gap-5 px-5 py-12 md:grid-cols-3"><ActionCard icon={<UserRound />} title={t.candidate} to="/carreira/vagas" /><ActionCard icon={<Building2 />} title={t.companyTitle} to="/carreira/empresa" /><ActionCard icon={<Search />} title={t.jobsTitle} to="/carreira/vagas" /></section></main>;
+}
+
+function PublishJobPage({ t }: { t: (typeof copy)[Locale] }) {
+  const [userId, setUserId] = useState<string | null | undefined>(undefined);
+  const [form, setForm] = useState<FormState>(emptyForm);
+  const [status, setStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
+  const input = "w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#c99b2d] focus:ring-2 focus:ring-[#c99b2d]/30";
+
+  useEffect(() => { void supabase.auth.getUser().then(({ data }) => setUserId(data.user?.id ?? null)); }, []);
+
+  async function submit(e: FormEvent, review: boolean) {
+    e.preventDefault();
+    if (!userId) return;
+    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim());
+    const valid = form.companyName.trim().length >= 2 && validEmail && form.country.trim().length >= 2 && form.title.trim().length >= 3 && form.category.trim().length >= 2 && form.description.trim().length >= 30;
+    if (!valid) { setStatus("error"); return; }
+    setStatus("saving");
+    const companyPayload = { owner_user_id: userId, name: form.companyName.trim(), responsible_name: form.companyName.trim(), professional_email: form.email.trim().toLowerCase(), country: form.country.trim(), city: form.city.trim() || null, website: null };
+    const companyResult = await (supabase.from("career_companies" as never) as any).insert(companyPayload).select("id").single();
+    if (companyResult.error) { setStatus("error"); return; }
+    const jobPayload = { company_id: companyResult.data.id, title: form.title.trim(), category: form.category.trim(), description: form.description.trim(), responsibilities: form.description.trim(), requirements: form.category.trim(), work_mode: "remote", contract_type: "employment", publication_language: "pt", country: form.country.trim(), city: form.city.trim() || null, status: review ? "pending_review" : "draft", accessibility_inclusive: true, accessibility_designated_disability: false, accessibility_features: [], accessibility_details: null };
+    const jobResult = await (supabase.from("career_jobs" as never) as any).insert(jobPayload);
+    setStatus(jobResult.error ? "error" : "saved");
+    if (!jobResult.error) setForm(emptyForm);
+  }
+
+  return <main className="min-h-screen bg-[#f8fafc] pb-36 text-slate-900"><Header t={t} /><section className="bg-gradient-to-br from-[#031d34] via-[#07345b] to-[#0b477a] text-white"><div className="mx-auto max-w-6xl px-5 py-14 md:py-20"><span className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-bold text-[#07345b] shadow-sm"><ShieldCheck size={18} /> {t.verified}</span><h1 className="mt-6 flex max-w-4xl items-center gap-3 text-4xl font-black tracking-tight text-white md:text-6xl"><Building2 className="h-10 w-10 shrink-0 md:h-12 md:w-12" /> {t.companyTitle}</h1><p className="mt-5 max-w-3xl text-lg leading-8 text-white/90">{t.companySub}</p></div></section><section className="mx-auto max-w-5xl px-5 py-10">{userId === undefined ? <div className="rounded-3xl bg-white p-6 shadow-sm">Carregando…</div> : !userId ? <div className="rounded-3xl bg-white p-6 shadow-sm"><h2 className="text-2xl font-black text-[#07345b]">{t.publish}</h2><p className="mt-2 text-slate-700">{t.loginNeeded}</p><a href={companyLogin("/carreira/empresa/publicar")} className="mt-6 inline-flex min-h-12 items-center justify-center rounded-xl bg-[#07345b] px-5 py-3 font-bold text-white">{t.login}</a></div> : <form className="rounded-3xl bg-white p-6 shadow-sm md:p-8" onSubmit={(e) => void submit(e, false)}><h2 className="text-2xl font-black text-[#07345b]">{t.publish}</h2><div className="mt-6 grid gap-4 sm:grid-cols-2"><Field label={t.companyName}><input className={input} value={form.companyName} onChange={(e) => setForm({ ...form, companyName: e.target.value })} /></Field><Field label={t.email}><input className={input} type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} /></Field><Field label={t.country}><input className={input} value={form.country} onChange={(e) => setForm({ ...form, country: e.target.value })} /></Field><Field label={t.city}><input className={input} value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} /></Field><Field label={t.jobTitle}><input className={input} value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} /></Field><Field label={t.category}><input className={input} value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} /></Field><div className="sm:col-span-2"><Field label={t.description}><textarea className={`${input} min-h-36`} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} /></Field></div></div>{status === "saved" && <p className="mt-5 rounded-xl bg-emerald-50 p-4 text-sm font-semibold text-emerald-800">{t.saved}</p>}{status === "error" && <p className="mt-5 rounded-xl bg-red-50 p-4 text-sm font-semibold text-red-800">{t.error}</p>}<div className="mt-7 flex flex-col gap-3 sm:flex-row"><button disabled={status === "saving"} className="min-h-12 rounded-xl bg-[#07345b] px-5 py-3 font-bold text-white" type="submit">{status === "saving" ? "Salvando…" : t.saveDraft}</button><button disabled={status === "saving"} className="min-h-12 rounded-xl border border-[#07345b] px-5 py-3 font-bold text-[#07345b]" type="button" onClick={(e) => void submit(e as unknown as FormEvent, true)}>{t.sendReview}</button><Link to="/carreira" className="inline-flex min-h-12 items-center justify-center rounded-xl bg-slate-100 px-5 py-3 font-bold text-[#07345b]">{t.back}</Link></div></form>}</section></main>;
 }
 
 function SubPage({ t, icon, title, subtitle, primary, primaryTo, secondary, secondaryTo, tertiary, tertiaryTo }: { t: (typeof copy)[Locale]; icon: "company" | "jobs" | "applications" | "guide"; title: string; subtitle: string; primary: string; primaryTo: string; secondary: string; secondaryTo: string; tertiary: string; tertiaryTo: string }) {
   const Icon = icon === "company" ? Building2 : icon === "jobs" ? Search : icon === "applications" ? ClipboardCheck : FileText;
-  return (
-    <main className="min-h-screen bg-[#f8fafc] pb-36 text-slate-900">
-      <Header t={t} />
-      <section className="bg-gradient-to-br from-[#031d34] via-[#07345b] to-[#0b477a] text-white">
-        <div className="mx-auto max-w-6xl px-5 py-14 md:py-20">
-          <span className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-bold text-[#07345b] shadow-sm"><ShieldCheck size={18} /> {t.verified}</span>
-          <h1 className="mt-6 flex max-w-4xl items-center gap-3 text-4xl font-black tracking-tight text-white md:text-6xl"><Icon className="h-10 w-10 shrink-0 md:h-12 md:w-12" /> {title}</h1>
-          <p className="mt-5 max-w-3xl text-lg leading-8 text-white/90">{subtitle}</p>
-        </div>
-      </section>
-      <section className="mx-auto max-w-6xl px-5 py-10">
-        <div className="rounded-3xl border border-[#d4b050]/45 bg-white p-6 shadow-sm md:p-8">
-          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div><h2 className="text-2xl font-black text-[#07345b]">{title}</h2><p className="mt-2 max-w-2xl leading-7 text-slate-700">{t.proof}</p></div>
-            <Globe2 className="h-10 w-10 text-[#d4b050]" />
-          </div>
-          <div className="mt-7 grid gap-3 sm:grid-cols-3">
-            <LinkButton to={primaryTo}>{primary}</LinkButton>
-            <LinkButton to={secondaryTo} variant="outline">{secondary}</LinkButton>
-            <LinkButton to={tertiaryTo} variant="ghost">{tertiary}</LinkButton>
-          </div>
-        </div>
-      </section>
-    </main>
-  );
+  return <main className="min-h-screen bg-[#f8fafc] pb-36 text-slate-900"><Header t={t} /><section className="bg-gradient-to-br from-[#031d34] via-[#07345b] to-[#0b477a] text-white"><div className="mx-auto max-w-6xl px-5 py-14 md:py-20"><span className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-bold text-[#07345b] shadow-sm"><ShieldCheck size={18} /> {t.verified}</span><h1 className="mt-6 flex max-w-4xl items-center gap-3 text-4xl font-black tracking-tight text-white md:text-6xl"><Icon className="h-10 w-10 shrink-0 md:h-12 md:w-12" /> {title}</h1><p className="mt-5 max-w-3xl text-lg leading-8 text-white/90">{subtitle}</p></div></section><section className="mx-auto max-w-6xl px-5 py-10"><div className="rounded-3xl border border-[#d4b050]/45 bg-white p-6 shadow-sm md:p-8"><div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between"><div><h2 className="text-2xl font-black text-[#07345b]">{title}</h2><p className="mt-2 max-w-2xl leading-7 text-slate-700">{t.proof}</p></div><Globe2 className="h-10 w-10 text-[#d4b050]" /></div><div className="mt-7 grid gap-3 sm:grid-cols-3"><LinkButton to={primaryTo}>{primary}</LinkButton><LinkButton to={secondaryTo} variant="outline">{secondary}</LinkButton><LinkButton to={tertiaryTo} variant="ghost">{tertiary}</LinkButton></div></div></section></main>;
 }
 
-function ActionCard({ icon, title, to }: { icon: React.ReactNode; title: string; to: string }) {
-  return <Link to={to} className="rounded-3xl border border-slate-200 bg-white p-6 text-[#07345b] shadow-sm transition hover:-translate-y-0.5 hover:border-[#d4b050]"><div className="mb-4 text-[#07345b]">{icon}</div><strong className="text-xl">{title}</strong></Link>;
-}
-
-function LinkButton({ to, children, variant = "solid" }: { to: string; children: React.ReactNode; variant?: "solid" | "outline" | "ghost" }) {
-  const cls = variant === "solid" ? "bg-[#07345b] text-white hover:bg-[#052844]" : variant === "outline" ? "border border-[#07345b] bg-white text-[#07345b] hover:bg-slate-50" : "bg-[#f8fafc] text-[#07345b] hover:bg-slate-100";
-  return <Link to={to} className={`inline-flex min-h-12 items-center justify-center rounded-xl px-5 py-3 text-center text-sm font-black transition ${cls}`}>{children}</Link>;
-}
+function Field({ label, children }: { label: string; children: ReactNode }) { return <label className="block text-sm font-bold text-slate-700"><span>{label}</span><div className="mt-2">{children}</div></label>; }
+function ActionCard({ icon, title, to }: { icon: ReactNode; title: string; to: string }) { return <Link to={to} className="rounded-3xl border border-slate-200 bg-white p-6 text-[#07345b] shadow-sm transition hover:-translate-y-0.5 hover:border-[#d4b050]"><div className="mb-4 text-[#07345b]">{icon}</div><strong className="text-xl">{title}</strong></Link>; }
+function LinkButton({ to, children, variant = "solid" }: { to: string; children: ReactNode; variant?: "solid" | "outline" | "ghost" }) { const cls = variant === "solid" ? "bg-[#07345b] text-white hover:bg-[#052844]" : variant === "outline" ? "border border-[#07345b] bg-white text-[#07345b] hover:bg-slate-50" : "bg-[#f8fafc] text-[#07345b] hover:bg-slate-100"; return <Link to={to} className={`inline-flex min-h-12 items-center justify-center rounded-xl px-5 py-3 text-center text-sm font-black transition ${cls}`}>{children}</Link>; }
