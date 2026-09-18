@@ -7,42 +7,50 @@ const FIXED_BRL_EBOOKS = {
   ebook_psicanalise_no_mundo: "A Psicanálise no Mundo",
   ebook_psicanalise_autismo: "Psicanálise e Autismo",
   ebook_estudos_caso_psicanalise: "Estudos de Caso",
-  ebook_psicologia_psicanalise_terapias: 'Psicologia, Psicanálise e Terapias Integrativas',
-  ebook_jornalismo_era_digital: 'Jornalismo na Era Digital',
-  ebook_corpo_trabalho_escuta: 'Corpo, Trabalho e Escuta',
-  ebook_comportamento_humano: 'Como Mudar o Comportamento Humano',
-  ebook_estetica_bem_estar: 'Estética Aplicada ao Bem-Estar',
-  ebook_tricologia_cuidado: 'Tricologia Capilar Aplicada ao Cuidado',
-  ebook_ia_novos_milionarios: 'Como a Inteligência Artificial Pode Criar Novos Milionários',
-  ebook_imigracao_efeitos_psicologicos: 'Entre Dois Mundos',
-  ebook_psicanalise_vs_psiquiatria: 'Psicanálise vs. Psiquiatria',
+  ebook_psicologia_psicanalise_terapias: "Psicologia, Psicanálise e Terapias Integrativas",
+  ebook_jornalismo_era_digital: "Jornalismo na Era Digital",
+  ebook_corpo_trabalho_escuta: "Corpo, Trabalho e Escuta",
+  ebook_comportamento_humano: "Como Mudar o Comportamento Humano",
+  ebook_estetica_bem_estar: "Estética Aplicada ao Bem-Estar",
+  ebook_tricologia_cuidado: "Tricologia Capilar Aplicada ao Cuidado",
+  ebook_ia_novos_milionarios: "Como a Inteligência Artificial Pode Criar Novos Milionários",
+  ebook_imigracao_efeitos_psicologicos: "Entre Dois Mundos",
+  ebook_psicanalise_vs_psiquiatria: "Psicanálise vs. Psiquiatria",
+  ebook_falar_com_quem_feriu: "Falar com Quem Feriu",
+  ebook_da_pobreza_ao_primeiro_contrato: "Da Pobreza ao Primeiro Contrato",
 } as const;
 
 type FixedBrlEbookKey = keyof typeof FIXED_BRL_EBOOKS;
 
-function isFixedBrlEbook(key: DigitalProductKey): key is FixedBrlEbookKey {
+function isFixedBrlEbook(key: string): key is FixedBrlEbookKey {
   return key in FIXED_BRL_EBOOKS;
 }
 
 function fail(message: string): never { throw new Error(message); }
 
+const PREMIUM_EBOOKS = new Set<string>([
+  "ebook_estudos_caso_psicanalise",
+  "ebook_psicologia_psicanalise_terapias",
+  "ebook_corpo_trabalho_escuta",
+  "ebook_ia_novos_milionarios",
+  "ebook_imigracao_efeitos_psicologicos",
+  "ebook_falar_com_quem_feriu",
+  "ebook_da_pobreza_ao_primeiro_contrato",
+]);
+
+function fixedAmountCents(productKey: string, market: DigitalMarket) {
+  if (productKey === "ebook_estudos_caso_psicanalise") return market === "BR" ? 7990 : 1490;
+  if (PREMIUM_EBOOKS.has(productKey)) return market === "BR" ? 4990 : 990;
+  return market === "BR" ? 1990 : 490;
+}
+
 export async function createDigitalCheckoutWithFixedBrlEbooks(
   userId: string,
   email: string | null,
-  input: { productKey: DigitalProductKey; market: DigitalMarket },
+  input: { productKey: string; market: DigitalMarket },
 ) {
-  const isPremiumCases = input.productKey === "ebook_estudos_caso_psicanalise";
-  const premiumCollectionOne = new Set<DigitalProductKey>([
-    "ebook_psicologia_psicanalise_terapias",
-    "ebook_corpo_trabalho_escuta",
-    "ebook_ia_novos_milionarios",
-    "ebook_imigracao_efeitos_psicologicos",
-  ]);
-  const isPremiumCollectionOne = premiumCollectionOne.has(input.productKey);
-  // Estudos de Caso mantém o preço atual. A Coleção 1 é dividida em padrão e Premium.
-  const isCollectionOne = ['ebook_psicologia_psicanalise_terapias', 'ebook_jornalismo_era_digital', 'ebook_corpo_trabalho_escuta', 'ebook_comportamento_humano', 'ebook_estetica_bem_estar', 'ebook_tricologia_cuidado', 'ebook_ia_novos_milionarios', 'ebook_imigracao_efeitos_psicologicos'].includes(input.productKey as any);
   if (!isFixedBrlEbook(input.productKey)) {
-    return createClientDigitalCheckout(userId, email, input);
+    return createClientDigitalCheckout(userId, email, input as { productKey: DigitalProductKey; market: DigitalMarket });
   }
 
   const client = await resolveClient(userId, email);
@@ -54,10 +62,11 @@ export async function createDigitalCheckoutWithFixedBrlEbooks(
     fail("Este produto já está disponível na sua biblioteca.");
   }
 
-  const amountCents = isPremiumCases ? (input.market === "BR" ? 7990 : 1490) : isPremiumCollectionOne ? (input.market === "BR" ? 4990 : 990) : (input.market === "BR" ? 1990 : 490);
+  const amountCents = fixedAmountCents(input.productKey, input.market);
   const currency = input.market === "BR" ? "BRL" : "EUR";
   const stripeCurrency = input.market === "BR" ? "brl" : "eur";
   const title = FIXED_BRL_EBOOKS[input.productKey];
+  const premium = PREMIUM_EBOOKS.has(input.productKey);
 
   const { data: order, error: orderError } = await supabaseAdmin
     .from("orders")
@@ -68,7 +77,7 @@ export async function createDigitalCheckoutWithFixedBrlEbooks(
       contact_phone: customer.phone,
       service_type: "produto_digital",
       title,
-      description: (isPremiumCases || isPremiumCollectionOne) ? "eBook Premium · compra digital pela Biblioteca / Plataforma" : "Compra digital pela Biblioteca / Plataforma",
+      description: premium ? "eBook especial · compra digital avulsa fora da assinatura" : "Compra digital pela Biblioteca / Plataforma",
       quantity: 1,
       amount_cents: amountCents,
       currency,
@@ -76,7 +85,7 @@ export async function createDigitalCheckoutWithFixedBrlEbooks(
       status: "novo",
       priority: "media",
       catalog_key: input.productKey,
-      metadata: { product_key: input.productKey, market: input.market, auth_user_id: userId, fixed_price: true, premium: isPremiumCases || isPremiumCollectionOne },
+      metadata: { product_key: input.productKey, market: input.market, auth_user_id: userId, fixed_price: true, premium },
     } as never)
     .select("id, order_number")
     .single();
@@ -95,7 +104,6 @@ export async function createDigitalCheckoutWithFixedBrlEbooks(
 
   const params = new URLSearchParams();
   params.set("mode", "payment");
-  // price_data evita reutilizar Price IDs antigos com valores divergentes.
   params.set("line_items[0][price_data][currency]", stripeCurrency);
   params.set("line_items[0][price_data][unit_amount]", String(amountCents));
   params.set("line_items[0][price_data][product_data][name]", title);
@@ -132,7 +140,7 @@ export async function createDigitalCheckoutWithFixedBrlEbooks(
 
   await supabaseAdmin.from("orders").update({
     stripe_checkout_session_id: session.id,
-    metadata: { product_key: input.productKey, market: input.market, auth_user_id: userId, stripe_price_id: null, fixed_price: true, premium: isPremiumCases || isPremiumCollectionOne },
+    metadata: { product_key: input.productKey, market: input.market, auth_user_id: userId, stripe_price_id: null, fixed_price: true, premium },
   } as never).eq("id", order.id);
 
   return { url: session.url, orderId: order.id, orderNumber: order.order_number };
