@@ -18,6 +18,7 @@ import { supabase } from "@/integrations/supabase/client";
 
 import appCss from "../styles.css?url";
 import responsiveCss from "../responsive-v3.css?url";
+import carreiraCss from "../carreira-hardening.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 const GLOBAL_COPY = {
@@ -33,14 +34,9 @@ function NotFoundComponent() {
       <div className="max-w-md text-center">
         <h1 className="text-7xl font-bold text-primary">404</h1>
         <h2 className="mt-4 text-xl font-semibold">Página não encontrada</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          O endereço acessado não existe ou foi movido.
-        </p>
+        <p className="mt-2 text-sm text-muted-foreground">O endereço acessado não existe ou foi movido.</p>
         <div className="mt-6">
-          <Link
-            to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:opacity-90"
-          >
+          <Link to="/" className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:opacity-90">
             Ir para o início
           </Link>
         </div>
@@ -60,9 +56,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <h1 className="text-xl font-semibold tracking-tight">Esta página não carregou</h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Algo não funcionou como esperado. Tente novamente ou volte ao início.
-        </p>
+        <p className="mt-2 text-sm text-muted-foreground">Algo não funcionou como esperado. Tente novamente ou volte ao início.</p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
             onClick={() => {
@@ -73,10 +67,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
           >
             Tentar novamente
           </button>
-          <a
-            href="/"
-            className="inline-flex items-center justify-center rounded-md border border-border bg-card px-4 py-2 text-sm font-semibold"
-          >
+          <a href="/" className="inline-flex items-center justify-center rounded-md border border-border bg-card px-4 py-2 text-sm font-semibold">
             Ir para o início
           </a>
         </div>
@@ -91,22 +82,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Grupo LDR Essence — Plataforma e Painéis" },
-      {
-        name: "description",
-        content:
-          "Plataforma Grupo LDR Essence para clientes, profissionais, empresas, funcionários e administração do ecossistema LDR.",
-      },
+      { name: "description", content: "Plataforma Grupo LDR Essence para clientes, profissionais, empresas, funcionários e administração do ecossistema LDR." },
       { name: "author", content: "Grupo LDR Essence" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
       { rel: "stylesheet", href: responsiveCss },
+      { rel: "stylesheet", href: carreiraCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap",
-      },
+      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
   }),
@@ -121,11 +106,7 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="pt-BR" suppressHydrationWarning>
       <head>
         <HeadContent />
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4298173894748549"
-          crossOrigin="anonymous"
-        ></script>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4298173894748549" crossOrigin="anonymous"></script>
       </head>
       <body>
         {children}
@@ -145,9 +126,7 @@ function CompanyPlanCards() {
           <div>
             <p className="text-xs font-black uppercase tracking-[.16em] text-primary">{copy.eyebrow}</p>
             <h2 className="mt-2 font-serif text-3xl">{copy.plansTitle}</h2>
-            <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">
-              {copy.plansText}
-            </p>
+            <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">{copy.plansText}</p>
           </div>
           <Link to="/assinatura-empresa" className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-black text-primary-foreground shadow-md transition hover:-translate-y-0.5">
             <Sparkles className="h-4 w-4" /> {copy.manage}
@@ -200,11 +179,7 @@ function PersistentActions() {
 
   return (
     <div className="fixed z-[80] flex flex-col items-end gap-2" style={{ bottom: "calc(5.5rem + env(safe-area-inset-bottom))", right: "calc(1rem + env(safe-area-inset-right))" }}>
-      <Link
-        to="/acesso"
-        aria-label={copy.enterAria}
-        className="inline-flex min-h-11 items-center gap-2 rounded-full border bg-card px-4 py-3 text-sm font-black text-primary shadow-xl transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-      >
+      <Link to="/acesso" aria-label={copy.enterAria} className="inline-flex min-h-11 items-center gap-2 rounded-full border bg-card px-4 py-3 text-sm font-black text-primary shadow-xl transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
         <LogIn className="h-5 w-5" /> <span>{copy.enter}</span>
       </Link>
     </div>
