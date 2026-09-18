@@ -25,6 +25,15 @@ function oauthReturnUrl() {
   return `${window.location.origin}/api/auth/callback`;
 }
 
+function getSafeNext() {
+  if (typeof window === "undefined") return "";
+  const next = new URLSearchParams(window.location.search).get("next") || "";
+  if (!next.startsWith("/")) return "";
+  if (next.startsWith("//")) return "";
+  const allowed = ["/empresa", "/assinatura-empresa", "/carreira/empresa", "/carreira/empresa/candidaturas", "/carreira/empresa/guia-triagem-responsavel"];
+  return allowed.some((prefix) => next === prefix || next.startsWith(`${prefix}?`)) ? next : "";
+}
+
 async function syncBrowserSession(session: Session) {
   const response = await fetch("/api/auth/session-sync", {
     method: "POST",
@@ -41,13 +50,14 @@ function CompanyLogin() {
   const copy = COPY[locale];
   const [busy, setBusy] = useState(false);
   const redirecting = useRef(false);
+  const safeNext = useMemo(getSafeNext, []);
   const sellerRef = useMemo(() => {
     if (typeof window === "undefined") return "";
     const queryRef = new URLSearchParams(window.location.search).get("seller_ref") || "";
     if (queryRef) return queryRef;
     try { return sessionStorage.getItem("ldr_seller_referral") || ""; } catch { return ""; }
   }, []);
-  const afterLogin = sellerRef ? `/assinatura-empresa?seller_ref=${encodeURIComponent(sellerRef)}` : "/empresa";
+  const afterLogin = safeNext || (sellerRef ? `/assinatura-empresa?seller_ref=${encodeURIComponent(sellerRef)}` : "/empresa");
 
   useEffect(() => {
     if (sellerRef) { try { sessionStorage.setItem("ldr_seller_referral", sellerRef); } catch { /* optional */ } }
