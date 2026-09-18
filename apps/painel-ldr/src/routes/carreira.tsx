@@ -37,18 +37,17 @@ const copy = {
     applicationsSub:
       "Acompanhe candidaturas, organize etapas e use critérios responsáveis para reduzir erros no processo seletivo.",
     guideTitle: "Guia de triagem responsável",
-    guideSub:
-      "Orientações para uma seleção ética, inclusiva e baseada em critérios claros.",
-    routeOk: "Página carregada corretamente",
-    currentRoute: "Rota atual",
+    guideSub: "Orientações para uma seleção ética, inclusiva e baseada em critérios claros.",
+    verified: "Ambiente LDR Carreira",
     candidate: "Sou profissional",
     company: "Sou empresa",
     publish: "Publicar vaga",
     seeJobs: "Ver vagas abertas",
-    seeApplications: "Ver candidaturas",
+    seeApplications: "Acessar candidaturas",
     openGuide: "Abrir guia",
+    companyPanel: "Entrar no painel da empresa",
     back: "Voltar para LDR Carreira",
-    proof: "Esta tela é diferente da página principal.",
+    proof: "Escolha uma ação abaixo para continuar.",
   },
   en: {
     brand: "LDR Career",
@@ -60,24 +59,23 @@ const copy = {
     privacy: "Protected data",
     global: "Ready for international opportunities",
     companyTitle: "Company area",
-    companySub:
-      "Post jobs for free, organize the selection process and state real accessibility and inclusion conditions.",
+    companySub: "Post jobs for free, organize the selection process and state real accessibility and inclusion conditions.",
     jobsTitle: "Open jobs",
     jobsSub: "Browse opportunities published on LDR Career and prepare your application more safely.",
     applicationsTitle: "Applications and screening",
     applicationsSub: "Track applications, organize steps and use responsible criteria to reduce selection-process errors.",
     guideTitle: "Responsible screening guide",
     guideSub: "Guidelines for ethical, inclusive selection based on clear criteria.",
-    routeOk: "Page loaded correctly",
-    currentRoute: "Current route",
+    verified: "LDR Career environment",
     candidate: "I'm a professional",
     company: "I'm a company",
     publish: "Post a job",
     seeJobs: "See open jobs",
-    seeApplications: "See applications",
+    seeApplications: "Access applications",
     openGuide: "Open guide",
+    companyPanel: "Enter company panel",
     back: "Back to LDR Career",
-    proof: "This screen is different from the main page.",
+    proof: "Choose an action below to continue.",
   },
   fr: {
     brand: "LDR Carrière",
@@ -89,24 +87,23 @@ const copy = {
     privacy: "Données protégées",
     global: "Prêt pour les opportunités internationales",
     companyTitle: "Espace entreprise",
-    companySub:
-      "Publiez gratuitement des offres, organisez le processus de sélection et indiquez les conditions réelles d’accessibilité et d’inclusion.",
+    companySub: "Publiez gratuitement des offres, organisez le processus de sélection et indiquez les conditions réelles d’accessibilité et d’inclusion.",
     jobsTitle: "Offres ouvertes",
     jobsSub: "Consultez les opportunités publiées sur LDR Carrière et préparez votre candidature avec plus de sécurité.",
     applicationsTitle: "Candidatures et triage",
     applicationsSub: "Suivez les candidatures, organisez les étapes et utilisez des critères responsables.",
     guideTitle: "Guide de triage responsable",
     guideSub: "Orientations pour une sélection éthique, inclusive et fondée sur des critères clairs.",
-    routeOk: "Page chargée correctement",
-    currentRoute: "Route actuelle",
+    verified: "Environnement LDR Carrière",
     candidate: "Je suis professionnel",
     company: "Je suis une entreprise",
     publish: "Publier une offre",
     seeJobs: "Voir les offres",
-    seeApplications: "Voir les candidatures",
+    seeApplications: "Accéder aux candidatures",
     openGuide: "Ouvrir le guide",
+    companyPanel: "Entrer dans le panneau entreprise",
     back: "Retour à LDR Carrière",
-    proof: "Cet écran est différent de la page principale.",
+    proof: "Choisissez une action ci-dessous pour continuer.",
   },
   es: {
     brand: "LDR Carrera",
@@ -118,24 +115,23 @@ const copy = {
     privacy: "Datos protegidos",
     global: "Preparado para oportunidades internacionales",
     companyTitle: "Área de empresa",
-    companySub:
-      "Publica vacantes gratis, organiza el proceso de selección e informa condiciones reales de accesibilidad e inclusión.",
+    companySub: "Publica vacantes gratis, organiza el proceso de selección e informa condiciones reales de accesibilidad e inclusión.",
     jobsTitle: "Vacantes abiertas",
     jobsSub: "Consulta oportunidades publicadas en LDR Carrera y prepara tu candidatura con más seguridad.",
     applicationsTitle: "Candidaturas y selección",
     applicationsSub: "Acompaña candidaturas, organiza etapas y usa criterios responsables.",
     guideTitle: "Guía de selección responsable",
     guideSub: "Orientaciones para una selección ética, inclusiva y basada en criterios claros.",
-    routeOk: "Página cargada correctamente",
-    currentRoute: "Ruta actual",
+    verified: "Ambiente LDR Carrera",
     candidate: "Soy profesional",
     company: "Soy empresa",
     publish: "Publicar vacante",
     seeJobs: "Ver vacantes",
-    seeApplications: "Ver candidaturas",
+    seeApplications: "Acceder a candidaturas",
     openGuide: "Abrir guía",
+    companyPanel: "Entrar al panel de empresa",
     back: "Volver a LDR Carrera",
-    proof: "Esta pantalla es diferente de la página principal.",
+    proof: "Elige una acción abajo para continuar.",
   },
 } as const;
 
@@ -148,16 +144,60 @@ function CareerRouterGuard() {
   const pathname = normalizePath(location.pathname);
 
   if (pathname === "/carreira/empresa") {
-    return <SubPage t={t} path={pathname} icon="company" title={t.companyTitle} subtitle={t.companySub} primary={t.publish} primaryTo="/carreira/empresa" secondary={t.openGuide} secondaryTo="/carreira/empresa/guia-triagem-responsavel" />;
+    return (
+      <SubPage
+        t={t}
+        icon="company"
+        title={t.companyTitle}
+        subtitle={t.companySub}
+        primary={t.publish}
+        primaryTo="/empresa"
+        secondary={t.openGuide}
+        secondaryTo="/carreira/empresa/guia-triagem-responsavel"
+      />
+    );
   }
   if (pathname === "/carreira/vagas") {
-    return <SubPage t={t} path={pathname} icon="jobs" title={t.jobsTitle} subtitle={t.jobsSub} primary={t.candidate} primaryTo="/carreira" secondary={t.company} secondaryTo="/carreira/empresa" />;
+    return (
+      <SubPage
+        t={t}
+        icon="jobs"
+        title={t.jobsTitle}
+        subtitle={t.jobsSub}
+        primary={t.candidate}
+        primaryTo="/carreira"
+        secondary={t.company}
+        secondaryTo="/carreira/empresa"
+      />
+    );
   }
   if (pathname === "/carreira/empresa/candidaturas") {
-    return <SubPage t={t} path={pathname} icon="applications" title={t.applicationsTitle} subtitle={t.applicationsSub} primary={t.seeApplications} primaryTo="/carreira/empresa/candidaturas" secondary={t.publish} secondaryTo="/carreira/empresa" />;
+    return (
+      <SubPage
+        t={t}
+        icon="applications"
+        title={t.applicationsTitle}
+        subtitle={t.applicationsSub}
+        primary={t.seeApplications}
+        primaryTo="/empresa"
+        secondary={t.publish}
+        secondaryTo="/carreira/empresa"
+      />
+    );
   }
   if (pathname === "/carreira/empresa/guia-triagem-responsavel") {
-    return <SubPage t={t} path={pathname} icon="guide" title={t.guideTitle} subtitle={t.guideSub} primary={t.openGuide} primaryTo="/carreira/empresa/guia-triagem-responsavel" secondary={t.seeApplications} secondaryTo="/carreira/empresa/candidaturas" />;
+    return (
+      <SubPage
+        t={t}
+        icon="guide"
+        title={t.guideTitle}
+        subtitle={t.guideSub}
+        primary={t.companyPanel}
+        primaryTo="/empresa"
+        secondary={t.seeApplications}
+        secondaryTo="/carreira/empresa/candidaturas"
+      />
+    );
   }
 
   return <Landing t={t} />;
@@ -183,7 +223,7 @@ function Header({ t }: { t: (typeof copy)[Locale] }) {
 
 function Landing({ t }: { t: (typeof copy)[Locale] }) {
   return (
-    <main className="min-h-screen bg-[#f8fafc] text-slate-900">
+    <main className="min-h-screen bg-[#f8fafc] pb-28 text-slate-900">
       <Header t={t} />
       <section className="bg-gradient-to-br from-[#031d34] via-[#07345b] to-[#0b477a] text-white">
         <div className="mx-auto max-w-6xl px-5 py-16 md:py-24">
@@ -208,7 +248,6 @@ function Landing({ t }: { t: (typeof copy)[Locale] }) {
 
 function SubPage({
   t,
-  path,
   icon,
   title,
   subtitle,
@@ -218,7 +257,6 @@ function SubPage({
   secondaryTo,
 }: {
   t: (typeof copy)[Locale];
-  path: string;
   icon: "company" | "jobs" | "applications" | "guide";
   title: string;
   subtitle: string;
@@ -229,20 +267,17 @@ function SubPage({
 }) {
   const Icon = icon === "company" ? Building2 : icon === "jobs" ? Search : icon === "applications" ? ClipboardCheck : FileText;
   return (
-    <main className="min-h-screen bg-[#f8fafc] text-slate-900">
+    <main className="min-h-screen bg-[#f8fafc] pb-36 text-slate-900">
       <Header t={t} />
       <section className="bg-gradient-to-br from-[#031d34] via-[#07345b] to-[#0b477a] text-white">
         <div className="mx-auto max-w-6xl px-5 py-14 md:py-20">
           <span className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-bold text-[#07345b] shadow-sm">
-            <ShieldCheck size={18} /> {t.routeOk}
+            <ShieldCheck size={18} /> {t.verified}
           </span>
           <h1 className="mt-6 flex max-w-4xl items-center gap-3 text-4xl font-black tracking-tight text-white md:text-6xl">
             <Icon className="h-10 w-10 shrink-0 md:h-12 md:w-12" /> {title}
           </h1>
           <p className="mt-5 max-w-3xl text-lg leading-8 text-white/90">{subtitle}</p>
-          <p className="mt-5 inline-flex rounded-xl bg-white/12 px-4 py-3 text-sm font-semibold text-white">
-            {t.currentRoute}: {path}
-          </p>
         </div>
       </section>
       <section className="mx-auto max-w-6xl px-5 py-10">
