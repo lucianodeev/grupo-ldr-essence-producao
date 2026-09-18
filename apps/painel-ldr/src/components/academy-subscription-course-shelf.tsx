@@ -12,6 +12,7 @@ const COPY={
 type Props={locale:AcademyLocale;active?:boolean;publicView?:boolean};
 
 export function AcademySubscriptionCourseShelf({locale,active=false,publicView=false}:Props){
+  if(!publicView)return null;
   const t=COPY[locale];
   const groups=ACADEMY_SUBSCRIPTION_TRACKS.map((track)=>({
     key:track,
