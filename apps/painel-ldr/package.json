@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "generate-routes": "npx @tanstack/router-cli@1.170.18 generate",
+    "generate-routes": "npx @tanstack/router-cli@latest generate",
     "build": "rm -rf .output .tanstack node_modules/.vite && npm run generate-routes && vite build",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
