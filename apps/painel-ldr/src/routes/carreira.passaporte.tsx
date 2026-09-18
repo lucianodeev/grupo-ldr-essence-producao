@@ -17,7 +17,7 @@ const copy={
 } as const;
 
 function Passport(){
- const {locale}=useI18n(); const t=copy[locale as keyof typeof copy]??copy.pt;
+ const { locale } = useI18n(); const t=copy[locale as keyof typeof copy]??copy.pt;
  const [uid,setUid]=useState<string|null>(null),[apps,setApps]=useState<App[]>([]),[evidence,setEvidence]=useState<Evidence[]>([]),[pool,setPool]=useState<Pool[]>([]),[busy,setBusy]=useState(false),[loaded,setLoaded]=useState(false);
  async function load(){
   const {data:{user}}=await supabase.auth.getUser(); setUid(user?.id??null);
@@ -41,6 +41,6 @@ function Passport(){
  {!loaded?<p className="py-10">...</p>:!uid?<section className="mt-6 rounded-2xl bg-white p-6 shadow-sm"><p>{t.login}</p><Link to="/cliente/login" className="mt-4 inline-flex rounded-xl bg-[#071426] px-4 py-3 text-sm font-black text-white">Login</Link></section>:<>
  <section className="mt-6 grid gap-5 md:grid-cols-2"><div className="rounded-2xl bg-white p-6 shadow-sm"><h2 className="text-xl font-black">{t.skills}</h2>{competencies.length?<div className="mt-4 flex flex-wrap gap-2">{competencies.map(e=><span key={e.id} className="rounded-full bg-[#f5f0e6] px-3 py-2 text-sm font-bold">{e.competency_key.replaceAll("_"," ")}</span>)}</div>:<p className="mt-3 text-sm text-slate-600">{t.empty}</p>}</div>
  <div className="rounded-2xl bg-white p-6 shadow-sm"><h2 className="text-xl font-black">{t.pool}</h2><p className="mt-3 text-sm leading-6 text-slate-600">{active?t.poolOn:t.poolOff}</p><button disabled={busy} onClick={()=>void toggle()} className="mt-4 min-h-12 w-full rounded-xl bg-[#071426] px-4 py-3 text-sm font-black text-white disabled:opacity-50">{active?t.leave:t.join}</button><p className="mt-3 text-xs leading-5 text-slate-500">{t.privacy}</p></div></section>
- <section className="mt-5 rounded-2xl bg-white p-6 shadow-sm"><h2 className="text-xl font-black">{t.history}</h2><div className="mt-4 grid gap-3">{apps.length?apps.map(a=><div key={a.id} className="rounded-xl border border-slate-200 p-4"><p className="font-black">{a.career_jobs?.title??"LDR Carreira"}</p><p className="mt-1 text-xs text-slate-500">{new Date(a.created_at).toLocaleDateString(locale)} · {a.status}</p></div>):<p className="text-sm text-slate-600">{t.empty}</p>}</div></section></>}
+ <section className="mt-5 rounded-2xl bg-white p-6 shadow-sm"><h2 className="text-xl font-black">{t.history}</h2><div className="mt-4 grid gap-3">{apps.length?apps.map(a=><div key={a.id} className="rounded-xl border border-slate-200 p-4"><p className="font-black">{a.career_jobs?.title??"LDR Carreira"}</p><p className="mt-1 text-xs text-slate-500">{new Date(a.created_at).toLocaleDateString(locale === "pt" ? "pt-BR" : locale === "en" ? "en-US" : locale === "fr" ? "fr-FR" : "es-ES")} · {a.status}</p></div>):<p className="text-sm text-slate-600">{t.empty}</p>}</div></section></>}
  </div></main>
 }
