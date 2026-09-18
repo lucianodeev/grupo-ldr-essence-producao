@@ -1,5 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { DigitalReaderV2 } from "@/components/digital-reader-v2";
+import { SpecialEbookReader } from "@/components/special-ebook-reader";
+
+const SPECIAL_EBOOKS = new Set([
+  "ebook_falar_com_quem_feriu",
+  "ebook_da_pobreza_ao_primeiro_contrato",
+]);
 
 const READER_PRODUCTS = new Set([
   "ebook_coragem_comecar",
@@ -27,6 +33,9 @@ function DigitalReaderRoute(){
   const {productKey}=Route.useParams();
   if(!READER_PRODUCTS.has(productKey)){
     return <section className="s8-card">Produto inválido.</section>;
+  }
+  if(SPECIAL_EBOOKS.has(productKey)){
+    return <SpecialEbookReader productKey={productKey as "ebook_falar_com_quem_feriu" | "ebook_da_pobreza_ao_primeiro_contrato"}/>;
   }
   return <DigitalReaderV2 productKey={productKey as any}/>;
 }
