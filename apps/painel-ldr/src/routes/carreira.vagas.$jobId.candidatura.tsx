@@ -61,7 +61,7 @@ const C = {
     back: "Voltar para a vaga",
     loading: "Carregando vaga...",
     closed: "Vaga indisponível ou não publicada.",
-    safe: "A candidatura será registrada com fallback seguro, sem depender de migration em produção.",
+    safe: "A candidatura será registrada com fallback seguro, sem depender de migração em produção.",
     name: "Nome completo",
     email: "E-mail",
     phone: "Telefone ou WhatsApp",
@@ -136,7 +136,7 @@ const C = {
     back: "Volver a la vacante",
     loading: "Cargando vacante...",
     closed: "Vacante no disponible o no publicada.",
-    safe: "La candidatura se registrará con fallback seguro, sin depender de una migration en producción.",
+    safe: "La candidatura se registrará con fallback seguro, sin depender de una migración en producción.",
     name: "Nombre completo",
     email: "Correo electrónico",
     phone: "Teléfono o WhatsApp",
@@ -219,7 +219,7 @@ function ApplicationCenter() {
       `professional_area=${form.professionalArea.trim()}`,
       `profile_url=${form.profileUrl.trim() || "not_informed"}`,
       form.shareAccessibility ? "share_accessibility=yes" : "share_accessibility=no",
-      `accessibility_notes=${
+      `accessibility_needs=${
         form.shareAccessibility && form.accessibilityNeeds.trim() ? form.accessibilityNeeds.trim() : "not_shared"
       }`,
     ].join(" | ");
@@ -229,11 +229,11 @@ function ApplicationCenter() {
       candidate_name: form.name.trim(),
       candidate_email: form.email.trim(),
       candidate_phone: form.phone.trim() || null,
-      professional_area: form.professionalArea.trim(),
       profile_url: form.profileUrl.trim() || null,
-      accessibility_notes:
+      summary: applicationSummary,
+      accessibility_needs:
         form.shareAccessibility && form.accessibilityNeeds.trim() ? form.accessibilityNeeds.trim() : null,
-      accessibility_shared: form.shareAccessibility,
+      share_accessibility_with_company: form.shareAccessibility,
       status: "submitted",
     });
 
