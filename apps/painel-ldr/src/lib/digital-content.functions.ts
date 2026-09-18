@@ -24,6 +24,8 @@ const PRODUCTS = new Set<DigitalReaderProductKey>([
   "ebook_ia_novos_milionarios",
   "ebook_imigracao_efeitos_psicologicos",
   "ebook_psicanalise_vs_psiquiatria",
+  "ebook_falar_com_quem_feriu",
+  "ebook_da_pobreza_ao_primeiro_contrato",
 ]);
 const LOCALES = new Set<DigitalReaderLocale>(["pt", "en", "fr", "es"]);
 
