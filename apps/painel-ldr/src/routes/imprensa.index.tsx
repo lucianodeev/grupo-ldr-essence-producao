@@ -9,12 +9,14 @@ export const Route = createFileRoute("/imprensa/")({
       { name: "robots", content: "index,follow" },
     ],
   }),
+  loader: async () => { try { const r=await fetch("https://sfrcsrzuoqdscflfuwik.supabase.co/rest/v1/press_articles?workflow_status=eq.published&select=slug,title,excerpt,category,author_name,published_at&order=published_at.desc&limit=6",{headers:{apikey:"sb_publishable_nN4RVHqSvj84P-GtTJfKgw_QNUGa6Sb"}}); return r.ok?await r.json():[] } catch { return [] } },
   component: ImprensaHome,
 });
 
 const categories = ["Educação", "Universidades", "Carreira", "Empregabilidade", "Mercado de Trabalho", "Ciência", "Saúde e Bem-Estar", "Empreendedorismo", "Sociedade", "Internacional"];
 
 function ImprensaHome() {
+  const articles=Route.useLoaderData() as any[];
   return <main className="min-h-screen bg-[#f7f5ef] text-slate-950">
     <header className="border-b border-[#d9d2c0] bg-[#071f36] text-white">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4">
@@ -41,10 +43,10 @@ function ImprensaHome() {
 
     <section id="noticias" className="mx-auto max-w-7xl px-5 py-14">
       <div className="flex items-end justify-between gap-5 border-b border-slate-300 pb-4"><div><p className="text-sm font-bold uppercase tracking-widest text-[#8b6c1f]">Em lançamento</p><h2 className="mt-1 text-3xl font-black">LDR Imprensa</h2></div><span className="text-sm text-slate-500">Conteúdo editorial em preparação</span></div>
-      <div className="mt-7 grid gap-5 md:grid-cols-3">
+      <div className="mt-7 grid gap-5 md:grid-cols-3">{articles.length?articles.map((a:any)=><Link key={a.slug} to="/imprensa/noticias/$slug" params={{slug:a.slug}} className="rounded-3xl border border-[#d9d2c0] bg-white p-7 shadow-sm"><p className="text-xs font-black uppercase tracking-widest text-[#8b6c1f]">{a.category}</p><h3 className="mt-3 text-2xl font-black">{a.title}</h3><p className="mt-4 leading-7 text-slate-600">{a.excerpt}</p><p className="mt-6 text-sm font-bold">Por {a.author_name}</p></Link>):<>
         <EditorialCard icon={<GraduationCap />} kicker="Educação" title="Conhecimento que atravessa a universidade e chega à sociedade" text="Cobertura e análises sobre educação, permanência estudantil, formação e novas possibilidades de aprendizagem." />
         <EditorialCard icon={<BriefcaseBusiness />} kicker="Carreira" title="Trabalho, oportunidades e as transformações do mercado" text="Um espaço para acompanhar empregabilidade, profissões, desenvolvimento e relações entre formação e mercado." />
-        <EditorialCard icon={<Mic2 />} kicker="Entrevistas" title="Especialistas e experiências que ajudam a compreender o presente" text="A LDR Imprensa nasce também como ponte entre jornalistas e pessoas com conhecimento para contribuir com pautas." />
+        <EditorialCard icon={<Mic2 />} kicker="Entrevistas" title="Especialistas e experiências que ajudam a compreender o presente" text="A LDR Imprensa nasce também como ponte entre jornalistas e pessoas com conhecimento para contribuir com pautas." /></>}
       </div>
     </section>
 
