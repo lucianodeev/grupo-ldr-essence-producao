@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import { Building2, Check, LogIn, Sparkles, UsersRound } from "lucide-react";
 
 import { AcademyChatbot } from "@/components/academy-chatbot";
+import { AmbientAudio } from "@/components/ambient-audio";
 import { Toaster } from "@/components/ui/sonner";
 import { I18nProvider, useI18n } from "@/lib/i18n";
 import { supabase } from "@/integrations/supabase/client";
@@ -223,6 +224,7 @@ function RootComponent() {
           {showCompanyPlans && <CompanyPlanCards />}
         </div>
         <PersistentActions />
+        <AmbientAudio />
         <AcademyChatbot />
         <Toaster richColors position="top-center" />
       </I18nProvider>
