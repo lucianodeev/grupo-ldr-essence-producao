@@ -7,7 +7,8 @@ export function academicReturnPath(value: unknown): string | null {
   try {
     const url = new URL(value, ACADEMY_ORIGIN);
     if (url.origin !== ACADEMY_ORIGIN) return null;
-    if (url.pathname !== "/cliente/rede-academica" && !url.pathname.startsWith("/cliente/rede-academica/")) return null;
+    const libraryReturn = url.pathname === "/cliente/biblioteca" || /^\/cliente\/(?:ebooks|biblioteca)\/ebook_(?:falar_com_quem_feriu|da_pobreza_ao_primeiro_contrato)$/.test(url.pathname);
+    if (!libraryReturn && url.pathname !== "/cliente/rede-academica" && !url.pathname.startsWith("/cliente/rede-academica/")) return null;
     return `${url.pathname}${url.search}${url.hash}`;
   } catch {
     return null;

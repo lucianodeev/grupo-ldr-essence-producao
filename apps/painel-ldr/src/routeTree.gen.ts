@@ -19,12 +19,14 @@ import { Route as AcoragemdecomecarRouteImport } from './routes/acoragemdecomeca
 import { Route as AmostraGratisRouteImport } from './routes/amostra-gratis'
 import { Route as BioRouteImport } from './routes/bio'
 import { Route as BootstrapRouteImport } from './routes/bootstrap'
+import { Route as CarreiraRouteImport } from './routes/carreira'
 import { Route as ClinicaSocialRouteImport } from './routes/clinica-social'
 import { Route as EbookEstudosCasoPsicanaliseRouteImport } from './routes/ebook-estudos-caso-psicanalise'
 import { Route as EbookPraticaClinicaPsicanaliseRouteImport } from './routes/ebook-pratica-clinica-psicanalise'
 import { Route as EbookPsicanaliseAutismoRouteImport } from './routes/ebook-psicanalise-autismo'
 import { Route as EbookPsicanaliseNoMundoRouteImport } from './routes/ebook-psicanalise-no-mundo'
 import { Route as EmpreendedoresRouteImport } from './routes/empreendedores'
+import { Route as FilmRouteImport } from './routes/film'
 import { Route as FormacaoComunicacaoOratoriaRouteImport } from './routes/formacao-comunicacao-oratoria'
 import { Route as FormacaoCopywritingVendasRouteImport } from './routes/formacao-copywriting-vendas'
 import { Route as FormacaoEducacaoFinanceiraRouteImport } from './routes/formacao-educacao-financeira'
@@ -76,10 +78,16 @@ import { Route as ApiSellerCheckoutRouteImport } from './routes/api/seller-check
 import { Route as ApiSellerPurchaseAccessRouteImport } from './routes/api/seller-purchase-access'
 import { Route as ApiSellerReferralRouteImport } from './routes/api/seller-referral'
 import { Route as ApiTrainingOfferRouteImport } from './routes/api/training-offer'
+import { Route as CarreiraSplatRouteImport } from './routes/carreira.$'
+import { Route as CarreiraEmpresaRouteImport } from './routes/carreira.empresa'
+import { Route as CarreiraMinhasCandidaturasRouteImport } from './routes/carreira.minhas-candidaturas'
+import { Route as CarreiraProfissionalRouteImport } from './routes/carreira.profissional'
+import { Route as CarreiraVagasRouteImport } from './routes/carreira.vagas'
 import { Route as ClienteAtivarRouteImport } from './routes/cliente.ativar'
 import { Route as ClienteDefinirSenhaRouteImport } from './routes/cliente.definir-senha'
 import { Route as ClienteLoginRouteImport } from './routes/cliente.login'
 import { Route as ClinicaSocialProfissionaisRouteImport } from './routes/clinica-social_.profissionais'
+import { Route as ClinicaSocialSolicitarRouteImport } from './routes/clinica-social_.solicitar'
 import { Route as EbooksSlugRouteImport } from './routes/ebooks.$slug'
 import { Route as EmpresaLoginRouteImport } from './routes/empresa.login'
 import { Route as FormacaoSlugRouteImport } from './routes/formacao.$slug'
@@ -163,11 +171,17 @@ import { Route as ClientareaClientePublicarRouteImport } from './routes/_clienta
 import { Route as ClientareaClienteRedeAcademicaRouteImport } from './routes/_clientarea.cliente.rede-academica'
 import { Route as ClientareaClienteSessoesRouteImport } from './routes/_clientarea.cliente.sessoes'
 import { Route as ClientareaClienteTreinamentosRouteImport } from './routes/_clientarea.cliente.treinamentos'
+import { Route as AdminCarreiraVagasRouteImport } from './routes/admin.carreira.vagas'
 import { Route as ApiAuthCallbackRouteImport } from './routes/api/auth/callback'
 import { Route as ApiAuthSessionSyncRouteImport } from './routes/api/auth/session-sync'
 import { Route as ApiHotmartWebhookRouteImport } from './routes/api/hotmart/webhook'
 import { Route as ApiIntegrationsSiteOrdersRouteImport } from './routes/api/integrations/site-orders'
 import { Route as ApiStripeWebhookRouteImport } from './routes/api/stripe/webhook'
+import { Route as CarreiraCandidatarJobIdRouteImport } from './routes/carreira.candidatar.$jobId'
+import { Route as CarreiraEmpresaCandidaturasRouteImport } from './routes/carreira.empresa.candidaturas'
+import { Route as CarreiraEmpresaGuiaTriagemResponsavelRouteImport } from './routes/carreira.empresa.guia-triagem-responsavel'
+import { Route as CarreiraEmpresaPublicarRouteImport } from './routes/carreira.empresa.publicar'
+import { Route as CarreiraVagasJobIdRouteImport } from './routes/carreira.vagas.$jobId'
 import { Route as ClientareaClienteBibliotecaProductKeyRouteImport } from './routes/_clientarea.cliente.biblioteca.$productKey'
 import { Route as ClientareaClienteBibliotecaArtigosCientificosRouteImport } from './routes/_clientarea.cliente.biblioteca.artigos-cientificos'
 import { Route as ClientareaClienteBibliotecaCursoGratuitoRouteImport } from './routes/_clientarea.cliente.biblioteca.curso-gratuito'
@@ -206,6 +220,7 @@ import { Route as ClientareaClienteTreinamentosPsicanaliseRouteImport } from './
 import { Route as ClientareaClienteTreinamentosPsicanaliseInternacionalRouteImport } from './routes/_clientarea.cliente.treinamentos.psicanalise-internacional'
 import { Route as ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRouteImport } from './routes/_clientarea.cliente.treinamentos.terapia-breve-psicanalitica'
 import { Route as ClientareaClienteTreinamentosTricologiaTerapiaCapilarRouteImport } from './routes/_clientarea.cliente.treinamentos.tricologia-terapia-capilar'
+import { Route as CarreiraVagasJobIdCandidaturaRouteImport } from './routes/carreira.vagas.$jobId.candidatura'
 import { Route as ClientareaClienteBibliotecaPublicacoesSlugRouteImport } from './routes/_clientarea.cliente.biblioteca.publicacoes.$slug'
 import { Route as ClientareaClienteCursosAcademySlugRouteImport } from './routes/_clientarea.cliente.cursos.academy.$slug'
 import { Route as ClientareaClienteCursosAssinaturaSlugRouteImport } from './routes/_clientarea.cliente.cursos.assinatura.$slug'
@@ -220,6 +235,7 @@ import { Route as ClientareaClienteTreinamentosDoMamaoAoNegocioForumRouteImport 
 import { Route as ClientareaClienteTreinamentosFormacaoProfissionalSlugRouteImport } from './routes/_clientarea.cliente.treinamentos.formacao-profissional.$slug'
 import { Route as ClientareaClienteTreinamentosPsicanaliseCertificadoRouteImport } from './routes/_clientarea.cliente.treinamentos.psicanalise.certificado'
 import { Route as ClientareaClienteTreinamentosPsicanaliseForumRouteImport } from './routes/_clientarea.cliente.treinamentos.psicanalise.forum'
+import { Route as CarreiraEmpresaVagasJobIdCandidatosRouteImport } from './routes/carreira.empresa.vagas.$jobId.candidatos'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -268,6 +284,11 @@ const BootstrapRoute = BootstrapRouteImport.update({
   path: '/bootstrap',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CarreiraRoute = CarreiraRouteImport.update({
+  id: '/carreira',
+  path: '/carreira',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ClinicaSocialRoute = ClinicaSocialRouteImport.update({
   id: '/clinica-social',
   path: '/clinica-social',
@@ -298,6 +319,11 @@ const EbookPsicanaliseNoMundoRoute = EbookPsicanaliseNoMundoRouteImport.update({
 const EmpreendedoresRoute = EmpreendedoresRouteImport.update({
   id: '/empreendedores',
   path: '/empreendedores',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FilmRoute = FilmRouteImport.update({
+  id: '/film',
+  path: '/film',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FormacaoComunicacaoOratoriaRoute =
@@ -570,6 +596,32 @@ const ApiTrainingOfferRoute = ApiTrainingOfferRouteImport.update({
   path: '/api/training-offer',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CarreiraSplatRoute = CarreiraSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => CarreiraRoute,
+} as any)
+const CarreiraEmpresaRoute = CarreiraEmpresaRouteImport.update({
+  id: '/empresa',
+  path: '/empresa',
+  getParentRoute: () => CarreiraRoute,
+} as any)
+const CarreiraMinhasCandidaturasRoute =
+  CarreiraMinhasCandidaturasRouteImport.update({
+    id: '/minhas-candidaturas',
+    path: '/minhas-candidaturas',
+    getParentRoute: () => CarreiraRoute,
+  } as any)
+const CarreiraProfissionalRoute = CarreiraProfissionalRouteImport.update({
+  id: '/profissional',
+  path: '/profissional',
+  getParentRoute: () => CarreiraRoute,
+} as any)
+const CarreiraVagasRoute = CarreiraVagasRouteImport.update({
+  id: '/vagas',
+  path: '/vagas',
+  getParentRoute: () => CarreiraRoute,
+} as any)
 const ClienteAtivarRoute = ClienteAtivarRouteImport.update({
   id: '/cliente/ativar',
   path: '/cliente/ativar',
@@ -591,6 +643,11 @@ const ClinicaSocialProfissionaisRoute =
     path: '/clinica-social/profissionais',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ClinicaSocialSolicitarRoute = ClinicaSocialSolicitarRouteImport.update({
+  id: '/clinica-social_/solicitar',
+  path: '/clinica-social/solicitar',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EbooksSlugRoute = EbooksSlugRouteImport.update({
   id: '/ebooks/$slug',
   path: '/ebooks/$slug',
@@ -1074,6 +1131,11 @@ const ClientareaClienteTreinamentosRoute =
     path: '/treinamentos',
     getParentRoute: () => ClientareaClienteRoute,
   } as any)
+const AdminCarreiraVagasRoute = AdminCarreiraVagasRouteImport.update({
+  id: '/admin/carreira/vagas',
+  path: '/admin/carreira/vagas',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAuthCallbackRoute = ApiAuthCallbackRouteImport.update({
   id: '/api/auth/callback',
   path: '/api/auth/callback',
@@ -1099,6 +1161,33 @@ const ApiStripeWebhookRoute = ApiStripeWebhookRouteImport.update({
   id: '/api/stripe/webhook',
   path: '/api/stripe/webhook',
   getParentRoute: () => rootRouteImport,
+} as any)
+const CarreiraCandidatarJobIdRoute = CarreiraCandidatarJobIdRouteImport.update({
+  id: '/candidatar/$jobId',
+  path: '/candidatar/$jobId',
+  getParentRoute: () => CarreiraRoute,
+} as any)
+const CarreiraEmpresaCandidaturasRoute =
+  CarreiraEmpresaCandidaturasRouteImport.update({
+    id: '/candidaturas',
+    path: '/candidaturas',
+    getParentRoute: () => CarreiraEmpresaRoute,
+  } as any)
+const CarreiraEmpresaGuiaTriagemResponsavelRoute =
+  CarreiraEmpresaGuiaTriagemResponsavelRouteImport.update({
+    id: '/guia-triagem-responsavel',
+    path: '/guia-triagem-responsavel',
+    getParentRoute: () => CarreiraEmpresaRoute,
+  } as any)
+const CarreiraEmpresaPublicarRoute = CarreiraEmpresaPublicarRouteImport.update({
+  id: '/publicar',
+  path: '/publicar',
+  getParentRoute: () => CarreiraEmpresaRoute,
+} as any)
+const CarreiraVagasJobIdRoute = CarreiraVagasJobIdRouteImport.update({
+  id: '/$jobId',
+  path: '/$jobId',
+  getParentRoute: () => CarreiraVagasRoute,
 } as any)
 const ClientareaClienteBibliotecaProductKeyRoute =
   ClientareaClienteBibliotecaProductKeyRouteImport.update({
@@ -1328,6 +1417,12 @@ const ClientareaClienteTreinamentosTricologiaTerapiaCapilarRoute =
     path: '/tricologia-terapia-capilar',
     getParentRoute: () => ClientareaClienteTreinamentosRoute,
   } as any)
+const CarreiraVagasJobIdCandidaturaRoute =
+  CarreiraVagasJobIdCandidaturaRouteImport.update({
+    id: '/candidatura',
+    path: '/candidatura',
+    getParentRoute: () => CarreiraVagasJobIdRoute,
+  } as any)
 const ClientareaClienteBibliotecaPublicacoesSlugRoute =
   ClientareaClienteBibliotecaPublicacoesSlugRouteImport.update({
     id: '/$slug',
@@ -1412,6 +1507,12 @@ const ClientareaClienteTreinamentosPsicanaliseForumRoute =
     path: '/forum',
     getParentRoute: () => ClientareaClienteTreinamentosPsicanaliseRoute,
   } as any)
+const CarreiraEmpresaVagasJobIdCandidatosRoute =
+  CarreiraEmpresaVagasJobIdCandidatosRouteImport.update({
+    id: '/vagas/$jobId/candidatos',
+    path: '/vagas/$jobId/candidatos',
+    getParentRoute: () => CarreiraEmpresaRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -1421,12 +1522,14 @@ export interface FileRoutesByFullPath {
   '/amostra-gratis': typeof AmostraGratisRoute
   '/bio': typeof BioRoute
   '/bootstrap': typeof BootstrapRoute
+  '/carreira': typeof CarreiraRouteWithChildren
   '/clinica-social': typeof ClinicaSocialRoute
   '/ebook-estudos-caso-psicanalise': typeof EbookEstudosCasoPsicanaliseRoute
   '/ebook-pratica-clinica-psicanalise': typeof EbookPraticaClinicaPsicanaliseRoute
   '/ebook-psicanalise-autismo': typeof EbookPsicanaliseAutismoRoute
   '/ebook-psicanalise-no-mundo': typeof EbookPsicanaliseNoMundoRoute
   '/empreendedores': typeof EmpreendedoresRoute
+  '/film': typeof FilmRoute
   '/formacao-comunicacao-oratoria': typeof FormacaoComunicacaoOratoriaRoute
   '/formacao-copywriting-vendas': typeof FormacaoCopywritingVendasRoute
   '/formacao-educacao-financeira': typeof FormacaoEducacaoFinanceiraRoute
@@ -1477,10 +1580,16 @@ export interface FileRoutesByFullPath {
   '/api/seller-purchase-access': typeof ApiSellerPurchaseAccessRoute
   '/api/seller-referral': typeof ApiSellerReferralRoute
   '/api/training-offer': typeof ApiTrainingOfferRoute
+  '/carreira/$': typeof CarreiraSplatRoute
+  '/carreira/empresa': typeof CarreiraEmpresaRouteWithChildren
+  '/carreira/minhas-candidaturas': typeof CarreiraMinhasCandidaturasRoute
+  '/carreira/profissional': typeof CarreiraProfissionalRoute
+  '/carreira/vagas': typeof CarreiraVagasRouteWithChildren
   '/cliente/ativar': typeof ClienteAtivarRoute
   '/cliente/definir-senha': typeof ClienteDefinirSenhaRoute
   '/cliente/login': typeof ClienteLoginRoute
   '/clinica-social/profissionais': typeof ClinicaSocialProfissionaisRoute
+  '/clinica-social/solicitar': typeof ClinicaSocialSolicitarRoute
   '/ebooks/$slug': typeof EbooksSlugRoute
   '/empresa/login': typeof EmpresaLoginRoute
   '/formacao/$slug': typeof FormacaoSlugRoute
@@ -1562,11 +1671,17 @@ export interface FileRoutesByFullPath {
   '/cliente/rede-academica': typeof ClientareaClienteRedeAcademicaRouteWithChildren
   '/cliente/sessoes': typeof ClientareaClienteSessoesRoute
   '/cliente/treinamentos': typeof ClientareaClienteTreinamentosRouteWithChildren
+  '/admin/carreira/vagas': typeof AdminCarreiraVagasRoute
   '/api/auth/callback': typeof ApiAuthCallbackRoute
   '/api/auth/session-sync': typeof ApiAuthSessionSyncRoute
   '/api/hotmart/webhook': typeof ApiHotmartWebhookRoute
   '/api/integrations/site-orders': typeof ApiIntegrationsSiteOrdersRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
+  '/carreira/candidatar/$jobId': typeof CarreiraCandidatarJobIdRoute
+  '/carreira/empresa/candidaturas': typeof CarreiraEmpresaCandidaturasRoute
+  '/carreira/empresa/guia-triagem-responsavel': typeof CarreiraEmpresaGuiaTriagemResponsavelRoute
+  '/carreira/empresa/publicar': typeof CarreiraEmpresaPublicarRoute
+  '/carreira/vagas/$jobId': typeof CarreiraVagasJobIdRouteWithChildren
   '/painel-profissional/': typeof AuthenticatedPainelProfissionalIndexRoute
   '/cliente/': typeof ClientareaClienteIndexRoute
   '/cliente/biblioteca/$productKey': typeof ClientareaClienteBibliotecaProductKeyRoute
@@ -1607,6 +1722,7 @@ export interface FileRoutesByFullPath {
   '/cliente/treinamentos/psicanalise-internacional': typeof ClientareaClienteTreinamentosPsicanaliseInternacionalRoute
   '/cliente/treinamentos/terapia-breve-psicanalitica': typeof ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRoute
   '/cliente/treinamentos/tricologia-terapia-capilar': typeof ClientareaClienteTreinamentosTricologiaTerapiaCapilarRoute
+  '/carreira/vagas/$jobId/candidatura': typeof CarreiraVagasJobIdCandidaturaRoute
   '/cliente/biblioteca/publicacoes/$slug': typeof ClientareaClienteBibliotecaPublicacoesSlugRoute
   '/cliente/cursos/academy/$slug': typeof ClientareaClienteCursosAcademySlugRoute
   '/cliente/cursos/assinatura/$slug': typeof ClientareaClienteCursosAssinaturaSlugRoute
@@ -1621,6 +1737,7 @@ export interface FileRoutesByFullPath {
   '/cliente/treinamentos/formacao-profissional/$slug': typeof ClientareaClienteTreinamentosFormacaoProfissionalSlugRoute
   '/cliente/treinamentos/psicanalise/certificado': typeof ClientareaClienteTreinamentosPsicanaliseCertificadoRoute
   '/cliente/treinamentos/psicanalise/forum': typeof ClientareaClienteTreinamentosPsicanaliseForumRoute
+  '/carreira/empresa/vagas/$jobId/candidatos': typeof CarreiraEmpresaVagasJobIdCandidatosRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -1630,12 +1747,14 @@ export interface FileRoutesByTo {
   '/amostra-gratis': typeof AmostraGratisRoute
   '/bio': typeof BioRoute
   '/bootstrap': typeof BootstrapRoute
+  '/carreira': typeof CarreiraRouteWithChildren
   '/clinica-social': typeof ClinicaSocialRoute
   '/ebook-estudos-caso-psicanalise': typeof EbookEstudosCasoPsicanaliseRoute
   '/ebook-pratica-clinica-psicanalise': typeof EbookPraticaClinicaPsicanaliseRoute
   '/ebook-psicanalise-autismo': typeof EbookPsicanaliseAutismoRoute
   '/ebook-psicanalise-no-mundo': typeof EbookPsicanaliseNoMundoRoute
   '/empreendedores': typeof EmpreendedoresRoute
+  '/film': typeof FilmRoute
   '/formacao-comunicacao-oratoria': typeof FormacaoComunicacaoOratoriaRoute
   '/formacao-copywriting-vendas': typeof FormacaoCopywritingVendasRoute
   '/formacao-educacao-financeira': typeof FormacaoEducacaoFinanceiraRoute
@@ -1684,10 +1803,16 @@ export interface FileRoutesByTo {
   '/api/seller-purchase-access': typeof ApiSellerPurchaseAccessRoute
   '/api/seller-referral': typeof ApiSellerReferralRoute
   '/api/training-offer': typeof ApiTrainingOfferRoute
+  '/carreira/$': typeof CarreiraSplatRoute
+  '/carreira/empresa': typeof CarreiraEmpresaRouteWithChildren
+  '/carreira/minhas-candidaturas': typeof CarreiraMinhasCandidaturasRoute
+  '/carreira/profissional': typeof CarreiraProfissionalRoute
+  '/carreira/vagas': typeof CarreiraVagasRouteWithChildren
   '/cliente/ativar': typeof ClienteAtivarRoute
   '/cliente/definir-senha': typeof ClienteDefinirSenhaRoute
   '/cliente/login': typeof ClienteLoginRoute
   '/clinica-social/profissionais': typeof ClinicaSocialProfissionaisRoute
+  '/clinica-social/solicitar': typeof ClinicaSocialSolicitarRoute
   '/ebooks/$slug': typeof EbooksSlugRoute
   '/empresa/login': typeof EmpresaLoginRoute
   '/formacao/$slug': typeof FormacaoSlugRoute
@@ -1769,11 +1894,17 @@ export interface FileRoutesByTo {
   '/cliente/rede-academica': typeof ClientareaClienteRedeAcademicaRouteWithChildren
   '/cliente/sessoes': typeof ClientareaClienteSessoesRoute
   '/cliente/treinamentos': typeof ClientareaClienteTreinamentosRouteWithChildren
+  '/admin/carreira/vagas': typeof AdminCarreiraVagasRoute
   '/api/auth/callback': typeof ApiAuthCallbackRoute
   '/api/auth/session-sync': typeof ApiAuthSessionSyncRoute
   '/api/hotmart/webhook': typeof ApiHotmartWebhookRoute
   '/api/integrations/site-orders': typeof ApiIntegrationsSiteOrdersRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
+  '/carreira/candidatar/$jobId': typeof CarreiraCandidatarJobIdRoute
+  '/carreira/empresa/candidaturas': typeof CarreiraEmpresaCandidaturasRoute
+  '/carreira/empresa/guia-triagem-responsavel': typeof CarreiraEmpresaGuiaTriagemResponsavelRoute
+  '/carreira/empresa/publicar': typeof CarreiraEmpresaPublicarRoute
+  '/carreira/vagas/$jobId': typeof CarreiraVagasJobIdRouteWithChildren
   '/painel-profissional': typeof AuthenticatedPainelProfissionalIndexRoute
   '/cliente': typeof ClientareaClienteIndexRoute
   '/cliente/biblioteca/$productKey': typeof ClientareaClienteBibliotecaProductKeyRoute
@@ -1814,6 +1945,7 @@ export interface FileRoutesByTo {
   '/cliente/treinamentos/psicanalise-internacional': typeof ClientareaClienteTreinamentosPsicanaliseInternacionalRoute
   '/cliente/treinamentos/terapia-breve-psicanalitica': typeof ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRoute
   '/cliente/treinamentos/tricologia-terapia-capilar': typeof ClientareaClienteTreinamentosTricologiaTerapiaCapilarRoute
+  '/carreira/vagas/$jobId/candidatura': typeof CarreiraVagasJobIdCandidaturaRoute
   '/cliente/biblioteca/publicacoes/$slug': typeof ClientareaClienteBibliotecaPublicacoesSlugRoute
   '/cliente/cursos/academy/$slug': typeof ClientareaClienteCursosAcademySlugRoute
   '/cliente/cursos/assinatura/$slug': typeof ClientareaClienteCursosAssinaturaSlugRoute
@@ -1828,6 +1960,7 @@ export interface FileRoutesByTo {
   '/cliente/treinamentos/formacao-profissional/$slug': typeof ClientareaClienteTreinamentosFormacaoProfissionalSlugRoute
   '/cliente/treinamentos/psicanalise/certificado': typeof ClientareaClienteTreinamentosPsicanaliseCertificadoRoute
   '/cliente/treinamentos/psicanalise/forum': typeof ClientareaClienteTreinamentosPsicanaliseForumRoute
+  '/carreira/empresa/vagas/$jobId/candidatos': typeof CarreiraEmpresaVagasJobIdCandidatosRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -1841,12 +1974,14 @@ export interface FileRoutesById {
   '/amostra-gratis': typeof AmostraGratisRoute
   '/bio': typeof BioRoute
   '/bootstrap': typeof BootstrapRoute
+  '/carreira': typeof CarreiraRouteWithChildren
   '/clinica-social': typeof ClinicaSocialRoute
   '/ebook-estudos-caso-psicanalise': typeof EbookEstudosCasoPsicanaliseRoute
   '/ebook-pratica-clinica-psicanalise': typeof EbookPraticaClinicaPsicanaliseRoute
   '/ebook-psicanalise-autismo': typeof EbookPsicanaliseAutismoRoute
   '/ebook-psicanalise-no-mundo': typeof EbookPsicanaliseNoMundoRoute
   '/empreendedores': typeof EmpreendedoresRoute
+  '/film': typeof FilmRoute
   '/formacao-comunicacao-oratoria': typeof FormacaoComunicacaoOratoriaRoute
   '/formacao-copywriting-vendas': typeof FormacaoCopywritingVendasRoute
   '/formacao-educacao-financeira': typeof FormacaoEducacaoFinanceiraRoute
@@ -1898,10 +2033,16 @@ export interface FileRoutesById {
   '/api/seller-purchase-access': typeof ApiSellerPurchaseAccessRoute
   '/api/seller-referral': typeof ApiSellerReferralRoute
   '/api/training-offer': typeof ApiTrainingOfferRoute
+  '/carreira/$': typeof CarreiraSplatRoute
+  '/carreira/empresa': typeof CarreiraEmpresaRouteWithChildren
+  '/carreira/minhas-candidaturas': typeof CarreiraMinhasCandidaturasRoute
+  '/carreira/profissional': typeof CarreiraProfissionalRoute
+  '/carreira/vagas': typeof CarreiraVagasRouteWithChildren
   '/cliente/ativar': typeof ClienteAtivarRoute
   '/cliente/definir-senha': typeof ClienteDefinirSenhaRoute
   '/cliente/login': typeof ClienteLoginRoute
   '/clinica-social_/profissionais': typeof ClinicaSocialProfissionaisRoute
+  '/clinica-social_/solicitar': typeof ClinicaSocialSolicitarRoute
   '/ebooks/$slug': typeof EbooksSlugRoute
   '/empresa/login': typeof EmpresaLoginRoute
   '/formacao/$slug': typeof FormacaoSlugRoute
@@ -1983,11 +2124,17 @@ export interface FileRoutesById {
   '/_clientarea/cliente/rede-academica': typeof ClientareaClienteRedeAcademicaRouteWithChildren
   '/_clientarea/cliente/sessoes': typeof ClientareaClienteSessoesRoute
   '/_clientarea/cliente/treinamentos': typeof ClientareaClienteTreinamentosRouteWithChildren
+  '/admin/carreira/vagas': typeof AdminCarreiraVagasRoute
   '/api/auth/callback': typeof ApiAuthCallbackRoute
   '/api/auth/session-sync': typeof ApiAuthSessionSyncRoute
   '/api/hotmart/webhook': typeof ApiHotmartWebhookRoute
   '/api/integrations/site-orders': typeof ApiIntegrationsSiteOrdersRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
+  '/carreira/candidatar/$jobId': typeof CarreiraCandidatarJobIdRoute
+  '/carreira/empresa/candidaturas': typeof CarreiraEmpresaCandidaturasRoute
+  '/carreira/empresa/guia-triagem-responsavel': typeof CarreiraEmpresaGuiaTriagemResponsavelRoute
+  '/carreira/empresa/publicar': typeof CarreiraEmpresaPublicarRoute
+  '/carreira/vagas/$jobId': typeof CarreiraVagasJobIdRouteWithChildren
   '/_authenticated/painel-profissional/': typeof AuthenticatedPainelProfissionalIndexRoute
   '/_clientarea/cliente/': typeof ClientareaClienteIndexRoute
   '/_clientarea/cliente/biblioteca/$productKey': typeof ClientareaClienteBibliotecaProductKeyRoute
@@ -2028,6 +2175,7 @@ export interface FileRoutesById {
   '/_clientarea/cliente/treinamentos/psicanalise-internacional': typeof ClientareaClienteTreinamentosPsicanaliseInternacionalRoute
   '/_clientarea/cliente/treinamentos/terapia-breve-psicanalitica': typeof ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRoute
   '/_clientarea/cliente/treinamentos/tricologia-terapia-capilar': typeof ClientareaClienteTreinamentosTricologiaTerapiaCapilarRoute
+  '/carreira/vagas/$jobId/candidatura': typeof CarreiraVagasJobIdCandidaturaRoute
   '/_clientarea/cliente/biblioteca/publicacoes/$slug': typeof ClientareaClienteBibliotecaPublicacoesSlugRoute
   '/_clientarea/cliente/cursos/academy/$slug': typeof ClientareaClienteCursosAcademySlugRoute
   '/_clientarea/cliente/cursos/assinatura/$slug': typeof ClientareaClienteCursosAssinaturaSlugRoute
@@ -2042,6 +2190,7 @@ export interface FileRoutesById {
   '/_clientarea/cliente/treinamentos/formacao-profissional/$slug': typeof ClientareaClienteTreinamentosFormacaoProfissionalSlugRoute
   '/_clientarea/cliente/treinamentos/psicanalise/certificado': typeof ClientareaClienteTreinamentosPsicanaliseCertificadoRoute
   '/_clientarea/cliente/treinamentos/psicanalise/forum': typeof ClientareaClienteTreinamentosPsicanaliseForumRoute
+  '/carreira/empresa/vagas/$jobId/candidatos': typeof CarreiraEmpresaVagasJobIdCandidatosRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -2053,12 +2202,14 @@ export interface FileRouteTypes {
     | '/amostra-gratis'
     | '/bio'
     | '/bootstrap'
+    | '/carreira'
     | '/clinica-social'
     | '/ebook-estudos-caso-psicanalise'
     | '/ebook-pratica-clinica-psicanalise'
     | '/ebook-psicanalise-autismo'
     | '/ebook-psicanalise-no-mundo'
     | '/empreendedores'
+    | '/film'
     | '/formacao-comunicacao-oratoria'
     | '/formacao-copywriting-vendas'
     | '/formacao-educacao-financeira'
@@ -2109,10 +2260,16 @@ export interface FileRouteTypes {
     | '/api/seller-purchase-access'
     | '/api/seller-referral'
     | '/api/training-offer'
+    | '/carreira/$'
+    | '/carreira/empresa'
+    | '/carreira/minhas-candidaturas'
+    | '/carreira/profissional'
+    | '/carreira/vagas'
     | '/cliente/ativar'
     | '/cliente/definir-senha'
     | '/cliente/login'
     | '/clinica-social/profissionais'
+    | '/clinica-social/solicitar'
     | '/ebooks/$slug'
     | '/empresa/login'
     | '/formacao/$slug'
@@ -2194,11 +2351,17 @@ export interface FileRouteTypes {
     | '/cliente/rede-academica'
     | '/cliente/sessoes'
     | '/cliente/treinamentos'
+    | '/admin/carreira/vagas'
     | '/api/auth/callback'
     | '/api/auth/session-sync'
     | '/api/hotmart/webhook'
     | '/api/integrations/site-orders'
     | '/api/stripe/webhook'
+    | '/carreira/candidatar/$jobId'
+    | '/carreira/empresa/candidaturas'
+    | '/carreira/empresa/guia-triagem-responsavel'
+    | '/carreira/empresa/publicar'
+    | '/carreira/vagas/$jobId'
     | '/painel-profissional/'
     | '/cliente/'
     | '/cliente/biblioteca/$productKey'
@@ -2239,6 +2402,7 @@ export interface FileRouteTypes {
     | '/cliente/treinamentos/psicanalise-internacional'
     | '/cliente/treinamentos/terapia-breve-psicanalitica'
     | '/cliente/treinamentos/tricologia-terapia-capilar'
+    | '/carreira/vagas/$jobId/candidatura'
     | '/cliente/biblioteca/publicacoes/$slug'
     | '/cliente/cursos/academy/$slug'
     | '/cliente/cursos/assinatura/$slug'
@@ -2253,6 +2417,7 @@ export interface FileRouteTypes {
     | '/cliente/treinamentos/formacao-profissional/$slug'
     | '/cliente/treinamentos/psicanalise/certificado'
     | '/cliente/treinamentos/psicanalise/forum'
+    | '/carreira/empresa/vagas/$jobId/candidatos'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -2262,12 +2427,14 @@ export interface FileRouteTypes {
     | '/amostra-gratis'
     | '/bio'
     | '/bootstrap'
+    | '/carreira'
     | '/clinica-social'
     | '/ebook-estudos-caso-psicanalise'
     | '/ebook-pratica-clinica-psicanalise'
     | '/ebook-psicanalise-autismo'
     | '/ebook-psicanalise-no-mundo'
     | '/empreendedores'
+    | '/film'
     | '/formacao-comunicacao-oratoria'
     | '/formacao-copywriting-vendas'
     | '/formacao-educacao-financeira'
@@ -2316,10 +2483,16 @@ export interface FileRouteTypes {
     | '/api/seller-purchase-access'
     | '/api/seller-referral'
     | '/api/training-offer'
+    | '/carreira/$'
+    | '/carreira/empresa'
+    | '/carreira/minhas-candidaturas'
+    | '/carreira/profissional'
+    | '/carreira/vagas'
     | '/cliente/ativar'
     | '/cliente/definir-senha'
     | '/cliente/login'
     | '/clinica-social/profissionais'
+    | '/clinica-social/solicitar'
     | '/ebooks/$slug'
     | '/empresa/login'
     | '/formacao/$slug'
@@ -2401,11 +2574,17 @@ export interface FileRouteTypes {
     | '/cliente/rede-academica'
     | '/cliente/sessoes'
     | '/cliente/treinamentos'
+    | '/admin/carreira/vagas'
     | '/api/auth/callback'
     | '/api/auth/session-sync'
     | '/api/hotmart/webhook'
     | '/api/integrations/site-orders'
     | '/api/stripe/webhook'
+    | '/carreira/candidatar/$jobId'
+    | '/carreira/empresa/candidaturas'
+    | '/carreira/empresa/guia-triagem-responsavel'
+    | '/carreira/empresa/publicar'
+    | '/carreira/vagas/$jobId'
     | '/painel-profissional'
     | '/cliente'
     | '/cliente/biblioteca/$productKey'
@@ -2446,6 +2625,7 @@ export interface FileRouteTypes {
     | '/cliente/treinamentos/psicanalise-internacional'
     | '/cliente/treinamentos/terapia-breve-psicanalitica'
     | '/cliente/treinamentos/tricologia-terapia-capilar'
+    | '/carreira/vagas/$jobId/candidatura'
     | '/cliente/biblioteca/publicacoes/$slug'
     | '/cliente/cursos/academy/$slug'
     | '/cliente/cursos/assinatura/$slug'
@@ -2460,6 +2640,7 @@ export interface FileRouteTypes {
     | '/cliente/treinamentos/formacao-profissional/$slug'
     | '/cliente/treinamentos/psicanalise/certificado'
     | '/cliente/treinamentos/psicanalise/forum'
+    | '/carreira/empresa/vagas/$jobId/candidatos'
   id:
     | '__root__'
     | '/'
@@ -2472,12 +2653,14 @@ export interface FileRouteTypes {
     | '/amostra-gratis'
     | '/bio'
     | '/bootstrap'
+    | '/carreira'
     | '/clinica-social'
     | '/ebook-estudos-caso-psicanalise'
     | '/ebook-pratica-clinica-psicanalise'
     | '/ebook-psicanalise-autismo'
     | '/ebook-psicanalise-no-mundo'
     | '/empreendedores'
+    | '/film'
     | '/formacao-comunicacao-oratoria'
     | '/formacao-copywriting-vendas'
     | '/formacao-educacao-financeira'
@@ -2529,10 +2712,16 @@ export interface FileRouteTypes {
     | '/api/seller-purchase-access'
     | '/api/seller-referral'
     | '/api/training-offer'
+    | '/carreira/$'
+    | '/carreira/empresa'
+    | '/carreira/minhas-candidaturas'
+    | '/carreira/profissional'
+    | '/carreira/vagas'
     | '/cliente/ativar'
     | '/cliente/definir-senha'
     | '/cliente/login'
     | '/clinica-social_/profissionais'
+    | '/clinica-social_/solicitar'
     | '/ebooks/$slug'
     | '/empresa/login'
     | '/formacao/$slug'
@@ -2614,11 +2803,17 @@ export interface FileRouteTypes {
     | '/_clientarea/cliente/rede-academica'
     | '/_clientarea/cliente/sessoes'
     | '/_clientarea/cliente/treinamentos'
+    | '/admin/carreira/vagas'
     | '/api/auth/callback'
     | '/api/auth/session-sync'
     | '/api/hotmart/webhook'
     | '/api/integrations/site-orders'
     | '/api/stripe/webhook'
+    | '/carreira/candidatar/$jobId'
+    | '/carreira/empresa/candidaturas'
+    | '/carreira/empresa/guia-triagem-responsavel'
+    | '/carreira/empresa/publicar'
+    | '/carreira/vagas/$jobId'
     | '/_authenticated/painel-profissional/'
     | '/_clientarea/cliente/'
     | '/_clientarea/cliente/biblioteca/$productKey'
@@ -2659,6 +2854,7 @@ export interface FileRouteTypes {
     | '/_clientarea/cliente/treinamentos/psicanalise-internacional'
     | '/_clientarea/cliente/treinamentos/terapia-breve-psicanalitica'
     | '/_clientarea/cliente/treinamentos/tricologia-terapia-capilar'
+    | '/carreira/vagas/$jobId/candidatura'
     | '/_clientarea/cliente/biblioteca/publicacoes/$slug'
     | '/_clientarea/cliente/cursos/academy/$slug'
     | '/_clientarea/cliente/cursos/assinatura/$slug'
@@ -2673,6 +2869,7 @@ export interface FileRouteTypes {
     | '/_clientarea/cliente/treinamentos/formacao-profissional/$slug'
     | '/_clientarea/cliente/treinamentos/psicanalise/certificado'
     | '/_clientarea/cliente/treinamentos/psicanalise/forum'
+    | '/carreira/empresa/vagas/$jobId/candidatos'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -2686,12 +2883,14 @@ export interface RootRouteChildren {
   AmostraGratisRoute: typeof AmostraGratisRoute
   BioRoute: typeof BioRoute
   BootstrapRoute: typeof BootstrapRoute
+  CarreiraRoute: typeof CarreiraRouteWithChildren
   ClinicaSocialRoute: typeof ClinicaSocialRoute
   EbookEstudosCasoPsicanaliseRoute: typeof EbookEstudosCasoPsicanaliseRoute
   EbookPraticaClinicaPsicanaliseRoute: typeof EbookPraticaClinicaPsicanaliseRoute
   EbookPsicanaliseAutismoRoute: typeof EbookPsicanaliseAutismoRoute
   EbookPsicanaliseNoMundoRoute: typeof EbookPsicanaliseNoMundoRoute
   EmpreendedoresRoute: typeof EmpreendedoresRoute
+  FilmRoute: typeof FilmRoute
   FormacaoComunicacaoOratoriaRoute: typeof FormacaoComunicacaoOratoriaRoute
   FormacaoCopywritingVendasRoute: typeof FormacaoCopywritingVendasRoute
   FormacaoEducacaoFinanceiraRoute: typeof FormacaoEducacaoFinanceiraRoute
@@ -2740,6 +2939,7 @@ export interface RootRouteChildren {
   ClienteDefinirSenhaRoute: typeof ClienteDefinirSenhaRoute
   ClienteLoginRoute: typeof ClienteLoginRoute
   ClinicaSocialProfissionaisRoute: typeof ClinicaSocialProfissionaisRoute
+  ClinicaSocialSolicitarRoute: typeof ClinicaSocialSolicitarRoute
   EbooksSlugRoute: typeof EbooksSlugRoute
   EmpresaLoginRoute: typeof EmpresaLoginRoute
   FormacaoSlugRoute: typeof FormacaoSlugRoute
@@ -2749,6 +2949,7 @@ export interface RootRouteChildren {
   ProfissionalSlugRoute: typeof ProfissionalSlugRoute
   ProfissionalLoginRoute: typeof ProfissionalLoginRoute
   RedeProfissionaisTermosRoute: typeof RedeProfissionaisTermosRoute
+  AdminCarreiraVagasRoute: typeof AdminCarreiraVagasRoute
   ApiAuthCallbackRoute: typeof ApiAuthCallbackRoute
   ApiAuthSessionSyncRoute: typeof ApiAuthSessionSyncRoute
   ApiHotmartWebhookRoute: typeof ApiHotmartWebhookRoute
@@ -2828,6 +3029,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BootstrapRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/carreira': {
+      id: '/carreira'
+      path: '/carreira'
+      fullPath: '/carreira'
+      preLoaderRoute: typeof CarreiraRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/clinica-social': {
       id: '/clinica-social'
       path: '/clinica-social'
@@ -2868,6 +3076,13 @@ declare module '@tanstack/react-router' {
       path: '/empreendedores'
       fullPath: '/empreendedores'
       preLoaderRoute: typeof EmpreendedoresRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/film': {
+      id: '/film'
+      path: '/film'
+      fullPath: '/film'
+      preLoaderRoute: typeof FilmRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/formacao-comunicacao-oratoria': {
@@ -3227,6 +3442,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiTrainingOfferRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/carreira/$': {
+      id: '/carreira/$'
+      path: '/$'
+      fullPath: '/carreira/$'
+      preLoaderRoute: typeof CarreiraSplatRouteImport
+      parentRoute: typeof CarreiraRoute
+    }
+    '/carreira/empresa': {
+      id: '/carreira/empresa'
+      path: '/empresa'
+      fullPath: '/carreira/empresa'
+      preLoaderRoute: typeof CarreiraEmpresaRouteImport
+      parentRoute: typeof CarreiraRoute
+    }
+    '/carreira/minhas-candidaturas': {
+      id: '/carreira/minhas-candidaturas'
+      path: '/minhas-candidaturas'
+      fullPath: '/carreira/minhas-candidaturas'
+      preLoaderRoute: typeof CarreiraMinhasCandidaturasRouteImport
+      parentRoute: typeof CarreiraRoute
+    }
+    '/carreira/profissional': {
+      id: '/carreira/profissional'
+      path: '/profissional'
+      fullPath: '/carreira/profissional'
+      preLoaderRoute: typeof CarreiraProfissionalRouteImport
+      parentRoute: typeof CarreiraRoute
+    }
+    '/carreira/vagas': {
+      id: '/carreira/vagas'
+      path: '/vagas'
+      fullPath: '/carreira/vagas'
+      preLoaderRoute: typeof CarreiraVagasRouteImport
+      parentRoute: typeof CarreiraRoute
+    }
     '/cliente/ativar': {
       id: '/cliente/ativar'
       path: '/cliente/ativar'
@@ -3253,6 +3503,13 @@ declare module '@tanstack/react-router' {
       path: '/clinica-social/profissionais'
       fullPath: '/clinica-social/profissionais'
       preLoaderRoute: typeof ClinicaSocialProfissionaisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/clinica-social_/solicitar': {
+      id: '/clinica-social_/solicitar'
+      path: '/clinica-social/solicitar'
+      fullPath: '/clinica-social/solicitar'
+      preLoaderRoute: typeof ClinicaSocialSolicitarRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ebooks/$slug': {
@@ -3836,6 +4093,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClientareaClienteTreinamentosRouteImport
       parentRoute: typeof ClientareaClienteRoute
     }
+    '/admin/carreira/vagas': {
+      id: '/admin/carreira/vagas'
+      path: '/admin/carreira/vagas'
+      fullPath: '/admin/carreira/vagas'
+      preLoaderRoute: typeof AdminCarreiraVagasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/auth/callback': {
       id: '/api/auth/callback'
       path: '/api/auth/callback'
@@ -3870,6 +4134,41 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/stripe/webhook'
       preLoaderRoute: typeof ApiStripeWebhookRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/carreira/candidatar/$jobId': {
+      id: '/carreira/candidatar/$jobId'
+      path: '/candidatar/$jobId'
+      fullPath: '/carreira/candidatar/$jobId'
+      preLoaderRoute: typeof CarreiraCandidatarJobIdRouteImport
+      parentRoute: typeof CarreiraRoute
+    }
+    '/carreira/empresa/candidaturas': {
+      id: '/carreira/empresa/candidaturas'
+      path: '/candidaturas'
+      fullPath: '/carreira/empresa/candidaturas'
+      preLoaderRoute: typeof CarreiraEmpresaCandidaturasRouteImport
+      parentRoute: typeof CarreiraEmpresaRoute
+    }
+    '/carreira/empresa/guia-triagem-responsavel': {
+      id: '/carreira/empresa/guia-triagem-responsavel'
+      path: '/guia-triagem-responsavel'
+      fullPath: '/carreira/empresa/guia-triagem-responsavel'
+      preLoaderRoute: typeof CarreiraEmpresaGuiaTriagemResponsavelRouteImport
+      parentRoute: typeof CarreiraEmpresaRoute
+    }
+    '/carreira/empresa/publicar': {
+      id: '/carreira/empresa/publicar'
+      path: '/publicar'
+      fullPath: '/carreira/empresa/publicar'
+      preLoaderRoute: typeof CarreiraEmpresaPublicarRouteImport
+      parentRoute: typeof CarreiraEmpresaRoute
+    }
+    '/carreira/vagas/$jobId': {
+      id: '/carreira/vagas/$jobId'
+      path: '/$jobId'
+      fullPath: '/carreira/vagas/$jobId'
+      preLoaderRoute: typeof CarreiraVagasJobIdRouteImport
+      parentRoute: typeof CarreiraVagasRoute
     }
     '/_clientarea/cliente/biblioteca/$productKey': {
       id: '/_clientarea/cliente/biblioteca/$productKey'
@@ -4137,6 +4436,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClientareaClienteTreinamentosTricologiaTerapiaCapilarRouteImport
       parentRoute: typeof ClientareaClienteTreinamentosRoute
     }
+    '/carreira/vagas/$jobId/candidatura': {
+      id: '/carreira/vagas/$jobId/candidatura'
+      path: '/candidatura'
+      fullPath: '/carreira/vagas/$jobId/candidatura'
+      preLoaderRoute: typeof CarreiraVagasJobIdCandidaturaRouteImport
+      parentRoute: typeof CarreiraVagasJobIdRoute
+    }
     '/_clientarea/cliente/biblioteca/publicacoes/$slug': {
       id: '/_clientarea/cliente/biblioteca/publicacoes/$slug'
       path: '/$slug'
@@ -4234,6 +4540,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/cliente/treinamentos/psicanalise/forum'
       preLoaderRoute: typeof ClientareaClienteTreinamentosPsicanaliseForumRouteImport
       parentRoute: typeof ClientareaClienteTreinamentosPsicanaliseRoute
+    }
+    '/carreira/empresa/vagas/$jobId/candidatos': {
+      id: '/carreira/empresa/vagas/$jobId/candidatos'
+      path: '/vagas/$jobId/candidatos'
+      fullPath: '/carreira/empresa/vagas/$jobId/candidatos'
+      preLoaderRoute: typeof CarreiraEmpresaVagasJobIdCandidatosRouteImport
+      parentRoute: typeof CarreiraEmpresaRoute
     }
   }
 }
@@ -4736,6 +5049,71 @@ const PortalRouteChildren: PortalRouteChildren = {
 const PortalRouteWithChildren =
   PortalRoute._addFileChildren(PortalRouteChildren)
 
+interface CarreiraEmpresaRouteChildren {
+  CarreiraEmpresaCandidaturasRoute: typeof CarreiraEmpresaCandidaturasRoute
+  CarreiraEmpresaGuiaTriagemResponsavelRoute: typeof CarreiraEmpresaGuiaTriagemResponsavelRoute
+  CarreiraEmpresaPublicarRoute: typeof CarreiraEmpresaPublicarRoute
+  CarreiraEmpresaVagasJobIdCandidatosRoute: typeof CarreiraEmpresaVagasJobIdCandidatosRoute
+}
+
+const CarreiraEmpresaRouteChildren: CarreiraEmpresaRouteChildren = {
+  CarreiraEmpresaCandidaturasRoute: CarreiraEmpresaCandidaturasRoute,
+  CarreiraEmpresaGuiaTriagemResponsavelRoute:
+    CarreiraEmpresaGuiaTriagemResponsavelRoute,
+  CarreiraEmpresaPublicarRoute: CarreiraEmpresaPublicarRoute,
+  CarreiraEmpresaVagasJobIdCandidatosRoute:
+    CarreiraEmpresaVagasJobIdCandidatosRoute,
+}
+
+const CarreiraEmpresaRouteWithChildren = CarreiraEmpresaRoute._addFileChildren(
+  CarreiraEmpresaRouteChildren,
+)
+
+interface CarreiraVagasJobIdRouteChildren {
+  CarreiraVagasJobIdCandidaturaRoute: typeof CarreiraVagasJobIdCandidaturaRoute
+}
+
+const CarreiraVagasJobIdRouteChildren: CarreiraVagasJobIdRouteChildren = {
+  CarreiraVagasJobIdCandidaturaRoute: CarreiraVagasJobIdCandidaturaRoute,
+}
+
+const CarreiraVagasJobIdRouteWithChildren =
+  CarreiraVagasJobIdRoute._addFileChildren(CarreiraVagasJobIdRouteChildren)
+
+interface CarreiraVagasRouteChildren {
+  CarreiraVagasJobIdRoute: typeof CarreiraVagasJobIdRouteWithChildren
+}
+
+const CarreiraVagasRouteChildren: CarreiraVagasRouteChildren = {
+  CarreiraVagasJobIdRoute: CarreiraVagasJobIdRouteWithChildren,
+}
+
+const CarreiraVagasRouteWithChildren = CarreiraVagasRoute._addFileChildren(
+  CarreiraVagasRouteChildren,
+)
+
+interface CarreiraRouteChildren {
+  CarreiraSplatRoute: typeof CarreiraSplatRoute
+  CarreiraEmpresaRoute: typeof CarreiraEmpresaRouteWithChildren
+  CarreiraMinhasCandidaturasRoute: typeof CarreiraMinhasCandidaturasRoute
+  CarreiraProfissionalRoute: typeof CarreiraProfissionalRoute
+  CarreiraVagasRoute: typeof CarreiraVagasRouteWithChildren
+  CarreiraCandidatarJobIdRoute: typeof CarreiraCandidatarJobIdRoute
+}
+
+const CarreiraRouteChildren: CarreiraRouteChildren = {
+  CarreiraSplatRoute: CarreiraSplatRoute,
+  CarreiraEmpresaRoute: CarreiraEmpresaRouteWithChildren,
+  CarreiraMinhasCandidaturasRoute: CarreiraMinhasCandidaturasRoute,
+  CarreiraProfissionalRoute: CarreiraProfissionalRoute,
+  CarreiraVagasRoute: CarreiraVagasRouteWithChildren,
+  CarreiraCandidatarJobIdRoute: CarreiraCandidatarJobIdRoute,
+}
+
+const CarreiraRouteWithChildren = CarreiraRoute._addFileChildren(
+  CarreiraRouteChildren,
+)
+
 interface ProfissionaisRouteChildren {
   ProfissionaisCategoryRoute: typeof ProfissionaisCategoryRoute
 }
@@ -4773,12 +5151,14 @@ const rootRouteChildren: RootRouteChildren = {
   AmostraGratisRoute: AmostraGratisRoute,
   BioRoute: BioRoute,
   BootstrapRoute: BootstrapRoute,
+  CarreiraRoute: CarreiraRouteWithChildren,
   ClinicaSocialRoute: ClinicaSocialRoute,
   EbookEstudosCasoPsicanaliseRoute: EbookEstudosCasoPsicanaliseRoute,
   EbookPraticaClinicaPsicanaliseRoute: EbookPraticaClinicaPsicanaliseRoute,
   EbookPsicanaliseAutismoRoute: EbookPsicanaliseAutismoRoute,
   EbookPsicanaliseNoMundoRoute: EbookPsicanaliseNoMundoRoute,
   EmpreendedoresRoute: EmpreendedoresRoute,
+  FilmRoute: FilmRoute,
   FormacaoComunicacaoOratoriaRoute: FormacaoComunicacaoOratoriaRoute,
   FormacaoCopywritingVendasRoute: FormacaoCopywritingVendasRoute,
   FormacaoEducacaoFinanceiraRoute: FormacaoEducacaoFinanceiraRoute,
@@ -4829,6 +5209,7 @@ const rootRouteChildren: RootRouteChildren = {
   ClienteDefinirSenhaRoute: ClienteDefinirSenhaRoute,
   ClienteLoginRoute: ClienteLoginRoute,
   ClinicaSocialProfissionaisRoute: ClinicaSocialProfissionaisRoute,
+  ClinicaSocialSolicitarRoute: ClinicaSocialSolicitarRoute,
   EbooksSlugRoute: EbooksSlugRoute,
   EmpresaLoginRoute: EmpresaLoginRoute,
   FormacaoSlugRoute: FormacaoSlugRoute,
@@ -4838,6 +5219,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProfissionalSlugRoute: ProfissionalSlugRoute,
   ProfissionalLoginRoute: ProfissionalLoginRoute,
   RedeProfissionaisTermosRoute: RedeProfissionaisTermosRoute,
+  AdminCarreiraVagasRoute: AdminCarreiraVagasRoute,
   ApiAuthCallbackRoute: ApiAuthCallbackRoute,
   ApiAuthSessionSyncRoute: ApiAuthSessionSyncRoute,
   ApiHotmartWebhookRoute: ApiHotmartWebhookRoute,

@@ -181,7 +181,7 @@ function ApplicationCenter() {
       if (!alive) return;
 
       if (error) {
-        setLoadError(error.message ?? "Erro ao carregar vaga.");
+        setLoadError("Não foi possível carregar a vaga. Tente novamente.");
         setJob(null);
       } else {
         setJob(data ?? null);
@@ -201,7 +201,7 @@ function ApplicationCenter() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!ready || submitting) return;
+    if (!ready || submitting || !job) return;
 
     setSubmitting(true);
     setStatus("idle");
@@ -238,19 +238,9 @@ function ApplicationCenter() {
     });
 
     if (applicationError) {
-      const { error: leadError } = await (supabase.from("career_interest_leads" as never) as any).insert({
-        audience: "candidate",
-        name: form.name.trim(),
-        email: form.email.trim(),
-        phone: form.phone.trim() || null,
-        professional_area: applicationSummary,
-      });
-
-      if (leadError) {
-        setStatus("error");
-        setSubmitting(false);
-        return;
-      }
+      setStatus("error");
+      setSubmitting(false);
+      return;
     }
 
     setStatus("success");

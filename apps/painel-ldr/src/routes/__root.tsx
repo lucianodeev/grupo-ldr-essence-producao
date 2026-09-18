@@ -175,7 +175,7 @@ function PersistentActions() {
   const isProtectedArea = pathname === "/profissional/login" || protectedPrefixes.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`));
   const hasVisibleAccessHub = pathname === "/" || pathname === "/acesso";
 
-  if (isProtectedArea || hasVisibleAccessHub) return null;
+  if (isProtectedArea || hasVisibleAccessHub || pathname === "/carreira" || pathname.startsWith("/carreira/") || pathname.startsWith("/ebooks/")) return null;
 
   return (
     <div className="fixed z-[80] flex flex-col items-end gap-2" style={{ bottom: "calc(5.5rem + env(safe-area-inset-bottom))", right: "calc(1rem + env(safe-area-inset-right))" }}>

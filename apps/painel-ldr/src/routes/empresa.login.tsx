@@ -1,8 +1,9 @@
-import { Link, createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute, useLocation } from "@tanstack/react-router";
 import type { Session } from "@supabase/supabase-js";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { COMPANY_RETURN_COOKIE, COMPANY_RETURN_KEY, companyReturnPath } from "@/lib/company-login-return";
 import { LanguageSelect, useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/empresa/login")({
@@ -17,32 +18,20 @@ const COPY = {
   es: { portal: "Portal corporativo", title: "Área de Empresa", subtitle: "Configura empleados, beneficios y pagos corporativos.", opening: "Abriendo…", google: "Continuar con Google", help: "Usa la cuenta Google responsable de la gestión de la empresa.", back: "Volver a los accesos", error: "No fue posible iniciar sesión con Google.", referral: "Llegaste mediante un enlace de venta de la Red Comercial LDR. Después de iniciar sesión, continúa la configuración de la empresa y el pago del plan indicado." },
 } as const;
 
-const CAREER_LOGIN_RETURN_KEY = "ldr_carreira_company_next";
+const CAREER_LOGIN_RETURN_KEY = COMPANY_RETURN_KEY;
 
 function oauthReturnUrl() {
   if (typeof window === "undefined") return "/api/auth/callback";
   return `${window.location.origin}/api/auth/callback`;
 }
 
-function sanitizeNext(value: string) {
-  if (!value.startsWith("/")) return "";
-  if (value.startsWith("//")) return "";
-  const allowed = [
-    "/empresa",
-    "/assinatura-empresa",
-    "/carreira/empresa",
-    "/carreira/empresa/candidaturas",
-    "/carreira/empresa/guia-triagem-responsavel",
-  ];
-  return allowed.some((prefix) => value === prefix || value.startsWith(`${prefix}?`)) ? value : "";
-}
-
 function getSafeNext() {
   if (typeof window === "undefined") return "";
-  const queryNext = sanitizeNext(new URLSearchParams(window.location.search).get("next") || "");
-  if (queryNext) return queryNext;
+  const params = new URLSearchParams(window.location.search);
+  if (params.has("next")) return companyReturnPath(params.get("next")) || "";
+  if (params.get("auth_complete") !== "1" && !params.has("auth_error")) return "";
   try {
-    return sanitizeNext(sessionStorage.getItem(CAREER_LOGIN_RETURN_KEY) || "");
+    return companyReturnPath(sessionStorage.getItem(CAREER_LOGIN_RETURN_KEY)) || "";
   } catch {
     return "";
   }
@@ -61,10 +50,12 @@ async function syncBrowserSession(session: Session) {
 
 function CompanyLogin() {
   const { locale } = useI18n();
-  const copy = COPY[locale];
+  const baseCopy = COPY[locale];
+  const copy = baseCopy;
   const [busy, setBusy] = useState(false);
   const redirecting = useRef(false);
-  const safeNext = useMemo(getSafeNext, []);
+  const location = useLocation();
+  const safeNext = useMemo(getSafeNext, [location.searchStr]);
   const sellerRef = useMemo(() => {
     if (typeof window === "undefined") return "";
     const queryRef = new URLSearchParams(window.location.search).get("seller_ref") || "";
@@ -90,6 +81,7 @@ function CompanyLogin() {
         return;
       }
       try { sessionStorage.removeItem(CAREER_LOGIN_RETURN_KEY); } catch { /* optional */ }
+      document.cookie = `${COMPANY_RETURN_COOKIE}=; Max-Age=0; Path=/; SameSite=Lax; Secure`;
       window.location.replace(afterLogin);
     };
 
@@ -103,9 +95,8 @@ function CompanyLogin() {
   async function signIn() {
     setBusy(true);
     document.cookie = "ldr_portal_oauth=company; Max-Age=600; Path=/; SameSite=Lax; Secure";
-    if (safeNext) {
-      try { sessionStorage.setItem(CAREER_LOGIN_RETURN_KEY, safeNext); } catch { /* optional */ }
-    }
+    document.cookie = `${COMPANY_RETURN_COOKIE}=${encodeURIComponent(safeNext || "")}; Max-Age=${safeNext ? 600 : 0}; Path=/; SameSite=Lax; Secure`;
+    try { if (safeNext) sessionStorage.setItem(CAREER_LOGIN_RETURN_KEY, safeNext); else sessionStorage.removeItem(CAREER_LOGIN_RETURN_KEY); } catch { /* optional */ }
     const { data, error } = await supabase.auth.signInWithOAuth({ provider: "google", options: { redirectTo: oauthReturnUrl(), skipBrowserRedirect: true } });
     if (error || !data.url) {
       document.cookie = "ldr_portal_oauth=; Max-Age=0; Path=/; SameSite=Lax; Secure";

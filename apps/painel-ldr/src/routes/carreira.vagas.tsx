@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useLocation } from "@tanstack/react-router";
 import {
   Accessibility,
   AlertCircle,
@@ -12,7 +12,7 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { LanguageSelect, useI18n } from "@/lib/i18n";
 
-export const Route = createFileRoute("/carreira/vagas")({ component: Jobs });
+export const Route = createFileRoute("/carreira/vagas")({ component: NestedRoute });
 
 type JobRow = Record<string, any> & {
   id: string;
@@ -132,7 +132,7 @@ const C = {
 const baseSelect =
   "id,title,category,country,city,work_mode,contract_type,published_at,career_companies(name)";
 
-const enhancedSelect = `${baseSelect},accessibility_inclusive,accessibility_pcd_open,accessibility_pcd_only,accessibility_resources,accessibility_interview_support,accessibility_sign_language`;
+const enhancedSelect = `${baseSelect},accessibility_inclusive,accessibility_pcd_only:accessibility_designated_disability,accessibility_resources:accessibility_features,accessibility_details`;
 
 function hasValue(value: unknown) {
   if (Array.isArray(value)) return value.length > 0;
@@ -191,7 +191,7 @@ function Jobs() {
 
       if (enhanced.error && !result.error) setUsedFallback(true);
       if (result.error) {
-        setError(result.error.message ?? "Erro ao carregar vagas.");
+        setError("Não foi possível carregar as vagas. Tente novamente.");
         setJobs([]);
       } else {
         setJobs(result.data ?? []);
@@ -268,7 +268,7 @@ function Jobs() {
                 <option value="remote">{t.remote}</option>
                 <option value="hybrid">{t.hybrid}</option>
                 <option value="onsite">{t.onsite}</option>
-                <option value="presencial">{t.onsite}</option>
+
               </select>
             </label>
           </div>
@@ -300,12 +300,7 @@ function Jobs() {
           </div>
         </section>
 
-        {usedFallback && (
-          <div className="mt-5 flex gap-3 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900" role="status">
-            <AlertCircle className="mt-0.5 shrink-0" size={18} />
-            <p>{t.warning}</p>
-          </div>
-        )}
+
 
         {error && (
           <div className="mt-5 flex gap-3 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-900" role="alert">
@@ -400,3 +395,5 @@ function Jobs() {
     </main>
   );
 }
+
+function NestedRoute() { const { pathname } = useLocation(); return pathname.replace(/\/+$/, "") !== "/carreira/vagas" ? <Outlet /> : <Jobs />; }

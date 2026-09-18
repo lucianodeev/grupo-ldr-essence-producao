@@ -70,7 +70,8 @@ export function AcademyChatbot() {
   const lang = (locale in COPY ? locale : "pt") as Locale;
   const baseCopy = COPY[lang];
   const careerCopy = { pt:{title:"LDR Carreira",hello:"Olá 👋 Sou o assistente do LDR Carreira.",prompt:"Você é profissional ou representa uma empresa? Posso orientar seu cadastro ou conectar você ao atendimento.",help:"Dúvidas sobre o LDR Carreira?"}, en:{title:"LDR Carreira",hello:"Hi 👋 I’m the LDR Carreira assistant.",prompt:"Are you a professional or representing a company? I can guide your registration or connect you with support.",help:"Questions about LDR Carreira?"}, fr:{title:"LDR Carreira",hello:"Bonjour 👋 Je suis l’assistant LDR Carreira.",prompt:"Êtes-vous professionnel ou représentez-vous une entreprise ? Je peux vous guider dans l’inscription ou vous mettre en contact avec notre équipe.",help:"Des questions sur LDR Carreira ?"}, es:{title:"LDR Carreira",hello:"Hola 👋 Soy el asistente de LDR Carreira.",prompt:"¿Eres profesional o representas a una empresa? Puedo orientarte con el registro o conectarte con nuestro equipo.",help:"¿Dudas sobre LDR Carreira?"} } as const;
-  const careerPage = location.pathname === "/carreira";
+  const careerPage = location.pathname === "/carreira" || location.pathname.startsWith("/carreira/");
+  const inlineAssistant = careerPage || location.pathname === "/empresa/login" || location.pathname.startsWith("/ebooks/") || location.pathname.startsWith("/cliente/ebooks/") || location.pathname.startsWith("/cliente/biblioteca");
   const careerActions = { pt:{candidate:"👤 Sou profissional",company:"🏢 Sou empresa",human:"💬 Falar com a LDR"}, en:{candidate:"👤 I’m a professional",company:"🏢 I’m a company",human:"💬 Talk to LDR"}, fr:{candidate:"👤 Je suis professionnel",company:"🏢 Je suis une entreprise",human:"💬 Parler à LDR"}, es:{candidate:"👤 Soy profesional",company:"🏢 Soy empresa",human:"💬 Hablar con LDR"} } as const;
   const c = careerPage ? {...baseCopy,...careerCopy[lang]} : baseCopy;
   const showAnnouncement = location.pathname === "/" || location.pathname === "/cliente/biblioteca";
@@ -122,8 +123,8 @@ export function AcademyChatbot() {
         </div>
       )}
 
-      <div className="fixed z-[95]" style={{ bottom: academicNetwork ? "calc(11rem + env(safe-area-inset-bottom))" : "calc(1rem + env(safe-area-inset-bottom))", right: "calc(1rem + env(safe-area-inset-right))" }}>
-        {!open && teaser && !academicNetwork && (
+      <div className={inlineAssistant ? "relative z-[30] mx-auto flex max-w-6xl flex-col items-end px-5 py-4" : "fixed z-[95]"} style={inlineAssistant ? undefined : { bottom: academicNetwork ? "calc(11rem + env(safe-area-inset-bottom))" : "calc(1rem + env(safe-area-inset-bottom))", right: "calc(1rem + env(safe-area-inset-right))" }}>
+        {!open && teaser && !academicNetwork && !inlineAssistant && (
           <div className="mb-3 ml-auto flex max-w-[18rem] items-start gap-2 rounded-2xl border border-[#d5bd78]/50 bg-white p-3 text-sm text-slate-800 shadow-2xl">
             <Bot className="mt-0.5 h-5 w-5 shrink-0 text-[#102a43]" aria-hidden="true" />
             <button type="button" onClick={() => { setOpen(true); setTeaser(false); }} className="text-left font-semibold leading-5">{c.help}</button>

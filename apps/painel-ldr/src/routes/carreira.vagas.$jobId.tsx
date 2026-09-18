@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import type { ReactNode } from "react";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useLocation } from "@tanstack/react-router";
 import {
   Accessibility,
   ArrowLeft,
@@ -15,7 +15,7 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { LanguageSelect, useI18n } from "@/lib/i18n";
 
-export const Route = createFileRoute("/carreira/vagas/$jobId")({ component: Job });
+export const Route = createFileRoute("/carreira/vagas/$jobId")({ component: NestedRoute });
 
 type JobRow = Record<string, any> & {
   id: string;
@@ -148,7 +148,7 @@ type Copy = (typeof C)[keyof typeof C];
 const baseSelect =
   "id,title,description,responsibilities,requirements,country,city,work_mode,contract_type,publication_language,required_languages,salary_currency,salary_min,salary_max,salary_period,career_companies(name,website)";
 
-const enhancedSelect = `${baseSelect},accessibility_inclusive,accessibility_pcd_open,accessibility_pcd_only,accessibility_resources,accessibility_interview_support,accessibility_sign_language`;
+const enhancedSelect = `${baseSelect},accessibility_inclusive,accessibility_pcd_only:accessibility_designated_disability,accessibility_resources:accessibility_features,accessibility_details`;
 
 function hasValue(value: unknown) {
   if (Array.isArray(value)) return value.length > 0;
@@ -281,11 +281,7 @@ function Job() {
                 <span>{t.safe}</span>
               </div>
 
-              {usedFallback && (
-                <div className="mt-4 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
-                  {t.fallbackWarning}
-                </div>
-              )}
+
 
               {badges.length > 0 && (
                 <div className="mt-5 flex flex-wrap gap-2" aria-label="Accessibility badges">
@@ -352,3 +348,5 @@ function S({ title, children }: { title: string; children: ReactNode }) {
     </section>
   );
 }
+
+function NestedRoute() { const { pathname } = useLocation(); return pathname.replace(/\/+$/, "").endsWith("/candidatura") ? <Outlet /> : <Job />; }

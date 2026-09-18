@@ -10,6 +10,7 @@ import {
   ShieldCheck,
   UserRound,
 } from "lucide-react";
+import { companyLoginHref } from "@/lib/company-login-return";
 import { supabase } from "@/integrations/supabase/client";
 import { LanguageSelect, useI18n } from "@/lib/i18n";
 
@@ -260,6 +261,7 @@ function getStatusLabel(status: StatusKey, t: Copy) {
 function CompanyApplicationsPage() {
   const { locale } = useI18n();
   const t = C[isLocale(locale) ? locale : "pt"];
+  const [needsLogin, setNeedsLogin] = useState(false);
   const [rows, setRows] = useState<ApplicationRow[]>([]);
   const [statusFilter, setStatusFilter] = useState<"all" | StatusKey>("all");
   const [loading, setLoading] = useState(true);
@@ -282,6 +284,7 @@ function CompanyApplicationsPage() {
     setMessage(null);
     const { data: sessionData } = await supabase.auth.getUser();
     const userId = sessionData.user?.id;
+    setNeedsLogin(!userId);
     if (!userId) {
       setRows([]);
       setMessage({ type: "error", text: t.login });
@@ -343,7 +346,7 @@ function CompanyApplicationsPage() {
 
     if (result.error) {
       setRows([]);
-      setMessage({ type: "error", text: t.pendingStructure });
+      setMessage({ type: "error", text: t.loadError });
       setLoading(false);
       return;
     }
@@ -391,12 +394,7 @@ function CompanyApplicationsPage() {
     };
     let result = await (supabase.from("career_applications" as never) as any)
       .update(enhancedPayload)
-      .eq("id", row.id);
-    if (result.error) {
-      result = await (supabase.from("career_applications" as never) as any)
-        .update({ status: next })
-        .eq("id", row.id);
-    }
+      .eq("id", row.id).select("id").single();
     setSavingId(null);
     if (result.error) {
       setMessage({ type: "error", text: t.updateError });
@@ -464,6 +462,7 @@ function CompanyApplicationsPage() {
 
         {!loading && filteredRows.length === 0 ? <div className="mt-8 rounded-3xl bg-white p-8 text-slate-600 shadow-sm">{t.empty}</div> : null}
 
+        {needsLogin && <a href={companyLoginHref("/carreira/empresa/candidaturas")} className="mt-6 inline-flex min-h-12 items-center rounded-xl bg-[#07345b] px-5 py-3 font-bold text-white">{locale === "pt" ? "Entrar para acessar candidaturas" : locale === "fr" ? "Se connecter aux candidatures" : locale === "es" ? "Entrar para ver candidaturas" : "Sign in to view applications"}</a>}
         <div className="mt-8 grid gap-5">
           {filteredRows.map((row) => (
             <article key={row.id} className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
