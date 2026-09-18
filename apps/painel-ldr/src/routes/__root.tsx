@@ -211,11 +211,32 @@ function PersistentActions() {
   );
 }
 
+function CareerRouteMarker() {
+  const location = useLocation();
+  const pathname = location.pathname;
+  if (!pathname.startsWith("/carreira")) return null;
+
+  const labels: Record<string, string> = {
+    "/carreira": "LDR Carreira — Página principal",
+    "/carreira/empresa": "LDR Carreira — Área da Empresa",
+    "/carreira/vagas": "LDR Carreira — Vagas Abertas",
+    "/carreira/empresa/candidaturas": "LDR Carreira — Triagem de Candidaturas",
+    "/carreira/empresa/guia-triagem-responsavel": "LDR Carreira — Guia de Triagem Responsável",
+  };
+  const label = labels[pathname] ?? `LDR Carreira — ${pathname}`;
+
+  return (
+    <div className="sticky top-0 z-[90] border-b border-[#c99b2d]/30 bg-[#07345b] px-4 py-2 text-center text-xs font-black uppercase tracking-[0.16em] text-white shadow-md">
+      <span>{label}</span>
+      <span className="ml-2 rounded-full bg-white/15 px-2 py-1 normal-case tracking-normal">rota: {pathname}</span>
+    </div>
+  );
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const router = useRouter();
   const location = useLocation();
-
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -244,6 +265,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <I18nProvider>
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <CareerRouteMarker />
         <div className="pb-24 sm:pb-28">
           <Outlet />
           {showCompanyPlans && <CompanyPlanCards />}
