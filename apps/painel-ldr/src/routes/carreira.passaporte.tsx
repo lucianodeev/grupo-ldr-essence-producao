@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { LanguageSelect, useI18n } from "@/i18n";
+import { LanguageSelect, useI18n } from "@/lib/i18n";
 
 type Evidence={id:string;competency_key:string;evidence_type:string;validity_status:string;created_at:string;evidence:Record<string,unknown>};
 type App={id:string;created_at:string;status:string;career_jobs?:{title?:string}|null;career_selection_journeys?:{id:string}|null};
