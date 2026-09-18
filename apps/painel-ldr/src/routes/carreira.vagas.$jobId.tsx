@@ -255,7 +255,7 @@ function Job() {
     <main className="min-h-screen bg-slate-50">
       <div className="mx-auto max-w-5xl px-5 py-10">
         <div className="flex items-center justify-between gap-4">
-          <Link
+          <Link reloadDocument
             to="/carreira/vagas"
             className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 text-sm font-semibold text-[#07345b] shadow-sm transition hover:bg-slate-50 focus:outline-none focus:ring-4 focus:ring-[#07345b]/10"
           >
@@ -312,7 +312,7 @@ function Job() {
                 <Info icon={<MapPin size={17} aria-hidden="true" />} label={t.location} value={location} />
               </div>
 
-              <Link
+              <Link reloadDocument
                 to="/carreira/vagas/$jobId/candidatura"
                 params={{ jobId: job.id }}
                 className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#07345b] px-5 font-semibold text-white transition hover:bg-[#0b426f] focus:outline-none focus:ring-4 focus:ring-[#07345b]/20"

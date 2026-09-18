@@ -203,7 +203,7 @@ export function CompanyJobsPage() {
     requirements: "",
     work_mode: "remote",
     contract_type: "employment",
-    publication_language: locale,
+    publication_language: locale as string,
     country: "",
     city: "",
     freelance_project_type: "one_off",
@@ -367,7 +367,7 @@ export function CompanyJobsPage() {
   return (
     <main className="min-h-screen bg-slate-50">
       <div className="mx-auto max-w-5xl px-5 py-10">
-        <Link to="/carreira/empresa" className="mb-5 inline-block font-semibold text-[#07345b]">
+        <Link reloadDocument to="/carreira/empresa" className="mb-5 inline-block font-semibold text-[#07345b]">
           ← {t.title}
         </Link>
         <div className="flex flex-col items-start justify-between gap-4 sm:flex-row">
@@ -654,7 +654,7 @@ export function CompanyJobsPage() {
                   "Entrevista accesible",
                   "Accessible interview",
                 ],
-              ].map(([v, pt, fr, es, en]) => (
+              ].map(([v = "", pt, fr, es, en]) => (
                 <label key={v} className="flex gap-3">
                   <input
                     type="checkbox"

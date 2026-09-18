@@ -252,7 +252,7 @@ function ApplicationCenter() {
     <main className="min-h-screen bg-slate-50">
       <div className="mx-auto max-w-4xl px-5 py-10">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-          <Link
+          <Link reloadDocument
             to="/carreira/vagas/$jobId"
             params={{ jobId }}
             className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 font-semibold text-[#07345b] transition hover:bg-slate-50 focus:outline-none focus:ring-4 focus:ring-[#07345b]/10"

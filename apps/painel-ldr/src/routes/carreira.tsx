@@ -39,11 +39,11 @@ function CareerRouterGuard() {
 }
 
 function Header({ t }: { t: (typeof copy)[Locale] }) {
-  return <header className="border-b border-slate-200 bg-white"><div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4"><Link to="/carreira" className="flex items-center gap-3 font-semibold text-[#07345b]"><BriefcaseBusiness aria-hidden="true" /> {t.brand}</Link><LanguageSelect /></div></header>;
+  return <header className="border-b border-slate-200 bg-white"><div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4"><Link reloadDocument to="/carreira" className="flex items-center gap-3 font-semibold text-[#07345b]"><BriefcaseBusiness aria-hidden="true" /> {t.brand}</Link><LanguageSelect /></div></header>;
 }
 
 function Landing({ t }: { t: (typeof copy)[Locale] }) {
   return <main className="min-h-screen bg-[#f8fafc] pb-28 text-slate-900"><Header t={t} /><section className="bg-gradient-to-br from-[#031d34] via-[#07345b] to-[#0b477a] text-white"><div className="mx-auto max-w-6xl px-5 py-16 md:py-24"><span className="inline-flex rounded-full bg-white px-4 py-2 text-sm font-bold text-[#07345b] shadow-sm">{t.badge}</span><h1 className="mt-6 max-w-4xl text-4xl font-black tracking-tight text-white md:text-6xl">{t.heroTitle}</h1><p className="mt-5 max-w-3xl text-lg leading-8 text-white/90">{t.heroSub}</p><div className="mt-8 flex flex-wrap gap-3 text-sm">{[t.free, t.privacy, t.global].map((item) => <span key={item} className="rounded-full bg-white/14 px-4 py-2 text-white">✓ {item}</span>)}</div></div></section><section className="mx-auto grid max-w-6xl gap-5 px-5 py-12 md:grid-cols-3"><ActionCard icon={<UserRound />} title={t.candidate} to="/carreira/vagas" /><ActionCard icon={<Building2 />} title={t.company} to="/carreira/empresa" /><ActionCard icon={<Search />} title={t.jobsTitle} to="/carreira/vagas" /></section></main>;
 }
 
-function ActionCard({ icon, title, to }: { icon: ReactNode; title: string; to: string }) { return <Link to={to} className="rounded-3xl border border-slate-200 bg-white p-6 text-[#07345b] shadow-sm transition hover:-translate-y-0.5 hover:border-[#d4b050]"><div className="mb-4 text-[#07345b]">{icon}</div><strong className="text-xl">{title}</strong></Link>; }
+function ActionCard({ icon, title, to }: { icon: ReactNode; title: string; to: string }) { return <Link reloadDocument to={to} className="rounded-3xl border border-slate-200 bg-white p-6 text-[#07345b] shadow-sm transition hover:-translate-y-0.5 hover:border-[#d4b050]"><div className="mb-4 text-[#07345b]">{icon}</div><strong className="text-xl">{title}</strong></Link>; }

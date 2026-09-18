@@ -175,7 +175,7 @@ function ResponsibleTriageGuide() {
     <main className="min-h-screen bg-slate-50 text-slate-900">
       <header className="border-b border-slate-200 bg-white">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4">
-          <Link to="/carreira/empresa" className="inline-flex items-center gap-2 text-sm font-semibold text-[#07345b] hover:text-[#0b477a]">
+          <Link reloadDocument to="/carreira/empresa" className="inline-flex items-center gap-2 text-sm font-semibold text-[#07345b] hover:text-[#0b477a]">
             <ArrowLeft size={18} aria-hidden="true" />
             {t.back}
           </Link>

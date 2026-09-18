@@ -370,14 +370,14 @@ function Jobs() {
                     </div>
 
                     <div className="flex shrink-0 flex-col gap-2 md:w-56">
-                      <Link
+                      <Link reloadDocument
                         to="/carreira/vagas/$jobId/candidatura"
                         params={{ jobId: job.id }}
                         className="inline-flex min-h-11 items-center justify-center rounded-xl bg-[#07345b] px-5 text-center font-semibold text-white transition hover:bg-[#0b426f] focus:outline-none focus:ring-4 focus:ring-[#07345b]/20"
                       >
                         {t.apply}
                       </Link>
-                      <Link
+                      <Link reloadDocument
                         to="/carreira/vagas/$jobId"
                         params={{ jobId: job.id }}
                         className="inline-flex min-h-11 items-center justify-center rounded-xl border border-slate-200 bg-white px-5 text-center font-semibold text-[#07345b] transition hover:bg-slate-50 focus:outline-none focus:ring-4 focus:ring-[#07345b]/10"
