@@ -6,11 +6,7 @@ export const Route = createFileRoute("/carreira")({
   head: () => ({
     meta: [
       { title: "LDR Carreira | Oportunidades e Talentos" },
-      {
-        name: "description",
-        content:
-          "Conectando profissionais e empresas em uma plataforma internacional, inclusiva e gratuita de oportunidades profissionais.",
-      },
+      { name: "description", content: "Conectando profissionais e empresas em uma plataforma internacional, inclusiva e gratuita de oportunidades profissionais." },
       { name: "robots", content: "index,follow" },
     ],
   }),
@@ -22,8 +18,7 @@ const copy = {
     brand: "LDR Carreira",
     badge: "100% gratuito para profissionais e empresas",
     heroTitle: "Oportunidades encontram talentos, onde quer que estejam.",
-    heroSub:
-      "Conectamos pessoas que procuram oportunidades a empresas que querem encontrar talentos — com uma experiência simples, humana, segura e inclusiva.",
+    heroSub: "Conectamos pessoas que procuram oportunidades a empresas que querem encontrar talentos — com uma experiência simples, humana, segura e inclusiva.",
     free: "Sem mensalidade",
     privacy: "Dados protegidos",
     global: "Preparado para oportunidades internacionais",
@@ -142,16 +137,16 @@ function CareerRouterGuard() {
   const pathname = normalizePath(location.pathname);
 
   if (pathname === "/carreira/empresa") {
-    return <SubPage t={t} icon="company" title={t.companyTitle} subtitle={t.companySub} primary={t.publish} primaryTo={companyLogin("/carreira/empresa")} secondary={t.openGuide} secondaryTo="/carreira/empresa/guia-triagem-responsavel" />;
+    return <SubPage t={t} icon="company" title={t.companyTitle} subtitle={t.companySub} primary={t.publish} primaryTo={companyLogin("/carreira/empresa")} secondary={t.seeApplications} secondaryTo="/carreira/empresa/candidaturas" tertiary={t.openGuide} tertiaryTo="/carreira/empresa/guia-triagem-responsavel" />;
   }
   if (pathname === "/carreira/vagas") {
-    return <SubPage t={t} icon="jobs" title={t.jobsTitle} subtitle={t.jobsSub} primary={t.candidate} primaryTo="/carreira" secondary={t.company} secondaryTo="/carreira/empresa" />;
+    return <SubPage t={t} icon="jobs" title={t.jobsTitle} subtitle={t.jobsSub} primary={t.candidate} primaryTo="/carreira/vagas" secondary={t.company} secondaryTo="/carreira/empresa" tertiary={t.back} tertiaryTo="/carreira" />;
   }
   if (pathname === "/carreira/empresa/candidaturas") {
-    return <SubPage t={t} icon="applications" title={t.applicationsTitle} subtitle={t.applicationsSub} primary={t.seeApplications} primaryTo={companyLogin("/carreira/empresa/candidaturas")} secondary={t.publish} secondaryTo="/carreira/empresa" />;
+    return <SubPage t={t} icon="applications" title={t.applicationsTitle} subtitle={t.applicationsSub} primary={t.seeApplications} primaryTo={companyLogin("/carreira/empresa/candidaturas")} secondary={t.publish} secondaryTo={companyLogin("/carreira/empresa")} tertiary={t.back} tertiaryTo="/carreira" />;
   }
   if (pathname === "/carreira/empresa/guia-triagem-responsavel") {
-    return <SubPage t={t} icon="guide" title={t.guideTitle} subtitle={t.guideSub} primary={t.companyPanel} primaryTo={companyLogin("/carreira/empresa")} secondary={t.seeApplications} secondaryTo="/carreira/empresa/candidaturas" />;
+    return <SubPage t={t} icon="guide" title={t.guideTitle} subtitle={t.guideSub} primary={t.companyPanel} primaryTo={companyLogin("/carreira/empresa")} secondary={t.seeApplications} secondaryTo="/carreira/empresa/candidaturas" tertiary={t.back} tertiaryTo="/carreira" />;
   }
 
   return <Landing t={t} />;
@@ -190,7 +185,7 @@ function Landing({ t }: { t: (typeof copy)[Locale] }) {
         </div>
       </section>
       <section className="mx-auto grid max-w-6xl gap-5 px-5 py-12 md:grid-cols-3">
-        <ActionCard icon={<UserRound />} title={t.candidate} to="/carreira" />
+        <ActionCard icon={<UserRound />} title={t.candidate} to="/carreira/vagas" />
         <ActionCard icon={<Building2 />} title={t.companyTitle} to="/carreira/empresa" />
         <ActionCard icon={<Search />} title={t.jobsTitle} to="/carreira/vagas" />
       </section>
@@ -198,7 +193,7 @@ function Landing({ t }: { t: (typeof copy)[Locale] }) {
   );
 }
 
-function SubPage({ t, icon, title, subtitle, primary, primaryTo, secondary, secondaryTo }: { t: (typeof copy)[Locale]; icon: "company" | "jobs" | "applications" | "guide"; title: string; subtitle: string; primary: string; primaryTo: string; secondary: string; secondaryTo: string }) {
+function SubPage({ t, icon, title, subtitle, primary, primaryTo, secondary, secondaryTo, tertiary, tertiaryTo }: { t: (typeof copy)[Locale]; icon: "company" | "jobs" | "applications" | "guide"; title: string; subtitle: string; primary: string; primaryTo: string; secondary: string; secondaryTo: string; tertiary: string; tertiaryTo: string }) {
   const Icon = icon === "company" ? Building2 : icon === "jobs" ? Search : icon === "applications" ? ClipboardCheck : FileText;
   return (
     <main className="min-h-screen bg-[#f8fafc] pb-36 text-slate-900">
@@ -219,7 +214,7 @@ function SubPage({ t, icon, title, subtitle, primary, primaryTo, secondary, seco
           <div className="mt-7 grid gap-3 sm:grid-cols-3">
             <LinkButton to={primaryTo}>{primary}</LinkButton>
             <LinkButton to={secondaryTo} variant="outline">{secondary}</LinkButton>
-            <LinkButton to="/carreira" variant="ghost">{t.back}</LinkButton>
+            <LinkButton to={tertiaryTo} variant="ghost">{tertiary}</LinkButton>
           </div>
         </div>
       </section>
