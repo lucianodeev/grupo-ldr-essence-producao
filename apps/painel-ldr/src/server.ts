@@ -38,6 +38,15 @@ function academyCanonicalRedirect(request: Request): Response | null {
   const isServicePortal = host === "portal.ldrrhestrategia.com";
   const isLegacyLearnHost = host === "learn.lucianoconecta.online";
   const isLegacyPanelHost = host === "painel.lucianoconecta.online";
+  const isFilmHost = host === "film.lucianoconecta.online";
+
+  // Keep the film/cinema landing page isolated from the Academy storefront.
+  // The subdomain shares the same deployment, but its root must render /film
+  // instead of the Academy home page.
+  if (isFilmHost && (url.pathname === "/" || url.pathname === "/index.html")) {
+    url.pathname = "/film";
+    return temporaryRedirect(url.toString());
+  }
 
   // The services portal shares the same deployment as the Academy, but it must
   // always carry an explicit services context before SSR. This prevents the
