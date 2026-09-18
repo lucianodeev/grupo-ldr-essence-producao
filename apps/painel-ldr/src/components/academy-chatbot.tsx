@@ -71,6 +71,7 @@ export function AcademyChatbot() {
   const baseCopy = COPY[lang];
   const careerCopy = { pt:{title:"LDR Carreira",hello:"Olá 👋 Sou o assistente do LDR Carreira.",prompt:"Você é profissional ou representa uma empresa? Posso orientar seu cadastro ou conectar você ao atendimento.",help:"Dúvidas sobre o LDR Carreira?"}, en:{title:"LDR Carreira",hello:"Hi 👋 I’m the LDR Carreira assistant.",prompt:"Are you a professional or representing a company? I can guide your registration or connect you with support.",help:"Questions about LDR Carreira?"}, fr:{title:"LDR Carreira",hello:"Bonjour 👋 Je suis l’assistant LDR Carreira.",prompt:"Êtes-vous professionnel ou représentez-vous une entreprise ? Je peux vous guider dans l’inscription ou vous mettre en contact avec notre équipe.",help:"Des questions sur LDR Carreira ?"}, es:{title:"LDR Carreira",hello:"Hola 👋 Soy el asistente de LDR Carreira.",prompt:"¿Eres profesional o representas a una empresa? Puedo orientarte con el registro o conectarte con nuestro equipo.",help:"¿Dudas sobre LDR Carreira?"} } as const;
   const careerPage = location.pathname === "/carreira";
+  const careerActions = { pt:{candidate:"👤 Sou profissional",company:"🏢 Sou empresa",human:"💬 Falar com a LDR"}, en:{candidate:"👤 I’m a professional",company:"🏢 I’m a company",human:"💬 Talk to LDR"}, fr:{candidate:"👤 Je suis professionnel",company:"🏢 Je suis une entreprise",human:"💬 Parler à LDR"}, es:{candidate:"👤 Soy profesional",company:"🏢 Soy empresa",human:"💬 Hablar con LDR"} } as const;
   const c = careerPage ? {...baseCopy,...careerCopy[lang]} : baseCopy;
   const showAnnouncement = location.pathname === "/" || location.pathname === "/cliente/biblioteca";
   const academicNetwork = location.pathname.startsWith("/cliente/rede-academica");
@@ -171,7 +172,7 @@ export function AcademyChatbot() {
                   ) : query ? (
                     <div className="rounded-2xl border border-slate-200 p-4 text-sm text-slate-700">
                       <p>{c.noResult}</p>
-                      <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#25D366] px-4 py-3 font-black text-white"><MessageCircle className="h-4 w-4" />{c.human}</a>
+                      <a href={careerPage ? "https://wa.me/32492923605?text=Ol%C3%A1%2C%20vim%20pelo%20LDR%20Carreira%20e%20gostaria%20de%20ajuda." : WHATSAPP_URL} target="_blank" rel="noreferrer" className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#25D366] px-4 py-3 font-black text-white"><MessageCircle className="h-4 w-4" />{c.human}</a>
                     </div>
                   ) : null}
                 </div>
