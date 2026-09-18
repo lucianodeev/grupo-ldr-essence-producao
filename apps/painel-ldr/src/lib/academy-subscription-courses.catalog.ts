@@ -10,343 +10,84 @@ export type SubscriptionCourse = {
   slug: string;
   productKey: string;
   category: "comportamento" | "gestao" | "marketing" | "educacao" | "direito" | "psicanalise";
-  hours: 60;
+  track: string;
+  hours: number;
   certificate: true;
   subscriptionOnly: true;
   name: I18nText;
   description: I18nText;
-  disclaimer?: I18nText;
   modules: SubscriptionCourseModule[];
+  materials: string[];
+  disclaimer?: I18nText;
 };
 
-const c = (
-  slug:string,
-  productKey:string,
-  category:SubscriptionCourse["category"],
-  name:I18nText,
-  description:I18nText,
-  modules:SubscriptionCourseModule[],
-  disclaimer?:I18nText,
-):SubscriptionCourse=>({slug,productKey,category,hours:60,certificate:true,subscriptionOnly:true,name,description,modules,disclaimer});
+const modulePlan=[
+  ["Antes de começar","preparar o percurso de estudo"],
+  ["Mapa do ponto de partida","identificar contexto, necessidades e limites"],
+  ["Fundamentos essenciais","compreender conceitos centrais"],
+  ["Diagnóstico prático","analisar situações reais ou simuladas"],
+  ["Ferramentas de organização","estruturar informações e prioridades"],
+  ["Comunicação e posicionamento","apresentar ideias com clareza"],
+  ["Aplicação orientada","transformar teoria em ação"],
+  ["Erros comuns e cuidados","evitar promessas, atalhos e decisões frágeis"],
+  ["Exercício de aprofundamento","praticar com roteiro guiado"],
+  ["Estudo de caso","interpretar um cenário completo"],
+  ["Construção de material próprio","produzir um recurso reutilizável"],
+  ["Revisão crítica","melhorar a entrega com critérios"],
+  ["Plano de continuidade","organizar próximos passos"],
+  ["Projeto aplicado","consolidar uma entrega prática"],
+  ["Fechamento e certificado","revisar aprendizados e preparar a conclusão"],
+] as const;
 
-export const ACADEMY_SUBSCRIPTION_COURSES:SubscriptionCourse[] = [
-  c("inteligencia-emocional-gestao-emocoes","curso_assinatura_inteligencia_emocional_60h","comportamento",
-    {pt:"Inteligência Emocional e Gestão das Emoções",en:"Emotional Intelligence and Emotion Management",fr:"Intelligence Émotionnelle et Gestion des Émotions",es:"Inteligencia Emocional y Gestión de las Emociones"},
-    {pt:"Autoconhecimento, regulação emocional, empatia e decisões conscientes na vida pessoal e profissional.",en:"Self-awareness, emotional regulation, empathy and conscious decision-making in personal and professional life.",fr:"Connaissance de soi, régulation émotionnelle, empathie et décisions conscientes dans la vie personnelle et professionnelle.",es:"Autoconocimiento, regulación emocional, empatía y decisiones conscientes en la vida personal y profesional."},
-    [
-      {title:"Mapeamento emocional e autoconsciência",topics:["vocabulário emocional","gatilhos","padrões de reação"],activity:"Construir um diário de observação emocional de sete dias."},
-      {title:"Autorregulação e tolerância ao desconforto",topics:["pausa consciente","flexibilidade","recuperação emocional"],activity:"Criar um protocolo pessoal de autorregulação para situações de pressão."},
-      {title:"Empatia e leitura das relações",topics:["perspectiva do outro","limites","escuta"],activity:"Analisar uma situação relacional sob três perspectivas diferentes."},
-      {title:"Emoções e tomada de decisão",topics:["impulso","avaliação de consequências","escolhas"],activity:"Comparar decisões automáticas e decisões deliberadas em um estudo aplicado."},
-      {title:"Inteligência emocional no trabalho",topics:["feedback","conflitos","pressão profissional"],activity:"Elaborar um plano de resposta emocional para um conflito profissional."},
-      {title:"Plano de desenvolvimento emocional",topics:["metas","hábitos","acompanhamento"],activity:"Entregar um plano individual de desenvolvimento emocional com indicadores observáveis."},
-    ]),
-  c("ansiedade-estresse-burnout-bem-estar","curso_assinatura_ansiedade_estresse_burnout_60h","comportamento",
-    {pt:"Ansiedade, Estresse e Burnout: Compreensão e Estratégias de Bem-Estar",en:"Anxiety, Stress and Burnout: Understanding and Well-being Strategies",fr:"Anxiété, Stress et Burn-out : Compréhension et Stratégies de Bien-être",es:"Ansiedad, Estrés y Burnout: Comprensión y Estrategias de Bienestar"},
-    {pt:"Curso educacional para compreender fatores de ansiedade, estresse e esgotamento e organizar práticas de bem-estar e prevenção.",en:"Educational course to understand anxiety, stress and burnout factors and organize well-being and prevention practices.",fr:"Cours éducatif pour comprendre les facteurs d’anxiété, de stress et d’épuisement et organiser des pratiques de bien-être et de prévention.",es:"Curso educativo para comprender factores de ansiedad, estrés y agotamiento y organizar prácticas de bienestar y prevención."},
-    [
-      {title:"Estresse, ansiedade e respostas do organismo",topics:["estressores","ativação fisiológica","contexto"],activity:"Mapear fontes pessoais e ambientais de estresse sem realizar autodiagnóstico."},
-      {title:"Burnout e contexto ocupacional",topics:["esgotamento","cinismo","eficácia percebida"],activity:"Analisar fatores de risco em um cenário fictício de trabalho."},
-      {title:"Rotina, sono e recuperação",topics:["ritmo","pausas","recuperação"],activity:"Desenhar uma rotina semanal com espaços realistas de recuperação."},
-      {title:"Limites e organização de demandas",topics:["prioridades","sobrecarga","negociação"],activity:"Criar uma matriz de demandas e limites para um caso simulado."},
-      {title:"Rede de apoio e encaminhamento",topics:["sinais de alerta","apoio social","procura profissional"],activity:"Construir um mapa de recursos e possibilidades de encaminhamento."},
-      {title:"Plano educativo de prevenção",topics:["hábitos protetores","ambiente","monitoramento"],activity:"Produzir um plano de prevenção e bem-estar com limites claros de atuação."},
-    ],
-    {pt:"Conteúdo educacional. Não realiza diagnóstico, não substitui acompanhamento médico ou psicológico e não promete tratamento ou cura.",en:"Educational content. It does not diagnose, replace medical or psychological care, or promise treatment or cure.",fr:"Contenu éducatif. Il ne pose pas de diagnostic, ne remplace pas un suivi médical ou psychologique et ne promet ni traitement ni guérison.",es:"Contenido educativo. No realiza diagnóstico, no sustituye atención médica o psicológica ni promete tratamiento o cura."}),
-  c("comunicacao-nao-violenta-gestao-conflitos","curso_assinatura_cnv_conflitos_60h","comportamento",
-    {pt:"Comunicação Não Violenta e Gestão de Conflitos",en:"Nonviolent Communication and Conflict Management",fr:"Communication Non Violente et Gestion des Conflits",es:"Comunicación No Violenta y Gestión de Conflictos"},
-    {pt:"Escuta, assertividade, negociação e construção de acordos em relações pessoais e profissionais.",en:"Listening, assertiveness, negotiation and agreement-building in personal and professional relationships.",fr:"Écoute, assertivité, négociation et construction d’accords dans les relations personnelles et professionnelles.",es:"Escucha, asertividad, negociación y construcción de acuerdos en relaciones personales y profesionales."},
-    [
-      {title:"Fatos, interpretações e julgamentos",topics:["observação","inferência","linguagem"],activity:"Reescrever mensagens julgadoras em observações verificáveis."},
-      {title:"Necessidades, sentimentos e pedidos",topics:["necessidades","clareza","pedidos concretos"],activity:"Transformar três reclamações em pedidos específicos e negociáveis."},
-      {title:"Escuta ativa em situações difíceis",topics:["paráfrase","perguntas","silêncio"],activity:"Aplicar um roteiro de escuta a uma conversa simulada."},
-      {title:"Assertividade sem agressividade",topics:["limites","responsabilidade","tom"],activity:"Preparar uma conversa de limite com linguagem assertiva."},
-      {title:"Negociação e gestão de impasses",topics:["interesses","alternativas","acordos"],activity:"Resolver um caso de impasse por interesses e opções de ganho mútuo."},
-      {title:"Plano de mediação cotidiana",topics:["preparação","condução","acompanhamento"],activity:"Criar um plano de mediação para um conflito não judicial."},
-    ]),
-  c("lideranca-gestao-pessoas-equipes","curso_assinatura_lideranca_equipes_60h","gestao",
-    {pt:"Liderança, Gestão de Pessoas e Desenvolvimento de Equipes",en:"Leadership, People Management and Team Development",fr:"Leadership, Gestion des Personnes et Développement des Équipes",es:"Liderazgo, Gestión de Personas y Desarrollo de Equipos"},
-    {pt:"Fundamentos de liderança, motivação, cultura, feedback e desenvolvimento de equipes.",en:"Foundations of leadership, motivation, culture, feedback and team development.",fr:"Fondements du leadership, de la motivation, de la culture, du feedback et du développement des équipes.",es:"Fundamentos de liderazgo, motivación, cultura, feedback y desarrollo de equipos."},
-    [
-      {title:"Papéis e estilos de liderança",topics:["contexto","maturidade da equipe","adaptação"],activity:"Diagnosticar qual abordagem de liderança cabe em quatro cenários distintos."},
-      {title:"Motivação e desenho do trabalho",topics:["autonomia","significado","reconhecimento"],activity:"Redesenhar um conjunto de tarefas para aumentar clareza e engajamento."},
-      {title:"Feedback e conversas de desenvolvimento",topics:["evidências","impacto","próximos passos"],activity:"Escrever e simular um feedback estruturado."},
-      {title:"Cultura, clima e segurança psicológica",topics:["normas","confiança","voz"],activity:"Avaliar práticas que fortalecem ou enfraquecem segurança psicológica."},
-      {title:"Conflitos e decisões em equipe",topics:["divergência","processo decisório","responsabilidade"],activity:"Montar um protocolo de decisão e escalonamento para equipes."},
-      {title:"Plano de desenvolvimento de equipe",topics:["competências","rituais","indicadores"],activity:"Entregar um plano de 90 dias para desenvolvimento de uma equipe fictícia."},
-    ]),
-  c("ia-trabalho-negocios","curso_assinatura_ia_trabalho_negocios_60h","gestao",
-    {pt:"Inteligência Artificial Aplicada ao Trabalho e aos Negócios",en:"Artificial Intelligence Applied to Work and Business",fr:"Intelligence Artificielle Appliquée au Travail et aux Entreprises",es:"Inteligencia Artificial Aplicada al Trabajo y los Negocios"},
-    {pt:"Uso responsável de IA generativa para produtividade, pesquisa, conteúdo, atendimento, vendas e automação.",en:"Responsible use of generative AI for productivity, research, content, service, sales and automation.",fr:"Usage responsable de l’IA générative pour la productivité, la recherche, le contenu, le service, les ventes et l’automatisation.",es:"Uso responsable de IA generativa para productividad, investigación, contenido, atención, ventas y automatización."},
-    [
-      {title:"Como modelos generativos funcionam",topics:["probabilidade","contexto","limitações"],activity:"Comparar respostas de IA e identificar riscos de alucinação."},
-      {title:"Prompts para tarefas profissionais",topics:["objetivo","contexto","critérios"],activity:"Criar uma biblioteca pessoal de prompts com critérios de qualidade."},
-      {title:"IA para pesquisa e síntese",topics:["fontes","verificação","resumos"],activity:"Produzir uma síntese com checagem independente das afirmações."},
-      {title:"IA para conteúdo, atendimento e vendas",topics:["personalização","tom","fluxos"],activity:"Desenhar três fluxos assistidos por IA com revisão humana."},
-      {title:"Automação e desenho de processos",topics:["gatilhos","dados","exceções"],activity:"Mapear um processo e marcar pontos apropriados para automação."},
-      {title:"Governança, privacidade e uso responsável",topics:["dados sensíveis","supervisão","transparência"],activity:"Criar uma política simples de uso responsável de IA para uma pequena empresa."},
-    ]),
-  c("marketing-digital-redes-vendas","curso_assinatura_marketing_redes_vendas_60h","marketing",
-    {pt:"Marketing Digital, Redes Sociais e Vendas Online",en:"Digital Marketing, Social Media and Online Sales",fr:"Marketing Digital, Réseaux Sociaux et Vente en Ligne",es:"Marketing Digital, Redes Sociales y Ventas Online"},
-    {pt:"Visão integrada de posicionamento, conteúdo, jornada do cliente, funil e conversão.",en:"Integrated view of positioning, content, customer journey, funnels and conversion.",fr:"Vision intégrée du positionnement, du contenu, du parcours client, du tunnel et de la conversion.",es:"Visión integrada de posicionamiento, contenido, recorrido del cliente, embudo y conversión."},
-    [
-      {title:"Posicionamento e proposta de valor",topics:["segmento","problema","diferenciação"],activity:"Criar uma proposta de valor para um negócio real ou simulado."},
-      {title:"Planejamento editorial",topics:["pilares","formatos","cadência"],activity:"Montar um calendário editorial de quatro semanas."},
-      {title:"Copywriting e chamadas para ação",topics:["benefício","prova","CTA"],activity:"Produzir cinco peças curtas com objetivos de conversão diferentes."},
-      {title:"Jornada, funil e captação",topics:["descoberta","consideração","decisão"],activity:"Desenhar um funil simples com pontos de mensuração."},
-      {title:"Venda social e atendimento digital",topics:["DM","WhatsApp","follow-up"],activity:"Criar um roteiro de atendimento do primeiro contato ao pós-venda."},
-      {title:"Métricas e melhoria contínua",topics:["alcance","leads","conversão"],activity:"Interpretar um painel fictício e propor três mudanças baseadas em dados."},
-    ]),
-  c("empreendedorismo-da-ideia-ao-negocio","curso_assinatura_empreendedorismo_60h","gestao",
-    {pt:"Empreendedorismo: Da Ideia ao Negócio",en:"Entrepreneurship: From Idea to Business",fr:"Entrepreneuriat : De l’Idée à l’Entreprise",es:"Emprendimiento: De la Idea al Negocio"},
-    {pt:"Validação de oportunidades, modelo de negócio, precificação, vendas e crescimento sustentável.",en:"Opportunity validation, business model, pricing, sales and sustainable growth.",fr:"Validation d’opportunités, modèle économique, tarification, ventes et croissance durable.",es:"Validación de oportunidades, modelo de negocio, precios, ventas y crecimiento sostenible."},
-    [
-      {title:"Problema, cliente e oportunidade",topics:["dor","contexto","demanda"],activity:"Conduzir uma análise de problema e hipótese de cliente."},
-      {title:"Validação antes de investir",topics:["entrevistas","MVP","evidência"],activity:"Planejar um teste de baixo custo para uma hipótese de negócio."},
-      {title:"Modelo de negócio e operação mínima",topics:["recursos","parcerias","processos"],activity:"Montar um mapa de modelo de negócio com operação essencial."},
-      {title:"Precificação e unidade econômica",topics:["custos","margem","valor"],activity:"Calcular três cenários de preço para um serviço simulado."},
-      {title:"Aquisição, vendas e retenção",topics:["canais","processo comercial","recorrência"],activity:"Definir um processo simples de aquisição e pós-venda."},
-      {title:"Plano de crescimento responsável",topics:["capacidade","caixa","prioridades"],activity:"Entregar um plano de crescimento de seis meses com riscos e marcos."},
-    ]),
-  c("oratoria-comunicacao-alto-impacto","curso_assinatura_oratoria_60h","comportamento",
-    {pt:"Oratória, Comunicação e Apresentações de Alto Impacto",en:"Public Speaking, Communication and High-Impact Presentations",fr:"Prise de Parole, Communication et Présentations à Fort Impact",es:"Oratoria, Comunicación y Presentaciones de Alto Impacto"},
-    {pt:"Estrutura, voz, presença, argumentação e comunicação em apresentações presenciais e digitais.",en:"Structure, voice, presence, argumentation and communication in in-person and digital presentations.",fr:"Structure, voix, présence, argumentation et communication dans les présentations en présentiel et numériques.",es:"Estructura, voz, presencia, argumentación y comunicación en presentaciones presenciales y digitales."},
-    [
-      {title:"Mensagem central e objetivo",topics:["audiência","propósito","foco"],activity:"Resumir uma apresentação inteira em uma frase central."},
-      {title:"Estrutura narrativa e sequência",topics:["abertura","desenvolvimento","fechamento"],activity:"Criar um roteiro de apresentação de sete minutos."},
-      {title:"Voz, ritmo e articulação",topics:["pausas","ênfase","clareza"],activity:"Gravar e avaliar uma leitura com variações conscientes de ritmo."},
-      {title:"Presença e comunicação não verbal",topics:["postura","gestos","contato visual"],activity:"Aplicar uma lista de verificação a uma apresentação simulada."},
-      {title:"Argumentação e persuasão ética",topics:["evidência","objeções","credibilidade"],activity:"Preparar argumentos e respostas para três objeções reais."},
-      {title:"Apresentação final aplicada",topics:["ensaio","feedback","ajustes"],activity:"Entregar uma apresentação estruturada com autoavaliação crítica."},
-    ]),
-  c("neurociencia-comportamento-habitos-decisoes","curso_assinatura_neurociencia_comportamento_60h","comportamento",
-    {pt:"Neurociência do Comportamento, Hábitos e Tomada de Decisão",en:"Neuroscience of Behavior, Habits and Decision-Making",fr:"Neurosciences du Comportement, Habitudes et Prise de Décision",es:"Neurociencia del Comportamiento, Hábitos y Toma de Decisiones"},
-    {pt:"Introdução crítica à relação entre cérebro, aprendizagem, hábitos, motivação e decisões, com atenção aos limites das evidências.",en:"Critical introduction to links between brain, learning, habits, motivation and decisions, with attention to evidence limits.",fr:"Introduction critique aux liens entre cerveau, apprentissage, habitudes, motivation et décisions, avec attention aux limites des preuves.",es:"Introducción crítica a la relación entre cerebro, aprendizaje, hábitos, motivación y decisiones, atendiendo a los límites de la evidencia."},
-    [
-      {title:"Do cérebro ao comportamento: o que podemos inferir",topics:["níveis de análise","causalidade","limites"],activity:"Separar afirmações plausíveis de neuromitos em exemplos de mídia."},
-      {title:"Atenção, memória e aprendizagem",topics:["codificação","recuperação","carga cognitiva"],activity:"Redesenhar uma sessão de estudo usando princípios de aprendizagem."},
-      {title:"Recompensa, motivação e persistência",topics:["expectativa","valor","esforço"],activity:"Analisar um hábito a partir de recompensa e contexto."},
-      {title:"Formação e mudança de hábitos",topics:["pistas","rotinas","ambiente"],activity:"Criar um experimento comportamental de duas semanas."},
-      {title:"Heurísticas e vieses de decisão",topics:["atalhos","incerteza","contexto"],activity:"Identificar vieses em decisões de consumo e trabalho."},
-      {title:"Pensamento crítico em neurociência popular",topics:["fontes","reprodutibilidade","exageros"],activity:"Avaliar criticamente uma alegação popular sobre cérebro e comportamento."},
-    ]),
-  c("diversidade-inclusao-relacoes-trabalho","curso_assinatura_diversidade_inclusao_60h","gestao",
-    {pt:"Diversidade, Inclusão e Relações Humanas no Trabalho",en:"Diversity, Inclusion and Human Relations at Work",fr:"Diversité, Inclusion et Relations Humaines au Travail",es:"Diversidad, Inclusión y Relaciones Humanas en el Trabajo"},
-    {pt:"Práticas de convivência, prevenção de discriminação, comunicação inclusiva e liderança responsável.",en:"Workplace practices for respectful relations, discrimination prevention, inclusive communication and responsible leadership.",fr:"Pratiques de respect, prévention des discriminations, communication inclusive et leadership responsable.",es:"Prácticas de convivencia, prevención de discriminación, comunicación inclusiva y liderazgo responsable."},
-    [
-      {title:"Diversidade e inclusão: conceitos e diferenças",topics:["representatividade","equidade","pertencimento"],activity:"Analisar um caso organizacional separando diversidade, inclusão e equidade."},
-      {title:"Vieses e decisões organizacionais",topics:["atalhos","seleção","avaliação"],activity:"Revisar um processo de decisão e localizar pontos de risco de viés."},
-      {title:"Comunicação inclusiva e respeito",topics:["linguagem","escuta","correção"],activity:"Reescrever comunicações internas para maior clareza e inclusão."},
-      {title:"Prevenção de discriminação e assédio",topics:["condutas","canais","responsabilidade"],activity:"Criar um fluxo educativo de orientação e encaminhamento."},
-      {title:"Liderança e segurança psicológica",topics:["participação","confiança","responsabilização"],activity:"Propor práticas de equipe que favoreçam participação sem eliminar cobrança."},
-      {title:"Plano de inclusão aplicável",topics:["prioridades","ações","indicadores"],activity:"Entregar um plano de inclusão com ações, responsáveis e indicadores."},
-    ]),
-  c("marketing-digital-profissional","curso_assinatura_marketing_digital_profissional_60h","marketing",
-    {pt:"Marketing Digital Profissional",en:"Professional Digital Marketing",fr:"Marketing Digital Professionnel",es:"Marketing Digital Profesional"},
-    {pt:"Aprofundamento em estratégia digital, marca, SEO, e-mail, funis, análise e crescimento.",en:"Advanced digital strategy, branding, SEO, email, funnels, analytics and growth.",fr:"Approfondissement en stratégie digitale, marque, SEO, e-mail, tunnels, analyse et croissance.",es:"Profundización en estrategia digital, marca, SEO, email, embudos, análisis y crecimiento."},
-    [
-      {title:"Diagnóstico de presença digital",topics:["ativos","concorrência","lacunas"],activity:"Executar uma auditoria estruturada de presença digital."},
-      {title:"Arquitetura de marca e posicionamento",topics:["território","mensagem","consistência"],activity:"Criar uma matriz de posicionamento frente a concorrentes."},
-      {title:"Conteúdo orientado por intenção",topics:["busca","necessidade","formato"],activity:"Planejar conteúdos por intenção de descoberta, consideração e decisão."},
-      {title:"SEO e ativos próprios",topics:["palavras-chave","estrutura","autoridade"],activity:"Desenhar um plano de melhoria de SEO para uma página existente."},
-      {title:"E-mail, automação e nutrição",topics:["segmentação","sequências","entregabilidade"],activity:"Criar uma sequência de nutrição de cinco mensagens."},
-      {title:"Análise de crescimento",topics:["coortes","conversão","experimentos"],activity:"Propor um ciclo de experimentos mensuráveis para 30 dias."},
-    ]),
-  c("trafego-pago-profissionais-servicos","curso_assinatura_trafego_pago_servicos_60h","marketing",
-    {pt:"Tráfego Pago para Profissionais de Serviços",en:"Paid Traffic for Service Professionals",fr:"Publicité Payante pour Professionnels de Services",es:"Tráfico Pago para Profesionales de Servicios"},
-    {pt:"Planejamento, Meta Ads, Google Ads, leads, métricas e ética para psicanalistas, psicólogos, massagistas e outros prestadores de serviços.",en:"Planning, Meta Ads, Google Ads, leads, metrics and ethics for psychoanalysts, psychologists, massage professionals and other service providers.",fr:"Planification, Meta Ads, Google Ads, prospects, métriques et éthique pour psychanalystes, psychologues, praticiens du massage et autres prestataires.",es:"Planificación, Meta Ads, Google Ads, leads, métricas y ética para psicoanalistas, psicólogos, masajistas y otros prestadores de servicios."},
-    [
-      {title:"Oferta de serviço e objetivo de campanha",topics:["captação","agendamento","mensagem"],activity:"Definir uma oferta publicitária sem promessa enganosa para três profissões."},
-      {title:"Meta Ads para serviços locais e online",topics:["estrutura","públicos","criativos"],activity:"Montar uma campanha simulada com conjunto de anúncios e critérios de segmentação."},
-      {title:"Google Ads e intenção de busca",topics:["palavras-chave","anúncios","página de destino"],activity:"Criar um grupo de anúncios baseado em intenção para um serviço profissional."},
-      {title:"Landing page e WhatsApp",topics:["clareza","fricção","qualificação"],activity:"Desenhar uma jornada do clique ao atendimento no WhatsApp."},
-      {title:"Métricas e otimização",topics:["CTR","CPC","CPA","conversão"],activity:"Interpretar resultados fictícios e priorizar ações de otimização."},
-      {title:"Publicidade ética em serviços de cuidado",topics:["limites profissionais","privacidade","alegações"],activity:"Revisar dez anúncios e corrigir riscos éticos e promessas indevidas."},
-    ]),
-  c("fundamentos-psicopedagogia-aprendizagem","curso_assinatura_psicopedagogia_fundamentos_60h","educacao",
-    {pt:"Fundamentos de Psicopedagogia e Processos de Aprendizagem",en:"Foundations of Psychopedagogy and Learning Processes",fr:"Fondements de la Psychopédagogie et Processus d’Apprentissage",es:"Fundamentos de Psicopedagogía y Procesos de Aprendizaje"},
-    {pt:"Curso livre introdutório sobre aprendizagem, desenvolvimento, dificuldades escolares, inclusão e trabalho interdisciplinar.",en:"Introductory non-degree course on learning, development, school difficulties, inclusion and interdisciplinary work.",fr:"Cours libre introductif sur l’apprentissage, le développement, les difficultés scolaires, l’inclusion et le travail interdisciplinaire.",es:"Curso libre introductorio sobre aprendizaje, desarrollo, dificultades escolares, inclusión y trabajo interdisciplinario."},
-    [
-      {title:"Objeto e campos da Psicopedagogia",topics:["aprendizagem","contextos","interdisciplinaridade"],activity:"Mapear fronteiras entre atuação educacional e profissões regulamentadas."},
-      {title:"Desenvolvimento e aprendizagem",topics:["cognição","afetividade","ambiente"],activity:"Analisar fatores que podem favorecer ou dificultar aprendizagem em um caso."},
-      {title:"Dificuldades escolares sem rotulagem",topics:["observação","hipóteses","contexto"],activity:"Produzir um registro descritivo sem diagnóstico."},
-      {title:"Família, escola e rede",topics:["comunicação","cooperação","encaminhamento"],activity:"Construir um plano de reunião escola-família centrado em evidências observáveis."},
-      {title:"Inclusão e adaptações pedagógicas",topics:["acesso","participação","barreiras"],activity:"Propor adaptações educacionais para um cenário fictício."},
-      {title:"Projeto educativo de apoio à aprendizagem",topics:["objetivo","estratégias","avaliação"],activity:"Entregar um projeto educacional com limites claros de escopo."},
-    ],
-    {pt:"Curso livre introdutório. Não constitui habilitação profissional em Psicopedagogia nem substitui formação, registro ou requisitos legais aplicáveis.",en:"Introductory non-degree course. It does not constitute professional qualification in Psychopedagogy or replace applicable education, registration or legal requirements.",fr:"Cours libre introductif. Il ne constitue pas une habilitation professionnelle en psychopédagogie et ne remplace pas les exigences légales applicables.",es:"Curso libre introductorio. No constituye habilitación profesional en Psicopedagogía ni sustituye requisitos legales aplicables."}),
-  c("educacao-financeira-planejamento-pessoal","curso_assinatura_educacao_financeira_60h","gestao",
-    {pt:"Educação Financeira e Planejamento Pessoal",en:"Financial Education and Personal Planning",fr:"Éducation Financière et Planification Personnelle",es:"Educación Financiera y Planificación Personal"},
-    {pt:"Organização financeira, orçamento, crédito, reserva, consumo consciente e noções introdutórias de investimentos.",en:"Financial organization, budgeting, credit, emergency reserves, conscious consumption and introductory investing concepts.",fr:"Organisation financière, budget, crédit, réserve d’urgence, consommation consciente et notions d’investissement.",es:"Organización financiera, presupuesto, crédito, reserva, consumo consciente y nociones introductorias de inversión."},
-    [
-      {title:"Diagnóstico financeiro pessoal",topics:["entradas","saídas","patrimônio"],activity:"Construir uma fotografia financeira mensal baseada em categorias."},
-      {title:"Orçamento e fluxo de caixa doméstico",topics:["fixos","variáveis","sazonais"],activity:"Montar um orçamento de três meses com margem para imprevistos."},
-      {title:"Crédito, juros e dívidas",topics:["CET","parcelamento","priorização"],activity:"Comparar cenários de pagamento e custo total de crédito."},
-      {title:"Reserva e proteção financeira",topics:["liquidez","emergências","seguros"],activity:"Definir uma meta de reserva compatível com um caso fictício."},
-      {title:"Investimentos: princípios introdutórios",topics:["risco","retorno","diversificação"],activity:"Classificar produtos hipotéticos por risco e liquidez sem recomendar compra."},
-      {title:"Plano financeiro de metas",topics:["prazo","valor","acompanhamento"],activity:"Entregar um plano de metas financeiras com revisão periódica."},
-    ],
-    {pt:"Conteúdo educacional geral. Não constitui recomendação individualizada de investimento.",en:"General educational content. It is not individualized investment advice.",fr:"Contenu éducatif général. Il ne constitue pas un conseil d’investissement personnalisé.",es:"Contenido educativo general. No constituye recomendación individualizada de inversión."}),
-  c("direito-consumidor-principios-aplicacoes","curso_assinatura_direito_consumidor_60h","direito",
-    {pt:"Direito do Consumidor: Princípios e Aplicações Práticas",en:"Consumer Law: Principles and Practical Applications",fr:"Droit de la Consommation : Principes et Applications Pratiques",es:"Derecho del Consumidor: Principios y Aplicaciones Prácticas"},
-    {pt:"Introdução educacional a relações de consumo, contratos, garantias, comércio eletrônico e práticas abusivas.",en:"Educational introduction to consumer relations, contracts, warranties, e-commerce and abusive practices.",fr:"Introduction éducative aux relations de consommation, contrats, garanties, commerce électronique et pratiques abusives.",es:"Introducción educativa a relaciones de consumo, contratos, garantías, comercio electrónico y prácticas abusivas."},
-    [
-      {title:"Relação de consumo e direitos básicos",topics:["consumidor","fornecedor","vulnerabilidade"],activity:"Classificar situações para identificar quando há relação de consumo."},
-      {title:"Oferta, publicidade e informação",topics:["clareza","vinculação","enganosidade"],activity:"Analisar peças publicitárias fictícias sob critérios de transparência."},
-      {title:"Contratos, cobrança e práticas abusivas",topics:["cláusulas","cobrança","equilíbrio"],activity:"Identificar cláusulas potencialmente problemáticas em contrato simulado."},
-      {title:"Garantias e vícios de produtos e serviços",topics:["prazos","responsabilidade","soluções"],activity:"Resolver casos simulados de vício com base em alternativas possíveis."},
-      {title:"Compras online e direito de arrependimento",topics:["e-commerce","prazos","prova"],activity:"Criar um guia de boas práticas para compra online."},
-      {title:"Resolução de conflitos de consumo",topics:["documentação","atendimento","órgãos"],activity:"Montar um dossiê organizado para tentativa de resolução administrativa."},
-    ],
-    {pt:"Curso livre educacional. Não habilita para o exercício da advocacia e não substitui orientação jurídica individualizada.",en:"Educational non-degree course. It does not qualify anyone to practice law and does not replace individualized legal advice.",fr:"Cours libre éducatif. Il n’habilite pas à exercer la profession d’avocat et ne remplace pas un conseil juridique individualisé.",es:"Curso libre educativo. No habilita para ejercer la abogacía ni sustituye asesoramiento jurídico individualizado."}),
+const modulesFor=(focus:string):SubscriptionCourseModule[]=>modulePlan.map(([title,objective],idx)=>({
+  title:`${title}: ${focus}`,
+  topics:[objective,`aplicação em ${focus}`,"atividade prática com revisão"],
+  activity:`Produzir uma entrega curta sobre ${focus} ligada ao módulo ${idx+1}, com registro do que foi aprendido e um próximo passo possível.`
+}));
 
-  c("donald-winnicott-self-ambiente","curso_assinatura_winnicott_60h","psicanalise",
-    {pt:"Donald Winnicott: Self, Ambiente e Desenvolvimento Emocional",en:"Donald Winnicott: Self, Environment and Emotional Development",fr:"Donald Winnicott : Self, Environnement et Développement Émotionnel",es:"Donald Winnicott: Self, Ambiente y Desarrollo Emocional"},
-    {pt:"Percurso introdutório pela obra de Winnicott, do ambiente facilitador ao brincar, verdadeiro e falso self e fenômenos transicionais.",en:"Introductory path through Winnicott’s work, from the facilitating environment to play, true and false self, and transitional phenomena.",fr:"Parcours introductif dans l’œuvre de Winnicott, de l’environnement facilitateur au jeu, au vrai et faux self et aux phénomènes transitionnels.",es:"Recorrido introductorio por la obra de Winnicott, desde el ambiente facilitador hasta el juego, verdadero y falso self y fenómenos transicionales."},
-    [
-      {title:"Da pediatria à psicanálise",topics:["trajetória","contexto britânico","clínica infantil"],activity:"Construir uma linha do tempo conceitual de Winnicott."},
-      {title:"Ambiente facilitador e dependência",topics:["dependência absoluta","relativa","adaptação"],activity:"Relacionar fases de dependência a vinhetas teóricas."},
-      {title:"Holding, handling e apresentação de objeto",topics:["sustentação","manejo","realidade"],activity:"Comparar os três conceitos em um quadro analítico."},
-      {title:"Verdadeiro self e falso self",topics:["espontaneidade","adaptação","continuidade"],activity:"Analisar uma vinheta fictícia sem transformar o conceito em diagnóstico."},
-      {title:"Objetos e fenômenos transicionais",topics:["espaço potencial","objeto","separação"],activity:"Explicar o valor teórico da transicionalidade em linguagem própria."},
-      {title:"Brincar, criatividade e legado clínico",topics:["play","criatividade","encontro"],activity:"Produzir um ensaio curto sobre brincar e experiência cultural."},
-    ]),
-  c("anna-freud-crianca-mecanismos-defesa","curso_assinatura_anna_freud_60h","psicanalise",
-    {pt:"Anna Freud: Psicanálise da Criança e Mecanismos de Defesa",en:"Anna Freud: Child Psychoanalysis and Defense Mechanisms",fr:"Anna Freud : Psychanalyse de l’Enfant et Mécanismes de Défense",es:"Anna Freud: Psicoanálisis Infantil y Mecanismos de Defensa"},
-    {pt:"Ego, mecanismos de defesa, desenvolvimento e especificidades do trabalho psicanalítico com crianças.",en:"Ego, defense mechanisms, development and specificities of psychoanalytic work with children.",fr:"Moi, mécanismes de défense, développement et spécificités du travail psychanalytique avec les enfants.",es:"Yo, mecanismos de defensa, desarrollo y especificidades del trabajo psicoanalítico con niños."},
-    [
-      {title:"Anna Freud e a tradição vienense",topics:["biografia intelectual","Freud","instituições"],activity:"Localizar sua obra no desenvolvimento histórico da psicanálise infantil."},
-      {title:"O ego em primeiro plano",topics:["funções do ego","conflito","adaptação"],activity:"Distinguir observações sobre ego de explicações centradas apenas no id."},
-      {title:"Mecanismos de defesa",topics:["repressão","projeção","formação reativa"],activity:"Criar um quadro conceitual de mecanismos sem usá-los como rótulos de pessoas."},
-      {title:"Linhas de desenvolvimento",topics:["maturação","ambiente","progressão"],activity:"Aplicar o conceito a uma sequência fictícia de desenvolvimento."},
-      {title:"Criança, família e realidade externa",topics:["pais","contexto","dependência"],activity:"Comparar diferenças entre análise de adultos e crianças."},
-      {title:"Legado e debates contemporâneos",topics:["técnica","educação","críticas"],activity:"Escrever uma síntese crítica sobre contribuições e limites históricos."},
-    ]),
-  c("wilfred-bion-pensamento-grupos","curso_assinatura_bion_60h","psicanalise",
-    {pt:"Wilfred Bion: Pensamento, Grupos e Experiência Emocional",en:"Wilfred Bion: Thought, Groups and Emotional Experience",fr:"Wilfred Bion : Pensée, Groupes et Expérience Émotionnelle",es:"Wilfred Bion: Pensamiento, Grupos y Experiencia Emocional"},
-    {pt:"Introdução às contribuições de Bion sobre grupos, função alfa, continente-conteúdo e capacidade de pensar experiências emocionais.",en:"Introduction to Bion’s contributions on groups, alpha function, container-contained and the capacity to think emotional experience.",fr:"Introduction aux apports de Bion sur les groupes, la fonction alpha, contenant-contenu et la capacité de penser l’expérience émotionnelle.",es:"Introducción a los aportes de Bion sobre grupos, función alfa, continente-contenido y capacidad de pensar la experiencia emocional."},
-    [
-      {title:"Guerra, grupos e formação de Bion",topics:["experiência militar","Tavistock","Klein"],activity:"Relacionar contexto biográfico e emergência de sua teoria de grupos."},
-      {title:"Grupo de trabalho e pressupostos básicos",topics:["dependência","ataque-fuga","acasalamento"],activity:"Analisar uma dinâmica grupal fictícia pelos pressupostos básicos."},
-      {title:"Elementos beta e função alfa",topics:["experiência bruta","transformação","pensamento"],activity:"Explicar a passagem conceitual de beta a alfa em exemplo próprio."},
-      {title:"Continente e conteúdo",topics:["reverie","transformação","vínculo"],activity:"Construir um esquema visual do modelo continente-conteúdo."},
-      {title:"Aprender com a experiência",topics:["frustração","conhecimento","tolerância"],activity:"Discutir como aprender depende de suportar não saber."},
-      {title:"Bion e a clínica contemporânea",topics:["sessão","atenção","incerteza"],activity:"Produzir uma reflexão crítica sobre o uso atual de conceitos bionianos."},
-    ]),
-  c("sandor-ferenczi-trauma-tecnica","curso_assinatura_ferenczi_60h","psicanalise",
-    {pt:"Sándor Ferenczi: Trauma, Técnica e Relação Analítica",en:"Sándor Ferenczi: Trauma, Technique and the Analytic Relationship",fr:"Sándor Ferenczi : Trauma, Technique et Relation Analytique",es:"Sándor Ferenczi: Trauma, Técnica y Relación Analítica"},
-    {pt:"Trauma, elasticidade técnica, empatia, regressão e debates sobre a relação analítica na obra de Ferenczi.",en:"Trauma, technical elasticity, empathy, regression and debates on the analytic relationship in Ferenczi’s work.",fr:"Trauma, élasticité technique, empathie, régression et débats sur la relation analytique chez Ferenczi.",es:"Trauma, elasticidad técnica, empatía, regresión y debates sobre la relación analítica en Ferenczi."},
-    [
-      {title:"Ferenczi ao lado e além de Freud",topics:["Budapeste","colaboração","divergências"],activity:"Construir um mapa das aproximações e tensões com Freud."},
-      {title:"Elasticidade da técnica",topics:["adaptação","tato","limites"],activity:"Comparar técnica rígida e elasticidade em cenário teórico."},
-      {title:"Trauma e desmentido",topics:["violência","descrédito","fragmentação"],activity:"Explicar o papel do desmentido na teoria ferencziana do trauma."},
-      {title:"Confusão de línguas",topics:["ternura","paixão","assimetria"],activity:"Produzir uma leitura conceitual do texto sem extrapolar para diagnóstico."},
-      {title:"Regressão, empatia e risco técnico",topics:["acolhimento","dependência","enquadre"],activity:"Debater benefícios e riscos históricos das inovações de Ferenczi."},
-      {title:"Legado para teorias do trauma",topics:["influência","controvérsias","atualidade"],activity:"Escrever um ensaio sobre sua recepção contemporânea."},
-    ]),
-  c("wilhelm-reich-carater-corpo","curso_assinatura_reich_60h","psicanalise",
-    {pt:"Wilhelm Reich: Caráter, Corpo e História do Pensamento Psicanalítico",en:"Wilhelm Reich: Character, Body and the History of Psychoanalytic Thought",fr:"Wilhelm Reich : Caractère, Corps et Histoire de la Pensée Psychanalytique",es:"Wilhelm Reich: Carácter, Cuerpo e Historia del Pensamiento Psicoanalítico"},
-    {pt:"Curso histórico-crítico sobre análise do caráter, corpo, divergências com o movimento psicanalítico e controvérsias posteriores.",en:"Historical-critical course on character analysis, the body, divergences from the psychoanalytic movement and later controversies.",fr:"Cours historico-critique sur l’analyse du caractère, le corps, les divergences avec le mouvement psychanalytique et les controverses ultérieures.",es:"Curso histórico-crítico sobre análisis del carácter, cuerpo, divergencias con el movimiento psicoanalítico y controversias posteriores."},
-    [
-      {title:"Reich no movimento psicanalítico",topics:["Viena","política","Freud"],activity:"Organizar uma cronologia das fases de sua obra."},
-      {title:"Análise do caráter",topics:["resistência","padrões","função defensiva"],activity:"Diferenciar análise do conteúdo e análise do caráter em texto teórico."},
-      {title:"Couraça caracterológica e expressão corporal",topics:["tensão","expressão","caráter"],activity:"Explicar o conceito historicamente sem tratá-lo como diagnóstico biomédico."},
-      {title:"Vegetoterapia em contexto histórico",topics:["corpo","respiração","técnica"],activity:"Situar a proposta em seu contexto e discutir limites de evidência."},
-      {title:"Rupturas e controvérsias",topics:["instituições","orgone","crítica científica"],activity:"Separar contribuições históricas de alegações sem sustentação científica."},
-      {title:"Influência em abordagens corporais",topics:["legado","apropriações","cautela"],activity:"Produzir análise crítica de influências posteriores."},
-    ],
-    {pt:"Teorias controversas são apresentadas em contexto histórico e crítico; alegações sem sustentação científica contemporânea não são tratadas como fatos médicos.",en:"Controversial theories are presented in historical and critical context; claims lacking contemporary scientific support are not treated as medical facts.",fr:"Les théories controversées sont présentées dans un contexte historique et critique ; les affirmations sans soutien scientifique contemporain ne sont pas traitées comme des faits médicaux.",es:"Las teorías controvertidas se presentan en contexto histórico y crítico; las afirmaciones sin respaldo científico contemporáneo no se tratan como hechos médicos."}),
-  c("alfred-adler-psicologia-individual","curso_assinatura_adler_60h","psicanalise",
-    {pt:"Alfred Adler: Psicologia Individual, Inferioridade e Desenvolvimento Humano",en:"Alfred Adler: Individual Psychology, Inferiority and Human Development",fr:"Alfred Adler : Psychologie Individuelle, Infériorité et Développement Humain",es:"Alfred Adler: Psicología Individual, Inferioridad y Desarrollo Humano"},
-    {pt:"Trajetória de Adler, ruptura com Freud e fundamentos da Psicologia Individual.",en:"Adler’s trajectory, break with Freud and foundations of Individual Psychology.",fr:"Parcours d’Adler, rupture avec Freud et fondements de la Psychologie Individuelle.",es:"Trayectoria de Adler, ruptura con Freud y fundamentos de la Psicología Individual."},
-    [
-      {title:"Adler no círculo freudiano",topics:["Viena","Sociedade Psicanalítica","ruptura"],activity:"Comparar pontos de convergência e divergência com Freud."},
-      {title:"Sentimento de inferioridade",topics:["experiência","compensação","desenvolvimento"],activity:"Explicar inferioridade sem transformá-la em rótulo de personalidade."},
-      {title:"Compensação e busca de superioridade",topics:["metas","direção","estilo"],activity:"Analisar um caso fictício pela lógica de compensação."},
-      {title:"Estilo de vida",topics:["padrões","objetivos","coerência"],activity:"Construir um esquema didático do conceito de estilo de vida."},
-      {title:"Interesse social",topics:["cooperação","comunidade","pertencimento"],activity:"Relacionar interesse social à educação e convivência."},
-      {title:"Psicologia Individual como corrente própria",topics:["autonomia teórica","legado","diferenças"],activity:"Produzir síntese distinguindo Adler da psicanálise freudiana."},
-    ]),
-  c("francoise-dolto-infancia-linguagem","curso_assinatura_dolto_60h","psicanalise",
-    {pt:"Françoise Dolto: Infância, Linguagem e Psicanálise",en:"Françoise Dolto: Childhood, Language and Psychoanalysis",fr:"Françoise Dolto : Enfance, Langage et Psychanalyse",es:"Françoise Dolto: Infancia, Lenguaje y Psicoanálisis"},
-    {pt:"Infância, linguagem, imagem inconsciente do corpo, família e escuta da criança na obra de Dolto.",en:"Childhood, language, unconscious image of the body, family and listening to the child in Dolto’s work.",fr:"Enfance, langage, image inconsciente du corps, famille et écoute de l’enfant dans l’œuvre de Dolto.",es:"Infancia, lenguaje, imagen inconsciente del cuerpo, familia y escucha del niño en la obra de Dolto."},
-    [
-      {title:"Dolto e a psicanálise francesa",topics:["formação","Lacan","instituições"],activity:"Situar Dolto no cenário francês do século XX."},
-      {title:"A criança como sujeito",topics:["palavra","desejo","escuta"],activity:"Discutir o que muda quando a criança é tratada como sujeito de linguagem."},
-      {title:"Imagem inconsciente do corpo",topics:["corpo vivido","imagem","relação"],activity:"Diferenciar imagem corporal comum e conceito doltoano."},
-      {title:"Família, filiação e verdade",topics:["segredos","origem","transmissão"],activity:"Analisar uma vinheta educativa sobre comunicação familiar."},
-      {title:"Adolescência e passagem",topics:["separação","autonomia","transformação"],activity:"Produzir síntese sobre os desafios da passagem adolescente."},
-      {title:"Recepção, críticas e legado",topics:["mídia","clínica","debates"],activity:"Comparar contribuições reconhecidas e críticas dirigidas a Dolto."},
-    ]),
-  c("andre-green-estados-limite","curso_assinatura_andre_green_60h","psicanalise",
-    {pt:"André Green: Estados-Limite, Narcisismo e o Complexo da Mãe Morta",en:"André Green: Borderline States, Narcissism and the Dead Mother Complex",fr:"André Green : États-Limites, Narcissisme et Complexe de la Mère Morte",es:"André Green: Estados Límite, Narcisismo y Complejo de la Madre Muerta"},
-    {pt:"Introdução ao pensamento de André Green sobre negativo, narcisismo, representação e estados-limite.",en:"Introduction to André Green’s thought on the negative, narcissism, representation and borderline states.",fr:"Introduction à la pensée d’André Green sur le négatif, le narcissisme, la représentation et les états-limites.",es:"Introducción al pensamiento de André Green sobre lo negativo, narcisismo, representación y estados límite."},
-    [
-      {title:"Green entre Freud, Winnicott e Bion",topics:["filiações","debates","originalidade"],activity:"Criar mapa de influências teóricas sobre Green."},
-      {title:"Trabalho do negativo",topics:["ausência","apagamento","representação"],activity:"Explicar o negativo sem reduzi-lo a simples negação."},
-      {title:"Narcisismo de vida e de morte",topics:["investimento","desinvestimento","objeto"],activity:"Comparar as duas formulações em quadro conceitual."},
-      {title:"Estados-limite",topics:["fronteiras","representabilidade","enquadre"],activity:"Analisar a função do enquadre em uma vinheta teórica."},
-      {title:"Complexo da mãe morta",topics:["depressão materna","desinvestimento","identificação"],activity:"Apresentar o conceito com precisão e sem uso diagnóstico simplista."},
-      {title:"Clínica do contemporâneo",topics:["simbolização","afetos","limites"],activity:"Produzir ensaio crítico sobre atualidade e limites da teoria."},
-    ]),
-  c("jacques-lacan-linguagem-inconsciente","curso_assinatura_lacan_60h","psicanalise",
-    {pt:"Jacques Lacan: Linguagem, Inconsciente e Retorno a Freud",en:"Jacques Lacan: Language, the Unconscious and the Return to Freud",fr:"Jacques Lacan : Langage, Inconscient et Retour à Freud",es:"Jacques Lacan: Lenguaje, Inconsciente y Retorno a Freud"},
-    {pt:"Percurso introdutório pelos principais eixos do ensino de Lacan: linguagem, sujeito, registros, desejo e objeto a.",en:"Introductory path through key axes of Lacan’s teaching: language, subject, registers, desire and object a.",fr:"Parcours introductif dans les grands axes de l’enseignement de Lacan : langage, sujet, registres, désir et objet a.",es:"Recorrido introductorio por los ejes principales de la enseñanza de Lacan: lenguaje, sujeto, registros, deseo y objeto a."},
-    [
-      {title:"O retorno a Freud",topics:["leitura estrutural","texto freudiano","rupturas"],activity:"Explicar o sentido histórico da expressão retorno a Freud."},
-      {title:"Estádio do espelho e constituição do eu",topics:["imagem","identificação","alienação"],activity:"Construir um esquema da função da imagem na constituição do eu."},
-      {title:"Significante e sujeito",topics:["cadeia","efeitos de sentido","divisão"],activity:"Diferenciar significante de significado com exemplos linguísticos."},
-      {title:"Imaginário, Simbólico e Real",topics:["registros","articulação","limites"],activity:"Relacionar os três registros a uma situação conceitual sem simplificá-los."},
-      {title:"Desejo, falta e objeto a",topics:["demanda","causa do desejo","fantasia"],activity:"Criar mapa conceitual entre necessidade, demanda e desejo."},
-      {title:"Discursos e direção da clínica",topics:["laço social","posição","escuta"],activity:"Produzir síntese crítica sobre a contribuição lacaniana à clínica."},
-    ]),
-  c("melanie-klein-relacoes-objetais","curso_assinatura_melanie_klein_60h","psicanalise",
-    {pt:"Melanie Klein: Psicanálise Infantil e Relações Objetais",en:"Melanie Klein: Child Psychoanalysis and Object Relations",fr:"Melanie Klein : Psychanalyse de l’Enfant et Relations d’Objet",es:"Melanie Klein: Psicoanálisis Infantil y Relaciones Objetales"},
-    {pt:"Técnica do brincar, fantasia inconsciente, posições, relações objetais e identificação projetiva.",en:"Play technique, unconscious phantasy, positions, object relations and projective identification.",fr:"Technique du jeu, fantasme inconscient, positions, relations d’objet et identification projective.",es:"Técnica del juego, fantasía inconsciente, posiciones, relaciones objetales e identificación proyectiva."},
-    [
-      {title:"Klein e a psicanálise de crianças",topics:["Viena","Berlim","Londres"],activity:"Organizar os marcos de sua trajetória e controvérsias institucionais."},
-      {title:"Técnica do brincar",topics:["brincadeira","simbolização","interpretação"],activity:"Explicar o brincar como material analítico em contexto histórico."},
-      {title:"Fantasia inconsciente e objetos internos",topics:["mundo interno","objeto","ansiedade"],activity:"Construir diagrama entre fantasia e relações objetais."},
-      {title:"Posição esquizoparanoide",topics:["cisão","idealização","perseguição"],activity:"Analisar os mecanismos associados sem convertê-los em fases rígidas."},
-      {title:"Posição depressiva",topics:["ambivalência","culpa","reparação"],activity:"Comparar posição depressiva e esquizoparanoide."},
-      {title:"Identificação projetiva e legado",topics:["projeção","relação","Bion"],activity:"Traçar a evolução do conceito em autores posteriores."},
-    ]),
-  c("carl-gustav-jung-psicologia-analitica","curso_assinatura_jung_60h","psicanalise",
-    {pt:"Carl Gustav Jung: Psicologia Analítica e Inconsciente Coletivo",en:"Carl Gustav Jung: Analytical Psychology and the Collective Unconscious",fr:"Carl Gustav Jung : Psychologie Analytique et Inconscient Collectif",es:"Carl Gustav Jung: Psicología Analítica e Inconsciente Colectivo"},
-    {pt:"Da colaboração com Freud à Psicologia Analítica: inconsciente coletivo, arquétipos, tipos e individuação.",en:"From collaboration with Freud to Analytical Psychology: collective unconscious, archetypes, types and individuation.",fr:"De la collaboration avec Freud à la Psychologie Analytique : inconscient collectif, archétypes, types et individuation.",es:"De la colaboración con Freud a la Psicología Analítica: inconsciente colectivo, arquetipos, tipos e individuación."},
-    [
-      {title:"Jung e Freud: aproximação e ruptura",topics:["Burghölzli","Freud","divergências"],activity:"Comparar os pontos que aproximaram e separaram Jung e Freud."},
-      {title:"Inconsciente pessoal e coletivo",topics:["complexos","camada coletiva","herança simbólica"],activity:"Distinguir os dois níveis na arquitetura junguiana."},
-      {title:"Arquétipos e imagens arquetípicas",topics:["forma","símbolo","cultura"],activity:"Analisar criticamente a diferença entre arquétipo e imagem concreta."},
-      {title:"Persona, sombra, anima e animus",topics:["papéis","polaridades","integração"],activity:"Organizar os conceitos em mapa sem tratá-los como categorias diagnósticas."},
-      {title:"Tipos psicológicos",topics:["atitudes","funções","preferências"],activity:"Comparar a teoria original com usos populares contemporâneos."},
-      {title:"Individuação, sonhos e símbolos",topics:["self","processo","sentido"],activity:"Produzir uma síntese sobre individuação e interpretação simbólica."},
-    ],
-    {pt:"Jung desenvolveu a Psicologia Analítica como tradição teórica própria, distinta da psicanálise freudiana.",en:"Jung developed Analytical Psychology as its own theoretical tradition, distinct from Freudian psychoanalysis.",fr:"Jung a développé la Psychologie Analytique comme tradition théorique propre, distincte de la psychanalyse freudienne.",es:"Jung desarrolló la Psicología Analítica como tradición teórica propia, distinta del psicoanálisis freudiano."}),
-  c("hiv-ciencia-tratamento-caminhos-cura","curso_assinatura_hiv_ciencia_60h","educacao",
-    {pt:"HIV: Ciência, Tratamento e Caminhos para a Cura",en:"HIV: Science, Treatment and Pathways to a Cure",fr:"VIH : Science, Traitement et Voies vers la Guérison",es:"VIH: Ciencia, Tratamiento y Caminos hacia la Cura"},
-    {pt:"Curso educacional baseado em evidências sobre HIV, tratamento estabelecido, remissão sustentada e principais frentes internacionais de pesquisa para cura.",en:"Evidence-based educational course on HIV, established treatment, sustained remission and major international cure-research strategies.",fr:"Cours éducatif fondé sur les preuves sur le VIH, les traitements établis, la rémission durable et les principales stratégies internationales de recherche vers la guérison.",es:"Curso educativo basado en evidencia sobre VIH, tratamiento establecido, remisión sostenida y principales estrategias internacionales de investigación hacia la cura."},
-    [
-      {title:"HIV: história, ciência e sociedade",topics:["HIV e AIDS","história científica","estigma"],activity:"Construir uma linha do tempo distinguindo fatos científicos de marcos sociais."},
-      {title:"Como o HIV funciona e por que persiste",topics:["replicação","integração","reservatórios virais"],activity:"Explicar, em linguagem própria, por que a TARV controla o vírus sem geralmente eliminar reservatórios."},
-      {title:"Tratamento estabelecido e indetectabilidade",topics:["TARV","carga viral","I=I/U=U"],activity:"Diferenciar tratamento estabelecido, prevenção e pesquisa experimental."},
-      {title:"O que significa cura ou remissão do HIV",topics:["remissão sustentada","erradicação","controle pós-tratamento"],activity:"Comparar definições científicas sem transformar casos excepcionais em promessa terapêutica."},
-      {title:"Casos documentados e CCR5",topics:["transplante de células-tronco","CCR5","limites clínicos"],activity:"Analisar o que casos documentados ensinaram à ciência e por que transplante não é estratégia aplicável à população geral."},
-      {title:"Terapia e edição genética",topics:["CCR5","terapia celular","edição genética"],activity:"Classificar abordagens por estágio de evidência: pré-clínica, clínica ou estabelecida."},
-      {title:"Anticorpos amplamente neutralizantes",topics:["bNAbs","controle viral","resistência"],activity:"Ler criticamente o resumo de um estudo e identificar população, intervenção e limitações."},
-      {title:"Shock and Kill e Block and Lock",topics:["latência","reativação","silenciamento"],activity:"Comparar objetivos, riscos e desafios das duas estratégias."},
-      {title:"Vacinas terapêuticas, imunoterapia e terapias celulares",topics:["imunidade","CAR-T","combinações"],activity:"Separar resultados experimentais de tratamentos disponíveis."},
-      {title:"Pesquisas internacionais e próximos passos",topics:["ensaios clínicos","biomarcadores","estratégias combinadas"],activity:"Montar um mapa de perguntas ainda abertas na pesquisa de cura do HIV."},
-      {title:"Notícias, fake news e falsas curas",topics:["alfabetização científica","nível de evidência","fontes"],activity:"Avaliar manchetes sobre cura usando desenho do estudo, amostra, acompanhamento e publicação científica."},
-      {title:"HIV, estigma, sexualidade e subjetividade",topics:["estigma","relações","psicanálise como perspectiva complementar"],activity:"Produzir reflexão sobre sofrimento subjetivo sem apresentar Psicanálise como tratamento do vírus."},
-      {title:"Estado da Ciência — HIV",topics:["atualizações","IAS/UNAIDS/WHO/NIH/PubMed","novas evidências"],activity:"Criar uma ficha de atualização que registre fonte, data, estágio de evidência e implicações sem extrapolar resultados."},
-    ],
-    {pt:"Conteúdo exclusivamente educacional. Não realiza diagnóstico, não substitui infectologista ou equipe de saúde, não recomenda interromper TARV e não promete tratamento ou cura. Diferencie sempre tratamento estabelecido, evidência clínica, pesquisa experimental, pesquisa pré-clínica e hipótese científica.",en:"Educational content only. It does not diagnose, replace HIV medical care, recommend stopping ART, or promise treatment or cure. Always distinguish established treatment, clinical evidence, experimental research, preclinical research and scientific hypotheses.",fr:"Contenu exclusivement éducatif. Il ne pose pas de diagnostic, ne remplace pas le suivi médical du VIH, ne recommande pas l’arrêt du traitement antirétroviral et ne promet ni traitement ni guérison. Toujours distinguer traitement établi, preuve clinique, recherche expérimentale, recherche préclinique et hypothèse scientifique.",es:"Contenido exclusivamente educativo. No diagnostica, no sustituye la atención médica del VIH, no recomienda suspender la TAR y no promete tratamiento ni cura. Distinguir siempre tratamiento establecido, evidencia clínica, investigación experimental, investigación preclínica e hipótesis científica."}),
+type CourseSeed = Omit<SubscriptionCourse,"certificate"|"subscriptionOnly"|"modules"> & {focus:string};
 
+const seeds:CourseSeed[] = [
+  {
+    "slug": "como-se-preparar-para-uma-entrevista-de-emprego",
+    "productKey": "curso_assinatura_como_se_preparar_para_uma_entrevista_de_emprego",
+    "category": "gestao",
+    "track": "Primeiro Emprego",
+    "hours": 80,
+    "name": {
+      "pt": "Como se Preparar para uma Entrevista de Emprego",
+      "en": "Como se Preparar para uma Entrevista de Emprego",
+      "fr": "Como se Preparar para uma Entrevista de Emprego",
+      "es": "Como se Preparar para uma Entrevista de Emprego"
+    },
+    "description": {
+      "pt": "Curso livre para estudar preparação para entrevistas com método, prática e direção profissional, conectando aprendizado, aplicação real e próximos passos dentro da trilha Primeiro Emprego.",
+      "en": "Curso livre para estudar preparação para entrevistas com método, prática e direção profissional, conectando aprendizado, aplicação real e próximos passos dentro da trilha Primeiro Emprego.",
+      "fr": "Curso livre para estudar preparação para entrevistas com método, prática e direção profissional, conectando aprendizado, aplicação real e próximos passos dentro da trilha Primeiro Emprego.",
+      "es": "Curso livre para estudar preparação para entrevistas com método, prática e direção profissional, conectando aprendizado, aplicação real e próximos passos dentro da trilha Primeiro Emprego."
+    },
+    "focus": "preparação para entrevistas",
+    "materials": [
+      "Checklist prático de preparação para entrevistas",
+      "Roteiro guiado para aplicar preparação para entrevistas",
+      "Plano de ação editável de preparação para entrevistas"
+    ]
+  }
 ];
 
+export const ACADEMY_SUBSCRIPTION_COURSES:SubscriptionCourse[] = seeds.map(({focus,...course})=>({
+  ...course,
+  certificate:true,
+  subscriptionOnly:true,
+  modules:modulesFor(focus),
+}));
+
+export const ACADEMY_SUBSCRIPTION_TRACKS = Array.from(new Set(ACADEMY_SUBSCRIPTION_COURSES.map((course)=>course.track)));
+
 export function getAcademySubscriptionCourse(slug:string){
-  return ACADEMY_SUBSCRIPTION_COURSES.find(course=>course.slug===slug) ?? null;
+  return ACADEMY_SUBSCRIPTION_COURSES.find((course)=>course.slug===slug)??null;
 }
 
-export const ACADEMY_SUBSCRIPTION_PRODUCT_KEYS = ACADEMY_SUBSCRIPTION_COURSES.map(course=>course.productKey);
+export function academySubscriptionCoursesByTrack(track:string){
+  return ACADEMY_SUBSCRIPTION_COURSES.filter((course)=>course.track===track);
+}
