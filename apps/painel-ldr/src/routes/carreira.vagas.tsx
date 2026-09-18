@@ -38,6 +38,8 @@ const C = {
     emptyFiltered: "Nenhuma vaga encontrada com estes filtros.",
     loading: "Carregando vagas publicadas...",
     view: "Ver vaga",
+    apply: "Candidatar pelo perfil",
+    applyHint: "Envie seus dados com acessibilidade opcional e consentida.",
     remote: "Remoto",
     hybrid: "Híbrido",
     onsite: "Presencial",
@@ -61,6 +63,8 @@ const C = {
     emptyFiltered: "No jobs found with these filters.",
     loading: "Loading published jobs...",
     view: "View job",
+    apply: "Apply with profile",
+    applyHint: "Submit organized data with optional, consent-based accessibility information.",
     remote: "Remote",
     hybrid: "Hybrid",
     onsite: "On-site",
@@ -84,6 +88,8 @@ const C = {
     emptyFiltered: "Aucune offre trouvée avec ces filtres.",
     loading: "Chargement des offres publiées...",
     view: "Voir l’offre",
+    apply: "Postuler avec profil",
+    applyHint: "Envoyez vos données avec accessibilité optionnelle et consentie.",
     remote: "Télétravail",
     hybrid: "Hybride",
     onsite: "Présentiel",
@@ -107,6 +113,8 @@ const C = {
     emptyFiltered: "No se encontraron vacantes con estos filtros.",
     loading: "Cargando vacantes publicadas...",
     view: "Ver vacante",
+    apply: "Postular con perfil",
+    applyHint: "Envía tus datos con accesibilidad opcional y consentida.",
     remote: "Remoto",
     hybrid: "Híbrido",
     onsite: "Presencial",
@@ -366,13 +374,23 @@ function Jobs() {
                       )}
                     </div>
 
-                    <Link
-                      to="/carreira/vagas/$jobId"
-                      params={{ jobId: job.id }}
-                      className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-xl bg-[#07345b] px-5 font-semibold text-white transition hover:bg-[#0b426f] focus:outline-none focus:ring-4 focus:ring-[#07345b]/20"
-                    >
-                      {t.view}
-                    </Link>
+                    <div className="flex shrink-0 flex-col gap-2 md:w-56">
+                      <Link
+                        to="/carreira/vagas/$jobId/candidatura"
+                        params={{ jobId: job.id }}
+                        className="inline-flex min-h-11 items-center justify-center rounded-xl bg-[#07345b] px-5 text-center font-semibold text-white transition hover:bg-[#0b426f] focus:outline-none focus:ring-4 focus:ring-[#07345b]/20"
+                      >
+                        {t.apply}
+                      </Link>
+                      <Link
+                        to="/carreira/vagas/$jobId"
+                        params={{ jobId: job.id }}
+                        className="inline-flex min-h-11 items-center justify-center rounded-xl border border-slate-200 bg-white px-5 text-center font-semibold text-[#07345b] transition hover:bg-slate-50 focus:outline-none focus:ring-4 focus:ring-[#07345b]/10"
+                      >
+                        {t.view}
+                      </Link>
+                      <p className="text-center text-xs text-slate-500">{t.applyHint}</p>
+                    </div>
                   </div>
                 </article>
               );
