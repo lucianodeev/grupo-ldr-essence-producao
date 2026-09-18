@@ -344,3 +344,107 @@ body:has(#personalizar-plano) main>section:last-child .grid.sm\:grid-cols-5>div 
   body:has(#personalizar-plano) #personalizar-plano aside{border-radius:1.35rem!important}
   body:has(#personalizar-plano) #personalizar-plano aside p.font-serif{font-size:1.9rem!important}
 }
+
+/* LDR Carreira — mobile contrast and accessibility hardening.
+   Escopo visual: evita azul sobre azul, preserva lógica de formulários e rotas. */
+main.bg-\[\#f8fafc\]{
+  background:#f8fafc!important;
+  color:#0f172a!important;
+  padding-bottom:7.5rem;
+}
+main.bg-\[\#f8fafc\] header{
+  background:#fff!important;
+  border-color:rgba(15,23,42,.10)!important;
+}
+main.bg-\[\#f8fafc\] header .text-\[\#07345b\]{
+  color:#07345b!important;
+}
+main.bg-\[\#f8fafc\] > section.bg-gradient-to-br{
+  position:relative;
+  isolation:isolate;
+  background:
+    radial-gradient(circle at 85% 10%,rgba(201,155,45,.28),transparent 28%),
+    linear-gradient(135deg,#061f35 0%,#0a3357 54%,#0d4b7f 100%)!important;
+  color:#fff!important;
+}
+main.bg-\[\#f8fafc\] > section.bg-gradient-to-br::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(180deg,rgba(0,0,0,.10),rgba(0,0,0,.22));
+  z-index:-1;
+}
+main.bg-\[\#f8fafc\] > section.bg-gradient-to-br h1,
+main.bg-\[\#f8fafc\] > section.bg-gradient-to-br h2{
+  color:#fff!important;
+  text-shadow:0 2px 20px rgba(0,0,0,.26);
+}
+main.bg-\[\#f8fafc\] > section.bg-gradient-to-br p{
+  color:rgba(255,255,255,.92)!important;
+}
+main.bg-\[\#f8fafc\] > section.bg-gradient-to-br span.inline-flex{
+  background:#fff!important;
+  border-color:rgba(255,255,255,.72)!important;
+  color:#07345b!important;
+  box-shadow:0 8px 24px rgba(0,0,0,.16);
+}
+main.bg-\[\#f8fafc\] > section.bg-gradient-to-br .grid>div{
+  border-color:rgba(255,255,255,.22)!important;
+  background:rgba(255,255,255,.10)!important;
+  color:#fff!important;
+}
+main.bg-\[\#f8fafc\] > section.bg-gradient-to-br .grid>div span,
+main.bg-\[\#f8fafc\] > section.bg-gradient-to-br .grid>div p{
+  color:#fff!important;
+}
+main.bg-\[\#f8fafc\] section.rounded-3xl,
+main.bg-\[\#f8fafc\] article.rounded-3xl,
+main.bg-\[\#f8fafc\] form.rounded-3xl{
+  background:#fff!important;
+  color:#0f172a!important;
+  border-color:rgba(15,23,42,.10)!important;
+  box-shadow:0 14px 40px rgba(15,23,42,.08)!important;
+}
+main.bg-\[\#f8fafc\] h2,
+main.bg-\[\#f8fafc\] h3,
+main.bg-\[\#f8fafc\] label,
+main.bg-\[\#f8fafc\] strong{
+  color:#07345b!important;
+}
+main.bg-\[\#f8fafc\] p,
+main.bg-\[\#f8fafc\] li{
+  color:#334155!important;
+}
+main.bg-\[\#f8fafc\] input,
+main.bg-\[\#f8fafc\] select,
+main.bg-\[\#f8fafc\] textarea{
+  background:#fff!important;
+  border-color:#cbd5e1!important;
+  color:#0f172a!important;
+}
+main.bg-\[\#f8fafc\] input:focus,
+main.bg-\[\#f8fafc\] select:focus,
+main.bg-\[\#f8fafc\] textarea:focus{
+  border-color:#c99b2d!important;
+  box-shadow:0 0 0 3px rgba(201,155,45,.22)!important;
+}
+main.bg-\[\#f8fafc\] button,
+main.bg-\[\#f8fafc\] a[class*='rounded']{
+  text-decoration:none!important;
+}
+
+@media(max-width:768px){
+  main.bg-\[\#f8fafc\]{padding-bottom:9rem!important}
+  main.bg-\[\#f8fafc\] > section.bg-gradient-to-br>div{padding-top:2.8rem!important;padding-bottom:3rem!important}
+  main.bg-\[\#f8fafc\] > section.bg-gradient-to-br h1{font-size:clamp(2rem,9vw,2.55rem)!important;line-height:1.05!important;letter-spacing:-.03em}
+  main.bg-\[\#f8fafc\] > section.bg-gradient-to-br p{font-size:1rem!important;line-height:1.58!important}
+  main.bg-\[\#f8fafc\] section.rounded-3xl,
+  main.bg-\[\#f8fafc\] article.rounded-3xl,
+  main.bg-\[\#f8fafc\] form.rounded-3xl{border-radius:1.35rem!important}
+}
+
+@media(max-width:480px){
+  main.bg-\[\#f8fafc\] > section.bg-gradient-to-br h1{font-size:2.05rem!important}
+  main.bg-\[\#f8fafc\] header>div{padding-left:1rem!important;padding-right:1rem!important}
+}
