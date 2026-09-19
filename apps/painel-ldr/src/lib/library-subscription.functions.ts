@@ -11,9 +11,9 @@ export const clientLibrarySubscription = createServerFn({ method: "GET" }).middl
   return { ...result, market: requestMarket() };
 });
 
-export const clientCreateLibrarySubscriptionCheckout = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth]).inputValidator((data: { market: "BR" | "INTL" }) => data).handler(async ({ context, data }) => {
+export const clientCreateLibrarySubscriptionCheckout = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth]).inputValidator((data: { market: "BR" | "INTL"; billingCycle?: "monthly" | "annual" }) => data).handler(async ({ context, data }) => {
   const { createLibrarySubscriptionCheckout } = await import("@/lib/library-subscription.server");
-  return createLibrarySubscriptionCheckout(context.userId, emailOf(context.claims), data.market);
+  return createLibrarySubscriptionCheckout(context.userId, emailOf(context.claims), data.market, data.billingCycle ?? "monthly");
 });
 
 export const clientSetLibrarySubscriptionCancellation = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth]).inputValidator((data: { cancelAtPeriodEnd: boolean }) => data).handler(async ({ context, data }) => {
