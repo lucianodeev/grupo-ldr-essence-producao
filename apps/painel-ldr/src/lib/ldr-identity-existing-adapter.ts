@@ -13,6 +13,8 @@ export type ExistingIdentitySources = {
   resolveOrganizationMemberships?: (authUserId: string) => Promise<readonly string[]>;
   resolveEmployee?: (authUserId: string) => Promise<{ id: string } | null>;
   resolveAcademic?: (authUserId: string) => Promise<{ profileId: string; displayRole?: AcademicDisplayRole } | null>;
+  /** Must delegate to the existing authoritative access resolver (for example resolveAccess).
+   * Never infer admin privileges from email, subscription, professional or academic state. */
   resolveAdmin?: (authUserId: string, email: string | null) => Promise<{ isAdmin: boolean; isSuperadmin: boolean }>;
 };
 
