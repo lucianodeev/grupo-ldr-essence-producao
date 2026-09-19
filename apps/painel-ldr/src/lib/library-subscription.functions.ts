@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { getRequest } from "@tanstack/react-start/server";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { resolveLegacyEntitlement } from "@/lib/entitlements";
 
 function emailOf(claims: Record<string, unknown>): string | null { const value = claims["email"]; return typeof value === "string" ? value : null; }
 function requestMarket(): "BR" | "INTL" { try { const request = getRequest(); const country = request?.headers.get("x-vercel-ip-country") ?? request?.headers.get("cf-ipcountry") ?? request?.headers.get("x-country-code"); return country?.trim().toUpperCase() === "BR" ? "BR" : "INTL"; } catch { return "INTL"; } }
@@ -9,6 +10,17 @@ export const clientLibrarySubscription = createServerFn({ method: "GET" }).middl
   const { getLibrarySubscriptionContext } = await import("@/lib/library-subscription.server");
   const result = await getLibrarySubscriptionContext(context.userId, emailOf(context.claims));
   return { ...result, market: requestMarket() };
+});
+
+export const clientLibraryCourseEntitlement = createServerFn({ method: "GET" }).middleware([requireSupabaseAuth]).inputValidator((data: { resourceKey: string }) => data).handler(async ({ context, data }) => {
+  const { getLibrarySubscriptionContext } = await import("@/lib/library-subscription.server");
+  const result = await getLibrarySubscriptionContext(context.userId, emailOf(context.claims));
+  return resolveLegacyEntitlement({
+    resourceKey: data.resourceKey,
+    librarySubscription: Boolean(result.active),
+    librarySubscriptionId: result.subscription?.id ?? undefined,
+    libraryExpiresAt: result.subscription?.current_period_end ?? undefined,
+  });
 });
 
 export const clientCreateLibrarySubscriptionCheckout = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth]).inputValidator((data: { market: "BR" | "INTL"; billingCycle?: "monthly" | "annual" }) => data).handler(async ({ context, data }) => {
