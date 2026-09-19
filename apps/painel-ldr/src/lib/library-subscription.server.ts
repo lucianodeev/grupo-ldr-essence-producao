@@ -6,6 +6,7 @@ import { resolveClient } from "@/lib/client-portal.server";
 const db = supabaseAdmin as any;
 const PRICE_BRL = 3990;
 const PRICE_EUR = 990;
+const ANNUAL_PRICE_BRL = 39900;
 const PROMO_FIRST_BRL = 1995;
 const PROMO_FIRST_EUR = 495;
 const PROMOTION_ENABLED = true;
@@ -40,6 +41,7 @@ const INCLUDED_PRODUCTS: ReadonlyArray<readonly [string,string]> = [
 ];
 
 type Market = "BR" | "INTL";
+type BillingCycle = "monthly" | "annual";
 type StripeObject = {
   id?: string;
   payment_status?: string;
@@ -131,7 +133,7 @@ export async function getLibrarySubscriptionContext(userId: string, email: strin
   const customer = await customerFor(userId, email);
   const row = await currentRow(customer.id);
   const subscription = row ? await syncRowFromStripe(row) : null;
-  return { customer, subscription, active: accessActive(subscription?.status), priceBrlCents: PRICE_BRL, priceEurCents: PRICE_EUR, promoActive: libraryPromoActive(), promoEndsAt: null, promoFirstBrlCents: PROMO_FIRST_BRL, promoFirstEurCents: PROMO_FIRST_EUR };
+  return { customer, subscription, active: accessActive(subscription?.status), priceBrlCents: PRICE_BRL, priceEurCents: PRICE_EUR, annualPriceBrlCents: ANNUAL_PRICE_BRL, promoActive: libraryPromoActive(), promoEndsAt: null, promoFirstBrlCents: PROMO_FIRST_BRL, promoFirstEurCents: PROMO_FIRST_EUR };
 }
 
 export async function hasActiveLibrarySubscription(customerId: string) {
@@ -141,7 +143,7 @@ export async function hasActiveLibrarySubscription(customerId: string) {
   return accessActive(synced?.status);
 }
 
-export async function createLibrarySubscriptionCheckout(userId: string, email: string | null, market: Market) {
+export async function createLibrarySubscriptionCheckout(userId: string, email: string | null, market: Market, billingCycle: BillingCycle = "monthly") {
   const customer = await customerFor(userId, email);
   const existing = await currentRow(customer.id);
   if (existing) {
@@ -149,7 +151,9 @@ export async function createLibrarySubscriptionCheckout(userId: string, email: s
     if (accessActive(synced?.status) || ["past_due", "unpaid", "paused", "incomplete"].includes(String(synced?.status))) fail("Você já possui uma assinatura da Biblioteca LDR. Gerencie a assinatura atual antes de criar outra.");
   }
   const currency = market === "BR" ? "BRL" : "EUR";
-  const amount = market === "BR" ? PRICE_BRL : PRICE_EUR;
+  if (billingCycle === "annual" && market !== "BR") fail("O plano anual está disponível no Brasil.");
+  const amount = billingCycle === "annual" ? ANNUAL_PRICE_BRL : (market === "BR" ? PRICE_BRL : PRICE_EUR);
+  const recurringInterval = billingCycle === "annual" ? "year" : "month";
   const { data: row, error } = await db.from("library_subscriptions").insert({ customer_id: customer.id, market, currency, monthly_amount_cents: amount, status: "pending" }).select("id").single();
   if (error || !row) fail("Não foi possível preparar a assinatura.");
   const secret = process.env.STRIPE_SECRET_KEY;
@@ -159,10 +163,10 @@ export async function createLibrarySubscriptionCheckout(userId: string, email: s
   params.append("payment_method_types[]", "card");
   params.set("line_items[0][price_data][currency]", currency.toLowerCase());
   params.set("line_items[0][price_data][unit_amount]", String(amount));
-  params.set("line_items[0][price_data][recurring][interval]", "month");
+  params.set("line_items[0][price_data][recurring][interval]", recurringInterval);
   params.set("line_items[0][price_data][product_data][name]", PRODUCT_NAME);
   params.set("line_items[0][quantity]", "1");
-  if (libraryPromoActive()) {
+  if (billingCycle === "monthly" && libraryPromoActive()) {
     const couponParams = new URLSearchParams();
     couponParams.set("duration", "once");
     couponParams.set("percent_off", "50");
@@ -179,10 +183,12 @@ export async function createLibrarySubscriptionCheckout(userId: string, email: s
   params.set("client_reference_id", userId);
   params.set("billing_address_collection", "auto");
   params.set("metadata[checkout_kind]", "library_subscription");
+  params.set("metadata[billing_cycle]", billingCycle);
   params.set("metadata[library_subscription_id]", row.id);
   params.set("metadata[customer_id]", customer.id);
   params.set("metadata[market]", market);
   params.set("subscription_data[metadata][checkout_kind]", "library_subscription");
+  params.set("subscription_data[metadata][billing_cycle]", billingCycle);
   params.set("subscription_data[metadata][library_subscription_id]", row.id);
   params.set("subscription_data[metadata][customer_id]", customer.id);
   params.set("subscription_data[metadata][market]", market);
