@@ -1,8 +1,8 @@
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { resolveAccess } from "@/lib/access.server";
+import { resolveLegacyEntitlement } from "@/lib/entitlements";
 
 const db = supabaseAdmin as any;
-const ACTIVE_SUBSCRIPTION = new Set(["active", "trialing"]);
 
 type Access = { premium:boolean; trialActive:boolean; trialEndsAt:string|null; subscriptionActive:boolean; isAdmin:boolean };
 type PostType = "reflection"|"question"|"debate"|"study"|"recommendation"|"photo"|"share";
@@ -47,8 +47,14 @@ async function isAdmin(userId:string){
 async function subscriptionActive(userId:string){
   const {data:customer}=await db.from("customers").select("id").eq("auth_user_id",userId).maybeSingle();
   if(!customer?.id)return false;
-  const {data:sub}=await db.from("library_subscriptions").select("status").eq("customer_id",customer.id).order("created_at",{ascending:false}).limit(1).maybeSingle();
-  return ACTIVE_SUBSCRIPTION.has(String(sub?.status??""));
+  const {data:sub}=await db.from("library_subscriptions").select("id,status,current_period_end").eq("customer_id",customer.id).order("created_at",{ascending:false}).limit(1).maybeSingle();
+  const decision=resolveLegacyEntitlement({
+    resourceKey:"academic_network_subscription_status",
+    librarySubscription:sub?.status==="active"||sub?.status==="trialing",
+    librarySubscriptionId:sub?.id,
+    libraryExpiresAt:sub?.current_period_end??undefined,
+  });
+  return decision.allowed&&decision.source==="library_subscription";
 }
 
 async function accessFor(userId:string):Promise<Access>{
