@@ -3,6 +3,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import type { Database } from "@/integrations/supabase/types";
 import { resolveAccess } from "@/lib/access.server";
+import { resolveLegacyEntitlement } from "@/lib/entitlements";
 
 type Client = SupabaseClient<Database>;
 type AccessType = "gratuito" | "avulso" | "assinatura";
@@ -66,8 +67,13 @@ function accessTypeFor(enrollment: EnrollmentRow, paidOrders: OrderRow[], active
     const metadata = (order.metadata ?? {}) as Metadata;
     return metadata.source === "library_subscription" && metadata.subscription_access !== false;
   });
-  if (bySubscription && activeSubscriptionCustomers.has(enrollment.customer_id)) return "assinatura";
-  if (matching.some((order) => order.metadata?.source !== "library_subscription")) return "avulso";
+  const decision = resolveLegacyEntitlement({
+    resourceKey: text(enrollment.product_key) || text(enrollment.training_programs?.slug) || enrollment.training_id,
+    owned: matching.some((order) => order.metadata?.source !== "library_subscription"),
+    librarySubscription: bySubscription && activeSubscriptionCustomers.has(enrollment.customer_id),
+  });
+  if (decision.source === "library_subscription") return "assinatura";
+  if (decision.source === "ownership") return "avulso";
   return "gratuito";
 }
 
