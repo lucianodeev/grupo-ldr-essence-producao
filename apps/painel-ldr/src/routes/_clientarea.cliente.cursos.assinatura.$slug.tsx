@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { CheckCircle2, ChevronLeft, ChevronRight, LockKeyhole } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { getAcademySubscriptionCourse } from "@/lib/academy-subscription-courses.catalog";
-import { clientLibrarySubscription } from "@/lib/library-subscription.functions";
+import { clientLibraryCourseEntitlement } from "@/lib/library-subscription.functions";
 import { clientSaveProgress } from "@/lib/learning.functions";
 
 export const Route=createFileRoute("/_clientarea/cliente/cursos/assinatura/$slug")({component:Page});
@@ -23,7 +23,7 @@ function Page(){
   const locale=(raw==="en"||raw==="fr"||raw==="es"?raw:"pt") as Locale;
   const u=UI[locale];
   const course=getAcademySubscriptionCourse(slug);
-  const getSubscription=useServerFn(clientLibrarySubscription);
+  const getEntitlement=useServerFn(clientLibraryCourseEntitlement);
   const saveProgress=useServerFn(clientSaveProgress);
   const [checking,setChecking]=useState(true);
   const [active,setActive]=useState(false);
@@ -32,9 +32,10 @@ function Page(){
 
   useEffect(()=>{
     let alive=true;
-    getSubscription({}).then((result)=>{if(alive)setActive(Boolean(result.active));}).catch(()=>{if(alive)setActive(false);}).finally(()=>{if(alive)setChecking(false);});
+    if(!course){setChecking(false);return()=>{alive=false;};}
+    getEntitlement({data:{resourceKey:course.productKey}}).then((decision)=>{if(alive)setActive(Boolean(decision.allowed));}).catch(()=>{if(alive)setActive(false);}).finally(()=>{if(alive)setChecking(false);});
     return()=>{alive=false;};
-  },[getSubscription]);
+  },[course,getEntitlement]);
 
   useEffect(()=>{
     if(!course)return;
