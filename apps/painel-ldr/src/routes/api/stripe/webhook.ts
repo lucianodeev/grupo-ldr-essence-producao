@@ -594,49 +594,32 @@ export const Route = createFileRoute("/api/stripe/webhook")({
             }
           }
 
-          // Empresas LDR: assinatura mensal recorrente, renovação, falha e cancelamento.
-          if (metadata["checkout_kind"] === "company_subscription" && (event.type === "checkout.session.completed" || event.type === "checkout.session.expired")) {
-            await setCompanySubscription(metadata, object, event.type);
-          } else if (
+          // Assinaturas recorrentes são roteadas exclusivamente pelo checkout_kind.
+          // Isso impede que um evento de um produto tente atualizar tabelas de outro produto.
+          const checkoutKind = metadata["checkout_kind"];
+          const recurringSubscriptionEvent =
             event.type === "customer.subscription.created" ||
             event.type === "customer.subscription.updated" ||
             event.type === "customer.subscription.deleted" ||
             event.type === "invoice.payment_succeeded" ||
-            event.type === "invoice.payment_failed"
-          ) {
-            await setCompanySubscription(metadata, object, event.type);
-          }
-
-          // Jornal LDR e Revista LDR: assinaturas editoriais independentes.
-          if (metadata["checkout_kind"] === "editorial_subscription" && (
+            event.type === "invoice.payment_failed";
+          const subscriptionCheckoutEvent =
             event.type === "checkout.session.completed" ||
-            event.type === "checkout.session.expired" ||
-            event.type === "customer.subscription.created" ||
-            event.type === "customer.subscription.updated" ||
-            event.type === "customer.subscription.deleted" ||
-            event.type === "invoice.payment_succeeded" ||
-            event.type === "invoice.payment_failed"
-          )) {
-            await setEditorialSubscription(metadata, object, event.type);
-          }
+            event.type === "checkout.session.expired";
 
-          // Biblioteca LDR: assinatura mensal de conteúdos digitais.
-          if (metadata["checkout_kind"] === "library_subscription" && (event.type === "checkout.session.completed" || event.type === "checkout.session.expired")) {
+          if (checkoutKind === "company_subscription" && (subscriptionCheckoutEvent || recurringSubscriptionEvent)) {
+            await setCompanySubscription(metadata, object, event.type);
+          } else if (checkoutKind === "editorial_subscription" && (subscriptionCheckoutEvent || recurringSubscriptionEvent)) {
+            await setEditorialSubscription(metadata, object, event.type);
+          } else if (checkoutKind === "library_subscription" && (subscriptionCheckoutEvent || recurringSubscriptionEvent)) {
             await setLibrarySubscription(metadata, object, event.type);
           } else if (
-            event.type === "customer.subscription.created" ||
-            event.type === "customer.subscription.updated" ||
-            event.type === "customer.subscription.deleted" ||
-            event.type === "invoice.payment_succeeded" ||
-            event.type === "invoice.payment_failed"
+            checkoutKind === "professional_subscription" &&
+            (event.type === "checkout.session.completed" ||
+              event.type === "customer.subscription.created" ||
+              event.type === "customer.subscription.updated" ||
+              event.type === "customer.subscription.deleted")
           ) {
-            await setLibrarySubscription(metadata, object, event.type);
-          }
-
-          // Rede de Profissionais LDR: assinatura mensal.
-          if (metadata["checkout_kind"] === "professional_subscription" && event.type === "checkout.session.completed") {
-            await setProfessionalSubscription(metadata, object, event.type);
-          } else if (event.type === "customer.subscription.created" || event.type === "customer.subscription.updated" || event.type === "customer.subscription.deleted") {
             await setProfessionalSubscription(metadata, object, event.type);
           }
 
