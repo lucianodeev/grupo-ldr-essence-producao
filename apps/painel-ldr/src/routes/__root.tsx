@@ -8,7 +8,7 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Building2, Check, LogIn, Sparkles, UsersRound } from "lucide-react";
 
 import { AcademyChatbot } from "@/components/academy-chatbot";
@@ -20,6 +20,9 @@ import appCss from "../styles.css?url";
 import responsiveCss from "../responsive-v3.css?url";
 import carreiraCss from "../carreira-hardening.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+
+const ADSENSE_SCRIPT_ID = "ldr-adsense-script";
+const ADSENSE_SCRIPT_SRC = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4298173894748549";
 
 const GLOBAL_COPY = {
   pt: { plansAria:"Planos empresariais", eyebrow:"Assinatura empresarial LDR", plansTitle:"Planos mensais para sua empresa", plansText:"A assinatura funciona com renovação mensal automática. O catálogo de serviços individuais continua disponível separadamente para compras extras, pacotes e futuros produtos.", manage:"Gerenciar assinatura", essentialRange:"Até 10 funcionários", month:"/mês", or:"ou", essentialCredit:"4 créditos mensais", employeeBenefits:"Gestão de funcionários e benefícios", subscribe:"Ver e assinar", proRange:"De 11 a 50 funcionários", proCredit:"12 créditos mensais", proBenefits:"Benefícios recorrentes para equipes em crescimento", customRange:"A partir de 51 funcionários", customPrice:"Calculado na plataforma", customHint:"conforme equipe, serviços e créditos", customServices:"Escolha de serviços e créditos", realtime:"Preço mensal calculado em tempo real", configure:"Configurar plano", enter:"Entrar", enterAria:"Entrar na plataforma", whatsappAria:"Falar com a LDR pelo WhatsApp" },
@@ -106,7 +109,6 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="pt-BR" suppressHydrationWarning>
       <head>
         <HeadContent />
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4298173894748549" crossOrigin="anonymous"></script>
       </head>
       <body>
         {children}
@@ -186,6 +188,60 @@ function PersistentActions() {
   );
 }
 
+function LazyAdSenseScript() {
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const idleWindow = window as typeof window & {
+      requestIdleCallback?: (callback: VoidFunction, options?: { timeout?: number }) => number;
+    };
+
+    let timeoutId: number | undefined;
+
+    const injectScript = () => {
+      if (document.getElementById(ADSENSE_SCRIPT_ID)) return;
+      const script = document.createElement("script");
+      script.id = ADSENSE_SCRIPT_ID;
+      script.async = true;
+      script.src = ADSENSE_SCRIPT_SRC;
+      script.crossOrigin = "anonymous";
+      document.head.appendChild(script);
+    };
+
+    const scheduleScript = () => {
+      if (idleWindow.requestIdleCallback) {
+        idleWindow.requestIdleCallback(injectScript, { timeout: 5000 });
+        return;
+      }
+      timeoutId = window.setTimeout(injectScript, 2500);
+    };
+
+    if (document.readyState === "complete") {
+      scheduleScript();
+    } else {
+      window.addEventListener("load", scheduleScript, { once: true });
+    }
+
+    return () => {
+      window.removeEventListener("load", scheduleScript);
+      if (timeoutId) window.clearTimeout(timeoutId);
+    };
+  }, []);
+
+  return null;
+}
+
+function LazyAcademyChatbot() {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    const timeoutId = window.setTimeout(() => setIsMounted(true), 2500);
+    return () => window.clearTimeout(timeoutId);
+  }, []);
+
+  return isMounted ? <AcademyChatbot /> : null;
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const router = useRouter();
@@ -223,7 +279,8 @@ function RootComponent() {
           {showCompanyPlans && <CompanyPlanCards />}
         </div>
         <PersistentActions />
-        <AcademyChatbot />
+        <LazyAdSenseScript />
+        <LazyAcademyChatbot />
         <Toaster richColors position="top-center" />
       </I18nProvider>
     </QueryClientProvider>
