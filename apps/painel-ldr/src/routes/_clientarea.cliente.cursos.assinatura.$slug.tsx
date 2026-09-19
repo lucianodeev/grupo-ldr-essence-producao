@@ -32,7 +32,8 @@ function Page(){
 
   useEffect(()=>{
     let alive=true;
-    if(!course){setChecking(false);return()=>{alive=false;};}\n    getEntitlement({data:{resourceKey:course.productKey}}).then((decision)=>{if(alive)setActive(Boolean(decision.allowed));}).catch(()=>{if(alive)setActive(false);}).finally(()=>{if(alive)setChecking(false);});
+    if(!course){setChecking(false);return()=>{alive=false;};}
+    getEntitlement({data:{resourceKey:course.productKey}}).then((decision)=>{if(alive)setActive(Boolean(decision.allowed));}).catch(()=>{if(alive)setActive(false);}).finally(()=>{if(alive)setChecking(false);});
     return()=>{alive=false;};
   },[course,getEntitlement]);
 
