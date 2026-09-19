@@ -1,0 +1,61 @@
+export type CareerJourneyCourse={slug:string;title:string;track:string;order:number;modality:"async";subscriptionIncluded:true;liveSessions:0;};
+
+/** Canonical foundation for the 50-course Career Journey expansion.
+ * Content is intentionally separate from existing subscription courses so semantic duplicates can be reviewed before publication.
+ * No course in this catalog may require live attendance; only the existing Psychoanalysis formation can have live sessions.
+ */
+export const ACADEMY_CAREER_JOURNEY_COURSES:CareerJourneyCourse[]=[
+  { slug:"do-diploma-ao-primeiro-contrato", title:"Do Diploma ao Primeiro Contrato", track:"Entrada no Mercado", order:1 },
+  { slug:"identidade-profissional-alem-do-curriculo", title:"Identidade Profissional: Quem Você É Além do Currículo", track:"Entrada no Mercado", order:2 },
+  { slug:"competencias-invisiveis-que-o-mercado-avalia", title:"Competências Invisíveis que o Mercado Avalia", track:"Entrada no Mercado", order:3 },
+  { slug:"curriculo-baseado-em-evidencias", title:"Currículo Baseado em Evidências", track:"Entrada no Mercado", order:4 },
+  { slug:"portfolio-para-quem-ainda-nao-tem-experiencia", title:"Portfólio para Quem Ainda Não Tem Experiência", track:"Entrada no Mercado", order:5 },
+  { slug:"projetos-academicos-em-experiencia-profissional", title:"Transformando Projetos Acadêmicos em Experiência Profissional", track:"Entrada no Mercado", order:6 },
+  { slug:"leitura-estrategica-de-vagas", title:"Leitura Estratégica de Vagas", track:"Entrada no Mercado", order:7 },
+  { slug:"processos-seletivos-da-inscricao-a-decisao", title:"Processos Seletivos: Da Inscrição à Decisão", track:"Entrada no Mercado", order:8 },
+  { slug:"entrevistas-baseadas-em-competencias", title:"Entrevistas Baseadas em Competências", track:"Entrada no Mercado", order:9 },
+  { slug:"primeiros-90-dias-no-trabalho", title:"Os Primeiros 90 Dias no Trabalho", track:"Entrada no Mercado", order:10 },
+  { slug:"primeiro-salario", title:"Primeiro Salário", track:"Finanças", order:11 },
+  { slug:"salario-liquido", title:"Salário Líquido: Entendendo o Dinheiro que Realmente Chega", track:"Finanças", order:12 },
+  { slug:"orcamento-inicio-vida-profissional", title:"Orçamento para o Início da Vida Profissional", track:"Finanças", order:13 },
+  { slug:"reserva-financeira-renda-inicial", title:"Construindo uma Reserva Financeira com Renda Inicial", track:"Finanças", order:14 },
+  { slug:"dividas-parcelamentos-decisoes-financeiras", title:"Dívidas, Parcelamentos e Decisões Financeiras", track:"Finanças", order:15 },
+  { slug:"beneficios-corporativos-vida-real", title:"Benefícios Corporativos Traduzidos para a Vida Real", track:"Finanças", order:16 },
+  { slug:"emprego-prestacao-servico-trabalho-autonomo", title:"Emprego, Prestação de Serviço e Trabalho Autônomo", track:"Finanças", order:17 },
+  { slug:"quanto-vale-minha-hora", title:"Quanto Vale Minha Hora?", track:"Finanças", order:18 },
+  { slug:"financas-transicoes-carreira", title:"Finanças nas Transições de Carreira", track:"Finanças", order:19 },
+  { slug:"metas-financeiras-qualidade-de-vida", title:"Metas Financeiras e Qualidade de Vida", track:"Finanças", order:20 },
+  { slug:"ansiedade-entrada-mercado", title:"Ansiedade na Entrada no Mercado", track:"Saúde Mental e Organização", order:21 },
+  { slug:"organizacao-mental-alta-demanda", title:"Organização Mental em Semanas de Alta Demanda", track:"Saúde Mental e Organização", order:22 },
+  { slug:"procrastinacao-academica-profissional", title:"Procrastinação Acadêmica e Profissional", track:"Saúde Mental e Organização", order:23 },
+  { slug:"limites-saudaveis-primeiro-emprego", title:"Limites Saudáveis no Primeiro Emprego", track:"Saúde Mental e Organização", order:24 },
+  { slug:"como-receber-feedback", title:"Como Receber Feedback", track:"Saúde Mental e Organização", order:25 },
+  { slug:"frustracao-profissional-expectativas", title:"Frustração Profissional e Expectativas", track:"Saúde Mental e Organização", order:26 },
+  { slug:"sindrome-impostor-transicao-universidade-trabalho", title:"Síndrome do Impostor na Transição Universidade–Trabalho", track:"Saúde Mental e Organização", order:27 },
+  { slug:"estudo-trabalho-vida-pessoal", title:"Estudo, Trabalho e Vida Pessoal", track:"Saúde Mental e Organização", order:28 },
+  { slug:"decisoes-profissionais-sob-pressao", title:"Decisões Profissionais sob Pressão", track:"Saúde Mental e Organização", order:29 },
+  { slug:"prevencao-esgotamento-inicio-carreira", title:"Prevenção do Esgotamento no Início da Carreira", track:"Saúde Mental e Organização", order:30 },
+  { slug:"como-empresa-funciona-por-dentro", title:"Como uma Empresa Funciona por Dentro", track:"Inteligência Profissional", order:31 },
+  { slug:"como-ler-cultura-organizacional", title:"Como Ler uma Cultura Organizacional", track:"Inteligência Profissional", order:32 },
+  { slug:"comunicacao-profissional-situacoes-dificeis", title:"Comunicação Profissional em Situações Difíceis", track:"Inteligência Profissional", order:33 },
+  { slug:"reunioes-que-produzem-decisoes", title:"Reuniões que Produzem Decisões", track:"Inteligência Profissional", order:34 },
+  { slug:"escrita-profissional", title:"Escrita Profissional", track:"Inteligência Profissional", order:35 },
+  { slug:"negociacao-inicio-carreira", title:"Negociação no Início da Carreira", track:"Inteligência Profissional", order:36 },
+  { slug:"como-apresentar-ideias", title:"Como Apresentar Ideias", track:"Inteligência Profissional", order:37 },
+  { slug:"gestao-conflitos-profissionais", title:"Gestão de Conflitos Profissionais", track:"Inteligência Profissional", order:38 },
+  { slug:"etica-confidencialidade-responsabilidade", title:"Ética, Confidencialidade e Responsabilidade", track:"Inteligência Profissional", order:39 },
+  { slug:"construindo-reputacao-profissional", title:"Construindo Reputação Profissional", track:"Inteligência Profissional", order:40 },
+  { slug:"mapa-carreira-baseado-competencias", title:"Mapa de Carreira Baseado em Competências", track:"Futuro", order:41 },
+  { slug:"identificando-lacunas-competencias", title:"Identificando Lacunas de Competências", track:"Futuro", order:42 },
+  { slug:"aprendizagem-continua-profissionais", title:"Aprendizagem Contínua para Profissionais", track:"Futuro", order:43 },
+  { slug:"ia-como-ferramenta-de-trabalho", title:"Inteligência Artificial como Ferramenta de Trabalho", track:"Futuro", order:44 },
+  { slug:"equipes-multiculturais", title:"Equipes Multiculturais", track:"Futuro", order:45 },
+  { slug:"preparacao-carreira-internacional", title:"Preparação para Carreira Internacional", track:"Futuro", order:46 },
+  { slug:"networking-troca-de-valor", title:"Networking Baseado em Troca de Valor", track:"Futuro", order:47 },
+  { slug:"mobilidade-profissional", title:"Mobilidade Profissional", track:"Futuro", order:48 },
+  { slug:"plano-profissional-12-meses", title:"Plano Profissional de 12 Meses", track:"Futuro", order:49 },
+  { slug:"formacao-a-empregabilidade-projeto-final", title:"Da Formação à Empregabilidade: Projeto Final", track:"Futuro", order:50 },
+];
+
+export const ACADEMY_CAREER_JOURNEY_TRACKS=[...new Set(ACADEMY_CAREER_JOURNEY_COURSES.map(c=>c.track))];
+export const getCareerJourneyCourse=(slug:string)=>ACADEMY_CAREER_JOURNEY_COURSES.find(c=>c.slug===slug)??null;
