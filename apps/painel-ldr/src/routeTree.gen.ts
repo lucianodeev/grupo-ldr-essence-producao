@@ -45,6 +45,8 @@ import { Route as FormacaoTerapiasContemporaneasRouteImport } from './routes/for
 import { Route as FormacaoTricologiaTerapiaCapilarRouteImport } from './routes/formacao-tricologia-terapia-capilar'
 import { Route as FormacaoVendasNegociacaoRouteImport } from './routes/formacao-vendas-negociacao'
 import { Route as FormularioRouteImport } from './routes/formulario'
+import { Route as ImprensaRouteImport } from './routes/imprensa'
+import { Route as InstituicoesRouteImport } from './routes/instituicoes'
 import { Route as LivrosRouteImport } from './routes/livros'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as MensagensProfissionaisRouteImport } from './routes/mensagens-profissionais'
@@ -79,10 +81,28 @@ import { Route as ApiSellerPurchaseAccessRouteImport } from './routes/api/seller
 import { Route as ApiSellerReferralRouteImport } from './routes/api/seller-referral'
 import { Route as ApiTrainingOfferRouteImport } from './routes/api/training-offer'
 import { Route as CarreiraSplatRouteImport } from './routes/carreira.$'
+import { Route as CarreiraContratarRouteImport } from './routes/carreira.contratar'
+import { Route as CarreiraCopilotRouteImport } from './routes/carreira.copilot'
 import { Route as CarreiraEmpresaRouteImport } from './routes/carreira.empresa'
+import { Route as CarreiraEmpresaEscolaRouteImport } from './routes/carreira.empresa-escola'
+import { Route as CarreiraGpsRouteImport } from './routes/carreira.gps'
+import { Route as CarreiraIdRouteImport } from './routes/carreira.id'
+import { Route as CarreiraMercadoRouteImport } from './routes/carreira.mercado'
+import { Route as CarreiraMeuDesenvolvimentoRouteImport } from './routes/carreira.meu-desenvolvimento'
+import { Route as CarreiraMeuFuturoRouteImport } from './routes/carreira.meu-futuro'
+import { Route as CarreiraMinhaJornadaRouteImport } from './routes/carreira.minha-jornada'
 import { Route as CarreiraMinhasCandidaturasRouteImport } from './routes/carreira.minhas-candidaturas'
+import { Route as CarreiraNextRouteImport } from './routes/carreira.next'
+import { Route as CarreiraOportunidadesParaMimRouteImport } from './routes/carreira.oportunidades-para-mim'
+import { Route as CarreiraPassaporteRouteImport } from './routes/carreira.passaporte'
+import { Route as CarreiraPortfolioRouteImport } from './routes/carreira.portfolio'
 import { Route as CarreiraProfissionalRouteImport } from './routes/carreira.profissional'
+import { Route as CarreiraProvasRouteImport } from './routes/carreira.provas'
+import { Route as CarreiraRadarRouteImport } from './routes/carreira.radar'
+import { Route as CarreiraSquadsRouteImport } from './routes/carreira.squads'
 import { Route as CarreiraVagasRouteImport } from './routes/carreira.vagas'
+import { Route as CarreiraWalletRouteImport } from './routes/carreira.wallet'
+import { Route as CarreiraWorkRouteImport } from './routes/carreira.work'
 import { Route as ClienteAtivarRouteImport } from './routes/cliente.ativar'
 import { Route as ClienteDefinirSenhaRouteImport } from './routes/cliente.definir-senha'
 import { Route as ClienteLoginRouteImport } from './routes/cliente.login'
@@ -93,6 +113,17 @@ import { Route as EmpresaLoginRouteImport } from './routes/empresa.login'
 import { Route as FormacaoSlugRouteImport } from './routes/formacao.$slug'
 import { Route as FormacoesSlugRouteImport } from './routes/formacoes.$slug'
 import { Route as FuncionarioLoginRouteImport } from './routes/funcionario.login'
+import { Route as ImprensaIndexRouteImport } from './routes/imprensa.index'
+import { Route as ImprensaCorrespondentesRouteImport } from './routes/imprensa.correspondentes'
+import { Route as ImprensaDistribuicaoRouteImport } from './routes/imprensa.distribuicao'
+import { Route as ImprensaFontesRouteImport } from './routes/imprensa.fontes'
+import { Route as ImprensaJornalistasRouteImport } from './routes/imprensa.jornalistas'
+import { Route as ImprensaPainelRouteImport } from './routes/imprensa.painel'
+import { Route as ImprensaRedacaoRouteImport } from './routes/imprensa.redacao'
+import { Route as ImprensaRedeAcademicaRouteImport } from './routes/imprensa.rede-academica'
+import { Route as ImprensaSalaDeImprensaRouteImport } from './routes/imprensa.sala-de-imprensa'
+import { Route as ImprensaTrabalheConoscoRouteImport } from './routes/imprensa.trabalhe-conosco'
+import { Route as InstituicoesPainelRouteImport } from './routes/instituicoes.painel'
 import { Route as LivrosSlugRouteImport } from './routes/livros_.$slug'
 import { Route as ProfissionaisCategoryRouteImport } from './routes/profissionais.$category'
 import { Route as ProfissionalSlugRouteImport } from './routes/profissional.$slug'
@@ -179,9 +210,12 @@ import { Route as ApiIntegrationsSiteOrdersRouteImport } from './routes/api/inte
 import { Route as ApiStripeWebhookRouteImport } from './routes/api/stripe/webhook'
 import { Route as CarreiraCandidatarJobIdRouteImport } from './routes/carreira.candidatar.$jobId'
 import { Route as CarreiraEmpresaCandidaturasRouteImport } from './routes/carreira.empresa.candidaturas'
+import { Route as CarreiraEmpresaEntrevistaRouteImport } from './routes/carreira.empresa.entrevista'
 import { Route as CarreiraEmpresaGuiaTriagemResponsavelRouteImport } from './routes/carreira.empresa.guia-triagem-responsavel'
 import { Route as CarreiraEmpresaPublicarRouteImport } from './routes/carreira.empresa.publicar'
+import { Route as CarreiraProjetosProjectIdRouteImport } from './routes/carreira.projetos.$projectId'
 import { Route as CarreiraVagasJobIdRouteImport } from './routes/carreira.vagas.$jobId'
+import { Route as ImprensaNoticiasSlugRouteImport } from './routes/imprensa.noticias.$slug'
 import { Route as ClientareaClienteBibliotecaProductKeyRouteImport } from './routes/_clientarea.cliente.biblioteca.$productKey'
 import { Route as ClientareaClienteBibliotecaArtigosCientificosRouteImport } from './routes/_clientarea.cliente.biblioteca.artigos-cientificos'
 import { Route as ClientareaClienteBibliotecaCursoGratuitoRouteImport } from './routes/_clientarea.cliente.biblioteca.curso-gratuito'
@@ -430,6 +464,16 @@ const FormularioRoute = FormularioRouteImport.update({
   path: '/formulario',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ImprensaRoute = ImprensaRouteImport.update({
+  id: '/imprensa',
+  path: '/imprensa',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InstituicoesRoute = InstituicoesRouteImport.update({
+  id: '/instituicoes',
+  path: '/instituicoes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LivrosRoute = LivrosRouteImport.update({
   id: '/livros',
   path: '/livros',
@@ -601,9 +645,55 @@ const CarreiraSplatRoute = CarreiraSplatRouteImport.update({
   path: '/$',
   getParentRoute: () => CarreiraRoute,
 } as any)
+const CarreiraContratarRoute = CarreiraContratarRouteImport.update({
+  id: '/contratar',
+  path: '/contratar',
+  getParentRoute: () => CarreiraRoute,
+} as any)
+const CarreiraCopilotRoute = CarreiraCopilotRouteImport.update({
+  id: '/copilot',
+  path: '/copilot',
+  getParentRoute: () => CarreiraRoute,
+} as any)
 const CarreiraEmpresaRoute = CarreiraEmpresaRouteImport.update({
   id: '/empresa',
   path: '/empresa',
+  getParentRoute: () => CarreiraRoute,
+} as any)
+const CarreiraEmpresaEscolaRoute = CarreiraEmpresaEscolaRouteImport.update({
+  id: '/empresa-escola',
+  path: '/empresa-escola',
+  getParentRoute: () => CarreiraRoute,
+} as any)
+const CarreiraGpsRoute = CarreiraGpsRouteImport.update({
+  id: '/gps',
+  path: '/gps',
+  getParentRoute: () => CarreiraRoute,
+} as any)
+const CarreiraIdRoute = CarreiraIdRouteImport.update({
+  id: '/id',
+  path: '/id',
+  getParentRoute: () => CarreiraRoute,
+} as any)
+const CarreiraMercadoRoute = CarreiraMercadoRouteImport.update({
+  id: '/mercado',
+  path: '/mercado',
+  getParentRoute: () => CarreiraRoute,
+} as any)
+const CarreiraMeuDesenvolvimentoRoute =
+  CarreiraMeuDesenvolvimentoRouteImport.update({
+    id: '/meu-desenvolvimento',
+    path: '/meu-desenvolvimento',
+    getParentRoute: () => CarreiraRoute,
+  } as any)
+const CarreiraMeuFuturoRoute = CarreiraMeuFuturoRouteImport.update({
+  id: '/meu-futuro',
+  path: '/meu-futuro',
+  getParentRoute: () => CarreiraRoute,
+} as any)
+const CarreiraMinhaJornadaRoute = CarreiraMinhaJornadaRouteImport.update({
+  id: '/minha-jornada',
+  path: '/minha-jornada',
   getParentRoute: () => CarreiraRoute,
 } as any)
 const CarreiraMinhasCandidaturasRoute =
@@ -612,14 +702,60 @@ const CarreiraMinhasCandidaturasRoute =
     path: '/minhas-candidaturas',
     getParentRoute: () => CarreiraRoute,
   } as any)
+const CarreiraNextRoute = CarreiraNextRouteImport.update({
+  id: '/next',
+  path: '/next',
+  getParentRoute: () => CarreiraRoute,
+} as any)
+const CarreiraOportunidadesParaMimRoute =
+  CarreiraOportunidadesParaMimRouteImport.update({
+    id: '/oportunidades-para-mim',
+    path: '/oportunidades-para-mim',
+    getParentRoute: () => CarreiraRoute,
+  } as any)
+const CarreiraPassaporteRoute = CarreiraPassaporteRouteImport.update({
+  id: '/passaporte',
+  path: '/passaporte',
+  getParentRoute: () => CarreiraRoute,
+} as any)
+const CarreiraPortfolioRoute = CarreiraPortfolioRouteImport.update({
+  id: '/portfolio',
+  path: '/portfolio',
+  getParentRoute: () => CarreiraRoute,
+} as any)
 const CarreiraProfissionalRoute = CarreiraProfissionalRouteImport.update({
   id: '/profissional',
   path: '/profissional',
   getParentRoute: () => CarreiraRoute,
 } as any)
+const CarreiraProvasRoute = CarreiraProvasRouteImport.update({
+  id: '/provas',
+  path: '/provas',
+  getParentRoute: () => CarreiraRoute,
+} as any)
+const CarreiraRadarRoute = CarreiraRadarRouteImport.update({
+  id: '/radar',
+  path: '/radar',
+  getParentRoute: () => CarreiraRoute,
+} as any)
+const CarreiraSquadsRoute = CarreiraSquadsRouteImport.update({
+  id: '/squads',
+  path: '/squads',
+  getParentRoute: () => CarreiraRoute,
+} as any)
 const CarreiraVagasRoute = CarreiraVagasRouteImport.update({
   id: '/vagas',
   path: '/vagas',
+  getParentRoute: () => CarreiraRoute,
+} as any)
+const CarreiraWalletRoute = CarreiraWalletRouteImport.update({
+  id: '/wallet',
+  path: '/wallet',
+  getParentRoute: () => CarreiraRoute,
+} as any)
+const CarreiraWorkRoute = CarreiraWorkRouteImport.update({
+  id: '/work',
+  path: '/work',
   getParentRoute: () => CarreiraRoute,
 } as any)
 const ClienteAtivarRoute = ClienteAtivarRouteImport.update({
@@ -672,6 +808,61 @@ const FuncionarioLoginRoute = FuncionarioLoginRouteImport.update({
   id: '/funcionario/login',
   path: '/funcionario/login',
   getParentRoute: () => rootRouteImport,
+} as any)
+const ImprensaIndexRoute = ImprensaIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ImprensaRoute,
+} as any)
+const ImprensaCorrespondentesRoute = ImprensaCorrespondentesRouteImport.update({
+  id: '/correspondentes',
+  path: '/correspondentes',
+  getParentRoute: () => ImprensaRoute,
+} as any)
+const ImprensaDistribuicaoRoute = ImprensaDistribuicaoRouteImport.update({
+  id: '/distribuicao',
+  path: '/distribuicao',
+  getParentRoute: () => ImprensaRoute,
+} as any)
+const ImprensaFontesRoute = ImprensaFontesRouteImport.update({
+  id: '/fontes',
+  path: '/fontes',
+  getParentRoute: () => ImprensaRoute,
+} as any)
+const ImprensaJornalistasRoute = ImprensaJornalistasRouteImport.update({
+  id: '/jornalistas',
+  path: '/jornalistas',
+  getParentRoute: () => ImprensaRoute,
+} as any)
+const ImprensaPainelRoute = ImprensaPainelRouteImport.update({
+  id: '/painel',
+  path: '/painel',
+  getParentRoute: () => ImprensaRoute,
+} as any)
+const ImprensaRedacaoRoute = ImprensaRedacaoRouteImport.update({
+  id: '/redacao',
+  path: '/redacao',
+  getParentRoute: () => ImprensaRoute,
+} as any)
+const ImprensaRedeAcademicaRoute = ImprensaRedeAcademicaRouteImport.update({
+  id: '/rede-academica',
+  path: '/rede-academica',
+  getParentRoute: () => ImprensaRoute,
+} as any)
+const ImprensaSalaDeImprensaRoute = ImprensaSalaDeImprensaRouteImport.update({
+  id: '/sala-de-imprensa',
+  path: '/sala-de-imprensa',
+  getParentRoute: () => ImprensaRoute,
+} as any)
+const ImprensaTrabalheConoscoRoute = ImprensaTrabalheConoscoRouteImport.update({
+  id: '/trabalhe-conosco',
+  path: '/trabalhe-conosco',
+  getParentRoute: () => ImprensaRoute,
+} as any)
+const InstituicoesPainelRoute = InstituicoesPainelRouteImport.update({
+  id: '/painel',
+  path: '/painel',
+  getParentRoute: () => InstituicoesRoute,
 } as any)
 const LivrosSlugRoute = LivrosSlugRouteImport.update({
   id: '/livros_/$slug',
@@ -1173,6 +1364,12 @@ const CarreiraEmpresaCandidaturasRoute =
     path: '/candidaturas',
     getParentRoute: () => CarreiraEmpresaRoute,
   } as any)
+const CarreiraEmpresaEntrevistaRoute =
+  CarreiraEmpresaEntrevistaRouteImport.update({
+    id: '/entrevista',
+    path: '/entrevista',
+    getParentRoute: () => CarreiraEmpresaRoute,
+  } as any)
 const CarreiraEmpresaGuiaTriagemResponsavelRoute =
   CarreiraEmpresaGuiaTriagemResponsavelRouteImport.update({
     id: '/guia-triagem-responsavel',
@@ -1184,10 +1381,21 @@ const CarreiraEmpresaPublicarRoute = CarreiraEmpresaPublicarRouteImport.update({
   path: '/publicar',
   getParentRoute: () => CarreiraEmpresaRoute,
 } as any)
+const CarreiraProjetosProjectIdRoute =
+  CarreiraProjetosProjectIdRouteImport.update({
+    id: '/projetos/$projectId',
+    path: '/projetos/$projectId',
+    getParentRoute: () => CarreiraRoute,
+  } as any)
 const CarreiraVagasJobIdRoute = CarreiraVagasJobIdRouteImport.update({
   id: '/$jobId',
   path: '/$jobId',
   getParentRoute: () => CarreiraVagasRoute,
+} as any)
+const ImprensaNoticiasSlugRoute = ImprensaNoticiasSlugRouteImport.update({
+  id: '/noticias/$slug',
+  path: '/noticias/$slug',
+  getParentRoute: () => ImprensaRoute,
 } as any)
 const ClientareaClienteBibliotecaProductKeyRoute =
   ClientareaClienteBibliotecaProductKeyRouteImport.update({
@@ -1548,6 +1756,8 @@ export interface FileRoutesByFullPath {
   '/formacao-tricologia-terapia-capilar': typeof FormacaoTricologiaTerapiaCapilarRoute
   '/formacao-vendas-negociacao': typeof FormacaoVendasNegociacaoRoute
   '/formulario': typeof FormularioRoute
+  '/imprensa': typeof ImprensaRouteWithChildren
+  '/instituicoes': typeof InstituicoesRouteWithChildren
   '/livros': typeof LivrosRoute
   '/login': typeof LoginRoute
   '/mensagens-profissionais': typeof MensagensProfissionaisRoute
@@ -1581,10 +1791,28 @@ export interface FileRoutesByFullPath {
   '/api/seller-referral': typeof ApiSellerReferralRoute
   '/api/training-offer': typeof ApiTrainingOfferRoute
   '/carreira/$': typeof CarreiraSplatRoute
+  '/carreira/contratar': typeof CarreiraContratarRoute
+  '/carreira/copilot': typeof CarreiraCopilotRoute
   '/carreira/empresa': typeof CarreiraEmpresaRouteWithChildren
+  '/carreira/empresa-escola': typeof CarreiraEmpresaEscolaRoute
+  '/carreira/gps': typeof CarreiraGpsRoute
+  '/carreira/id': typeof CarreiraIdRoute
+  '/carreira/mercado': typeof CarreiraMercadoRoute
+  '/carreira/meu-desenvolvimento': typeof CarreiraMeuDesenvolvimentoRoute
+  '/carreira/meu-futuro': typeof CarreiraMeuFuturoRoute
+  '/carreira/minha-jornada': typeof CarreiraMinhaJornadaRoute
   '/carreira/minhas-candidaturas': typeof CarreiraMinhasCandidaturasRoute
+  '/carreira/next': typeof CarreiraNextRoute
+  '/carreira/oportunidades-para-mim': typeof CarreiraOportunidadesParaMimRoute
+  '/carreira/passaporte': typeof CarreiraPassaporteRoute
+  '/carreira/portfolio': typeof CarreiraPortfolioRoute
   '/carreira/profissional': typeof CarreiraProfissionalRoute
+  '/carreira/provas': typeof CarreiraProvasRoute
+  '/carreira/radar': typeof CarreiraRadarRoute
+  '/carreira/squads': typeof CarreiraSquadsRoute
   '/carreira/vagas': typeof CarreiraVagasRouteWithChildren
+  '/carreira/wallet': typeof CarreiraWalletRoute
+  '/carreira/work': typeof CarreiraWorkRoute
   '/cliente/ativar': typeof ClienteAtivarRoute
   '/cliente/definir-senha': typeof ClienteDefinirSenhaRoute
   '/cliente/login': typeof ClienteLoginRoute
@@ -1595,6 +1823,16 @@ export interface FileRoutesByFullPath {
   '/formacao/$slug': typeof FormacaoSlugRoute
   '/formacoes/$slug': typeof FormacoesSlugRoute
   '/funcionario/login': typeof FuncionarioLoginRoute
+  '/imprensa/correspondentes': typeof ImprensaCorrespondentesRoute
+  '/imprensa/distribuicao': typeof ImprensaDistribuicaoRoute
+  '/imprensa/fontes': typeof ImprensaFontesRoute
+  '/imprensa/jornalistas': typeof ImprensaJornalistasRoute
+  '/imprensa/painel': typeof ImprensaPainelRoute
+  '/imprensa/redacao': typeof ImprensaRedacaoRoute
+  '/imprensa/rede-academica': typeof ImprensaRedeAcademicaRoute
+  '/imprensa/sala-de-imprensa': typeof ImprensaSalaDeImprensaRoute
+  '/imprensa/trabalhe-conosco': typeof ImprensaTrabalheConoscoRoute
+  '/instituicoes/painel': typeof InstituicoesPainelRoute
   '/livros/$slug': typeof LivrosSlugRoute
   '/profissionais/$category': typeof ProfissionaisCategoryRoute
   '/profissional/$slug': typeof ProfissionalSlugRoute
@@ -1602,6 +1840,7 @@ export interface FileRoutesByFullPath {
   '/rede-profissionais/termos': typeof RedeProfissionaisTermosRoute
   '/vendedor/academia': typeof VendedorAcademiaRoute
   '/vendedor/apresentacao': typeof VendedorApresentacaoRoute
+  '/imprensa/': typeof ImprensaIndexRoute
   '/admin/acessos': typeof AuthenticatedAdminAcessosRoute
   '/admin/alunos-matriculas': typeof AuthenticatedAdminAlunosMatriculasRoute
   '/admin/catalogo': typeof AuthenticatedAdminCatalogoRoute
@@ -1679,9 +1918,12 @@ export interface FileRoutesByFullPath {
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
   '/carreira/candidatar/$jobId': typeof CarreiraCandidatarJobIdRoute
   '/carreira/empresa/candidaturas': typeof CarreiraEmpresaCandidaturasRoute
+  '/carreira/empresa/entrevista': typeof CarreiraEmpresaEntrevistaRoute
   '/carreira/empresa/guia-triagem-responsavel': typeof CarreiraEmpresaGuiaTriagemResponsavelRoute
   '/carreira/empresa/publicar': typeof CarreiraEmpresaPublicarRoute
+  '/carreira/projetos/$projectId': typeof CarreiraProjetosProjectIdRoute
   '/carreira/vagas/$jobId': typeof CarreiraVagasJobIdRouteWithChildren
+  '/imprensa/noticias/$slug': typeof ImprensaNoticiasSlugRoute
   '/painel-profissional/': typeof AuthenticatedPainelProfissionalIndexRoute
   '/cliente/': typeof ClientareaClienteIndexRoute
   '/cliente/biblioteca/$productKey': typeof ClientareaClienteBibliotecaProductKeyRoute
@@ -1773,6 +2015,7 @@ export interface FileRoutesByTo {
   '/formacao-tricologia-terapia-capilar': typeof FormacaoTricologiaTerapiaCapilarRoute
   '/formacao-vendas-negociacao': typeof FormacaoVendasNegociacaoRoute
   '/formulario': typeof FormularioRoute
+  '/instituicoes': typeof InstituicoesRouteWithChildren
   '/livros': typeof LivrosRoute
   '/login': typeof LoginRoute
   '/mensagens-profissionais': typeof MensagensProfissionaisRoute
@@ -1804,10 +2047,28 @@ export interface FileRoutesByTo {
   '/api/seller-referral': typeof ApiSellerReferralRoute
   '/api/training-offer': typeof ApiTrainingOfferRoute
   '/carreira/$': typeof CarreiraSplatRoute
+  '/carreira/contratar': typeof CarreiraContratarRoute
+  '/carreira/copilot': typeof CarreiraCopilotRoute
   '/carreira/empresa': typeof CarreiraEmpresaRouteWithChildren
+  '/carreira/empresa-escola': typeof CarreiraEmpresaEscolaRoute
+  '/carreira/gps': typeof CarreiraGpsRoute
+  '/carreira/id': typeof CarreiraIdRoute
+  '/carreira/mercado': typeof CarreiraMercadoRoute
+  '/carreira/meu-desenvolvimento': typeof CarreiraMeuDesenvolvimentoRoute
+  '/carreira/meu-futuro': typeof CarreiraMeuFuturoRoute
+  '/carreira/minha-jornada': typeof CarreiraMinhaJornadaRoute
   '/carreira/minhas-candidaturas': typeof CarreiraMinhasCandidaturasRoute
+  '/carreira/next': typeof CarreiraNextRoute
+  '/carreira/oportunidades-para-mim': typeof CarreiraOportunidadesParaMimRoute
+  '/carreira/passaporte': typeof CarreiraPassaporteRoute
+  '/carreira/portfolio': typeof CarreiraPortfolioRoute
   '/carreira/profissional': typeof CarreiraProfissionalRoute
+  '/carreira/provas': typeof CarreiraProvasRoute
+  '/carreira/radar': typeof CarreiraRadarRoute
+  '/carreira/squads': typeof CarreiraSquadsRoute
   '/carreira/vagas': typeof CarreiraVagasRouteWithChildren
+  '/carreira/wallet': typeof CarreiraWalletRoute
+  '/carreira/work': typeof CarreiraWorkRoute
   '/cliente/ativar': typeof ClienteAtivarRoute
   '/cliente/definir-senha': typeof ClienteDefinirSenhaRoute
   '/cliente/login': typeof ClienteLoginRoute
@@ -1818,6 +2079,16 @@ export interface FileRoutesByTo {
   '/formacao/$slug': typeof FormacaoSlugRoute
   '/formacoes/$slug': typeof FormacoesSlugRoute
   '/funcionario/login': typeof FuncionarioLoginRoute
+  '/imprensa/correspondentes': typeof ImprensaCorrespondentesRoute
+  '/imprensa/distribuicao': typeof ImprensaDistribuicaoRoute
+  '/imprensa/fontes': typeof ImprensaFontesRoute
+  '/imprensa/jornalistas': typeof ImprensaJornalistasRoute
+  '/imprensa/painel': typeof ImprensaPainelRoute
+  '/imprensa/redacao': typeof ImprensaRedacaoRoute
+  '/imprensa/rede-academica': typeof ImprensaRedeAcademicaRoute
+  '/imprensa/sala-de-imprensa': typeof ImprensaSalaDeImprensaRoute
+  '/imprensa/trabalhe-conosco': typeof ImprensaTrabalheConoscoRoute
+  '/instituicoes/painel': typeof InstituicoesPainelRoute
   '/livros/$slug': typeof LivrosSlugRoute
   '/profissionais/$category': typeof ProfissionaisCategoryRoute
   '/profissional/$slug': typeof ProfissionalSlugRoute
@@ -1825,6 +2096,7 @@ export interface FileRoutesByTo {
   '/rede-profissionais/termos': typeof RedeProfissionaisTermosRoute
   '/vendedor/academia': typeof VendedorAcademiaRoute
   '/vendedor/apresentacao': typeof VendedorApresentacaoRoute
+  '/imprensa': typeof ImprensaIndexRoute
   '/admin/acessos': typeof AuthenticatedAdminAcessosRoute
   '/admin/alunos-matriculas': typeof AuthenticatedAdminAlunosMatriculasRoute
   '/admin/catalogo': typeof AuthenticatedAdminCatalogoRoute
@@ -1902,9 +2174,12 @@ export interface FileRoutesByTo {
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
   '/carreira/candidatar/$jobId': typeof CarreiraCandidatarJobIdRoute
   '/carreira/empresa/candidaturas': typeof CarreiraEmpresaCandidaturasRoute
+  '/carreira/empresa/entrevista': typeof CarreiraEmpresaEntrevistaRoute
   '/carreira/empresa/guia-triagem-responsavel': typeof CarreiraEmpresaGuiaTriagemResponsavelRoute
   '/carreira/empresa/publicar': typeof CarreiraEmpresaPublicarRoute
+  '/carreira/projetos/$projectId': typeof CarreiraProjetosProjectIdRoute
   '/carreira/vagas/$jobId': typeof CarreiraVagasJobIdRouteWithChildren
+  '/imprensa/noticias/$slug': typeof ImprensaNoticiasSlugRoute
   '/painel-profissional': typeof AuthenticatedPainelProfissionalIndexRoute
   '/cliente': typeof ClientareaClienteIndexRoute
   '/cliente/biblioteca/$productKey': typeof ClientareaClienteBibliotecaProductKeyRoute
@@ -2000,6 +2275,8 @@ export interface FileRoutesById {
   '/formacao-tricologia-terapia-capilar': typeof FormacaoTricologiaTerapiaCapilarRoute
   '/formacao-vendas-negociacao': typeof FormacaoVendasNegociacaoRoute
   '/formulario': typeof FormularioRoute
+  '/imprensa': typeof ImprensaRouteWithChildren
+  '/instituicoes': typeof InstituicoesRouteWithChildren
   '/livros': typeof LivrosRoute
   '/login': typeof LoginRoute
   '/mensagens-profissionais': typeof MensagensProfissionaisRoute
@@ -2034,10 +2311,28 @@ export interface FileRoutesById {
   '/api/seller-referral': typeof ApiSellerReferralRoute
   '/api/training-offer': typeof ApiTrainingOfferRoute
   '/carreira/$': typeof CarreiraSplatRoute
+  '/carreira/contratar': typeof CarreiraContratarRoute
+  '/carreira/copilot': typeof CarreiraCopilotRoute
   '/carreira/empresa': typeof CarreiraEmpresaRouteWithChildren
+  '/carreira/empresa-escola': typeof CarreiraEmpresaEscolaRoute
+  '/carreira/gps': typeof CarreiraGpsRoute
+  '/carreira/id': typeof CarreiraIdRoute
+  '/carreira/mercado': typeof CarreiraMercadoRoute
+  '/carreira/meu-desenvolvimento': typeof CarreiraMeuDesenvolvimentoRoute
+  '/carreira/meu-futuro': typeof CarreiraMeuFuturoRoute
+  '/carreira/minha-jornada': typeof CarreiraMinhaJornadaRoute
   '/carreira/minhas-candidaturas': typeof CarreiraMinhasCandidaturasRoute
+  '/carreira/next': typeof CarreiraNextRoute
+  '/carreira/oportunidades-para-mim': typeof CarreiraOportunidadesParaMimRoute
+  '/carreira/passaporte': typeof CarreiraPassaporteRoute
+  '/carreira/portfolio': typeof CarreiraPortfolioRoute
   '/carreira/profissional': typeof CarreiraProfissionalRoute
+  '/carreira/provas': typeof CarreiraProvasRoute
+  '/carreira/radar': typeof CarreiraRadarRoute
+  '/carreira/squads': typeof CarreiraSquadsRoute
   '/carreira/vagas': typeof CarreiraVagasRouteWithChildren
+  '/carreira/wallet': typeof CarreiraWalletRoute
+  '/carreira/work': typeof CarreiraWorkRoute
   '/cliente/ativar': typeof ClienteAtivarRoute
   '/cliente/definir-senha': typeof ClienteDefinirSenhaRoute
   '/cliente/login': typeof ClienteLoginRoute
@@ -2048,6 +2343,16 @@ export interface FileRoutesById {
   '/formacao/$slug': typeof FormacaoSlugRoute
   '/formacoes/$slug': typeof FormacoesSlugRoute
   '/funcionario/login': typeof FuncionarioLoginRoute
+  '/imprensa/correspondentes': typeof ImprensaCorrespondentesRoute
+  '/imprensa/distribuicao': typeof ImprensaDistribuicaoRoute
+  '/imprensa/fontes': typeof ImprensaFontesRoute
+  '/imprensa/jornalistas': typeof ImprensaJornalistasRoute
+  '/imprensa/painel': typeof ImprensaPainelRoute
+  '/imprensa/redacao': typeof ImprensaRedacaoRoute
+  '/imprensa/rede-academica': typeof ImprensaRedeAcademicaRoute
+  '/imprensa/sala-de-imprensa': typeof ImprensaSalaDeImprensaRoute
+  '/imprensa/trabalhe-conosco': typeof ImprensaTrabalheConoscoRoute
+  '/instituicoes/painel': typeof InstituicoesPainelRoute
   '/livros_/$slug': typeof LivrosSlugRoute
   '/profissionais/$category': typeof ProfissionaisCategoryRoute
   '/profissional/$slug': typeof ProfissionalSlugRoute
@@ -2055,6 +2360,7 @@ export interface FileRoutesById {
   '/rede-profissionais/termos': typeof RedeProfissionaisTermosRoute
   '/vendedor/academia': typeof VendedorAcademiaRoute
   '/vendedor/apresentacao': typeof VendedorApresentacaoRoute
+  '/imprensa/': typeof ImprensaIndexRoute
   '/_authenticated/admin/acessos': typeof AuthenticatedAdminAcessosRoute
   '/_authenticated/admin/alunos-matriculas': typeof AuthenticatedAdminAlunosMatriculasRoute
   '/_authenticated/admin/catalogo': typeof AuthenticatedAdminCatalogoRoute
@@ -2132,9 +2438,12 @@ export interface FileRoutesById {
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
   '/carreira/candidatar/$jobId': typeof CarreiraCandidatarJobIdRoute
   '/carreira/empresa/candidaturas': typeof CarreiraEmpresaCandidaturasRoute
+  '/carreira/empresa/entrevista': typeof CarreiraEmpresaEntrevistaRoute
   '/carreira/empresa/guia-triagem-responsavel': typeof CarreiraEmpresaGuiaTriagemResponsavelRoute
   '/carreira/empresa/publicar': typeof CarreiraEmpresaPublicarRoute
+  '/carreira/projetos/$projectId': typeof CarreiraProjetosProjectIdRoute
   '/carreira/vagas/$jobId': typeof CarreiraVagasJobIdRouteWithChildren
+  '/imprensa/noticias/$slug': typeof ImprensaNoticiasSlugRoute
   '/_authenticated/painel-profissional/': typeof AuthenticatedPainelProfissionalIndexRoute
   '/_clientarea/cliente/': typeof ClientareaClienteIndexRoute
   '/_clientarea/cliente/biblioteca/$productKey': typeof ClientareaClienteBibliotecaProductKeyRoute
@@ -2228,6 +2537,8 @@ export interface FileRouteTypes {
     | '/formacao-tricologia-terapia-capilar'
     | '/formacao-vendas-negociacao'
     | '/formulario'
+    | '/imprensa'
+    | '/instituicoes'
     | '/livros'
     | '/login'
     | '/mensagens-profissionais'
@@ -2261,10 +2572,28 @@ export interface FileRouteTypes {
     | '/api/seller-referral'
     | '/api/training-offer'
     | '/carreira/$'
+    | '/carreira/contratar'
+    | '/carreira/copilot'
     | '/carreira/empresa'
+    | '/carreira/empresa-escola'
+    | '/carreira/gps'
+    | '/carreira/id'
+    | '/carreira/mercado'
+    | '/carreira/meu-desenvolvimento'
+    | '/carreira/meu-futuro'
+    | '/carreira/minha-jornada'
     | '/carreira/minhas-candidaturas'
+    | '/carreira/next'
+    | '/carreira/oportunidades-para-mim'
+    | '/carreira/passaporte'
+    | '/carreira/portfolio'
     | '/carreira/profissional'
+    | '/carreira/provas'
+    | '/carreira/radar'
+    | '/carreira/squads'
     | '/carreira/vagas'
+    | '/carreira/wallet'
+    | '/carreira/work'
     | '/cliente/ativar'
     | '/cliente/definir-senha'
     | '/cliente/login'
@@ -2275,6 +2604,16 @@ export interface FileRouteTypes {
     | '/formacao/$slug'
     | '/formacoes/$slug'
     | '/funcionario/login'
+    | '/imprensa/correspondentes'
+    | '/imprensa/distribuicao'
+    | '/imprensa/fontes'
+    | '/imprensa/jornalistas'
+    | '/imprensa/painel'
+    | '/imprensa/redacao'
+    | '/imprensa/rede-academica'
+    | '/imprensa/sala-de-imprensa'
+    | '/imprensa/trabalhe-conosco'
+    | '/instituicoes/painel'
     | '/livros/$slug'
     | '/profissionais/$category'
     | '/profissional/$slug'
@@ -2282,6 +2621,7 @@ export interface FileRouteTypes {
     | '/rede-profissionais/termos'
     | '/vendedor/academia'
     | '/vendedor/apresentacao'
+    | '/imprensa/'
     | '/admin/acessos'
     | '/admin/alunos-matriculas'
     | '/admin/catalogo'
@@ -2359,9 +2699,12 @@ export interface FileRouteTypes {
     | '/api/stripe/webhook'
     | '/carreira/candidatar/$jobId'
     | '/carreira/empresa/candidaturas'
+    | '/carreira/empresa/entrevista'
     | '/carreira/empresa/guia-triagem-responsavel'
     | '/carreira/empresa/publicar'
+    | '/carreira/projetos/$projectId'
     | '/carreira/vagas/$jobId'
+    | '/imprensa/noticias/$slug'
     | '/painel-profissional/'
     | '/cliente/'
     | '/cliente/biblioteca/$productKey'
@@ -2453,6 +2796,7 @@ export interface FileRouteTypes {
     | '/formacao-tricologia-terapia-capilar'
     | '/formacao-vendas-negociacao'
     | '/formulario'
+    | '/instituicoes'
     | '/livros'
     | '/login'
     | '/mensagens-profissionais'
@@ -2484,10 +2828,28 @@ export interface FileRouteTypes {
     | '/api/seller-referral'
     | '/api/training-offer'
     | '/carreira/$'
+    | '/carreira/contratar'
+    | '/carreira/copilot'
     | '/carreira/empresa'
+    | '/carreira/empresa-escola'
+    | '/carreira/gps'
+    | '/carreira/id'
+    | '/carreira/mercado'
+    | '/carreira/meu-desenvolvimento'
+    | '/carreira/meu-futuro'
+    | '/carreira/minha-jornada'
     | '/carreira/minhas-candidaturas'
+    | '/carreira/next'
+    | '/carreira/oportunidades-para-mim'
+    | '/carreira/passaporte'
+    | '/carreira/portfolio'
     | '/carreira/profissional'
+    | '/carreira/provas'
+    | '/carreira/radar'
+    | '/carreira/squads'
     | '/carreira/vagas'
+    | '/carreira/wallet'
+    | '/carreira/work'
     | '/cliente/ativar'
     | '/cliente/definir-senha'
     | '/cliente/login'
@@ -2498,6 +2860,16 @@ export interface FileRouteTypes {
     | '/formacao/$slug'
     | '/formacoes/$slug'
     | '/funcionario/login'
+    | '/imprensa/correspondentes'
+    | '/imprensa/distribuicao'
+    | '/imprensa/fontes'
+    | '/imprensa/jornalistas'
+    | '/imprensa/painel'
+    | '/imprensa/redacao'
+    | '/imprensa/rede-academica'
+    | '/imprensa/sala-de-imprensa'
+    | '/imprensa/trabalhe-conosco'
+    | '/instituicoes/painel'
     | '/livros/$slug'
     | '/profissionais/$category'
     | '/profissional/$slug'
@@ -2505,6 +2877,7 @@ export interface FileRouteTypes {
     | '/rede-profissionais/termos'
     | '/vendedor/academia'
     | '/vendedor/apresentacao'
+    | '/imprensa'
     | '/admin/acessos'
     | '/admin/alunos-matriculas'
     | '/admin/catalogo'
@@ -2582,9 +2955,12 @@ export interface FileRouteTypes {
     | '/api/stripe/webhook'
     | '/carreira/candidatar/$jobId'
     | '/carreira/empresa/candidaturas'
+    | '/carreira/empresa/entrevista'
     | '/carreira/empresa/guia-triagem-responsavel'
     | '/carreira/empresa/publicar'
+    | '/carreira/projetos/$projectId'
     | '/carreira/vagas/$jobId'
+    | '/imprensa/noticias/$slug'
     | '/painel-profissional'
     | '/cliente'
     | '/cliente/biblioteca/$productKey'
@@ -2679,6 +3055,8 @@ export interface FileRouteTypes {
     | '/formacao-tricologia-terapia-capilar'
     | '/formacao-vendas-negociacao'
     | '/formulario'
+    | '/imprensa'
+    | '/instituicoes'
     | '/livros'
     | '/login'
     | '/mensagens-profissionais'
@@ -2713,10 +3091,28 @@ export interface FileRouteTypes {
     | '/api/seller-referral'
     | '/api/training-offer'
     | '/carreira/$'
+    | '/carreira/contratar'
+    | '/carreira/copilot'
     | '/carreira/empresa'
+    | '/carreira/empresa-escola'
+    | '/carreira/gps'
+    | '/carreira/id'
+    | '/carreira/mercado'
+    | '/carreira/meu-desenvolvimento'
+    | '/carreira/meu-futuro'
+    | '/carreira/minha-jornada'
     | '/carreira/minhas-candidaturas'
+    | '/carreira/next'
+    | '/carreira/oportunidades-para-mim'
+    | '/carreira/passaporte'
+    | '/carreira/portfolio'
     | '/carreira/profissional'
+    | '/carreira/provas'
+    | '/carreira/radar'
+    | '/carreira/squads'
     | '/carreira/vagas'
+    | '/carreira/wallet'
+    | '/carreira/work'
     | '/cliente/ativar'
     | '/cliente/definir-senha'
     | '/cliente/login'
@@ -2727,6 +3123,16 @@ export interface FileRouteTypes {
     | '/formacao/$slug'
     | '/formacoes/$slug'
     | '/funcionario/login'
+    | '/imprensa/correspondentes'
+    | '/imprensa/distribuicao'
+    | '/imprensa/fontes'
+    | '/imprensa/jornalistas'
+    | '/imprensa/painel'
+    | '/imprensa/redacao'
+    | '/imprensa/rede-academica'
+    | '/imprensa/sala-de-imprensa'
+    | '/imprensa/trabalhe-conosco'
+    | '/instituicoes/painel'
     | '/livros_/$slug'
     | '/profissionais/$category'
     | '/profissional/$slug'
@@ -2734,6 +3140,7 @@ export interface FileRouteTypes {
     | '/rede-profissionais/termos'
     | '/vendedor/academia'
     | '/vendedor/apresentacao'
+    | '/imprensa/'
     | '/_authenticated/admin/acessos'
     | '/_authenticated/admin/alunos-matriculas'
     | '/_authenticated/admin/catalogo'
@@ -2811,9 +3218,12 @@ export interface FileRouteTypes {
     | '/api/stripe/webhook'
     | '/carreira/candidatar/$jobId'
     | '/carreira/empresa/candidaturas'
+    | '/carreira/empresa/entrevista'
     | '/carreira/empresa/guia-triagem-responsavel'
     | '/carreira/empresa/publicar'
+    | '/carreira/projetos/$projectId'
     | '/carreira/vagas/$jobId'
+    | '/imprensa/noticias/$slug'
     | '/_authenticated/painel-profissional/'
     | '/_clientarea/cliente/'
     | '/_clientarea/cliente/biblioteca/$productKey'
@@ -2909,6 +3319,8 @@ export interface RootRouteChildren {
   FormacaoTricologiaTerapiaCapilarRoute: typeof FormacaoTricologiaTerapiaCapilarRoute
   FormacaoVendasNegociacaoRoute: typeof FormacaoVendasNegociacaoRoute
   FormularioRoute: typeof FormularioRoute
+  ImprensaRoute: typeof ImprensaRouteWithChildren
+  InstituicoesRoute: typeof InstituicoesRouteWithChildren
   LivrosRoute: typeof LivrosRoute
   LoginRoute: typeof LoginRoute
   MensagensProfissionaisRoute: typeof MensagensProfissionaisRoute
@@ -3211,6 +3623,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FormularioRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/imprensa': {
+      id: '/imprensa'
+      path: '/imprensa'
+      fullPath: '/imprensa'
+      preLoaderRoute: typeof ImprensaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/instituicoes': {
+      id: '/instituicoes'
+      path: '/instituicoes'
+      fullPath: '/instituicoes'
+      preLoaderRoute: typeof InstituicoesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/livros': {
       id: '/livros'
       path: '/livros'
@@ -3449,11 +3875,74 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CarreiraSplatRouteImport
       parentRoute: typeof CarreiraRoute
     }
+    '/carreira/contratar': {
+      id: '/carreira/contratar'
+      path: '/contratar'
+      fullPath: '/carreira/contratar'
+      preLoaderRoute: typeof CarreiraContratarRouteImport
+      parentRoute: typeof CarreiraRoute
+    }
+    '/carreira/copilot': {
+      id: '/carreira/copilot'
+      path: '/copilot'
+      fullPath: '/carreira/copilot'
+      preLoaderRoute: typeof CarreiraCopilotRouteImport
+      parentRoute: typeof CarreiraRoute
+    }
     '/carreira/empresa': {
       id: '/carreira/empresa'
       path: '/empresa'
       fullPath: '/carreira/empresa'
       preLoaderRoute: typeof CarreiraEmpresaRouteImport
+      parentRoute: typeof CarreiraRoute
+    }
+    '/carreira/empresa-escola': {
+      id: '/carreira/empresa-escola'
+      path: '/empresa-escola'
+      fullPath: '/carreira/empresa-escola'
+      preLoaderRoute: typeof CarreiraEmpresaEscolaRouteImport
+      parentRoute: typeof CarreiraRoute
+    }
+    '/carreira/gps': {
+      id: '/carreira/gps'
+      path: '/gps'
+      fullPath: '/carreira/gps'
+      preLoaderRoute: typeof CarreiraGpsRouteImport
+      parentRoute: typeof CarreiraRoute
+    }
+    '/carreira/id': {
+      id: '/carreira/id'
+      path: '/id'
+      fullPath: '/carreira/id'
+      preLoaderRoute: typeof CarreiraIdRouteImport
+      parentRoute: typeof CarreiraRoute
+    }
+    '/carreira/mercado': {
+      id: '/carreira/mercado'
+      path: '/mercado'
+      fullPath: '/carreira/mercado'
+      preLoaderRoute: typeof CarreiraMercadoRouteImport
+      parentRoute: typeof CarreiraRoute
+    }
+    '/carreira/meu-desenvolvimento': {
+      id: '/carreira/meu-desenvolvimento'
+      path: '/meu-desenvolvimento'
+      fullPath: '/carreira/meu-desenvolvimento'
+      preLoaderRoute: typeof CarreiraMeuDesenvolvimentoRouteImport
+      parentRoute: typeof CarreiraRoute
+    }
+    '/carreira/meu-futuro': {
+      id: '/carreira/meu-futuro'
+      path: '/meu-futuro'
+      fullPath: '/carreira/meu-futuro'
+      preLoaderRoute: typeof CarreiraMeuFuturoRouteImport
+      parentRoute: typeof CarreiraRoute
+    }
+    '/carreira/minha-jornada': {
+      id: '/carreira/minha-jornada'
+      path: '/minha-jornada'
+      fullPath: '/carreira/minha-jornada'
+      preLoaderRoute: typeof CarreiraMinhaJornadaRouteImport
       parentRoute: typeof CarreiraRoute
     }
     '/carreira/minhas-candidaturas': {
@@ -3463,6 +3952,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CarreiraMinhasCandidaturasRouteImport
       parentRoute: typeof CarreiraRoute
     }
+    '/carreira/next': {
+      id: '/carreira/next'
+      path: '/next'
+      fullPath: '/carreira/next'
+      preLoaderRoute: typeof CarreiraNextRouteImport
+      parentRoute: typeof CarreiraRoute
+    }
+    '/carreira/oportunidades-para-mim': {
+      id: '/carreira/oportunidades-para-mim'
+      path: '/oportunidades-para-mim'
+      fullPath: '/carreira/oportunidades-para-mim'
+      preLoaderRoute: typeof CarreiraOportunidadesParaMimRouteImport
+      parentRoute: typeof CarreiraRoute
+    }
+    '/carreira/passaporte': {
+      id: '/carreira/passaporte'
+      path: '/passaporte'
+      fullPath: '/carreira/passaporte'
+      preLoaderRoute: typeof CarreiraPassaporteRouteImport
+      parentRoute: typeof CarreiraRoute
+    }
+    '/carreira/portfolio': {
+      id: '/carreira/portfolio'
+      path: '/portfolio'
+      fullPath: '/carreira/portfolio'
+      preLoaderRoute: typeof CarreiraPortfolioRouteImport
+      parentRoute: typeof CarreiraRoute
+    }
     '/carreira/profissional': {
       id: '/carreira/profissional'
       path: '/profissional'
@@ -3470,11 +3987,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CarreiraProfissionalRouteImport
       parentRoute: typeof CarreiraRoute
     }
+    '/carreira/provas': {
+      id: '/carreira/provas'
+      path: '/provas'
+      fullPath: '/carreira/provas'
+      preLoaderRoute: typeof CarreiraProvasRouteImport
+      parentRoute: typeof CarreiraRoute
+    }
+    '/carreira/radar': {
+      id: '/carreira/radar'
+      path: '/radar'
+      fullPath: '/carreira/radar'
+      preLoaderRoute: typeof CarreiraRadarRouteImport
+      parentRoute: typeof CarreiraRoute
+    }
+    '/carreira/squads': {
+      id: '/carreira/squads'
+      path: '/squads'
+      fullPath: '/carreira/squads'
+      preLoaderRoute: typeof CarreiraSquadsRouteImport
+      parentRoute: typeof CarreiraRoute
+    }
     '/carreira/vagas': {
       id: '/carreira/vagas'
       path: '/vagas'
       fullPath: '/carreira/vagas'
       preLoaderRoute: typeof CarreiraVagasRouteImport
+      parentRoute: typeof CarreiraRoute
+    }
+    '/carreira/wallet': {
+      id: '/carreira/wallet'
+      path: '/wallet'
+      fullPath: '/carreira/wallet'
+      preLoaderRoute: typeof CarreiraWalletRouteImport
+      parentRoute: typeof CarreiraRoute
+    }
+    '/carreira/work': {
+      id: '/carreira/work'
+      path: '/work'
+      fullPath: '/carreira/work'
+      preLoaderRoute: typeof CarreiraWorkRouteImport
       parentRoute: typeof CarreiraRoute
     }
     '/cliente/ativar': {
@@ -3546,6 +4098,83 @@ declare module '@tanstack/react-router' {
       fullPath: '/funcionario/login'
       preLoaderRoute: typeof FuncionarioLoginRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/imprensa/': {
+      id: '/imprensa/'
+      path: '/'
+      fullPath: '/imprensa/'
+      preLoaderRoute: typeof ImprensaIndexRouteImport
+      parentRoute: typeof ImprensaRoute
+    }
+    '/imprensa/correspondentes': {
+      id: '/imprensa/correspondentes'
+      path: '/correspondentes'
+      fullPath: '/imprensa/correspondentes'
+      preLoaderRoute: typeof ImprensaCorrespondentesRouteImport
+      parentRoute: typeof ImprensaRoute
+    }
+    '/imprensa/distribuicao': {
+      id: '/imprensa/distribuicao'
+      path: '/distribuicao'
+      fullPath: '/imprensa/distribuicao'
+      preLoaderRoute: typeof ImprensaDistribuicaoRouteImport
+      parentRoute: typeof ImprensaRoute
+    }
+    '/imprensa/fontes': {
+      id: '/imprensa/fontes'
+      path: '/fontes'
+      fullPath: '/imprensa/fontes'
+      preLoaderRoute: typeof ImprensaFontesRouteImport
+      parentRoute: typeof ImprensaRoute
+    }
+    '/imprensa/jornalistas': {
+      id: '/imprensa/jornalistas'
+      path: '/jornalistas'
+      fullPath: '/imprensa/jornalistas'
+      preLoaderRoute: typeof ImprensaJornalistasRouteImport
+      parentRoute: typeof ImprensaRoute
+    }
+    '/imprensa/painel': {
+      id: '/imprensa/painel'
+      path: '/painel'
+      fullPath: '/imprensa/painel'
+      preLoaderRoute: typeof ImprensaPainelRouteImport
+      parentRoute: typeof ImprensaRoute
+    }
+    '/imprensa/redacao': {
+      id: '/imprensa/redacao'
+      path: '/redacao'
+      fullPath: '/imprensa/redacao'
+      preLoaderRoute: typeof ImprensaRedacaoRouteImport
+      parentRoute: typeof ImprensaRoute
+    }
+    '/imprensa/rede-academica': {
+      id: '/imprensa/rede-academica'
+      path: '/rede-academica'
+      fullPath: '/imprensa/rede-academica'
+      preLoaderRoute: typeof ImprensaRedeAcademicaRouteImport
+      parentRoute: typeof ImprensaRoute
+    }
+    '/imprensa/sala-de-imprensa': {
+      id: '/imprensa/sala-de-imprensa'
+      path: '/sala-de-imprensa'
+      fullPath: '/imprensa/sala-de-imprensa'
+      preLoaderRoute: typeof ImprensaSalaDeImprensaRouteImport
+      parentRoute: typeof ImprensaRoute
+    }
+    '/imprensa/trabalhe-conosco': {
+      id: '/imprensa/trabalhe-conosco'
+      path: '/trabalhe-conosco'
+      fullPath: '/imprensa/trabalhe-conosco'
+      preLoaderRoute: typeof ImprensaTrabalheConoscoRouteImport
+      parentRoute: typeof ImprensaRoute
+    }
+    '/instituicoes/painel': {
+      id: '/instituicoes/painel'
+      path: '/painel'
+      fullPath: '/instituicoes/painel'
+      preLoaderRoute: typeof InstituicoesPainelRouteImport
+      parentRoute: typeof InstituicoesRoute
     }
     '/livros_/$slug': {
       id: '/livros_/$slug'
@@ -4149,6 +4778,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CarreiraEmpresaCandidaturasRouteImport
       parentRoute: typeof CarreiraEmpresaRoute
     }
+    '/carreira/empresa/entrevista': {
+      id: '/carreira/empresa/entrevista'
+      path: '/entrevista'
+      fullPath: '/carreira/empresa/entrevista'
+      preLoaderRoute: typeof CarreiraEmpresaEntrevistaRouteImport
+      parentRoute: typeof CarreiraEmpresaRoute
+    }
     '/carreira/empresa/guia-triagem-responsavel': {
       id: '/carreira/empresa/guia-triagem-responsavel'
       path: '/guia-triagem-responsavel'
@@ -4163,12 +4799,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CarreiraEmpresaPublicarRouteImport
       parentRoute: typeof CarreiraEmpresaRoute
     }
+    '/carreira/projetos/$projectId': {
+      id: '/carreira/projetos/$projectId'
+      path: '/projetos/$projectId'
+      fullPath: '/carreira/projetos/$projectId'
+      preLoaderRoute: typeof CarreiraProjetosProjectIdRouteImport
+      parentRoute: typeof CarreiraRoute
+    }
     '/carreira/vagas/$jobId': {
       id: '/carreira/vagas/$jobId'
       path: '/$jobId'
       fullPath: '/carreira/vagas/$jobId'
       preLoaderRoute: typeof CarreiraVagasJobIdRouteImport
       parentRoute: typeof CarreiraVagasRoute
+    }
+    '/imprensa/noticias/$slug': {
+      id: '/imprensa/noticias/$slug'
+      path: '/noticias/$slug'
+      fullPath: '/imprensa/noticias/$slug'
+      preLoaderRoute: typeof ImprensaNoticiasSlugRouteImport
+      parentRoute: typeof ImprensaRoute
     }
     '/_clientarea/cliente/biblioteca/$productKey': {
       id: '/_clientarea/cliente/biblioteca/$productKey'
@@ -5051,6 +5701,7 @@ const PortalRouteWithChildren =
 
 interface CarreiraEmpresaRouteChildren {
   CarreiraEmpresaCandidaturasRoute: typeof CarreiraEmpresaCandidaturasRoute
+  CarreiraEmpresaEntrevistaRoute: typeof CarreiraEmpresaEntrevistaRoute
   CarreiraEmpresaGuiaTriagemResponsavelRoute: typeof CarreiraEmpresaGuiaTriagemResponsavelRoute
   CarreiraEmpresaPublicarRoute: typeof CarreiraEmpresaPublicarRoute
   CarreiraEmpresaVagasJobIdCandidatosRoute: typeof CarreiraEmpresaVagasJobIdCandidatosRoute
@@ -5058,6 +5709,7 @@ interface CarreiraEmpresaRouteChildren {
 
 const CarreiraEmpresaRouteChildren: CarreiraEmpresaRouteChildren = {
   CarreiraEmpresaCandidaturasRoute: CarreiraEmpresaCandidaturasRoute,
+  CarreiraEmpresaEntrevistaRoute: CarreiraEmpresaEntrevistaRoute,
   CarreiraEmpresaGuiaTriagemResponsavelRoute:
     CarreiraEmpresaGuiaTriagemResponsavelRoute,
   CarreiraEmpresaPublicarRoute: CarreiraEmpresaPublicarRoute,
@@ -5094,24 +5746,106 @@ const CarreiraVagasRouteWithChildren = CarreiraVagasRoute._addFileChildren(
 
 interface CarreiraRouteChildren {
   CarreiraSplatRoute: typeof CarreiraSplatRoute
+  CarreiraContratarRoute: typeof CarreiraContratarRoute
+  CarreiraCopilotRoute: typeof CarreiraCopilotRoute
   CarreiraEmpresaRoute: typeof CarreiraEmpresaRouteWithChildren
+  CarreiraEmpresaEscolaRoute: typeof CarreiraEmpresaEscolaRoute
+  CarreiraGpsRoute: typeof CarreiraGpsRoute
+  CarreiraIdRoute: typeof CarreiraIdRoute
+  CarreiraMercadoRoute: typeof CarreiraMercadoRoute
+  CarreiraMeuDesenvolvimentoRoute: typeof CarreiraMeuDesenvolvimentoRoute
+  CarreiraMeuFuturoRoute: typeof CarreiraMeuFuturoRoute
+  CarreiraMinhaJornadaRoute: typeof CarreiraMinhaJornadaRoute
   CarreiraMinhasCandidaturasRoute: typeof CarreiraMinhasCandidaturasRoute
+  CarreiraNextRoute: typeof CarreiraNextRoute
+  CarreiraOportunidadesParaMimRoute: typeof CarreiraOportunidadesParaMimRoute
+  CarreiraPassaporteRoute: typeof CarreiraPassaporteRoute
+  CarreiraPortfolioRoute: typeof CarreiraPortfolioRoute
   CarreiraProfissionalRoute: typeof CarreiraProfissionalRoute
+  CarreiraProvasRoute: typeof CarreiraProvasRoute
+  CarreiraRadarRoute: typeof CarreiraRadarRoute
+  CarreiraSquadsRoute: typeof CarreiraSquadsRoute
   CarreiraVagasRoute: typeof CarreiraVagasRouteWithChildren
+  CarreiraWalletRoute: typeof CarreiraWalletRoute
+  CarreiraWorkRoute: typeof CarreiraWorkRoute
   CarreiraCandidatarJobIdRoute: typeof CarreiraCandidatarJobIdRoute
+  CarreiraProjetosProjectIdRoute: typeof CarreiraProjetosProjectIdRoute
 }
 
 const CarreiraRouteChildren: CarreiraRouteChildren = {
   CarreiraSplatRoute: CarreiraSplatRoute,
+  CarreiraContratarRoute: CarreiraContratarRoute,
+  CarreiraCopilotRoute: CarreiraCopilotRoute,
   CarreiraEmpresaRoute: CarreiraEmpresaRouteWithChildren,
+  CarreiraEmpresaEscolaRoute: CarreiraEmpresaEscolaRoute,
+  CarreiraGpsRoute: CarreiraGpsRoute,
+  CarreiraIdRoute: CarreiraIdRoute,
+  CarreiraMercadoRoute: CarreiraMercadoRoute,
+  CarreiraMeuDesenvolvimentoRoute: CarreiraMeuDesenvolvimentoRoute,
+  CarreiraMeuFuturoRoute: CarreiraMeuFuturoRoute,
+  CarreiraMinhaJornadaRoute: CarreiraMinhaJornadaRoute,
   CarreiraMinhasCandidaturasRoute: CarreiraMinhasCandidaturasRoute,
+  CarreiraNextRoute: CarreiraNextRoute,
+  CarreiraOportunidadesParaMimRoute: CarreiraOportunidadesParaMimRoute,
+  CarreiraPassaporteRoute: CarreiraPassaporteRoute,
+  CarreiraPortfolioRoute: CarreiraPortfolioRoute,
   CarreiraProfissionalRoute: CarreiraProfissionalRoute,
+  CarreiraProvasRoute: CarreiraProvasRoute,
+  CarreiraRadarRoute: CarreiraRadarRoute,
+  CarreiraSquadsRoute: CarreiraSquadsRoute,
   CarreiraVagasRoute: CarreiraVagasRouteWithChildren,
+  CarreiraWalletRoute: CarreiraWalletRoute,
+  CarreiraWorkRoute: CarreiraWorkRoute,
   CarreiraCandidatarJobIdRoute: CarreiraCandidatarJobIdRoute,
+  CarreiraProjetosProjectIdRoute: CarreiraProjetosProjectIdRoute,
 }
 
 const CarreiraRouteWithChildren = CarreiraRoute._addFileChildren(
   CarreiraRouteChildren,
+)
+
+interface ImprensaRouteChildren {
+  ImprensaCorrespondentesRoute: typeof ImprensaCorrespondentesRoute
+  ImprensaDistribuicaoRoute: typeof ImprensaDistribuicaoRoute
+  ImprensaFontesRoute: typeof ImprensaFontesRoute
+  ImprensaJornalistasRoute: typeof ImprensaJornalistasRoute
+  ImprensaPainelRoute: typeof ImprensaPainelRoute
+  ImprensaRedacaoRoute: typeof ImprensaRedacaoRoute
+  ImprensaRedeAcademicaRoute: typeof ImprensaRedeAcademicaRoute
+  ImprensaSalaDeImprensaRoute: typeof ImprensaSalaDeImprensaRoute
+  ImprensaTrabalheConoscoRoute: typeof ImprensaTrabalheConoscoRoute
+  ImprensaIndexRoute: typeof ImprensaIndexRoute
+  ImprensaNoticiasSlugRoute: typeof ImprensaNoticiasSlugRoute
+}
+
+const ImprensaRouteChildren: ImprensaRouteChildren = {
+  ImprensaCorrespondentesRoute: ImprensaCorrespondentesRoute,
+  ImprensaDistribuicaoRoute: ImprensaDistribuicaoRoute,
+  ImprensaFontesRoute: ImprensaFontesRoute,
+  ImprensaJornalistasRoute: ImprensaJornalistasRoute,
+  ImprensaPainelRoute: ImprensaPainelRoute,
+  ImprensaRedacaoRoute: ImprensaRedacaoRoute,
+  ImprensaRedeAcademicaRoute: ImprensaRedeAcademicaRoute,
+  ImprensaSalaDeImprensaRoute: ImprensaSalaDeImprensaRoute,
+  ImprensaTrabalheConoscoRoute: ImprensaTrabalheConoscoRoute,
+  ImprensaIndexRoute: ImprensaIndexRoute,
+  ImprensaNoticiasSlugRoute: ImprensaNoticiasSlugRoute,
+}
+
+const ImprensaRouteWithChildren = ImprensaRoute._addFileChildren(
+  ImprensaRouteChildren,
+)
+
+interface InstituicoesRouteChildren {
+  InstituicoesPainelRoute: typeof InstituicoesPainelRoute
+}
+
+const InstituicoesRouteChildren: InstituicoesRouteChildren = {
+  InstituicoesPainelRoute: InstituicoesPainelRoute,
+}
+
+const InstituicoesRouteWithChildren = InstituicoesRoute._addFileChildren(
+  InstituicoesRouteChildren,
 )
 
 interface ProfissionaisRouteChildren {
@@ -5179,6 +5913,8 @@ const rootRouteChildren: RootRouteChildren = {
   FormacaoTricologiaTerapiaCapilarRoute: FormacaoTricologiaTerapiaCapilarRoute,
   FormacaoVendasNegociacaoRoute: FormacaoVendasNegociacaoRoute,
   FormularioRoute: FormularioRoute,
+  ImprensaRoute: ImprensaRouteWithChildren,
+  InstituicoesRoute: InstituicoesRouteWithChildren,
   LivrosRoute: LivrosRoute,
   LoginRoute: LoginRoute,
   MensagensProfissionaisRoute: MensagensProfissionaisRoute,
