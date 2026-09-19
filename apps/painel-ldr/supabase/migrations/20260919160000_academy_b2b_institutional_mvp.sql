@@ -60,3 +60,16 @@ create policy "academy_students_admin_update" on public.academy_institution_stud
 create policy "academy_signals_staff_read" on public.academy_student_attention_signals for select to authenticated using(student_user_id=(select auth.uid()) or exists(select 1 from public.academy_institution_members m where m.institution_id=academy_student_attention_signals.institution_id and m.user_id=(select auth.uid()) and m.status='active'));
 create policy "academy_signals_staff_insert" on public.academy_student_attention_signals for insert to authenticated with check(exists(select 1 from public.academy_institution_members m where m.institution_id=academy_student_attention_signals.institution_id and m.user_id=(select auth.uid()) and m.status='active' and m.role in ('owner','admin','coordinator')));
 comment on table public.academy_student_attention_signals is 'Observed/rule/manual follow-up signals for human review. Not a predictive dropout model and not an automated academic decision system.';
+-- Institutional pilot metrics: aggregated counts only, scoped by RLS.
+create or replace function public.academy_institution_metrics(p_institution_id uuid)
+returns table(linked_students bigint,active_students bigint,open_signals bigint,high_attention_signals bigint)
+language sql stable security invoker set search_path=public as $$
+ select
+  (select count(*) from public.academy_institution_students s where s.institution_id=p_institution_id),
+  (select count(*) from public.academy_institution_students s where s.institution_id=p_institution_id and s.status='active'),
+  (select count(*) from public.academy_student_attention_signals g where g.institution_id=p_institution_id and g.resolved_at is null),
+  (select count(*) from public.academy_student_attention_signals g where g.institution_id=p_institution_id and g.resolved_at is null and g.severity='high_attention');
+$$;
+revoke all on function public.academy_institution_metrics(uuid) from public,anon;
+grant execute on function public.academy_institution_metrics(uuid) to authenticated;
+comment on function public.academy_institution_metrics(uuid) is 'Aggregated operational pilot metrics only; RLS remains authoritative.';
