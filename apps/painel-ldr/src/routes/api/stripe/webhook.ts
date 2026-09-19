@@ -219,6 +219,28 @@ async function setEditorialSubscription(metadata: Record<string, string>, object
   return handleEditorialStripeEvent(metadata, object, eventType);
 }
 
+type RecurringCheckoutKind = "company_subscription" | "editorial_subscription" | "library_subscription" | "professional_subscription";
+
+async function resolveRecurringCheckoutKind(object: StripeObject): Promise<RecurringCheckoutKind | null> {
+  const subscriptionId = stripeId(object.subscription) ?? stripeId(object.parent?.subscription_details?.subscription);
+  if (!subscriptionId) return null;
+  const db = await database();
+  const tables: Array<[RecurringCheckoutKind, string]> = [
+    ["company_subscription", "company_subscriptions"],
+    ["editorial_subscription", "editorial_subscriptions"],
+    ["library_subscription", "library_subscriptions"],
+    ["professional_subscription", "professional_subscriptions"],
+  ];
+  const matches: RecurringCheckoutKind[] = [];
+  for (const [kind, table] of tables) {
+    const { data, error } = await db.from(table).select("id").eq("stripe_subscription_id", subscriptionId).limit(1);
+    if (error) throw error;
+    if (Array.isArray(data) && data.length) matches.push(kind);
+  }
+  if (matches.length > 1) throw new Error(`Ambiguous Stripe subscription routing for ${subscriptionId}`);
+  return matches[0] ?? null;
+}
+
 async function balanceCredit(accountId: string, currency: string, gross: number, platformFee: number, net: number) {
   const db = await database();
   const { data: row } = await db.from("provider_balances").select("available_cents,pending_cents,lifetime_gross_cents,lifetime_platform_fee_cents,lifetime_refunds_cents").eq("professional_account_id", accountId).eq("currency", currency).maybeSingle();
@@ -596,7 +618,10 @@ export const Route = createFileRoute("/api/stripe/webhook")({
 
           // Assinaturas recorrentes são roteadas exclusivamente pelo checkout_kind.
           // Isso impede que um evento de um produto tente atualizar tabelas de outro produto.
-          const checkoutKind = metadata["checkout_kind"];
+          let checkoutKind = metadata["checkout_kind"];
+          if (!checkoutKind && (event.type === "invoice.payment_succeeded" || event.type === "invoice.payment_failed")) {
+            checkoutKind = (await resolveRecurringCheckoutKind(object)) ?? undefined;
+          }
           const recurringSubscriptionEvent =
             event.type === "customer.subscription.created" ||
             event.type === "customer.subscription.updated" ||
