@@ -6,6 +6,7 @@ type Hub = {
   tag: string;
   desc: string;
   featured?: "academy" | "pass" | "network" | "career";
+  cta?: string;
 };
 
 export const Route = createFileRoute("/ecossistema")({
@@ -32,18 +33,29 @@ const hubs: Hub[] = [
     tag: "Assinatura digital",
     featured: "pass",
     desc: "Assinatura digital do ecossistema para acessar conteúdos elegíveis, trilhas, eBooks e formações online selecionadas, preservando compras antigas e assinaturas separadas.",
+    cta: "Conhecer o LDR PASS",
   },
   {
     name: "Biblioteca LDR",
     url: "/cliente/biblioteca",
     tag: "Conteúdos e assinatura",
     desc: "Biblioteca digital com cursos, eBooks, publicações, materiais gratuitos, formações e conteúdos para estudo contínuo.",
+    cta: "Acessar Biblioteca",
   },
   {
     name: "Cursos Gratuitos",
     url: "/cliente/biblioteca/cursos-gratuitos",
     tag: "Acesso livre",
     desc: "Cursos gratuitos para entrada no ecossistema, incluindo idiomas, carreira, primeiros socorros e conteúdos introdutórios.",
+    cta: "Ver Cursos Gratuitos",
+  },
+  {
+    name: "Recrutamento & Seleção",
+    url: "/falar-com-ecossistema?assunto=Empreendedorismo%2C%20neg%C3%B3cios%20e%20novas%20oportunidades&source=recrutamento_escala",
+    tag: "Para empresas",
+    featured: "career",
+    desc: "Divulgue vagas, acesse talentos e conte com soluções para recrutamento. Projetos de contratação em grande volume são personalizados e não estão incluídos nas assinaturas, recebendo proposta separada conforme volume, perfil das vagas e escopo do processo.",
+    cta: "Falar com o Comercial",
   },
   {
     name: "Rede Acadêmica LDR",
@@ -218,7 +230,7 @@ function EcosystemMap() {
                 <span className={styles.tag}>{hub.tag}</span>
                 <h2 className={styles.title}>{hub.name}</h2>
                 <p className={styles.desc}>{hub.desc}</p>
-                <p className={styles.link}>{hub.url}</p>
+                <span className={styles.link}>{hub.cta ?? `Conhecer ${hub.name}`} →</span>
               </a>
             );
           })}
