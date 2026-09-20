@@ -169,6 +169,21 @@ function EcosystemMap() {
           </div>
         </div>
 
+        <section className="mt-8 rounded-[28px] border border-[#b7d2ff] bg-[#eef5ff] p-6 shadow-sm sm:p-8">
+          <p className="text-xs font-black uppercase tracking-[.2em] text-[#1d3158]">Oportunidades</p>
+          <h2 className="mt-3 font-serif text-3xl font-bold text-[#071426]">Empresas e candidatos conectados em uma única jornada.</h2>
+          <p className="mt-3 max-w-3xl text-sm leading-6 text-[#42526b]">O Ecossistema LDR conecta quem oferece oportunidades a quem está procurando trabalho. A publicação básica de vagas é gratuita e candidatos podem consultar oportunidades sem precisar assinar.</p>
+          <div className="mt-6 grid gap-4 md:grid-cols-2">
+            <a href="/carreira/empresa/publicar" className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-[#b7d2ff] transition hover:-translate-y-0.5">
+              <span className="text-2xl" aria-hidden="true">🏢</span><h3 className="mt-2 text-lg font-black text-[#07345b]">Sou empresa</h3><p className="mt-2 text-sm text-[#42526b]">Divulgue sua vaga gratuitamente e conecte sua empresa a profissionais do Ecossistema LDR.</p><span className="mt-4 inline-flex min-h-12 items-center rounded-full bg-[#07345b] px-5 py-3 text-sm font-black text-white">Divulgar vaga gratuita</span>
+            </a>
+            <a href="/carreira/vagas" className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-[#b7d2ff] transition hover:-translate-y-0.5">
+              <span className="text-2xl" aria-hidden="true">👤</span><h3 className="mt-2 text-lg font-black text-[#07345b]">Sou candidato</h3><p className="mt-2 text-sm text-[#42526b]">Encontre vagas e use o Ecossistema para desenvolver sua preparação profissional.</p><span className="mt-4 inline-flex min-h-12 items-center rounded-full bg-[#07345b] px-5 py-3 text-sm font-black text-white">Encontrar vagas</span>
+            </a>
+          </div>
+          <div className="mt-5 rounded-2xl bg-white/80 p-4 text-sm leading-6 text-[#42526b]"><strong className="text-[#07345b]">LDR Academy + Carreira:</strong> assinantes podem acessar recursos adicionais de desenvolvimento profissional conforme o plano contratado. A assinatura não garante contratação e não é necessária para consultar vagas abertas.</div>
+        </section>
+
         <section className="mt-8 rounded-[28px] border border-[#e5d1ac] bg-white p-6 shadow-sm">
           <p className="text-xs font-black uppercase tracking-[.2em] text-[#9a6a20]">O que você encontra no ecossistema</p>
           <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
