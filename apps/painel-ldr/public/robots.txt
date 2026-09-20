@@ -31,4 +31,4 @@ Disallow: /funcionario
 Disallow: /profissional
 Disallow: /api/
 
-Sitemap: https://ldrrhestrategia.com/sitemap.xml
+Sitemap: https://ldracademy.online/sitemap.xml
