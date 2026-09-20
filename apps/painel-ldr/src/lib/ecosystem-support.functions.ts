@@ -9,7 +9,7 @@ async function requireMaster(supabase: any, userId: string) {
 export const listEcosystemContacts = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
-    await requireMaster(context.supabase, context.user.id);
+    await requireMaster(context.supabase, context.userId);
     const { data, error } = await context.supabase.from("ecosystem_contacts").select("*").order("created_at", { ascending: false }).limit(500);
     if (error) throw error;
     return data ?? [];
