@@ -60,7 +60,7 @@ const COPY = {
     minimum: "Contratação mínima: €150 por ação/deslocamento na tabela atual em EUR.",
     localQuote: "Disponibilidade, deslocamento e valores finais são confirmados conforme local, demanda e agendamento.",
     timing: "O horário de almoço costuma ser uma ótima opção. Também pode ser organizado pela manhã, à tarde, no início/final do expediente ou em eventos corporativos.",
-    quoteWhatsapp: "Solicitar orçamento no WhatsApp",
+    quoteWhatsapp: "Solicitar orçamento no Falar com o Ecossistema",
     wellbeingHour: "Hora de Bem-Estar LDR",
     tagline: "Sua empresa escolhe o tempo. Nós organizamos a experiência.",
     depositText: "Pagamento de 50% para solicitar a reserva. Os 50% restantes são pagos após a ação. A disponibilidade definitiva será confirmada pelo atendimento.",
@@ -82,7 +82,7 @@ const COPY = {
     wellbeingIntro: "Workplace Massage brings the same relaxation and wellbeing approach as Relaxing Massage, adapted to companies, teams, employees and corporate events. Sessions can be staggered so the whole operation does not need to stop.",
     popular: "One of our most requested services", massage: "Workplace Massage", chooseTime: "Choose the time per employee:", perEmployee: "per employee",
     minimum: "Current EUR table: minimum booking of €150 per action/travel.", localQuote: "Availability, travel and final prices are confirmed according to location, demand and scheduling.",
-    timing: "Lunch time is often a great option. It can also be arranged in the morning, afternoon, at the beginning/end of the workday or during corporate events.", quoteWhatsapp: "Request a quote on WhatsApp",
+    timing: "Lunch time is often a great option. It can also be arranged in the morning, afternoon, at the beginning/end of the workday or during corporate events.", quoteWhatsapp: "Request a quote on Falar com o Ecossistema",
     wellbeingHour: "LDR Wellbeing Hour", tagline: "Your company chooses the time. We organize the experience.", depositText: "Pay 50% to request the booking. The remaining 50% is paid after the action. Final availability is confirmed by our team.",
     hours2: "2 hours", hours4: "4 hours", halfDay: "Half day · 5 hours", corporateDay: "Corporate Day · up to 8 hours", deposit: "Deposit", mostChosen: "MOST CHOSEN", choosePeriod: "Choose period and pay 50%",
     serviceSolutions: "LDR Solutions", attendance: "Care", mentorshipStrategy: "Mentorship and strategy",
@@ -101,7 +101,7 @@ const COPY = {
     wellbeingIntro: "Le Massage en entreprise reprend la même approche de détente et de bien-être que le Massage Relaxant, adaptée aux entreprises, équipes, collaborateurs et événements professionnels. Les séances peuvent être organisées de manière échelonnée afin de ne pas interrompre toute l’activité.",
     popular: "L’un de nos services les plus demandés", massage: "Massage en entreprise", chooseTime: "Choisissez la durée par collaborateur :", perEmployee: "par collaborateur",
     minimum: "Tarif actuel en EUR : réservation minimale de 150 € par intervention/déplacement.", localQuote: "La disponibilité, le déplacement et le prix final sont confirmés selon le lieu, la demande et le rendez-vous.",
-    timing: "La pause déjeuner est souvent une excellente option. Le service peut aussi être organisé le matin, l’après-midi, au début/à la fin de la journée ou lors d’événements d’entreprise.", quoteWhatsapp: "Demander un devis sur WhatsApp",
+    timing: "La pause déjeuner est souvent une excellente option. Le service peut aussi être organisé le matin, l’après-midi, au début/à la fin de la journée ou lors d’événements d’entreprise.", quoteWhatsapp: "Demander un devis sur Falar com o Ecossistema",
     wellbeingHour: "Heure Bien-Être LDR", tagline: "Votre entreprise choisit la durée. Nous organisons l’expérience.", depositText: "Payez 50 % pour demander la réservation. Les 50 % restants sont payés après l’intervention. La disponibilité finale est confirmée par notre équipe.",
     hours2: "2 heures", hours4: "4 heures", halfDay: "Demi-journée · 5 heures", corporateDay: "Journée entreprise · jusqu’à 8 heures", deposit: "Acompte", mostChosen: "LE PLUS CHOISI", choosePeriod: "Choisir la durée et payer 50 %",
     serviceSolutions: "Solutions LDR", attendance: "Accompagnement", mentorshipStrategy: "Mentorat et stratégie",
@@ -120,7 +120,7 @@ const COPY = {
     wellbeingIntro: "El Masaje Laboral utiliza la misma propuesta de relajación y bienestar del Masaje Relajante, adaptada a empresas, equipos, colaboradores y eventos corporativos. Las sesiones pueden organizarse de forma escalonada para no interrumpir toda la operación.",
     popular: "Uno de nuestros servicios más solicitados", massage: "Masaje Laboral", chooseTime: "Elige el tiempo por colaborador:", perEmployee: "por colaborador",
     minimum: "Tarifa actual en EUR: contratación mínima de 150 € por acción/desplazamiento.", localQuote: "La disponibilidad, el desplazamiento y los valores finales se confirman según el lugar, la demanda y la agenda.",
-    timing: "La hora del almuerzo suele ser una excelente opción. También puede organizarse por la mañana, por la tarde, al inicio/final de la jornada o en eventos corporativos.", quoteWhatsapp: "Solicitar presupuesto por WhatsApp",
+    timing: "La hora del almuerzo suele ser una excelente opción. También puede organizarse por la mañana, por la tarde, al inicio/final de la jornada o en eventos corporativos.", quoteWhatsapp: "Solicitar presupuesto por Falar com o Ecossistema",
     wellbeingHour: "Hora de Bienestar LDR", tagline: "Tu empresa elige el tiempo. Nosotros organizamos la experiencia.", depositText: "Paga el 50 % para solicitar la reserva. El 50 % restante se paga después de la acción. La disponibilidad final será confirmada por nuestro equipo.",
     hours2: "2 horas", hours4: "4 horas", halfDay: "Medio día · 5 horas", corporateDay: "Día Corporativo · hasta 8 horas", deposit: "Entrada", mostChosen: "MÁS ELEGIDO", choosePeriod: "Elegir período y pagar 50 %",
     serviceSolutions: "Soluciones LDR", attendance: "Atención", mentorshipStrategy: "Mentoría y estrategia",
@@ -129,7 +129,7 @@ const COPY = {
   },
 } as const;
 
-const WHATSAPP = "https://wa.me/32492923605";
+const SUPPORT = "https://suporte.ldrrhestrategia.com/falar-com-ecossistema";
 
 type Copy = (typeof COPY)[keyof typeof COPY];
 type Locale = keyof typeof COPY;
@@ -164,7 +164,7 @@ function Card({ item, copy }: { item: ContractItem; copy: Copy }) {
 }
 
 function CorporateWellbeing({ copy, locale }: { copy: Copy; locale: Locale }) {
-  const massageMessage = `${WHATSAPP}?text=${encodeURIComponent(copy.massageMessage)}`;
+  const massageMessage = `${SUPPORT}?text=${encodeURIComponent(copy.massageMessage)}`;
   const wellbeingUrl = `https://ldrrhestrategia.com/bem-estar?lang=${locale}#hora-bem-estar-ldr`;
   return (
     <section className="min-w-0 rounded-3xl border border-primary/20 bg-card p-5 shadow-sm sm:p-6">
