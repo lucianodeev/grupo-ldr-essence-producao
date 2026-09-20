@@ -36,9 +36,17 @@ function academyCanonicalRedirect(request: Request): Response | null {
   const host = url.hostname.toLowerCase();
   const isAcademy = host === "ldracademy.online" || host === "www.ldracademy.online";
   const isServicePortal = host === "portal.ldrrhestrategia.com";
+  const isLegacyLdrPanelHost = host === "painel.ldrrhestrategia.com";
   const isLegacyLearnHost = host === "learn.lucianoconecta.online";
   const isLegacyPanelHost = host === "painel.lucianoconecta.online";
   const isFilmHost = host === "film.lucianoconecta.online";
+
+  // The legacy LDR panel domain is an access/panel host, not the Academy storefront.
+  // Keep deep panel routes intact, but never render the public Academy home at its root.
+  if (isLegacyLdrPanelHost && (url.pathname === "/" || url.pathname === "/index.html")) {
+    url.pathname = "/acesso";
+    return temporaryRedirect(url.toString());
+  }
 
   // Keep the film/cinema landing page isolated from the Academy storefront.
   // The subdomain shares the same deployment, but its root must render /film
