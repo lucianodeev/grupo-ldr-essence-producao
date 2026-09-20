@@ -40,7 +40,6 @@ const SECONDARY_TOOLS = [
   ["Rede Acadêmica", "/admin/rede-academica"],
   ["Treinamentos", "/admin/treinamentos"],
   ["Rede Comercial", "/admin/vendedores"],
-  ["Contatos do Ecossistema", "/admin/contatos"],
   ["Notificações", "/admin/notificacoes"],
   ["Equipe LDR", "/admin/equipe"],
 ] as const;
