@@ -1,32 +1,28 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { FormEvent, useMemo, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/falar-com-ecossistema")({
-  head: () => ({
-    meta: [
-      { title: "Falar com o Ecossistema | LDR" },
-      { name: "description", content: "Central de suporte, serviços e contato do Ecossistema LDR." },
-    ],
-  }),
+  head: () => ({ meta: [{ title: "Falar com o Ecossistema | LDR" }, { name: "description", content: "Central de suporte, serviços e contato do Ecossistema LDR." }] }),
   component: EcosystemSupport,
 });
 
-function EcosystemSupport() {
-  return (
-    <main className="min-h-screen bg-[#f8f1e7] px-5 py-12 text-[#25170f]">
-      <section className="mx-auto max-w-3xl">
-        <Link to="/ecossistema" className="text-sm font-bold text-[#8a4c18]">← Voltar ao Ecossistema</Link>
-        <div className="mt-6 rounded-[32px] border border-[#d6ad63]/50 bg-white p-6 shadow-xl sm:p-9">
-          <p className="text-xs font-black uppercase tracking-[.2em] text-[#9a6a20]">Central única de atendimento</p>
-          <h1 className="mt-3 font-serif text-4xl font-bold sm:text-5xl">Falar com o Ecossistema</h1>
-          <p className="mt-4 text-base leading-7 text-[#6f6358]">
-            Quer conhecer nossos projetos, solicitar um serviço, tirar uma dúvida ou falar comigo? <strong>Venha falar comigo também.</strong>
-          </p>
-          <p className="mt-3 text-sm font-bold text-[#1d3158]">Prazo de resposta: até 7 dias.</p>
-          <p className="mt-6 rounded-2xl border border-[#d6ad63]/40 bg-[#fffaf2] p-4 text-sm leading-6 text-[#6f6358]">
-            Estamos preparando o formulário seguro desta central. Não envie dados clínicos, senhas, informações financeiras ou outros dados sensíveis.
-          </p>
-        </div>
-      </section>
-    </main>
-  );
+const copy = {
+ pt:{title:"Falar com o Ecossistema",intro:"Quer conhecer nossos projetos, solicitar um serviço, tirar uma dúvida ou falar comigo? Venha falar comigo também.",sla:"Prazo de resposta: até 7 dias.",send:"Enviar solicitação",sensitive:"Não envie dados clínicos, senhas, informações financeiras ou outros dados sensíveis.",success:"Solicitação recebida",protocol:"Seu protocolo é"},
+ en:{title:"Contact the Ecosystem",intro:"Want to learn about our projects, request a service, ask a question or speak with me? You can contact me here too.",sla:"Response time: up to 7 days.",send:"Send request",sensitive:"Do not send clinical data, passwords, financial information or other sensitive data.",success:"Request received",protocol:"Your reference is"},
+ fr:{title:"Contacter l'Écosystème",intro:"Vous souhaitez découvrir nos projets, demander un service, poser une question ou me parler ? Vous pouvez aussi me contacter ici.",sla:"Délai de réponse : jusqu'à 7 jours.",send:"Envoyer la demande",sensitive:"N'envoyez pas de données cliniques, mots de passe, informations financières ou autres données sensibles.",success:"Demande reçue",protocol:"Votre référence est"},
+ es:{title:"Hablar con el Ecosistema",intro:"¿Quieres conocer nuestros proyectos, solicitar un servicio, hacer una consulta o hablar conmigo? También puedes contactarme aquí.",sla:"Plazo de respuesta: hasta 7 días.",send:"Enviar solicitud",sensitive:"No envíes datos clínicos, contraseñas, información financiera ni otros datos sensibles.",success:"Solicitud recibida",protocol:"Tu referencia es"}
+} as const;
+const subjects=["Solicitação de serviço","Quero falar com Luciano","Assinatura e pagamentos","Problema com compra ou acesso","Suporte técnico","Empresa","Parceria","Imprensa e mídia","Quero conhecer o Ecossistema","Outro assunto"];
+
+function EcosystemSupport(){
+ const params=new URLSearchParams(typeof window==="undefined"?"":window.location.search);
+ const lang=(["pt","en","fr","es"].includes(params.get("lang")||"")?params.get("lang"):"pt") as keyof typeof copy;
+ const t=copy[lang], preset=params.get("assunto")||"";
+ const [sending,setSending]=useState(false),[protocol,setProtocol]=useState(""),[error,setError]=useState("");
+ const sourceUrl=useMemo(()=>typeof window==="undefined"?"":document.referrer||window.location.href,[]);
+ async function submit(e:FormEvent<HTMLFormElement>){e.preventDefault();setSending(true);setError("");const d=new FormData(e.currentTarget);const subject=String(d.get("subject")||"");
+ const {data, error:rpcError}=await supabase.rpc("submit_ecosystem_contact" as never,{p_name:String(d.get("name")||""),p_email:String(d.get("email")||""),p_phone:String(d.get("phone")||""),p_subject:subject,p_message:String(d.get("message")||""),p_source_project:params.get("source")||"LDR Academy / Ecossistema",p_source_url:sourceUrl,p_language:lang,p_wants_luciano:subject==="Quero falar com Luciano",p_consent:d.get("consent")==="on",p_website:String(d.get("website")||"")} as never);setSending(false);if(rpcError||!data){setError("Não foi possível registrar agora. Tente novamente.");return;}setProtocol(String(data));}
+ if(protocol)return <main className="min-h-screen bg-[#f8f1e7] px-5 py-16"><section className="mx-auto max-w-2xl rounded-[32px] bg-white p-8 text-center shadow-xl"><h1 className="font-serif text-4xl font-bold">{t.success}</h1><p className="mt-4">{t.protocol} <strong>{protocol}</strong>. {t.sla}</p><Link to="/ecossistema" className="mt-7 inline-flex rounded-full bg-[#1d3158] px-6 py-3 font-bold text-white">Ecossistema LDR</Link></section></main>;
+ return <main className="min-h-screen bg-[#f8f1e7] px-5 py-12 text-[#25170f]"><section className="mx-auto max-w-3xl"><Link to="/ecossistema" className="text-sm font-bold text-[#8a4c18]">← Ecossistema</Link><div className="mt-6 rounded-[32px] border border-[#d6ad63]/50 bg-white p-6 shadow-xl sm:p-9"><h1 className="font-serif text-4xl font-bold sm:text-5xl">{t.title}</h1><p className="mt-4 leading-7 text-[#6f6358]">{t.intro}</p><p className="mt-2 font-bold text-[#1d3158]">{t.sla}</p><p className="mt-5 rounded-xl bg-[#fffaf2] p-4 text-sm">{t.sensitive}</p><form onSubmit={submit} className="mt-7 grid gap-4"><input name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true"/><input name="name" required minLength={2} maxLength={120} placeholder="Nome / Name" className="rounded-xl border px-4 py-3"/><input name="email" type="email" required maxLength={254} placeholder="E-mail" className="rounded-xl border px-4 py-3"/><input name="phone" maxLength={40} placeholder="WhatsApp / telefone (opcional)" className="rounded-xl border px-4 py-3"/><select name="subject" defaultValue={subjects.includes(preset)?preset:subjects[0]} className="rounded-xl border bg-white px-4 py-3">{subjects.map(s=><option key={s}>{s}</option>)}</select><textarea name="message" required minLength={5} maxLength={4000} rows={6} placeholder="Mensagem / Message" className="rounded-xl border px-4 py-3"/><label className="flex gap-3 text-sm"><input name="consent" type="checkbox" required/> Autorizo o uso destes dados para responder à minha solicitação.</label>{error&&<p role="alert" className="text-sm font-bold text-red-800">{error}</p>}<button disabled={sending} className="rounded-xl bg-[#1d3158] px-6 py-4 font-black text-white disabled:opacity-60">{sending?"…":t.send}</button></form></div></section></main>;
 }
