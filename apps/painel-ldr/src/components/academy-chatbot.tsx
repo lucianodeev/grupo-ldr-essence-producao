@@ -87,7 +87,10 @@ export function AcademyChatbot() {
     const root = document.documentElement;
     if (root.dataset.ldrAcademyChatbot === "1") return;
     root.dataset.ldrAcademyChatbot = "1";
-    setPrimaryInstance(true);\n    return () => {\n      if (root.dataset.ldrAcademyChatbot === "1") delete root.dataset.ldrAcademyChatbot;\n    };
+    setPrimaryInstance(true);
+    return () => {
+      if (root.dataset.ldrAcademyChatbot === "1") delete root.dataset.ldrAcademyChatbot;
+    };
   }, []);
 
   useEffect(() => {
@@ -115,7 +118,9 @@ export function AcademyChatbot() {
     setSelected(topic);
   }
 
-  if (!primaryInstance) return null;\n\n  return (
+  if (!primaryInstance) return null;
+
+  return (
     <>
       {showAnnouncement && (
         <div className="fixed inset-x-0 top-0 z-[110] overflow-hidden border-b border-[#d6ad63]/30 bg-[#071426] py-2 text-white shadow-sm" role="status" aria-live="polite">
