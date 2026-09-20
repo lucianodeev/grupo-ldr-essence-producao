@@ -1,4 +1,6 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import { clientCreateLdrPassCheckout } from "@/lib/ldr-pass.functions";
 
 export const Route = createFileRoute("/ldr-pass")({
   head: () => ({
@@ -13,9 +15,9 @@ export const Route = createFileRoute("/ldr-pass")({
 });
 
 const plans = [
-  { name: "LDR PASS", br: "R$ 49,90/mês", brAnnual: "R$ 499/ano", eu: "€ 9,90/mês", euAnnual: "€ 99/ano", desc: "Conteúdo, aprendizagem e desenvolvimento.", items: ["Cursos digitais elegíveis", "eBooks e materiais elegíveis", "Trilhas de carreira, IA e empreendedorismo", "Benefícios digitais identificados como PASS"] },
-  { name: "LDR PASS PRO", br: "R$ 149,90/mês", brAnnual: "R$ 1.499/ano", eu: "€ 29,90/mês", euAnnual: "€ 299/ano", desc: "Carreira e recursos profissionais premium.", items: ["Tudo que for elegível no PASS", "Recursos avançados de carreira", "Avaliações e ferramentas profissionais", "Créditos somente para serviços elegíveis quando configurados"] },
-  { name: "LDR PASS BUSINESS", br: "R$ 499/mês", brAnnual: "R$ 4.990/ano", eu: "€ 99/mês", euAnnual: "€ 990/ano", desc: "Recursos premium para empresas, talentos e recrutamento.", items: ["Ferramentas empresariais premium", "Gestão de candidaturas e triagem responsável", "Banco e reaproveitamento de talentos", "Serviço humano de recrutamento permanece separado ou por créditos"] },
+  { key: "pass" as const, name: "LDR PASS", br: "R$ 49,90/mês", brAnnual: "R$ 499/ano", eu: "€ 9,90/mês", euAnnual: "€ 99/ano", desc: "Conteúdo, aprendizagem e desenvolvimento.", items: ["Cursos digitais elegíveis", "eBooks e materiais elegíveis", "Trilhas de carreira, IA e empreendedorismo", "Benefícios digitais identificados como PASS"] },
+  { key: "pro" as const, name: "LDR PASS PRO", br: "R$ 149,90/mês", brAnnual: "R$ 1.499/ano", eu: "€ 29,90/mês", euAnnual: "€ 299/ano", desc: "Carreira e recursos profissionais premium.", items: ["Tudo que for elegível no PASS", "Recursos avançados de carreira", "Avaliações e ferramentas profissionais", "Créditos somente para serviços elegíveis quando configurados"] },
+  { key: "business" as const, name: "LDR PASS BUSINESS", br: "R$ 499/mês", brAnnual: "R$ 4.990/ano", eu: "€ 99/mês", euAnnual: "€ 990/ano", desc: "Recursos premium para empresas, talentos e recrutamento.", items: ["Ferramentas empresariais premium", "Gestão de candidaturas e triagem responsável", "Banco e reaproveitamento de talentos", "Serviço humano de recrutamento permanece separado ou por créditos"] },
 ];
 
 const protectedItems = [
@@ -26,6 +28,8 @@ const protectedItems = [
 ];
 
 function LdrPassPage() {
+  const [market,setMarket]=useState<"BR"|"EU">("BR"); const [billing,setBilling]=useState<"monthly"|"annual">("monthly"); const [loading,setLoading]=useState<string|null>(null); const [error,setError]=useState("");
+  async function checkout(plan:"pass"|"pro"|"business"){setLoading(plan);setError("");try{const r=await clientCreateLdrPassCheckout({data:{plan,market,billing,source:"academy"}});window.location.assign(r.url)}catch(e){setError(e instanceof Error?e.message:"Não foi possível abrir o checkout.");setLoading(null)}}
   return (
     <main className="min-h-screen bg-[#070b17] text-white">
       <section className="mx-auto max-w-6xl px-5 py-14 sm:py-20">
@@ -43,6 +47,7 @@ function LdrPassPage() {
       </section>
 
       <section className="mx-auto max-w-6xl px-5 pb-16">
+        <div className="mb-6 flex flex-wrap gap-3"><button onClick={()=>setMarket("BR")} className={`rounded-full px-5 py-2 font-bold ${market==="BR"?"bg-[#f4c76b] text-black":"border border-white/20"}`}>Brasil · BRL</button><button onClick={()=>setMarket("EU")} className={`rounded-full px-5 py-2 font-bold ${market==="EU"?"bg-[#f4c76b] text-black":"border border-white/20"}`}>Europa · EUR</button><button onClick={()=>setBilling("monthly")} className={`rounded-full px-5 py-2 font-bold ${billing==="monthly"?"bg-white text-black":"border border-white/20"}`}>Mensal</button><button onClick={()=>setBilling("annual")} className={`rounded-full px-5 py-2 font-bold ${billing==="annual"?"bg-white text-black":"border border-white/20"}`}>Anual</button></div>{error&&<p className="mb-5 rounded-xl border border-red-300/30 bg-red-400/10 p-3 text-sm text-red-100">{error}</p>}
         <div className="grid gap-5 lg:grid-cols-3">
           {plans.map((plan, index) => (
             <article key={plan.name} className={`rounded-[28px] border p-6 ${index === 2 ? "border-[#f4c76b]/60 bg-[#f4c76b]/[.09]" : "border-white/15 bg-white/[.06]"}`}>
@@ -56,7 +61,7 @@ function LdrPassPage() {
                 <p className="mt-1 text-xl font-black">{plan.eu}</p><p className="text-sm text-white/60">{plan.euAnnual}</p>
               </div>
               <div className="mt-5 space-y-3">{plan.items.map((item) => <p key={item} className="text-sm text-white/75">✓ {item}</p>)}</div>
-              <p className="mt-6 rounded-xl border border-white/10 p-3 text-xs text-white/55">Checkout será ativado somente após validação segura dos produtos, preços e webhooks. Nenhuma cobrança é simulada nesta página.</p>
+              <button disabled={loading!==null} onClick={()=>checkout(plan.key)} className="mt-6 w-full rounded-xl bg-[#f4c76b] px-5 py-3 font-black text-[#1f1303] disabled:opacity-50">{loading===plan.key?"Abrindo checkout…":`Assinar ${plan.name}`}</button><p className="mt-3 text-center text-xs text-white/50">{market==="BR"?(billing==="monthly"?plan.br:plan.brAnnual):(billing==="monthly"?plan.eu:plan.euAnnual)}</p>
             </article>
           ))}
         </div>
