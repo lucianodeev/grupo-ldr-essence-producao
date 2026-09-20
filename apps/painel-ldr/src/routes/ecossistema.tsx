@@ -85,6 +85,12 @@ const hubs: Hub[] = [
     desc: "Espaço global de escuta, humanidade, reflexão e histórias reais, conectado ao propósito social e humano do ecossistema LDR.",
   },
   {
+    name: "Instagram LDR Academy",
+    url: "https://www.instagram.com/ldracademy.online",
+    tag: "Social",
+    desc: "Canal oficial da LDR Academy no Instagram para acompanhar conteúdos, novidades e conexões do ecossistema.",
+  },
+  {
     name: "Instagram Human Room",
     url: "https://www.instagram.com/humanroom.world",
     tag: "Social",
