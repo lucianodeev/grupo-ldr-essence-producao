@@ -118,7 +118,7 @@ export function AcademyChatbot() {
     setSelected(topic);
   }
 
-  return (
+  if (!primaryInstance) return null;\n\n  return (
     <>
       {showAnnouncement && (
         <div className="fixed inset-x-0 top-0 z-[110] overflow-hidden border-b border-[#d6ad63]/30 bg-[#071426] py-2 text-white shadow-sm" role="status" aria-live="polite">
