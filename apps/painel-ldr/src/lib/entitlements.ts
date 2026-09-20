@@ -41,6 +41,10 @@ export type LegacyEntitlementSignals = {
   editorialSubscriptionId?: string;
   editorialExpiresAt?: string;
   serviceSpecific?: boolean;
+  pass?: boolean;
+  passSubscriptionId?: string;
+  passExpiresAt?: string;
+  passEnabled?: boolean;
 };
 
 const deny = (resourceKey: string): EntitlementDecision => ({
@@ -57,7 +61,7 @@ const deny = (resourceKey: string): EntitlementDecision => ({
  *
  * Foundation constraints:
  * - read-only: no database, Stripe, enrollment, order or credit writes;
- * - PASS is intentionally not resolved yet;
+ * - PASS is additive and only resolves when its feature flag is explicitly enabled;
  * - precedence protects permanent/privileged access from being shadowed by
  *   revocable subscription access.
  */
@@ -108,6 +112,19 @@ export function resolveLegacyEntitlement(
       accessType: "lifetime",
       legacy: true,
       reasons: ["grandfathered_enrollment"],
+    };
+  }
+
+  if (signals.passEnabled && signals.pass) {
+    return {
+      allowed: true,
+      resourceKey,
+      source: "pass",
+      accessType: "recurring",
+      subscriptionId: signals.passSubscriptionId,
+      expiresAt: signals.passExpiresAt,
+      legacy: false,
+      reasons: ["active_ldr_pass"],
     };
   }
 
