@@ -17,13 +17,7 @@ const COPY = {
   es: { portal: "Beneficios corporativos", title: "Mi Área", subtitle: "Entra con la misma cuenta de Google del correo registrado por tu empresa.", opening: "Abriendo…", google: "Continuar con Google", privacy: "Tu acceso solo muestra los beneficios que tienes asignados.", back: "Volver a los accesos", error: "No fue posible iniciar sesión con Google." },
 } as const;
 
-function oauthReturnUrl() {
-  if (typeof window === "undefined") return "/api/auth/callback";
-  if (/(^|\.)ldracademy\.online$/i.test(window.location.hostname)) {
-    return "https://learn.lucianoconecta.online/api/auth/callback?academy=1";
-  }
-  return `${window.location.origin}/api/auth/callback`;
-}
+function oauthReturnUrl() {\n  if (typeof window === "undefined") return "/api/auth/callback";\n  return `${window.location.origin}/api/auth/callback`;\n}
 
 async function syncBrowserSession(session: Session) {
   const response = await fetch("/api/auth/session-sync", {
