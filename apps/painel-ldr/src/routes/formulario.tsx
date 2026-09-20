@@ -40,12 +40,12 @@ function Formulario() {
             responsável, dentro do painel protegido.
           </p>
           <a
-            href="https://wa.me/32492923605?text=Ol%C3%A1%2C%20tenho%20interesse%20na%20mentoria%20Sistema%20S8"
+            href="https://suporte.ldrrhestrategia.com/falar-com-ecossistema"
             target="_blank"
             rel="noreferrer noopener external"
             className="mt-6 inline-flex rounded-lg bg-primary px-5 py-3 text-sm font-bold text-primary-foreground hover:opacity-90"
           >
-            Falar com a equipe no WhatsApp
+            Falar com a equipe no Falar com o Ecossistema
           </a>
         </section>
       </main>
