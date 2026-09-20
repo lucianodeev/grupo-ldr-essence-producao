@@ -23,7 +23,7 @@ export const updateEcosystemContact = createServerFn({ method: "POST" })
     const patch: Record<string, unknown> = { status: data.status, updated_at: new Date().toISOString() };
     if (data.status === "respondido") patch.first_response_at = new Date().toISOString();
     if (data.status === "resolvido") patch.resolved_at = new Date().toISOString();
-    const { error } = await context.supabase.from("ecosystem_contacts").update(patch).eq("id", data.id);
+    const { error } = await supportDb.from("ecosystem_contacts").update(patch).eq("id", data.id);
     if (error) throw error;
     return { ok: true as const };
   });
