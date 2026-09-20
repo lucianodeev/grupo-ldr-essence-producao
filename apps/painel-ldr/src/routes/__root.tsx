@@ -267,7 +267,7 @@ function RootComponent() {
           <Outlet />
           {showCompanyPlans && <CompanyPlanCards />}
         </div>
-        <PersistentActions />
+
         <LazyAdSenseScript />
         <LazyAcademyChatbot />
         <Toaster richColors position="top-center" />
