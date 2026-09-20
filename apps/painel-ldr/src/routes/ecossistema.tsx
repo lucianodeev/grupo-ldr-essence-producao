@@ -161,7 +161,7 @@ function EcosystemMap() {
           <p className="mt-4 max-w-3xl text-base text-[#6f6358]">
             A LDR Academy conecta educação, carreira, biblioteca digital, rede acadêmica, projetos sociais, soluções para empresas e iniciativas humanas em um único ecossistema. Cada projeto mantém sua identidade, mas todos se conectam por caminhos claros.
           </p>
-          <div className="mt-6 flex flex-wrap gap-3">
+          <div className="mt-6 flex flex-wrap gap-3">\n            <Link to="/falar-com-ecossistema" className="rounded-full bg-[#9a6a20] px-5 py-3 text-sm font-black uppercase tracking-[.12em] text-white">💬 Falar com o Ecossistema</Link>
             <Link to="/ldr-pass" className="rounded-full bg-[#1d3158] px-5 py-3 text-sm font-black uppercase tracking-[.12em] text-white">Ver LDR PASS</Link>
             <Link to="/cliente/biblioteca" className="rounded-full border border-[#d6ad63] px-5 py-3 text-sm font-black uppercase tracking-[.12em] text-[#7a4d14]">Entrar na Biblioteca</Link>
             <Link to="/cliente/rede-academica" className="rounded-full border border-[#351073] px-5 py-3 text-sm font-black uppercase tracking-[.12em] text-[#351073]">Conhecer a Rede Acadêmica</Link>
