@@ -24,7 +24,7 @@ function EcosystemSupport() {
     setSending(true); setError("");
     const data = new FormData(event.currentTarget);
     const subject = String(data.get("subject") || "");
-    const { data: row, error: insertError } = await supabase.from("ecosystem_contacts").insert({
+    const supportDb = supabase as any;\n    const { data: row, error: insertError } = await supportDb.from("ecosystem_contacts").insert({
       name: String(data.get("name") || "").trim(),
       email: String(data.get("email") || "").trim(),
       phone: String(data.get("phone") || "").trim() || null,
