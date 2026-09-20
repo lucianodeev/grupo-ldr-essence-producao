@@ -3,7 +3,7 @@ import { FormEvent, useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/falar-com-ecossistema")({
-  head: () => ({ meta: [{ title: "Falar com o Ecossistema | LDR" }, { name: "description", content: "Central de suporte, serviços e contato do Ecossistema LDR." }] }),
+  head: () => ({ meta: [{ title: "Falar com o Ecossistema | LDR" }, { name: "description", content: "Central de suporte, serviços e contato do Ecossistema LDR. Atendimento em até 7 dias." }] }),
   component: EcosystemSupport,
 });
 
