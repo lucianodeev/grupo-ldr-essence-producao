@@ -13,14 +13,14 @@ export const updateEcosystemContact=createServerFn({method:"POST"}).middleware([
  const db=await requireMaster(context.supabase,context.userId); const patch:any={status:data.status,priority:data.priority,updated_at:new Date().toISOString()}; if(data.status==="respondido"){ const {data:current}=await (db as any).from("ecosystem_contacts").select("first_response_at").eq("id",data.id).maybeSingle(); if(!current?.first_response_at) patch.first_response_at=new Date().toISOString(); } if(data.status==="resolvido") patch.resolved_at=new Date().toISOString();
  const {error}=await (db as any).from("ecosystem_contacts").update(patch).eq("id",data.id); if(error) throw error; return {ok:true};
 });
-export const prepareEcosystemSupportUpload=createServerFn({method:"POST"}).middleware([requireSupabaseAuth]).inputValidator((d:{protocol:string;fileName:string;contentType:string;size:number})=>d).handler(async({data,context})=>{
+export const prepareEcosystemSupportUpload=createServerFn({method:"POST"}).inputValidator((d:{protocol:string;fileName:string;contentType:string;size:number})=>d).handler(async({data,context})=>{
  const {preparePublicSupportUpload}=await import("@/lib/ecosystem-support-upload.server"); return preparePublicSupportUpload(data);
 });
-export const finalizeEcosystemSupportUpload=createServerFn({method:"POST"}).middleware([requireSupabaseAuth]).inputValidator((d:{protocol:string;path:string;fileName:string;contentType:string;size:number})=>d).handler(async({data,context})=>{
+export const finalizeEcosystemSupportUpload=createServerFn({method:"POST"}).inputValidator((d:{protocol:string;path:string;fileName:string;contentType:string;size:number})=>d).handler(async({data,context})=>{
  const {finalizePublicSupportUpload}=await import("@/lib/ecosystem-support-upload.server"); return finalizePublicSupportUpload(data);
 });
 
-export const getEcosystemContactThread=createServerFn({method:"GET"}).inputValidator((d:{id:string})=>d).handler(async({data,context})=>{
+export const getEcosystemContactThread=createServerFn({method:"GET"}).middleware([requireSupabaseAuth]).inputValidator((d:{id:string})=>d).handler(async({data,context})=>{
  const db=await requireMaster(context.supabase,context.userId);
  const {data:contact,error}=await (db as any).from("ecosystem_contacts").select("*").eq("id",data.id).single(); if(error) throw error;
  const [{data:messages,error:me},{data:attachments,error:ae}]=await Promise.all([
@@ -34,8 +34,8 @@ export const getEcosystemAttachmentUrl=createServerFn({method:"POST"}).middlewar
 });
 export const addEcosystemAdminReply=createServerFn({method:"POST"}).middleware([requireSupabaseAuth]).inputValidator((d:{contactId:string;body:string})=>d).handler(async({data,context})=>{
  const body=data.body.trim();if(!body||body.length>10000)throw new Error("Invalid reply");
- const db=await requireMaster(context.supabase,context.userId); const {data:{user}}=await db.auth.getUser(); const {data:contact,error:ce}=await (db as any).from("ecosystem_contacts").select("email,first_response_at").eq("id",data.contactId).single();if(ce)throw ce;
- const now=new Date().toISOString(); const {error}=await (db as any).from("ecosystem_contact_messages").insert({contact_id:data.contactId,direction:"outbound",channel:"admin",body,sender:"LDR",recipient:contact.email,created_by:user!.id});if(error)throw error;
+ const db=await requireMaster(context.supabase,context.userId); const {data:contact,error:ce}=await (db as any).from("ecosystem_contacts").select("email,first_response_at").eq("id",data.contactId).single();if(ce)throw ce;
+ const now=new Date().toISOString(); const {error}=await (db as any).from("ecosystem_contact_messages").insert({contact_id:data.contactId,direction:"outbound",channel:"admin",body,sender:"LDR",recipient:contact.email,created_by:context.userId});if(error)throw error;
  const patch:any={status:"respondido",updated_at:now};if(!contact.first_response_at)patch.first_response_at=now;const {error:ue}=await (db as any).from("ecosystem_contacts").update(patch).eq("id",data.contactId);if(ue)throw ue;
  return {ok:true,email:contact.email,emailSent:false};
 });
