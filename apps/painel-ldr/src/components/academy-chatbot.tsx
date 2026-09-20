@@ -80,6 +80,18 @@ export function AcademyChatbot() {
   const [teaser, setTeaser] = useState(false);
   const [selected, setSelected] = useState<Topic | null>(null);
   const [query, setQuery] = useState("");
+  const [primaryInstance, setPrimaryInstance] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const root = document.documentElement;
+    if (root.dataset.ldrAcademyChatbot === "1") return;
+    root.dataset.ldrAcademyChatbot = "1";
+    setPrimaryInstance(true);
+    return () => {
+      if (root.dataset.ldrAcademyChatbot === "1") delete root.dataset.ldrAcademyChatbot;
+    };
+  }, []);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -105,6 +117,8 @@ export function AcademyChatbot() {
     setQuery("");
     setSelected(topic);
   }
+
+  if (!primaryInstance) return null;
 
   return (
     <>
