@@ -177,7 +177,7 @@ async function setProfessionalSubscription(metadata: Record<string, string>, obj
 
 async function setCompanySubscription(metadata: Record<string, string>, object: StripeObject, eventType: string) {
   const rowId = metadata["company_subscription_id"];
-  const subscriptionId = eventType.startsWith("customer.subscription") ? object.id ?? null : stripeId(object.subscription);
+  const subscriptionId = eventType.startsWith("customer.subscription") ? object.id ?? null : stripeId(object.subscription) ?? stripeId(object.parent?.subscription_details?.subscription);
   if (!rowId && !subscriptionId) return false;
 
   let rawStatus = String(object.status ?? "pending");
