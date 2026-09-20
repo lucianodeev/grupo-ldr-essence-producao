@@ -251,6 +251,13 @@ function RootComponent() {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    if (window.location.hostname === "suporte.ldrrhestrategia.com" && window.location.pathname === "/") {
+      window.location.replace("/falar-com-ecossistema" + window.location.search + window.location.hash);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
     const onImageError = (event: Event) => {
       const img = event.target as HTMLImageElement | null;
       if (!img || img.tagName !== "IMG" || img.dataset.ldrFallback === "1") return;
