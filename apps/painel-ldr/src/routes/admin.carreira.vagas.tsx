@@ -39,7 +39,7 @@ function Moderation() {
   }
 
   return <main className="min-h-screen bg-slate-50"><div className="mx-auto max-w-5xl px-5 py-10">
-    <div className="flex items-start justify-between gap-4"><div><h1 className="text-3xl font-bold text-[#07345b]">{t.title}</h1><p className="mt-2 text-slate-600">{t.sub}</p></div><LanguageSelect /></div>
+    <div className="mb-4"><a href="/admin/contatos" className="font-semibold text-[#07345b]">Atendimento do Ecossistema →</a></div><div className="flex items-start justify-between gap-4"><div><h1 className="text-3xl font-bold text-[#07345b]">{t.title}</h1><p className="mt-2 text-slate-600">{t.sub}</p></div><LanguageSelect /></div>
     {status && <p role="status" className="mt-5 rounded-xl bg-white p-4 text-sm">{status}</p>}
     <div className="mt-8 grid gap-5">
       {jobs.length === 0 && <p className="rounded-2xl bg-white p-6">{t.empty}</p>}
