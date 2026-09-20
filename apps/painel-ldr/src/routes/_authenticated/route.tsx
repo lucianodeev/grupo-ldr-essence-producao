@@ -19,6 +19,7 @@ async function syncBrowserSession(session: Session) {
 }
 
 export const Route = createFileRoute("/_authenticated")({
+  head: () => ({ meta: [{ name: "robots", content: "noindex,nofollow" }] }),
   ssr: false,
   beforeLoad: async ({ location }) => {
     // OAuth callbacks exchange the code server-side and persist the Supabase
