@@ -181,7 +181,7 @@ function PersistentActions() {
 
   return (
     <div className="fixed z-[80] flex flex-col items-end gap-2" style={{ bottom: "calc(5.5rem + env(safe-area-inset-bottom))", right: "calc(1rem + env(safe-area-inset-right))" }}>
-      <Link to="/acesso" aria-label={copy.enterAria} className="inline-flex min-h-11 items-center gap-2 rounded-full border bg-card px-4 py-3 text-sm font-black text-primary shadow-xl transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
+      <a href="https://suporte.ldrrhestrategia.com/falar-com-ecossistema" aria-label="Falar com o Ecossistema" className="inline-flex min-h-11 items-center gap-2 rounded-full bg-[#9a6a20] px-4 py-3 text-sm font-black text-white shadow-xl transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#9a6a20] focus-visible:ring-offset-2">\n        <span aria-hidden="true">💬</span> <span>Falar com o Ecossistema</span>\n      </a>\n      <Link to="/acesso" aria-label={copy.enterAria} className="inline-flex min-h-11 items-center gap-2 rounded-full border bg-card px-4 py-3 text-sm font-black text-primary shadow-xl transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
         <LogIn className="h-5 w-5" /> <span>{copy.enter}</span>
       </Link>
     </div>
