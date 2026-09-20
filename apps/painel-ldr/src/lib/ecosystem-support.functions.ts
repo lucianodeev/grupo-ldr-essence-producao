@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
-import { resolveRequestAuth } from "@/integrations/supabase/request-auth.server";
 
 async function requireMaster() {
+ const { resolveRequestAuth }=await import("@/integrations/supabase/request-auth.server");
  const auth=await resolveRequestAuth();
  if(!auth.authenticated) throw new Error("Unauthorized");
  const supabase=auth.supabase;
