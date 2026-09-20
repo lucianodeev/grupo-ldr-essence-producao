@@ -87,10 +87,7 @@ export function AcademyChatbot() {
     const root = document.documentElement;
     if (root.dataset.ldrAcademyChatbot === "1") return;
     root.dataset.ldrAcademyChatbot = "1";
-    setPrimaryInstance(true);
-    if (!primaryInstance) return null;\n\n  return () => {
-      if (root.dataset.ldrAcademyChatbot === "1") delete root.dataset.ldrAcademyChatbot;
-    };
+    setPrimaryInstance(true);\n    return () => {\n      if (root.dataset.ldrAcademyChatbot === "1") delete root.dataset.ldrAcademyChatbot;\n    };
   }, []);
 
   useEffect(() => {
