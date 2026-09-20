@@ -185,6 +185,14 @@ function EcosystemMap() {
           <div className="mt-5 rounded-2xl bg-white/80 p-4 text-sm leading-6 text-[#42526b]"><strong className="text-[#07345b]">LDR Academy + Carreira:</strong> assinantes podem acessar recursos adicionais de desenvolvimento profissional conforme o plano contratado. A assinatura não garante contratação e não é necessária para consultar vagas abertas.</div>
         </section>
 
+        <section className="mt-8 rounded-[28px] border border-[#d6ad63]/50 bg-[#fffaf2] p-6 shadow-sm sm:p-8">
+          <p className="text-xs font-black uppercase tracking-[.2em] text-[#9a6a20]">Empreendedorismo e negócios</p>
+          <h2 className="mt-3 font-serif text-3xl font-bold text-[#25170f]">Quer conversar sobre empreendedorismo ou negócios?</h2>
+          <p className="mt-3 max-w-3xl text-sm leading-6 text-[#6f6358]">O Ecossistema LDR também é um espaço para novas ideias, conexões e oportunidades. Estamos desenvolvendo novos projetos e algumas iniciativas ainda não foram apresentadas publicamente.</p>
+          <p className="mt-3 max-w-3xl text-sm leading-6 text-[#6f6358]">Se você é empreendedor, empresa, profissional, investidor ou simplesmente tem uma boa ideia, fale comigo pelo suporte. Talvez exista uma conversa que valha a pena começar.</p>
+          <Link to="/falar-com-ecossistema" search={{ assunto: "Empreendedorismo, negócios e novas oportunidades", source: "ecossistema_negocios" } as any} className="mt-5 inline-flex min-h-12 items-center justify-center rounded-full bg-[#1d3158] px-5 py-3 text-sm font-black text-white">Quero conversar sobre negócios</Link>
+        </section>
+
         <section className="mt-8 rounded-[28px] border border-[#e5d1ac] bg-white p-6 shadow-sm">
           <p className="text-xs font-black uppercase tracking-[.2em] text-[#9a6a20]">O que você encontra no ecossistema</p>
           <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
