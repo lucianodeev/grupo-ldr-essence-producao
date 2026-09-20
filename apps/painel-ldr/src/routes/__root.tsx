@@ -9,7 +9,7 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
-import { Building2, Check, LogIn, Sparkles, UsersRound } from "lucide-react";
+import { Building2, Check, Sparkles, UsersRound } from "lucide-react";
 
 import { AcademyChatbot } from "@/components/academy-chatbot";
 import { Toaster } from "@/components/ui/sonner";
@@ -168,7 +168,7 @@ function CompanyPlanCards() {
   );
 }
 
-function PersistentActions() {\n  // AcademyChatbot is the single global support entry point.\n  return null;\n}\n\nfunction LazyAdSenseScript() {
+function LazyAdSenseScript() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
