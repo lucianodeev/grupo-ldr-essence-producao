@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { AcademyUniversityHome } from "@/components/academy-university-home";
 import { AcademyEcosystemSection } from "@/components/academy-ecosystem-section";
@@ -27,6 +27,17 @@ function PublicHome() {
 
   return <>
     <AcademyInstitutionalIntro />
+    <section className="bg-[#071426] px-5 py-8 text-white">
+      <div className="mx-auto grid max-w-6xl gap-4 md:grid-cols-[1fr_auto_auto] md:items-center">
+        <div>
+          <p className="text-xs font-black uppercase tracking-[.2em] text-[#f4c76b]">Ecossistema LDR</p>
+          <h2 className="mt-2 font-serif text-2xl font-bold">Acesse o mapa central e o LDR PASS.</h2>
+          <p className="mt-1 text-sm text-white/70">A Academy agora referencia as entradas principais: Biblioteca, Rede Acadêmica, LDR PASS, Clínica Social, LDR RH & Estratégia e Human Room.</p>
+        </div>
+        <Link to="/ecossistema" className="rounded-full bg-[#f4c76b] px-5 py-3 text-center text-xs font-black uppercase tracking-[.14em] text-[#1f1303]">Mapa do ecossistema</Link>
+        <Link to="/ldr-pass" className="rounded-full border border-white/20 px-5 py-3 text-center text-xs font-black uppercase tracking-[.14em] text-white hover:bg-white/10">LDR PASS</Link>
+      </div>
+    </section>
     <AcademyEcosystemSection />
     <div className="academy-integrated-legacy">
       <AcademyUniversityHome />
