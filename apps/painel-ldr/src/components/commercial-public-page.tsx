@@ -27,8 +27,8 @@ const SELLER_ACADEMY =
   "https://lucianodeev.github.io/grupo-ldr-essence-unificado/academia-vendas.html";
 const SELLER_PRESENTATION =
   "https://lucianodeev.github.io/grupo-ldr-essence-unificado/apresentacao-vendedores.html";
-const WEBINAR_GROUP = "https://chat.whatsapp.com/IMk7F1zg2rZJdj9NWC664G?s=cl&p=i&ilr=0";
-const WHATSAPP = "https://wa.me/32492923605";
+const WEBINAR_GROUP = "https://chat.suporte do Ecossistema.com/IMk7F1zg2rZJdj9NWC664G?s=cl&p=i&ilr=0";
+const SUPPORT = "https://suporte.ldrrhestrategia.com/falar-com-ecossistema";
 
 const COPY = {
   pt: {
@@ -105,7 +105,7 @@ const COPY = {
       title: "Empreendedorismo sem Fronteiras e Saúde Mental",
       lead: "Aprenda a transformar experiência, conhecimento e coragem em oportunidades — sem ignorar o equilíbrio emocional necessário para sustentar a jornada.",
       cta: "ENTRAR NO GRUPO OFICIAL",
-      secondary: "FALAR NO WHATSAPP",
+      secondary: "FALAR NO SUPPORT",
       problem:
         "Empreender exige visão, mas também pede clareza emocional para lidar com incerteza, mudança, identidade e tomada de decisão.",
       transform:
@@ -141,7 +141,7 @@ const COPY = {
         ],
         [
           "Como recebo as informações?",
-          "Pelo grupo oficial do WhatsApp e pelos canais já utilizados pelo projeto.",
+          "Pelo grupo oficial do Falar com o Ecossistema e pelos canais já utilizados pelo projeto.",
         ],
         [
           "Há certificado?",
@@ -433,7 +433,7 @@ const COPY = {
       title: "Entrepreneurship Without Borders and Mental Health",
       lead: "Learn to turn experience, knowledge and courage into opportunities — without ignoring the emotional balance required to sustain the journey.",
       cta: "JOIN THE OFFICIAL GROUP",
-      secondary: "CHAT ON WHATSAPP",
+      secondary: "CHAT ON SUPPORT",
       problem:
         "Entrepreneurship requires vision and emotional clarity to deal with uncertainty, change, identity and decisions.",
       transform:
@@ -466,7 +466,7 @@ const COPY = {
         ],
         [
           "How do I receive information?",
-          "Through the official WhatsApp group and existing project channels.",
+          "Through the official Falar com o Ecossistema group and existing project channels.",
         ],
         [
           "Is there a certificate?",
@@ -756,7 +756,7 @@ const COPY = {
       title: "Entrepreneuriat sans Frontières et Santé Mentale",
       lead: "Apprenez à transformer expérience, connaissances et courage en opportunités — sans ignorer l’équilibre émotionnel nécessaire pour soutenir le parcours.",
       cta: "REJOINDRE LE GROUPE OFFICIEL",
-      secondary: "PARLER SUR WHATSAPP",
+      secondary: "PARLER SUR SUPPORT",
       problem:
         "Entreprendre demande de la vision mais aussi de la clarté émotionnelle face à l’incertitude, au changement et aux décisions.",
       transform:
@@ -792,7 +792,7 @@ const COPY = {
         ],
         [
           "Comment recevoir les informations ?",
-          "Via le groupe WhatsApp officiel et les canaux existants.",
+          "Via le groupe Falar com o Ecossistema officiel et les canaux existants.",
         ],
         [
           "Y a-t-il un certificat ?",
@@ -1085,7 +1085,7 @@ const COPY = {
       title: "Emprendimiento sin Fronteras y Salud Mental",
       lead: "Aprende a transformar experiencia, conocimiento y coraje en oportunidades — sin ignorar el equilibrio emocional necesario para sostener el camino.",
       cta: "ENTRAR AL GRUPO OFICIAL",
-      secondary: "HABLAR POR WHATSAPP",
+      secondary: "HABLAR POR SUPPORT",
       problem:
         "Emprender exige visión y también claridad emocional para manejar incertidumbre, cambio, identidad y decisiones.",
       transform:
@@ -1121,7 +1121,7 @@ const COPY = {
         ],
         [
           "¿Cómo recibo la información?",
-          "Por el grupo oficial de WhatsApp y los canales existentes.",
+          "Por el grupo oficial de Falar com o Ecossistema y los canales existentes.",
         ],
         [
           "¿Hay certificado?",
@@ -1388,7 +1388,7 @@ export function CommercialPublicPage({ kind }: { kind: Kind }) {
     kind === "training"
       ? `${PANEL}/cliente/treinamentos`
       : kind === "webinar"
-        ? `${WHATSAPP}?text=Tenho%20interesse%20no%20webinar%20gratuito%20Empreendedorismo%20sem%20Fronteiras`
+        ? `${SUPPORT}?text=Tenho%20interesse%20no%20webinar%20gratuito%20Empreendedorismo%20sem%20Fronteiras`
         : kind === "seller"
           ? SELLER
           : kind === "ebook"
