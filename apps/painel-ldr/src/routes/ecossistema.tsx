@@ -6,6 +6,7 @@ type Hub = {
   tag: string;
   desc: string;
   featured?: "academy" | "pass" | "network" | "career";
+  cta?: string;
 };
 
 export const Route = createFileRoute("/ecossistema")({
@@ -25,6 +26,7 @@ const hubs: Hub[] = [
     tag: "Entrada principal",
     featured: "academy",
     desc: "A entrada central do ecossistema LDR para cursos, formações, biblioteca digital, conteúdos gratuitos, desenvolvimento profissional e acesso às principais soluções educacionais.",
+    cta: "Entrar na LDR Academy",
   },
   {
     name: "LDR PASS",
@@ -32,18 +34,21 @@ const hubs: Hub[] = [
     tag: "Assinatura digital",
     featured: "pass",
     desc: "Assinatura digital do ecossistema para acessar conteúdos elegíveis, trilhas, eBooks e formações online selecionadas, preservando compras antigas e assinaturas separadas.",
+    cta: "Conhecer o LDR PASS",
   },
   {
     name: "Biblioteca LDR",
     url: "/cliente/biblioteca",
     tag: "Conteúdos e assinatura",
     desc: "Biblioteca digital com cursos, eBooks, publicações, materiais gratuitos, formações e conteúdos para estudo contínuo.",
+    cta: "Acessar Biblioteca",
   },
   {
     name: "Cursos Gratuitos",
     url: "/cliente/biblioteca/cursos-gratuitos",
     tag: "Acesso livre",
     desc: "Cursos gratuitos para entrada no ecossistema, incluindo idiomas, carreira, primeiros socorros e conteúdos introdutórios.",
+    cta: "Ver Cursos Gratuitos",
   },
   {
     name: "Rede Acadêmica LDR",
@@ -218,7 +223,7 @@ function EcosystemMap() {
                 <span className={styles.tag}>{hub.tag}</span>
                 <h2 className={styles.title}>{hub.name}</h2>
                 <p className={styles.desc}>{hub.desc}</p>
-                <p className={styles.link}>{hub.url}</p>
+                <span className={styles.link}>{hub.cta ?? `Conhecer ${hub.name}`} →</span>
               </a>
             );
           })}
