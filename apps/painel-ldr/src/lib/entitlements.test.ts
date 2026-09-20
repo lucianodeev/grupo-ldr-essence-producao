@@ -13,3 +13,7 @@ test("library subscription maps to recurring legacy entitlement",()=>{const x=re
 test("editorial subscription remains independent",()=>{const x=resolveLegacyEntitlement({resourceKey:"magazine",editorialSubscription:true,editorialSubscriptionId:"editorial-row"});assert.equal(x.source,"editorial_subscription")});
 test("service-specific access is not converted to PASS",()=>{const x=resolveLegacyEntitlement({resourceKey:"session",serviceSpecific:true});assert.equal(x.source,"service_specific");assert.equal(x.accessType,"temporary")});
 test("missing entitlement denies access",()=>{const x=resolveLegacyEntitlement({resourceKey:"premium"});assert.equal(x.allowed,false);assert.equal(x.source,"none")});
+
+test("PASS stays disabled unless feature flag is enabled",()=>{const x=resolveLegacyEntitlement({resourceKey:"course",pass:true});assert.equal(x.allowed,false);assert.equal(x.source,"none")});
+test("enabled PASS grants recurring access",()=>{const x=resolveLegacyEntitlement({resourceKey:"course",pass:true,passEnabled:true,passSubscriptionId:"pass-row",passExpiresAt:"2026-11-01T00:00:00Z"});assert.equal(x.allowed,true);assert.equal(x.source,"pass");assert.equal(x.subscriptionId,"pass-row");assert.equal(x.legacy,false)});
+test("lifetime ownership still outranks PASS",()=>{const x=resolveLegacyEntitlement({resourceKey:"course",owned:true,pass:true,passEnabled:true});assert.equal(x.source,"ownership");assert.equal(x.accessType,"lifetime")});
