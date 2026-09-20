@@ -80,6 +80,18 @@ export function AcademyChatbot() {
   const [teaser, setTeaser] = useState(false);
   const [selected, setSelected] = useState<Topic | null>(null);
   const [query, setQuery] = useState("");
+  const [primaryInstance, setPrimaryInstance] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const root = document.documentElement;
+    if (root.dataset.ldrAcademyChatbot === "1") return;
+    root.dataset.ldrAcademyChatbot = "1";
+    setPrimaryInstance(true);
+    if (!primaryInstance) return null;\n\n  return () => {
+      if (root.dataset.ldrAcademyChatbot === "1") delete root.dataset.ldrAcademyChatbot;
+    };
+  }, []);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
