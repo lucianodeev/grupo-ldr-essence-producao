@@ -16,3 +16,9 @@ export const updateEcosystemContact=createServerFn({method:"POST"}).inputValidat
  const db=await requireMaster(); const patch:any={status:data.status,priority:data.priority,updated_at:new Date().toISOString()}; if(data.status==="respondido") patch.first_response_at=new Date().toISOString(); if(data.status==="resolvido") patch.resolved_at=new Date().toISOString();
  const {error}=await (db as any).from("ecosystem_contacts").update(patch).eq("id",data.id); if(error) throw error; return {ok:true};
 });
+export const prepareEcosystemSupportUpload=createServerFn({method:"POST"}).inputValidator((d:{protocol:string;fileName:string;contentType:string;size:number})=>d).handler(async({data})=>{
+ const {preparePublicSupportUpload}=await import("@/lib/ecosystem-support-upload.server"); return preparePublicSupportUpload(data);
+});
+export const finalizeEcosystemSupportUpload=createServerFn({method:"POST"}).inputValidator((d:{protocol:string;path:string;fileName:string;contentType:string;size:number})=>d).handler(async({data})=>{
+ const {finalizePublicSupportUpload}=await import("@/lib/ecosystem-support-upload.server"); return finalizePublicSupportUpload(data);
+});
