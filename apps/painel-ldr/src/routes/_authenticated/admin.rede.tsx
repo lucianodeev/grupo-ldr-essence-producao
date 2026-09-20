@@ -6,7 +6,8 @@ export const Route = createFileRoute("/_authenticated/admin/rede")({ component: 
 function RedeAdmin() {
   const access = useAccess();
   if (access.isLoading) return <div className="s8-card mx-auto max-w-md text-center">Carregando...</div>;
-  if (!access.data?.authorized || access.data.role !== "superadmin") return <div className="s8-card mx-auto max-w-xl text-center"><h1 className="font-serif text-3xl">403</h1><p className="mt-2 text-sm text-muted-foreground">Área exclusiva do administrador master.</p></div>;
+  if (access.isError) return <div className="s8-card mx-auto max-w-xl text-center"><h1 className="font-serif text-3xl">Sessão expirada</h1><p className="mt-2 text-sm text-muted-foreground">Entre novamente para validar seu acesso ao Painel Master.</p><a href="/login" className="mt-5 inline-flex rounded-xl bg-[#0B1F3A] px-5 py-3 text-sm font-bold text-white">Entrar novamente</a></div>;
+  if (!access.data?.authorized || access.data.role !== "superadmin") return <div className="s8-card mx-auto max-w-xl text-center"><h1 className="font-serif text-3xl">Acesso restrito</h1><p className="mt-2 text-sm text-muted-foreground">Área exclusiva do administrador Master.</p><a href="/login" className="mt-5 inline-flex rounded-xl border px-5 py-3 text-sm font-bold">Trocar de conta</a></div>;
 
   const links = [
     ["Profissionais", "/admin/profissionais"],
