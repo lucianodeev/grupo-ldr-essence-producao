@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { FormEvent, useMemo, useRef, useState } from "react";\nimport { useServerFn } from "@tanstack/react-start";\nimport { finalizeEcosystemSupportUpload, prepareEcosystemSupportUpload } from "@/lib/ecosystem-support.functions";
+import { FormEvent, useMemo, useRef, useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
+import { finalizeEcosystemSupportUpload, prepareEcosystemSupportUpload } from "@/lib/ecosystem-support.functions";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/falar-com-ecossistema")({
@@ -19,7 +21,8 @@ function EcosystemSupport(){
  const params=new URLSearchParams(typeof window==="undefined"?"":window.location.search);
  const lang=(["pt","en","fr","es"].includes(params.get("lang")||"")?params.get("lang"):"pt") as keyof typeof copy;
  const t=copy[lang], preset=params.get("assunto")||"";
- const [sending,setSending]=useState(false),[protocol,setProtocol]=useState(""),[error,setError]=useState(""),[files,setFiles]=useState<File[]>([]);\n const fileRef=useRef<HTMLInputElement|null>(null); const prepareUpload=useServerFn(prepareEcosystemSupportUpload),finalizeUpload=useServerFn(finalizeEcosystemSupportUpload);
+ const [sending,setSending]=useState(false),[protocol,setProtocol]=useState(""),[error,setError]=useState(""),[files,setFiles]=useState<File[]>([]);
+ const fileRef=useRef<HTMLInputElement|null>(null); const prepareUpload=useServerFn(prepareEcosystemSupportUpload),finalizeUpload=useServerFn(finalizeEcosystemSupportUpload);
  const sourceUrl=useMemo(()=>typeof window==="undefined"?"":document.referrer||window.location.href,[]);
  async function submit(e:FormEvent<HTMLFormElement>){e.preventDefault();setSending(true);setError("");const d=new FormData(e.currentTarget);const subject=String(d.get("subject")||"");
  const {data, error:rpcError}=await supabase.rpc("submit_ecosystem_contact" as never,{p_name:String(d.get("name")||""),p_email:String(d.get("email")||""),p_phone:String(d.get("phone")||""),p_subject:subject,p_message:String(d.get("message")||""),p_source_project:params.get("source")||"LDR Academy / Ecossistema",p_source_url:sourceUrl,p_language:lang,p_wants_luciano:subject==="Quero falar com Luciano",p_consent:d.get("consent")==="on",p_website:String(d.get("website")||"")} as never);if(rpcError||!data){setSending(false);setError("Não foi possível registrar agora. Tente novamente.");return;}const nextProtocol=String(data); try{for(const file of files){const prepared:any=await prepareUpload({data:{protocol:nextProtocol,fileName:file.name,contentType:file.type,size:file.size}});const {error:uploadError}=await supabase.storage.from(prepared.bucket).uploadToSignedUrl(prepared.path,prepared.token,file,{contentType:file.type});if(uploadError)throw uploadError;await finalizeUpload({data:{protocol:nextProtocol,path:prepared.path,fileName:file.name,contentType:file.type,size:file.size}})}}catch(err){setSending(false);setError(`Solicitação ${nextProtocol} registrada, mas um anexo não foi confirmado. Tente enviar novamente ou informe o protocolo ao suporte.`);return;}setSending(false);setProtocol(nextProtocol);}
