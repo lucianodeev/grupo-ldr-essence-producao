@@ -23,7 +23,7 @@ export const Route = createFileRoute("/film")({
   component: FilmLandingPage,
 });
 
-const WHATSAPP_URL = "https://wa.me/32492923605?text=Ol%C3%A1%2C%20Luciano.%20Tenho%20interesse%20em%20conhecer%20o%20projeto%20Luciano%20Conecta%20Film.";
+const SUPPORT_URL = "https://suporte.ldrrhestrategia.com/falar-com-ecossistema";
 const MAIL_URL = "mailto:llucianouam@gmail.com?subject=Projeto%20Luciano%20Conecta%20Film&body=Ol%C3%A1%2C%20Luciano.%20Tenho%20interesse%20em%20receber%20a%20apresenta%C3%A7%C3%A3o%20do%20projeto%20audiovisual.";
 
 const formats = [
@@ -93,10 +93,10 @@ function FilmLandingPage() {
             <a className="transition hover:text-white" href="#contato">Contato</a>
           </nav>
           <a
-            href={WHATSAPP_URL}
+            href={SUPPORT_URL}
             className="rounded-full bg-[#d6ad63] px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-[#070914] transition hover:scale-[1.02]"
           >
-            WhatsApp
+            Falar com o Ecossistema
           </a>
         </div>
       </header>
@@ -122,7 +122,7 @@ function FilmLandingPage() {
             </p>
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
               <a
-                href={WHATSAPP_URL}
+                href={SUPPORT_URL}
                 className="rounded-full bg-[#d6ad63] px-7 py-4 text-center text-sm font-black uppercase tracking-[0.2em] text-[#070914] shadow-2xl transition hover:scale-[1.02]"
               >
                 Falar com o projeto
@@ -298,10 +298,10 @@ function FilmLandingPage() {
             </div>
             <div className="flex flex-col gap-4">
               <a
-                href={WHATSAPP_URL}
+                href={SUPPORT_URL}
                 className="rounded-full bg-[#d6ad63] px-7 py-4 text-center text-sm font-black uppercase tracking-[0.2em] text-[#070914] transition hover:scale-[1.02]"
               >
-                Chamar no WhatsApp
+                Chamar no Falar com o Ecossistema
               </a>
               <a
                 href={MAIL_URL}
