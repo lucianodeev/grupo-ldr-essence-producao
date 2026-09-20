@@ -9,7 +9,7 @@ import { ownerDashboardSummary } from "@/lib/owner-dashboard.functions";
 export const Route = createFileRoute("/_authenticated/admin")({ component: MasterAdmin });
 
 const PRIMARY_AREAS = [
-  ["Falar com o Ecossistema", "Solicitações de serviços, suporte, compras com erro e pessoas que querem falar com Luciano.", "/admin/contatos"],\n  ["Atendimentos", "Agenda, atendimentos de hoje, clientes e acompanhamento administrativo.", "/admin/meus-atendimentos"],
+  ["Atendimentos", "Agenda, atendimentos de hoje, clientes e acompanhamento administrativo.", "/admin/meus-atendimentos"],
   ["Profissionais", "Aprovação, perfis, serviços, conformidade e operação da rede multidisciplinar.", "/admin/rede"],
   ["Clínica Social", "Solicitações, profissionais participantes, valores sociais e acompanhamento.", "/admin/clinica-social"],
   ["Empresas", "Planos corporativos, colaboradores, benefícios e créditos.", "/admin/empresas"],
