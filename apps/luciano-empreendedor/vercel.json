@@ -2,6 +2,24 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "routes": [
     {
+      "src": "/treinamento(?:/)?",
+      "has": [{ "type": "host", "value": "ldrrhestrategia.com" }],
+      "status": 308,
+      "headers": { "Location": "https://ldracademy.online/ecossistema" }
+    },
+    {
+      "src": "/treinamento(?:/)?",
+      "has": [{ "type": "host", "value": "www.ldrrhestrategia.com" }],
+      "status": 308,
+      "headers": { "Location": "https://ldracademy.online/ecossistema" }
+    },
+    {
+      "src": "/treinamento(?:/)?",
+      "has": [{ "type": "host", "value": "clinicasocial.ldrrhestrategia.com" }],
+      "status": 308,
+      "headers": { "Location": "https://ldracademy.online/ecossistema" }
+    },
+    {
       "src": "/(.*)",
       "has": [{ "type": "host", "value": "lucianoempreendendor.com" }],
       "status": 308,
