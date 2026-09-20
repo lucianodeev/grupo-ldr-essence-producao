@@ -25,13 +25,9 @@ const COPY = {
 function oauthReturnUrl() {
   if (typeof window === "undefined") return "/api/auth/callback?admin=1";
 
-  // This host is already allow-listed in Supabase and is canonicalized back
-  // to ldracademy.online while preserving the OAuth code. The temporary
-  // admin-intent cookie keeps the destination separate from the client login.
-  if (/(^|\.)ldracademy\.online$/i.test(window.location.hostname)) {
-    return "https://learn.lucianoconecta.online/api/auth/callback?academy=1";
-  }
-
+  // Keep the administrator OAuth callback on the same canonical Academy host.
+  // Sending it through the legacy Learn host loses the host-only admin-intent
+  // cookie and can make the callback fall through to the public/client flow.
   return `${window.location.origin}/api/auth/callback?admin=1`;
 }
 
