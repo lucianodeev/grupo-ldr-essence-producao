@@ -98,8 +98,8 @@ export function AcademyChatbot() {
 
   function choose(topic: Topic) {
     if (topic === "human") {
-      const url = careerPage ? "https://wa.me/32492923605?text=Ol%C3%A1%2C%20vim%20pelo%20LDR%20Carreira%20e%20gostaria%20de%20ajuda." : WHATSAPP_URL;
-      window.open(url, "_blank", "noopener,noreferrer");
+      const source = encodeURIComponent(location.pathname);
+      window.location.href = `${SUPPORT_URL}?source=${source}&lang=${lang}`;
       return;
     }
     setQuery("");
