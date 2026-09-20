@@ -1,11 +1,11 @@
 import { createServerFn } from "@tanstack/react-start";
-import { getSupabaseServerClient } from "@/integrations/supabase/server";
+import { resolveRequestAuth } from "@/integrations/supabase/request-auth.server";
 
 async function requireMaster() {
- const supabase=await getSupabaseServerClient();
- const { data: { user } }=await supabase.auth.getUser();
- if(!user) throw new Error("Unauthorized");
- const {data:role}=await supabase.from("user_roles").select("role").eq("user_id",user.id).eq("role","superadmin").maybeSingle();
+ const auth=await resolveRequestAuth();
+ if(!auth.authenticated) throw new Error("Unauthorized");
+ const supabase=auth.supabase;
+ const {data:role}=await supabase.from("user_roles").select("role").eq("user_id",auth.userId).eq("role","superadmin").maybeSingle();
  if(!role) throw new Error("Forbidden");
  return supabase;
 }
