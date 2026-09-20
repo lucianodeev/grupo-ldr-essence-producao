@@ -17,7 +17,10 @@ const COPY = {
   es: { portal: "Beneficios corporativos", title: "Mi Área", subtitle: "Entra con la misma cuenta de Google del correo registrado por tu empresa.", opening: "Abriendo…", google: "Continuar con Google", privacy: "Tu acceso solo muestra los beneficios que tienes asignados.", back: "Volver a los accesos", error: "No fue posible iniciar sesión con Google." },
 } as const;
 
-function oauthReturnUrl() {\n  if (typeof window === "undefined") return "/api/auth/callback";\n  return `${window.location.origin}/api/auth/callback`;\n}
+function oauthReturnUrl() {
+  if (typeof window === "undefined") return "/api/auth/callback";
+  return `${window.location.origin}/api/auth/callback`;
+}
 
 async function syncBrowserSession(session: Session) {
   const response = await fetch("/api/auth/session-sync", {

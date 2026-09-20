@@ -10,7 +10,10 @@ import { professionalDashboard } from "@/lib/professional-network.functions";
 export const Route=createFileRoute("/profissional/login")({head:()=>({meta:[{title:"Área do Profissional — Rede LDR"},{name:"description",content:"Acesse ou crie sua área profissional na Rede LDR para configurar perfil, plano, agenda e recursos da plataforma."},{name:"robots",content:"noindex"}]}),component:ProfessionalLogin});
 const COPY={pt:{title:"Área do Profissional",sub:"Crie seu perfil, escolha o plano e gerencie sua atuação na Rede LDR.",google:"Entrar com Google",opening:"Abrindo…",back:"Conhecer a Rede LDR",error:"Não foi possível entrar."},en:{title:"Professional Area",sub:"Create your profile, choose a plan and manage your work in the LDR Network.",google:"Continue with Google",opening:"Opening…",back:"Explore the LDR Network",error:"Could not sign in."},fr:{title:"Espace Professionnel",sub:"Créez votre profil, choisissez votre plan et gérez votre activité dans le Réseau LDR.",google:"Continuer avec Google",opening:"Ouverture…",back:"Découvrir le Réseau LDR",error:"Connexion impossible."},es:{title:"Área Profesional",sub:"Crea tu perfil, elige tu plan y gestiona tu actividad en la Red LDR.",google:"Continuar con Google",opening:"Abriendo…",back:"Conocer la Red LDR",error:"No fue posible entrar."}} as const;
 
-function oauthReturnUrl() {\n  if (typeof window === "undefined") return "/api/auth/callback";\n  return `${window.location.origin}/api/auth/callback`;\n}
+function oauthReturnUrl() {
+  if (typeof window === "undefined") return "/api/auth/callback";
+  return `${window.location.origin}/api/auth/callback`;
+}
 
 async function syncBrowserSession(session:Session){
   const response=await fetch("/api/auth/session-sync",{method:"POST",credentials:"include",cache:"no-store",headers:{"content-type":"application/json"},body:JSON.stringify({access_token:session.access_token,refresh_token:session.refresh_token})});
