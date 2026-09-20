@@ -24,6 +24,7 @@ async function syncSession(session: Session) {
 }
 
 export const Route = createFileRoute("/_clientarea")({
+  head: () => ({ meta: [{ name: "robots", content: "noindex,nofollow" }] }),
   beforeLoad: async ({ location }) => {
     if (typeof window === "undefined") return;
 
