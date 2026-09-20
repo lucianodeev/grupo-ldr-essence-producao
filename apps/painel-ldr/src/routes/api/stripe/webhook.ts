@@ -219,7 +219,7 @@ async function setEditorialSubscription(metadata: Record<string, string>, object
   return handleEditorialStripeEvent(metadata, object, eventType);
 }
 
-type RecurringCheckoutKind = "company_subscription" | "editorial_subscription" | "library_subscription" | "professional_subscription";
+type RecurringCheckoutKind = "company_subscription" | "editorial_subscription" | "library_subscription" | "professional_subscription" | "ldr_pass_subscription";
 
 async function resolveRecurringCheckoutKind(object: StripeObject): Promise<RecurringCheckoutKind | null> {
   const subscriptionId = stripeId(object.subscription) ?? stripeId(object.parent?.subscription_details?.subscription);
@@ -230,6 +230,7 @@ async function resolveRecurringCheckoutKind(object: StripeObject): Promise<Recur
     ["editorial_subscription", "editorial_subscriptions"],
     ["library_subscription", "library_subscriptions"],
     ["professional_subscription", "professional_subscriptions"],
+    ["ldr_pass_subscription", "ldr_pass_subscriptions"],
   ];
   const matches: RecurringCheckoutKind[] = [];
   for (const [kind, table] of tables) {
@@ -239,6 +240,24 @@ async function resolveRecurringCheckoutKind(object: StripeObject): Promise<Recur
   }
   if (matches.length > 1) throw new Error(`Ambiguous Stripe subscription routing for ${subscriptionId}`);
   return matches[0] ?? null;
+}
+
+async function setLdrPassSubscription(metadata: Record<string,string>, object: StripeObject, eventType: string) {
+  const rowId=metadata["ldr_pass_subscription_id"];
+  const subscriptionId=eventType.startsWith("customer.subscription")?object.id??null:stripeId(object.subscription)??stripeId(object.parent?.subscription_details?.subscription);
+  if(!rowId&&!subscriptionId)return false;
+  const db=await database(); let status=String(object.status??"pending");
+  if(eventType==="checkout.session.completed")status=object.payment_status==="paid"||object.payment_status==="no_payment_required"?"active":"pending";
+  if(eventType==="invoice.payment_succeeded")status="active";
+  if(eventType==="invoice.payment_failed")status="past_due";
+  if(eventType==="checkout.session.expired"||eventType==="customer.subscription.deleted")status="canceled";
+  const allowed=new Set(["pending","active","trialing","past_due","canceled","unpaid","paused","incomplete"]); if(!allowed.has(status))status="incomplete";
+  const patch:Record<string,unknown>={status,updated_at:new Date().toISOString()};
+  if(eventType==="checkout.session.completed"||eventType==="checkout.session.expired")patch.stripe_checkout_session_id=object.id??null;
+  if(subscriptionId)patch.stripe_subscription_id=subscriptionId; const customer=stripeId(object.customer);if(customer)patch.stripe_customer_id=customer;
+  const start=isoFromUnix(object.current_period_start);if(start)patch.current_period_start=start;const end=isoFromUnix(object.current_period_end);if(end)patch.current_period_end=end;
+  if(typeof object.cancel_at_period_end==="boolean")patch.cancel_at_period_end=object.cancel_at_period_end;
+  let q=db.from("ldr_pass_subscriptions").update(patch);q=rowId?q.eq("id",rowId):q.eq("stripe_subscription_id",subscriptionId);const {error}=await q;if(error)throw error;return true;
 }
 
 async function balanceCredit(accountId: string, currency: string, gross: number, platformFee: number, net: number) {
@@ -632,7 +651,9 @@ export const Route = createFileRoute("/api/stripe/webhook")({
             event.type === "checkout.session.completed" ||
             event.type === "checkout.session.expired";
 
-          if (checkoutKind === "company_subscription" && (subscriptionCheckoutEvent || recurringSubscriptionEvent)) {
+          if (checkoutKind === "ldr_pass_subscription" && (subscriptionCheckoutEvent || recurringSubscriptionEvent)) {
+            await setLdrPassSubscription(metadata, object, event.type);
+          } else if (checkoutKind === "company_subscription" && (subscriptionCheckoutEvent || recurringSubscriptionEvent)) {
             await setCompanySubscription(metadata, object, event.type);
           } else if (checkoutKind === "editorial_subscription" && (subscriptionCheckoutEvent || recurringSubscriptionEvent)) {
             await setEditorialSubscription(metadata, object, event.type);
