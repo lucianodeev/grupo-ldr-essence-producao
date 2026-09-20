@@ -68,7 +68,7 @@ const hubs: Hub[] = [
   },
   {
     name: "Clínica Social LDR",
-    url: "https://clinicasocial.ldrrhestrategia.com/",
+    url: "https://ldracademy.online/clinica-social",
     tag: "Cuidado social",
     desc: "Projeto social do ecossistema LDR para ampliar acesso a cuidado, acolhimento e encaminhamento, preservando confidencialidade e responsabilidade profissional.",
   },
