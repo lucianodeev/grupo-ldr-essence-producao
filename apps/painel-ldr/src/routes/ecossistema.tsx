@@ -159,19 +159,12 @@ const HUB_COPY = {
   ] as Hub[]
 } as const;
 
-const features = [
-  "Cursos e formações online",
-  "Biblioteca digital",
-  "eBooks e publicações",
-  "Cursos gratuitos",
-  "Rede Acadêmica",
-  "Divulgação gratuita de vagas",
-  "Desenvolvimento de carreira",
-  "Projetos para empresas",
-  "Clínica Social",
-  "Human Room",
-  "LDR PASS",
-];
+const FEATURES = {
+  pt:["Cursos e formações online","Biblioteca digital","eBooks e publicações","Cursos gratuitos","Rede Acadêmica","Divulgação gratuita de vagas","Desenvolvimento de carreira","Projetos para empresas","Clínica Social","Human Room","LDR PASS"],
+  en:["Online courses and programs","Digital library","eBooks and publications","Free courses","Academic Network","Free job posting","Career development","Projects for companies","Social Clinic","Human Room","LDR PASS"],
+  fr:["Cours et formations en ligne","Bibliothèque numérique","eBooks et publications","Cours gratuits","Réseau Académique","Publication gratuite d’offres","Développement de carrière","Projets pour les entreprises","Clinique Sociale","Human Room","LDR PASS"],
+  es:["Cursos y formaciones online","Biblioteca digital","eBooks y publicaciones","Cursos gratuitos","Red Académica","Publicación gratuita de vacantes","Desarrollo profesional","Proyectos para empresas","Clínica Social","Human Room","LDR PASS"],
+} as const;
 
 function external(url: string) {
   return url.startsWith("http");
@@ -228,6 +221,8 @@ function EcosystemMap() {
   const { locale } = useI18n();
   const copy = ECOSYSTEM_COPY[locale] ?? ECOSYSTEM_COPY.pt;
   const hubs = HUB_COPY[locale] ?? HUB_COPY.pt;
+  const features = FEATURES[locale] ?? FEATURES.pt;
+  const discoverLabel = locale==="en"?"Discover":locale==="fr"?"Découvrir":locale==="es"?"Conocer":"Conhecer";
   return (
     <main className="min-h-screen bg-[#f8f1e7] text-[#25170f]">
       <div className="border-y border-[#d6ad63]/30 bg-[#071426] text-white" aria-label={copy.tickerLabel}>
@@ -305,7 +300,7 @@ function EcosystemMap() {
                 <span className={styles.tag}>{hub.tag}</span>
                 <h2 className={styles.title}>{hub.name}</h2>
                 <p className={styles.desc}>{hub.desc}</p>
-                <span className={styles.link}>{hub.cta ?? `Conhecer ${hub.name}`} →</span>
+                <span className={styles.link}>{hub.cta ?? `${discoverLabel} ${hub.name}`} →</span>
               </a>
             );
           })}
