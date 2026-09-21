@@ -31,7 +31,13 @@ export function PressMention({ mention = startupValleyMention }: { mention?: Pre
       <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
         {mention.logoSrc ? (
           <div className="flex min-h-20 w-full items-center justify-center rounded-2xl bg-white p-4 ring-1 ring-slate-200 sm:w-52">
-            <img src={mention.logoSrc} alt={mention.mediaOutlet} className="block h-auto w-[200px] max-w-full object-contain opacity-100" loading="eager" decoding="sync" width="320" height="152" style={{ visibility: "visible", opacity: 1 }} />
+            <div role="img" aria-label="StartupValley.news" className="flex w-full max-w-[220px] flex-col items-center justify-center px-2 py-3">
+              <div className="whitespace-nowrap text-center font-sans text-[32px] font-extrabold leading-none tracking-[-0.055em] sm:text-[34px]">
+                <span className="text-[#1789d5]">Startup</span><span className="text-[#111111]">Valley</span>
+              </div>
+              <div className="mt-2 h-px w-full bg-[#111111]" aria-hidden="true" />
+              <div className="mt-1 self-end font-sans text-[15px] font-semibold leading-none text-[#111111]">.news</div>
+            </div>
           </div>
         ) : null}
         <div className="min-w-0 flex-1">
