@@ -234,7 +234,7 @@ function EcosystemMap() {
           <span className="mr-4 shrink-0 rounded bg-[#d6ad63] px-2 py-1 text-[10px] font-black tracking-[.16em] text-[#25170f]">{copy.tickerLabel}</span>
           <div className="min-w-0 flex-1 overflow-hidden whitespace-nowrap">
             <div className="inline-block motion-safe:animate-[ldrTicker_22s_linear_infinite] motion-reduce:whitespace-normal text-xs font-semibold tracking-wide">
-              <span>{copy.antiRacism}</span>{liveNews.length>0?liveNews.map((item)=><span key={item.url}><span className="mx-8 text-[#d6ad63]" aria-hidden="true">●</span><a className="hover:underline" href={item.url} target="_blank" rel="noreferrer">{item.title}{item.source?` — ${item.source}`:""}</a></span>):<><span className="mx-8 text-[#d6ad63]" aria-hidden="true">●</span><span>{copy.newsSoon}</span></>}
+              <span>{copy.antiRacism}</span>{liveNews.length>0?liveNews.map((item)=><span key={item.url}><span className="mx-8 text-[#d6ad63]" aria-hidden="true">●</span><a className="hover:underline" href={item.url} target="_blank" rel="noreferrer">{item.title}{item.source?` — ${item.source}`:""}{item.publishedAt?` · ${new Intl.DateTimeFormat(locale,{dateStyle:"short",timeStyle:"short"}).format(new Date(item.publishedAt))}`:""}</a></span>):<><span className="mx-8 text-[#d6ad63]" aria-hidden="true">●</span><span>{copy.newsSoon}</span></>}
             </div>
           </div>
         </div>
