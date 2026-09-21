@@ -57,12 +57,32 @@ const freeCourses=[
 
 export function LibrarySalesHome(){
   const {locale:raw}=useI18n(); const locale=(raw==="pt"||raw==="en"||raw==="fr"||raw==="es"?raw:"pt") as Locale; const t=COPY[locale]; const {formations,freeCourses}=librarySalesCardCatalog(locale); const promo=Date.now()<PROMO_END_AT;
-  const faq = locale==="pt" ? [
-    ["Preciso pagar para entrar na Biblioteca?","Não. Há conteúdos gratuitos. Os conteúdos pagos podem ser comprados individualmente ou acessados pela assinatura enquanto ela estiver ativa."],
-    ["Posso comprar uma formação sem assinar?","Sim. A compra individual é independente da assinatura e mantém acesso vitalício ao conteúdo comprado."],
-    ["O que acontece se eu cancelar a assinatura?","O acesso derivado da assinatura termina conforme o período contratado. Compras vitalícias continuam disponíveis."],
-    ["A formação de RH de 600h é graduação?","Não. É uma formação livre de caráter profissional e não corresponde a graduação ou diploma de nível superior reconhecido pelo MEC."],
-  ] : [];
+  const faq = {
+    pt:[
+      ["Preciso pagar para entrar na Biblioteca?","Não. Há conteúdos gratuitos. Os conteúdos pagos podem ser comprados individualmente ou acessados pela assinatura enquanto ela estiver ativa."],
+      ["Posso comprar uma formação sem assinar?","Sim. A compra individual é independente da assinatura e mantém acesso vitalício ao conteúdo comprado."],
+      ["O que acontece se eu cancelar a assinatura?","O acesso derivado da assinatura termina conforme o período contratado. Compras vitalícias continuam disponíveis."],
+      ["A formação de RH de 600h é graduação?","Não. É uma formação livre de caráter profissional e não corresponde a graduação ou diploma de nível superior reconhecido pelo MEC."],
+    ],
+    en:[
+      ["Do I need to pay to enter the Library?","No. Free content is available. Paid content can be purchased individually or accessed through the subscription while it is active."],
+      ["Can I buy a training program without subscribing?","Yes. An individual purchase is independent of the subscription and provides lifetime access to the purchased content."],
+      ["What happens if I cancel the subscription?","Subscription-based access ends according to the contracted period. Lifetime purchases remain available."],
+      ["Is the 600-hour HR training a university degree?","No. It is a non-degree professional training program and does not constitute a university degree or higher-education diploma."],
+    ],
+    fr:[
+      ["Dois-je payer pour accéder à la Bibliothèque ?","Non. Des contenus gratuits sont disponibles. Les contenus payants peuvent être achetés séparément ou accessibles via l’abonnement tant qu’il est actif."],
+      ["Puis-je acheter une formation sans abonnement ?","Oui. L’achat individuel est indépendant de l’abonnement et donne un accès à vie au contenu acheté."],
+      ["Que se passe-t-il si j’annule l’abonnement ?","L’accès lié à l’abonnement prend fin selon la période souscrite. Les achats avec accès à vie restent disponibles."],
+      ["La formation RH de 600 h est-elle un diplôme universitaire ?","Non. Il s’agit d’une formation professionnelle non diplômante et non d’un diplôme universitaire ou de l’enseignement supérieur."],
+    ],
+    es:[
+      ["¿Tengo que pagar para entrar en la Biblioteca?","No. Hay contenidos gratuitos. Los contenidos de pago pueden comprarse individualmente o utilizarse mediante la suscripción mientras esté activa."],
+      ["¿Puedo comprar una formación sin suscribirme?","Sí. La compra individual es independiente de la suscripción y mantiene acceso de por vida al contenido comprado."],
+      ["¿Qué ocurre si cancelo la suscripción?","El acceso derivado de la suscripción termina según el período contratado. Las compras con acceso vitalicio siguen disponibles."],
+      ["¿La formación de RR. HH. de 600 h es un grado universitario?","No. Es una formación profesional no universitaria y no equivale a un grado ni a un diploma de educación superior."],
+    ],
+  }[locale];
   return <main className="min-h-screen bg-[#f7f3e9] text-[#071426]">
     <header className="sticky top-0 z-50 border-b border-[#d6ad63]/25 bg-[#071426]/95 text-white backdrop-blur"><div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6"><a href="#top" className="font-serif text-xl text-[#fff7e7]">{t.brand}</a><div className="flex items-center gap-2"><LanguageSelect/><Link to="/cliente/login" className="rounded-lg border border-white/15 px-3 py-2 text-xs font-black">{t.login}</Link></div></div></header>
 
