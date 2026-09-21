@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, BookOpen, BriefcaseBusiness, Building2, GraduationCap, Mic2, Newspaper, Search, Users } from "lucide-react";
+import { PressMention } from "../components/press/PressMention";
 
 export const Route = createFileRoute("/imprensa/")({
   head: () => ({
@@ -49,6 +50,8 @@ function ImprensaHome() {
         <EditorialCard icon={<Mic2 />} kicker="Entrevistas" title="Especialistas e experiências que ajudam a compreender o presente" text="A LDR Imprensa nasce também como ponte entre jornalistas e pessoas com conhecimento para contribuir com pautas." /></>}
       </div>
     </section>
+
+    <section className="mx-auto max-w-7xl px-5 pb-14"><p className="text-sm font-black uppercase tracking-widest text-[#8b6c1f]">Na imprensa internacional</p><h2 className="mt-2 mb-6 text-3xl font-black">Cobertura editorial do Ecossistema LDR</h2><PressMention /></section>
 
     <section id="categorias" className="border-y border-[#d9d2c0] bg-white">
       <div className="mx-auto max-w-7xl px-5 py-14"><h2 className="text-3xl font-black">Editorias</h2><div className="mt-7 flex flex-wrap gap-3">{categories.map(c => <span key={c} className="rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold">{c}</span>)}</div></div>

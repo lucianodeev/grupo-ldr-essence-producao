@@ -1,4 +1,5 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
+import { PressMention } from "../components/press/PressMention";
 
 type Hub = {
   name: string;
@@ -212,6 +213,8 @@ function EcosystemMap() {
           <p className="mt-3 max-w-3xl text-sm leading-6 text-[#6f6358]">Se você é empreendedor, empresa, profissional, investidor ou simplesmente tem uma boa ideia, fale comigo pelo suporte. Talvez exista uma conversa que valha a pena começar.</p>
           <Link to="/falar-com-ecossistema" search={{ assunto: "Empreendedorismo, negócios e novas oportunidades", source: "ecossistema_negocios" } as any} className="mt-5 inline-flex min-h-12 items-center justify-center rounded-full bg-[#1d3158] px-5 py-3 text-sm font-black text-white">Quero conversar sobre negócios</Link>
         </section>
+
+        <section className="mt-8 rounded-[28px] border border-[#d6ad63]/50 bg-white p-6 shadow-sm sm:p-8"><p className="text-xs font-black uppercase tracking-[.2em] text-[#9a6a20]">Na imprensa internacional</p><h2 className="mt-3 mb-6 font-serif text-3xl font-bold text-[#25170f]">O Ecossistema LDR em cobertura editorial internacional.</h2><PressMention /><Link to="/imprensa" className="mt-5 inline-flex min-h-12 items-center justify-center rounded-full border border-[#1d3158] px-5 py-3 text-sm font-black text-[#1d3158]">Imprensa & Mídia</Link></section>
 
         <section className="mt-8 rounded-[28px] border border-[#e5d1ac] bg-white p-6 shadow-sm">
           <p className="text-xs font-black uppercase tracking-[.2em] text-[#9a6a20]">O que você encontra no ecossistema</p>
