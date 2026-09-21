@@ -2,6 +2,8 @@ import { createServerFn } from "@tanstack/react-start";
 
 type Locale = "pt"|"en"|"fr"|"es";
 export type EcosystemNewsItem={title:string;url:string;source:string;publishedAt:string};
+const blocked=/\b(opini[aã]o|opinion|opini[oó]n|editorial|hor[oó]scopo|celebridade|celebrity|fofoca|gossip)\b/i;
+const cleanTitle=(s:string)=>s.replace(/\s+/g," ").trim();
 
 const feeds:Record<Locale,string>={
  pt:"https://news.google.com/rss/search?q=empreendedorismo%20OR%20economia%20OR%20tecnologia%20OR%20pol%C3%ADtica&hl=pt-BR&gl=BR&ceid=BR:pt-419",
@@ -20,10 +22,12 @@ export const ecosystemNews=createServerFn({method:"GET"})
      const res=await fetch(feeds[locale],{headers:{"User-Agent":"LDR-Ecosystem-News/1.0"}});
      if(!res.ok) return [] as EcosystemNewsItem[];
      const xml=await res.text();
-     return [...xml.matchAll(/<item>([\s\S]*?)<\/item>/gi)].slice(0,8).map(m=>{
+     const seen=new Set<string>();
+     return [...xml.matchAll(/<item>([\s\S]*?)<\/item>/gi)].map(m=>{
        const block=m[1], raw=tag(block,"title"), link=tag(block,"link"), publishedAt=tag(block,"pubDate");
        const parts=raw.split(" - "); const source=parts.length>1?(parts.pop()||""):"";
-       return {title:parts.join(" - ")||raw,url:link,source,publishedAt};
-     }).filter(x=>x.title&&x.url);
+       const title=cleanTitle(parts.join(" - ")||raw);
+       return {title,url:link,source:cleanTitle(source),publishedAt};
+     }).filter(x=>{if(!x.title||!x.url||blocked.test(x.title))return false;const k=x.title.toLowerCase();if(seen.has(k))return false;seen.add(k);return true}).slice(0,8);
    }catch{return [] as EcosystemNewsItem[]}
  });
