@@ -229,7 +229,7 @@ function EcosystemMap() {
   const liveNews=newsQuery.data??[];
   return (
     <main className="min-h-screen bg-[#f8f1e7] text-[#25170f]">
-      <div className="border-y border-[#d6ad63]/30 bg-[#071426] text-white" aria-label={copy.tickerLabel}>
+      <div className="sticky top-0 z-50 border-y border-[#d6ad63]/30 bg-[#071426] text-white shadow-md" aria-label={copy.tickerLabel}>
         <div className="mx-auto flex max-w-6xl items-center overflow-hidden px-5 py-2">
           <span className="mr-4 shrink-0 rounded bg-[#d6ad63] px-2 py-1 text-[10px] font-black tracking-[.16em] text-[#25170f]">{copy.tickerLabel}</span>
           <div className="min-w-0 flex-1 overflow-hidden whitespace-nowrap">
