@@ -111,7 +111,7 @@ const HUB_COPY = {
     tag: "Social",
     desc: "Canal social do Human Room para conteúdos, reflexões e comunicação pública do projeto.",
   },
-];,
+] as Hub[],
   en: [
     { name:"LDR Academy", url:"https://ldracademy.online/", tag:"Main entry", featured:"academy", desc:"The central entry point to the LDR ecosystem for courses, professional programs, the digital library, free content and educational solutions." },
     { name:"LDR PASS", url:"/ldr-pass", tag:"Digital subscription", featured:"pass", desc:"The ecosystem subscription for eligible content, learning paths, eBooks and selected online programs.", cta:"Discover LDR PASS" },
