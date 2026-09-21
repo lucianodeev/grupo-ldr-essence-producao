@@ -39,7 +39,7 @@ function ClientLibraryRoute(){
 type Locale="pt"|"en"|"fr"|"es";
 
 const TXT={
-  pt:{title:"Minha Biblioteca",intro:"Seu espaço exclusivo para leitura, formação e conteúdos.",orders:"Ver pedidos e pagamentos",access:"Acesso liberado",buy:"Comprar",start:"Começar gratuitamente",open:"Acessar curso",comments:"Comentários"},
+  pt:{title:"Minha Biblioteca",intro:"Aprenda no seu ritmo. Continue de onde parou ou descubra algo novo por aqui.",orders:"Ver pedidos e pagamentos",access:"Acesso liberado",buy:"Comprar",start:"Começar gratuitamente",open:"Acessar curso",comments:"Conversas sobre este conteúdo"},
   en:{title:"My Library",intro:"Your private space for reading, training and content.",orders:"View orders and payments",access:"Access granted",buy:"Buy",start:"Start for free",open:"Open course",comments:"Comments"},
   fr:{title:"Ma Bibliothèque",intro:"Votre espace privé de lecture, formation et contenus.",orders:"Voir les commandes et paiements",access:"Accès autorisé",buy:"Acheter",start:"Commencer gratuitement",open:"Ouvrir le cours",comments:"Commentaires"},
   es:{title:"Mi Biblioteca",intro:"Tu espacio privado de lectura, formación y contenidos.",orders:"Ver pedidos y pagos",access:"Acceso liberado",buy:"Comprar",start:"Comenzar gratis",open:"Abrir curso",comments:"Comentarios"}
