@@ -30,11 +30,12 @@ const CORE:Course[]=[
  {id:"business24",title:"Formação Negócio em 24 Horas",desc:"Da ideia a uma primeira oferta pronta para vender, com projeto final aplicado.",meta:"360h · 9 módulos · 90 aulas",price:"R$ 299,99 · € 49,90",href:"/formacao-negocio-em-24-horas",kind:"negocios",icon:"🚀",accent:"#c85a24"},
 ];
 
-const LEGACY_FREE=[
- {title:"Organizar minha Carreira",desc:"Planejamento e próximos passos profissionais.",href:"/cliente/cursos/organizar-carreira",icon:"💼"},
- {title:"Francês para Negócios A1",desc:"Francês básico aplicado a situações profissionais.",href:"/cliente/cursos/frances-negocios-a1",icon:"🇫🇷"},
- {title:"Primeiros Socorros",desc:"Noções essenciais para situações de emergência.",href:"/cliente/cursos/primeiros-socorros",icon:"⛑️"},
-] as const;
+const LEGACY_FREE={
+pt:[{title:"Organizar minha Carreira",desc:"Planejamento e próximos passos profissionais.",href:"/cliente/cursos/organizar-carreira",icon:"💼"},{title:"Francês para Negócios A1",desc:"Francês básico aplicado a situações profissionais.",href:"/cliente/cursos/frances-negocios-a1",icon:"🇫🇷"},{title:"Primeiros Socorros",desc:"Noções essenciais para situações de emergência.",href:"/cliente/cursos/primeiros-socorros",icon:"⛑️"}],
+en:[{title:"Organize My Career",desc:"Planning and next professional steps.",href:"/cliente/cursos/organizar-carreira",icon:"💼"},{title:"French for Business A1",desc:"Basic French for professional situations.",href:"/cliente/cursos/frances-negocios-a1",icon:"🇫🇷"},{title:"First Aid",desc:"Essential knowledge for emergency situations.",href:"/cliente/cursos/primeiros-socorros",icon:"⛑️"}],
+fr:[{title:"Organiser ma carrière",desc:"Planification et prochaines étapes professionnelles.",href:"/cliente/cursos/organizar-carreira",icon:"💼"},{title:"Français des affaires A1",desc:"Français de base appliqué aux situations professionnelles.",href:"/cliente/cursos/frances-negocios-a1",icon:"🇫🇷"},{title:"Premiers secours",desc:"Notions essentielles pour les situations d’urgence.",href:"/cliente/cursos/primeiros-socorros",icon:"⛑️"}],
+es:[{title:"Organizar mi carrera",desc:"Planificación y próximos pasos profesionales.",href:"/cliente/cursos/organizar-carreira",icon:"💼"},{title:"Francés para Negocios A1",desc:"Francés básico aplicado a situaciones profesionales.",href:"/cliente/cursos/frances-negocios-a1",icon:"🇫🇷"},{title:"Primeros Auxilios",desc:"Conocimientos esenciales para situaciones de emergencia.",href:"/cliente/cursos/primeiros-socorros",icon:"⛑️"}]
+} as const;
 
 const EDITORIAL=[["Revista Psicanálise no Mundo","/cliente/biblioteca/publicacoes/revista-psicanalise-no-mundo","🧠"]] as const;
 
@@ -52,7 +53,7 @@ export function AcademyUniversityHome(){
  const popularLabel=locale==="pt"?"MAIS PROCURADO":locale==="fr"?"LE PLUS RECHERCHÉ":locale==="es"?"MÁS BUSCADO":"MOST POPULAR";
  const freeBadge=locale==="pt"?"GRÁTIS":locale==="fr"?"GRATUIT":locale==="es"?"GRATIS":"FREE";
  const freeCourses=[
-   ...LEGACY_FREE.map(x=>({...x,popular:false})),
+   ...LEGACY_FREE[locale].map(x=>({...x,popular:false})),
    ...ACADEMY_FREE_COURSES.map(c=>({title:c.name[locale],desc:c.description[locale],href:`/cliente/cursos/academy/${c.slug}`,icon:"🎓",popular:["clinica-psicanalitica-sigmund-freud","orientacao-trabalho-cientifico","modelos-documentos-psicanaliticos"].includes(c.slug)})),
  ].sort((a,b)=>Number(Boolean(b.popular))-Number(Boolean(a.popular)));
  const courses=[...CORE,...professional];
