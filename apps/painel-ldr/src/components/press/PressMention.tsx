@@ -22,7 +22,7 @@ export const startupValleyMention: PressMentionData = {
   country: "United Kingdom",
   mediaType: "Interview",
   relatedProject: "LDR Academy / Ecossistema LDR",
-  logoSrc: "/media/press/startupvalley-logo.png",
+  logoSrc: "/media/press/startupvalley-logo.png?v=official-20260921",
 };
 
 export function PressMention({ mention = startupValleyMention }: { mention?: PressMentionData }) {
@@ -31,7 +31,7 @@ export function PressMention({ mention = startupValleyMention }: { mention?: Pre
       <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
         {mention.logoSrc ? (
           <div className="flex min-h-20 w-full items-center justify-center rounded-2xl bg-white p-4 ring-1 ring-slate-200 sm:w-52">
-            <img src={mention.logoSrc} alt={mention.mediaOutlet} className="max-h-14 max-w-full object-contain" loading="lazy" width="320" height="96" />
+            <img src={mention.logoSrc} alt={mention.mediaOutlet} className="h-auto max-h-20 w-full max-w-[200px] object-contain" loading="eager" width="320" height="152" />
           </div>
         ) : null}
         <div className="min-w-0 flex-1">
