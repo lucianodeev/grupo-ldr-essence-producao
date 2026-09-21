@@ -31,7 +31,7 @@ export function PressMention({ mention = startupValleyMention }: { mention?: Pre
       <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
         {mention.logoSrc ? (
           <div className="flex min-h-20 w-full items-center justify-center rounded-2xl bg-white p-4 ring-1 ring-slate-200 sm:w-52">
-            <img src={mention.logoSrc} alt={mention.mediaOutlet} className="h-auto max-h-20 w-full max-w-[200px] object-contain" loading="eager" width="320" height="152" />
+            <img src={mention.logoSrc} alt={mention.mediaOutlet} className="block h-auto w-[200px] max-w-full object-contain opacity-100" loading="eager" decoding="sync" width="320" height="152" style={{ visibility: "visible", opacity: 1 }} />
           </div>
         ) : null}
         <div className="min-w-0 flex-1">
