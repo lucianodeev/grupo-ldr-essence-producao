@@ -234,7 +234,7 @@ function EcosystemMap() {
         <div className="mx-auto flex max-w-6xl items-center overflow-hidden px-5 py-2">
           <span className="mr-4 shrink-0 rounded bg-[#d6ad63] px-2 py-1 text-[10px] font-black tracking-[.16em] text-[#25170f]">{copy.tickerLabel}</span>
           <div className="min-w-0 flex-1 overflow-hidden whitespace-nowrap">
-            <div className="inline-block motion-safe:animate-[ldrTicker_34s_linear_infinite] motion-reduce:whitespace-normal text-xs font-semibold tracking-wide">
+            <div className="inline-block motion-safe:animate-[ldrTicker_22s_linear_infinite] motion-reduce:whitespace-normal text-xs font-semibold tracking-wide">
               <span>{copy.antiRacism}</span><span className="mx-8 text-[#d6ad63]" aria-hidden="true">●</span><a className="hover:underline" href="https://www.reuters.com/world/americas/brazil-economists-cut-end-2026-interest-rate-forecast-1350-2026-09-21/" target="_blank" rel="noreferrer">{copy.newsBrazil} — Reuters</a><span className="mx-8 text-[#d6ad63]" aria-hidden="true">●</span><a className="hover:underline" href="https://www.reuters.com/sustainability/climate-energy/brazils-mombak-raises-new-fund-adds-salesforce-carbon-credit-buyer-2026-09-21/" target="_blank" rel="noreferrer">{copy.newsEntrepreneur} — Reuters</a><span className="mx-8 text-[#d6ad63]" aria-hidden="true">●</span><a className="hover:underline" href="https://www.reuters.com/world/china/global-markets-global-markets-2026-09-21/" target="_blank" rel="noreferrer">{copy.newsWorld} — Reuters</a>
             </div>
           </div>
