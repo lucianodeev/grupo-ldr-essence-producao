@@ -230,7 +230,19 @@ function EcosystemMap() {
   const hubs = HUB_COPY[locale] ?? HUB_COPY.pt;
   return (
     <main className="min-h-screen bg-[#f8f1e7] text-[#25170f]">
-      <div className="border-y border-[#d6ad63]/30 bg-[#071426] text-white" aria-label={copy.tickerLabel}>\n        <div className="mx-auto flex max-w-6xl items-center overflow-hidden px-5 py-2">\n          <span className="mr-4 shrink-0 rounded bg-[#d6ad63] px-2 py-1 text-[10px] font-black tracking-[.16em] text-[#25170f]">{copy.tickerLabel}</span>\n          <div className="min-w-0 flex-1 overflow-hidden whitespace-nowrap">\n            <div className="inline-block motion-safe:animate-[ldrTicker_34s_linear_infinite] motion-reduce:whitespace-normal text-xs font-semibold tracking-wide">\n              <span>{copy.antiRacism}</span><span className="mx-8 text-[#d6ad63]" aria-hidden="true">●</span><a className="hover:underline" href="https://www.reuters.com/world/americas/brazil-economists-cut-end-2026-interest-rate-forecast-1350-2026-09-21/" target="_blank" rel="noreferrer">{copy.newsBrazil} — Reuters</a><span className="mx-8 text-[#d6ad63]" aria-hidden="true">●</span><a className="hover:underline" href="https://www.reuters.com/sustainability/climate-energy/brazils-mombak-raises-new-fund-adds-salesforce-carbon-credit-buyer-2026-09-21/" target="_blank" rel="noreferrer">{copy.newsEntrepreneur} — Reuters</a><span className="mx-8 text-[#d6ad63]" aria-hidden="true">●</span><a className="hover:underline" href="https://www.reuters.com/world/china/global-markets-global-markets-2026-09-21/" target="_blank" rel="noreferrer">{copy.newsWorld} — Reuters</a>\n            </div>\n          </div>\n        </div>\n        <style>{`@keyframes ldrTicker{from{transform:translateX(100%)}to{transform:translateX(-100%)}}`}</style>\n      </div>\n      <section className="mx-auto max-w-6xl px-5 py-12 sm:py-16">\n        <div className="mb-4 ml-auto w-36"><LanguageSelect /></div>
+      <div className="border-y border-[#d6ad63]/30 bg-[#071426] text-white" aria-label={copy.tickerLabel}>
+        <div className="mx-auto flex max-w-6xl items-center overflow-hidden px-5 py-2">
+          <span className="mr-4 shrink-0 rounded bg-[#d6ad63] px-2 py-1 text-[10px] font-black tracking-[.16em] text-[#25170f]">{copy.tickerLabel}</span>
+          <div className="min-w-0 flex-1 overflow-hidden whitespace-nowrap">
+            <div className="inline-block motion-safe:animate-[ldrTicker_34s_linear_infinite] motion-reduce:whitespace-normal text-xs font-semibold tracking-wide">
+              <span>{copy.antiRacism}</span><span className="mx-8 text-[#d6ad63]" aria-hidden="true">●</span><a className="hover:underline" href="https://www.reuters.com/world/americas/brazil-economists-cut-end-2026-interest-rate-forecast-1350-2026-09-21/" target="_blank" rel="noreferrer">{copy.newsBrazil} — Reuters</a><span className="mx-8 text-[#d6ad63]" aria-hidden="true">●</span><a className="hover:underline" href="https://www.reuters.com/sustainability/climate-energy/brazils-mombak-raises-new-fund-adds-salesforce-carbon-credit-buyer-2026-09-21/" target="_blank" rel="noreferrer">{copy.newsEntrepreneur} — Reuters</a><span className="mx-8 text-[#d6ad63]" aria-hidden="true">●</span><a className="hover:underline" href="https://www.reuters.com/world/china/global-markets-global-markets-2026-09-21/" target="_blank" rel="noreferrer">{copy.newsWorld} — Reuters</a>
+            </div>
+          </div>
+        </div>
+        <style>{`@keyframes ldrTicker{from{transform:translateX(100%)}to{transform:translateX(-100%)}}`}</style>
+      </div>
+      <section className="mx-auto max-w-6xl px-5 py-12 sm:py-16">
+        <div className="mb-4 ml-auto w-36"><LanguageSelect /></div>
         <Link to="/" className="text-sm font-bold text-[#8a4c18]">{copy.back}</Link>
         <div className="mt-7 rounded-[34px] border border-[#d6ad63]/40 bg-white p-6 shadow-xl sm:p-9">
           <p className="text-xs font-black uppercase tracking-[.2em] text-[#9a6a20]">{copy.welcome}</p>
