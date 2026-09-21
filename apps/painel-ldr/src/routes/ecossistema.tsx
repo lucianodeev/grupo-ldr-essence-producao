@@ -1,6 +1,8 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { PressMention } from "../components/press/PressMention";
 import { LanguageSelect, useI18n } from "../lib/i18n";
+import { useQuery } from "@tanstack/react-query";
+import { ecosystemNews } from "../lib/ecosystem-news.functions";
 
 type Hub = {
   name: string;
@@ -223,6 +225,8 @@ function EcosystemMap() {
   const hubs = HUB_COPY[locale] ?? HUB_COPY.pt;
   const features = FEATURES[locale] ?? FEATURES.pt;
   const discoverLabel = locale==="en"?"Discover":locale==="fr"?"Découvrir":locale==="es"?"Conocer":"Conhecer";
+  const newsQuery=useQuery({queryKey:["ecosystem-news",locale],queryFn:()=>ecosystemNews({data:{locale}}),staleTime:15*60*1000,retry:1});
+  const liveNews=newsQuery.data??[];
   return (
     <main className="min-h-screen bg-[#f8f1e7] text-[#25170f]">
       <div className="border-y border-[#d6ad63]/30 bg-[#071426] text-white" aria-label={copy.tickerLabel}>
@@ -230,7 +234,7 @@ function EcosystemMap() {
           <span className="mr-4 shrink-0 rounded bg-[#d6ad63] px-2 py-1 text-[10px] font-black tracking-[.16em] text-[#25170f]">{copy.tickerLabel}</span>
           <div className="min-w-0 flex-1 overflow-hidden whitespace-nowrap">
             <div className="inline-block motion-safe:animate-[ldrTicker_22s_linear_infinite] motion-reduce:whitespace-normal text-xs font-semibold tracking-wide">
-              <span>{copy.antiRacism}</span><span className="mx-8 text-[#d6ad63]" aria-hidden="true">●</span><a className="hover:underline" href="https://www.reuters.com/world/americas/brazil-economists-cut-end-2026-interest-rate-forecast-1350-2026-09-21/" target="_blank" rel="noreferrer">{copy.newsBrazil} — Reuters</a><span className="mx-8 text-[#d6ad63]" aria-hidden="true">●</span><a className="hover:underline" href="https://www.reuters.com/sustainability/climate-energy/brazils-mombak-raises-new-fund-adds-salesforce-carbon-credit-buyer-2026-09-21/" target="_blank" rel="noreferrer">{copy.newsEntrepreneur} — Reuters</a><span className="mx-8 text-[#d6ad63]" aria-hidden="true">●</span><a className="hover:underline" href="https://www.reuters.com/world/china/global-markets-global-markets-2026-09-21/" target="_blank" rel="noreferrer">{copy.newsWorld} — Reuters</a>
+              <span>{copy.antiRacism}</span>{liveNews.length>0?liveNews.map((item)=><span key={item.url}><span className="mx-8 text-[#d6ad63]" aria-hidden="true">●</span><a className="hover:underline" href={item.url} target="_blank" rel="noreferrer">{item.title}{item.source?` — ${item.source}`:""}</a></span>):<><span className="mx-8 text-[#d6ad63]" aria-hidden="true">●</span><span>{copy.newsSoon}</span></>}
             </div>
           </div>
         </div>
