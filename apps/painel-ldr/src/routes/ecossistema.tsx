@@ -174,14 +174,16 @@ function EcosystemMap() {
       <section className="mx-auto max-w-6xl px-5 py-12 sm:py-16">
         <Link to="/" className="text-sm font-bold text-[#8a4c18]">← Voltar para LDR Academy</Link>
         <div className="mt-7 rounded-[34px] border border-[#d6ad63]/40 bg-white p-6 shadow-xl sm:p-9">
-          <p className="text-xs font-black uppercase tracking-[.2em] text-[#9a6a20]">Mapa central</p>
-          <h1 className="mt-3 font-serif text-4xl font-bold sm:text-5xl">Ecossistema LDR organizado por entradas.</h1>
-          <p className="mt-4 max-w-3xl text-base text-[#6f6358]">
-            A LDR Academy conecta educação, carreira, biblioteca digital, rede acadêmica, projetos sociais, soluções para empresas e iniciativas humanas em um único ecossistema. Cada projeto mantém sua identidade, mas todos se conectam por caminhos claros.
+          <p className="text-xs font-black uppercase tracking-[.2em] text-[#9a6a20]">Bem-vindo ao Ecossistema LDR</p>
+          <h1 className="mt-3 font-serif text-4xl font-bold sm:text-5xl">Olá! Tudo bem? 👋</h1>
+          <p className="mt-3 text-xl font-bold text-[#8a4c18]">Entra, fica à vontade. Você é de casa.</p>
+          <p className="mt-4 max-w-3xl text-base leading-7 text-[#6f6358]">
+            Aqui você pode aprender, encontrar oportunidades, conhecer pessoas, compartilhar ideias e criar coisas novas. Não sabe por onde começar? Tudo bem. Conta pra gente o que você procura e vamos encontrar um caminho juntos.
           </p>
+          <p className="mt-3 max-w-3xl text-sm text-[#6f6358]">Tem uma ideia? Conta pra gente. Quer participar? Vem com a gente. Gostou daqui? Chama seus amigos também. Vamos criar juntos.</p>
           <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <Link to="/falar-com-ecossistema" className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#9a6a20] px-5 py-3 text-sm font-black uppercase tracking-[.12em] text-white">💬 Falar com o Ecossistema</Link>
-            <Link to="/ldr-pass" className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#1d3158] px-5 py-3 text-sm font-black uppercase tracking-[.12em] text-white">Ver LDR PASS</Link>
+            <Link to="/falar-com-ecossistema" className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#9a6a20] px-5 py-3 text-sm font-black uppercase tracking-[.12em] text-white">💬 Vamos conversar</Link>
+            <Link to="/ldr-pass" className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#1d3158] px-5 py-3 text-sm font-black uppercase tracking-[.12em] text-white">Quero explorar</Link>
             <Link to="/cliente/biblioteca" className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#d6ad63] px-5 py-3 text-sm font-black uppercase tracking-[.12em] text-[#7a4d14]">Entrar na Biblioteca</Link>
             <Link to="/cliente/rede-academica" className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#351073] px-5 py-3 text-sm font-black uppercase tracking-[.12em] text-[#351073]">Conhecer a Rede Acadêmica</Link>
             <a href="/carreira?audience=company" className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#1d3158] px-5 py-3 text-sm font-black uppercase tracking-[.12em] text-[#1d3158]">Divulgar vaga gratuita</a>
