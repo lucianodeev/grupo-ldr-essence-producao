@@ -251,7 +251,8 @@ function LucianoPage() {
               <img
                 src="/media/press/startupvalley-logo.png"
                 alt="StartupValley"
-                className="mx-auto h-12 w-auto object-contain sm:h-14"
+                className="mx-auto object-contain"
+                style={{ width: "230px", height: "auto", maxWidth: "100%" }}
                 loading="lazy"
               />
               <span className="mt-4 block text-center">
