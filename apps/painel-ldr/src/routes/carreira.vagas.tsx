@@ -50,7 +50,7 @@ const C = {
     sign: "Língua de sinais quando aplicável",
     warning: "Alguns campos de acessibilidade ainda não estão disponíveis no banco. A listagem foi carregada com os dados seguros existentes.",
     companyFallback: "Empresa validada",
-    noLocation: "Localidade a confirmar",
+    noLocation: "Localidade a confirmar", external: "Vaga externa", externalApply: "Candidatar na fonte", externalHint: "A candidatura acontece no site de origem.",
   },
   en: {
     title: "Find jobs",
@@ -75,7 +75,7 @@ const C = {
     sign: "Sign language when applicable",
     warning: "Some accessibility fields are not available in the database yet. The listing was loaded with the existing safe data.",
     companyFallback: "Validated company",
-    noLocation: "Location to be confirmed",
+    noLocation: "Location to be confirmed", external: "External job", externalApply: "Apply at source", externalHint: "Application takes place on the original website.",
   },
   fr: {
     title: "Trouver des offres",
@@ -100,7 +100,7 @@ const C = {
     sign: "Langue des signes si applicable",
     warning: "Certains champs d’accessibilité ne sont pas encore disponibles dans la base. La liste a été chargée avec les données sûres existantes.",
     companyFallback: "Entreprise validée",
-    noLocation: "Lieu à confirmer",
+    noLocation: "Lieu à confirmer", external: "Offre externe", externalApply: "Postuler à la source", externalHint: "La candidature se fait sur le site d’origine.",
   },
   es: {
     title: "Encontrar vacantes",
@@ -125,12 +125,12 @@ const C = {
     sign: "Lengua de señas cuando aplique",
     warning: "Algunos campos de accesibilidad aún no están disponibles en la base de datos. La lista se cargó con los datos seguros existentes.",
     companyFallback: "Empresa validada",
-    noLocation: "Ubicación por confirmar",
+    noLocation: "Ubicación por confirmar", external: "Vacante externa", externalApply: "Postular en la fuente", externalHint: "La postulación se realiza en el sitio de origen.",
   },
 } as const;
 
 const baseSelect =
-  "id,title,category,country,city,work_mode,contract_type,published_at,career_companies(name)";
+  "id,title,category,country,city,work_mode,contract_type,published_at,source_type,source_name,external_apply_url,career_companies(name)";
 
 const enhancedSelect = `${baseSelect},accessibility_inclusive,accessibility_pcd_only:accessibility_designated_disability,accessibility_resources:accessibility_features,accessibility_details`;
 
@@ -335,6 +335,7 @@ function Jobs() {
                   <div className="flex flex-col justify-between gap-5 md:flex-row md:items-center">
                     <div className="min-w-0">
                       <div className="mb-3 flex flex-wrap gap-2">
+                        {job.source_type==="external_public"&&<span className="inline-flex rounded-full bg-amber-50 px-3 py-1 text-xs font-bold text-amber-800 ring-1 ring-amber-100">{t.external}{job.source_name?` · ${job.source_name}`:""}</span>}
                         {inclusive && (
                           <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-800 ring-1 ring-emerald-100">
                             <Accessibility size={14} /> {t.inclusive}
@@ -370,13 +371,8 @@ function Jobs() {
                     </div>
 
                     <div className="flex shrink-0 flex-col gap-2 md:w-56">
-                      <Link reloadDocument
-                        to="/carreira/vagas/$jobId/candidatura"
-                        params={{ jobId: job.id }}
-                        className="inline-flex min-h-11 items-center justify-center rounded-xl bg-[#07345b] px-5 text-center font-semibold text-white transition hover:bg-[#0b426f] focus:outline-none focus:ring-4 focus:ring-[#07345b]/20"
-                      >
-                        {t.apply}
-                      </Link>
+                      {job.source_type==="external_public"&&job.external_apply_url?<a href={job.external_apply_url} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center justify-center rounded-xl bg-[#07345b] px-5 text-center font-semibold text-white">{t.externalApply}</a>:<Link reloadDocument to="/carreira/vagas/$jobId/candidatura" params={{ jobId: job.id }} className="inline-flex min-h-11 items-center justify-center rounded-xl bg-[#07345b] px-5 text-center font-semibold text-white">{t.apply}</Link>}
+
                       <Link reloadDocument
                         to="/carreira/vagas/$jobId"
                         params={{ jobId: job.id }}
@@ -384,7 +380,7 @@ function Jobs() {
                       >
                         {t.view}
                       </Link>
-                      <p className="text-center text-xs text-slate-500">{t.applyHint}</p>
+                      <p className="text-center text-xs text-slate-500">{job.source_type==="external_public"?t.externalHint:t.applyHint}</p>
                     </div>
                   </div>
                 </article>
