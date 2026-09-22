@@ -1,0 +1,117 @@
+import type { PF } from "@/lib/professional-formations.catalog";
+
+export const NEUROSCIENCE_OFFICIAL_FORMATION: PF[] = [
+  {
+    slug: "neurociencias-comportamento-humano" as any,
+    productKey: "formacao_neurociencias_comportamento_humano_600h",
+    publicPath: "/formacoes/neurociencias-comportamento-humano",
+    learnerPath: "/cliente/treinamentos/curso-avulso/neurociencias-comportamento-humano",
+    icon: "🧠",
+    theme: "purple",
+    priceBrlCents: 19700,
+    priceEurCents: 3290,
+    hours: 600,
+    lessons: 144,
+    modulesCount: 12,
+    minimumDays: 75,
+    includedInSubscription: false,
+    i18n: {
+      pt: {
+        name: "Formação em Neurociências e Comportamento Humano",
+        short: "Neurociências e Comportamento Humano",
+        category: "Neurociências e Comportamento",
+        description:
+          "Formação livre, 100% online e autoinstrucional, organizada em 12 módulos e 600 horas. O aluno estuda no próprio ritmo, com conclusão mediante projeto final obrigatório.",
+        project: "Projeto Final em Neurociências e Comportamento Humano",
+        disclaimer:
+          "Sobre a formação e o conteúdo: esta é uma formação livre, idealizada no âmbito da LDR Academy, sem alegação de reconhecimento pelo MEC e sem promessa de habilitação profissional regulamentada. Não substitui graduação, registro profissional, diagnóstico, tratamento médico, psicológico ou neuropsicológico. Não há indicação de professores, docentes, neurocientistas, médicos, psicólogos ou outros profissionais quando esses nomes não estiverem oficialmente cadastrados e validados pela plataforma.",
+        modules: [
+          "Fundamentos das Neurociências",
+          "Sistema Nervoso, Cérebro e Comportamento",
+          "Neurônios, Sinapses e Neurotransmissores",
+          "Neuroplasticidade e Desenvolvimento Humano",
+          "Memória, Aprendizagem e Atenção",
+          "Cognição, Percepção e Funções Executivas",
+          "Emoções, Motivação e Tomada de Decisão",
+          "Sono, Estresse e Regulação do Organismo",
+          "Hábitos, Comportamento e Mudança",
+          "Comportamento Social e Relações Humanas",
+          "Neurociências Aplicadas à Educação, Carreira e Saúde Mental",
+          "Ética, Leitura Crítica de Evidências e Projeto Final",
+        ],
+      },
+      en: {
+        name: "Neuroscience and Human Behavior Training",
+        short: "Neuroscience and Human Behavior",
+        category: "Neuroscience and Behavior",
+        description:
+          "A non-degree, 100% online and self-paced training program organized into 12 modules and 600 hours. Learners study at their own pace and complete a mandatory final project.",
+        project: "Final Project in Neuroscience and Human Behavior",
+        disclaimer:
+          "About the training and content: this is a non-degree training program developed within LDR Academy, with no claim of MEC recognition and no promise of regulated professional qualification. It does not replace a degree, professional registration, medical, psychological or neuropsychological diagnosis or treatment. Teachers, lecturers, neuroscientists, physicians, psychologists or other professionals must not be named unless those names are officially registered and validated by the platform.",
+        modules: [
+          "Foundations of Neuroscience",
+          "Nervous System, Brain and Behavior",
+          "Neurons, Synapses and Neurotransmitters",
+          "Neuroplasticity and Human Development",
+          "Memory, Learning and Attention",
+          "Cognition, Perception and Executive Functions",
+          "Emotions, Motivation and Decision-Making",
+          "Sleep, Stress and Body Regulation",
+          "Habits, Behavior and Change",
+          "Social Behavior and Human Relationships",
+          "Neuroscience Applied to Education, Career and Mental Health",
+          "Ethics, Critical Reading of Evidence and Final Project",
+        ],
+      },
+      fr: {
+        name: "Formation en Neurosciences et Comportement Humain",
+        short: "Neurosciences et Comportement Humain",
+        category: "Neurosciences et Comportement",
+        description:
+          "Formation libre, 100 % en ligne et autoinstructionnelle, organisée en 12 modules et 600 heures. L’apprenant étudie à son rythme et conclut par un projet final obligatoire.",
+        project: "Projet Final en Neurosciences et Comportement Humain",
+        disclaimer:
+          "À propos de la formation et du contenu : il s’agit d’une formation libre, conçue dans le cadre de LDR Academy, sans revendication de reconnaissance par le MEC et sans promesse d’habilitation professionnelle réglementée. Elle ne remplace pas un diplôme, une inscription professionnelle, un diagnostic ou un traitement médical, psychologique ou neuropsychologique. Aucun professeur, enseignant, neuroscientifique, médecin, psychologue ou autre professionnel ne doit être nommé si ces noms ne sont pas officiellement enregistrés et validés par la plateforme.",
+        modules: [
+          "Fondements des Neurosciences",
+          "Système Nerveux, Cerveau et Comportement",
+          "Neurones, Synapses et Neurotransmetteurs",
+          "Neuroplasticité et Développement Humain",
+          "Mémoire, Apprentissage et Attention",
+          "Cognition, Perception et Fonctions Exécutives",
+          "Émotions, Motivation et Prise de Décision",
+          "Sommeil, Stress et Régulation de l’Organisme",
+          "Habitudes, Comportement et Changement",
+          "Comportement Social et Relations Humaines",
+          "Neurosciences Appliquées à l’Éducation, à la Carrière et à la Santé Mentale",
+          "Éthique, Lecture Critique des Preuves et Projet Final",
+        ],
+      },
+      es: {
+        name: "Formación en Neurociencias y Comportamiento Humano",
+        short: "Neurociencias y Comportamiento Humano",
+        category: "Neurociencias y Comportamiento",
+        description:
+          "Formación libre, 100% online y autoinstruccional, organizada en 12 módulos y 600 horas. El alumno estudia a su propio ritmo y concluye con un proyecto final obligatorio.",
+        project: "Proyecto Final en Neurociencias y Comportamiento Humano",
+        disclaimer:
+          "Sobre la formación y el contenido: esta es una formación libre, idealizada en el ámbito de LDR Academy, sin afirmación de reconocimiento por el MEC y sin promesa de habilitación profesional regulada. No sustituye titulación, registro profesional, diagnóstico ni tratamiento médico, psicológico o neuropsicológico. No se deben mencionar profesores, docentes, neurocientíficos, médicos, psicólogos u otros profesionales si esos nombres no están oficialmente registrados y validados por la plataforma.",
+        modules: [
+          "Fundamentos de las Neurociencias",
+          "Sistema Nervioso, Cerebro y Comportamiento",
+          "Neuronas, Sinapsis y Neurotransmisores",
+          "Neuroplasticidad y Desarrollo Humano",
+          "Memoria, Aprendizaje y Atención",
+          "Cognición, Percepción y Funciones Ejecutivas",
+          "Emociones, Motivación y Toma de Decisiones",
+          "Sueño, Estrés y Regulación del Organismo",
+          "Hábitos, Comportamiento y Cambio",
+          "Comportamiento Social y Relaciones Humanas",
+          "Neurociencias Aplicadas a la Educación, Carrera y Salud Mental",
+          "Ética, Lectura Crítica de Evidencias y Proyecto Final",
+        ],
+      },
+    },
+  },
+];
