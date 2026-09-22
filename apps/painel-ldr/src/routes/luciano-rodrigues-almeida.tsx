@@ -144,9 +144,13 @@ function LucianoPage() {
           </div>
 
           <aside className="rounded-[2rem] border border-white/15 bg-white/8 p-6 shadow-2xl backdrop-blur">
-            <div className="flex aspect-square items-center justify-center rounded-[1.5rem] border border-[#d6ad63]/40 bg-gradient-to-br from-[#d6ad63] to-[#7b4aa3] text-center text-6xl font-black text-white shadow-xl" aria-label="Luciano Rodrigues Almeida, fundador da LDR Academy">
-              LRA
-            </div>
+            <img
+              src="/media/luciano/luciano-rodrigues-almeida.jpeg"
+              alt="Luciano Rodrigues Almeida, fundador da LDR Academy"
+              className="aspect-[4/3] w-full rounded-[1.5rem] border border-[#d6ad63]/40 object-cover object-center shadow-xl"
+              loading="eager"
+              fetchPriority="high"
+            />
             <div className="mt-6 grid gap-3 text-sm text-white/80">
               <p><strong className="text-white">Origem:</strong> Guanambi, Bahia</p>
               <p><strong className="text-white">Trajetória:</strong> Bahia, São Paulo e Europa</p>
