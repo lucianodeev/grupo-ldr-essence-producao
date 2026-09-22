@@ -21,6 +21,8 @@ type JobRow = Record<string, any> & {
   country?: string | null;
   city?: string | null;
   work_mode?: string | null;
+  external_work_mode?: string | null;
+  external_contract_type?: string | null;
   contract_type?: string | null;
   published_at?: string | null;
   career_companies?: { name?: string | null } | null;
@@ -50,7 +52,7 @@ const C = {
     sign: "Língua de sinais quando aplicável",
     warning: "Alguns campos de acessibilidade ainda não estão disponíveis no banco. A listagem foi carregada com os dados seguros existentes.",
     companyFallback: "Empresa validada",
-    noLocation: "Localidade a confirmar", external: "Vaga externa", externalApply: "Candidatar na fonte", externalHint: "A candidatura acontece no site de origem.",
+    noLocation: "Localidade a confirmar", sourceNotInformed: "Não informado pela fonte", external: "Vaga externa", externalApply: "Candidatar na fonte", externalHint: "A candidatura acontece no site de origem.",
   },
   en: {
     title: "Find jobs",
@@ -75,7 +77,7 @@ const C = {
     sign: "Sign language when applicable",
     warning: "Some accessibility fields are not available in the database yet. The listing was loaded with the existing safe data.",
     companyFallback: "Validated company",
-    noLocation: "Location to be confirmed", external: "External job", externalApply: "Apply at source", externalHint: "Application takes place on the original website.",
+    noLocation: "Location to be confirmed", sourceNotInformed: "Not informed by source", external: "External job", externalApply: "Apply at source", externalHint: "Application takes place on the original website.",
   },
   fr: {
     title: "Trouver des offres",
@@ -100,7 +102,7 @@ const C = {
     sign: "Langue des signes si applicable",
     warning: "Certains champs d’accessibilité ne sont pas encore disponibles dans la base. La liste a été chargée avec les données sûres existantes.",
     companyFallback: "Entreprise validée",
-    noLocation: "Lieu à confirmer", external: "Offre externe", externalApply: "Postuler à la source", externalHint: "La candidature se fait sur le site d’origine.",
+    noLocation: "Lieu à confirmer", sourceNotInformed: "Non renseigné par la source", external: "Offre externe", externalApply: "Postuler à la source", externalHint: "La candidature se fait sur le site d’origine.",
   },
   es: {
     title: "Encontrar vacantes",
@@ -125,12 +127,12 @@ const C = {
     sign: "Lengua de señas cuando aplique",
     warning: "Algunos campos de accesibilidad aún no están disponibles en la base de datos. La lista se cargó con los datos seguros existentes.",
     companyFallback: "Empresa validada",
-    noLocation: "Ubicación por confirmar", external: "Vacante externa", externalApply: "Postular en la fuente", externalHint: "La postulación se realiza en el sitio de origen.",
+    noLocation: "Ubicación por confirmar", sourceNotInformed: "No informado por la fuente", external: "Vacante externa", externalApply: "Postular en la fuente", externalHint: "La postulación se realiza en el sitio de origen.",
   },
 } as const;
 
 const baseSelect =
-  "id,title,category,country,city,work_mode,contract_type,published_at,source_type,source_name,external_apply_url,career_companies(name)";
+  "id,title,category,country,city,work_mode,contract_type,published_at,external_work_mode,external_contract_type,source_type,source_name,external_apply_url,career_companies(name)";
 
 const enhancedSelect = `${baseSelect},accessibility_inclusive,accessibility_pcd_only:accessibility_designated_disability,accessibility_resources:accessibility_features,accessibility_details`;
 
@@ -219,7 +221,7 @@ function Jobs() {
 
       const matchesQuery = !normalizedQuery || searchable.includes(normalizedQuery);
       const matchesWorkMode =
-        workMode === "all" || String(job.work_mode ?? "").toLowerCase().includes(workMode);
+        workMode === "all" || String(job.source_type==="external_public"?job.external_work_mode:job.work_mode ?? "").toLowerCase().includes(workMode);
       const matchesInclusive = !inclusiveOnly || isInclusiveJob(job);
 
       return matchesQuery && matchesWorkMode && matchesInclusive;
@@ -356,9 +358,9 @@ function Jobs() {
                         <MapPin size={16} />
                         <span>{location}</span>
                         <span aria-hidden="true">·</span>
-                        <span>{getWorkModeLabel(job.work_mode, t)}</span>
+                        <span>{job.source_type==="external_public"?(job.external_work_mode?getWorkModeLabel(job.external_work_mode,t):t.sourceNotInformed):getWorkModeLabel(job.work_mode,t)}</span>
                         <span aria-hidden="true">·</span>
-                        <span>{job.contract_type || "—"}</span>
+                        <span>{job.source_type==="external_public"?(job.external_contract_type||t.sourceNotInformed):(job.contract_type||"—")}</span>
                       </p>
 
                       {inclusive && (
