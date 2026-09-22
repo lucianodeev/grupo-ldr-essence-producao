@@ -248,7 +248,15 @@ function LucianoPage() {
               href="https://startupvalley.news/uk/ldr-academy-entrepreneurship-education/"
               className="mt-6 block rounded-2xl border border-[#d6ad63]/30 bg-[#fbf8f1] p-5 font-bold text-[#0b1428] hover:border-[#8b6a12]"
             >
-              StartupValley — From Street Vendor to EdTech Founder: How Luciano Almeida Is Uniting Education and Careers
+              <img
+                src="/media/press/startupvalley-logo.png"
+                alt="StartupValley"
+                className="mx-auto h-12 w-auto object-contain sm:h-14"
+                loading="lazy"
+              />
+              <span className="mt-4 block text-center">
+                From Street Vendor to EdTech Founder: How Luciano Almeida Is Uniting Education and Careers
+              </span>
             </a>
             <p className="mt-4 text-xs text-[#6b7280]">Em breve, novas entrevistas, matérias, podcasts, portais e publicações.</p>
           </article>
