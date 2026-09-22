@@ -29,7 +29,7 @@ export const socialClinicProfessionalState = createServerFn({ method: "GET" }).m
     getProfessionalSocialClinicState(email),
     getProfessionalDashboard(context.userId, email),
   ]);
-  return { ...state, profile: dashboard.profile ?? null, account: dashboard.account ?? null };
+  return { ...state, email, profile: dashboard.profile ?? null, account: dashboard.account ?? null };
 });
 
 export const socialClinicAdmin = createServerFn({ method: "GET" }).middleware([requireSupabaseAuth]).handler(async ({ context }) => {
