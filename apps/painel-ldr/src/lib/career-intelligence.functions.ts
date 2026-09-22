@@ -19,3 +19,21 @@ export const refreshCareerIntelligence=createServerFn({method:"POST"}).middlewar
  await db.from("ldr_copilot_actions").delete().eq("user_id",uid).eq("status","suggested"); if(actions.length)await db.from("ldr_copilot_actions").insert(actions);
  return {recommendations:recs.length,actions:actions.length};
 });
+
+export const getAcademicPostPossibilityContext=createServerFn({method:"POST"}).middleware([requireSupabaseAuth]).inputValidator((data:{postId:string})=>data).handler(async({data,context})=>{
+ const {supabaseAdmin}=await import("@/integrations/supabase/client.server"); const db=supabaseAdmin as any; const uid=context.userId;
+ const postId=String(data?.postId??"").trim();
+ if(!postId)return {found:false as const};
+ const {data:post,error}=await db.from("academic_posts").select("id,user_id,body,post_type,status").eq("id",postId).eq("user_id",uid).eq("status","active").maybeSingle();
+ if(error||!post)return {found:false as const};
+ const body=String(post.body??"").trim(); const normalized=body.toLocaleLowerCase();
+ const signals=[
+  {kind:"project",words:["projeto","project","projet","proyecto","ideia","idea","idée"]},
+  {kind:"learning",words:["aprender","aprendendo","learn","learning","apprendre","apprends","aprender"]},
+  {kind:"mentor",words:["mentor","mentoria","orientador","orientação","guidance","supervisor"]},
+  {kind:"collaboration",words:["parceiro","parceria","colabor","partner","équipe","equipo","team"]},
+  {kind:"service",words:["serviço","service","servicio","freelance","cliente","client"]},
+  {kind:"work",words:["trabalho","vaga","emprego","work","job","emploi","trabajo"]}
+ ].filter(s=>s.words.some(w=>normalized.includes(w))).map(s=>s.kind);
+ return {found:true as const,post:{id:post.id,body:body.slice(0,1200),postType:post.post_type},signals:[...new Set(signals)]};
+});
