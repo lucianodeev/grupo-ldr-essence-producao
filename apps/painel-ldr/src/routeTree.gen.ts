@@ -25,7 +25,9 @@ import { Route as EbookEstudosCasoPsicanaliseRouteImport } from './routes/ebook-
 import { Route as EbookPraticaClinicaPsicanaliseRouteImport } from './routes/ebook-pratica-clinica-psicanalise'
 import { Route as EbookPsicanaliseAutismoRouteImport } from './routes/ebook-psicanalise-autismo'
 import { Route as EbookPsicanaliseNoMundoRouteImport } from './routes/ebook-psicanalise-no-mundo'
+import { Route as EcossistemaRouteImport } from './routes/ecossistema'
 import { Route as EmpreendedoresRouteImport } from './routes/empreendedores'
+import { Route as FalarComEcossistemaRouteImport } from './routes/falar-com-ecossistema'
 import { Route as FilmRouteImport } from './routes/film'
 import { Route as FormacaoComunicacaoOratoriaRouteImport } from './routes/formacao-comunicacao-oratoria'
 import { Route as FormacaoCopywritingVendasRouteImport } from './routes/formacao-copywriting-vendas'
@@ -47,8 +49,10 @@ import { Route as FormacaoVendasNegociacaoRouteImport } from './routes/formacao-
 import { Route as FormularioRouteImport } from './routes/formulario'
 import { Route as ImprensaRouteImport } from './routes/imprensa'
 import { Route as InstituicoesRouteImport } from './routes/instituicoes'
+import { Route as LdrPassRouteImport } from './routes/ldr-pass'
 import { Route as LivrosRouteImport } from './routes/livros'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as LucianoRodriguesAlmeidaRouteImport } from './routes/luciano-rodrigues-almeida'
 import { Route as MensagensProfissionaisRouteImport } from './routes/mensagens-profissionais'
 import { Route as ParaProfissionaisRouteImport } from './routes/para-profissionais'
 import { Route as ParaVendedoresRouteImport } from './routes/para-vendedores'
@@ -76,6 +80,7 @@ import { Route as ClientareaClienteRouteImport } from './routes/_clientarea.clie
 import { Route as PortalAssinaturaEmpresaRouteImport } from './routes/_portal.assinatura-empresa'
 import { Route as PortalEmpresaRouteImport } from './routes/_portal.empresa'
 import { Route as PortalFuncionarioRouteImport } from './routes/_portal.funcionario'
+import { Route as AdminContatosRouteImport } from './routes/admin.contatos'
 import { Route as ApiSellerCheckoutRouteImport } from './routes/api/seller-checkout'
 import { Route as ApiSellerPurchaseAccessRouteImport } from './routes/api/seller-purchase-access'
 import { Route as ApiSellerReferralRouteImport } from './routes/api/seller-referral'
@@ -191,6 +196,7 @@ import { Route as ClientareaClienteAgendaRouteImport } from './routes/_clientare
 import { Route as ClientareaClienteBibliotecaRouteImport } from './routes/_clientarea.cliente.biblioteca'
 import { Route as ClientareaClienteContratarRouteImport } from './routes/_clientarea.cliente.contratar'
 import { Route as ClientareaClienteEntregasRouteImport } from './routes/_clientarea.cliente.entregas'
+import { Route as ClientareaClienteLdrPassRouteImport } from './routes/_clientarea.cliente.ldr-pass'
 import { Route as ClientareaClienteMentoriaRouteImport } from './routes/_clientarea.cliente.mentoria'
 import { Route as ClientareaClienteMinhaBibliotecaPessoalRouteImport } from './routes/_clientarea.cliente.minha-biblioteca-pessoal'
 import { Route as ClientareaClienteOrientacaoProfissionalRouteImport } from './routes/_clientarea.cliente.orientacao-profissional'
@@ -350,9 +356,19 @@ const EbookPsicanaliseNoMundoRoute = EbookPsicanaliseNoMundoRouteImport.update({
   path: '/ebook-psicanalise-no-mundo',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EcossistemaRoute = EcossistemaRouteImport.update({
+  id: '/ecossistema',
+  path: '/ecossistema',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EmpreendedoresRoute = EmpreendedoresRouteImport.update({
   id: '/empreendedores',
   path: '/empreendedores',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FalarComEcossistemaRoute = FalarComEcossistemaRouteImport.update({
+  id: '/falar-com-ecossistema',
+  path: '/falar-com-ecossistema',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FilmRoute = FilmRouteImport.update({
@@ -474,6 +490,11 @@ const InstituicoesRoute = InstituicoesRouteImport.update({
   path: '/instituicoes',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LdrPassRoute = LdrPassRouteImport.update({
+  id: '/ldr-pass',
+  path: '/ldr-pass',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LivrosRoute = LivrosRouteImport.update({
   id: '/livros',
   path: '/livros',
@@ -482,6 +503,11 @@ const LivrosRoute = LivrosRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LucianoRodriguesAlmeidaRoute = LucianoRodriguesAlmeidaRouteImport.update({
+  id: '/luciano-rodrigues-almeida',
+  path: '/luciano-rodrigues-almeida',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MensagensProfissionaisRoute = MensagensProfissionaisRouteImport.update({
@@ -619,6 +645,11 @@ const PortalFuncionarioRoute = PortalFuncionarioRouteImport.update({
   id: '/funcionario',
   path: '/funcionario',
   getParentRoute: () => PortalRoute,
+} as any)
+const AdminContatosRoute = AdminContatosRouteImport.update({
+  id: '/admin/contatos',
+  path: '/admin/contatos',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ApiSellerCheckoutRoute = ApiSellerCheckoutRouteImport.update({
   id: '/api/seller-checkout',
@@ -1257,6 +1288,12 @@ const ClientareaClienteEntregasRoute =
     path: '/entregas',
     getParentRoute: () => ClientareaClienteRoute,
   } as any)
+const ClientareaClienteLdrPassRoute =
+  ClientareaClienteLdrPassRouteImport.update({
+    id: '/ldr-pass',
+    path: '/ldr-pass',
+    getParentRoute: () => ClientareaClienteRoute,
+  } as any)
 const ClientareaClienteMentoriaRoute =
   ClientareaClienteMentoriaRouteImport.update({
     id: '/mentoria',
@@ -1736,7 +1773,9 @@ export interface FileRoutesByFullPath {
   '/ebook-pratica-clinica-psicanalise': typeof EbookPraticaClinicaPsicanaliseRoute
   '/ebook-psicanalise-autismo': typeof EbookPsicanaliseAutismoRoute
   '/ebook-psicanalise-no-mundo': typeof EbookPsicanaliseNoMundoRoute
+  '/ecossistema': typeof EcossistemaRoute
   '/empreendedores': typeof EmpreendedoresRoute
+  '/falar-com-ecossistema': typeof FalarComEcossistemaRoute
   '/film': typeof FilmRoute
   '/formacao-comunicacao-oratoria': typeof FormacaoComunicacaoOratoriaRoute
   '/formacao-copywriting-vendas': typeof FormacaoCopywritingVendasRoute
@@ -1758,8 +1797,10 @@ export interface FileRoutesByFullPath {
   '/formulario': typeof FormularioRoute
   '/imprensa': typeof ImprensaRouteWithChildren
   '/instituicoes': typeof InstituicoesRouteWithChildren
+  '/ldr-pass': typeof LdrPassRoute
   '/livros': typeof LivrosRoute
   '/login': typeof LoginRoute
+  '/luciano-rodrigues-almeida': typeof LucianoRodriguesAlmeidaRoute
   '/mensagens-profissionais': typeof MensagensProfissionaisRoute
   '/para-profissionais': typeof ParaProfissionaisRoute
   '/para-vendedores': typeof ParaVendedoresRoute
@@ -1786,6 +1827,7 @@ export interface FileRoutesByFullPath {
   '/assinatura-empresa': typeof PortalAssinaturaEmpresaRoute
   '/empresa': typeof PortalEmpresaRoute
   '/funcionario': typeof PortalFuncionarioRoute
+  '/admin/contatos': typeof AdminContatosRoute
   '/api/seller-checkout': typeof ApiSellerCheckoutRoute
   '/api/seller-purchase-access': typeof ApiSellerPurchaseAccessRoute
   '/api/seller-referral': typeof ApiSellerReferralRoute
@@ -1899,6 +1941,7 @@ export interface FileRoutesByFullPath {
   '/cliente/biblioteca': typeof ClientareaClienteBibliotecaRouteWithChildren
   '/cliente/contratar': typeof ClientareaClienteContratarRoute
   '/cliente/entregas': typeof ClientareaClienteEntregasRoute
+  '/cliente/ldr-pass': typeof ClientareaClienteLdrPassRoute
   '/cliente/mentoria': typeof ClientareaClienteMentoriaRoute
   '/cliente/minha-biblioteca-pessoal': typeof ClientareaClienteMinhaBibliotecaPessoalRoute
   '/cliente/orientacao-profissional': typeof ClientareaClienteOrientacaoProfissionalRoute
@@ -1995,7 +2038,9 @@ export interface FileRoutesByTo {
   '/ebook-pratica-clinica-psicanalise': typeof EbookPraticaClinicaPsicanaliseRoute
   '/ebook-psicanalise-autismo': typeof EbookPsicanaliseAutismoRoute
   '/ebook-psicanalise-no-mundo': typeof EbookPsicanaliseNoMundoRoute
+  '/ecossistema': typeof EcossistemaRoute
   '/empreendedores': typeof EmpreendedoresRoute
+  '/falar-com-ecossistema': typeof FalarComEcossistemaRoute
   '/film': typeof FilmRoute
   '/formacao-comunicacao-oratoria': typeof FormacaoComunicacaoOratoriaRoute
   '/formacao-copywriting-vendas': typeof FormacaoCopywritingVendasRoute
@@ -2016,8 +2061,10 @@ export interface FileRoutesByTo {
   '/formacao-vendas-negociacao': typeof FormacaoVendasNegociacaoRoute
   '/formulario': typeof FormularioRoute
   '/instituicoes': typeof InstituicoesRouteWithChildren
+  '/ldr-pass': typeof LdrPassRoute
   '/livros': typeof LivrosRoute
   '/login': typeof LoginRoute
+  '/luciano-rodrigues-almeida': typeof LucianoRodriguesAlmeidaRoute
   '/mensagens-profissionais': typeof MensagensProfissionaisRoute
   '/para-profissionais': typeof ParaProfissionaisRoute
   '/para-vendedores': typeof ParaVendedoresRoute
@@ -2042,6 +2089,7 @@ export interface FileRoutesByTo {
   '/assinatura-empresa': typeof PortalAssinaturaEmpresaRoute
   '/empresa': typeof PortalEmpresaRoute
   '/funcionario': typeof PortalFuncionarioRoute
+  '/admin/contatos': typeof AdminContatosRoute
   '/api/seller-checkout': typeof ApiSellerCheckoutRoute
   '/api/seller-purchase-access': typeof ApiSellerPurchaseAccessRoute
   '/api/seller-referral': typeof ApiSellerReferralRoute
@@ -2155,6 +2203,7 @@ export interface FileRoutesByTo {
   '/cliente/biblioteca': typeof ClientareaClienteBibliotecaRouteWithChildren
   '/cliente/contratar': typeof ClientareaClienteContratarRoute
   '/cliente/entregas': typeof ClientareaClienteEntregasRoute
+  '/cliente/ldr-pass': typeof ClientareaClienteLdrPassRoute
   '/cliente/mentoria': typeof ClientareaClienteMentoriaRoute
   '/cliente/minha-biblioteca-pessoal': typeof ClientareaClienteMinhaBibliotecaPessoalRoute
   '/cliente/orientacao-profissional': typeof ClientareaClienteOrientacaoProfissionalRoute
@@ -2255,7 +2304,9 @@ export interface FileRoutesById {
   '/ebook-pratica-clinica-psicanalise': typeof EbookPraticaClinicaPsicanaliseRoute
   '/ebook-psicanalise-autismo': typeof EbookPsicanaliseAutismoRoute
   '/ebook-psicanalise-no-mundo': typeof EbookPsicanaliseNoMundoRoute
+  '/ecossistema': typeof EcossistemaRoute
   '/empreendedores': typeof EmpreendedoresRoute
+  '/falar-com-ecossistema': typeof FalarComEcossistemaRoute
   '/film': typeof FilmRoute
   '/formacao-comunicacao-oratoria': typeof FormacaoComunicacaoOratoriaRoute
   '/formacao-copywriting-vendas': typeof FormacaoCopywritingVendasRoute
@@ -2277,8 +2328,10 @@ export interface FileRoutesById {
   '/formulario': typeof FormularioRoute
   '/imprensa': typeof ImprensaRouteWithChildren
   '/instituicoes': typeof InstituicoesRouteWithChildren
+  '/ldr-pass': typeof LdrPassRoute
   '/livros': typeof LivrosRoute
   '/login': typeof LoginRoute
+  '/luciano-rodrigues-almeida': typeof LucianoRodriguesAlmeidaRoute
   '/mensagens-profissionais': typeof MensagensProfissionaisRoute
   '/para-profissionais': typeof ParaProfissionaisRoute
   '/para-vendedores': typeof ParaVendedoresRoute
@@ -2306,6 +2359,7 @@ export interface FileRoutesById {
   '/_portal/assinatura-empresa': typeof PortalAssinaturaEmpresaRoute
   '/_portal/empresa': typeof PortalEmpresaRoute
   '/_portal/funcionario': typeof PortalFuncionarioRoute
+  '/admin/contatos': typeof AdminContatosRoute
   '/api/seller-checkout': typeof ApiSellerCheckoutRoute
   '/api/seller-purchase-access': typeof ApiSellerPurchaseAccessRoute
   '/api/seller-referral': typeof ApiSellerReferralRoute
@@ -2419,6 +2473,7 @@ export interface FileRoutesById {
   '/_clientarea/cliente/biblioteca': typeof ClientareaClienteBibliotecaRouteWithChildren
   '/_clientarea/cliente/contratar': typeof ClientareaClienteContratarRoute
   '/_clientarea/cliente/entregas': typeof ClientareaClienteEntregasRoute
+  '/_clientarea/cliente/ldr-pass': typeof ClientareaClienteLdrPassRoute
   '/_clientarea/cliente/mentoria': typeof ClientareaClienteMentoriaRoute
   '/_clientarea/cliente/minha-biblioteca-pessoal': typeof ClientareaClienteMinhaBibliotecaPessoalRoute
   '/_clientarea/cliente/orientacao-profissional': typeof ClientareaClienteOrientacaoProfissionalRoute
@@ -2517,7 +2572,9 @@ export interface FileRouteTypes {
     | '/ebook-pratica-clinica-psicanalise'
     | '/ebook-psicanalise-autismo'
     | '/ebook-psicanalise-no-mundo'
+    | '/ecossistema'
     | '/empreendedores'
+    | '/falar-com-ecossistema'
     | '/film'
     | '/formacao-comunicacao-oratoria'
     | '/formacao-copywriting-vendas'
@@ -2539,8 +2596,10 @@ export interface FileRouteTypes {
     | '/formulario'
     | '/imprensa'
     | '/instituicoes'
+    | '/ldr-pass'
     | '/livros'
     | '/login'
+    | '/luciano-rodrigues-almeida'
     | '/mensagens-profissionais'
     | '/para-profissionais'
     | '/para-vendedores'
@@ -2567,6 +2626,7 @@ export interface FileRouteTypes {
     | '/assinatura-empresa'
     | '/empresa'
     | '/funcionario'
+    | '/admin/contatos'
     | '/api/seller-checkout'
     | '/api/seller-purchase-access'
     | '/api/seller-referral'
@@ -2680,6 +2740,7 @@ export interface FileRouteTypes {
     | '/cliente/biblioteca'
     | '/cliente/contratar'
     | '/cliente/entregas'
+    | '/cliente/ldr-pass'
     | '/cliente/mentoria'
     | '/cliente/minha-biblioteca-pessoal'
     | '/cliente/orientacao-profissional'
@@ -2776,7 +2837,9 @@ export interface FileRouteTypes {
     | '/ebook-pratica-clinica-psicanalise'
     | '/ebook-psicanalise-autismo'
     | '/ebook-psicanalise-no-mundo'
+    | '/ecossistema'
     | '/empreendedores'
+    | '/falar-com-ecossistema'
     | '/film'
     | '/formacao-comunicacao-oratoria'
     | '/formacao-copywriting-vendas'
@@ -2797,8 +2860,10 @@ export interface FileRouteTypes {
     | '/formacao-vendas-negociacao'
     | '/formulario'
     | '/instituicoes'
+    | '/ldr-pass'
     | '/livros'
     | '/login'
+    | '/luciano-rodrigues-almeida'
     | '/mensagens-profissionais'
     | '/para-profissionais'
     | '/para-vendedores'
@@ -2823,6 +2888,7 @@ export interface FileRouteTypes {
     | '/assinatura-empresa'
     | '/empresa'
     | '/funcionario'
+    | '/admin/contatos'
     | '/api/seller-checkout'
     | '/api/seller-purchase-access'
     | '/api/seller-referral'
@@ -2936,6 +3002,7 @@ export interface FileRouteTypes {
     | '/cliente/biblioteca'
     | '/cliente/contratar'
     | '/cliente/entregas'
+    | '/cliente/ldr-pass'
     | '/cliente/mentoria'
     | '/cliente/minha-biblioteca-pessoal'
     | '/cliente/orientacao-profissional'
@@ -3035,7 +3102,9 @@ export interface FileRouteTypes {
     | '/ebook-pratica-clinica-psicanalise'
     | '/ebook-psicanalise-autismo'
     | '/ebook-psicanalise-no-mundo'
+    | '/ecossistema'
     | '/empreendedores'
+    | '/falar-com-ecossistema'
     | '/film'
     | '/formacao-comunicacao-oratoria'
     | '/formacao-copywriting-vendas'
@@ -3057,8 +3126,10 @@ export interface FileRouteTypes {
     | '/formulario'
     | '/imprensa'
     | '/instituicoes'
+    | '/ldr-pass'
     | '/livros'
     | '/login'
+    | '/luciano-rodrigues-almeida'
     | '/mensagens-profissionais'
     | '/para-profissionais'
     | '/para-vendedores'
@@ -3086,6 +3157,7 @@ export interface FileRouteTypes {
     | '/_portal/assinatura-empresa'
     | '/_portal/empresa'
     | '/_portal/funcionario'
+    | '/admin/contatos'
     | '/api/seller-checkout'
     | '/api/seller-purchase-access'
     | '/api/seller-referral'
@@ -3199,6 +3271,7 @@ export interface FileRouteTypes {
     | '/_clientarea/cliente/biblioteca'
     | '/_clientarea/cliente/contratar'
     | '/_clientarea/cliente/entregas'
+    | '/_clientarea/cliente/ldr-pass'
     | '/_clientarea/cliente/mentoria'
     | '/_clientarea/cliente/minha-biblioteca-pessoal'
     | '/_clientarea/cliente/orientacao-profissional'
@@ -3299,7 +3372,9 @@ export interface RootRouteChildren {
   EbookPraticaClinicaPsicanaliseRoute: typeof EbookPraticaClinicaPsicanaliseRoute
   EbookPsicanaliseAutismoRoute: typeof EbookPsicanaliseAutismoRoute
   EbookPsicanaliseNoMundoRoute: typeof EbookPsicanaliseNoMundoRoute
+  EcossistemaRoute: typeof EcossistemaRoute
   EmpreendedoresRoute: typeof EmpreendedoresRoute
+  FalarComEcossistemaRoute: typeof FalarComEcossistemaRoute
   FilmRoute: typeof FilmRoute
   FormacaoComunicacaoOratoriaRoute: typeof FormacaoComunicacaoOratoriaRoute
   FormacaoCopywritingVendasRoute: typeof FormacaoCopywritingVendasRoute
@@ -3321,8 +3396,10 @@ export interface RootRouteChildren {
   FormularioRoute: typeof FormularioRoute
   ImprensaRoute: typeof ImprensaRouteWithChildren
   InstituicoesRoute: typeof InstituicoesRouteWithChildren
+  LdrPassRoute: typeof LdrPassRoute
   LivrosRoute: typeof LivrosRoute
   LoginRoute: typeof LoginRoute
+  LucianoRodriguesAlmeidaRoute: typeof LucianoRodriguesAlmeidaRoute
   MensagensProfissionaisRoute: typeof MensagensProfissionaisRoute
   ParaProfissionaisRoute: typeof ParaProfissionaisRoute
   ParaVendedoresRoute: typeof ParaVendedoresRoute
@@ -3343,6 +3420,7 @@ export interface RootRouteChildren {
   SellerReferralRoute: typeof SellerReferralRoute
   TreinamentoRoute: typeof TreinamentoRoute
   VendedorRoute: typeof VendedorRouteWithChildren
+  AdminContatosRoute: typeof AdminContatosRoute
   ApiSellerCheckoutRoute: typeof ApiSellerCheckoutRoute
   ApiSellerPurchaseAccessRoute: typeof ApiSellerPurchaseAccessRoute
   ApiSellerReferralRoute: typeof ApiSellerReferralRoute
@@ -3483,11 +3561,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EbookPsicanaliseNoMundoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ecossistema': {
+      id: '/ecossistema'
+      path: '/ecossistema'
+      fullPath: '/ecossistema'
+      preLoaderRoute: typeof EcossistemaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/empreendedores': {
       id: '/empreendedores'
       path: '/empreendedores'
       fullPath: '/empreendedores'
       preLoaderRoute: typeof EmpreendedoresRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/falar-com-ecossistema': {
+      id: '/falar-com-ecossistema'
+      path: '/falar-com-ecossistema'
+      fullPath: '/falar-com-ecossistema'
+      preLoaderRoute: typeof FalarComEcossistemaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/film': {
@@ -3637,6 +3729,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InstituicoesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ldr-pass': {
+      id: '/ldr-pass'
+      path: '/ldr-pass'
+      fullPath: '/ldr-pass'
+      preLoaderRoute: typeof LdrPassRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/livros': {
       id: '/livros'
       path: '/livros'
@@ -3649,6 +3748,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/luciano-rodrigues-almeida': {
+      id: '/luciano-rodrigues-almeida'
+      path: '/luciano-rodrigues-almeida'
+      fullPath: '/luciano-rodrigues-almeida'
+      preLoaderRoute: typeof LucianoRodriguesAlmeidaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mensagens-profissionais': {
@@ -3839,6 +3945,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/funcionario'
       preLoaderRoute: typeof PortalFuncionarioRouteImport
       parentRoute: typeof PortalRoute
+    }
+    '/admin/contatos': {
+      id: '/admin/contatos'
+      path: '/admin/contatos'
+      fullPath: '/admin/contatos'
+      preLoaderRoute: typeof AdminContatosRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/api/seller-checkout': {
       id: '/api/seller-checkout'
@@ -4643,6 +4756,13 @@ declare module '@tanstack/react-router' {
       path: '/entregas'
       fullPath: '/cliente/entregas'
       preLoaderRoute: typeof ClientareaClienteEntregasRouteImport
+      parentRoute: typeof ClientareaClienteRoute
+    }
+    '/_clientarea/cliente/ldr-pass': {
+      id: '/_clientarea/cliente/ldr-pass'
+      path: '/ldr-pass'
+      fullPath: '/cliente/ldr-pass'
+      preLoaderRoute: typeof ClientareaClienteLdrPassRouteImport
       parentRoute: typeof ClientareaClienteRoute
     }
     '/_clientarea/cliente/mentoria': {
@@ -5600,6 +5720,7 @@ interface ClientareaClienteRouteChildren {
   ClientareaClienteBibliotecaRoute: typeof ClientareaClienteBibliotecaRouteWithChildren
   ClientareaClienteContratarRoute: typeof ClientareaClienteContratarRoute
   ClientareaClienteEntregasRoute: typeof ClientareaClienteEntregasRoute
+  ClientareaClienteLdrPassRoute: typeof ClientareaClienteLdrPassRoute
   ClientareaClienteMentoriaRoute: typeof ClientareaClienteMentoriaRoute
   ClientareaClienteMinhaBibliotecaPessoalRoute: typeof ClientareaClienteMinhaBibliotecaPessoalRoute
   ClientareaClienteOrientacaoProfissionalRoute: typeof ClientareaClienteOrientacaoProfissionalRoute
@@ -5630,6 +5751,7 @@ const ClientareaClienteRouteChildren: ClientareaClienteRouteChildren = {
     ClientareaClienteBibliotecaRouteWithChildren,
   ClientareaClienteContratarRoute: ClientareaClienteContratarRoute,
   ClientareaClienteEntregasRoute: ClientareaClienteEntregasRoute,
+  ClientareaClienteLdrPassRoute: ClientareaClienteLdrPassRoute,
   ClientareaClienteMentoriaRoute: ClientareaClienteMentoriaRoute,
   ClientareaClienteMinhaBibliotecaPessoalRoute:
     ClientareaClienteMinhaBibliotecaPessoalRoute,
@@ -5891,7 +6013,9 @@ const rootRouteChildren: RootRouteChildren = {
   EbookPraticaClinicaPsicanaliseRoute: EbookPraticaClinicaPsicanaliseRoute,
   EbookPsicanaliseAutismoRoute: EbookPsicanaliseAutismoRoute,
   EbookPsicanaliseNoMundoRoute: EbookPsicanaliseNoMundoRoute,
+  EcossistemaRoute: EcossistemaRoute,
   EmpreendedoresRoute: EmpreendedoresRoute,
+  FalarComEcossistemaRoute: FalarComEcossistemaRoute,
   FilmRoute: FilmRoute,
   FormacaoComunicacaoOratoriaRoute: FormacaoComunicacaoOratoriaRoute,
   FormacaoCopywritingVendasRoute: FormacaoCopywritingVendasRoute,
@@ -5915,8 +6039,10 @@ const rootRouteChildren: RootRouteChildren = {
   FormularioRoute: FormularioRoute,
   ImprensaRoute: ImprensaRouteWithChildren,
   InstituicoesRoute: InstituicoesRouteWithChildren,
+  LdrPassRoute: LdrPassRoute,
   LivrosRoute: LivrosRoute,
   LoginRoute: LoginRoute,
+  LucianoRodriguesAlmeidaRoute: LucianoRodriguesAlmeidaRoute,
   MensagensProfissionaisRoute: MensagensProfissionaisRoute,
   ParaProfissionaisRoute: ParaProfissionaisRoute,
   ParaVendedoresRoute: ParaVendedoresRoute,
@@ -5937,6 +6063,7 @@ const rootRouteChildren: RootRouteChildren = {
   SellerReferralRoute: SellerReferralRoute,
   TreinamentoRoute: TreinamentoRoute,
   VendedorRoute: VendedorRouteWithChildren,
+  AdminContatosRoute: AdminContatosRoute,
   ApiSellerCheckoutRoute: ApiSellerCheckoutRoute,
   ApiSellerPurchaseAccessRoute: ApiSellerPurchaseAccessRoute,
   ApiSellerReferralRoute: ApiSellerReferralRoute,
