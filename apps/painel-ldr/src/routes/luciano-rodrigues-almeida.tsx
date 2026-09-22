@@ -246,7 +246,7 @@ function LucianoPage() {
             </p>
             <a
               href="https://startupvalley.news/uk/ldr-academy-entrepreneurship-education/"
-              className="mt-6 block rounded-2xl border border-[#d6ad63]/30 bg-[#fbf8f1] p-5 font-bold text-[#0b1428] hover:border-[#8b6a12]"
+              className="mt-6 block rounded-2xl border border-[#d6ad63]/40 bg-[#0b1428] p-5 font-bold text-white hover:border-[#d6ad63]"
             >
               <img
                 src="/media/press/startupvalley-logo-original.png"
