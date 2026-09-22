@@ -16,6 +16,22 @@ export const socialClinicProfessionalApply = createServerFn({ method: "POST" }).
   return submitSocialClinicProfessional(data);
 });
 
+function emailOf(claims: Record<string, unknown>): string | null {
+  const value = claims["email"];
+  return typeof value === "string" ? value : null;
+}
+
+export const socialClinicProfessionalState = createServerFn({ method: "GET" }).middleware([requireSupabaseAuth]).handler(async ({ context }) => {
+  const { getProfessionalSocialClinicState } = await import("@/lib/social-clinic.server");
+  const { getProfessionalDashboard } = await import("@/lib/professional-network.server");
+  const email = emailOf(context.claims);
+  const [state, dashboard] = await Promise.all([
+    getProfessionalSocialClinicState(email),
+    getProfessionalDashboard(context.userId, email),
+  ]);
+  return { ...state, profile: dashboard.profile ?? null, account: dashboard.account ?? null };
+});
+
 export const socialClinicAdmin = createServerFn({ method: "GET" }).middleware([requireSupabaseAuth]).handler(async ({ context }) => {
   const { getSocialClinicAdmin } = await import("@/lib/social-clinic.server");
   return getSocialClinicAdmin(context.supabase, context.userId);
