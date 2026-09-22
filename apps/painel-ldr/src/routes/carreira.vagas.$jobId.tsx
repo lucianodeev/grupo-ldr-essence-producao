@@ -26,6 +26,9 @@ type JobRow = Record<string, any> & {
   country?: string | null;
   city?: string | null;
   work_mode?: string | null;
+  external_work_mode?: string | null;
+  external_contract_type?: string | null;
+  external_publication_language?: string | null;
   contract_type?: string | null;
   publication_language?: string | null;
   required_languages?: string[] | string | null;
@@ -61,7 +64,7 @@ const C = {
     sign: "Apoio em língua de sinais/comunicação",
     fallbackWarning:
       "Alguns campos avançados de acessibilidade ainda não estão disponíveis no banco. A vaga foi carregada com os dados seguros atuais.",
-    notInformed: "Não informado", externalApply: "Candidatar na fonte original", source: "Fonte original",
+    notInformed: "Não informado", sourceNotInformed: "Não informado pela fonte", externalApply: "Candidatar na fonte original", source: "Fonte original",
   },
   en: {
     back: "Back to jobs",
@@ -87,7 +90,7 @@ const C = {
     sign: "Sign language/communication support",
     fallbackWarning:
       "Some advanced accessibility fields are not available in the database yet. The job was loaded with the current safe data.",
-    notInformed: "Not informed", externalApply: "Apply on original source", source: "Original source",
+    notInformed: "Not informed", sourceNotInformed: "Not informed by source", externalApply: "Apply on original source", source: "Original source",
   },
   fr: {
     back: "Retour aux offres",
@@ -113,7 +116,7 @@ const C = {
     sign: "Soutien en langue des signes/communication",
     fallbackWarning:
       "Certains champs avancés d’accessibilité ne sont pas encore disponibles dans la base. L’offre a été chargée avec les données sûres actuelles.",
-    notInformed: "Non renseigné", externalApply: "Postuler sur la source originale", source: "Source originale",
+    notInformed: "Non renseigné", sourceNotInformed: "Non renseigné par la source", externalApply: "Postuler sur la source originale", source: "Source originale",
   },
   es: {
     back: "Volver a vacantes",
@@ -139,14 +142,14 @@ const C = {
     sign: "Apoyo en lengua de señas/comunicación",
     fallbackWarning:
       "Algunos campos avanzados de accesibilidad aún no están disponibles en la base de datos. La vacante se cargó con los datos seguros actuales.",
-    notInformed: "No informado", externalApply: "Postular en la fuente original", source: "Fuente original",
+    notInformed: "No informado", sourceNotInformed: "No informado por la fuente", externalApply: "Postular en la fuente original", source: "Fuente original",
   },
 } as const;
 
 type Copy = (typeof C)[keyof typeof C];
 
 const baseSelect =
-  "id,title,description,responsibilities,requirements,country,city,work_mode,contract_type,publication_language,required_languages,salary_currency,salary_min,salary_max,salary_period,source_type,source_name,source_url,external_apply_url,career_companies(name,website)";
+  "id,title,description,responsibilities,requirements,country,city,work_mode,contract_type,publication_language,required_languages,salary_currency,salary_min,salary_max,salary_period,external_work_mode,external_contract_type,external_publication_language,source_type,source_name,source_url,external_apply_url,career_companies(name,website)";
 
 const enhancedSelect = `${baseSelect},accessibility_inclusive,accessibility_pcd_only:accessibility_designated_disability,accessibility_resources:accessibility_features,accessibility_details`;
 
@@ -270,7 +273,7 @@ function Job() {
             <h1 className="mt-2 text-3xl font-bold md:text-4xl">{job.title}</h1>
             <p className="mt-4 flex flex-wrap items-center gap-2 text-white/85">
               <MapPin size={18} aria-hidden="true" />
-              {location} · {job.work_mode || t.notInformed} · {job.contract_type || t.notInformed}
+              {location} · {job.source_type==="external_public"?(job.external_work_mode||t.sourceNotInformed):(job.work_mode||t.notInformed)} · {job.source_type==="external_public"?(job.external_contract_type||t.sourceNotInformed):(job.contract_type||t.notInformed)}
             </p>
           </div>
 
@@ -308,7 +311,7 @@ function Job() {
               <div className="mt-5 space-y-3 text-sm text-slate-700">
                 <Info icon={<DollarSign size={17} aria-hidden="true" />} label={t.salary} value={formatSalary(job, t)} />
                 <Info icon={<Languages size={17} aria-hidden="true" />} label={t.languages} value={formatLanguages(job.required_languages, t.notInformed)} />
-                <Info icon={<Globe2 size={17} aria-hidden="true" />} label={t.work} value={job.work_mode || t.notInformed} />
+                <Info icon={<Globe2 size={17} aria-hidden="true" />} label={t.work} value={job.source_type==="external_public"?(job.external_work_mode||t.sourceNotInformed):(job.work_mode||t.notInformed)} />
                 <Info icon={<MapPin size={17} aria-hidden="true" />} label={t.location} value={location} />
               </div>
 
