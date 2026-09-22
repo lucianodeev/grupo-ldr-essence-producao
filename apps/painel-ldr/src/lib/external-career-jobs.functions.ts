@@ -28,7 +28,7 @@ export const stageExternalPublicJob=createServerFn({method:"POST"})
   if(duplicate)return {created:false as const,duplicate:true as const,jobId:duplicate.id,status:duplicate.status};
   const row:any={
    company_id:null,title,description:clean(data.description,12000)||null,country:clean(data.country,100)||null,city:clean(data.city,100)||null,
-   work_mode:clean(data.workMode,40)||"remote",contract_type:clean(data.contractType,60)||"employment",publication_language:clean(data.publicationLanguage,8)||"pt",
+   ...(clean(data.workMode,40)?{work_mode:clean(data.workMode,40)}:{}),...(clean(data.contractType,60)?{contract_type:clean(data.contractType,60)}:{}),...(clean(data.publicationLanguage,8)?{publication_language:clean(data.publicationLanguage,8)}:{}),
    status:"pending_review",source_type:"external_public",source_name:sourceName,source_url:sourceUrl,external_reference:externalReference,
    external_apply_url:applyUrl,source_published_at:data.sourcePublishedAt||null,source_expires_at:data.sourceExpiresAt||null,source_checked_at:new Date().toISOString(),source_active:true
   };
