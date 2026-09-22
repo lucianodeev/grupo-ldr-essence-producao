@@ -159,12 +159,38 @@ type ProfessionalInput = {
   education: string; experience?: string; modalities?: string; availability?: string; maxPatients?: number;
   profileSlug?: string; acceptsCommission: boolean; privacyConsent: boolean; website?: string;
 };
+export async function getProfessionalSocialClinicState(emailValue: string | null) {
+  const email = clean(emailValue, 180).toLowerCase();
+  if (!email || !email.includes("@")) return { application: null };
+  const { data: events } = await db.from("audit_logs")
+    .select("action,target,details,created_at")
+    .eq("actor_email", email)
+    .in("action", ["social_clinic.professional_application_submitted","social_clinic.professional_status_changed"])
+    .order("created_at", { ascending: true })
+    .limit(200);
+  const applications = new Map<string, any>();
+  for (const event of events ?? []) {
+    if (!event.target) continue;
+    if (event.action === "social_clinic.professional_application_submitted") {
+      applications.set(event.target, { ...event.details, protocol: event.target, submitted_at: event.created_at });
+    } else if (event.action === "social_clinic.professional_status_changed" && applications.has(event.target)) {
+      applications.set(event.target, { ...applications.get(event.target), ...event.details });
+    }
+  }
+  const application = [...applications.values()].sort((a,b) => String(b.submitted_at).localeCompare(String(a.submitted_at)))[0] ?? null;
+  return { application };
+}
+
 export async function submitSocialClinicProfessional(input: ProfessionalInput) {
   if (clean(input.website, 100)) return { ok: true as const, protocol: "CSPRO-RECEBIDO" };
   const fullName = clean(input.fullName, 120);
   const email = clean(input.email, 180).toLowerCase();
   if (fullName.length < 3 || !email.includes("@") || !clean(input.phone, 50) || !clean(input.country, 80) || !clean(input.education, 500)) fail("Preencha os dados profissionais obrigatórios.");
   if (!input.acceptsCommission || !input.privacyConsent) fail("É necessário aceitar a comissão única de 20% e a política de privacidade.");
+  const current = await getProfessionalSocialClinicState(email);
+  if (current.application && !["rejected","closed","inactive"].includes(String(current.application.status || "new"))) {
+    return { ok: true as const, protocol: current.application.protocol, existing: true as const };
+  }
   const protocol = `CSPRO-${new Date().getUTCFullYear()}-${randomUUID().replace(/-/g, "").slice(0, 8).toUpperCase()}`;
   const details = {
     protocol, status: "new", full_name: fullName, email, phone: clean(input.phone, 50), country: clean(input.country, 80), city: clean(input.city, 100) || null,
