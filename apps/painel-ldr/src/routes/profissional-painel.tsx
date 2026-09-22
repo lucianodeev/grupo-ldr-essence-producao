@@ -1,7 +1,7 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useMemo, useState } from "react";
-import { BriefcaseBusiness, CalendarDays, CircleDollarSign, CreditCard, ExternalLink, FileText, GraduationCap, LayoutDashboard, LogOut, Megaphone, Settings2, UserRound, UsersRound } from "lucide-react";
+import { BriefcaseBusiness, CalendarDays, CircleDollarSign, LayoutDashboard, LogOut, Megaphone, Settings2, UserRound, UsersRound } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { LanguageSelect, useI18n } from "@/lib/i18n";
