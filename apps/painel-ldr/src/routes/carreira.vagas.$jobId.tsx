@@ -45,7 +45,7 @@ const C = {
     apply: "Candidatar pelo perfil",
     closed: "Vaga indisponível ou não publicada.",
     loading: "Carregando vaga...",
-    safe: "Esta vaga passou pela etapa de publicação da plataforma.",
+    safe: "Esta vaga passou pela etapa de publicação da plataforma.", externalSafe: "Esta vaga pública externa está referenciada à fonte original. Confirme os detalhes e a disponibilidade na fonte antes de se candidatar.",
     journeyTitle: "Candidatura rápida e inclusiva",
     journeyText:
       "Você pode avançar usando seu perfil profissional. Dados de acessibilidade só devem ser compartilhados quando você autorizar na próxima etapa.",
@@ -71,7 +71,7 @@ const C = {
     apply: "Apply with profile",
     closed: "Job unavailable or not published.",
     loading: "Loading job...",
-    safe: "This job passed the platform publication stage.",
+    safe: "This job passed the platform publication stage.", externalSafe: "This external public job is referenced to its original source. Confirm details and availability at the source before applying.",
     journeyTitle: "Fast and inclusive application",
     journeyText:
       "You can move forward using your professional profile. Accessibility information is shared only when you authorize it in the next step.",
@@ -97,7 +97,7 @@ const C = {
     apply: "Postuler avec profil",
     closed: "Offre indisponible ou non publiée.",
     loading: "Chargement de l’offre...",
-    safe: "Cette offre a passé l’étape de publication de la plateforme.",
+    safe: "Cette offre a passé l’étape de publication de la plateforme.", externalSafe: "Cette offre publique externe renvoie à sa source originale. Vérifiez les détails et sa disponibilité à la source avant de postuler.",
     journeyTitle: "Candidature rapide et inclusive",
     journeyText:
       "Vous pouvez avancer avec votre profil professionnel. Les informations d’accessibilité ne sont partagées que si vous l’autorisez à l’étape suivante.",
@@ -123,7 +123,7 @@ const C = {
     apply: "Postular con perfil",
     closed: "Vacante no disponible o no publicada.",
     loading: "Cargando vacante...",
-    safe: "Esta vacante pasó por la etapa de publicación de la plataforma.",
+    safe: "Esta vacante pasó por la etapa de publicación de la plataforma.", externalSafe: "Esta vacante pública externa está referenciada a su fuente original. Confirma los detalles y su disponibilidad en la fuente antes de postular.",
     journeyTitle: "Postulación rápida e inclusiva",
     journeyText:
       "Puedes avanzar usando tu perfil profesional. Los datos de accesibilidad solo se comparten cuando lo autorizas en la próxima etapa.",
@@ -278,7 +278,7 @@ function Job() {
             <div>
               <div className="flex gap-2 rounded-xl bg-slate-50 p-4 text-sm text-slate-600">
                 <ShieldCheck size={19} className="mt-0.5 shrink-0" aria-hidden="true" />
-                <span>{t.safe}</span>
+                <span>{job.source_type==="external_public"?t.externalSafe:t.safe}</span>
               </div>
 
 
@@ -313,7 +313,7 @@ function Job() {
               </div>
 
               {job.source_type==="external_public"&&job.external_apply_url?<a href={job.external_apply_url} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#07345b] px-5 font-semibold text-white"><Send size={17} aria-hidden="true"/>{t.externalApply}</a>:<Link reloadDocument to="/carreira/vagas/$jobId/candidatura" params={{jobId:job.id}} className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#07345b] px-5 font-semibold text-white"><Send size={17} aria-hidden="true"/>{t.apply}</Link>}
-              {job.source_type==="external_public"&&job.source_url&&<a href={job.source_url} target="_blank" rel="noopener noreferrer" className="mt-3 block text-center text-xs font-semibold text-[#07345b] underline">{t.source}{job.source_name?` · ${job.source_name}`:""}</a>}
+              <div className="mt-5 rounded-2xl border border-[#d6ad63]/35 bg-[#fffaf0] p-4"><p className="text-[10px] font-black uppercase tracking-[.16em] text-[#9a772c]">DEPOIS · por LDR Academy</p><h3 className="mt-1 font-black text-[#07345b]">E depois de encontrar esta vaga?</h3><p className="mt-1 text-xs leading-5 text-slate-600">Você decide se quer se preparar, fortalecer evidências ou seguir para a candidatura. O DEPOIS não envia candidaturas nem decide seleção por você.</p><div className="mt-3 flex flex-wrap gap-2"><Link to="/carreira/id" className="rounded-lg border border-[#07345b] px-3 py-2 text-[10px] font-black text-[#07345b]">PREPARAR PERFIL</Link><Link to="/cliente/biblioteca" className="rounded-lg border border-[#07345b] px-3 py-2 text-[10px] font-black text-[#07345b]">APRENDER</Link><Link to="/carreira/next" className="rounded-lg bg-[#07345b] px-3 py-2 text-[10px] font-black text-white">OUTRAS POSSIBILIDADES</Link></div></div>\n              {job.source_type==="external_public"&&job.source_url&&<a href={job.source_url} target="_blank" rel="noopener noreferrer" className="mt-3 block text-center text-xs font-semibold text-[#07345b] underline">{t.source}{job.source_name?` · ${job.source_name}`:""}</a>}
 
             </aside>
           </div>
