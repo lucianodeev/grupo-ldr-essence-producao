@@ -44,7 +44,7 @@ function ProfessionalLogin(){
       const dashboard=await load();
       const profile=dashboard?.profile;
       const isActiveApproved=profile?.profile_status==="active"&&profile?.compliance_status==="approved";
-      window.location.replace((isActiveApproved?"/painel-profissional":"/profissional-onboarding")+(sellerRef?`?seller_ref=${encodeURIComponent(sellerRef)}`:""));
+      window.location.replace((isActiveApproved?"/profissional-painel":"/profissional-onboarding")+(sellerRef?`?seller_ref=${encodeURIComponent(sellerRef)}`:""));
     }catch{
       window.location.replace("/profissional-onboarding"+(sellerRef?`?seller_ref=${encodeURIComponent(sellerRef)}`:""));
     }
