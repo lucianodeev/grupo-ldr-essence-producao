@@ -61,7 +61,7 @@ const C = {
     sign: "Apoio em língua de sinais/comunicação",
     fallbackWarning:
       "Alguns campos avançados de acessibilidade ainda não estão disponíveis no banco. A vaga foi carregada com os dados seguros atuais.",
-    notInformed: "Não informado",
+    notInformed: "Não informado", externalApply: "Candidatar na fonte original", source: "Fonte original",
   },
   en: {
     back: "Back to jobs",
@@ -87,7 +87,7 @@ const C = {
     sign: "Sign language/communication support",
     fallbackWarning:
       "Some advanced accessibility fields are not available in the database yet. The job was loaded with the current safe data.",
-    notInformed: "Not informed",
+    notInformed: "Not informed", externalApply: "Apply on original source", source: "Original source",
   },
   fr: {
     back: "Retour aux offres",
@@ -113,7 +113,7 @@ const C = {
     sign: "Soutien en langue des signes/communication",
     fallbackWarning:
       "Certains champs avancés d’accessibilité ne sont pas encore disponibles dans la base. L’offre a été chargée avec les données sûres actuelles.",
-    notInformed: "Non renseigné",
+    notInformed: "Non renseigné", externalApply: "Postuler sur la source originale", source: "Source originale",
   },
   es: {
     back: "Volver a vacantes",
@@ -139,14 +139,14 @@ const C = {
     sign: "Apoyo en lengua de señas/comunicación",
     fallbackWarning:
       "Algunos campos avanzados de accesibilidad aún no están disponibles en la base de datos. La vacante se cargó con los datos seguros actuales.",
-    notInformed: "No informado",
+    notInformed: "No informado", externalApply: "Postular en la fuente original", source: "Fuente original",
   },
 } as const;
 
 type Copy = (typeof C)[keyof typeof C];
 
 const baseSelect =
-  "id,title,description,responsibilities,requirements,country,city,work_mode,contract_type,publication_language,required_languages,salary_currency,salary_min,salary_max,salary_period,career_companies(name,website)";
+  "id,title,description,responsibilities,requirements,country,city,work_mode,contract_type,publication_language,required_languages,salary_currency,salary_min,salary_max,salary_period,source_type,source_name,source_url,external_apply_url,career_companies(name,website)";
 
 const enhancedSelect = `${baseSelect},accessibility_inclusive,accessibility_pcd_only:accessibility_designated_disability,accessibility_resources:accessibility_features,accessibility_details`;
 
@@ -312,14 +312,9 @@ function Job() {
                 <Info icon={<MapPin size={17} aria-hidden="true" />} label={t.location} value={location} />
               </div>
 
-              <Link reloadDocument
-                to="/carreira/vagas/$jobId/candidatura"
-                params={{ jobId: job.id }}
-                className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#07345b] px-5 font-semibold text-white transition hover:bg-[#0b426f] focus:outline-none focus:ring-4 focus:ring-[#07345b]/20"
-              >
-                <Send size={17} aria-hidden="true" />
-                {t.apply}
-              </Link>
+              {job.source_type==="external_public"&&job.external_apply_url?<a href={job.external_apply_url} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#07345b] px-5 font-semibold text-white"><Send size={17} aria-hidden="true"/>{t.externalApply}</a>:<Link reloadDocument to="/carreira/vagas/$jobId/candidatura" params={{jobId:job.id}} className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#07345b] px-5 font-semibold text-white"><Send size={17} aria-hidden="true"/>{t.apply}</Link>}
+              {job.source_type==="external_public"&&job.source_url&&<a href={job.source_url} target="_blank" rel="noopener noreferrer" className="mt-3 block text-center text-xs font-semibold text-[#07345b] underline">{t.source}{job.source_name?` · ${job.source_name}`:""}</a>}
+
             </aside>
           </div>
         </article>
