@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { classifyEntitlementResource, isPassEligibleResource, resolveLegacyEntitlement } from "./entitlements";
+import { classifyEntitlementResource, isPassEligibleResource, resolveLegacyEntitlement } from "./entitlements.ts";
 
 test("owner override has highest precedence", () => {
   const x=resolveLegacyEntitlement({resourceKey:"course",ownerOverride:true,librarySubscription:true});
