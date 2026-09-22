@@ -34,7 +34,11 @@ jobs:
         id: lint
         continue-on-error: true
         working-directory: apps/painel-ldr
-        run: npx eslint src/routes/profissional-onboarding.tsx --rule 'prettier/prettier: off' --rule '@typescript-eslint/no-explicit-any: off' --max-warnings=1
+        run: >-
+          npx eslint src/routes/profissional-onboarding.tsx
+          --rule 'prettier/prettier: off'
+          --rule '@typescript-eslint/no-explicit-any: off'
+          --max-warnings=1
       - name: TypeScript route validation
         id: types
         continue-on-error: true
