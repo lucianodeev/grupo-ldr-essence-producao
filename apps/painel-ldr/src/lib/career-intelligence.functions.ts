@@ -5,11 +5,11 @@ export const refreshCareerIntelligence=createServerFn({method:"POST"}).middlewar
  const [{data:goals},{data:proofs},{data:jobs},{data:projects}]=await Promise.all([
   db.from("ldr_career_goals").select("id,target_title,target_country,target_work_mode,target_competency_keys").eq("user_id",uid).eq("status","active").limit(5),
   db.from("ldr_proofs").select("id,title,competency_key,verification_status").eq("user_id",uid).limit(50),
-  db.from("career_jobs").select("id,title,location,work_mode,status").eq("status","published").limit(50),
+  db.from("career_jobs").select("id,title,country,city,work_mode,status,source_type,source_name,source_active,source_expires_at").eq("status","published").limit(50),
   db.from("ldr_experience_projects").select("id,title,modality,status").in("status",["open","in_progress"]).limit(30)
  ]);
  const goal=(goals??[])[0]; const skills=[...new Set((proofs??[]).map((p:any)=>p.competency_key).filter(Boolean))];
- const recs:any[]=[]; for(const j of jobs??[]){if(recs.length>=8)break; const title=String(j.title??""); const hit=goal&&title.toLowerCase().includes(String(goal.target_title??"").toLowerCase()); if(hit||!goal)recs.push({user_id:uid,opportunity_type:"job",source_reference:j.id,title,rationale:{summary:hit?"O título da vaga se aproxima do seu objetivo ativo.":"Vaga aberta disponível no ecossistema.",goal:goal?.target_title??null,evidence_skills:skills.slice(0,8)},status:"suggested"});}
+ const now=Date.now(); const validJobs=(jobs??[]).filter((j:any)=>j.source_type!=="external_public"||(j.source_active!==false&&(!j.source_expires_at||Date.parse(j.source_expires_at)>now)));\n const recs:any[]=[]; for(const j of validJobs){if(recs.length>=8)break; const title=String(j.title??""); const hit=goal&&title.toLowerCase().includes(String(goal.target_title??"").toLowerCase()); if(hit||!goal)recs.push({user_id:uid,opportunity_type:"job",source_reference:j.id,title,rationale:{summary:hit?"O título da vaga se aproxima do seu objetivo ativo.":j.source_type==="external_public"?"Vaga pública externa ativa disponível como possibilidade.":"Vaga aberta disponível no ecossistema.",goal:goal?.target_title??null,evidence_skills:skills.slice(0,8),source_type:j.source_type??"internal",source_name:j.source_name??null},status:"suggested"});}
  for(const p of projects??[]){if(recs.length>=12)break;recs.push({user_id:uid,opportunity_type:"project",source_reference:p.id,title:p.title,rationale:{summary:"Projeto ativo no ecossistema para prática e construção de evidências.",modality:p.modality},status:"suggested"});}
  await db.from("ldr_opportunity_recommendations").delete().eq("user_id",uid).eq("status","suggested");
  if(recs.length)await db.from("ldr_opportunity_recommendations").insert(recs);
