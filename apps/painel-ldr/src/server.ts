@@ -110,6 +110,7 @@ function academyCanonicalRedirect(request: Request): Response | null {
       "/clinica-social",
       "/profissionais",
       "/profissional/",
+      "/profissional-painel",
       "/profissional-onboarding",
       "/para-profissionais",
       "/painel-profissional",
