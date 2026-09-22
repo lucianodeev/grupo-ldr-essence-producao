@@ -64,7 +64,7 @@ const C = {
     sign: "Apoio em língua de sinais/comunicação",
     fallbackWarning:
       "Alguns campos avançados de acessibilidade ainda não estão disponíveis no banco. A vaga foi carregada com os dados seguros atuais.",
-    notInformed: "Não informado", sourceNotInformed: "Não informado pela fonte", externalApply: "Candidatar na fonte original", source: "Fonte original",
+    depoisTitle: "E depois de encontrar esta vaga?", depoisText: "Você decide se quer se preparar, fortalecer evidências ou seguir para a candidatura. O DEPOIS não envia candidaturas nem decide seleção por você.", prepare: "PREPARAR PERFIL", learn: "APRENDER", possibilities: "OUTRAS POSSIBILIDADES", notInformed: "Não informado", sourceNotInformed: "Não informado pela fonte", externalApply: "Candidatar na fonte original", source: "Fonte original",
   },
   en: {
     back: "Back to jobs",
@@ -90,7 +90,7 @@ const C = {
     sign: "Sign language/communication support",
     fallbackWarning:
       "Some advanced accessibility fields are not available in the database yet. The job was loaded with the current safe data.",
-    notInformed: "Not informed", sourceNotInformed: "Not informed by source", externalApply: "Apply on original source", source: "Original source",
+    depoisTitle: "What comes after finding this job?", depoisText: "You decide whether to prepare, strengthen real evidence or proceed to the application. DEPOIS does not submit applications or make selection decisions for you.", prepare: "PREPARE PROFILE", learn: "LEARN", possibilities: "OTHER POSSIBILITIES", notInformed: "Not informed", sourceNotInformed: "Not informed by source", externalApply: "Apply on original source", source: "Original source",
   },
   fr: {
     back: "Retour aux offres",
@@ -116,7 +116,7 @@ const C = {
     sign: "Soutien en langue des signes/communication",
     fallbackWarning:
       "Certains champs avancés d’accessibilité ne sont pas encore disponibles dans la base. L’offre a été chargée avec les données sûres actuelles.",
-    notInformed: "Non renseigné", sourceNotInformed: "Non renseigné par la source", externalApply: "Postuler sur la source originale", source: "Source originale",
+    depoisTitle: "Et après avoir trouvé cette offre ?", depoisText: "Vous décidez de vous préparer, de renforcer des preuves réelles ou de poursuivre la candidature. DEPOIS ne postule pas et ne prend aucune décision de sélection à votre place.", prepare: "PRÉPARER LE PROFIL", learn: "APPRENDRE", possibilities: "AUTRES POSSIBILITÉS", notInformed: "Non renseigné", sourceNotInformed: "Non renseigné par la source", externalApply: "Postuler sur la source originale", source: "Source originale",
   },
   es: {
     back: "Volver a vacantes",
@@ -142,7 +142,7 @@ const C = {
     sign: "Apoyo en lengua de señas/comunicación",
     fallbackWarning:
       "Algunos campos avanzados de accesibilidad aún no están disponibles en la base de datos. La vacante se cargó con los datos seguros actuales.",
-    notInformed: "No informado", sourceNotInformed: "No informado por la fuente", externalApply: "Postular en la fuente original", source: "Fuente original",
+    depoisTitle: "¿Y después de encontrar esta vacante?", depoisText: "Tú decides si quieres prepararte, reforzar evidencias reales o continuar con la postulación. DEPOIS no envía postulaciones ni toma decisiones de selección por ti.", prepare: "PREPARAR PERFIL", learn: "APRENDER", possibilities: "OTRAS POSIBILIDADES", notInformed: "No informado", sourceNotInformed: "No informado por la fuente", externalApply: "Postular en la fuente original", source: "Fuente original",
   },
 } as const;
 
@@ -316,7 +316,7 @@ function Job() {
               </div>
 
               {job.source_type==="external_public"&&job.external_apply_url?<a href={job.external_apply_url} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#07345b] px-5 font-semibold text-white"><Send size={17} aria-hidden="true"/>{t.externalApply}</a>:<Link reloadDocument to="/carreira/vagas/$jobId/candidatura" params={{jobId:job.id}} className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#07345b] px-5 font-semibold text-white"><Send size={17} aria-hidden="true"/>{t.apply}</Link>}
-              <div className="mt-5 rounded-2xl border border-[#d6ad63]/35 bg-[#fffaf0] p-4"><p className="text-[10px] font-black uppercase tracking-[.16em] text-[#9a772c]">DEPOIS · por LDR Academy</p><h3 className="mt-1 font-black text-[#07345b]">E depois de encontrar esta vaga?</h3><p className="mt-1 text-xs leading-5 text-slate-600">Você decide se quer se preparar, fortalecer evidências ou seguir para a candidatura. O DEPOIS não envia candidaturas nem decide seleção por você.</p><div className="mt-3 flex flex-wrap gap-2"><Link to="/carreira/id" className="rounded-lg border border-[#07345b] px-3 py-2 text-[10px] font-black text-[#07345b]">PREPARAR PERFIL</Link><Link to="/cliente/biblioteca" className="rounded-lg border border-[#07345b] px-3 py-2 text-[10px] font-black text-[#07345b]">APRENDER</Link><Link to="/carreira/next" className="rounded-lg bg-[#07345b] px-3 py-2 text-[10px] font-black text-white">OUTRAS POSSIBILIDADES</Link></div></div>
+              <div className="mt-5 rounded-2xl border border-[#d6ad63]/35 bg-[#fffaf0] p-4"><p className="text-[10px] font-black uppercase tracking-[.16em] text-[#9a772c]">DEPOIS · por LDR Academy</p><h3 className="mt-1 font-black text-[#07345b]">{t.depoisTitle}</h3><p className="mt-1 text-xs leading-5 text-slate-600">{t.depoisText}</p><div className="mt-3 flex flex-wrap gap-2"><Link to="/carreira/id" className="rounded-lg border border-[#07345b] px-3 py-2 text-[10px] font-black text-[#07345b]">{t.prepare}</Link><Link to="/cliente/biblioteca" className="rounded-lg border border-[#07345b] px-3 py-2 text-[10px] font-black text-[#07345b]">{t.learn}</Link><Link to="/carreira/next" className="rounded-lg bg-[#07345b] px-3 py-2 text-[10px] font-black text-white">{t.possibilities}</Link></div></div>
               {job.source_type==="external_public"&&job.source_url&&<a href={job.source_url} target="_blank" rel="noopener noreferrer" className="mt-3 block text-center text-xs font-semibold text-[#07345b] underline">{t.source}{job.source_name?` · ${job.source_name}`:""}</a>}
 
             </aside>
