@@ -249,7 +249,7 @@ function LucianoPage() {
               className="mt-6 block rounded-2xl border border-[#d6ad63]/30 bg-[#fbf8f1] p-5 font-bold text-[#0b1428] hover:border-[#8b6a12]"
             >
               <img
-                src="/media/press/startupvalley-logo.png"
+                src="/media/press/startupvalley-logo-original.png"
                 alt="StartupValley"
                 className="mx-auto object-contain"
                 style={{ width: "230px", height: "auto", maxWidth: "100%" }}
