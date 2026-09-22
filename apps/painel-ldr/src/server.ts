@@ -103,6 +103,29 @@ function academyCanonicalRedirect(request: Request): Response | null {
     return temporaryRedirect(target.toString());
   }
 
+  // Keep service/booking/professional portals out of the Academy host without
+  // changing the underlying routes or authentication flows.
+  if (isAcademy) {
+    const servicePrefixes = [
+      "/clinica-social",
+      "/profissionais",
+      "/profissional/",
+      "/profissional-onboarding",
+      "/para-profissionais",
+      "/painel-profissional",
+      "/agendamento",
+      "/agenda",
+    ];
+    const isServiceRoute = servicePrefixes.some((prefix) =>
+      url.pathname === prefix || url.pathname.startsWith(prefix.endsWith("/") ? prefix : prefix + "/")
+    );
+    if (isServiceRoute) {
+      const target = new URL(url.toString());
+      target.hostname = "portal.ldrrhestrategia.com";
+      return temporaryRedirect(target.toString());
+    }
+  }
+
   if (!isAcademy) return null;
 
   // The academy root is the public sales page. Keep the library on the real
