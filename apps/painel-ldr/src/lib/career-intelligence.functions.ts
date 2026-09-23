@@ -15,12 +15,12 @@ export const refreshCareerIntelligence=createServerFn({method:"POST"}).middlewar
  if(failed?.error)throw new Error("Não foi possível atualizar as oportunidades com segurança. As sugestões atuais foram preservadas.");
  const goals=goalsResult.data,proofs=proofsResult.data,jobs=jobsResult.data,projects=projectsResult.data;
  const goal=(goals??[])[0]; const skills=[...new Set((proofs??[]).map((p:any)=>p.competency_key).filter(Boolean))];
- const recs:any[]=[]; for(const j of jobs??[]){if(recs.length>=8)break; const title=String(j.title??""); const hit=goal&&title.toLowerCase().includes(String(goal.target_title??"").toLowerCase()); if(hit||!goal)recs.push({user_id:uid,opportunity_type:"job",source_reference:j.id,title,rationale:{summary:hit?"O título da vaga se aproxima do seu objetivo ativo.":"Vaga aberta disponível no ecossistema.",goal:goal?.target_title??null,evidence_skills:skills.slice(0,8),location:[j.city,j.country].filter(Boolean).join(", ")||null,work_mode:j.work_mode??null},status:"suggested"});}
- for(const p of projects??[]){if(recs.length>=12)break;recs.push({user_id:uid,opportunity_type:"project",source_reference:p.id,title:p.title,rationale:{summary:"Projeto ativo no ecossistema para prática e construção de evidências.",modality:p.modality},status:"suggested"});}
+ const recs:any[]=[]; for(const j of jobs??[]){if(recs.length>=8)break; const title=String(j.title??""); const hit=goal&&title.toLowerCase().includes(String(goal.target_title??"").toLowerCase()); if(hit||!goal)recs.push({user_id:uid,opportunity_type:"job",source_reference:j.id,title,rationale:{generator:"career_intelligence",summary:hit?"O título da vaga se aproxima do seu objetivo ativo.":"Vaga aberta disponível no ecossistema.",goal:goal?.target_title??null,evidence_skills:skills.slice(0,8),location:[j.city,j.country].filter(Boolean).join(", ")||null,work_mode:j.work_mode??null},status:"suggested"});}
+ for(const p of projects??[]){if(recs.length>=12)break;recs.push({user_id:uid,opportunity_type:"project",source_reference:p.id,title:p.title,rationale:{generator:"career_intelligence",summary:"Projeto ativo no ecossistema para prática e construção de evidências.",modality:p.modality},status:"suggested"});}
 
  // Refresh only recommendations owned by this career generator.
  // Other modules (Rede Acadêmica, negócios, eventos, cursos) may share this table.
- const recDelete=await db.from("ldr_opportunity_recommendations").delete().eq("user_id",uid).eq("status","suggested").in("opportunity_type",[...CAREER_TYPES]);
+ const recDelete=await db.from("ldr_opportunity_recommendations").delete().eq("user_id",uid).eq("status","suggested").in("opportunity_type",[...CAREER_TYPES]).contains("rationale",{generator:"career_intelligence"});
  if(recDelete.error)throw new Error("Não foi possível atualizar as oportunidades. As sugestões atuais foram preservadas.");
  if(recs.length){const recInsert=await db.from("ldr_opportunity_recommendations").insert(recs);if(recInsert.error)throw new Error("Não foi possível salvar as novas oportunidades.");}
 
