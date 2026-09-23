@@ -33,6 +33,11 @@ type JobRow = Record<string, any> & {
   salary_min?: number | string | null;
   salary_max?: number | string | null;
   salary_period?: string | null;
+  listing_origin?: string | null;
+  external_source_name?: string | null;
+  external_source_url?: string | null;
+  external_apply_url?: string | null;
+  external_checked_at?: string | null;
   career_companies?: { name?: string | null; website?: string | null } | null;
 };
 
@@ -43,6 +48,10 @@ const C = {
     resp: "Responsabilidades",
     req: "Requisitos mínimos",
     apply: "Candidatar pelo perfil",
+    externalBadge: "Vaga pública externa",
+    externalApply: "Candidatar no site original",
+    externalNotice: "Esta vaga foi encontrada em fonte pública externa. A LDR não representa a empresa contratante nesta publicação; confirme os dados e conclua a candidatura na fonte original.",
+    source: "Fonte",
     closed: "Vaga indisponível ou não publicada.",
     loading: "Carregando vaga...",
     safe: "Esta vaga passou pela etapa de publicação da plataforma.",
@@ -69,6 +78,10 @@ const C = {
     resp: "Responsibilities",
     req: "Minimum requirements",
     apply: "Apply with profile",
+    externalBadge: "External public job",
+    externalApply: "Apply on original site",
+    externalNotice: "This job was found on a public external source. LDR does not represent the hiring company for this listing; verify the details and complete the application on the original source.",
+    source: "Source",
     closed: "Job unavailable or not published.",
     loading: "Loading job...",
     safe: "This job passed the platform publication stage.",
@@ -95,6 +108,10 @@ const C = {
     resp: "Responsabilités",
     req: "Exigences minimales",
     apply: "Postuler avec profil",
+    externalBadge: "Offre publique externe",
+    externalApply: "Postuler sur le site d’origine",
+    externalNotice: "Cette offre provient d’une source publique externe. LDR ne représente pas l’entreprise recruteuse pour cette publication ; vérifiez les informations et finalisez la candidature sur la source originale.",
+    source: "Source",
     closed: "Offre indisponible ou non publiée.",
     loading: "Chargement de l’offre...",
     safe: "Cette offre a passé l’étape de publication de la plateforme.",
@@ -121,6 +138,10 @@ const C = {
     resp: "Responsabilidades",
     req: "Requisitos mínimos",
     apply: "Postular con perfil",
+    externalBadge: "Vacante pública externa",
+    externalApply: "Postular en el sitio original",
+    externalNotice: "Esta vacante fue encontrada en una fuente pública externa. LDR no representa a la empresa contratante en esta publicación; verifica los datos y completa la postulación en la fuente original.",
+    source: "Fuente",
     closed: "Vacante no disponible o no publicada.",
     loading: "Cargando vacante...",
     safe: "Esta vacante pasó por la etapa de publicación de la plataforma.",
@@ -146,7 +167,7 @@ const C = {
 type Copy = (typeof C)[keyof typeof C];
 
 const baseSelect =
-  "id,title,description,responsibilities,requirements,country,city,work_mode,contract_type,publication_language,required_languages,salary_currency,salary_min,salary_max,salary_period,career_companies(name,website)";
+  "id,title,description,responsibilities,requirements,country,city,work_mode,contract_type,publication_language,required_languages,salary_currency,salary_min,salary_max,salary_period,listing_origin,external_source_name,external_source_url,external_apply_url,external_checked_at,career_companies(name,website)";
 
 const enhancedSelect = `${baseSelect},accessibility_inclusive,accessibility_pcd_only:accessibility_designated_disability,accessibility_resources:accessibility_features,accessibility_details`;
 
@@ -171,6 +192,10 @@ function formatLanguages(value: JobRow["required_languages"], fallback: string) 
   if (Array.isArray(value)) return value.filter(Boolean).join(", ") || fallback;
   if (typeof value === "string" && value.trim()) return value;
   return fallback;
+}
+
+function isExternalJob(job: JobRow) {
+  return job.listing_origin === "external_public" && /^https?:\/\//i.test(String(job.external_apply_url ?? ""));
 }
 
 function getBadges(job: JobRow, t: Copy) {
@@ -227,6 +252,7 @@ function Job() {
   }, [jobId]);
 
   const badges = useMemo(() => (job ? getBadges(job, t) : []), [job, t]);
+  const external = Boolean(job && isExternalJob(job));
   const location = useMemo(
     () => (job ? [job.city, job.country].filter(Boolean).join(", ") || t.notInformed : t.notInformed),
     [job, t.notInformed],
@@ -276,10 +302,25 @@ function Job() {
 
           <div className="grid gap-6 p-6 md:grid-cols-[1fr_320px] md:p-9">
             <div>
-              <div className="flex gap-2 rounded-xl bg-slate-50 p-4 text-sm text-slate-600">
-                <ShieldCheck size={19} className="mt-0.5 shrink-0" aria-hidden="true" />
-                <span>{t.safe}</span>
-              </div>
+              {external ? (
+                <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+                  <p className="font-semibold">{t.externalBadge}</p>
+                  <p className="mt-1 leading-6">{t.externalNotice}</p>
+                  {job.external_source_url && /^https?:\/\//i.test(job.external_source_url) ? (
+                    <p className="mt-2">
+                      <span className="font-semibold">{t.source}: </span>
+                      <a href={job.external_source_url} target="_blank" rel="noopener noreferrer" className="underline">
+                        {job.external_source_name || job.external_source_url}
+                      </a>
+                    </p>
+                  ) : null}
+                </div>
+              ) : (
+                <div className="flex gap-2 rounded-xl bg-slate-50 p-4 text-sm text-slate-600">
+                  <ShieldCheck size={19} className="mt-0.5 shrink-0" aria-hidden="true" />
+                  <span>{t.safe}</span>
+                </div>
+              )}
 
 
 
@@ -312,14 +353,26 @@ function Job() {
                 <Info icon={<MapPin size={17} aria-hidden="true" />} label={t.location} value={location} />
               </div>
 
-              <Link reloadDocument
-                to="/carreira/vagas/$jobId/candidatura"
-                params={{ jobId: job.id }}
-                className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#07345b] px-5 font-semibold text-white transition hover:bg-[#0b426f] focus:outline-none focus:ring-4 focus:ring-[#07345b]/20"
-              >
-                <Send size={17} aria-hidden="true" />
-                {t.apply}
-              </Link>
+              {external ? (
+                <a
+                  href={job.external_apply_url || "#"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#07345b] px-5 font-semibold text-white transition hover:bg-[#0b426f] focus:outline-none focus:ring-4 focus:ring-[#07345b]/20"
+                >
+                  <Send size={17} aria-hidden="true" />
+                  {t.externalApply}
+                </a>
+              ) : (
+                <Link reloadDocument
+                  to="/carreira/vagas/$jobId/candidatura"
+                  params={{ jobId: job.id }}
+                  className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#07345b] px-5 font-semibold text-white transition hover:bg-[#0b426f] focus:outline-none focus:ring-4 focus:ring-[#07345b]/20"
+                >
+                  <Send size={17} aria-hidden="true" />
+                  {t.apply}
+                </Link>
+              )}
             </aside>
           </div>
         </article>
