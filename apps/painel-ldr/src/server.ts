@@ -41,10 +41,11 @@ function academyCanonicalRedirect(request: Request): Response | null {
   const isLegacyPanelHost = host === "painel.lucianoconecta.online";
   const isFilmHost = host === "film.lucianoconecta.online";
 
-  // The legacy LDR panel domain is an access/panel host, not the Academy storefront.
-  // Keep deep panel routes intact, but never render the public Academy home at its root.
+  // painel.ldrrhestrategia.com is the canonical Master administration entry.
+  // Keep deep routes intact; the root must open the protected Master dashboard,
+  // which will request Master authentication when no valid session exists.
   if (isLegacyLdrPanelHost && (url.pathname === "/" || url.pathname === "/index.html")) {
-    url.pathname = "/acesso";
+    url.pathname = "/admin";
     return temporaryRedirect(url.toString());
   }
 
