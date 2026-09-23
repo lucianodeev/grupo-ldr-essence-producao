@@ -370,12 +370,12 @@ test('threaded backend validates parent and keeps replies on soft delete in isol
 });
 
 
-test('career intelligence guards source failures before destructive recommendation refresh',()=>{const source=read('lib/career-intelligence.functions.ts');assert.match(source,/const failed=\[goalsResult,proofsResult,jobsResult,projectsResult\]/);assert.ok(source.indexOf('const failed=')<source.indexOf('ldr_opportunity_recommendations").delete'));});
+test('career intelligence guards source failures before destructive recommendation refresh',()=>{const source=fs.readFileSync(path.resolve(ROOT,'lib/career-intelligence.functions.ts'),'utf8');assert.match(source,/const failed=\[goalsResult,proofsResult,jobsResult,projectsResult\]/);assert.ok(source.indexOf('const failed=')<source.indexOf('ldr_opportunity_recommendations").delete'));});
 
-test('career intelligence owns only its generated recommendations',()=>{const source=read('lib/career-intelligence.functions.ts');assert.match(source,/generator:"career_intelligence"/);assert.match(source,/contains\("rationale",\{generator:"career_intelligence"\}\)/);});
+test('career intelligence owns only its generated recommendations',()=>{const source=fs.readFileSync(path.resolve(ROOT,'lib/career-intelligence.functions.ts'),'utf8');assert.match(source,/generator:"career_intelligence"/);assert.match(source,/contains\("rationale",\{generator:"career_intelligence"\}\)/);});
 
-test('academic opportunities route filters suggested and expired recommendations',()=>{const source=read('routes/_clientarea.cliente.rede-academica.oportunidades.tsx');assert.match(source,/\.eq\("status","suggested"\)/);assert.match(source,/expires_at\.is\.null,expires_at\.gt/);});
+test('academic opportunities route filters suggested and expired recommendations',()=>{const source=fs.readFileSync(path.resolve(ROOT,'routes/_clientarea.cliente.rede-academica.oportunidades.tsx'),'utf8');assert.match(source,/\.eq\("status","suggested"\)/);assert.match(source,/expires_at\.is\.null,expires_at\.gt/);});
 
-test('LDR NEXT and Copilot filter inactive and expired suggestions',()=>{for(const file of ['routes/carreira.next.tsx','routes/carreira.copilot.tsx']){const source=read(file);assert.match(source,/\.eq\("status","suggested"\)/);assert.match(source,/expires_at\.is\.null,expires_at\.gt/);}});
+test('LDR NEXT and Copilot filter inactive and expired suggestions',()=>{for(const file of ['routes/carreira.next.tsx','routes/carreira.copilot.tsx']){const source=fs.readFileSync(path.resolve(ROOT,file),'utf8');assert.match(source,/\.eq\("status","suggested"\)/);assert.match(source,/expires_at\.is\.null,expires_at\.gt/);}});
 
-test('academic quick access exposes opportunities without changing fixed mobile nav',()=>{const source=read('routes/_clientarea.cliente.rede-academica.tsx');assert.match(source,/\/cliente\/rede-academica\/oportunidades/);});
+test('academic quick access exposes opportunities without changing fixed mobile nav',()=>{const source=fs.readFileSync(path.resolve(ROOT,'routes/_clientarea.cliente.rede-academica.tsx'),'utf8');assert.match(source,/\/cliente\/rede-academica\/oportunidades/);});
