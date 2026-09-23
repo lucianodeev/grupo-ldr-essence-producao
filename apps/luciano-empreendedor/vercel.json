@@ -26,6 +26,14 @@
       "headers": { "Location": "https://ldracademy.online/ecossistema" }
     },
     {
+      "src": "/",
+      "has": [{ "type": "host", "value": "clinicasocial.ldrrhestrategia.com" }],
+      "dest": "/clinica.html",
+      "headers": {
+        "Link": "<https://clinicasocial.ldrrhestrategia.com/>; rel=\"canonical\""
+      }
+    },
+    {
       "src": "/(.*)",
       "has": [{ "type": "host", "value": "lucianoempreendendor.com" }],
       "status": 308,
