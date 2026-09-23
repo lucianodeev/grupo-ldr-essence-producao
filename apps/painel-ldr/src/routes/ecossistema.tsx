@@ -97,7 +97,7 @@ const HUB_COPY = {
   },
   {
     name: "Human Room",
-    url: "https://www.humanroom.online/",
+    url: "https://ldracademy.online/human-room",
     tag: "Projeto conectado",
     desc: "Espaço global de escuta, humanidade, reflexão e histórias reais, conectado ao propósito social e humano do ecossistema LDR.",
   },
@@ -125,7 +125,7 @@ const HUB_COPY = {
     { name:"Free Job Posting", url:"/carreira?audience=company", tag:"For companies", featured:"career", desc:"Companies can post jobs free of charge and reach talent connected to the LDR ecosystem." },
     { name:"LDR Social Clinic", url:"https://clinicasocial.ldrrhestrategia.com/", tag:"Social care", desc:"A social initiative designed to broaden access to care, support and appropriate referrals while preserving confidentiality." },
     { name:"LDR RH & Estratégia", url:"https://ldrrhestrategia.com/", tag:"Institutional", desc:"Institutional portal with solutions for companies, mental health and workplace well-being, career, education, mentoring and human development." },
-    { name:"Human Room", url:"https://www.humanroom.online/", tag:"Connected project", desc:"A global space for listening, humanity, reflection and real stories." },
+    { name:"Human Room", url:"https://ldracademy.online/human-room", tag:"Connected project", desc:"A global space for listening, humanity, reflection and real stories." },
     { name:"Instagram LDR Academy", url:"https://www.instagram.com/ldracademy.online", tag:"Social", desc:"Official LDR Academy Instagram channel for content and ecosystem updates." },
     { name:"Instagram Human Room", url:"https://www.instagram.com/humanroom.world", tag:"Social", desc:"Human Room social channel for public communication and reflections." }
   ] as Hub[],
@@ -140,7 +140,7 @@ const HUB_COPY = {
     { name:"Publication gratuite d’offres", url:"/carreira?audience=company", tag:"Pour les entreprises", featured:"career", desc:"Les entreprises peuvent publier gratuitement leurs offres et toucher les talents de l’écosystème LDR." },
     { name:"Clinique Sociale LDR", url:"https://clinicasocial.ldrrhestrategia.com/", tag:"Accompagnement social", desc:"Initiative sociale visant à élargir l’accès à l’accompagnement et à l’orientation, dans le respect de la confidentialité." },
     { name:"LDR RH & Estratégia", url:"https://ldrrhestrategia.com/", tag:"Institutionnel", desc:"Portail institutionnel proposant des solutions pour les entreprises, le bien-être, la carrière, l’éducation, le mentorat et le développement humain." },
-    { name:"Human Room", url:"https://www.humanroom.online/", tag:"Projet connecté", desc:"Un espace mondial d’écoute, d’humanité, de réflexion et d’histoires réelles." },
+    { name:"Human Room", url:"https://ldracademy.online/human-room", tag:"Projet connecté", desc:"Un espace mondial d’écoute, d’humanité, de réflexion et d’histoires réelles." },
     { name:"Instagram LDR Academy", url:"https://www.instagram.com/ldracademy.online", tag:"Social", desc:"Canal Instagram officiel de LDR Academy." },
     { name:"Instagram Human Room", url:"https://www.instagram.com/humanroom.world", tag:"Social", desc:"Canal social de Human Room pour la communication publique." }
   ] as Hub[],
@@ -155,7 +155,7 @@ const HUB_COPY = {
     { name:"Publicación gratuita de vacantes", url:"/carreira?audience=company", tag:"Para empresas", featured:"career", desc:"Las empresas pueden publicar vacantes gratis y llegar a talentos conectados al ecosistema LDR." },
     { name:"Clínica Social LDR", url:"https://clinicasocial.ldrrhestrategia.com/", tag:"Atención social", desc:"Iniciativa social para ampliar el acceso a atención, acogida y orientación preservando la confidencialidad." },
     { name:"LDR RH & Estratégia", url:"https://ldrrhestrategia.com/", tag:"Institucional", desc:"Portal institucional con soluciones para empresas, bienestar, carrera, educación, mentoría y desarrollo humano." },
-    { name:"Human Room", url:"https://www.humanroom.online/", tag:"Proyecto conectado", desc:"Un espacio global de escucha, humanidad, reflexión e historias reales." },
+    { name:"Human Room", url:"https://ldracademy.online/human-room", tag:"Proyecto conectado", desc:"Un espacio global de escucha, humanidad, reflexión e historias reales." },
     { name:"Instagram LDR Academy", url:"https://www.instagram.com/ldracademy.online", tag:"Social", desc:"Canal oficial de LDR Academy en Instagram." },
     { name:"Instagram Human Room", url:"https://www.instagram.com/humanroom.world", tag:"Social", desc:"Canal social de Human Room para comunicación pública." }
   ] as Hub[]
