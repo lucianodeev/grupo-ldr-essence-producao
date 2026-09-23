@@ -18,7 +18,7 @@ export const Route = createFileRoute("/film")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "https://film.lucianoconecta.online" }],
+    links: [{ rel: "canonical", href: "https://ldracademy.online/film" }],
   }),
   component: FilmLandingPage,
 });
