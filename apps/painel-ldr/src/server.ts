@@ -215,66 +215,6 @@ function academyCanonicalRedirect(request: Request): Response | null {
   return null;
 }
 
-async function proxyHumanRoom(request: Request): Promise<Response | null> {
-  const url = new URL(request.url);
-  const host = url.hostname.toLowerCase();
-  const isAcademy = host === "ldracademy.online" || host === "www.ldracademy.online";
-  const isHumanRoomPath =
-    url.pathname === "/human-room" ||
-    url.pathname.startsWith("/human-room/");
-
-  if (!isAcademy || !isHumanRoomPath) return null;
-
-  const target = new URL(url.toString());
-  target.protocol = "https:";
-  target.hostname = "human-room.vercel.app";
-  target.port = "";
-
-  const headers = new Headers(request.headers);
-  headers.set("x-forwarded-host", "ldracademy.online");
-  headers.set("x-forwarded-proto", "https");
-  headers.delete("host");
-
-  const hasBody = request.method !== "GET" && request.method !== "HEAD";
-  const body = hasBody ? await request.arrayBuffer() : undefined;
-  const upstream = await fetch(target.toString(), {
-    method: request.method,
-    headers,
-    body,
-    redirect: "manual",
-  });
-
-  const responseHeaders = new Headers(upstream.headers);
-  const location = responseHeaders.get("location");
-  if (location) {
-    try {
-      const redirectUrl = new URL(location, target);
-      if (
-        redirectUrl.hostname === "human-room.vercel.app" ||
-        redirectUrl.hostname === "humanroom.online" ||
-        redirectUrl.hostname === "www.humanroom.online"
-      ) {
-        redirectUrl.protocol = "https:";
-        redirectUrl.hostname = "ldracademy.online";
-        redirectUrl.port = "";
-        responseHeaders.set("location", redirectUrl.toString());
-      }
-    } catch {
-      // Keep a relative redirect unchanged; it resolves on ldracademy.online.
-    }
-  }
-
-  responseHeaders.delete("connection");
-  responseHeaders.delete("transfer-encoding");
-  responseHeaders.delete("content-length");
-
-  return new Response(upstream.body, {
-    status: upstream.status,
-    statusText: upstream.statusText,
-    headers: responseHeaders,
-  });
-}
-
 function withFreshDocumentHeaders(request: Request, response: Response): Response {
   const accept = request.headers.get("accept") ?? "";
   const contentType = response.headers.get("content-type") ?? "";
@@ -326,9 +266,6 @@ export default {
     try {
       const canonicalRedirect = academyCanonicalRedirect(request);
       if (canonicalRedirect) return canonicalRedirect;
-
-      const humanRoomResponse = await proxyHumanRoom(request);
-      if (humanRoomResponse) return humanRoomResponse;
 
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
