@@ -31,6 +31,13 @@ function temporaryRedirect(url: string): Response {
   });
 }
 
+function permanentRedirect(url: string): Response {
+  return new Response("Redirecting...\n", {
+    status: 308,
+    headers: { location: url, "cache-control": "no-store, max-age=0", vary: "Host" },
+  });
+}
+
 function academyCanonicalRedirect(request: Request): Response | null {
   const url = new URL(request.url);
   const host = url.hostname.toLowerCase();
@@ -51,15 +58,18 @@ function academyCanonicalRedirect(request: Request): Response | null {
     return temporaryRedirect(target.toString());
   }
 
-  // painel.ldrrhestrategia.com is the canonical Master administration entry.
-  // Keep deep routes intact; the root must open the protected Master dashboard,
-  // which will request Master authentication when no valid session exists.
+  // The former panel hostname remains a legacy alias for Master routes.
   if (
     isLegacyLdrPanelHost &&
-    (url.pathname === "/" || url.pathname === "/index.html" || url.pathname === "/acesso")
+    (url.pathname === "/" || url.pathname === "/index.html" || url.pathname === "/acesso" ||
+      url.pathname === "/admin" || url.pathname.startsWith("/admin/"))
   ) {
-    url.pathname = "/admin";
-    return temporaryRedirect(url.toString());
+    const target = new URL(url.toString());
+    target.hostname = "portal.ldrrhestrategia.com";
+    if (url.pathname === "/" || url.pathname === "/index.html" || url.pathname === "/acesso") {
+      target.pathname = "/admin";
+    }
+    return permanentRedirect(target.toString());
   }
 
   // Legacy Luciano Conecta hosts are aliases only. Keep their content/routes,
@@ -85,12 +95,6 @@ function academyCanonicalRedirect(request: Request): Response | null {
   // Academy storefront/client learning state from being rendered on this host,
   // including on stale browser/CDN navigations.
   if (isServicePortal) {
-    if (url.pathname === "/admin" || url.pathname.startsWith("/admin/") || url.pathname === "/login") {
-      const target = new URL(url.toString());
-      target.hostname = "painel.ldrrhestrategia.com";
-      return temporaryRedirect(target.toString());
-    }
-
     if (
       url.pathname === "/cliente/biblioteca" ||
       url.pathname.startsWith("/cliente/biblioteca/") ||
@@ -149,7 +153,7 @@ function academyCanonicalRedirect(request: Request): Response | null {
   // Keep each validated product on its single official hostname.
   if (isAcademy && (url.pathname === "/admin" || url.pathname.startsWith("/admin/") || url.pathname === "/login")) {
     const target = new URL(url.toString());
-    target.hostname = "painel.ldrrhestrategia.com";
+    target.hostname = "portal.ldrrhestrategia.com";
     return temporaryRedirect(target.toString());
   }
 
