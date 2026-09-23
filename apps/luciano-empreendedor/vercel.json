@@ -23,19 +23,19 @@
       "src": "/(.*)",
       "has": [{ "type": "host", "value": "lucianoempreendendor.com" }],
       "status": 308,
-      "headers": { "Location": "https://www.lucianoempreendendor.com/$1" }
+      "headers": { "Location": "https://ldrrhestrategia.com/$1" }
     },
     {
       "src": "/(.*)",
       "has": [{ "type": "host", "value": "lucianoempreendedor.com" }],
       "status": 308,
-      "headers": { "Location": "https://www.lucianoempreendendor.com/$1" }
+      "headers": { "Location": "https://ldrrhestrategia.com/$1" }
     },
     {
       "src": "/(.*)",
       "has": [{ "type": "host", "value": "www.lucianoempreendedor.com" }],
       "status": 308,
-      "headers": { "Location": "https://www.lucianoempreendendor.com/$1" }
+      "headers": { "Location": "https://ldrrhestrategia.com/$1" }
     },
     {
       "src": "/(.*)",
