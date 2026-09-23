@@ -75,8 +75,19 @@ export async function getEnhancedPublicProfessional(slug: string) {
     international:
       Array.isArray(profile.operating_countries) && profile.operating_countries.length > 0,
   };
+  const passportRequiredItems = {
+    identity: passportItems.identity,
+    documents: passportItems.documents,
+    photo: passportItems.photo,
+    languages: passportItems.languages,
+    services: passportItems.services,
+    availability: passportItems.availability,
+    international: passportItems.international,
+  };
   const passportScore = Math.round(
-    (Object.values(passportItems).filter(Boolean).length / Object.keys(passportItems).length) * 100,
+    (Object.values(passportRequiredItems).filter(Boolean).length /
+      Object.keys(passportRequiredItems).length) *
+      100,
   );
   const allReviews = [
     ...(reviews ?? []).map((review: any) => ({
