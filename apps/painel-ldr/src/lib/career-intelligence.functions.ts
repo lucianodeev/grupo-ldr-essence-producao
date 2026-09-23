@@ -8,11 +8,11 @@ export const refreshCareerIntelligence=createServerFn({method:"POST"}).middlewar
  const [{data:goals},{data:proofs},{data:jobs},{data:projects}]=await Promise.all([
   db.from("ldr_career_goals").select("id,target_title,target_country,target_work_mode,target_competency_keys").eq("user_id",uid).eq("status","active").limit(5),
   db.from("ldr_proofs").select("id,title,competency_key,verification_status").eq("user_id",uid).limit(50),
-  db.from("career_jobs").select("id,title,location,work_mode,status").eq("status","published").limit(50),
+  db.from("career_jobs").select("id,title,city,country,work_mode,status").eq("status","published").limit(50),
   db.from("ldr_experience_projects").select("id,title,modality,status").in("status",["open","in_progress"]).limit(30)
  ]);
  const goal=(goals??[])[0]; const skills=[...new Set((proofs??[]).map((p:any)=>p.competency_key).filter(Boolean))];
- const recs:any[]=[]; for(const j of jobs??[]){if(recs.length>=8)break; const title=String(j.title??""); const hit=goal&&title.toLowerCase().includes(String(goal.target_title??"").toLowerCase()); if(hit||!goal)recs.push({user_id:uid,opportunity_type:"job",source_reference:j.id,title,rationale:{summary:hit?"O título da vaga se aproxima do seu objetivo ativo.":"Vaga aberta disponível no ecossistema.",goal:goal?.target_title??null,evidence_skills:skills.slice(0,8)},status:"suggested"});}
+ const recs:any[]=[]; for(const j of jobs??[]){if(recs.length>=8)break; const title=String(j.title??""); const hit=goal&&title.toLowerCase().includes(String(goal.target_title??"").toLowerCase()); if(hit||!goal)recs.push({user_id:uid,opportunity_type:"job",source_reference:j.id,title,rationale:{summary:hit?"O título da vaga se aproxima do seu objetivo ativo.":"Vaga aberta disponível no ecossistema.",goal:goal?.target_title??null,evidence_skills:skills.slice(0,8),location:[j.city,j.country].filter(Boolean).join(", ")||null,work_mode:j.work_mode??null},status:"suggested"});}
  for(const p of projects??[]){if(recs.length>=12)break;recs.push({user_id:uid,opportunity_type:"project",source_reference:p.id,title:p.title,rationale:{summary:"Projeto ativo no ecossistema para prática e construção de evidências.",modality:p.modality},status:"suggested"});}
 
  // Refresh only recommendations owned by this career generator.
