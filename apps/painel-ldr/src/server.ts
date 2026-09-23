@@ -39,7 +39,16 @@ function academyCanonicalRedirect(request: Request): Response | null {
   const isLegacyLdrPanelHost = host === "painel.ldrrhestrategia.com";
   const isLegacyLearnHost = host === "learn.lucianoconecta.online";
   const isLegacyPanelHost = host === "painel.lucianoconecta.online";
+  const isLegacyLucianoHost = host === "lucianoconecta.online" || host === "www.lucianoconecta.online";
   const isFilmHost = host === "film.lucianoconecta.online";
+
+  // Canonical Academy hostname. www is accepted only as an alias and always
+  // resolves to the official apex domain.
+  if (host === "www.ldracademy.online") {
+    const target = new URL(url.toString());
+    target.hostname = "ldracademy.online";
+    return temporaryRedirect(target.toString());
+  }
 
   // painel.ldrrhestrategia.com is the canonical Master administration entry.
   // Keep deep routes intact; the root must open the protected Master dashboard,
@@ -52,12 +61,22 @@ function academyCanonicalRedirect(request: Request): Response | null {
     return temporaryRedirect(url.toString());
   }
 
-  // Keep the film/cinema landing page isolated from the Academy storefront.
-  // The subdomain shares the same deployment, but its root must render /film
-  // instead of the Academy home page.
-  if (isFilmHost && (url.pathname === "/" || url.pathname === "/index.html")) {
-    url.pathname = "/film";
-    return temporaryRedirect(url.toString());
+  // Legacy Luciano Conecta hosts are aliases only. Keep their content/routes,
+  // but expose them through the official LDR Academy domain.
+  if (isFilmHost) {
+    const target = new URL("https://ldracademy.online");
+    target.pathname = url.pathname === "/" || url.pathname === "/index.html" ? "/film" : url.pathname;
+    target.search = url.search;
+    target.hash = url.hash;
+    return temporaryRedirect(target.toString());
+  }
+
+  if (isLegacyLucianoHost) {
+    const target = new URL("https://ldracademy.online");
+    target.pathname = url.pathname === "/index.html" ? "/" : url.pathname;
+    target.search = url.search;
+    target.hash = url.hash;
+    return temporaryRedirect(target.toString());
   }
 
   // The services portal shares the same deployment as the Academy, but it must
