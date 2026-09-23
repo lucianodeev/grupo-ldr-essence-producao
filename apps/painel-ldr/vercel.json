@@ -2,6 +2,14 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
     {
+      "source": "/human-room",
+      "destination": "https://human-room.vercel.app/human-room"
+    },
+    {
+      "source": "/human-room/:path*",
+      "destination": "https://human-room.vercel.app/human-room/:path*"
+    },
+    {
       "source": "/biblioteca",
       "destination": "/cliente/biblioteca"
     },
