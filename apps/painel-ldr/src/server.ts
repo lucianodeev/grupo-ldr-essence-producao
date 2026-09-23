@@ -31,6 +31,13 @@ function temporaryRedirect(url: string): Response {
   });
 }
 
+function permanentRedirect(url: string): Response {
+  return new Response("Redirecting...\n", {
+    status: 308,
+    headers: { location: url, "cache-control": "no-store, max-age=0", vary: "Host" },
+  });
+}
+
 function academyCanonicalRedirect(request: Request): Response | null {
   const url = new URL(request.url);
   const host = url.hostname.toLowerCase();
@@ -51,13 +58,18 @@ function academyCanonicalRedirect(request: Request): Response | null {
     return temporaryRedirect(target.toString());
   }
 
-  // Keep the old Master entry active until the new Portal entry is validated.
+  // The former panel hostname remains a legacy alias for Master routes.
   if (
     isLegacyLdrPanelHost &&
-    (url.pathname === "/" || url.pathname === "/index.html" || url.pathname === "/acesso")
+    (url.pathname === "/" || url.pathname === "/index.html" || url.pathname === "/acesso" ||
+      url.pathname === "/admin" || url.pathname.startsWith("/admin/"))
   ) {
-    url.pathname = "/admin";
-    return temporaryRedirect(url.toString());
+    const target = new URL(url.toString());
+    target.hostname = "portal.ldrrhestrategia.com";
+    if (url.pathname === "/" || url.pathname === "/index.html" || url.pathname === "/acesso") {
+      target.pathname = "/admin";
+    }
+    return permanentRedirect(target.toString());
   }
 
   // Legacy Luciano Conecta hosts are aliases only. Keep their content/routes,
