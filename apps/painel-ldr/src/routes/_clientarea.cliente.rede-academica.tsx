@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import {
   BookHeart, BookOpen, Bookmark, CalendarDays, HeartHandshake, Home, LockKeyhole,
-  Bell, MapPin, MessageCircle, Network, Plus, Search, Send, Share2, Shield, SlidersHorizontal, UserRound, Users
+  Bell, BriefcaseBusiness, MapPin, MessageCircle, Network, Plus, Search, Send, Share2, Shield, SlidersHorizontal, UserRound, Users
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
@@ -91,11 +91,11 @@ function AcademicNetworkPage(){
 }
 
 function AcademicUtilityStrip({locale}:{locale:Locale}){
-  const labels={pt:{library:"Biblioteca",accessibility:"Acessibilidade",chat:"Chat",search:"Buscar",notifications:"Notificações",challenges:"Desafios"},en:{library:"Library",accessibility:"Accessibility",chat:"Chat",search:"Search",notifications:"Notifications",challenges:"Challenges"},fr:{library:"Bibliothèque",accessibility:"Accessibilité",chat:"Chat",search:"Rechercher",notifications:"Notifications",challenges:"Défis"},es:{library:"Biblioteca",accessibility:"Accesibilidad",chat:"Chat",search:"Buscar",notifications:"Notificaciones",challenges:"Desafíos"}}[locale];
+  const labels={pt:{library:"Biblioteca",opportunities:"Oportunidades",accessibility:"Acessibilidade",chat:"Chat",search:"Buscar",notifications:"Notificações",challenges:"Desafios"},en:{library:"Library",opportunities:"Opportunities",accessibility:"Accessibility",chat:"Chat",search:"Search",notifications:"Notifications",challenges:"Challenges"},fr:{library:"Bibliothèque",opportunities:"Opportunités",accessibility:"Accessibilité",chat:"Chat",search:"Rechercher",notifications:"Notifications",challenges:"Défis"},es:{library:"Biblioteca",opportunities:"Oportunidades",accessibility:"Accesibilidad",chat:"Chat",search:"Buscar",notifications:"Notificaciones",challenges:"Desafíos"}}[locale];
   const openAccessibility=()=>document.querySelector<HTMLButtonElement>('[data-academy-accessibility-drawer="true"] > button')?.click();
   const item="flex min-h-11 shrink-0 items-center justify-center gap-1.5 rounded-xl px-2.5 text-[9px] font-black transition hover:bg-muted sm:gap-2 sm:px-4 sm:text-[10px]";
   return <section aria-label={locale==="pt"?"Acessos rápidos":locale==="en"?"Quick access":locale==="fr"?"Accès rapides":"Accesos rápidos"} className="academic-v4-utility-strip flex w-full min-w-0 max-w-full flex-nowrap items-center gap-1 overflow-x-auto overscroll-x-contain rounded-[20px] border bg-card p-1.5 shadow-sm [scrollbar-width:none] [-webkit-overflow-scrolling:touch]">
-    <Link to="/cliente/biblioteca" className={item}><BookHeart className="h-4 w-4 shrink-0 text-[#b78927]"/><span>{labels.library}</span></Link>
+    <Link to="/cliente/biblioteca" className={item}><BookHeart className="h-4 w-4 shrink-0 text-[#b78927]"/><span>{labels.library}</span></Link>\n    <Link to="/cliente/rede-academica/oportunidades" className={item}><BriefcaseBusiness className="h-4 w-4 shrink-0 text-[#b78927]"/><span>{labels.opportunities}</span></Link>
     <button type="button" onClick={openAccessibility} className={item}><Shield className="h-4 w-4 shrink-0 text-[#b78927]"/><span>{labels.accessibility}</span></button>
     <Link to="/cliente/rede-academica/chat" className={item}><MessageCircle className="h-4 w-4 shrink-0 text-[#b78927]"/><span>{labels.chat}</span></Link>
     <Link to="/cliente/rede-academica/buscar" className={item}><Search className="h-4 w-4 shrink-0 text-[#b78927]"/><span>{labels.search}</span></Link>

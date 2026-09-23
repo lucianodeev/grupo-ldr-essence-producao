@@ -1,0 +1,27 @@
+import {createFileRoute,Link} from "@tanstack/react-router";
+import {useQuery} from "@tanstack/react-query";
+import {Lightbulb,ShieldCheck} from "lucide-react";
+import {supabase} from "@/integrations/supabase/client";
+
+export const Route=createFileRoute("/_clientarea/cliente/rede-academica/oportunidades")({component:AcademicOpportunities});
+
+const labels:Record<string,string>={job:"Trabalho",project:"Projeto",business:"Negócio",connection:"Conexão",event:"Evento",course:"Aprendizado"};
+function explain(r:any){const x=r?.rationale;if(!x)return "";const parts=[x.summary];if(x.goal)parts.push(`Objetivo relacionado: ${x.goal}.`);if(Array.isArray(x.evidence_skills)&&x.evidence_skills.length)parts.push(`Competências relacionadas: ${x.evidence_skills.slice(0,4).join(", ")}.`);if(x.modality)parts.push(`Modalidade: ${x.modality}.`);return parts.filter(Boolean).join(" ")}
+
+function AcademicOpportunities(){
+ const {data:rows=[],isLoading,error}=useQuery({queryKey:["academic-opportunities"],queryFn:async()=>{
+  const {data:{user}}=await supabase.auth.getUser();if(!user)throw new Error("AUTH_REQUIRED");
+  const {data,error}=await (supabase.from("ldr_opportunity_recommendations" as never) as any).select("id,opportunity_type,source_reference,title,rationale,status,generated_at,expires_at").eq("user_id",user.id).eq("status","suggested").or(`expires_at.is.null,expires_at.gt.${new Date().toISOString()}`).order("generated_at",{ascending:false}).limit(30);
+  if(error)throw error;return data??[];
+ }});
+ return <main className="mx-auto max-w-5xl space-y-5 px-3 pb-28 pt-4 sm:px-6 sm:pt-6">
+  <header className="rounded-[28px] bg-gradient-to-br from-[#061426] via-[#0b2a4b] to-[#154b7a] p-6 text-white shadow-sm">
+   <p className="text-xs font-black tracking-[.2em] text-[#efcf7d]">REDE ACADÊMICA LDR</p>
+   <h1 className="mt-2 font-serif text-3xl sm:text-4xl">Minhas oportunidades</h1>
+   <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-200">Possibilidades de trabalho, projetos, negócios, conexões e aprendizado reunidas a partir do contexto que você escolheu compartilhar no ecossistema.</p>
+  </header>
+  <div className="flex gap-3 rounded-2xl border border-blue-100 bg-blue-50 p-4 text-sm text-[#07345b]"><ShieldCheck className="h-5 w-5 shrink-0"/><p>As sugestões são informativas. Nada é enviado, aceito ou decidido automaticamente por você.</p></div>
+  {isLoading?<div className="rounded-2xl border bg-card p-6 text-sm text-muted-foreground">Carregando oportunidades…</div>:error?<div className="rounded-2xl border bg-card p-6 text-sm">Não conseguimos carregar suas oportunidades agora.</div>:rows.length?<section className="grid gap-4">{rows.map((r:any)=>{const why=explain(r);return <article key={r.id} className="rounded-3xl border bg-card p-5 shadow-sm"><div className="flex gap-3"><span className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-[#edf4fb] text-[#07315a]"><Lightbulb className="h-5 w-5"/></span><div className="min-w-0"><p className="text-[10px] font-black uppercase tracking-wider text-[#9a772c]">{labels[r.opportunity_type]??"Oportunidade"}</p><h2 className="mt-1 font-serif text-xl">{r.title}</h2></div></div>{why&&<div className="mt-4 rounded-2xl bg-muted/50 p-4 text-sm leading-6 text-muted-foreground"><b className="text-foreground">Por que estou vendo isso?</b><p className="mt-1">{why}</p></div>}</article>})}</section>:<div className="rounded-3xl border border-dashed bg-card p-8"><h2 className="font-serif text-xl">Ainda não há sugestões para você.</h2><p className="mt-2 text-sm leading-6 text-muted-foreground">Complete seu perfil acadêmico e seus objetivos de carreira para dar mais contexto ao ecossistema.</p></div>}
+  <div className="flex flex-wrap gap-3"><Link to="/cliente/rede-academica" search={{tab:"profile"}} className="rounded-xl border px-4 py-3 text-sm font-bold">Meu perfil</Link><Link to="/carreira/next" className="rounded-xl bg-[#07315a] px-4 py-3 text-sm font-bold text-white">Ver LDR NEXT</Link></div>
+ </main>
+}
