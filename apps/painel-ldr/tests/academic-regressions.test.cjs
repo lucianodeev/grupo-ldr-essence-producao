@@ -368,3 +368,14 @@ test('threaded backend validates parent and keeps replies on soft delete in isol
   const reply=await service.createAcademicThreadedComment('me',{postId:'post',body:'reply',anonymous:false,parentCommentId:'parent'});assert.equal(reply.parent_comment_id,'parent');assert.notEqual(reply.id,'parent');
   await load('lib/academic-comment-delete.server.ts',mocks).deleteOwnedAcademicComment('me','parent');assert.equal(db.rows.academic_comments.find(x=>x.id===reply.id).status,'active');
 });
+
+
+test('career intelligence guards source failures before destructive recommendation refresh',()=>{const source=read('lib/career-intelligence.functions.ts');assert.match(source,/const failed=\[goalsResult,proofsResult,jobsResult,projectsResult\]/);assert.ok(source.indexOf('const failed=')<source.indexOf('ldr_opportunity_recommendations").delete'));});
+
+test('career intelligence owns only its generated recommendations',()=>{const source=read('lib/career-intelligence.functions.ts');assert.match(source,/generator:"career_intelligence"/);assert.match(source,/contains\("rationale",\{generator:"career_intelligence"\}\)/);});
+
+test('academic opportunities route filters suggested and expired recommendations',()=>{const source=read('routes/_clientarea.cliente.rede-academica.oportunidades.tsx');assert.match(source,/\.eq\("status","suggested"\)/);assert.match(source,/expires_at\.is\.null,expires_at\.gt/);});
+
+test('LDR NEXT and Copilot filter inactive and expired suggestions',()=>{for(const file of ['routes/carreira.next.tsx','routes/carreira.copilot.tsx']){const source=read(file);assert.match(source,/\.eq\("status","suggested"\)/);assert.match(source,/expires_at\.is\.null,expires_at\.gt/);}});
+
+test('academic quick access exposes opportunities without changing fixed mobile nav',()=>{const source=read('routes/_clientarea.cliente.rede-academica.tsx');assert.match(source,/\/cliente\/rede-academica\/oportunidades/);});
