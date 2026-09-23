@@ -11,12 +11,12 @@ import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/login")({
   ssr: false,
-  head: () => ({ meta: [{ title: "Acesso profissional — Sistema S8 | Grupo LDR Essence" },{ name: "description", content: "Área de autenticação para profissionais autorizados do Sistema S8." },{ name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "Painel Master — Grupo LDR Essence" },{ name: "description", content: "Acesso exclusivo do administrador Master do ecossistema Grupo LDR Essence." },{ name: "robots", content: "noindex,nofollow" }] }),
   component: LoginPage,
 });
 
 const COPY = {
-  pt:{title:"Acesso profissional",recover:"Vamos ajudar você a entrar novamente",intro:"Que bom ter você aqui. Entre com sua senha ou com sua conta Google autorizada para continuar.",email:"E-mail",password:"Senha",wait:"Aguarde…",send:"Enviar instruções",enter:"Entrar com senha",google:"Entrar com Google",or:"ou",back:"Voltar para o login",forgot:"Esqueci minha senha",noAccess:"Não possui acesso? Solicite ao superadministrador do Grupo LDR Essence.",home:"Voltar ao início",loginError:"Não conseguimos entrar com esses dados. Confira seu e-mail e senha ou recupere o acesso.",googleError:"Não foi possível iniciar o acesso com Google.",recoverDone:"Se este e-mail estiver cadastrado, você receberá as instruções em instantes."},
+  pt:{title:"Painel Master",recover:"Recuperar acesso ao Painel Master",intro:"Acesso exclusivo do administrador Master. Entre com a conta autorizada para controlar profissionais, clientes, empresas, financeiro, Academy e demais áreas do ecossistema.",email:"E-mail Master",password:"Senha",wait:"Aguarde…",send:"Enviar instruções",enter:"Entrar no Painel Master",google:"Entrar no Master com Google",or:"ou",back:"Voltar para o login",forgot:"Esqueci minha senha",noAccess:"Somente contas com permissão Master podem entrar nesta área.",home:"Voltar ao início",loginError:"Não foi possível entrar no Painel Master. Verifique a conta e a senha.",googleError:"Não foi possível iniciar o acesso Master com Google.",recoverDone:"Se este e-mail estiver cadastrado, você receberá as instruções em instantes."},
   en:{title:"Professional access",recover:"Recover password",intro:"Sign in with your password or an authorized Google account.",email:"Email",password:"Password",wait:"Please wait…",send:"Send instructions",enter:"Sign in with password",google:"Sign in with Google",or:"or",back:"Back to sign in",forgot:"Forgot my password",noAccess:"No access yet? Ask a Grupo LDR Essence super administrator.",home:"Back to home",loginError:"Could not sign in. Check your credentials.",googleError:"Could not start Google sign-in.",recoverDone:"If this email is registered, password reset instructions will be sent shortly."},
   fr:{title:"Accès professionnel",recover:"Récupérer le mot de passe",intro:"Connectez-vous avec votre mot de passe ou un compte Google autorisé.",email:"E-mail",password:"Mot de passe",wait:"Veuillez patienter…",send:"Envoyer les instructions",enter:"Se connecter avec le mot de passe",google:"Se connecter avec Google",or:"ou",back:"Retour à la connexion",forgot:"Mot de passe oublié",noAccess:"Pas encore d’accès ? Demandez à un superadministrateur du Grupo LDR Essence.",home:"Retour à l’accueil",loginError:"Connexion impossible. Vérifiez vos identifiants.",googleError:"Impossible de démarrer la connexion Google.",recoverDone:"Si cet e-mail est enregistré, les instructions de réinitialisation seront envoyées dans quelques instants."},
   es:{title:"Acceso profesional",recover:"Recuperar contraseña",intro:"Entra con tu contraseña o con una cuenta de Google autorizada.",email:"Correo electrónico",password:"Contraseña",wait:"Espera…",send:"Enviar instrucciones",enter:"Entrar con contraseña",google:"Entrar con Google",or:"o",back:"Volver al inicio de sesión",forgot:"Olvidé mi contraseña",noAccess:"¿Aún no tienes acceso? Solicítalo a un superadministrador del Grupo LDR Essence.",home:"Volver al inicio",loginError:"No fue posible entrar. Verifica tus credenciales.",googleError:"No fue posible iniciar el acceso con Google.",recoverDone:"Si este correo está registrado, recibirás las instrucciones en unos instantes."},
@@ -58,10 +58,22 @@ function LoginPage() {
       return;
     }
 
-    let target="/painel-profissional";
-    try { const access=await fetchAccess({}); if(access.authorized&&access.role==="superadmin") target="/admin"; } catch {}
+    try {
+      const access = await fetchAccess({});
+      if (!access.authorized || access.role !== "superadmin") {
+        await supabase.auth.signOut().catch(() => undefined);
+        setBusy(false);
+        toast.error("Esta conta não possui acesso ao Painel Master.");
+        return;
+      }
+    } catch {
+      await supabase.auth.signOut().catch(() => undefined);
+      setBusy(false);
+      toast.error("Não foi possível validar o acesso Master.");
+      return;
+    }
     try { await logEvent({data:{action:"auth.login"}}); } catch {}
-    window.location.replace(target);
+    window.location.replace("/admin");
   }
   async function handleSignIn(event:React.FormEvent){event.preventDefault();setBusy(true);const {data,error}=await supabase.auth.signInWithPassword({email:email.trim().toLowerCase(),password});if(error||!data.session){setBusy(false);toast.error(copy.loginError);return;}await routeAfterAuth(data.session);}
   async function handleGoogle(){
