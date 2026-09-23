@@ -36,6 +36,7 @@ function academyCanonicalRedirect(request: Request): Response | null {
   const host = url.hostname.toLowerCase();
   const isAcademy = host === "ldracademy.online" || host === "www.ldracademy.online";
   const isServicePortal = host === "portal.ldrrhestrategia.com";
+  const isSupportPortal = host === "suporte.ldrrhestrategia.com";
   const isLegacyLdrPanelHost = host === "painel.ldrrhestrategia.com";
   const isLegacyLearnHost = host === "learn.lucianoconecta.online";
   const isLegacyPanelHost = host === "painel.lucianoconecta.online";
@@ -84,6 +85,25 @@ function academyCanonicalRedirect(request: Request): Response | null {
   // Academy storefront/client learning state from being rendered on this host,
   // including on stale browser/CDN navigations.
   if (isServicePortal) {
+    if (url.pathname === "/admin" || url.pathname.startsWith("/admin/") || url.pathname === "/login") {
+      const target = new URL(url.toString());
+      target.hostname = "painel.ldrrhestrategia.com";
+      return temporaryRedirect(target.toString());
+    }
+
+    if (
+      url.pathname === "/cliente/biblioteca" ||
+      url.pathname.startsWith("/cliente/biblioteca/") ||
+      url.pathname === "/biblioteca" ||
+      url.pathname.startsWith("/biblioteca/") ||
+      url.pathname === "/cliente/rede-academica" ||
+      url.pathname.startsWith("/cliente/rede-academica/")
+    ) {
+      const target = new URL(url.toString());
+      target.hostname = "ldracademy.online";
+      return temporaryRedirect(target.toString());
+    }
+
     if (url.pathname === "/") {
       url.pathname = "/cliente/login";
       url.searchParams.set("portal", "services");
@@ -124,6 +144,31 @@ function academyCanonicalRedirect(request: Request): Response | null {
     }
 
     return temporaryRedirect(target.toString());
+  }
+
+  // Keep each validated product on its single official hostname.
+  if (isAcademy && (url.pathname === "/admin" || url.pathname.startsWith("/admin/") || url.pathname === "/login")) {
+    const target = new URL(url.toString());
+    target.hostname = "painel.ldrrhestrategia.com";
+    return temporaryRedirect(target.toString());
+  }
+
+  if (isAcademy && url.pathname === "/falar-com-ecossistema") {
+    const target = new URL(url.toString());
+    target.hostname = "suporte.ldrrhestrategia.com";
+    return temporaryRedirect(target.toString());
+  }
+
+  if (isAcademy && (url.pathname === "/clinica-social" || url.pathname === "/clinica-social/")) {
+    const target = new URL("https://clinicasocial.ldrrhestrategia.com/");
+    target.search = url.search;
+    target.hash = url.hash;
+    return temporaryRedirect(target.toString());
+  }
+
+  if (isSupportPortal && (url.pathname === "/" || url.pathname === "/index.html")) {
+    url.pathname = "/falar-com-ecossistema";
+    return temporaryRedirect(url.toString());
   }
 
   // Keep service/booking/professional portals out of the Academy host without
