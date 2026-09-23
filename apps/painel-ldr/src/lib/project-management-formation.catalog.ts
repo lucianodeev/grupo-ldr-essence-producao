@@ -21,7 +21,7 @@ export const PROJECT_MANAGEMENT_FORMATION:PF[]=[{
       category:"Gestão e Negócios",
       description:"Formação livre de 600 horas, 100% online, em planejamento, escopo, cronograma, custos, riscos, stakeholders, liderança, métodos tradicionais, ágeis e híbridos, indicadores e inteligência artificial aplicada à gestão de projetos.",
       project:"Projeto Integrador Final — Gestão Completa de um Projeto",
-      disclaimer:"Formação livre de aperfeiçoamento profissional. Não equivale a graduação, certificação PMP®, título acadêmico ou habilitação profissional regulamentada.",
+      disclaimer:"Formação livre voltada ao desenvolvimento e aprofundamento de conhecimentos em gestão de projetos. Não substitui graduação, habilitação profissional ou formação regulamentada quando exigidas. Não equivale a certificação PMP® nem a título acadêmico.",
       portfolio:[
         "Projeto 1 — Termo de abertura: problema, justificativa, objetivo, stakeholders, entregáveis, premissas e restrições.",
         "Projeto 2 — Plano de escopo e cronograma: EAP, atividades, dependências, marcos e linha do tempo.",

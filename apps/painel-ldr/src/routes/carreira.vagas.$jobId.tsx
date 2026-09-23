@@ -26,6 +26,9 @@ type JobRow = Record<string, any> & {
   country?: string | null;
   city?: string | null;
   work_mode?: string | null;
+  external_work_mode?: string | null;
+  external_contract_type?: string | null;
+  external_publication_language?: string | null;
   contract_type?: string | null;
   publication_language?: string | null;
   required_languages?: string[] | string | null;
@@ -45,7 +48,7 @@ const C = {
     apply: "Candidatar pelo perfil",
     closed: "Vaga indisponível ou não publicada.",
     loading: "Carregando vaga...",
-    safe: "Esta vaga passou pela etapa de publicação da plataforma.",
+    safe: "Esta vaga passou pela etapa de publicação da plataforma.", externalSafe: "Esta vaga pública externa está referenciada à fonte original. Confirme os detalhes e a disponibilidade na fonte antes de se candidatar.",
     journeyTitle: "Candidatura rápida e inclusiva",
     journeyText:
       "Você pode avançar usando seu perfil profissional. Dados de acessibilidade só devem ser compartilhados quando você autorizar na próxima etapa.",
@@ -61,7 +64,7 @@ const C = {
     sign: "Apoio em língua de sinais/comunicação",
     fallbackWarning:
       "Alguns campos avançados de acessibilidade ainda não estão disponíveis no banco. A vaga foi carregada com os dados seguros atuais.",
-    notInformed: "Não informado",
+    depoisTitle: "E depois de encontrar esta vaga?", depoisText: "Você decide se quer se preparar, fortalecer evidências ou seguir para a candidatura. O DEPOIS não envia candidaturas nem decide seleção por você.", prepare: "PREPARAR PERFIL", learn: "APRENDER", possibilities: "OUTRAS POSSIBILIDADES", notInformed: "Não informado", sourceNotInformed: "Não informado pela fonte", externalApply: "Candidatar na fonte original", source: "Fonte original",
   },
   en: {
     back: "Back to jobs",
@@ -71,7 +74,7 @@ const C = {
     apply: "Apply with profile",
     closed: "Job unavailable or not published.",
     loading: "Loading job...",
-    safe: "This job passed the platform publication stage.",
+    safe: "This job passed the platform publication stage.", externalSafe: "This external public job is referenced to its original source. Confirm details and availability at the source before applying.",
     journeyTitle: "Fast and inclusive application",
     journeyText:
       "You can move forward using your professional profile. Accessibility information is shared only when you authorize it in the next step.",
@@ -87,7 +90,7 @@ const C = {
     sign: "Sign language/communication support",
     fallbackWarning:
       "Some advanced accessibility fields are not available in the database yet. The job was loaded with the current safe data.",
-    notInformed: "Not informed",
+    depoisTitle: "What comes after finding this job?", depoisText: "You decide whether to prepare, strengthen real evidence or proceed to the application. DEPOIS does not submit applications or make selection decisions for you.", prepare: "PREPARE PROFILE", learn: "LEARN", possibilities: "OTHER POSSIBILITIES", notInformed: "Not informed", sourceNotInformed: "Not informed by source", externalApply: "Apply on original source", source: "Original source",
   },
   fr: {
     back: "Retour aux offres",
@@ -97,7 +100,7 @@ const C = {
     apply: "Postuler avec profil",
     closed: "Offre indisponible ou non publiée.",
     loading: "Chargement de l’offre...",
-    safe: "Cette offre a passé l’étape de publication de la plateforme.",
+    safe: "Cette offre a passé l’étape de publication de la plateforme.", externalSafe: "Cette offre publique externe renvoie à sa source originale. Vérifiez les détails et sa disponibilité à la source avant de postuler.",
     journeyTitle: "Candidature rapide et inclusive",
     journeyText:
       "Vous pouvez avancer avec votre profil professionnel. Les informations d’accessibilité ne sont partagées que si vous l’autorisez à l’étape suivante.",
@@ -113,7 +116,7 @@ const C = {
     sign: "Soutien en langue des signes/communication",
     fallbackWarning:
       "Certains champs avancés d’accessibilité ne sont pas encore disponibles dans la base. L’offre a été chargée avec les données sûres actuelles.",
-    notInformed: "Non renseigné",
+    depoisTitle: "Et après avoir trouvé cette offre ?", depoisText: "Vous décidez de vous préparer, de renforcer des preuves réelles ou de poursuivre la candidature. DEPOIS ne postule pas et ne prend aucune décision de sélection à votre place.", prepare: "PRÉPARER LE PROFIL", learn: "APPRENDRE", possibilities: "AUTRES POSSIBILITÉS", notInformed: "Non renseigné", sourceNotInformed: "Non renseigné par la source", externalApply: "Postuler sur la source originale", source: "Source originale",
   },
   es: {
     back: "Volver a vacantes",
@@ -123,7 +126,7 @@ const C = {
     apply: "Postular con perfil",
     closed: "Vacante no disponible o no publicada.",
     loading: "Cargando vacante...",
-    safe: "Esta vacante pasó por la etapa de publicación de la plataforma.",
+    safe: "Esta vacante pasó por la etapa de publicación de la plataforma.", externalSafe: "Esta vacante pública externa está referenciada a su fuente original. Confirma los detalles y su disponibilidad en la fuente antes de postular.",
     journeyTitle: "Postulación rápida e inclusiva",
     journeyText:
       "Puedes avanzar usando tu perfil profesional. Los datos de accesibilidad solo se comparten cuando lo autorizas en la próxima etapa.",
@@ -139,14 +142,14 @@ const C = {
     sign: "Apoyo en lengua de señas/comunicación",
     fallbackWarning:
       "Algunos campos avanzados de accesibilidad aún no están disponibles en la base de datos. La vacante se cargó con los datos seguros actuales.",
-    notInformed: "No informado",
+    depoisTitle: "¿Y después de encontrar esta vacante?", depoisText: "Tú decides si quieres prepararte, reforzar evidencias reales o continuar con la postulación. DEPOIS no envía postulaciones ni toma decisiones de selección por ti.", prepare: "PREPARAR PERFIL", learn: "APRENDER", possibilities: "OTRAS POSIBILIDADES", notInformed: "No informado", sourceNotInformed: "No informado por la fuente", externalApply: "Postular en la fuente original", source: "Fuente original",
   },
 } as const;
 
 type Copy = (typeof C)[keyof typeof C];
 
 const baseSelect =
-  "id,title,description,responsibilities,requirements,country,city,work_mode,contract_type,publication_language,required_languages,salary_currency,salary_min,salary_max,salary_period,career_companies(name,website)";
+  "id,title,description,responsibilities,requirements,country,city,work_mode,contract_type,publication_language,required_languages,salary_currency,salary_min,salary_max,salary_period,external_work_mode,external_contract_type,external_publication_language,source_type,source_name,source_url,external_apply_url,career_companies(name,website)";
 
 const enhancedSelect = `${baseSelect},accessibility_inclusive,accessibility_pcd_only:accessibility_designated_disability,accessibility_resources:accessibility_features,accessibility_details`;
 
@@ -270,7 +273,7 @@ function Job() {
             <h1 className="mt-2 text-3xl font-bold md:text-4xl">{job.title}</h1>
             <p className="mt-4 flex flex-wrap items-center gap-2 text-white/85">
               <MapPin size={18} aria-hidden="true" />
-              {location} · {job.work_mode || t.notInformed} · {job.contract_type || t.notInformed}
+              {location} · {job.source_type==="external_public"?(job.external_work_mode||t.sourceNotInformed):(job.work_mode||t.notInformed)} · {job.source_type==="external_public"?(job.external_contract_type||t.sourceNotInformed):(job.contract_type||t.notInformed)}
             </p>
           </div>
 
@@ -278,7 +281,7 @@ function Job() {
             <div>
               <div className="flex gap-2 rounded-xl bg-slate-50 p-4 text-sm text-slate-600">
                 <ShieldCheck size={19} className="mt-0.5 shrink-0" aria-hidden="true" />
-                <span>{t.safe}</span>
+                <span>{job.source_type==="external_public"?t.externalSafe:t.safe}</span>
               </div>
 
 
@@ -308,18 +311,14 @@ function Job() {
               <div className="mt-5 space-y-3 text-sm text-slate-700">
                 <Info icon={<DollarSign size={17} aria-hidden="true" />} label={t.salary} value={formatSalary(job, t)} />
                 <Info icon={<Languages size={17} aria-hidden="true" />} label={t.languages} value={formatLanguages(job.required_languages, t.notInformed)} />
-                <Info icon={<Globe2 size={17} aria-hidden="true" />} label={t.work} value={job.work_mode || t.notInformed} />
+                <Info icon={<Globe2 size={17} aria-hidden="true" />} label={t.work} value={job.source_type==="external_public"?(job.external_work_mode||t.sourceNotInformed):(job.work_mode||t.notInformed)} />
                 <Info icon={<MapPin size={17} aria-hidden="true" />} label={t.location} value={location} />
               </div>
 
-              <Link reloadDocument
-                to="/carreira/vagas/$jobId/candidatura"
-                params={{ jobId: job.id }}
-                className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#07345b] px-5 font-semibold text-white transition hover:bg-[#0b426f] focus:outline-none focus:ring-4 focus:ring-[#07345b]/20"
-              >
-                <Send size={17} aria-hidden="true" />
-                {t.apply}
-              </Link>
+              {job.source_type==="external_public"&&job.external_apply_url?<a href={job.external_apply_url} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#07345b] px-5 font-semibold text-white"><Send size={17} aria-hidden="true"/>{t.externalApply}</a>:<Link reloadDocument to="/carreira/vagas/$jobId/candidatura" params={{jobId:job.id}} className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#07345b] px-5 font-semibold text-white"><Send size={17} aria-hidden="true"/>{t.apply}</Link>}
+              <div className="mt-5 rounded-2xl border border-[#d6ad63]/35 bg-[#fffaf0] p-4"><p className="text-[10px] font-black uppercase tracking-[.16em] text-[#9a772c]">DEPOIS · por LDR Academy</p><h3 className="mt-1 font-black text-[#07345b]">{t.depoisTitle}</h3><p className="mt-1 text-xs leading-5 text-slate-600">{t.depoisText}</p><div className="mt-3 flex flex-wrap gap-2"><Link to="/carreira/id" className="rounded-lg border border-[#07345b] px-3 py-2 text-[10px] font-black text-[#07345b]">{t.prepare}</Link><Link to="/cliente/biblioteca" className="rounded-lg border border-[#07345b] px-3 py-2 text-[10px] font-black text-[#07345b]">{t.learn}</Link><Link to="/carreira/next" className="rounded-lg bg-[#07345b] px-3 py-2 text-[10px] font-black text-white">{t.possibilities}</Link></div></div>
+              {job.source_type==="external_public"&&job.source_url&&<a href={job.source_url} target="_blank" rel="noopener noreferrer" className="mt-3 block text-center text-xs font-semibold text-[#07345b] underline">{t.source}{job.source_name?` · ${job.source_name}`:""}</a>}
+
             </aside>
           </div>
         </article>
