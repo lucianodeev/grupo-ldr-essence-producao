@@ -14,6 +14,12 @@
       "headers": { "Location": "https://ldracademy.online/ecossistema" }
     },
     {
+      "src": "/(.*)",
+      "has": [{ "type": "host", "value": "www.ldrrhestrategia.com" }],
+      "status": 308,
+      "headers": { "Location": "https://ldrrhestrategia.com/$1" }
+    },
+    {
       "src": "/treinamento(?:/)?",
       "has": [{ "type": "host", "value": "clinicasocial.ldrrhestrategia.com" }],
       "status": 308,
