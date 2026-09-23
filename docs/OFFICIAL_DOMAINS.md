@@ -41,4 +41,4 @@ lucianoconecta.online, learn.lucianoconecta.online, painel.lucianoconecta.online
 O Human Room passa a ter como entrada oficial no ecossistema:
 - https://ldracademy.online/human-room
 
-O aplicativo Human Room mantém sua infraestrutura atual durante a migração para evitar quebra de contas, salas e fluxos já validados.
+O aplicativo Human Room está operacional oficialmente em https://ldracademy.online/human-room e suas páginas filhas. Os domínios humanroom.online e www.humanroom.online são legados e devem apenas redirecionar para a rota equivalente na Academy; não devem ser usados em novos links públicos.
