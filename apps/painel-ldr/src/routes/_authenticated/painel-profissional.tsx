@@ -73,6 +73,13 @@ function CentralLayout() {
   const isSuperadmin = access.data?.authorized && access.data.role === "superadmin";
   const isProfessional = access.data?.authorized && access.data.role === "colaborador";
 
+  if (isSuperadmin && (pathname === "/painel-profissional" || pathname === "/painel-profissional/")) {
+    if (typeof window !== "undefined") {
+      window.location.replace("/admin");
+      return <div className="min-h-screen p-6"><div className="s8-card mx-auto max-w-md text-center">{t("state.loading")}</div></div>;
+    }
+  }
+
   if (!isSuperadmin && !isProfessional) return <div className="min-h-screen p-6"><div className="s8-card mx-auto max-w-md text-center"><h1 className="font-serif text-3xl">403</h1><p className="mt-2 text-sm text-muted-foreground">{copy.denied}</p><button type="button" onClick={signOut} className="mt-5 rounded-lg bg-primary px-5 py-3 font-bold text-primary-foreground">{t("action.signout")}</button></div></div>;
 
   const isAdminPath = ADMIN_PATHS.some((path) => pathname === path || pathname.startsWith(`${path}/`));
