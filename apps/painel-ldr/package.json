@@ -12,7 +12,8 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "typecheck": "tsc --noEmit",
-    "test": "node --experimental-strip-types --test src/lib/platform-fee.test.ts src/lib/entitlements.test.ts src/lib/ldr-identity.test.ts",\n    "test:academic": "node --test tests/academic-regressions.test.cjs"
+    "test": "node --experimental-strip-types --test src/lib/platform-fee.test.ts src/lib/entitlements.test.ts src/lib/ldr-identity.test.ts",
+    "test:academic": "node --test tests/academic-regressions.test.cjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
