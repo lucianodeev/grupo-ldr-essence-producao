@@ -9,6 +9,7 @@ import {
   Loader2,
   Send,
   ShieldCheck,
+  Upload,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { LanguageSelect, useI18n } from "@/lib/i18n";
@@ -66,7 +67,10 @@ const C = {
     email: "E-mail",
     phone: "Telefone ou WhatsApp",
     area: "Área, experiência ou objetivo profissional",
-    profileUrl: "Link do perfil, currículo ou portfólio",
+    profileUrl: "Link do perfil ou portfólio",
+    resume: "Anexar currículo (PDF, DOC ou DOCX)",
+    resumeHelp: "Arquivo privado, até 5 MB. Somente você e a empresa responsável pela vaga poderão acessar.",
+    resumeLogin: "Para anexar currículo com segurança, entre na sua conta LDR antes de enviar.",
     accessibility: "Necessidades de acessibilidade para o processo seletivo",
     shareAccessibility:
       "Autorizo compartilhar estas informações de acessibilidade com a empresa para viabilizar adaptações no processo seletivo.",
@@ -165,6 +169,7 @@ function ApplicationCenter() {
   const [submitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [loadError, setLoadError] = useState<string | null>(null);
+  const [resume, setResume] = useState<File | null>(null);
 
   useEffect(() => {
     let alive = true;
@@ -206,6 +211,34 @@ function ApplicationCenter() {
     setSubmitting(true);
     setStatus("idle");
 
+    let resumePath: string | null = null;
+    if (resume) {
+      const { data: authData } = await supabase.auth.getUser();
+      const user = authData.user;
+      if (!user) {
+        setStatus("error");
+        setLoadError(t.resumeLogin);
+        setSubmitting(false);
+        return;
+      }
+      const allowed = ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"];
+      if (!allowed.includes(resume.type) || resume.size > 5 * 1024 * 1024) {
+        setStatus("error");
+        setLoadError("Currículo inválido. Envie PDF, DOC ou DOCX com até 5 MB.");
+        setSubmitting(false);
+        return;
+      }
+      const ext = resume.name.split(".").pop()?.toLowerCase() || "pdf";
+      resumePath = `${user.id}/${crypto.randomUUID()}.${ext}`;
+      const { error: uploadError } = await supabase.storage.from("career-resumes").upload(resumePath, resume, { contentType: resume.type, upsert: false });
+      if (uploadError) {
+        setStatus("error");
+        setLoadError("Não foi possível anexar o currículo com segurança.");
+        setSubmitting(false);
+        return;
+      }
+    }
+
     const jobSummary = [
       `job_id=${job?.id ?? jobId}`,
       `job_title=${job?.title ?? t.jobFallback}`,
@@ -234,10 +267,12 @@ function ApplicationCenter() {
       accessibility_needs:
         form.shareAccessibility && form.accessibilityNeeds.trim() ? form.accessibilityNeeds.trim() : null,
       share_accessibility_with_company: form.shareAccessibility,
+      resume_path: resumePath,
       status: "submitted",
     });
 
     if (applicationError) {
+      if (resumePath) await supabase.storage.from("career-resumes").remove([resumePath]);
       setStatus("error");
       setSubmitting(false);
       return;
@@ -245,6 +280,7 @@ function ApplicationCenter() {
 
     setStatus("success");
     setForm(empty);
+    setResume(null);
     setSubmitting(false);
   }
 
@@ -347,6 +383,15 @@ function ApplicationCenter() {
                   className={inputClass}
                 />
               </Field>
+
+              <label className="block md:col-span-2">
+                <span className="text-sm font-semibold text-slate-800">{t.resume} ({t.optional})</span>
+                <div className="mt-2 rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-4">
+                  <div className="flex items-center gap-2 text-sm font-semibold text-[#07345b]"><Upload size={18} aria-hidden="true" /> {resume?.name || t.resume}</div>
+                  <input type="file" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" onChange={(event) => setResume(event.target.files?.[0] ?? null)} className="mt-3 block w-full text-sm text-slate-700" />
+                  <p className="mt-2 text-xs text-slate-500">{t.resumeHelp}</p>
+                </div>
+              </label>
 
               <label className="block md:col-span-2">
                 <span className="text-sm font-semibold text-slate-800">{t.area} *</span>
