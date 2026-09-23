@@ -83,6 +83,12 @@ function academyCanonicalRedirect(request: Request): Response | null {
   // Academy storefront/client learning state from being rendered on this host,
   // including on stale browser/CDN navigations.
   if (isServicePortal) {
+    // Previously shared signup links must open the actual professional entry.
+    if (url.pathname === "/profissional/cadastro" || url.pathname === "/profissional/cadastro/") {
+      url.pathname = "/profissional/login";
+      return temporaryRedirect(url.toString());
+    }
+
     if (
       url.pathname === "/cliente/biblioteca" ||
       url.pathname.startsWith("/cliente/biblioteca/") ||
