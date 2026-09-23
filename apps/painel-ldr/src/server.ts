@@ -51,9 +51,7 @@ function academyCanonicalRedirect(request: Request): Response | null {
     return temporaryRedirect(target.toString());
   }
 
-  // painel.ldrrhestrategia.com is the canonical Master administration entry.
-  // Keep deep routes intact; the root must open the protected Master dashboard,
-  // which will request Master authentication when no valid session exists.
+  // Keep the old Master entry active until the new Portal entry is validated.
   if (
     isLegacyLdrPanelHost &&
     (url.pathname === "/" || url.pathname === "/index.html" || url.pathname === "/acesso")
@@ -85,12 +83,6 @@ function academyCanonicalRedirect(request: Request): Response | null {
   // Academy storefront/client learning state from being rendered on this host,
   // including on stale browser/CDN navigations.
   if (isServicePortal) {
-    if (url.pathname === "/admin" || url.pathname.startsWith("/admin/") || url.pathname === "/login") {
-      const target = new URL(url.toString());
-      target.hostname = "painel.ldrrhestrategia.com";
-      return temporaryRedirect(target.toString());
-    }
-
     if (
       url.pathname === "/cliente/biblioteca" ||
       url.pathname.startsWith("/cliente/biblioteca/") ||
@@ -149,7 +141,7 @@ function academyCanonicalRedirect(request: Request): Response | null {
   // Keep each validated product on its single official hostname.
   if (isAcademy && (url.pathname === "/admin" || url.pathname.startsWith("/admin/") || url.pathname === "/login")) {
     const target = new URL(url.toString());
-    target.hostname = "painel.ldrrhestrategia.com";
+    target.hostname = "portal.ldrrhestrategia.com";
     return temporaryRedirect(target.toString());
   }
 
