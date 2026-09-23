@@ -5,7 +5,7 @@ const CAREER_TYPES=["job","project"] as const;
 
 export const refreshCareerIntelligence=createServerFn({method:"POST"}).middleware([requireSupabaseAuth]).handler(async({context})=>{
  const {supabaseAdmin}=await import("@/integrations/supabase/client.server"); const db=supabaseAdmin as any; const uid=context.userId;
- const [{data:goals},{data:proofs},{data:jobs},{data:projects}]=await Promise.all([
+ const [goalsResult,proofsResult,jobsResult,projectsResult]=await Promise.all([
   db.from("ldr_career_goals").select("id,target_title,target_country,target_work_mode,target_competency_keys").eq("user_id",uid).eq("status","active").limit(5),
   db.from("ldr_proofs").select("id,title,competency_key,verification_status").eq("user_id",uid).limit(50),
   db.from("career_jobs").select("id,title,city,country,work_mode,status").eq("status","published").limit(50),
