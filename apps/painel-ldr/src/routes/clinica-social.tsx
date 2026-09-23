@@ -49,7 +49,7 @@ function SocialClinicPage(){
               {Array.isArray(p.specialties)&&p.specialties.length>0?<div className="mt-4 flex flex-wrap gap-2">{p.specialties.slice(0,4).map((s:string)=><span key={s} className="rounded-full bg-white px-3 py-1 text-xs font-bold">{s}</span>)}</div>:null}
               <div className="mt-auto pt-5">
                 <p className="mb-3 text-xs font-semibold text-slate-500">{p.active_service_count>0?(p.active_service_count+" serviço(s) ativo(s)"):p.availability_count>0?(p.availability_count+" período(s) de disponibilidade cadastrado(s)"):"Serviços e horários serão exibidos quando cadastrados pelo profissional."}</p>
-                <div className="flex flex-wrap gap-2"><Link to="/profissional/$slug" params={{slug:p.slug}} className="rounded-full px-5 py-2.5 text-sm font-black text-white" style={{background:WINE}}>VER PERFIL{p.active_service_count>0||p.availability_count>0?" E AGENDA":""}</Link><a href="#cadastro" className="rounded-full border px-5 py-2.5 text-sm font-black">{c.apply}</a></div>
+                <div className="flex flex-wrap gap-2"><Link to="/profissional/$slug" params={{slug:p.slug}} className="rounded-full border px-5 py-2.5 text-sm font-black">VER PERFIL</Link>{p.active_service_count>0&&p.availability_count>0?<Link to="/profissional/$slug" params={{slug:p.slug}} hash="agendar" className="rounded-full px-5 py-2.5 text-sm font-black text-white" style={{background:WINE}}>AGENDAR ONLINE</Link>:null}<a href="#cadastro" className="rounded-full border px-5 py-2.5 text-sm font-black">{c.apply}</a></div>
               </div>
             </article>)}
           </div>
