@@ -11,7 +11,7 @@ function explain(r:any){const x=r?.rationale;if(!x)return "";const parts=[x.summ
 function AcademicOpportunities(){
  const {data:rows=[],isLoading,error}=useQuery({queryKey:["academic-opportunities"],queryFn:async()=>{
   const {data:{user}}=await supabase.auth.getUser();if(!user)throw new Error("AUTH_REQUIRED");
-  const {data,error}=await (supabase.from("ldr_opportunity_recommendations" as never) as any).select("id,opportunity_type,source_reference,title,rationale,status,generated_at,expires_at").eq("user_id",user.id).eq("status","suggested").order("generated_at",{ascending:false}).limit(30);
+  const {data,error}=await (supabase.from("ldr_opportunity_recommendations" as never) as any).select("id,opportunity_type,source_reference,title,rationale,status,generated_at,expires_at").eq("user_id",user.id).eq("status","suggested").or(`expires_at.is.null,expires_at.gt.${new Date().toISOString()}`).order("generated_at",{ascending:false}).limit(30);
   if(error)throw error;return data??[];
  }});
  return <main className="mx-auto max-w-5xl space-y-5 px-3 pb-28 pt-4 sm:px-6 sm:pt-6">
