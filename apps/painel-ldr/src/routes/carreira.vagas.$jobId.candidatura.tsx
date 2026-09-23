@@ -26,6 +26,8 @@ type JobRow = Record<string, any> & {
   city?: string | null;
   work_mode?: string | null;
   contract_type?: string | null;
+  listing_origin?: string | null;
+  external_apply_url?: string | null;
   career_companies?: { name?: string | null } | null;
 };
 
@@ -187,7 +189,7 @@ function ApplicationCenter() {
       setLoadError(null);
 
       const { data, error } = await (supabase.from("career_jobs" as never) as any)
-        .select("id,title,category,country,city,work_mode,contract_type,status,career_companies(name)")
+        .select("id,title,category,country,city,work_mode,contract_type,status,listing_origin,external_apply_url,career_companies(name)")
         .eq("id", jobId)
         .eq("status", "published")
         .maybeSingle();
@@ -197,6 +199,11 @@ function ApplicationCenter() {
       if (error) {
         setLoadError("Não foi possível carregar a vaga. Tente novamente.");
         setJob(null);
+      } else if (
+        data?.listing_origin === "external_public" &&
+        /^https?:\/\//i.test(String(data?.external_apply_url ?? ""))
+      ) {
+        window.location.replace(data.external_apply_url);
       } else {
         setJob(data ?? null);
       }

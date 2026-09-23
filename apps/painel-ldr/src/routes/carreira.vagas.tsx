@@ -23,13 +23,18 @@ type JobRow = Record<string, any> & {
   work_mode?: string | null;
   contract_type?: string | null;
   published_at?: string | null;
+  listing_origin?: string | null;
+  external_source_name?: string | null;
+  external_source_url?: string | null;
+  external_apply_url?: string | null;
+  external_checked_at?: string | null;
   career_companies?: { name?: string | null } | null;
 };
 
 const C = {
   pt: {
     title: "Encontrar vagas",
-    sub: "Oportunidades publicadas e validadas no LDR Carreira, com atenção à acessibilidade e à candidatura pelo perfil.",
+    sub: "Oportunidades próprias e vagas públicas externas verificadas pela LDR Carreira, com indicação clara da fonte e do canal de candidatura.",
     search: "Buscar por cargo, empresa, categoria ou cidade",
     allModes: "Todos os modelos",
     inclusiveOnly: "Mostrar somente vagas com sinalização inclusiva",
@@ -40,6 +45,9 @@ const C = {
     view: "Ver vaga",
     apply: "Candidatar pelo perfil",
     applyHint: "Envie seus dados com acessibilidade opcional e consentida.",
+    externalBadge: "Vaga pública externa",
+    externalApply: "Candidatar no site original",
+    externalHint: "A candidatura é concluída na fonte original da vaga.",
     remote: "Remoto",
     hybrid: "Híbrido",
     onsite: "Presencial",
@@ -54,7 +62,7 @@ const C = {
   },
   en: {
     title: "Find jobs",
-    sub: "Published and validated opportunities on LDR Carreira, with accessibility and profile-based applications in mind.",
+    sub: "LDR opportunities and verified public external jobs, with a clear source and application channel.",
     search: "Search by role, company, category or city",
     allModes: "All work modes",
     inclusiveOnly: "Show only jobs marked as inclusive",
@@ -65,6 +73,9 @@ const C = {
     view: "View job",
     apply: "Apply with profile",
     applyHint: "Submit organized data with optional, consent-based accessibility information.",
+    externalBadge: "External public job",
+    externalApply: "Apply on original site",
+    externalHint: "The application is completed on the original job source.",
     remote: "Remote",
     hybrid: "Hybrid",
     onsite: "On-site",
@@ -79,7 +90,7 @@ const C = {
   },
   fr: {
     title: "Trouver des offres",
-    sub: "Opportunités publiées et validées sur LDR Carreira, avec attention à l’accessibilité et à la candidature via le profil.",
+    sub: "Opportunités LDR et offres publiques externes vérifiées, avec source et canal de candidature clairement indiqués.",
     search: "Rechercher par poste, entreprise, catégorie ou ville",
     allModes: "Tous les formats",
     inclusiveOnly: "Afficher seulement les offres signalées comme inclusives",
@@ -90,6 +101,9 @@ const C = {
     view: "Voir l’offre",
     apply: "Postuler avec profil",
     applyHint: "Envoyez vos données avec accessibilité optionnelle et consentie.",
+    externalBadge: "Offre publique externe",
+    externalApply: "Postuler sur le site d’origine",
+    externalHint: "La candidature est finalisée sur la source originale de l’offre.",
     remote: "Télétravail",
     hybrid: "Hybride",
     onsite: "Présentiel",
@@ -104,7 +118,7 @@ const C = {
   },
   es: {
     title: "Encontrar vacantes",
-    sub: "Oportunidades publicadas y validadas en LDR Carreira, con atención a la accesibilidad y a la candidatura desde el perfil.",
+    sub: "Oportunidades LDR y vacantes públicas externas verificadas, con fuente y canal de postulación claramente indicados.",
     search: "Buscar por puesto, empresa, categoría o ciudad",
     allModes: "Todos los modelos",
     inclusiveOnly: "Mostrar solo vacantes señaladas como inclusivas",
@@ -115,6 +129,9 @@ const C = {
     view: "Ver vacante",
     apply: "Postular con perfil",
     applyHint: "Envía tus datos con accesibilidad opcional y consentida.",
+    externalBadge: "Vacante pública externa",
+    externalApply: "Postular en el sitio original",
+    externalHint: "La postulación se completa en la fuente original de la vacante.",
     remote: "Remoto",
     hybrid: "Híbrido",
     onsite: "Presencial",
@@ -130,7 +147,7 @@ const C = {
 } as const;
 
 const baseSelect =
-  "id,title,category,country,city,work_mode,contract_type,published_at,career_companies(name)";
+  "id,title,category,country,city,work_mode,contract_type,published_at,listing_origin,external_source_name,external_source_url,external_apply_url,external_checked_at,career_companies(name)";
 
 const enhancedSelect = `${baseSelect},accessibility_inclusive,accessibility_pcd_only:accessibility_designated_disability,accessibility_resources:accessibility_features,accessibility_details`;
 
@@ -138,6 +155,10 @@ function hasValue(value: unknown) {
   if (Array.isArray(value)) return value.length > 0;
   if (typeof value === "string") return value.trim().length > 0;
   return Boolean(value);
+}
+
+function isExternalJob(job: JobRow) {
+  return job.listing_origin === "external_public" && /^https?:\/\//i.test(String(job.external_apply_url ?? ""));
 }
 
 function isInclusiveJob(job: JobRow) {
@@ -329,12 +350,18 @@ function Jobs() {
               const companyName = job.career_companies?.name || t.companyFallback;
               const location = [job.city, job.country].filter(Boolean).join(", ") || t.noLocation;
               const inclusive = isInclusiveJob(job);
+              const external = isExternalJob(job);
 
               return (
                 <article key={job.id} className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
                   <div className="flex flex-col justify-between gap-5 md:flex-row md:items-center">
                     <div className="min-w-0">
                       <div className="mb-3 flex flex-wrap gap-2">
+                        {external && (
+                          <span className="inline-flex rounded-full bg-amber-50 px-3 py-1 text-xs font-bold text-amber-900 ring-1 ring-amber-200">
+                            {t.externalBadge}
+                          </span>
+                        )}
                         {inclusive && (
                           <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-800 ring-1 ring-emerald-100">
                             <Accessibility size={14} /> {t.inclusive}
@@ -370,13 +397,24 @@ function Jobs() {
                     </div>
 
                     <div className="flex shrink-0 flex-col gap-2 md:w-56">
-                      <Link reloadDocument
-                        to="/carreira/vagas/$jobId/candidatura"
-                        params={{ jobId: job.id }}
-                        className="inline-flex min-h-11 items-center justify-center rounded-xl bg-[#07345b] px-5 text-center font-semibold text-white transition hover:bg-[#0b426f] focus:outline-none focus:ring-4 focus:ring-[#07345b]/20"
-                      >
-                        {t.apply}
-                      </Link>
+                      {external ? (
+                        <a
+                          href={job.external_apply_url || "#"}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex min-h-11 items-center justify-center rounded-xl bg-[#07345b] px-5 text-center font-semibold text-white transition hover:bg-[#0b426f] focus:outline-none focus:ring-4 focus:ring-[#07345b]/20"
+                        >
+                          {t.externalApply}
+                        </a>
+                      ) : (
+                        <Link reloadDocument
+                          to="/carreira/vagas/$jobId/candidatura"
+                          params={{ jobId: job.id }}
+                          className="inline-flex min-h-11 items-center justify-center rounded-xl bg-[#07345b] px-5 text-center font-semibold text-white transition hover:bg-[#0b426f] focus:outline-none focus:ring-4 focus:ring-[#07345b]/20"
+                        >
+                          {t.apply}
+                        </Link>
+                      )}
                       <Link reloadDocument
                         to="/carreira/vagas/$jobId"
                         params={{ jobId: job.id }}
@@ -384,7 +422,7 @@ function Jobs() {
                       >
                         {t.view}
                       </Link>
-                      <p className="text-center text-xs text-slate-500">{t.applyHint}</p>
+                      <p className="text-center text-xs text-slate-500">{external ? t.externalHint : t.applyHint}</p>
                     </div>
                   </div>
                 </article>
