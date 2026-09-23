@@ -38,7 +38,7 @@ const projects = [
   {
     name: "Human Room",
     text: "Projeto digital voltado à escuta, participação e construção coletiva de soluções entre pessoas, universidades, empresas e organizações.",
-    href: "https://www.humanroom.online",
+    href: "https://ldracademy.online/human-room",
   },
   {
     name: "Grupo LDR Essence",
@@ -64,7 +64,7 @@ const officialLinks = [
   ["LDR Academy", "https://ldracademy.online"],
   ["Ecossistema LDR", "https://ldracademy.online/ecossistema"],
   ["LDR RH & Estratégia", "https://ldrrhestrategia.com"],
-  ["Human Room", "https://www.humanroom.online"],
+  ["Human Room", "https://ldracademy.online/human-room"],
   ["Instagram LDR Academy", "https://www.instagram.com/ldracademy.online"],
   ["Instagram profissional", "https://www.instagram.com/luciano.psicanalise_"],
   ["Página atual sobre Luciano", "https://ldrrhestrategia.com/luciano"],
@@ -81,7 +81,7 @@ const personSchema = {
   sameAs: [
     "https://ldracademy.online",
     "https://ldrrhestrategia.com/luciano",
-    "https://www.humanroom.online",
+    "https://ldracademy.online/human-room",
     "https://www.instagram.com/ldracademy.online",
     "https://www.instagram.com/luciano.psicanalise_",
   ],
@@ -120,7 +120,7 @@ function LucianoPage() {
           <nav className="hidden items-center gap-5 text-sm font-semibold text-white/80 sm:flex">
             <a href="https://ldracademy.online/ecossistema" className="hover:text-white">Ecossistema</a>
             <a href="https://ldrrhestrategia.com" className="hover:text-white">LDR RH</a>
-            <a href="https://www.humanroom.online" className="hover:text-white">Human Room</a>
+            <a href="https://ldracademy.online/human-room" className="hover:text-white">Human Room</a>
           </nav>
         </div>
       </header>
