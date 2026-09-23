@@ -20,12 +20,15 @@ export const refreshCareerIntelligence=createServerFn({method:"POST"}).middlewar
 
  // Refresh only recommendations owned by this career generator.
  // Other modules (Rede Acadêmica, negócios, eventos, cursos) may share this table.
- await db.from("ldr_opportunity_recommendations").delete().eq("user_id",uid).eq("status","suggested").in("opportunity_type",[...CAREER_TYPES]);
- if(recs.length)await db.from("ldr_opportunity_recommendations").insert(recs);
+ const recDelete=await db.from("ldr_opportunity_recommendations").delete().eq("user_id",uid).eq("status","suggested").in("opportunity_type",[...CAREER_TYPES]);
+ if(recDelete.error)throw new Error("Não foi possível atualizar as oportunidades. As sugestões atuais foram preservadas.");
+ if(recs.length){const recInsert=await db.from("ldr_opportunity_recommendations").insert(recs);if(recInsert.error)throw new Error("Não foi possível salvar as novas oportunidades.");}
 
  const actions:any[]=[]; if(goal)actions.push({user_id:uid,context_type:"career",context_reference:goal.id,action_type:"build_portfolio",title:"Fortaleça seu portfólio para "+goal.target_title,rationale:{summary:"Objetivo ativo no Career GPS conectado às evidências disponíveis."}});
  if(!skills.length)actions.push({user_id:uid,context_type:"portfolio",action_type:"prove",title:"Adicione uma evidência ao LDR Proof",rationale:{summary:"Ainda não encontramos competências comprovadas no seu LDR Proof."}});
  if(recs.some(r=>r.opportunity_type==="project"))actions.push({user_id:uid,context_type:"project",action_type:"join_project",title:"Explore um projeto compatível",rationale:{summary:"Há projetos ativos disponíveis no ecossistema Empresa-Escola."}});
- const actionDelete=await db.from("ldr_copilot_actions").delete().eq("user_id",uid).eq("status","suggested").in("context_type",["career","portfolio","project"]);\n if(actionDelete.error)throw new Error("As oportunidades foram atualizadas, mas não foi possível atualizar os próximos passos.");\n if(actions.length){const actionInsert=await db.from("ldr_copilot_actions").insert(actions);if(actionInsert.error)throw new Error("Não foi possível salvar os novos próximos passos.");}
+ const actionDelete=await db.from("ldr_copilot_actions").delete().eq("user_id",uid).eq("status","suggested").in("context_type",["career","portfolio","project"]);
+ if(actionDelete.error)throw new Error("As oportunidades foram atualizadas, mas não foi possível atualizar os próximos passos.");
+ if(actions.length){const actionInsert=await db.from("ldr_copilot_actions").insert(actions);if(actionInsert.error)throw new Error("Não foi possível salvar os novos próximos passos.");}
  return {recommendations:recs.length,actions:actions.length};
 });
