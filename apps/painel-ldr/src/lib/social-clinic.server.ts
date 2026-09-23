@@ -87,28 +87,69 @@ async function ensureSocialClinicStripeCatalog() {
 }
 
 export async function getSocialClinicLanding() {
-  const [{ data: profile }, brlCents, eurCents, stripe] = await Promise.all([
+  const [{ data: profiles }, brlCents, eurCents, stripe] = await Promise.all([
     db.from("professional_profiles")
-      .select("id,professional_account_id,slug,display_name,professional_title,profile_headline,city,country_code,languages,online_enabled,in_person_enabled,photo_url,about,experience_summary,specialties,profile_verified")
-      .eq("slug", LUCIANO_SLUG).eq("is_public", true).eq("profile_status", "active").eq("compliance_status", "approved").maybeSingle(),
+      .select("id,professional_account_id,slug,display_name,professional_title,profile_headline,city,country_code,languages,online_enabled,in_person_enabled,public_region,photo_url,about,experience_summary,specialties,profile_verified,identity_verified,documents_verified,created_at")
+      .eq("is_public", true)
+      .eq("profile_status", "active")
+      .eq("compliance_status", "approved")
+      .order("created_at", { ascending: true }),
     configNumber("social_clinic_brl_cents", BRL_FALLBACK),
     configNumber("social_clinic_eur_cents", EUR_FALLBACK),
     ensureSocialClinicStripeCatalog(),
   ]);
+
+  const publicProfiles = profiles ?? [];
+  const profileIds = publicProfiles.map((item: any) => item.id).filter(Boolean);
   let availability: any[] = [];
   let reviews: any[] = [];
-  if (profile?.id) {
-    const [{ data: slots }, { data: reviewRows }] = await Promise.all([
-      db.from("professional_availability").select("weekday,start_time,end_time,timezone,modality").eq("professional_profile_id", profile.id).eq("active", true).order("weekday").order("start_time"),
-      db.from("professional_reviews").select("rating,body,created_at").eq("professional_profile_id", profile.id).eq("status", "published").order("created_at", { ascending: false }).limit(6),
+  let serviceRows: any[] = [];
+
+  if (profileIds.length) {
+    const [{ data: slots }, { data: reviewRows }, { data: services }] = await Promise.all([
+      db.from("professional_availability")
+        .select("professional_profile_id,weekday,start_time,end_time,timezone,modality")
+        .in("professional_profile_id", profileIds)
+        .eq("active", true)
+        .order("weekday")
+        .order("start_time"),
+      db.from("professional_reviews")
+        .select("professional_profile_id,rating,body,created_at")
+        .in("professional_profile_id", profileIds)
+        .eq("status", "published")
+        .order("created_at", { ascending: false })
+        .limit(30),
+      db.from("professional_services")
+        .select("professional_profile_id,id,booking_enabled,active,approval_status")
+        .in("professional_profile_id", profileIds)
+        .eq("active", true)
+        .eq("approval_status", "approved"),
     ]);
     availability = slots ?? [];
     reviews = reviewRows ?? [];
+    serviceRows = services ?? [];
   }
+
+  const professionals = publicProfiles.map((item: any) => ({
+    ...item,
+    availability_count: availability.filter((slot: any) => slot.professional_profile_id === item.id).length,
+    active_service_count: serviceRows.filter((service: any) => service.professional_profile_id === item.id).length,
+    booking_enabled: serviceRows.some((service: any) => service.professional_profile_id === item.id && service.booking_enabled),
+  }));
+
+  const profile = professionals.find((item: any) => item.slug === LUCIANO_SLUG) ?? professionals[0] ?? null;
+  const legacyAvailability = profile
+    ? availability.filter((slot: any) => slot.professional_profile_id === profile.id)
+    : [];
+  const legacyReviews = profile
+    ? reviews.filter((review: any) => review.professional_profile_id === profile.id)
+    : [];
+
   return {
     profile,
-    availability,
-    reviews,
+    profiles: professionals,
+    availability: legacyAvailability,
+    reviews: legacyReviews,
     pricing: { brlCents: Math.round(brlCents), eurCents: Math.round(eurCents) },
     commissions: {
       social: (await platformFeePercent()) / 100,
