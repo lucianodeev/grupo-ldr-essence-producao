@@ -517,7 +517,7 @@ function Page() {
                           identity: "Identidade",
                           documents: "Documentos",
                           photo: "Foto",
-                          video: "Vídeo",
+                          video: "Vídeo (opcional)",
                           languages: "Idiomas",
                           services: "Serviços",
                           availability: "Agenda",
