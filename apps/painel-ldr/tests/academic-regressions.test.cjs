@@ -375,7 +375,7 @@ test('threaded backend validates parent and keeps replies on soft delete in isol
 });
 
 
-test('career intelligence guards source failures before atomic recommendation refresh',()=>{const source=fs.readFileSync(path.resolve(ROOT,'lib/career-intelligence.functions.ts'),'utf8');assert.match(source,/const failed=\[goalsResult,proofsResult,jobsResult,projectsResult\]/);assert.ok(source.indexOf('const failed=')<source.indexOf('ldr_refresh_career_intelligence_atomic'));});
+test('career intelligence guards source failures before atomic recommendation refresh',()=>{const source=fs.readFileSync(path.resolve(ROOT,'lib/career-intelligence.functions.ts'),'utf8');assert.match(source,/const failed=\[goalsResult,proofsResult,jobsResult,projectsResult,feedbackResult\]/);assert.ok(source.indexOf('const failed=')<source.indexOf('ldr_refresh_career_intelligence_atomic'));});
 
 test('career intelligence marks its generated recommendations for atomic ownership',()=>{const source=fs.readFileSync(path.resolve(ROOT,'lib/career-intelligence.functions.ts'),'utf8');assert.match(source,/generator:"career_intelligence"/);assert.match(source,/ldr_refresh_career_intelligence_atomic/);});
 
@@ -409,3 +409,6 @@ test('career intelligence keeps open-job discovery when no active goal exists',(
 
 
 test('opportunity feedback snapshots durable context',()=>{const source=fs.readFileSync(path.resolve(ROOT,'routes/_clientarea.cliente.rede-academica.oportunidades.tsx'),'utf8');assert.match(source,/opportunity_title:row\.title\?\?null/);assert.match(source,/rationale_snapshot:row\.rationale\?\?null/);});
+
+
+test('career ranking uses only bounded explicit opportunity feedback',()=>{const source=fs.readFileSync(path.resolve(ROOT,'lib/career-intelligence.functions.ts'),'utf8');assert.match(source,/\["more_like_this","not_interested"\]/);assert.match(source,/Math\.min\(10,adjustment\+5\)/);assert.match(source,/Math\.max\(-10,adjustment-5\)/);assert.match(source,/feedbackAdjustment\(j\.id\)/);});
