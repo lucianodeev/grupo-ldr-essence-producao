@@ -28,7 +28,7 @@ function EmployeePortal(){
   const {locale}=useI18n(); const copy=COPY[locale]; const navigate=useNavigate();
   const getContext=useServerFn(employeeContext); const requestBenefit=useServerFn(employeeRequestBenefit); const getNotifications=useServerFn(portalNotifications);
   const [data,setData]=useState<any>(null); const [notifications,setNotifications]=useState<any[]>([]); const [loading,setLoading]=useState(true); const [busyId,setBusyId]=useState<string|null>(null);
-  async function load(){setLoading(true);try{const [ctx,notes]=await Promise.all([getContext(),getNotifications()]);setData(ctx);setNotifications(notes as any[]);}catch{toast.error(copy.loadError);}finally{setLoading(false);}}
+  async function load(){setLoading(true);try{const [ctx,notes]=await Promise.all([getContext(),getNotifications().catch(()=>[])]);setData(ctx);setNotifications(notes as any[]);}catch{toast.error(copy.loadError);}finally{setLoading(false);}}
   useEffect(()=>{void load();},[]);
   async function signOut(){await supabase.auth.signOut();navigate({to:"/funcionario/login",replace:true});}
   const serviceName=(b:AnyRow)=>SERVICE_NAMES[b.catalog_key]?.[locale]??b.service?.name??copy.benefit;

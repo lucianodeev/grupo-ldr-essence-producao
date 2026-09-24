@@ -27,7 +27,7 @@ const HUB_COPY = {
   pt: [
   {
     name: "LDR Academy",
-    url: "https://ldracademy.online/",
+    url: "/",
     tag: "Entrada principal",
     featured: "academy",
     desc: "A entrada central do ecossistema LDR para cursos, formações, biblioteca digital, conteúdos gratuitos, desenvolvimento profissional e acesso às principais soluções educacionais.",
@@ -85,13 +85,13 @@ const HUB_COPY = {
   },
   {
     name: "Clínica Social LDR",
-    url: "https://clinicasocial.ldrrhestrategia.com/",
+    url: "/clinica-social",
     tag: "Cuidado social",
     desc: "Projeto social do ecossistema LDR para ampliar acesso a cuidado, acolhimento e encaminhamento, preservando confidencialidade e responsabilidade profissional.",
   },
   {
     name: "LDR RH & Estratégia",
-    url: "https://ldrrhestrategia.com/",
+    url: "/ldr-rh-estrategia",
     tag: "Institucional",
     desc: "Portal institucional da LDR com soluções para empresas, saúde mental e bem-estar corporativo, carreira, projetos educacionais, mentoria, RH e desenvolvimento humano.",
   },
@@ -115,7 +115,7 @@ const HUB_COPY = {
   },
 ] as Hub[],
   en: [
-    { name:"LDR Academy", url:"https://ldracademy.online/", tag:"Main entry", featured:"academy", desc:"The central entry point to the LDR ecosystem for courses, professional programs, the digital library, free content and educational solutions." },
+    { name:"LDR Academy", url:"/", tag:"Main entry", featured:"academy", desc:"The central entry point to the LDR ecosystem for courses, professional programs, the digital library, free content and educational solutions." },
     { name:"LDR PASS", url:"/ldr-pass", tag:"Digital subscription", featured:"pass", desc:"The ecosystem subscription for eligible content, learning paths, eBooks and selected online programs.", cta:"Discover LDR PASS" },
     { name:"LDR Library", url:"/cliente/biblioteca", tag:"Content and subscription", desc:"Digital library with courses, eBooks, publications, free materials and programs for continuous learning.", cta:"Open Library" },
     { name:"Free Courses", url:"/cliente/biblioteca/cursos-gratuitos", tag:"Free access", desc:"Free courses including languages, career, first aid and introductory content.", cta:"View Free Courses" },
@@ -123,14 +123,14 @@ const HUB_COPY = {
     { name:"LDR Academic Network", url:"/cliente/rede-academica", tag:"Academic community", featured:"network", desc:"A community for students, teachers, professionals and institutions to share knowledge, experiences and opportunities." },
     { name:"LDR Career", url:"/carreira", tag:"Jobs and development", featured:"career", desc:"Career area connecting talent, companies and opportunities, with professional development and labor-market connections." },
     { name:"Free Job Posting", url:"/carreira?audience=company", tag:"For companies", featured:"career", desc:"Companies can post jobs free of charge and reach talent connected to the LDR ecosystem." },
-    { name:"LDR Social Clinic", url:"https://clinicasocial.ldrrhestrategia.com/", tag:"Social care", desc:"A social initiative designed to broaden access to care, support and appropriate referrals while preserving confidentiality." },
-    { name:"LDR RH & Estratégia", url:"https://ldrrhestrategia.com/", tag:"Institutional", desc:"Institutional portal with solutions for companies, mental health and workplace well-being, career, education, mentoring and human development." },
+    { name:"LDR Social Clinic", url:"/clinica-social", tag:"Social care", desc:"A social initiative designed to broaden access to care, support and appropriate referrals while preserving confidentiality." },
+    { name:"LDR RH & Estratégia", url:"/ldr-rh-estrategia", tag:"Institutional", desc:"Institutional portal with solutions for companies, mental health and workplace well-being, career, education, mentoring and human development." },
     { name:"Human Room", url:"https://ldracademy.online/human-room", tag:"Connected project", desc:"A global space for listening, humanity, reflection and real stories." },
     { name:"Instagram LDR Academy", url:"https://www.instagram.com/ldracademy.online", tag:"Social", desc:"Official LDR Academy Instagram channel for content and ecosystem updates." },
     { name:"Instagram Human Room", url:"https://www.instagram.com/humanroom.world", tag:"Social", desc:"Human Room social channel for public communication and reflections." }
   ] as Hub[],
   fr: [
-    { name:"LDR Academy", url:"https://ldracademy.online/", tag:"Entrée principale", featured:"academy", desc:"L’entrée centrale de l’écosystème LDR pour les cours, formations, bibliothèque numérique, contenus gratuits et solutions éducatives." },
+    { name:"LDR Academy", url:"/", tag:"Entrée principale", featured:"academy", desc:"L’entrée centrale de l’écosystème LDR pour les cours, formations, bibliothèque numérique, contenus gratuits et solutions éducatives." },
     { name:"LDR PASS", url:"/ldr-pass", tag:"Abonnement numérique", featured:"pass", desc:"L’abonnement de l’écosystème pour les contenus éligibles, parcours, eBooks et formations en ligne sélectionnées.", cta:"Découvrir LDR PASS" },
     { name:"Bibliothèque LDR", url:"/cliente/biblioteca", tag:"Contenus et abonnement", desc:"Bibliothèque numérique avec cours, eBooks, publications, ressources gratuites et formations.", cta:"Accéder à la bibliothèque" },
     { name:"Cours gratuits", url:"/cliente/biblioteca/cursos-gratuitos", tag:"Accès libre", desc:"Cours gratuits comprenant langues, carrière, premiers secours et contenus d’introduction.", cta:"Voir les cours gratuits" },
@@ -138,14 +138,14 @@ const HUB_COPY = {
     { name:"Réseau Académique LDR", url:"/cliente/rede-academica", tag:"Communauté académique", featured:"network", desc:"Une communauté pour partager connaissances, expériences, publications, connexions et opportunités." },
     { name:"LDR Carrière", url:"/carreira", tag:"Emplois et développement", featured:"career", desc:"Espace carrière reliant talents, entreprises et opportunités, avec développement professionnel et connexion au marché du travail." },
     { name:"Publication gratuite d’offres", url:"/carreira?audience=company", tag:"Pour les entreprises", featured:"career", desc:"Les entreprises peuvent publier gratuitement leurs offres et toucher les talents de l’écosystème LDR." },
-    { name:"Clinique Sociale LDR", url:"https://clinicasocial.ldrrhestrategia.com/", tag:"Accompagnement social", desc:"Initiative sociale visant à élargir l’accès à l’accompagnement et à l’orientation, dans le respect de la confidentialité." },
-    { name:"LDR RH & Estratégia", url:"https://ldrrhestrategia.com/", tag:"Institutionnel", desc:"Portail institutionnel proposant des solutions pour les entreprises, le bien-être, la carrière, l’éducation, le mentorat et le développement humain." },
+    { name:"Clinique Sociale LDR", url:"/clinica-social", tag:"Accompagnement social", desc:"Initiative sociale visant à élargir l’accès à l’accompagnement et à l’orientation, dans le respect de la confidentialité." },
+    { name:"LDR RH & Estratégia", url:"/ldr-rh-estrategia", tag:"Institutionnel", desc:"Portail institutionnel proposant des solutions pour les entreprises, le bien-être, la carrière, l’éducation, le mentorat et le développement humain." },
     { name:"Human Room", url:"https://ldracademy.online/human-room", tag:"Projet connecté", desc:"Un espace mondial d’écoute, d’humanité, de réflexion et d’histoires réelles." },
     { name:"Instagram LDR Academy", url:"https://www.instagram.com/ldracademy.online", tag:"Social", desc:"Canal Instagram officiel de LDR Academy." },
     { name:"Instagram Human Room", url:"https://www.instagram.com/humanroom.world", tag:"Social", desc:"Canal social de Human Room pour la communication publique." }
   ] as Hub[],
   es: [
-    { name:"LDR Academy", url:"https://ldracademy.online/", tag:"Entrada principal", featured:"academy", desc:"La entrada central del ecosistema LDR para cursos, formaciones, biblioteca digital, contenidos gratuitos y soluciones educativas." },
+    { name:"LDR Academy", url:"/", tag:"Entrada principal", featured:"academy", desc:"La entrada central del ecosistema LDR para cursos, formaciones, biblioteca digital, contenidos gratuitos y soluciones educativas." },
     { name:"LDR PASS", url:"/ldr-pass", tag:"Suscripción digital", featured:"pass", desc:"La suscripción del ecosistema para contenidos elegibles, rutas, eBooks y formaciones online seleccionadas.", cta:"Conocer LDR PASS" },
     { name:"Biblioteca LDR", url:"/cliente/biblioteca", tag:"Contenidos y suscripción", desc:"Biblioteca digital con cursos, eBooks, publicaciones, materiales gratuitos y formaciones.", cta:"Acceder a la Biblioteca" },
     { name:"Cursos gratuitos", url:"/cliente/biblioteca/cursos-gratuitos", tag:"Acceso libre", desc:"Cursos gratuitos de idiomas, carrera, primeros auxilios y contenidos introductorios.", cta:"Ver cursos gratuitos" },
@@ -153,8 +153,8 @@ const HUB_COPY = {
     { name:"Red Académica LDR", url:"/cliente/rede-academica", tag:"Comunidad académica", featured:"network", desc:"Comunidad para compartir conocimiento, experiencias, publicaciones, conexiones y oportunidades." },
     { name:"LDR Carrera", url:"/carreira", tag:"Vacantes y desarrollo", featured:"career", desc:"Área de carrera que conecta talento, empresas y oportunidades con desarrollo profesional y conexión al mercado laboral." },
     { name:"Publicación gratuita de vacantes", url:"/carreira?audience=company", tag:"Para empresas", featured:"career", desc:"Las empresas pueden publicar vacantes gratis y llegar a talentos conectados al ecosistema LDR." },
-    { name:"Clínica Social LDR", url:"https://clinicasocial.ldrrhestrategia.com/", tag:"Atención social", desc:"Iniciativa social para ampliar el acceso a atención, acogida y orientación preservando la confidencialidad." },
-    { name:"LDR RH & Estratégia", url:"https://ldrrhestrategia.com/", tag:"Institucional", desc:"Portal institucional con soluciones para empresas, bienestar, carrera, educación, mentoría y desarrollo humano." },
+    { name:"Clínica Social LDR", url:"/clinica-social", tag:"Atención social", desc:"Iniciativa social para ampliar el acceso a atención, acogida y orientación preservando la confidencialidad." },
+    { name:"LDR RH & Estratégia", url:"/ldr-rh-estrategia", tag:"Institucional", desc:"Portal institucional con soluciones para empresas, bienestar, carrera, educación, mentoría y desarrollo humano." },
     { name:"Human Room", url:"https://ldracademy.online/human-room", tag:"Proyecto conectado", desc:"Un espacio global de escucha, humanidad, reflexión e historias reales." },
     { name:"Instagram LDR Academy", url:"https://www.instagram.com/ldracademy.online", tag:"Social", desc:"Canal oficial de LDR Academy en Instagram." },
     { name:"Instagram Human Room", url:"https://www.instagram.com/humanroom.world", tag:"Social", desc:"Canal social de Human Room para comunicación pública." }
@@ -219,6 +219,48 @@ const ECOSYSTEM_COPY = {
   es: { back:"← Volver a LDR Academy", welcome:"Bienvenido al Ecosistema LDR", hello:"¡Hola! ¿Cómo estás? 👋", home:"Entra, ponte cómodo. Estás en casa.", intro:"Aquí puedes aprender, encontrar oportunidades, conocer personas, compartir ideas y crear cosas nuevas. ¿No sabes por dónde empezar? Cuéntanos qué buscas y encontraremos un camino juntos.", invite:"¿Tienes una idea? Cuéntanos. ¿Quieres participar? Únete. ¿Te gusta este espacio? Invita también a tus amigos. Creemos juntos.", talk:"💬 Hablemos", explore:"Quiero explorar", library:"Entrar en la Biblioteca", network:"Conocer la Red Académica", freeJob:"Publicar una vacante gratis", opportunities:"Oportunidades", opportunityTitle:"Empresas y candidatos conectados en un único recorrido.", international:"En la prensa internacional", pressTitle:"El Ecosistema LDR en la cobertura editorial internacional.", press:"Prensa y Medios", find:"Lo que encontrarás en el ecosistema", tickerLabel:"AHORA", antiRacism:"LDR Essence — Un ecosistema comprometido con la lucha contra el racismo y todas las formas de discriminación, en Brasil y en todo el mundo. Respeto, dignidad e igualdad para todas las personas.", newsSoon:"Brasil y mundo · emprendimiento · economía · tecnología · política — noticias con fuentes identificadas", opportunityText:"El Ecosistema LDR conecta a quienes ofrecen oportunidades con quienes buscan trabajo. La publicación básica de vacantes es gratuita y los candidatos pueden consultar oportunidades sin suscripción.", company:"Soy empresa", companyText:"Publica tu vacante gratuitamente y conecta tu empresa con profesionales del Ecosistema LDR.", candidate:"Soy candidato", candidateText:"Encuentra vacantes y utiliza el Ecosistema para fortalecer tu preparación profesional.", findJobs:"Encontrar vacantes", careerNoteLabel:"LDR Academy + Carrera:", careerNote:"los suscriptores pueden acceder a recursos adicionales de desarrollo profesional según el plan contratado. La suscripción no garantiza contratación y no es necesaria para consultar vacantes abiertas.", businessEyebrow:"Emprendimiento y negocios", businessTitle:"¿Quieres hablar sobre emprendimiento o negocios?", businessText1:"El Ecosistema LDR también es un espacio para nuevas ideas, conexiones y oportunidades. Estamos desarrollando nuevos proyectos y algunas iniciativas aún no se han presentado públicamente.", businessText2:"Si eres emprendedor, empresa, profesional, inversor o simplemente tienes una buena idea, contáctanos a través del soporte. Puede haber una conversación que valga la pena comenzar.", businessCta:"Quiero hablar de negocios", newsBrazil:"Brasil: economistas consultados por el Banco Central reducen su previsión de la tasa Selic para finales de 2026 al 13,50 %.", newsEntrepreneur:"Emprendimiento: Mombak capta un nuevo fondo de reforestación amazónica y suma a Salesforce como comprador de créditos de carbono.", newsWorld:"Mundo y tecnología: las bolsas globales avanzan por el renovado optimismo sobre la IA mientras baja el petróleo.", postFree:"Publicar una vacante gratis" }
 } as const;
 
+const CENTRAL_ACCESS_COPY = {
+  pt: {
+    pillars: "Mapa principal",
+    pillarsTitle: "Três pilares, um único Ecossistema LDR",
+    rh: "LDR RH & Estratégia",
+    rhText: "Empresas, carreira, recrutamento, profissionais, bem-estar e operação corporativa.",
+    clinic: "Clínica Social",
+    clinicText: "Atendimento social, profissionais aprovados, agenda e acompanhamento.",
+    academy: "LDR Academy",
+    academyText: "Biblioteca, cursos, formações, Rede Acadêmica e desenvolvimento contínuo.",
+    access: "Acessos por perfil",
+    client: "Sou cliente",
+    professional: "Sou profissional",
+    company: "Sou empresa",
+    employee: "Sou funcionário",
+    student: "Sou estudante / acadêmico",
+    care: "Quero atendimento",
+    master: "Master / Admin",
+  },
+  en: {
+    pillars: "Main map", pillarsTitle: "Three pillars, one LDR Ecosystem",
+    rh: "LDR HR & Strategy", rhText: "Companies, careers, recruitment, professionals, wellbeing and corporate operations.",
+    clinic: "Social Clinic", clinicText: "Social care, approved professionals, schedule and follow-up.",
+    academy: "LDR Academy", academyText: "Library, courses, programs, Academic Network and continuous development.",
+    access: "Access by profile", client: "I am a client", professional: "I am a professional", company: "I am a company", employee: "I am an employee", student: "I am a student / academic", care: "I want care", master: "Master / Admin",
+  },
+  fr: {
+    pillars: "Carte principale", pillarsTitle: "Trois piliers, un seul Écosystème LDR",
+    rh: "LDR RH & Stratégie", rhText: "Entreprises, carrière, recrutement, professionnels, bien-être et opérations.",
+    clinic: "Clinique Sociale", clinicText: "Accompagnement social, professionnels approuvés, agenda et suivi.",
+    academy: "LDR Academy", academyText: "Bibliothèque, cours, formations, Réseau Académique et développement continu.",
+    access: "Accès par profil", client: "Je suis client", professional: "Je suis professionnel", company: "Je suis une entreprise", employee: "Je suis collaborateur", student: "Je suis étudiant / académique", care: "Je veux un accompagnement", master: "Master / Admin",
+  },
+  es: {
+    pillars: "Mapa principal", pillarsTitle: "Tres pilares, un único Ecosistema LDR",
+    rh: "LDR RH & Estrategia", rhText: "Empresas, carrera, reclutamiento, profesionales, bienestar y operación corporativa.",
+    clinic: "Clínica Social", clinicText: "Atención social, profesionales aprobados, agenda y seguimiento.",
+    academy: "LDR Academy", academyText: "Biblioteca, cursos, formaciones, Red Académica y desarrollo continuo.",
+    access: "Accesos por perfil", client: "Soy cliente", professional: "Soy profesional", company: "Soy empresa", employee: "Soy empleado", student: "Soy estudiante / académico", care: "Quiero atención", master: "Master / Admin",
+  },
+} as const;
+
 function EcosystemMap() {
   const { locale } = useI18n();
   const copy = ECOSYSTEM_COPY[locale] ?? ECOSYSTEM_COPY.pt;
@@ -227,6 +269,7 @@ function EcosystemMap() {
   const discoverLabel = locale==="en"?"Discover":locale==="fr"?"Découvrir":locale==="es"?"Conocer":"Conhecer";
   const newsQuery=useQuery({queryKey:["ecosystem-news",locale],queryFn:()=>ecosystemNews({data:{locale}}),staleTime:15*60*1000,retry:1});
   const liveNews=newsQuery.data??[];
+  const central=CENTRAL_ACCESS_COPY[locale]??CENTRAL_ACCESS_COPY.pt;
   return (
     <main className="min-h-screen bg-[#f8f1e7] text-[#25170f]">
       <div className="fixed inset-x-0 top-0 z-[100] w-full border-y border-[#d6ad63]/30 bg-[#071426] text-white shadow-md" aria-label={copy.tickerLabel}>
@@ -259,6 +302,40 @@ function EcosystemMap() {
             <a href="/carreira?audience=company" className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#1d3158] px-5 py-3 text-sm font-black uppercase tracking-[.12em] text-[#1d3158]">{copy.freeJob}</a>
           </div>
         </div>
+
+        <section className="mt-8 rounded-[28px] border border-[#d6ad63]/50 bg-white p-6 shadow-sm sm:p-8">
+          <p className="text-xs font-black uppercase tracking-[.2em] text-[#9a6a20]">{central.pillars}</p>
+          <h2 className="mt-3 font-serif text-3xl font-bold text-[#25170f]">{central.pillarsTitle}</h2>
+          <div className="mt-6 grid gap-4 lg:grid-cols-3">
+            <Link to="/ldr-rh-estrategia" className="rounded-2xl border border-[#d6ad63]/40 bg-[#fffaf2] p-5 transition hover:-translate-y-0.5 hover:shadow-md">
+              <p className="text-xs font-black uppercase tracking-[.14em] text-[#9a6a20]">01</p>
+              <h3 className="mt-2 font-serif text-2xl font-bold">{central.rh}</h3>
+              <p className="mt-2 text-sm leading-6 text-[#6f6358]">{central.rhText}</p>
+            </Link>
+            <Link to="/clinica-social" className="rounded-2xl border border-[#5b0824]/25 bg-[#fff8fa] p-5 transition hover:-translate-y-0.5 hover:shadow-md">
+              <p className="text-xs font-black uppercase tracking-[.14em] text-[#5b0824]">02</p>
+              <h3 className="mt-2 font-serif text-2xl font-bold">{central.clinic}</h3>
+              <p className="mt-2 text-sm leading-6 text-[#6f6358]">{central.clinicText}</p>
+            </Link>
+            <Link to="/" className="rounded-2xl border border-[#1d3158]/25 bg-[#eef5ff] p-5 transition hover:-translate-y-0.5 hover:shadow-md">
+              <p className="text-xs font-black uppercase tracking-[.14em] text-[#1d3158]">03</p>
+              <h3 className="mt-2 font-serif text-2xl font-bold">{central.academy}</h3>
+              <p className="mt-2 text-sm leading-6 text-[#6f6358]">{central.academyText}</p>
+            </Link>
+          </div>
+          <div className="mt-7 border-t border-[#e5d1ac] pt-6">
+            <p className="text-xs font-black uppercase tracking-[.18em] text-[#9a6a20]">{central.access}</p>
+            <div className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+              <Link to="/cliente/login" className="rounded-xl border bg-[#f8f1e7] px-4 py-3 text-sm font-black">{central.client} →</Link>
+              <Link to="/profissional/cadastro" className="rounded-xl border bg-[#f8f1e7] px-4 py-3 text-sm font-black">{central.professional} →</Link>
+              <Link to="/empresa/login" className="rounded-xl border bg-[#f8f1e7] px-4 py-3 text-sm font-black">{central.company} →</Link>
+              <Link to="/funcionario/login" className="rounded-xl border bg-[#f8f1e7] px-4 py-3 text-sm font-black">{central.employee} →</Link>
+              <Link to="/cliente/rede-academica" className="rounded-xl border bg-[#f8f1e7] px-4 py-3 text-sm font-black">{central.student} →</Link>
+              <Link to="/clinica-social/solicitar" className="rounded-xl border bg-[#f8f1e7] px-4 py-3 text-sm font-black">{central.care} →</Link>
+              <Link to="/login" className="rounded-xl border bg-[#071426] px-4 py-3 text-sm font-black text-white">{central.master} →</Link>
+            </div>
+          </div>
+        </section>
 
         <section className="mt-8 rounded-[28px] border border-[#b7d2ff] bg-[#eef5ff] p-6 shadow-sm sm:p-8">
           <p className="text-xs font-black uppercase tracking-[.2em] text-[#1d3158]">{copy.opportunities}</p>

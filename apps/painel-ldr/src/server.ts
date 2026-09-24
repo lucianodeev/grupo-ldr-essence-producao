@@ -53,6 +53,11 @@ function academyCanonicalRedirect(request: Request): Response | null {
     }
     if (url.pathname === "/profissional/cadastro" || url.pathname === "/profissional/cadastro/") {
       url.pathname = "/profissional/login";
+      url.searchParams.set("mode", "cadastro");
+      return temporaryRedirect(url.toString());
+    }
+    if (url.pathname === "/painel-profissional" || url.pathname === "/painel-profissional/") {
+      url.pathname = "/profissional-painel";
       return temporaryRedirect(url.toString());
     }
     if (url.pathname === "/biblioteca") {
@@ -75,6 +80,17 @@ function academyCanonicalRedirect(request: Request): Response | null {
   }
 
   // Keep the old Master entry active until the new Portal entry is validated.
+  if (
+    isLegacyLdrPanelHost &&
+    url.searchParams.has("code") &&
+    (url.pathname === "/" || url.pathname === "/index.html" || url.pathname === "/acesso" || url.pathname === "/admin")
+  ) {
+    const callback = new URL(url.toString());
+    callback.pathname = "/api/auth/callback";
+    callback.searchParams.set("admin", "1");
+    return temporaryRedirect(callback.toString());
+  }
+
   if (
     isLegacyLdrPanelHost &&
     (url.pathname === "/" || url.pathname === "/index.html" || url.pathname === "/acesso")
@@ -109,6 +125,7 @@ function academyCanonicalRedirect(request: Request): Response | null {
     // Previously shared signup links must open the actual professional entry.
     if (url.pathname === "/profissional/cadastro" || url.pathname === "/profissional/cadastro/") {
       url.pathname = "/profissional/login";
+      url.searchParams.set("mode", "cadastro");
       return temporaryRedirect(url.toString());
     }
 

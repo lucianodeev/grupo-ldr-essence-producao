@@ -72,6 +72,7 @@ export async function resolveRequestAuth() {
           claims,
           supabase,
           source: "bearer" as const,
+          accessToken: token,
         };
       }
     }
@@ -88,9 +89,12 @@ export async function resolveRequestAuth() {
       claims: {} as Record<string, unknown>,
       supabase,
       source: "none" as const,
+      accessToken: null,
     };
   }
 
+  const sessionResult = await supabase.auth.getSession();
+  const accessToken = sessionResult.data.session?.access_token ?? null;
   const claims: Record<string, unknown> = {
     sub: user.id,
     email: user.email ?? null,
@@ -104,5 +108,6 @@ export async function resolveRequestAuth() {
     claims,
     supabase,
     source: "cookie" as const,
+    accessToken,
   };
 }

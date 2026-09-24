@@ -57,6 +57,8 @@ test("critical ecosystem routes remain generated", () => {
   const routeTree = fs.readFileSync(path.resolve(__dirname, "../src/routeTree.gen.ts"), "utf8");
   const routes = [
     "/ecossistema",
+    "/ldr-rh-estrategia",
+    "/profissional/cadastro",
     "/cliente/login",
     "/cliente/biblioteca",
     "/cliente/rede-academica",
@@ -94,4 +96,31 @@ test("keeps Academy routes on Render validation host", () => {
     "ldr-ecossistema-validacao.onrender.com",
   );
   assert.equal(target, "/cliente/biblioteca");
+});
+
+
+test("maps RH institutional domain into the unified host", () => {
+  const origin = "https://ldr-ecossistema-validacao.onrender.com";
+  const host = "ldr-ecossistema-validacao.onrender.com";
+  assert.equal(
+    unifiedPreviewTarget("https://ldrrhestrategia.com/", origin, host),
+    "/ldr-rh-estrategia",
+  );
+});
+
+test("keeps professional registration intent when crossing portal hosts", () => {
+  const origin = "https://ldr-ecossistema-validacao.onrender.com";
+  const host = "ldr-ecossistema-validacao.onrender.com";
+  assert.equal(
+    unifiedPreviewTarget("https://portal.ldrrhestrategia.com/profissional/cadastro", origin, host),
+    "/profissional/login?mode=cadastro",
+  );
+});
+
+
+test("Master OAuth code is exchanged before the admin redirect", () => {
+  const server = fs.readFileSync(path.resolve(__dirname, "../src/server.ts"), "utf8");
+  assert.match(server, /isLegacyLdrPanelHost\s*&&\s*url\.searchParams\.has\("code"\)/);
+  assert.match(server, /callback\.pathname\s*=\s*"\/api\/auth\/callback"/);
+  assert.match(server, /callback\.searchParams\.set\("admin",\s*"1"\)/);
 });
