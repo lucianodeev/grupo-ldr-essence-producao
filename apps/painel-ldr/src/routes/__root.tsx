@@ -15,6 +15,7 @@ import { AcademyChatbot } from "@/components/academy-chatbot";
 import { Toaster } from "@/components/ui/sonner";
 import { I18nProvider, useI18n } from "@/lib/i18n";
 import { supabase } from "@/integrations/supabase/client";
+import { isUnifiedPreviewHost, unifiedPreviewTarget } from "@/lib/unified-preview";
 
 import appCss from "../styles.css?url";
 import responsiveCss from "../responsive-v3.css?url";
@@ -234,6 +235,27 @@ function RootComponent() {
     if (window.location.hostname === "suporte.ldrrhestrategia.com" && window.location.pathname === "/") {
       window.location.replace("/falar-com-ecossistema" + window.location.search + window.location.hash);
     }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !isUnifiedPreviewHost(window.location.hostname)) return;
+
+    const onInternalLinkClick = (event: MouseEvent) => {
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      const anchor = target.closest<HTMLAnchorElement>("a[href]");
+      if (!anchor || anchor.hasAttribute("download") || (anchor.target && anchor.target !== "_self")) return;
+      const href = anchor.getAttribute("href");
+      if (!href) return;
+      const next = unifiedPreviewTarget(href, window.location.origin, window.location.hostname);
+      if (!next) return;
+      event.preventDefault();
+      window.location.assign(next);
+    };
+
+    document.addEventListener("click", onInternalLinkClick, true);
+    return () => document.removeEventListener("click", onInternalLinkClick, true);
   }, []);
 
   useEffect(() => {
