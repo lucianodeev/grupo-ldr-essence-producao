@@ -1,5 +1,6 @@
 import { getRequest } from "@tanstack/react-start/server";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { resolveRequestAuth } from "@/integrations/supabase/request-auth.server";
 import { calculatePlatformSplit, DEFAULT_PLATFORM_FEE_PERCENT } from "@/lib/platform-fee";
 
 const db = supabaseAdmin as unknown as { from: (table: string) => any; rpc: (name: string, args: Record<string, unknown>) => Promise<{ data: any; error: { message?: string } | null }> };
@@ -39,6 +40,7 @@ function origin() {
 
 type ClientSource = "social_clinic" | "professional_direct" | "ldr_generated";
 async function getPlatformFeePercent() {
+  if (!process.env["SUPABASE_SERVICE_ROLE_KEY"]) return DEFAULT_PLATFORM_FEE_PERCENT;
   const { data } = await db.from("platform_financial_config").select("numeric_value").eq("config_key", "platform_fee_percent").eq("active", true).maybeSingle();
   const percent = Number(data?.numeric_value ?? DEFAULT_PLATFORM_FEE_PERCENT);
   return Number.isFinite(percent) && percent >= 0 && percent <= 100 ? percent : DEFAULT_PLATFORM_FEE_PERCENT;
@@ -54,26 +56,36 @@ async function ensureAccount(userId: string, email: string | null) {
 }
 
 export async function getNetworkLanding() {
+  const requestAuth = await resolveRequestAuth();
+  const publicDb = requestAuth.supabase as unknown as { from: (table: string) => any };
+  const configPromise = process.env["SUPABASE_SERVICE_ROLE_KEY"]
+    ? db.from("platform_financial_config").select("config_key,numeric_value,text_value").eq("active", true)
+    : Promise.resolve({ data: [] });
+
   const [{ data: categories }, { data: plans }, { data: profiles }, { data: events }, { data: config }] = await Promise.all([
-    db.from("professional_categories").select("id,slug,name_pt,name_en,name_fr,name_es,active,sort_order").eq("active", true).order("sort_order"),
+    publicDb.from("professional_categories").select("id,slug,name_pt,name_en,name_fr,name_es,active,sort_order").eq("active", true).order("sort_order"),
     Promise.resolve({ data: [] }),
-    db.from("professional_profiles").select("id,slug,display_name,professional_title,category_id,city,country_code,languages,online_enabled,in_person_enabled,public_region,photo_url,about,specialties,identity_verified,documents_verified,profile_verified,view_count").eq("is_public", true).eq("profile_status", "active").eq("compliance_status", "approved").order("display_name"),
-    db.from("professional_events").select("id,event_type,title,description,instructor,starts_at,ends_at,timezone,published,access_tier").eq("published", true).eq("access_tier", "free").gte("starts_at", new Date().toISOString()).order("starts_at").limit(8),
-    db.from("platform_financial_config").select("config_key,numeric_value,text_value").eq("active", true),
+    publicDb.from("professional_profiles").select("id,slug,display_name,professional_title,category_id,city,country_code,languages,online_enabled,in_person_enabled,public_region,photo_url,about,specialties,identity_verified,documents_verified,profile_verified,view_count").eq("is_public", true).eq("profile_status", "active").eq("compliance_status", "approved").order("display_name"),
+    publicDb.from("professional_events").select("id,event_type,title,description,instructor,starts_at,ends_at,timezone,published,access_tier").eq("published", true).eq("access_tier", "free").gte("starts_at", new Date().toISOString()).order("starts_at").limit(8),
+    configPromise,
   ]);
   return { categories: categories ?? [], plans: plans ?? [], profiles: profiles ?? [], events: events ?? [], config: config ?? [] };
 }
 
 export async function getPublicProfessional(slug: string) {
-  const { data: profile } = await db.from("professional_profiles").select("id,slug,display_name,professional_title,category_id,city,country_code,languages,online_enabled,in_person_enabled,public_region,photo_url,about,experience_summary,education_summary,specialties,identity_verified,documents_verified,profile_verified,view_count").eq("slug", slug).eq("is_public", true).eq("profile_status", "active").eq("compliance_status", "approved").maybeSingle();
+  const requestAuth = await resolveRequestAuth();
+  const publicDb = requestAuth.supabase as unknown as { from: (table: string) => any };
+  const { data: profile } = await publicDb.from("professional_profiles").select("id,slug,display_name,professional_title,category_id,city,country_code,languages,online_enabled,in_person_enabled,public_region,photo_url,about,experience_summary,education_summary,specialties,identity_verified,documents_verified,profile_verified,view_count").eq("slug", slug).eq("is_public", true).eq("profile_status", "active").eq("compliance_status", "approved").maybeSingle();
   if (!profile) return null;
   const [{ data: category }, { data: services }, { data: availability }, { data: reviews }] = await Promise.all([
-    db.from("professional_categories").select("slug,name_pt,name_en,name_fr,name_es").eq("id", profile.category_id).maybeSingle(),
-    db.from("professional_services").select("id,name,description,modality,duration_minutes,currency,price_cents,city,public_location,booking_enabled,active,sort_order").eq("professional_profile_id", profile.id).eq("active", true).eq("approval_status", "approved").order("sort_order"),
-    db.from("professional_availability").select("id,professional_service_id,weekday,start_time,end_time,timezone,slot_interval_minutes,buffer_minutes,modality,location_label,effective_from,effective_until").eq("professional_profile_id", profile.id).eq("active", true),
-    db.from("professional_reviews").select("id,rating,body,created_at").eq("professional_profile_id", profile.id).eq("status", "published").order("created_at", { ascending: false }).limit(12),
+    publicDb.from("professional_categories").select("slug,name_pt,name_en,name_fr,name_es").eq("id", profile.category_id).maybeSingle(),
+    publicDb.from("professional_services").select("id,name,description,modality,duration_minutes,currency,price_cents,city,public_location,booking_enabled,active,sort_order").eq("professional_profile_id", profile.id).eq("active", true).eq("approval_status", "approved").order("sort_order"),
+    publicDb.from("professional_availability").select("id,professional_service_id,weekday,start_time,end_time,timezone,slot_interval_minutes,buffer_minutes,modality,location_label,effective_from,effective_until").eq("professional_profile_id", profile.id).eq("active", true),
+    publicDb.from("professional_reviews").select("id,rating,body,created_at").eq("professional_profile_id", profile.id).eq("status", "published").order("created_at", { ascending: false }).limit(12),
   ]);
-  void db.from("professional_profiles").update({ view_count: Number(profile.view_count ?? 0) + 1 }).eq("id", profile.id);
+  if (process.env["SUPABASE_SERVICE_ROLE_KEY"]) {
+    void db.from("professional_profiles").update({ view_count: Number(profile.view_count ?? 0) + 1 }).eq("id", profile.id);
+  }
   return { profile, category, services: services ?? [], availability: availability ?? [], reviews: reviews ?? [] };
 }
 
