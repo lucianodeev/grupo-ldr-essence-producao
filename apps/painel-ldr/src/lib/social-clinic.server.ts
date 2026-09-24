@@ -168,6 +168,27 @@ export async function getSocialClinicLanding() {
   };
 }
 
+async function submitSocialClinicEdge(kind: "patient" | "professional", input: Record<string, unknown>) {
+  const url = process.env["SUPABASE_URL"];
+  const key = process.env["SUPABASE_PUBLISHABLE_KEY"];
+  if (!url || !key) fail("Integração segura da Clínica Social indisponível.");
+  const response = await fetch(`${url.replace(/\/$/, "")}/functions/v1/social-clinic-submit`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      apikey: key,
+    },
+    body: JSON.stringify({ kind, ...input }),
+  });
+  const body = await response.json().catch(() => ({})) as Record<string, unknown>;
+  if (!response.ok) {
+    const code = typeof body["error"] === "string" ? body["error"] : "submission_failed";
+    console.error("[social-clinic] edge submission failed", { kind, status: response.status, code });
+    fail("Não foi possível registrar a solicitação. Tente novamente.");
+  }
+  return body as { ok: true; protocol: string; existing?: boolean };
+}
+
 type PatientInput = {
   fullName: string; birthDate?: string; email: string; phone: string; country: string; city?: string;
   language?: string; modality?: "online"|"in_person"; availability?: string; previousAnalysis?: boolean;
@@ -176,6 +197,9 @@ type PatientInput = {
 
 export async function submitSocialClinicPatient(input: PatientInput) {
   if (clean(input.website, 100)) return { ok: true as const, protocol: "CSLDR-RECEBIDO" };
+  if (!process.env["SUPABASE_SERVICE_ROLE_KEY"]) {
+    return submitSocialClinicEdge("patient", input as unknown as Record<string, unknown>);
+  }
   const fullName = clean(input.fullName, 120);
   const email = clean(input.email, 180).toLowerCase();
   const phone = clean(input.phone, 50);
@@ -232,6 +256,9 @@ export async function getProfessionalSocialClinicState(emailValue: string | null
 
 export async function submitSocialClinicProfessional(input: ProfessionalInput) {
   if (clean(input.website, 100)) return { ok: true as const, protocol: "CSPRO-RECEBIDO" };
+  if (!process.env["SUPABASE_SERVICE_ROLE_KEY"]) {
+    return submitSocialClinicEdge("professional", input as unknown as Record<string, unknown>);
+  }
   const fullName = clean(input.fullName, 120);
   const email = clean(input.email, 180).toLowerCase();
   if (fullName.length < 3 || !email.includes("@") || !clean(input.phone, 50) || !clean(input.country, 80) || !clean(input.education, 500)) fail("Preencha os dados profissionais obrigatórios.");
