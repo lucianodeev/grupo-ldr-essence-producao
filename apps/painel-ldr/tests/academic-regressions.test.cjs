@@ -400,3 +400,6 @@ test('career intelligence refreshes recommendations and copilot actions through 
 
 
 test('academic opportunities exposes explicit feedback without automatic action',()=>{const source=fs.readFileSync(path.resolve(ROOT,'routes/_clientarea.cliente.rede-academica.oportunidades.tsx'),'utf8');assert.match(source,/Tenho interesse/);assert.match(source,/Quero mais como esta/);assert.match(source,/Não tenho interesse/);assert.match(source,/ldr_opportunity_feedback_events/);assert.match(source,/status:"dismissed"/);});
+
+
+test('career intelligence ranking is deterministic and explainable',()=>{const source=fs.readFileSync(path.resolve(ROOT,'lib/career-intelligence.functions.ts'),'utf8');assert.match(source,/targetCountry/);assert.match(source,/targetWorkMode/);assert.match(source,/targetCompetencies/);assert.match(source,/ranking_score:score/);assert.match(source,/ranking_factors:reasons/);assert.match(source,/localeCompare/);assert.match(source,/competências verificadas relacionadas ao objetivo/);});
