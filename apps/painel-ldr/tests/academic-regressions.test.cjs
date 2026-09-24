@@ -284,7 +284,12 @@ test('PDF-only and captioned attachments retain their actual media type', async 
 
 test('legacy academic domain redirects do not affect other applications', () => {
   const config = JSON.parse(fs.readFileSync(path.resolve(ROOT, '../vercel.json')));
-  assert.equal(config.rewrites[0].destination, '/cliente/biblioteca');
+  const libraryRewrite=config.rewrites.find(rule=>rule.source==='/biblioteca');
+  assert.ok(libraryRewrite);
+  assert.equal(libraryRewrite.destination, '/cliente/biblioteca');
+  const humanRoomRewrite=config.rewrites.find(rule=>rule.source==='/human-room');
+  assert.ok(humanRoomRewrite);
+  assert.equal(humanRoomRewrite.destination, 'https://human-room.vercel.app/human-room');
   const academicRedirects=config.redirects.filter(rule=>rule.source.includes('rede-academica'));
   assert.equal(academicRedirects.length,2);
   for (const rule of academicRedirects) {
