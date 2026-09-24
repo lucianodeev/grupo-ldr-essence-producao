@@ -9,7 +9,7 @@ import { isUnifiedPreviewHost } from "@/lib/unified-preview";
 
 function config(){const supabaseUrl=process.env["SUPABASE_URL"];const supabasePublishableKey=process.env["SUPABASE_PUBLISHABLE_KEY"];if(!supabaseUrl||!supabasePublishableKey)throw new Error("Missing Supabase server configuration");return{supabaseUrl,supabasePublishableKey}}
 function isServicePortalCallback(url:URL){return url.searchParams.get("portal")==="services"||/^portal\.ldrrhestrategia\.com$/i.test(url.hostname)}
-function isAcademicCallbackHost(url:URL){return /(^|\.)ldracademy\.online$/i.test(url.hostname)||/\.vercel\.app$/i.test(url.hostname)}
+function isAcademicCallbackHost(url:URL){return /(^|\.)ldracademy\.online$/i.test(url.hostname)||/\.vercel\.app$/i.test(url.hostname)||isUnifiedPreviewHost(url.hostname)}
 type OAuthPortal="company"|"employee"|"professional"|null;
 function portalFromCookies(cookies:ReturnType<typeof parseCookieHeader>):OAuthPortal{const value=cookies.find(({name})=>name==="ldr_portal_oauth")?.value;return value==="company"||value==="employee"||value==="professional"?value:null}
 function clearTemporaryCookie(headers:Headers,name:string){headers.append("set-cookie",serializeCookieHeader(name,"",{path:"/",maxAge:0,sameSite:"lax",secure:true}))}
