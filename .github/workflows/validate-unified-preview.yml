@@ -1,0 +1,50 @@
+name: Validate unified LDR preview
+
+on:
+  push:
+    branches:
+      - deploy/cloudflare-preview
+    paths:
+      - 'apps/painel-ldr/**'
+      - '.github/workflows/validate-unified-preview.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Unified preview regression tests
+        working-directory: apps/painel-ldr
+        run: npm run test:preview
+      - name: Core tests
+        working-directory: apps/painel-ldr
+        run: npm test
+      - name: Academic regressions
+        working-directory: apps/painel-ldr
+        run: npm run test:academic
+      - name: TypeScript validation (baseline report)
+        id: typecheck
+        continue-on-error: true
+        working-directory: apps/painel-ldr
+        run: npm run typecheck
+      - name: Cloudflare-compatible build
+        working-directory: apps/painel-ldr
+        run: npm run build:cloudflare
+
+      - name: Preview release gate
+        if: always()
+        env:
+          TYPECHECK_RESULT: ${{ steps.typecheck.outcome }}
+        run: |
+          echo "Baseline TypeScript result: $TYPECHECK_RESULT"
+          echo "Preview regression tests, core tests, academic regressions and Cloudflare build are blocking checks."

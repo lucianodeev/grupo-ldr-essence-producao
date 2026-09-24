@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
+import { isUnifiedPreviewHost, unifiedPreviewTarget } from "@/lib/unified-preview";
 
 const ACADEMY_ECOSYSTEM_URL = "https://ldracademy.online/ecossistema";
 
@@ -19,9 +20,17 @@ export const Route = createFileRoute("/treinamento")({
 
 function TrainingMovedPage() {
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      window.location.replace(ACADEMY_ECOSYSTEM_URL);
+    if (typeof window === "undefined") return;
+    if (isUnifiedPreviewHost(window.location.hostname)) {
+      const previewTarget = unifiedPreviewTarget(
+        ACADEMY_ECOSYSTEM_URL,
+        window.location.origin,
+        window.location.hostname,
+      );
+      if (previewTarget) window.location.replace(previewTarget);
+      return;
     }
+    window.location.replace(ACADEMY_ECOSYSTEM_URL);
   }, []);
 
   const links = [
