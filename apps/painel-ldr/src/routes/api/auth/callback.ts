@@ -5,6 +5,7 @@ import { normalizeSupabaseUrl } from "@/integrations/supabase/config";
 import type { Database } from "@/integrations/supabase/types";
 import { COMPANY_RETURN_COOKIE, companyLoginHref, companyReturnPath } from "@/lib/company-login-return";
 import { ACADEMIC_RETURN_COOKIE, academicLoginHref, academicReturnPath } from "@/lib/academic-login-return";
+import { isUnifiedPreviewHost } from "@/lib/unified-preview";
 
 function config(){const supabaseUrl=process.env["SUPABASE_URL"];const supabasePublishableKey=process.env["SUPABASE_PUBLISHABLE_KEY"];if(!supabaseUrl||!supabasePublishableKey)throw new Error("Missing Supabase server configuration");return{supabaseUrl,supabasePublishableKey}}
 function isServicePortalCallback(url:URL){return url.searchParams.get("portal")==="services"||/^portal\.ldrrhestrategia\.com$/i.test(url.hostname)}
