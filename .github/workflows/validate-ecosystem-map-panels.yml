@@ -24,7 +24,7 @@ jobs:
         run: npm install --no-audit --no-fund
       - name: Generate route tree
         working-directory: apps/painel-ldr
-        run: npm run routes:generate
+        run: npm run generate-routes
       - name: Preview routing tests
         working-directory: apps/painel-ldr
         run: npm run test:preview
