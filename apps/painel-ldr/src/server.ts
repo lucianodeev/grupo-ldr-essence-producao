@@ -56,6 +56,10 @@ function academyCanonicalRedirect(request: Request): Response | null {
       url.searchParams.set("mode", "cadastro");
       return temporaryRedirect(url.toString());
     }
+    if (url.pathname === "/painel-profissional" || url.pathname === "/painel-profissional/") {
+      url.pathname = "/profissional-painel";
+      return temporaryRedirect(url.toString());
+    }
     if (url.pathname === "/biblioteca") {
       url.pathname = "/cliente/biblioteca";
       return temporaryRedirect(url.toString());
