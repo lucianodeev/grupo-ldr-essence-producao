@@ -38,14 +38,20 @@ jobs:
             "/falar-com-ecossistema"
           )
 
+          failures=0
           for route in "${routes[@]}"; do
             code="$(curl -L -sS -o /tmp/body -w '%{http_code}' --max-time 30 "$base$route")"
             echo "$route -> $code"
             if [[ "$code" -ge 500 || "$code" -eq 404 || "$code" -eq 000 ]]; then
               echo "FAILED $route with HTTP $code"
-              head -c 1000 /tmp/body || true
-              exit 1
+              head -c 500 /tmp/body || true
+              echo
+              failures=$((failures + 1))
             fi
           done
+          if [[ "$failures" -gt 0 ]]; then
+            echo "$failures route(s) failed"
+            exit 1
+          fi
 
 # rerun after clinic fix 08180fbd
