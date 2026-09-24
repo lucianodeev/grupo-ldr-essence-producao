@@ -16,7 +16,7 @@ export default defineConfig(({ mode }) => {
   const isCloudflare = process.env["CLOUDFLARE"] === "true";
   const isRender = process.env["RENDER"] === "true";
   const deploymentAdapter = isRender
-    ? nitro({ preset: "render" })
+    ? nitro({ preset: "node-server" })
     : process.env["VERCEL"]
       ? nitro()
       : netlify();
