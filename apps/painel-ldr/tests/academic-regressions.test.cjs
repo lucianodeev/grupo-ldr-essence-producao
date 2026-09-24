@@ -379,3 +379,8 @@ test('academic opportunities route filters suggested and expired recommendations
 test('LDR NEXT and Copilot filter inactive and expired suggestions',()=>{for(const file of ['routes/carreira.next.tsx','routes/carreira.copilot.tsx']){const source=fs.readFileSync(path.resolve(ROOT,file),'utf8');assert.match(source,/\.eq\("status","suggested"\)/);assert.match(source,/expires_at\.is\.null,expires_at\.gt/);}});
 
 test('academic quick access exposes opportunities without changing fixed mobile nav',()=>{const source=fs.readFileSync(path.resolve(ROOT,'routes/_clientarea.cliente.rede-academica.tsx'),'utf8');assert.match(source,/\/cliente\/rede-academica\/oportunidades/);});
+
+
+test('career intelligence selects the most recently updated active goal deterministically',()=>{const source=fs.readFileSync(path.resolve(ROOT,'lib/career-intelligence.functions.ts'),'utf8');assert.match(source,/\.eq\("status","active"\)\.order\("updated_at",\{ascending:false\}\)\.order\("created_at",\{ascending:false\}\)/);});
+test('career intelligence counts only verified proof competencies',()=>{const source=fs.readFileSync(path.resolve(ROOT,'lib/career-intelligence.functions.ts'),'utf8');assert.match(source,/verification_status/);assert.match(source,/===\"verified\"/);assert.match(source,/competências verificadas/);});
+test('career intelligence owns only its generated copilot actions',()=>{const source=fs.readFileSync(path.resolve(ROOT,'lib/career-intelligence.functions.ts'),'utf8');const marker='contains("rationale",{generator:"career_intelligence"})';assert.ok(source.split(marker).length>=3);});
