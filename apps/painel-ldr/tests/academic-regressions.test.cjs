@@ -389,3 +389,11 @@ test('academic quick access exposes opportunities without changing fixed mobile 
 test('career intelligence selects the most recently updated active goal deterministically',()=>{const source=fs.readFileSync(path.resolve(ROOT,'lib/career-intelligence.functions.ts'),'utf8');assert.match(source,/\.eq\("status","active"\)\.order\("updated_at",\{ascending:false\}\)\.order\("created_at",\{ascending:false\}\)/);});
 test('career intelligence counts only verified proof competencies',()=>{const source=fs.readFileSync(path.resolve(ROOT,'lib/career-intelligence.functions.ts'),'utf8');assert.match(source,/verification_status/);assert.match(source,/===\"verified\"/);assert.match(source,/competências verificadas/);});
 test('career intelligence owns only its generated copilot actions',()=>{const source=fs.readFileSync(path.resolve(ROOT,'lib/career-intelligence.functions.ts'),'utf8');const marker='contains("rationale",{generator:"career_intelligence"})';assert.ok(source.split(marker).length>=3);});
+
+
+test('career intelligence refreshes recommendations and copilot actions through one atomic RPC', () => {
+  const source=fs.readFileSync(path.resolve(ROOT,'src/lib/career-intelligence.functions.ts'),'utf8');
+  assert.match(source,/\.rpc\("ldr_refresh_career_intelligence_atomic"/);
+  assert.doesNotMatch(source,/from\("ldr_opportunity_recommendations"\)\.delete\(\)/);
+  assert.doesNotMatch(source,/from\("ldr_copilot_actions"\)\.delete\(\)/);
+});
