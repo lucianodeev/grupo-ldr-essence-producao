@@ -22,6 +22,7 @@ const { isUnifiedPreviewHost, unifiedPreviewTarget } = moduleBox.exports;
 test("recognizes unified preview hosts without affecting official hosts", () => {
   assert.equal(isUnifiedPreviewHost("ecossistema-ldr-validacao.llucianouam.chatgpt.site"), true);
   assert.equal(isUnifiedPreviewHost("ecossistema-ldr-provisorio.workers.dev"), true);
+  assert.equal(isUnifiedPreviewHost("ldr-ecossistema-validacao.onrender.com"), true);
   assert.equal(isUnifiedPreviewHost("localhost"), true);
   assert.equal(isUnifiedPreviewHost("ldracademy.online"), false);
 });
@@ -83,4 +84,14 @@ test("server and OAuth callback explicitly support unified preview hosts", () =>
   assert.match(server, /isUnifiedPreviewHost\(host\)/);
   assert.match(server, /return null;/);
   assert.match(callback, /isUnifiedPreviewHost\(url\.hostname\)/);
+});
+
+
+test("keeps Academy routes on Render validation host", () => {
+  const target = unifiedPreviewTarget(
+    "https://ldracademy.online/cliente/biblioteca",
+    "https://ldr-ecossistema-validacao.onrender.com",
+    "ldr-ecossistema-validacao.onrender.com",
+  );
+  assert.equal(target, "/cliente/biblioteca");
 });
