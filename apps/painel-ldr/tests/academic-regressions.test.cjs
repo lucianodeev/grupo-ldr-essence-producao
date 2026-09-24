@@ -403,3 +403,6 @@ test('academic opportunities exposes explicit feedback without automatic action'
 
 
 test('career intelligence ranking is deterministic and explainable',()=>{const source=fs.readFileSync(path.resolve(ROOT,'lib/career-intelligence.functions.ts'),'utf8');assert.match(source,/targetCountry/);assert.match(source,/targetWorkMode/);assert.match(source,/targetCompetencies/);assert.match(source,/ranking_score:score/);assert.match(source,/ranking_factors:reasons/);assert.match(source,/localeCompare/);assert.match(source,/competências verificadas relacionadas ao objetivo/);});
+
+
+test('career intelligence keeps open-job discovery when no active goal exists',()=>{const source=fs.readFileSync(path.resolve(ROOT,'lib/career-intelligence.functions.ts'),'utf8');assert.match(source,/if\(!goal\)\{score=1;reasons\.push\("vaga aberta disponível no ecossistema"\);\}/);assert.match(source,/\.filter\(\(x:any\)=>!goal\|\|x\.score>0\)/);});
