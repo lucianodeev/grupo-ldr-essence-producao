@@ -1,0 +1,49 @@
+name: Smoke test Render live
+
+on:
+  push:
+    branches:
+      - deploy/render-preview
+    paths:
+      - '.github/workflows/smoke-render-live.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check public and protected routes
+        shell: bash
+        run: |
+          set -euo pipefail
+          base="https://ldr-ecossistema-validacao.onrender.com"
+          routes=(
+            "/"
+            "/ecossistema"
+            "/clinica-social"
+            "/clinica-social/solicitar"
+            "/clinica-social/profissionais"
+            "/cliente/login"
+            "/cliente/biblioteca"
+            "/cliente/rede-academica"
+            "/carreira"
+            "/carreira/vagas"
+            "/profissionais"
+            "/profissional/login"
+            "/empresa/login"
+            "/admin"
+            "/falar-com-ecossistema"
+          )
+
+          for route in "${routes[@]}"; do
+            code="$(curl -L -sS -o /tmp/body -w '%{http_code}' --max-time 30 "$base$route")"
+            echo "$route -> $code"
+            if [[ "$code" -ge 500 || "$code" -eq 404 || "$code" -eq 000 ]]; then
+              echo "FAILED $route with HTTP $code"
+              head -c 1000 /tmp/body || true
+              exit 1
+            fi
+          done
