@@ -1,0 +1,62 @@
+name: Verify Render live routes
+
+on:
+  push:
+    branches:
+      - verify/render-live-routes
+    paths:
+      - '.github/workflows/verify-render-live-routes.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify public ecosystem routes
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="https://ldr-ecossistema-validacao.onrender.com"
+          check_page() {
+            path="$1"
+            needle="$2"
+            tmp="$(mktemp)"
+            code="$(curl --retry 3 --retry-delay 2 --connect-timeout 20 --max-time 60 -L -sS -o "$tmp" -w '%{http_code}' "$BASE$path")"
+            echo "$path => HTTP $code"
+            test "$code" = "200"
+            grep -Fqi "$needle" "$tmp" || {
+              echo "Missing expected text [$needle] on $path"
+              head -c 1200 "$tmp"
+              exit 1
+            }
+          }
+          check_page "/ecossistema" "Ecossistema LDR"
+          check_page "/ldr-rh-estrategia" "LDR RH"
+          check_page "/clinica-social" "Clínica Social"
+          check_page "/profissional/login?mode=cadastro" "Cadastro Profissional"
+          check_page "/empresa/login" "Área da Empresa"
+          check_page "/funcionario/login" "Minha Área"
+          check_page "/cliente/login" "Área do Cliente"
+          check_page "/login" "Painel Master"
+          check_page "/clinica-social/solicitar" "Clínica Social"
+          check_page "/clinica-social/profissionais" "Clínica Social"
+
+      - name: Verify redirects and canonical aliases
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="https://ldr-ecossistema-validacao.onrender.com"
+          status="$(curl -sS -o /dev/null -w '%{http_code}' "$BASE/profissional/cadastro")"
+          location="$(curl -sSI "$BASE/profissional/cadastro" | tr -d '\r' | awk 'tolower($1)=="location:" {$1=""; sub(/^ /,""); print; exit}')"
+          echo "/profissional/cadastro => $status location=$location"
+          [[ "$status" =~ ^30[2378]$ ]]
+          [[ "$location" == *"/profissional/login"* ]]
+          [[ "$location" == *"mode=cadastro"* ]]
+
+          status2="$(curl -sS -o /dev/null -w '%{http_code}' "$BASE/painel-profissional")"
+          location2="$(curl -sSI "$BASE/painel-profissional" | tr -d '\r' | awk 'tolower($1)=="location:" {$1=""; sub(/^ /,""); print; exit}')"
+          echo "/painel-profissional => $status2 location=$location2"
+          [[ "$status2" =~ ^30[2378]$ ]]
+          [[ "$location2" == *"/profissional-painel"* ]]
