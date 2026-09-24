@@ -2,6 +2,7 @@ import "./lib/error-capture";
 
 import { consumeLastCapturedError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
+import { isUnifiedPreviewHost } from "./lib/unified-preview";
 
 type ServerEntry = {
   fetch: (request: Request, env: unknown, ctx: unknown) => Promise<Response> | Response;
@@ -42,6 +43,28 @@ function academyCanonicalRedirect(request: Request): Response | null {
   const isLegacyPanelHost = host === "painel.lucianoconecta.online";
   const isLegacyLucianoHost = host === "lucianoconecta.online" || host === "www.lucianoconecta.online";
   const isFilmHost = host === "film.lucianoconecta.online";
+
+  // Preview/staging hosts intentionally keep the full ecosystem on one origin.
+  // This makes deep links testable before any official-domain cutover.
+  if (isUnifiedPreviewHost(host)) {
+    if (url.pathname === "/index.html") {
+      url.pathname = "/";
+      return temporaryRedirect(url.toString());
+    }
+    if (url.pathname === "/profissional/cadastro" || url.pathname === "/profissional/cadastro/") {
+      url.pathname = "/profissional/login";
+      return temporaryRedirect(url.toString());
+    }
+    if (url.pathname === "/biblioteca") {
+      url.pathname = "/cliente/biblioteca";
+      return temporaryRedirect(url.toString());
+    }
+    if (url.pathname.startsWith("/biblioteca/")) {
+      url.pathname = `/cliente${url.pathname}`;
+      return temporaryRedirect(url.toString());
+    }
+    return null;
+  }
 
   // Canonical Academy hostname. www is accepted only as an alias and always
   // resolves to the official apex domain.
