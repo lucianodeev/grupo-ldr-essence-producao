@@ -375,7 +375,7 @@ test('threaded backend validates parent and keeps replies on soft delete in isol
 });
 
 
-test('career intelligence guards source failures before atomic recommendation refresh',()=>{const source=fs.readFileSync(path.resolve(ROOT,'lib/career-intelligence.functions.ts'),'utf8');assert.match(source,/const failed=\[goalsResult,proofsResult,jobsResult,projectsResult\]/);assert.ok(source.indexOf('const failed=')<source.indexOf('ldr_refresh_career_intelligence_atomic'));});
+test('career intelligence guards source failures before atomic recommendation refresh',()=>{const source=fs.readFileSync(path.resolve(ROOT,'lib/career-intelligence.functions.ts'),'utf8');assert.match(source,/const failed=\[goalsResult,proofsResult,jobsResult,projectsResult,feedbackResult\]/);assert.ok(source.indexOf('const failed=')<source.indexOf('ldr_refresh_career_intelligence_atomic'));});
 
 test('career intelligence marks its generated recommendations for atomic ownership',()=>{const source=fs.readFileSync(path.resolve(ROOT,'lib/career-intelligence.functions.ts'),'utf8');assert.match(source,/generator:"career_intelligence"/);assert.match(source,/ldr_refresh_career_intelligence_atomic/);});
 
