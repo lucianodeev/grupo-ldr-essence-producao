@@ -82,7 +82,7 @@ export const getClientContext = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     if (!process.env["SUPABASE_SERVICE_ROLE_KEY"]) {
-      return clientEdge<any>(context.accessToken, "client-portal-self", "context");
+      return clientSelfEdge<any>(context.accessToken, "context");
     }
     const { resolveClient } = await import("@/lib/client-portal.server");
     return resolveClient(context.userId, emailOf(context.claims));
@@ -99,7 +99,7 @@ export const clientOverview = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     if (!process.env["SUPABASE_SERVICE_ROLE_KEY"]) {
-      return clientEdge<any>(context.accessToken, "client-portal-self", "overview");
+      return clientSelfEdge<any>(context.accessToken, "overview");
     }
     const { getClientOverview } = await import("@/lib/client-portal.server");
     return getClientOverview(context.userId, emailOf(context.claims));
@@ -156,7 +156,7 @@ export const clientUpdateProfile = createServerFn({ method: "POST" })
   .inputValidator((data: { fullName: string; phone: string | null }) => data)
   .handler(async ({ context, data }) => {
     if (!process.env["SUPABASE_SERVICE_ROLE_KEY"]) {
-      return clientEdge<{ ok: true }>(context.accessToken, "client-portal-self", "update_profile", data as Record<string, unknown>);
+      return clientSelfEdge<{ ok: true }>(context.accessToken, "update_profile", data as Record<string, unknown>);
     }
     const { updateClientProfile } = await import("@/lib/client-portal.server");
     return updateClientProfile(context.userId, emailOf(context.claims), data);
@@ -197,7 +197,7 @@ export const clientDigitalLibrary = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     if (!process.env["SUPABASE_SERVICE_ROLE_KEY"]) {
-      const library = await clientEdge<any>(context.accessToken, "client-library-self", "library");
+      const library = await clientSelfEdge<any>(context.accessToken, "digital_library");
       return { ...library, market: requestMarket() };
     }
     const { getClientDigitalLibrary } = await import("@/lib/client-portal.server");
