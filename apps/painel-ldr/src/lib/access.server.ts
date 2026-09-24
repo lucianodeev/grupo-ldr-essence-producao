@@ -59,17 +59,16 @@ export async function writeAudit(input: {
 }
 
 /** Resolves the caller's authorization from their own (RLS-scoped) client. */
-export async function resolveAccess(_supabase: Client, userId: string) {
-  // Authentication has already been enforced by requireSupabaseAuth before this
-  // function is called. Resolve the authenticated user's own application role
-  // with the server-only admin client so authorization does not depend on a
-  // second RLS-scoped read that can return an empty result for a valid session.
+export async function resolveAccess(supabase: Client, userId: string) {
+  // The authenticated user's own profile and role are intentionally readable
+  // through RLS. Using the request-scoped client keeps login/access validation
+  // functional on hosts that do not carry the service-role secret.
   const [
     { data: profile, error: profileError },
     { data: roles, error: rolesError },
   ] = await Promise.all([
-    supabaseAdmin.from("profiles").select("id, email, full_name, is_active").eq("id", userId).maybeSingle(),
-    supabaseAdmin.from("user_roles").select("role").eq("user_id", userId),
+    supabase.from("profiles").select("id, email, full_name, is_active").eq("id", userId).maybeSingle(),
+    supabase.from("user_roles").select("role").eq("user_id", userId),
   ]);
 
   if (profileError || rolesError) fail("Não foi possível validar sua permissão.");
