@@ -375,9 +375,9 @@ test('threaded backend validates parent and keeps replies on soft delete in isol
 });
 
 
-test('career intelligence guards source failures before destructive recommendation refresh',()=>{const source=fs.readFileSync(path.resolve(ROOT,'lib/career-intelligence.functions.ts'),'utf8');assert.match(source,/const failed=\[goalsResult,proofsResult,jobsResult,projectsResult\]/);assert.ok(source.indexOf('const failed=')<source.indexOf('ldr_opportunity_recommendations").delete'));});
+test('career intelligence guards source failures before atomic recommendation refresh',()=>{const source=fs.readFileSync(path.resolve(ROOT,'lib/career-intelligence.functions.ts'),'utf8');assert.match(source,/const failed=\[goalsResult,proofsResult,jobsResult,projectsResult\]/);assert.ok(source.indexOf('const failed=')<source.indexOf('ldr_refresh_career_intelligence_atomic'));});
 
-test('career intelligence owns only its generated recommendations',()=>{const source=fs.readFileSync(path.resolve(ROOT,'lib/career-intelligence.functions.ts'),'utf8');assert.match(source,/generator:"career_intelligence"/);assert.match(source,/contains\("rationale",\{generator:"career_intelligence"\}\)/);});
+test('career intelligence marks its generated recommendations for atomic ownership',()=>{const source=fs.readFileSync(path.resolve(ROOT,'lib/career-intelligence.functions.ts'),'utf8');assert.match(source,/generator:"career_intelligence"/);assert.match(source,/ldr_refresh_career_intelligence_atomic/);});
 
 test('academic opportunities route filters suggested and expired recommendations',()=>{const source=fs.readFileSync(path.resolve(ROOT,'routes/_clientarea.cliente.rede-academica.oportunidades.tsx'),'utf8');assert.match(source,/\.eq\("status","suggested"\)/);assert.match(source,/expires_at\.is\.null,expires_at\.gt/);});
 
@@ -388,4 +388,12 @@ test('academic quick access exposes opportunities without changing fixed mobile 
 
 test('career intelligence selects the most recently updated active goal deterministically',()=>{const source=fs.readFileSync(path.resolve(ROOT,'lib/career-intelligence.functions.ts'),'utf8');assert.match(source,/\.eq\("status","active"\)\.order\("updated_at",\{ascending:false\}\)\.order\("created_at",\{ascending:false\}\)/);});
 test('career intelligence counts only verified proof competencies',()=>{const source=fs.readFileSync(path.resolve(ROOT,'lib/career-intelligence.functions.ts'),'utf8');assert.match(source,/verification_status/);assert.match(source,/===\"verified\"/);assert.match(source,/competências verificadas/);});
-test('career intelligence owns only its generated copilot actions',()=>{const source=fs.readFileSync(path.resolve(ROOT,'lib/career-intelligence.functions.ts'),'utf8');const marker='contains("rationale",{generator:"career_intelligence"})';assert.ok(source.split(marker).length>=3);});
+test('career intelligence marks its generated copilot actions for atomic ownership',()=>{const source=fs.readFileSync(path.resolve(ROOT,'lib/career-intelligence.functions.ts'),'utf8');assert.match(source,/rationale:\{generator:"career_intelligence",summary:/);assert.match(source,/p_actions:rpcActions/);});
+
+
+test('career intelligence refreshes recommendations and copilot actions through one atomic RPC', () => {
+  const source=fs.readFileSync(path.resolve(ROOT,'lib/career-intelligence.functions.ts'),'utf8');
+  assert.match(source,/\.rpc\("ldr_refresh_career_intelligence_atomic"/);
+  assert.doesNotMatch(source,/from\("ldr_opportunity_recommendations"\)\.delete\(\)/);
+  assert.doesNotMatch(source,/from\("ldr_copilot_actions"\)\.delete\(\)/);
+});
