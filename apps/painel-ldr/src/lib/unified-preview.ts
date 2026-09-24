@@ -3,6 +3,8 @@ const PREVIEW_SUFFIXES = [".chatgpt.site", ".workers.dev", ".pages.dev", ".onren
 const INTERNAL_HOSTS = new Set([
   "ldracademy.online",
   "www.ldracademy.online",
+  "ldrrhestrategia.com",
+  "www.ldrrhestrategia.com",
   "portal.ldrrhestrategia.com",
   "painel.ldrrhestrategia.com",
   "suporte.ldrrhestrategia.com",
@@ -73,7 +75,10 @@ export function unifiedPreviewTarget(
       pathname = "/cliente/login";
       return withQuery(pathname, url, { portal: "services", v: "3" });
     }
-    if (pathname === "/profissional/cadastro" || pathname === "/profissional/cadastro/") pathname = "/profissional/login";
+    if (pathname === "/profissional/cadastro" || pathname === "/profissional/cadastro/") {
+      pathname = "/profissional/login";
+      return withQuery(pathname, url, { mode: "cadastro" });
+    }
     return withQuery(pathname, url);
   }
 
@@ -90,6 +95,11 @@ export function unifiedPreviewTarget(
 
   if (host === "lucianoconecta.online" || host === "www.lucianoconecta.online") {
     if (pathname === "/index.html") pathname = "/";
+    return withQuery(pathname, url);
+  }
+
+  if (host === "ldrrhestrategia.com" || host === "www.ldrrhestrategia.com") {
+    if (pathname === "/" || pathname === "/index.html") pathname = "/ldr-rh-estrategia";
     return withQuery(pathname, url);
   }
 
