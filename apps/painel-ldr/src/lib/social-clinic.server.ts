@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { getRequest } from "@tanstack/react-start/server";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { resolveRequestAuth } from "@/integrations/supabase/request-auth.server";
 import { resolveAccess, writeAudit } from "@/lib/access.server";
 import { DEFAULT_PLATFORM_FEE_PERCENT } from "@/lib/platform-fee";
 import type { SupabaseClient } from "@supabase/supabase-js";
@@ -20,6 +21,7 @@ function origin() {
   return process.env["CLIENT_PANEL_URL"]?.replace(/\/$/, "") || (req ? new URL(req.url).origin : "https://painel.ldrrhestrategia.com");
 }
 async function configNumber(key: string, fallback: number) {
+  if (!process.env["SUPABASE_SERVICE_ROLE_KEY"]) return fallback;
   const { data } = await db.from("platform_financial_config").select("numeric_value").eq("config_key", key).eq("active", true).maybeSingle();
   const n = Number(data?.numeric_value);
   return Number.isFinite(n) && n >= 0 ? n : fallback;
@@ -29,6 +31,7 @@ async function platformFeePercent() {
 }
 
 async function configText(key: string) {
+  if (!process.env["SUPABASE_SERVICE_ROLE_KEY"]) return null;
   const { data } = await db.from("platform_financial_config").select("text_value").eq("config_key", key).eq("active", true).maybeSingle();
   return data?.text_value ? String(data.text_value) : null;
 }
@@ -87,8 +90,13 @@ async function ensureSocialClinicStripeCatalog() {
 }
 
 export async function getSocialClinicLanding() {
+  // Public landing data must respect RLS and must not require an admin secret.
+  // This keeps the public clinic available on any host that has the publishable key.
+  const requestAuth = await resolveRequestAuth();
+  const publicDb = requestAuth.supabase as unknown as { from: (table: string) => any };
+
   const [{ data: profiles }, brlCents, eurCents, stripe] = await Promise.all([
-    db.from("professional_profiles")
+    publicDb.from("professional_profiles")
       .select("id,professional_account_id,slug,display_name,professional_title,profile_headline,city,country_code,languages,online_enabled,in_person_enabled,public_region,photo_url,about,experience_summary,specialties,profile_verified,identity_verified,documents_verified,created_at")
       .eq("is_public", true)
       .eq("profile_status", "active")
@@ -107,19 +115,19 @@ export async function getSocialClinicLanding() {
 
   if (profileIds.length) {
     const [{ data: slots }, { data: reviewRows }, { data: services }] = await Promise.all([
-      db.from("professional_availability")
+      publicDb.from("professional_availability")
         .select("professional_profile_id,weekday,start_time,end_time,timezone,modality")
         .in("professional_profile_id", profileIds)
         .eq("active", true)
         .order("weekday")
         .order("start_time"),
-      db.from("professional_reviews")
+      publicDb.from("professional_reviews")
         .select("professional_profile_id,rating,body,created_at")
         .in("professional_profile_id", profileIds)
         .eq("status", "published")
         .order("created_at", { ascending: false })
         .limit(30),
-      db.from("professional_services")
+      publicDb.from("professional_services")
         .select("professional_profile_id,id,booking_enabled,active,approval_status")
         .in("professional_profile_id", profileIds)
         .eq("active", true)
