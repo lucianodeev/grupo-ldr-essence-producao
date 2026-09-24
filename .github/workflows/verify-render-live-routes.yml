@@ -35,7 +35,7 @@ jobs:
           check_page "/ecossistema" "Ecossistema LDR"
           check_page "/ldr-rh-estrategia" "LDR RH"
           check_page "/clinica-social" "Clínica Social"
-          check_page "/profissional/login?mode=cadastro" "Cadastro Profissional"
+          check_page "/profissional/login?mode=cadastro" "Rede de Profissionais LDR"
           check_page "/empresa/login" "Área da Empresa"
           check_page "/funcionario/login" "Minha Área"
           check_page "/cliente/login" "Área do Cliente"
