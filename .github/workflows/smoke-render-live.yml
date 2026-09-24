@@ -47,3 +47,5 @@ jobs:
               exit 1
             fi
           done
+
+# rerun after clinic fix 08180fbd
