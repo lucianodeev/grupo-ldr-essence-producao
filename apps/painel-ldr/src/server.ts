@@ -19,6 +19,19 @@ async function getServerEntry(): Promise<ServerEntry> {
   return serverEntryPromise;
 }
 
+function publicRequestUrl(request: Request): URL {
+  const url = publicRequestUrl(request);
+  const forwardedProto = request.headers.get("x-forwarded-proto")?.split(",")[0]?.trim().toLowerCase();
+  if (forwardedProto === "https" || forwardedProto === "http") {
+    url.protocol = `${forwardedProto}:`;
+  } else if (/\.onrender\.com$/i.test(url.hostname)) {
+    // Render terminates TLS before the Node service. Without the forwarded
+    // header some runtimes expose the internal request as http://.
+    url.protocol = "https:";
+  }
+  return url;
+}
+
 function temporaryRedirect(url: string): Response {
   return new Response("Redirecting...\n", {
     status: 307,
