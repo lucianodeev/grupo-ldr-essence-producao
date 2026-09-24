@@ -18,17 +18,16 @@ export const refreshCareerIntelligence=createServerFn({method:"POST"}).middlewar
  const recs:any[]=[]; for(const j of jobs??[]){if(recs.length>=8)break; const title=String(j.title??""); const hit=Boolean(normalizedTargetTitle)&&title.toLowerCase().includes(normalizedTargetTitle); if(hit||!normalizedTargetTitle)recs.push({user_id:uid,opportunity_type:"job",source_reference:j.id,title,rationale:{generator:"career_intelligence",summary:hit?"O título da vaga se aproxima do seu objetivo ativo.":"Vaga aberta disponível no ecossistema.",goal:goal?.target_title??null,evidence_skills:skills.slice(0,8),location:[j.city,j.country].filter(Boolean).join(", ")||null,work_mode:j.work_mode??null},status:"suggested"});}
  for(const p of projects??[]){if(recs.length>=12)break;recs.push({user_id:uid,opportunity_type:"project",source_reference:p.id,title:p.title,rationale:{generator:"career_intelligence",summary:"Projeto ativo no ecossistema para prática e construção de evidências.",modality:p.modality},status:"suggested"});}
 
- // Refresh only recommendations owned by this career generator.
- // Other modules (Rede Acadêmica, negócios, eventos, cursos) may share this table.
- const recDelete=await db.from("ldr_opportunity_recommendations").delete().eq("user_id",uid).eq("status","suggested").in("opportunity_type",[...CAREER_TYPES]).contains("rationale",{generator:"career_intelligence"});
- if(recDelete.error)throw new Error("Não foi possível atualizar as oportunidades. As sugestões atuais foram preservadas.");
- if(recs.length){const recInsert=await db.from("ldr_opportunity_recommendations").insert(recs);if(recInsert.error)throw new Error("Não foi possível salvar as novas oportunidades.");}
-
  const actions:any[]=[]; if(goal)actions.push({user_id:uid,context_type:"career",context_reference:goal.id,action_type:"build_portfolio",title:targetTitle?"Fortaleça seu portfólio para "+targetTitle:"Fortaleça seu portfólio profissional",rationale:{generator:"career_intelligence",summary:"Objetivo ativo no Career GPS conectado às evidências disponíveis."}});
  if(!skills.length)actions.push({user_id:uid,context_type:"portfolio",action_type:"prove",title:"Adicione uma evidência ao LDR Proof",rationale:{generator:"career_intelligence",summary:"Ainda não encontramos competências verificadas no seu LDR Proof."}});
  if(recs.some(r=>r.opportunity_type==="project"))actions.push({user_id:uid,context_type:"project",action_type:"join_project",title:"Explore um projeto compatível",rationale:{generator:"career_intelligence",summary:"Há projetos ativos disponíveis no ecossistema Empresa-Escola."}});
- const actionDelete=await db.from("ldr_copilot_actions").delete().eq("user_id",uid).eq("status","suggested").in("context_type",["career","portfolio","project"]).contains("rationale",{generator:"career_intelligence"});
- if(actionDelete.error)throw new Error("As oportunidades foram atualizadas, mas não foi possível atualizar os próximos passos.");
- if(actions.length){const actionInsert=await db.from("ldr_copilot_actions").insert(actions);if(actionInsert.error)throw new Error("Não foi possível salvar os novos próximos passos.");}
- return {recommendations:recs.length,actions:actions.length};
+
+ // Replace this generator's recommendations and Copilot actions in one database transaction.
+ // If any insert fails, Postgres rolls the entire RPC back and preserves the previous suggestions.
+ const rpcRecommendations=recs.map(({user_id:_,status:__,...rec})=>rec);
+ const rpcActions=actions.map(({user_id:_,...action})=>action);
+ const {data:refreshResult,error:refreshError}=await db.rpc("ldr_refresh_career_intelligence_atomic",{p_user_id:uid,p_recommendations:rpcRecommendations,p_actions:rpcActions});
+ if(refreshError)throw new Error("Não foi possível atualizar as oportunidades com segurança. As sugestões atuais foram preservadas.");
+ const result=(refreshResult??{}) as any;
+ return {recommendations:Number(result.recommendations??recs.length),actions:Number(result.actions??actions.length)};
 });
