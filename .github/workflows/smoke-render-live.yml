@@ -23,6 +23,7 @@ jobs:
           routes=(
             "/"
             "/ecossistema"
+            "/ldr-rh-estrategia"
             "/clinica-social"
             "/clinica-social/solicitar"
             "/clinica-social/profissionais"
@@ -33,7 +34,15 @@ jobs:
             "/carreira/vagas"
             "/profissionais"
             "/profissional/login"
+            "/profissional/cadastro"
+            "/profissional-painel"
+            "/painel-profissional"
             "/empresa/login"
+            "/empresa"
+            "/funcionario/login"
+            "/funcionario"
+            "/cliente"
+            "/login"
             "/admin"
             "/falar-com-ecossistema"
           )
@@ -61,3 +70,5 @@ jobs:
 # final smoke after Render unified-host deploy 57b60bea
 
 # smoke after clinic submission edge deploy 304cedea
+
+# smoke after ecosystem map and panels deploy e3b35ddd
