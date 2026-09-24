@@ -50,3 +50,37 @@ test("never rewrites third-party links", () => {
   assert.equal(unifiedPreviewTarget("https://checkout.stripe.com/example", origin, host), null);
   assert.equal(unifiedPreviewTarget("mailto:contato@example.com", origin, host), null);
 });
+
+
+test("critical ecosystem routes remain generated", () => {
+  const routeTree = fs.readFileSync(path.resolve(__dirname, "../src/routeTree.gen.ts"), "utf8");
+  const routes = [
+    "/ecossistema",
+    "/cliente/login",
+    "/cliente/biblioteca",
+    "/cliente/rede-academica",
+    "/clinica-social",
+    "/clinica-social/solicitar",
+    "/clinica-social/profissionais",
+    "/profissionais",
+    "/profissional/login",
+    "/painel-profissional",
+    "/empresa/login",
+    "/empresa",
+    "/carreira",
+    "/carreira/vagas",
+    "/admin",
+    "/falar-com-ecossistema",
+  ];
+  for (const route of routes) {
+    assert.ok(routeTree.includes(`'${route}'`) || routeTree.includes(`"${route}"`), `missing route: ${route}`);
+  }
+});
+
+test("server and OAuth callback explicitly support unified preview hosts", () => {
+  const server = fs.readFileSync(path.resolve(__dirname, "../src/server.ts"), "utf8");
+  const callback = fs.readFileSync(path.resolve(__dirname, "../src/routes/api/auth/callback.ts"), "utf8");
+  assert.match(server, /isUnifiedPreviewHost\(host\)/);
+  assert.match(server, /return null;/);
+  assert.match(callback, /isUnifiedPreviewHost\(url\.hostname\)/);
+});
