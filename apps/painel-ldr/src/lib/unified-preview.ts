@@ -1,4 +1,4 @@
-const PREVIEW_SUFFIXES = [".chatgpt.site", ".workers.dev", ".pages.dev"] as const;
+const PREVIEW_SUFFIXES = [".chatgpt.site", ".workers.dev", ".pages.dev", ".onrender.com"] as const;
 
 const INTERNAL_HOSTS = new Set([
   "ldracademy.online",
