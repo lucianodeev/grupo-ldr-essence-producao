@@ -397,3 +397,6 @@ test('career intelligence refreshes recommendations and copilot actions through 
   assert.doesNotMatch(source,/from\("ldr_opportunity_recommendations"\)\.delete\(\)/);
   assert.doesNotMatch(source,/from\("ldr_copilot_actions"\)\.delete\(\)/);
 });
+
+
+test('academic opportunities exposes explicit feedback without automatic action',()=>{const source=fs.readFileSync(path.resolve(ROOT,'routes/_clientarea.cliente.rede-academica.oportunidades.tsx'),'utf8');assert.match(source,/Tenho interesse/);assert.match(source,/Quero mais como esta/);assert.match(source,/Não tenho interesse/);assert.match(source,/ldr_opportunity_feedback_events/);assert.match(source,/status:"dismissed"/);});
