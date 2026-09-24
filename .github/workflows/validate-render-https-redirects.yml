@@ -21,6 +21,9 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm install --no-audit --no-fund
+      - name: Generate routes
+        working-directory: apps/painel-ldr
+        run: npm run generate-routes
       - name: Core tests
         working-directory: apps/painel-ldr
         run: npm test
