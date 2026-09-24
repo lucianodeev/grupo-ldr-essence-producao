@@ -72,3 +72,5 @@ jobs:
 # smoke after clinic submission edge deploy 304cedea
 
 # smoke after ecosystem map and panels deploy e3b35ddd
+
+# post-live smoke for e3b35ddd
