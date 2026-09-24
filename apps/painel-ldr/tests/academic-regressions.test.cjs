@@ -406,3 +406,6 @@ test('career intelligence ranking is deterministic and explainable',()=>{const s
 
 
 test('career intelligence keeps open-job discovery when no active goal exists',()=>{const source=fs.readFileSync(path.resolve(ROOT,'lib/career-intelligence.functions.ts'),'utf8');assert.match(source,/if\(!goal\)\{score=1;reasons\.push\("vaga aberta disponível no ecossistema"\);\}/);assert.match(source,/\.filter\(\(x:any\)=>!goal\|\|x\.score>0\)/);});
+
+
+test('opportunity feedback snapshots durable context',()=>{const source=fs.readFileSync(path.resolve(ROOT,'routes/_clientarea.cliente.rede-academica.oportunidades.tsx'),'utf8');assert.match(source,/opportunity_title:row\.title\?\?null/);assert.match(source,/rationale_snapshot:row\.rationale\?\?null/);});
