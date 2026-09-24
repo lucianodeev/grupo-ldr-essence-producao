@@ -38,7 +38,7 @@ jobs:
           check_page "/profissional/login?mode=cadastro" "Rede de Profissionais LDR"
           check_page "/empresa/login" "Área da Empresa"
           check_page "/funcionario/login" "Minha Área"
-          check_page "/cliente/login" "Área do Cliente"
+          check_page "/cliente/login" "Minha Área"
           check_page "/login" "Painel Master"
           check_page "/clinica-social/solicitar" "Clínica Social"
           check_page "/clinica-social/profissionais" "Clínica Social"
