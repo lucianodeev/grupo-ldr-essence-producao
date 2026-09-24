@@ -48,6 +48,7 @@ No host de validação:
 
 Servidor:
 - `SUPABASE_URL`
+- `SUPABASE_PUBLISHABLE_KEY` — usada pelo SSR/autenticação; é a chave publicável, não a service role.
 - `SUPABASE_SERVICE_ROLE_KEY` — somente secret server-side, nunca expor no navegador.
 - `CLIENT_PANEL_URL` = origem do host de validação quando o provedor aceitar essa variável.
 
