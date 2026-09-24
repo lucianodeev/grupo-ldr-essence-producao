@@ -14,7 +14,12 @@ export default defineConfig(({ mode }) => {
     env["VITE_SUPABASE_PUBLISHABLE_KEY"] || env["SUPABASE_PUBLISHABLE_KEY"] || "";
 
   const isCloudflare = process.env["CLOUDFLARE"] === "true";
-  const deploymentAdapter = process.env["VERCEL"] ? nitro() : netlify();
+  const isRender = process.env["RENDER"] === "true";
+  const deploymentAdapter = isRender
+    ? nitro({ preset: "node-server" })
+    : process.env["VERCEL"]
+      ? nitro()
+      : netlify();
 
   return {
     define: {

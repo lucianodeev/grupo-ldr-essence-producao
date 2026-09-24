@@ -16,7 +16,9 @@
     "typecheck": "tsc --noEmit",
     "test": "node --experimental-strip-types --test src/lib/platform-fee.test.ts src/lib/entitlements.test.ts src/lib/ldr-identity.test.ts tests/unified-preview.test.cjs",
     "test:academic": "node --test tests/academic-regressions.test.cjs",
-    "test:preview": "node --test tests/unified-preview.test.cjs"
+    "test:preview": "node --test tests/unified-preview.test.cjs",
+    "build:render": "RENDER=true npm run build",
+    "start:render": "node .output/server/index.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
