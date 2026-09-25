@@ -1,0 +1,41 @@
+name: Validate internal products page
+
+on:
+  push:
+    branches:
+      - fix/products-inside-ecosystem
+    paths:
+      - 'apps/painel-ldr/src/routes/produtos.tsx'
+      - '.github/workflows/validate-products-inside.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install --no-audit --no-fund
+      - name: Generate routes
+        working-directory: apps/painel-ldr
+        run: npm run generate-routes
+      - name: Core tests
+        working-directory: apps/painel-ldr
+        run: npm test
+      - name: Render build
+        working-directory: apps/painel-ldr
+        env:
+          SUPABASE_URL: https://sfrcsrzuoqdscflfuwik.supabase.co
+          SUPABASE_PUBLISHABLE_KEY: placeholder
+          VITE_SUPABASE_URL: https://sfrcsrzuoqdscflfuwik.supabase.co
+          VITE_SUPABASE_PUBLISHABLE_KEY: placeholder
+        run: npm run build:render
+      - name: Verify PageShare redirect removed
+        run: |
+          ! grep -Fq 'hosted.pageshare.ai' apps/painel-ldr/src/routes/produtos.tsx
+          grep -Fq 'createFileRoute("/produtos")' apps/painel-ldr/src/routes/produtos.tsx
