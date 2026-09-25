@@ -28,7 +28,7 @@ function oauthReturnUrl() {
   // Keep the administrator OAuth callback on the same canonical Academy host.
   // Sending it through the legacy Learn host loses the host-only admin-intent
   // cookie and can make the callback fall through to the public/client flow.
-  return `${window.location.origin}/api/auth/callback?admin=1`;
+  return `https://ldr-ecossistema-validacao.onrender.com/api/auth/callback?admin=1`;
 }
 
 async function syncBrowserSession(session: Session) {
