@@ -129,7 +129,7 @@ const COPY = {
   },
 } as const;
 
-const SUPPORT = "https://suporte.ldrrhestrategia.com/falar-com-ecossistema";
+const SUPPORT = "/falar-com-ecossistema";
 
 type Copy = (typeof COPY)[keyof typeof COPY];
 type Locale = keyof typeof COPY;
