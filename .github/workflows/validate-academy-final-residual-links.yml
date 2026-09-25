@@ -1,0 +1,53 @@
+name: Validate Academy final residual links
+
+on:
+  push:
+    branches:
+      - fix/academy-final-residual-links
+    paths:
+      - 'apps/painel-ldr/**'
+      - '.github/workflows/validate-academy-final-residual-links.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install --no-audit --no-fund
+      - name: Generate routes
+        working-directory: apps/painel-ldr
+        run: npm run generate-routes
+      - name: Unified-domain tests
+        working-directory: apps/painel-ldr
+        run: npm run test:preview
+      - name: Core tests
+        working-directory: apps/painel-ldr
+        run: npm test
+      - name: Academic regressions
+        working-directory: apps/painel-ldr
+        run: npm run test:academic
+      - name: Render build
+        working-directory: apps/painel-ldr
+        env:
+          SUPABASE_URL: https://sfrcsrzuoqdscflfuwik.supabase.co
+          SUPABASE_PUBLISHABLE_KEY: placeholder
+          VITE_SUPABASE_URL: https://sfrcsrzuoqdscflfuwik.supabase.co
+          VITE_SUPABASE_PUBLISHABLE_KEY: placeholder
+        run: npm run build:render
+      - name: Block residual public legacy-domain URLs
+        shell: bash
+        run: |
+          set -euo pipefail
+          matches="$(grep -RInE 'https://(suporte|painel|clinicasocial)\.ldrrhestrategia\.com|https://ldrrhestrategia\.com' apps/painel-ldr/src             --exclude='server.ts'             --exclude='unified-preview.ts'             --exclude='cliente.login.tsx'             --exclude='training-offer.ts'             --exclude='seller-checkout.ts' || true)"
+          if [ -n "$matches" ]; then
+            echo "$matches"
+            echo "Residual public legacy-domain URLs remain."
+            exit 1
+          fi
