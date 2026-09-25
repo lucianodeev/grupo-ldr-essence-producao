@@ -18,7 +18,7 @@ function fail(message:string):never{throw new Error(message)}
 async function customerFor(userId:string,email:string|null){const ctx=await resolveClient(userId,email);if(ctx.status!=="ok")fail("Acesso do cliente não disponível.");return ctx.customer;}
 function matches(order:any){const metadata=(order?.metadata??{}) as Record<string,unknown>;const key=typeof metadata.product_key==="string"?metadata.product_key:"";return order?.catalog_key===PRODUCT_KEY||key===PRODUCT_KEY||key===PRODUCT_SLUG;}
 async function paidOrder(customerId:string){const {data,error}=await db.from("orders").select("id,catalog_key,payment_status,amount_cents,currency,stripe_checkout_session_id,metadata,created_at").eq("customer_id",customerId).eq("payment_status","pago").order("created_at",{ascending:false});if(error)fail("Não foi possível verificar a compra da formação.");return (data??[]).find(matches)??null;}
-function appOrigin(){const request=getRequest();const requestUrl=request?new URL(request.url):null;return process.env.CLIENT_PANEL_URL?.replace(/\/$/,"")||requestUrl?.origin||"https://painel.ldrrhestrategia.com";}
+function appOrigin(){const request=getRequest();const requestUrl=request?new URL(request.url):null;return process.env.CLIENT_PANEL_URL?.replace(/\/$/,"")||requestUrl?.origin||"https://ldracademy.online";}
 function daysSince(value:string|null|undefined){if(!value)return 0;const time=Date.parse(value);if(!Number.isFinite(time))return 0;return Math.max(0,Math.floor((Date.now()-time)/86_400_000));}
 
 async function ensureProgram(){
