@@ -10,7 +10,7 @@ export const Route=createFileRoute("/_clientarea/cliente/orientacao-profissional
 
 const SUPPORT_CHANNEL="Falar com o Ecossistema";
 const SUPPORT_MESSAGE="Olá! Meu pagamento da Orientação Profissional foi confirmado pela LDR Essence Academy. Gostaria de continuar meu atendimento pelo Falar com o Ecossistema.";
-const supportUrl=()=>`https://suporte.ldrrhestrategia.com/falar-com-ecossistema?assunto=${encodeURIComponent(SUPPORT_MESSAGE)}`;
+const supportUrl=()=>`/falar-com-ecossistema?assunto=${encodeURIComponent(SUPPORT_MESSAGE)}`;
 
 const COPY={
 pt:{new:"NOVO SERVIÇO",title:"Orientação Profissional Escrita",intro:"Orientação prática para carreira, currículo, entrevistas, transição profissional, posicionamento e próximos passos.",private:"Atendimento pelo Falar com o Ecossistema",minutes:"10, 30 ou 60 minutos",human:"Resposta humana",choose:"Escolha seu pacote",promo:"Promoção de lançamento ativa por 30 dias a partir da primeira compra confirmada.",regular:"Preço regular: €0,90 a cada 2 minutos, com pacotes prontos.",until:"PROMO ATÉ",pack:"PACOTE",min:"minutos",promoValue:"valor promocional",buy:"COMPRAR PACOTE",important:"Importante:",notice:"este é um serviço breve de orientação profissional. Não garante contratação, promoção, visto, reconhecimento de diploma ou resultado profissional. Decisões finais são do cliente e podem exigir profissionais ou órgãos especializados.",mine:"Minhas orientações",continue:"CONTINUAR NO SUPPORT",confirming:"Confirmando seu pagamento…",confirmed:"Pagamento confirmado com sucesso.",redirect:"Seu atendimento foi registrado. Agora você continuará pelo Falar com o Ecossistema.",retry:"Ainda estamos confirmando seu pagamento. Tente novamente em alguns segundos."},
