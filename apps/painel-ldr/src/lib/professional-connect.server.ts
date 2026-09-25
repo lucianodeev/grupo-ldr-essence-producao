@@ -7,7 +7,7 @@ function fail(message: string): never { throw new Error(message); }
 function normEmail(value: string | null | undefined) { return value?.trim().toLowerCase() ?? null; }
 function origin() {
   const req = getRequest();
-  return process.env["CLIENT_PANEL_URL"]?.replace(/\/$/, "") || (req ? new URL(req.url).origin : "https://painel.ldrrhestrategia.com");
+  return process.env["CLIENT_PANEL_URL"]?.replace(/\/$/, "") || (req ? new URL(req.url).origin : "https://ldracademy.online");
 }
 function stripeSecret() {
   const secret = process.env["STRIPE_SECRET_KEY"];
