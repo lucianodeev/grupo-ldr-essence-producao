@@ -28,7 +28,7 @@ const SELLER_ACADEMY =
 const SELLER_PRESENTATION =
   "https://lucianodeev.github.io/grupo-ldr-essence-unificado/apresentacao-vendedores.html";
 const WEBINAR_GROUP = "https://chat.suporte do Ecossistema.com/IMk7F1zg2rZJdj9NWC664G?s=cl&p=i&ilr=0";
-const SUPPORT = "https://suporte.ldrrhestrategia.com/falar-com-ecossistema";
+const SUPPORT = "/falar-com-ecossistema";
 
 const COPY = {
   pt: {
