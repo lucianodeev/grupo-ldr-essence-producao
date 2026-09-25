@@ -126,18 +126,19 @@ test("Master OAuth code is exchanged before the admin redirect", () => {
 });
 
 
-test("recognizes ldracademy.online as the unified canonical ecosystem host", () => {
-  assert.equal(isUnifiedEcosystemHost("ldracademy.online"), true);
-  assert.equal(isUnifiedEcosystemHost("www.ldracademy.online"), true);
+test("recognizes the Render host as the unified canonical ecosystem host", () => {
   assert.equal(isUnifiedEcosystemHost("ldr-ecossistema-validacao.onrender.com"), true);
+  assert.equal(isUnifiedEcosystemHost("ldracademy.online"), false);
+  assert.equal(isUnifiedEcosystemHost("www.ldracademy.online"), false);
 });
 
-test("keeps legacy LDR links inside ldracademy.online", () => {
-  const origin = "https://ldracademy.online";
-  const host = "ldracademy.online";
+test("keeps legacy LDR links inside the Render ecosystem host", () => {
+  const origin = "https://ldr-ecossistema-validacao.onrender.com";
+  const host = "ldr-ecossistema-validacao.onrender.com";
   assert.equal(unifiedPreviewTarget("https://clinicasocial.ldrrhestrategia.com/", origin, host), "/clinica-social");
   assert.equal(unifiedPreviewTarget("https://suporte.ldrrhestrategia.com/", origin, host), "/falar-com-ecossistema");
   assert.equal(unifiedPreviewTarget("https://painel.ldrrhestrategia.com/acesso", origin, host), "/admin");
   assert.equal(unifiedPreviewTarget("https://ldrrhestrategia.com/", origin, host), "/ldr-rh-estrategia");
   assert.equal(unifiedPreviewTarget("https://portal.ldrrhestrategia.com/profissional/cadastro", origin, host), "/profissional/login?mode=cadastro");
+  assert.equal(unifiedPreviewTarget("https://ldracademy.online/cliente/biblioteca", origin, host), "/cliente/biblioteca");
 });
