@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: ldr-ecossistema-validacao
+    runtime: node
+    repo: https://github.com/lucianodeev/grupo-ldr-essence-producao
+    branch: main
+    region: frankfurt
+    plan: free
+    buildCommand: npm install --no-audit --no-fund && npm --prefix apps/painel-ldr run build:render
+    startCommand: npm --prefix apps/painel-ldr run start:render
+    autoDeployTrigger: commit
+    domains:
+      - ldracademy.online
+    renderSubdomainPolicy: enabled
