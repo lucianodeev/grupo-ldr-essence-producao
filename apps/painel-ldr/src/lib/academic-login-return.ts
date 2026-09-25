@@ -1,5 +1,5 @@
 export const ACADEMIC_RETURN_COOKIE = "ldr_academic_return_to";
-export const ACADEMY_ORIGIN = "https://ldracademy.online";
+export const ACADEMY_ORIGIN = "https://ldr-ecossistema-validacao.onrender.com";
 
 // The return target is navigation state only. It never grants access.
 export function academicReturnPath(value: unknown): string | null {
