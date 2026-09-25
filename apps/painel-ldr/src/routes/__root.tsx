@@ -15,7 +15,7 @@ import { AcademyChatbot } from "@/components/academy-chatbot";
 import { Toaster } from "@/components/ui/sonner";
 import { I18nProvider, useI18n } from "@/lib/i18n";
 import { supabase } from "@/integrations/supabase/client";
-import { isUnifiedPreviewHost, unifiedPreviewTarget } from "@/lib/unified-preview";
+import { isUnifiedEcosystemHost, unifiedPreviewTarget } from "@/lib/unified-preview";
 
 import appCss from "../styles.css?url";
 import responsiveCss from "../responsive-v3.css?url";
@@ -238,7 +238,7 @@ function RootComponent() {
   }, []);
 
   useEffect(() => {
-    if (typeof window === "undefined" || !isUnifiedPreviewHost(window.location.hostname)) return;
+    if (typeof window === "undefined" || !isUnifiedEcosystemHost(window.location.hostname)) return;
 
     const onInternalLinkClick = (event: MouseEvent) => {
       if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
