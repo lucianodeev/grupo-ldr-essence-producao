@@ -4,7 +4,7 @@ import { useLocation } from "@tanstack/react-router";
 
 import { useI18n } from "@/lib/i18n";
 
-const SUPPORT_URL = "https://suporte.ldrrhestrategia.com/falar-com-ecossistema";
+const SUPPORT_URL = "/falar-com-ecossistema";
 
 type Locale = "pt" | "en" | "fr" | "es";
 type Topic = "courses" | "formations" | "free" | "business" | "psychoanalysis" | "career" | "books" | "editorial" | "library" | "human";
