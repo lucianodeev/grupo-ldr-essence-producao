@@ -158,26 +158,6 @@ function academyCanonicalRedirect(request: Request): Response | null {
     return temporaryRedirect(target.toString());
   }
 
-  // Keep the old Master entry active until the new Portal entry is validated.
-  if (
-    isLegacyLdrPanelHost &&
-    url.searchParams.has("code") &&
-    (url.pathname === "/" || url.pathname === "/index.html" || url.pathname === "/acesso" || url.pathname === "/admin")
-  ) {
-    const callback = new URL(url.toString());
-    callback.pathname = "/api/auth/callback";
-    callback.searchParams.set("admin", "1");
-    return temporaryRedirect(callback.toString());
-  }
-
-  if (
-    isLegacyLdrPanelHost &&
-    (url.pathname === "/" || url.pathname === "/index.html" || url.pathname === "/acesso")
-  ) {
-    url.pathname = "/admin";
-    return temporaryRedirect(url.toString());
-  }
-
   // Legacy Luciano Conecta hosts are aliases only. Keep their content/routes,
   // but expose them through the official LDR Academy domain.
   if (isFilmHost) {
