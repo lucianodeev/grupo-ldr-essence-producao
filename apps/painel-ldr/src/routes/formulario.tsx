@@ -40,7 +40,7 @@ function Formulario() {
             responsável, dentro do painel protegido.
           </p>
           <a
-            href="https://suporte.ldrrhestrategia.com/falar-com-ecossistema"
+            href="/falar-com-ecossistema"
             target="_blank"
             rel="noreferrer noopener external"
             className="mt-6 inline-flex rounded-lg bg-primary px-5 py-3 text-sm font-bold text-primary-foreground hover:opacity-90"

@@ -64,7 +64,7 @@ function HumanRoomOfficialPage() {
                   Acessar aplicativo Human Room
                 </a>
                 <a
-                  href="https://suporte.ldrrhestrategia.com/falar-com-ecossistema?assunto=Human%20Room&source=human-room"
+                  href="/falar-com-ecossistema?assunto=Human%20Room&source=human-room"
                   className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#d6ad63] px-6 py-3 text-sm font-black text-[#7a4d14]"
                 >
                   Falar com o Ecossistema

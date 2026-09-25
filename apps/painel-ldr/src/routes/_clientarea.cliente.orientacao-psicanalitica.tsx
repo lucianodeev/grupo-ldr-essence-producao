@@ -10,7 +10,7 @@ export const Route=createFileRoute("/_clientarea/cliente/orientacao-psicanalitic
 
 const SUPPORT_CHANNEL="Falar com o Ecossistema";
 const SUPPORT_MESSAGE="Olá! Meu pagamento da Orientação Psicanalítica foi confirmado pela LDR Essence Academy. Gostaria de continuar meu atendimento pelo Falar com o Ecossistema.";
-const supportUrl=()=>`https://suporte.ldrrhestrategia.com/falar-com-ecossistema?assunto=${encodeURIComponent(SUPPORT_MESSAGE)}`;
+const supportUrl=()=>`/falar-com-ecossistema?assunto=${encodeURIComponent(SUPPORT_MESSAGE)}`;
 
 const COPY={
 pt:{new:"NOVO SERVIÇO",title:"Orientação Psicanalítica Escrita",intro:"Um espaço breve de escuta e orientação com fundamentação psicanalítica e, quando pertinente, referências científicas verificáveis.",private:"Atendimento pelo Falar com o Ecossistema",minutes:"10, 30 ou 60 minutos",human:"Resposta humana",choose:"Escolha seu pacote",promo:"Promoção de lançamento ativa por 30 dias a partir da primeira compra confirmada.",regular:"Preço regular: €0,90 a cada 2 minutos, com pacotes prontos.",until:"PROMO ATÉ",pack:"PACOTE",min:"minutos",promoValue:"valor promocional",buy:"COMPRAR PACOTE",important:"Importante:",notice:"este é um serviço breve de orientação. Não substitui atendimento médico, psiquiátrico, psicológico emergencial ou serviços de urgência. Em situação de risco imediato ou emergência, procure o serviço de emergência da sua região.",mine:"Minhas orientações",continue:"CONTINUAR NO SUPPORT",confirming:"Confirmando seu pagamento…",confirmed:"Pagamento confirmado com sucesso.",redirect:"Seu atendimento foi registrado. Agora você continuará pelo Falar com o Ecossistema.",retry:"Ainda estamos confirmando seu pagamento. Tente novamente em alguns segundos."},

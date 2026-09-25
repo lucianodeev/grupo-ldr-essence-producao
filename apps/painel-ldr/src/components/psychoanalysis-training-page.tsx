@@ -29,7 +29,7 @@ const reviews=[
  {name:"Murilo",date:"12/2023",text:"Uma ótima primeira sessão, me senti acolhido. Um excelente profissional."},
 ] as const;
 
-const SUPPORT="https://suporte.ldrrhestrategia.com/falar-com-ecossistema";
+const SUPPORT="/falar-com-ecossistema";
 
 function PriceBlock({compact=false}:{compact?:boolean}){
  return <div className={compact?"":"rounded-3xl border border-white/15 bg-white/10 p-5 sm:p-6"}>

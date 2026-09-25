@@ -23,7 +23,7 @@ export const Route = createFileRoute("/film")({
   component: FilmLandingPage,
 });
 
-const SUPPORT_URL = "https://suporte.ldrrhestrategia.com/falar-com-ecossistema";
+const SUPPORT_URL = "/falar-com-ecossistema";
 const MAIL_URL = "mailto:llucianouam@gmail.com?subject=Projeto%20Luciano%20Conecta%20Film&body=Ol%C3%A1%2C%20Luciano.%20Tenho%20interesse%20em%20receber%20a%20apresenta%C3%A7%C3%A3o%20do%20projeto%20audiovisual.";
 
 const formats = [
