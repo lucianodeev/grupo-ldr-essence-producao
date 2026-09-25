@@ -147,7 +147,7 @@ export async function getDoMamaoTrainingOffer(userId: string, email: string | nu
 function appOrigin() {
   const request = getRequest();
   const requestUrl = request ? new URL(request.url) : null;
-  return process.env.CLIENT_PANEL_URL?.replace(/\/$/, "") || requestUrl?.origin || "https://painel.ldrrhestrategia.com";
+  return process.env.CLIENT_PANEL_URL?.replace(/\/$/, "") || requestUrl?.origin || "https://ldracademy.online";
 }
 
 export async function createDoMamaoTrainingCheckout(userId: string, email: string | null, market: Market) {
