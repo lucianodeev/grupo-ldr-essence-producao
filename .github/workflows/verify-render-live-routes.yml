@@ -52,11 +52,11 @@ jobs:
           location="$(curl -sSI "$BASE/profissional/cadastro" | tr -d '\r' | awk 'tolower($1)=="location:" {$1=""; sub(/^ /,""); print; exit}')"
           echo "/profissional/cadastro => $status location=$location"
           [[ "$status" =~ ^30[2378]$ ]]
-          [[ "$location" == *"/profissional/login"* ]]
+          [[ "$location" == https://ldr-ecossistema-validacao.onrender.com/profissional/login* ]]
           [[ "$location" == *"mode=cadastro"* ]]
 
           status2="$(curl -sS -o /dev/null -w '%{http_code}' "$BASE/painel-profissional")"
           location2="$(curl -sSI "$BASE/painel-profissional" | tr -d '\r' | awk 'tolower($1)=="location:" {$1=""; sub(/^ /,""); print; exit}')"
           echo "/painel-profissional => $status2 location=$location2"
           [[ "$status2" =~ ^30[2378]$ ]]
-          [[ "$location2" == *"/profissional-painel"* ]]
+          [[ "$location2" == "https://ldr-ecossistema-validacao.onrender.com/profissional-painel" ]]
