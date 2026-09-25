@@ -281,7 +281,7 @@ export async function upsertProfessionalByAdmin(
     if (!authUser) {
       const invited = await supabaseAdmin.auth.admin.inviteUserByEmail(email, {
         data: { full_name: displayName, account_kind: "profissional" },
-        redirectTo: "https://painel.ldrrhestrategia.com/profissional/login",
+        redirectTo: "https://ldracademy.online/profissional/login",
       });
       if (invited.error || !invited.data.user)
         throw invited.error ?? new Error("Não foi possível criar o acesso profissional.");

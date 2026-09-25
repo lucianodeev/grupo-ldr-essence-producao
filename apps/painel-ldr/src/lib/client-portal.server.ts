@@ -991,7 +991,7 @@ const DIGITAL_LIBRARY_PRODUCTS: Omit<ClientLibraryProduct, "entitled">[] = [
       "E-book de empreendedorismo, coragem e recomeços. O acesso à leitura depende de compra confirmada para esta conta.",
     priceBrlCents: 990,
     priceEurCents: 490,
-    purchaseUrl: "https://ldrrhestrategia.com/acoragemdecomecar?lang=pt",
+    purchaseUrl: "/acoragemdecomecar?lang=pt",
   },
   {
     key: "livro_menino_mamao",
@@ -1000,7 +1000,7 @@ const DIGITAL_LIBRARY_PRODUCTS: Omit<ClientLibraryProduct, "entitled">[] = [
       "Livro autobiográfico sobre trabalho, recomeços, estratégia e a coragem de continuar construindo.",
     priceBrlCents: 4990,
     priceEurCents: 2000,
-    purchaseUrl: "https://ldrrhestrategia.com/livros?lang=pt",
+    purchaseUrl: "/livros?lang=pt",
   },  { key:"ebook_pratica_clinica_psicanalise", title:"A Prática Clínica da Psicanálise", description:"Estrutura, manejo, ética e construção da clínica psicanalítica.", priceBrlCents:1990, priceEurCents:490, purchaseUrl:"/ebook-pratica-clinica-psicanalise" },
   { key:"ebook_psicanalise_no_mundo", title:"A Psicanálise no Mundo", description:"Panorama global, regulamentação e atuação internacional em perspectiva comparada.", priceBrlCents:1990, priceEurCents:490, purchaseUrl:"/ebook-psicanalise-no-mundo" },
   { key:"ebook_estudos_caso_psicanalise", title:"Estudos de Caso", description:"Casos ficcionais ou compostos sobre vínculos, desejo, trabalho e impasses contemporâneos.", priceBrlCents:7990, priceEurCents:1490, purchaseUrl:"/ebook-estudos-caso-psicanalise" },
@@ -1232,7 +1232,7 @@ export async function createClientDigitalCheckout(
   const requestUrl = request ? new URL(request.url) : null;
   const appOrigin =
     process.env["CLIENT_PANEL_URL"]?.replace(/\/$/, "") ||
-    (requestUrl ? requestUrl.origin : "https://painel.ldrrhestrategia.com");
+    (requestUrl ? requestUrl.origin : "https://ldracademy.online");
   const appUrl = new URL(appOrigin);
 
   logDigitalCheckout("info", "stripe_configuration_ready", {

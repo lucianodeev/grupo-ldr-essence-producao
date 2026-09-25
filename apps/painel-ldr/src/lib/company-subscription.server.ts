@@ -195,7 +195,7 @@ export async function createCompanySubscriptionCheckout(userId: string, email: s
   const secret = process.env["STRIPE_SECRET_KEY"];
   if (!secret) { await db.from("company_subscriptions").delete().eq("id", row.id); fail("Checkout indisponível no momento."); }
   const request = getRequest();
-  const origin = process.env["CLIENT_PANEL_URL"]?.replace(/\/$/, "") || (request ? new URL(request.url).origin : "https://painel.ldrrhestrategia.com");
+  const origin = process.env["CLIENT_PANEL_URL"]?.replace(/\/$/, "") || (request ? new URL(request.url).origin : "https://ldracademy.online");
   const params = new URLSearchParams();
   params.set("mode", "subscription");
   params.append("payment_method_types[]", "card");

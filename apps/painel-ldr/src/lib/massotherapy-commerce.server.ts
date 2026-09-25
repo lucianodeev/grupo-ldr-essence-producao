@@ -8,7 +8,7 @@ const PRICE_BRL=29_999,PRICE_EUR=4_990,TOTAL_LESSONS=300,TOTAL_HOURS=1200,MINIMU
 type Market="BR"|"INTL";const db=supabaseAdmin as any;
 function fail(message:string):never{throw new Error(message)}
 async function customerFor(userId:string,email:string|null){const ctx=await resolveClient(userId,email);if(ctx.status!=="ok")fail("Acesso do cliente não disponível.");return ctx.customer;}
-function appOrigin(){const request=getRequest();return process.env.CLIENT_PANEL_URL?.replace(/\/$/,"")||(request?new URL(request.url).origin:"https://painel.ldrrhestrategia.com");}
+function appOrigin(){const request=getRequest();return process.env.CLIENT_PANEL_URL?.replace(/\/$/,"")||(request?new URL(request.url).origin:"https://ldracademy.online");}
 function daysSince(v:string|null|undefined){if(!v)return 0;const t=Date.parse(v);return Number.isFinite(t)?Math.max(0,Math.floor((Date.now()-t)/86400000)):0;}
 function matches(o:any){const m=(o?.metadata??{}) as Record<string,unknown>;const k=typeof m.product_key==="string"?m.product_key:"";return o?.catalog_key===PRODUCT_KEY||k===PRODUCT_KEY||k===PRODUCT_SLUG;}
 async function paidOrder(customerId:string){const {data,error}=await db.from("orders").select("id,catalog_key,payment_status,metadata,created_at").eq("customer_id",customerId).eq("payment_status","pago").order("created_at",{ascending:false});if(error)fail("Não foi possível verificar o acesso.");return(data??[]).find(matches)??null;}
