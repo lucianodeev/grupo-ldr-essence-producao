@@ -21,6 +21,11 @@ export function isUnifiedPreviewHost(hostname: string): boolean {
   return host === "localhost" || host === "127.0.0.1" || PREVIEW_SUFFIXES.some((suffix) => host.endsWith(suffix));
 }
 
+export function isUnifiedEcosystemHost(hostname: string): boolean {
+  const host = hostname.trim().toLowerCase();
+  return host === "ldracademy.online" || host === "www.ldracademy.online" || isUnifiedPreviewHost(host);
+}
+
 function withQuery(pathname: string, url: URL, extra?: Record<string, string>): string {
   const params = new URLSearchParams(url.search);
   for (const [key, value] of Object.entries(extra ?? {})) {
@@ -35,7 +40,7 @@ export function unifiedPreviewTarget(
   currentOrigin: string,
   currentHostname: string,
 ): string | null {
-  if (!isUnifiedPreviewHost(currentHostname)) return null;
+  if (!isUnifiedEcosystemHost(currentHostname)) return null;
 
   const raw = href.trim();
   if (!raw || /^(?:#|mailto:|tel:|sms:|javascript:)/i.test(raw)) return null;
