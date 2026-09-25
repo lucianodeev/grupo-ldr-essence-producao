@@ -245,12 +245,16 @@ function RootComponent() {
       const target = event.target;
       if (!(target instanceof Element)) return;
       const anchor = target.closest<HTMLAnchorElement>("a[href]");
-      if (!anchor || anchor.hasAttribute("download") || (anchor.target && anchor.target !== "_self")) return;
+      if (!anchor || anchor.hasAttribute("download")) return;
       const href = anchor.getAttribute("href");
       if (!href) return;
       const next = unifiedPreviewTarget(href, window.location.origin, window.location.hostname);
       if (!next) return;
       event.preventDefault();
+      if (anchor.target && anchor.target !== "_self") {
+        window.open(next, anchor.target, "noopener,noreferrer");
+        return;
+      }
       window.location.assign(next);
     };
 
