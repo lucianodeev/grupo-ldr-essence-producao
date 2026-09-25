@@ -47,13 +47,22 @@ export const Route = createFileRoute("/api/auth/session-sync")({
           },
         );
 
-        const { data, error } = await supabase.auth.setSession({
-          access_token: accessToken,
-          refresh_token: refreshToken,
-        });
-        if (error || !data.user?.id) return json(401, { ok: false, error: "invalid_session" }, responseHeaders);
+        try {
+          const { data, error } = await supabase.auth.setSession({
+            access_token: accessToken,
+            refresh_token: refreshToken,
+          });
+          if (error || !data.user?.id) {
+            return json(401, { ok: false, error: "invalid_session" }, responseHeaders);
+          }
 
-        return json(200, { ok: true, userId: data.user.id }, responseHeaders);
+          return json(200, { ok: true, userId: data.user.id }, responseHeaders);
+        } catch (error) {
+          console.warn("[auth/session-sync] rejected invalid session", {
+            message: error instanceof Error ? error.message : "invalid_session",
+          });
+          return json(401, { ok: false, error: "invalid_session" }, responseHeaders);
+        }
       },
     },
   },
