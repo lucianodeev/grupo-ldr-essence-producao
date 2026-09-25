@@ -35,7 +35,7 @@ function localSlotParts(date: Date, timeZone: string) {
 }
 function origin() {
   const req = getRequest();
-  return process.env["CLIENT_PANEL_URL"]?.replace(/\/$/, "") || (req ? new URL(req.url).origin : "https://painel.ldrrhestrategia.com");
+  return process.env["CLIENT_PANEL_URL"]?.replace(/\/$/, "") || (req ? new URL(req.url).origin : "https://ldracademy.online");
 }
 
 type ClientSource = "social_clinic" | "professional_direct" | "ldr_generated";
