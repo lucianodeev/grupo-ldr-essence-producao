@@ -1,0 +1,43 @@
+name: Validate Render HTTPS redirects v2
+
+on:
+  push:
+    branches:
+      - fix/render-https-redirects-v2
+    paths:
+      - 'apps/painel-ldr/src/server.ts'
+      - '.github/workflows/validate-render-https-redirects-v2.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install --no-audit --no-fund
+      - name: Generate routes
+        working-directory: apps/painel-ldr
+        run: npm run generate-routes
+      - name: Core tests
+        working-directory: apps/painel-ldr
+        run: npm test
+      - name: Render build
+        working-directory: apps/painel-ldr
+        env:
+          SUPABASE_URL: https://sfrcsrzuoqdscflfuwik.supabase.co
+          SUPABASE_PUBLISHABLE_KEY: placeholder
+          VITE_SUPABASE_URL: https://sfrcsrzuoqdscflfuwik.supabase.co
+          VITE_SUPABASE_PUBLISHABLE_KEY: placeholder
+        run: npm run build:render
+      - name: Verify redirect implementation
+        shell: bash
+        run: |
+          grep -Fq 'const url = new URL(request.url);' apps/painel-ldr/src/server.ts
+          grep -Fq 'const url = publicRequestUrl(request);' apps/painel-ldr/src/server.ts
+          ! grep -Fq 'const url = publicRequestUrl(request);' <(sed -n '/function publicRequestUrl/,/return url/p' apps/painel-ldr/src/server.ts)
