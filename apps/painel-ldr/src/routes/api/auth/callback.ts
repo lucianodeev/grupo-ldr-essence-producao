@@ -20,7 +20,7 @@ export const Route=createFileRoute("/api/auth/callback")({server:{handlers:{GET:
  // Academic return is accepted only on Academy and its Vercel previews. The
  // path validator additionally prevents external/open redirects.
  const academicReturn=isAcademicCallbackHost(url)?academicReturnPath(requestCookies.find(({name})=>name===ACADEMIC_RETURN_COOKIE)?.value):null;
- const adminFlow=url.searchParams.get("admin")==="1"||requestCookies.some(({name,value})=>name==="ldr_admin_oauth"&&value==="1");
+ const adminFlow=url.pathname.endsWith("/callback/admin")||url.searchParams.get("admin")==="1"||requestCookies.some(({name,value})=>name==="ldr_admin_oauth"&&value==="1");
  const portalFlow=portalFromCookies(requestCookies),{supabaseUrl,supabasePublishableKey}=config();
  const companyReturn=portalFlow==="company"?companyReturnPath(requestCookies.find(({name})=>name===COMPANY_RETURN_COOKIE)?.value):null;
  const responseHeaders=new Headers({"cache-control":"no-store, max-age=0, must-revalidate",pragma:"no-cache",expires:"0"});
