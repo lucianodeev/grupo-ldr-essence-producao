@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-const ALLOWED_ORIGINS = new Set([
+const ALLOWED_ORIGINS = new Set([\n  "https://ldracademy.online",\n  "https://www.ldracademy.online",
   "https://ldrrhestrategia.com",
   "https://www.ldrrhestrategia.com",
   "https://kind-crest-9804.hosted.pageshare.ai",
