@@ -1,0 +1,49 @@
+name: Validate Academy single domain
+
+on:
+  push:
+    branches:
+      - feat/academy-single-domain
+    paths:
+      - 'apps/painel-ldr/**'
+      - '.github/workflows/validate-academy-single-domain.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install --no-audit --no-fund
+      - name: Generate routes
+        working-directory: apps/painel-ldr
+        run: npm run generate-routes
+      - name: Unified-domain tests
+        working-directory: apps/painel-ldr
+        run: npm run test:preview
+      - name: Core tests
+        working-directory: apps/painel-ldr
+        run: npm test
+      - name: Academic regressions
+        working-directory: apps/painel-ldr
+        run: npm run test:academic
+      - name: Render build
+        working-directory: apps/painel-ldr
+        env:
+          SUPABASE_URL: https://sfrcsrzuoqdscflfuwik.supabase.co
+          SUPABASE_PUBLISHABLE_KEY: placeholder
+          VITE_SUPABASE_URL: https://sfrcsrzuoqdscflfuwik.supabase.co
+          VITE_SUPABASE_PUBLISHABLE_KEY: placeholder
+        run: npm run build:render
+      - name: Verify Academy remains unified
+        shell: bash
+        run: |
+          grep -Fq 'LDR Academy is now the single canonical domain' apps/painel-ldr/src/server.ts
+          grep -Fq 'isUnifiedEcosystemHost' apps/painel-ldr/src/routes/__root.tsx
+          ! grep -Fq 'https://suporte.ldrrhestrategia.com/falar-com-ecossistema' apps/painel-ldr/src/routes/ecossistema.tsx
