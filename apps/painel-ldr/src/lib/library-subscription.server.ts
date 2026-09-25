@@ -57,7 +57,7 @@ type StripeObject = {
 function fail(message: string): never { throw new Error(message); }
 function stripeId(value: string | { id?: string } | null | undefined) { return typeof value === "string" ? value : value?.id ?? null; }
 function isoFromUnix(value?: number | null) { return value && Number.isFinite(value) ? new Date(value * 1000).toISOString() : null; }
-function appOrigin() { const request = getRequest(); return process.env.CLIENT_PANEL_URL?.replace(/\/$/, "") || (request ? new URL(request.url).origin : "https://painel.ldrrhestrategia.com"); }
+function appOrigin() { const request = getRequest(); return process.env.CLIENT_PANEL_URL?.replace(/\/$/, "") || (request ? new URL(request.url).origin : "https://ldracademy.online"); }
 async function customerFor(userId: string, email: string | null) { const ctx = await resolveClient(userId, email); if (ctx.status !== "ok") fail("Acesso do cliente não disponível."); return ctx.customer; }
 
 async function stripeGet(path: string) {
