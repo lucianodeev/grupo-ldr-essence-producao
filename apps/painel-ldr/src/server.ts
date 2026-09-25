@@ -20,7 +20,7 @@ async function getServerEntry(): Promise<ServerEntry> {
 }
 
 function publicRequestUrl(request: Request): URL {
-  const url = publicRequestUrl(request);
+  const url = new URL(request.url);
   const forwardedProto = request.headers.get("x-forwarded-proto")?.split(",")[0]?.trim().toLowerCase();
   if (forwardedProto === "https" || forwardedProto === "http") {
     url.protocol = `${forwardedProto}:`;
@@ -46,7 +46,7 @@ function temporaryRedirect(url: string): Response {
 }
 
 function academyCanonicalRedirect(request: Request): Response | null {
-  const url = new URL(request.url);
+  const url = publicRequestUrl(request);
   const host = url.hostname.toLowerCase();
   const isAcademy = host === "ldracademy.online" || host === "www.ldracademy.online";
   const isServicePortal = host === "portal.ldrrhestrategia.com";
