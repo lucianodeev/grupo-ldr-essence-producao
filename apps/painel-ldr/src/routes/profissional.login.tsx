@@ -12,7 +12,7 @@ const COPY={pt:{title:"Área do Profissional",signupTitle:"Cadastro Profissional
 
 function oauthReturnUrl() {
   if (typeof window === "undefined") return "/api/auth/callback";
-  return `${window.location.origin}/api/auth/callback`;
+  return `https://ldr-ecossistema-validacao.onrender.com/api/auth/callback`;
 }
 
 async function syncBrowserSession(session:Session){
