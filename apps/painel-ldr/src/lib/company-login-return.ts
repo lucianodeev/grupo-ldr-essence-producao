@@ -18,8 +18,8 @@ export function companyReturnPath(value: unknown): string | null {
   )
     return null;
   try {
-    const url = new URL(value, "https://ldracademy.online");
-    if (url.origin !== "https://ldracademy.online" || !allowed.has(url.pathname)) return null;
+    const url = new URL(value, "https://ldr-ecossistema-validacao.onrender.com");
+    if (url.origin !== "https://ldr-ecossistema-validacao.onrender.com" || !allowed.has(url.pathname)) return null;
     return `${url.pathname}${url.search}${url.hash}`;
   } catch {
     return null;
