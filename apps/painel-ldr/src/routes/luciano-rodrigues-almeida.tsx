@@ -33,7 +33,7 @@ const projects = [
   {
     name: "LDR RH & Estratégia",
     text: "Ecossistema voltado à carreira, empregabilidade, saúde mental, bem-estar, recrutamento, orientação profissional e soluções para empresas e instituições.",
-    href: "https://ldrrhestrategia.com",
+    href: "/ecossistema",
   },
   {
     name: "Human Room",
@@ -43,7 +43,7 @@ const projects = [
   {
     name: "Grupo LDR Essence",
     text: "Iniciativa que reúne projetos em educação, carreira, saúde mental, bem-estar e desenvolvimento humano.",
-    href: "https://ldrrhestrategia.com/luciano",
+    href: "/luciano",
   },
 ];
 
