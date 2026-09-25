@@ -8,6 +8,8 @@ type ServerEntry = {
   fetch: (request: Request, env: unknown, ctx: unknown) => Promise<Response> | Response;
 };
 
+const CANONICAL_ECOSYSTEM_ORIGIN = "https://ldr-ecossistema-validacao.onrender.com";
+
 let serverEntryPromise: Promise<ServerEntry> | undefined;
 
 async function getServerEntry(): Promise<ServerEntry> {
@@ -86,53 +88,35 @@ function academyCanonicalRedirect(request: Request): Response | null {
     return null;
   }
 
-  // Canonical Academy hostname. www is accepted only as an alias and always
-  // resolves to the official apex domain.
-  if (host === "www.ldracademy.online") {
-    const target = new URL(url.toString());
-    target.hostname = "ldracademy.online";
-    return temporaryRedirect(target.toString());
-  }
-
-  // LDR Academy is now the single canonical domain for the complete ecosystem.
-  // Every product, portal and authenticated area stays on this origin.
-  if (isAcademy) {
-    if (url.pathname === "/index.html") {
-      url.pathname = "/";
-      return temporaryRedirect(url.toString());
-    }
-    if (url.pathname === "/profissional/cadastro" || url.pathname === "/profissional/cadastro/") {
-      url.pathname = "/profissional/login";
-      url.searchParams.set("mode", "cadastro");
-      return temporaryRedirect(url.toString());
-    }
-    if (url.pathname === "/painel-profissional" || url.pathname === "/painel-profissional/") {
-      url.pathname = "/profissional-painel";
-      return temporaryRedirect(url.toString());
-    }
-    if (url.pathname === "/biblioteca") {
-      url.pathname = "/cliente/biblioteca";
-      return temporaryRedirect(url.toString());
-    }
-    if (url.pathname.startsWith("/biblioteca/")) {
-      url.pathname = `/cliente${url.pathname}`;
-      return temporaryRedirect(url.toString());
-    }
-    return null;
-  }
-
-  const academyTarget = (pathname: string) => {
-    const target = new URL("https://ldracademy.online");
+  const ecosystemTarget = (pathname: string) => {
+    const target = new URL(CANONICAL_ECOSYSTEM_ORIGIN);
     target.pathname = pathname;
     target.search = url.search;
     target.hash = url.hash;
     return target;
   };
 
+  // ldracademy.online and the former LDR hosts are compatibility aliases only.
+  // The canonical public origin is the Render ecosystem host.
+  if (isAcademy) {
+    let pathname = url.pathname;
+    if (pathname === "/index.html") pathname = "/";
+    if (pathname === "/biblioteca") pathname = "/cliente/biblioteca";
+    if (pathname.startsWith("/biblioteca/")) pathname = `/cliente${pathname}`;
+    if (pathname === "/profissional/cadastro" || pathname === "/profissional/cadastro/") {
+      pathname = "/profissional/login";
+      const target = ecosystemTarget(pathname);
+      target.searchParams.set("mode", "cadastro");
+      return temporaryRedirect(target.toString());
+    }
+    if (pathname === "/painel-profissional" || pathname === "/painel-profissional/") pathname = "/profissional-painel";
+    return temporaryRedirect(ecosystemTarget(pathname).toString());
+  }
+
   // Old LDR hosts are compatibility aliases only. Once their DNS reaches this
   // deployment, they redirect into a child page of ldracademy.online.
   if (isInstitutionalHost) {
-    const target = academyTarget(url.pathname === "/" || url.pathname === "/index.html" ? "/ldr-rh-estrategia" : url.pathname);
+    const target = ecosystemTarget(url.pathname === "/" || url.pathname === "/index.html" ? "/ldr-rh-estrategia" : url.pathname);
     return temporaryRedirect(target.toString());
   }
 
@@ -143,16 +127,16 @@ function academyCanonicalRedirect(request: Request): Response | null {
         : url.pathname.startsWith("/clinica-social")
           ? url.pathname
           : `/clinica-social${url.pathname.startsWith("/") ? url.pathname : `/${url.pathname}`}`;
-    return temporaryRedirect(academyTarget(pathname).toString());
+    return temporaryRedirect(ecosystemTarget(pathname).toString());
   }
 
   if (isSupportPortal) {
     const pathname = url.pathname === "/" || url.pathname === "/index.html" ? "/falar-com-ecossistema" : url.pathname;
-    return temporaryRedirect(academyTarget(pathname).toString());
+    return temporaryRedirect(ecosystemTarget(pathname).toString());
   }
 
   if (isLegacyLdrPanelHost) {
-    const target = academyTarget(
+    const target = ecosystemTarget(
       url.searchParams.has("code") ? "/api/auth/callback" :
       (url.pathname === "/" || url.pathname === "/index.html" || url.pathname === "/acesso" ? "/admin" : url.pathname)
     );
@@ -162,7 +146,7 @@ function academyCanonicalRedirect(request: Request): Response | null {
 
   if (isServicePortal) {
     let pathname = url.pathname;
-    const target = academyTarget(pathname);
+    const target = ecosystemTarget(pathname);
     if (pathname === "/" || pathname === "/index.html") {
       target.pathname = "/cliente/login";
       target.searchParams.set("portal", "services");
@@ -197,7 +181,7 @@ function academyCanonicalRedirect(request: Request): Response | null {
   // Legacy Luciano Conecta hosts are aliases only. Keep their content/routes,
   // but expose them through the official LDR Academy domain.
   if (isFilmHost) {
-    const target = new URL("https://ldracademy.online");
+    const target = new URL(CANONICAL_ECOSYSTEM_ORIGIN);
     target.pathname = url.pathname === "/" || url.pathname === "/index.html" ? "/film" : url.pathname;
     target.search = url.search;
     target.hash = url.hash;
@@ -205,7 +189,7 @@ function academyCanonicalRedirect(request: Request): Response | null {
   }
 
   if (isLegacyLucianoHost) {
-    const target = new URL("https://ldracademy.online");
+    const target = new URL(CANONICAL_ECOSYSTEM_ORIGIN);
     target.pathname = url.pathname === "/index.html" ? "/" : url.pathname;
     target.search = url.search;
     target.hash = url.hash;
@@ -233,7 +217,7 @@ function academyCanonicalRedirect(request: Request): Response | null {
       url.pathname.startsWith("/cliente/rede-academica/")
     ) {
       const target = new URL(url.toString());
-      target.hostname = "ldracademy.online";
+      target.hostname = "ldr-ecossistema-validacao.onrender.com";
       return temporaryRedirect(target.toString());
     }
 
@@ -258,7 +242,7 @@ function academyCanonicalRedirect(request: Request): Response | null {
   }
 
   if (isLegacyLearnHost || isLegacyPanelHost) {
-    const target = new URL("https://ldracademy.online");
+    const target = new URL(CANONICAL_ECOSYSTEM_ORIGIN);
     target.search = url.search;
     target.hash = url.hash;
 
@@ -334,13 +318,13 @@ function academyCanonicalRedirect(request: Request): Response | null {
   // authenticated client route so the public storefront and private library
   // remain separate and hydration uses the same route on server and browser.
   if (url.pathname === "/cliente" || url.pathname === "/biblioteca") {
-    url.hostname = "ldracademy.online";
+    url.hostname = "ldr-ecossistema-validacao.onrender.com";
     url.pathname = "/cliente/biblioteca";
     return temporaryRedirect(url.toString());
   }
 
   if (url.pathname.startsWith("/biblioteca/")) {
-    url.hostname = "ldracademy.online";
+    url.hostname = "ldr-ecossistema-validacao.onrender.com";
     url.pathname = `/cliente${url.pathname}`;
     return temporaryRedirect(url.toString());
   }
