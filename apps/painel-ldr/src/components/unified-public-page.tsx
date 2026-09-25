@@ -24,7 +24,7 @@ const SELLER_ACADEMY =
   "https://lucianodeev.github.io/grupo-ldr-essence-unificado/academia-vendas.html";
 const SELLER_PRESENTATION =
   "https://lucianodeev.github.io/grupo-ldr-essence-unificado/apresentacao-vendedores.html";
-const PANEL = "https://painel.ldrrhestrategia.com";
+const PANEL = "https://ldracademy.online";
 
 const COPY = {
   pt: {
