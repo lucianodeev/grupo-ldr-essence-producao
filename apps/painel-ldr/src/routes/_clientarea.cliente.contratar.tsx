@@ -165,7 +165,7 @@ function Card({ item, copy }: { item: ContractItem; copy: Copy }) {
 
 function CorporateWellbeing({ copy, locale }: { copy: Copy; locale: Locale }) {
   const massageMessage = `${SUPPORT}?text=${encodeURIComponent(copy.massageMessage)}`;
-  const wellbeingUrl = `https://ldrrhestrategia.com/bem-estar?lang=${locale}#hora-bem-estar-ldr`;
+  const wellbeingUrl = `/bem-estar?lang=${locale}#hora-bem-estar-ldr`;
   return (
     <section className="min-w-0 rounded-3xl border border-primary/20 bg-card p-5 shadow-sm sm:p-6">
       <div className="grid min-w-0 gap-6 lg:grid-cols-[1.05fr_1.95fr] lg:items-stretch">
