@@ -22,7 +22,7 @@ const CAREER_LOGIN_RETURN_KEY = COMPANY_RETURN_KEY;
 
 function oauthReturnUrl() {
   if (typeof window === "undefined") return "/api/auth/callback";
-  return `${window.location.origin}/api/auth/callback`;
+  return `https://ldr-ecossistema-validacao.onrender.com/api/auth/callback`;
 }
 
 function getSafeNext() {
