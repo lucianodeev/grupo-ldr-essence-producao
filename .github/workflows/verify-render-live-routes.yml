@@ -43,6 +43,27 @@ jobs:
           check_page "/clinica-social/solicitar" "Clínica Social"
           check_page "/clinica-social/profissionais" "Clínica Social"
 
+      - name: Verify protected entry routes without session
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="https://ldr-ecossistema-validacao.onrender.com"
+          check_no_500() {
+            path="$1"
+            code="$(curl --retry 3 --retry-delay 2 --connect-timeout 20 --max-time 60 -L -sS -o /tmp/route.html -w '%{http_code}' "$BASE$path")"
+            echo "$path => final HTTP $code"
+            test "$code" = "200"
+            ! grep -Fqi "Internal Server Error" /tmp/route.html
+          }
+          check_no_500 "/cliente/biblioteca"
+          check_no_500 "/cliente/rede-academica"
+          check_no_500 "/empresa"
+          check_no_500 "/funcionario"
+          check_no_500 "/admin"
+          check_no_500 "/profissional-painel"
+          check_no_500 "/carreira"
+          check_no_500 "/carreira/vagas"
+
       - name: Verify redirects and canonical aliases
         shell: bash
         run: |
