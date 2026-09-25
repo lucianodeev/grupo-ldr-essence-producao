@@ -33,7 +33,7 @@ const projects = [
   {
     name: "LDR RH & Estratégia",
     text: "Ecossistema voltado à carreira, empregabilidade, saúde mental, bem-estar, recrutamento, orientação profissional e soluções para empresas e instituições.",
-    href: "https://ldrrhestrategia.com",
+    href: "https://ldracademy.online/ldr-rh-estrategia",
   },
   {
     name: "Human Room",
@@ -43,7 +43,7 @@ const projects = [
   {
     name: "Grupo LDR Essence",
     text: "Iniciativa que reúne projetos em educação, carreira, saúde mental, bem-estar e desenvolvimento humano.",
-    href: "https://ldrrhestrategia.com/luciano",
+    href: "https://ldracademy.online/ldr-rh-estrategia/luciano",
   },
 ];
 
@@ -63,11 +63,11 @@ const areas = [
 const officialLinks = [
   ["LDR Academy", "https://ldracademy.online"],
   ["Ecossistema LDR", "https://ldracademy.online/ecossistema"],
-  ["LDR RH & Estratégia", "https://ldrrhestrategia.com"],
+  ["LDR RH & Estratégia", "https://ldracademy.online/ldr-rh-estrategia"],
   ["Human Room", "https://ldracademy.online/human-room"],
   ["Instagram LDR Academy", "https://www.instagram.com/ldracademy.online"],
   ["Instagram profissional", "https://www.instagram.com/luciano.psicanalise_"],
-  ["Página atual sobre Luciano", "https://ldrrhestrategia.com/luciano"],
+  ["Página atual sobre Luciano", "https://ldracademy.online/ldr-rh-estrategia/luciano"],
 ];
 
 const personSchema = {
@@ -80,7 +80,7 @@ const personSchema = {
   url: "https://ldracademy.online/luciano-rodrigues-almeida",
   sameAs: [
     "https://ldracademy.online",
-    "https://ldrrhestrategia.com/luciano",
+    "https://ldracademy.online/ldr-rh-estrategia/luciano",
     "https://ldracademy.online/human-room",
     "https://www.instagram.com/ldracademy.online",
     "https://www.instagram.com/luciano.psicanalise_",
@@ -119,7 +119,7 @@ function LucianoPage() {
           </Link>
           <nav className="hidden items-center gap-5 text-sm font-semibold text-white/80 sm:flex">
             <a href="https://ldracademy.online/ecossistema" className="hover:text-white">Ecossistema</a>
-            <a href="https://ldrrhestrategia.com" className="hover:text-white">LDR RH</a>
+            <a href="https://ldracademy.online/ldr-rh-estrategia" className="hover:text-white">LDR RH</a>
             <a href="https://ldracademy.online/human-room" className="hover:text-white">Human Room</a>
           </nav>
         </div>
@@ -139,7 +139,7 @@ function LucianoPage() {
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <ExternalButton href="https://ldracademy.online">Conhecer LDR Academy</ExternalButton>
               <ExternalButton href="https://ldracademy.online/ecossistema" variant="secondary">Ver Ecossistema</ExternalButton>
-              <ExternalButton href="https://ldrrhestrategia.com" variant="secondary">LDR RH & Estratégia</ExternalButton>
+              <ExternalButton href="https://ldracademy.online/ldr-rh-estrategia" variant="secondary">LDR RH & Estratégia</ExternalButton>
             </div>
           </div>
 
@@ -286,7 +286,7 @@ function LucianoPage() {
           </p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap">
             <ExternalButton href="https://ldracademy.online/ecossistema">Conhecer o ecossistema</ExternalButton>
-            <ExternalButton href="https://ldrrhestrategia.com" variant="secondary">LDR RH & Estratégia</ExternalButton>
+            <ExternalButton href="https://ldracademy.online/ldr-rh-estrategia" variant="secondary">LDR RH & Estratégia</ExternalButton>
             <ExternalButton href="https://www.instagram.com/luciano.psicanalise_" variant="secondary">Instagram profissional</ExternalButton>
           </div>
         </div>
