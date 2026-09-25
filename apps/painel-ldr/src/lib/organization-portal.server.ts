@@ -149,7 +149,7 @@ export async function createOrganizationCheckout(userId: string, email: string |
   const secret = process.env["STRIPE_SECRET_KEY"];
   if (!secret) { await cleanup(); fail("Checkout indisponível no momento."); }
   const request = getRequest();
-  const origin = process.env["CLIENT_PANEL_URL"]?.replace(/\/$/, "") || (request ? new URL(request.url).origin : "https://painel.ldrrhestrategia.com");
+  const origin = process.env["CLIENT_PANEL_URL"]?.replace(/\/$/, "") || (request ? new URL(request.url).origin : "https://ldracademy.online");
   const params = new URLSearchParams();
   params.set("mode", "payment");
   params.set("line_items[0][price_data][currency]", String(service.currency).toLowerCase());
