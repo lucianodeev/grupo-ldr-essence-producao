@@ -20,7 +20,7 @@ import { LanguageSelect, useI18n } from "@/lib/i18n";
 type Kind =
   "training" | "webinar" | "seller" | "ebook" | "books" | "sellerAcademy" | "sellerPresentation";
 
-const PANEL = "https://ldracademy.online";
+const PANEL = "";
 const SELLER =
   "https://lucianodeev.github.io/grupo-ldr-essence-unificado/rede-comercial-final/vendedor.html";
 const SELLER_ACADEMY =
