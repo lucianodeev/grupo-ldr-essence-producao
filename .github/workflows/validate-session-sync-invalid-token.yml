@@ -1,0 +1,41 @@
+name: Validate session sync invalid token
+
+on:
+  push:
+    branches:
+      - fix/session-sync-invalid-token
+    paths:
+      - 'apps/painel-ldr/src/routes/api/auth/session-sync.ts'
+      - '.github/workflows/validate-session-sync-invalid-token.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install --no-audit --no-fund
+      - name: Generate routes
+        working-directory: apps/painel-ldr
+        run: npm run generate-routes
+      - name: Core tests
+        working-directory: apps/painel-ldr
+        run: npm test
+      - name: Render build
+        working-directory: apps/painel-ldr
+        env:
+          SUPABASE_URL: https://sfrcsrzuoqdscflfuwik.supabase.co
+          SUPABASE_PUBLISHABLE_KEY: placeholder
+          VITE_SUPABASE_URL: https://sfrcsrzuoqdscflfuwik.supabase.co
+          VITE_SUPABASE_PUBLISHABLE_KEY: placeholder
+        run: npm run build:render
+      - name: Verify invalid-session guard exists
+        run: |
+          grep -Fq 'catch (error)' apps/painel-ldr/src/routes/api/auth/session-sync.ts
+          grep -Fq 'invalid_session' apps/painel-ldr/src/routes/api/auth/session-sync.ts
