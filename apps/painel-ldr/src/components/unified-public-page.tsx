@@ -24,7 +24,7 @@ const SELLER_ACADEMY =
   "https://lucianodeev.github.io/grupo-ldr-essence-unificado/academia-vendas.html";
 const SELLER_PRESENTATION =
   "https://lucianodeev.github.io/grupo-ldr-essence-unificado/apresentacao-vendedores.html";
-const PANEL = "https://ldracademy.online";
+const PANEL = "";
 
 const COPY = {
   pt: {
@@ -68,7 +68,7 @@ const COPY = {
     presentationTitle: "Apresentação Comercial",
     presentationText: "Acesse o material oficial de apresentação da Rede Comercial LDR.",
     openPresentation: "ABRIR APRESENTAÇÃO",
-    note: "Os sistemas autenticados continuam em painel.ldrrhestrategia.com para preservar segurança, login, Stripe e dados existentes.",
+    note: "Os sistemas autenticados permanecem dentro deste Ecossistema LDR, preservando segurança, login, Stripe e dados existentes.",
   },
   en: {
     back: "Back to home",
@@ -109,7 +109,7 @@ const COPY = {
     presentationTitle: "Sales Presentation",
     presentationText: "Access the official LDR Sales Network presentation material.",
     openPresentation: "OPEN PRESENTATION",
-    note: "Authenticated systems remain on painel.ldrrhestrategia.com to preserve security, login, Stripe and existing data.",
+    note: "Authenticated systems remain inside this LDR Ecosystem, preserving security, login, Stripe and existing data.",
   },
   fr: {
     back: "Retour à l'accueil",
@@ -151,7 +151,7 @@ const COPY = {
     presentationTitle: "Présentation commerciale",
     presentationText: "Accédez au support officiel de présentation du Réseau commercial LDR.",
     openPresentation: "OUVRIR LA PRÉSENTATION",
-    note: "Les systèmes authentifiés restent sur painel.ldrrhestrategia.com afin de préserver la sécurité, la connexion, Stripe et les données existantes.",
+    note: "Les systèmes authentifiés restent dans cet Écosystème LDR, en préservant la sécurité, la connexion, Stripe et les données existantes.",
   },
   es: {
     back: "Volver al inicio",
@@ -194,7 +194,7 @@ const COPY = {
     presentationTitle: "Presentación Comercial",
     presentationText: "Accede al material oficial de presentación de la Red Comercial LDR.",
     openPresentation: "ABRIR PRESENTACIÓN",
-    note: "Los sistemas autenticados continúan en painel.ldrrhestrategia.com para preservar seguridad, acceso, Stripe y los datos existentes.",
+    note: "Los sistemas autenticados permanecen dentro de este Ecosistema LDR, preservando seguridad, acceso, Stripe y los datos existentes.",
   },
 } as const;
 
