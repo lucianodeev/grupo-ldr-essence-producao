@@ -119,7 +119,7 @@ function ClientShell() {
               return <li key={item.to}><Link to={item.to} activeOptions={{ exact: "exact" in item ? item.exact : false }} onClick={() => setMenuOpen(false)} className={classes} activeProps={{ className: "flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-bold bg-white/15" }}><Icon className="h-4 w-4" aria-hidden="true"/>{item.label}</Link></li>;
             })}
           </ul>
-          {!servicePortal ? <div className="mt-5 border-t border-white/20 pt-4"><p className="mb-2 text-xs font-bold uppercase tracking-wide opacity-70">{c.ecosystem}</p><a className="block rounded-lg px-3 py-2 text-sm hover:bg-white/10" href="https://ldrrhestrategia.com/" target="_blank" rel="noreferrer">Grupo LDR Essence</a></div> : null}
+          {!servicePortal ? <div className="mt-5 border-t border-white/20 pt-4"><p className="mb-2 text-xs font-bold uppercase tracking-wide opacity-70">{c.ecosystem}</p><a className="block rounded-lg px-3 py-2 text-sm hover:bg-white/10" href="/ldr-rh-estrategia" target="_blank" rel="noreferrer">Grupo LDR Essence</a></div> : null}
           <div className="mt-5 border-t border-white/20 pt-4"><LanguageSelect /><button type="button" onClick={handleSignOut} className="mt-3 w-full rounded-lg border border-white/30 px-3 py-2 text-sm font-bold">{c.signout}</button></div>
         </nav>
       </aside>}
