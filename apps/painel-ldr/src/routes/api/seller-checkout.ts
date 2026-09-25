@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 
 const MAX_BODY = 16 * 1024;
-const ALLOWED_ORIGINS = new Set([
+const ALLOWED_ORIGINS = new Set([\n  "https://ldracademy.online",\n  "https://www.ldracademy.online",
   "https://lucianodeev.github.io",
   "https://ldrrhestrategia.com",
   "https://www.ldrrhestrategia.com",
@@ -110,7 +110,7 @@ export const Route = createFileRoute("/api/seller-checkout")({
               ok: true,
               link_type: "portal_referral",
               referral_id: referral.referral_id,
-              url: `https://painel.ldrrhestrategia.com/seller-referral?ref=${encodeURIComponent(referral.referral_id)}`,
+              url: `https://ldracademy.online/seller-referral?ref=${encodeURIComponent(referral.referral_id)}`,
               name: referral.name,
               currency: referral.currency,
               amount_cents: amount,
@@ -175,7 +175,7 @@ export const Route = createFileRoute("/api/seller-checkout")({
           params.set("line_items[0][quantity]", String(prepared.quantity || 1));
           params.set("customer_email", parsed.data.customer_email.toLowerCase());
           params.set("client_reference_id", prepared.sale_id);
-          params.set("success_url", "https://painel.ldrrhestrategia.com/acesso-compra?session_id={CHECKOUT_SESSION_ID}");
+          params.set("success_url", "https://ldracademy.online/acesso-compra?session_id={CHECKOUT_SESSION_ID}");
           params.set("cancel_url", "https://lucianodeev.github.io/grupo-ldr-essence-unificado/?pagamento=cancelado");
           putMetadata(params, "metadata", metadata);
           if (mode === "payment") putMetadata(params, "payment_intent_data[metadata]", metadata);
