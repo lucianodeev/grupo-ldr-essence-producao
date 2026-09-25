@@ -1,5 +1,5 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { BriefcaseBusiness, Building2, GraduationCap, HeartHandshake, Map, UsersRound } from "lucide-react";
+import { BriefcaseBusiness, Building2, GraduationCap, HeartHandshake, UsersRound } from "lucide-react";
 import { LanguageSelect, useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/ldr-rh-estrategia")({
@@ -28,8 +28,6 @@ const COPY = {
     clinicText: "Atendimento social, solicitação de vaga e participação de profissionais aprovados.",
     academy: "LDR Academy",
     academyText: "Biblioteca, cursos, formações, Rede Acadêmica e desenvolvimento contínuo.",
-    master: "Painel Master",
-    masterText: "Administração separada para operação, profissionais, Clínica Social, empresas e financeiro.",
     open: "Abrir",
     preservation: "Tudo permanece ligado ao mesmo Supabase e às rotas já validadas. Esta página funciona apenas como organização institucional e de navegação.",
   },
@@ -48,8 +46,6 @@ const COPY = {
     clinicText: "Social care, requests and participation by approved professionals.",
     academy: "LDR Academy",
     academyText: "Library, courses, programs, Academic Network and continuous development.",
-    master: "Master Panel",
-    masterText: "Separated administration for operations, professionals, Social Clinic, companies and finance.",
     open: "Open",
     preservation: "Everything remains connected to the same Supabase project and validated routes. This page only organizes institutional navigation.",
   },
@@ -68,8 +64,6 @@ const COPY = {
     clinicText: "Accompagnement social, demande de place et participation des professionnels approuvés.",
     academy: "LDR Academy",
     academyText: "Bibliothèque, cours, formations, Réseau Académique et développement continu.",
-    master: "Panneau Master",
-    masterText: "Administration séparée des opérations, professionnels, Clinique Sociale, entreprises et finances.",
     open: "Ouvrir",
     preservation: "Tout reste connecté au même projet Supabase et aux routes déjà validées. Cette page organise uniquement la navigation institutionnelle.",
   },
@@ -88,8 +82,6 @@ const COPY = {
     clinicText: "Atención social, solicitud de plaza y participación de profesionales aprobados.",
     academy: "LDR Academy",
     academyText: "Biblioteca, cursos, formaciones, Red Académica y desarrollo continuo.",
-    master: "Panel Master",
-    masterText: "Administración separada para operación, profesionales, Clínica Social, empresas y finanzas.",
     open: "Abrir",
     preservation: "Todo permanece conectado al mismo proyecto Supabase y a las rutas ya validadas. Esta página solo organiza la navegación institucional.",
   },
@@ -104,7 +96,6 @@ function LdrRhStrategyPage() {
     { title: c.professional, text: c.professionalText, to: "/profissional/cadastro", icon: UsersRound },
     { title: c.clinic, text: c.clinicText, to: "/clinica-social", icon: HeartHandshake },
     { title: c.academy, text: c.academyText, to: "/", icon: GraduationCap },
-    { title: c.master, text: c.masterText, to: "/login", icon: Map },
   ] as const;
 
   return (
