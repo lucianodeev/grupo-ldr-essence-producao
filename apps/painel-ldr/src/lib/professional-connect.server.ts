@@ -56,7 +56,7 @@ async function ensureConnectedAccount(userId: string, email: string | null) {
   params.set("controller[losses][payments]", "application");
   params.set("controller[stripe_dashboard][type]", "express");
   params.set("capabilities[transfers][requested]", "true");
-  params.set("business_profile[url]", "https://ldrrhestrategia.com");
+  params.set("business_profile[url]", "https://ldracademy.online");
   params.set("business_profile[product_description]", "Prestação de serviços profissionais através da Rede de Profissionais LDR.");
   params.set("metadata[platform]", "Rede de Profissionais LDR");
   params.set("metadata[professional_account_id]", account.id);
