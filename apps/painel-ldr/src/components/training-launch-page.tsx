@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRight, BadgeCheck, BookOpen, CheckCircle2, Clock3, GraduationCap, MessageCircle, Sparkles, UsersRound, Video } from "lucide-react";
 import { LanguageSelect, useI18n } from "@/lib/i18n";
 
-const PANEL = "https://ldracademy.online";
+const PANEL = "";
 
 const COPY = {
   pt: {
