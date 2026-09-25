@@ -20,7 +20,7 @@ const REGULAR_PRICES={
 } as const;
 
 function fail(message:string):never{throw new Error(message)}
-function appOrigin(){const request=getRequest();const requestUrl=request?new URL(request.url):null;return process.env.CLIENT_PANEL_URL?.replace(/\/$/,"")||requestUrl?.origin||"https://painel.ldrrhestrategia.com";}
+function appOrigin(){const request=getRequest();const requestUrl=request?new URL(request.url):null;return process.env.CLIENT_PANEL_URL?.replace(/\/$/,"")||requestUrl?.origin||"https://ldracademy.online";}
 async function customerFor(userId:string,email:string|null){const ctx=await resolveClient(userId,email);if(ctx.status!=="ok")fail("Acesso do cliente não disponível.");return ctx.customer;}
 async function requireMaster(supabase:any,userId:string){const access=await resolveAccess(supabase,userId);if(!access.authorized||access.role!=="superadmin")fail("Acesso negado.");}
 
