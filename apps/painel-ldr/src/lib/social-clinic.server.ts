@@ -18,7 +18,7 @@ function fail(message: string): never { throw new Error(message); }
 function clean(value: unknown, max = 300) { return String(value ?? "").trim().slice(0, max); }
 function origin() {
   const req = getRequest();
-  return process.env["CLIENT_PANEL_URL"]?.replace(/\/$/, "") || (req ? new URL(req.url).origin : "https://painel.ldrrhestrategia.com");
+  return process.env["CLIENT_PANEL_URL"]?.replace(/\/$/, "") || (req ? new URL(req.url).origin : "https://ldracademy.online");
 }
 async function configNumber(key: string, fallback: number) {
   if (!process.env["SUPABASE_SERVICE_ROLE_KEY"]) return fallback;
