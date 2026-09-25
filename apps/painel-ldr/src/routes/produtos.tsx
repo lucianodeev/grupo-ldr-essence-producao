@@ -8,7 +8,7 @@ export const Route = createFileRoute("/produtos")({
       {title:"Produtos | Grupo LDR Essence"},
       {name:"description",content:"Produtos, eBooks, livros, formações e acessos digitais do Ecossistema LDR."}
     ],
-    links:[{rel:"canonical",href:"https://ldrrhestrategia.com/produtos"}]
+    links:[{rel:"canonical",href:"https://ldracademy.online/produtos"}]
   }),
   component:ProductsPublicPage
 });
