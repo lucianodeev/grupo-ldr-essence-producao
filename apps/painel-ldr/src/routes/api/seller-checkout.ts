@@ -2,7 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 
 const MAX_BODY = 16 * 1024;
-const ALLOWED_ORIGINS = new Set([\n  "https://ldracademy.online",\n  "https://www.ldracademy.online",
+const ALLOWED_ORIGINS = new Set([
+  "https://ldracademy.online",
+  "https://www.ldracademy.online",
   "https://lucianodeev.github.io",
   "https://ldrrhestrategia.com",
   "https://www.ldrrhestrategia.com",
