@@ -139,7 +139,7 @@ export const Route = createFileRoute("/api/seller-purchase-access")({
             // Se a conta já existir, ainda enviamos o link de redefinição. A resposta
             // continua genérica para não expor a existência de contas.
             void createError;
-            const origin = "https://painel.ldrrhestrategia.com";
+            const origin = "https://ldracademy.online";
             const { error: resetError } = await supabaseAdmin.auth.resetPasswordForEmail(customerEmail, {
               redirectTo: `${origin}/cliente/definir-senha?next=${encodeURIComponent(target)}`,
             });
