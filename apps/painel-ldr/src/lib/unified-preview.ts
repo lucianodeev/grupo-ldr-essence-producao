@@ -21,7 +21,7 @@ export function isUnifiedPreviewHost(hostname: string): boolean {
   return host === "localhost" || host === "127.0.0.1" || PREVIEW_SUFFIXES.some((suffix) => host.endsWith(suffix));
 }
 
-export const CANONICAL_ECOSYSTEM_HOST = "www.ldrrhestrategia.com";
+export const CANONICAL_ECOSYSTEM_HOST = "ldrrhestrategia.com";
 
 export function isUnifiedEcosystemHost(hostname: string): boolean {
   const host = hostname.trim().toLowerCase();
