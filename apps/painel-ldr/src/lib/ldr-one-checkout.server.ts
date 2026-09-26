@@ -84,7 +84,7 @@ export async function createLdrOneCheckout(input: CheckoutRequest): Promise<{ ur
     }
     const response = await fetch("https://api.stripe.com/v1/checkout/sessions", {
       method: "POST",
-      headers: { Authorization: `Bearer ${secret}`, "Content-Type": "application/x-www-form-urlencoded" },
+      headers: { Authorization: `Bearer ${secret}`, "Content-Type": "application/x-www-form-urlencoded", "Idempotency-Key": `ldr-one-checkout-${row.id}` },
       body: params,
     });
     const session = await response.json() as { id?: string; url?: string };
