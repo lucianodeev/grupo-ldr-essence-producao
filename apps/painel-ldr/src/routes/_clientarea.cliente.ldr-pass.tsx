@@ -1,4 +1,7 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import { clientLdrOneEntitlement } from "@/lib/ldr-one-entitlement.functions";
 import { LanguageSelect, useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_clientarea/cliente/ldr-pass")({
@@ -14,6 +17,8 @@ const LDR_ONE_COPY = {
 
 function ClientLdrPass() {
   const { locale } = useI18n();
+  const statusFn = useServerFn(clientLdrOneEntitlement);
+  const status = useQuery({queryKey:["ldr-one-entitlement"],queryFn:()=>statusFn()});
   const t = LDR_ONE_COPY[locale as keyof typeof LDR_ONE_COPY] ?? LDR_ONE_COPY.pt;
   return (
     <div className="space-y-6"><div className="ml-auto w-36"><LanguageSelect /></div>
@@ -27,8 +32,8 @@ function ClientLdrPass() {
           </div>
           <div className="rounded-2xl bg-white/10 p-4">
             <p className="text-xs uppercase tracking-[.16em] text-white/50">{t.status}</p>
-            <p className="mt-1 text-xl font-black text-[#f4c76b]">{t.ready}</p>
-            <p className="mt-2 text-xs text-white/65">{t.statusText}</p>
+            <p className="mt-1 text-xl font-black text-[#f4c76b]">{status.data?.active ? (status.data.audience === "business" ? "LDR ONE Business ativo" : "LDR ONE Individual ativo") : status.isLoading ? "Verificando assinatura…" : t.ready}</p>
+            <p className="mt-2 text-xs text-white/65">{status.data?.active ? "Assinatura identificada. O acesso a cada conteúdo depende de sua elegibilidade." : status.isError ? "Não foi possível consultar a assinatura. Atualize a página." : t.statusText}</p>
           </div>
         </div>
       </section>
