@@ -50,16 +50,16 @@ function markPopularCards(label: string) {
   });
   for (const href of POPULAR_HREFS) {
     catalog.querySelectorAll<HTMLElement>(`a[href="${href}"]`).forEach((node) => {
-      node.dataset.ldrPopular = "true";
-      node.dataset.popularLabel = label;
+      node.dataset['ldrPopular'] = "true";
+      node.dataset['popularLabel'] = label;
     });
   }
   catalog.querySelectorAll<HTMLElement>("a,button").forEach((node) => {
     const href = node.getAttribute("href") || "";
     const text = (node.textContent || "").replace(/\s+/g, " ").trim();
     if (href === "/cliente/treinamentos/ia-negocios-carreira" || /^IA(?:\s|$)/i.test(text)) {
-      node.dataset.ldrPopular = "true";
-      node.dataset.popularLabel = label;
+      node.dataset['ldrPopular'] = "true";
+      node.dataset['popularLabel'] = label;
     }
   });
 }
@@ -327,20 +327,20 @@ export function AcademyAccessibilityControls({ visible = true }: Props) {
 
   useEffect(() => {
     const root = document.documentElement;
-    if (!visible) { root.classList.remove("dark"); delete root.dataset.academyTheme; return; }
+    if (!visible) { root.classList.remove("dark"); delete root.dataset['academyTheme']; return; }
     root.classList.toggle("dark", theme === "dark");
-    root.dataset.academyTheme = theme;
+    root.dataset['academyTheme'] = theme;
     window.localStorage.setItem(STORAGE_THEME, theme);
-    return () => { root.classList.remove("dark"); delete root.dataset.academyTheme; };
+    return () => { root.classList.remove("dark"); delete root.dataset['academyTheme']; };
   }, [theme, visible]);
 
   useEffect(() => {
     const root = document.documentElement;
-    if (!visible) { delete root.dataset.academyFontScale; root.style.removeProperty("--academy-font-scale"); return; }
-    root.dataset.academyFontScale = String(Math.round(scale * 100));
+    if (!visible) { delete root.dataset['academyFontScale']; root.style.removeProperty("--academy-font-scale"); return; }
+    root.dataset['academyFontScale'] = String(Math.round(scale * 100));
     root.style.setProperty("--academy-font-scale", String(scale));
     window.localStorage.setItem(STORAGE_SCALE, String(scale));
-    return () => { delete root.dataset.academyFontScale; root.style.removeProperty("--academy-font-scale"); };
+    return () => { delete root.dataset['academyFontScale']; root.style.removeProperty("--academy-font-scale"); };
   }, [scale, visible]);
 
   useEffect(() => {
