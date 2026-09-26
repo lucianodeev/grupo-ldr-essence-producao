@@ -122,6 +122,7 @@ export function getDoMamaoCurriculum(locale:TrainingLocale):DailyLesson[] {
   const result:DailyLesson[]=[];
   for(let month=1;month<=3;month++){
     const phase=PHASES[locale][month-1];
+    if (!phase) continue;
     THEMES.forEach((theme,index)=>{
       const day=(month-1)*30+index+1;
       const name=theme.title[locale];
@@ -132,12 +133,12 @@ export function getDoMamaoCurriculum(locale:TrainingLocale):DailyLesson[] {
         ...buildExtendedLessonReading(locale,name,theme.description[locale],phase.name,phase.application),
         locale==="pt"?`A pergunta central da aula é: o que você consegue provar hoje sobre ${name.toLowerCase()}? Uma boa resposta diferencia hipótese, evidência e decisão.`:locale==="fr"?`La question centrale est : que pouvez-vous prouver aujourd’hui sur ${name.toLowerCase()} ? Une bonne réponse distingue hypothèse, preuve et décision.`:locale==="es"?`La pregunta central es: ¿qué puedes demostrar hoy sobre ${name.toLowerCase()}? Una buena respuesta distingue hipótesis, evidencia y decisión.`:`The central question is: what can you prove today about ${name.toLowerCase()}? A strong answer separates hypothesis, evidence and decision.`
       ];
-      const objective=[txt.q1,txt.q2,txt.q3,txt.q4,txt.q5,txt.q6,txt.q7].map((q,i)=>({id:`d${day}q${i+1}`,type:"objective" as const,prompt:repl(q,name),options:[txt.yes,txt.part,txt.no]}));
-      const written=[txt.w1,txt.w2,txt.w3].map((q,i)=>({id:`d${day}q${i+8}`,type:"written" as const,prompt:repl(q,name)}));
-      result.push({day,month:month as 1|2|3,title:`${phase.name} · ${name}`,theme:name,phase:phase.name,manualSection:theme.section[locale],theory,storyLens:txt.story,example:txt.example,activity:txt.activity,questions:[...objective,...written],quiz:[
-        {id:`d${day}quiz1`,prompt:txt.quiz1,options:[txt.quiz1a,txt.quiz1b,txt.quiz1c],correct:0},
-        {id:`d${day}quiz2`,prompt:txt.quiz2,options:[txt.quiz2a,txt.quiz2b,txt.quiz2c],correct:0},
-        {id:`d${day}quiz3`,prompt:txt.quiz3,options:[txt.quiz3a,txt.quiz3b,txt.quiz3c],correct:0}
+      const objective=[txt["q1"],txt["q2"],txt["q3"],txt["q4"],txt["q5"],txt["q6"],txt["q7"]].map((q,i)=>({id:`d${day}q${i+1}`,type:"objective" as const,prompt:repl(q,name),options:[txt["yes"],txt["part"],txt["no"]]}));
+      const written=[txt["w1"],txt["w2"],txt["w3"]].map((q,i)=>({id:`d${day}q${i+8}`,type:"written" as const,prompt:repl(q,name)}));
+      result.push({day,month:month as 1|2|3,title:`${phase.name} · ${name}`,theme:name,phase:phase.name,manualSection:theme.section[locale],theory,storyLens:txt["story"],example:txt["example"],activity:txt["activity"],questions:[...objective,...written],quiz:[
+        {id:`d${day}quiz1`,prompt:txt["quiz1"],options:[txt["quiz1a"],txt["quiz1b"],txt["quiz1c"]],correct:0},
+        {id:`d${day}quiz2`,prompt:txt["quiz2"],options:[txt["quiz2a"],txt["quiz2b"],txt["quiz2c"]],correct:0},
+        {id:`d${day}quiz3`,prompt:txt["quiz3"],options:[txt["quiz3a"],txt["quiz3b"],txt["quiz3c"]],correct:0}
       ]});
     });
   }
