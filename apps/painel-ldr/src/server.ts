@@ -201,7 +201,7 @@ function academyCanonicalRedirect(request: Request): Response | null {
       url.pathname.startsWith("/cliente/rede-academica/")
     ) {
       const target = new URL(url.toString());
-      target.hostname = "www.ldrrhestrategia.com";
+      target.hostname = "ldrrhestrategia.com";
       return temporaryRedirect(target.toString());
     }
 
@@ -302,13 +302,13 @@ function academyCanonicalRedirect(request: Request): Response | null {
   // authenticated client route so the public storefront and private library
   // remain separate and hydration uses the same route on server and browser.
   if (url.pathname === "/cliente" || url.pathname === "/biblioteca") {
-    url.hostname = "www.ldrrhestrategia.com";
+    url.hostname = "ldrrhestrategia.com";
     url.pathname = "/cliente/biblioteca";
     return temporaryRedirect(url.toString());
   }
 
   if (url.pathname.startsWith("/biblioteca/")) {
-    url.hostname = "www.ldrrhestrategia.com";
+    url.hostname = "ldrrhestrategia.com";
     url.pathname = `/cliente${url.pathname}`;
     return temporaryRedirect(url.toString());
   }
