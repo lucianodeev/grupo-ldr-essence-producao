@@ -22,7 +22,33 @@ export function useAccess() {
   const fetchAccess = useServerFn(getMyAccess);
   return useQuery({
     queryKey: ["my-access"],
-    queryFn: () => fetchAccess({}),
+    queryFn: async () => {
+      try {
+        return await fetchAccess({});
+      } catch (serverError) {
+        // OAuth can leave a valid browser session even when the server
+        // function request does not receive its SSR cookies. Verify the user
+        // against Supabase and query only RLS-scoped own records.
+        const { data: userResult, error: userError } = await supabase.auth.getUser();
+        if (userError || !userResult.user?.id) throw serverError;
+        const user = userResult.user;
+        const [{ data: profile, error: profileError }, { data: roles, error: rolesError }] = await Promise.all([
+          supabase.from("profiles").select("id, email, full_name, is_active").eq("id", user.id).maybeSingle(),
+          supabase.from("user_roles").select("role").eq("user_id", user.id),
+        ]);
+        if (profileError || rolesError || !profile) throw serverError;
+        const role = roles?.[0]?.role ?? null;
+        const owner = user.email?.trim().toLowerCase() === "llucianouam@gmail.com"
+          && profile.email?.trim().toLowerCase() === "llucianouam@gmail.com";
+        const effectiveRole = role === "superadmin" && !owner ? null : role;
+        return {
+          authorized: Boolean(profile.is_active && effectiveRole),
+          role: effectiveRole,
+          email: profile.email,
+          fullName: profile.full_name,
+        };
+      }
+    },
     staleTime: 60_000,
   });
 }
