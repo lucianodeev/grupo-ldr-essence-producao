@@ -257,7 +257,7 @@ async function setLdrPassSubscription(metadata: Record<string,string>, object: S
   if(subscriptionId)patch.stripe_subscription_id=subscriptionId; const customer=stripeId(object.customer);if(customer)patch.stripe_customer_id=customer;
   const start=isoFromUnix(object.current_period_start);if(start)patch.current_period_start=start;const end=isoFromUnix(object.current_period_end);if(end)patch.current_period_end=end;
   if(typeof object.cancel_at_period_end==="boolean")patch.cancel_at_period_end=object.cancel_at_period_end;
-  let q=db.from("ldr_pass_subscriptions").update(patch);q=rowId?q.eq("id",rowId):q.eq("stripe_subscription_id",subscriptionId);const {error}=await q;if(error)throw error;return true;
+  let q=db.from("ldr_pass_subscriptions").update(patch);q=rowId?q.eq("id",rowId):q.eq("stripe_subscription_id",subscriptionId);const {data:updated,error}=await q.select("id,ldr_one_offer,ldr_one_seats");if(error)throw error;if(!updated?.length)throw new Error("Stripe subscription could not be matched to a local record");if(updated.length!==1)throw new Error("Stripe subscription matched multiple local records");if(metadata["ldr_one_offer"]&&updated[0].ldr_one_offer!==metadata["ldr_one_offer"])throw new Error("LDR ONE offer mismatch in Stripe event");if(metadata["ldr_one_seats"]&&updated[0].ldr_one_seats!==Number(metadata["ldr_one_seats"]))throw new Error("LDR ONE seat count mismatch in Stripe event");return true;
 }
 
 async function balanceCredit(accountId: string, currency: string, gross: number, platformFee: number, net: number) {
