@@ -30,13 +30,13 @@ export function useAccess() {
         // function request does not receive its SSR cookies. Verify the user
         // against Supabase and query only RLS-scoped own records.
         const { data: userResult, error: userError } = await supabase.auth.getUser();
-        if (userError || !userResult.user?.id) throw serverError;
+        if (userError || !userResult.user?.id) throw new Error(`AUTH_BROWSER: ${userError?.message ?? "no verified browser user"}; SERVER: ${serverError instanceof Error ? serverError.message : "unavailable"}`);
         const user = userResult.user;
         const [{ data: profile, error: profileError }, { data: roles, error: rolesError }] = await Promise.all([
           supabase.from("profiles").select("id, email, full_name, is_active").eq("id", user.id).maybeSingle(),
           supabase.from("user_roles").select("role").eq("user_id", user.id),
         ]);
-        if (profileError || rolesError || !profile) throw serverError;
+        if (profileError || rolesError || !profile) throw new Error(`ACCESS_QUERY: ${profileError?.code ?? "ok"}/${rolesError?.code ?? "ok"}/${profile ? "profile_found" : "profile_missing"}; SERVER: ${serverError instanceof Error ? serverError.message : "unavailable"}`);
         const role = roles?.[0]?.role ?? null;
         const owner = user.email?.trim().toLowerCase() === "llucianouam@gmail.com"
           && profile.email?.trim().toLowerCase() === "llucianouam@gmail.com";
