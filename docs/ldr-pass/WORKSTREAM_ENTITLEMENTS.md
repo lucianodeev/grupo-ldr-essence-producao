@@ -1,0 +1,3 @@
+# LDR ONE digital entitlements
+
+Initial reader integration recognizes paid individual orders and active individual LDR ONE subscriptions with valid Stripe subscription ID and future period end. Editorial title is excluded from the explicit reader allowlist. Business seat access is NOT connected to the reader yet. Before launch reconcile the approved catalog with product/marketing claims, verify multilingual content exists and test owner/lifetime grants, individual paid/unpaid/expired access, editorial exclusion and business employee access. Review email-based customer fallback to prevent cross-account access; prefer authenticated customer ID binding.
