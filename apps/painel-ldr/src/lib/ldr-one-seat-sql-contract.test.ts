@@ -12,7 +12,7 @@ test("staged allocation SQL contains locking, capacity and active paid checks", 
   assert.match(sql, /s\.current_period_end <= now\(\)/);
   assert.match(sql, /s\.stripe_subscription_id IS NULL/);
   assert.match(sql, /CREATE UNIQUE INDEX IF NOT EXISTS ldr_one_one_active_seat_per_subscription_user/);
-  assert.doesNotMatch(sql, /\\\\n/, "no escaped newline artifacts");
+  assert.doesNotMatch(sql, /\\n/, "no escaped newline artifacts");
 });
 
 test("staged SQL blocks direct public allocation and revocation", () => {
