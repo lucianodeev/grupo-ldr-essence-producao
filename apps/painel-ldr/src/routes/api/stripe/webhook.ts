@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { createHmac, timingSafeEqual } from "crypto";
+import { ldrPassStatusFromStripeEvent } from "@/lib/ldr-one-stripe-lifecycle";
 
 const MAX_BODY = 256 * 1024;
 const TOLERANCE_SECONDS = 300;
@@ -246,14 +247,7 @@ async function setLdrPassSubscription(metadata: Record<string,string>, object: S
   const rowId=metadata["ldr_pass_subscription_id"];
   const subscriptionId=eventType.startsWith("customer.subscription")?object.id??null:stripeId(object.subscription)??stripeId(object.parent?.subscription_details?.subscription);
   if(!rowId&&!subscriptionId)return false;
-  const db=await database(); let status=String(object.status??"pending");
-  if(eventType==="checkout.session.completed")status=object.payment_status==="paid"||object.payment_status==="no_payment_required"?"active":"pending";
-  if(eventType==="checkout.session.async_payment_succeeded")status="active";
-  if(eventType==="checkout.session.async_payment_failed")status="incomplete";
-  if(eventType==="invoice.payment_succeeded")status="active";
-  if(eventType==="invoice.payment_failed")status="past_due";
-  if(eventType==="checkout.session.expired"||eventType==="customer.subscription.deleted")status="canceled";
-  const allowed=new Set(["pending","active","trialing","past_due","canceled","unpaid","paused","incomplete"]); if(!allowed.has(status))status="incomplete";
+  const db=await database(); const status=ldrPassStatusFromStripeEvent(eventType,object);
   const patch:Record<string,unknown>={status,updated_at:new Date().toISOString()};
   if(["checkout.session.completed","checkout.session.expired","checkout.session.async_payment_succeeded","checkout.session.async_payment_failed"].includes(eventType))patch['stripe_checkout_session_id']=object.id??null;
   if(subscriptionId)patch['stripe_subscription_id']=subscriptionId; const customer=stripeId(object.customer);if(customer)patch['stripe_customer_id']=customer;
