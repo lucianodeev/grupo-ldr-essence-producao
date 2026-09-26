@@ -11,6 +11,7 @@ type ProductKey="ebook_coragem_comecar" | "livro_menino_mamao" | "ebook_pratica_
 type EbookPage={titulo?:string;texto?:string};
 type BookChapter=[string|number,string,string[]];
 type ReaderPayload={kind:"ebook";pages:EbookPage[]}|{kind:"book";data:{title?:string;subtitle?:string;chapters?:BookChapter[]}};
+type ReaderResponse={content:unknown;requestedLocale:Locale;locale:Locale;title:string};
 
 const COPY={
  pt:{back:"Voltar à Biblioteca",light:"Claro",dark:"Escuro",smaller:"Diminuir letra",larger:"Aumentar letra",language:"Idioma",chapter:"Capítulo",page:"Página",previous:"Anterior",next:"Próximo",loading:"Carregando conteúdo…",unavailable:"Não foi possível abrir este conteúdo.",fallback:"A tradução selecionada ainda não está disponível; exibindo a versão original.",progress:"Progresso"},
@@ -44,7 +45,7 @@ export function DigitalReaderV2({productKey}:{productKey:ProductKey}){
  useEffect(()=>{try{const t=localStorage.getItem(`ldr-reader-${productKey}-theme`);if(t==="light"||t==="dark")setTheme(t);const s=Number(localStorage.getItem(`ldr-reader-${productKey}-scale`));if(s>=.9&&s<=1.4)setScale(s);}catch{}},[productKey]);
  useEffect(()=>{try{localStorage.setItem(`ldr-reader-${productKey}-theme`,theme);localStorage.setItem(`ldr-reader-${productKey}-scale`,String(scale));}catch{}},[theme,scale,productKey]);
  useEffect(()=>{if((appLocale==="pt"||appLocale==="en"||appLocale==="fr"||appLocale==="es")&&appLocale!==locale)setLocale(appLocale as Locale)},[appLocale,locale]);
- const query=useQuery({queryKey:["digital-reader",productKey,locale],queryFn:()=>contentFn({data:{productKey,locale}}),retry:false,staleTime:5*60*1000,refetchOnWindowFocus:false});
+ const query=useQuery({queryKey:["digital-reader",productKey,locale],queryFn:async()=>await contentFn({data:{productKey,locale}}) as ReaderResponse,retry:false,staleTime:5*60*1000,refetchOnWindowFocus:false});
  useEffect(()=>{setChapterIndex(0);setPageIndex(0)},[locale,productKey]);
  const payload=query.data?.content as ReaderPayload|undefined;const book=payload?.kind==="book"?payload.data:null;const ebookPages=payload?.kind==="ebook"&&Array.isArray(payload.pages)?payload.pages:[];const chapters=book?.chapters??[];const activeChapter=chapters[chapterIndex];const bookPages=Array.isArray(activeChapter?.[2])?activeChapter[2]:[];
  const totalUnits=payload?.kind==="ebook"?Math.max(ebookPages.length,1):Math.max(chapters.reduce((n,c)=>n+(Array.isArray(c?.[2])?c[2].length:0),0),1);

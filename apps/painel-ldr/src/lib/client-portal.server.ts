@@ -1043,6 +1043,19 @@ export async function getClientDigitalLibrary(userId: string, email: string | nu
     if (key) paidKeys.add(key);
   }
 
+  // Server-side verification, not a client-provided flag. Existing paid ownership remains independent.
+  // A Stripe/API outage must deny only the additional LDR ONE grant, never legacy purchases.
+  // Do not grant access from client-provided flags or unverified local subscription state.
+  let ldrOneDigitalAccess = false;
+  try {
+    const { getLdrOneEntitlement } = await import("@/lib/ldr-one-entitlement.server");
+    const ldrOne = await getLdrOneEntitlement(userId, email);
+    // Business seat assignment is not implemented; only the authenticated purchaser gets this access.
+    ldrOneDigitalAccess = ldrOne.active;
+  } catch (error) {
+    console.error("[LDR ONE] Verification unavailable; retaining independently verified legacy rights.", error instanceof Error ? error.message : "unknown error");
+  }
+
   const aliases: Record<ClientLibraryProduct["key"], string[]> = {
     ebook_coragem_comecar: ["ebook_coragem_comecar", "a_coragem_de_comecar", "ebook", "combo_empreendedor"],
     livro_menino_mamao: ["livro_menino_mamao", "menino_mamao", "livro", "combo_empreendedor"],
@@ -1066,7 +1079,7 @@ export async function getClientDigitalLibrary(userId: string, email: string | nu
     customer,
     products: DIGITAL_LIBRARY_PRODUCTS.map((product) => ({
       ...product,
-      entitled: ownerAccess || aliases[product.key].some((key) => paidKeys.has(key)),
+      entitled: ownerAccess || aliases[product.key].some((key) => paidKeys.has(key)) || ldrOneDigitalAccess,
     })),
   };
 }

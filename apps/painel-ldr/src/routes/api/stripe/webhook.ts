@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { createHmac, timingSafeEqual } from "crypto";
+import { ldrPassStatusFromStripeEvent } from "@/lib/ldr-one-stripe-lifecycle";
+import { ldrOneBillingPeriodFromStripeObject } from "@/lib/ldr-one-stripe-period";
 
 const MAX_BODY = 256 * 1024;
 const TOLERANCE_SECONDS = 300;
@@ -46,6 +48,7 @@ type StripeObject = {
   payment_intent?: string | { id?: string } | null;
   current_period_start?: number;
   current_period_end?: number;
+  lines?: { data?: Array<{ period?: { start?: number; end?: number }; subscription?: string | { id?: string } | null; parent?: { subscription_item_details?: { subscription?: string | { id?: string } | null } } }> };
   cancel_at_period_end?: boolean;
 };
 
@@ -189,15 +192,15 @@ async function setCompanySubscription(metadata: Record<string, string>, object: 
   // A tabela atual não oferece período de teste; se a Stripe enviar trialing, os benefícios seguem ativos.
   const status = rawStatus === "trialing" ? "active" : allowed.has(rawStatus) ? rawStatus : "incomplete";
   const patch: Record<string, unknown> = { status, updated_at: new Date().toISOString() };
-  if (eventType === "checkout.session.completed" || eventType === "checkout.session.expired") patch.stripe_checkout_session_id = object.id ?? null;
-  if (subscriptionId) patch.stripe_subscription_id = subscriptionId;
+  if (eventType === "checkout.session.completed" || eventType === "checkout.session.expired") patch['stripe_checkout_session_id'] = object.id ?? null;
+  if (subscriptionId) patch['stripe_subscription_id'] = subscriptionId;
   const customerId = stripeId(object.customer);
-  if (customerId) patch.stripe_customer_id = customerId;
+  if (customerId) patch['stripe_customer_id'] = customerId;
   const periodStart = isoFromUnix(object.current_period_start);
   const periodEnd = isoFromUnix(object.current_period_end);
-  if (periodStart) patch.current_period_start = periodStart;
-  if (periodEnd) patch.current_period_end = periodEnd;
-  if (typeof object.cancel_at_period_end === "boolean") patch.cancel_at_period_end = object.cancel_at_period_end;
+  if (periodStart) patch['current_period_start'] = periodStart;
+  if (periodEnd) patch['current_period_end'] = periodEnd;
+  if (typeof object.cancel_at_period_end === "boolean") patch['cancel_at_period_end'] = object.cancel_at_period_end;
 
   const db = await database();
   let query = db.from("company_subscriptions").update(patch);
@@ -246,18 +249,15 @@ async function setLdrPassSubscription(metadata: Record<string,string>, object: S
   const rowId=metadata["ldr_pass_subscription_id"];
   const subscriptionId=eventType.startsWith("customer.subscription")?object.id??null:stripeId(object.subscription)??stripeId(object.parent?.subscription_details?.subscription);
   if(!rowId&&!subscriptionId)return false;
-  const db=await database(); let status=String(object.status??"pending");
-  if(eventType==="checkout.session.completed")status=object.payment_status==="paid"||object.payment_status==="no_payment_required"?"active":"pending";
-  if(eventType==="invoice.payment_succeeded")status="active";
-  if(eventType==="invoice.payment_failed")status="past_due";
-  if(eventType==="checkout.session.expired"||eventType==="customer.subscription.deleted")status="canceled";
-  const allowed=new Set(["pending","active","trialing","past_due","canceled","unpaid","paused","incomplete"]); if(!allowed.has(status))status="incomplete";
+  const db=await database(); const status=ldrPassStatusFromStripeEvent(eventType,object);
   const patch:Record<string,unknown>={status,updated_at:new Date().toISOString()};
-  if(eventType==="checkout.session.completed"||eventType==="checkout.session.expired")patch.stripe_checkout_session_id=object.id??null;
-  if(subscriptionId)patch.stripe_subscription_id=subscriptionId; const customer=stripeId(object.customer);if(customer)patch.stripe_customer_id=customer;
-  const start=isoFromUnix(object.current_period_start);if(start)patch.current_period_start=start;const end=isoFromUnix(object.current_period_end);if(end)patch.current_period_end=end;
-  if(typeof object.cancel_at_period_end==="boolean")patch.cancel_at_period_end=object.cancel_at_period_end;
-  let q=db.from("ldr_pass_subscriptions").update(patch);q=rowId?q.eq("id",rowId):q.eq("stripe_subscription_id",subscriptionId);const {error}=await q;if(error)throw error;return true;
+  if(["checkout.session.completed","checkout.session.expired","checkout.session.async_payment_succeeded","checkout.session.async_payment_failed"].includes(eventType))patch['stripe_checkout_session_id']=object.id??null;
+  if(subscriptionId)patch['stripe_subscription_id']=subscriptionId; const customer=stripeId(object.customer);if(customer)patch['stripe_customer_id']=customer;
+  const period = ldrOneBillingPeriodFromStripeObject(object, subscriptionId, eventType);
+  const start=isoFromUnix(period.start ?? undefined);if(start)patch["current_period_start"]=start;
+  const end=isoFromUnix(period.end ?? undefined);if(end)patch["current_period_end"]=end;
+  if(typeof object.cancel_at_period_end==="boolean")patch['cancel_at_period_end']=object.cancel_at_period_end;
+  const isLdrOne=Boolean(metadata["ldr_one_offer"]);if(isLdrOne){let verify=db.from("ldr_pass_subscriptions").select("id,ldr_one_offer,ldr_one_seats");verify=rowId?verify.eq("id",rowId):verify.eq("stripe_subscription_id",subscriptionId);const {data:found,error:lookupError}=await verify;if(lookupError)throw lookupError;if(found?.length!==1)throw new Error("LDR ONE Stripe event must match exactly one subscription");if(found[0].ldr_one_offer!==metadata["ldr_one_offer"]||found[0].ldr_one_seats!==Number(metadata["ldr_one_seats"]))throw new Error("LDR ONE Stripe metadata mismatch");}let q=db.from("ldr_pass_subscriptions").update(patch);q=rowId?q.eq("id",rowId):q.eq("stripe_subscription_id",subscriptionId);const {data:updated,error}=await q.select("id");if(error)throw error;if(updated?.length!==1)throw new Error("Stripe subscription update must affect exactly one record");return true;
 }
 
 async function balanceCredit(accountId: string, currency: string, gross: number, platformFee: number, net: number) {
@@ -651,7 +651,7 @@ export const Route = createFileRoute("/api/stripe/webhook")({
             event.type === "checkout.session.completed" ||
             event.type === "checkout.session.expired";
 
-          if (checkoutKind === "ldr_pass_subscription" && (subscriptionCheckoutEvent || recurringSubscriptionEvent)) {
+          if (checkoutKind === "ldr_pass_subscription" && (subscriptionCheckoutEvent || recurringSubscriptionEvent || event.type === "checkout.session.async_payment_succeeded" || event.type === "checkout.session.async_payment_failed")) {
             await setLdrPassSubscription(metadata, object, event.type);
           } else if (checkoutKind === "company_subscription" && (subscriptionCheckoutEvent || recurringSubscriptionEvent)) {
             await setCompanySubscription(metadata, object, event.type);

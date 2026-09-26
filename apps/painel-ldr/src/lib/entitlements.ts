@@ -6,6 +6,7 @@ export type EntitlementSource =
   | "library_subscription"
   | "editorial_subscription"
   | "pass"
+  | "ldr_one"
   | "service_specific"
   | "none";
 
@@ -32,8 +33,8 @@ export type EntitlementDecision = {
   resourceKey: string;
   source: EntitlementSource;
   accessType: EntitlementAccessType;
-  subscriptionId?: string;
-  expiresAt?: string;
+  subscriptionId?: string | undefined;
+  expiresAt?: string | undefined;
   legacy: boolean;
   reasons: string[];
 };
@@ -226,4 +227,37 @@ export function resolveLegacyEntitlement(
   }
 
   return deny(resourceKey);
+}
+
+/** LDR ONE adds access to approved digital catalog items only.
+ * Preserve all legacy grants first; never grant unlimited human or live services.
+ */
+export function resolveLdrOneEntitlement(
+  signals: LegacyEntitlementSignals & { ldrOneActive?: boolean; ldrOneSubscriptionId?: string; ldrOneExpiresAt?: string; ldrOneApprovedDigital?: boolean },
+): EntitlementDecision {
+  const existing = resolveLegacyEntitlement(signals);
+  if (existing.allowed) return existing;
+  const key = signals.resourceKey.trim();
+  if (!key || !signals.ldrOneActive) return existing;
+  const category = signals.resourceClass ?? classifyEntitlementResource(key);
+  const digital = category === "digital_pass_candidate" ||
+    (category === "editorial_separate" && signals.ldrOneApprovedDigital === true);
+  if (!digital || signals.passEligible === false) return deny(key, "ldr_one_resource_not_approved");
+  return {
+    allowed: true, resourceKey: key, source: "ldr_one", accessType: "recurring",
+    subscriptionId: signals.ldrOneSubscriptionId, expiresAt: signals.ldrOneExpiresAt,
+    legacy: false, reasons: ["active_ldr_one_approved_digital"],
+  };
+}
+
+/** Fail-closed reader check: never grant access on a pending payment or unknown expiry. */
+export function hasCurrentIndividualLdrOneSubscription(
+  subscription: { status: string; stripe_subscription_id: string | null; current_period_end: string | null },
+  now: number,
+): boolean {
+  return (subscription.status === "active" || subscription.status === "trialing") &&
+    Boolean(subscription.stripe_subscription_id) &&
+    subscription.current_period_end !== null &&
+    Number.isFinite(Date.parse(subscription.current_period_end)) &&
+    Date.parse(subscription.current_period_end) > now;
 }

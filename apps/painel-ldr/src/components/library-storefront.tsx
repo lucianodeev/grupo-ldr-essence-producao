@@ -61,7 +61,7 @@ const NOVELTY_COVERS:Record<string,string>={
 };
 function progressLabel(locale:Locale,free:boolean){return free?(locale==="pt"?"CURSO GRATUITO":locale==="fr"?"COURS GRATUIT":locale==="es"?"CURSO GRATUITO":"FREE COURSE"):(locale==="pt"?"EM ANDAMENTO":locale==="fr"?"EN COURS":locale==="es"?"EN CURSO":"IN PROGRESS");}
 function ContinueCard({x,locale}:{x:any;locale:Locale}){
-  const meta=PROGRESS_META[x.product_key]||{title:(x.title||String(x.product_key||"").replaceAll("_"," ")),href:x.href||"/cliente/biblioteca",cover:"/ldr/covers/formacao-ia.svg"};
+  const meta: {title:string;href:string;cover:string;free?:boolean}=PROGRESS_META[x.product_key]||{title:(x.title||String(x.product_key||"").replaceAll("_"," ")),href:x.href||"/cliente/biblioteca",cover:"/ldr/covers/formacao-ia.svg"};
   const pct=Math.max(0,Math.min(100,Number(x.progress_percent)||0));
   return <a href={meta.href} className="group grid min-w-0 grid-cols-[88px_minmax(0,1fr)] gap-4 rounded-[24px] border border-slate-200 bg-white p-3 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md sm:grid-cols-[110px_minmax(0,1fr)] sm:p-4">
     <img src={meta.cover} alt="" className="h-[122px] w-[88px] rounded-2xl object-cover shadow-sm sm:h-[150px] sm:w-[110px]"/>
@@ -107,7 +107,7 @@ export function LibraryStorefront({locale,progress}:{locale:Locale;progress?:any
 
     {!searching ? <section id="novidades" className="scroll-mt-24">
       <Heading icon={<Sparkles className="h-7 w-7"/>} title={locale==="pt"?"Novidades na Biblioteca":locale==="fr"?"Nouveautés de la Bibliothèque":locale==="es"?"Novedades en la Biblioteca":"New in the Library"} desc={locale==="pt"?"Publicações e conteúdos para descobrir agora.":locale==="fr"?"Publications et contenus à découvrir maintenant.":locale==="es"?"Publicaciones y contenidos para descubrir ahora.":"Fresh publications and content to discover now."} label={t.seeAll}/>
-      <div className="grid min-w-0 grid-cols-1 gap-4 min-[520px]:grid-cols-2 lg:grid-cols-4">{[ITEMS[2],ITEMS[3],ITEMS[4],ITEMS[8]].filter(Boolean).map(item=><NoveltyCard key={item.title} item={item} locale={locale} t={t}/>)}</div>
+      <div className="grid min-w-0 grid-cols-1 gap-4 min-[520px]:grid-cols-2 lg:grid-cols-4">{[ITEMS[2],ITEMS[3],ITEMS[4],ITEMS[8]].filter((item):item is Item=>item!==undefined).map(item=><NoveltyCard key={item.title} item={item} locale={locale} t={t}/>)}</div>
     </section>:null}
 
     {searching?<section><Heading icon={<Search className="h-6 w-6"/>} title={filter==="all"?t.all:filter==="banca"?t.newsstand:filter==="livraria"?t.bookstore:filter==="formacoes"?t.formations:t.free} desc={t.featuredDesc} label={t.seeAll}/><div className="grid min-w-0 grid-cols-1 gap-3 min-[480px]:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">{filtered.map(item=><ShelfCard key={item.title} item={item} t={t}/>)}</div></section>:<>

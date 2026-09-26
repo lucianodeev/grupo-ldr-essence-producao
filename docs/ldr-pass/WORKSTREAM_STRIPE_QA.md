@@ -1,0 +1,3 @@
+# Stripe test-mode acceptance plan
+
+NO LIVE CHARGES AUTHORIZED. Keep LDR_ONE_LAUNCH_ENABLED false. In isolated test configuration, verify four intended price IDs are test-mode prices and correspond to €39.90/€399 individual and €19.90/€199 per business seat (minimum 5). Verify webhook signature secret, correct return origin, duplicate and out-of-order events, asynchronous payment success/failure, renewals, past-due, cancellation, refunds, retry after pending checkout, and concurrent checkout attempts. Reconcile local row ID, Stripe subscription ID and seat quantity. Do not use live price IDs in test mode. Record event IDs and redacted results before approval.

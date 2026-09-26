@@ -1,0 +1,54 @@
+name: LDR ONE validation
+on:
+  pull_request:
+    paths:
+      - 'apps/painel-ldr/**'
+      - 'package*.json'
+      - '.github/workflows/ldr-one-validation.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: ldr_one_disposable_ci_only
+          POSTGRES_DB: ldr_one_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd=pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Focused LDR ONE entitlement tests
+        run: node --experimental-strip-types --test apps/painel-ldr/src/lib/entitlements.test.ts
+      - name: LDR ONE business seat policy and allocation eligibility tests
+        run: node --experimental-strip-types --test apps/painel-ldr/src/lib/ldr-one-business-seat-policy.test.ts apps/painel-ldr/src/lib/ldr-one-seat-allocation-eligibility.test.ts apps/painel-ldr/src/lib/ldr-one-seat-concurrency.test.ts apps/painel-ldr/src/lib/ldr-one-seat-sql-contract.test.ts apps/painel-ldr/src/lib/ldr-one-launch-gates.test.ts apps/painel-ldr/src/lib/ldr-one-stripe-lifecycle.test.ts apps/painel-ldr/src/lib/ldr-one-payment-access-integration.test.ts apps/painel-ldr/src/lib/ldr-one-stripe-period.test.ts apps/painel-ldr/src/lib/ldr-one-webhook-release-blocker.test.ts apps/painel-ldr/src/lib/ldr-one-event-ordering.test.ts apps/painel-ldr/src/lib/ldr-one-db-release-gates.test.ts apps/painel-ldr/src/lib/ldr-one-webhook-replay-policy.test.ts apps/painel-ldr/src/lib/ldr-one-webhook-inbox-sql-contract.test.ts apps/painel-ldr/src/lib/ldr-one-webhook-inbox.server.test.ts apps/painel-ldr/src/lib/ldr-one-event-cursor-sql-contract.test.ts apps/painel-ldr/src/lib/ldr-one-atomic-status-sql-contract.test.ts apps/painel-ldr/src/lib/ldr-one-atomic-subscription-sql-contract.test.ts apps/painel-ldr/src/lib/ldr-one-atomic-subscription.server.test.ts apps/painel-ldr/src/lib/ldr-one-verified-webhook.server.test.ts
+      - name: Disposable PostgreSQL staged migration integration test
+        env:
+          PGPASSWORD: ldr_one_disposable_ci_only
+        run: psql -h localhost -U postgres -d ldr_one_ci -v ON_ERROR_STOP=1 -f apps/painel-ldr/supabase/tests/ldr_one_isolated_postgres.sql
+      - name: Full existing application regression suite (required)
+        run: npm --prefix apps/painel-ldr test
+      - name: LDR ONE typecheck gate (required; legacy errors remain diagnostic)
+        shell: bash
+        run: |
+          set -o pipefail
+          npm --prefix apps/painel-ldr run typecheck 2>&1 | tee /tmp/ldr-one-typecheck.log || typecheck_status=$?
+          if grep -E '^src/(lib/(ldr-one[^(:]*|ldr-pass\\.server|entitlements|client-portal\\.server)\\.(ts|tsx)|routes/(ldr-pass|_clientarea\\.cliente\\.ldr-pass)\\.tsx|routes/api/stripe/webhook\\.ts)\\([0-9]+,[0-9]+\\): error TS' /tmp/ldr-one-typecheck.log; then
+            echo 'LDR ONE critical modules contain TypeScript errors.'
+            exit 1
+          fi
+          echo "Global TypeScript status: ${typecheck_status:-0}; legacy errors are still reported above."
+      - name: Render production build
+        run: npm --prefix apps/painel-ldr run build:render

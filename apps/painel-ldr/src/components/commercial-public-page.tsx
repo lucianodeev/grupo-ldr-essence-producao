@@ -1598,7 +1598,7 @@ export function CommercialPublicPage({ kind }: { kind: Kind }) {
                   UsersRound,
                   BookOpen,
                 ];
-                const I = icons[i];
+                const I = icons[i] ?? Sparkles;
                 return (
                   <article
                     key={t}

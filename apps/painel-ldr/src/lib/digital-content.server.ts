@@ -2,6 +2,9 @@ import { gunzipSync } from "node:zlib";
 
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { hasOwnerDigitalAccess } from "@/lib/owner-digital-access.server";
+import { LDR_ONE_READER_APPROVED } from "@/lib/ldr-one-reader-catalog";
+import { hasLdrOneBusinessReaderAccess } from "@/lib/ldr-one-business-reader.server";
+import { hasCurrentIndividualLdrOneSubscription } from "@/lib/entitlements";
 
 export type DigitalReaderProductKey = "ebook_coragem_comecar" | "livro_menino_mamao" | "ebook_pratica_clinica_psicanalise" | "ebook_psicanalise_no_mundo" | "ebook_estudos_caso_psicanalise" | "ebook_psicanalise_autismo" | "ebook_psicologia_psicanalise_terapias" | "ebook_jornalismo_era_digital" | "ebook_corpo_trabalho_escuta" | "ebook_comportamento_humano" | "ebook_estetica_bem_estar" | "ebook_tricologia_cuidado" | "ebook_ia_novos_milionarios" | "ebook_imigracao_efeitos_psicologicos" | "ebook_psicanalise_vs_psiquiatria" | "ebook_falar_com_quem_feriu" | "ebook_da_pobreza_ao_primeiro_contrato";
 export type DigitalReaderLocale = "pt" | "en" | "fr" | "es";
@@ -26,6 +29,20 @@ const ALIASES: Record<DigitalReaderProductKey, string[]> = {
   ebook_da_pobreza_ao_primeiro_contrato: ["ebook_da_pobreza_ao_primeiro_contrato"],
 };
 
+
+async function hasIndividualLdrOneReaderAccess(customerId: string, productKey: DigitalReaderProductKey) {
+  if (!LDR_ONE_READER_APPROVED.has(productKey)) return false;
+  const { data, error } = await supabaseAdmin
+    .from("ldr_pass_subscriptions")
+    .select("id,status,current_period_end,stripe_subscription_id")
+    .eq("customer_id", customerId)
+    .eq("ldr_one_offer", "individual")
+    .in("status", ["active", "trialing"]);
+  if (error) fail("Não foi possível validar sua assinatura.");
+  const now = Date.now();
+  return (data ?? []).some((subscription) => hasCurrentIndividualLdrOneSubscription(subscription, now));
+}
+
 function fail(message: string): never {
   throw new Error(message);
 }
@@ -37,7 +54,7 @@ async function resolveCustomer(userId: string, email: string | null) {
     .select("id,portal_active")
     .eq("auth_user_id", userId)
     .maybeSingle();
-  if (linked?.portal_active) return linked.id;
+  if (linked?.portal_active) return { id: linked.id, verifiedAuthBinding: true };
 
   if (mail) {
     const { data: byEmail } = await supabaseAdmin
@@ -45,12 +62,12 @@ async function resolveCustomer(userId: string, email: string | null) {
       .select("id,portal_active")
       .ilike("email", mail)
       .maybeSingle();
-    if (byEmail?.portal_active) return byEmail.id;
+    if (byEmail?.portal_active) return { id: byEmail.id, verifiedAuthBinding: false };
   }
   fail("Acesso de cliente não encontrado.");
 }
 
-async function assertEntitlement(customerId: string, productKey: DigitalReaderProductKey) {
+async function assertEntitlement(customerId: string, productKey: DigitalReaderProductKey, verifiedAuthBinding: boolean) {
   const { data: orders, error } = await supabaseAdmin
     .from("orders")
     .select("catalog_key,metadata")
@@ -65,7 +82,10 @@ async function assertEntitlement(customerId: string, productKey: DigitalReaderPr
     const key = metadata && typeof metadata.product_key === "string" ? metadata.product_key : null;
     return Boolean(key && allowed.has(key));
   });
-  if (!entitled) fail("Conteúdo disponível somente após confirmação da compra.");
+  if (entitled) return;
+  // Legacy email fallback preserves prior purchases, but cannot authorize a recurring LDR ONE grant.
+  if (verifiedAuthBinding && await hasIndividualLdrOneReaderAccess(customerId, productKey)) return;
+  fail("Conteúdo disponível somente após confirmação da compra ou assinatura elegível.");
 }
 
 function decodeContent(value: unknown): unknown {
@@ -90,8 +110,12 @@ export async function getProtectedDigitalContent(
 ) {
   const owner = hasOwnerDigitalAccess(email, userId);
   if (!owner) {
-    const customerId = await resolveCustomer(userId, email);
-    await assertEntitlement(customerId, productKey);
+    // Business employees have an independent authenticated seat path.
+    // No email-only customer lookup can authorize a business seat.
+    if (!await hasLdrOneBusinessReaderAccess(userId, productKey)) {
+      const customer = await resolveCustomer(userId, email);
+      await assertEntitlement(customer.id, productKey, customer.verifiedAuthBinding);
+    }
   }
 
   let { data, error } = await supabaseAdmin

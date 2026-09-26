@@ -1,0 +1,44 @@
+name: LDR ONE Stripe sandbox preflight
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  sandbox-preflight:
+    runs-on: ubuntu-latest
+    environment: ldr-one-sandbox
+    timeout-minutes: 5
+    env:
+      STRIPE_TEST_SECRET_KEY: ${{ secrets.LDR_ONE_STRIPE_TEST_SECRET_KEY }}
+      STRIPE_TEST_WEBHOOK_SECRET: ${{ secrets.LDR_ONE_STRIPE_TEST_WEBHOOK_SECRET }}
+      TEST_PRICE_INDIVIDUAL_MONTHLY: ${{ vars.LDR_ONE_TEST_PRICE_INDIVIDUAL_MONTHLY }}
+      TEST_PRICE_INDIVIDUAL_ANNUAL: ${{ vars.LDR_ONE_TEST_PRICE_INDIVIDUAL_ANNUAL }}
+      TEST_PRICE_BUSINESS_MONTHLY: ${{ vars.LDR_ONE_TEST_PRICE_BUSINESS_MONTHLY }}
+      TEST_PRICE_BUSINESS_ANNUAL: ${{ vars.LDR_ONE_TEST_PRICE_BUSINESS_ANNUAL }}
+    steps:
+      - name: Verify isolated test configuration (no API calls or charges)
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ ! "${STRIPE_TEST_SECRET_KEY:-}" =~ ^sk_test_[A-Za-z0-9]+$ ]]; then
+            echo "::error::Missing or invalid test secret key; never supply a live key."
+            exit 1
+          fi
+          if [[ ! "${STRIPE_TEST_WEBHOOK_SECRET:-}" =~ ^whsec_[A-Za-z0-9]+$ ]]; then
+            echo "::error::Missing or invalid test webhook signing secret."
+            exit 1
+          fi
+          for key in TEST_PRICE_INDIVIDUAL_MONTHLY TEST_PRICE_INDIVIDUAL_ANNUAL TEST_PRICE_BUSINESS_MONTHLY TEST_PRICE_BUSINESS_ANNUAL; do
+            value="${!key:-}"
+            if [[ ! "$value" =~ ^price_[A-Za-z0-9]+$ ]]; then
+              echo "::error::Missing or invalid sandbox price ID for $key"
+              exit 1
+            fi
+          done
+          echo "Test-only configuration shape validated; no Stripe requests or charges made."
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Read-only verification of four Stripe test prices
+        run: node scripts/ldr-one-stripe-sandbox-prices.mjs

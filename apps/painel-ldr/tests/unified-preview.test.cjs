@@ -57,8 +57,6 @@ test("critical ecosystem routes remain generated", () => {
   const routeTree = fs.readFileSync(path.resolve(__dirname, "../src/routeTree.gen.ts"), "utf8");
   const routes = [
     "/ecossistema",
-    "/ldr-rh-estrategia",
-    "/profissional/cadastro",
     "/cliente/login",
     "/cliente/biblioteca",
     "/cliente/rede-academica",
@@ -67,7 +65,6 @@ test("critical ecosystem routes remain generated", () => {
     "/clinica-social/profissionais",
     "/profissionais",
     "/profissional/login",
-    "/painel-profissional",
     "/empresa/login",
     "/empresa",
     "/carreira",
@@ -78,6 +75,17 @@ test("critical ecosystem routes remain generated", () => {
   for (const route of routes) {
     assert.ok(routeTree.includes(`'${route}'`) || routeTree.includes(`"${route}"`), `missing route: ${route}`);
   }
+});
+
+test("legacy aliases remain redirected instead of generated as standalone routes", () => {
+  const server = fs.readFileSync(path.resolve(__dirname, "../src/server.ts"), "utf8");
+  assert.match(server, /isUnifiedPreviewHost\(host\)/);
+  assert.match(server, /url\.pathname === "\/profissional\/cadastro"/);
+  assert.match(server, /url\.pathname === "\/painel-profissional"/);
+  assert.match(server, /url\.pathname = "\/profissional\/login"/);
+  assert.match(server, /url\.pathname = "\/profissional-painel"/);
+  const preview = fs.readFileSync(path.resolve(__dirname, "../src/lib/unified-preview.ts"), "utf8");
+  assert.match(preview, /ldr-rh-estrategia/);
 });
 
 test("server and OAuth callback explicitly support unified preview hosts", () => {
@@ -118,11 +126,12 @@ test("keeps professional registration intent when crossing portal hosts", () => 
 });
 
 
-test("Master OAuth code is exchanged before the admin redirect", () => {
+test("legacy Master OAuth code is forwarded to the canonical callback before admin routing", () => {
   const server = fs.readFileSync(path.resolve(__dirname, "../src/server.ts"), "utf8");
-  assert.match(server, /isLegacyLdrPanelHost\s*&&\s*url\.searchParams\.has\("code"\)/);
-  assert.match(server, /callback\.pathname\s*=\s*"\/api\/auth\/callback"/);
-  assert.match(server, /callback\.searchParams\.set\("admin",\s*"1"\)/);
+  assert.match(server, /if\s*\(isLegacyLdrPanelHost\)/);
+  assert.match(server, /url\.searchParams\.has\("code"\)\s*\?\s*"\/api\/auth\/callback"/);
+  assert.match(server, /ecosystemTarget\(/);
+  assert.match(server, /target\.searchParams\.set\("admin",\s*"1"\)/);
 });
 
 
