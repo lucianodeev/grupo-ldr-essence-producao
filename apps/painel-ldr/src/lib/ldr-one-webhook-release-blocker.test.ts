@@ -17,7 +17,7 @@ test("LDR ONE remains disabled while shared webhook replay is not transactional"
   assert.ok(earlyEventClaim >= 0 && duplicateAcknowledgment > earlyEventClaim && handler > duplicateAcknowledgment,
     "If the shared webhook replay implementation changes, review this release blocker test.");
 
-  assert.match(catalog, /LDR_ONE_LAUNCH_ENABLED\s*=\s*false\s+as\s+const/);
+  // Best-effort deletion after a failed handler does not guarantee safe concurrent retries.\n  assert.match(webhook, /await db\\.from\\(\"stripe_webhook_events\"\\)\\.delete\\(\\)\\.eq\\(\"event_id\", event\\.id\\)/);\n\n  assert.match(catalog, /LDR_ONE_LAUNCH_ENABLED\s*=\s*false\s+as\s+const/);
   assert.match(checkout, /LDR_ONE_LAUNCH_ENABLED/);
   assert.match(checkout, /LDR_ONE_BUSINESS_READER_ENABLED/);
   assert.match(reader, /LDR_ONE_BUSINESS_READER_ENABLED/);
