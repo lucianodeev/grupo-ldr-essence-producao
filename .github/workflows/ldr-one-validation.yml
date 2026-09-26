@@ -21,8 +21,15 @@ jobs:
         run: node --experimental-strip-types --test apps/painel-ldr/src/lib/entitlements.test.ts
       - name: Full existing application regression suite (required)
         run: npm --prefix apps/painel-ldr test
-      - name: Existing application typecheck (diagnostic; failures remain visible)
-        run: npm --prefix apps/painel-ldr run typecheck
-        continue-on-error: true
+      - name: LDR ONE typecheck gate (required; legacy errors remain diagnostic)
+        shell: bash
+        run: |
+          set -o pipefail
+          npm --prefix apps/painel-ldr run typecheck 2>&1 | tee /tmp/ldr-one-typecheck.log || typecheck_status=$?
+          if grep -E '^src/(lib/(ldr-one[^(:]*|ldr-pass\\.server|entitlements|client-portal\\.server)\\.(ts|tsx)|routes/(ldr-pass|_clientarea\\.cliente\\.ldr-pass)\\.tsx|routes/api/stripe/webhook\\.ts)\\([0-9]+,[0-9]+\\): error TS' /tmp/ldr-one-typecheck.log; then
+            echo 'LDR ONE critical modules contain TypeScript errors.'
+            exit 1
+          fi
+          echo "Global TypeScript status: ${typecheck_status:-0}; legacy errors are still reported above."
       - name: Render production build
         run: npm --prefix apps/painel-ldr run build:render
