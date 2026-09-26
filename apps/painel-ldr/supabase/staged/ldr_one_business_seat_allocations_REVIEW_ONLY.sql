@@ -22,8 +22,8 @@ DECLARE s public.ldr_pass_subscriptions%ROWTYPE; existing_id uuid; seat_count in
 BEGIN
   IF p_subscription_id IS NULL OR p_auth_user_id IS NULL THEN RAISE EXCEPTION 'Missing seat assignment identity'; END IF;
   SELECT * INTO s FROM public.ldr_pass_subscriptions WHERE id=p_subscription_id FOR UPDATE;
-  IF NOT FOUND OR s.ldr_one_offer IS DISTINCT FROM 'business' OR s.ldr_one_seats < 5
-    OR s.status NOT IN ('active','trialing') OR s.stripe_subscription_id IS NULL
+  IF NOT FOUND OR s.ldr_one_offer IS DISTINCT FROM 'business' OR (s.ldr_one_seats IS NULL OR s.ldr_one_seats < 5)
+    OR s.status IS NULL OR s.status NOT IN ('active','trialing') OR s.stripe_subscription_id IS NULL
     OR s.current_period_end IS NULL OR s.current_period_end <= now() THEN
     RAISE EXCEPTION 'Not a valid LDR ONE business subscription';
   END IF;
