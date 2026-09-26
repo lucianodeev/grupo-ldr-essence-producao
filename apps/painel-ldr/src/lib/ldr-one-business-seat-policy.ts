@@ -29,3 +29,15 @@ export function canAccessLdrOneBusinessSeat(
   const end = Date.parse(subscription.current_period_end);
   return Number.isFinite(end) && end > now;
 }
+
+/** Advisory pure validation; concurrency-safe allocation still requires a DB transaction. */
+export function canAllocateBusinessSeat(
+  purchasedSeats: number,
+  activeAssignedUserIds: readonly string[],
+  candidateAuthUserId: string,
+): boolean {
+  if (!Number.isSafeInteger(purchasedSeats) || purchasedSeats < 5 || !candidateAuthUserId.trim()) return false;
+  const unique = new Set(activeAssignedUserIds);
+  if (unique.size !== activeAssignedUserIds.length) return false;
+  return unique.has(candidateAuthUserId) || unique.size < purchasedSeats;
+}
