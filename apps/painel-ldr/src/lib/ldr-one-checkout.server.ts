@@ -1,4 +1,3 @@
-import { getRequest } from "@tanstack/react-start/server";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { resolveClient } from "@/lib/client-portal.server";
 import { LDR_ONE_EUR, LDR_ONE_LAUNCH_ENABLED } from "@/lib/ldr-one.catalog";
@@ -8,10 +7,20 @@ type Billing = "monthly" | "annual";
 type CheckoutRequest = { userId: string; email: string | null; audience: Audience; billing: Billing; seats?: number };
 
 function origin() {
-  const configured = process.env['CLIENT_PANEL_URL']?.replace(/\/$/, "");
-  const request = getRequest();
-  const requestOrigin = request ? new URL(request.url).origin : null;
-  return configured || requestOrigin || "https://ldracademy.online";
+  // Payment return URLs must come from trusted server configuration, never request Host headers.
+  const configured = process.env['CLIENT_PANEL_URL'];
+  if (!configured) throw new Error("Domínio de retorno do pagamento não configurado.");
+  let url: URL;
+  try {
+    url = new URL(configured);
+  } catch {
+    throw new Error("Domínio de retorno do pagamento inválido.");
+  }
+  if (url.protocol !== "https:" || url.username || url.password || url.search || url.hash)
+    throw new Error("O domínio de retorno deve usar HTTPS e não conter credenciais ou parâmetros.");
+  if (url.pathname !== "/" && url.pathname !== "")
+    throw new Error("Configure CLIENT_PANEL_URL com a origem do painel, sem caminho.");
+  return url.origin;
 }
 
 /** Staged implementation. Keep the catalog launch guard off until Stripe, migration and entitlements pass QA. */
