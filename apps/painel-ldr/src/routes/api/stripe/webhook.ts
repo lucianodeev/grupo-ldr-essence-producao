@@ -257,7 +257,7 @@ async function setLdrPassSubscription(metadata: Record<string,string>, object: S
   if(subscriptionId)patch.stripe_subscription_id=subscriptionId; const customer=stripeId(object.customer);if(customer)patch.stripe_customer_id=customer;
   const start=isoFromUnix(object.current_period_start);if(start)patch.current_period_start=start;const end=isoFromUnix(object.current_period_end);if(end)patch.current_period_end=end;
   if(typeof object.cancel_at_period_end==="boolean")patch.cancel_at_period_end=object.cancel_at_period_end;
-  let q=db.from("ldr_pass_subscriptions").update(patch);q=rowId?q.eq("id",rowId):q.eq("stripe_subscription_id",subscriptionId);const {error}=await q;if(error)throw error;return true;
+  const isLdrOne=Boolean(metadata["ldr_one_offer"]);if(isLdrOne){let verify=db.from("ldr_pass_subscriptions").select("id,ldr_one_offer,ldr_one_seats");verify=rowId?verify.eq("id",rowId):verify.eq("stripe_subscription_id",subscriptionId);const {data:found,error:lookupError}=await verify;if(lookupError)throw lookupError;if(found?.length!==1)throw new Error("LDR ONE Stripe event must match exactly one subscription");if(found[0].ldr_one_offer!==metadata["ldr_one_offer"]||found[0].ldr_one_seats!==Number(metadata["ldr_one_seats"]))throw new Error("LDR ONE Stripe metadata mismatch");}let q=db.from("ldr_pass_subscriptions").update(patch);q=rowId?q.eq("id",rowId):q.eq("stripe_subscription_id",subscriptionId);const {data:updated,error}=await q.select("id");if(error)throw error;if(updated?.length!==1)throw new Error("Stripe subscription update must affect exactly one record");return true;
 }
 
 async function balanceCredit(accountId: string, currency: string, gross: number, platformFee: number, net: number) {
