@@ -31,6 +31,9 @@ export async function createLdrOneCheckout(input: CheckoutRequest): Promise<{ ur
     throw new Error("Contratação indisponível: validação de pagamento e biblioteca não configurada.");
   if (!["individual", "business"].includes(input.audience) || !["monthly", "annual"].includes(input.billing))
     throw new Error("Assinatura inválida.");
+  // Never sell business seats while the verified employee reader remains disabled.
+  if (input.audience === "business" && process.env["LDR_ONE_BUSINESS_READER_ENABLED"] !== "true")
+    throw new Error("Assinatura empresarial indisponível até a validação do acesso dos colaboradores.");
   const seats = input.audience === "individual" ? 1 : (input.seats ?? 0);
   if (!Number.isSafeInteger(seats) || !seats || (input.audience === "business" && (seats < 5 || seats > 10000)))
     throw new Error("A assinatura empresarial exige entre 5 e 10.000 colaboradores.");
