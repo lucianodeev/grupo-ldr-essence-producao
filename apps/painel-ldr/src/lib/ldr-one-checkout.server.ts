@@ -46,6 +46,15 @@ export async function createLdrOneCheckout(input: CheckoutRequest): Promise<{ ur
   if (existingError) throw new Error("Não foi possível validar a assinatura atual.");
   if (existing) throw new Error("Já existe uma assinatura em andamento. Entre em contato com o suporte para migrar.");
 
+  // A recently created checkout may not yet have a Stripe subscription or webhook event.
+  // Block repeat requests during that window instead of creating parallel payment sessions.
+  const pendingSince = new Date(Date.now() - 30 * 60 * 1000).toISOString();
+  const { data: recentPending, error: pendingError } = await db.from("ldr_pass_subscriptions")
+    .select("id").eq("customer_id", customer.id).eq("status", "pending")
+    .gte("created_at", pendingSince).limit(1).maybeSingle();
+  if (pendingError) throw new Error("Não foi possível verificar pagamentos pendentes.");
+  if (recentPending) throw new Error("Já existe uma contratação recente em preparação. Aguarde ou contate o suporte.");
+
   const offer = LDR_ONE_EUR[input.audience][input.billing];
   const priceId = offer.priceId;
   const amount = input.audience === "business"
