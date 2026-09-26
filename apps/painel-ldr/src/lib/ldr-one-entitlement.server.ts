@@ -31,7 +31,7 @@ export async function getLdrOneEntitlement(userId: string, email: string | null)
   if (!data?.stripe_subscription_id || !data?.stripe_customer_id ||
       !["individual", "business"].includes(data.ldr_one_offer)) return denied;
   if (data.current_period_end && new Date(data.current_period_end).getTime() <= Date.now()) return denied;
-  const secret = process.env.STRIPE_SECRET_KEY;
+  const secret = process.env['STRIPE_SECRET_KEY'];
   if (!secret) return denied;
   const url = new URL("https://api.stripe.com/v1/subscriptions/" + encodeURIComponent(data.stripe_subscription_id));
   url.searchParams.set("expand[]", "latest_invoice");
