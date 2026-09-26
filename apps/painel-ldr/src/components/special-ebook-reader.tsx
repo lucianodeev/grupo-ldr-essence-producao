@@ -10,6 +10,7 @@ type Locale = "pt" | "en" | "fr" | "es";
 type SpecialProductKey = "ebook_falar_com_quem_feriu" | "ebook_da_pobreza_ao_primeiro_contrato";
 type EbookPage = { titulo?: string; texto?: string };
 type ReaderPayload = { kind: "ebook"; pages: EbookPage[] };
+type ReaderResponse = { content: unknown; title: string; requestedLocale: Locale; locale: Locale };
 
 const COPY = {
   pt: { back: "Voltar à Biblioteca", loading: "Carregando conteúdo…", unavailable: "Conteúdo indisponível ou compra ainda não confirmada.", page: "Página", previous: "Anterior", next: "Próximo", progress: "Progresso", fallback: "A tradução selecionada ainda não está disponível; exibindo a versão em português." },
@@ -33,7 +34,7 @@ export function SpecialEbookReader({ productKey }: { productKey: SpecialProductK
 
   const query = useQuery({
     queryKey: ["special-ebook-reader", productKey, locale],
-    queryFn: () => contentFn({ data: { productKey, locale } }),
+    queryFn: async (): Promise<ReaderResponse> => await contentFn({ data: { productKey, locale } }) as ReaderResponse,
     retry: false,
     staleTime: 5 * 60 * 1000,
     refetchOnWindowFocus: false,
