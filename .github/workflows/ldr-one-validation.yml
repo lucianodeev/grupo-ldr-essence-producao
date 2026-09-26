@@ -1,0 +1,28 @@
+name: LDR ONE validation
+on:
+  pull_request:
+    paths:
+      - 'apps/painel-ldr/**'
+      - 'package*.json'
+      - '.github/workflows/ldr-one-validation.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Focused LDR ONE entitlement tests
+        run: node --experimental-strip-types --test apps/painel-ldr/src/lib/entitlements.test.ts
+      - name: Full existing application regression suite (required)
+        run: npm --prefix apps/painel-ldr test
+      - name: Existing application typecheck (diagnostic; failures remain visible)
+        run: npm --prefix apps/painel-ldr run typecheck
+        continue-on-error: true
+      - name: Render production build
+        run: npm --prefix apps/painel-ldr run build:render

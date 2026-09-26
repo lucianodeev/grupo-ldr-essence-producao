@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { classifyEntitlementResource, isPassEligibleResource, resolveLegacyEntitlement } from "./entitlements.ts";
+import { classifyEntitlementResource, isPassEligibleResource, resolveLegacyEntitlement, resolveLdrOneEntitlement } from "./entitlements.ts";
 
 test("owner override has highest precedence", () => {
   const x=resolveLegacyEntitlement({resourceKey:"course",ownerOverride:true,librarySubscription:true});
@@ -22,3 +22,26 @@ test("PASS does not absorb editorial subscription area",()=>{const x=resolveLega
 test("PASS does not create unlimited human-service access",()=>{const x=resolveLegacyEntitlement({resourceKey:"clinica_social_session",pass:true,passEnabled:true});assert.equal(x.allowed,false);assert.equal(x.reasons[0],"pass_not_eligible_for_resource")});
 test("explicit PASS eligibility can be enabled for approved digital resources",()=>{const x=resolveLegacyEntitlement({resourceKey:"formacao_psicanalise_600h",pass:true,passEnabled:true,passEligible:true});assert.equal(x.allowed,true);assert.equal(x.source,"pass")});
 test("resource classifier keeps separated areas outside PASS by default",()=>{assert.equal(classifyEntitlementResource("revista_psicanalise_no_mundo"),"editorial_separate");assert.equal(classifyEntitlementResource("clinica_social_session"),"human_service_separate");assert.equal(isPassEligibleResource({resourceKey:"ebook_coragem_comecar"}),true)});
+
+test("LDR ONE active subscription grants approved digital courses",()=>{
+ const x=resolveLdrOneEntitlement({resourceKey:"curso_digital_1",ldrOneActive:true,ldrOneSubscriptionId:"one-1"});
+ assert.equal(x.allowed,true);assert.equal(x.source,"ldr_one");assert.equal(x.subscriptionId,"one-1");
+});
+test("LDR ONE pending or absent subscription does not grant digital access",()=>{
+ assert.equal(resolveLdrOneEntitlement({resourceKey:"ebook_a",ldrOneActive:false}).allowed,false);
+});
+test("LDR ONE never grants unlimited human services",()=>{
+ assert.equal(resolveLdrOneEntitlement({resourceKey:"clinica_consulta",ldrOneActive:true}).allowed,false);
+});
+test("LDR ONE does not grant business or live services",()=>{
+ for(const resourceKey of ["empresa_vagas","live_formacao","mentoria_ao_vivo_1"])
+  assert.equal(resolveLdrOneEntitlement({resourceKey,ldrOneActive:true}).allowed,false);
+});
+test("LDR ONE editorial material requires explicit approval",()=>{
+ assert.equal(resolveLdrOneEntitlement({resourceKey:"revista_1",ldrOneActive:true}).allowed,false);
+ assert.equal(resolveLdrOneEntitlement({resourceKey:"revista_1",ldrOneActive:true,ldrOneApprovedDigital:true}).allowed,true);
+});
+test("LDR ONE preserves existing lifetime ownership precedence",()=>{
+ const x=resolveLdrOneEntitlement({resourceKey:"ebook_1",owned:true,ldrOneActive:true});
+ assert.equal(x.source,"ownership");assert.equal(x.accessType,"lifetime");
+});

@@ -26,6 +26,8 @@ import { AcademicDrawers } from "@/components/academic-drawers";
 import { PROFESSIONAL_FORMATIONS, pfText } from "@/lib/academy-professional-formations.catalog";
 import { PSYCHOANALYSIS_EBOOKS } from "@/lib/psychoanalysis-ebooks.catalog";
 import { AcademySubscriptionCourseShelf } from "@/components/academy-subscription-course-shelf";
+import { clientLdrOneEntitlement } from "@/lib/ldr-one-entitlement.functions";
+import { Link } from "@tanstack/react-router";
 
 export const Route=createFileRoute("/_clientarea/cliente/biblioteca")({component:ClientLibraryRoute});
 
@@ -62,6 +64,8 @@ function ClientLibrary(){
   const t=TXT[locale];
   const ct=libraryCardText(locale);
   const ac=libraryAcademicCardText(locale);
+  const ldrOneFn=useServerFn(clientLdrOneEntitlement);
+  const {data:ldrOneStatus}=useQuery({queryKey:["ldr-one-entitlement"],queryFn:()=>ldrOneFn()});
   const subscriptionFn=useServerFn(clientLibrarySubscription),
     subscriptionCheckoutFn=useServerFn(clientCreateLibrarySubscriptionCheckout),
     subscriptionCancelFn=useServerFn(clientSetLibrarySubscriptionCancellation),
@@ -154,6 +158,11 @@ function ClientLibrary(){
   ];
 
   return <div className="min-w-0 space-y-6 pb-8">
+    {ldrOneStatus?.active && <section className="rounded-2xl border border-amber-300 bg-amber-50 p-4 text-slate-900" aria-label="LDR ONE">
+      <p className="font-bold">LDR ONE {ldrOneStatus.audience === "business" ? "Business" : "Individual"} ativo</p>
+      <p className="mt-1 text-sm">Seu plano está identificado. A liberação de cada curso e publicação depende das regras do conteúdo; suas compras anteriores permanecem preservadas.</p>
+      <Link to="/cliente/ldr-pass" className="mt-2 inline-block text-sm font-semibold underline">Ver minha assinatura</Link>
+    </section>}
     <section className="rounded-[28px] bg-gradient-to-br from-[#071426] via-[#0b2341] to-[#102d50] px-5 py-7 text-white shadow-xl sm:px-8">
       <p className="text-[11px] font-bold uppercase tracking-[.28em] text-[#d6ad63]">LDR Plataforma</p>
       <h1 className="mt-2 font-serif text-4xl text-[#fff7e7]">{t.title}</h1>
