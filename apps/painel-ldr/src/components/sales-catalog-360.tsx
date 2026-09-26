@@ -96,7 +96,7 @@ export function SalesCatalog360(){
     {key:"subscriptions",label:t.subscriptions,desc:t.subText,meta:`R$ 19,95 · € 4,95 / 1º ${t.month}`,href:"/cliente/biblioteca",icon:Library,kind:"subscriptions",theme:THEMES.subscriptions},
   ];
   const filtered=useMemo(()=>cards.filter(c=>(kind==="all"||c.kind===kind)&&(!q||`${c.label} ${c.desc} ${c.meta}`.toLocaleLowerCase(locale).includes(q.toLocaleLowerCase(locale)))),[q,kind,locale]);
-  const chips=[['all',t.all],['formations',t.formations],['free',t.free],['books',t.books],['guidance',t.guidance],['publications',t.publications],['subscriptions',t.subscriptions]];
+  const chips: [string, string][]=[['all',t.all],['formations',t.formations],['free',t.free],['books',t.books],['guidance',t.guidance],['publications',t.publications],['subscriptions',t.subscriptions]];
 
   return <section id="catalogo-360" className="border-y border-[#d6ad63]/20 bg-[#fffdf8] py-8 sm:py-10">
     <div className="mx-auto max-w-7xl px-4 sm:px-6">
