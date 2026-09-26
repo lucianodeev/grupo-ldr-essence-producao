@@ -1,0 +1,41 @@
+name: LDR ONE Stripe sandbox preflight
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  sandbox-preflight:
+    runs-on: ubuntu-latest
+    environment: ldr-one-sandbox
+    timeout-minutes: 5
+    env:
+      STRIPE_TEST_SECRET_KEY: ${{ secrets.LDR_ONE_STRIPE_TEST_SECRET_KEY }}
+      STRIPE_TEST_WEBHOOK_SECRET: ${{ secrets.LDR_ONE_STRIPE_TEST_WEBHOOK_SECRET }}
+      TEST_PRICE_INDIVIDUAL_MONTHLY: ${{ vars.LDR_ONE_TEST_PRICE_INDIVIDUAL_MONTHLY }}
+      TEST_PRICE_INDIVIDUAL_ANNUAL: ${{ vars.LDR_ONE_TEST_PRICE_INDIVIDUAL_ANNUAL }}
+      TEST_PRICE_BUSINESS_MONTHLY: ${{ vars.LDR_ONE_TEST_PRICE_BUSINESS_MONTHLY }}
+      TEST_PRICE_BUSINESS_ANNUAL: ${{ vars.LDR_ONE_TEST_PRICE_BUSINESS_ANNUAL }}
+    steps:
+      - name: Validate Stripe test-only credentials and read-only prices
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          const secret=process.env.STRIPE_TEST_SECRET_KEY??"";
+          const webhook=process.env.STRIPE_TEST_WEBHOOK_SECRET??"";
+          if(!/^sk_test_[A-Za-z0-9]+$/.test(secret))throw Error("Configure a Stripe sk_test_ key in the sandbox environment; live keys are forbidden.");
+          if(!/^whsec_[A-Za-z0-9]+$/.test(webhook))throw Error("Configure the isolated test webhook signing secret.");
+          const expected=[["TEST_PRICE_INDIVIDUAL_MONTHLY",3990,"month"],["TEST_PRICE_INDIVIDUAL_ANNUAL",39900,"year"],["TEST_PRICE_BUSINESS_MONTHLY",1990,"month"],["TEST_PRICE_BUSINESS_ANNUAL",19900,"year"]];
+          const seen=new Set();
+          for(const [key,amount,interval] of expected){
+            const id=process.env[key]??"";
+            if(!/^price_[A-Za-z0-9]+$/.test(id)||seen.has(id))throw Error("Missing, malformed or duplicate test price: "+key);
+            seen.add(id);
+            const response=await fetch("https://api.stripe.com/v1/prices/"+encodeURIComponent(id),{headers:{Authorization:"Bearer "+secret},signal:AbortSignal.timeout(15000)});
+            if(!response.ok)throw Error("Stripe test lookup failed for "+key+" (HTTP "+response.status+")");
+            const price=await response.json();
+            if(price.livemode!==false||price.active!==true||price.currency!=="eur"||price.unit_amount!==amount||price.type!=="recurring"||price.recurring?.interval!==interval||price.recurring?.interval_count!==1)throw Error("Test price configuration mismatch: "+key);
+            console.log(key+": verified in Stripe test mode");
+          }
+          console.log("Four test prices verified with read-only requests; no charges, checkout or production changes.");
+          NODE
