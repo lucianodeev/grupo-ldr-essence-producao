@@ -77,6 +77,17 @@ test("critical ecosystem routes remain generated", () => {
   }
 });
 
+test("legacy aliases remain redirected instead of generated as standalone routes", () => {
+  const server = fs.readFileSync(path.resolve(__dirname, "../src/server.ts"), "utf8");
+  assert.match(server, /isUnifiedPreviewHost\(host\)/);
+  assert.match(server, /url\.pathname === "\/profissional\/cadastro"/);
+  assert.match(server, /url\.pathname === "\/painel-profissional"/);
+  assert.match(server, /url\.pathname = "\/profissional\/login"/);
+  assert.match(server, /url\.pathname = "\/profissional-painel"/);
+  const preview = fs.readFileSync(path.resolve(__dirname, "../src/lib/unified-preview.ts"), "utf8");
+  assert.match(preview, /ldr-rh-estrategia/);
+});
+
 test("server and OAuth callback explicitly support unified preview hosts", () => {
   const server = fs.readFileSync(path.resolve(__dirname, "../src/server.ts"), "utf8");
   const callback = fs.readFileSync(path.resolve(__dirname, "../src/routes/api/auth/callback.ts"), "utf8");
