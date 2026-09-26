@@ -17,6 +17,9 @@ function origin() {
 /** Staged implementation. Keep the catalog launch guard off until Stripe, migration and entitlements pass QA. */
 export async function createLdrOneCheckout(input: CheckoutRequest): Promise<{ url: string }> {
   if (!LDR_ONE_LAUNCH_ENABLED) throw new Error("A assinatura LDR ONE está em preparação.");
+  // Never accept payment unless the same server can verify and enforce digital access.
+  if (!process.env.SUPABASE_SERVICE_ROLE_KEY || !process.env.STRIPE_SECRET_KEY)
+    throw new Error("Contratação indisponível: validação de pagamento e biblioteca não configurada.");
   if (!["individual", "business"].includes(input.audience) || !["monthly", "annual"].includes(input.billing))
     throw new Error("Assinatura inválida.");
   const seats = input.audience === "individual" ? 1 : (input.seats ?? 0);
