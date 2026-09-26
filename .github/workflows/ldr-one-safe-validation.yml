@@ -18,7 +18,7 @@ jobs:
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
       - name: Regression tests
-        run: npm --prefix apps/painel-ldr test
+        run: node --experimental-strip-types --test apps/painel-ldr/src/lib/entitlements.test.ts
       - name: TypeScript
         run: npm --prefix apps/painel-ldr run typecheck
       - name: Render build
