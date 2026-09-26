@@ -39,3 +39,24 @@ REVOKE ALL ON FUNCTION public.ldr_one_allocate_seat(uuid,uuid) FROM PUBLIC, anon
 GRANT EXECUTE ON FUNCTION public.ldr_one_allocate_seat(uuid,uuid) TO service_role;
 COMMENT ON FUNCTION public.ldr_one_allocate_seat(uuid,uuid) IS
   'Server-only allocator; caller MUST verify organization admin authorization and subscription ownership before invocation.';
+
+-- Revocation also locks the subscription parent to serialize against allocation.
+CREATE OR REPLACE FUNCTION public.ldr_one_revoke_seat(
+  p_subscription_id uuid, p_auth_user_id uuid
+) RETURNS boolean LANGUAGE plpgsql SECURITY DEFINER SET search_path = ''
+AS $$
+DECLARE locked_id uuid; affected integer;
+BEGIN
+  IF p_subscription_id IS NULL OR p_auth_user_id IS NULL THEN
+    RAISE EXCEPTION 'Missing seat revocation identity';
+  END IF;
+  SELECT id INTO locked_id FROM public.ldr_pass_subscriptions
+    WHERE id=p_subscription_id AND ldr_one_offer='business' FOR UPDATE;
+  IF locked_id IS NULL THEN RAISE EXCEPTION 'Business subscription not found'; END IF;
+  UPDATE public.ldr_one_seat_allocations SET revoked_at=now()
+    WHERE subscription_id=p_subscription_id AND auth_user_id=p_auth_user_id AND revoked_at IS NULL;
+  GET DIAGNOSTICS affected = ROW_COUNT;
+  RETURN affected > 0;
+END $$;
+REVOKE ALL ON FUNCTION public.ldr_one_revoke_seat(uuid,uuid) FROM PUBLIC, anon, authenticated;
+GRANT EXECUTE ON FUNCTION public.ldr_one_revoke_seat(uuid,uuid) TO service_role;
