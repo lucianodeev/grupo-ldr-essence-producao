@@ -1,0 +1,22 @@
+name: LDR ONE validation
+on:
+  pull_request:
+    paths:
+      - 'apps/painel-ldr/**'
+      - 'package*.json'
+      - '.github/workflows/ldr-one-validation.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm --prefix apps/painel-ldr test
+      - run: npm --prefix apps/painel-ldr run typecheck
+      - run: npm --prefix apps/painel-ldr run build:render
