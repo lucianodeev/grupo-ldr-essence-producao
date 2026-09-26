@@ -35,3 +35,24 @@ test("same-second ambiguity requires reconciliation and failed completion",async
  await assert.rejects(()=>processVerifiedLdrOneEvent(db,rowId,event),/reconciliation/);
  assert.equal(finished,true);
 });
+
+test("already completed event is acknowledged without a second update",async()=>{
+ const calls:string[]=[];
+ const db={rpc:async(name:string)=>{calls.push(name);return {data:[{decision:"acknowledge",token:null}],error:null};}};
+ assert.equal(await processVerifiedLdrOneEvent(db,rowId,event),"duplicate");
+ assert.deepEqual(calls,["ldr_one_claim_webhook_event"]);
+});
+test("exhausted retry policy requires manual reconciliation",async()=>{
+ let calls=0;
+ const db={rpc:async()=>{calls++;return {data:[{decision:"reject",token:null}],error:null};}};
+ await assert.rejects(()=>processVerifiedLdrOneEvent(db,rowId,event),/manual reconciliation/);
+ assert.equal(calls,1);
+});
+test("completion failure is not reported as success",async()=>{
+ const db={rpc:async(name:string)=>{
+ if(name==="ldr_one_claim_webhook_event")return {data:[{decision:"claim",token}],error:null};
+ if(name==="ldr_one_apply_ordered_subscription")return {data:"applied",error:null};
+ return {data:false,error:null};
+ }};
+ await assert.rejects(()=>processVerifiedLdrOneEvent(db,rowId,event),/claim lost or expired/);
+});
