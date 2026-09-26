@@ -8,7 +8,7 @@ type ServerEntry = {
   fetch: (request: Request, env: unknown, ctx: unknown) => Promise<Response> | Response;
 };
 
-const CANONICAL_ECOSYSTEM_ORIGIN = "https://www.ldrrhestrategia.com";
+const CANONICAL_ECOSYSTEM_ORIGIN = "https://ldrrhestrategia.com";
 
 let serverEntryPromise: Promise<ServerEntry> | undefined;
 
@@ -116,7 +116,7 @@ function academyCanonicalRedirect(request: Request): Response | null {
   // Old LDR hosts are compatibility aliases only. Once their DNS reaches this
   // deployment, they redirect into a child page of ldracademy.online.
   if (isInstitutionalHost) {
-    if (host === "www.ldrrhestrategia.com") {
+    if (host === "ldrrhestrategia.com") {
       if (url.pathname === "/index.html") { url.pathname = "/"; return temporaryRedirect(url.toString()); }
       return null;
     }
