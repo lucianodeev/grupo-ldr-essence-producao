@@ -23,7 +23,7 @@ DO $$ BEGIN
     ALTER TABLE public.ldr_pass_subscriptions
       ADD CONSTRAINT ldr_pass_ldr_one_seats_check
       CHECK (ldr_one_offer IS NULL OR
-        (ldr_one_offer = 'individual' AND (ldr_one_seats IS NULL OR ldr_one_seats = 1)) OR
-        (ldr_one_offer = 'business' AND ldr_one_seats >= 5));
+        (ldr_one_offer = 'individual' AND (ldr_one_seats = 1)) OR
+        (ldr_one_offer = 'business' AND ldr_one_seats BETWEEN 5 AND 10000));
   END IF;
 END $$;
