@@ -19,7 +19,7 @@ const COPY = {
 
 function oauthReturnUrl() {
   if (typeof window === "undefined") return "/api/auth/callback";
-  return `https://www.ldrrhestrategia.com/api/auth/callback`;
+  return `https://ldrrhestrategia.com/api/auth/callback`;
 }
 
 async function syncBrowserSession(session: Session) {
