@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { createHmac, timingSafeEqual } from "crypto";
 import { ldrPassStatusFromStripeEvent } from "@/lib/ldr-one-stripe-lifecycle";
+import { ldrOneBillingPeriodFromStripeObject } from "@/lib/ldr-one-stripe-period";
 
 const MAX_BODY = 256 * 1024;
 const TOLERANCE_SECONDS = 300;
@@ -47,6 +48,7 @@ type StripeObject = {
   payment_intent?: string | { id?: string } | null;
   current_period_start?: number;
   current_period_end?: number;
+  lines?: { data?: Array<{ period?: { start?: number; end?: number }; subscription?: string | { id?: string } | null; parent?: { subscription_item_details?: { subscription?: string | { id?: string } | null } } }> };
   cancel_at_period_end?: boolean;
 };
 
@@ -251,7 +253,9 @@ async function setLdrPassSubscription(metadata: Record<string,string>, object: S
   const patch:Record<string,unknown>={status,updated_at:new Date().toISOString()};
   if(["checkout.session.completed","checkout.session.expired","checkout.session.async_payment_succeeded","checkout.session.async_payment_failed"].includes(eventType))patch['stripe_checkout_session_id']=object.id??null;
   if(subscriptionId)patch['stripe_subscription_id']=subscriptionId; const customer=stripeId(object.customer);if(customer)patch['stripe_customer_id']=customer;
-  const start=isoFromUnix(object.current_period_start);if(start)patch['current_period_start']=start;const end=isoFromUnix(object.current_period_end);if(end)patch['current_period_end']=end;
+  const period = ldrOneBillingPeriodFromStripeObject(object, subscriptionId);
+  const start=isoFromUnix(period.start ?? undefined);if(start)patch["current_period_start"]=start;
+  const end=isoFromUnix(period.end ?? undefined);if(end)patch["current_period_end"]=end;
   if(typeof object.cancel_at_period_end==="boolean")patch['cancel_at_period_end']=object.cancel_at_period_end;
   const isLdrOne=Boolean(metadata["ldr_one_offer"]);if(isLdrOne){let verify=db.from("ldr_pass_subscriptions").select("id,ldr_one_offer,ldr_one_seats");verify=rowId?verify.eq("id",rowId):verify.eq("stripe_subscription_id",subscriptionId);const {data:found,error:lookupError}=await verify;if(lookupError)throw lookupError;if(found?.length!==1)throw new Error("LDR ONE Stripe event must match exactly one subscription");if(found[0].ldr_one_offer!==metadata["ldr_one_offer"]||found[0].ldr_one_seats!==Number(metadata["ldr_one_seats"]))throw new Error("LDR ONE Stripe metadata mismatch");}let q=db.from("ldr_pass_subscriptions").update(patch);q=rowId?q.eq("id",rowId):q.eq("stripe_subscription_id",subscriptionId);const {data:updated,error}=await q.select("id");if(error)throw error;if(updated?.length!==1)throw new Error("Stripe subscription update must affect exactly one record");return true;
 }
