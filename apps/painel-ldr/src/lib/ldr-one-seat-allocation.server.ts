@@ -26,8 +26,14 @@ export async function assignLdrOneBusinessSeat(input: {
     .eq("ldr_one_offer", "business")
     .maybeSingle();
   if (subscriptionError || !subscription) throw new Error("Assinatura empresarial não pertence a este cliente.");
-  const { hasCurrentIndividualLdrOneSubscription } = await import("@/lib/entitlements");
-  if (!hasCurrentIndividualLdrOneSubscription(subscription, Date.now()))
+  // Validate the business subscription before invoking the locked allocator.
+  const valid = subscription.ldr_one_offer === "business" &&
+    Number.isSafeInteger(subscription.ldr_one_seats) && subscription.ldr_one_seats >= 5 &&
+    Boolean(subscription.stripe_subscription_id) && ["active", "trialing"].includes(subscription.status) &&
+    Boolean(subscription.current_period_end) &&
+    Number.isFinite(Date.parse(subscription.current_period_end)) &&
+    Date.parse(subscription.current_period_end) > Date.now();
+  if (!valid)
     throw new Error("Assinatura empresarial sem pagamento vigente.");
   if (!Number.isSafeInteger(subscription.ldr_one_seats) || subscription.ldr_one_seats < 5)
     throw new Error("Quantidade de vagas empresariais inválida.");
