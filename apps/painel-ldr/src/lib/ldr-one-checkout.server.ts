@@ -8,7 +8,7 @@ type Billing = "monthly" | "annual";
 type CheckoutRequest = { userId: string; email: string | null; audience: Audience; billing: Billing; seats?: number };
 
 function origin() {
-  const configured = process.env.CLIENT_PANEL_URL?.replace(/\/$/, "");
+  const configured = process.env['CLIENT_PANEL_URL']?.replace(/\/$/, "");
   const request = getRequest();
   const requestOrigin = request ? new URL(request.url).origin : null;
   return configured || requestOrigin || "https://ldracademy.online";
@@ -18,7 +18,7 @@ function origin() {
 export async function createLdrOneCheckout(input: CheckoutRequest): Promise<{ url: string }> {
   if (!LDR_ONE_LAUNCH_ENABLED) throw new Error("A assinatura LDR ONE está em preparação.");
   // Never accept payment unless the same server can verify and enforce digital access.
-  if (!process.env.SUPABASE_SERVICE_ROLE_KEY || !process.env.STRIPE_SECRET_KEY)
+  if (!process.env['SUPABASE_SERVICE_ROLE_KEY'] || !process.env['STRIPE_SECRET_KEY'])
     throw new Error("Contratação indisponível: validação de pagamento e biblioteca não configurada.");
   if (!["individual", "business"].includes(input.audience) || !["monthly", "annual"].includes(input.billing))
     throw new Error("Assinatura inválida.");
@@ -42,7 +42,7 @@ export async function createLdrOneCheckout(input: CheckoutRequest): Promise<{ ur
   const amount = input.audience === "business"
     ? LDR_ONE_EUR.business[input.billing].amountCentsPerSeat * seats
     : LDR_ONE_EUR.individual[input.billing].amountCents;
-  const secret = process.env.STRIPE_SECRET_KEY;
+  const secret = process.env['STRIPE_SECRET_KEY'];
   if (!secret) throw new Error("Pagamento temporariamente indisponível.");
 
   const { data: row, error: insertError } = await db.from("ldr_pass_subscriptions")
