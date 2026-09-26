@@ -63,7 +63,7 @@ function MasterAdmin() {
     return (
       <div className="s8-card mx-auto max-w-xl text-center">
         <h1 className="font-serif text-3xl">Sessão expirada</h1>
-        <p className="mt-2 text-sm text-muted-foreground">Entre novamente para validar seu acesso ao Painel Master.</p>
+        <p className="mt-2 text-sm text-muted-foreground">Falha na validação do acesso. Informe o código abaixo para corrigirmos a origem.</p><p className="mt-3 break-all rounded-lg bg-slate-100 p-3 text-xs text-slate-800">{access.error instanceof Error ? access.error.message : "ACCESS_UNKNOWN"}</p>
         <a href="/login" className="mt-5 inline-flex rounded-xl bg-[#0B1F3A] px-5 py-3 text-sm font-bold text-white">Entrar novamente</a>
       </div>
     );
