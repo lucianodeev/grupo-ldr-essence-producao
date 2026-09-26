@@ -28,6 +28,12 @@ Status: **NOT RELEASED**. This is a checklist, not authorization to deploy or ch
 4. Verify customer-facing checkout URLs, pricing, and consent; obtain explicit launch authorization.
 5. Enable business reader only after migration and permission checks; enable launch only after all required gates pass.
 
+## Latest verified CI checkpoint
+- Commit `372841ad0f263ebdbcf8a17b62cf989d73c2c0e9`: both PR workflows completed successfully (LDR ONE validation and Academy subscription courses).
+- This verifies automated source checks and build only; it is **not** a Stripe test-mode end-to-end run or live PostgreSQL concurrency test.
+- No PR reviews or review threads were recorded when this checkpoint was checked.
+- Any subsequent commit requires fresh CI validation; do not reuse this checkpoint as a release approval.
+
 ## Current known state
 - Source and CI validation can run without purchasing another project.
 - Staged SQL is review-only and has not been installed by this work.
