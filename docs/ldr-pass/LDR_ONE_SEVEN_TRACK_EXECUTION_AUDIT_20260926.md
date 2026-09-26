@@ -3,7 +3,7 @@
 Status: **NOT READY FOR LIVE SALES**. This is an execution record, not a launch authorization.
 
 ## 1. Payment security
-- Confirmed in shared webhook: `markEvent` inserts the event ID before handlers finish; duplicates are immediately acknowledged HTTP 200. A transient downstream failure can therefore strand an unprocessed event. Shared-product transaction/replay design and regression tests remain required.
+- Confirmed in shared webhook: `markEvent` inserts the event ID before handlers finish; duplicates are immediately acknowledged HTTP 200. A transient downstream failure attempts best-effort deletion of the event marker in the catch block, but that cleanup can fail and concurrent duplicate delivery can be acknowledged before the first handler completes. Shared-product transactional claim/retry design and regression tests remain required.
 - Offline `ldr-one-event-ordering.ts` exists but is not wired to webhook; equal-second Stripe events require authoritative reconciliation, not arbitrary ID sorting.
 
 ## 2. Stripe end-to-end
@@ -11,7 +11,7 @@ Status: **NOT READY FOR LIVE SALES**. This is an execution record, not a launch 
 - Stripe test-mode checkout, payment success/delay/failure, renewals, cancellation, duplicate/out-of-order events and real signed webhook delivery have not been evidenced by this audit. Do not assert they pass.
 
 ## 3. Business database
-- READ-ONLY Supabase schema query on project `sfrcsrzuoqdscflfuwik` verified: `public.ldr_pass_subscriptions` and `public.stripe_webhook_events` exist; `public.ldr_one_business_seat_allocations` does **not** exist.
+- READ-ONLY Supabase schema query on project `sfrcsrzuoqdscflfuwik` verified: `public.ldr_pass_subscriptions` and `public.stripe_webhook_events` exist; the intended staged table `public.ldr_one_seat_allocations` has **not yet been checked** by this audit; the earlier query used the wrong table name and cannot establish migration status.
 - `stripe_webhook_events` has only `event_id`, `event_type`, `created_at`; no persisted processing state or completion timestamp.
 - Keep staged allocation SQL uninstalled until isolated real PostgreSQL concurrency testing, permission review, backup/rollback and separate production authorization. Never use the unrelated Human Room project.
 
