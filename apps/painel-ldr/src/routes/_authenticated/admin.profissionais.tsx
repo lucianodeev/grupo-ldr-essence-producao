@@ -72,6 +72,7 @@ function NetworkAdmin() {
   const updateFinancial = useServerFn(professionalNetworkFinancialUpdate);
   const preparePayout = useServerFn(professionalNetworkPreparePayout);
   const [data, setData] = useState<any>(null);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [commission, setCommission] = useState("10");
   const [payoutDays, setPayoutDays] = useState("30");
@@ -79,6 +80,8 @@ function NetworkAdmin() {
   const [form, setForm] = useState<ProfessionalForm>(EMPTY_FORM);
 
   const refresh = async () => {
+    setLoadError(null);
+    try {
     const result = await load();
     setData(result);
     const currentCommission = (result.config ?? []).find(
@@ -89,6 +92,10 @@ function NetworkAdmin() {
     );
     setCommission(String(Number(currentCommission?.numeric_value ?? 0.1) * 100));
     setPayoutDays(String(Number(currentDays?.numeric_value ?? 30)));
+    } catch (error) {
+      console.error("[master/profissionais] load failed", error);
+      setLoadError(error instanceof Error ? error.message : "Falha na consulta da rede profissional.");
+    }
   };
   useEffect(() => {
     void refresh();
@@ -230,6 +237,7 @@ function NetworkAdmin() {
     }
   }
 
+  if (loadError && !data) return <section className="s8-card max-w-xl"><h1 className="font-serif text-2xl">Não foi possível carregar os profissionais</h1><p className="mt-3 break-words text-sm text-muted-foreground">{loadError}</p><button type="button" onClick={() => void refresh()} className="mt-4 rounded-lg bg-primary px-5 py-3 font-semibold text-primary-foreground">Tentar novamente</button></section>;
   if (!data)
     return <p className="text-sm text-muted-foreground">Carregando Rede de Profissionais…</p>;
   return (
