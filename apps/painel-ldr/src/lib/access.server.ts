@@ -74,11 +74,14 @@ export async function resolveAccess(supabase: Client, userId: string) {
   if (profileError || rolesError) fail("Não foi possível validar sua permissão.");
 
   const role = (roles?.[0]?.role ?? null) as AppRole | null;
-  // Master is reserved exclusively for the verified owner account.\n  const ownerEmail = "llucianouam@gmail.com";\n  const effectiveRole = role === "superadmin" && profile?.email?.trim().toLowerCase() !== ownerEmail ? null : role;\n  const authorized = Boolean(profile?.is_active && effectiveRole);
+  // Master is reserved exclusively for the verified owner account.
+  const ownerEmail = "llucianouam@gmail.com";
+  const effectiveRole = role === "superadmin" && profile?.email?.trim().toLowerCase() !== ownerEmail ? null : role;
+  const authorized = Boolean(profile?.is_active && effectiveRole);
 
   return {
     authorized,
-    role,
+    role: effectiveRole,
     email: profile?.email ?? null,
     fullName: profile?.full_name ?? null,
   };
