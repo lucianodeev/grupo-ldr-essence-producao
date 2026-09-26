@@ -19,7 +19,7 @@ export async function createLdrOneCheckout(input: CheckoutRequest): Promise<{ ur
   if (!LDR_ONE_LAUNCH_ENABLED) throw new Error("A assinatura LDR ONE está em preparação.");
   if (!["individual", "business"].includes(input.audience) || !["monthly", "annual"].includes(input.billing))
     throw new Error("Assinatura inválida.");
-  const seats = input.audience === "individual" ? 1 : input.seats;
+  const seats = input.audience === "individual" ? 1 : (input.seats ?? 0);
   if (!Number.isSafeInteger(seats) || !seats || (input.audience === "business" && (seats < 5 || seats > 10000)))
     throw new Error("A assinatura empresarial exige entre 5 e 10.000 colaboradores.");
 
