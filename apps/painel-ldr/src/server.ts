@@ -8,7 +8,7 @@ type ServerEntry = {
   fetch: (request: Request, env: unknown, ctx: unknown) => Promise<Response> | Response;
 };
 
-const CANONICAL_ECOSYSTEM_ORIGIN = "https://ldr-ecossistema-validacao.onrender.com";
+const CANONICAL_ECOSYSTEM_ORIGIN = "https://www.ldrrhestrategia.com";
 
 let serverEntryPromise: Promise<ServerEntry> | undefined;
 
@@ -116,7 +116,11 @@ function academyCanonicalRedirect(request: Request): Response | null {
   // Old LDR hosts are compatibility aliases only. Once their DNS reaches this
   // deployment, they redirect into a child page of ldracademy.online.
   if (isInstitutionalHost) {
-    const target = ecosystemTarget(url.pathname === "/" || url.pathname === "/index.html" ? "/ldr-rh-estrategia" : url.pathname);
+    if (host === "www.ldrrhestrategia.com") {
+      if (url.pathname === "/index.html") { url.pathname = "/"; return temporaryRedirect(url.toString()); }
+      return null;
+    }
+    const target = ecosystemTarget(url.pathname === "/index.html" ? "/" : url.pathname);
     return temporaryRedirect(target.toString());
   }
 
@@ -197,7 +201,7 @@ function academyCanonicalRedirect(request: Request): Response | null {
       url.pathname.startsWith("/cliente/rede-academica/")
     ) {
       const target = new URL(url.toString());
-      target.hostname = "ldr-ecossistema-validacao.onrender.com";
+      target.hostname = "www.ldrrhestrategia.com";
       return temporaryRedirect(target.toString());
     }
 
@@ -298,13 +302,13 @@ function academyCanonicalRedirect(request: Request): Response | null {
   // authenticated client route so the public storefront and private library
   // remain separate and hydration uses the same route on server and browser.
   if (url.pathname === "/cliente" || url.pathname === "/biblioteca") {
-    url.hostname = "ldr-ecossistema-validacao.onrender.com";
+    url.hostname = "www.ldrrhestrategia.com";
     url.pathname = "/cliente/biblioteca";
     return temporaryRedirect(url.toString());
   }
 
   if (url.pathname.startsWith("/biblioteca/")) {
-    url.hostname = "ldr-ecossistema-validacao.onrender.com";
+    url.hostname = "www.ldrrhestrategia.com";
     url.pathname = `/cliente${url.pathname}`;
     return temporaryRedirect(url.toString());
   }
