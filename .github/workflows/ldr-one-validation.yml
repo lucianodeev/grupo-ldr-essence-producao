@@ -19,9 +19,8 @@ jobs:
       - run: npm ci --no-audit --no-fund
       - name: Focused LDR ONE entitlement tests
         run: node --experimental-strip-types --test apps/painel-ldr/src/lib/entitlements.test.ts
-      - name: Full existing application regression suite (diagnostic; failures remain visible)
+      - name: Full existing application regression suite (required)
         run: npm --prefix apps/painel-ldr test
-        continue-on-error: true
       - name: Existing application typecheck (diagnostic; failures remain visible)
         run: npm --prefix apps/painel-ldr run typecheck
         continue-on-error: true
