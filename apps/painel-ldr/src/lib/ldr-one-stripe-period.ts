@@ -5,9 +5,9 @@ export function ldrOneBillingPeriodFromStripeObject(object: {
   current_period_start?: number;
   current_period_end?: number;
   lines?: { data?: Array<{ period?: { start?: number; end?: number }; subscription?: string | { id?: string } | null; parent?: { subscription_item_details?: { subscription?: string | { id?: string } | null } } }> };
-}, subscriptionId: string | null): { start: number | null; end: number | null } {
+}, subscriptionId: string | null, eventType = "customer.subscription.updated"): { start: number | null; end: number | null } {
   const valid = (n: unknown): n is number => typeof n === "number" && Number.isSafeInteger(n) && n > 0;
-  if (valid(object.current_period_end)) {
+  if (!eventType.startsWith("invoice.") && valid(object.current_period_end)) {
     const start = valid(object.current_period_start) ? object.current_period_start : null;
     if (start !== null && object.current_period_end <= start) return { start: null, end: null };
     return { start, end: object.current_period_end };
