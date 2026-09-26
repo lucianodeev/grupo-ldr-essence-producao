@@ -74,7 +74,7 @@ export async function resolveAccess(supabase: Client, userId: string) {
   if (profileError || rolesError) fail("Não foi possível validar sua permissão.");
 
   const role = (roles?.[0]?.role ?? null) as AppRole | null;
-  const authorized = Boolean(profile?.is_active && role);
+  // Master is reserved exclusively for the verified owner account.\n  const ownerEmail = "llucianouam@gmail.com";\n  const effectiveRole = role === "superadmin" && profile?.email?.trim().toLowerCase() !== ownerEmail ? null : role;\n  const authorized = Boolean(profile?.is_active && effectiveRole);
 
   return {
     authorized,
@@ -107,7 +107,7 @@ export async function bootstrapFirstSuperadmin(input: {
 
   if (!state || state.completed) fail("Bootstrap indisponível.");
   if (!timingSafeEqual(input.secret, expected)) fail("Bootstrap indisponível.");
-  if (input.password.length < 12) fail("A senha deve ter ao menos 12 caracteres.");
+  if (input.email.trim().toLowerCase() !== "llucianouam@gmail.com") fail("Cadastro Master restrito.");\n  if (input.password.length < 12) fail("A senha deve ter ao menos 12 caracteres.");
 
   const { data: created, error } = await supabaseAdmin.auth.admin.createUser({
     email: input.email.trim().toLowerCase(),
