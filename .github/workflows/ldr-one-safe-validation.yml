@@ -1,0 +1,26 @@
+name: LDR ONE safe validation
+on:
+  pull_request:
+    paths:
+      - 'apps/painel-ldr/src/**'
+      - '.github/workflows/ldr-one-safe-validation.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Regression tests
+        run: node --experimental-strip-types --test apps/painel-ldr/src/lib/entitlements.test.ts
+      - name: TypeScript diagnostic (existing platform debt; report without hiding errors)
+        continue-on-error: true
+        run: npm --prefix apps/painel-ldr run typecheck
+      - name: Render build
+        run: npm --prefix apps/painel-ldr run build:render
