@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { classifyEntitlementResource, isPassEligibleResource, resolveLegacyEntitlement, resolveLdrOneEntitlement } from "./entitlements.ts";
+import { classifyEntitlementResource, isPassEligibleResource, resolveLegacyEntitlement, resolveLdrOneEntitlement, hasCurrentIndividualLdrOneSubscription } from "./entitlements.ts";
 
 test("owner override has highest precedence", () => {
   const x=resolveLegacyEntitlement({resourceKey:"course",ownerOverride:true,librarySubscription:true});
@@ -44,4 +44,18 @@ test("LDR ONE editorial material requires explicit approval",()=>{
 test("LDR ONE preserves existing lifetime ownership precedence",()=>{
  const x=resolveLdrOneEntitlement({resourceKey:"ebook_1",owned:true,ldrOneActive:true});
  assert.equal(x.source,"ownership");assert.equal(x.accessType,"lifetime");
+});
+
+test("LDR ONE reader requires confirmed subscription and unexpired period", () => {
+  const now = Date.parse("2026-09-26T12:00:00Z");
+  const base = { status: "active", stripe_subscription_id: "sub_test", current_period_end: "2026-10-26T12:00:00Z" };
+  assert.equal(hasCurrentIndividualLdrOneSubscription(base, now), true);
+  for (const status of ["pending", "past_due", "unpaid", "paused", "canceled", "incomplete"]) {
+    assert.equal(hasCurrentIndividualLdrOneSubscription({ ...base, status }, now), false, status);
+  }
+  assert.equal(hasCurrentIndividualLdrOneSubscription({ ...base, stripe_subscription_id: null }, now), false);
+  assert.equal(hasCurrentIndividualLdrOneSubscription({ ...base, current_period_end: null }, now), false);
+  assert.equal(hasCurrentIndividualLdrOneSubscription({ ...base, current_period_end: "not-a-date" }, now), false);
+  assert.equal(hasCurrentIndividualLdrOneSubscription({ ...base, current_period_end: "2026-09-26T12:00:00Z" }, now), false);
+  assert.equal(hasCurrentIndividualLdrOneSubscription({ ...base, status: "trialing" }, now), true);
 });
