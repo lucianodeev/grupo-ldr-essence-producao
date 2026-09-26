@@ -249,3 +249,15 @@ export function resolveLdrOneEntitlement(
     legacy: false, reasons: ["active_ldr_one_approved_digital"],
   };
 }
+
+/** Fail-closed reader check: never grant access on a pending payment or unknown expiry. */
+export function hasCurrentIndividualLdrOneSubscription(
+  subscription: { status: string; stripe_subscription_id: string | null; current_period_end: string | null },
+  now: number,
+): boolean {
+  return (subscription.status === "active" || subscription.status === "trialing") &&
+    Boolean(subscription.stripe_subscription_id) &&
+    subscription.current_period_end !== null &&
+    Number.isFinite(Date.parse(subscription.current_period_end)) &&
+    Date.parse(subscription.current_period_end) > now;
+}
