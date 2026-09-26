@@ -26,6 +26,43 @@ const ALIASES: Record<DigitalReaderProductKey, string[]> = {
   ebook_da_pobreza_ao_primeiro_contrato: ["ebook_da_pobreza_ao_primeiro_contrato"],
 };
 
+/** Explicit initial LDR ONE reader catalog. Editorial and non-listed works remain separate. */
+const LDR_ONE_READER_APPROVED = new Set<DigitalReaderProductKey>([
+  "ebook_coragem_comecar",
+  "livro_menino_mamao",
+  "ebook_pratica_clinica_psicanalise",
+  "ebook_estudos_caso_psicanalise",
+  "ebook_psicanalise_autismo",
+  "ebook_psicologia_psicanalise_terapias",
+  "ebook_jornalismo_era_digital",
+  "ebook_corpo_trabalho_escuta",
+  "ebook_comportamento_humano",
+  "ebook_estetica_bem_estar",
+  "ebook_tricologia_cuidado",
+  "ebook_ia_novos_milionarios",
+  "ebook_imigracao_efeitos_psicologicos",
+  "ebook_psicanalise_vs_psiquiatria",
+  "ebook_falar_com_quem_feriu",
+  "ebook_da_pobreza_ao_primeiro_contrato",
+]);
+
+async function hasIndividualLdrOneReaderAccess(customerId: string, productKey: DigitalReaderProductKey) {
+  if (!LDR_ONE_READER_APPROVED.has(productKey)) return false;
+  const { data, error } = await supabaseAdmin
+    .from("ldr_pass_subscriptions")
+    .select("id,status,current_period_end,stripe_subscription_id")
+    .eq("customer_id", customerId)
+    .eq("ldr_one_offer", "individual")
+    .in("status", ["active", "trialing"]);
+  if (error) fail("Não foi possível validar sua assinatura.");
+  const now = Date.now();
+  return (data ?? []).some((subscription) =>
+    Boolean(subscription.stripe_subscription_id) &&
+    (subscription.current_period_end !== null) &&
+    Date.parse(subscription.current_period_end) > now
+  );
+}
+
 function fail(message: string): never {
   throw new Error(message);
 }
@@ -65,7 +102,9 @@ async function assertEntitlement(customerId: string, productKey: DigitalReaderPr
     const key = metadata && typeof metadata.product_key === "string" ? metadata.product_key : null;
     return Boolean(key && allowed.has(key));
   });
-  if (!entitled) fail("Conteúdo disponível somente após confirmação da compra.");
+  if (entitled) return;
+  if (await hasIndividualLdrOneReaderAccess(customerId, productKey)) return;
+  fail("Conteúdo disponível somente após confirmação da compra ou assinatura elegível.");
 }
 
 function decodeContent(value: unknown): unknown {
