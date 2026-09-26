@@ -33,8 +33,8 @@ export type EntitlementDecision = {
   resourceKey: string;
   source: EntitlementSource;
   accessType: EntitlementAccessType;
-  subscriptionId?: string;
-  expiresAt?: string;
+  subscriptionId?: string | undefined;
+  expiresAt?: string | undefined;
   legacy: boolean;
   reasons: string[];
 };
