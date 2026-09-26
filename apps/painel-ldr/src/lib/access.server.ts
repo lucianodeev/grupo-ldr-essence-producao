@@ -107,7 +107,8 @@ export async function bootstrapFirstSuperadmin(input: {
 
   if (!state || state.completed) fail("Bootstrap indisponível.");
   if (!timingSafeEqual(input.secret, expected)) fail("Bootstrap indisponível.");
-  if (input.email.trim().toLowerCase() !== "llucianouam@gmail.com") fail("Cadastro Master restrito.");\n  if (input.password.length < 12) fail("A senha deve ter ao menos 12 caracteres.");
+  if (input.email.trim().toLowerCase() !== "llucianouam@gmail.com") fail("Cadastro Master restrito.");
+  if (input.password.length < 12) fail("A senha deve ter ao menos 12 caracteres.");
 
   const { data: created, error } = await supabaseAdmin.auth.admin.createUser({
     email: input.email.trim().toLowerCase(),
