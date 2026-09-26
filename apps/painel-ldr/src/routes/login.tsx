@@ -28,7 +28,7 @@ function oauthReturnUrl() {
   // Keep the administrator OAuth callback on the same canonical Academy host.
   // Sending it through the legacy Learn host loses the host-only admin-intent
   // cookie and can make the callback fall through to the public/client flow.
-  return `https://www.ldrrhestrategia.com/api/auth/callback?portal=admin`;
+  return `https://ldrrhestrategia.com/api/auth/callback?portal=admin`;
 }
 
 async function syncBrowserSession(session: Session) {
