@@ -353,8 +353,8 @@ export function AcademyAccessibilityControls({ visible = true }: Props) {
   }, [t.popular]);
 
   useEffect(() => { if (!visible) setOpen(false); }, [visible]);
-  const decrease = () => setScale(SCALES[Math.max(0, scaleIndex - 1)]);
-  const increase = () => setScale(SCALES[Math.min(SCALES.length - 1, scaleIndex + 1)]);
+  const decrease = () => setScale(SCALES[Math.max(0, scaleIndex - 1)] ?? 1);
+  const increase = () => setScale(SCALES[Math.min(SCALES.length - 1, scaleIndex + 1)] ?? 1);
   if (!visible) return null;
 
   const buttonClass = "inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-white/30 px-3 py-2.5 text-sm font-black text-white transition hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-40";
