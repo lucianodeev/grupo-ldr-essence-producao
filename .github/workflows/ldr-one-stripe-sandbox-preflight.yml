@@ -36,3 +36,9 @@ jobs:
             fi
           done
           echo "Test-only configuration shape validated; no Stripe requests or charges made."
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Read-only verification of four Stripe test prices
+        run: node scripts/ldr-one-stripe-sandbox-prices.mjs
