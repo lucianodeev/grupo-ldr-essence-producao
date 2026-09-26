@@ -236,28 +236,27 @@ const CENTRAL_ACCESS_COPY = {
     employee: "Sou funcionário",
     student: "Sou estudante / acadêmico",
     care: "Quero atendimento",
-    master: "Master / Admin",
   },
   en: {
     pillars: "Main map", pillarsTitle: "Three pillars, one LDR Ecosystem",
     rh: "LDR HR & Strategy", rhText: "Companies, careers, recruitment, professionals, wellbeing and corporate operations.",
     clinic: "Social Clinic", clinicText: "Social care, approved professionals, schedule and follow-up.",
     academy: "LDR Academy", academyText: "Library, courses, programs, Academic Network and continuous development.",
-    access: "Access by profile", client: "I am a client", professional: "I am a professional", company: "I am a company", employee: "I am an employee", student: "I am a student / academic", care: "I want care", master: "Master / Admin",
+    access: "Access by profile", client: "I am a client", professional: "I am a professional", company: "I am a company", employee: "I am an employee", student: "I am a student / academic", care: "I want care",
   },
   fr: {
     pillars: "Carte principale", pillarsTitle: "Trois piliers, un seul Écosystème LDR",
     rh: "LDR RH & Stratégie", rhText: "Entreprises, carrière, recrutement, professionnels, bien-être et opérations.",
     clinic: "Clinique Sociale", clinicText: "Accompagnement social, professionnels approuvés, agenda et suivi.",
     academy: "LDR Academy", academyText: "Bibliothèque, cours, formations, Réseau Académique et développement continu.",
-    access: "Accès par profil", client: "Je suis client", professional: "Je suis professionnel", company: "Je suis une entreprise", employee: "Je suis collaborateur", student: "Je suis étudiant / académique", care: "Je veux un accompagnement", master: "Master / Admin",
+    access: "Accès par profil", client: "Je suis client", professional: "Je suis professionnel", company: "Je suis une entreprise", employee: "Je suis collaborateur", student: "Je suis étudiant / académique", care: "Je veux un accompagnement",
   },
   es: {
     pillars: "Mapa principal", pillarsTitle: "Tres pilares, un único Ecosistema LDR",
     rh: "LDR RH & Estrategia", rhText: "Empresas, carrera, reclutamiento, profesionales, bienestar y operación corporativa.",
     clinic: "Clínica Social", clinicText: "Atención social, profesionales aprobados, agenda y seguimiento.",
     academy: "LDR Academy", academyText: "Biblioteca, cursos, formaciones, Red Académica y desarrollo continuo.",
-    access: "Accesos por perfil", client: "Soy cliente", professional: "Soy profesional", company: "Soy empresa", employee: "Soy empleado", student: "Soy estudiante / académico", care: "Quiero atención", master: "Master / Admin",
+    access: "Accesos por perfil", client: "Soy cliente", professional: "Soy profesional", company: "Soy empresa", employee: "Soy empleado", student: "Soy estudiante / académico", care: "Quiero atención",
   },
 } as const;
 
@@ -332,8 +331,7 @@ function EcosystemMap() {
               <Link to="/funcionario/login" className="rounded-xl border bg-[#f8f1e7] px-4 py-3 text-sm font-black">{central.employee} →</Link>
               <Link to="/cliente/rede-academica" className="rounded-xl border bg-[#f8f1e7] px-4 py-3 text-sm font-black">{central.student} →</Link>
               <Link to="/clinica-social/solicitar" className="rounded-xl border bg-[#f8f1e7] px-4 py-3 text-sm font-black">{central.care} →</Link>
-              <Link to="/login" className="rounded-xl border bg-[#071426] px-4 py-3 text-sm font-black text-white">{central.master} →</Link>
-            </div>
+              </div>
           </div>
         </section>
 
