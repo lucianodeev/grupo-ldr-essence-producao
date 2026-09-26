@@ -20,3 +20,9 @@ test("staged seat schema is never silently applied by the application", () => {
   assert.match(source, /REVOKE ALL ON FUNCTION public\.ldr_one_allocate_seat/);
   assert.match(source, /REVOKE ALL ON FUNCTION public\.ldr_one_revoke_seat/);
 });
+
+test("business checkout refuses payment preparation until employee reader is enabled", () => {
+  const source = readFileSync(fileURLToPath(new URL("./ldr-one-checkout.server.ts", import.meta.url)), "utf8");
+  assert.match(source, /input\.audience === "business" && process\.env\["LDR_ONE_BUSINESS_READER_ENABLED"\] !== "true"/);
+  assert.match(source, /if \(!LDR_ONE_LAUNCH_ENABLED\)/);
+});
