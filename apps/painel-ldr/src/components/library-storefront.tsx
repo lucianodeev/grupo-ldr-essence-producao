@@ -61,7 +61,7 @@ const NOVELTY_COVERS:Record<string,string>={
 };
 function progressLabel(locale:Locale,free:boolean){return free?(locale==="pt"?"CURSO GRATUITO":locale==="fr"?"COURS GRATUIT":locale==="es"?"CURSO GRATUITO":"FREE COURSE"):(locale==="pt"?"EM ANDAMENTO":locale==="fr"?"EN COURS":locale==="es"?"EN CURSO":"IN PROGRESS");}
 function ContinueCard({x,locale}:{x:any;locale:Locale}){
-  const meta=PROGRESS_META[x.product_key]||{title:(x.title||String(x.product_key||"").replaceAll("_"," ")),href:x.href||"/cliente/biblioteca",cover:"/ldr/covers/formacao-ia.svg"};
+  const meta: {title:string;href:string;cover:string;free?:boolean}=PROGRESS_META[x.product_key]||{title:(x.title||String(x.product_key||"").replaceAll("_"," ")),href:x.href||"/cliente/biblioteca",cover:"/ldr/covers/formacao-ia.svg"};
   const pct=Math.max(0,Math.min(100,Number(x.progress_percent)||0));
   return <a href={meta.href} className="group grid min-w-0 grid-cols-[88px_minmax(0,1fr)] gap-4 rounded-[24px] border border-slate-200 bg-white p-3 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md sm:grid-cols-[110px_minmax(0,1fr)] sm:p-4">
     <img src={meta.cover} alt="" className="h-[122px] w-[88px] rounded-2xl object-cover shadow-sm sm:h-[150px] sm:w-[110px]"/>
