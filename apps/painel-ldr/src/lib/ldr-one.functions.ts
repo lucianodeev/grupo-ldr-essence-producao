@@ -3,7 +3,7 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { LDR_ONE_LAUNCH_ENABLED } from "@/lib/ldr-one.catalog";
 
 function emailOf(claims: Record<string, unknown>) {
-  return typeof claims.email === "string" ? claims.email : null;
+  return typeof claims['email'] === "string" ? claims['email'] : null;
 }
 
 /** Checkout stays disabled until the LDR ONE migration, webhook and entitlement tests pass. */
