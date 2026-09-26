@@ -11,7 +11,7 @@ Status: **NOT READY FOR LIVE SALES**. This is an execution record, not a launch 
 - Stripe test-mode checkout, payment success/delay/failure, renewals, cancellation, duplicate/out-of-order events and real signed webhook delivery have not been evidenced by this audit. Do not assert they pass.
 
 ## 3. Business database
-- READ-ONLY Supabase schema query on project `sfrcsrzuoqdscflfuwik` verified: `public.ldr_pass_subscriptions` and `public.stripe_webhook_events` exist; the intended staged table `public.ldr_one_seat_allocations` has **not yet been checked** by this audit; the earlier query used the wrong table name and cannot establish migration status.
+- READ-ONLY Supabase schema query on project `sfrcsrzuoqdscflfuwik` verified: `public.ldr_pass_subscriptions` and `public.stripe_webhook_events` exist; the correct intended staged table `public.ldr_one_seat_allocations` is **absent**, confirmed by a second read-only query; the allocator and revoker functions are also absent.
 - `stripe_webhook_events` has only `event_id`, `event_type`, `created_at`; no persisted processing state or completion timestamp.
 - Keep staged allocation SQL uninstalled until isolated real PostgreSQL concurrency testing, permission review, backup/rollback and separate production authorization. Never use the unrelated Human Room project.
 
@@ -35,3 +35,8 @@ Status: **NOT READY FOR LIVE SALES**. This is an execution record, not a launch 
 3. Review and authorize staged database migration; then verify employee reader and customer portal end-to-end.
 4. Confirm catalog, terms, production environment, domains and support.
 5. Re-run full CI; request separate authorization for go-live and controlled live purchase.
+
+## Follow-up checks
+- Corrected read-only database inspection confirmed the actual staged table and both RPC functions are absent; no migration was executed.
+- Connected Stripe currently exposes a **live-mode** account only. Do not run checkout simulation on that live context; a separate test/sandbox context is required.
+- Render workspace confirmed existing LDR ecosystem service on the free plan, connected to `main`, with pull-request previews disabled. No new deployment was triggered.
