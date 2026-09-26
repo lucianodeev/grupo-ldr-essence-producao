@@ -2,7 +2,7 @@ name: LDR ONE safe validation
 on:
   pull_request:
     paths:
-      - 'apps/painel-ldr/src/lib/entitlements*'
+      - 'apps/painel-ldr/src/**'
       - '.github/workflows/ldr-one-safe-validation.yml'
   workflow_dispatch:
 jobs:
