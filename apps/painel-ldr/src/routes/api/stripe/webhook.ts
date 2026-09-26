@@ -248,12 +248,14 @@ async function setLdrPassSubscription(metadata: Record<string,string>, object: S
   if(!rowId&&!subscriptionId)return false;
   const db=await database(); let status=String(object.status??"pending");
   if(eventType==="checkout.session.completed")status=object.payment_status==="paid"||object.payment_status==="no_payment_required"?"active":"pending";
+  if(eventType==="checkout.session.async_payment_succeeded")status="active";
+  if(eventType==="checkout.session.async_payment_failed")status="incomplete";
   if(eventType==="invoice.payment_succeeded")status="active";
   if(eventType==="invoice.payment_failed")status="past_due";
   if(eventType==="checkout.session.expired"||eventType==="customer.subscription.deleted")status="canceled";
   const allowed=new Set(["pending","active","trialing","past_due","canceled","unpaid","paused","incomplete"]); if(!allowed.has(status))status="incomplete";
   const patch:Record<string,unknown>={status,updated_at:new Date().toISOString()};
-  if(eventType==="checkout.session.completed"||eventType==="checkout.session.expired")patch['stripe_checkout_session_id']=object.id??null;
+  if(["checkout.session.completed","checkout.session.expired","checkout.session.async_payment_succeeded","checkout.session.async_payment_failed"].includes(eventType))patch['stripe_checkout_session_id']=object.id??null;
   if(subscriptionId)patch['stripe_subscription_id']=subscriptionId; const customer=stripeId(object.customer);if(customer)patch['stripe_customer_id']=customer;
   const start=isoFromUnix(object.current_period_start);if(start)patch['current_period_start']=start;const end=isoFromUnix(object.current_period_end);if(end)patch['current_period_end']=end;
   if(typeof object.cancel_at_period_end==="boolean")patch['cancel_at_period_end']=object.cancel_at_period_end;
@@ -651,7 +653,7 @@ export const Route = createFileRoute("/api/stripe/webhook")({
             event.type === "checkout.session.completed" ||
             event.type === "checkout.session.expired";
 
-          if (checkoutKind === "ldr_pass_subscription" && (subscriptionCheckoutEvent || recurringSubscriptionEvent)) {
+          if (checkoutKind === "ldr_pass_subscription" && (subscriptionCheckoutEvent || recurringSubscriptionEvent || event.type === "checkout.session.async_payment_succeeded" || event.type === "checkout.session.async_payment_failed")) {
             await setLdrPassSubscription(metadata, object, event.type);
           } else if (checkoutKind === "company_subscription" && (subscriptionCheckoutEvent || recurringSubscriptionEvent)) {
             await setCompanySubscription(metadata, object, event.type);
