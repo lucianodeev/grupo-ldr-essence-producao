@@ -11,13 +11,16 @@ export async function processVerifiedLdrOneEvent(db:Db,rowId:string,event:Event)
  if(claim.decision==="acknowledge") return "duplicate" as const;
  if(claim.decision==="retry_later") throw new Error("LDR ONE event is already processing; Stripe must retry");
  if(claim.decision==="reject") throw new Error("LDR ONE event exceeded retry policy; manual reconciliation required");
+ let decision: "applied"|"duplicate"|"stale";
  try{
-   const decision=await applyVerifiedLdrOneSubscriptionEvent(db,rowId,event);
-   await finishLdrOneWebhookEvent(db,event.id,claim.token,true);
-   return decision;
+   decision=await applyVerifiedLdrOneSubscriptionEvent(db,rowId,event);
  }catch(error){
    try{await finishLdrOneWebhookEvent(db,event.id,claim.token,false,error instanceof Error?error.message:"unknown error");}
    catch(finishError){throw new AggregateError([error,finishError],"LDR ONE event processing and claim release failed");}
    throw error;
  }
+ // Once the atomic update succeeds, do not mark it failed if acknowledgement
+ // fails. Let Stripe retry; the atomic event cursor prevents a second update.
+ await finishLdrOneWebhookEvent(db,event.id,claim.token,true);
+ return decision;
 }
