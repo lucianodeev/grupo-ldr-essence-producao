@@ -33,6 +33,10 @@ export const Route = createFileRoute("/_authenticated")({
     // already proven in the client library area, then verify server auth again.
     const { data } = await supabase.auth.getSession();
     if (data.session) {
+      // A verified browser identity is sufficient to enter the protected route;
+      // each admin screen separately enforces the server/RLS-backed Master role.
+      const { data: verifiedUser, error: verifyError } = await supabase.auth.getUser();
+      if (!verifyError && verifiedUser.user?.id === data.session.user.id) return;
       const synced = await syncBrowserSession(data.session).catch(() => false);
       if (synced) {
         const verified = await getClientAuthState().catch(() => null);
