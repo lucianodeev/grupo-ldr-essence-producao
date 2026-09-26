@@ -56,3 +56,16 @@ test("completion failure is not reported as success",async()=>{
  }};
  await assert.rejects(()=>processVerifiedLdrOneEvent(db,rowId,event),/claim lost or expired/);
 });
+
+test("failed acknowledgement does not falsely mark committed update as failed",async()=>{
+ const calls:Array<{name:string;success?:unknown}>=[];
+ const db={rpc:async(name:string,args:Record<string,unknown>)=>{
+ calls.push({name,success:args.p_success});
+ if(name==="ldr_one_claim_webhook_event")return {data:[{decision:"claim",token}],error:null};
+ if(name==="ldr_one_apply_ordered_subscription")return {data:"applied",error:null};
+ return {data:false,error:null};
+ }};
+ await assert.rejects(()=>processVerifiedLdrOneEvent(db,rowId,event),/claim lost or expired/);
+ assert.deepEqual(calls.map(c=>c.name),["ldr_one_claim_webhook_event","ldr_one_apply_ordered_subscription","ldr_one_finish_webhook_event"]);
+ assert.equal(calls[2].success,true);
+});
