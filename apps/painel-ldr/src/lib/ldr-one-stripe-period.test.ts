@@ -28,3 +28,11 @@ test("rejects reversed and zero-length periods before persisting", () => {
   assert.deepEqual(period({ current_period_start: 300, current_period_end: 300 }, "sub_a"), { start: null, end: null });
   assert.deepEqual(period({ lines: { data: [{ subscription: "sub_a", period: { start: 300, end: 200 } }] } }, "sub_a"), { start: null, end: null });
 });
+
+test("invoice cannot override matching subscription line with unrelated root period", () => {
+  const invoice = { current_period_start: 100, current_period_end: 999, lines: { data: [
+    { subscription: "sub_a", period: { start: 200, end: 300 } },
+  ] } };
+  assert.deepEqual(period(invoice, "sub_a", "invoice.payment_succeeded"), { start: 200, end: 300 });
+  assert.deepEqual(period({ current_period_start: 100, current_period_end: 999 }, "sub_a", "invoice.payment_succeeded"), { start: null, end: null });
+});
