@@ -7,7 +7,7 @@ export const Route = createFileRoute("/ldr-pass")({
   head: () => ({
     meta: [
       { title: "LDR ONE | Assinatura única do Ecossistema LDR" },
-      { name: "description", content: "Uma assinatura para todos os conteúdos digitais do Ecossistema LDR. Os serviços gratuitos continuam gratuitos." },
+      { name: "description", content: "Assinatura para o catálogo digital elegível do Ecossistema LDR. Serviços gratuitos continuam gratuitos; atendimentos individuais não estão incluídos." },
     ],
   }),
   component: LdrOnePage,
@@ -15,8 +15,8 @@ export const Route = createFileRoute("/ldr-pass")({
 
 const offers = [
   { name: "LDR FREE", description: "O que já é gratuito continua gratuito.", monthly: "Grátis", annual: "Grátis", items: ["Cadastro e perfil gratuitos", "Rede Acadêmica e recursos gratuitos", "Vagas e candidaturas gratuitas", "Cursos e conteúdos abertos"] },
-  { name: "LDR ONE Individual", description: "Uma assinatura para o catálogo digital completo.", monthly: "€ 39,90 / mês", annual: "€ 399 / ano", items: ["Todos os cursos e formações digitais disponíveis", "Todos os eBooks e publicações digitais", "Ferramentas e benefícios do ecossistema", "Acesso aos serviços profissionais conforme créditos contratados"] },
-  { name: "LDR ONE Business", description: "Uma assinatura por colaborador, com recursos empresariais.", monthly: "€ 19,90 / colaborador / mês", annual: "€ 199 / colaborador / ano", items: ["Todo o catálogo digital para colaboradores elegíveis", "Painel e ferramentas empresariais", "Recursos de carreira e desenvolvimento", "Serviços humanos conforme créditos e contrato"] },
+  { name: "LDR ONE Individual", description: "Acesso ao catálogo digital elegível da assinatura.", monthly: "€ 39,90 / mês", annual: "€ 399 / ano", items: ["Cursos e formações digitais elegíveis", "eBooks e publicações digitais elegíveis", "Recursos digitais incluídos no plano", "Atendimentos individuais não estão incluídos; contratação separada"] },
+  { name: "LDR ONE Business", description: "Uma assinatura por colaborador, com recursos empresariais.", monthly: "€ 19,90 / colaborador / mês", annual: "€ 199 / colaborador / ano", items: ["Catálogo digital elegível para colaboradores com acesso atribuído", "Painel e ferramentas empresariais", "Recursos de carreira e desenvolvimento", "Serviços humanos contratados separadamente"] },
 ];
 
 function LdrOnePage() {
@@ -44,7 +44,7 @@ function LdrOnePage() {
         <Link to="/ecossistema" className="text-sm font-bold text-[#f4c76b]">← Ecossistema LDR</Link>
         <p className="mt-10 text-xs font-black uppercase tracking-[.22em] text-[#f4c76b]">Assinatura única</p>
         <h1 className="mt-4 max-w-4xl font-serif text-4xl font-bold leading-tight sm:text-6xl">LDR ONE. Todo o ecossistema, uma assinatura.</h1>
-        <p className="mt-5 max-w-3xl text-lg text-white/75">Todos os cursos e formações digitais disponíveis, eBooks e publicações em uma única assinatura. Os recursos gratuitos permanecem gratuitos. Profissionais da clínica continuam com cadastro gratuito e recebem 80% dos atendimentos elegíveis; 20% correspondem à plataforma.</p>
+        <p className="mt-5 max-w-3xl text-lg text-white/75">Cursos, formações, eBooks e publicações digitais elegíveis em uma assinatura. Atendimentos individuais não estão incluídos. Os recursos gratuitos permanecem gratuitos. Profissionais da clínica continuam com cadastro gratuito e recebem 80% dos atendimentos elegíveis; 20% correspondem à plataforma.</p>
         <div className="mt-8 flex flex-wrap gap-3" aria-label="Periodicidade">
           <button type="button" aria-pressed={billing === "monthly"} onClick={() => setBilling("monthly")} className={`rounded-full px-6 py-3 font-bold ${billing === "monthly" ? "bg-[#f4c76b] text-[#1f1303]" : "border border-white/30"}`}>Mensal</button>
           <button type="button" aria-pressed={billing === "annual"} onClick={() => setBilling("annual")} className={`rounded-full px-6 py-3 font-bold ${billing === "annual" ? "bg-[#f4c76b] text-[#1f1303]" : "border border-white/30"}`}>Anual</button>
