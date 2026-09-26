@@ -48,7 +48,7 @@ function LdrOnePage() {
         <div className="rounded-[28px] border border-white/20 p-7">
           <h2 className="font-serif text-2xl font-bold">Parcerias e serviços profissionais</h2>
           <p className="mt-3 text-white/75">Profissionais podem cadastrar-se gratuitamente. Empresas e instituições interessadas em parcerias podem entrar em contato pelos canais oficiais do ecossistema.</p>
-          <Link to="/ecossistema" className="mt-5 inline-block rounded-xl border border-[#f4c76b] px-5 py-3 font-bold text-[#f4c76b]">Conhecer o ecossistema</Link>
+          <Link to="/falar-com-ecossistema?assunto=Parceria&source=LDR%20ONE" className="mt-5 inline-block rounded-xl border border-[#f4c76b] px-5 py-3 font-bold text-[#f4c76b]">Propor parceria pelo suporte</Link>
           <p className="mt-4 text-xs text-white/60">Atendimentos humanos dependem de créditos, disponibilidade e condições contratuais. Valores em outras moedas serão apresentados quando o checkout correspondente estiver disponível.</p>
         </div>
       </section>
