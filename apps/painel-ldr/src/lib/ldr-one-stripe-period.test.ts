@@ -22,3 +22,9 @@ test("ambiguous, missing and malformed invoice periods fail closed", () => {
   assert.deepEqual(period({ lines: { data: [{ subscription: "sub_a", period: { end: -1 } }] } }, "sub_a"), { start: null, end: null });
   assert.deepEqual(period({ lines: { data: [{ period: { end: 300 } }] } }, "sub_a"), { start: null, end: null });
 });
+
+test("rejects reversed and zero-length periods before persisting", () => {
+  assert.deepEqual(period({ current_period_start: 300, current_period_end: 200 }, "sub_a"), { start: null, end: null });
+  assert.deepEqual(period({ current_period_start: 300, current_period_end: 300 }, "sub_a"), { start: null, end: null });
+  assert.deepEqual(period({ lines: { data: [{ subscription: "sub_a", period: { start: 300, end: 200 } }] } }, "sub_a"), { start: null, end: null });
+});
