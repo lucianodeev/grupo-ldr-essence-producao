@@ -19,6 +19,7 @@ const offers = [
 
 function LdrOnePage() {
   const [billing, setBilling] = useState<"monthly" | "annual">("monthly");
+  const [seats, setSeats] = useState(5);
   return (
     <main className="min-h-screen bg-[#070b17] text-white">
       <section className="mx-auto max-w-6xl px-5 py-14 sm:py-20">
@@ -39,6 +40,7 @@ function LdrOnePage() {
             <h2 className="mt-3 font-serif text-3xl font-bold">{offer.name}</h2>
             <p className="mt-3 min-h-14 text-white/70">{offer.description}</p>
             <p className="mt-6 text-2xl font-black">{billing === "monthly" ? offer.monthly : offer.annual}</p>
+            {i === 2 && <div className="mt-4 rounded-xl border border-white/20 p-4"><label htmlFor="ldr-one-seats" className="block text-sm font-semibold">Quantidade de colaboradores (mínimo 5)</label><input id="ldr-one-seats" type="number" min={5} max={10000} step={1} value={seats} onChange={event => { const value = Number(event.target.value); if (Number.isSafeInteger(value)) setSeats(Math.max(5, Math.min(10000, value))); }} className="mt-2 w-full rounded-lg bg-white px-3 py-2 text-[#081326]" /><p className="mt-3 text-sm text-white/80" aria-live="polite">Total {billing === "monthly" ? "mensal" : "anual"}: {(seats * (billing === "monthly" ? 19.9 : 199)).toLocaleString("pt-PT", { style: "currency", currency: "EUR" })}</p></div>}
             <ul className="mt-7 flex-1 space-y-4">{offer.items.map(item => <li key={item} className="text-sm leading-6 text-white/80">✓ {item}</li>)}</ul>
             {i === 0 ? <Link to="/ecossistema" className="mt-8 rounded-xl bg-[#f4c76b] px-5 py-3 text-center font-black text-[#1f1303]">Explorar gratuitamente</Link> : <p className="mt-8 rounded-xl border border-white/25 p-4 text-center text-sm text-white/75">Contratação em preparação — sem cobranças antecipadas</p>}
           </article>
