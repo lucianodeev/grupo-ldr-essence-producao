@@ -7,8 +7,11 @@ export function ldrOneBillingPeriodFromStripeObject(object: {
   lines?: { data?: Array<{ period?: { start?: number; end?: number }; subscription?: string | { id?: string } | null; parent?: { subscription_item_details?: { subscription?: string | { id?: string } | null } } }> };
 }, subscriptionId: string | null): { start: number | null; end: number | null } {
   const valid = (n: unknown): n is number => typeof n === "number" && Number.isSafeInteger(n) && n > 0;
-  if (valid(object.current_period_end))
-    return { start: valid(object.current_period_start) ? object.current_period_start : null, end: object.current_period_end };
+  if (valid(object.current_period_end)) {
+    const start = valid(object.current_period_start) ? object.current_period_start : null;
+    if (start !== null && object.current_period_end <= start) return { start: null, end: null };
+    return { start, end: object.current_period_end };
+  }
   if (!subscriptionId) return { start: null, end: null };
   const id = (value: string | { id?: string } | null | undefined) =>
     typeof value === "string" ? value : value?.id ?? null;
@@ -17,6 +20,8 @@ export function ldrOneBillingPeriodFromStripeObject(object: {
     id(line.parent?.subscription_item_details?.subscription) === subscriptionId,
   );
   if (matches.length !== 1 || !valid(matches[0].period?.end)) return { start: null, end: null };
+  if (valid(matches[0].period?.start) && matches[0].period!.end! <= matches[0].period!.start!)
+    return { start: null, end: null };
   return {
     start: valid(matches[0].period?.start) ? matches[0].period!.start! : null,
     end: matches[0].period!.end!,
