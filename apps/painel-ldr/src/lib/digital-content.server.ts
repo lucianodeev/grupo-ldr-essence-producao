@@ -53,7 +53,7 @@ async function resolveCustomer(userId: string, email: string | null) {
     .select("id,portal_active")
     .eq("auth_user_id", userId)
     .maybeSingle();
-  if (linked?.portal_active) return linked.id;
+  if (linked?.portal_active) return { id: linked.id, verifiedAuthBinding: true };
 
   if (mail) {
     const { data: byEmail } = await supabaseAdmin
@@ -61,12 +61,12 @@ async function resolveCustomer(userId: string, email: string | null) {
       .select("id,portal_active")
       .ilike("email", mail)
       .maybeSingle();
-    if (byEmail?.portal_active) return byEmail.id;
+    if (byEmail?.portal_active) return { id: byEmail.id, verifiedAuthBinding: false };
   }
   fail("Acesso de cliente não encontrado.");
 }
 
-async function assertEntitlement(customerId: string, productKey: DigitalReaderProductKey) {
+async function assertEntitlement(customerId: string, productKey: DigitalReaderProductKey, verifiedAuthBinding: boolean) {
   const { data: orders, error } = await supabaseAdmin
     .from("orders")
     .select("catalog_key,metadata")
@@ -82,7 +82,8 @@ async function assertEntitlement(customerId: string, productKey: DigitalReaderPr
     return Boolean(key && allowed.has(key));
   });
   if (entitled) return;
-  if (await hasIndividualLdrOneReaderAccess(customerId, productKey)) return;
+  // Legacy email fallback preserves prior purchases, but cannot authorize a recurring LDR ONE grant.
+  if (verifiedAuthBinding && await hasIndividualLdrOneReaderAccess(customerId, productKey)) return;
   fail("Conteúdo disponível somente após confirmação da compra ou assinatura elegível.");
 }
 
@@ -108,8 +109,8 @@ export async function getProtectedDigitalContent(
 ) {
   const owner = hasOwnerDigitalAccess(email, userId);
   if (!owner) {
-    const customerId = await resolveCustomer(userId, email);
-    await assertEntitlement(customerId, productKey);
+    const customer = await resolveCustomer(userId, email);
+    await assertEntitlement(customer.id, productKey, customer.verifiedAuthBinding);
   }
 
   let { data, error } = await supabaseAdmin
