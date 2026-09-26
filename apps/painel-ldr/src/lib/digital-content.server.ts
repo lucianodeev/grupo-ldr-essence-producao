@@ -3,6 +3,7 @@ import { gunzipSync } from "node:zlib";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { hasOwnerDigitalAccess } from "@/lib/owner-digital-access.server";
 import { LDR_ONE_READER_APPROVED } from "@/lib/ldr-one-reader-catalog";
+import { hasLdrOneBusinessReaderAccess } from "@/lib/ldr-one-business-reader.server";
 import { hasCurrentIndividualLdrOneSubscription } from "@/lib/entitlements";
 
 export type DigitalReaderProductKey = "ebook_coragem_comecar" | "livro_menino_mamao" | "ebook_pratica_clinica_psicanalise" | "ebook_psicanalise_no_mundo" | "ebook_estudos_caso_psicanalise" | "ebook_psicanalise_autismo" | "ebook_psicologia_psicanalise_terapias" | "ebook_jornalismo_era_digital" | "ebook_corpo_trabalho_escuta" | "ebook_comportamento_humano" | "ebook_estetica_bem_estar" | "ebook_tricologia_cuidado" | "ebook_ia_novos_milionarios" | "ebook_imigracao_efeitos_psicologicos" | "ebook_psicanalise_vs_psiquiatria" | "ebook_falar_com_quem_feriu" | "ebook_da_pobreza_ao_primeiro_contrato";
@@ -109,8 +110,12 @@ export async function getProtectedDigitalContent(
 ) {
   const owner = hasOwnerDigitalAccess(email, userId);
   if (!owner) {
-    const customer = await resolveCustomer(userId, email);
-    await assertEntitlement(customer.id, productKey, customer.verifiedAuthBinding);
+    // Business employees have an independent authenticated seat path.
+    // No email-only customer lookup can authorize a business seat.
+    if (!await hasLdrOneBusinessReaderAccess(userId, productKey)) {
+      const customer = await resolveCustomer(userId, email);
+      await assertEntitlement(customer.id, productKey, customer.verifiedAuthBinding);
+    }
   }
 
   let { data, error } = await supabaseAdmin
