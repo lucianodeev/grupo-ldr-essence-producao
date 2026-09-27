@@ -1,3 +1,5 @@
+// One-shot real Stripe TEST delivery probe; never on normal boot.
+if(process.env.LDR_ONE_SANDBOX_REAL_DELIVERY_PROBE==="yes")await import("./ldr-one-sandbox-real-delivery-probe.mjs");
 // One-shot read-only Stripe TEST webhook endpoint preflight; never creates or modifies Stripe resources.
 if(process.env.LDR_ONE_SANDBOX_WEBHOOK_PREFLIGHT==="yes"){
  if(process.env.RENDER_SERVICE_ID!=="srv-das6drvavr4c7397dflg"||
