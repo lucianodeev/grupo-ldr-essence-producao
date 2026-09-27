@@ -3,6 +3,7 @@ import { sandboxOneConfig, type OneSelection } from "./ldr-one-sandbox.ts";
 export type OneSandboxCheckoutContext = {
   userId: string;
   customerId: string;
+  stripeCustomerId?: string | null;
   customerEmail?: string | null;
   origin: string;
   subscriptionRecordId: string;
@@ -36,7 +37,14 @@ export function buildOneSandboxCheckout(
     params.set("metadata[" + key + "]", value);
     params.set("subscription_data[metadata][" + key + "]", value);
   }
-  if (context.customerEmail) params.set("customer_email", context.customerEmail);
+  // Stripe forbids sending customer and customer_email together. The internal
+  // customerId in metadata is never treated as a Stripe customer identifier.
+  if (context.stripeCustomerId) {
+    if (!/^cus_[A-Za-z0-9]+$/.test(context.stripeCustomerId)) throw Error("Invalid Stripe test customer ID");
+    params.set("customer", context.stripeCustomerId);
+  } else if (context.customerEmail) {
+    params.set("customer_email", context.customerEmail);
+  }
   return { params, price };
 }
 // Deliberately no Stripe POST or access grant here. Checkout creation must be wired
