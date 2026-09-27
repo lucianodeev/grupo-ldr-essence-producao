@@ -43,3 +43,15 @@ test("Supabase ES256 signing keys verify with JOSE signature encoding", async()=
  const wrongAlg=async()=>new Response(JSON.stringify({keys:[{...ecJwk,alg:"RS256"}]}));
  assert.equal(await authenticateSandboxSupabase({request:request(jwt),env,fetcher:wrongAlg,resolveCustomer}),null);
 });
+
+import {createSandboxCustomerResolver} from "./ldr-one-sandbox-customer-directory.mjs";
+test("private sandbox customer directory resolves only explicitly verified membership",async()=>{
+ let sqlSeen=false;
+ const db={query:async(sql,args)=>{assert.deepEqual(args,[userId]);assert.match(sql,/verified=true/);sqlSeen=true;return {rows:[{customer_id:customerId}]};}};
+ const resolver=createSandboxCustomerResolver({db,env});
+ assert.deepEqual(await resolver({userId}),{verified:true,customerId});assert.equal(sqlSeen,true);
+ assert.equal(await resolver({userId:"invalid"}),null);
+ assert.equal(await createSandboxCustomerResolver({db:{query:async()=>({rows:[]})},env})({userId}),null);
+ assert.equal(await createSandboxCustomerResolver({db:{query:async()=>({rows:[{customer_id:customerId},{customer_id:customerId}]})},env})({userId}),null);
+ assert.throws(()=>createSandboxCustomerResolver({db,env:{...env,RENDER_SERVICE_ID:"production"}}));
+});
