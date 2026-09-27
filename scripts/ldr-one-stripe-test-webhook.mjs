@@ -58,6 +58,22 @@ if (process.env.LDR_ONE_SANDBOX_EVENT_INTEGRATION === "yes") {
     process.exit(1);
   }
 }
+// One-shot real Stripe TEST checkout integration, never run on ordinary startup.
+if(process.env.LDR_ONE_SANDBOX_CHECKOUT_INTEGRATION==="yes"){
+ if(process.env.RENDER_SERVICE_ID!=="srv-das6drvavr4c7397dflg")throw Error("Wrong sandbox service");
+ const {execFileSync}=await import("node:child_process");
+ try{
+  execFileSync("npm",["install","--prefix","/tmp/ldr-one-migration","--no-package-lock","--ignore-scripts","--omit=dev","pg"],{cwd:"/tmp",timeout:60000,stdio:"pipe"});
+  const result=execFileSync(process.execPath,["scripts/ldr-one-sandbox-checkout-integration.mjs"],{
+   cwd:process.cwd(),timeout:60000,stdio:"pipe",
+   env:{...process.env,LDR_ONE_PG_MODULE_URL:"file:///tmp/ldr-one-migration/node_modules/pg/lib/index.js"}
+  }).toString();
+  if(!result.includes("LDR ONE SANDBOX REAL TEST CHECKOUT DB INTEGRATION VERIFIED")||
+     !result.includes("LDR ONE SANDBOX REAL TEST CHECKOUT CLEANUP VERIFIED"))throw Error("Verification incomplete");
+  console.log("LDR ONE SANDBOX REAL TEST CHECKOUT DB INTEGRATION VERIFIED");
+  console.log("LDR ONE SANDBOX REAL TEST CHECKOUT CLEANUP VERIFIED");
+ }catch{console.error("LDR ONE SANDBOX REAL TEST CHECKOUT DB INTEGRATION FAILED");process.exit(1);}
+}
 // Isolated Stripe test webhook receiver. Does not persist, grant access or call Stripe.
 // Never deploy on the production app or configure live-mode events here.
 import { createHmac, timingSafeEqual } from "node:crypto";
