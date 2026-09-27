@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'apps/painel-ldr/src/lib/ldr-one-sandbox*'
+      - 'apps/painel-ldr/src/lib/ldr-one-checkout-sandbox*'
       - '.github/workflows/ldr-one-sandbox-unit.yml'
       - 'scripts/ldr-one-stripe-test-webhook*'
   workflow_dispatch:
@@ -19,6 +20,6 @@ jobs:
           node-version: '22'
       - name: Run isolated tests without Stripe keys
         working-directory: apps/painel-ldr
-        run: node --experimental-strip-types --test src/lib/ldr-one-sandbox.test.ts
+        run: node --experimental-strip-types --test src/lib/ldr-one-sandbox.test.ts src/lib/ldr-one-checkout-sandbox.test.ts
       - name: Verify isolated webhook security
         run: node --test scripts/ldr-one-stripe-test-webhook.test.mjs
