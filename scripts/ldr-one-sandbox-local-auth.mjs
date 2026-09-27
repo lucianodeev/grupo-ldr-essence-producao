@@ -3,7 +3,6 @@
 import {scrypt as scryptCallback,timingSafeEqual,randomBytes} from "node:crypto";
 import {promisify} from "node:util";
 const scrypt=promisify(scryptCallback);
-const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const safeUuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 export async function hashSandboxPassword(password,{salt=randomBytes(32)}={}){
  if(typeof password!=="string"||password.length<14||Buffer.byteLength(password)>1024||salt.length!==32)throw Error("Invalid sandbox password");
