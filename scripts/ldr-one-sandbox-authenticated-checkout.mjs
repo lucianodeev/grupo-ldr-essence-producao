@@ -3,6 +3,7 @@
 import {resolveSandboxStripeConfig,verifySandboxPrice} from "./ldr-one-sandbox-stripe-config.mjs";
 import {prepareSandboxCheckout} from "./ldr-one-sandbox-checkout-service.mjs";
 const allowedOrigin="https://ldr-one-stripe-sandbox.onrender.com";
+const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 export async function handleAuthenticatedSandboxCheckout({request,authenticate,db,stripe,env,fetcher=fetch}){
  if(env.LDR_ONE_SANDBOX_CHECKOUT_ENABLED!=="true"||env.RENDER_SERVICE_ID!=="srv-das6drvavr4c7397dflg")return {status:503,body:{ok:false,error:"Sandbox checkout disabled"}};
  const url=new URL(request.url);
@@ -15,7 +16,7 @@ export async function handleAuthenticatedSandboxCheckout({request,authenticate,d
  if(typeof authenticate!=="function")return {status:503,body:{ok:false,error:"Trusted authentication unavailable"}};
  let identity;
  try{identity=await authenticate(request);}catch{return {status:401,body:{ok:false,error:"Authentication failed"}};}
- if(!identity?.verified||!identity.userId||!identity.customerId)return {status:401,body:{ok:false,error:"Authentication required"}};
+ if(identity?.verified!==true||!uuid.test(identity.userId??"")||!uuid.test(identity.customerId??""))return {status:401,body:{ok:false,error:"Authentication required"}};
  let input;
  try{const raw=await request.text();if(Buffer.byteLength(raw)>4096)throw Error("Too large");input=JSON.parse(raw);}
  catch{return {status:400,body:{ok:false,error:"Invalid request"}};}
