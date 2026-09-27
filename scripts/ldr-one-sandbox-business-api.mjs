@@ -5,7 +5,7 @@ import {assignSandboxBusinessSeat} from "./ldr-one-sandbox-business-seats.mjs";
 import {revokeSandboxBusinessSeat} from "./ldr-one-sandbox-revoke-seat.mjs";
 const service="srv-das6drvavr4c7397dflg";
 const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-export async function handleSandboxBusinessSeats({request,authenticate,verifyMember,db,env}){
+export async function handleSandboxBusinessSeats({request,authenticate,verifyAdmin,verifyMember,db,env}){
  if(env?.RENDER_SERVICE_ID!==service||env?.LDR_ONE_SANDBOX_BUSINESS_API_ENABLED!=="true")
   return {status:503,body:{error:"Sandbox business API disabled"}};
  const url=new URL(request.url);
@@ -16,14 +16,18 @@ export async function handleSandboxBusinessSeats({request,authenticate,verifyMem
  if(["POST","DELETE"].includes(request.method)&&
     (request.headers.get("origin")!==url.origin||request.headers.get("content-type")?.split(";")[0]?.trim()!=="application/json"))
   return {status:403,body:{error:"Request forbidden"}};
+ if(typeof authenticate!=="function"||typeof verifyAdmin!=="function")
+  return {status:503,body:{error:"Trusted authentication unavailable"}};
  const identity=await authenticate(request);
- if(identity?.verified!==true||identity?.businessAdmin!==true)
+ if(identity?.verified!==true||await verifyAdmin({customerId:identity?.customerId,userId:identity?.userId})!==true)
   return {status:403,body:{error:"Verified company administrator required"}};
+ // Never accept administrator privilege from a client or unchecked session claim.
+ const authorized={...identity,businessAdmin:true};
  const subscriptionId=url.searchParams.get("subscriptionId");
  if(!uuid.test(subscriptionId??""))return {status:400,body:{error:"Invalid subscription"}};
  try{
   if(request.method==="GET"){
-   const roster=await listSandboxBusinessSeats({db,identity,subscriptionId});
+   const roster=await listSandboxBusinessSeats({db,identity:authorized,subscriptionId});
    return {status:200,body:roster};
   }
   if(Number(request.headers.get("content-length")??"0")>1024)return {status:413,body:{error:"Request too large"}};
@@ -36,8 +40,8 @@ export async function handleSandboxBusinessSeats({request,authenticate,verifyMem
    return {status:400,body:{error:"Invalid member"}};
   if(request.method==="POST"){
    if(typeof verifyMember!=="function")return {status:503,body:{error:"Membership directory unavailable"}};
-   return {status:200,body:await assignSandboxBusinessSeat({db,identity,subscriptionId,memberUserId:input.memberUserId,verifyMember})};
+   return {status:200,body:await assignSandboxBusinessSeat({db,identity:authorized,subscriptionId,memberUserId:input.memberUserId,verifyMember})};
   }
-  return {status:200,body:await revokeSandboxBusinessSeat({db,identity,subscriptionId,memberUserId:input.memberUserId})};
+  return {status:200,body:await revokeSandboxBusinessSeat({db,identity:authorized,subscriptionId,memberUserId:input.memberUserId})};
  }catch{return {status:403,body:{error:"Operation not permitted"}};}
 }
