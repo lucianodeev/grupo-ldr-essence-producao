@@ -217,6 +217,11 @@ createServer(async(req,res)=>{
   res.writeHead(200,{"content-type":"application/json"});res.end(JSON.stringify({received:true,sandbox:true}));
 }).listen(port,"0.0.0.0",async()=>{
   console.log("Isolated test webhook listening");
+  if(process.env.LDR_ONE_SANDBOX_REAL_WEBHOOK_LIFECYCLE==="yes"){
+   if(!persistSandboxEvents||!ready||!eventDb)throw Error("Real TEST lifecycle requires signed persistent webhook");
+   const {probeRealStripeWebhook}=await import("./ldr-one-sandbox-real-webhook-lifecycle.mjs");
+   try{await probeRealStripeWebhook({db:eventDb,env:process.env});}catch{console.error("LDR ONE REAL STRIPE WEBHOOK LIFECYCLE FAILED");process.exitCode=1;}
+  }
   // Explicit one-shot test: local signed HTTP delivery and cleanup of synthetic rows.
   if(process.env.LDR_ONE_SANDBOX_SIGNED_HTTP_SELFTEST!=="yes")return;
   if(!persistSandboxEvents||!ready||process.env.RENDER_SERVICE_ID!=="srv-das6drvavr4c7397dflg"){
