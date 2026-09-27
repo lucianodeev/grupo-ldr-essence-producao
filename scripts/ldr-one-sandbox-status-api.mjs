@@ -17,5 +17,5 @@ export async function handleSandboxSubscriptionStatus({request,authenticate,db,e
    checkSandboxEntitlement({db,identity})
   ]);
   return {status:200,body:{subscriptions,entitlement}};
- }catch{return {status:403,body:{error:"Status unavailable"};}}
+ }catch{return {status:403,body:{error:"Status unavailable"}};}
 }
