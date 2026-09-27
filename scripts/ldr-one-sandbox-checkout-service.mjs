@@ -26,15 +26,21 @@ export async function prepareSandboxCheckout({db,stripe,authenticated,selection,
    if(!/^cus_[A-Za-z0-9]+$/.test(authenticated.stripeCustomerId))throw Error("Invalid Stripe customer");
    params.set("customer",authenticated.stripeCustomerId);
   }else if(authenticated.email){params.set("customer_email",authenticated.email);}
-  session=await stripe(params);
-  if(session?.livemode!==false||!/^cs_test_[A-Za-z0-9]+$/.test(session.id??"")||session.mode!=="subscription"||!session.url||session.status!=="open")throw Error("Unexpected Stripe test session");
+  // Retry-safe request key is stable for this pending DB record. An ambiguous
+  // network failure must retain the row for reconciliation, not erase it.
+  session=await stripe(params,{idempotencyKey:"ldr-one-sandbox-"+id});
+  if(session?.livemode!==false||!/^cs_test_[A-Za-z0-9]+$/.test(session.id??"")||session.mode!=="subscription"||typeof session.url!=="string"||session.status!=="open")throw Error("Unexpected Stripe test session");
+  let checkoutUrl;
+  try { checkoutUrl=new URL(session.url); } catch { throw Error("Unexpected Stripe test checkout URL"); }
+  if(checkoutUrl.protocol!=="https:"||checkoutUrl.hostname!=="checkout.stripe.com"||checkoutUrl.username||checkoutUrl.password)throw Error("Unexpected Stripe test checkout URL");
   const saved=await db.query("UPDATE public.ldr_one_sandbox_subscriptions SET stripe_checkout_session_id=$1,updated_at=now() WHERE id=$2 AND status='pending' RETURNING id",[session.id,id]);
   if(saved.rowCount!==1)throw Error("Pending record not updated");
   return {url:session.url,recordId:id,sessionId:session.id};
  }catch(error){
   // Do not delete a row for a potentially created Stripe session. Reconcile
   // uncertain failures manually; no entitlement is granted for pending rows.
-  if(!session?.id)await db.query("DELETE FROM public.ldr_one_sandbox_subscriptions WHERE id=$1 AND status='pending' AND stripe_checkout_session_id IS NULL",[id]);
+  // A rejected/timeout Stripe POST may have created a session. Preserve the
+  // pending row for safe manual reconciliation and never grant access here.
   throw error;
  }
 }
