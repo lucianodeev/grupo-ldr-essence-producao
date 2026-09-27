@@ -13,7 +13,7 @@ test("both endpoints are disabled by default",async()=>{
 test("unauthenticated business request never touches database",async()=>{
  let touched=false;
  const request=new Request(origin+"/business?subscriptionId="+id);
- const response=await handleSandboxBusinessSeats({request,env,authenticate:async()=>null,db:{query:async()=>{touched=true;}}});
+ const response=await handleSandboxBusinessSeats({request,env,authenticate:async()=>null,verifyAdmin:async()=>false,db:{query:async()=>{touched=true;}}});
  assert.equal(response.status,403);assert.equal(touched,false);
 });
 test("business seat roster is company scoped",async()=>{
