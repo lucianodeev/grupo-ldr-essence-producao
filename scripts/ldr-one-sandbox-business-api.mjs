@@ -13,10 +13,11 @@ export async function handleSandboxBusinessSeats({request,authenticate,verifyAdm
     [...url.searchParams.keys()].some(key=>key!=="subscriptionId")||url.searchParams.getAll("subscriptionId").length!==1||
     !["GET","POST","DELETE"].includes(request.method))
   return {status:403,body:{error:"Request forbidden"}};
+ if(request.headers.get("origin")!==url.origin)return {status:403,body:{error:"Request forbidden"}};
  if(["POST","DELETE"].includes(request.method)&&
     (request.headers.get("origin")!==url.origin||request.headers.get("content-type")?.split(";")[0]?.trim()!=="application/json"))
   return {status:403,body:{error:"Request forbidden"}};
- if(typeof authenticate!=="function"||typeof verifyAdmin!=="function")
+ if(typeof authenticate!=="function"||typeof verifyAdmin!=="function"||!db||typeof db.query!=="function")
   return {status:503,body:{error:"Trusted authentication unavailable"}};
  let identity;
  try{identity=await authenticate(request);}catch{return {status:403,body:{error:"Authentication failed"}};}
