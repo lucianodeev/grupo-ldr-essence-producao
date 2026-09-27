@@ -130,4 +130,45 @@ createServer(async(req,res)=>{
     console.log(JSON.stringify({sandbox:true,eventType:String(event.type??"unknown"),received:true,persisted:false}));
   }
   res.writeHead(200,{"content-type":"application/json"});res.end(JSON.stringify({received:true,sandbox:true}));
-}).listen(port,"0.0.0.0",()=>console.log("Isolated test webhook listening"));
+}).listen(port,"0.0.0.0",async()=>{
+  console.log("Isolated test webhook listening");
+  // Explicit one-shot test: local signed HTTP delivery and cleanup of synthetic rows.
+  if(process.env.LDR_ONE_SANDBOX_SIGNED_HTTP_SELFTEST!=="yes")return;
+  if(!persistSandboxEvents||!ready||process.env.RENDER_SERVICE_ID!=="srv-das6drvavr4c7397dflg"){
+    console.error("LDR ONE SIGNED HTTP SELFTEST GUARD FAILED");process.exitCode=1;return;
+  }
+  const {randomUUID}=await import("node:crypto");
+  const recordId=randomUUID(),customerId=randomUUID(),userId=randomUUID();
+  const evtId="evt_"+randomUUID().replaceAll("-","");
+  let created=false;
+  try{
+    await eventDb.query("INSERT INTO public.ldr_one_sandbox_subscriptions(id,customer_id,user_id,plan,billing_cycle,seats) VALUES($1,$2,$3,'individual','monthly',1)",[recordId,customerId,userId]);
+    created=true;
+    const body=JSON.stringify({id:evtId,created:Math.floor(Date.now()/1000),livemode:false,type:"customer.subscription.updated",data:{object:{id:"sub_"+randomUUID().replaceAll("-",""),status:"active",metadata:{sandbox:"true",checkout_kind:"ldr_one_subscription",ldr_one_subscription_id:recordId,customer_id:customerId}}}});
+    const deliver=async()=>{
+      const stamp=Math.floor(Date.now()/1000);
+      const signature=createHmac("sha256",secret).update(stamp+"."+body).digest("hex");
+      return fetch("http://127.0.0.1:"+port+"/stripe/test-webhook",{method:"POST",headers:{"stripe-signature":"t="+stamp+",v1="+signature},body,signal:AbortSignal.timeout(10000)});
+    };
+    const first=await deliver();
+    if(first.status!==200)throw Error("Signed delivery rejected");
+    const status=await eventDb.query("SELECT status FROM public.ldr_one_sandbox_subscriptions WHERE id=$1",[recordId]);
+    if(status.rows[0]?.status!=="active")throw Error("Activation missing");
+    const second=await deliver();
+    if(second.status!==200)throw Error("Duplicate delivery rejected");
+    const count=await eventDb.query("SELECT count(*)::int AS n FROM public.ldr_one_sandbox_stripe_events WHERE stripe_event_id=$1",[evtId]);
+    if(count.rows[0]?.n!==1)throw Error("Duplicate event inserted");
+    console.log("LDR ONE SANDBOX SIGNED HTTP SELFTEST VERIFIED");
+  }catch{
+    console.error("LDR ONE SANDBOX SIGNED HTTP SELFTEST FAILED");
+    process.exitCode=1;
+  }finally{
+    if(created){
+      try{
+        await eventDb.query("DELETE FROM public.ldr_one_sandbox_stripe_events WHERE subscription_id=$1",[recordId]);
+        await eventDb.query("DELETE FROM public.ldr_one_sandbox_subscriptions WHERE id=$1",[recordId]);
+        console.log("LDR ONE SANDBOX SIGNED HTTP SELFTEST CLEANUP VERIFIED");
+      }catch{console.error("LDR ONE SANDBOX SIGNED HTTP SELFTEST CLEANUP FAILED");process.exitCode=1;}
+    }
+  }
+});
