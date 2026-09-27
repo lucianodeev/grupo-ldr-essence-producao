@@ -21,3 +21,5 @@ test('business seats reject unauthorized administrator and full capacity',async(
 test("unverified company member is rejected before database writes",async()=>{let touched=false;const db={query:async()=>{touched=true;}};await assert.rejects(()=>assignSandboxBusinessSeat({db,identity,subscriptionId,memberUserId,verifyMember:async()=>false}),/not verified/);assert.equal(touched,false);});
 
 import './ldr-one-sandbox-api.test.mjs';
+
+test("entitlement fails closed for unexpected DB rows and nonboolean verification",async()=>{const db={query:async()=>({rows:[{seat_authorized:true,plan:"individual",status:"pending",id:subscriptionId}]})};assert.equal((await checkSandboxEntitlement({db,identity})).allowed,false);await assert.rejects(()=>checkSandboxEntitlement({db,identity:{...identity,verified:"true"}}),/Authenticated identity/);await assert.rejects(()=>checkSandboxEntitlement({identity}),/Private sandbox database/);});
