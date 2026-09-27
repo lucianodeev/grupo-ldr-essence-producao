@@ -25,6 +25,7 @@ on:
       - 'scripts/ldr-one-sandbox-status-api*'
       - 'scripts/ldr-one-sandbox-business-api*'
       - 'scripts/ldr-one-sandbox-api*'
+      - 'scripts/ldr-one-sandbox-local-auth*'
       - 'docs/ldr-pass/sql/ldr-one-sandbox-schema-REVIEW-ONLY.sql'
   workflow_dispatch:
 permissions:
