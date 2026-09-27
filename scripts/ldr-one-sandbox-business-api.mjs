@@ -38,5 +38,5 @@ export async function handleSandboxBusinessSeats({request,authenticate,verifyMem
    return {status:200,body:await assignSandboxBusinessSeat({db,identity,subscriptionId,memberUserId:input.memberUserId,verifyMember})};
   }
   return {status:200,body:await revokeSandboxBusinessSeat({db,identity,subscriptionId,memberUserId:input.memberUserId})};
- }catch{return {status:403,body:{error:"Operation not permitted"};}}
+ }catch{return {status:403,body:{error:"Operation not permitted"}};}
 }
