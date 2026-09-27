@@ -18,8 +18,12 @@ export async function handleSandboxBusinessSeats({request,authenticate,verifyAdm
   return {status:403,body:{error:"Request forbidden"}};
  if(typeof authenticate!=="function"||typeof verifyAdmin!=="function")
   return {status:503,body:{error:"Trusted authentication unavailable"}};
- const identity=await authenticate(request);
- if(identity?.verified!==true||await verifyAdmin({customerId:identity?.customerId,userId:identity?.userId})!==true)
+ let identity;
+ try{identity=await authenticate(request);}catch{return {status:403,body:{error:"Authentication failed"}};}
+ if(identity?.verified!==true)return {status:403,body:{error:"Verified company administrator required"}};
+ let approved=false;
+ try{approved=await verifyAdmin({customerId:identity.customerId,userId:identity.userId})===true;}catch{return {status:403,body:{error:"Administrator verification failed"}};}
+ if(!approved)
   return {status:403,body:{error:"Verified company administrator required"}};
  // Never accept administrator privilege from a client or unchecked session claim.
  const authorized={...identity,businessAdmin:true};
