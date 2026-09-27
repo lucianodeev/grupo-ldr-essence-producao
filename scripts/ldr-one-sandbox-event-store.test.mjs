@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {applyVerifiedSandboxEvent} from "./ldr-one-sandbox-event-store.mjs";
 const id="11111111-1111-4111-8111-111111111111",customer="22222222-2222-4222-8222-222222222222";
-const event=(over={})=>({id:"evt_test123",created:100,livemode:false,type:"invoice.payment_succeeded",data:{object:{subscription:"sub_test",metadata:{sandbox:"true",checkout_kind:"ldr_one_subscription",ldr_one_subscription_id:id,customer_id:customer}}},...over});
+const event=(over={})=>({id:"evt_test123",created:100,livemode:false,type:"customer.subscription.updated",data:{object:{id:"sub_test",status:"active",metadata:{sandbox:"true",checkout_kind:"ldr_one_subscription",ldr_one_subscription_id:id,customer_id:customer}}},...over});
 function db({duplicate=false,stale=false}={}){
  const calls=[];
  const client={query:async(sql,args=[])=>{
@@ -36,3 +36,5 @@ test("DB failures roll back",async()=>{
  const client={query:async(sql)=>{if(sql.startsWith("SELECT"))throw Error("db down");return {};}};
  await assert.rejects(applyVerifiedSandboxEvent(client,event(),id,customer),/db down/);
 });
+
+test("direct invoice or checkout event never changes access",async()=>{const {client,calls}=db();for(const type of ["checkout.session.completed","invoice.payment_succeeded"]){assert.deepEqual(await applyVerifiedSandboxEvent(client,event({type}),id,customer),{handled:false});}assert.equal(calls.length,0);});
