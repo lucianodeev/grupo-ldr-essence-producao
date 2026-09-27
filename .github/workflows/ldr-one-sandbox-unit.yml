@@ -9,6 +9,7 @@ on:
       - 'scripts/ldr-one-stripe-test-webhook*'
       - 'scripts/ldr-one-sandbox-migrate*'
       - 'scripts/ldr-one-sandbox-event-store*'
+      - 'scripts/ldr-one-sandbox-webhook-bridge*'
       - 'docs/ldr-pass/sql/ldr-one-sandbox-schema-REVIEW-ONLY.sql'
   workflow_dispatch:
 permissions:
@@ -30,5 +31,7 @@ jobs:
 
       - name: Verify isolated event persistence guards
         run: node --test scripts/ldr-one-sandbox-event-store.test.mjs
+      - name: Verify webhook bridge guards
+        run: node --test scripts/ldr-one-sandbox-webhook-bridge.test.mjs
       - name: Verify migration safety guards
         run: node --test scripts/ldr-one-sandbox-migrate.test.mjs
