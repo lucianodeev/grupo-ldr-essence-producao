@@ -28,3 +28,13 @@ test("missing identity, unsafe origins and disabled flag fail closed",()=>{
   assert.throws(()=>buildOneSandboxCheckout(selection,{...context,origin:"http://example.test"},env));
   assert.throws(()=>buildOneSandboxCheckout(selection,context,{...env,LDR_ONE_SANDBOX_CHECKOUT_ENABLED:"false"}));
 });
+
+test("existing Stripe customer never conflicts with customer_email",()=>{
+  const {params}=buildOneSandboxCheckout({plan:"individual",cycle:"monthly",seats:1},{...context,stripeCustomerId:"cus_test123",customerEmail:"sandbox@example.test"},env);
+  assert.equal(params.get("customer"),"cus_test123");
+  assert.equal(params.has("customer_email"),false);
+  assert.equal(params.get("metadata[customer_id]"),"customer-local");
+});
+test("reject malformed Stripe customer ID",()=>{
+  assert.throws(()=>buildOneSandboxCheckout({plan:"individual",cycle:"monthly",seats:1},{...context,stripeCustomerId:"cus_invalid-!"},env),/Invalid Stripe/);
+});
