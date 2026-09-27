@@ -7,7 +7,7 @@ export async function handleSandboxSubscriptionStatus({request,authenticate,db,e
     env?.LDR_ONE_SANDBOX_STATUS_API_ENABLED!=="true")
   return {status:503,body:{error:"Sandbox status disabled"}};
  const url=new URL(request.url);
- if(request.method!=="GET"||url.origin!==origin||url.search||request.headers.get("origin")!==origin)
+ if(request.method!=="GET"||url.origin!==origin||url.pathname!=="/status"||url.search||url.hash||request.headers.get("origin")!==origin)
   return {status:403,body:{error:"Request forbidden"}};
  const identity=await authenticate(request);
  if(identity?.verified!==true)return {status:401,body:{error:"Authentication required"}};
