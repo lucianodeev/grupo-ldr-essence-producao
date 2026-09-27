@@ -35,3 +35,5 @@ test("subscription status requires authenticated identity",async()=>{
  const result=await handleSandboxSubscriptionStatus({request,env,authenticate:async()=>identity,db});
  assert.equal(result.status,200);assert.equal(result.body.entitlement.allowed,false);
 });
+
+test("unrecognized paths and unexpected parameters are denied",async()=>{let called=false;const authenticate=async()=>{called=true;return identity;};for(const request of [new Request(origin+"/other?subscriptionId="+id),new Request(origin+"/business?subscriptionId="+id+"&unexpected=1")]){assert.equal((await handleSandboxBusinessSeats({request,env,authenticate})).status,403);}assert.equal((await handleSandboxSubscriptionStatus({request:new Request(origin+"/other",{headers:{origin}}),env,authenticate})).status,403);assert.equal(called,false);});
