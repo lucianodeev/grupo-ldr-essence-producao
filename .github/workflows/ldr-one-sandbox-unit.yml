@@ -26,6 +26,7 @@ on:
       - 'scripts/ldr-one-sandbox-business-api*'
       - 'scripts/ldr-one-sandbox-api*'
       - 'scripts/ldr-one-sandbox-local-auth*'
+      - 'scripts/ldr-one-sandbox-sessions*'
       - 'docs/ldr-pass/sql/ldr-one-sandbox-schema-REVIEW-ONLY.sql'
   workflow_dispatch:
 permissions:
@@ -63,5 +64,7 @@ jobs:
         run: node --test scripts/ldr-one-sandbox-revoke-seat.test.mjs scripts/ldr-one-sandbox-seat-roster.test.mjs
       - name: Verify isolated invite-only sandbox credentials
         run: node --test scripts/ldr-one-sandbox-local-auth.test.mjs
+      - name: Verify isolated sandbox session safety
+        run: node --test scripts/ldr-one-sandbox-sessions.test.mjs
       - name: Verify migration safety guards
         run: node --test scripts/ldr-one-sandbox-migrate.test.mjs
