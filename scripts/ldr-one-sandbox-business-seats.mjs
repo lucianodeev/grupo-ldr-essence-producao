@@ -1,10 +1,12 @@
 // Atomic seat allocation for an authenticated company administrator.
 // Caller MUST verify company administrator authorization in trusted middleware.
 const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-export async function assignSandboxBusinessSeat({db,identity,subscriptionId,memberUserId}){
+export async function assignSandboxBusinessSeat({db,identity,subscriptionId,memberUserId,verifyMember}){
  if(!identity?.verified||identity.businessAdmin!==true||!uuid.test(identity.customerId??"")||
-    !uuid.test(identity.userId??"")||!uuid.test(subscriptionId??"")||!uuid.test(memberUserId??""))
+    !uuid.test(identity.userId??"")||!uuid.test(subscriptionId??"")||!uuid.test(memberUserId??"")||typeof verifyMember!=="function")
   throw Error("Verified business administrator and valid IDs required");
+ // Membership MUST be resolved by trusted server-side directory, not browser input.
+ if(await verifyMember({customerId:identity.customerId,userId:memberUserId})!==true)throw Error("Member is not verified for this company");
  await db.query("BEGIN");
  try{
   const result=await db.query(
