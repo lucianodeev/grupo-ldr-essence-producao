@@ -1,3 +1,14 @@
+// One-shot rollback-only private sandbox login DB test. Disabled on normal boot.
+if(process.env.LDR_ONE_SANDBOX_LOGIN_DB_SELFTEST==="yes"){
+ if(process.env.RENDER_SERVICE_ID!=="srv-das6drvavr4c7397dflg")throw Error("Wrong isolated service");
+ const {execFileSync}=await import("node:child_process");
+ try{
+  execFileSync("npm",["install","--prefix","/tmp/ldr-one-migration","--no-package-lock","--ignore-scripts","--omit=dev","pg"],{cwd:"/tmp",timeout:60000,stdio:"pipe"});
+  const result=execFileSync(process.execPath,["scripts/ldr-one-sandbox-login-db-selftest.mjs"],{cwd:process.cwd(),timeout:45000,stdio:"pipe",env:{...process.env,LDR_ONE_PG_MODULE_URL:"file:///tmp/ldr-one-migration/node_modules/pg/lib/index.js"}}).toString();
+  if(!result.includes("LDR ONE SANDBOX PRIVATE LOGIN DB SELFTEST VERIFIED"))throw Error("Missing verification");
+  console.log("LDR ONE SANDBOX PRIVATE LOGIN DB SELFTEST VERIFIED");
+ }catch{console.error("LDR ONE SANDBOX PRIVATE LOGIN DB SELFTEST FAILED");process.exit(1);}
+}
 // One-shot real Stripe TEST delivery probe; never on normal boot.
 if(process.env.LDR_ONE_SANDBOX_REAL_DELIVERY_PROBE==="yes")await import("./ldr-one-sandbox-real-delivery-probe.mjs");
 // One-shot read-only Stripe TEST webhook endpoint preflight; never creates or modifies Stripe resources.
