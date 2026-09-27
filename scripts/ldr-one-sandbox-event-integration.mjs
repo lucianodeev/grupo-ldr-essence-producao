@@ -42,7 +42,7 @@ try {
  if(!staleResult.stale)throw Error("Older event accepted");
  const afterStale=await checkSandboxEntitlement({db:client,identity});
  if(afterStale.allowed)throw Error("Stale event restored access");
- console.log("LDR ONE SANDBOX ENTITLEMENT LIFECYCLE VERIFIED (grant, isolation, cancel, stale-event protection; rolled back)");
+ console.log("LDR ONE SANDBOX EVENT INTEGRATION VERIFIED; ENTITLEMENT LIFECYCLE VERIFIED (grant, isolation, cancel, stale-event protection; rolled back)");
 } finally {
  try {await client.query("ROLLBACK");} finally {await client.end();}
 }
