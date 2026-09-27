@@ -17,7 +17,7 @@ export async function verifySandboxPassword(password,stored){
 }
 export async function authenticateInvitedSandboxUser({email,password,db,env}){
  if(env?.RENDER_SERVICE_ID!=="srv-das6drvavr4c7397dflg"||env?.LDR_ONE_SANDBOX_LOCAL_AUTH_ENABLED!=="true")return null;
- if(!db||typeof db.query!=="function"||typeof email!=="string"||email.length>254||!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)||typeof password!=="string")return null;
+ if(!db||typeof db.query!=="function"||typeof email!=="string"||email.length>254||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)||typeof password!=="string")return null;
  const normalized=email.trim().toLowerCase();
  const result=await db.query("SELECT user_id,customer_id,password_hash FROM public.ldr_one_sandbox_invited_users WHERE email=$1 AND verified=true AND disabled=false LIMIT 2",[normalized]);
  if(result.rows.length!==1)return null;
