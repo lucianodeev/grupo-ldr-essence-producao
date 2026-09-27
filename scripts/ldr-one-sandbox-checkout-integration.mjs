@@ -13,8 +13,8 @@ const {default:pg}=await import(process.env.LDR_ONE_PG_MODULE_URL||"pg");
 const pool=new pg.Pool({connectionString:process.env.DATABASE_URL,max:1,connectionTimeoutMillis:5000});
 const customerId=randomUUID(),userId=randomUUID();
 let recordId=null,sessionId=null;
-async function stripe(path,params){
- const response=await fetch("https://api.stripe.com/v1/"+path,{method:params?"POST":"GET",headers:{Authorization:"Bearer "+key,...(params?{"Content-Type":"application/x-www-form-urlencoded"}:{})},body:params,signal:AbortSignal.timeout(15000)});
+async function stripe(path,params,options={}){
+ const response=await fetch("https://api.stripe.com/v1/"+path,{method:params?"POST":"GET",headers:{Authorization:"Bearer "+key,...(params?{"Content-Type":"application/x-www-form-urlencoded"}:{}),...(options.idempotencyKey?{"Idempotency-Key":options.idempotencyKey}:{})},body:params,signal:AbortSignal.timeout(15000)});
  if(!response.ok)throw Error("Stripe TEST API failed HTTP "+response.status);
  return response.json();
 }
@@ -22,8 +22,8 @@ try{
  await verifySandboxPrice({secret:key,priceId,selection});
  const db=await pool.connect();
  try{
-  const result=await prepareSandboxCheckout({db,authenticated:{customerId,userId},selection,priceId,origin:"https://ldr-one-stripe-sandbox.onrender.com",stripe:async params=>{
-   const created=await stripe("checkout/sessions",params);
+  const result=await prepareSandboxCheckout({db,authenticated:{customerId,userId},selection,priceId,origin:"https://ldr-one-stripe-sandbox.onrender.com",stripe:async (params,options)=>{
+   const created=await stripe("checkout/sessions",params,options);
    sessionId=created.id;
    return created;
   }});
