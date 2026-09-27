@@ -74,6 +74,23 @@ if (databaseUrl) {
   } catch { dbConfig = "invalid-or-wrong-database"; }
 }
 console.log("LDR ONE SANDBOX DB CONFIG: " + dbConfig);
+// Persistence is explicitly opt-in, sandbox-only, and requires the private database.
+const persistSandboxEvents=process.env.LDR_ONE_SANDBOX_PERSIST_EVENTS==="yes";
+let eventDb=null;
+if(persistSandboxEvents){
+  if(process.env.RENDER_SERVICE_ID!=="srv-das6drvavr4c7397dflg")throw Error("Sandbox persistence forbidden on other services");
+  const dbUrl=process.env.DATABASE_URL;
+  if(!dbUrl)throw Error("Private sandbox database required");
+  const parsed=new URL(dbUrl);
+  if(!["postgres:","postgresql:"].includes(parsed.protocol)||decodeURIComponent(parsed.pathname.slice(1))!=="ldr_one_sandbox_db")throw Error("Wrong database");
+  const {execFileSync}=await import("node:child_process");
+  execFileSync("npm",["install","--prefix","/tmp/ldr-one-migration","--no-package-lock","--ignore-scripts","--omit=dev","pg"],{cwd:"/tmp",timeout:60000,stdio:"pipe"});
+  const {default:pg}=await import("file:///tmp/ldr-one-migration/node_modules/pg/lib/index.js");
+  eventDb=new pg.Pool({connectionString:dbUrl,max:2,connectionTimeoutMillis:5000,statement_timeout:10000});
+  const check=await eventDb.query("SELECT current_database() AS db");
+  if(check.rows[0]?.db!=="ldr_one_sandbox_db")throw Error("Sandbox database identity mismatch");
+  console.log("LDR ONE SANDBOX EVENT PERSISTENCE READY");
+}
 const secret=process.env.LDR_ONE_STRIPE_TEST_WEBHOOK_SECRET ?? "";
 const ready=/^whsec_[A-Za-z0-9]+$/.test(secret);
 if(!ready)console.log("Sandbox receiver started in setup-only mode; all webhook POST requests are blocked until test signing secret is configured.");
@@ -98,7 +115,19 @@ createServer(async(req,res)=>{
   let event;
   try{event=JSON.parse(raw.toString("utf8"));}catch{res.writeHead(400);res.end("Invalid JSON");return;}
   if(event?.livemode!==false){res.writeHead(400);res.end("Only test events accepted");return;}
-  console.log(JSON.stringify({sandbox:true,eventType:String(event.type??"unknown"),received:true}));
-  // Intentionally do not grant entitlements; integration testing requires an isolated database.
+  if(persistSandboxEvents){
+    let client;
+    try{
+      const {processSignedSandboxEvent}=await import("./ldr-one-sandbox-webhook-bridge.mjs");
+      client=await eventDb.connect();
+      const outcome=await processSignedSandboxEvent(client,event);
+      console.log(JSON.stringify({sandbox:true,eventType:String(event.type??"unknown"),persisted:outcome.handled===true}));
+    }catch{
+      console.error("LDR ONE SANDBOX SIGNED EVENT PERSISTENCE FAILED");
+      res.writeHead(500);res.end("Sandbox persistence unavailable");return;
+    }finally{client?.release();}
+  }else{
+    console.log(JSON.stringify({sandbox:true,eventType:String(event.type??"unknown"),received:true,persisted:false}));
+  }
   res.writeHead(200,{"content-type":"application/json"});res.end(JSON.stringify({received:true,sandbox:true}));
 }).listen(port,"0.0.0.0",()=>console.log("Isolated test webhook listening"));
