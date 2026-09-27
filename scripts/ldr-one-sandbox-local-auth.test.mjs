@@ -13,10 +13,13 @@ test("sandbox credentials use salted scrypt and reject wrong passwords",async()=
 test("sandbox auth requires enabled service, one verified invite and correct password",async()=>{
  const password="an-invited-only-password-123",password_hash=await hashSandboxPassword(password);
  const row={user_id:userId,customer_id:customerId,password_hash};
+ const resolveCustomer=async()=>({verified:true,customerId});
  const db={query:async(sql,args)=>{assert.match(sql,/verified=true AND disabled=false/);assert.deepEqual(args,["invited@example.com"]);return {rows:[row]};}};
- assert.deepEqual(await authenticateInvitedSandboxUser({email:"INVITED@example.com",password,db,env}),{verified:true,userId,customerId});
- assert.equal(await authenticateInvitedSandboxUser({email:"INVITED@example.com",password:"wrong",db,env}),null);
- assert.equal(await authenticateInvitedSandboxUser({email:"INVITED@example.com",password,db,env:{...env,LDR_ONE_SANDBOX_LOCAL_AUTH_ENABLED:"false"}}),null);
- assert.equal(await authenticateInvitedSandboxUser({email:"INVITED@example.com",password,db:{query:async()=>({rows:[]})},env}),null);
- assert.equal(await authenticateInvitedSandboxUser({email:"INVITED@example.com",password,db:{query:async()=>({rows:[row,row]})},env}),null);
+ assert.deepEqual(await authenticateInvitedSandboxUser({email:"INVITED@example.com",password,db,env,resolveCustomer}),{verified:true,userId,customerId});
+ assert.equal(await authenticateInvitedSandboxUser({email:"INVITED@example.com",password:"wrong",db,env,resolveCustomer}),null);
+ assert.equal(await authenticateInvitedSandboxUser({email:"INVITED@example.com",password,db,env,resolveCustomer:async()=>null}),null);
+ assert.equal(await authenticateInvitedSandboxUser({email:"INVITED@example.com",password,db,env,resolveCustomer:async()=>({verified:true,customerId:userId})}),null);
+ assert.equal(await authenticateInvitedSandboxUser({email:"INVITED@example.com",password,db,resolveCustomer,env:{...env,LDR_ONE_SANDBOX_LOCAL_AUTH_ENABLED:"false"}}),null);
+ assert.equal(await authenticateInvitedSandboxUser({email:"INVITED@example.com",password,db:{query:async()=>({rows:[]})},env,resolveCustomer}),null);
+ assert.equal(await authenticateInvitedSandboxUser({email:"INVITED@example.com",password,db:{query:async()=>({rows:[row,row]})},env,resolveCustomer}),null);
 });
