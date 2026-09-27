@@ -19,7 +19,7 @@ test("unauthenticated business request never touches database",async()=>{
 test("business seat roster is company scoped",async()=>{
  const request=new Request(origin+"/business?subscriptionId="+id);
  const db={query:async(sql,values)=>{assert.deepEqual(values,[id,identity.customerId,identity.userId]);return {rows:[{user_id:null,seats:5}]};}};
- const response=await handleSandboxBusinessSeats({request,env,authenticate:async()=>identity,db});
+ const response=await handleSandboxBusinessSeats({request,env,authenticate:async()=>identity,verifyAdmin:async()=>true,db});
  assert.equal(response.status,200);assert.deepEqual(response.body,{capacity:5,used:0,members:[]});
 });
 test("cross-origin business mutation blocked before authentication",async()=>{
@@ -32,8 +32,10 @@ test("subscription status requires authenticated identity",async()=>{
  const request=new Request(origin+"/status",{headers:{origin}});
  assert.equal((await handleSandboxSubscriptionStatus({request,env,authenticate:async()=>null})).status,401);
  const db={query:async(sql)=>sql.includes("ORDER BY created_at")?{rows:[]}:{rows:[]}};
- const result=await handleSandboxSubscriptionStatus({request,env,authenticate:async()=>identity,db});
+ const result=await handleSandboxSubscriptionStatus({request,env,authenticate:async()=>identity,verifyAdmin:async()=>true,db});
  assert.equal(result.status,200);assert.equal(result.body.entitlement.allowed,false);
 });
 
 test("unrecognized paths and unexpected parameters are denied",async()=>{let called=false;const authenticate=async()=>{called=true;return identity;};for(const request of [new Request(origin+"/other?subscriptionId="+id),new Request(origin+"/business?subscriptionId="+id+"&unexpected=1")]){assert.equal((await handleSandboxBusinessSeats({request,env,authenticate})).status,403);}assert.equal((await handleSandboxSubscriptionStatus({request:new Request(origin+"/other",{headers:{origin}}),env,authenticate})).status,403);assert.equal(called,false);});
+
+test("client-provided admin claim cannot bypass trusted directory",async()=>{let touched=false;const request=new Request(origin+"/business?subscriptionId="+id);const result=await handleSandboxBusinessSeats({request,env,authenticate:async()=>identity,verifyAdmin:async()=>false,db:{query:async()=>{touched=true;}}});assert.equal(result.status,403);assert.equal(touched,false);});
