@@ -3,11 +3,13 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { createServer } from "node:http";
 const secret=process.env.LDR_ONE_STRIPE_TEST_WEBHOOK_SECRET ?? "";
-if(!/^whsec_[A-Za-z0-9]+$/.test(secret))throw Error("Isolated Stripe test webhook signing secret required");
+const ready=/^whsec_[A-Za-z0-9]+$/.test(secret);
+if(!ready)console.log("Sandbox receiver started in setup-only mode; all webhook POST requests are blocked until test signing secret is configured.");
 const port=Number(process.env.PORT || 10000);
 createServer(async(req,res)=>{
   if(req.url==="/health"&&req.method==="GET"){res.writeHead(200);res.end("sandbox only");return;}
   if(req.url!=="/stripe/test-webhook"||req.method!=="POST"){res.writeHead(404);res.end();return;}
+  if(!ready){res.writeHead(503);res.end("Sandbox webhook not configured");return;}
   const chunks=[];let size=0;
   for await(const chunk of req){size+=chunk.length;if(size>1024*1024){res.writeHead(413);res.end();return;}chunks.push(chunk);}
   const raw=Buffer.concat(chunks);
