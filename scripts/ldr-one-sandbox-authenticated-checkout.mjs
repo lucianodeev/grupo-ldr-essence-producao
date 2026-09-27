@@ -13,7 +13,8 @@ export async function handleAuthenticatedSandboxCheckout({request,authenticate,d
  // Authenticate BEFORE reading user-provided selection or contacting Stripe.
  if(typeof stripe!=="function"||!db||typeof db.query!=="function")return {status:503,body:{ok:false,error:"Sandbox checkout dependencies unavailable"}};
  if(typeof authenticate!=="function")return {status:503,body:{ok:false,error:"Trusted authentication unavailable"}};
- const identity=await authenticate(request);
+ let identity;
+ try{identity=await authenticate(request);}catch{return {status:401,body:{ok:false,error:"Authentication failed"}};}
  if(!identity?.verified||!identity.userId||!identity.customerId)return {status:401,body:{ok:false,error:"Authentication required"}};
  let input;
  try{const raw=await request.text();if(Buffer.byteLength(raw)>4096)throw Error("Too large");input=JSON.parse(raw);}
