@@ -6,11 +6,12 @@ const allowedOrigin="https://ldr-one-stripe-sandbox.onrender.com";
 export async function handleAuthenticatedSandboxCheckout({request,authenticate,db,stripe,env,fetcher=fetch}){
  if(env.LDR_ONE_SANDBOX_CHECKOUT_ENABLED!=="true"||env.RENDER_SERVICE_ID!=="srv-das6drvavr4c7397dflg")return {status:503,body:{ok:false,error:"Sandbox checkout disabled"}};
  const url=new URL(request.url);
- if(url.origin!==allowedOrigin||request.method!=="POST"||request.headers.get("origin")!==allowedOrigin||
+ if(url.origin!==allowedOrigin||url.pathname!=="/checkout"||url.search||url.hash||request.method!=="POST"||request.headers.get("origin")!==allowedOrigin||
     request.headers.get("content-type")?.split(";")[0]?.trim()!=="application/json")return {status:403,body:{ok:false,error:"Request not permitted"}};
  const length=Number(request.headers.get("content-length")??"0");
  if(!Number.isFinite(length)||length>4096)return {status:413,body:{ok:false,error:"Request too large"}};
  // Authenticate BEFORE reading user-provided selection or contacting Stripe.
+ if(typeof authenticate!=="function")return {status:503,body:{ok:false,error:"Trusted authentication unavailable"}};
  const identity=await authenticate(request);
  if(!identity?.verified||!identity.userId||!identity.customerId)return {status:401,body:{ok:false,error:"Authentication required"}};
  let input;
