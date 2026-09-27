@@ -55,3 +55,13 @@ test("receiver with no secret rejects webhook posts", async () => {
     assert.equal(response.status, 503);
   } finally { child.kill(); }
 });
+
+test("public sandbox status stays closed without a dedicated verified auth provider",async()=>{
+ const {child,origin}=await receiver("whsec_localtest123");
+ try{
+  const response=await fetch(origin+"/status",{headers:{origin:"https://ldr-one-stripe-sandbox.onrender.com"}});
+  assert.equal(response.status,503);
+  assert.equal(await response.text(),"Verified sandbox login not configured");
+  assert.equal((await fetch(origin+"/health")).status,200);
+ }finally{child.kill();}
+});
