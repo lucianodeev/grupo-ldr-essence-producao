@@ -16,6 +16,31 @@ jobs:
       TEST_PRICE_BUSINESS_MONTHLY: ${{ vars.LDR_ONE_TEST_PRICE_BUSINESS_MONTHLY }}
       TEST_PRICE_BUSINESS_ANNUAL: ${{ vars.LDR_ONE_TEST_PRICE_BUSINESS_ANNUAL }}
     steps:
+      - name: Diagnose sandbox configuration without exposing secrets
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          const checks=[
+            ["Stripe test API key", "STRIPE_TEST_SECRET_KEY", /^sk_test_[A-Za-z0-9]+$/],
+            ["Stripe test webhook secret", "STRIPE_TEST_WEBHOOK_SECRET", /^whsec_[A-Za-z0-9]+$/],
+            ["Individual monthly test price", "TEST_PRICE_INDIVIDUAL_MONTHLY", /^price_[A-Za-z0-9]+$/],
+            ["Individual annual test price", "TEST_PRICE_INDIVIDUAL_ANNUAL", /^price_[A-Za-z0-9]+$/],
+            ["Business monthly test price", "TEST_PRICE_BUSINESS_MONTHLY", /^price_[A-Za-z0-9]+$/],
+            ["Business annual test price", "TEST_PRICE_BUSINESS_ANNUAL", /^price_[A-Za-z0-9]+$/]
+          ];
+          let failed=false;
+          for(const [label,key,pattern] of checks){
+            const value=process.env[key]??"";
+            const status=!value?"MISSING":pattern.test(value)?"PRESENT":"INVALID FORMAT";
+            console.log(label+": "+status);
+            if(status!=="PRESENT")failed=true;
+          }
+          if(failed){
+            console.error("Sandbox configuration incomplete. Fix only the items marked MISSING or INVALID FORMAT in the ldr-one-sandbox environment.");
+            process.exitCode=1;
+          }
+          NODE
       - name: Validate Stripe test-only credentials and read-only prices
         shell: bash
         run: |
