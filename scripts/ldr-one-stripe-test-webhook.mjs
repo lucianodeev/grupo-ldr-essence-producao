@@ -1,3 +1,22 @@
+// One-shot read-only Stripe TEST webhook endpoint preflight; never creates or modifies Stripe resources.
+if(process.env.LDR_ONE_SANDBOX_WEBHOOK_PREFLIGHT==="yes"){
+ if(process.env.RENDER_SERVICE_ID!=="srv-das6drvavr4c7397dflg"||
+    ["LDR_ONE_SANDBOX_CUSTOMER_MIGRATION","LDR_ONE_ALLOW_SANDBOX_MIGRATION","LDR_ONE_SANDBOX_DB_SMOKE","LDR_ONE_SANDBOX_EVENT_INTEGRATION","LDR_ONE_SANDBOX_CHECKOUT_INTEGRATION"].some(k=>process.env[k]==="yes"))throw Error("Webhook preflight guard");
+ const key=process.env.LDR_ONE_STRIPE_TEST_SECRET_KEY;
+ if(!key||!key.startsWith("sk_test_"))throw Error("Stripe TEST key unavailable");
+ const response=await fetch("https://api.stripe.com/v1/webhook_endpoints?limit=100",{
+   headers:{authorization:"Bearer "+key},signal:AbortSignal.timeout(12000)});
+ if(!response.ok)throw Error("Stripe TEST webhook listing failed: "+response.status);
+ const data=await response.json();
+ const url="https://ldr-one-stripe-sandbox.onrender.com/stripe/test-webhook";
+ const matches=(data.data||[]).filter(x=>x.url===url);
+ console.log("LDR ONE STRIPE TEST WEBHOOK PREFLIGHT "+JSON.stringify({
+   endpointCount:matches.length,enabledCount:matches.filter(x=>x.status==="enabled").length,
+   subscriptionEventsCovered:matches.some(x=>x.status==="enabled"&&(x.enabled_events?.includes("*")||["customer.subscription.created","customer.subscription.updated","customer.subscription.deleted"].every(e=>x.enabled_events?.includes(e)))),
+   signingSecretConfigured:/^whsec_[A-Za-z0-9]+$/.test(process.env.LDR_ONE_STRIPE_TEST_WEBHOOK_SECRET||""),
+   persistenceEnabled:process.env.LDR_ONE_SANDBOX_PERSIST_EVENTS==="yes"
+ }));
+}
 // One-time isolated customer directory migration; disabled on ordinary startup.
 if(process.env.LDR_ONE_SANDBOX_CUSTOMER_MIGRATION==="yes"){
  if(process.env.RENDER_SERVICE_ID!=="srv-das6drvavr4c7397dflg"||
