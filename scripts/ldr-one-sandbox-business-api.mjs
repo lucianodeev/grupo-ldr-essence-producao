@@ -9,7 +9,8 @@ export async function handleSandboxBusinessSeats({request,authenticate,verifyMem
  if(env?.RENDER_SERVICE_ID!==service||env?.LDR_ONE_SANDBOX_BUSINESS_API_ENABLED!=="true")
   return {status:503,body:{error:"Sandbox business API disabled"}};
  const url=new URL(request.url);
- if(url.origin!=="https://ldr-one-stripe-sandbox.onrender.com"||
+ if(url.origin!=="https://ldr-one-stripe-sandbox.onrender.com"||url.pathname!=="/business"||url.hash||
+    [...url.searchParams.keys()].some(key=>key!=="subscriptionId")||url.searchParams.getAll("subscriptionId").length!==1||
     !["GET","POST","DELETE"].includes(request.method))
   return {status:403,body:{error:"Request forbidden"}};
  if(["POST","DELETE"].includes(request.method)&&
