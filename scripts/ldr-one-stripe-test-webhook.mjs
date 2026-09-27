@@ -5,10 +5,12 @@ if (process.env.LDR_ONE_ALLOW_SANDBOX_MIGRATION === "yes") {
     throw Error("Migration refused: wrong Render service");
   }
   const { execFileSync } = await import("node:child_process");
+  let stage = "dependency-install";
   try {
     execFileSync("npm", ["install", "--prefix", "/tmp/ldr-one-migration", "--no-package-lock", "--ignore-scripts", "--omit=dev", "pg"], {
       cwd: "/tmp", timeout: 60000, stdio: "pipe"
     });
+    stage = "database-migration";
     const migration = execFileSync(process.execPath, ["scripts/ldr-one-sandbox-migrate.mjs"], {
       cwd: process.cwd(), timeout: 30000, stdio: "pipe",
       env: { ...process.env, LDR_ONE_PG_MODULE_URL: "file:///tmp/ldr-one-migration/node_modules/pg/lib/index.js" }
@@ -16,7 +18,7 @@ if (process.env.LDR_ONE_ALLOW_SANDBOX_MIGRATION === "yes") {
     if (!migration.toString().includes("LDR ONE isolated sandbox schema verified")) throw Error("Migration verification missing");
     console.log("LDR ONE SANDBOX MIGRATION VERIFIED");
   } catch {
-    console.error("LDR ONE SANDBOX MIGRATION FAILED; no receiver started");
+    console.error("LDR ONE SANDBOX MIGRATION FAILED at stage: " + stage + "; no receiver started");
     process.exit(1);
   }
 }
