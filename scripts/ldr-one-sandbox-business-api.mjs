@@ -29,7 +29,7 @@ export async function handleSandboxBusinessSeats({request,authenticate,verifyMem
   const raw=await request.text();
   if(Buffer.byteLength(raw)>1024)return {status:413,body:{error:"Request too large"}};
   let input;
-  try{input=JSON.parse(raw);}catch{return {status:400,body:{error:"Invalid JSON"};}}
+  try{input=JSON.parse(raw);}catch{return {status:400,body:{error:"Invalid JSON"}};}
   if(!input||typeof input!=="object"||Array.isArray(input)||
      Object.keys(input).length!==1||!uuid.test(input.memberUserId??""))
    return {status:400,body:{error:"Invalid member"}};
