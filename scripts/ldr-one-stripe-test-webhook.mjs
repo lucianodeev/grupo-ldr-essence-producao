@@ -6,12 +6,14 @@ if (process.env.LDR_ONE_ALLOW_SANDBOX_MIGRATION === "yes") {
   }
   const { execFileSync } = await import("node:child_process");
   try {
-    execFileSync("npm", ["install", "--no-save", "--no-package-lock", "--ignore-scripts", "pg"], {
-      cwd: process.cwd(), timeout: 120000, stdio: "pipe"
+    execFileSync("npm", ["install", "--prefix", "/tmp/ldr-one-migration", "--no-package-lock", "--ignore-scripts", "--omit=dev", "pg"], {
+      cwd: "/tmp", timeout: 60000, stdio: "pipe"
     });
-    execFileSync(process.execPath, ["scripts/ldr-one-sandbox-migrate.mjs"], {
-      cwd: process.cwd(), timeout: 30000, stdio: "pipe", env: process.env
+    const migration = execFileSync(process.execPath, ["scripts/ldr-one-sandbox-migrate.mjs"], {
+      cwd: process.cwd(), timeout: 30000, stdio: "pipe",
+      env: { ...process.env, LDR_ONE_PG_MODULE_URL: "file:///tmp/ldr-one-migration/node_modules/pg/lib/index.js" }
     });
+    if (!migration.toString().includes("LDR ONE isolated sandbox schema verified")) throw Error("Migration verification missing");
     console.log("LDR ONE SANDBOX MIGRATION VERIFIED");
   } catch {
     console.error("LDR ONE SANDBOX MIGRATION FAILED; no receiver started");
