@@ -230,10 +230,12 @@ createServer(async(req,res)=>{
     await eventDb.query("INSERT INTO public.ldr_one_sandbox_subscriptions(id,customer_id,user_id,plan,billing_cycle,seats) VALUES($1,$2,$3,'individual','monthly',1)",[recordId,customerId,userId]);
     created=true;
     const body=JSON.stringify({id:evtId,created:Math.floor(Date.now()/1000),livemode:false,type:"customer.subscription.updated",data:{object:{id:"sub_"+randomUUID().replaceAll("-",""),status:"active",metadata:{sandbox:"true",checkout_kind:"ldr_one_subscription",ldr_one_subscription_id:recordId,customer_id:customerId}}}});
-    const deliver=async()=>{
+    const {checkSandboxEntitlement}=await import("./ldr-one-sandbox-entitlement-gate.mjs");
+    const identity={verified:true,userId,customerId};
+    const deliver=async(payload=body)=>{
       const stamp=Math.floor(Date.now()/1000);
-      const signature=createHmac("sha256",secret).update(stamp+"."+body).digest("hex");
-      return fetch("http://127.0.0.1:"+port+"/stripe/test-webhook",{method:"POST",headers:{"stripe-signature":"t="+stamp+",v1="+signature},body,signal:AbortSignal.timeout(10000)});
+      const signature=createHmac("sha256",secret).update(stamp+"."+payload).digest("hex");
+      return fetch("http://127.0.0.1:"+port+"/stripe/test-webhook",{method:"POST",headers:{"stripe-signature":"t="+stamp+",v1="+signature},body:payload,signal:AbortSignal.timeout(10000)});
     };
     const first=await deliver();
     if(first.status!==200)throw Error("Signed delivery rejected");
@@ -243,7 +245,19 @@ createServer(async(req,res)=>{
     if(second.status!==200)throw Error("Duplicate delivery rejected");
     const count=await eventDb.query("SELECT count(*)::int AS n FROM public.ldr_one_sandbox_stripe_events WHERE stripe_event_id=$1",[evtId]);
     if(count.rows[0]?.n!==1)throw Error("Duplicate event inserted");
-    console.log("LDR ONE SANDBOX SIGNED HTTP SELFTEST VERIFIED");
+    const active=await checkSandboxEntitlement({db:eventDb,identity});
+    if(!active.allowed||active.subscriptionId!==recordId)throw Error("Signed activation did not grant entitlement");
+    const stranger=await checkSandboxEntitlement({db:eventDb,identity:{...identity,userId:randomUUID()}});
+    if(stranger.allowed)throw Error("Signed activation leaked entitlement");
+    const canceled=JSON.stringify({id:"evt_"+randomUUID().replaceAll("-",""),created:Math.floor(Date.now()/1000)+1,livemode:false,type:"customer.subscription.deleted",data:{object:{id:JSON.parse(body).data.object.id,status:"canceled",metadata:JSON.parse(body).data.object.metadata}}});
+    const cancelResponse=await deliver(canceled);
+    if(cancelResponse.status!==200)throw Error("Signed cancellation rejected");
+    const revoked=await checkSandboxEntitlement({db:eventDb,identity});
+    if(revoked.allowed)throw Error("Signed cancellation did not revoke access");
+    const staleResponse=await deliver(body);
+    if(staleResponse.status!==200)throw Error("Signed replay after cancellation rejected");
+    if((await checkSandboxEntitlement({db:eventDb,identity})).allowed)throw Error("Replay restored canceled access");
+    console.log("LDR ONE SANDBOX SIGNED HTTP SELFTEST VERIFIED; ENTITLEMENT GRANT AND REVOCATION VERIFIED");
   }catch{
     console.error("LDR ONE SANDBOX SIGNED HTTP SELFTEST FAILED");
     process.exitCode=1;
