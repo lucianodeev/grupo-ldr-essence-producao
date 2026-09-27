@@ -11,6 +11,7 @@ export async function handleAuthenticatedSandboxCheckout({request,authenticate,d
  const length=Number(request.headers.get("content-length")??"0");
  if(!Number.isFinite(length)||length>4096)return {status:413,body:{ok:false,error:"Request too large"}};
  // Authenticate BEFORE reading user-provided selection or contacting Stripe.
+ if(typeof stripe!=="function"||!db||typeof db.query!=="function")return {status:503,body:{ok:false,error:"Sandbox checkout dependencies unavailable"}};
  if(typeof authenticate!=="function")return {status:503,body:{ok:false,error:"Trusted authentication unavailable"}};
  const identity=await authenticate(request);
  if(!identity?.verified||!identity.userId||!identity.customerId)return {status:401,body:{ok:false,error:"Authentication required"}};
