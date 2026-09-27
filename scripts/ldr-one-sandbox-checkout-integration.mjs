@@ -2,11 +2,11 @@
 // Never serves a checkout URL, charges a card, or grants an entitlement.
 import {randomUUID} from "node:crypto";
 import {prepareSandboxCheckout} from "./ldr-one-sandbox-checkout-service.mjs";
+import {resolveSandboxStripeConfig,verifySandboxPrice} from "./ldr-one-sandbox-stripe-config.mjs";
 const service="srv-das6drvavr4c7397dflg";
 if(process.env.LDR_ONE_SANDBOX_CHECKOUT_INTEGRATION!=="yes"||process.env.RENDER_SERVICE_ID!==service)throw Error("Sandbox-only integration guard");
-const key=process.env.LDR_ONE_STRIPE_TEST_SECRET_KEY??"";
-const priceId=process.env.LDR_ONE_TEST_PRICE_INDIVIDUAL_MONTHLY??"";
-if(!/^sk_test_[A-Za-z0-9]+$/.test(key)||!/^price_[A-Za-z0-9]+$/.test(priceId))throw Error("Stripe TEST configuration required");
+const selection={plan:"individual",cycle:"monthly",seats:1};
+const {secret:key,priceId}=resolveSandboxStripeConfig(process.env,selection);
 const dbUrl=new URL(process.env.DATABASE_URL??"");
 if(!["postgres:","postgresql:"].includes(dbUrl.protocol)||decodeURIComponent(dbUrl.pathname.slice(1))!=="ldr_one_sandbox_db")throw Error("Wrong database");
 const {default:pg}=await import(process.env.LDR_ONE_PG_MODULE_URL||"pg");
@@ -19,9 +19,10 @@ async function stripe(path,params){
  return response.json();
 }
 try{
+ await verifySandboxPrice({secret:key,priceId,selection});
  const db=await pool.connect();
  try{
-  const result=await prepareSandboxCheckout({db,authenticated:{customerId,userId},selection:{plan:"individual",cycle:"monthly",seats:1},priceId,origin:"https://ldr-one-stripe-sandbox.onrender.com",stripe:async params=>{
+  const result=await prepareSandboxCheckout({db,authenticated:{customerId,userId},selection,priceId,origin:"https://ldr-one-stripe-sandbox.onrender.com",stripe:async params=>{
    const created=await stripe("checkout/sessions",params);
    sessionId=created.id;
    return created;
