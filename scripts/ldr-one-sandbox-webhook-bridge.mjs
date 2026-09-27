@@ -5,10 +5,10 @@ const supported=new Set(["customer.subscription.created","customer.subscription.
 export function resolveSandboxEventIdentity(event) {
   // Only subscription lifecycle events have authoritative direct metadata here.
   // Invoice/checkout events require separate verified ownership mapping.
-  if(!supported.has(event?.type))return null;
   if (event?.livemode !== false) throw Error("Live events forbidden");
   const obj = event?.data?.object;
   if (!obj || typeof obj !== "object") throw Error("Stripe event object required");
+  if(!supported.has(event?.type))return null;
   const metadata = obj.metadata ?? {};
   if (metadata.sandbox !== "true" || metadata.checkout_kind !== "ldr_one_subscription") return null;
   const recordId = metadata.ldr_one_subscription_id;
