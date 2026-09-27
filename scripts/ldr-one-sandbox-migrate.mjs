@@ -12,7 +12,7 @@ if (!raw) throw Error("DATABASE_URL must be supplied privately by Render");
 const url = new URL(raw);
 if (!["postgres:","postgresql:"].includes(url.protocol)) throw Error("PostgreSQL URL required");
 if (decodeURIComponent(url.pathname.slice(1)) !== "ldr_one_sandbox_db") throw Error("Wrong database: migration refused");
-const { default: pg } = await import("pg");
+const { default: pg } = await import(process.env.LDR_ONE_PG_MODULE_URL || "pg");
 const client = new pg.Client({ connectionString: raw });
 const file = resolve(dirname(fileURLToPath(import.meta.url)), "../docs/ldr-pass/sql/ldr-one-sandbox-schema-REVIEW-ONLY.sql");
 const sql = await readFile(file,"utf8");
