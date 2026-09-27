@@ -19,3 +19,5 @@ test('business seats reject unauthorized administrator and full capacity',async(
 });
 
 test("unverified company member is rejected before database writes",async()=>{let touched=false;const db={query:async()=>{touched=true;}};await assert.rejects(()=>assignSandboxBusinessSeat({db,identity,subscriptionId,memberUserId,verifyMember:async()=>false}),/not verified/);assert.equal(touched,false);});
+
+import './ldr-one-sandbox-api.test.mjs';
