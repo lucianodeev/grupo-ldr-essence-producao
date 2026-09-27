@@ -23,3 +23,5 @@ test("unverified company member is rejected before database writes",async()=>{le
 import './ldr-one-sandbox-api.test.mjs';
 
 test("entitlement fails closed for unexpected DB rows and nonboolean verification",async()=>{const db={query:async()=>({rows:[{seat_authorized:true,plan:"individual",status:"pending",id:subscriptionId}]})};assert.equal((await checkSandboxEntitlement({db,identity})).allowed,false);await assert.rejects(()=>checkSandboxEntitlement({db,identity:{...identity,verified:"true"}}),/Authenticated identity/);await assert.rejects(()=>checkSandboxEntitlement({identity}),/Private sandbox database/);});
+
+import "./ldr-one-sandbox-supabase-auth.test.mjs";
