@@ -3,6 +3,8 @@
 import {scrypt as scryptCallback,timingSafeEqual,randomBytes} from "node:crypto";
 import {promisify} from "node:util";
 const scrypt=promisify(scryptCallback);
+// Use a fixed-format dummy hash for nonexistent accounts to reduce timing disclosure.
+const dummyHash="scrypt-v1:"+("00".repeat(32))+":"+("00".repeat(64));
 const safeUuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 export async function hashSandboxPassword(password,{salt=randomBytes(32)}={}){
  if(typeof password!=="string"||password.length<14||Buffer.byteLength(password)>1024||salt.length!==32)throw Error("Invalid sandbox password");
@@ -20,7 +22,7 @@ export async function authenticateInvitedSandboxUser({email,password,db,env,reso
  if(typeof resolveCustomer!=="function"||!db||typeof db.query!=="function"||typeof email!=="string"||email.length>254||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)||typeof password!=="string")return null;
  const normalized=email.trim().toLowerCase();
  const result=await db.query("SELECT user_id,customer_id,password_hash FROM public.ldr_one_sandbox_invited_users WHERE email=$1 AND verified=true AND disabled=false LIMIT 2",[normalized]);
- if(result.rows.length!==1)return null;
+ if(result.rows.length!==1){await verifySandboxPassword(password,dummyHash);return null;}
  const row=result.rows[0];if(!safeUuid.test(row.user_id??"")||!safeUuid.test(row.customer_id??"")||!await verifySandboxPassword(password,row.password_hash))return null;
  const membership=await resolveCustomer({userId:row.user_id});
  if(membership?.verified!==true||membership.customerId!==row.customer_id)return null;
