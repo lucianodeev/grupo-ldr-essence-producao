@@ -23,3 +23,23 @@ test("verified status fails closed when sandbox directory is unavailable",async(
  assert.equal(touched,false);
  assert.equal((await handleVerifiedSandboxStatus({request:req,env:statusEnv,db,fetcher})).status,503);
 });
+
+
+test("Supabase ES256 signing keys verify with JOSE signature encoding", async()=>{
+ const pair=generateKeyPairSync("ec",{namedCurve:"prime256v1"});
+ const ecJwk={...pair.publicKey.export({format:"jwk"}),kid:"sandbox-ec",alg:"ES256",use:"sig"};
+ const header=Buffer.from(JSON.stringify({alg:"ES256",kid:"sandbox-ec",typ:"JWT"})).toString("base64url");
+ const now=Math.floor(Date.now()/1000);
+ const payload=Buffer.from(JSON.stringify({iss:issuer,aud:"authenticated",sub:userId,iat:now,exp:now+300})).toString("base64url");
+ const input=header+"."+payload;
+ const jwt=input+"."+sign("sha256",Buffer.from(input),{key:pair.privateKey,dsaEncoding:"ieee-p1363"}).toString("base64url");
+ const ecFetcher=async()=>new Response(JSON.stringify({keys:[ecJwk]}));
+ const result=await authenticateSandboxSupabase({request:request(jwt),env,fetcher:ecFetcher,resolveCustomer});
+ assert.equal(result?.verified,true);
+ assert.equal(result.userId,userId);
+ const wrongPair=generateKeyPairSync("ec",{namedCurve:"prime256v1"});
+ const forged=input+"."+sign("sha256",Buffer.from(input),{key:wrongPair.privateKey,dsaEncoding:"ieee-p1363"}).toString("base64url");
+ assert.equal(await authenticateSandboxSupabase({request:request(forged),env,fetcher:ecFetcher,resolveCustomer}),null);
+ const wrongAlg=async()=>new Response(JSON.stringify({keys:[{...ecJwk,alg:"RS256"}]}));
+ assert.equal(await authenticateSandboxSupabase({request:request(jwt),env,fetcher:wrongAlg,resolveCustomer}),null);
+});

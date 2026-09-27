@@ -14,15 +14,21 @@ export async function authenticateSandboxSupabase({request,env,fetcher=fetch,res
  if(!/^Bearer [A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/.test(authorization)||authorization.length>12000)return null;
  try{
   const token=authorization.slice(7),parts=token.split("."),header=decode(parts[0]),payload=decode(parts[1]);
-  if(header.alg!=="RS256"||typeof header.kid!=="string"||!header.kid||header.typ&&header.typ!=="JWT")return null;
+  if(!["RS256","ES256"].includes(header.alg)||typeof header.kid!=="string"||!header.kid||header.typ&&header.typ!=="JWT")return null;
   const now=Math.floor(Date.now()/1000);
   if(payload.iss!==issuer||!(payload.aud===audience||Array.isArray(payload.aud)&&payload.aud.includes(audience))||!uuid.test(payload.sub??"")||typeof payload.exp!=="number"||payload.exp<=now||typeof payload.iat!=="number"||payload.iat>now+60||payload.nbf!==undefined&&(typeof payload.nbf!=="number"||payload.nbf>now))return null;
   const response=await fetcher(jwksUrl,{headers:{accept:"application/json"},signal:AbortSignal.timeout(5000),redirect:"error"});
   if(!response.ok)return null;
   const body=await response.text();if(Buffer.byteLength(body)>65536)return null;
-  const jwks=JSON.parse(body),key=jwks.keys?.find(k=>k.kid===header.kid&&k.kty==="RSA"&&k.use==="sig"&&k.alg==="RS256"&&typeof k.n==="string"&&typeof k.e==="string");
+  const jwks=JSON.parse(body),key=jwks.keys?.find(k=>k.kid===header.kid&&k.use==="sig"&&k.alg===header.alg&&(
+   header.alg==="RS256"
+    ? k.kty==="RSA"&&typeof k.n==="string"&&typeof k.e==="string"
+    : k.kty==="EC"&&k.crv==="P-256"&&typeof k.x==="string"&&typeof k.y==="string"
+  ));
   if(!key)return null;
-  const valid=verifySignature("RSA-SHA256",Buffer.from(parts[0]+"."+parts[1]),createPublicKey({key,format:"jwk"}),Buffer.from(parts[2],"base64url"));
+  const publicKey=createPublicKey({key,format:"jwk"});
+  // JOSE ECDSA signatures are fixed-width R || S, not ASN.1 DER.
+  const valid=verifySignature("sha256",Buffer.from(parts[0]+"."+parts[1]),header.alg==="ES256"?{key:publicKey,dsaEncoding:"ieee-p1363"}:publicKey,Buffer.from(parts[2],"base64url"));
   if(!valid)return null;
   const customer=await resolveCustomer({userId:payload.sub});
   if(!customer||!uuid.test(customer.customerId??"")||customer.verified!==true)return null;

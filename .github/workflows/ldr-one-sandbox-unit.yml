@@ -20,6 +20,11 @@ on:
       - 'scripts/ldr-one-sandbox-access.test.mjs'
       - 'scripts/ldr-one-sandbox-revoke-seat*'
       - 'scripts/ldr-one-sandbox-seat-roster*'
+      - 'scripts/ldr-one-sandbox-supabase-auth*'
+      - 'scripts/ldr-one-sandbox-verified-status*'
+      - 'scripts/ldr-one-sandbox-status-api*'
+      - 'scripts/ldr-one-sandbox-business-api*'
+      - 'scripts/ldr-one-sandbox-api*'
       - 'docs/ldr-pass/sql/ldr-one-sandbox-schema-REVIEW-ONLY.sql'
   workflow_dispatch:
 permissions:
