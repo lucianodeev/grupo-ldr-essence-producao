@@ -1,24 +1,21 @@
 // Transactional sandbox event persistence. Caller MUST verify Stripe signature and livemode=false.
 // The caller supplies an already authenticated/verified event and trusted subscription ID.
 // No Stripe live key, no browser DB access, and no writes to production tables.
-const allowed = new Map([
-  ["checkout.session.completed", "active"],
-  ["checkout.session.expired", "canceled"],
-  ["invoice.payment_succeeded", "active"],
-  ["invoice.payment_failed", "past_due"],
-  ["customer.subscription.deleted", "canceled"],
-]);
+const allowed = new Map([["customer.subscription.deleted", "canceled"]]);
 const statuses = new Set(["active","trialing","past_due","canceled","unpaid","paused","incomplete"]);
 export async function applyVerifiedSandboxEvent(client, event, recordId, customerId) {
   if (event?.livemode !== false || !/^evt_[A-Za-z0-9]+$/.test(event?.id ?? "")) throw Error("Verified test event required");
   if (!Number.isSafeInteger(event.created) || event.created < 1) throw Error("Valid Stripe event timestamp required");
+  // Enforce lifecycle-only at the persistence layer as well as the webhook bridge.
+  // Checkout and invoice metadata alone are not authoritative for access grants.
+  if (!["customer.subscription.created","customer.subscription.updated","customer.subscription.deleted"].includes(event.type)) return {handled:false};
   const meta = event.data?.object?.metadata ?? {};
   if (meta.sandbox !== "true" || meta.checkout_kind !== "ldr_one_subscription" ||
       meta.ldr_one_subscription_id !== recordId || meta.customer_id !== customerId) throw Error("Event ownership mismatch");
   const obj = event.data.object;
-  const stripeSub = event.type.startsWith("customer.subscription.") ? obj.id : obj.subscription;
+  if (!/^sub_[A-Za-z0-9]+$/.test(obj.id??"")) throw Error("Verified Stripe subscription ID required");
+  const stripeSub = obj.id;
   let next = allowed.get(event.type);
-  if (event.type === "checkout.session.completed" && obj.payment_status !== "paid") next = "pending";
   if (event.type === "customer.subscription.created" || event.type === "customer.subscription.updated") next = statuses.has(obj.status) ? obj.status : undefined;
   if (!next) return {handled:false};
   await client.query("BEGIN");
