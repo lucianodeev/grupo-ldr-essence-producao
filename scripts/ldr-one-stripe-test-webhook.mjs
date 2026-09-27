@@ -40,6 +40,24 @@ if (process.env.LDR_ONE_SANDBOX_DB_SMOKE === "yes") {
     process.exit(1);
   }
 }
+// One-time rollback-only database event integration; never on regular boot.
+if (process.env.LDR_ONE_SANDBOX_EVENT_INTEGRATION === "yes") {
+  if (process.env.RENDER_SERVICE_ID !== "srv-das6drvavr4c7397dflg" ||
+      process.env.LDR_ONE_ALLOW_SANDBOX_MIGRATION === "yes") throw Error("Integration test guard");
+  const { execFileSync } = await import("node:child_process");
+  try {
+    execFileSync("npm", ["install", "--prefix", "/tmp/ldr-one-migration", "--no-package-lock", "--ignore-scripts", "--omit=dev", "pg"], {cwd:"/tmp",timeout:60000,stdio:"pipe"});
+    const result=execFileSync(process.execPath,["scripts/ldr-one-sandbox-event-integration.mjs"],{
+      cwd:process.cwd(),timeout:30000,stdio:"pipe",
+      env:{...process.env,LDR_ONE_PG_MODULE_URL:"file:///tmp/ldr-one-migration/node_modules/pg/lib/index.js"}
+    });
+    if(!result.toString().includes("LDR ONE SANDBOX EVENT INTEGRATION VERIFIED"))throw Error("Integration verification missing");
+    console.log("LDR ONE SANDBOX EVENT INTEGRATION VERIFIED");
+  } catch {
+    console.error("LDR ONE SANDBOX EVENT INTEGRATION FAILED; receiver not started");
+    process.exit(1);
+  }
+}
 // Isolated Stripe test webhook receiver. Does not persist, grant access or call Stripe.
 // Never deploy on the production app or configure live-mode events here.
 import { createHmac, timingSafeEqual } from "node:crypto";
