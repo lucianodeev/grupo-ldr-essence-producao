@@ -11,7 +11,7 @@ export async function authenticateSandboxSupabase({request,env,fetcher=fetch,res
  const expected=new URL(issuer),keys=new URL(jwksUrl);
  if(expected.protocol!=="https:"||expected.username||expected.password||expected.search||expected.hash||keys.protocol!=="https:"||keys.origin!==expected.origin||keys.username||keys.password||keys.search||keys.hash)throw Error("Invalid sandbox issuer or JWKS origin");
  const authorization=request?.headers?.get("authorization")??"";
- if(!/^Bearer [A-Za-z0-9_-]+\\.[A-Za-z0-9_-]+\\.[A-Za-z0-9_-]+$/.test(authorization)||authorization.length>12000)return null;
+ if(!/^Bearer [A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/.test(authorization)||authorization.length>12000)return null;
  try{
   const token=authorization.slice(7),parts=token.split("."),header=decode(parts[0]),payload=decode(parts[1]);
   if(header.alg!=="RS256"||typeof header.kid!=="string"||!header.kid||header.typ&&header.typ!=="JWT")return null;
