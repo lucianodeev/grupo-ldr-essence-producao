@@ -12,8 +12,10 @@ test('no entitlement without active owned subscription',async()=>{
 test('business seats reject unauthorized administrator and full capacity',async()=>{
  const queries=[];
  const db={query:async(sql)=>{queries.push(sql);if(sql.startsWith('SELECT id,seats'))return {rows:[{seats:5,status:'active'}]};if(sql.startsWith('SELECT 1'))return {rowCount:0};if(sql.startsWith('SELECT count'))return {rows:[{used:5}]};return {rowCount:1};}};
- await assert.rejects(()=>assignSandboxBusinessSeat({db,identity:{...identity,businessAdmin:false},subscriptionId,memberUserId}));
+ await assert.rejects(()=>assignSandboxBusinessSeat({db,identity:{...identity,businessAdmin:false},subscriptionId,memberUserId,verifyMember:async()=>true}));
  assert.equal(queries.length,0);
- await assert.rejects(()=>assignSandboxBusinessSeat({db,identity,subscriptionId,memberUserId}),/No business seats/);
+ await assert.rejects(()=>assignSandboxBusinessSeat({db,identity,subscriptionId,memberUserId,verifyMember:async()=>true}),/No business seats/);
  assert.equal(queries.at(-1),'ROLLBACK');
 });
+
+test("unverified company member is rejected before database writes",async()=>{let touched=false;const db={query:async()=>{touched=true;}};await assert.rejects(()=>assignSandboxBusinessSeat({db,identity,subscriptionId,memberUserId,verifyMember:async()=>false}),/not verified/);assert.equal(touched,false);});
