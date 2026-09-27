@@ -20,7 +20,7 @@ export async function handleSandboxBusinessSeats({request,authenticate,verifyAdm
   return {status:503,body:{error:"Trusted authentication unavailable"}};
  let identity;
  try{identity=await authenticate(request);}catch{return {status:403,body:{error:"Authentication failed"}};}
- if(identity?.verified!==true)return {status:403,body:{error:"Verified company administrator required"}};
+ if(identity?.verified!==true||!uuid.test(identity.userId??"")||!uuid.test(identity.customerId??""))return {status:403,body:{error:"Verified company administrator required"}};
  let approved=false;
  try{approved=await verifyAdmin({customerId:identity.customerId,userId:identity.userId})===true;}catch{return {status:403,body:{error:"Administrator verification failed"}};}
  if(!approved)
