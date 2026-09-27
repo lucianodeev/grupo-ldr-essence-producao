@@ -30,7 +30,7 @@ test("cross-origin business mutation blocked before authentication",async()=>{
 });
 test("subscription status requires authenticated identity",async()=>{
  const request=new Request(origin+"/status",{headers:{origin}});
- assert.equal((await handleSandboxSubscriptionStatus({request,env,authenticate:async()=>null})).status,401);
+ assert.equal((await handleSandboxSubscriptionStatus({request,env,authenticate:async()=>null,db:{query:async()=>({rows:[]})}})).status,401);
  const db={query:async(sql)=>sql.includes("ORDER BY created_at")?{rows:[]}:{rows:[]}};
  const result=await handleSandboxSubscriptionStatus({request,env,authenticate:async()=>identity,verifyAdmin:async()=>true,db});
  assert.equal(result.status,200);assert.equal(result.body.entitlement.allowed,false);
