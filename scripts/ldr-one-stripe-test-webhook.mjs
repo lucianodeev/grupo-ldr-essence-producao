@@ -1,3 +1,19 @@
+// One-time isolated customer directory migration; disabled on ordinary startup.
+if(process.env.LDR_ONE_SANDBOX_CUSTOMER_MIGRATION==="yes"){
+ if(process.env.RENDER_SERVICE_ID!=="srv-das6drvavr4c7397dflg"||
+    ["LDR_ONE_ALLOW_SANDBOX_MIGRATION","LDR_ONE_SANDBOX_DB_SMOKE","LDR_ONE_SANDBOX_EVENT_INTEGRATION","LDR_ONE_SANDBOX_CHECKOUT_INTEGRATION"].some(k=>process.env[k]==="yes"))
+  throw Error("Customer directory migration guard");
+ const {execFileSync}=await import("node:child_process");
+ try{
+  execFileSync("npm",["install","--prefix","/tmp/ldr-one-migration","--no-package-lock","--ignore-scripts","--omit=dev","pg"],{cwd:"/tmp",timeout:60000,stdio:"pipe"});
+  const result=execFileSync(process.execPath,["scripts/ldr-one-sandbox-customer-migrate.mjs"],{
+   cwd:process.cwd(),timeout:30000,stdio:"pipe",
+   env:{...process.env,LDR_ONE_PG_MODULE_URL:"file:///tmp/ldr-one-migration/node_modules/pg/lib/index.js"}
+  }).toString();
+  if(!result.includes("LDR ONE SANDBOX CUSTOMER DIRECTORY VERIFIED"))throw Error("Verification missing");
+  console.log("LDR ONE SANDBOX CUSTOMER DIRECTORY VERIFIED");
+ }catch{console.error("LDR ONE SANDBOX CUSTOMER DIRECTORY FAILED");process.exit(1);}
+}
 // Optional one-time migration for isolated Render free web service.
 // Must never run on ordinary startup; fails closed if explicitly requested migration fails.
 if (process.env.LDR_ONE_ALLOW_SANDBOX_MIGRATION === "yes") {
