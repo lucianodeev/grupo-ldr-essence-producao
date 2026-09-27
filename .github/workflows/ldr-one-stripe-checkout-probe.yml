@@ -1,6 +1,9 @@
 name: LDR ONE test checkout probe
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/ldr-one-stripe-checkout-probe.yml'
 permissions:
   contents: read
 jobs:
