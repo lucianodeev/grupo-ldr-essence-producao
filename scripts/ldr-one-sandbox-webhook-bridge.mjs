@@ -1,7 +1,11 @@
 // Bridge for signed Stripe test events to isolated PostgreSQL.
 // Import only AFTER verifying Stripe signature on the raw request body.
 import { applyVerifiedSandboxEvent } from "./ldr-one-sandbox-event-store.mjs";
+const supported=new Set(["customer.subscription.created","customer.subscription.updated","customer.subscription.deleted"]);
 export function resolveSandboxEventIdentity(event) {
+  // Only subscription lifecycle events have authoritative direct metadata here.
+  // Invoice/checkout events require separate verified ownership mapping.
+  if(!supported.has(event?.type))return null;
   if (event?.livemode !== false) throw Error("Live events forbidden");
   const obj = event?.data?.object;
   if (!obj || typeof obj !== "object") throw Error("Stripe event object required");
