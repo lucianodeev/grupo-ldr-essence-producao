@@ -12,12 +12,12 @@ test("both endpoints are disabled by default",async()=>{
 });
 test("unauthenticated business request never touches database",async()=>{
  let touched=false;
- const request=new Request(origin+"/business?subscriptionId="+id);
+ const request=new Request(origin+"/business?subscriptionId="+id,{headers:{origin}});
  const response=await handleSandboxBusinessSeats({request,env,authenticate:async()=>null,verifyAdmin:async()=>false,db:{query:async()=>{touched=true;}}});
  assert.equal(response.status,403);assert.equal(touched,false);
 });
 test("business seat roster is company scoped",async()=>{
- const request=new Request(origin+"/business?subscriptionId="+id);
+ const request=new Request(origin+"/business?subscriptionId="+id,{headers:{origin}});
  const db={query:async(sql,values)=>{assert.deepEqual(values,[id,identity.customerId,identity.userId]);return {rows:[{user_id:null,seats:5}]};}};
  const response=await handleSandboxBusinessSeats({request,env,authenticate:async()=>identity,verifyAdmin:async()=>true,db});
  assert.equal(response.status,200);assert.deepEqual(response.body,{capacity:5,used:0,members:[]});
@@ -38,12 +38,14 @@ test("subscription status requires authenticated identity",async()=>{
 
 test("unrecognized paths and unexpected parameters are denied",async()=>{let called=false;const authenticate=async()=>{called=true;return identity;};for(const request of [new Request(origin+"/other?subscriptionId="+id),new Request(origin+"/business?subscriptionId="+id+"&unexpected=1")]){assert.equal((await handleSandboxBusinessSeats({request,env,authenticate})).status,403);}assert.equal((await handleSandboxSubscriptionStatus({request:new Request(origin+"/other",{headers:{origin}}),env,authenticate})).status,403);assert.equal(called,false);});
 
-test("client-provided admin claim cannot bypass trusted directory",async()=>{let touched=false;const request=new Request(origin+"/business?subscriptionId="+id);const result=await handleSandboxBusinessSeats({request,env,authenticate:async()=>identity,verifyAdmin:async()=>false,db:{query:async()=>{touched=true;}}});assert.equal(result.status,403);assert.equal(touched,false);});
+test("client-provided admin claim cannot bypass trusted directory",async()=>{let touched=false;const request=new Request(origin+"/business?subscriptionId="+id,{headers:{origin}});const result=await handleSandboxBusinessSeats({request,env,authenticate:async()=>identity,verifyAdmin:async()=>false,db:{query:async()=>{touched=true;}}});assert.equal(result.status,403);assert.equal(touched,false);});
 
-test("admin directory outage fails closed without database access",async()=>{let touched=false;const request=new Request(origin+"/business?subscriptionId="+id);const response=await handleSandboxBusinessSeats({request,env,authenticate:async()=>identity,verifyAdmin:async()=>{throw Error("directory unavailable");},db:{query:async()=>{touched=true;}}});assert.equal(response.status,403);assert.equal(touched,false);});
+test("admin directory outage fails closed without database access",async()=>{let touched=false;const request=new Request(origin+"/business?subscriptionId="+id,{headers:{origin}});const response=await handleSandboxBusinessSeats({request,env,authenticate:async()=>identity,verifyAdmin:async()=>{throw Error("directory unavailable");},db:{query:async()=>{touched=true;}}});assert.equal(response.status,403);assert.equal(touched,false);});
 
 test("status denies absent or failing authentication before DB access",async()=>{let touched=false;const request=new Request(origin+"/status",{headers:{origin}});const db={query:async()=>{touched=true;}};assert.equal((await handleSandboxSubscriptionStatus({request,env,db})).status,503);assert.equal((await handleSandboxSubscriptionStatus({request,env,db,authenticate:async()=>{throw Error("auth offline");}})).status,401);assert.equal(touched,false);});
 
-test("invalid admin identity never reaches trusted directory or DB",async()=>{let called=false;const request=new Request(origin+"/business?subscriptionId="+id);const response=await handleSandboxBusinessSeats({request,env,authenticate:async()=>({...identity,userId:"not-a-uuid"}),verifyAdmin:async()=>{called=true;return true;},db:{query:async()=>{called=true;}}});assert.equal(response.status,403);assert.equal(called,false);});
+test("invalid admin identity never reaches trusted directory or DB",async()=>{let called=false;const request=new Request(origin+"/business?subscriptionId="+id,{headers:{origin}});const response=await handleSandboxBusinessSeats({request,env,authenticate:async()=>({...identity,userId:"not-a-uuid"}),verifyAdmin:async()=>{called=true;return true;},db:{query:async()=>{called=true;}}});assert.equal(response.status,403);assert.equal(called,false);});
 
 test("status rejects malformed authenticated customer without database reads",async()=>{let queried=false;const request=new Request(origin+"/status",{headers:{origin}});const db={query:async()=>{queried=true;return {rows:[]};}};for(const bad of [{...identity,verified:"true"},{...identity,customerId:"invalid"},{...identity,userId:"invalid"}]){const result=await handleSandboxSubscriptionStatus({request,env,db,authenticate:async()=>bad});assert.equal(result.status,401);}assert.equal(queried,false);});
+
+test("business GET denies cross-origin and missing DB before directory access",async()=>{let called=false;const request=new Request(origin+"/business?subscriptionId="+id,{headers:{origin:"https://evil.invalid"}});assert.equal((await handleSandboxBusinessSeats({request,env,authenticate:async()=>{called=true;return identity;},verifyAdmin:async()=>true,db:{query:async()=>{called=true;}}})).status,403);assert.equal(called,false);const valid=new Request(origin+"/business?subscriptionId="+id,{headers:{origin}});assert.equal((await handleSandboxBusinessSeats({request:valid,env,authenticate:async()=>{called=true;return identity;},verifyAdmin:async()=>true})).status,503);assert.equal(called,false);});
