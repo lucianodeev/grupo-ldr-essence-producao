@@ -60,5 +60,7 @@ jobs:
         run: node --test scripts/ldr-one-sandbox-access.test.mjs
       - name: Verify seat revocation and company roster
         run: node --test scripts/ldr-one-sandbox-revoke-seat.test.mjs scripts/ldr-one-sandbox-seat-roster.test.mjs
+      - name: Verify isolated invite-only sandbox credentials
+        run: node --test scripts/ldr-one-sandbox-local-auth.test.mjs
       - name: Verify migration safety guards
         run: node --test scripts/ldr-one-sandbox-migrate.test.mjs
