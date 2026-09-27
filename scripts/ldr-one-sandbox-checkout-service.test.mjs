@@ -15,7 +15,7 @@ test("unauthenticated, invalid seats and live-mode session fail closed",async()=
  await assert.rejects(()=>prepareSandboxCheckout({...base,selection:{plan:"business",cycle:"monthly",seats:1},db,stripe:async()=>{throw Error("called");}}),/Invalid plan/);
  const sql=[];const tracking={query:async(q)=>{sql.push(q);return {rowCount:1};}};
  await assert.rejects(()=>prepareSandboxCheckout({...base,db:tracking,stripe:async()=>({livemode:true,id:"cs_live_123",mode:"subscription",status:"open",url:"https://example.test"})}),/Unexpected/);
- assert.match(sql[1],/DELETE/);
+ assert.equal(sql.length,1); // Potential Stripe session retained for reconciliation.
 });
 test("existing Stripe customer suppresses email",async()=>{
  const db={query:async()=>({rowCount:1})};
