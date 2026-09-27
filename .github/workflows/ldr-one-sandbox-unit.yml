@@ -7,6 +7,8 @@ on:
       - 'apps/painel-ldr/src/lib/ldr-one-events-sandbox*'
       - '.github/workflows/ldr-one-sandbox-unit.yml'
       - 'scripts/ldr-one-stripe-test-webhook*'
+      - 'scripts/ldr-one-sandbox-migrate*'
+      - 'docs/ldr-pass/sql/ldr-one-sandbox-schema-REVIEW-ONLY.sql'
   workflow_dispatch:
 permissions:
   contents: read
@@ -24,3 +26,6 @@ jobs:
         run: node --experimental-strip-types --test src/lib/ldr-one-sandbox.test.ts src/lib/ldr-one-checkout-sandbox.test.ts src/lib/ldr-one-events-sandbox.test.ts
       - name: Verify isolated webhook security
         run: node --test scripts/ldr-one-stripe-test-webhook.test.mjs
+
+      - name: Verify migration safety guards
+        run: node --test scripts/ldr-one-sandbox-migrate.test.mjs
