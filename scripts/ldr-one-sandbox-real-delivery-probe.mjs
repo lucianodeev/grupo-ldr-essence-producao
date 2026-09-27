@@ -27,9 +27,6 @@ if(process.env.LDR_ONE_SANDBOX_REAL_DELIVERY_PROBE==="yes"){
   console.log("LDR ONE STRIPE REAL TEST SUBSCRIPTION EVENT REQUESTED");
  }catch{console.error("LDR ONE STRIPE REAL TEST PROBE FAILED");}
  finally{
-  if(subscription?.id){try{await api("subscriptions/"+encodeURIComponent(subscription.id),{});}catch{
-   // DELETE cancellation below; POST above intentionally cannot cancel.
-  }}
   if(subscription?.id){try{
    const response=await fetch("https://api.stripe.com/v1/subscriptions/"+encodeURIComponent(subscription.id),{
     method:"DELETE",headers:{authorization:"Bearer "+key},signal:AbortSignal.timeout(12000)});
