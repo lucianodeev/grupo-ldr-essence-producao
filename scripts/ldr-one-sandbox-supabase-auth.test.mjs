@@ -8,3 +8,18 @@ const token=(changes={},key=privateKey)=>{const now=Math.floor(Date.now()/1000),
 const request=value=>new Request("https://ldr-one-stripe-sandbox.onrender.com/status",{headers:{authorization:"Bearer "+value}});
 test("trusted sandbox JWT maps to independently verified customer",async()=>{const result=await authenticateSandboxSupabase({request:request(token()),env,fetcher,resolveCustomer});assert.equal(result.verified,true);assert.equal(result.userId,userId);assert.equal(result.customerId,customerId);});
 test("sandbox JWT rejects expiry, wrong audience, bad signature, unverified customer and disabled mode",async()=>{const other=generateKeyPairSync("rsa",{modulusLength:2048}).privateKey;for(const value of [token({exp:1}),token({aud:"other"}),token({},other)])assert.equal(await authenticateSandboxSupabase({request:request(value),env,fetcher,resolveCustomer}),null);assert.equal(await authenticateSandboxSupabase({request:request(token()),env,fetcher,resolveCustomer:async()=>({verified:false,customerId})}),null);await assert.rejects(()=>authenticateSandboxSupabase({request:request(token()),env:{...env,LDR_ONE_SANDBOX_AUTH_ENABLED:"false"},fetcher,resolveCustomer}));});
+
+import {handleVerifiedSandboxStatus} from "./ldr-one-sandbox-verified-status.mjs";
+test("verified JWT reaches scoped subscription status, no entitlement without active row",async()=>{
+ const db={query:async()=>({rows:[]})},statusEnv={...env,LDR_ONE_SANDBOX_STATUS_API_ENABLED:"true"};
+ const req=new Request("https://ldr-one-stripe-sandbox.onrender.com/status",{headers:{origin:"https://ldr-one-stripe-sandbox.onrender.com",authorization:"Bearer "+token()}});
+ const result=await handleVerifiedSandboxStatus({request:req,env:statusEnv,db,resolveCustomer,fetcher});
+ assert.equal(result.status,200);assert.equal(result.body.entitlement.allowed,false);assert.deepEqual(result.body.subscriptions,[]);
+});
+test("verified status fails closed when sandbox directory is unavailable",async()=>{
+ let touched=false;const db={query:async()=>{touched=true;return {rows:[]};}},statusEnv={...env,LDR_ONE_SANDBOX_STATUS_API_ENABLED:"true"};
+ const req=new Request("https://ldr-one-stripe-sandbox.onrender.com/status",{headers:{origin:"https://ldr-one-stripe-sandbox.onrender.com",authorization:"Bearer "+token()}});
+ assert.equal((await handleVerifiedSandboxStatus({request:req,env:statusEnv,db,resolveCustomer:async()=>null,fetcher})).status,401);
+ assert.equal(touched,false);
+ assert.equal((await handleVerifiedSandboxStatus({request:req,env:statusEnv,db,fetcher})).status,503);
+});
