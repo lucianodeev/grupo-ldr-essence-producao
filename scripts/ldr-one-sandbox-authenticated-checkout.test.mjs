@@ -30,3 +30,5 @@ test("customer subscription status is parameterized, scoped and omits Stripe ide
  assert.match(args.sql,/user_id=\$1 AND customer_id=\$2/);
  assert.equal(rows[0].stripe_subscription_id,undefined);
 });
+
+test("checkout rejects unknown paths and missing trusted authentication before Stripe",async()=>{let touched=false;const base={env,db:{query:async()=>{touched=true;}},stripe:async()=>{touched=true;}};const body=JSON.stringify({plan:"individual",cycle:"monthly",seats:1});for(const path of ["/checkout","/internal/checkout?unexpected=1"]){const req=new Request(origin+path,{method:"POST",headers:{origin,"content-type":"application/json"},body});assert.equal((await handleAuthenticatedSandboxCheckout({...base,request:req,authenticate:async()=>identity})).status,403);}assert.equal((await handleAuthenticatedSandboxCheckout({...base,request:request({plan:"individual",cycle:"monthly",seats:1})})).status,503);assert.equal(touched,false);});
