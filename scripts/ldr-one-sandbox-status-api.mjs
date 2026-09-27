@@ -9,7 +9,9 @@ export async function handleSandboxSubscriptionStatus({request,authenticate,db,e
  const url=new URL(request.url);
  if(request.method!=="GET"||url.origin!==origin||url.pathname!=="/status"||url.search||url.hash||request.headers.get("origin")!==origin)
   return {status:403,body:{error:"Request forbidden"}};
- const identity=await authenticate(request);
+ if(typeof authenticate!=="function"||!db||typeof db.query!=="function")return {status:503,body:{error:"Trusted status dependencies unavailable"}};
+ let identity;
+ try{identity=await authenticate(request);}catch{return {status:401,body:{error:"Authentication failed"}};}
  if(identity?.verified!==true)return {status:401,body:{error:"Authentication required"}};
  try{
   const [subscriptions,entitlement]=await Promise.all([
