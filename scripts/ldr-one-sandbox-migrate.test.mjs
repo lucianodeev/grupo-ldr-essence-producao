@@ -15,3 +15,11 @@ test("migration refuses production database before opening a connection",()=>{
   assert.notEqual(run.status,0);
   assert.match(run.stderr,/Wrong database: migration refused/);
 });
+
+test("receiver refuses migration outside designated Render service",()=>{
+  const run=spawnSync(process.execPath,["scripts/ldr-one-stripe-test-webhook.mjs"],{
+    encoding:"utf8",env:{...process.env,LDR_ONE_ALLOW_SANDBOX_MIGRATION:"yes",RENDER_SERVICE_ID:"wrong-service"}
+  });
+  assert.notEqual(run.status,0);
+  assert.match(run.stderr,/Migration refused: wrong Render service/);
+});
