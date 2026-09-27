@@ -1,0 +1,23 @@
+name: LDR ONE test checkout probe
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  checkout-test-only:
+    runs-on: ubuntu-latest
+    environment: ldr-one-sandbox
+    timeout-minutes: 5
+    env:
+      LDR_ONE_STRIPE_TEST_SECRET_KEY: ${{ secrets.LDR_ONE_STRIPE_TEST_SECRET_KEY }}
+      LDR_ONE_TEST_PRICE_INDIVIDUAL_MONTHLY: ${{ vars.LDR_ONE_TEST_PRICE_INDIVIDUAL_MONTHLY }}
+      LDR_ONE_TEST_PRICE_INDIVIDUAL_ANNUAL: ${{ vars.LDR_ONE_TEST_PRICE_INDIVIDUAL_ANNUAL }}
+      LDR_ONE_TEST_PRICE_BUSINESS_MONTHLY: ${{ vars.LDR_ONE_TEST_PRICE_BUSINESS_MONTHLY }}
+      LDR_ONE_TEST_PRICE_BUSINESS_ANNUAL: ${{ vars.LDR_ONE_TEST_PRICE_BUSINESS_ANNUAL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Create and immediately expire four Stripe TEST checkout sessions
+        run: node scripts/ldr-one-stripe-checkout-probe.mjs
