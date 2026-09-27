@@ -115,6 +115,8 @@ if(process.env.LDR_ONE_SANDBOX_CHECKOUT_INTEGRATION==="yes"){
 // Never deploy on the production app or configure live-mode events here.
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { createServer } from "node:http";
+import {handleVerifiedSandboxStatus} from "./ldr-one-sandbox-verified-status.mjs";
+import {createSandboxCustomerResolver} from "./ldr-one-sandbox-customer-directory.mjs";
 // Safe startup diagnostics; never log database URL, hostname, user or password.
 const databaseUrl = process.env.DATABASE_URL;
 let dbConfig = "missing";
@@ -150,6 +152,14 @@ if(!ready)console.log("Sandbox receiver started in setup-only mode; all webhook 
 const port=Number(process.env.PORT || 10000);
 createServer(async(req,res)=>{
   if(req.url==="/health"&&req.method==="GET"){res.writeHead(200);res.end("sandbox only");return;}
+  if(req.url==="/status"&&req.method==="GET"){
+    if(process.env.LDR_ONE_SANDBOX_AUTH_ENABLED!=="true"||process.env.LDR_ONE_SANDBOX_STATUS_API_ENABLED!=="true"||!eventDb){res.writeHead(503);res.end("Verified sandbox login not configured");return;}
+    const origin="https://ldr-one-stripe-sandbox.onrender.com";
+    const request=new Request(origin+"/status",{method:"GET",headers:{origin:String(req.headers.origin??""),authorization:String(req.headers.authorization??"")}});
+    const result=await handleVerifiedSandboxStatus({request,env:process.env,db:eventDb,resolveCustomer:createSandboxCustomerResolver({db:eventDb,env:process.env})});
+    res.writeHead(result.status,{"content-type":"application/json","cache-control":"no-store"});res.end(JSON.stringify(result.body));return;
+  }
+
   if(req.url!=="/stripe/test-webhook"||req.method!=="POST"){res.writeHead(404);res.end();return;}
   if(!ready){res.writeHead(503);res.end("Sandbox webhook not configured");return;}
   const chunks=[];let size=0;
