@@ -13,11 +13,18 @@ try {
  await client.connect();
  await client.query("BEGIN");
  await client.query("INSERT INTO public.ldr_one_sandbox_subscriptions(id,customer_id,user_id,plan,billing_cycle,seats) VALUES($1,$2,$3,'individual','monthly',1)",[id,customer,user]);
- const result=await applyVerifiedSandboxEvent(client,event,id,customer);
+ // Preserve outer rollback: map event-store transaction boundaries to savepoints.
+ const scoped={query:(sql,args)=>{
+   if(sql==="BEGIN")return client.query("SAVEPOINT ldr_event");
+   if(sql==="COMMIT")return client.query("RELEASE SAVEPOINT ldr_event");
+   if(sql==="ROLLBACK")return client.query("ROLLBACK TO SAVEPOINT ldr_event");
+   return client.query(sql,args);
+ }};
+ const result=await applyVerifiedSandboxEvent(scoped,event,id,customer);
  if(result.status!=="active")throw Error("Sandbox lifecycle integration failed");
  const check=await client.query("SELECT status FROM public.ldr_one_sandbox_subscriptions WHERE id=$1",[id]);
  if(check.rows[0]?.status!=="active")throw Error("DB state mismatch");
- const duplicate=await applyVerifiedSandboxEvent(client,event,id,customer);
+ const duplicate=await applyVerifiedSandboxEvent(scoped,event,id,customer);
  if(!duplicate.duplicate)throw Error("Replay guard failed");
  console.log("LDR ONE SANDBOX EVENT INTEGRATION VERIFIED (all synthetic data rolled back)");
 } finally {
