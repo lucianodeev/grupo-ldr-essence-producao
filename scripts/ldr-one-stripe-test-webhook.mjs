@@ -26,6 +26,18 @@ if (process.env.LDR_ONE_ALLOW_SANDBOX_MIGRATION === "yes") {
 // Never deploy on the production app or configure live-mode events here.
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { createServer } from "node:http";
+// Safe startup diagnostics; never log database URL, hostname, user or password.
+const databaseUrl = process.env.DATABASE_URL;
+let dbConfig = "missing";
+if (databaseUrl) {
+  try {
+    const parsed = new URL(databaseUrl);
+    dbConfig = ["postgres:","postgresql:"].includes(parsed.protocol)
+      && decodeURIComponent(parsed.pathname.slice(1)) === "ldr_one_sandbox_db"
+      ? "configured-for-sandbox" : "invalid-or-wrong-database";
+  } catch { dbConfig = "invalid-or-wrong-database"; }
+}
+console.log("LDR ONE SANDBOX DB CONFIG: " + dbConfig);
 const secret=process.env.LDR_ONE_STRIPE_TEST_WEBHOOK_SECRET ?? "";
 const ready=/^whsec_[A-Za-z0-9]+$/.test(secret);
 if(!ready)console.log("Sandbox receiver started in setup-only mode; all webhook POST requests are blocked until test signing secret is configured.");
