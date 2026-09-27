@@ -1,0 +1,21 @@
+name: LDR ONE sandbox unit checks
+on:
+  pull_request:
+    paths:
+      - 'apps/painel-ldr/src/lib/ldr-one-sandbox*'
+      - '.github/workflows/ldr-one-sandbox-unit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  sandbox-unit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run isolated tests without Stripe keys
+        working-directory: apps/painel-ldr
+        run: node --experimental-strip-types --test src/lib/ldr-one-sandbox.test.ts
