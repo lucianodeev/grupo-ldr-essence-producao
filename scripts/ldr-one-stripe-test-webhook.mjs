@@ -1,3 +1,23 @@
+// Optional one-time migration for isolated Render free web service.
+// Must never run on ordinary startup; fails closed if explicitly requested migration fails.
+if (process.env.LDR_ONE_ALLOW_SANDBOX_MIGRATION === "yes") {
+  if (process.env.RENDER_SERVICE_ID !== "srv-das6drvavr4c7397dflg") {
+    throw Error("Migration refused: wrong Render service");
+  }
+  const { execFileSync } = await import("node:child_process");
+  try {
+    execFileSync("npm", ["install", "--no-save", "--no-package-lock", "--ignore-scripts", "pg"], {
+      cwd: process.cwd(), timeout: 120000, stdio: "pipe"
+    });
+    execFileSync(process.execPath, ["scripts/ldr-one-sandbox-migrate.mjs"], {
+      cwd: process.cwd(), timeout: 30000, stdio: "pipe", env: process.env
+    });
+    console.log("LDR ONE SANDBOX MIGRATION VERIFIED");
+  } catch {
+    console.error("LDR ONE SANDBOX MIGRATION FAILED; no receiver started");
+    process.exit(1);
+  }
+}
 // Isolated Stripe test webhook receiver. Does not persist, grant access or call Stripe.
 // Never deploy on the production app or configure live-mode events here.
 import { createHmac, timingSafeEqual } from "node:crypto";
