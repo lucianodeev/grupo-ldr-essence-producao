@@ -7,7 +7,7 @@ const identity={verified:true,userId:"e49bc51e-2af6-4c3d-a91e-a713e1ed69cb",cust
 const request=body=>new Request(origin+"/internal/checkout",{method:"POST",headers:{origin,"content-type":"application/json"},body:JSON.stringify(body)});
 test("checkout disabled by default and unverified identity rejected before Stripe",async()=>{
  let called=false;
- const args={request:request({plan:"individual",cycle:"monthly",seats:1}),authenticate:async()=>null,db:{},stripe:async()=>{called=true;},env:{}};
+ const args={request:request({plan:"individual",cycle:"monthly",seats:1}),authenticate:async()=>null,db:{query:async()=>{}},stripe:async()=>{called=true;},env:{}};
  assert.equal((await handleAuthenticatedSandboxCheckout(args)).status,503);
  assert.equal((await handleAuthenticatedSandboxCheckout({...args,env})).status,401);
  assert.equal(called,false);
@@ -32,3 +32,5 @@ test("customer subscription status is parameterized, scoped and omits Stripe ide
 });
 
 test("checkout rejects unknown paths and missing trusted authentication before Stripe",async()=>{let touched=false;const base={env,db:{query:async()=>{touched=true;}},stripe:async()=>{touched=true;}};const body=JSON.stringify({plan:"individual",cycle:"monthly",seats:1});for(const path of ["/checkout","/internal/checkout?unexpected=1"]){const req=new Request(origin+path,{method:"POST",headers:{origin,"content-type":"application/json"},body});assert.equal((await handleAuthenticatedSandboxCheckout({...base,request:req,authenticate:async()=>identity})).status,403);}assert.equal((await handleAuthenticatedSandboxCheckout({...base,request:request({plan:"individual",cycle:"monthly",seats:1})})).status,503);assert.equal(touched,false);});
+
+test("checkout refuses missing payment and database adapters",async()=>{const req=request({plan:"individual",cycle:"monthly",seats:1});for(const missing of [{db:{query:async()=>{}}},{stripe:async()=>{}}]){const result=await handleAuthenticatedSandboxCheckout({request:req.clone(),authenticate:async()=>identity,env,...missing});assert.equal(result.status,503);}});
