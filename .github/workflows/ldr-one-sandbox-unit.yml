@@ -8,6 +8,7 @@ on:
       - '.github/workflows/ldr-one-sandbox-unit.yml'
       - 'scripts/ldr-one-stripe-test-webhook*'
       - 'scripts/ldr-one-sandbox-migrate*'
+      - 'scripts/ldr-one-sandbox-event-store*'
       - 'docs/ldr-pass/sql/ldr-one-sandbox-schema-REVIEW-ONLY.sql'
   workflow_dispatch:
 permissions:
@@ -27,5 +28,7 @@ jobs:
       - name: Verify isolated webhook security
         run: node --test scripts/ldr-one-stripe-test-webhook.test.mjs
 
+      - name: Verify isolated event persistence guards
+        run: node --test scripts/ldr-one-sandbox-event-store.test.mjs
       - name: Verify migration safety guards
         run: node --test scripts/ldr-one-sandbox-migrate.test.mjs
