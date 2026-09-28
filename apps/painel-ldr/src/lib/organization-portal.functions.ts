@@ -97,3 +97,10 @@ export const employeeRequestBenefit = createServerFn({ method: "POST" }).middlew
   const { requestEmployeeBenefit } = await import("@/lib/organization-portal.server");
   return requestEmployeeBenefit(context.userId, emailOf(context.claims), data.benefitId);
 });
+
+
+export const organizationSetLdrOneSeat = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth]).inputValidator((data: { memberId: string; assigned: boolean }) => data).handler(async ({ context, data }) => {
+  if (!process.env["SUPABASE_SERVICE_ROLE_KEY"]) throw new Error("Gestão do LDR ONE Business indisponível neste ambiente.");
+  const { setLdrOneBusinessSeat } = await import("@/lib/organization-portal.server");
+  return setLdrOneBusinessSeat(context.userId, emailOf(context.claims), data.memberId, data.assigned);
+});
