@@ -163,7 +163,13 @@ export async function saveProfessionalOnboarding(userId: string, email: string |
   const accountPatch: Record<string,unknown>={updated_at:new Date().toISOString()};
   if(input.countryCode)accountPatch.country_code=input.countryCode.toUpperCase(); if(input.currency)accountPatch.preferred_currency=input.currency;
   if(alreadyApproved){accountPatch.onboarding_step=7;accountPatch.onboarding_completed=true;}
-  else if(step>=7 && complete){\n    accountPatch.onboarding_step=7; accountPatch.onboarding_completed=true; accountPatch.status="active";\n    const publishedAt=new Date().toISOString();\n    Object.assign(payload,{compliance_status:"approved",profile_status:"active",is_public:true,published_at:publishedAt});\n    const {error:publishError}=await db.from("professional_profiles").update({compliance_status:"approved",profile_status:"active",is_public:true,published_at:publishedAt,updated_at:publishedAt}).eq("professional_account_id",account.id);\n    if(publishError)throw publishError;\n  }
+  else if(step>=7 && complete){
+    accountPatch.onboarding_step=7; accountPatch.onboarding_completed=true; accountPatch.status="active";
+    const publishedAt=new Date().toISOString();
+    Object.assign(payload,{compliance_status:"approved",profile_status:"active",is_public:true,published_at:publishedAt});
+    const {error:publishError}=await db.from("professional_profiles").update({compliance_status:"approved",profile_status:"active",is_public:true,published_at:publishedAt,updated_at:publishedAt}).eq("professional_account_id",account.id);
+    if(publishError)throw publishError;
+  }
   else {accountPatch.onboarding_step=Math.min(step,6);accountPatch.onboarding_completed=false;accountPatch.status="incomplete";}
   await db.from("professional_accounts").update(accountPatch).eq("id",account.id);
   if(step>=7 && !complete) fail("Complete 100% do perfil antes de publicar. A foto é obrigatória; vídeo, agenda e serviços são opcionais para a completude.");
