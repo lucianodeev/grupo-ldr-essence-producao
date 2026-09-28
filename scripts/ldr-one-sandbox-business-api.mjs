@@ -1,0 +1,52 @@
+// Framework-neutral business API boundary; mount ONLY behind trusted session middleware.
+// This is not a public HTTP server or an authorization provider.
+import {listSandboxBusinessSeats} from "./ldr-one-sandbox-seat-roster.mjs";
+import {assignSandboxBusinessSeat} from "./ldr-one-sandbox-business-seats.mjs";
+import {revokeSandboxBusinessSeat} from "./ldr-one-sandbox-revoke-seat.mjs";
+const service="srv-das6drvavr4c7397dflg";
+const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+export async function handleSandboxBusinessSeats({request,authenticate,verifyAdmin,verifyMember,db,env}){
+ if(env?.RENDER_SERVICE_ID!==service||env?.LDR_ONE_SANDBOX_BUSINESS_API_ENABLED!=="true")
+  return {status:503,body:{error:"Sandbox business API disabled"}};
+ const url=new URL(request.url);
+ if(url.origin!=="https://ldr-one-stripe-sandbox.onrender.com"||url.pathname!=="/business"||url.hash||
+    [...url.searchParams.keys()].some(key=>key!=="subscriptionId")||url.searchParams.getAll("subscriptionId").length!==1||
+    !["GET","POST","DELETE"].includes(request.method))
+  return {status:403,body:{error:"Request forbidden"}};
+ if(request.headers.get("origin")!==url.origin)return {status:403,body:{error:"Request forbidden"}};
+ if(["POST","DELETE"].includes(request.method)&&
+    (request.headers.get("origin")!==url.origin||request.headers.get("content-type")?.split(";")[0]?.trim()!=="application/json"))
+  return {status:403,body:{error:"Request forbidden"}};
+ if(typeof authenticate!=="function"||typeof verifyAdmin!=="function"||!db||typeof db.query!=="function")
+  return {status:503,body:{error:"Trusted authentication unavailable"}};
+ let identity;
+ try{identity=await authenticate(request);}catch{return {status:403,body:{error:"Authentication failed"}};}
+ if(identity?.verified!==true||!uuid.test(identity.userId??"")||!uuid.test(identity.customerId??""))return {status:403,body:{error:"Verified company administrator required"}};
+ let approved=false;
+ try{approved=await verifyAdmin({customerId:identity.customerId,userId:identity.userId})===true;}catch{return {status:403,body:{error:"Administrator verification failed"}};}
+ if(!approved)
+  return {status:403,body:{error:"Verified company administrator required"}};
+ // Never accept administrator privilege from a client or unchecked session claim.
+ const authorized={...identity,businessAdmin:true};
+ const subscriptionId=url.searchParams.get("subscriptionId");
+ if(!uuid.test(subscriptionId??""))return {status:400,body:{error:"Invalid subscription"}};
+ try{
+  if(request.method==="GET"){
+   const roster=await listSandboxBusinessSeats({db,identity:authorized,subscriptionId});
+   return {status:200,body:roster};
+  }
+  if(Number(request.headers.get("content-length")??"0")>1024)return {status:413,body:{error:"Request too large"}};
+  const raw=await request.text();
+  if(Buffer.byteLength(raw)>1024)return {status:413,body:{error:"Request too large"}};
+  let input;
+  try{input=JSON.parse(raw);}catch{return {status:400,body:{error:"Invalid JSON"}};}
+  if(!input||typeof input!=="object"||Array.isArray(input)||
+     Object.keys(input).length!==1||!uuid.test(input.memberUserId??""))
+   return {status:400,body:{error:"Invalid member"}};
+  if(request.method==="POST"){
+   if(typeof verifyMember!=="function")return {status:503,body:{error:"Membership directory unavailable"}};
+   return {status:200,body:await assignSandboxBusinessSeat({db,identity:authorized,subscriptionId,memberUserId:input.memberUserId,verifyMember})};
+  }
+  return {status:200,body:await revokeSandboxBusinessSeat({db,identity:authorized,subscriptionId,memberUserId:input.memberUserId})};
+ }catch{return {status:403,body:{error:"Operation not permitted"}};}
+}

@@ -44,6 +44,20 @@ function cookieClient(url: string, key: string) {
 }
 
 export async function resolveRequestAuth() {
+  // The isolated Render sandbox intentionally has no Supabase project.
+  // Treat that state as unauthenticated so protected routes can redirect to
+  // their login pages instead of throwing during navigation.
+  if (!process.env["SUPABASE_URL"] || !process.env["SUPABASE_PUBLISHABLE_KEY"]) {
+    return {
+      authenticated: false as const,
+      userId: null,
+      email: null,
+      claims: {} as Record<string, unknown>,
+      supabase: null,
+      source: "none" as const,
+      accessToken: null,
+    };
+  }
   const { supabaseUrl, supabasePublishableKey } = config();
   const request = getRequest();
   const authHeader = request?.headers?.get("authorization") ?? null;

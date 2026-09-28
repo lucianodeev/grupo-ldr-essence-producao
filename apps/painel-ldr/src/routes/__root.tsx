@@ -275,12 +275,21 @@ function RootComponent() {
   }, []);
 
   useEffect(() => {
-    const { data } = supabase.auth.onAuthStateChange((event) => {
-      if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
-      router.invalidate();
-      if (event !== "SIGNED_OUT") queryClient.invalidateQueries();
-    });
-    return () => data.subscription.unsubscribe();
+    // The Render LDR ONE sandbox intentionally has no Supabase credentials.
+    // Keep public portal routes usable there while preserving Supabase auth
+    // whenever the integration is configured.
+    let subscription: { unsubscribe: () => void } | undefined;
+    try {
+      const { data } = supabase.auth.onAuthStateChange((event) => {
+        if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
+        router.invalidate();
+        if (event !== "SIGNED_OUT") queryClient.invalidateQueries();
+      });
+      subscription = data.subscription;
+    } catch (error) {
+      console.warn("[Supabase] Auth listener unavailable; continuing without Supabase auth.", error);
+    }
+    return () => subscription?.unsubscribe();
   }, [router, queryClient]);
 
   const showCompanyPlans = location.pathname === "/empresa";

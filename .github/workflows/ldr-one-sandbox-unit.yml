@@ -1,0 +1,87 @@
+name: LDR ONE sandbox unit checks
+on:
+  pull_request:
+    paths:
+      - 'apps/painel-ldr/src/lib/ldr-one-sandbox*'
+      - 'apps/painel-ldr/src/lib/ldr-one-checkout-sandbox*'
+      - 'apps/painel-ldr/src/lib/ldr-one-events-sandbox*'
+      - '.github/workflows/ldr-one-sandbox-unit.yml'
+      - 'scripts/ldr-one-stripe-test-webhook*'
+      - 'scripts/ldr-one-sandbox-migrate*'
+      - 'scripts/ldr-one-sandbox-event-store*'
+      - 'scripts/ldr-one-sandbox-webhook-bridge*'
+      - 'scripts/ldr-one-sandbox-checkout-service*'
+      - 'scripts/ldr-one-sandbox-checkout-integration*'
+      - 'scripts/ldr-one-sandbox-stripe-config*'
+      - 'scripts/ldr-one-sandbox-authenticated-checkout*'
+      - 'scripts/ldr-one-sandbox-customer-subscriptions*'
+      - 'scripts/ldr-one-sandbox-entitlement-gate*'
+      - 'scripts/ldr-one-sandbox-business-seats*'
+      - 'scripts/ldr-one-sandbox-access.test.mjs'
+      - 'scripts/ldr-one-sandbox-revoke-seat*'
+      - 'scripts/ldr-one-sandbox-seat-roster*'
+      - 'scripts/ldr-one-sandbox-supabase-auth*'
+      - 'scripts/ldr-one-sandbox-verified-status*'
+      - 'scripts/ldr-one-sandbox-status-api*'
+      - 'scripts/ldr-one-sandbox-business-api*'
+      - 'scripts/ldr-one-sandbox-api*'
+      - 'scripts/ldr-one-sandbox-local-auth*'
+      - 'scripts/ldr-one-sandbox-sessions*'
+      - 'scripts/ldr-one-sandbox-login-service*'
+      - 'scripts/ldr-one-sandbox-session-checkout*'
+      - 'scripts/ldr-one-sandbox-portal-adapter*'
+      - 'scripts/ldr-one-sandbox-real-webhook-lifecycle*'
+      - 'scripts/ldr-one-sandbox-stripe-inventory*'
+      - 'docs/ldr-pass/sql/ldr-one-sandbox-schema-REVIEW-ONLY.sql'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  sandbox-unit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run isolated tests without Stripe keys
+        working-directory: apps/painel-ldr
+        run: node --experimental-strip-types --test src/lib/ldr-one-sandbox.test.ts src/lib/ldr-one-checkout-sandbox.test.ts src/lib/ldr-one-events-sandbox.test.ts
+      - name: Verify isolated webhook security
+        run: node --test scripts/ldr-one-stripe-test-webhook.test.mjs
+
+      - name: Verify isolated event persistence guards
+        run: node --test scripts/ldr-one-sandbox-event-store.test.mjs
+      - name: Verify webhook bridge guards
+        run: node --test scripts/ldr-one-sandbox-webhook-bridge.test.mjs
+      - name: Verify isolated checkout orchestration
+        run: node --test scripts/ldr-one-sandbox-checkout-service.test.mjs
+      - name: Verify real checkout integration safety guard
+        run: node --test scripts/ldr-one-sandbox-checkout-integration.test.mjs
+      - name: Verify Stripe test-only configuration
+        run: node --test scripts/ldr-one-sandbox-stripe-config.test.mjs
+      - name: Verify authenticated checkout and customer-scoped status
+        run: node --test scripts/ldr-one-sandbox-authenticated-checkout.test.mjs
+      - name: Verify subscription access and business seats
+        run: node --test scripts/ldr-one-sandbox-access.test.mjs
+      - name: Verify seat revocation and company roster
+        run: node --test scripts/ldr-one-sandbox-revoke-seat.test.mjs scripts/ldr-one-sandbox-seat-roster.test.mjs
+      - name: Verify isolated invite-only sandbox credentials
+        run: node --test scripts/ldr-one-sandbox-local-auth.test.mjs
+      - name: Verify isolated sandbox session safety
+        run: node --test scripts/ldr-one-sandbox-sessions.test.mjs
+      - name: Verify isolated login session orchestration
+        run: node --test scripts/ldr-one-sandbox-login-service.test.mjs
+      - name: Verify session-bound sandbox checkout guard
+        run: node --test scripts/ldr-one-sandbox-session-checkout.test.mjs
+      - name: Verify isolated portal adapter
+        run: node --test scripts/ldr-one-sandbox-portal-adapter.test.mjs
+      - name: Verify migration safety guards
+        run: node --test scripts/ldr-one-sandbox-migrate.test.mjs
+
+      - name: Verify real Stripe TEST probe safety without network or secrets
+        run: node --test scripts/ldr-one-sandbox-real-webhook-lifecycle.test.mjs
+
+      - name: Verify isolated read-only Stripe TEST inventory
+        run: node --test scripts/ldr-one-sandbox-stripe-inventory.test.mjs
