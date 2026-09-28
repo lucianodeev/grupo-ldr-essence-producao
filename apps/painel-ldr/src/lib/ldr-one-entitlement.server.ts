@@ -2,6 +2,7 @@ import { supabaseAdmin } from "@/integrations/supabase/client.server";
 
 const db = supabaseAdmin as any;
 
+// Paid digital catalog entitlement: free content remains independently accessible.
 export async function hasActiveLdrOne(customerId: string) {
   const { data, error } = await db
     .from("ldr_pass_subscriptions")
