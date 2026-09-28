@@ -4,7 +4,7 @@ import { LanguageSelect, useI18n } from "@/lib/i18n";
 import { SalesCatalog360 } from "@/components/sales-catalog-360";
 import { useEffect, useState } from "react";
 
-const PROMO_END_AT = new Date("2026-09-30T23:59:59+02:00").getTime();
+
 type Locale = "pt" | "en" | "fr" | "es";
 
 const copy = {
@@ -43,37 +43,6 @@ export function LibrarySalesHomeAccessChoice(){
   const locale=(raw==="pt"||raw==="en"||raw==="fr"||raw==="es"?raw:"pt") as Locale;
   const t=copy[locale];
   const tx=(pt:string,en:string,fr:string,es:string)=>locale==="en"?en:locale==="fr"?fr:locale==="es"?es:pt;
-  const promo=Date.now()<PROMO_END_AT;
-  const [remaining,setRemaining]=useState<number|null>(null);
-  const [showLibraryAll,setShowLibraryAll]=useState(false);
-  const showcase=libraryShowcase[locale];
-  const cardDefs=[
-    {k:"psycho",icon:"🎓",to:"/formacao-psicanalise",tone:"from-[#f4edfb] to-[#eadcf8] border border-[#7a3dac]/25"},
-    {k:"intlPsycho",icon:"🌍",to:"/formacao-psicanalise-internacional",tone:"from-[#e8f3ff] to-[#d3e8fb] border border-[#1768a6]/30"},
-    {k:"business",icon:"📈",to:"/formacao-negocio-em-24-horas",tone:"from-[#fff1e8] to-[#ffe2cf] border border-[#d65a1d]/25"},
-    {k:"massage",icon:"🌿",to:"/formacao-massoterapia",tone:"from-[#eaf8fb] to-[#d7f0f6] border border-[#1581a0]/25"},
-    {k:"mentor",icon:"💼",to:"/cliente/biblioteca",tone:"from-[#fff7df] to-[#ffefbd] border border-[#c48a16]/25"},
-    {k:"psychoWrite",icon:"✍️",to:"/cliente/orientacao-psicanalitica",tone:"from-[#f9f0df] to-[#f1dfbd] border border-[#a36d19]/25"},
-    {k:"careerWrite",icon:"🧭",to:"/cliente/orientacao-profissional",tone:"from-[#fff0f5] to-[#fbdbe7] border border-[#b33b68]/25"},
-    {k:"news",icon:"📰",to:"/cliente/biblioteca/jornal-ldr",tone:"from-[#f3f4f6] to-[#e5e7eb] border border-slate-300"},
-    {k:"mag",icon:"📖",to:"/cliente/biblioteca/revista-ldr",tone:"from-[#fff0f4] to-[#f8dce5] border border-[#8d1236]/25"},
-    {k:"ebooks",icon:"📚",to:"/cliente/biblioteca",tone:"from-[#fff7ed] to-[#ffedd5] border border-[#c06b1b]/25"},
-    {k:"books",icon:"📘",to:"/cliente/biblioteca",tone:"from-[#fdf2f8] to-[#fce7f3] border border-[#981443]/20"},
-    {k:"brief",icon:"🧠",to:"/formacao-terapia-breve-psicanalitica",tone:"from-[#ecfdf5] to-[#d1fae5] border border-[#1b897b]/25"},
-    {k:"lead",icon:"👥",to:"/cliente/biblioteca",tone:"from-[#f0fdf4] to-[#dcfce7] border border-[#0b7a48]/25"},
-    {k:"rh",icon:"🎯",to:"/cliente/formacoes/gestao-pessoas-rh",tone:"from-[#ecfdf5] to-[#d1fae5] border border-[#0b9a70]/25"},
-    {k:"free",icon:"🎁",to:"/cliente/biblioteca",tone:"from-[#fff7ed] to-[#ffedd5] border border-[#d66a2c]/25"},
-    {k:"ai",icon:"🤖",to:"/cliente/biblioteca",tone:"from-[#eef2ff] to-[#e0e7ff] border border-[#4f46e5]/20"},
-    {k:"film",icon:"🎬",to:"/cliente/biblioteca",tone:"from-[#f8fafc] to-[#e2e8f0] border border-slate-300"},
-  ] as const;
-  useEffect(()=>{
-    const tick=()=>setRemaining(Math.max(0,PROMO_END_AT-Date.now()));
-    tick();
-    const timer=window.setInterval(tick,1000);
-    return ()=>window.clearInterval(timer);
-  },[]);
-  const countdown=remaining===null?"--d --:--:--":`${Math.floor(remaining/86400000)}d ${String(Math.floor((remaining%86400000)/3600000)).padStart(2,"0")}:${String(Math.floor((remaining%3600000)/60000)).padStart(2,"0")}:${String(Math.floor((remaining%60000)/1000)).padStart(2,"0")}`;
-  const countdownLabel=locale==="pt"?"A PROMOÇÃO TERMINA EM":locale==="fr"?"LA PROMOTION SE TERMINE DANS":locale==="es"?"LA PROMOCIÓN TERMINA EN":"PROMOTION ENDS IN";
   return <main className="min-h-screen bg-[#f7f3e9] text-[#071426]">
     <header className="sticky top-0 z-50 border-b border-[#d6ad63]/25 bg-[#071426]/95 text-white backdrop-blur"><div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6"><a href="#top" className="font-serif text-xl text-[#fff7e7]">{t.brand}</a><div className="flex items-center gap-2"><LanguageSelect/><Link to="/cliente/login" className="rounded-lg border border-white/15 px-3 py-2 text-xs font-black">{t.login}</Link></div></div></header>
 
@@ -91,7 +60,7 @@ export function LibrarySalesHomeAccessChoice(){
       </div>
     </section>
 
-    <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6"><h2 className="font-serif text-3xl sm:text-4xl">{t.choose}</h2><div className="mt-6 grid gap-5 lg:grid-cols-2"><div className="rounded-[28px] border border-[#d6ad63]/40 bg-white p-7 shadow-sm"><div className="flex items-center gap-3"><BookOpen className="h-6 w-6 text-[#a36d19]"/><p className="text-xs font-black uppercase tracking-[.17em] text-[#8a5d17]">{t.lifetime}</p></div><p className="mt-4 text-base leading-7 text-slate-700">{t.lifetimeText}</p><div className="mt-5 rounded-xl bg-[#f7f3e9] p-4 text-sm font-bold">Incluído no LDR ONE <span className="font-normal">{tx("— nas formações pagas atuais","— for current paid programs","— pour les formations payantes actuelles","— para las formaciones de pago actuales")}</span></div></div><div className="rounded-[28px] bg-[#071426] p-7 text-white shadow-sm"><div className="flex items-center gap-3"><Library className="h-6 w-6 text-[#d6ad63]"/><p className="text-xs font-black uppercase tracking-[.17em] text-[#d6ad63]">{t.monthly}</p></div><p className="mt-4 text-base leading-7 text-white/80">{t.monthlyText}</p><div className="mt-5 rounded-2xl border border-[#d6ad63]/35 bg-[#d6ad63]/10 p-5"><p className="text-sm font-black text-[#f5cc82]">{promo?t.promo:tx("ASSINATURA BIBLIOTECA LDR","LDR LIBRARY SUBSCRIPTION","ABONNEMENT BIBLIOTHÈQUE LDR","SUSCRIPCIÓN BIBLIOTECA LDR")}</p>{promo&&<div className="mt-4 rounded-2xl border-2 border-[#d6ad63] bg-black/25 p-4 text-center"><p className="text-[11px] font-black uppercase tracking-[.18em] text-[#f5cc82]">{countdownLabel}</p><p className="mt-1 font-mono text-3xl font-black tracking-wider text-white">{countdown}</p><p className="mt-1 text-[10px] uppercase tracking-[.12em] text-white/60">{tx("DIAS · HORAS · MINUTOS · SEGUNDOS","DAYS · HOURS · MINUTES · SECONDS","JOURS · HEURES · MINUTES · SECONDES","DÍAS · HORAS · MINUTOS · SEGUNDOS")}</p></div>}<p className="mt-2 text-2xl font-black">{promo?t.first:"🇧🇷 € 39,90/mês · € 399/ano"}</p>{promo&&<p className="mt-2 text-sm text-white/80">{t.after}</p>}</div><Link to="/ldr-pass" className="mt-5 block rounded-xl bg-[#d6ad63] px-5 py-3 text-center text-sm font-black text-[#281605]">{promo?tx("ASSINAR COM 50% OFF","SUBSCRIBE WITH 50% OFF","S’ABONNER AVEC -50%","SUSCRIBIRME CON 50% OFF"):t.subscribe}</Link></div></div></section>
+    <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6"><h2 className="font-serif text-3xl sm:text-4xl">{t.choose}</h2><div className="mt-6 rounded-[28px] border border-[#d6ad63]/45 bg-[#071426] p-7 text-white shadow-xl"><div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center"><div><p className="text-xs font-black uppercase tracking-[.17em] text-[#f5cc82]">LDR ONE</p><h3 className="mt-2 font-serif text-3xl">{tx("Uma assinatura para cursos, formações e eBooks pagos","One subscription for paid courses, training and eBooks","Un abonnement pour les cours, formations et eBooks payants","Una suscripción para cursos, formaciones y eBooks de pago")}</h3><div className="mt-4 flex flex-wrap gap-2 text-sm font-bold"><span className="rounded-full border border-[#d6ad63]/40 bg-white/10 px-4 py-2">{tx("Individual · €39,90/mês ou €399/ano","Individual · €39.90/month or €399/year","Individuel · 39,90 €/mois ou 399 €/an","Individual · €39,90/mes o €399/año")}</span><span className="rounded-full border border-[#d6ad63]/40 bg-white/10 px-4 py-2">{tx("Business · €19,90/colaborador/mês · mínimo 5","Business · €19.90/employee/month · minimum 5","Business · 19,90 €/collaborateur/mois · minimum 5","Business · €19,90/empleado/mes · mínimo 5")}</span></div></div><Link to="/ldr-pass" className="rounded-xl border-2 border-[#f5cc82] bg-[#d6ad63] px-7 py-4 text-center text-sm font-black text-[#071426] shadow-lg">{tx("ASSINAR LDR ONE","SUBSCRIBE TO LDR ONE","S’ABONNER À LDR ONE","SUSCRIBIRME A LDR ONE")}</Link></div></div></section>
 
     <section className="mx-auto max-w-7xl px-4 pt-10 sm:px-6"><article className="overflow-hidden rounded-[30px] border-2 border-[#17645e]/35 bg-gradient-to-br from-[#edf8f5] to-white p-7 shadow-sm"><div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center"><div><p className="mt-4 text-xs font-black uppercase tracking-[.18em] text-[#17645e]">{tx("TERAPIA BREVE PSICANALÍTICA","BRIEF PSYCHOANALYTIC THERAPY","THÉRAPIE BRÈVE PSYCHANALYTIQUE","TERAPIA BREVE PSICOANALÍTICA")}</p><h2 className="mt-2 font-serif text-3xl sm:text-4xl">{locale==='pt'?'Formação em Terapia Breve Psicanalítica':locale==='fr'?'Formation en Thérapie Brève Psychanalytique':locale==='es'?'Formación en Terapia Breve Psicoanalítica':'Brief Psychoanalytic Therapy Training'}</h2><p className="mt-3 max-w-3xl text-sm leading-7 text-slate-600">{locale==='pt'?'15 módulos · 300 aulas · 1.200 horas · 100% online · sob demanda. Do foco à alta, com fundamentos, técnica e prática clínica.':locale==='fr'?'15 modules · 300 leçons · 1 200 heures · 100 % en ligne · à la demande. Des fondements à la pratique clinique.':locale==='es'?'15 módulos · 300 clases · 1.200 horas · 100% online · bajo demanda. Fundamentos, técnica y práctica clínica.':'15 modules · 300 lessons · 1,200 hours · 100% online · on demand. Foundations, technique and clinical practice.'}</p><p className="mt-4 font-black text-[#103d3a]">Incluído no LDR ONE · {locale==='pt'?'assinatura LDR ONE · acesso vitalício':locale==='fr'?'abonnement LDR ONE · accès à vie':locale==='es'?'suscripción LDR ONE · acceso vitalicio':'LDR ONE subscription · lifetime access'}</p></div><Link to="/formacao-terapia-breve-psicanalitica" className="rounded-xl bg-[#17645e] px-6 py-4 text-center text-sm font-black text-white shadow-sm">{locale==='pt'?'CONHECER A FORMAÇÃO':locale==='fr'?'DÉCOUVRIR LA FORMATION':locale==='es'?'CONOCER LA FORMACIÓN':'LEARN MORE'}</Link></div></article></section>
 
