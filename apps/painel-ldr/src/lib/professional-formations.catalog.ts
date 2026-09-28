@@ -3,7 +3,7 @@ export type PFSlug="vendas-negociacao"|"marketing-digital"|"recrutamento-selecao
 type T={name:string;short:string;description:string;project:string;modules:string[];category?:string;disclaimer?:string;portfolio?:string[]};
 export type PF={slug:PFSlug;productKey:string;publicPath:string;learnerPath:string;icon:string;theme:string;priceBrlCents:number;priceEurCents:number;hours:number;lessons:number;modulesCount:number;minimumDays:number;includedInSubscription?:boolean;i18n:Record<PFLocale,T>};
 const common={priceBrlCents:29999,priceEurCents:4990,hours:600,lessons:150,modulesCount:10,minimumDays:75};
-const advanced={priceBrlCents:29999,priceEurCents:4990,hours:600,lessons:150,modulesCount:15,minimumDays:75,includedInSubscription:false};
+const advanced={priceBrlCents:29999,priceEurCents:4990,hours:600,lessons:150,modulesCount:15,minimumDays:75,includedInSubscription:true};
 export const PROFESSIONAL_FORMATIONS:PF[]=[
 {slug:"vendas-negociacao",productKey:"formacao_vendas_negociacao_atendimento",publicPath:"/formacao-vendas-negociacao",learnerPath:"/cliente/treinamentos/formacao-profissional/vendas-negociacao",icon:"🤝",theme:"navy",...common,i18n:{
 pt:{name:"Formação em Vendas, Negociação e Atendimento ao Cliente",short:"Vendas e Negociação",description:"Formação prática para estruturar prospecção, atendimento, negociação, fechamento, CRM e pós-venda.",project:"Plano Comercial e Processo Completo de Vendas",modules:["Fundamentos de Vendas","Prospecção Profissional","Atendimento ao Cliente","Vendas Consultivas","Negociação","Objeções e Fechamento","Vendas Digitais","Pós-venda e Fidelização","Gestão Comercial","Vendas Internacionais e Projeto Final"]},
