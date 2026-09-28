@@ -121,7 +121,7 @@ export async function addProfessionalAvailabilityBlocks(userId: string, input: {
 export async function disableProfessionalAvailability(userId: string, availabilityId: string) {
   const profile = await ownProfile(userId);
   const { data, error } = await db.from("professional_availability")
-    .update({ active: false })
+    .delete()
     .eq("id", availabilityId)
     .eq("professional_profile_id", profile.id)
     .select("id")

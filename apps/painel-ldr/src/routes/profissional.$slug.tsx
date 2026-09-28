@@ -18,6 +18,7 @@ import {
   UserRound,
 } from "lucide-react";
 import { toast } from "sonner";
+import { ProfessionalVideo } from "@/components/ProfessionalVideo";
 import { LanguageSelect, useI18n } from "@/lib/i18n";
 import { marketplaceBookingCheckout } from "@/lib/professional-network.functions";
 import {
@@ -88,6 +89,7 @@ const COPY = {
     internationalDisclaimer:
       "Disponibilidade internacional declarada pelo profissional e sujeita às regras profissionais, fiscais e legais aplicáveis a cada país.",
     publicReview: "Avaliação pública",
+    googleReviews: "VER AVALIAÇÕES NO GOOGLE",
   },
   en: {
     back: "Back to directory",
@@ -125,6 +127,7 @@ const COPY = {
     internationalDisclaimer:
       "International availability is declared by the professional and remains subject to the professional, tax and legal rules applicable in each country.",
     publicReview: "Public review",
+    googleReviews: "VIEW REVIEWS ON GOOGLE",
   },
   fr: {
     back: "Retour au répertoire",
@@ -162,6 +165,7 @@ const COPY = {
     internationalDisclaimer:
       "La disponibilité internationale est déclarée par le professionnel et reste soumise aux règles professionnelles, fiscales et légales applicables dans chaque pays.",
     publicReview: "Avis public",
+    googleReviews: "VOIR LES AVIS SUR GOOGLE",
   },
   es: {
     back: "Volver al directorio",
@@ -199,6 +203,7 @@ const COPY = {
     internationalDisclaimer:
       "La disponibilidad internacional es declarada por el profesional y está sujeta a las normas profesionales, fiscales y legales aplicables en cada país.",
     publicReview: "Opinión pública",
+    googleReviews: "VER OPINIONES EN GOOGLE",
   },
 } as const;
 
@@ -463,13 +468,7 @@ function Page() {
                   <PlayCircle className="h-5 w-5 text-primary" />
                   {c.video}
                 </h2>
-                <video
-                  controls
-                  preload="metadata"
-                  playsInline
-                  className="mt-4 aspect-video w-full rounded-2xl bg-black"
-                  src={p.intro_video_url}
-                />
+                <ProfessionalVideo src={p.intro_video_url} className="mt-4 aspect-video w-full rounded-2xl bg-black" />
               </section>
             ) : null}
             <section className="rounded-3xl border bg-card p-6">
@@ -605,6 +604,12 @@ function Page() {
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
                   <h2 className="font-serif text-2xl">{c.reviews}</h2>
+              {p.google_reviews_url ? (
+                <a href={p.google_reviews_url} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-2 rounded-xl border border-primary px-4 py-2 text-sm font-black text-primary">
+                  <Star className="h-4 w-4" />
+                  {c.googleReviews}
+                </a>
+              ) : null}
                   <p className="mt-1 text-sm text-muted-foreground">
                     {reviews.length
                       ? `${avg.toFixed(1)} / 5 · ${reviews.length}`
