@@ -4,7 +4,8 @@ import { AcademyUniversityHome } from "@/components/academy-university-home";
 import { AcademyEcosystemSection } from "@/components/academy-ecosystem-section";
 import { AcademyInstitutionalIntro } from "@/components/academy-institutional-intro";
 
-// Desktop home actions intentionally compact; LDR ONE is the current digital subscription.\nexport const Route = createFileRoute("/")({
+// Desktop home actions intentionally compact; LDR ONE is the current digital subscription.
+export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "LDR Academy | Conhecimento, Educação e Comunidade Acadêmica" },
