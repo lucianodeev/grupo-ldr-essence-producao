@@ -51,9 +51,6 @@ function ClientShell() {
     { to: "/cliente", label: c.home, exact: true, icon: Home },
     { to: "/cliente/biblioteca", label: c.library, icon: BookOpen, featured: true },
     { to: "/cliente/treinamentos", label: c.training, icon: GraduationCap },
-    { to: "/cliente/agenda", label: c.agenda, icon: CalendarDays },
-    { to: "/cliente/pedidos", label: c.orders, icon: ClipboardList },
-    { to: "/cliente/contratar", label: c.contract, icon: MessageCircle },
     { to: "/cliente/perfil", label: c.profile, icon: UserRound },
   ] as const;
   const academyNav = [
