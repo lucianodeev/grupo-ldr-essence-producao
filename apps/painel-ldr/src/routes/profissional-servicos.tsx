@@ -30,6 +30,7 @@ type Draft = {
   bookingEnabled: boolean;
   availableForPrivate: boolean;
   availableForCompany: boolean;
+  availableForSocial: boolean;
   feeComplianceStatus: "allowed" | "requires_review" | "restricted";
 };
 
@@ -125,6 +126,7 @@ function ServicesPage() {
         bookingEnabled: true,
         availableForPrivate: true,
         availableForCompany: ["recursos-humanos", "consultoria-carreira", "mentoria"].includes(catalogData?.category?.slug),
+        availableForSocial: false,
         feeComplianceStatus: service.fee_compliance_status ?? "allowed",
       })),
     ]);
@@ -149,6 +151,7 @@ function ServicesPage() {
         bookingEnabled: false,
         availableForPrivate: true,
         availableForCompany: false,
+        availableForSocial: false,
         feeComplianceStatus: "requires_review",
       },
     ]);
@@ -188,6 +191,7 @@ function ServicesPage() {
           quoteRequired: draft.quoteRequired,
           availableForPrivate: draft.availableForPrivate,
           availableForCompany: draft.availableForCompany,
+          availableForSocial: draft.availableForSocial,
         },
       });
       if (result.feeComplianceStatus !== "allowed") {
@@ -295,7 +299,7 @@ function ServicesPage() {
                     {draft.modality !== "online" ? <Field label="Local público / região"><input value={draft.publicLocation} onChange={(e) => setDrafts((current) => current.map((item, i) => i === index ? { ...item, publicLocation: e.target.value } : item))} placeholder="Ex.: Bruxelas, Bélgica" /></Field> : null}
                   </div>
                   <Field label="Descrição"><textarea rows={3} value={draft.description} onChange={(e) => setDrafts((current) => current.map((item, i) => i === index ? { ...item, description: e.target.value } : item))} /></Field>
-                  <div className="mt-4 flex flex-wrap gap-4 text-sm font-semibold"><label className="flex items-center gap-2"><input type="checkbox" checked={draft.quoteRequired} onChange={(e) => setDrafts((current) => current.map((item, i) => i === index ? { ...item, quoteRequired: e.target.checked } : item))} />Orçamento personalizado</label><label className="flex items-center gap-2"><input type="checkbox" checked={draft.availableForPrivate} onChange={(e) => setDrafts((current) => current.map((item, i) => i === index ? { ...item, availableForPrivate: e.target.checked } : item))} />Clientes particulares</label><label className="flex items-center gap-2"><input type="checkbox" checked={draft.availableForCompany} onChange={(e) => setDrafts((current) => current.map((item, i) => i === index ? { ...item, availableForCompany: e.target.checked } : item))} />Empresas</label></div>
+                  <div className="mt-4 flex flex-wrap gap-4 text-sm font-semibold"><label className="flex items-center gap-2"><input type="checkbox" checked={draft.quoteRequired} onChange={(e) => setDrafts((current) => current.map((item, i) => i === index ? { ...item, quoteRequired: e.target.checked } : item))} />Orçamento personalizado</label><label className="flex items-center gap-2"><input type="checkbox" checked={draft.availableForPrivate} onChange={(e) => setDrafts((current) => current.map((item, i) => i === index ? { ...item, availableForPrivate: e.target.checked } : item))} />Clientes particulares</label><label className="flex items-center gap-2"><input type="checkbox" checked={draft.availableForCompany} onChange={(e) => setDrafts((current) => current.map((item, i) => i === index ? { ...item, availableForCompany: e.target.checked } : item))} />Empresas</label><label className="flex items-center gap-2"><input type="checkbox" checked={draft.availableForSocial} onChange={(e) => setDrafts((current) => current.map((item, i) => i === index ? { ...item, availableForSocial: e.target.checked } : item))} />Clínica Social LDR — aceito atender pelo valor social (R$ 80 / € 25)</label></div>
                   <div className="mt-4 grid gap-3 md:grid-cols-2">
                     <div className="rounded-xl bg-muted/40 p-4"><p className="text-xs font-black uppercase tracking-[.1em] text-muted-foreground">Referência de mercado</p><p className="mt-1 font-bold text-primary">{referenceText(ref)}</p></div>
                     <div className="rounded-xl bg-primary/5 p-4"><p className="text-xs font-black uppercase tracking-[.1em] text-primary">Divisão do pagamento</p>{draft.feeComplianceStatus === "allowed" && !draft.quoteRequired && grossCents > 0 ? <p className="mt-1 text-sm"><strong>LDR:</strong> {money(ldr, draft.currency)} · <strong>Você:</strong> {money(grossCents - ldr, draft.currency)}</p> : <p className="mt-1 text-sm text-muted-foreground">{draft.feeComplianceStatus === "allowed" ? "Informe o preço para visualizar 20% / 80%." : "Checkout bloqueado até validação de compliance."}</p>}</div>
@@ -313,7 +317,7 @@ function ServicesPage() {
             {services.map((service) => <article key={service.id} className="rounded-2xl border p-5">
               <div className="flex items-start justify-between gap-3"><div><h3 className="font-bold">{service.name}</h3><p className="mt-1 text-xs text-muted-foreground">{UNIT_LABELS[service.billing_unit as BillingUnit] ?? service.billing_unit ?? "por sessão"} · {service.modality} · {service.duration_minutes} min</p></div><strong>{service.quote_required ? "ORÇAMENTO" : service.price_cents == null ? "Preço não definido" : money(service.price_cents, service.currency || "EUR")}</strong></div>
               <p className="mt-3 text-sm text-muted-foreground">{service.description}</p>
-              <div className="mt-3 flex flex-wrap gap-2 text-xs"><span className={`rounded-full px-2 py-1 font-bold ${service.active ? "bg-emerald-100 text-emerald-800" : "bg-muted"}`}>{service.active ? "ATIVO" : "PAUSADO"}</span><span className="rounded-full bg-muted px-2 py-1 font-bold">{service.approval_status ?? "approved"}</span><span className="rounded-full bg-muted px-2 py-1 font-bold">{service.fee_compliance_status === "allowed" ? "20% / 80% LIBERADO" : "COMPLIANCE PENDENTE"}</span><span className="rounded-full bg-muted px-2 py-1 font-bold">{service.booking_enabled ? "CHECKOUT ATIVO" : "SEM CHECKOUT"}</span></div>
+              <div className="mt-3 flex flex-wrap gap-2 text-xs"><span className={`rounded-full px-2 py-1 font-bold ${service.active ? "bg-emerald-100 text-emerald-800" : "bg-muted"}`}>{service.active ? "ATIVO" : "PAUSADO"}</span><span className="rounded-full bg-muted px-2 py-1 font-bold">{service.approval_status ?? "approved"}</span><span className="rounded-full bg-muted px-2 py-1 font-bold">{service.fee_compliance_status === "allowed" ? "20% / 80% LIBERADO" : "COMPLIANCE PENDENTE"}</span><span className="rounded-full bg-muted px-2 py-1 font-bold">{service.booking_enabled ? "CHECKOUT ATIVO" : "SEM CHECKOUT"}</span><span className={`rounded-full px-2 py-1 font-bold ${service.available_for_social ? "bg-amber-100 text-amber-900" : "bg-muted"}`}>{service.available_for_social ? "CLÍNICA SOCIAL ATIVA" : "CLÍNICA SOCIAL NÃO"}</span></div>
               <button disabled={busy} onClick={async () => { setBusy(true); try { await toggle({ data: { id: service.id, active: !service.active } }); await refresh(); } catch (error) { toast.error(error instanceof Error ? error.message : "Erro"); } finally { setBusy(false); } }} className="mt-4 rounded-lg border px-3 py-2 text-xs font-bold">{service.active ? "PAUSAR" : "REATIVAR"}</button>
             </article>)}
           </div>
