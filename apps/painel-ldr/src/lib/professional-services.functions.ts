@@ -37,3 +37,12 @@ export const professionalServiceSetActive = createServerFn({ method: "POST" })
     const { setProfessionalServiceActive } = await import("@/lib/professional-services.server");
     return setProfessionalServiceActive(context.userId, data);
   });
+
+
+export const professionalServiceSetSocial = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: { id: string; available: boolean }) => data)
+  .handler(async ({ context, data }) => {
+    const { setProfessionalServiceSocial } = await import("@/lib/professional-services.server");
+    return setProfessionalServiceSocial(context.userId, data);
+  });
