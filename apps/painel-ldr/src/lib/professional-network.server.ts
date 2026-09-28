@@ -155,7 +155,7 @@ export async function saveProfessionalOnboarding(userId: string, email: string |
     online_enabled: Boolean(input.onlineEnabled), in_person_enabled: Boolean(input.inPersonEnabled), about: input.about?.trim() || null,
     experience_summary: input.experienceSummary?.trim() || null, education_summary: input.educationSummary?.trim() || null, specialties: input.specialties ?? [], updated_at: new Date().toISOString(),
   };
-  if (!alreadyApproved) Object.assign(payload,{ compliance_status:"needs_review", profile_status:"review", is_public:false });
+  if (!alreadyApproved) Object.assign(payload,{ compliance_status:"needs_review", profile_status:"draft", is_public:false });
   if (current) { const {error}=await db.from("professional_profiles").update(payload).eq("id",current.id); if(error)throw error; }
   else { const {error}=await db.from("professional_profiles").insert(payload); if(error?.code==="23505")fail("Este endereço público já está em uso. Ajuste o nome/slug."); if(error)throw error; }
   const merged={...(current??{}),...payload};
@@ -163,10 +163,10 @@ export async function saveProfessionalOnboarding(userId: string, email: string |
   const accountPatch: Record<string,unknown>={updated_at:new Date().toISOString()};
   if(input.countryCode)accountPatch.country_code=input.countryCode.toUpperCase(); if(input.currency)accountPatch.preferred_currency=input.currency;
   if(alreadyApproved){accountPatch.onboarding_step=7;accountPatch.onboarding_completed=true;}
-  else if(step>=7 && complete){accountPatch.onboarding_step=7;accountPatch.onboarding_completed=true;accountPatch.status="under_review";}
+  else if(step>=7 && complete){\n    accountPatch.onboarding_step=7; accountPatch.onboarding_completed=true; accountPatch.status="active";\n    const publishedAt=new Date().toISOString();\n    Object.assign(payload,{compliance_status:"approved",profile_status:"active",is_public:true,published_at:publishedAt});\n    const {error:publishError}=await db.from("professional_profiles").update({compliance_status:"approved",profile_status:"active",is_public:true,published_at:publishedAt,updated_at:publishedAt}).eq("professional_account_id",account.id);\n    if(publishError)throw publishError;\n  }
   else {accountPatch.onboarding_step=Math.min(step,6);accountPatch.onboarding_completed=false;accountPatch.status="incomplete";}
   await db.from("professional_accounts").update(accountPatch).eq("id",account.id);
-  if(step>=7 && !complete) fail("Complete 100% do perfil antes de enviar para análise. A foto é obrigatória; vídeo, agenda e serviços são opcionais para a completude.");
+  if(step>=7 && !complete) fail("Complete 100% do perfil antes de publicar. A foto é obrigatória; vídeo, agenda e serviços são opcionais para a completude.");
   return getProfessionalDashboard(userId,email);
 }
 
