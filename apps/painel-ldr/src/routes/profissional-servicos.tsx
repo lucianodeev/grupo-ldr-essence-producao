@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { professionalDashboard } from "@/lib/professional-network.functions";
 import { professionalServiceCatalogForMe } from "@/lib/professional-service-catalog.functions";
-import { professionalServiceSave, professionalServiceSetActive } from "@/lib/professional-services.functions";
+import { professionalServiceSave, professionalServiceSetActive, professionalServiceSetSocial } from "@/lib/professional-services.functions";
 
 export const Route = createFileRoute("/profissional-servicos")({
   head: () => ({ meta: [{ title: "Meus Serviços — Rede LDR" }, { name: "robots", content: "noindex,nofollow" }] }),
@@ -69,6 +69,7 @@ function ServicesPage() {
   const loadCatalog = useServerFn(professionalServiceCatalogForMe);
   const save = useServerFn(professionalServiceSave);
   const toggle = useServerFn(professionalServiceSetActive);
+  const toggleSocial = useServerFn(professionalServiceSetSocial);
   const [data, setData] = useState<any>(null);
   const [catalogData, setCatalogData] = useState<any>(null);
   const [busy, setBusy] = useState(false);
@@ -318,7 +319,7 @@ function ServicesPage() {
               <div className="flex items-start justify-between gap-3"><div><h3 className="font-bold">{service.name}</h3><p className="mt-1 text-xs text-muted-foreground">{UNIT_LABELS[service.billing_unit as BillingUnit] ?? service.billing_unit ?? "por sessão"} · {service.modality} · {service.duration_minutes} min</p></div><strong>{service.quote_required ? "ORÇAMENTO" : service.price_cents == null ? "Preço não definido" : money(service.price_cents, service.currency || "EUR")}</strong></div>
               <p className="mt-3 text-sm text-muted-foreground">{service.description}</p>
               <div className="mt-3 flex flex-wrap gap-2 text-xs"><span className={`rounded-full px-2 py-1 font-bold ${service.active ? "bg-emerald-100 text-emerald-800" : "bg-muted"}`}>{service.active ? "ATIVO" : "PAUSADO"}</span><span className="rounded-full bg-muted px-2 py-1 font-bold">{service.approval_status ?? "approved"}</span><span className="rounded-full bg-muted px-2 py-1 font-bold">{service.fee_compliance_status === "allowed" ? "20% / 80% LIBERADO" : "COMPLIANCE PENDENTE"}</span><span className="rounded-full bg-muted px-2 py-1 font-bold">{service.booking_enabled ? "CHECKOUT ATIVO" : "SEM CHECKOUT"}</span><span className={`rounded-full px-2 py-1 font-bold ${service.available_for_social ? "bg-amber-100 text-amber-900" : "bg-muted"}`}>{service.available_for_social ? "CLÍNICA SOCIAL ATIVA" : "CLÍNICA SOCIAL NÃO"}</span></div>
-              <button disabled={busy} onClick={async () => { setBusy(true); try { await toggle({ data: { id: service.id, active: !service.active } }); await refresh(); } catch (error) { toast.error(error instanceof Error ? error.message : "Erro"); } finally { setBusy(false); } }} className="mt-4 rounded-lg border px-3 py-2 text-xs font-bold">{service.active ? "PAUSAR" : "REATIVAR"}</button>
+              <div className="mt-4 flex flex-wrap gap-2"><button disabled={busy} onClick={async () => { setBusy(true); try { await toggle({ data: { id: service.id, active: !service.active } }); await refresh(); } catch (error) { toast.error(error instanceof Error ? error.message : "Erro"); } finally { setBusy(false); } }} className="rounded-lg border px-3 py-2 text-xs font-bold">{service.active ? "PAUSAR" : "REATIVAR"}</button><button disabled={busy||(!service.available_for_social&&(!service.active||!service.booking_enabled||service.approval_status!=="approved"))} onClick={async()=>{setBusy(true);try{await toggleSocial({data:{id:service.id,available:!service.available_for_social}});await refresh();toast.success(service.available_for_social?"Serviço removido da Clínica Social.":"Serviço disponibilizado na Clínica Social.");}catch(error){toast.error(error instanceof Error?error.message:"Erro");}finally{setBusy(false);}}} className="rounded-lg border px-3 py-2 text-xs font-bold">{service.available_for_social?"SAIR DA CLÍNICA SOCIAL":"ENTRAR NA CLÍNICA SOCIAL"}</button></div>
             </article>)}
           </div>
           {services.length === 0 ? <p className="mt-4 text-sm text-muted-foreground">Nenhum serviço cadastrado.</p> : null}
