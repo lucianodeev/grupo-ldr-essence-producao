@@ -1,13 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { BookOpen } from "lucide-react";
 import { clientDigitalLibrary } from "@/lib/client-portal.functions";
-import { psychoanalysisEbookByKey, type PsychoanalysisEbookKey } from "@/lib/psychoanalysis-ebooks.catalog";
+import { psychoanalysisEbookByKey } from "@/lib/psychoanalysis-ebooks.catalog";
 
 export const Route=createFileRoute("/_clientarea/cliente/ebooks/$productKey")({component:EbookOffer});
 
-const SPECIAL_EBOOK_KEYS=new Set(["ebook_falar_com_quem_feriu","ebook_da_pobreza_ao_primeiro_contrato"]);
 
 function money(cents:number,currency:"BRL"|"EUR"){
  return new Intl.NumberFormat(currency==="BRL"?"pt-BR":"pt-PT",{style:"currency",currency}).format(cents/100);
