@@ -52,7 +52,7 @@ const COPY = {
       lead: "Transforme sua ideia em um projeto de negócio mais claro, estruturado e possível de executar.",
       cta: "QUERO CONHECER O TREINAMENTO",
       secondary: "JÁ TENHO ACESSO",
-      price: "DE R$ 599,99 / € 100,56 · AGORA R$ 299,99 / € 49,90",
+      price: "DE R$ 599,99 / € 100,56 · AGORA LDR ONE / LDR ONE",
       problem:
         "Ter uma ideia é diferente de saber como organizá-la, testá-la e transformá-la em um projeto que faça sentido no mundo real.",
       transform:
@@ -69,7 +69,7 @@ const COPY = {
         "Atividades e quizzes",
         "Laboratório de Campo",
         "Fórum de aprendizagem",
-        "Encontros ao vivo",
+        "Conteúdo sob demanda",
         "Certificado conforme regras do treinamento",
         "Gestão, marketing, finanças, internacionalização e saúde mental",
       ],
@@ -91,8 +91,8 @@ const COPY = {
           "Sim. O treinamento inclui atividades, quizzes, Laboratório de Campo e fórum.",
         ],
         [
-          "Há encontros ao vivo?",
-          "Sim, os encontros ao vivo fazem parte da experiência conforme o calendário do treinamento.",
+          "Como funciona o conteúdo?",
+          "Todo o conteúdo é 100% online e sob demanda, sem encontros ao vivo.",
         ],
         [
           "Como acesso?",
@@ -709,7 +709,7 @@ const COPY = {
       lead: "Transformez votre idée en un projet d’entreprise plus clair, structuré et possible à exécuter.",
       cta: "DÉCOUVRIR LA FORMATION",
       secondary: "J’AI DÉJÀ ACCÈS",
-      price: "DE R$ 599,99 / 100,56 € · MAINTENANT R$ 299,99 / 49,90 €",
+      price: "DE R$ 599,99 / 100,56 € · MAINTENANT LDR ONE / LDR ONE",
       problem:
         "Avoir une idée est différent de savoir l’organiser, la tester et la transformer en projet réel.",
       transform:
@@ -1038,7 +1038,7 @@ const COPY = {
       lead: "Transforma tu idea en un proyecto de negocio más claro, estructurado y posible de ejecutar.",
       cta: "CONOCER LA FORMACIÓN",
       secondary: "YA TENGO ACCESO",
-      price: "DE R$ 599,99 / € 100,56 · AGORA R$ 299,99 / € 49,90",
+      price: "DE R$ 599,99 / € 100,56 · AGORA LDR ONE / LDR ONE",
       problem:
         "Tener una idea es diferente de saber organizarla, probarla y convertirla en un proyecto real.",
       transform:
