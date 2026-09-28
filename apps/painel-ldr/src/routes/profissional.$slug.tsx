@@ -267,7 +267,9 @@ function Page() {
   const services = (data.services ?? []) as AnyRow[];
   const reviews = (data.reviews ?? []) as AnyRow[];
   const service = services.find((s) => s.id === selected);
-  const displayedPrice = (s: AnyRow) => search.source === "social_clinic" && s.available_for_social ? (String(s.currency).toUpperCase() === "BRL" ? 8000 : String(s.currency).toUpperCase() === "EUR" ? 3000 : s.price_cents) : s.price_cents;
+  const baseDisplayedPrice = (s: AnyRow) => search.source === "social_clinic" && s.available_for_social ? (String(s.currency).toUpperCase() === "BRL" ? 8000 : String(s.currency).toUpperCase() === "EUR" ? 3000 : s.price_cents) : s.price_cents;
+  const oneDiscount = search.source === "social_clinic" ? 0 : Number(data.ldrOneBenefit?.discountPercent || 0);
+  const displayedPrice = (s: AnyRow) => { const base=baseDisplayedPrice(s); return base == null ? base : Math.max(0, Math.round(Number(base)*(100-oneDiscount)/100)); };
   const rules = ((data.availability ?? []) as AnyRow[]).filter(
     (r) => !selected || !r.professional_service_id || r.professional_service_id === selected,
   );
@@ -695,10 +697,11 @@ function Page() {
               <>
                 <div className="mt-4 rounded-xl bg-primary/5 p-4 text-sm">
                   <p className="font-bold">{service.name}</p>
-                  <p className="mt-1">
+                                    <p className="mt-1">
                     {money(displayedPrice(service), service.currency, locale)} ·{" "}
                     {service.duration_minutes} min
                   </p>
+                  {oneDiscount > 0 ? <div className="mt-2 rounded-lg bg-primary/10 px-3 py-2 text-xs"><p className="font-black text-primary">Benefício LDR ONE: −{oneDiscount}%</p><p className="mt-1 text-muted-foreground"><span className="line-through">{money(baseDisplayedPrice(service), service.currency, locale)}</span> → <strong className="text-foreground">{money(displayedPrice(service), service.currency, locale)}</strong></p></div> : search.source !== "social_clinic" ? <p className="mt-2 text-xs font-bold text-primary">Assinantes LDR ONE economizam até 10% neste serviço.</p> : null}
                 </div>
                 <div className="mt-5 rounded-2xl border bg-background p-3">
                   <div className="flex items-center justify-between gap-2">
