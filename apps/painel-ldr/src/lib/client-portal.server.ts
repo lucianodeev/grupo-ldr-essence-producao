@@ -1027,6 +1027,8 @@ export async function getClientDigitalLibrary(userId: string, email: string | nu
   const customer = await requireClient(userId, email);
   const { hasOwnerDigitalAccess } = await import("@/lib/owner-digital-access.server");
   const ownerAccess = hasOwnerDigitalAccess(email ?? customer.email, userId);
+  const { hasActiveLdrOne } = await import("@/lib/ldr-one-entitlement.server");
+  const ldrOneAccess = await hasActiveLdrOne(customer.id);
 
   const { data: orders } = await supabaseAdmin
     .from("orders")
@@ -1066,7 +1068,7 @@ export async function getClientDigitalLibrary(userId: string, email: string | nu
     customer,
     products: DIGITAL_LIBRARY_PRODUCTS.map((product) => ({
       ...product,
-      entitled: ownerAccess || aliases[product.key].some((key) => paidKeys.has(key)),
+      entitled: ownerAccess || ldrOneAccess || aliases[product.key].some((key) => paidKeys.has(key)),
     })),
   };
 }
@@ -1166,6 +1168,7 @@ export async function createClientDigitalCheckout(
 
   const config = DIGITAL_CHECKOUT_CONFIG[input.productKey];
   if (!config) fail("Produto inválido.");
+  fail("Novas compras individuais de eBooks foram encerradas. Este conteúdo está incluído no LDR ONE.");
 
   // Evita nova cobrança quando o cliente já possui acesso.
   const library = await getClientDigitalLibrary(userId, email);
