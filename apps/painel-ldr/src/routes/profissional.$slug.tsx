@@ -4,6 +4,9 @@ import { useEffect, useMemo, useState } from "react";
 import {
   BadgeCheck,
   Clock3,
+  CalendarDays,
+  ChevronLeft,
+  ChevronRight,
   Globe2,
   Languages,
   MapPin,
@@ -242,6 +245,8 @@ function Page() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [date, setDate] = useState("");
+  const [calendarMonth, setCalendarMonth] = useState(() => { const d=new Date(); return new Date(d.getFullYear(),d.getMonth(),1); });
+  const [selectedDay, setSelectedDay] = useState("");
   const [mode, setMode] = useState<"online" | "in_person">("online");
   const [busy, setBusy] = useState(false);
   const [reviewOpen, setReviewOpen] = useState(false);
@@ -262,23 +267,39 @@ function Page() {
   const services = (data.services ?? []) as AnyRow[];
   const reviews = (data.reviews ?? []) as AnyRow[];
   const service = services.find((s) => s.id === selected);
-  const displayedPrice = (s: AnyRow) => search.source === "social_clinic" && s.available_for_social ? (String(s.currency).toUpperCase() === "BRL" ? 8000 : String(s.currency).toUpperCase() === "EUR" ? 2500 : s.price_cents) : s.price_cents;
+  const displayedPrice = (s: AnyRow) => search.source === "social_clinic" && s.available_for_social ? (String(s.currency).toUpperCase() === "BRL" ? 8000 : String(s.currency).toUpperCase() === "EUR" ? 3000 : s.price_cents) : s.price_cents;
   const rules = ((data.availability ?? []) as AnyRow[]).filter(
     (r) => !selected || !r.professional_service_id || r.professional_service_id === selected,
   );
-  const days = useMemo(() => {
-    const map = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
-    return [
-      ...new Set(
-        rules.map(
-          (r) =>
-            `${map[Number(r.weekday)] ?? r.weekday} ${String(r.start_time).slice(0, 5)}–${String(r.end_time).slice(0, 5)}`,
-        ),
-      ),
-    ];
-  }, [rules]);
+  const busy = (data.busy ?? []) as AnyRow[];
+  const dateKey = (d: Date) => [d.getFullYear(), String(d.getMonth()+1).padStart(2,"0"), String(d.getDate()).padStart(2,"0")].join("-");
+  const slotsForDay = (day: Date) => {
+    if (!service) return [] as { label:string; value:string }[];
+    const out:{label:string;value:string}[]=[];
+    const dayRules=rules.filter((r:any)=>Number(r.weekday)===day.getDay() && (!r.effective_from || dateKey(day)>=String(r.effective_from)) && (!r.effective_until || dateKey(day)<=String(r.effective_until)));
+    for(const r of dayRules){
+      const [sh,sm]=String(r.start_time).split(":").map(Number), [eh,em]=String(r.end_time).split(":").map(Number);
+      const step=Math.max(5,Number(r.slot_interval_minutes||service.duration_minutes||30));
+      let mins=sh*60+sm, endMins=eh*60+em;
+      while(mins+Number(service.duration_minutes)<=endMins){
+        const start=new Date(day.getFullYear(),day.getMonth(),day.getDate(),Math.floor(mins/60),mins%60);
+        const finish=new Date(start.getTime()+Number(service.duration_minutes)*60000);
+        const blocked=busy.some((b:any)=>new Date(b.starts_at)<finish && new Date(b.ends_at)>start);
+        if(start.getTime()>Date.now()+5*60000 && !blocked) out.push({label:start.toLocaleTimeString(locale==="pt"?"pt-BR":locale,{hour:"2-digit",minute:"2-digit"}),value:start.toISOString()});
+        mins+=step;
+      }
+    }
+    return out.filter((v,i,a)=>a.findIndex(x=>x.value===v.value)===i).sort((a,b)=>a.value.localeCompare(b.value));
+  };
+  const calendarDays = useMemo(() => {
+    const first=new Date(calendarMonth.getFullYear(),calendarMonth.getMonth(),1);
+    const start=new Date(first); start.setDate(1-first.getDay());
+    return Array.from({length:42},(_,i)=>{const d=new Date(start);d.setDate(start.getDate()+i);return d;});
+  },[calendarMonth]);
+  const selectedDateObj = selectedDay ? new Date(selectedDay+"T12:00:00") : null;
+  const availableSlots = selectedDateObj ? slotsForDay(selectedDateObj) : [];
   useEffect(() => {
-    if (service) setMode(service.modality === "in_person" ? "in_person" : "online");
+    if (service) { setMode(service.modality === "in_person" ? "in_person" : "online"); setDate(""); setSelectedDay(""); }
   }, [service]);
   const avg = reviews.length
     ? reviews.reduce((s, r) => s + Number(r.rating || 0), 0) / reviews.length
@@ -669,7 +690,7 @@ function Page() {
             className="scroll-mt-24 h-fit rounded-3xl border bg-card p-6 outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 lg:sticky lg:top-24"
           >
             <h2 className="font-serif text-2xl">{c.book}</h2>
-            <p className="mt-2 text-sm text-muted-foreground">{c.choose}</p>
+            <p className="mt-2 text-sm text-muted-foreground">{service ? "Escolha uma data e depois um horário disponível." : c.choose}</p>
             {service ? (
               <>
                 <div className="mt-4 rounded-xl bg-primary/5 p-4 text-sm">
@@ -679,23 +700,17 @@ function Page() {
                     {service.duration_minutes} min
                   </p>
                 </div>
-                <div className="mt-4">
-                  <p className="text-xs font-black uppercase tracking-wide text-muted-foreground">
-                    {c.availability}
-                  </p>
-                  {days.length ? (
-                    <div className="mt-2 flex flex-wrap gap-2">
-                      {days.map((x) => (
-                        <span key={x} className="rounded-lg border px-2.5 py-1 text-xs">
-                          {x}
-                        </span>
-                      ))}
-                    </div>
-                  ) : (
-                    <p className="mt-2 text-sm text-muted-foreground">{c.noAvailability}</p>
-                  )}
+                <div className="mt-5 rounded-2xl border bg-background p-3">
+                  <div className="flex items-center justify-between gap-2">
+                    <button type="button" onClick={()=>setCalendarMonth(new Date(calendarMonth.getFullYear(),calendarMonth.getMonth()-1,1))} className="rounded-lg border p-2" aria-label="Mês anterior"><ChevronLeft className="h-4 w-4"/></button>
+                    <div className="text-center"><p className="text-xs font-black uppercase tracking-wide text-muted-foreground">Escolha a data</p><p className="font-bold">{new Intl.DateTimeFormat(locale==="pt"?"pt-BR":locale,{month:"long",year:"numeric"}).format(calendarMonth)}</p></div>
+                    <button type="button" onClick={()=>setCalendarMonth(new Date(calendarMonth.getFullYear(),calendarMonth.getMonth()+1,1))} className="rounded-lg border p-2" aria-label="Próximo mês"><ChevronRight className="h-4 w-4"/></button>
+                  </div>
+                  <div className="mt-3 grid grid-cols-7 gap-1 text-center text-[11px] font-bold text-muted-foreground">{["D","S","T","Q","Q","S","S"].map((x,i)=><span key={i}>{x}</span>)}</div>
+                  <div className="mt-1 grid grid-cols-7 gap-1">{calendarDays.map((d)=>{const key=dateKey(d),slots=slotsForDay(d),same=d.getMonth()===calendarMonth.getMonth(),active=selectedDay===key;return <button type="button" key={key} disabled={!same||!slots.length} onClick={()=>{setSelectedDay(key);setDate("");}} className={`aspect-square rounded-lg text-sm font-bold transition ${!same?"opacity-20":!slots.length?"text-muted-foreground opacity-35":active?"bg-primary text-primary-foreground":"border bg-background hover:border-primary"}`}>{d.getDate()}</button>})}</div>
                 </div>
-                {service.booking_enabled && days.length ? (
+                {selectedDateObj ? <div className="mt-4"><div className="flex items-center gap-2"><CalendarDays className="h-4 w-4 text-primary"/><p className="text-sm font-black">{new Intl.DateTimeFormat(locale==="pt"?"pt-BR":locale,{weekday:"long",day:"2-digit",month:"long"}).format(selectedDateObj)}</p></div>{availableSlots.length?<div className="mt-3 grid grid-cols-3 gap-2">{availableSlots.map(slot=><button type="button" key={slot.value} onClick={()=>setDate(slot.value)} className={`rounded-xl border px-2 py-2.5 text-sm font-black ${date===slot.value?"border-primary bg-primary text-primary-foreground":"bg-background hover:border-primary"}`}>{slot.label}</button>)}</div>:<p className="mt-2 text-sm text-muted-foreground">Sem horários livres nesta data.</p>}</div>:null}
+                {service.booking_enabled && rules.length ? (
                   <div className="mt-5 grid gap-3">
                     <input
                       value={name}
@@ -710,12 +725,7 @@ function Page() {
                       placeholder={c.email}
                       className="rounded-xl border bg-background px-3 py-3 text-sm"
                     />
-                    <input
-                      value={date}
-                      onChange={(e) => setDate(e.target.value)}
-                      type="datetime-local"
-                      className="rounded-xl border bg-background px-3 py-3 text-sm"
-                    />
+{date ? <div className="rounded-xl border border-primary/30 bg-primary/5 p-3 text-sm"><p className="text-xs font-black uppercase tracking-wide text-primary">Horário selecionado</p><p className="mt-1 font-bold">{new Intl.DateTimeFormat(locale==="pt"?"pt-BR":locale,{dateStyle:"medium",timeStyle:"short"}).format(new Date(date))}</p></div> : null}
                     {service.modality === "both" ? (
                       <select
                         value={mode}
@@ -728,7 +738,7 @@ function Page() {
                     ) : null}
                     <button
                       onClick={pay}
-                      disabled={busy}
+                      disabled={busy || !date || name.trim().length < 2 || !email.includes("@")}
                       className="rounded-xl bg-primary px-4 py-3 font-black text-primary-foreground disabled:opacity-50"
                     >
                       {busy ? c.opening : c.pay}
