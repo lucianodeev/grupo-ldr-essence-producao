@@ -271,7 +271,7 @@ function Page() {
   const rules = ((data.availability ?? []) as AnyRow[]).filter(
     (r) => !selected || !r.professional_service_id || r.professional_service_id === selected,
   );
-  const busy = (data.busy ?? []) as AnyRow[];
+  const busySlots = (data.busy ?? []) as AnyRow[];
   const dateKey = (d: Date) => [d.getFullYear(), String(d.getMonth()+1).padStart(2,"0"), String(d.getDate()).padStart(2,"0")].join("-");
   const slotsForDay = (day: Date) => {
     if (!service) return [] as { label:string; value:string }[];
@@ -284,7 +284,7 @@ function Page() {
       while(mins+Number(service.duration_minutes)<=endMins){
         const start=new Date(day.getFullYear(),day.getMonth(),day.getDate(),Math.floor(mins/60),mins%60);
         const finish=new Date(start.getTime()+Number(service.duration_minutes)*60000);
-        const blocked=busy.some((b:any)=>new Date(b.starts_at)<finish && new Date(b.ends_at)>start);
+        const blocked=busySlots.some((b:any)=>new Date(b.starts_at)<finish && new Date(b.ends_at)>start);
         if(start.getTime()>Date.now()+5*60000 && !blocked) out.push({label:start.toLocaleTimeString(locale==="pt"?"pt-BR":locale,{hour:"2-digit",minute:"2-digit"}),value:start.toISOString()});
         mins+=step;
       }
