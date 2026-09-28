@@ -1,3 +1,9 @@
+// Guarded, read-only inventory of prior disposable Stripe TEST resources.
+if(process.env.LDR_ONE_SANDBOX_STRIPE_INVENTORY==="yes"){
+ if(process.env.RENDER_SERVICE_ID!=="srv-das6drvavr4c7397dflg")throw Error("Wrong isolated sandbox");
+ const {inventorySandboxStripe}=await import("./ldr-one-sandbox-stripe-inventory.mjs");
+ try{await inventorySandboxStripe();}catch(error){console.error("LDR ONE STRIPE TEST INVENTORY FAILED: "+String(error.message).replace(/sk_test_[A-Za-z0-9]+/g,"[REDACTED]"));process.exitCode=1;}
+}
 // One-shot real Stripe TEST checkout through verified private sandbox login.
 if(process.env.LDR_ONE_SANDBOX_AUTH_CHECKOUT_SELFTEST==="yes"){
  if(process.env.RENDER_SERVICE_ID!=="srv-das6drvavr4c7397dflg")throw Error("Wrong sandbox service");
