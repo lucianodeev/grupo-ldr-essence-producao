@@ -88,12 +88,12 @@ export function SalesCatalog360(){
   const [q,setQ]=useState("");
   const [kind,setKind]=useState("all");
   const cards:Card[]=[
-    {key:"formations",label:t.formations,desc:t.formationList,meta:`${t.online} · R$ 299,99 · € 49,90`,href:"#formacoes",icon:GraduationCap,kind:"formations",theme:THEMES.formations},
+    {key:"formations",label:t.formations,desc:t.formationList,meta:`${t.online} · LDR ONE`,href:"#formacoes",icon:GraduationCap,kind:"formations",theme:THEMES.formations},
     {key:"free",label:t.free,desc:t.freeText,meta:"R$ 0 · € 0",href:"/cliente/biblioteca",icon:Sparkles,kind:"free",theme:THEMES.free},
     {key:"books",label:t.books,desc:t.booksText,meta:locale==="en"?"eBooks · Books":locale==="fr"?"eBooks · Livres":locale==="es"?"eBooks · Libros":"eBooks · Livros",href:"/cliente/biblioteca",icon:BookOpen,kind:"books",theme:THEMES.books},
     {key:"guidance",label:t.guidance,desc:t.guidanceText,meta:`${t.from} € 0,90`,href:"/cliente/orientacao-profissional",icon:BriefcaseBusiness,kind:"guidance",theme:THEMES.guidance},
-    {key:"publications",label:t.publications,desc:t.publicationText,meta:`€ 0,90 / ${t.week}`,href:"#editorial-ldr-sales",icon:Newspaper,kind:"publications",theme:THEMES.publications},
-    {key:"subscriptions",label:t.subscriptions,desc:t.subText,meta:`R$ 19,95 · € 4,95 / 1º ${t.month}`,href:"/cliente/biblioteca",icon:Library,kind:"subscriptions",theme:THEMES.subscriptions},
+    {key:"publications",label:t.publications,desc:t.publicationText,meta:`LDR ONE`,href:"/ldr-pass",icon:Newspaper,kind:"publications",theme:THEMES.publications},
+    {key:"subscriptions",label:t.subscriptions,desc:t.subText,meta:`LDR ONE · € 39,90 / ${t.month}`,href:"/ldr-pass",icon:Library,kind:"subscriptions",theme:THEMES.subscriptions},
   ];
   const filtered=useMemo(()=>cards.filter(c=>(kind==="all"||c.kind===kind)&&(!q||`${c.label} ${c.desc} ${c.meta}`.toLocaleLowerCase(locale).includes(q.toLocaleLowerCase(locale)))),[q,kind,locale]);
   const chips=[['all',t.all],['formations',t.formations],['free',t.free],['books',t.books],['guidance',t.guidance],['publications',t.publications],['subscriptions',t.subscriptions]];
