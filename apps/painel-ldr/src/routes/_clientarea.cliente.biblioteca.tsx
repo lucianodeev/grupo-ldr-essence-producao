@@ -3,18 +3,18 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { BookOpen, Film, GraduationCap, MessageCircle, ReceiptText, ShoppingCart } from "lucide-react";
 import { useState } from "react";
-import { clientCreateDigitalCheckout, clientDigitalLibrary } from "@/lib/client-portal.functions";
+import { clientDigitalLibrary } from "@/lib/client-portal.functions";
 import { clientLdrPass } from "@/lib/ldr-pass.functions";
 import { clientAddLibraryComment, clientLearningHub } from "@/lib/learning.functions";
-import { clientCreateDoMamaoTrainingCheckout, clientDoMamaoTrainingOffer } from "@/lib/training-commerce.functions";
-import { clientCreatePsychoanalysisCheckout, clientPsychoanalysisOffer } from "@/lib/psychoanalysis-commerce.functions";
-import { clientCreateBriefTherapyCheckout, clientBriefTherapyOffer } from "@/lib/brief-therapy-commerce.functions";
-import { clientCreateInternationalPsychoanalysisCheckout, clientInternationalPsychoanalysisOffer } from "@/lib/international-psychoanalysis-commerce.functions";
-import { clientCreateMassotherapyCheckout, clientMassotherapyOffer } from "@/lib/massotherapy-commerce.functions";
-import { clientBusiness24Offer, clientCreateBusiness24Checkout } from "@/lib/business24-commerce.functions";
-import { clientAIFormationOffer, clientCreateAIFormationCheckout } from "@/lib/ai-formation-commerce.functions";
-import { clientCreateMentorshipCheckout, clientMentorshipOffer } from "@/lib/mentorship-commerce.functions";
-import { clientCreateLeadershipCheckout, clientLeadershipOffer } from "@/lib/leadership-commerce.functions";
+import { clientDoMamaoTrainingOffer } from "@/lib/training-commerce.functions";
+import { clientPsychoanalysisOffer } from "@/lib/psychoanalysis-commerce.functions";
+import { clientBriefTherapyOffer } from "@/lib/brief-therapy-commerce.functions";
+import { clientInternationalPsychoanalysisOffer } from "@/lib/international-psychoanalysis-commerce.functions";
+import { clientMassotherapyOffer } from "@/lib/massotherapy-commerce.functions";
+import { clientBusiness24Offer } from "@/lib/business24-commerce.functions";
+import { clientAIFormationOffer } from "@/lib/ai-formation-commerce.functions";
+import { clientMentorshipOffer } from "@/lib/mentorship-commerce.functions";
+import { clientLeadershipOffer } from "@/lib/leadership-commerce.functions";
 import { clientEnrollFreeCareerCourse, clientFreeCareerCourse } from "@/lib/free-career-course.functions";
 import { clientEnrollFreeFrenchA1, clientFreeFrenchA1 } from "@/lib/free-french-a1.functions";
 import { clientEnrollFreeFirstAid, clientFreeFirstAid } from "@/lib/free-first-aid.functions";
@@ -64,25 +64,15 @@ function ClientLibrary(){
   const ac=libraryAcademicCardText(locale);
   const ldrPassFn=useServerFn(clientLdrPass),
     fn=useServerFn(clientDigitalLibrary),
-    checkoutFn=useServerFn(clientCreateDigitalCheckout),
     trainingFn=useServerFn(clientDoMamaoTrainingOffer),
-    trainingCheckoutFn=useServerFn(clientCreateDoMamaoTrainingCheckout),
     psychoFn=useServerFn(clientPsychoanalysisOffer),
     briefFn=useServerFn(clientBriefTherapyOffer),
     intlPsychoFn=useServerFn(clientInternationalPsychoanalysisOffer),
     massageFn=useServerFn(clientMassotherapyOffer),
     business24Fn=useServerFn(clientBusiness24Offer),
     aiFn=useServerFn(clientAIFormationOffer),
-    aiCheckoutFn=useServerFn(clientCreateAIFormationCheckout),
-    psychoCheckoutFn=useServerFn(clientCreatePsychoanalysisCheckout),
-    briefCheckoutFn=useServerFn(clientCreateBriefTherapyCheckout),
-    intlPsychoCheckoutFn=useServerFn(clientCreateInternationalPsychoanalysisCheckout),
-    massageCheckoutFn=useServerFn(clientCreateMassotherapyCheckout),
-    business24CheckoutFn=useServerFn(clientCreateBusiness24Checkout),
     mentorFn=useServerFn(clientMentorshipOffer),
-    mentorCheckoutFn=useServerFn(clientCreateMentorshipCheckout),
     leaderFn=useServerFn(clientLeadershipOffer),
-    leaderCheckoutFn=useServerFn(clientCreateLeadershipCheckout),
     freeFn=useServerFn(clientFreeCareerCourse),
     freeEnrollFn=useServerFn(clientEnrollFreeCareerCourse),
     frenchFn=useServerFn(clientFreeFrenchA1),
@@ -113,16 +103,6 @@ function ClientLibrary(){
   const {data:firstAid,refetch:refetchFirstAid}=useQuery({queryKey:["free-first-aid-offer"],queryFn:()=>firstAidFn({})});
   const {data:learning}=useQuery({queryKey:["client-learning-hub"],queryFn:()=>learningFn({})});
 
-  const checkout=useMutation({mutationFn:(x:{productKey:"ebook_coragem_comecar"|"livro_menino_mamao";market:"BR"|"INTL"})=>checkoutFn({data:x}),onSuccess:r=>location.href=r.url});
-  const trainingCheckout=useMutation({mutationFn:(m:"BR"|"INTL")=>trainingCheckoutFn({data:{market:m}}),onSuccess:r=>location.href=r.url});
-  const psychoCheckout=useMutation({mutationFn:(m:"BR"|"INTL")=>psychoCheckoutFn({data:{market:m}}),onSuccess:r=>location.href=r.url});
-  const briefCheckout=useMutation({mutationFn:(m:"BR"|"INTL")=>briefCheckoutFn({data:{market:m}}),onSuccess:r=>location.href=r.url});
-  const intlPsychoCheckout=useMutation({mutationFn:(m:"BR"|"INTL")=>intlPsychoCheckoutFn({data:{market:m}}),onSuccess:r=>location.href=r.url});
-  const massageCheckout=useMutation({mutationFn:(m:"BR"|"INTL")=>massageCheckoutFn({data:{market:m}}),onSuccess:r=>location.href=r.url});
-  const business24Checkout=useMutation({mutationFn:(m:"BR"|"INTL")=>business24CheckoutFn({data:{market:m}}),onSuccess:r=>location.href=r.url});
-  const aiCheckout=useMutation({mutationFn:(m:"BR"|"INTL")=>aiCheckoutFn({data:{market:m}}),onSuccess:r=>location.href=r.url});
-  const mentorCheckout=useMutation({mutationFn:(m:"BR"|"INTL")=>mentorCheckoutFn({data:{market:m}}),onSuccess:r=>location.href=r.url});
-  const leaderCheckout=useMutation({mutationFn:(m:"BR"|"INTL")=>leaderCheckoutFn({data:{market:m}}),onSuccess:r=>location.href=r.url});
   const enrollFree=useMutation({mutationFn:()=>freeEnrollFn({}),onSuccess:()=>refetchFree()});
   const enrollFrench=useMutation({mutationFn:()=>frenchEnrollFn({}),onSuccess:()=>refetchFrench()});
   const enrollFirstAid=useMutation({mutationFn:()=>firstAidEnrollFn({}),onSuccess:()=>refetchFirstAid()});
