@@ -34,8 +34,8 @@ function PublicHome() {
           <h2 className="mt-2 font-serif text-2xl font-bold">Acesse o mapa central e o LDR PASS.</h2>
           <p className="mt-1 text-sm text-white/70">A Academy agora referencia as entradas principais: Biblioteca, Rede Acadêmica, LDR PASS, Clínica Social, LDR RH & Estratégia e Human Room.</p>
         </div>
-        <Link to="/ecossistema" className="rounded-full bg-[#f4c76b] px-5 py-3 text-center text-xs font-black uppercase tracking-[.14em] text-[#1f1303]">Mapa do ecossistema</Link>
-        <Link to="/ldr-pass" className="rounded-full border border-white/20 px-5 py-3 text-center text-xs font-black uppercase tracking-[.14em] text-white hover:bg-white/10">LDR PASS</Link>
+        <Link to="/ecossistema" className="inline-flex w-auto items-center justify-center rounded-full bg-[#f4c76b] px-4 py-2 text-center text-[11px] font-black uppercase tracking-[.10em] text-[#1f1303]">Mapa do ecossistema</Link>
+        <Link to="/ldr-pass" className="inline-flex w-auto items-center justify-center rounded-full border border-white/20 px-4 py-2 text-center text-[11px] font-black uppercase tracking-[.10em] text-white hover:bg-white/10">LDR PASS</Link>
       </div>
     </section>
     <AcademyEcosystemSection />
