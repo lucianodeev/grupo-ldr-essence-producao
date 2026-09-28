@@ -2,6 +2,7 @@ import { getRequest } from "@tanstack/react-start/server";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { resolveClient } from "@/lib/client-portal.server";
 import { hasOwnerDigitalAccess } from "@/lib/owner-digital-access.server";
+import { hasActiveLdrOne } from "@/lib/ldr-one-entitlement.server";
 
 const PRODUCT_KEY = "do_mamao_ao_negocio";
 const TRAINING_SLUG = "do-mamao-ao-negocio";
@@ -104,7 +105,7 @@ export async function getPublicDoMamaoTrainingOffer() {
   return {
     productKey: PRODUCT_KEY,
     title: training.title || TRAINING_TITLE,
-    description: training.description || "Treinamento empreendedor de 3 meses e 300 horas com jornada guiada, atividades, projeto e encontros ao vivo opcionais.",
+    description: training.description || "Treinamento empreendedor de 3 meses e 300 horas com jornada guiada, atividades, projeto e conteúdo 100% online e sob demanda.",
     priceBrlCents: launch.active ? LAUNCH_PRICE_BRL : PRICE_BRL,
     priceEurCents: launch.active ? LAUNCH_PRICE_EUR : PRICE_EUR,
     regularPriceBrlCents: PRICE_BRL,
@@ -120,13 +121,14 @@ export async function getDoMamaoTrainingOffer(userId: string, email: string | nu
   const training = await trainingRow();
   const launch = await launchStatus();
   let currentEnrollment = await enrollment(customer.id, training.id);
-  const order = await paidOrder(customer.id);
+  const [order, ldrOne] = await Promise.all([paidOrder(customer.id), hasActiveLdrOne(customer.id)]);
   if (!currentEnrollment && order) { await provisionFromPaidOrder(customer.id, order); currentEnrollment = await enrollment(customer.id, training.id); }
+  if (!currentEnrollment && ldrOne) { await db.from("training_enrollments").upsert({ training_id: training.id, customer_id: customer.id, active: true }, { onConflict: "training_id,customer_id" }); currentEnrollment = await enrollment(customer.id, training.id); }
   if (!currentEnrollment) currentEnrollment = await ensureOwnerEnrollment(customer.id, training.id, email, userId);
   return {
     productKey: PRODUCT_KEY,
     title: training.title || TRAINING_TITLE,
-    description: training.description || "Treinamento empreendedor de 3 meses e 300 horas com jornada guiada, atividades, projeto e encontros ao vivo opcionais.",
+    description: training.description || "Treinamento empreendedor de 3 meses e 300 horas com jornada guiada, atividades, projeto e conteúdo 100% online e sob demanda.",
     priceBrlCents: launch.active ? LAUNCH_PRICE_BRL : PRICE_BRL,
     priceEurCents: launch.active ? LAUNCH_PRICE_EUR : PRICE_EUR,
     regularPriceBrlCents: PRICE_BRL,
