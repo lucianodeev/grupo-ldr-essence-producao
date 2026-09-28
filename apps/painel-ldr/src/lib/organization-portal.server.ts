@@ -100,6 +100,7 @@ export async function getOrganizationDashboard(userId: string) {
     members: members ?? [],
     purchases: purchases ?? [],
     benefits: benefits ?? [],
+    ldrOne: await (async()=>{ const { data: ownerCustomer } = await db.from("customers").select("id").eq("auth_user_id", userId).maybeSingle(); if(!ownerCustomer?.id)return null; const { data: sub } = await db.from("ldr_pass_subscriptions").select("id,plan,status,ldr_one_seats,billing_cycle,current_period_end").eq("customer_id",ownerCustomer.id).eq("plan","business").in("status",["active","trialing"]).order("created_at",{ascending:false}).limit(1).maybeSingle(); if(!sub?.id)return null; const { data: seats } = await db.from("ldr_one_seat_assignments").select("id,member_id,assigned_at").eq("subscription_id",sub.id).is("revoked_at",null); return {...sub,assignments:seats??[]}; })(),
     services: (services ?? []).map((s: any) => ({ ...s, ...(serviceByKey.get(s.catalog_key) ?? {}) })).filter((s: any) => s.name).sort((a: any, b: any) => { const priority = (x: any) => String(x.catalog_key).startsWith("psicanalise") ? 0 : String(x.catalog_key).startsWith("massagem_laboral") ? 1 : 2; return priority(a) - priority(b) || Number(a.sort_order ?? 9999) - Number(b.sort_order ?? 9999) || String(a.name).localeCompare(String(b.name)); }),
   };
 }
