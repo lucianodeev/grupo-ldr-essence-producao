@@ -30,6 +30,7 @@ on:
       - 'scripts/ldr-one-sandbox-login-service*'
       - 'scripts/ldr-one-sandbox-session-checkout*'
       - 'scripts/ldr-one-sandbox-real-webhook-lifecycle*'
+      - 'scripts/ldr-one-sandbox-stripe-inventory*'
       - 'docs/ldr-pass/sql/ldr-one-sandbox-schema-REVIEW-ONLY.sql'
   workflow_dispatch:
 permissions:
@@ -78,3 +79,6 @@ jobs:
 
       - name: Verify real Stripe TEST probe safety without network or secrets
         run: node --test scripts/ldr-one-sandbox-real-webhook-lifecycle.test.mjs
+
+      - name: Verify isolated read-only Stripe TEST inventory
+        run: node --test scripts/ldr-one-sandbox-stripe-inventory.test.mjs
