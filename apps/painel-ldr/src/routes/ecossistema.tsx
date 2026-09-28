@@ -220,6 +220,13 @@ const ECOSYSTEM_COPY = {
   es: { back:"← Volver a LDR Academy", welcome:"Bienvenido al Ecosistema LDR", hello:"¡Hola! ¿Cómo estás? 👋", home:"Entra, ponte cómodo. Estás en casa.", intro:"Aquí puedes aprender, encontrar oportunidades, conocer personas, compartir ideas y crear cosas nuevas. ¿No sabes por dónde empezar? Cuéntanos qué buscas y encontraremos un camino juntos.", invite:"¿Tienes una idea? Cuéntanos. ¿Quieres participar? Únete. ¿Te gusta este espacio? Invita también a tus amigos. Creemos juntos.", talk:"💬 Hablemos", explore:"Quiero explorar", library:"Entrar en la Biblioteca", network:"Conocer la Red Académica", freeJob:"Publicar una vacante gratis", opportunities:"Oportunidades", opportunityTitle:"Empresas y candidatos conectados en un único recorrido.", international:"En la prensa internacional", pressTitle:"El Ecosistema LDR en la cobertura editorial internacional.", press:"Prensa y Medios", find:"Lo que encontrarás en el ecosistema", tickerLabel:"AHORA", antiRacism:"LDR Essence — Un ecosistema comprometido con la lucha contra el racismo y todas las formas de discriminación, en Brasil y en todo el mundo. Respeto, dignidad e igualdad para todas las personas.", newsSoon:"Brasil y mundo · emprendimiento · economía · tecnología · política — noticias con fuentes identificadas", opportunityText:"El Ecosistema LDR conecta a quienes ofrecen oportunidades con quienes buscan trabajo. La publicación básica de vacantes es gratuita y los candidatos pueden consultar oportunidades sin suscripción.", company:"Soy empresa", companyText:"Publica tu vacante gratuitamente y conecta tu empresa con profesionales del Ecosistema LDR.", candidate:"Soy candidato", candidateText:"Encuentra vacantes y utiliza el Ecosistema para fortalecer tu preparación profesional.", findJobs:"Encontrar vacantes", careerNoteLabel:"LDR Academy + Carrera:", careerNote:"los suscriptores pueden acceder a recursos adicionales de desarrollo profesional según el plan contratado. La suscripción no garantiza contratación y no es necesaria para consultar vacantes abiertas.", businessEyebrow:"Emprendimiento y negocios", businessTitle:"¿Quieres hablar sobre emprendimiento o negocios?", businessText1:"El Ecosistema LDR también es un espacio para nuevas ideas, conexiones y oportunidades. Estamos desarrollando nuevos proyectos y algunas iniciativas aún no se han presentado públicamente.", businessText2:"Si eres emprendedor, empresa, profesional, inversor o simplemente tienes una buena idea, contáctanos a través del soporte. Puede haber una conversación que valga la pena comenzar.", businessCta:"Quiero hablar de negocios", newsBrazil:"Brasil: economistas consultados por el Banco Central reducen su previsión de la tasa Selic para finales de 2026 al 13,50 %.", newsEntrepreneur:"Emprendimiento: Mombak capta un nuevo fondo de reforestación amazónica y suma a Salesforce como comprador de créditos de carbono.", newsWorld:"Mundo y tecnología: las bolsas globales avanzan por el renovado optimismo sobre la IA mientras baja el petróleo.", postFree:"Publicar una vacante gratis" }
 } as const;
 
+const PARTNERSHIP_COPY = {
+  pt: { eyebrow:"Parcerias & colaboração", title:"Quer fazer parte do Ecossistema LDR?", text:"Estamos abertos a profissionais, empresas, instituições de ensino, projetos e organizações que queiram construir oportunidades, conexões e novas iniciativas conosco.", primary:"Quero ser parceiro", secondary:"Conhecer oportunidades de parceria" },
+  en: { eyebrow:"Partnerships & collaboration", title:"Want to be part of the LDR Ecosystem?", text:"We are open to professionals, companies, educational institutions, projects and organizations interested in building opportunities, connections and new initiatives with us.", primary:"Become a partner", secondary:"Explore partnership opportunities" },
+  fr: { eyebrow:"Partenariats & collaboration", title:"Vous souhaitez rejoindre l'Écosystème LDR ?", text:"Nous sommes ouverts aux professionnels, entreprises, établissements d'enseignement, projets et organisations souhaitant créer avec nous des opportunités, des connexions et de nouvelles initiatives.", primary:"Devenir partenaire", secondary:"Découvrir les opportunités de partenariat" },
+  es: { eyebrow:"Alianzas & colaboración", title:"¿Quieres formar parte del Ecosistema LDR?", text:"Estamos abiertos a profesionales, empresas, instituciones educativas, proyectos y organizaciones que quieran construir con nosotros oportunidades, conexiones y nuevas iniciativas.", primary:"Quiero ser socio", secondary:"Conocer oportunidades de colaboración" }
+} as const;
+
 const CENTRAL_ACCESS_COPY = {
   pt: {
     pillars: "Mapa principal",
@@ -269,7 +276,7 @@ function EcosystemMap() {
   const discoverLabel = locale==="en"?"Discover":locale==="fr"?"Découvrir":locale==="es"?"Conocer":"Conhecer";
   const newsQuery=useQuery({queryKey:["ecosystem-news",locale],queryFn:()=>ecosystemNews({data:{locale}}),staleTime:15*60*1000,retry:1});
   const liveNews=newsQuery.data??[];
-  const central=CENTRAL_ACCESS_COPY[locale]??CENTRAL_ACCESS_COPY.pt;
+  const central=CENTRAL_ACCESS_COPY[locale]??CENTRAL_ACCESS_COPY.pt;\n  const partnership=PARTNERSHIP_COPY[locale]??PARTNERSHIP_COPY.pt;
   return (
     <main className="min-h-screen bg-[#f8f1e7] text-[#25170f]">
       <div className="fixed inset-x-0 top-0 z-[100] w-full border-y border-[#d6ad63]/30 bg-[#071426] text-white shadow-md" aria-label={copy.tickerLabel}>
@@ -302,6 +309,19 @@ function EcosystemMap() {
             <a href="/carreira?audience=company" className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#1d3158] px-5 py-3 text-sm font-black uppercase tracking-[.12em] text-[#1d3158]">{copy.freeJob}</a>
           </div>
         </div>
+
+        <section className="relative mt-8 overflow-hidden rounded-[30px] border border-[#d6ad63]/50 bg-[#071426] p-6 text-white shadow-xl sm:p-8">
+          <div className="absolute -right-16 -top-20 h-56 w-56 rounded-full border border-[#d6ad63]/20 bg-[#d6ad63]/10" aria-hidden="true" />
+          <div className="relative max-w-4xl">
+            <p className="text-xs font-black uppercase tracking-[.2em] text-[#f4c76b]">{partnership.eyebrow}</p>
+            <h2 className="mt-3 font-serif text-3xl font-bold sm:text-4xl">{partnership.title}</h2>
+            <p className="mt-4 max-w-3xl text-sm leading-7 text-white/80 sm:text-base">{partnership.text}</p>
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <Link to="/falar-com-ecossistema" search={{ assunto: "Quero ser parceiro do Ecossistema LDR", source: "ecossistema_parcerias" } as any} className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#f4c76b] px-6 py-3 text-sm font-black text-[#071426] shadow-lg transition hover:-translate-y-0.5">{partnership.primary} →</Link>
+              <Link to="/falar-com-ecossistema" search={{ assunto: "Oportunidades de parceria no Ecossistema LDR", source: "ecossistema_parcerias_oportunidades" } as any} className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/35 bg-white/5 px-6 py-3 text-sm font-black text-white transition hover:bg-white/10">{partnership.secondary}</Link>
+            </div>
+          </div>
+        </section>
 
         <section className="mt-8 rounded-[28px] border border-[#d6ad63]/50 bg-white p-6 shadow-sm sm:p-8">
           <p className="text-xs font-black uppercase tracking-[.2em] text-[#9a6a20]">{central.pillars}</p>
