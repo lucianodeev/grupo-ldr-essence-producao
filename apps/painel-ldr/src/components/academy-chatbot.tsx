@@ -3,18 +3,12 @@ import { BookOpen, Bot, ChevronLeft, ExternalLink, GraduationCap, MessageCircle,
 import { useLocation } from "@tanstack/react-router";
 
 import { useI18n } from "@/lib/i18n";
+import { ECOSYSTEM_TICKER } from "@/lib/ecosystem-ticker";
 
 const SUPPORT_URL = "/falar-com-ecossistema";
 
 type Locale = "pt" | "en" | "fr" | "es";
 type Topic = "courses" | "formations" | "free" | "business" | "psychoanalysis" | "career" | "books" | "editorial" | "library" | "human";
-
-const ANNOUNCEMENT: Record<Locale, string> = {
-  pt: "Conteúdo em constante evolução. A LDR Essence Academy é atualizada regularmente para trazer novos conhecimentos e uma experiência de aprendizagem cada vez melhor.",
-  en: "Content that keeps evolving. LDR Essence Academy is regularly updated to bring you new knowledge and an ever-improving learning experience.",
-  fr: "Contenu en constante évolution. LDR Essence Academy est régulièrement mise à jour afin de vous proposer de nouvelles connaissances et une expérience d'apprentissage toujours meilleure.",
-  es: "Contenido en constante evolución. LDR Essence Academy se actualiza regularmente para ofrecerte nuevos conocimientos y una experiencia de aprendizaje cada vez mejor.",
-};
 
 const COPY: Record<Locale, {
   help: string; title: string; subtitle: string; hello: string; prompt: string; search: string; back: string; close: string;
@@ -128,7 +122,7 @@ export function AcademyChatbot() {
             {[0,1].map((item) => (
               <div key={item} className="flex shrink-0 items-center gap-4 px-4 text-[11px] font-bold tracking-[.04em] sm:px-8 sm:text-xs">
                 <span className="text-[#d6ad63]">✦ LDR ESSENCE ACADEMY</span>
-                <span>{ANNOUNCEMENT[lang]}</span>
+                <span>{ECOSYSTEM_TICKER[lang].join("   ✦   ")}</span>
                 <span className="text-[#d6ad63]">✦</span>
               </div>
             ))}
