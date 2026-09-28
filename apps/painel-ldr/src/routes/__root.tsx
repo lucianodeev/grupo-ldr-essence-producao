@@ -130,6 +130,12 @@ function CompanyPlanCards() {
   return <section className="mx-auto w-full max-w-7xl px-4 pb-8 sm:px-6 lg:px-8"><div className="rounded-[2rem] border bg-card p-6 shadow-lg shadow-primary/5 sm:p-8"><p className="text-xs font-black uppercase tracking-[.16em] text-primary">{text.eyebrow}</p><h2 className="mt-2 font-serif text-3xl">{text.title}</h2><p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">{text.desc}</p><div className="mt-6 grid gap-4 md:grid-cols-2"><div className="rounded-2xl border bg-background p-5"><p className="text-2xl font-black">{text.monthly}</p></div><div className="rounded-2xl border bg-background p-5"><p className="text-2xl font-black">{text.annual}</p></div></div><p className="mt-4 text-sm text-muted-foreground">{text.note}</p><Link to="/ldr-pass" className="mt-5 inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-5 py-3 text-sm font-black text-primary-foreground"><Sparkles className="mr-2 h-4 w-4"/>{text.cta}</Link></div></section>;
 }
 
+function GlobalLdrOneCard() {
+  const { locale } = useI18n();
+  const t={pt:{title:"LDR ONE",text:"Cursos, formações, eBooks e conteúdos digitais pagos em uma única assinatura.",individual:"Individual · €39,90/mês ou €399/ano",business:"Business · €19,90/colaborador/mês ou €199/ano · mínimo 5",cta:"ASSINAR LDR ONE"},en:{title:"LDR ONE",text:"Paid courses, training, eBooks and digital content in one subscription.",individual:"Individual · €39.90/month or €399/year",business:"Business · €19.90/employee/month or €199/year · minimum 5",cta:"SUBSCRIBE TO LDR ONE"},fr:{title:"LDR ONE",text:"Cours, formations, eBooks et contenus numériques payants dans un seul abonnement.",individual:"Individuel · 39,90 €/mois ou 399 €/an",business:"Business · 19,90 €/collaborateur/mois ou 199 €/an · minimum 5",cta:"S’ABONNER À LDR ONE"},es:{title:"LDR ONE",text:"Cursos, formaciones, eBooks y contenidos digitales de pago en una sola suscripción.",individual:"Individual · €39,90/mes o €399/año",business:"Business · €19,90/empleado/mes o €199/año · mínimo 5",cta:"SUSCRIBIRME A LDR ONE"}}[locale];
+  return <section className="mx-auto w-full max-w-7xl px-4 py-5 sm:px-6 lg:px-8"><div className="overflow-hidden rounded-[24px] border border-[#d6ad63]/50 bg-gradient-to-r from-[#071426] via-[#0b2341] to-[#123a67] p-5 text-white shadow-xl sm:p-6"><div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between"><div><p className="text-xs font-black uppercase tracking-[.18em] text-[#f5cc82]">{t.title}</p><p className="mt-2 max-w-2xl text-sm text-white/80">{t.text}</p><div className="mt-3 flex flex-wrap gap-2 text-xs font-bold"><span className="rounded-full border border-[#d6ad63]/40 bg-white/10 px-3 py-2">{t.individual}</span><span className="rounded-full border border-[#d6ad63]/40 bg-white/10 px-3 py-2">{t.business}</span></div></div><Link to="/ldr-pass" className="inline-flex min-h-12 shrink-0 items-center justify-center rounded-xl border-2 border-[#f5cc82] bg-[#d6ad63] px-6 py-3 text-sm font-black text-[#071426] shadow-lg transition hover:-translate-y-0.5 hover:bg-[#f5cc82]"><Sparkles className="mr-2 h-4 w-4"/>{t.cta}</Link></div></div></section>;
+}
+
 function LazyAdSenseScript() {
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -254,6 +260,7 @@ function RootComponent() {
   }, [router, queryClient]);
 
   const showCompanyPlans = location.pathname === "/empresa";
+  const showLdrOneCard = !["/ldr-pass","/cliente/login","/empresa/login","/funcionario/login","/painel-profissional/login","/admin/login"].some((path)=>location.pathname.startsWith(path));
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -262,6 +269,7 @@ function RootComponent() {
         <div className="pb-24 sm:pb-28">
           <Outlet />
           {showCompanyPlans && <CompanyPlanCards />}
+          {showLdrOneCard && <GlobalLdrOneCard />}
         </div>
 
         <LazyAdSenseScript />
