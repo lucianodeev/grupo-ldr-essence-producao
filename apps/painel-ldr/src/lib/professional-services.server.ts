@@ -75,6 +75,7 @@ type SaveInput = {
   quoteRequired?: boolean;
   availableForPrivate?: boolean;
   availableForCompany?: boolean;
+  availableForSocial?: boolean;
 };
 
 export async function saveProfessionalService(userId: string, input: SaveInput) {
@@ -158,6 +159,7 @@ export async function saveProfessionalService(userId: string, input: SaveInput) 
     quote_required: quoteRequired,
     available_for_private: input.availableForPrivate ?? true,
     available_for_company: input.availableForCompany ?? false,
+    available_for_social: input.availableForSocial ?? false,
     requires_admin_review: requiresAdminReview,
     approval_status: approvalStatus,
     fee_compliance_status: feeComplianceStatus,
