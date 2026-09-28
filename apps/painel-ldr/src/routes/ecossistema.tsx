@@ -278,7 +278,7 @@ function EcosystemMap() {
   const liveNews=newsQuery.data??[];
   const central=CENTRAL_ACCESS_COPY[locale]??CENTRAL_ACCESS_COPY.pt;\n  const partnership=PARTNERSHIP_COPY[locale]??PARTNERSHIP_COPY.pt;
   return (
-    <main className="min-h-screen bg-[#f8f1e7] text-[#25170f]">
+    <main className="min-h-screen overflow-x-hidden bg-[#f8f1e7] text-[#25170f] [overflow-wrap:anywhere]">
       <div className="fixed inset-x-0 top-0 z-[100] w-full border-y border-[#d6ad63]/30 bg-[#071426] text-white shadow-md" aria-label={copy.tickerLabel}>
         <div className="mx-auto flex max-w-6xl items-center overflow-hidden px-5 py-2">
           <span className="mr-4 shrink-0 rounded bg-[#d6ad63] px-2 py-1 text-[10px] font-black tracking-[.16em] text-[#25170f]">{copy.tickerLabel}</span>
@@ -290,54 +290,54 @@ function EcosystemMap() {
         </div>
         <style>{`@keyframes ldrTicker{from{transform:translateX(100%)}to{transform:translateX(-100%)}}`}</style>
       </div>
-      <section className="mx-auto max-w-6xl px-5 pb-12 pt-24 sm:pb-16 sm:pt-24">
+      <section className="mx-auto w-full max-w-6xl px-4 pb-12 pt-24 sm:px-5 sm:pb-16 sm:pt-24">
         <div className="mb-4 ml-auto w-36"><LanguageSelect /></div>
         <Link to="/" className="text-sm font-bold text-[#8a4c18]">{copy.back}</Link>
-        <div className="mt-7 rounded-[34px] border border-[#d6ad63]/40 bg-white p-6 shadow-xl sm:p-9">
+        <div className="mt-7 min-w-0 rounded-[34px] border border-[#d6ad63]/40 bg-white p-6 shadow-xl sm:p-9">
           <p className="text-xs font-black uppercase tracking-[.2em] text-[#9a6a20]">{copy.welcome}</p>
-          <h1 className="mt-3 font-serif text-4xl font-bold sm:text-5xl">{copy.hello}</h1>
+          <h1 className="mt-3 font-serif text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">{copy.hello}</h1>
           <p className="mt-3 text-xl font-bold text-[#8a4c18]">{copy.home}</p>
           <p className="mt-4 max-w-3xl text-base leading-7 text-[#6f6358]">
             {copy.intro}
           </p>
           <p className="mt-3 max-w-3xl text-sm text-[#6f6358]">{copy.invite}</p>
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <Link to="/falar-com-ecossistema" className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#9a6a20] px-5 py-3 text-sm font-black uppercase tracking-[.12em] text-white">{copy.talk}</Link>
-            <Link to="/ldr-pass" className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#1d3158] px-5 py-3 text-sm font-black uppercase tracking-[.12em] text-white">{copy.explore}</Link>
-            <Link to="/cliente/biblioteca" className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#d6ad63] px-5 py-3 text-sm font-black uppercase tracking-[.12em] text-[#7a4d14]">{copy.library}</Link>
-            <Link to="/cliente/rede-academica" className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#351073] px-5 py-3 text-sm font-black uppercase tracking-[.12em] text-[#351073]">{copy.network}</Link>
-            <a href="/carreira?audience=company" className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#1d3158] px-5 py-3 text-sm font-black uppercase tracking-[.12em] text-[#1d3158]">{copy.freeJob}</a>
+          <div className="mt-6 flex min-w-0 flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <Link to="/falar-com-ecossistema" className="inline-flex min-h-12 max-w-full items-center justify-center rounded-full text-center leading-snug bg-[#9a6a20] px-5 py-3 text-sm font-black uppercase tracking-[.12em] text-white">{copy.talk}</Link>
+            <Link to="/ldr-pass" className="inline-flex min-h-12 max-w-full items-center justify-center rounded-full text-center leading-snug bg-[#1d3158] px-5 py-3 text-sm font-black uppercase tracking-[.12em] text-white">{copy.explore}</Link>
+            <Link to="/cliente/biblioteca" className="inline-flex min-h-12 max-w-full items-center justify-center rounded-full text-center leading-snug border border-[#d6ad63] px-5 py-3 text-sm font-black uppercase tracking-[.12em] text-[#7a4d14]">{copy.library}</Link>
+            <Link to="/cliente/rede-academica" className="inline-flex min-h-12 max-w-full items-center justify-center rounded-full text-center leading-snug border border-[#351073] px-5 py-3 text-sm font-black uppercase tracking-[.12em] text-[#351073]">{copy.network}</Link>
+            <a href="/carreira?audience=company" className="inline-flex min-h-12 max-w-full items-center justify-center rounded-full text-center leading-snug border border-[#1d3158] px-5 py-3 text-sm font-black uppercase tracking-[.12em] text-[#1d3158]">{copy.freeJob}</a>
           </div>
         </div>
 
-        <section className="relative mt-8 overflow-hidden rounded-[30px] border border-[#d6ad63]/50 bg-[#071426] p-6 text-white shadow-xl sm:p-8">
+        <section className="relative mt-8 overflow-hidden min-w-0 rounded-[30px] border border-[#d6ad63]/50 bg-[#071426] p-6 text-white shadow-xl sm:p-8">
           <div className="absolute -right-16 -top-20 h-56 w-56 rounded-full border border-[#d6ad63]/20 bg-[#d6ad63]/10" aria-hidden="true" />
           <div className="relative max-w-4xl">
             <p className="text-xs font-black uppercase tracking-[.2em] text-[#f4c76b]">{partnership.eyebrow}</p>
-            <h2 className="mt-3 font-serif text-3xl font-bold sm:text-4xl">{partnership.title}</h2>
+            <h2 className="mt-3 font-serif text-2xl font-bold leading-tight sm:text-3xl sm:text-4xl">{partnership.title}</h2>
             <p className="mt-4 max-w-3xl text-sm leading-7 text-white/80 sm:text-base">{partnership.text}</p>
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <Link to="/falar-com-ecossistema" search={{ assunto: "Quero ser parceiro do Ecossistema LDR", source: "ecossistema_parcerias" } as any} className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#f4c76b] px-6 py-3 text-sm font-black text-[#071426] shadow-lg transition hover:-translate-y-0.5">{partnership.primary} →</Link>
-              <Link to="/falar-com-ecossistema" search={{ assunto: "Oportunidades de parceria no Ecossistema LDR", source: "ecossistema_parcerias_oportunidades" } as any} className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/35 bg-white/5 px-6 py-3 text-sm font-black text-white transition hover:bg-white/10">{partnership.secondary}</Link>
+            <div className="mt-6 flex min-w-0 flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <Link to="/falar-com-ecossistema" search={{ assunto: "Quero ser parceiro do Ecossistema LDR", source: "ecossistema_parcerias" } as any} className="inline-flex min-h-12 max-w-full items-center justify-center rounded-full text-center leading-snug bg-[#f4c76b] px-6 py-3 text-sm font-black text-[#071426] shadow-lg transition hover:-translate-y-0.5">{partnership.primary} →</Link>
+              <Link to="/falar-com-ecossistema" search={{ assunto: "Oportunidades de parceria no Ecossistema LDR", source: "ecossistema_parcerias_oportunidades" } as any} className="inline-flex min-h-12 max-w-full items-center justify-center rounded-full text-center leading-snug border border-white/35 bg-white/5 px-6 py-3 text-sm font-black text-white transition hover:bg-white/10">{partnership.secondary}</Link>
             </div>
           </div>
         </section>
 
-        <section className="mt-8 rounded-[28px] border border-[#d6ad63]/50 bg-white p-6 shadow-sm sm:p-8">
+        <section className="mt-8 min-w-0 rounded-[28px] border border-[#d6ad63]/50 bg-white p-6 shadow-sm sm:p-8">
           <p className="text-xs font-black uppercase tracking-[.2em] text-[#9a6a20]">{central.pillars}</p>
-          <h2 className="mt-3 font-serif text-3xl font-bold text-[#25170f]">{central.pillarsTitle}</h2>
+          <h2 className="mt-3 font-serif text-2xl font-bold leading-tight sm:text-3xl text-[#25170f]">{central.pillarsTitle}</h2>
           <div className="mt-6 grid gap-4 lg:grid-cols-3">
-            <Link to="/ldr-rh-estrategia" className="rounded-2xl border border-[#d6ad63]/40 bg-[#fffaf2] p-5 transition hover:-translate-y-0.5 hover:shadow-md">
+            <Link to="/ldr-rh-estrategia" className="min-w-0 rounded-2xl border border-[#d6ad63]/40 bg-[#fffaf2] p-5 transition hover:-translate-y-0.5 hover:shadow-md">
               <p className="text-xs font-black uppercase tracking-[.14em] text-[#9a6a20]">01</p>
               <h3 className="mt-2 font-serif text-2xl font-bold">{central.rh}</h3>
               <p className="mt-2 text-sm leading-6 text-[#6f6358]">{central.rhText}</p>
             </Link>
-            <Link to="/clinica-social" className="rounded-2xl border border-[#5b0824]/25 bg-[#fff8fa] p-5 transition hover:-translate-y-0.5 hover:shadow-md">
+            <Link to="/clinica-social" className="min-w-0 rounded-2xl border border-[#5b0824]/25 bg-[#fff8fa] p-5 transition hover:-translate-y-0.5 hover:shadow-md">
               <p className="text-xs font-black uppercase tracking-[.14em] text-[#5b0824]">02</p>
               <h3 className="mt-2 font-serif text-2xl font-bold">{central.clinic}</h3>
               <p className="mt-2 text-sm leading-6 text-[#6f6358]">{central.clinicText}</p>
             </Link>
-            <Link to="/" className="rounded-2xl border border-[#1d3158]/25 bg-[#eef5ff] p-5 transition hover:-translate-y-0.5 hover:shadow-md">
+            <Link to="/" className="min-w-0 rounded-2xl border border-[#1d3158]/25 bg-[#eef5ff] p-5 transition hover:-translate-y-0.5 hover:shadow-md">
               <p className="text-xs font-black uppercase tracking-[.14em] text-[#1d3158]">03</p>
               <h3 className="mt-2 font-serif text-2xl font-bold">{central.academy}</h3>
               <p className="mt-2 text-sm leading-6 text-[#6f6358]">{central.academyText}</p>
@@ -356,32 +356,32 @@ function EcosystemMap() {
           </div>
         </section>
 
-        <section className="mt-8 rounded-[28px] border border-[#b7d2ff] bg-[#eef5ff] p-6 shadow-sm sm:p-8">
+        <section className="mt-8 min-w-0 rounded-[28px] border border-[#b7d2ff] bg-[#eef5ff] p-6 shadow-sm sm:p-8">
           <p className="text-xs font-black uppercase tracking-[.2em] text-[#1d3158]">{copy.opportunities}</p>
-          <h2 className="mt-3 font-serif text-3xl font-bold text-[#071426]">{copy.opportunityTitle}</h2>
+          <h2 className="mt-3 font-serif text-2xl font-bold leading-tight sm:text-3xl text-[#071426]">{copy.opportunityTitle}</h2>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-[#42526b]">{copy.opportunityText}</p>
           <div className="mt-6 grid gap-4 md:grid-cols-2">
-            <a href="/carreira/empresa/publicar" className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-[#b7d2ff] transition hover:-translate-y-0.5">
+            <a href="/carreira/empresa/publicar" className="min-w-0 rounded-2xl bg-white p-5 shadow-sm ring-1 ring-[#b7d2ff] transition hover:-translate-y-0.5">
               <span className="text-2xl" aria-hidden="true">🏢</span><h3 className="mt-2 text-lg font-black text-[#07345b]">{copy.company}</h3><p className="mt-2 text-sm text-[#42526b]">{copy.companyText}</p><span className="mt-4 inline-flex min-h-12 items-center rounded-full bg-[#07345b] px-5 py-3 text-sm font-black text-white">{copy.postFree}</span>
             </a>
-            <a href="/carreira/vagas" className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-[#b7d2ff] transition hover:-translate-y-0.5">
+            <a href="/carreira/vagas" className="min-w-0 rounded-2xl bg-white p-5 shadow-sm ring-1 ring-[#b7d2ff] transition hover:-translate-y-0.5">
               <span className="text-2xl" aria-hidden="true">👤</span><h3 className="mt-2 text-lg font-black text-[#07345b]">{copy.candidate}</h3><p className="mt-2 text-sm text-[#42526b]">{copy.candidateText}</p><span className="mt-4 inline-flex min-h-12 items-center rounded-full bg-[#07345b] px-5 py-3 text-sm font-black text-white">{copy.findJobs}</span>
             </a>
           </div>
-          <div className="mt-5 rounded-2xl bg-white/80 p-4 text-sm leading-6 text-[#42526b]"><strong className="text-[#07345b]">{copy.careerNoteLabel}</strong> {copy.careerNote}</div>
+          <div className="mt-5 min-w-0 rounded-2xl bg-white/80 p-4 text-sm leading-6 text-[#42526b]"><strong className="text-[#07345b]">{copy.careerNoteLabel}</strong> {copy.careerNote}</div>
         </section>
 
-        <section className="mt-8 rounded-[28px] border border-[#d6ad63]/50 bg-[#fffaf2] p-6 shadow-sm sm:p-8">
+        <section className="mt-8 min-w-0 rounded-[28px] border border-[#d6ad63]/50 bg-[#fffaf2] p-6 shadow-sm sm:p-8">
           <p className="text-xs font-black uppercase tracking-[.2em] text-[#9a6a20]">{copy.businessEyebrow}</p>
-          <h2 className="mt-3 font-serif text-3xl font-bold text-[#25170f]">{copy.businessTitle}</h2>
+          <h2 className="mt-3 font-serif text-2xl font-bold leading-tight sm:text-3xl text-[#25170f]">{copy.businessTitle}</h2>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-[#6f6358]">{copy.businessText1}</p>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-[#6f6358]">{copy.businessText2}</p>
-          <Link to="/falar-com-ecossistema" search={{ assunto: "Empreendedorismo, negócios e novas oportunidades", source: "ecossistema_negocios" } as any} className="mt-5 inline-flex min-h-12 items-center justify-center rounded-full bg-[#1d3158] px-5 py-3 text-sm font-black text-white">{copy.businessCta}</Link>
+          <Link to="/falar-com-ecossistema" search={{ assunto: "Empreendedorismo, negócios e novas oportunidades", source: "ecossistema_negocios" } as any} className="mt-5 inline-flex min-h-12 max-w-full items-center justify-center rounded-full text-center leading-snug bg-[#1d3158] px-5 py-3 text-sm font-black text-white">{copy.businessCta}</Link>
         </section>
 
-        <section className="mt-8 rounded-[28px] border border-[#d6ad63]/50 bg-white p-6 shadow-sm sm:p-8"><p className="text-xs font-black uppercase tracking-[.2em] text-[#9a6a20]">{copy.international}</p><h2 className="mt-3 mb-6 font-serif text-3xl font-bold text-[#25170f]">{copy.pressTitle}</h2><InternationalPressMentions /><Link to="/imprensa" className="mt-5 inline-flex min-h-12 items-center justify-center rounded-full border border-[#1d3158] px-5 py-3 text-sm font-black text-[#1d3158]">{copy.press}</Link></section>
+        <section className="mt-8 min-w-0 rounded-[28px] border border-[#d6ad63]/50 bg-white p-6 shadow-sm sm:p-8"><p className="text-xs font-black uppercase tracking-[.2em] text-[#9a6a20]">{copy.international}</p><h2 className="mt-3 mb-6 font-serif text-2xl font-bold leading-tight sm:text-3xl text-[#25170f]">{copy.pressTitle}</h2><InternationalPressMentions /><Link to="/imprensa" className="mt-5 inline-flex min-h-12 max-w-full items-center justify-center rounded-full text-center leading-snug border border-[#1d3158] px-5 py-3 text-sm font-black text-[#1d3158]">{copy.press}</Link></section>
 
-        <section className="mt-8 rounded-[28px] border border-[#e5d1ac] bg-white p-6 shadow-sm">
+        <section className="mt-8 min-w-0 rounded-[28px] border border-[#e5d1ac] bg-white p-6 shadow-sm">
           <p className="text-xs font-black uppercase tracking-[.2em] text-[#9a6a20]">{copy.find}</p>
           <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {features.map((feature) => (
@@ -396,11 +396,11 @@ function EcosystemMap() {
           {hubs.map((hub) => {
             const styles = hubClasses(hub);
             return (
-              <a key={hub.name} href={hub.url} target={external(hub.url) ? "_blank" : undefined} rel={external(hub.url) ? "noreferrer" : undefined} className={styles.card}>
+              <a key={hub.name} href={hub.url} target={external(hub.url) ? "_blank" : undefined} rel={external(hub.url) ? "noreferrer" : undefined} className={`${styles.card} min-w-0 overflow-hidden`}>
                 <span className={styles.tag}>{hub.tag}</span>
-                <h2 className={styles.title}>{hub.name}</h2>
-                <p className={styles.desc}>{hub.desc}</p>
-                <span className={styles.link}>{hub.cta ?? `${discoverLabel} ${hub.name}`} →</span>
+                <h2 className={`${styles.title} break-words leading-tight`}>{hub.name}</h2>
+                <p className={`${styles.desc} break-words leading-6`}>{hub.desc}</p>
+                <span className={`${styles.link} whitespace-normal break-words leading-5`}>{hub.cta ?? `${discoverLabel} ${hub.name}`} →</span>
               </a>
             );
           })}
