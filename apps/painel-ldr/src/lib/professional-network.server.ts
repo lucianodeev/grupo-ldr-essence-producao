@@ -183,7 +183,7 @@ export async function createMarketplaceBookingCheckout(input: { profileSlug: str
   if ((blocked ?? []).length) fail("Este horário está indisponível.");
   const clientSource: ClientSource = input.clientSource === "social_clinic" || input.clientSource === "professional_direct" ? input.clientSource : "ldr_generated";
   if (clientSource === "social_clinic" && !service.available_for_social) fail("Este profissional não disponibilizou este serviço na Clínica Social.");
-  const socialGross = String(service.currency).toUpperCase() === "BRL" ? 8000 : String(service.currency).toUpperCase() === "EUR" ? 2500 : null;
+  const socialGross = String(service.currency).toUpperCase() === "BRL" ? 8000 : String(service.currency).toUpperCase() === "EUR" ? 3000 : null;
   const gross = clientSource === "social_clinic" && socialGross != null ? socialGross : moneyInt(service.price_cents);
   const feePercent = await getPlatformFeePercent();
   const split = calculatePlatformSplit(gross, feePercent);
