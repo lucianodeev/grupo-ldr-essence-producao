@@ -196,6 +196,7 @@ export async function getEmployeeContext(userId: string, email: string | null) {
     db.from("organizations").select("id,name,country,active").eq("id", member.organization_id).maybeSingle(),
     db.from("organization_benefit_allocations").select("id,catalog_key,credits_granted,credits_used,status,created_at,purchase_id,requested_at,used_at,scheduled_at,scheduled_note,schedule_status").eq("member_id", member.id).neq("status", "revoked").order("created_at", { ascending: false }),
   ]);
+  if (!organization?.active) return { status: "blocked" as const, member, organization: null, benefits: [] };
   const keys = [...new Set((benefits ?? []).map((b: any) => b.catalog_key))];
   const { data: catalog } = keys.length ? await db.from("service_catalog").select("catalog_key,name,category,package_sessions").in("catalog_key", keys) : { data: [] };
   const byKey = new Map((catalog ?? []).map((c: any) => [c.catalog_key, c]));
