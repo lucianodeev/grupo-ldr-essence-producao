@@ -18,6 +18,7 @@ import {
   UserRound,
 } from "lucide-react";
 import { toast } from "sonner";
+import { ProfessionalVideo } from "@/components/ProfessionalVideo";
 import { LanguageSelect, useI18n } from "@/lib/i18n";
 import { marketplaceBookingCheckout } from "@/lib/professional-network.functions";
 import {
@@ -463,13 +464,7 @@ function Page() {
                   <PlayCircle className="h-5 w-5 text-primary" />
                   {c.video}
                 </h2>
-                <video
-                  controls
-                  preload="metadata"
-                  playsInline
-                  className="mt-4 aspect-video w-full rounded-2xl bg-black"
-                  src={p.intro_video_url}
-                />
+                <ProfessionalVideo src={p.intro_video_url} className="mt-4 aspect-video w-full rounded-2xl bg-black" />
               </section>
             ) : null}
             <section className="rounded-3xl border bg-card p-6">
