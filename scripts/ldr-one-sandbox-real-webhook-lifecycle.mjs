@@ -8,7 +8,7 @@ export async function probeRealStripeWebhook({db,env}){
  const key=env.LDR_ONE_STRIPE_TEST_SECRET_KEY,price=env.LDR_ONE_TEST_PRICE_INDIVIDUAL_MONTHLY;
  if(!/^sk_test_[A-Za-z0-9]+$/.test(key??"")||!/^price_[A-Za-z0-9]+$/.test(price??""))throw Error("TEST configuration required");
  const id=randomUUID(),customerId=randomUUID(),userId=randomUUID(),identity={verified:true,userId,customerId};
- let stripeCustomer=null,sub=null,inserted=false,stage="initial";
+ let stripeCustomer=null,sub=null,inserted=false,stage="initial",terminalStatus=null;
  const api=async(path,params,method="POST")=>{
   const response=await fetch("https://api.stripe.com/v1/"+path,{method,headers:{authorization:"Bearer "+key,...(params?{"content-type":"application/x-www-form-urlencoded"}:{})},body:params?new URLSearchParams(params):undefined,signal:AbortSignal.timeout(15000)});
   if(!response.ok)throw Error("Stripe TEST "+path+" HTTP "+response.status);
@@ -22,14 +22,16 @@ export async function probeRealStripeWebhook({db,env}){
   if(sub.status!=="incomplete")throw Error("Probe must remain unpaid and incomplete");
   stage="wait_for_real_signed_creation";await waitFor(row=>row?.status==="incomplete"&&row.stripe_subscription_id===sub.id);
   if((await checkSandboxEntitlement({db,identity})).allowed)throw Error("Unpaid TEST subscription granted access");
-  stage="cancel_test_subscription";const canceled=await api("subscriptions/"+encodeURIComponent(sub.id),null,"DELETE");if(!["canceled","incomplete_expired"].includes(canceled.status))throw Error("Unexpected TEST cancellation response: "+JSON.stringify({status:canceled.status??null,deleted:canceled.deleted??null,object:canceled.object??null}));sub=null;
-  stage="wait_for_real_signed_cancellation";await waitFor(row=>row?.status==="canceled");
+  stage="cancel_test_subscription";const canceled=await api("subscriptions/"+encodeURIComponent(sub.id),null,"DELETE");if(!["canceled","incomplete_expired"].includes(canceled.status))throw Error("Unexpected TEST cancellation response: "+JSON.stringify({status:canceled.status??null,deleted:canceled.deleted??null,object:canceled.object??null}));terminalStatus=canceled.status;sub=null;
+  stage="wait_for_real_signed_cancellation";await waitFor(row=>["canceled","incomplete_expired"].includes(row?.status));
+  const persisted=await db.query("SELECT event_type FROM public.ldr_one_sandbox_stripe_events WHERE subscription_id=$1 AND event_type IN ('customer.subscription.updated','customer.subscription.deleted')",[id]);
+  if(!persisted.rows.length)throw Error("Signed terminal event persistence missing");
   if((await checkSandboxEntitlement({db,identity})).allowed)throw Error("Canceled subscription granted access");
-  console.log("LDR ONE REAL STRIPE SIGNED WEBHOOK VERIFIED: incomplete -> canceled; no unpaid access");
+  console.log("LDR ONE REAL STRIPE SIGNED WEBHOOK VERIFIED: incomplete -> "+terminalStatus+"; no unpaid access; signed terminal event persisted");
  }catch(error){console.error("LDR ONE REAL STRIPE WEBHOOK PROBE FAILED AT "+stage+": "+String(error?.message??"unknown").replace(/sk_test_[A-Za-z0-9]+/g,"[REDACTED]"));throw error;
  }finally{
   if(sub){try{await api("subscriptions/"+encodeURIComponent(sub.id),null,"DELETE");console.log("TEST SUBSCRIPTION CLEANUP CONFIRMED");}catch(error){console.error("TEST SUBSCRIPTION CLEANUP UNCONFIRMED HTTP "+String(error?.message??"unknown").replace(/sk_test_[A-Za-z0-9]+/g,"[REDACTED]"));}}
-  if(stripeCustomer){try{await api("customers/"+encodeURIComponent(stripeCustomer.id),null,"DELETE");console.log("TEST CUSTOMER CLEANUP CONFIRMED");}catch(error){console.error("TEST CUSTOMER CLEANUP UNCONFIRMED HTTP "+String(error?.message??"unknown").replace(/sk_test_[A-Za-z0-9]+/g,"[REDACTED]"));}}
-  if(inserted){await db.query("DELETE FROM public.ldr_one_sandbox_stripe_events WHERE subscription_id=$1",[id]);await db.query("DELETE FROM public.ldr_one_sandbox_subscriptions WHERE id=$1",[id]);console.log("LDR ONE REAL STRIPE WEBHOOK PROBE DB CLEANUP VERIFIED");}
+  if(stripeCustomer){try{const removed=await api("customers/"+encodeURIComponent(stripeCustomer.id),null,"DELETE");if(removed.deleted!==true)throw Error("Customer deletion not confirmed");console.log("TEST CUSTOMER CLEANUP CONFIRMED");}catch(error){console.error("TEST CUSTOMER CLEANUP UNCONFIRMED HTTP "+String(error?.message??"unknown").replace(/sk_test_[A-Za-z0-9]+/g,"[REDACTED]"));}}
+  if(inserted){await db.query("DELETE FROM public.ldr_one_sandbox_stripe_events WHERE subscription_id=$1",[id]);await db.query("DELETE FROM public.ldr_one_sandbox_subscriptions WHERE id=$1",[id]);const remaining=await db.query("SELECT (SELECT count(*) FROM public.ldr_one_sandbox_subscriptions WHERE id=$1)+(SELECT count(*) FROM public.ldr_one_sandbox_stripe_events WHERE subscription_id=$1) AS n",[id]);if(Number(remaining.rows[0]?.n)!==0)throw Error("Probe rows remain");console.log("LDR ONE REAL STRIPE WEBHOOK PROBE DB CLEANUP VERIFIED");}
  }
 }

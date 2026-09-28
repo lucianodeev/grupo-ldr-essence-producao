@@ -12,7 +12,7 @@ create table if not exists public.ldr_one_sandbox_subscriptions (
     or (plan = 'business' and seats between 5 and 10000)
   ),
   status text not null default 'pending' check (status in (
-    'pending','active','trialing','past_due','canceled','unpaid','paused','incomplete'
+    'pending','active','trialing','past_due','canceled','unpaid','paused','incomplete','incomplete_expired'
   )),
   stripe_checkout_session_id text unique,
   stripe_subscription_id text unique,
@@ -45,3 +45,10 @@ alter table public.ldr_one_sandbox_seat_assignments enable row level security;
 -- idempotently, then update subscription in one transaction.
 -- Do not run this schema without reviewing actual customer/user UUID types,
 -- foreign keys, RLS/service-role permissions and isolated database connection.
+
+-- Idempotent upgrade for existing isolated databases (CREATE TABLE does not update constraints).
+alter table public.ldr_one_sandbox_subscriptions
+  drop constraint if exists ldr_one_sandbox_subscriptions_status_check;
+alter table public.ldr_one_sandbox_subscriptions
+  add constraint ldr_one_sandbox_subscriptions_status_check check
+  (status in ('pending','active','trialing','past_due','canceled','unpaid','paused','incomplete','incomplete_expired'));

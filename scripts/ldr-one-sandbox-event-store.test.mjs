@@ -38,3 +38,21 @@ test("DB failures roll back",async()=>{
 });
 
 test("direct invoice or checkout event never changes access",async()=>{const {client,calls}=db();for(const type of ["checkout.session.completed","invoice.payment_succeeded"]){assert.deepEqual(await applyVerifiedSandboxEvent(client,event({type}),id,customer),{handled:false});}assert.equal(calls.length,0);});
+
+for (const status of ["unpaid","incomplete","incomplete_expired","canceled"]) {
+ test(`updated persists ${status} and entitlement denies access`,async()=>{
+  const {client,calls}=db(); const e=event(); e.data.object.status=status;
+  assert.deepEqual(await applyVerifiedSandboxEvent(client,e,id,customer),{handled:true,status});
+  assert.equal(calls.find(c=>c.sql.startsWith("UPDATE")).args[0],status);
+  const {checkSandboxEntitlement}=await import("./ldr-one-sandbox-entitlement-gate.mjs");
+  const result=await checkSandboxEntitlement({db:{query:async()=>({rows:[{id,plan:"individual",status,seat_authorized:true}]})},identity:{verified:true,userId:id,customerId:customer}});
+  assert.equal(result.allowed,false);
+ });
+}
+test("terminal state cannot be reopened by a delayed same-second creation",async()=>{
+ const {client,calls}=db(); const query=client.query;
+ client.query=async(sql,args)=>sql.startsWith("SELECT")?{rows:[{id,customer_id:customer,status:"incomplete_expired",stripe_subscription_id:"sub_test",last_stripe_event_created:100}]}:query(sql,args);
+ const result=await applyVerifiedSandboxEvent(client,event(),id,customer);
+ assert.equal(result.stale,true);
+ assert.equal(calls.some(c=>c.sql.startsWith("UPDATE")),false);
+});
