@@ -18,7 +18,8 @@ function checkoutErrorMessage(err:unknown){
 }
 function LdrOnePage(){
  const search=Route.useSearch();
- const [billing,setBilling]=useState<"monthly"|"annual">(search.billing),[seatsInput,setSeatsInput]=useState(String(search.seats)),[busy,setBusy]=useState<number|null>(null),[error,setError]=useState("");\n const seats=Math.max(5,Math.min(10000,Number.parseInt(seatsInput,10)||5));
+ const [billing,setBilling]=useState<"monthly"|"annual">(search.billing),[seatsInput,setSeatsInput]=useState(String(search.seats)),[busy,setBusy]=useState<number|null>(null),[error,setError]=useState("");
+ const seats=Math.max(5,Math.min(10000,Number.parseInt(seatsInput,10)||5));
  async function buy(i:number,resuming=false){setError("");setBusy(i);try{const r=await clientCreateLdrPassCheckout({data:{plan:i===1?"individual":"business",market:"EU",billing,seats:i===1?1:seats,source:"ecossistema"}});if(!r?.url)throw Error("O checkout não retornou um endereço de pagamento.");window.location.href=r.url}catch(err){if(/Unauthorized|authenticated session/i.test(err instanceof Error?err.message:String(err))){if(resuming){setError("Sua sessão não foi confirmada. Entre novamente e toque em Assinar agora.");setBusy(null);return;}window.location.assign(`/cliente/login?next=${encodeURIComponent(`/ldr-pass?plan=${i===1?"individual":"business"}&billing=${billing}&seats=${seats}&checkout=resume`)}`);return;}console.error("LDR ONE checkout failed",err);setError(checkoutErrorMessage(err));setBusy(null)}}
  const resumed=useRef(false);
  useEffect(()=>{
