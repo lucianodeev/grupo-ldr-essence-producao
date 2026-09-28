@@ -262,6 +262,7 @@ function Page() {
   const services = (data.services ?? []) as AnyRow[];
   const reviews = (data.reviews ?? []) as AnyRow[];
   const service = services.find((s) => s.id === selected);
+  const displayedPrice = (s: AnyRow) => search.source === "social_clinic" && s.available_for_social ? (String(s.currency).toUpperCase() === "BRL" ? 8000 : String(s.currency).toUpperCase() === "EUR" ? 2500 : s.price_cents) : s.price_cents;
   const rules = ((data.availability ?? []) as AnyRow[]).filter(
     (r) => !selected || !r.professional_service_id || r.professional_service_id === selected,
   );
@@ -571,7 +572,7 @@ function Page() {
                               : `${c.online} / ${c.present}`}
                         </p>
                       </div>
-                      <strong>{money(s.price_cents, s.currency, locale)}</strong>
+                      <strong>{money(displayedPrice(s), s.currency, locale)}</strong>
                     </div>
                   </button>
                 ))}
@@ -674,7 +675,7 @@ function Page() {
                 <div className="mt-4 rounded-xl bg-primary/5 p-4 text-sm">
                   <p className="font-bold">{service.name}</p>
                   <p className="mt-1">
-                    {money(service.price_cents, service.currency, locale)} ·{" "}
+                    {money(displayedPrice(service), service.currency, locale)} ·{" "}
                     {service.duration_minutes} min
                   </p>
                 </div>
