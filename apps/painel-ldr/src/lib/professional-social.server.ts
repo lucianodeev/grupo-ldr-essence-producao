@@ -10,7 +10,7 @@ export async function getEnhancedPublicProfessional(slug: string) {
   const { data: profile } = await db
     .from("professional_profiles")
     .select(
-      "id,professional_account_id,slug,display_name,professional_title,profile_headline,category_id,city,country_code,languages,online_enabled,in_person_enabled,public_region,photo_url,intro_video_url,about,experience_summary,education_summary,specialties,identity_verified,documents_verified,profile_verified,view_count,lgbtq_self_identified,show_lgbtq_badge,operating_countries,open_to_international_projects,open_to_partnerships,international_positioning,show_passport_badge",
+      "id,professional_account_id,slug,display_name,professional_title,profile_headline,category_id,city,country_code,languages,online_enabled,in_person_enabled,public_region,photo_url,intro_video_url,about,experience_summary,education_summary,specialties,identity_verified,documents_verified,profile_verified,view_count,lgbtq_self_identified,show_lgbtq_badge,operating_countries,open_to_international_projects,open_to_partnerships,international_positioning,show_passport_badge,google_reviews_url",
     )
     .eq("slug", slug)
     .eq("is_public", true)
@@ -177,6 +177,7 @@ export async function saveProfessionalMediaAndIdentity(
     pressTopics?: string[];
     pressLanguages?: string[];
     pressContactConsent?: boolean;
+    googleReviewsUrl?: string | null;
   },
 ) {
   const { data: account } = await db
@@ -219,6 +220,18 @@ export async function saveProfessionalMediaAndIdentity(
   if (input.pressTopics !== undefined) patch.press_topics = [...new Set(input.pressTopics.map((x) => x.trim()).filter(Boolean))].slice(0, 30);
   if (input.pressLanguages !== undefined) patch.press_languages = [...new Set(input.pressLanguages.map((x) => x.trim()).filter(Boolean))].slice(0, 12);
   if (input.pressContactConsent !== undefined) patch.press_contact_consent = Boolean(input.pressContactConsent);
+  if (input.googleReviewsUrl !== undefined) {
+    const v = input.googleReviewsUrl?.trim() || null;
+    if (v) {
+      let parsed: URL;
+      try { parsed = new URL(v); } catch { fail("Use um link HTTPS válido para as avaliações do Google."); }
+      if (parsed.protocol !== "https:") fail("Use um link HTTPS para as avaliações do Google.");
+      const host = parsed.hostname.toLowerCase();
+      const allowed = host === "google.com" || host.endsWith(".google.com") || host === "goo.gl" || host.endsWith(".goo.gl");
+      if (!allowed) fail("Use o link oficial da sua página ou avaliações no Google.");
+    }
+    patch.google_reviews_url = v;
+  }
   const { error } = await db
     .from("professional_profiles")
     .update(patch)
