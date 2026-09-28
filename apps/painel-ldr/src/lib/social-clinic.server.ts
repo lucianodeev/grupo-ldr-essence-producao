@@ -90,8 +90,24 @@ async function ensureSocialClinicStripeCatalog() {
 }
 
 export async function getSocialClinicLanding() {
+  // Render sandbox has no Supabase project. Keep the public landing available
+  // with safe static defaults; writes/auth remain unavailable rather than bypassed.
+  if (!process.env["SUPABASE_URL"] || !process.env["SUPABASE_PUBLISHABLE_KEY"]) {
+    return {
+      profile: null,
+      profiles: [],
+      availability: [],
+      reviews: [],
+      pricing: { brlCents: BRL_FALLBACK, eurCents: EUR_FALLBACK },
+      commissions: {
+        social: DEFAULT_PLATFORM_FEE_PERCENT / 100,
+        professionalDirect: DEFAULT_PLATFORM_FEE_PERCENT / 100,
+        ldrGenerated: DEFAULT_PLATFORM_FEE_PERCENT / 100,
+      },
+      stripe: null,
+    };
+  }
   // Public landing data must respect RLS and must not require an admin secret.
-  // This keeps the public clinic available on any host that has the publishable key.
   const requestAuth = await resolveRequestAuth();
   const publicDb = requestAuth.supabase as unknown as { from: (table: string) => any };
 
