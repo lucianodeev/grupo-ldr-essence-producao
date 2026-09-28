@@ -33,10 +33,10 @@ export const internationalPressMentions=[startupValleyMention, rysentraMention, 
 
 export function PressMention({ mention = startupValleyMention }: { mention?: PressMentionData }) {
   return (
-    <article className="rounded-3xl border border-[#d9d2c0] bg-white p-6 shadow-sm">
-      <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
+    <article className="min-w-0 overflow-hidden rounded-3xl border border-[#d9d2c0] bg-white p-6 shadow-sm">
+      <div className="flex min-w-0 flex-col gap-5 xl:flex-row xl:items-center">
         {mention.logoSrc ? (
-          <div className="flex min-h-20 w-full items-center justify-center rounded-2xl bg-white p-4 ring-1 ring-slate-200 sm:w-52">
+          <div className="flex min-h-20 w-full min-w-0 items-center justify-center rounded-2xl bg-white p-4 ring-1 ring-slate-200 xl:w-52 xl:shrink-0">
             <div role="img" aria-label="StartupValley.news" className="flex w-full max-w-[220px] flex-col items-center justify-center px-2 py-3">
               <div className="whitespace-nowrap text-center font-sans text-[32px] font-extrabold leading-none tracking-[-0.055em] sm:text-[34px]">
                 <span className="text-[#1789d5]">Startup</span><span className="text-[#111111]">Valley</span>
@@ -48,11 +48,11 @@ export function PressMention({ mention = startupValleyMention }: { mention?: Pre
         ) : null}
         <div className="min-w-0 flex-1">
           <p className="text-xs font-black uppercase tracking-[.18em] text-[#8b6c1f]">Cobertura editorial internacional</p>
-          <h3 className="mt-2 text-2xl font-black text-slate-950">{mention.mediaOutlet}</h3>
-          <p className="mt-2 font-bold text-slate-800">{mention.title}</p>
-          <p className="mt-3 leading-7 text-slate-600">{mention.description}</p>
-          <p className="mt-3 text-xs text-slate-500">{mention.mediaType} · {mention.language} · {mention.relatedProject}</p>
-          <a href={mention.originalUrl} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex min-h-12 items-center justify-center rounded-full bg-[#071f36] px-5 py-3 text-sm font-black text-white">
+          <h3 className="mt-2 break-words text-xl font-black leading-tight text-slate-950 sm:text-2xl">{mention.mediaOutlet}</h3>
+          <p className="mt-2 break-words font-bold leading-6 text-slate-800">{mention.title}</p>
+          <p className="mt-3 break-words leading-7 text-slate-600">{mention.description}</p>
+          <p className="mt-3 break-words text-xs leading-5 text-slate-500">{mention.mediaType} · {mention.language} · {mention.relatedProject}</p>
+          <a href={mention.originalUrl} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex min-h-12 max-w-full items-center justify-center rounded-full text-center leading-snug bg-[#071f36] px-5 py-3 text-sm font-black text-white">
             Ler entrevista original
           </a>
         </div>
