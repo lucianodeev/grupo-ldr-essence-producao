@@ -23,6 +23,7 @@ export const professionalServiceSave = createServerFn({ method: "POST" })
     quoteRequired?: boolean;
     availableForPrivate?: boolean;
     availableForCompany?: boolean;
+    availableForSocial?: boolean;
   }) => data)
   .handler(async ({ context, data }) => {
     const { saveProfessionalService } = await import("@/lib/professional-services.server");
