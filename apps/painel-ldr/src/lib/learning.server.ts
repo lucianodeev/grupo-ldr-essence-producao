@@ -11,9 +11,13 @@ async function requireClient(userId: string, email: string | null) {
 }
 
 async function requireProfessional(userId: string) {
-  const { data } = await supabaseAdmin.from("user_roles").select("role").eq("user_id", userId).maybeSingle();
+  const { data } = await supabaseAdmin
+    .from("professional_accounts")
+    .select("id,status")
+    .eq("auth_user_id", userId)
+    .maybeSingle();
   if (!data) fail("Acesso profissional não autorizado.");
-  return data.role as string;
+  return data.id as string;
 }
 
 async function clientCommentDeleteEnabled() {
