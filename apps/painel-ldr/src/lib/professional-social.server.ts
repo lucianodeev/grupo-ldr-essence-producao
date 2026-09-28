@@ -23,6 +23,8 @@ export async function getEnhancedPublicProfessional(slug: string) {
     { data: availability },
     { data: reviews },
     { data: externalReviews },
+    { data: busyBookings },
+    { data: unavailability },
   ] = await Promise.all([
     db
       .from("professional_categories")
@@ -32,7 +34,7 @@ export async function getEnhancedPublicProfessional(slug: string) {
     db
       .from("professional_services")
       .select(
-        "id,name,description,modality,duration_minutes,currency,price_cents,city,public_location,booking_enabled,active,sort_order",
+        "id,name,description,modality,duration_minutes,currency,price_cents,city,public_location,booking_enabled,active,sort_order,available_for_social",
       )
       .eq("professional_profile_id", profile.id)
       .eq("active", true)
@@ -59,6 +61,19 @@ export async function getEnhancedPublicProfessional(slug: string) {
       .eq("published", true)
       .order("review_date", { ascending: false })
       .limit(50),
+    db
+      .from("marketplace_bookings")
+      .select("starts_at,ends_at,status,checkout_expires_at")
+      .eq("professional_profile_id", profile.id)
+      .in("status", ["awaiting_payment","confirmed"])
+      .gte("ends_at", new Date().toISOString())
+      .limit(500),
+    db
+      .from("professional_unavailability")
+      .select("starts_at,ends_at")
+      .eq("professional_profile_id", profile.id)
+      .gte("ends_at", new Date().toISOString())
+      .limit(500),
   ]);
   void db
     .from("professional_profiles")
@@ -125,6 +140,7 @@ export async function getEnhancedPublicProfessional(slug: string) {
     category,
     services: services ?? [],
     availability: availability ?? [],
+    busy: [...(busyBookings ?? []).filter((b: any) => b.status === "confirmed" || !b.checkout_expires_at || new Date(b.checkout_expires_at).getTime() > Date.now()), ...(unavailability ?? [])].map((b: any) => ({ starts_at: b.starts_at, ends_at: b.ends_at })),
     reviews: deduplicatedReviews,
     passport: {
       score: passportScore,
