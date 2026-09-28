@@ -46,6 +46,25 @@ async function getPlatformFeePercent() {
   return Number.isFinite(percent) && percent >= 0 && percent <= 100 ? percent : DEFAULT_PLATFORM_FEE_PERCENT;
 }
 
+async function resolveLdrOneServiceDiscount(clientSource: ClientSource) {
+  if (clientSource === "social_clinic") return { percent: 0, subscriptionId: null as string | null, billingCycle: null as string | null };
+  try {
+    const auth = await resolveRequestAuth();
+    if (!auth.authenticated || !auth.userId) return { percent: 0, subscriptionId: null, billingCycle: null };
+    const email = typeof auth.claims?.["email"] === "string" ? String(auth.claims["email"]) : null;
+    const { resolveClient } = await import("@/lib/client-portal.server");
+    const client = await resolveClient(auth.userId, email);
+    if (client.status !== "ok") return { percent: 0, subscriptionId: null, billingCycle: null };
+    const { data: subscription } = await db.from("ldr_pass_subscriptions").select("id,status,billing_cycle,current_period_end").eq("customer_id", client.customer.id).in("status", ["active","trialing"]).order("created_at", { ascending: false }).limit(1).maybeSingle();
+    if (!subscription?.id) return { percent: 0, subscriptionId: null, billingCycle: null };
+    if (subscription.current_period_end && new Date(subscription.current_period_end).getTime() <= Date.now()) return { percent: 0, subscriptionId: null, billingCycle: null };
+    const billingCycle = String(subscription.billing_cycle || "");
+    return { percent: billingCycle === "annual" ? 10 : billingCycle === "monthly" ? 5 : 0, subscriptionId: subscription.id as string, billingCycle };
+  } catch {
+    return { percent: 0, subscriptionId: null, billingCycle: null };
+  }
+}
+
 async function ensureAccount(userId: string, email: string | null) {
   const { data: existing } = await db.from("professional_accounts").select("*").eq("auth_user_id", userId).maybeSingle();
   if (existing) return existing;
@@ -184,7 +203,10 @@ export async function createMarketplaceBookingCheckout(input: { profileSlug: str
   const clientSource: ClientSource = input.clientSource === "social_clinic" || input.clientSource === "professional_direct" ? input.clientSource : "ldr_generated";
   if (clientSource === "social_clinic" && !service.available_for_social) fail("Este profissional não disponibilizou este serviço na Clínica Social.");
   const socialGross = String(service.currency).toUpperCase() === "BRL" ? 8000 : String(service.currency).toUpperCase() === "EUR" ? 3000 : null;
-  const gross = clientSource === "social_clinic" && socialGross != null ? socialGross : moneyInt(service.price_cents);
+  const baseGross = clientSource === "social_clinic" && socialGross != null ? socialGross : moneyInt(service.price_cents);
+  const oneBenefit = await resolveLdrOneServiceDiscount(clientSource);
+  const discountCents = oneBenefit.percent > 0 ? Math.round(baseGross * oneBenefit.percent / 100) : 0;
+  const gross = Math.max(0, baseGross - discountCents);
   const feePercent = await getPlatformFeePercent();
   const split = calculatePlatformSplit(gross, feePercent);
   const rate = feePercent / 100;
@@ -223,6 +245,6 @@ export async function createMarketplaceBookingCheckout(input: { profileSlug: str
   const session = await response.json() as { id?: string; url?: string; error?: { message?: string } };
   if (!response.ok || !session.id || !session.url) { await db.from("marketplace_bookings").update({ status: "cancelled_client" }).eq("id", booking.id); fail(session.error?.message || "Não foi possível abrir o checkout."); }
   await db.from("marketplace_payments").update({ stripe_checkout_session_id: session.id }).eq("id", payment.id);
-  await db.from("audit_logs").insert({ action: "professional_network.booking_source", target: booking.id, actor_email: mail, details: { client_source: clientSource, commission_rate: rate, platform_fee_cents: platformFee, professional_account_id: profile.professional_account_id } });
-  return { url: session.url };
+  await db.from("audit_logs").insert({ action: "professional_network.booking_source", target: booking.id, actor_email: mail, details: { client_source: clientSource, commission_rate: rate, platform_fee_cents: platformFee, professional_account_id: profile.professional_account_id, base_gross_amount_cents: baseGross, ldr_one_discount_percent: oneBenefit.percent, ldr_one_discount_cents: discountCents, ldr_one_subscription_id: oneBenefit.subscriptionId, ldr_one_billing_cycle: oneBenefit.billingCycle } });
+  return { url: session.url, discountPercent: oneBenefit.percent, discountCents, baseGrossAmountCents: baseGross, grossAmountCents: gross };
 }
