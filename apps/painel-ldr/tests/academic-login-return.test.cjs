@@ -178,3 +178,15 @@ test('client-side entry preserves the destination route before the browser URL c
     });
   }
 });
+
+test('LDR ONE returns to the official domain checkout after login and rejects external targets', async () => {
+  const checkout = '/ldr-pass?billing=annual&seats=8';
+  assert.equal(helper.academicReturnPath(checkout), checkout);
+  for (const target of ['//evil.test/ldr-pass', 'https://evil.test/ldr-pass', '/ldr-pass/../admin', '/ldr-pass\\evil']) {
+    assert.equal(helper.academicReturnPath(target), null);
+  }
+  const response = await callback().run('https://ldrrhestrategia.com/api/auth/callback?code=test-only', ssr.serializeCookieHeader(helper.ACADEMIC_RETURN_COOKIE, checkout));
+  assert.equal(response.status, 303);
+  assert.equal(response.headers.get('location'), checkout);
+  assert.match(response.headers.get('set-cookie'), /test-session=fixture/);
+});
