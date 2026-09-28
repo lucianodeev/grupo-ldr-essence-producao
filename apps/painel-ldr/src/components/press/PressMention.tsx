@@ -25,7 +25,13 @@ export const startupValleyMention: PressMentionData = {
   logoSrc: "/media/press/startupvalley-logo.png?v=official-20260921",
 };
 
-export const rysentraMention: PressMentionData = { id:"rysentra-luciano-2026", mediaOutlet:"Rysentra Magazine", title:"How Luciano Almeida Built Opportunities Across Brazil and Europe", description:"Entrevista editorial sobre a trajetória entre Brasil e Europa e a construção do Ecossistema LDR.", publicationDate:"2026-09-27", originalUrl:"https://rysentra.com/luciano-rodrigues-almeida-building-opportunities/", language:"English", country:"International", mediaType:"Feature Interview", relatedProject:"Ecossistema LDR" };\n\nexport const escapeArtistMention: PressMentionData = { id:"escape-artist-luciano-2026", mediaOutlet:"Escape Artist", title:"From Selling Bananas in Brazil to Building a Life in Europe", description:"História editorial sobre a trajetória de Bahia a São Paulo e Europa, publicada pela Escape Artist.", publicationDate:"2026-09-24", originalUrl:"https://www.escapeartist.com/blog/moving-from-brazil-to-europe/", language:"English", country:"International", mediaType:"Feature Story", relatedProject:"Luciano Rodrigues Almeida / Ecossistema LDR" };\n\nexport const internationalPressMentions=[startupValleyMention, rysentraMention, escapeArtistMention];\n\nexport function PressMention({ mention = startupValleyMention }: { mention?: PressMentionData }) {
+export const rysentraMention: PressMentionData = { id:"rysentra-luciano-2026", mediaOutlet:"Rysentra Magazine", title:"How Luciano Almeida Built Opportunities Across Brazil and Europe", description:"Entrevista editorial sobre a trajetória entre Brasil e Europa e a construção do Ecossistema LDR.", publicationDate:"2026-09-27", originalUrl:"https://rysentra.com/luciano-rodrigues-almeida-building-opportunities/", language:"English", country:"International", mediaType:"Feature Interview", relatedProject:"Ecossistema LDR" };
+
+export const escapeArtistMention: PressMentionData = { id:"escape-artist-luciano-2026", mediaOutlet:"Escape Artist", title:"From Selling Bananas in Brazil to Building a Life in Europe", description:"História editorial sobre a trajetória de Bahia a São Paulo e Europa, publicada pela Escape Artist.", publicationDate:"2026-09-24", originalUrl:"https://www.escapeartist.com/blog/moving-from-brazil-to-europe/", language:"English", country:"International", mediaType:"Feature Story", relatedProject:"Luciano Rodrigues Almeida / Ecossistema LDR" };
+
+export const internationalPressMentions=[startupValleyMention, rysentraMention, escapeArtistMention];
+
+export function PressMention({ mention = startupValleyMention }: { mention?: PressMentionData }) {
   return (
     <article className="rounded-3xl border border-[#d9d2c0] bg-white p-6 shadow-sm">
       <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
@@ -57,4 +63,5 @@ export const rysentraMention: PressMentionData = { id:"rysentra-luciano-2026", m
     </article>
   );
 }
-\nexport function InternationalPressMentions(){return <div className="grid gap-5 lg:grid-cols-3">{internationalPressMentions.map((mention)=><PressMention key={mention.id} mention={mention}/>)}</div>}\n
+
+export function InternationalPressMentions(){return <div className="grid gap-5 lg:grid-cols-3">{internationalPressMentions.map((mention)=><PressMention key={mention.id} mention={mention}/>)}</div>}
