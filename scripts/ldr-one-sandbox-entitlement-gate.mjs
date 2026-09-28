@@ -7,8 +7,11 @@ export async function checkSandboxEntitlement({db,identity}){
  const result=await db.query(
   `SELECT s.id,s.plan,s.status,s.seats,
     CASE WHEN s.plan='individual' THEN s.user_id=$1
-         ELSE EXISTS(SELECT 1 FROM public.ldr_one_sandbox_seat_assignments a
-                     WHERE a.subscription_id=s.id AND a.user_id=$1) END AS seat_authorized
+         ELSE (
+           (SELECT count(*) FROM public.ldr_one_sandbox_seat_assignments a WHERE a.subscription_id=s.id) <= s.seats
+           AND EXISTS(SELECT 1 FROM public.ldr_one_sandbox_seat_assignments a
+                      WHERE a.subscription_id=s.id AND a.user_id=$1)
+         ) END AS seat_authorized
    FROM public.ldr_one_sandbox_subscriptions s
    WHERE s.customer_id=$2 AND s.status IN ('active','trialing')
    ORDER BY s.created_at DESC LIMIT 25`,[identity.userId,identity.customerId]);
