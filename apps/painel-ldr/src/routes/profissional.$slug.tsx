@@ -23,6 +23,7 @@ import {
 } from "@/lib/professional-social.functions";
 
 export const Route = createFileRoute("/profissional/$slug")({
+  validateSearch: (search: Record<string, unknown>) => ({ source: search.source === "social_clinic" ? "social_clinic" as const : undefined, service: typeof search.service === "string" ? search.service : undefined }),
   loader: ({ params }) => enhancedPublicProfessional({ data: { slug: params.slug } }),
   head: ({ loaderData, params }) => {
     const p = (loaderData as any)?.profile;
@@ -231,12 +232,13 @@ function money(c: number | null, currency: string | null, locale: string) {
 }
 function Page() {
   const { slug } = Route.useParams();
+  const search = Route.useSearch();
   const data = Route.useLoaderData() as any;
   const { locale } = useI18n();
   const c = COPY[locale];
   const checkout = useServerFn(marketplaceBookingCheckout);
   const createReview = useServerFn(professionalReviewCreate);
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState(search.service || "");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [date, setDate] = useState("");
@@ -296,6 +298,7 @@ function Page() {
           customerEmail: email,
           timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || "Europe/Brussels",
           modality: mode,
+          clientSource: search.source === "social_clinic" ? "social_clinic" : "professional_direct",
         },
       });
       location.assign(r.url);
