@@ -121,52 +121,13 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function CompanyPlanCards() {
   const { locale } = useI18n();
-  const copy = GLOBAL_COPY[locale];
-  return (
-    <section aria-label={copy.plansAria} className="mx-auto w-full max-w-7xl px-4 pb-8 sm:px-6 lg:px-8">
-      <div className="overflow-hidden rounded-[2rem] border bg-card p-6 shadow-lg shadow-primary/5 sm:p-8">
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <p className="text-xs font-black uppercase tracking-[.16em] text-primary">{copy.eyebrow}</p>
-            <h2 className="mt-2 font-serif text-3xl">{copy.plansTitle}</h2>
-            <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">{copy.plansText}</p>
-          </div>
-          <Link to="/assinatura-empresa" className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-black text-primary-foreground shadow-md transition hover:-translate-y-0.5">
-            <Sparkles className="h-4 w-4" /> {copy.manage}
-          </Link>
-        </div>
-
-        <div className="mt-6 grid gap-4 lg:grid-cols-3">
-          <article className="rounded-2xl border bg-background p-5">
-            <div className="flex items-start justify-between gap-3"><div><p className="text-xs font-black uppercase tracking-[.12em] text-primary">Essencial</p><h3 className="mt-1 font-serif text-2xl">LDR Empresa Essencial</h3></div><UsersRound className="h-6 w-6 text-primary" /></div>
-            <p className="mt-3 text-sm text-muted-foreground">{copy.essentialRange}</p>
-            <p className="mt-3 text-2xl font-black">€149 <span className="text-sm font-semibold text-muted-foreground">{copy.month}</span></p>
-            <p className="text-sm font-semibold text-muted-foreground">{copy.or} R$ 699{copy.month}</p>
-            <div className="mt-4 space-y-2 text-sm"><p className="flex gap-2"><Check className="mt-0.5 h-4 w-4 text-primary"/>{copy.essentialCredit}</p><p className="flex gap-2"><Check className="mt-0.5 h-4 w-4 text-primary"/>{copy.employeeBenefits}</p></div>
-            <Link to="/assinatura-empresa" className="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-xl border border-primary px-4 py-3 text-sm font-black text-primary">{copy.subscribe}</Link>
-          </article>
-
-          <article className="rounded-2xl border-2 border-primary bg-primary/5 p-5 shadow-md">
-            <div className="flex items-start justify-between gap-3"><div><p className="text-xs font-black uppercase tracking-[.12em] text-primary">Pro</p><h3 className="mt-1 font-serif text-2xl">LDR Empresa Pro</h3></div><Building2 className="h-6 w-6 text-primary" /></div>
-            <p className="mt-3 text-sm text-muted-foreground">{copy.proRange}</p>
-            <p className="mt-3 text-2xl font-black">€349 <span className="text-sm font-semibold text-muted-foreground">{copy.month}</span></p>
-            <p className="text-sm font-semibold text-muted-foreground">{copy.or} R$ 1.690{copy.month}</p>
-            <div className="mt-4 space-y-2 text-sm"><p className="flex gap-2"><Check className="mt-0.5 h-4 w-4 text-primary"/>{copy.proCredit}</p><p className="flex gap-2"><Check className="mt-0.5 h-4 w-4 text-primary"/>{copy.proBenefits}</p></div>
-            <Link to="/assinatura-empresa" className="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-primary px-4 py-3 text-sm font-black text-primary-foreground">{copy.subscribe}</Link>
-          </article>
-
-          <article className="rounded-2xl border bg-background p-5">
-            <div className="flex items-start justify-between gap-3"><div><p className="text-xs font-black uppercase tracking-[.12em] text-primary">Personalizado</p><h3 className="mt-1 font-serif text-2xl">LDR Empresa Personalizado</h3></div><Sparkles className="h-6 w-6 text-primary" /></div>
-            <p className="mt-3 text-sm text-muted-foreground">{copy.customRange}</p>
-            <p className="mt-3 text-2xl font-black">{copy.customPrice}</p>
-            <p className="text-sm font-semibold text-muted-foreground">{copy.customHint}</p>
-            <div className="mt-4 space-y-2 text-sm"><p className="flex gap-2"><Check className="mt-0.5 h-4 w-4 text-primary"/>{copy.customServices}</p><p className="flex gap-2"><Check className="mt-0.5 h-4 w-4 text-primary"/>{copy.realtime}</p></div>
-            <Link to="/assinatura-empresa" className="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-xl border border-primary px-4 py-3 text-sm font-black text-primary">{copy.configure}</Link>
-          </article>
-        </div>
-      </div>
-    </section>
-  );
+  const text = {
+    pt:{eyebrow:"LDR ONE BUSINESS",title:"Uma assinatura digital para toda a equipe",desc:"Cursos, formações, eBooks e conteúdos digitais pagos elegíveis para cada colaborador. Mínimo de 5 colaboradores.",monthly:"€19,90 por colaborador/mês",annual:"€199 por colaborador/ano",cta:"VER LDR ONE BUSINESS",note:"Serviços humanos e atendimentos continuam contratados separadamente."},
+    en:{eyebrow:"LDR ONE BUSINESS",title:"One digital subscription for the whole team",desc:"Eligible paid courses, training, eBooks and digital content for each employee. Minimum 5 employees.",monthly:"€19.90 per employee/month",annual:"€199 per employee/year",cta:"VIEW LDR ONE BUSINESS",note:"Human services and appointments remain separate."},
+    fr:{eyebrow:"LDR ONE BUSINESS",title:"Un abonnement numérique pour toute l’équipe",desc:"Cours, formations, eBooks et contenus numériques payants éligibles pour chaque collaborateur. Minimum 5 collaborateurs.",monthly:"19,90 € par collaborateur/mois",annual:"199 € par collaborateur/an",cta:"VOIR LDR ONE BUSINESS",note:"Les services humains et rendez-vous restent séparés."},
+    es:{eyebrow:"LDR ONE BUSINESS",title:"Una suscripción digital para todo el equipo",desc:"Cursos, formaciones, eBooks y contenidos digitales de pago elegibles para cada empleado. Mínimo 5 empleados.",monthly:"€19,90 por empleado/mes",annual:"€199 por empleado/año",cta:"VER LDR ONE BUSINESS",note:"Los servicios humanos y las citas se contratan por separado."}
+  }[locale];
+  return <section className="mx-auto w-full max-w-7xl px-4 pb-8 sm:px-6 lg:px-8"><div className="rounded-[2rem] border bg-card p-6 shadow-lg shadow-primary/5 sm:p-8"><p className="text-xs font-black uppercase tracking-[.16em] text-primary">{text.eyebrow}</p><h2 className="mt-2 font-serif text-3xl">{text.title}</h2><p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">{text.desc}</p><div className="mt-6 grid gap-4 md:grid-cols-2"><div className="rounded-2xl border bg-background p-5"><p className="text-2xl font-black">{text.monthly}</p></div><div className="rounded-2xl border bg-background p-5"><p className="text-2xl font-black">{text.annual}</p></div></div><p className="mt-4 text-sm text-muted-foreground">{text.note}</p><Link to="/ldr-pass" className="mt-5 inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-5 py-3 text-sm font-black text-primary-foreground"><Sparkles className="mr-2 h-4 w-4"/>{text.cta}</Link></div></section>;
 }
 
 function LazyAdSenseScript() {
