@@ -276,7 +276,8 @@ function EcosystemMap() {
   const discoverLabel = locale==="en"?"Discover":locale==="fr"?"Découvrir":locale==="es"?"Conocer":"Conhecer";
   const newsQuery=useQuery({queryKey:["ecosystem-news",locale],queryFn:()=>ecosystemNews({data:{locale}}),staleTime:15*60*1000,retry:1});
   const liveNews=newsQuery.data??[];
-  const central=CENTRAL_ACCESS_COPY[locale]??CENTRAL_ACCESS_COPY.pt;\n  const partnership=PARTNERSHIP_COPY[locale]??PARTNERSHIP_COPY.pt;
+  const central=CENTRAL_ACCESS_COPY[locale]??CENTRAL_ACCESS_COPY.pt;
+  const partnership=PARTNERSHIP_COPY[locale]??PARTNERSHIP_COPY.pt;
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#f8f1e7] text-[#25170f] [overflow-wrap:anywhere]">
       <div className="fixed inset-x-0 top-0 z-[100] w-full border-y border-[#d6ad63]/30 bg-[#071426] text-white shadow-md" aria-label={copy.tickerLabel}>
