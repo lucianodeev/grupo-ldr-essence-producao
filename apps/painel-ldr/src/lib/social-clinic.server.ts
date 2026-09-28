@@ -144,10 +144,11 @@ export async function getSocialClinicLanding() {
         .order("created_at", { ascending: false })
         .limit(30),
       publicDb.from("professional_services")
-        .select("professional_profile_id,id,name,description,modality,duration_minutes,currency,price_cents,booking_enabled,active,approval_status")
+        .select("professional_profile_id,id,name,description,modality,duration_minutes,currency,price_cents,booking_enabled,active,approval_status,available_for_social")
         .in("professional_profile_id", profileIds)
         .eq("active", true)
-        .eq("approval_status", "approved"),
+        .eq("approval_status", "approved")
+        .eq("available_for_social", true),
     ]);
     availability = slots ?? [];
     reviews = reviewRows ?? [];
@@ -160,7 +161,7 @@ export async function getSocialClinicLanding() {
     active_service_count: serviceRows.filter((service: any) => service.professional_profile_id === item.id).length,
     booking_enabled: serviceRows.some((service: any) => service.professional_profile_id === item.id && service.booking_enabled),
     services: serviceRows.filter((service: any) => service.professional_profile_id === item.id && service.booking_enabled),
-  }));
+  })).filter((item: any) => item.services.length > 0);
 
   const profile = professionals.find((item: any) => item.slug === LUCIANO_SLUG) ?? professionals[0] ?? null;
   const legacyAvailability = profile
