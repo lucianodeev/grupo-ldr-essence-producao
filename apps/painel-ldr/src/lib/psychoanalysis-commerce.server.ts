@@ -3,6 +3,7 @@ import { paidCourseProjectApproved } from "@/lib/paid-course-project-policy.serv
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { resolveClient } from "@/lib/client-portal.server";
 import { hasOwnerDigitalAccess } from "@/lib/owner-digital-access.server";
+import { hasActiveLdrOne } from "@/lib/ldr-one-entitlement.server";
 
 const PRODUCT_KEY="formacao_psicanalise";
 const PRODUCT_SLUG="formacao-psicanalise";
@@ -25,7 +26,7 @@ function appOrigin(){const request=getRequest();const requestUrl=request?new URL
 function daysSince(value:string|null|undefined){if(!value)return 0;const time=Date.parse(value);if(!Number.isFinite(time))return 0;return Math.max(0,Math.floor((Date.now()-time)/86_400_000));}
 
 async function ensureProgram(){
-  const description="Formação livre em Psicanálise com 15 módulos, 240 unidades de aprendizagem, carga horária formativa total de 1.200 horas, 6 encontros ao vivo, projetos e avaliações, com autismo, neurodiversidade e atuação internacional.";
+  const description="Formação livre em Psicanálise com 15 módulos, 240 unidades de aprendizagem, carga horária formativa total de 1.200 horas, 100% online e sob demanda, projetos e avaliações, com autismo, neurodiversidade e atuação internacional.";
   const {data:existing}=await db.from("training_programs").select("id,slug,title,status").eq("slug",PRODUCT_SLUG).maybeSingle();
   if(existing){
     if(existing.status!=="published"){
