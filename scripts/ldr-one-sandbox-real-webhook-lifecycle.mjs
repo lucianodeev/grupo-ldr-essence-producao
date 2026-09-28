@@ -22,7 +22,7 @@ export async function probeRealStripeWebhook({db,env}){
   if(sub.status!=="incomplete")throw Error("Probe must remain unpaid and incomplete");
   stage="wait_for_real_signed_creation";await waitFor(row=>row?.status==="incomplete"&&row.stripe_subscription_id===sub.id);
   if((await checkSandboxEntitlement({db,identity})).allowed)throw Error("Unpaid TEST subscription granted access");
-  stage="cancel_test_subscription";const canceled=await api("subscriptions/"+encodeURIComponent(sub.id),null,"DELETE");if(!["canceled","incomplete_expired"].includes(canceled.status))throw Error("Unexpected TEST cancellation state: "+String(canceled.status??"missing"));sub=null;
+  stage="cancel_test_subscription";const canceled=await api("subscriptions/"+encodeURIComponent(sub.id),null,"DELETE");if(!["canceled","incomplete_expired"].includes(canceled.status))throw Error("Unexpected TEST cancellation response: "+JSON.stringify({status:canceled.status??null,deleted:canceled.deleted??null,object:canceled.object??null}));sub=null;
   stage="wait_for_real_signed_cancellation";await waitFor(row=>row?.status==="canceled");
   if((await checkSandboxEntitlement({db,identity})).allowed)throw Error("Canceled subscription granted access");
   console.log("LDR ONE REAL STRIPE SIGNED WEBHOOK VERIFIED: incomplete -> canceled; no unpaid access");
