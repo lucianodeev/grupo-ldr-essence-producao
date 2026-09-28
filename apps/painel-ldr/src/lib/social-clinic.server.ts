@@ -144,7 +144,7 @@ export async function getSocialClinicLanding() {
         .order("created_at", { ascending: false })
         .limit(30),
       publicDb.from("professional_services")
-        .select("professional_profile_id,id,booking_enabled,active,approval_status")
+        .select("professional_profile_id,id,name,description,modality,duration_minutes,currency,price_cents,booking_enabled,active,approval_status")
         .in("professional_profile_id", profileIds)
         .eq("active", true)
         .eq("approval_status", "approved"),
@@ -159,6 +159,7 @@ export async function getSocialClinicLanding() {
     availability_count: availability.filter((slot: any) => slot.professional_profile_id === item.id).length,
     active_service_count: serviceRows.filter((service: any) => service.professional_profile_id === item.id).length,
     booking_enabled: serviceRows.some((service: any) => service.professional_profile_id === item.id && service.booking_enabled),
+    services: serviceRows.filter((service: any) => service.professional_profile_id === item.id && service.booking_enabled),
   }));
 
   const profile = professionals.find((item: any) => item.slug === LUCIANO_SLUG) ?? professionals[0] ?? null;
