@@ -60,6 +60,30 @@ async function ensureEmployeeCapacity(organizationId: string) {
   if (Number(count ?? 0) >= limit) fail(`Seu plano atual permite até ${limit} funcionários.`);
 }
 
+export async function setLdrOneBusinessSeat(userId: string, email: string | null, memberId: string, assigned: boolean) {
+  const org = await requireOrganization(userId);
+  const { data: member } = await db.from("organization_members").select("id,organization_id,portal_active").eq("id", memberId).eq("organization_id", org.id).maybeSingle();
+  if (!member?.id) fail("Funcionário não encontrado.");
+  const { data: customer } = await db.from("customers").select("id").eq("auth_user_id", userId).maybeSingle();
+  if (!customer?.id) fail("Conta responsável não vinculada ao LDR ONE.");
+  const { data: subscription } = await db.from("ldr_pass_subscriptions").select("id,ldr_one_seats,status,plan").eq("customer_id", customer.id).eq("plan", "business").in("status", ["active","trialing"]).order("created_at", { ascending: false }).limit(1).maybeSingle();
+  if (!subscription?.id) fail("LDR ONE Business ativo não encontrado.");
+  if (assigned) {
+    if (!member.portal_active) fail("Ative o funcionário antes de atribuir um seat.");
+    const { count } = await db.from("ldr_one_seat_assignments").select("id", { count: "exact", head: true }).eq("subscription_id", subscription.id).is("revoked_at", null);
+    const { data: existing } = await db.from("ldr_one_seat_assignments").select("id").eq("subscription_id", subscription.id).eq("member_id", member.id).is("revoked_at", null).maybeSingle();
+    if (!existing && Number(count ?? 0) >= Number(subscription.ldr_one_seats ?? 0)) fail("Todos os seats do LDR ONE Business já estão atribuídos.");
+    if (!existing) {
+      const { error } = await db.from("ldr_one_seat_assignments").insert({ subscription_id: subscription.id, member_id: member.id });
+      if (error) fail("Não foi possível atribuir o acesso LDR ONE.");
+    }
+  } else {
+    await db.from("ldr_one_seat_assignments").update({ revoked_at: new Date().toISOString(), updated_at: new Date().toISOString() }).eq("subscription_id", subscription.id).eq("member_id", member.id).is("revoked_at", null);
+  }
+  await audit(userId, emailNorm(email), assigned ? "ldr_one.seat_assigned" : "ldr_one.seat_revoked", member.id, { subscription_id: subscription.id });
+  return { ok: true as const };
+}
+
 export async function getOrganizationDashboard(userId: string) {
   const org = await requireOrganization(userId);
   const [{ data: members }, { data: services }, { data: purchases }, { data: benefits }] = await Promise.all([
