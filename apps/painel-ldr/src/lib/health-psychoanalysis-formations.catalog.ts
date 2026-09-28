@@ -1,6 +1,6 @@
 import type { PF } from "@/lib/professional-formations.catalog";
 
-const make=(x:Omit<PF,"includedInSubscription">)=>({...x,includedInSubscription:false}) as PF;
+const make=(x:Omit<PF,"includedInSubscription">)=>({...x,includedInSubscription:true}) as PF;
 
 export const HEALTH_PSYCHOANALYSIS_FORMATIONS:PF[]=[
 make({slug:"sexologia-humana-terapia-sexual" as any,productKey:"formacao_sexologia_humana_terapia_sexual_600h",publicPath:"/formacoes/sexologia-humana-terapia-sexual",learnerPath:"/cliente/treinamentos/curso-avulso/sexologia-humana-terapia-sexual",icon:"❤️",theme:"wine",priceBrlCents:18000,priceEurCents:2990,hours:600,lessons:144,modulesCount:24,minimumDays:75,i18n:{
