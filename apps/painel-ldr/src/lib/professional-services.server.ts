@@ -208,3 +208,23 @@ export async function setProfessionalServiceActive(userId: string, input: { id: 
   if (error) throw error;
   return { ok: true as const };
 }
+
+
+export async function setProfessionalServiceSocial(userId: string, input: { id: string; available: boolean }) {
+  const { profile } = await context(userId);
+  const { data: service } = await db.from("professional_services")
+    .select("id,active,approval_status,booking_enabled,currency")
+    .eq("id", input.id).eq("professional_profile_id", profile.id).maybeSingle();
+  if (!service) fail("Serviço não encontrado.");
+  if (input.available && (!service.active || service.approval_status !== "approved" || !service.booking_enabled)) {
+    fail("Ative o checkout deste serviço antes de disponibilizá-lo na Clínica Social.");
+  }
+  if (input.available && !["EUR","BRL"].includes(String(service.currency).toUpperCase())) {
+    fail("A Clínica Social está disponível para serviços em EUR ou BRL.");
+  }
+  const { error } = await db.from("professional_services")
+    .update({ available_for_social: Boolean(input.available), updated_at: new Date().toISOString() })
+    .eq("id", service.id).eq("professional_profile_id", profile.id);
+  if (error) throw error;
+  return { ok: true as const };
+}
