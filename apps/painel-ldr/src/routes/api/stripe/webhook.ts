@@ -253,6 +253,8 @@ async function setLdrPassSubscription(metadata: Record<string,string>, object: S
   if(eventType==="checkout.session.expired"||eventType==="customer.subscription.deleted")status="canceled";
   const allowed=new Set(["pending","active","trialing","past_due","canceled","unpaid","paused","incomplete"]); if(!allowed.has(status))status="incomplete";
   const patch:Record<string,unknown>={status,updated_at:new Date().toISOString()};
+  const seats=Number(metadata["seats"]);if(Number.isSafeInteger(seats)&&seats>0)patch.ldr_one_seats=seats;
+  if(metadata["plan"]==="individual"||metadata["plan"]==="business")patch.ldr_one_offer=metadata["plan"];
   if(eventType==="checkout.session.completed"||eventType==="checkout.session.expired")patch.stripe_checkout_session_id=object.id??null;
   if(subscriptionId)patch.stripe_subscription_id=subscriptionId; const customer=stripeId(object.customer);if(customer)patch.stripe_customer_id=customer;
   const start=isoFromUnix(object.current_period_start);if(start)patch.current_period_start=start;const end=isoFromUnix(object.current_period_end);if(end)patch.current_period_end=end;
