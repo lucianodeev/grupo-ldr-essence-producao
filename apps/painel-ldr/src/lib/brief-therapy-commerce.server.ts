@@ -3,6 +3,7 @@ import { paidCourseProjectApproved } from "@/lib/paid-course-project-policy.serv
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { resolveClient } from "@/lib/client-portal.server";
 import { hasOwnerDigitalAccess } from "@/lib/owner-digital-access.server";
+import { hasActiveLdrOne } from "@/lib/ldr-one-entitlement.server";
 
 const PRODUCT_KEY="formacao_terapia_breve_psicanalitica";
 const PRODUCT_SLUG="formacao-terapia-breve-psicanalitica";
@@ -28,12 +29,12 @@ async function ensureProgram(){
   const {data:existing}=await db.from("training_programs").select("id,slug,title,status").eq("slug",PRODUCT_SLUG).maybeSingle();
   if(existing){
     if(existing.status!=="published"){
-      const {data:published}=await db.from("training_programs").update({status:"published",description:"Formação livre em Terapia Breve Psicanalítica com 15 módulos, 300 aulas, carga horária formativa total de 1.200 horas e 6 encontros ao vivo."}).eq("id",existing.id).select("id,slug,title,status").single();
+      const {data:published}=await db.from("training_programs").update({status:"published",description:"Formação livre em Terapia Breve Psicanalítica com 15 módulos, 300 aulas, carga horária formativa total de 1.200 horas e 100% online e sob demanda."}).eq("id",existing.id).select("id,slug,title,status").single();
       return published??{...existing,status:"published"};
     }
     return existing;
   }
-  const {data,error}=await db.from("training_programs").insert({slug:PRODUCT_SLUG,title:TITLE,description:"Formação livre em Terapia Breve Psicanalítica com 15 módulos, 300 aulas, carga horária formativa total de 1.200 horas e 6 encontros ao vivo.",status:"published"}).select("id,slug,title,status").single();
+  const {data,error}=await db.from("training_programs").insert({slug:PRODUCT_SLUG,title:TITLE,description:"Formação livre em Terapia Breve Psicanalítica com 15 módulos, 300 aulas, carga horária formativa total de 1.200 horas e 100% online e sob demanda.",status:"published"}).select("id,slug,title,status").single();
   if(error||!data)throw error??new Error("Falha ao preparar a formação.");
   return data;
 }
