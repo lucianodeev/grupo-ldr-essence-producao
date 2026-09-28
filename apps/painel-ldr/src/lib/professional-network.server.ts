@@ -130,36 +130,44 @@ export async function getProfessionalDashboard(userId: string, email: string | n
   const visibleEvents = events ?? [];
   const visibleCommunity = community ?? [];
   const access = { planCode, free: true, community: true, liveTraining: true, mentoriaS8: true };
-  return { account, profile, subscription: subscription ?? null, plans: plans ?? [], bookings: bookings ?? [], payments: payments ?? [], balances: balances ?? [], payouts: payouts ?? [], documents: documents ?? [], events: visibleEvents, community: visibleCommunity, services: services ?? [], availability: availability ?? [], categories: categories ?? [], config: config ?? [], access };
+  const legacyComplete = Boolean(account.onboarding_completed || account.status === "approved" || account.status === "active" || (profile?.is_public && profile?.compliance_status === "approved"));
+  const requiredProfile = profile ? {
+    photo: Boolean(profile.photo_url), name: Boolean(profile.display_name?.trim()), title: Boolean(profile.professional_title?.trim()), category: Boolean(profile.category_id),
+    city: Boolean(profile.city?.trim()), languages: Array.isArray(profile.languages) && profile.languages.length > 0, about: Boolean(profile.about?.trim()),
+    experience: Boolean(profile.experience_summary?.trim()), education: Boolean(profile.education_summary?.trim()), specialties: Array.isArray(profile.specialties) && profile.specialties.length > 0,
+    modality: Boolean(profile.online_enabled || profile.in_person_enabled),
+  } : {};
+  const missingProfileFields = legacyComplete ? [] : Object.entries(requiredProfile).filter(([,ok])=>!ok).map(([key])=>key);
+  const profileCompletion = legacyComplete ? 100 : Math.round((Object.values(requiredProfile).filter(Boolean).length / Math.max(1,Object.keys(requiredProfile).length))*100);
+  return { account, profile, profileCompletion, missingProfileFields, legacyComplete, subscription: subscription ?? null, plans: plans ?? [], bookings: bookings ?? [], payments: payments ?? [], balances: balances ?? [], payouts: payouts ?? [], documents: documents ?? [], events: visibleEvents, community: visibleCommunity, services: services ?? [], availability: availability ?? [], categories: categories ?? [], config: config ?? [], access };
 }
 
 export async function saveProfessionalOnboarding(userId: string, email: string | null, input: { step: number; countryCode?: string; currency?: "EUR"|"BRL"; displayName?: string; slug?: string; professionalTitle?: string; categoryId?: string; city?: string; languages?: string[]; onlineEnabled?: boolean; inPersonEnabled?: boolean; about?: string; experienceSummary?: string; educationSummary?: string; specialties?: string[] }) {
   const account = await ensureAccount(userId, email);
   const step = Math.max(1, Math.min(7, Number(input.step || 1)));
-  const accountPatch: Record<string, unknown> = { onboarding_step: step, updated_at: new Date().toISOString() };
-  if (input.countryCode) accountPatch.country_code = input.countryCode.toUpperCase();
-  if (input.currency) accountPatch.preferred_currency = input.currency;
-  if (step >= 7) { accountPatch.onboarding_completed = true; accountPatch.status = "under_review"; }
-  await db.from("professional_accounts").update(accountPatch).eq("id", account.id);
-
-  if (input.displayName && input.professionalTitle && input.categoryId) {
-    const slug = (input.slug || input.displayName).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "").slice(0, 80);
-    const payload = {
-      professional_account_id: account.id, slug, display_name: input.displayName.trim(), professional_title: input.professionalTitle.trim(), category_id: input.categoryId,
-      city: input.city?.trim() || null, country_code: (input.countryCode || account.country_code || "BE").toUpperCase(), languages: input.languages?.length ? input.languages : ["pt"],
-      online_enabled: Boolean(input.onlineEnabled), in_person_enabled: Boolean(input.inPersonEnabled), about: input.about?.trim() || null,
-      experience_summary: input.experienceSummary?.trim() || null, education_summary: input.educationSummary?.trim() || null, specialties: input.specialties ?? [],
-      compliance_status: "needs_review", profile_status: "review", is_public: false, updated_at: new Date().toISOString(),
-    };
-    const { data: current } = await db.from("professional_profiles").select("id").eq("professional_account_id", account.id).maybeSingle();
-    if (current) await db.from("professional_profiles").update(payload).eq("id", current.id);
-    else {
-      const { error } = await db.from("professional_profiles").insert(payload);
-      if (error?.code === "23505") fail("Este endereço público já está em uso. Ajuste o nome/slug.");
-      if (error) throw error;
-    }
-  }
-  return getProfessionalDashboard(userId, email);
+  if (!input.displayName?.trim() || !input.professionalTitle?.trim() || !input.categoryId) fail("Preencha nome, título e categoria.");
+  const { data: current } = await db.from("professional_profiles").select("*").eq("professional_account_id", account.id).maybeSingle();
+  const alreadyApproved = Boolean(current?.is_public && current?.profile_status === "active" && current?.compliance_status === "approved");
+  const slug = (input.slug || current?.slug || input.displayName).toLowerCase().normalize("NFD").replace(/[\\u0300-\\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "").slice(0, 80);
+  const payload: Record<string,unknown> = {
+    professional_account_id: account.id, slug, display_name: input.displayName.trim(), professional_title: input.professionalTitle.trim(), category_id: input.categoryId,
+    city: input.city?.trim() || null, country_code: (input.countryCode || account.country_code || "BE").toUpperCase(), languages: input.languages?.length ? input.languages : [],
+    online_enabled: Boolean(input.onlineEnabled), in_person_enabled: Boolean(input.inPersonEnabled), about: input.about?.trim() || null,
+    experience_summary: input.experienceSummary?.trim() || null, education_summary: input.educationSummary?.trim() || null, specialties: input.specialties ?? [], updated_at: new Date().toISOString(),
+  };
+  if (!alreadyApproved) Object.assign(payload,{ compliance_status:"needs_review", profile_status:"review", is_public:false });
+  if (current) { const {error}=await db.from("professional_profiles").update(payload).eq("id",current.id); if(error)throw error; }
+  else { const {error}=await db.from("professional_profiles").insert(payload); if(error?.code==="23505")fail("Este endereço público já está em uso. Ajuste o nome/slug."); if(error)throw error; }
+  const merged={...(current??{}),...payload};
+  const complete = alreadyApproved || Boolean(merged.photo_url && String(merged.display_name||"").trim() && String(merged.professional_title||"").trim() && merged.category_id && String(merged.city||"").trim() && Array.isArray(merged.languages) && merged.languages.length && String(merged.about||"").trim() && String(merged.experience_summary||"").trim() && String(merged.education_summary||"").trim() && Array.isArray(merged.specialties) && merged.specialties.length && (merged.online_enabled || merged.in_person_enabled));
+  const accountPatch: Record<string,unknown>={updated_at:new Date().toISOString()};
+  if(input.countryCode)accountPatch.country_code=input.countryCode.toUpperCase(); if(input.currency)accountPatch.preferred_currency=input.currency;
+  if(alreadyApproved){accountPatch.onboarding_step=7;accountPatch.onboarding_completed=true;}
+  else if(step>=7 && complete){accountPatch.onboarding_step=7;accountPatch.onboarding_completed=true;accountPatch.status="under_review";}
+  else {accountPatch.onboarding_step=Math.min(step,6);accountPatch.onboarding_completed=false;accountPatch.status="incomplete";}
+  await db.from("professional_accounts").update(accountPatch).eq("id",account.id);
+  if(step>=7 && !complete) fail("Complete 100% do perfil antes de enviar para análise. A foto é obrigatória; vídeo, agenda e serviços são opcionais para a completude.");
+  return getProfessionalDashboard(userId,email);
 }
 
 export async function addProfessionalAvailability(userId: string, email: string | null, input: { serviceId?: string | null; weekday: number; startTime: string; endTime: string; timezone: string; intervalMinutes?: number; bufferMinutes?: number; modality?: "online"|"in_person"|"both"; locationLabel?: string | null }) {
