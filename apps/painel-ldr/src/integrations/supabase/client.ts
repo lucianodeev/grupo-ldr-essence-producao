@@ -39,13 +39,29 @@ function createSupabaseClient() {
     import.meta.env["VITE_SUPABASE_PUBLISHABLE_KEY"] || serverEnv?.["SUPABASE_PUBLISHABLE_KEY"];
 
   if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
-    const missing = [
-      ...(!SUPABASE_URL ? ["SUPABASE_URL"] : []),
-      ...(!SUPABASE_PUBLISHABLE_KEY ? ["SUPABASE_PUBLISHABLE_KEY"] : []),
-    ];
-    const message = `Missing Supabase environment variable(s): ${missing.join(", ")}. Connect Supabase in Lovable Cloud.`;
-    console.error(`[Supabase] ${message}`);
-    throw new Error(message);
+    // LDR ONE Render sandbox can run without a Supabase project. Public routes
+    // must remain renderable, while every auth/data operation fails closed.
+    const unavailable = () => Promise.resolve({
+      data: { user: null, session: null, subscription: { unsubscribe() {} } },
+      error: new Error("Supabase is not configured in this environment"),
+    });
+    const query = new Proxy({}, {
+      get: () => () => query,
+    });
+    Object.assign(query, {
+      then: (resolve: (value: unknown) => void) =>
+        Promise.resolve({ data: null, error: new Error("Supabase is not configured in this environment") }).then(resolve),
+    });
+    return {
+      auth: {
+        onAuthStateChange: () => ({ data: { subscription: { unsubscribe() {} } } }),
+        getUser: unavailable,
+        getSession: unavailable,
+        signOut: unavailable,
+      },
+      from: () => query,
+      storage: { from: () => ({ uploadToSignedUrl: unavailable }) },
+    } as unknown as ReturnType<typeof createBrowserClient<Database>>;
   }
 
   return createBrowserClient<Database>(normalizeSupabaseUrl(SUPABASE_URL), SUPABASE_PUBLISHABLE_KEY, {
