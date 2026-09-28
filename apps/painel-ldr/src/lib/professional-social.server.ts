@@ -91,20 +91,10 @@ export async function getEnhancedPublicProfessional(slug: string) {
     international:
       Array.isArray(profile.operating_countries) && profile.operating_countries.length > 0,
   };
-  const passportRequiredItems = {
-    identity: passportItems.identity,
-    documents: passportItems.documents,
-    photo: passportItems.photo,
-    languages: passportItems.languages,
-    services: passportItems.services,
-    availability: passportItems.availability,
-    international: passportItems.international,
-  };
-  const passportScore = Math.round(
-    (Object.values(passportRequiredItems).filter(Boolean).length /
-      Object.keys(passportRequiredItems).length) *
-      100,
-  );
+  // Public profiles have already passed administrative approval. Services, agenda,
+  // international availability and video are optional operational enhancements and
+  // must never make an approved professional look "incomplete".
+  const passportScore = 100;
   const allReviews = [
     ...(reviews ?? []).map((review: any) => ({
       ...review,
