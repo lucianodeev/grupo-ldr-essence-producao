@@ -168,7 +168,7 @@ export async function createMarketplaceBookingCheckout(input: { profileSlug: str
   if (!Number.isFinite(start.getTime()) || start.getTime() < Date.now() + 5 * 60_000) fail("Horário inválido ou já muito próximo.");
   const { data: profile } = await db.from("professional_profiles").select("id,professional_account_id,display_name,country_code").eq("slug", input.profileSlug).eq("is_public", true).eq("profile_status", "active").eq("compliance_status", "approved").maybeSingle();
   if (!profile) fail("Profissional indisponível.");
-  const { data: service } = await db.from("professional_services").select("id,name,modality,duration_minutes,currency,price_cents,booking_enabled,public_location").eq("id", input.serviceId).eq("professional_profile_id", profile.id).eq("active", true).eq("approval_status", "approved").eq("booking_enabled", true).maybeSingle();
+  const { data: service } = await db.from("professional_services").select("id,name,modality,duration_minutes,currency,price_cents,booking_enabled,public_location,available_for_social").eq("id", input.serviceId).eq("professional_profile_id", profile.id).eq("active", true).eq("approval_status", "approved").eq("booking_enabled", true).maybeSingle();
   if (!service || !service.currency || service.price_cents == null) fail("Este serviço ainda não está disponível para checkout.");
   if (service.modality !== "both" && service.modality !== input.modality) fail("Modalidade indisponível para este serviço.");
   const { data: rules } = await db.from("professional_availability").select("weekday,start_time,end_time,timezone,modality,effective_from,effective_until").eq("professional_profile_id", profile.id).eq("active", true).or(`professional_service_id.eq.${service.id},professional_service_id.is.null`);
@@ -181,8 +181,10 @@ export async function createMarketplaceBookingCheckout(input: { profileSlug: str
   const end = new Date(start.getTime() + Number(service.duration_minutes) * 60_000);
   const { data: blocked } = await db.from("professional_unavailability").select("id").eq("professional_profile_id", profile.id).lt("starts_at", end.toISOString()).gt("ends_at", start.toISOString()).limit(1);
   if ((blocked ?? []).length) fail("Este horário está indisponível.");
-  const gross = moneyInt(service.price_cents);
   const clientSource: ClientSource = input.clientSource === "social_clinic" || input.clientSource === "professional_direct" ? input.clientSource : "ldr_generated";
+  if (clientSource === "social_clinic" && !service.available_for_social) fail("Este profissional não disponibilizou este serviço na Clínica Social.");
+  const socialGross = String(service.currency).toUpperCase() === "BRL" ? 8000 : String(service.currency).toUpperCase() === "EUR" ? 2500 : null;
+  const gross = clientSource === "social_clinic" && socialGross != null ? socialGross : moneyInt(service.price_cents);
   const feePercent = await getPlatformFeePercent();
   const split = calculatePlatformSplit(gross, feePercent);
   const rate = feePercent / 100;
@@ -202,8 +204,8 @@ export async function createMarketplaceBookingCheckout(input: { profileSlug: str
   params.set("line_items[0][price_data][product_data][name]", `${service.name} — ${profile.display_name}`);
   params.set("line_items[0][quantity]", "1");
   params.set("customer_email", mail);
-  params.set("success_url", `${origin()}/profissional/${input.profileSlug}?booking=success`);
-  params.set("cancel_url", `${origin()}/profissional/${input.profileSlug}?booking=cancel`);
+  params.set("success_url", clientSource === "social_clinic" ? `${origin()}/clinica-social?booking=success` : `${origin()}/profissional/${input.profileSlug}?booking=success`);
+  params.set("cancel_url", clientSource === "social_clinic" ? `${origin()}/clinica-social?booking=cancel` : `${origin()}/profissional/${input.profileSlug}?booking=cancel`);
   params.set("expires_at", String(Math.floor(Date.now() / 1000) + 30 * 60));
   params.set("metadata[checkout_kind]", "marketplace_booking");
   params.set("metadata[booking_id]", booking.id);
