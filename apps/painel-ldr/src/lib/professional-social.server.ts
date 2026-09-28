@@ -227,7 +227,7 @@ export async function saveProfessionalMediaAndIdentity(
       try { parsed = new URL(v); } catch { fail("Use um link HTTPS válido para as avaliações do Google."); }
       if (parsed.protocol !== "https:") fail("Use um link HTTPS para as avaliações do Google.");
       const host = parsed.hostname.toLowerCase();
-      const allowed = host === "google.com" || host.endsWith(".google.com") || host === "goo.gl" || host.endsWith(".goo.gl");
+      const allowed = host === "google.com" || host.endsWith(".google.com") || host === "goo.gl" || host.endsWith(".goo.gl") || host === "share.google";
       if (!allowed) fail("Use o link oficial da sua página ou avaliações no Google.");
     }
     patch.google_reviews_url = v;
