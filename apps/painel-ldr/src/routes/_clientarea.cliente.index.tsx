@@ -14,7 +14,6 @@ export const Route = createFileRoute("/_clientarea/cliente/")({ component: Clien
 const OPEN_ORDER = new Set(["novo", "em_analise", "em_andamento", "aguardando_cliente", "em_revisao"]);
 
 const QUICK = [
-  { to: "/cliente/contratar", title: "Contratar e agendar", text: "Serviços, sessões, pacotes e agendamento", icon: ShoppingBag, featured: true },
   { to: "/cliente/biblioteca", title: "Minha Biblioteca", text: "Livros, e-books e conteúdos", icon: BookOpen },
   { to: "/cliente/treinamentos", title: "Treinamentos", text: "Módulos, materiais e fórum", icon: GraduationCap },
   { to: "/cliente/agenda", title: "Minha agenda", text: "Próximos encontros e sessões", icon: CalendarDays },
