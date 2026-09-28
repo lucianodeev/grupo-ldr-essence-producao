@@ -58,7 +58,7 @@ const KEYWORDS: Record<Exclude<Topic, "human" | "library">, string[]> = {
 };
 
 const EDITORIAL_INFO: Record<Locale, string> = {
-  pt: "Revista Psicanálise no Mundo · 🇧🇷 R$ 3,90 por semana · 🇪🇺 € 3,90 por semana. Assinatura semanal recorrente, separada da assinatura principal da biblioteca.",
+  pt: "Revista Psicanálise no Mundo · conteúdo digital elegível incluído no LDR ONE.",
   en: "Revista Psicanálise no Mundo · 🇧🇷 R$ 3.90 per week · 🇪🇺 € 3.90 per week. Recurring weekly subscription, separate from the main library subscription.",
   fr: "Revista Psicanálise no Mundo · 🇧🇷 R$ 3,90 par semaine · 🇪🇺 3,90 € par semaine. Abonnement hebdomadaire récurrent, séparé de l’abonnement principal à la bibliothèque.",
   es: "Revista Psicanálise no Mundo · 🇧🇷 R$ 3,90 por semana · 🇪🇺 € 3,90 por semana. Suscripción semanal recurrente, separada de la suscripción principal de la biblioteca.",
