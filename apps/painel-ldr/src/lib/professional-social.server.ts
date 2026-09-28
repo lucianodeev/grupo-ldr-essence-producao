@@ -1,4 +1,5 @@
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { resolveRequestAuth } from "@/integrations/supabase/request-auth.server";
 
 const db = supabaseAdmin as unknown as { from: (table: string) => any };
 function fail(message: string): never {
@@ -132,12 +133,29 @@ export async function getEnhancedPublicProfessional(slug: string) {
     .sort((a: any, b: any) =>
       String(b.review_date ?? b.created_at).localeCompare(String(a.review_date ?? a.created_at)),
     );
+  let ldrOneBenefit = { active: false, discountPercent: 0, billingCycle: null as string | null };
+  try {
+    const auth = await resolveRequestAuth();
+    if (auth.authenticated && auth.userId) {
+      const email = typeof auth.claims?.["email"] === "string" ? String(auth.claims["email"]) : null;
+      const { resolveClient } = await import("@/lib/client-portal.server");
+      const client = await resolveClient(auth.userId, email);
+      if (client.status === "ok") {
+        const { data: one } = await db.from("ldr_pass_subscriptions").select("status,billing_cycle,current_period_end").eq("customer_id", client.customer.id).in("status", ["active","trialing"]).order("created_at", { ascending: false }).limit(1).maybeSingle();
+        if (one && (!one.current_period_end || new Date(one.current_period_end).getTime() > Date.now())) {
+          const cycle=String(one.billing_cycle || "");
+          ldrOneBenefit={active:true,discountPercent:cycle==="annual"?10:cycle==="monthly"?5:0,billingCycle:cycle};
+        }
+      }
+    }
+  } catch { /* public profile remains available without authenticated benefit */ }
   return {
     profile: {
       ...profile,
       lgbtq_public: Boolean(profile.lgbtq_self_identified && profile.show_lgbtq_badge),
     },
     category,
+    ldrOneBenefit,
     services: services ?? [],
     availability: availability ?? [],
     busy: [...(busyBookings ?? []).filter((b: any) => b.status === "confirmed" || !b.checkout_expires_at || new Date(b.checkout_expires_at).getTime() > Date.now()), ...(unavailability ?? [])].map((b: any) => ({ starts_at: b.starts_at, ends_at: b.ends_at })),
