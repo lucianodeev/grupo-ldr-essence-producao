@@ -1,26 +1,28 @@
 # LDR ONE — production release gates (review only)
 
-Verified 2026-09-28. This document is not authorization to merge or deploy unfinished payment features.
+Verified 2026-09-28. This document is evidence, not authorization to merge, deploy production billing, or charge customers.
 
-## Verified
-- Draft PR #236 head ee1c14e0c107800e0d391c91fbb7f5aa502af796. Sandbox unit run #131 succeeded.
-- Isolated Render receiver srv-das6drvavr4c7397dflg latest deployed cebe445c2865b794c493324f455563b2ca145e1b, live.
-- Existing Vercel painel-ldr production deployment on main at 49c5d2b64bb9eb3e80dc6d6d30bd90fdbd069a11 is READY; separate from PR #236.
-- Stripe TEST customer and subscription created/canceled and signed subscription events reached isolated receiver; disposable probe intentionally did not grant access.
+## Verified in isolated sandbox
+- Draft PR #236 remains the working release vehicle.
+- LDR ONE sandbox unit checks run #170 succeeded at commit db7ead4b76516eacea2476e8c04b684d4bb6fd21.
+- Isolated Render service srv-das6drvavr4c7397dflg returned to normal mode and is live after one-shot tests.
+- Private PostgreSQL login/session integration passed with rollback.
+- Business seats passed against private PostgreSQL with rollback: seat limit, over-allocation denial and revocation.
+- Entitlement gate fails closed when Business assignments exceed purchased seats.
+- Real Stripe TEST signed lifecycle passed: incomplete -> incomplete_expired, no unpaid entitlement, signed terminal event persisted, Stripe customer and probe DB rows cleaned up.
+- Authenticated Stripe TEST checkout previously passed: verified private login -> session-bound checkout -> pending scoped record -> TEST checkout expiration -> DB rollback.
+- Server-only isolated portal adapter is covered by CI for authenticated access, terminal-subscription denial, CSRF-protected logout and secure cookie clearing.
+- Production Supabase is not reused by the sandbox adapter.
 
-## Independent workstreams
-1. Portal inventory and route smoke tests: public landing, client, professional, enterprise, library, clinic and career. Check Google OAuth callback domains and prohibit master/admin exposure.
-2. Dedicated sandbox auth: review invite-only schema, rate limiting, secure session issuance, CSRF, password reset, email verification and isolation; test first invited user. Do not enable incomplete local auth.
-3. Individual checkout: verified identity -> pending record -> Stripe TEST -> signed webhook -> scoped active entitlement -> cancellation/revocation. No redirect-based access.
-4. Business checkout: min five seats, seat roster ownership and revocation, test monthly/annual pricing and no cross-company access.
-5. Production operations: secrets and isolated live billing setup only after complete end-to-end sandbox evidence, backups, monitoring, rollback, legal/privacy review, verified domain ownership.
+## Still required before production
+1. **Permanent persistence** — replace the expiring free sandbox PostgreSQL with a durable production database and documented backup/restore. Current free DB expires 2026-10-27.
+2. **Production-candidate portal regression** — smoke-test public/client/professional/company/library/clinic/career routes and authorization boundaries on the exact release candidate.
+3. **Production billing configuration** — only after explicit authorization: configure Stripe LIVE products/prices, live webhook secret and production environment variables. Never copy TEST identifiers into LIVE.
+4. **Operations and compliance** — monitoring/alerting, support/refund/cancellation workflow, privacy/legal/tax review and verified production domain/callback configuration.
+5. **Release procedure** — confirm rollback, review PR #236, remove Draft only after all blockers above pass, then merge/deploy under explicit production authorization.
 
-## Release blockers
-- No verified end-to-end real user login/session and isolated identity directory.
-- No verified full checkout-to-entitlement-to-revocation sequence for Individual and Business.
-- No verified production live Stripe credentials, live webhook, payment tax/legal review or customer support workflow.
-- No full cross-portal route and authorization regression report on the actual production candidate.
-- Existing sandbox private PostgreSQL free plan expires 2026-10-27; do not use as production persistence.
+## External CI status note
+The LDR ONE-specific GitHub workflow is green. Repository-wide deployment contexts can fail or remain pending independently (for example blocked Vercel preview contexts); those are not treated as LDR ONE test success and must be resolved/reviewed before release.
 
 ## Go/no-go
-No PR merge, production credential changes, public checkout enablement or customer charging until all blockers are resolved and a rollback-tested candidate is approved. Keep PR #236 draft and all existing production services unchanged meanwhile.
+NO-GO for customer charging today. Keep Stripe LIVE disabled, public checkout disabled, PR #236 Draft, and production services unchanged until permanent persistence, production-candidate regression, operational/compliance checks, and explicit production authorization are complete.
