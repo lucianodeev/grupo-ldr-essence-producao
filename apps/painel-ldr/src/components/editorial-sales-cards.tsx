@@ -30,7 +30,7 @@ export function EditorialSalesCards(){
           </div>
           <div className="rounded-2xl border border-white/15 bg-white/10 p-5 text-right backdrop-blur-sm">
             <p className="text-xs font-black uppercase tracking-[.12em] text-white/60">LDR ONE</p>
-            <p className="mt-2 text-2xl font-black !text-white">{locale==="fr"?"Inclus dans LDR ONE":locale==="en"?"Included with LDR ONE":locale==="es"?"Incluido en LDR ONE":"Incluído no LDR ONE"}</p>
+            <p className="mt-2 text-2xl font-black !text-white">{locale==="fr"?"Inclus dans LDR ONE":locale==="en"?"Included with LDR ONE":locale==="es"?"Incluido en LDR ONE":"Acesso LDR ONE"}</p>
           </div>
         </div>
         <span className="mt-7 inline-flex rounded-xl bg-[#f0c775] px-6 py-3 text-xs font-black text-[#2b1642] shadow-lg">{t.subscribePsy} →</span>
