@@ -1,1 +1,67 @@
-import{createFileRoute}from"@tanstack/react-router";import{FormEvent,useState}from"react";import{humanRoomClient}from"@/lib/human-room-browser";export const Route=createFileRoute("/human-room/login")({component:Page});function Page(){const[m,setM]=useState(""),[mode,setMode]=useState<"login"|"signup">("login");const rawNext=typeof window!=="undefined"?new URLSearchParams(window.location.search).get("next"):null,next=rawNext?.startsWith("/human-room/")&&!rawNext.startsWith("//")?rawNext:null;async function go(e:FormEvent<HTMLFormElement>){e.preventDefault();setM("");const f=new FormData(e.currentTarget),email=String(f.get("email")),password=String(f.get("password")),s=humanRoomClient();if(mode==="signup"){const{data,error}=await s.auth.signUp({email,password});if(error)return setM(error.message);if(!data.session)return setM("Conta criada. Confirme seu e-mail e depois entre no Human Room.");location.href="/human-room/perfil"+(next?"?next="+encodeURIComponent(next):"");return}const{data,error}=await s.auth.signInWithPassword({email,password});if(error)return setM(error.message);const{data:p}=await s.from("profiles").select("is_adult").eq("id",data.user.id).maybeSingle();location.href=p?.is_adult?(next||"/human-room/salas"):("/human-room/perfil"+(next?"?next="+encodeURIComponent(next):""))}return <main className="min-h-screen bg-[#f7f5ef] p-5"><form onSubmit={go} className="mx-auto mt-20 max-w-lg rounded-3xl border bg-white p-7"><a href="/human-room" className="font-black">HUMAN ROOM</a><h1 className="my-6 font-serif text-4xl font-bold">{mode==="login"?"Entrar":"Criar acesso"}</h1><input className="mb-3 w-full rounded-xl border p-4" name="email" type="email" placeholder="E-mail" required/><input className="mb-3 w-full rounded-xl border p-4" name="password" type="password" placeholder="Senha (mínimo 8 caracteres)" minLength={8} required/><button className="w-full rounded-full bg-[#121826] p-4 font-black text-white">{mode==="login"?"ENTRAR":"CRIAR ACESSO"}</button><button type="button" onClick={()=>{setMode(mode==="login"?"signup":"login");setM("")}} className="mt-4 w-full text-sm font-bold underline">{mode==="login"?"CRIAR CONTA":"JÁ TENHO CONTA"}</button>{m&&<p className="mt-4 text-sm">{m}</p>}</form></main>}
+import { createFileRoute } from "@tanstack/react-router";
+import { FormEvent, useEffect, useState } from "react";
+import { humanRoomClient } from "@/lib/human-room-browser";
+export const Route = createFileRoute("/human-room/login")({ component: Page });
+function Page() {
+  const [m, setM] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [mode, setMode] = useState<"login" | "signup" | "recover" | "reset">("login");
+  const rawNext = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("next") : null;
+  const next = rawNext?.startsWith("/human-room/") && !rawNext.startsWith("//") ? rawNext : null;
+  useEffect(() => {
+    const s = humanRoomClient();
+    const { data: { subscription } } = s.auth.onAuthStateChange((event: string) => {
+      if (event === "PASSWORD_RECOVERY") setMode("reset");
+    });
+    // The SSR client exchanges the PKCE callback before getUser resolves.
+    if (new URLSearchParams(location.search).get("recovery") === "1") {
+      s.auth.getUser().then(({ data, error }: any) => {
+        if (data.user && !error) setMode("reset");
+        else { setMode("recover"); setM("Abra o link recebido neste mesmo navegador. Se expirou, solicite outro abaixo."); }
+      });
+    }
+    return () => subscription.unsubscribe();
+  }, []);
+  async function go(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault(); if (busy) return;
+    setBusy(true); setM("");
+    const f = new FormData(e.currentTarget), email = String(f.get("email") || "").trim(), password = String(f.get("password") || ""), s = humanRoomClient();
+    try {
+      if (mode === "recover") {
+        const { error } = await s.auth.resetPasswordForEmail(email, { redirectTo: location.origin + "/human-room/login?recovery=1" });
+        if (error) throw error;
+        setM("Se houver uma conta para este e-mail, você receberá um link para redefinir a senha. Confira também o spam e abra o link neste mesmo navegador."); return;
+      }
+      if (mode === "reset") {
+        if (password !== String(f.get("confirm"))) { setM("As senhas precisam ser iguais."); return; }
+        const { data: { user }, error: authError } = await s.auth.getUser();
+        if (authError || !user) { setMode("recover"); setM("O link expirou. Solicite outro."); return; }
+        const { error } = await s.auth.updateUser({ password });
+        if (error) throw error;
+        await s.auth.signOut(); history.replaceState(null, "", "/human-room/login");
+        setMode("login"); setM("Senha atualizada. Entre com sua nova senha."); return;
+      }
+      if (mode === "signup") {
+        const { data, error } = await s.auth.signUp({ email, password });
+        if (error) throw error;
+        if (!data.session) { setM("Confira seu e-mail para concluir o cadastro. Se já possui conta, entre ou use Esqueci minha senha."); return; }
+        location.href = "/human-room/perfil" + (next ? "?next=" + encodeURIComponent(next) : ""); return;
+      }
+      const { data, error } = await s.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+      const { data: p, error: profileError } = await s.from("profiles").select("is_adult").eq("id", data.user.id).maybeSingle();
+      if (profileError) throw profileError;
+      location.href = p?.is_adult ? (next || "/human-room/salas") : ("/human-room/perfil" + (next ? "?next=" + encodeURIComponent(next) : ""));
+    } catch (error: any) { setM(error?.message || "Não foi possível concluir. Tente novamente."); }
+    finally { setBusy(false); }
+  }
+  return <main className="min-h-screen bg-[#f7f5ef] p-5"><form key={mode} onSubmit={go} className="mx-auto mt-20 max-w-lg rounded-3xl border bg-white p-7"><a href="/human-room" className="font-black">HUMAN ROOM</a><h1 className="my-6 font-serif text-4xl font-bold">{mode === "login" ? "Entrar" : mode === "signup" ? "Criar acesso" : mode === "recover" ? "Recuperar senha" : "Definir nova senha"}</h1>
+    {mode !== "reset" && <input className="mb-3 w-full rounded-xl border p-4" name="email" type="email" placeholder="E-mail" autoComplete="email" required />}
+    {mode !== "recover" && <input className="mb-3 w-full rounded-xl border p-4" name="password" type="password" placeholder="Senha (mínimo 8 caracteres)" autoComplete={mode === "login" ? "current-password" : "new-password"} minLength={8} required />}
+    {mode === "reset" && <input className="mb-3 w-full rounded-xl border p-4" name="confirm" type="password" placeholder="Confirme a nova senha" autoComplete="new-password" minLength={8} required />}
+    <button disabled={busy} className="w-full rounded-full bg-[#121826] p-4 font-black text-white disabled:opacity-60">{busy ? "AGUARDE…" : mode === "login" ? "ENTRAR" : mode === "signup" ? "CRIAR ACESSO" : mode === "recover" ? "ENVIAR LINK DE RECUPERAÇÃO" : "SALVAR NOVA SENHA"}</button>
+    <button type="button" onClick={() => { setMode(mode === "login" ? "signup" : "login"); setM(""); }} className="mt-4 w-full text-sm font-bold underline">{mode === "login" ? "CRIAR CONTA" : "JÁ TENHO CONTA"}</button>
+    {(mode === "login" || mode === "signup") && <button type="button" onClick={() => { setMode("recover"); setM(""); }} className="mt-4 w-full text-sm font-bold underline">ESQUECI MINHA SENHA</button>}
+    {m && <p role="status" className="mt-4 text-sm">{m}</p>}
+  </form></main>;
+}
