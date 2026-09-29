@@ -47,9 +47,11 @@ import { Route as FormacaoTerapiasContemporaneasRouteImport } from './routes/for
 import { Route as FormacaoTricologiaTerapiaCapilarRouteImport } from './routes/formacao-tricologia-terapia-capilar'
 import { Route as FormacaoVendasNegociacaoRouteImport } from './routes/formacao-vendas-negociacao'
 import { Route as FormularioRouteImport } from './routes/formulario'
+import { Route as HumanRoomRouteImport } from './routes/human-room'
 import { Route as ImprensaRouteImport } from './routes/imprensa'
 import { Route as InstituicoesRouteImport } from './routes/instituicoes'
 import { Route as LdrPassRouteImport } from './routes/ldr-pass'
+import { Route as LdrRhEstrategiaRouteImport } from './routes/ldr-rh-estrategia'
 import { Route as LivrosRouteImport } from './routes/livros'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as LucianoRodriguesAlmeidaRouteImport } from './routes/luciano-rodrigues-almeida'
@@ -118,6 +120,11 @@ import { Route as EmpresaLoginRouteImport } from './routes/empresa.login'
 import { Route as FormacaoSlugRouteImport } from './routes/formacao.$slug'
 import { Route as FormacoesSlugRouteImport } from './routes/formacoes.$slug'
 import { Route as FuncionarioLoginRouteImport } from './routes/funcionario.login'
+import { Route as HumanRoomCriarRouteImport } from './routes/human-room.criar'
+import { Route as HumanRoomLoginRouteImport } from './routes/human-room.login'
+import { Route as HumanRoomPerfilRouteImport } from './routes/human-room.perfil'
+import { Route as HumanRoomSalasRouteImport } from './routes/human-room.salas'
+import { Route as HumanRoomSegurancaRouteImport } from './routes/human-room.seguranca'
 import { Route as ImprensaIndexRouteImport } from './routes/imprensa.index'
 import { Route as ImprensaCorrespondentesRouteImport } from './routes/imprensa.correspondentes'
 import { Route as ImprensaDistribuicaoRouteImport } from './routes/imprensa.distribuicao'
@@ -132,6 +139,7 @@ import { Route as InstituicoesPainelRouteImport } from './routes/instituicoes.pa
 import { Route as LivrosSlugRouteImport } from './routes/livros_.$slug'
 import { Route as ProfissionaisCategoryRouteImport } from './routes/profissionais.$category'
 import { Route as ProfissionalSlugRouteImport } from './routes/profissional.$slug'
+import { Route as ProfissionalCadastroRouteImport } from './routes/profissional.cadastro'
 import { Route as ProfissionalLoginRouteImport } from './routes/profissional.login'
 import { Route as RedeProfissionaisTermosRouteImport } from './routes/rede-profissionais.termos'
 import { Route as VendedorAcademiaRouteImport } from './routes/vendedor.academia'
@@ -171,6 +179,7 @@ import { Route as AuthenticatedPainelProfissionalAcessosRouteImport } from './ro
 import { Route as AuthenticatedPainelProfissionalAgendaRouteImport } from './routes/_authenticated/painel-profissional.agenda'
 import { Route as AuthenticatedPainelProfissionalCatalogoRouteImport } from './routes/_authenticated/painel-profissional.catalogo'
 import { Route as AuthenticatedPainelProfissionalClientesRouteImport } from './routes/_authenticated/painel-profissional.clientes'
+import { Route as AuthenticatedPainelProfissionalClinicaSocialRouteImport } from './routes/_authenticated/painel-profissional.clinica-social'
 import { Route as AuthenticatedPainelProfissionalComentariosRouteImport } from './routes/_authenticated/painel-profissional.comentarios'
 import { Route as AuthenticatedPainelProfissionalConteudosCriadoresRouteImport } from './routes/_authenticated/painel-profissional.conteudos-criadores'
 import { Route as AuthenticatedPainelProfissionalDisponibilidadeRouteImport } from './routes/_authenticated/painel-profissional.disponibilidade'
@@ -221,6 +230,7 @@ import { Route as CarreiraEmpresaGuiaTriagemResponsavelRouteImport } from './rou
 import { Route as CarreiraEmpresaPublicarRouteImport } from './routes/carreira.empresa.publicar'
 import { Route as CarreiraProjetosProjectIdRouteImport } from './routes/carreira.projetos.$projectId'
 import { Route as CarreiraVagasJobIdRouteImport } from './routes/carreira.vagas.$jobId'
+import { Route as HumanRoomSalasSlugRouteImport } from './routes/human-room.salas.$slug'
 import { Route as ImprensaNoticiasSlugRouteImport } from './routes/imprensa.noticias.$slug'
 import { Route as ClientareaClienteBibliotecaProductKeyRouteImport } from './routes/_clientarea.cliente.biblioteca.$productKey'
 import { Route as ClientareaClienteBibliotecaArtigosCientificosRouteImport } from './routes/_clientarea.cliente.biblioteca.artigos-cientificos'
@@ -248,6 +258,7 @@ import { Route as ClientareaClienteRedeAcademicaCriarArtigoRouteImport } from '.
 import { Route as ClientareaClienteRedeAcademicaDesafiosRouteImport } from './routes/_clientarea.cliente.rede-academica.desafios'
 import { Route as ClientareaClienteRedeAcademicaEditarPerfilRouteImport } from './routes/_clientarea.cliente.rede-academica.editar-perfil'
 import { Route as ClientareaClienteRedeAcademicaNotificacoesRouteImport } from './routes/_clientarea.cliente.rede-academica.notificacoes'
+import { Route as ClientareaClienteRedeAcademicaOportunidadesRouteImport } from './routes/_clientarea.cliente.rede-academica.oportunidades'
 import { Route as ClientareaClienteRedeAcademicaSalvosRouteImport } from './routes/_clientarea.cliente.rede-academica.salvos'
 import { Route as ClientareaClienteTreinamentosDoMamaoAoNegocioRouteImport } from './routes/_clientarea.cliente.treinamentos.do-mamao-ao-negocio'
 import { Route as ClientareaClienteTreinamentosIaNegociosCarreiraRouteImport } from './routes/_clientarea.cliente.treinamentos.ia-negocios-carreira'
@@ -480,6 +491,11 @@ const FormularioRoute = FormularioRouteImport.update({
   path: '/formulario',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HumanRoomRoute = HumanRoomRouteImport.update({
+  id: '/human-room',
+  path: '/human-room',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ImprensaRoute = ImprensaRouteImport.update({
   id: '/imprensa',
   path: '/imprensa',
@@ -493,6 +509,11 @@ const InstituicoesRoute = InstituicoesRouteImport.update({
 const LdrPassRoute = LdrPassRouteImport.update({
   id: '/ldr-pass',
   path: '/ldr-pass',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LdrRhEstrategiaRoute = LdrRhEstrategiaRouteImport.update({
+  id: '/ldr-rh-estrategia',
+  path: '/ldr-rh-estrategia',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LivrosRoute = LivrosRouteImport.update({
@@ -840,6 +861,31 @@ const FuncionarioLoginRoute = FuncionarioLoginRouteImport.update({
   path: '/funcionario/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HumanRoomCriarRoute = HumanRoomCriarRouteImport.update({
+  id: '/criar',
+  path: '/criar',
+  getParentRoute: () => HumanRoomRoute,
+} as any)
+const HumanRoomLoginRoute = HumanRoomLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => HumanRoomRoute,
+} as any)
+const HumanRoomPerfilRoute = HumanRoomPerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
+  getParentRoute: () => HumanRoomRoute,
+} as any)
+const HumanRoomSalasRoute = HumanRoomSalasRouteImport.update({
+  id: '/salas',
+  path: '/salas',
+  getParentRoute: () => HumanRoomRoute,
+} as any)
+const HumanRoomSegurancaRoute = HumanRoomSegurancaRouteImport.update({
+  id: '/seguranca',
+  path: '/seguranca',
+  getParentRoute: () => HumanRoomRoute,
+} as any)
 const ImprensaIndexRoute = ImprensaIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -908,6 +954,11 @@ const ProfissionaisCategoryRoute = ProfissionaisCategoryRouteImport.update({
 const ProfissionalSlugRoute = ProfissionalSlugRouteImport.update({
   id: '/profissional/$slug',
   path: '/profissional/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfissionalCadastroRoute = ProfissionalCadastroRouteImport.update({
+  id: '/profissional/cadastro',
+  path: '/profissional/cadastro',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProfissionalLoginRoute = ProfissionalLoginRouteImport.update({
@@ -1136,6 +1187,12 @@ const AuthenticatedPainelProfissionalClientesRoute =
   AuthenticatedPainelProfissionalClientesRouteImport.update({
     id: '/clientes',
     path: '/clientes',
+    getParentRoute: () => AuthenticatedPainelProfissionalRoute,
+  } as any)
+const AuthenticatedPainelProfissionalClinicaSocialRoute =
+  AuthenticatedPainelProfissionalClinicaSocialRouteImport.update({
+    id: '/clinica-social',
+    path: '/clinica-social',
     getParentRoute: () => AuthenticatedPainelProfissionalRoute,
   } as any)
 const AuthenticatedPainelProfissionalComentariosRoute =
@@ -1429,6 +1486,11 @@ const CarreiraVagasJobIdRoute = CarreiraVagasJobIdRouteImport.update({
   path: '/$jobId',
   getParentRoute: () => CarreiraVagasRoute,
 } as any)
+const HumanRoomSalasSlugRoute = HumanRoomSalasSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => HumanRoomSalasRoute,
+} as any)
 const ImprensaNoticiasSlugRoute = ImprensaNoticiasSlugRouteImport.update({
   id: '/noticias/$slug',
   path: '/noticias/$slug',
@@ -1588,6 +1650,12 @@ const ClientareaClienteRedeAcademicaNotificacoesRoute =
   ClientareaClienteRedeAcademicaNotificacoesRouteImport.update({
     id: '/notificacoes',
     path: '/notificacoes',
+    getParentRoute: () => ClientareaClienteRedeAcademicaRoute,
+  } as any)
+const ClientareaClienteRedeAcademicaOportunidadesRoute =
+  ClientareaClienteRedeAcademicaOportunidadesRouteImport.update({
+    id: '/oportunidades',
+    path: '/oportunidades',
     getParentRoute: () => ClientareaClienteRedeAcademicaRoute,
   } as any)
 const ClientareaClienteRedeAcademicaSalvosRoute =
@@ -1795,9 +1863,11 @@ export interface FileRoutesByFullPath {
   '/formacao-tricologia-terapia-capilar': typeof FormacaoTricologiaTerapiaCapilarRoute
   '/formacao-vendas-negociacao': typeof FormacaoVendasNegociacaoRoute
   '/formulario': typeof FormularioRoute
+  '/human-room': typeof HumanRoomRouteWithChildren
   '/imprensa': typeof ImprensaRouteWithChildren
   '/instituicoes': typeof InstituicoesRouteWithChildren
   '/ldr-pass': typeof LdrPassRoute
+  '/ldr-rh-estrategia': typeof LdrRhEstrategiaRoute
   '/livros': typeof LivrosRoute
   '/login': typeof LoginRoute
   '/luciano-rodrigues-almeida': typeof LucianoRodriguesAlmeidaRoute
@@ -1865,6 +1935,11 @@ export interface FileRoutesByFullPath {
   '/formacao/$slug': typeof FormacaoSlugRoute
   '/formacoes/$slug': typeof FormacoesSlugRoute
   '/funcionario/login': typeof FuncionarioLoginRoute
+  '/human-room/criar': typeof HumanRoomCriarRoute
+  '/human-room/login': typeof HumanRoomLoginRoute
+  '/human-room/perfil': typeof HumanRoomPerfilRoute
+  '/human-room/salas': typeof HumanRoomSalasRouteWithChildren
+  '/human-room/seguranca': typeof HumanRoomSegurancaRoute
   '/imprensa/correspondentes': typeof ImprensaCorrespondentesRoute
   '/imprensa/distribuicao': typeof ImprensaDistribuicaoRoute
   '/imprensa/fontes': typeof ImprensaFontesRoute
@@ -1878,6 +1953,7 @@ export interface FileRoutesByFullPath {
   '/livros/$slug': typeof LivrosSlugRoute
   '/profissionais/$category': typeof ProfissionaisCategoryRoute
   '/profissional/$slug': typeof ProfissionalSlugRoute
+  '/profissional/cadastro': typeof ProfissionalCadastroRoute
   '/profissional/login': typeof ProfissionalLoginRoute
   '/rede-profissionais/termos': typeof RedeProfissionaisTermosRoute
   '/vendedor/academia': typeof VendedorAcademiaRoute
@@ -1917,6 +1993,7 @@ export interface FileRoutesByFullPath {
   '/painel-profissional/agenda': typeof AuthenticatedPainelProfissionalAgendaRoute
   '/painel-profissional/catalogo': typeof AuthenticatedPainelProfissionalCatalogoRoute
   '/painel-profissional/clientes': typeof AuthenticatedPainelProfissionalClientesRoute
+  '/painel-profissional/clinica-social': typeof AuthenticatedPainelProfissionalClinicaSocialRoute
   '/painel-profissional/comentarios': typeof AuthenticatedPainelProfissionalComentariosRoute
   '/painel-profissional/conteudos-criadores': typeof AuthenticatedPainelProfissionalConteudosCriadoresRoute
   '/painel-profissional/disponibilidade': typeof AuthenticatedPainelProfissionalDisponibilidadeRoute
@@ -1966,6 +2043,7 @@ export interface FileRoutesByFullPath {
   '/carreira/empresa/publicar': typeof CarreiraEmpresaPublicarRoute
   '/carreira/projetos/$projectId': typeof CarreiraProjetosProjectIdRoute
   '/carreira/vagas/$jobId': typeof CarreiraVagasJobIdRouteWithChildren
+  '/human-room/salas/$slug': typeof HumanRoomSalasSlugRoute
   '/imprensa/noticias/$slug': typeof ImprensaNoticiasSlugRoute
   '/painel-profissional/': typeof AuthenticatedPainelProfissionalIndexRoute
   '/cliente/': typeof ClientareaClienteIndexRoute
@@ -1995,6 +2073,7 @@ export interface FileRoutesByFullPath {
   '/cliente/rede-academica/desafios': typeof ClientareaClienteRedeAcademicaDesafiosRoute
   '/cliente/rede-academica/editar-perfil': typeof ClientareaClienteRedeAcademicaEditarPerfilRoute
   '/cliente/rede-academica/notificacoes': typeof ClientareaClienteRedeAcademicaNotificacoesRoute
+  '/cliente/rede-academica/oportunidades': typeof ClientareaClienteRedeAcademicaOportunidadesRoute
   '/cliente/rede-academica/salvos': typeof ClientareaClienteRedeAcademicaSalvosRoute
   '/cliente/treinamentos/do-mamao-ao-negocio': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioRouteWithChildren
   '/cliente/treinamentos/ia-negocios-carreira': typeof ClientareaClienteTreinamentosIaNegociosCarreiraRoute
@@ -2060,8 +2139,10 @@ export interface FileRoutesByTo {
   '/formacao-tricologia-terapia-capilar': typeof FormacaoTricologiaTerapiaCapilarRoute
   '/formacao-vendas-negociacao': typeof FormacaoVendasNegociacaoRoute
   '/formulario': typeof FormularioRoute
+  '/human-room': typeof HumanRoomRouteWithChildren
   '/instituicoes': typeof InstituicoesRouteWithChildren
   '/ldr-pass': typeof LdrPassRoute
+  '/ldr-rh-estrategia': typeof LdrRhEstrategiaRoute
   '/livros': typeof LivrosRoute
   '/login': typeof LoginRoute
   '/luciano-rodrigues-almeida': typeof LucianoRodriguesAlmeidaRoute
@@ -2127,6 +2208,11 @@ export interface FileRoutesByTo {
   '/formacao/$slug': typeof FormacaoSlugRoute
   '/formacoes/$slug': typeof FormacoesSlugRoute
   '/funcionario/login': typeof FuncionarioLoginRoute
+  '/human-room/criar': typeof HumanRoomCriarRoute
+  '/human-room/login': typeof HumanRoomLoginRoute
+  '/human-room/perfil': typeof HumanRoomPerfilRoute
+  '/human-room/salas': typeof HumanRoomSalasRouteWithChildren
+  '/human-room/seguranca': typeof HumanRoomSegurancaRoute
   '/imprensa/correspondentes': typeof ImprensaCorrespondentesRoute
   '/imprensa/distribuicao': typeof ImprensaDistribuicaoRoute
   '/imprensa/fontes': typeof ImprensaFontesRoute
@@ -2140,6 +2226,7 @@ export interface FileRoutesByTo {
   '/livros/$slug': typeof LivrosSlugRoute
   '/profissionais/$category': typeof ProfissionaisCategoryRoute
   '/profissional/$slug': typeof ProfissionalSlugRoute
+  '/profissional/cadastro': typeof ProfissionalCadastroRoute
   '/profissional/login': typeof ProfissionalLoginRoute
   '/rede-profissionais/termos': typeof RedeProfissionaisTermosRoute
   '/vendedor/academia': typeof VendedorAcademiaRoute
@@ -2179,6 +2266,7 @@ export interface FileRoutesByTo {
   '/painel-profissional/agenda': typeof AuthenticatedPainelProfissionalAgendaRoute
   '/painel-profissional/catalogo': typeof AuthenticatedPainelProfissionalCatalogoRoute
   '/painel-profissional/clientes': typeof AuthenticatedPainelProfissionalClientesRoute
+  '/painel-profissional/clinica-social': typeof AuthenticatedPainelProfissionalClinicaSocialRoute
   '/painel-profissional/comentarios': typeof AuthenticatedPainelProfissionalComentariosRoute
   '/painel-profissional/conteudos-criadores': typeof AuthenticatedPainelProfissionalConteudosCriadoresRoute
   '/painel-profissional/disponibilidade': typeof AuthenticatedPainelProfissionalDisponibilidadeRoute
@@ -2228,6 +2316,7 @@ export interface FileRoutesByTo {
   '/carreira/empresa/publicar': typeof CarreiraEmpresaPublicarRoute
   '/carreira/projetos/$projectId': typeof CarreiraProjetosProjectIdRoute
   '/carreira/vagas/$jobId': typeof CarreiraVagasJobIdRouteWithChildren
+  '/human-room/salas/$slug': typeof HumanRoomSalasSlugRoute
   '/imprensa/noticias/$slug': typeof ImprensaNoticiasSlugRoute
   '/painel-profissional': typeof AuthenticatedPainelProfissionalIndexRoute
   '/cliente': typeof ClientareaClienteIndexRoute
@@ -2257,6 +2346,7 @@ export interface FileRoutesByTo {
   '/cliente/rede-academica/desafios': typeof ClientareaClienteRedeAcademicaDesafiosRoute
   '/cliente/rede-academica/editar-perfil': typeof ClientareaClienteRedeAcademicaEditarPerfilRoute
   '/cliente/rede-academica/notificacoes': typeof ClientareaClienteRedeAcademicaNotificacoesRoute
+  '/cliente/rede-academica/oportunidades': typeof ClientareaClienteRedeAcademicaOportunidadesRoute
   '/cliente/rede-academica/salvos': typeof ClientareaClienteRedeAcademicaSalvosRoute
   '/cliente/treinamentos/do-mamao-ao-negocio': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioRouteWithChildren
   '/cliente/treinamentos/ia-negocios-carreira': typeof ClientareaClienteTreinamentosIaNegociosCarreiraRoute
@@ -2326,9 +2416,11 @@ export interface FileRoutesById {
   '/formacao-tricologia-terapia-capilar': typeof FormacaoTricologiaTerapiaCapilarRoute
   '/formacao-vendas-negociacao': typeof FormacaoVendasNegociacaoRoute
   '/formulario': typeof FormularioRoute
+  '/human-room': typeof HumanRoomRouteWithChildren
   '/imprensa': typeof ImprensaRouteWithChildren
   '/instituicoes': typeof InstituicoesRouteWithChildren
   '/ldr-pass': typeof LdrPassRoute
+  '/ldr-rh-estrategia': typeof LdrRhEstrategiaRoute
   '/livros': typeof LivrosRoute
   '/login': typeof LoginRoute
   '/luciano-rodrigues-almeida': typeof LucianoRodriguesAlmeidaRoute
@@ -2397,6 +2489,11 @@ export interface FileRoutesById {
   '/formacao/$slug': typeof FormacaoSlugRoute
   '/formacoes/$slug': typeof FormacoesSlugRoute
   '/funcionario/login': typeof FuncionarioLoginRoute
+  '/human-room/criar': typeof HumanRoomCriarRoute
+  '/human-room/login': typeof HumanRoomLoginRoute
+  '/human-room/perfil': typeof HumanRoomPerfilRoute
+  '/human-room/salas': typeof HumanRoomSalasRouteWithChildren
+  '/human-room/seguranca': typeof HumanRoomSegurancaRoute
   '/imprensa/correspondentes': typeof ImprensaCorrespondentesRoute
   '/imprensa/distribuicao': typeof ImprensaDistribuicaoRoute
   '/imprensa/fontes': typeof ImprensaFontesRoute
@@ -2410,6 +2507,7 @@ export interface FileRoutesById {
   '/livros_/$slug': typeof LivrosSlugRoute
   '/profissionais/$category': typeof ProfissionaisCategoryRoute
   '/profissional/$slug': typeof ProfissionalSlugRoute
+  '/profissional/cadastro': typeof ProfissionalCadastroRoute
   '/profissional/login': typeof ProfissionalLoginRoute
   '/rede-profissionais/termos': typeof RedeProfissionaisTermosRoute
   '/vendedor/academia': typeof VendedorAcademiaRoute
@@ -2449,6 +2547,7 @@ export interface FileRoutesById {
   '/_authenticated/painel-profissional/agenda': typeof AuthenticatedPainelProfissionalAgendaRoute
   '/_authenticated/painel-profissional/catalogo': typeof AuthenticatedPainelProfissionalCatalogoRoute
   '/_authenticated/painel-profissional/clientes': typeof AuthenticatedPainelProfissionalClientesRoute
+  '/_authenticated/painel-profissional/clinica-social': typeof AuthenticatedPainelProfissionalClinicaSocialRoute
   '/_authenticated/painel-profissional/comentarios': typeof AuthenticatedPainelProfissionalComentariosRoute
   '/_authenticated/painel-profissional/conteudos-criadores': typeof AuthenticatedPainelProfissionalConteudosCriadoresRoute
   '/_authenticated/painel-profissional/disponibilidade': typeof AuthenticatedPainelProfissionalDisponibilidadeRoute
@@ -2498,6 +2597,7 @@ export interface FileRoutesById {
   '/carreira/empresa/publicar': typeof CarreiraEmpresaPublicarRoute
   '/carreira/projetos/$projectId': typeof CarreiraProjetosProjectIdRoute
   '/carreira/vagas/$jobId': typeof CarreiraVagasJobIdRouteWithChildren
+  '/human-room/salas/$slug': typeof HumanRoomSalasSlugRoute
   '/imprensa/noticias/$slug': typeof ImprensaNoticiasSlugRoute
   '/_authenticated/painel-profissional/': typeof AuthenticatedPainelProfissionalIndexRoute
   '/_clientarea/cliente/': typeof ClientareaClienteIndexRoute
@@ -2527,6 +2627,7 @@ export interface FileRoutesById {
   '/_clientarea/cliente/rede-academica/desafios': typeof ClientareaClienteRedeAcademicaDesafiosRoute
   '/_clientarea/cliente/rede-academica/editar-perfil': typeof ClientareaClienteRedeAcademicaEditarPerfilRoute
   '/_clientarea/cliente/rede-academica/notificacoes': typeof ClientareaClienteRedeAcademicaNotificacoesRoute
+  '/_clientarea/cliente/rede-academica/oportunidades': typeof ClientareaClienteRedeAcademicaOportunidadesRoute
   '/_clientarea/cliente/rede-academica/salvos': typeof ClientareaClienteRedeAcademicaSalvosRoute
   '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio': typeof ClientareaClienteTreinamentosDoMamaoAoNegocioRouteWithChildren
   '/_clientarea/cliente/treinamentos/ia-negocios-carreira': typeof ClientareaClienteTreinamentosIaNegociosCarreiraRoute
@@ -2594,9 +2695,11 @@ export interface FileRouteTypes {
     | '/formacao-tricologia-terapia-capilar'
     | '/formacao-vendas-negociacao'
     | '/formulario'
+    | '/human-room'
     | '/imprensa'
     | '/instituicoes'
     | '/ldr-pass'
+    | '/ldr-rh-estrategia'
     | '/livros'
     | '/login'
     | '/luciano-rodrigues-almeida'
@@ -2664,6 +2767,11 @@ export interface FileRouteTypes {
     | '/formacao/$slug'
     | '/formacoes/$slug'
     | '/funcionario/login'
+    | '/human-room/criar'
+    | '/human-room/login'
+    | '/human-room/perfil'
+    | '/human-room/salas'
+    | '/human-room/seguranca'
     | '/imprensa/correspondentes'
     | '/imprensa/distribuicao'
     | '/imprensa/fontes'
@@ -2677,6 +2785,7 @@ export interface FileRouteTypes {
     | '/livros/$slug'
     | '/profissionais/$category'
     | '/profissional/$slug'
+    | '/profissional/cadastro'
     | '/profissional/login'
     | '/rede-profissionais/termos'
     | '/vendedor/academia'
@@ -2716,6 +2825,7 @@ export interface FileRouteTypes {
     | '/painel-profissional/agenda'
     | '/painel-profissional/catalogo'
     | '/painel-profissional/clientes'
+    | '/painel-profissional/clinica-social'
     | '/painel-profissional/comentarios'
     | '/painel-profissional/conteudos-criadores'
     | '/painel-profissional/disponibilidade'
@@ -2765,6 +2875,7 @@ export interface FileRouteTypes {
     | '/carreira/empresa/publicar'
     | '/carreira/projetos/$projectId'
     | '/carreira/vagas/$jobId'
+    | '/human-room/salas/$slug'
     | '/imprensa/noticias/$slug'
     | '/painel-profissional/'
     | '/cliente/'
@@ -2794,6 +2905,7 @@ export interface FileRouteTypes {
     | '/cliente/rede-academica/desafios'
     | '/cliente/rede-academica/editar-perfil'
     | '/cliente/rede-academica/notificacoes'
+    | '/cliente/rede-academica/oportunidades'
     | '/cliente/rede-academica/salvos'
     | '/cliente/treinamentos/do-mamao-ao-negocio'
     | '/cliente/treinamentos/ia-negocios-carreira'
@@ -2859,8 +2971,10 @@ export interface FileRouteTypes {
     | '/formacao-tricologia-terapia-capilar'
     | '/formacao-vendas-negociacao'
     | '/formulario'
+    | '/human-room'
     | '/instituicoes'
     | '/ldr-pass'
+    | '/ldr-rh-estrategia'
     | '/livros'
     | '/login'
     | '/luciano-rodrigues-almeida'
@@ -2926,6 +3040,11 @@ export interface FileRouteTypes {
     | '/formacao/$slug'
     | '/formacoes/$slug'
     | '/funcionario/login'
+    | '/human-room/criar'
+    | '/human-room/login'
+    | '/human-room/perfil'
+    | '/human-room/salas'
+    | '/human-room/seguranca'
     | '/imprensa/correspondentes'
     | '/imprensa/distribuicao'
     | '/imprensa/fontes'
@@ -2939,6 +3058,7 @@ export interface FileRouteTypes {
     | '/livros/$slug'
     | '/profissionais/$category'
     | '/profissional/$slug'
+    | '/profissional/cadastro'
     | '/profissional/login'
     | '/rede-profissionais/termos'
     | '/vendedor/academia'
@@ -2978,6 +3098,7 @@ export interface FileRouteTypes {
     | '/painel-profissional/agenda'
     | '/painel-profissional/catalogo'
     | '/painel-profissional/clientes'
+    | '/painel-profissional/clinica-social'
     | '/painel-profissional/comentarios'
     | '/painel-profissional/conteudos-criadores'
     | '/painel-profissional/disponibilidade'
@@ -3027,6 +3148,7 @@ export interface FileRouteTypes {
     | '/carreira/empresa/publicar'
     | '/carreira/projetos/$projectId'
     | '/carreira/vagas/$jobId'
+    | '/human-room/salas/$slug'
     | '/imprensa/noticias/$slug'
     | '/painel-profissional'
     | '/cliente'
@@ -3056,6 +3178,7 @@ export interface FileRouteTypes {
     | '/cliente/rede-academica/desafios'
     | '/cliente/rede-academica/editar-perfil'
     | '/cliente/rede-academica/notificacoes'
+    | '/cliente/rede-academica/oportunidades'
     | '/cliente/rede-academica/salvos'
     | '/cliente/treinamentos/do-mamao-ao-negocio'
     | '/cliente/treinamentos/ia-negocios-carreira'
@@ -3124,9 +3247,11 @@ export interface FileRouteTypes {
     | '/formacao-tricologia-terapia-capilar'
     | '/formacao-vendas-negociacao'
     | '/formulario'
+    | '/human-room'
     | '/imprensa'
     | '/instituicoes'
     | '/ldr-pass'
+    | '/ldr-rh-estrategia'
     | '/livros'
     | '/login'
     | '/luciano-rodrigues-almeida'
@@ -3195,6 +3320,11 @@ export interface FileRouteTypes {
     | '/formacao/$slug'
     | '/formacoes/$slug'
     | '/funcionario/login'
+    | '/human-room/criar'
+    | '/human-room/login'
+    | '/human-room/perfil'
+    | '/human-room/salas'
+    | '/human-room/seguranca'
     | '/imprensa/correspondentes'
     | '/imprensa/distribuicao'
     | '/imprensa/fontes'
@@ -3208,6 +3338,7 @@ export interface FileRouteTypes {
     | '/livros_/$slug'
     | '/profissionais/$category'
     | '/profissional/$slug'
+    | '/profissional/cadastro'
     | '/profissional/login'
     | '/rede-profissionais/termos'
     | '/vendedor/academia'
@@ -3247,6 +3378,7 @@ export interface FileRouteTypes {
     | '/_authenticated/painel-profissional/agenda'
     | '/_authenticated/painel-profissional/catalogo'
     | '/_authenticated/painel-profissional/clientes'
+    | '/_authenticated/painel-profissional/clinica-social'
     | '/_authenticated/painel-profissional/comentarios'
     | '/_authenticated/painel-profissional/conteudos-criadores'
     | '/_authenticated/painel-profissional/disponibilidade'
@@ -3296,6 +3428,7 @@ export interface FileRouteTypes {
     | '/carreira/empresa/publicar'
     | '/carreira/projetos/$projectId'
     | '/carreira/vagas/$jobId'
+    | '/human-room/salas/$slug'
     | '/imprensa/noticias/$slug'
     | '/_authenticated/painel-profissional/'
     | '/_clientarea/cliente/'
@@ -3325,6 +3458,7 @@ export interface FileRouteTypes {
     | '/_clientarea/cliente/rede-academica/desafios'
     | '/_clientarea/cliente/rede-academica/editar-perfil'
     | '/_clientarea/cliente/rede-academica/notificacoes'
+    | '/_clientarea/cliente/rede-academica/oportunidades'
     | '/_clientarea/cliente/rede-academica/salvos'
     | '/_clientarea/cliente/treinamentos/do-mamao-ao-negocio'
     | '/_clientarea/cliente/treinamentos/ia-negocios-carreira'
@@ -3394,9 +3528,11 @@ export interface RootRouteChildren {
   FormacaoTricologiaTerapiaCapilarRoute: typeof FormacaoTricologiaTerapiaCapilarRoute
   FormacaoVendasNegociacaoRoute: typeof FormacaoVendasNegociacaoRoute
   FormularioRoute: typeof FormularioRoute
+  HumanRoomRoute: typeof HumanRoomRouteWithChildren
   ImprensaRoute: typeof ImprensaRouteWithChildren
   InstituicoesRoute: typeof InstituicoesRouteWithChildren
   LdrPassRoute: typeof LdrPassRoute
+  LdrRhEstrategiaRoute: typeof LdrRhEstrategiaRoute
   LivrosRoute: typeof LivrosRoute
   LoginRoute: typeof LoginRoute
   LucianoRodriguesAlmeidaRoute: typeof LucianoRodriguesAlmeidaRoute
@@ -3437,6 +3573,7 @@ export interface RootRouteChildren {
   FuncionarioLoginRoute: typeof FuncionarioLoginRoute
   LivrosSlugRoute: typeof LivrosSlugRoute
   ProfissionalSlugRoute: typeof ProfissionalSlugRoute
+  ProfissionalCadastroRoute: typeof ProfissionalCadastroRoute
   ProfissionalLoginRoute: typeof ProfissionalLoginRoute
   RedeProfissionaisTermosRoute: typeof RedeProfissionaisTermosRoute
   AdminCarreiraVagasRoute: typeof AdminCarreiraVagasRoute
@@ -3715,6 +3852,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FormularioRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/human-room': {
+      id: '/human-room'
+      path: '/human-room'
+      fullPath: '/human-room'
+      preLoaderRoute: typeof HumanRoomRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/imprensa': {
       id: '/imprensa'
       path: '/imprensa'
@@ -3734,6 +3878,13 @@ declare module '@tanstack/react-router' {
       path: '/ldr-pass'
       fullPath: '/ldr-pass'
       preLoaderRoute: typeof LdrPassRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ldr-rh-estrategia': {
+      id: '/ldr-rh-estrategia'
+      path: '/ldr-rh-estrategia'
+      fullPath: '/ldr-rh-estrategia'
+      preLoaderRoute: typeof LdrRhEstrategiaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/livros': {
@@ -4212,6 +4363,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FuncionarioLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/human-room/criar': {
+      id: '/human-room/criar'
+      path: '/criar'
+      fullPath: '/human-room/criar'
+      preLoaderRoute: typeof HumanRoomCriarRouteImport
+      parentRoute: typeof HumanRoomRoute
+    }
+    '/human-room/login': {
+      id: '/human-room/login'
+      path: '/login'
+      fullPath: '/human-room/login'
+      preLoaderRoute: typeof HumanRoomLoginRouteImport
+      parentRoute: typeof HumanRoomRoute
+    }
+    '/human-room/perfil': {
+      id: '/human-room/perfil'
+      path: '/perfil'
+      fullPath: '/human-room/perfil'
+      preLoaderRoute: typeof HumanRoomPerfilRouteImport
+      parentRoute: typeof HumanRoomRoute
+    }
+    '/human-room/salas': {
+      id: '/human-room/salas'
+      path: '/salas'
+      fullPath: '/human-room/salas'
+      preLoaderRoute: typeof HumanRoomSalasRouteImport
+      parentRoute: typeof HumanRoomRoute
+    }
+    '/human-room/seguranca': {
+      id: '/human-room/seguranca'
+      path: '/seguranca'
+      fullPath: '/human-room/seguranca'
+      preLoaderRoute: typeof HumanRoomSegurancaRouteImport
+      parentRoute: typeof HumanRoomRoute
+    }
     '/imprensa/': {
       id: '/imprensa/'
       path: '/'
@@ -4308,6 +4494,13 @@ declare module '@tanstack/react-router' {
       path: '/profissional/$slug'
       fullPath: '/profissional/$slug'
       preLoaderRoute: typeof ProfissionalSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profissional/cadastro': {
+      id: '/profissional/cadastro'
+      path: '/profissional/cadastro'
+      fullPath: '/profissional/cadastro'
+      preLoaderRoute: typeof ProfissionalCadastroRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/profissional/login': {
@@ -4581,6 +4774,13 @@ declare module '@tanstack/react-router' {
       path: '/clientes'
       fullPath: '/painel-profissional/clientes'
       preLoaderRoute: typeof AuthenticatedPainelProfissionalClientesRouteImport
+      parentRoute: typeof AuthenticatedPainelProfissionalRoute
+    }
+    '/_authenticated/painel-profissional/clinica-social': {
+      id: '/_authenticated/painel-profissional/clinica-social'
+      path: '/clinica-social'
+      fullPath: '/painel-profissional/clinica-social'
+      preLoaderRoute: typeof AuthenticatedPainelProfissionalClinicaSocialRouteImport
       parentRoute: typeof AuthenticatedPainelProfissionalRoute
     }
     '/_authenticated/painel-profissional/comentarios': {
@@ -4933,6 +5133,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CarreiraVagasJobIdRouteImport
       parentRoute: typeof CarreiraVagasRoute
     }
+    '/human-room/salas/$slug': {
+      id: '/human-room/salas/$slug'
+      path: '/$slug'
+      fullPath: '/human-room/salas/$slug'
+      preLoaderRoute: typeof HumanRoomSalasSlugRouteImport
+      parentRoute: typeof HumanRoomSalasRoute
+    }
     '/imprensa/noticias/$slug': {
       id: '/imprensa/noticias/$slug'
       path: '/noticias/$slug'
@@ -5120,6 +5327,13 @@ declare module '@tanstack/react-router' {
       path: '/notificacoes'
       fullPath: '/cliente/rede-academica/notificacoes'
       preLoaderRoute: typeof ClientareaClienteRedeAcademicaNotificacoesRouteImport
+      parentRoute: typeof ClientareaClienteRedeAcademicaRoute
+    }
+    '/_clientarea/cliente/rede-academica/oportunidades': {
+      id: '/_clientarea/cliente/rede-academica/oportunidades'
+      path: '/oportunidades'
+      fullPath: '/cliente/rede-academica/oportunidades'
+      preLoaderRoute: typeof ClientareaClienteRedeAcademicaOportunidadesRouteImport
       parentRoute: typeof ClientareaClienteRedeAcademicaRoute
     }
     '/_clientarea/cliente/rede-academica/salvos': {
@@ -5407,6 +5621,7 @@ interface AuthenticatedPainelProfissionalRouteChildren {
   AuthenticatedPainelProfissionalAgendaRoute: typeof AuthenticatedPainelProfissionalAgendaRoute
   AuthenticatedPainelProfissionalCatalogoRoute: typeof AuthenticatedPainelProfissionalCatalogoRoute
   AuthenticatedPainelProfissionalClientesRoute: typeof AuthenticatedPainelProfissionalClientesRoute
+  AuthenticatedPainelProfissionalClinicaSocialRoute: typeof AuthenticatedPainelProfissionalClinicaSocialRoute
   AuthenticatedPainelProfissionalComentariosRoute: typeof AuthenticatedPainelProfissionalComentariosRoute
   AuthenticatedPainelProfissionalConteudosCriadoresRoute: typeof AuthenticatedPainelProfissionalConteudosCriadoresRoute
   AuthenticatedPainelProfissionalDisponibilidadeRoute: typeof AuthenticatedPainelProfissionalDisponibilidadeRoute
@@ -5440,6 +5655,8 @@ const AuthenticatedPainelProfissionalRouteChildren: AuthenticatedPainelProfissio
       AuthenticatedPainelProfissionalCatalogoRoute,
     AuthenticatedPainelProfissionalClientesRoute:
       AuthenticatedPainelProfissionalClientesRoute,
+    AuthenticatedPainelProfissionalClinicaSocialRoute:
+      AuthenticatedPainelProfissionalClinicaSocialRoute,
     AuthenticatedPainelProfissionalComentariosRoute:
       AuthenticatedPainelProfissionalComentariosRoute,
     AuthenticatedPainelProfissionalConteudosCriadoresRoute:
@@ -5585,6 +5802,7 @@ interface ClientareaClienteRedeAcademicaRouteChildren {
   ClientareaClienteRedeAcademicaDesafiosRoute: typeof ClientareaClienteRedeAcademicaDesafiosRoute
   ClientareaClienteRedeAcademicaEditarPerfilRoute: typeof ClientareaClienteRedeAcademicaEditarPerfilRoute
   ClientareaClienteRedeAcademicaNotificacoesRoute: typeof ClientareaClienteRedeAcademicaNotificacoesRoute
+  ClientareaClienteRedeAcademicaOportunidadesRoute: typeof ClientareaClienteRedeAcademicaOportunidadesRoute
   ClientareaClienteRedeAcademicaSalvosRoute: typeof ClientareaClienteRedeAcademicaSalvosRoute
   ClientareaClienteRedeAcademicaArtigoEditorialSlugRoute: typeof ClientareaClienteRedeAcademicaArtigoEditorialSlugRoute
   ClientareaClienteRedeAcademicaArtigoSlugRoute: typeof ClientareaClienteRedeAcademicaArtigoSlugRoute
@@ -5610,6 +5828,8 @@ const ClientareaClienteRedeAcademicaRouteChildren: ClientareaClienteRedeAcademic
       ClientareaClienteRedeAcademicaEditarPerfilRoute,
     ClientareaClienteRedeAcademicaNotificacoesRoute:
       ClientareaClienteRedeAcademicaNotificacoesRoute,
+    ClientareaClienteRedeAcademicaOportunidadesRoute:
+      ClientareaClienteRedeAcademicaOportunidadesRoute,
     ClientareaClienteRedeAcademicaSalvosRoute:
       ClientareaClienteRedeAcademicaSalvosRoute,
     ClientareaClienteRedeAcademicaArtigoEditorialSlugRoute:
@@ -5926,6 +6146,38 @@ const CarreiraRouteWithChildren = CarreiraRoute._addFileChildren(
   CarreiraRouteChildren,
 )
 
+interface HumanRoomSalasRouteChildren {
+  HumanRoomSalasSlugRoute: typeof HumanRoomSalasSlugRoute
+}
+
+const HumanRoomSalasRouteChildren: HumanRoomSalasRouteChildren = {
+  HumanRoomSalasSlugRoute: HumanRoomSalasSlugRoute,
+}
+
+const HumanRoomSalasRouteWithChildren = HumanRoomSalasRoute._addFileChildren(
+  HumanRoomSalasRouteChildren,
+)
+
+interface HumanRoomRouteChildren {
+  HumanRoomCriarRoute: typeof HumanRoomCriarRoute
+  HumanRoomLoginRoute: typeof HumanRoomLoginRoute
+  HumanRoomPerfilRoute: typeof HumanRoomPerfilRoute
+  HumanRoomSalasRoute: typeof HumanRoomSalasRouteWithChildren
+  HumanRoomSegurancaRoute: typeof HumanRoomSegurancaRoute
+}
+
+const HumanRoomRouteChildren: HumanRoomRouteChildren = {
+  HumanRoomCriarRoute: HumanRoomCriarRoute,
+  HumanRoomLoginRoute: HumanRoomLoginRoute,
+  HumanRoomPerfilRoute: HumanRoomPerfilRoute,
+  HumanRoomSalasRoute: HumanRoomSalasRouteWithChildren,
+  HumanRoomSegurancaRoute: HumanRoomSegurancaRoute,
+}
+
+const HumanRoomRouteWithChildren = HumanRoomRoute._addFileChildren(
+  HumanRoomRouteChildren,
+)
+
 interface ImprensaRouteChildren {
   ImprensaCorrespondentesRoute: typeof ImprensaCorrespondentesRoute
   ImprensaDistribuicaoRoute: typeof ImprensaDistribuicaoRoute
@@ -6037,9 +6289,11 @@ const rootRouteChildren: RootRouteChildren = {
   FormacaoTricologiaTerapiaCapilarRoute: FormacaoTricologiaTerapiaCapilarRoute,
   FormacaoVendasNegociacaoRoute: FormacaoVendasNegociacaoRoute,
   FormularioRoute: FormularioRoute,
+  HumanRoomRoute: HumanRoomRouteWithChildren,
   ImprensaRoute: ImprensaRouteWithChildren,
   InstituicoesRoute: InstituicoesRouteWithChildren,
   LdrPassRoute: LdrPassRoute,
+  LdrRhEstrategiaRoute: LdrRhEstrategiaRoute,
   LivrosRoute: LivrosRoute,
   LoginRoute: LoginRoute,
   LucianoRodriguesAlmeidaRoute: LucianoRodriguesAlmeidaRoute,
@@ -6080,6 +6334,7 @@ const rootRouteChildren: RootRouteChildren = {
   FuncionarioLoginRoute: FuncionarioLoginRoute,
   LivrosSlugRoute: LivrosSlugRoute,
   ProfissionalSlugRoute: ProfissionalSlugRoute,
+  ProfissionalCadastroRoute: ProfissionalCadastroRoute,
   ProfissionalLoginRoute: ProfissionalLoginRoute,
   RedeProfissionaisTermosRoute: RedeProfissionaisTermosRoute,
   AdminCarreiraVagasRoute: AdminCarreiraVagasRoute,
