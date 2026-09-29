@@ -282,19 +282,11 @@ test('PDF-only and captioned attachments retain their actual media type', async 
   }
 });
 
-test('legacy academic domain redirects do not affect other applications', () => {
-  const config = JSON.parse(fs.readFileSync(path.resolve(ROOT, '../vercel.json')));
-  const libraryRewrite=config.rewrites.find(rule=>rule.source==='/biblioteca');
-  assert.ok(libraryRewrite);
-  assert.equal(libraryRewrite.destination, '/cliente/biblioteca');
-  const humanRoomRewrite=config.rewrites.find(rule=>rule.source==='/human-room');
-  assert.equal(humanRoomRewrite, undefined, 'Human Room must stay on the official LDR app route');
-  const academicRedirects=config.redirects.filter(rule=>rule.source.includes('rede-academica'));
-  assert.equal(academicRedirects.length,2);
-  for (const rule of academicRedirects) {
-    assert.equal(rule.has[0].value, 'painel.ldrrhestrategia.com');
-    assert.ok(rule.destination.startsWith('https://ldracademy.online/'));
-  }
+test('Human Room stays inside the official LDR application', () => {
+  const source = fs.readFileSync(path.resolve(ROOT, 'routes/human-room.tsx'), 'utf8');
+  assert.ok(source.includes('createFileRoute("/human-room")'));
+  assert.ok(source.includes('href:"https://ldrrhestrategia.com/human-room"'));
+  assert.equal(source.includes('human-room.vercel.app'), false);
 });
 
 test('Saved includes editorial posts and paginates their existing saves', async () => {
