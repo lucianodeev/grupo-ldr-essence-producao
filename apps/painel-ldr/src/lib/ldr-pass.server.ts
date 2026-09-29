@@ -7,7 +7,7 @@ const PRICE_ENV={
  EU:{individual:{monthly:"LDR_ONE_LIVE_PRICE_INDIVIDUAL_MONTHLY",annual:"LDR_ONE_LIVE_PRICE_INDIVIDUAL_ANNUAL"},business:{monthly:"LDR_ONE_LIVE_PRICE_BUSINESS_MONTHLY",annual:"LDR_ONE_LIVE_PRICE_BUSINESS_ANNUAL"}},
  BR:{individual:{monthly:"LDR_ONE_LIVE_PRICE_BR_INDIVIDUAL_MONTHLY",annual:"LDR_ONE_LIVE_PRICE_BR_INDIVIDUAL_ANNUAL"},business:{monthly:"LDR_ONE_LIVE_PRICE_BR_BUSINESS_MONTHLY",annual:"LDR_ONE_LIVE_PRICE_BR_BUSINESS_ANNUAL"}}
 } as const;
-const AMOUNTS={EU:{individual:{monthly:3990,annual:39900},business:{monthly:1990,annual:19900}},BR:{individual:{monthly:3990,annual:39900},business:{monthly:1990,annual:19900}}} as const;
+const AMOUNTS={EU:{individual:{monthly:3990,annual:39900},business:{monthly:1990,annual:19900}},BR:{individual:{monthly:23615,annual:236152},business:{monthly:11778,annual:117780}}} as const;
 function fail(m:string):never{throw new Error(m)}
 function origin(){const r=getRequest();return process.env.CLIENT_PANEL_URL?.replace(/\/$/,"")||(r?new URL(r.url).origin:"https://ldr-ecossistema-validacao.onrender.com")}
 async function customerFor(u:string,e:string|null){const c=await resolveClient(u,e);if(c.status!=="ok")fail("Acesso do cliente não disponível.");return c.customer}
