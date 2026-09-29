@@ -85,13 +85,13 @@ const FREE_TEXT: Record<LibraryCardLocale, [string,string][]> = {
 };
 
 const FORMATION_BASE: {free?: boolean; price?: string; href: string; tone: Tone}[] = [
-  { price:"Incluído no LDR ONE", href:"/cliente/formacoes/gestao-pessoas-rh", tone:"emerald" },
-  { price:"Incluído no LDR ONE", href:"/formacao-psicanalise", tone:"violet" },
-  { price:"Incluído no LDR ONE", href:"/formacao-psicanalise-internacional", tone:"blue" },
-  { price:"Incluído no LDR ONE", href:"/formacao-terapia-breve-psicanalitica", tone:"petrol" },
-  { price:"Incluído no LDR ONE", href:"/formacao-negocio-em-24-horas", tone:"gold" },
-  { price:"Incluído no LDR ONE", href:"/cliente/biblioteca", tone:"blue" },
-  { price:"Incluído no LDR ONE", href:"/cliente/biblioteca", tone:"green" },
+  { price:"Acesso com LDR ONE", href:"/cliente/formacoes/gestao-pessoas-rh", tone:"emerald" },
+  { price:"Acesso com LDR ONE", href:"/formacao-psicanalise", tone:"violet" },
+  { price:"Acesso com LDR ONE", href:"/formacao-psicanalise-internacional", tone:"blue" },
+  { price:"Acesso com LDR ONE", href:"/formacao-terapia-breve-psicanalitica", tone:"petrol" },
+  { price:"Acesso com LDR ONE", href:"/formacao-negocio-em-24-horas", tone:"gold" },
+  { price:"Acesso com LDR ONE", href:"/cliente/biblioteca", tone:"blue" },
+  { price:"Acesso com LDR ONE", href:"/cliente/biblioteca", tone:"green" },
 ];
 
 export const FREE_ROUTES = [
