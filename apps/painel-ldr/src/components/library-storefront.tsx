@@ -13,9 +13,9 @@ const COPY={
 } as const;
 
 const ITEMS:Item[]=[
-  {title:"Revista Psicanálise no Mundo",subtitle:"Psicanálise contemporânea, clínica, teoria, cultura e sociedade.",href:"/cliente/biblioteca/publicacoes/revista-psicanalise-no-mundo",icon:"🧠",price:"LDR ONE · incluído",tag:"revista psicanálise psicanalise mundo clínica teoria cultura sociedade",group:"banca",color:"#6b2145",badge:"NOVO · DESTAQUE"},
-  {title:"eBook A Coragem de Começar",subtitle:"Leitura digital para transformar coragem em ação.",href:"/cliente/biblioteca/ebook_coragem_comecar",icon:"📘",price:"LDR ONE · incluído",tag:"ebook coragem começar",group:"livraria",color:"#5b0824",badge:"DESTAQUE"},
-  {title:"O Menino que Vendia Mamão",subtitle:"Livro de Luciano Rodrigues Almeida sobre coragem, iniciativa e construção de oportunidades.",href:"/cliente/biblioteca/livro_menino_mamao",icon:"📕",price:"LDR ONE · incluído",tag:"livro menino vendia mamão coragem empreendedorismo",group:"livraria",color:"#7a3f16",badge:"LIVRO"},
+  {title:"Revista Psicanálise no Mundo",subtitle:"Psicanálise contemporânea, clínica, teoria, cultura e sociedade.",href:"/cliente/biblioteca/publicacoes/revista-psicanalise-no-mundo",icon:"🧠",price:"Acesso LDR ONE",tag:"revista psicanálise psicanalise mundo clínica teoria cultura sociedade",group:"banca",color:"#6b2145",badge:"NOVO · DESTAQUE"},
+  {title:"eBook A Coragem de Começar",subtitle:"Leitura digital para transformar coragem em ação.",href:"/cliente/biblioteca/ebook_coragem_comecar",icon:"📘",price:"Acesso LDR ONE",tag:"ebook coragem começar",group:"livraria",color:"#5b0824",badge:"DESTAQUE"},
+  {title:"O Menino que Vendia Mamão",subtitle:"Livro de Luciano Rodrigues Almeida sobre coragem, iniciativa e construção de oportunidades.",href:"/cliente/biblioteca/livro_menino_mamao",icon:"📕",price:"Acesso LDR ONE",tag:"livro menino vendia mamão coragem empreendedorismo",group:"livraria",color:"#7a3f16",badge:"LIVRO"},
   {title:"Livros LDR",subtitle:"Livros e projetos editoriais do ecossistema.",href:"/livros",icon:"📚",tag:"livros editorial",group:"livraria",color:"#35101e"},
   {title:"Filme LDR",subtitle:"Produção audiovisual do ecossistema.",href:"/cliente/biblioteca",icon:"🎬",tag:"filme produção",group:"livraria",color:"#35101e"},
   {title:"Formação em IA",subtitle:"IA aplicada aos negócios e à carreira.",href:"/cliente/treinamentos/ia-negocios-carreira",icon:"🤖",tag:"ia formação inteligência artificial",group:"formacoes",color:"#143d59"},
