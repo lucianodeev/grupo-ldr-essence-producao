@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect,useState } from "react";
-import { humanRoomClient } from "@/lib/human-room.client";
+import { humanRoomClient } from "@/lib/human-room-browser";
 
 export const Route=createFileRoute("/human-room")({component:Page,head:()=>({meta:[{title:"Human Room | Ecossistema LDR"},{name:"description",content:"6 perspectivas, 1 pergunta e humanos reais. Human Room dentro do Ecossistema LDR."}],links:[{rel:"canonical",href:"https://ldrrhestrategia.com/human-room"}]})});
 type Room={slug:string;status:string;questions:{title:string;objective:string}|null};
