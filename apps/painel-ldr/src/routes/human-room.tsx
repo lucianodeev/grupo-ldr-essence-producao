@@ -1,10 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Outlet, useRouterState } from "@tanstack/react-router";
 import { useEffect,useState } from "react";
 import { humanRoomClient } from "@/lib/human-room-browser";
 
 export const Route=createFileRoute("/human-room")({component:Page,head:()=>({meta:[{title:"Human Room | Ecossistema LDR"},{name:"description",content:"6 perspectivas, 1 pergunta e humanos reais. Human Room dentro do Ecossistema LDR."}],links:[{rel:"canonical",href:"https://ldrrhestrategia.com/human-room"}]})});
 type Room={slug:string;status:string;questions:{title:string;objective:string}|null};
-function Page(){const[rooms,setRooms]=useState<Room[]>([]);useEffect(()=>{humanRoomClient().from("rooms").select("slug,status,questions(title,objective)").neq("status","draft").order("created_at",{ascending:false}).limit(6).then(({data}:any)=>setRooms(data||[]))},[]);
+function Page(){const pathname=useRouterState({select:s=>s.location.pathname});if(pathname!=="/human-room"&&pathname!=="/human-room/")return <Outlet/>;const[rooms,setRooms]=useState<Room[]>([]);useEffect(()=>{humanRoomClient().from("rooms").select("slug,status,questions(title,objective)").neq("status","draft").order("created_at",{ascending:false}).limit(6).then(({data}:any)=>setRooms(data||[]))},[]);
 return <main className="min-h-screen bg-[#f7f5ef] text-[#121826]"><div className="mx-auto max-w-6xl px-5 py-6">
 <nav className="flex flex-wrap items-center justify-between gap-4"><a href="/ecossistema" className="font-black tracking-wider">HUMAN ROOM <span className="text-[#315b4c]">· LDR</span></a><div className="flex gap-4 text-sm font-bold"><a href="/human-room/salas">SALAS</a><a href="/human-room/minhas-salas">MINHAS SALAS</a><a href="/human-room/seguranca">SEGURANÇA</a></div></nav>
 <section className="max-w-4xl py-24"><p className="font-bold text-[#315b4c]">6 perspectivas · 1 pergunta · humanos reais</p><h1 className="mt-5 font-serif text-5xl font-black leading-none md:text-7xl">A sala anti-feed para perguntas que importam.</h1><p className="mt-6 max-w-3xl text-xl leading-8 text-slate-600">Human Room reúne pessoas selecionadas em torno de uma pergunta, registra como elas pensam e transforma a conversa em um Human Brief.</p><div className="mt-8 flex flex-wrap gap-3"><a className="rounded-full bg-[#121826] px-6 py-4 font-black text-white" href="/human-room/criar">CRIAR UMA HUMAN ROOM</a><a className="rounded-full border border-[#121826] px-6 py-4 font-black" href="/human-room/salas">EXPLORAR SALAS ABERTAS</a></div></section>
