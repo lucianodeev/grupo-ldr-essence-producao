@@ -27,7 +27,7 @@ const C = {
     save: "Salvar rascunho",
     review: "Enviar para análise",
     success: "Vaga salva. A publicação pública depende de validação.",
-    login: "Entre na sua conta para acessar a área da empresa.",
+    login: "Entre com Google para acessar a área da empresa. Não é necessário aguardar e-mail de confirmação.",
     safe: "A empresa não pode aprovar ou publicar a própria vaga.",
     onsite: "Presencial",
     hybrid: "Híbrido",
