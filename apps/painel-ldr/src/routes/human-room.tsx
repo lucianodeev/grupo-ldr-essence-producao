@@ -1,38 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect,useState } from "react";
+import { humanRoomClient } from "@/lib/human-room.client";
 
-export const Route = createFileRoute("/human-room")({
-  head: () => ({
-    meta: [
-      { title: "Human Room | Ecossistema LDR" },
-      { name: "description", content: "Human Room integrado ao Ecossistema LDR: salas, participação, seleção, presença, feedback e Human Brief." },
-      { name: "robots", content: "index,follow" },
-      { property: "og:title", content: "Human Room | Ecossistema LDR" },
-      { property: "og:url", content: "https://ldrrhestrategia.com/human-room" },
-    ],
-    links: [{ rel: "canonical", href: "https://ldrrhestrategia.com/human-room" }],
-  }),
-  component: HumanRoomIntegratedPage,
-});
-
-function HumanRoomIntegratedPage() {
-  return <main className="min-h-screen bg-[#071426] text-white">
-    <header className="border-b border-white/10 bg-[#071426] px-4 py-3">
-      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3">
-        <a href="/ecossistema" className="text-sm font-black text-[#f4c76b]">← Ecossistema LDR</a>
-        <div className="text-right"><p className="font-serif text-xl font-bold">Human Room</p><p className="text-xs text-white/60">Integrado ao Ecossistema LDR</p></div>
-      </div>
-    </header>
-    <section className="mx-auto max-w-7xl px-4 py-4">
-      <div className="mb-4 rounded-2xl border border-[#f4c76b]/30 bg-white/[.06] p-4">
-        <p className="text-sm leading-6 text-white/80">A versão operacional mais recente do Human Room permanece preservada aqui, incluindo salas, candidaturas, seleção, participação, presença, feedback e Human Brief.</p>
-      </div>
-      <iframe
-        title="Human Room"
-        src="https://human-room.vercel.app/human-room"
-        className="h-[calc(100vh-170px)] min-h-[720px] w-full rounded-2xl border border-white/15 bg-white"
-        allow="clipboard-read; clipboard-write"
-      />
-      <p className="mt-3 text-center text-xs text-white/60">Se o aplicativo não carregar dentro da página, <a className="font-bold text-[#f4c76b] underline" href="https://www.humanroom.online/" target="_blank" rel="noreferrer">abra o Human Room diretamente</a>.</p>
-    </section>
-  </main>;
-}
+export const Route=createFileRoute("/human-room")({component:Page,head:()=>({meta:[{title:"Human Room | Ecossistema LDR"},{name:"description",content:"6 perspectivas, 1 pergunta e humanos reais. Human Room dentro do Ecossistema LDR."}],links:[{rel:"canonical",href:"https://ldrrhestrategia.com/human-room"}]})});
+type Room={slug:string;status:string;questions:{title:string;objective:string}|null};
+function Page(){const[rooms,setRooms]=useState<Room[]>([]);useEffect(()=>{humanRoomClient().from("rooms").select("slug,status,questions(title,objective)").neq("status","draft").order("created_at",{ascending:false}).limit(6).then(({data}:any)=>setRooms(data||[]))},[]);
+return <main className="min-h-screen bg-[#f7f5ef] text-[#121826]"><div className="mx-auto max-w-6xl px-5 py-6">
+<nav className="flex flex-wrap items-center justify-between gap-4"><a href="/ecossistema" className="font-black tracking-wider">HUMAN ROOM <span className="text-[#315b4c]">· LDR</span></a><div className="flex gap-4 text-sm font-bold"><a href="/human-room/salas">SALAS</a><a href="/human-room/minhas-salas">MINHAS SALAS</a><a href="/human-room/seguranca">SEGURANÇA</a></div></nav>
+<section className="max-w-4xl py-24"><p className="font-bold text-[#315b4c]">6 perspectivas · 1 pergunta · humanos reais</p><h1 className="mt-5 font-serif text-5xl font-black leading-none md:text-7xl">A sala anti-feed para perguntas que importam.</h1><p className="mt-6 max-w-3xl text-xl leading-8 text-slate-600">Human Room reúne pessoas selecionadas em torno de uma pergunta, registra como elas pensam e transforma a conversa em um Human Brief.</p><div className="mt-8 flex flex-wrap gap-3"><a className="rounded-full bg-[#121826] px-6 py-4 font-black text-white" href="/human-room/criar">CRIAR UMA HUMAN ROOM</a><a className="rounded-full border border-[#121826] px-6 py-4 font-black" href="/human-room/salas">EXPLORAR SALAS ABERTAS</a></div></section>
+<section><p className="font-bold text-[#315b4c]">COMO FUNCIONA</p><h2 className="mt-2 font-serif text-4xl font-bold">Da pergunta ao Human Brief.</h2><div className="mt-8 grid gap-4 md:grid-cols-3">{[["Criar uma sala","Comece com uma pergunta real que merece mais do que uma resposta rápida."],["Selecionar perspectivas","As pessoas se candidatam pelas ideias primeiro. O anfitrião escolhe a combinação de perspectivas."],["Conversar e sintetizar","Participantes confirmam, conversam, deixam feedback e o anfitrião publica um Human Brief."]].map(([t,d],i)=><article className="rounded-3xl border bg-white p-6" key={t}><p className="text-xs font-black text-[#315b4c]">ETAPA {i+1}</p><h3 className="mt-3 text-xl font-black">{t}</h3><p className="mt-2 text-slate-600">{d}</p></article>)}</div></section>
+<section className="my-12 rounded-3xl border bg-white p-7"><p className="text-xs font-black text-[#315b4c]">SALAS ATIVAS</p>{rooms.length?rooms.map(r=><a key={r.slug} href={"/human-room/salas/"+r.slug} className="mt-4 block rounded-2xl border p-5"><span className="text-xs font-bold text-[#315b4c]">{r.questions?.objective?.toUpperCase()}</span><strong className="mt-1 block text-xl">{r.questions?.title}</strong></a>):<p className="mt-3 text-slate-600">Nenhuma sala pública aberta neste momento.</p>}</section>
+</div></main>}
