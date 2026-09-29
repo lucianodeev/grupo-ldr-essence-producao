@@ -14,7 +14,7 @@ function Page(){
         <h1 className="mt-3 max-w-5xl font-serif text-4xl text-[#fff7e7] sm:text-6xl">O Menino que Vendia Mamão</h1>
         <p className="mt-5 max-w-3xl text-lg leading-8 text-white/80">Uma história de Luciano Rodrigues Almeida sobre coragem, iniciativa, recomeços e construção de oportunidades.</p>
         <div className="mt-8 flex flex-wrap gap-3"><a href="/ldr-pass" className="rounded-xl bg-[#d6ad63] px-6 py-4 text-sm font-black text-[#281605]">ACESSAR COM LDR ONE</a></div>
-        <p className="mt-3 text-xs text-white/65">Incluído no catálogo digital elegível do LDR ONE. Compras anteriores continuam preservadas.</p>
+        <p className="mt-3 text-xs text-white/65">Disponível no catálogo digital elegível do LDR ONE. Compras anteriores continuam preservadas.</p>
       </div>
     </section>
     <section className="mx-auto max-w-6xl px-4 py-14"><div className="grid gap-4 md:grid-cols-3"><Card title="Uma história real" text="Experiências de trabalho, começo, adaptação e construção de caminhos possíveis."/><Card title="Empreendedorismo" text="Reflexões sobre iniciativa, oportunidade, persistência e transformação de experiência em ação."/><Card title="Leitura na Academy" text="Com LDR ONE ativo, o conteúdo digital elegível fica disponível na conta."/></div><section className="mt-10 rounded-3xl bg-[#071426] p-7 text-white"><CheckCircle2 className="h-8 w-8 text-[#d6ad63]"/><h2 className="mt-4 font-serif text-3xl text-[#fff7e7]">Seu livro, seu acesso</h2><p className="mt-3 max-w-3xl text-white/75">Esta é a página pública individual e compartilhável do livro. O acesso digital é centralizado na Biblioteca da LDR Essence e validado pelo LDR ONE ou por direitos adquiridos anteriormente.</p></section></section>
