@@ -76,6 +76,7 @@ function AcademicNetworkPage(){
 
     <AcademicUtilityStrip locale={locale}/>
     <EcosystemDiscoveryCard locale={locale}/>
+    <OpportunityEngineDiscoveryCard locale={locale}/>
 
     <nav aria-label="Academic network" className="hidden grid-cols-5 overflow-hidden rounded-[24px] border bg-card shadow-sm sm:grid">
       {nav.map(([key,Icon,label])=><button key={key} onClick={()=>setTab(key)} aria-current={tab===key?"page":undefined} className={`min-w-0 px-1 py-3 text-[9px] font-black transition sm:px-3 sm:text-xs ${tab===key?"bg-[#07315a] text-white shadow-inner":"text-foreground hover:bg-muted/70"}`}><Icon className={`mx-auto mb-1 h-5 w-5 ${tab===key?"text-[#efc56d]":""}`}/><span className="block whitespace-normal">{label}</span></button>)}
@@ -111,6 +112,16 @@ function EcosystemDiscoveryCard({locale}:{locale:Locale}){
       </Link>
     </div>
   </section>
+}
+
+function OpportunityEngineDiscoveryCard({locale}:{locale:Locale}){
+  const copy={
+    pt:{eyebrow:"MOTOR DE OPORTUNIDADES",title:"Ajude o Motor a aprender com suas escolhas",text:"Veja recomendações explicáveis e diga quais são úteis para você. Seu feedback explícito ajuda a melhorar as próximas sugestões — sem candidatura ou decisão automática.",button:"VER OPORTUNIDADES"},
+    en:{eyebrow:"OPPORTUNITY ENGINE",title:"Help the Engine learn from your choices",text:"See explainable recommendations and tell us which are useful. Your explicit feedback helps improve future suggestions — with no automatic application or decision.",button:"SEE OPPORTUNITIES"},
+    fr:{eyebrow:"MOTEUR D’OPPORTUNITÉS",title:"Aidez le Moteur à apprendre de vos choix",text:"Consultez des recommandations explicables et indiquez celles qui vous sont utiles. Votre retour explicite améliore les prochaines suggestions — sans candidature ni décision automatique.",button:"VOIR LES OPPORTUNITÉS"},
+    es:{eyebrow:"MOTOR DE OPORTUNIDADES",title:"Ayuda al Motor a aprender de tus elecciones",text:"Consulta recomendaciones explicables e indica cuáles te resultan útiles. Tu feedback explícito ayuda a mejorar las próximas sugerencias — sin candidatura ni decisión automática.",button:"VER OPORTUNIDADES"}
+  }[locale];
+  return <section className="rounded-[24px] border border-[#9abbe0] bg-[#edf5ff] p-5 text-[#071426] shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-white sm:p-6"><div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"><div className="max-w-2xl"><p className="text-[10px] font-black tracking-[.24em] text-[#37658f] dark:text-[#efcf7d]">{copy.eyebrow}</p><h2 className="mt-2 font-serif text-2xl leading-tight">{copy.title}</h2><p className="mt-2 text-sm leading-6 text-muted-foreground">{copy.text}</p></div><Link to="/cliente/rede-academica/oportunidades" className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-xl bg-[#07315a] px-5 text-xs font-black text-white"><BriefcaseBusiness className="h-4 w-4 text-[#efc56d]"/>{copy.button}</Link></div></section>;
 }
 
 function AcademicUtilityStrip({locale}:{locale:Locale}){
