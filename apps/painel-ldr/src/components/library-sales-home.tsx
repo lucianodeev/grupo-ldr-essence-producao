@@ -38,13 +38,13 @@ const COPY = {
 } as const;
 
 const formations = [
-  {tag:"RH · 600H",title:"Formação em Gestão de Pessoas e Recursos Humanos",desc:"600 horas · 100% online · leitura e atividades",price:"Incluído no LDR ONE",href:"/cliente/formacoes/gestao-pessoas-rh",tone:"emerald"},
-  {tag:"PSICANÁLISE",title:"Formação Online em Psicanálise",desc:"12 módulos · 1.200 horas · 180 unidades · 100% online · sob demanda",price:"Incluído no LDR ONE",href:"/formacao-psicanalise",tone:"violet"},
-  {tag:"🌍 INTERNACIONAL · PREMIUM",title:"Psicanálise Internacional, Neurodiversidade e Autismo",desc:"21 módulos · 6–12 meses · 100% online · sob demanda",price:"Incluído no LDR ONE",href:"/formacao-psicanalise-internacional",tone:"blue"},
-  {tag:"TERAPIA BREVE · 1.200H",title:"Formação em Terapia Breve Psicanalítica",desc:"15 módulos · 300 aulas · 1.200 horas · 100% online · sob demanda",price:"Incluído no LDR ONE",href:"/formacao-terapia-breve-psicanalitica",tone:"petrol"},
-  {tag:"NEGÓCIO EM 24H",title:"Formação Negócio em 24 Horas",desc:"9 módulos · 90 aulas · 360 horas · 100% online · projeto final avaliado",price:"Incluído no LDR ONE",href:"/formacao-negocio-em-24-horas",tone:"gold"},
-  {tag:"MENTORIA E CARREIRA",title:"Formação em Mentoria Profissional e de Carreira",desc:"3 meses · percurso estruturado · acesso digital",price:"Incluído no LDR ONE",href:"/cliente/biblioteca",tone:"blue"},
-  {tag:"LIDERANÇA",title:"Formação em Liderança e Gestão de Pessoas",desc:"3 meses · percurso estruturado · acesso digital",price:"Incluído no LDR ONE",href:"/cliente/biblioteca",tone:"green"},
+  {tag:"RH · 600H",title:"Formação em Gestão de Pessoas e Recursos Humanos",desc:"600 horas · 100% online · leitura e atividades",price:"Acesso com LDR ONE",href:"/cliente/formacoes/gestao-pessoas-rh",tone:"emerald"},
+  {tag:"PSICANÁLISE",title:"Formação Online em Psicanálise",desc:"12 módulos · 1.200 horas · 180 unidades · 100% online · sob demanda",price:"Acesso com LDR ONE",href:"/formacao-psicanalise",tone:"violet"},
+  {tag:"🌍 INTERNACIONAL · PREMIUM",title:"Psicanálise Internacional, Neurodiversidade e Autismo",desc:"21 módulos · 6–12 meses · 100% online · sob demanda",price:"Acesso com LDR ONE",href:"/formacao-psicanalise-internacional",tone:"blue"},
+  {tag:"TERAPIA BREVE · 1.200H",title:"Formação em Terapia Breve Psicanalítica",desc:"15 módulos · 300 aulas · 1.200 horas · 100% online · sob demanda",price:"Acesso com LDR ONE",href:"/formacao-terapia-breve-psicanalitica",tone:"petrol"},
+  {tag:"NEGÓCIO EM 24H",title:"Formação Negócio em 24 Horas",desc:"9 módulos · 90 aulas · 360 horas · 100% online · projeto final avaliado",price:"Acesso com LDR ONE",href:"/formacao-negocio-em-24-horas",tone:"gold"},
+  {tag:"MENTORIA E CARREIRA",title:"Formação em Mentoria Profissional e de Carreira",desc:"3 meses · percurso estruturado · acesso digital",price:"Acesso com LDR ONE",href:"/cliente/biblioteca",tone:"blue"},
+  {tag:"LIDERANÇA",title:"Formação em Liderança e Gestão de Pessoas",desc:"3 meses · percurso estruturado · acesso digital",price:"Acesso com LDR ONE",href:"/cliente/biblioteca",tone:"green"},
 ] as const;
 const freeCourses=[
   ["Organize sua Carreira","7 aulas · leitura · sem expiração","/cliente/cursos/organizar-carreira"],
@@ -96,7 +96,7 @@ export function LibrarySalesHome(){
 
     <section id="formacoes" className="mx-auto max-w-7xl px-4 py-12 sm:px-6"><div className="max-w-3xl"><p className="text-xs font-black uppercase tracking-[.2em] text-[#a77b2e]">FORMAÇÕES PROFISSIONAIS</p><h2 className="mt-2 font-serif text-4xl">{t.formationTitle}</h2><p className="mt-3 text-sm leading-6 text-slate-600">{t.formationSub}</p></div><div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-5">{formations.map(f=><article key={f.title} className="flex flex-col rounded-[26px] border border-[#d9cfba] bg-white p-5 shadow-sm"><span className="w-fit rounded-full bg-[#071426] px-3 py-1 text-[10px] font-black uppercase tracking-[.12em] text-white">{f.free?t.freeBadge:f.tag}</span><h3 className="mt-4 font-serif text-2xl leading-tight">{f.title}</h3><p className="mt-3 text-sm leading-6 text-slate-600">{f.desc}</p>{f.free?<p className="mt-4 text-xl font-black text-emerald-700">GRÁTIS</p>:<p className="mt-4 text-lg font-black text-[#0b2341]">{f.price}</p>}<a href={f.href} className="mt-auto pt-6"><span className={`block rounded-xl px-4 py-3 text-center text-sm font-black text-white ${f.free?"bg-emerald-700":"bg-[#0b2341]"}`}>{f.free?t.startFree:t.know}</span></a></article>)}</div></section>
 
-    <section id="negocios" className="bg-[#0b2341] text-white"><div className="mx-auto grid max-w-7xl gap-8 px-4 py-14 sm:px-6 lg:grid-cols-[1fr_auto] lg:items-center"><div><p className="text-xs font-black uppercase tracking-[.2em] text-[#d6ad63]">{t.entrepreneurship}</p><h2 className="mt-3 font-serif text-4xl text-[#fff7e7]">{t.entrepreneurshipTitle}</h2><p className="mt-3 max-w-2xl text-sm leading-7 text-white/70">{t.entrepreneurshipText}</p><div className="mt-5 flex flex-wrap gap-2">{["90 aulas","100% online · sob demanda","Acesso vitalício","Posicionamento","Vendas"].map(x=><span key={x} className="rounded-full bg-white/10 px-3 py-1.5 text-xs">✓ {x}</span>)}</div></div><div className="rounded-2xl bg-white p-5 text-[#071426]"><p className="text-2xl font-black">LDR ONE</p><p className="text-sm font-bold">Incluído na assinatura</p><a href="/treinamento" className="mt-4 block rounded-xl bg-[#d6ad63] px-5 py-3 text-center text-sm font-black text-[#281605]">{t.know}</a></div></div></section>
+    <section id="negocios" className="bg-[#0b2341] text-white"><div className="mx-auto grid max-w-7xl gap-8 px-4 py-14 sm:px-6 lg:grid-cols-[1fr_auto] lg:items-center"><div><p className="text-xs font-black uppercase tracking-[.2em] text-[#d6ad63]">{t.entrepreneurship}</p><h2 className="mt-3 font-serif text-4xl text-[#fff7e7]">{t.entrepreneurshipTitle}</h2><p className="mt-3 max-w-2xl text-sm leading-7 text-white/70">{t.entrepreneurshipText}</p><div className="mt-5 flex flex-wrap gap-2">{["90 aulas","100% online · sob demanda","Acesso vitalício","Posicionamento","Vendas"].map(x=><span key={x} className="rounded-full bg-white/10 px-3 py-1.5 text-xs">✓ {x}</span>)}</div></div><div className="rounded-2xl bg-white p-5 text-[#071426]"><p className="text-2xl font-black">LDR ONE</p><p className="text-sm font-bold">Disponível na assinatura</p><a href="/treinamento" className="mt-4 block rounded-xl bg-[#d6ad63] px-5 py-3 text-center text-sm font-black text-[#281605]">{t.know}</a></div></div></section>
 
     <section id="ebooks" className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
       <div className="max-w-3xl">
@@ -146,7 +146,7 @@ export function LibrarySalesHome(){
           <h3 className="mt-3 font-serif text-3xl text-[#fff7e7]">O mundo em movimento</h3>
           <p className="mt-3 text-sm leading-6 text-white/75">Negócios, ciência, tecnologia, mundo e entretenimento em uma edição digital.</p>
           <div className="mt-6 flex flex-wrap items-end justify-between gap-4">
-            <div><p className="text-2xl font-black">LDR ONE</p><p className="mt-1 text-sm font-bold text-[#d6ad63]">Incluído na assinatura</p></div>
+            <div><p className="text-2xl font-black">LDR ONE</p><p className="mt-1 text-sm font-bold text-[#d6ad63]">Disponível na assinatura</p></div>
             <span className="rounded-xl bg-[#d6ad63] px-4 py-3 text-xs font-black text-[#281605]">ACESSAR COM LDR ONE →</span>
           </div>
         </a>
@@ -155,7 +155,7 @@ export function LibrarySalesHome(){
           <h3 className="mt-3 font-serif text-3xl text-[#fff7e7]">Ideias que movem pessoas e negócios</h3>
           <p className="mt-3 text-sm leading-6 text-white/75">Carreira, empreendedorismo, comportamento, inovação e histórias que inspiram.</p>
           <div className="mt-6 flex flex-wrap items-end justify-between gap-4">
-            <div><p className="text-2xl font-black">LDR ONE</p><p className="mt-1 text-sm font-bold text-[#f0c775]">Incluído na assinatura</p></div>
+            <div><p className="text-2xl font-black">LDR ONE</p><p className="mt-1 text-sm font-bold text-[#f0c775]">Disponível na assinatura</p></div>
             <span className="rounded-xl bg-[#f0c775] px-4 py-3 text-xs font-black text-[#35101e]">ACESSAR COM LDR ONE →</span>
           </div>
         </a>
