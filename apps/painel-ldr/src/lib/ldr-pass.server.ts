@@ -2,16 +2,19 @@ import { getRequest } from "@tanstack/react-start/server";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { resolveClient } from "@/lib/client-portal.server";
 const db=supabaseAdmin as any;
-export type LdrPassPlan="individual"|"business"; export type LdrPassMarket="EU"; export type LdrPassBilling="monthly"|"annual";
-const PRICE_ENV={individual:{monthly:"LDR_ONE_LIVE_PRICE_INDIVIDUAL_MONTHLY",annual:"LDR_ONE_LIVE_PRICE_INDIVIDUAL_ANNUAL"},business:{monthly:"LDR_ONE_LIVE_PRICE_BUSINESS_MONTHLY",annual:"LDR_ONE_LIVE_PRICE_BUSINESS_ANNUAL"}} as const;
-const AMOUNTS={individual:{monthly:3990,annual:39900},business:{monthly:1990,annual:19900}} as const;
+export type LdrPassPlan="individual"|"business"; export type LdrPassMarket="EU"|"BR"; export type LdrPassBilling="monthly"|"annual";
+const PRICE_ENV={
+ EU:{individual:{monthly:"LDR_ONE_LIVE_PRICE_INDIVIDUAL_MONTHLY",annual:"LDR_ONE_LIVE_PRICE_INDIVIDUAL_ANNUAL"},business:{monthly:"LDR_ONE_LIVE_PRICE_BUSINESS_MONTHLY",annual:"LDR_ONE_LIVE_PRICE_BUSINESS_ANNUAL"}},
+ BR:{individual:{monthly:"LDR_ONE_LIVE_PRICE_BR_INDIVIDUAL_MONTHLY",annual:"LDR_ONE_LIVE_PRICE_BR_INDIVIDUAL_ANNUAL"},business:{monthly:"LDR_ONE_LIVE_PRICE_BR_BUSINESS_MONTHLY",annual:"LDR_ONE_LIVE_PRICE_BR_BUSINESS_ANNUAL"}}
+} as const;
+const AMOUNTS={EU:{individual:{monthly:3990,annual:39900},business:{monthly:1990,annual:19900}},BR:{individual:{monthly:0,annual:0},business:{monthly:0,annual:0}}} as const;
 function fail(m:string):never{throw new Error(m)}
 function origin(){const r=getRequest();return process.env.CLIENT_PANEL_URL?.replace(/\/$/,"")||(r?new URL(r.url).origin:"https://ldr-ecossistema-validacao.onrender.com")}
 async function customerFor(u:string,e:string|null){const c=await resolveClient(u,e);if(c.status!=="ok")fail("Acesso do cliente não disponível.");return c.customer}
-export function ldrPassPrice(plan:LdrPassPlan,market:LdrPassMarket,billing:LdrPassBilling){if(market!=="EU")fail("Mercado indisponível.");const priceId=process.env[PRICE_ENV[plan][billing]]??"";if(!/^price_[A-Za-z0-9]+$/.test(priceId))fail("Preço LDR ONE indisponível.");return {priceId,amount:AMOUNTS[plan][billing],currency:"EUR"}}
+export function ldrPassPrice(plan:LdrPassPlan,market:LdrPassMarket,billing:LdrPassBilling){const envName=PRICE_ENV[market][plan][billing];const priceId=process.env[envName]??"";if(!/^price_[A-Za-z0-9]+$/.test(priceId))fail(market==="BR"?"Preço LDR ONE Brasil ainda não configurado.":"Preço LDR ONE indisponível.");const amount=AMOUNTS[market][plan][billing];return {priceId,amount,currency:market==="BR"?"BRL":"EUR"}}
 export async function getLdrPassContext(u:string,e:string|null){const customer=await customerFor(u,e);const {data,error}=await db.from("ldr_pass_subscriptions").select("*").eq("customer_id",customer.id).order("created_at",{ascending:false}).limit(1).maybeSingle();if(error)fail("Não foi possível carregar o LDR ONE.");return {customer,subscription:data??null,active:data?.status==="active"||data?.status==="trialing"}}
 export async function createLdrPassCheckout(u:string,e:string|null,plan:LdrPassPlan,market:LdrPassMarket,billing:LdrPassBilling,source:string,seats=1){
- const quantity=plan==="individual"?1:seats;if(!Number.isSafeInteger(quantity)||(plan==="business"&&(quantity<5||quantity>10000)))fail("Quantidade de colaboradores inválida.");
+ const quantity=plan==="individual"?1:seats;if(!Number.isSafeInteger(quantity)||(plan==="business"&&(quantity<2||quantity>10000)))fail("Quantidade de colaboradores inválida.");
  const customer=await customerFor(u,e);const {data:existing}=await db.from("ldr_pass_subscriptions").select("id,status").eq("customer_id",customer.id).in("status",["active","trialing","past_due","unpaid","paused","incomplete"]).limit(1).maybeSingle();if(existing)fail("Você já possui um LDR ONE em andamento.");
  const p=ldrPassPrice(plan,market,billing),safeSource=["academy","ldrrhestrategia","ecossistema"].includes(source)?source:"ecossistema";
  const {data:row,error}=await db.from("ldr_pass_subscriptions").insert({customer_id:customer.id,plan,market,currency:p.currency,billing_cycle:billing,amount_cents:p.amount*quantity,status:"pending",source:safeSource,ldr_one_seats:quantity,ldr_one_offer:plan}).select("id").single();if(error||!row)fail("Não foi possível preparar o LDR ONE.");
