@@ -288,8 +288,7 @@ test('legacy academic domain redirects do not affect other applications', () => 
   assert.ok(libraryRewrite);
   assert.equal(libraryRewrite.destination, '/cliente/biblioteca');
   const humanRoomRewrite=config.rewrites.find(rule=>rule.source==='/human-room');
-  assert.ok(humanRoomRewrite);
-  assert.equal(humanRoomRewrite.destination, 'https://human-room.vercel.app/human-room');
+  assert.equal(humanRoomRewrite, undefined, 'Human Room must stay on the official LDR app route');
   const academicRedirects=config.redirects.filter(rule=>rule.source.includes('rede-academica'));
   assert.equal(academicRedirects.length,2);
   for (const rule of academicRedirects) {
