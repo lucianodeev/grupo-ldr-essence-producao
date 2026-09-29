@@ -75,6 +75,7 @@ function AcademicNetworkPage(){
     </header>
 
     <AcademicUtilityStrip locale={locale}/>
+    <EcosystemDiscoveryCard locale={locale}/>
 
     <nav aria-label="Academic network" className="hidden grid-cols-5 overflow-hidden rounded-[24px] border bg-card shadow-sm sm:grid">
       {nav.map(([key,Icon,label])=><button key={key} onClick={()=>setTab(key)} aria-current={tab===key?"page":undefined} className={`min-w-0 px-1 py-3 text-[9px] font-black transition sm:px-3 sm:text-xs ${tab===key?"bg-[#07315a] text-white shadow-inner":"text-foreground hover:bg-muted/70"}`}><Icon className={`mx-auto mb-1 h-5 w-5 ${tab===key?"text-[#efc56d]":""}`}/><span className="block whitespace-normal">{label}</span></button>)}
@@ -88,6 +89,28 @@ function AcademicNetworkPage(){
     <p className="pb-6 text-center text-[11px] leading-5 text-muted-foreground">{t.safety}</p>
     <MobileAcademicNav tab={tab} setTab={setTab} t={t} locale={locale} />
   </div>
+}
+
+function EcosystemDiscoveryCard({locale}:{locale:Locale}){
+  const copy={
+    pt:{eyebrow:"ECOSSISTEMA LDR",title:"Conheça tudo o que a LDR oferece",text:"Explore carreira, formação, bem-estar, Human Room e outros recursos conectados em um só ecossistema.",button:"EXPLORAR O ECOSSISTEMA"},
+    en:{eyebrow:"LDR ECOSYSTEM",title:"Discover everything LDR offers",text:"Explore career, education, wellbeing, Human Room and other connected resources in one ecosystem.",button:"EXPLORE THE ECOSYSTEM"},
+    fr:{eyebrow:"ÉCOSYSTÈME LDR",title:"Découvrez tout ce que LDR propose",text:"Explorez carrière, formation, bien-être, Human Room et d’autres ressources réunies dans un même écosystème.",button:"EXPLORER L’ÉCOSYSTÈME"},
+    es:{eyebrow:"ECOSISTEMA LDR",title:"Descubre todo lo que ofrece LDR",text:"Explora carrera, formación, bienestar, Human Room y otros recursos conectados en un solo ecosistema.",button:"EXPLORAR EL ECOSISTEMA"}
+  }[locale];
+  return <section className="relative overflow-hidden rounded-[24px] border border-[#d7b65d]/60 bg-gradient-to-r from-[#fff7df] via-[#f7e8b9] to-[#e8cf83] p-5 text-[#071426] shadow-[0_10px_30px_rgba(132,98,24,.12)] dark:from-[#3a3017] dark:via-[#493b1c] dark:to-[#5a4720] dark:text-white sm:p-6">
+    <div className="pointer-events-none absolute -right-10 -top-16 h-44 w-44 rounded-full border border-[#9a772c]/25"/>
+    <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="max-w-2xl">
+        <p className="text-[10px] font-black tracking-[.24em] text-[#8b681e] dark:text-[#efcf7d]">{copy.eyebrow}</p>
+        <h2 className="mt-2 font-serif text-2xl leading-tight sm:text-3xl">{copy.title}</h2>
+        <p className="mt-2 text-sm leading-6 text-[#4f4531] dark:text-[#f5ead0]">{copy.text}</p>
+      </div>
+      <Link to="/ecossistema" className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-xl bg-[#07315a] px-5 text-xs font-black text-white shadow-sm transition hover:bg-[#0b416f]">
+        <Network className="h-4 w-4 text-[#efc56d]"/><span>{copy.button}</span>
+      </Link>
+    </div>
+  </section>
 }
 
 function AcademicUtilityStrip({locale}:{locale:Locale}){
