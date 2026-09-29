@@ -268,6 +268,13 @@ const CENTRAL_ACCESS_COPY = {
   },
 } as const;
 
+const MOTOR_CARD_COPY={
+  pt:{eyebrow:"MOTOR DE OPORTUNIDADES LDR",title:"Ajude a treinar o Motor de Oportunidades",text:"Avalie oportunidades reais e ajude o Motor a entender quais recomendações são mais úteis. O feedback é explícito: o Motor não envia candidaturas e não toma decisões por você.",button:"TREINAR O MOTOR"},
+  en:{eyebrow:"LDR OPPORTUNITY ENGINE",title:"Help train the Opportunity Engine",text:"Evaluate real opportunities and help the Engine understand which recommendations are most useful. Feedback is explicit: the Engine does not apply or make decisions for you.",button:"TRAIN THE ENGINE"},
+  fr:{eyebrow:"MOTEUR D’OPPORTUNITÉS LDR",title:"Aidez à entraîner le Moteur d’Opportunités",text:"Évaluez de vraies opportunités et aidez le Moteur à comprendre quelles recommandations sont les plus utiles. Le retour est explicite : aucune candidature ni décision automatique.",button:"ENTRAÎNER LE MOTEUR"},
+  es:{eyebrow:"MOTOR DE OPORTUNIDADES LDR",title:"Ayuda a entrenar el Motor de Oportunidades",text:"Evalúa oportunidades reales y ayuda al Motor a entender qué recomendaciones son más útiles. El feedback es explícito: el Motor no envía candidaturas ni toma decisiones por ti.",button:"ENTRENAR EL MOTOR"}
+} as const;
+
 function EcosystemMap() {
   const { locale } = useI18n();
   const copy = ECOSYSTEM_COPY[locale] ?? ECOSYSTEM_COPY.pt;
@@ -310,6 +317,13 @@ function EcosystemMap() {
             <a href="/carreira?audience=company" className="inline-flex min-h-12 max-w-full items-center justify-center rounded-full text-center leading-snug border border-[#1d3158] px-5 py-3 text-sm font-black uppercase tracking-[.12em] text-[#1d3158]">{copy.freeJob}</a>
           </div>
         </div>
+
+        <section className="mt-8 min-w-0 rounded-[30px] border border-[#9abbe0] bg-[#edf5ff] p-6 shadow-lg sm:p-8">
+          <p className="text-xs font-black uppercase tracking-[.2em] text-[#37658f]">{(MOTOR_CARD_COPY[locale]??MOTOR_CARD_COPY.pt).eyebrow}</p>
+          <h2 className="mt-3 font-serif text-2xl font-bold leading-tight text-[#071426] sm:text-3xl">{(MOTOR_CARD_COPY[locale]??MOTOR_CARD_COPY.pt).title}</h2>
+          <p className="mt-3 max-w-3xl text-sm leading-7 text-[#42526b]">{(MOTOR_CARD_COPY[locale]??MOTOR_CARD_COPY.pt).text}</p>
+          <Link to="/cliente/rede-academica/oportunidades" className="mt-5 inline-flex min-h-12 items-center justify-center rounded-full bg-[#07315a] px-6 py-3 text-sm font-black text-white">{(MOTOR_CARD_COPY[locale]??MOTOR_CARD_COPY.pt).button} →</Link>
+        </section>
 
         <section className="relative mt-8 overflow-hidden min-w-0 rounded-[30px] border border-[#d6ad63]/50 bg-[#071426] p-6 text-white shadow-xl sm:p-8">
           <div className="absolute -right-16 -top-20 h-56 w-56 rounded-full border border-[#d6ad63]/20 bg-[#d6ad63]/10" aria-hidden="true" />
