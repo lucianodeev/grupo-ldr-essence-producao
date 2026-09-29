@@ -210,7 +210,7 @@ function CatalogOrganizer({locale}:{locale:Locale}){
     };
     const courseIcon=(category:string)=>category==="psicanalise"?"🧠":category==="marketing"?"📣":category==="gestao"?"📊":category==="educacao"?"📚":category==="direito"?"⚖️":"🌱";
     const courseTone=(category:string)=>category==="psicanalise"?"#5b2b86":category==="marketing"?"#985014":category==="gestao"?"#17645e":category==="direito"?"#6E102A":"#3D4778";
-    const includedLabel=locale==="pt"?"Incluído na assinatura":locale==="fr"?"Inclus dans l’abonnement":locale==="es"?"Incluido en la suscripción":"Included in subscription";
+    const includedLabel=locale==="pt"?"Disponível com LDR ONE":locale==="fr"?"Inclus dans l’abonnement":locale==="es"?"Incluido en la suscripción":"Included in subscription";
     const courseLabel=locale==="pt"?"Curso Livre":locale==="fr"?"Cours libre":locale==="es"?"Curso libre":"Non-degree course";
     for(const course of ACADEMY_SUBSCRIPTION_COURSES){
       const category=courseCategory(course.category);
