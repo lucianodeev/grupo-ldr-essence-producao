@@ -18,7 +18,7 @@ export const Route = createFileRoute("/ecossistema")({
   head: () => ({
     meta: [
       { title: "Mapa do Ecossistema LDR" },
-      { name: "description", content: "Mapa público do ecossistema LDR: Academy, LDR PASS, Biblioteca, cursos gratuitos, Rede Acadêmica, LDR Carreira, divulgação gratuita de vagas, Clínica Social, LDR RH & Estratégia e Human Room." },
+      { name: "description", content: "Mapa público do ecossistema LDR: acesso FREE, LDR ONE, Academy, Biblioteca, cursos gratuitos, Rede Acadêmica, LDR Carreira, divulgação gratuita de vagas, Clínica Social, LDR RH & Estratégia e Human Room." },
     ],
   }),
   component: EcosystemMap,
@@ -34,12 +34,12 @@ const HUB_COPY = {
     desc: "A entrada central do ecossistema LDR para cursos, formações, biblioteca digital, conteúdos gratuitos, desenvolvimento profissional e acesso às principais soluções educacionais.",
   },
   {
-    name: "LDR PASS",
+    name: "LDR ONE",
     url: "/ldr-pass",
-    tag: "Assinatura digital",
+    tag: "Experiência premium",
     featured: "pass",
-    desc: "Assinatura digital do ecossistema para acessar conteúdos elegíveis, trilhas, eBooks e formações online selecionadas, preservando compras antigas e assinaturas separadas.",
-    cta: "Conhecer o LDR PASS",
+    desc: "Camada premium do ecossistema para recursos digitais elegíveis e experiências avançadas. Os acessos gratuitos atuais continuam gratuitos, e compras ou acessos anteriores permanecem preservados.",
+    cta: "Conhecer o LDR ONE",
   },
   {
     name: "Biblioteca LDR",
@@ -117,7 +117,7 @@ const HUB_COPY = {
 ] as Hub[],
   en: [
     { name:"LDR Academy", url:"/", tag:"Main entry", featured:"academy", desc:"The central entry point to the LDR ecosystem for courses, professional programs, the digital library, free content and educational solutions." },
-    { name:"LDR PASS", url:"/ldr-pass", tag:"Digital subscription", featured:"pass", desc:"The ecosystem subscription for eligible content, learning paths, eBooks and selected online programs.", cta:"Discover LDR PASS" },
+    { name:"LDR ONE", url:"/ldr-pass", tag:"Premium experience", featured:"pass", desc:"The ecosystem premium layer for eligible digital resources and advanced experiences. Existing free access remains free and previous purchases or access remain preserved.", cta:"Discover LDR ONE" },
     { name:"LDR Library", url:"/cliente/biblioteca", tag:"Content and subscription", desc:"Digital library with courses, eBooks, publications, free materials and programs for continuous learning.", cta:"Open Library" },
     { name:"Free Courses", url:"/cliente/biblioteca/cursos-gratuitos", tag:"Free access", desc:"Free courses including languages, career, first aid and introductory content.", cta:"View Free Courses" },
     { name:"Recruitment & Selection", url:"/falar-com-ecossistema?assunto=Empreendedorismo%2C%20neg%C3%B3cios%20e%20novas%20oportunidades&source=recrutamento_escala", tag:"For companies", featured:"career", desc:"Post jobs, reach talent and access recruitment solutions. High-volume hiring projects receive a separate proposal.", cta:"Talk to Sales" },
@@ -132,7 +132,7 @@ const HUB_COPY = {
   ] as Hub[],
   fr: [
     { name:"LDR Academy", url:"/", tag:"Entrée principale", featured:"academy", desc:"L’entrée centrale de l’écosystème LDR pour les cours, formations, bibliothèque numérique, contenus gratuits et solutions éducatives." },
-    { name:"LDR PASS", url:"/ldr-pass", tag:"Abonnement numérique", featured:"pass", desc:"L’abonnement de l’écosystème pour les contenus éligibles, parcours, eBooks et formations en ligne sélectionnées.", cta:"Découvrir LDR PASS" },
+    { name:"LDR ONE", url:"/ldr-pass", tag:"Expérience premium", featured:"pass", desc:"La couche premium de l’écosystème pour les ressources numériques éligibles et les expériences avancées. Les accès gratuits actuels restent gratuits et les achats ou accès antérieurs sont préservés.", cta:"Découvrir LDR ONE" },
     { name:"Bibliothèque LDR", url:"/cliente/biblioteca", tag:"Contenus et abonnement", desc:"Bibliothèque numérique avec cours, eBooks, publications, ressources gratuites et formations.", cta:"Accéder à la bibliothèque" },
     { name:"Cours gratuits", url:"/cliente/biblioteca/cursos-gratuitos", tag:"Accès libre", desc:"Cours gratuits comprenant langues, carrière, premiers secours et contenus d’introduction.", cta:"Voir les cours gratuits" },
     { name:"Recrutement & Sélection", url:"/falar-com-ecossistema?assunto=Empreendedorismo%2C%20neg%C3%B3cios%20e%20novas%20oportunidades&source=recrutamento_escala", tag:"Pour les entreprises", featured:"career", desc:"Publiez des offres, accédez aux talents et bénéficiez de solutions de recrutement. Les projets à grand volume font l’objet d’une proposition séparée.", cta:"Parler au service commercial" },
@@ -147,7 +147,7 @@ const HUB_COPY = {
   ] as Hub[],
   es: [
     { name:"LDR Academy", url:"/", tag:"Entrada principal", featured:"academy", desc:"La entrada central del ecosistema LDR para cursos, formaciones, biblioteca digital, contenidos gratuitos y soluciones educativas." },
-    { name:"LDR PASS", url:"/ldr-pass", tag:"Suscripción digital", featured:"pass", desc:"La suscripción del ecosistema para contenidos elegibles, rutas, eBooks y formaciones online seleccionadas.", cta:"Conocer LDR PASS" },
+    { name:"LDR ONE", url:"/ldr-pass", tag:"Experiencia premium", featured:"pass", desc:"La capa premium del ecosistema para recursos digitales elegibles y experiencias avanzadas. Los accesos gratuitos actuales siguen siendo gratuitos y las compras o accesos anteriores se conservan.", cta:"Conocer LDR ONE" },
     { name:"Biblioteca LDR", url:"/cliente/biblioteca", tag:"Contenidos y suscripción", desc:"Biblioteca digital con cursos, eBooks, publicaciones, materiales gratuitos y formaciones.", cta:"Acceder a la Biblioteca" },
     { name:"Cursos gratuitos", url:"/cliente/biblioteca/cursos-gratuitos", tag:"Acceso libre", desc:"Cursos gratuitos de idiomas, carrera, primeros auxilios y contenidos introductorios.", cta:"Ver cursos gratuitos" },
     { name:"Reclutamiento y Selección", url:"/falar-com-ecossistema?assunto=Empreendedorismo%2C%20neg%C3%B3cios%20e%20novas%20oportunidades&source=recrutamento_escala", tag:"Para empresas", featured:"career", desc:"Publica vacantes, accede a talento y cuenta con soluciones de reclutamiento. Los proyectos de gran volumen reciben una propuesta separada.", cta:"Hablar con Ventas" },
@@ -163,10 +163,10 @@ const HUB_COPY = {
 } as const;
 
 const FEATURES = {
-  pt:["Cursos e formações online","Biblioteca digital","eBooks e publicações","Cursos gratuitos","Rede Acadêmica","Divulgação gratuita de vagas","Desenvolvimento de carreira","Projetos para empresas","Clínica Social","Human Room","LDR PASS"],
-  en:["Online courses and programs","Digital library","eBooks and publications","Free courses","Academic Network","Free job posting","Career development","Projects for companies","Social Clinic","Human Room","LDR PASS"],
-  fr:["Cours et formations en ligne","Bibliothèque numérique","eBooks et publications","Cours gratuits","Réseau Académique","Publication gratuite d’offres","Développement de carrière","Projets pour les entreprises","Clinique Sociale","Human Room","LDR PASS"],
-  es:["Cursos y formaciones online","Biblioteca digital","eBooks y publicaciones","Cursos gratuitos","Red Académica","Publicación gratuita de vacantes","Desarrollo profesional","Proyectos para empresas","Clínica Social","Human Room","LDR PASS"],
+  pt:["Cursos e formações online","Biblioteca digital","eBooks e publicações","Cursos gratuitos","Rede Acadêmica","Divulgação gratuita de vagas","Desenvolvimento de carreira","Projetos para empresas","Clínica Social","Human Room","LDR ONE"],
+  en:["Online courses and programs","Digital library","eBooks and publications","Free courses","Academic Network","Free job posting","Career development","Projects for companies","Social Clinic","Human Room","LDR ONE"],
+  fr:["Cours et formations en ligne","Bibliothèque numérique","eBooks et publications","Cours gratuits","Réseau Académique","Publication gratuite d’offres","Développement de carrière","Projets pour les entreprises","Clinique Sociale","Human Room","LDR ONE"],
+  es:["Cursos y formaciones online","Biblioteca digital","eBooks y publicaciones","Cursos gratuitos","Red Académica","Publicación gratuita de vacantes","Desarrollo profesional","Proyectos para empresas","Clínica Social","Human Room","LDR ONE"],
 } as const;
 
 function external(url: string) {

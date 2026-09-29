@@ -120,9 +120,9 @@ test("keeps professional registration intent when crossing portal hosts", () => 
 
 test("Master OAuth code is exchanged before the admin redirect", () => {
   const server = fs.readFileSync(path.resolve(__dirname, "../src/server.ts"), "utf8");
-  assert.match(server, /isLegacyLdrPanelHost\s*&&\s*url\.searchParams\.has\("code"\)/);
-  assert.match(server, /callback\.pathname\s*=\s*"\/api\/auth\/callback"/);
-  assert.match(server, /callback\.searchParams\.set\("admin",\s*"1"\)/);
+  assert.match(server, /if \(isLegacyLdrPanelHost\)/);
+  assert.match(server, /url\.searchParams\.has\("code"\) \? "\/api\/auth\/callback" :/);
+  assert.match(server, /if \(url\.searchParams\.has\("code"\)\) target\.searchParams\.set\("admin", "1"\)/);
 });
 
 
