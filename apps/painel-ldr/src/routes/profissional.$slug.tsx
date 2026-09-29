@@ -371,12 +371,12 @@ function Page() {
       <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
         <section className="overflow-hidden rounded-3xl border bg-card">
           <div className="grid gap-0 lg:grid-cols-[320px_1fr]">
-            <div className="min-h-[320px] bg-muted">
+            <div className="h-80 bg-muted">
               {p.photo_url ? (
                 <img
                   src={p.photo_url}
                   alt={p.display_name}
-                  className="h-full w-full object-cover"
+                  className="h-80 w-full object-cover lg:h-80"
                 />
               ) : (
                 <div className="grid h-full place-items-center">
