@@ -370,13 +370,13 @@ function Page() {
       </header>
       <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
         <section className="overflow-hidden rounded-3xl border bg-card">
-          <div className="grid gap-0 lg:grid-cols-[320px_1fr]">
-            <div className="h-80 bg-muted">
+          <div className="grid items-start gap-6 p-5 sm:p-6 lg:grid-cols-[220px_1fr] lg:gap-8">
+            <div className="mx-auto aspect-square w-full max-w-[220px] overflow-hidden rounded-2xl bg-muted lg:mx-0">
               {p.photo_url ? (
                 <img
                   src={p.photo_url}
                   alt={p.display_name}
-                  className="h-80 w-full object-cover lg:h-80"
+                  className="h-full w-full object-cover object-top"
                 />
               ) : (
                 <div className="grid h-full place-items-center">
@@ -384,13 +384,13 @@ function Page() {
                 </div>
               )}
             </div>
-            <div className="p-6 sm:p-8">
+            <div className="min-w-0 py-1 sm:py-2">
               <div className="flex flex-wrap items-start justify-between gap-5">
                 <div className="min-w-0">
-                  <h1 className="break-words font-serif text-4xl sm:text-5xl">{p.display_name}</h1>
-                  <p className="mt-2 text-xl font-black text-primary">{p.professional_title}</p>
+                  <h1 className="break-words font-serif text-3xl leading-tight sm:text-4xl">{p.display_name}</h1>
+                  <p className="mt-2 text-lg font-black leading-snug text-primary sm:text-xl">{p.professional_title}</p>
                   {p.profile_headline ? (
-                    <p className="mt-3 max-w-2xl text-base leading-7 text-muted-foreground">
+                    <p className="mt-3 max-w-3xl text-sm leading-6 text-muted-foreground sm:text-base sm:leading-7">
                       {p.profile_headline}
                     </p>
                   ) : null}
