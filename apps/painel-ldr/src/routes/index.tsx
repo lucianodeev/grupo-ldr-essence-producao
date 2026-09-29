@@ -27,7 +27,6 @@ function PublicHome() {
   }, []);
 
   return <>
-    <AcademyInstitutionalIntro />
     <section className="bg-[#071426] px-5 py-8 text-white">
       <div className="mx-auto grid max-w-6xl gap-4 md:grid-cols-[1fr_auto_auto] md:items-center">
         <div>
@@ -39,6 +38,7 @@ function PublicHome() {
         <Link to="/ldr-pass" className="inline-flex w-auto items-center justify-center rounded-full border border-white/20 px-4 py-2 text-center text-[11px] font-black uppercase tracking-[.10em] text-white hover:bg-white/10">LDR PASS</Link>
       </div>
     </section>
+    <AcademyInstitutionalIntro />
     <AcademyEcosystemSection />
     <div className="academy-integrated-legacy">
       <AcademyUniversityHome />
