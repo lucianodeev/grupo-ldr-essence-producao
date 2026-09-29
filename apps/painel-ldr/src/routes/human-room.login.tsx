@@ -10,14 +10,27 @@ function Page() {
   const next = rawNext?.startsWith("/human-room/") && !rawNext.startsWith("//") ? rawNext : null;
   useEffect(() => {
     const s = humanRoomClient();
-    const { data: { subscription } } = s.auth.onAuthStateChange((event: string) => {
+    let routing = false;
+    const routeSignedInUser = async (user: any) => {
+      if (!user || routing || new URLSearchParams(location.search).get("recovery") === "1") return;
+      routing = true;
+      const { data: p, error } = await s.from("profiles").select("is_adult").eq("id", user.id).maybeSingle();
+      if (error) { routing = false; setM(error.message); return; }
+      location.replace(p?.is_adult ? (next || "/human-room/salas") : ("/human-room/perfil" + (next ? "?next=" + encodeURIComponent(next) : "")));
+    };
+    const { data: { subscription } } = s.auth.onAuthStateChange((event: string, session: any) => {
       if (event === "PASSWORD_RECOVERY") setMode("reset");
+      else if (event === "SIGNED_IN" && session?.user) void routeSignedInUser(session.user);
     });
     // The SSR client exchanges the PKCE callback before getUser resolves.
     if (new URLSearchParams(location.search).get("recovery") === "1") {
       s.auth.getUser().then(({ data, error }: any) => {
         if (data.user && !error) setMode("reset");
         else { setMode("recover"); setM("Abra o link recebido neste mesmo navegador. Se expirou, solicite outro abaixo."); }
+      });
+    } else {
+      s.auth.getUser().then(({ data, error }: any) => {
+        if (data.user && !error) void routeSignedInUser(data.user);
       });
     }
     return () => subscription.unsubscribe();
