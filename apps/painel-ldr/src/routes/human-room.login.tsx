@@ -22,6 +22,20 @@ function Page() {
     }
     return () => subscription.unsubscribe();
   }, []);
+  async function signInWithGoogle() {
+    if (busy) return;
+    setBusy(true); setM("");
+    const s = humanRoomClient();
+    try {
+      const redirectTo = location.origin + "/human-room/login" + (next ? "?next=" + encodeURIComponent(next) : "");
+      const { data, error } = await s.auth.signInWithOAuth({ provider: "google", options: { redirectTo, skipBrowserRedirect: true } });
+      if (error || !data.url) throw error || new Error("Não foi possível iniciar o acesso com Google.");
+      location.assign(data.url);
+    } catch (error: any) {
+      setM(error?.message || "Não foi possível entrar com Google. Tente novamente.");
+      setBusy(false);
+    }
+  }
   async function go(e: FormEvent<HTMLFormElement>) {
     e.preventDefault(); if (busy) return;
     setBusy(true); setM("");
@@ -60,6 +74,7 @@ function Page() {
     {mode !== "recover" && <input className="mb-3 w-full rounded-xl border p-4" name="password" type="password" placeholder="Senha (mínimo 8 caracteres)" autoComplete={mode === "login" ? "current-password" : "new-password"} minLength={8} required />}
     {mode === "reset" && <input className="mb-3 w-full rounded-xl border p-4" name="confirm" type="password" placeholder="Confirme a nova senha" autoComplete="new-password" minLength={8} required />}
     <button disabled={busy} className="w-full rounded-full bg-[#121826] p-4 font-black text-white disabled:opacity-60">{busy ? "AGUARDE…" : mode === "login" ? "ENTRAR" : mode === "signup" ? "CRIAR ACESSO" : mode === "recover" ? "ENVIAR LINK DE RECUPERAÇÃO" : "SALVAR NOVA SENHA"}</button>
+    {(mode === "login" || mode === "signup") && <><div className="my-4 flex items-center gap-3"><div className="h-px flex-1 bg-gray-200"/><span className="text-xs font-bold text-gray-500">OU</span><div className="h-px flex-1 bg-gray-200"/></div><button type="button" disabled={busy} onClick={signInWithGoogle} className="w-full rounded-full border border-gray-300 bg-white p-4 font-black text-[#121826] disabled:opacity-60">CONTINUAR COM GOOGLE</button></>}
     <button type="button" onClick={() => { setMode(mode === "login" ? "signup" : "login"); setM(""); }} className="mt-4 w-full text-sm font-bold underline">{mode === "login" ? "CRIAR CONTA" : "JÁ TENHO CONTA"}</button>
     {(mode === "login" || mode === "signup") && <button type="button" onClick={() => { setMode("recover"); setM(""); }} className="mt-4 w-full text-sm font-bold underline">ESQUECI MINHA SENHA</button>}
     {m && <p role="status" className="mt-4 text-sm">{m}</p>}
