@@ -161,7 +161,7 @@ export async function getSocialClinicLanding() {
     active_service_count: serviceRows.filter((service: any) => service.professional_profile_id === item.id).length,
     booking_enabled: serviceRows.some((service: any) => service.professional_profile_id === item.id && service.booking_enabled),
     services: serviceRows.filter((service: any) => service.professional_profile_id === item.id && service.booking_enabled),
-  })).filter((item: any) => item.services.length > 0);
+  }));
 
   const profile = professionals.find((item: any) => item.slug === LUCIANO_SLUG) ?? professionals[0] ?? null;
   const legacyAvailability = profile
