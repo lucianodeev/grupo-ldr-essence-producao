@@ -4,7 +4,7 @@ function embedUrl(value: string) {
     const host = url.hostname.replace(/^www\./, "");
     if (host === "youtu.be") {
       const id = url.pathname.split("/").filter(Boolean)[0];
-      return id ? `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}` : null;
+      return id ? `https://www.youtube.com/embed/${encodeURIComponent(id)}` : null;
     }
     if (host === "youtube.com" || host === "m.youtube.com") {
       const id = url.searchParams.get("v") || (url.pathname.startsWith("/shorts/") ? url.pathname.split("/")[2] : null) || (url.pathname.startsWith("/embed/") ? url.pathname.split("/")[2] : null);
