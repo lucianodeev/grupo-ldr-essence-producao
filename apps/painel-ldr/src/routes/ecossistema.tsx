@@ -34,6 +34,14 @@ const HUB_COPY = {
     desc: "A entrada central do ecossistema LDR para cursos, formações, biblioteca digital, conteúdos gratuitos, desenvolvimento profissional e acesso às principais soluções educacionais.",
   },
   {
+    name: "AI READY 2026",
+    url: "/ai-ready",
+    tag: "IA para empresas",
+    featured: "pass",
+    desc: "Prepare sua empresa e sua equipe para usar Inteligência Artificial de forma responsável, com treinamento, materiais práticos e certificado individual.",
+    cta: "Conhecer AI READY 2026",
+  },
+  {
     name: "LDR ONE",
     url: "/ldr-pass",
     tag: "Experiência premium",
@@ -117,6 +125,7 @@ const HUB_COPY = {
 ] as Hub[],
   en: [
     { name:"LDR Academy", url:"/", tag:"Main entry", featured:"academy", desc:"The central entry point to the LDR ecosystem for courses, professional programs, the digital library, free content and educational solutions." },
+    { name:"AI READY 2026", url:"/ai-ready", tag:"AI for companies", featured:"pass", desc:"Prepare your company and team to use artificial intelligence responsibly, with training, practical materials and individual certificates.", cta:"Discover AI READY 2026" },
     { name:"LDR ONE", url:"/ldr-pass", tag:"Premium experience", featured:"pass", desc:"The ecosystem premium layer for eligible digital resources and advanced experiences. Existing free access remains free and previous purchases or access remain preserved.", cta:"Discover LDR ONE" },
     { name:"LDR Library", url:"/cliente/biblioteca", tag:"Content and subscription", desc:"Digital library with courses, eBooks, publications, free materials and programs for continuous learning.", cta:"Open Library" },
     { name:"Free Courses", url:"/cliente/biblioteca/cursos-gratuitos", tag:"Free access", desc:"Free courses including languages, career, first aid and introductory content.", cta:"View Free Courses" },
@@ -132,6 +141,7 @@ const HUB_COPY = {
   ] as Hub[],
   fr: [
     { name:"LDR Academy", url:"/", tag:"Entrée principale", featured:"academy", desc:"L’entrée centrale de l’écosystème LDR pour les cours, formations, bibliothèque numérique, contenus gratuits et solutions éducatives." },
+    { name:"AI READY 2026", url:"/ai-ready", tag:"IA pour les entreprises", featured:"pass", desc:"Préparez votre entreprise et votre équipe à utiliser l’intelligence artificielle de manière responsable, avec formation, ressources pratiques et certificats individuels.", cta:"Découvrir AI READY 2026" },
     { name:"LDR ONE", url:"/ldr-pass", tag:"Expérience premium", featured:"pass", desc:"La couche premium de l’écosystème pour les ressources numériques éligibles et les expériences avancées. Les accès gratuits actuels restent gratuits et les achats ou accès antérieurs sont préservés.", cta:"Découvrir LDR ONE" },
     { name:"Bibliothèque LDR", url:"/cliente/biblioteca", tag:"Contenus et abonnement", desc:"Bibliothèque numérique avec cours, eBooks, publications, ressources gratuites et formations.", cta:"Accéder à la bibliothèque" },
     { name:"Cours gratuits", url:"/cliente/biblioteca/cursos-gratuitos", tag:"Accès libre", desc:"Cours gratuits comprenant langues, carrière, premiers secours et contenus d’introduction.", cta:"Voir les cours gratuits" },
@@ -147,6 +157,7 @@ const HUB_COPY = {
   ] as Hub[],
   es: [
     { name:"LDR Academy", url:"/", tag:"Entrada principal", featured:"academy", desc:"La entrada central del ecosistema LDR para cursos, formaciones, biblioteca digital, contenidos gratuitos y soluciones educativas." },
+    { name:"AI READY 2026", url:"/ai-ready", tag:"IA para empresas", featured:"pass", desc:"Prepara tu empresa y tu equipo para usar inteligencia artificial de forma responsable, con formación, materiales prácticos y certificados individuales.", cta:"Conocer AI READY 2026" },
     { name:"LDR ONE", url:"/ldr-pass", tag:"Experiencia premium", featured:"pass", desc:"La capa premium del ecosistema para recursos digitales elegibles y experiencias avanzadas. Los accesos gratuitos actuales siguen siendo gratuitos y las compras o accesos anteriores se conservan.", cta:"Conocer LDR ONE" },
     { name:"Biblioteca LDR", url:"/cliente/biblioteca", tag:"Contenidos y suscripción", desc:"Biblioteca digital con cursos, eBooks, publicaciones, materiales gratuitos y formaciones.", cta:"Acceder a la Biblioteca" },
     { name:"Cursos gratuitos", url:"/cliente/biblioteca/cursos-gratuitos", tag:"Acceso libre", desc:"Cursos gratuitos de idiomas, carrera, primeros auxilios y contenidos introductorios.", cta:"Ver cursos gratuitos" },
