@@ -46,10 +46,10 @@ const opportunityEngineCopy={
 } as const;
 
 const professionalModules = {
-  pt: [["Passaporte profissional","/carreira/passaporte"],["Minha Jornada","/carreira/minha-jornada"],["Oportunidades para mim","/carreira/oportunidades-para-mim"],["Meu desenvolvimento","/carreira/meu-desenvolvimento"],["Meu Futuro","/carreira/meu-futuro"]],
-  en: [["Professional Passport","/carreira/passaporte"],["My Journey","/carreira/minha-jornada"],["Opportunities for me","/carreira/oportunidades-para-mim"],["My development","/carreira/meu-desenvolvimento"],["My Future","/carreira/meu-futuro"]],
-  fr: [["Passeport professionnel","/carreira/passaporte"],["Mon parcours","/carreira/minha-jornada"],["Opportunités pour moi","/carreira/oportunidades-para-mim"],["Mon développement","/carreira/meu-desenvolvimento"],["Mon avenir","/carreira/meu-futuro"]],
-  es: [["Pasaporte profesional","/carreira/passaporte"],["Mi Jornada","/carreira/minha-jornada"],["Oportunidades para mí","/carreira/oportunidades-para-mim"],["Mi desarrollo","/carreira/meu-desenvolvimento"],["Mi futuro","/carreira/meu-futuro"]],
+  pt: [["Diagnóstico Profissional","/carreira/diagnostico"],["Passaporte profissional","/carreira/passaporte"],["Minha Jornada","/carreira/minha-jornada"],["Oportunidades para mim","/carreira/oportunidades-para-mim"],["Meu desenvolvimento","/carreira/meu-desenvolvimento"],["Meu Futuro","/carreira/meu-futuro"]],
+  en: [["Professional Diagnostic","/carreira/diagnostico"],["Professional Passport","/carreira/passaporte"],["My Journey","/carreira/minha-jornada"],["Opportunities for me","/carreira/oportunidades-para-mim"],["My development","/carreira/meu-desenvolvimento"],["My Future","/carreira/meu-futuro"]],
+  fr: [["Diagnostic professionnel","/carreira/diagnostico"],["Passeport professionnel","/carreira/passaporte"],["Mon parcours","/carreira/minha-jornada"],["Opportunités pour moi","/carreira/oportunidades-para-mim"],["Mon développement","/carreira/meu-desenvolvimento"],["Mon avenir","/carreira/meu-futuro"]],
+  es: [["Diagnóstico profesional","/carreira/diagnostico"],["Pasaporte profesional","/carreira/passaporte"],["Mi Jornada","/carreira/minha-jornada"],["Oportunidades para mí","/carreira/oportunidades-para-mim"],["Mi desarrollo","/carreira/meu-desenvolvimento"],["Mi futuro","/carreira/meu-futuro"]],
 } as const;
 
 type Locale = keyof typeof copy;
