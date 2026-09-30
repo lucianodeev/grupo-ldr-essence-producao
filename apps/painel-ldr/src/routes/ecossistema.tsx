@@ -17,8 +17,16 @@ type Hub = {
 export const Route = createFileRoute("/ecossistema")({
   head: () => ({
     meta: [
-      { title: "Mapa do Ecossistema LDR" },
-      { name: "description", content: "Mapa público do ecossistema LDR: acesso FREE, LDR ONE, Academy, Biblioteca, cursos gratuitos, Rede Acadêmica, LDR Carreira, divulgação gratuita de vagas, Clínica Social, LDR RH & Estratégia e Human Room." },
+      { title: "Ecossistema LDR | Educação, Carreira, Empresas e Bem-Estar" },
+      { name: "description", content: "Conheça o Ecossistema LDR: educação, LDR ONE, AI READY 2026, carreira, vagas, Rede Acadêmica, Clínica Social, soluções para empresas e Human Room." },
+      { name: "robots", content: "index,follow" },
+      { property: "og:title", content: "Ecossistema LDR | Educação, Carreira, Empresas e Bem-Estar" },
+      { property: "og:description", content: "Educação, carreira, oportunidades, soluções para empresas e bem-estar em um único ecossistema." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://ldrrhestrategia.com/ecossistema" },
+    ],
+    links: [
+      { rel: "canonical", href: "https://ldrrhestrategia.com/ecossistema" },
     ],
   }),
   component: EcosystemMap,
