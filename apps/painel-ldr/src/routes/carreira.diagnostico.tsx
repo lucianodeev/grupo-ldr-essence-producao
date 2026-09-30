@@ -9,7 +9,12 @@ export const Route = createFileRoute("/carreira/diagnostico")({
   head: () => ({ meta: [
     { title: "Diagnóstico Profissional LDR | LDR Carreira" },
     { name: "description", content: "Responda 12 perguntas e receba uma leitura prática do seu momento profissional e um plano de 30 dias." },
-  ] }),
+    { name: "robots", content: "index,follow" },
+    { property: "og:title", content: "Diagnóstico Profissional LDR | LDR Carreira" },
+    { property: "og:description", content: "Diagnóstico profissional online com 12 perguntas, prioridades, ações para 72 horas e plano de 30 dias." },
+    { property: "og:type", content: "product" },
+    { property: "og:url", content: "https://ldrrhestrategia.com/carreira/diagnostico" },
+  ], links: [{ rel: "canonical", href: "https://ldrrhestrategia.com/carreira/diagnostico" }] }),
   component: DiagnosticoProfissional,
 });
 
@@ -54,6 +59,19 @@ function buildResult(answers: Record<string,Answer>) {
 }
 
 function DiagnosticoProfissional(){
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: "Diagnóstico Profissional LDR",
+    description: "Diagnóstico profissional online com 12 perguntas objetivas, 2 reflexões, prioridades, ações para 72 horas e plano de 30 dias.",
+    url: "https://ldrrhestrategia.com/carreira/diagnostico",
+    brand: { "@type": "Brand", name: "LDR Carreira" },
+    offers: [
+      { "@type": "Offer", price: "9.90", priceCurrency: "EUR", availability: "https://schema.org/InStock", url: "https://ldrrhestrategia.com/carreira/diagnostico" },
+      { "@type": "Offer", price: "49.00", priceCurrency: "BRL", availability: "https://schema.org/InStock", url: "https://ldrrhestrategia.com/carreira/diagnostico" },
+    ],
+  };
+  const schemaTag=<script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }} />;
   const accessFn=useServerFn(professionalDiagnosticAccess),checkoutFn=useServerFn(professionalDiagnosticCheckout);
   const access=useQuery({queryKey:["professional-diagnostic-access"],queryFn:()=>accessFn({}),retry:false});
   const checkout=useMutation({mutationFn:(market:"BR"|"INTL")=>checkoutFn({data:{market}}),onSuccess:r=>{location.href=r.url}});
@@ -66,10 +84,10 @@ function DiagnosticoProfissional(){
   const q=questions[step];
   const choose=(value:string,score:number)=>{setAnswers(a=>({...a,[q.id]:{value,score}}));setStep(s=>s+1)};
   const restart=()=>{setAnswers({});setReflection({impact:"",tried:""});setStep(0)};
-  if(access.isLoading)return <main className="min-h-screen bg-slate-50"><div className="mx-auto max-w-3xl px-5 py-16 text-slate-600">Validando seu acesso…</div></main>;
-  if(access.isError)return <main className="min-h-screen bg-slate-50"><div className="mx-auto max-w-3xl px-5 py-12"><Link to="/cliente/login" search={{redirect:"/carreira/diagnostico"} as never} className="inline-flex min-h-12 items-center rounded-xl bg-[#07345b] px-6 font-black text-white">Entrar para comprar ou acessar</Link><p className="mt-3 text-sm text-slate-500">O diagnóstico fica vinculado à sua conta para que o pagamento possa liberar o acesso com segurança.</p></div></main>;
-  if(!access.data?.entitled)return <main className="min-h-screen bg-slate-50 text-slate-900"><div className="mx-auto max-w-3xl px-5 py-10"><Link to="/carreira" className="text-sm font-bold text-[#07345b]">← LDR Carreira</Link><section className="mt-8 rounded-[28px] bg-[#07345b] p-7 text-white"><p className="text-xs font-black uppercase tracking-[.18em] text-[#f4c76b]">Diagnóstico Profissional LDR</p><h1 className="mt-3 text-3xl font-black md:text-4xl">Descubra seu próximo passo profissional em cerca de 10 minutos.</h1><p className="mt-4 max-w-2xl text-sm leading-6 text-white/80">12 perguntas objetivas + 2 reflexões. Receba uma leitura baseada nas suas respostas, prioridades, ações para as próximas 72 horas e plano de 30 dias.</p></section><section className="mt-5 rounded-2xl border bg-white p-6 shadow-sm"><p className="text-xs font-black uppercase tracking-[.18em] text-[#c99b2d]">Pagamento único</p><h2 className="mt-2 text-2xl font-black text-[#07345b]">Acesso completo ao diagnóstico</h2><div className="mt-5 grid gap-3 sm:grid-cols-2"><button disabled={checkout.isPending} onClick={()=>checkout.mutate("INTL")} className="min-h-12 rounded-xl bg-[#07345b] px-5 font-black text-white">Comprar por €9,90</button><button disabled={checkout.isPending} onClick={()=>checkout.mutate("BR")} className="min-h-12 rounded-xl border border-[#07345b] px-5 font-black text-[#07345b]">Comprar por R$49</button></div>{checkout.error&&<p className="mt-3 text-sm text-red-700">{String(checkout.error.message)}</p>}<p className="mt-4 text-xs leading-5 text-slate-500">Pagamento processado pelo Stripe. As perguntas são liberadas automaticamente após a confirmação do pagamento.</p></section></div></main>;
-  return <main className="min-h-screen bg-slate-50 text-slate-900"><div className="mx-auto max-w-3xl px-5 py-10">
+  if(access.isLoading)return <><main className="min-h-screen bg-slate-50"><div className="mx-auto max-w-3xl px-5 py-16 text-slate-600">Validando seu acesso…</div></main>{schemaTag}</>;
+  if(access.isError)return <><main className="min-h-screen bg-slate-50"><div className="mx-auto max-w-3xl px-5 py-12"><Link to="/cliente/login" search={{redirect:"/carreira/diagnostico"} as never} className="inline-flex min-h-12 items-center rounded-xl bg-[#07345b] px-6 font-black text-white">Entrar para comprar ou acessar</Link><p className="mt-3 text-sm text-slate-500">O diagnóstico fica vinculado à sua conta para que o pagamento possa liberar o acesso com segurança.</p></div></main>{schemaTag}</>;
+  if(!access.data?.entitled)return <><main className="min-h-screen bg-slate-50 text-slate-900"><div className="mx-auto max-w-3xl px-5 py-10"><Link to="/carreira" className="text-sm font-bold text-[#07345b]">← LDR Carreira</Link><section className="mt-8 rounded-[28px] bg-[#07345b] p-7 text-white"><p className="text-xs font-black uppercase tracking-[.18em] text-[#f4c76b]">Diagnóstico Profissional LDR</p><h1 className="mt-3 text-3xl font-black md:text-4xl">Descubra seu próximo passo profissional em cerca de 10 minutos.</h1><p className="mt-4 max-w-2xl text-sm leading-6 text-white/80">12 perguntas objetivas + 2 reflexões. Receba uma leitura baseada nas suas respostas, prioridades, ações para as próximas 72 horas e plano de 30 dias.</p></section><section className="mt-5 rounded-2xl border bg-white p-6 shadow-sm"><p className="text-xs font-black uppercase tracking-[.18em] text-[#c99b2d]">Pagamento único</p><h2 className="mt-2 text-2xl font-black text-[#07345b]">Acesso completo ao diagnóstico</h2><div className="mt-5 grid gap-3 sm:grid-cols-2"><button disabled={checkout.isPending} onClick={()=>checkout.mutate("INTL")} className="min-h-12 rounded-xl bg-[#07345b] px-5 font-black text-white">Comprar por €9,90</button><button disabled={checkout.isPending} onClick={()=>checkout.mutate("BR")} className="min-h-12 rounded-xl border border-[#07345b] px-5 font-black text-[#07345b]">Comprar por R$49</button></div>{checkout.error&&<p className="mt-3 text-sm text-red-700">{String(checkout.error.message)}</p>}<p className="mt-4 text-xs leading-5 text-slate-500">Pagamento processado pelo Stripe. As perguntas são liberadas automaticamente após a confirmação do pagamento.</p></section></div></main>{schemaTag}</>;
+  return <><main className="min-h-screen bg-slate-50 text-slate-900"><div className="mx-auto max-w-3xl px-5 py-10">
     <Link to="/carreira" className="inline-flex items-center gap-2 text-sm font-bold text-[#07345b]"><ArrowLeft size={16}/> LDR Carreira</Link>
     {!objectiveDone?<><p className="mt-8 text-xs font-black uppercase tracking-[.18em] text-[#c99b2d]">Diagnóstico Profissional LDR</p>
       <h1 className="mt-2 text-3xl font-black text-[#07345b] md:text-4xl">Descubra seu próximo passo profissional</h1>
@@ -88,5 +106,5 @@ function DiagnosticoProfissional(){
       <section className="mt-5 rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200"><h2 className="text-xl font-black text-[#07345b]">Próximas 72 horas</h2><div className="mt-4 grid gap-3">{result.actions.slice(0,3).map((a,i)=><div key={a.title} className="rounded-2xl bg-slate-50 p-4"><strong>{i+1}. {a.text}</strong></div>)}</div></section><section className="mt-5 rounded-3xl bg-[#07345b] p-6 text-white shadow-sm"><h2 className="flex items-center gap-2 text-xl font-black"><Compass/> Seus próximos 30 dias</h2><div className="mt-5 grid gap-4">{result.actions.map((a,i)=><div key={a.title} className="rounded-2xl bg-white/10 p-4"><p className="text-xs font-black uppercase tracking-wide text-[#f4d47b]">Semana {i+1}</p><p className="mt-1 font-bold">{a.text}</p></div>)}<div className="rounded-2xl bg-white/10 p-4"><p className="text-xs font-black uppercase tracking-wide text-[#f4d47b]">Semana 4</p><p className="mt-1 font-bold">Revise o que executou, registre evidências e escolha a próxima prioridade com base no que mudou.</p></div></div></section>
       <section className="mt-5 rounded-3xl border border-slate-200 bg-white p-6"><h2 className="text-xl font-black text-[#07345b]">Seu contexto, nas suas palavras</h2><p className="mt-3 text-sm font-bold">Mudança que teria maior impacto:</p><p className="mt-1 text-slate-600">{reflection.impact}</p><p className="mt-4 text-sm font-bold">O que você já tentou:</p><p className="mt-1 text-slate-600">{reflection.tried}</p></section><section className="mt-5 rounded-3xl bg-[#fff8e8] p-6"><h2 className="text-xl font-black text-[#07345b]">Reavalie em 30 dias</h2><p className="mt-2 text-slate-600">Volte ao diagnóstico após executar o plano. Compare suas respostas, registre novas evidências e veja se sua prioridade mudou.</p></section><div className="mt-6 flex flex-wrap gap-3"><Link to="/carreira/gps" className="rounded-xl bg-[#c99b2d] px-5 py-3 font-bold text-white">Levar objetivo ao Career GPS</Link><button onClick={restart} className="rounded-xl border border-[#07345b] px-5 py-3 font-bold text-[#07345b]">Refazer diagnóstico</button></div>
     </>}
-  </div></main>
+  </div></main>{schemaTag}</>;
 }
