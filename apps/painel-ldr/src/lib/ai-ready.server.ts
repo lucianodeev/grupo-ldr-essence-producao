@@ -1,7 +1,6 @@
 import { getRequest } from "@tanstack/react-start/server";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { resolveClient } from "@/lib/client-portal.server";
-import { getEmployeeContext } from "@/lib/organization-portal.server";
 
 export type AiReadyMarket = "BR" | "INTL";
 const PRODUCT_KEY = "ai_ready_2026";
@@ -13,21 +12,26 @@ async function customer(userId:string,email:string|null){
 }
 
 export async function getAiReadyAccess(userId:string,email:string|null){
-  const employee=await getEmployeeContext(userId,email);
-  const employeeAllocation=employee.status==="ok"
-    ? employee.benefits.find((b:any)=>b.catalog_key===PRODUCT_KEY&&["assigned","requested","used"].includes(String(b.status)))??null
-    : null;
-  let c:null|Awaited<ReturnType<typeof customer>>=null;
-  let order:any=null;
-  try{
-    c=await customer(userId,email);
-    const result=await supabaseAdmin.from("orders").select("id,payment_status,status,created_at,metadata").eq("customer_id",c.id).eq("payment_status","pago").order("created_at",{ascending:false});
-    if(result.error) throw new Error("Não foi possível validar o acesso.");
-    order=(result.data??[]).find((o:any)=>o?.metadata?.product_key===PRODUCT_KEY)??null;
-  }catch(error){
-    if(!employeeAllocation) throw error;
-  }
-  return {customer:c,entitled:Boolean(order||employeeAllocation),order,employeeAllocation,employee:employee.status==="ok"?employee.member:null};
+  const c=await customer(userId,email);
+  const mail=(email??c.email??"").trim().toLowerCase();
+  const {data,error}=await supabaseAdmin.from("orders").select("id,customer_id,payment_status,status,created_at,metadata").eq("payment_status","pago").eq("catalog_key",PRODUCT_KEY).order("created_at",{ascending:false});
+  if(error) throw new Error("Não foi possível validar o acesso.");
+  const ownOrder=(data??[]).find((o:any)=>o.customer_id===c.id||o?.metadata?.auth_user_id===userId)??null;
+  const seatOrder=!ownOrder&&mail?(data??[]).find((o:any)=>Array.isArray(o?.metadata?.seat_emails)&&o.metadata.seat_emails.map((x:any)=>String(x).trim().toLowerCase()).includes(mail))??null:null;
+  const order=ownOrder??seatOrder;
+  return {customer:c,entitled:Boolean(order),order,seatAccess:Boolean(seatOrder),seatEmails:ownOrder&&Array.isArray((ownOrder as any)?.metadata?.seat_emails)?(ownOrder as any).metadata.seat_emails:[]};
+}
+
+export async function saveAiReadySeats(userId:string,email:string|null,emails:string[]){
+  const access=await getAiReadyAccess(userId,email);
+  if(!access.order||access.seatAccess) throw new Error("Somente a conta compradora pode administrar os colaboradores.");
+  const normalized=[...new Set((emails??[]).map(x=>String(x).trim().toLowerCase()).filter(x=>x.includes("@")&&x.length<=254))];
+  if(normalized.length>10) throw new Error("O AI READY 2026 permite até 10 colaboradores.");
+  const current=(access.order as any).metadata??{};
+  const metadata={...current,seat_emails:normalized,seats:10};
+  const {error}=await supabaseAdmin.from("orders").update({metadata} as never).eq("id",access.order.id).eq("customer_id",access.customer.id).eq("payment_status","pago");
+  if(error) throw new Error("Não foi possível salvar os colaboradores.");
+  return {ok:true as const,seatEmails:normalized,limit:10};
 }
 
 export async function createAiReadyCheckout(userId:string,email:string|null,market:AiReadyMarket){
