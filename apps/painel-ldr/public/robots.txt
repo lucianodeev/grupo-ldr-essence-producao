@@ -1,20 +1,20 @@
 User-agent: Googlebot
 Allow: /
 Disallow: /admin
-Disallow: /cliente
-Disallow: /empresa
-Disallow: /funcionario
-Disallow: /profissional
 Disallow: /api/
+Disallow: /cliente/login
+Disallow: /empresa/login
+Disallow: /funcionario/login
+Disallow: /profissional-painel
 
 User-agent: Bingbot
 Allow: /
 Disallow: /admin
-Disallow: /cliente
-Disallow: /empresa
-Disallow: /funcionario
-Disallow: /profissional
 Disallow: /api/
+Disallow: /cliente/login
+Disallow: /empresa/login
+Disallow: /funcionario/login
+Disallow: /profissional-painel
 
 User-agent: Twitterbot
 Allow: /
@@ -25,10 +25,10 @@ Allow: /
 User-agent: *
 Allow: /
 Disallow: /admin
-Disallow: /cliente
-Disallow: /empresa
-Disallow: /funcionario
-Disallow: /profissional
 Disallow: /api/
+Disallow: /cliente/login
+Disallow: /empresa/login
+Disallow: /funcionario/login
+Disallow: /profissional-painel
 
-Sitemap: https://ldracademy.online/sitemap.xml
+Sitemap: https://ldrrhestrategia.com/sitemap.xml
