@@ -380,6 +380,20 @@ function EcosystemMap() {
           </div>
         </section>
 
+        <section className="mt-8 overflow-hidden rounded-[30px] border border-[#d6ad63]/60 bg-gradient-to-br from-[#071426] via-[#0b2341] to-[#123a67] text-white shadow-xl">
+          <div className="grid min-w-0 md:grid-cols-[220px_1fr] md:items-stretch">
+            <div className="min-h-56 bg-[#0b1c31]">
+              <img src="/media/luciano/luciano-rodrigues-almeida.jpeg" alt="Luciano Rodrigues Almeida" className="h-full w-full object-cover object-center" />
+            </div>
+            <div className="flex min-w-0 flex-col justify-center p-6 sm:p-8">
+              <p className="text-xs font-black uppercase tracking-[.2em] text-[#f4c76b]">Quem criou o Ecossistema LDR</p>
+              <h2 className="mt-3 font-serif text-3xl font-bold leading-tight sm:text-4xl">Luciano Rodrigues Almeida</h2>
+              <p className="mt-4 max-w-3xl text-sm leading-7 text-white/80 sm:text-base">Conheça a trajetória profissional, a criação e o desenvolvimento do Ecossistema LDR, seus projetos e as publicações editoriais sobre essa história.</p>
+              <Link to="/luciano" className="mt-6 inline-flex min-h-12 w-fit max-w-full items-center justify-center rounded-full border border-[#f4c76b] bg-[#d6ad63] px-6 py-3 text-sm font-black uppercase tracking-[.08em] text-[#071426] shadow-lg transition hover:-translate-y-0.5 hover:bg-[#f4c76b]">Conhecer trajetória →</Link>
+            </div>
+          </div>
+        </section>
+
         <section className="mt-8 min-w-0 rounded-[28px] border border-[#b7d2ff] bg-[#eef5ff] p-6 shadow-sm sm:p-8">
           <p className="text-xs font-black uppercase tracking-[.2em] text-[#1d3158]">{copy.opportunities}</p>
           <h2 className="mt-3 font-serif text-2xl font-bold leading-tight sm:text-3xl text-[#071426]">{copy.opportunityTitle}</h2>
