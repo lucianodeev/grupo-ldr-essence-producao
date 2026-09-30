@@ -179,6 +179,20 @@ function LazyAdSenseScript() {
   return null;
 }
 
+function GlobalLucianoReference() {
+  const location = useLocation();
+  const hidden = ["/luciano", "/luciano-rodrigues-almeida", "/cliente/login", "/empresa/login", "/funcionario/login", "/painel-profissional/login", "/admin/login"].some((path) => location.pathname.startsWith(path));
+  if (hidden) return null;
+  return (
+    <div className="mx-auto w-full max-w-7xl px-4 pb-3 sm:px-6 lg:px-8">
+      <Link to="/luciano" className="inline-flex items-center gap-2 text-[11px] font-semibold text-muted-foreground/80 transition hover:text-primary">
+        <span className="h-1.5 w-1.5 rounded-full bg-[#d6ad63]" aria-hidden="true" />
+        Fundador · Luciano Rodrigues Almeida — biografia e trajetória
+      </Link>
+    </div>
+  );
+}
+
 function LazyAcademyChatbot() {
   const location = useLocation();
   const [isMounted, setIsMounted] = useState(false);
@@ -270,6 +284,7 @@ function RootComponent() {
           <Outlet />
           {showCompanyPlans && <CompanyPlanCards />}
           {showLdrOneCard && <GlobalLdrOneCard />}
+          <GlobalLucianoReference />
         </div>
 
         <LazyAdSenseScript />
