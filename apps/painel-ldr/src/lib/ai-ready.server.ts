@@ -1,6 +1,7 @@
 import { getRequest } from "@tanstack/react-start/server";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { resolveClient } from "@/lib/client-portal.server";
+import { getEmployeeContext } from "@/lib/organization-portal.server";
 
 export type AiReadyMarket = "BR" | "INTL";
 const PRODUCT_KEY = "ai_ready_2026";
@@ -12,11 +13,21 @@ async function customer(userId:string,email:string|null){
 }
 
 export async function getAiReadyAccess(userId:string,email:string|null){
-  const c=await customer(userId,email);
-  const {data,error}=await supabaseAdmin.from("orders").select("id,payment_status,status,created_at,metadata").eq("customer_id",c.id).eq("payment_status","pago").order("created_at",{ascending:false});
-  if(error) throw new Error("Não foi possível validar o acesso.");
-  const order=(data??[]).find((o:any)=>o?.metadata?.product_key===PRODUCT_KEY)??null;
-  return {customer:c,entitled:Boolean(order),order};
+  const employee=await getEmployeeContext(userId,email);
+  const employeeAllocation=employee.status==="ok"
+    ? employee.benefits.find((b:any)=>b.catalog_key===PRODUCT_KEY&&["assigned","requested","used"].includes(String(b.status)))??null
+    : null;
+  let c:null|Awaited<ReturnType<typeof customer>>=null;
+  let order:any=null;
+  try{
+    c=await customer(userId,email);
+    const result=await supabaseAdmin.from("orders").select("id,payment_status,status,created_at,metadata").eq("customer_id",c.id).eq("payment_status","pago").order("created_at",{ascending:false});
+    if(result.error) throw new Error("Não foi possível validar o acesso.");
+    order=(result.data??[]).find((o:any)=>o?.metadata?.product_key===PRODUCT_KEY)??null;
+  }catch(error){
+    if(!employeeAllocation) throw error;
+  }
+  return {customer:c,entitled:Boolean(order||employeeAllocation),order,employeeAllocation,employee:employee.status==="ok"?employee.member:null};
 }
 
 export async function createAiReadyCheckout(userId:string,email:string|null,market:AiReadyMarket){
