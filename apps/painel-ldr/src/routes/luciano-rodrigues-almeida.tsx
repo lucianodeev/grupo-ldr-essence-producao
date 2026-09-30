@@ -3,7 +3,7 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/luciano-rodrigues-almeida")({
   head: () => ({
     meta: [
-      { title: "Luciano Rodrigues Almeida | Fundador da LDR Academy" },
+      { title: "Luciano Rodrigues Almeida | Biografia e trajetória" },
       {
         name: "description",
         content:
@@ -17,9 +17,9 @@ export const Route = createFileRoute("/luciano-rodrigues-almeida")({
           "Trajetória, projetos, links oficiais e presença pública de Luciano Rodrigues Almeida no ecossistema LDR.",
       },
       { property: "og:type", content: "profile" },
-      { property: "og:url", content: "https://ldracademy.online/luciano-rodrigues-almeida" },
+      { property: "og:url", content: "https://ldrrhestrategia.com/luciano" },
     ],
-    links: [{ rel: "canonical", href: "https://ldracademy.online/luciano-rodrigues-almeida" }],
+    links: [{ rel: "canonical", href: "https://ldrrhestrategia.com/luciano" }],
   }),
   component: LucianoPage,
 });
@@ -28,7 +28,7 @@ const projects = [
   {
     name: "LDR Academy",
     text: "Plataforma educacional online com cursos, formações, biblioteca digital, conteúdos de carreira, desenvolvimento humano e qualificação profissional.",
-    href: "https://ldracademy.online",
+    href: "https://ldrrhestrategia.com",
   },
   {
     name: "LDR RH & Estratégia",
@@ -38,7 +38,7 @@ const projects = [
   {
     name: "Human Room",
     text: "Projeto digital voltado à escuta, participação e construção coletiva de soluções entre pessoas, universidades, empresas e organizações.",
-    href: "https://ldracademy.online/human-room",
+    href: "https://ldrrhestrategia.com/human-room",
   },
   {
     name: "Grupo LDR Essence",
@@ -61,13 +61,13 @@ const areas = [
 ];
 
 const officialLinks = [
-  ["LDR Academy", "https://ldracademy.online"],
-  ["Ecossistema LDR", "https://ldracademy.online/ecossistema"],
-  ["LDR RH & Estratégia", "https://ldracademy.online/ldr-rh-estrategia"],
-  ["Human Room", "https://ldracademy.online/human-room"],
+  ["LDR Academy", "https://ldrrhestrategia.com"],
+  ["Ecossistema LDR", "https://ldrrhestrategia.com/ecossistema"],
+  ["LDR RH & Estratégia", "https://ldrrhestrategia.com/"],
+  ["Human Room", "https://ldrrhestrategia.com/human-room"],
   ["Instagram LDR Academy", "https://www.instagram.com/ldracademy.online"],
   ["Instagram profissional", "https://www.instagram.com/luciano.psicanalise_"],
-  ["Página atual sobre Luciano", "https://ldracademy.online/luciano"],
+  ["Página atual sobre Luciano", "https://ldrrhestrategia.com/luciano"],
 ];
 
 const personSchema = {
@@ -77,11 +77,11 @@ const personSchema = {
   jobTitle: "Psicanalista, mentor profissional e fundador da LDR Academy",
   birthPlace: "Guanambi, Bahia, Brasil",
   homeLocation: "Bélgica",
-  url: "https://ldracademy.online/luciano-rodrigues-almeida",
+  url: "https://ldrrhestrategia.com/luciano",
   sameAs: [
-    "https://ldracademy.online",
-    "https://ldracademy.online/luciano",
-    "https://ldracademy.online/human-room",
+    "https://ldrrhestrategia.com",
+    "https://ldrrhestrategia.com/luciano",
+    "https://ldrrhestrategia.com/human-room",
     "https://www.instagram.com/ldracademy.online",
     "https://www.instagram.com/luciano.psicanalise_",
   ],
@@ -118,9 +118,9 @@ function LucianoPage() {
             LDR ACADEMY
           </Link>
           <nav className="hidden items-center gap-5 text-sm font-semibold text-white/80 sm:flex">
-            <a href="https://ldracademy.online/ecossistema" className="hover:text-white">Ecossistema</a>
-            <a href="https://ldracademy.online/ldr-rh-estrategia" className="hover:text-white">LDR RH</a>
-            <a href="https://ldracademy.online/human-room" className="hover:text-white">Human Room</a>
+            <a href="https://ldrrhestrategia.com/ecossistema" className="hover:text-white">Ecossistema</a>
+            <a href="https://ldrrhestrategia.com/" className="hover:text-white">LDR RH</a>
+            <a href="https://ldrrhestrategia.com/human-room" className="hover:text-white">Human Room</a>
           </nav>
         </div>
       </header>
@@ -134,12 +134,12 @@ function LucianoPage() {
               Luciano Rodrigues Almeida
             </h1>
             <p className="mt-5 max-w-3xl text-lg leading-8 text-white/82">
-              Fundador da LDR Academy, psicanalista e idealizador de projetos em educação, carreira, empregabilidade e bem-estar.
+              Psicanalista, mentor profissional e fundador do Ecossistema LDR, com atuação em educação, carreira, empregabilidade, saúde mental e desenvolvimento humano.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <ExternalButton href="https://ldracademy.online">Conhecer LDR Academy</ExternalButton>
-              <ExternalButton href="https://ldracademy.online/ecossistema" variant="secondary">Ver Ecossistema</ExternalButton>
-              <ExternalButton href="https://ldracademy.online/ldr-rh-estrategia" variant="secondary">LDR RH & Estratégia</ExternalButton>
+              <ExternalButton href="https://ldrrhestrategia.com">Conhecer LDR Academy</ExternalButton>
+              <ExternalButton href="https://ldrrhestrategia.com/ecossistema" variant="secondary">Ver Ecossistema</ExternalButton>
+              <ExternalButton href="https://ldrrhestrategia.com/" variant="secondary">LDR RH & Estratégia</ExternalButton>
             </div>
           </div>
 
@@ -203,7 +203,7 @@ function LucianoPage() {
             <p className="text-xs font-black uppercase tracking-[.2em] text-[#8b6a12]">Projetos principais</p>
             <h2 className="mt-3 font-serif text-3xl sm:text-4xl">Ecossistema LDR</h2>
           </div>
-          <a href="https://ldracademy.online/ecossistema" className="font-bold text-[#6d4f09] underline underline-offset-4">Ver ecossistema completo</a>
+          <a href="https://ldrrhestrategia.com/ecossistema" className="font-bold text-[#6d4f09] underline underline-offset-4">Ver ecossistema completo</a>
         </div>
         <div className="grid gap-5 md:grid-cols-2">
           {projects.map((project) => (
@@ -259,7 +259,10 @@ function LucianoPage() {
                 From Street Vendor to EdTech Founder: How Luciano Almeida Is Uniting Education and Careers
               </span>
             </a>
-            <p className="mt-4 text-xs text-[#6b7280]">Em breve, novas entrevistas, matérias, podcasts, portais e publicações.</p>
+            <div className="mt-4 grid gap-3">
+              <a href="https://rysentra.com/luciano-rodrigues-almeida-building-opportunities/" className="rounded-2xl border border-[#e6dac4] p-4 text-sm font-bold text-[#0b1428] transition hover:border-[#8b6a12] hover:bg-[#fbf8f1]">Rysentra Magazine — How Luciano Almeida Built Opportunities Across Brazil and Europe</a>
+              <a href="https://www.escapeartist.com/blog/moving-from-brazil-to-europe/" className="rounded-2xl border border-[#e6dac4] p-4 text-sm font-bold text-[#0b1428] transition hover:border-[#8b6a12] hover:bg-[#fbf8f1]">Escape Artist — From Selling Bananas in Brazil to Building a Life in Europe</a>
+            </div>
           </article>
 
           <article className="rounded-[2rem] border border-[#d6ad63]/25 bg-white p-6 shadow-sm sm:p-8">
@@ -285,8 +288,8 @@ function LucianoPage() {
             entre em contato pelos canais oficiais.
           </p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap">
-            <ExternalButton href="https://ldracademy.online/ecossistema">Conhecer o ecossistema</ExternalButton>
-            <ExternalButton href="https://ldracademy.online/ldr-rh-estrategia" variant="secondary">LDR RH & Estratégia</ExternalButton>
+            <ExternalButton href="https://ldrrhestrategia.com/ecossistema">Conhecer o ecossistema</ExternalButton>
+            <ExternalButton href="https://ldrrhestrategia.com/" variant="secondary">LDR RH & Estratégia</ExternalButton>
             <ExternalButton href="https://www.instagram.com/luciano.psicanalise_" variant="secondary">Instagram profissional</ExternalButton>
           </div>
         </div>
