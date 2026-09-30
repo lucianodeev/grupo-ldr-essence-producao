@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { CheckCircle2, ShieldCheck, Users, FileCheck2, Brain, ArrowRight } from "lucide-react";
+import { CheckCircle2, ShieldCheck, Users, FileCheck2, Brain, ArrowRight } from "lucide-react";\nimport { AiNarrator } from "@/components/ai-ready/ai-narrator";
 
 export const Route = createFileRoute("/ai-ready")({
   head: () => ({
@@ -30,7 +30,7 @@ function AiReadyPage() {
           <p className="text-xs font-black uppercase tracking-[.25em] text-[#d6ad63]">AI READY 2026 · by LDR RH & Estratégia</p>
           <h1 className="mt-5 max-w-4xl font-serif text-4xl font-bold leading-tight sm:text-6xl">Sua empresa já usa Inteligência Artificial?</h1>
           <p className="mt-6 max-w-3xl text-base leading-7 text-white/80 sm:text-lg">Prepare sua equipe para utilizar ferramentas de IA com mais consciência, segurança, revisão humana e boas práticas — com treinamento e documentos prontos para implementar.</p>
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-7 max-w-3xl rounded-2xl border border-white/15 bg-white/10 p-4"><p className="mb-3 text-sm font-bold text-[#f4dba8]">▶ Ouça uma prévia do AI READY 2026</p><AiNarrator compact label="Ouvir apresentação" text="Bem-vindo ao AI READY 2026, da LDR RH e Estratégia. Sua equipe já utiliza inteligência artificial no trabalho? Neste treinamento, você vai aprender como usar IA com mais consciência, proteger informações da empresa, reconhecer respostas que precisam de verificação, aplicar revisão humana e criar regras claras para o uso profissional. O objetivo não é impedir a inteligência artificial. É ajudar sua empresa a utilizá-la com responsabilidade, método e supervisão." /></div>\n          <div className="mt-8 flex flex-wrap gap-3">
             <Link to="/cliente/login" search={{ redirect: "/cliente/ai-ready" } as never} className="inline-flex min-h-12 items-center gap-2 rounded-xl bg-[#d6ad63] px-6 font-black text-[#071426]">Preparar minha empresa <ArrowRight className="h-4 w-4"/></Link>
             <a href="#conteudo" className="inline-flex min-h-12 items-center rounded-xl border border-white/25 px-6 font-bold text-white">Ver o que está incluído</a>
           </div>
