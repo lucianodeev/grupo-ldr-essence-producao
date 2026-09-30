@@ -19,7 +19,12 @@ export async function getAiReadyAccess(userId:string,email:string|null){
   const ownOrder=(data??[]).find((o:any)=>o.customer_id===c.id||o?.metadata?.auth_user_id===userId)??null;
   const seatOrder=!ownOrder&&mail?(data??[]).find((o:any)=>Array.isArray(o?.metadata?.seat_emails)&&o.metadata.seat_emails.map((x:any)=>String(x).trim().toLowerCase()).includes(mail))??null:null;
   const order=ownOrder??seatOrder;
-  return {customer:c,entitled:Boolean(order),order,seatAccess:Boolean(seatOrder),seatEmails:ownOrder&&Array.isArray((ownOrder as any)?.metadata?.seat_emails)?(ownOrder as any).metadata.seat_emails:[]};
+  let progress:null|{progress_percent:number;current_location:string|null;updated_at:string|null}=null;
+  if(order){
+    const {data:p}=await supabaseAdmin.from("library_progress").select("progress_percent,current_location,updated_at").eq("customer_id",c.id).eq("product_key",PRODUCT_KEY).maybeSingle();
+    progress=p??null;
+  }
+  return {customer:c,entitled:Boolean(order),order,seatAccess:Boolean(seatOrder),seatEmails:ownOrder&&Array.isArray((ownOrder as any)?.metadata?.seat_emails)?(ownOrder as any).metadata.seat_emails:[],progress};
 }
 
 export async function saveAiReadySeats(userId:string,email:string|null,emails:string[]){
