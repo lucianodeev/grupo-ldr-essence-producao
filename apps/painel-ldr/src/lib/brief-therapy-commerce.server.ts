@@ -92,7 +92,7 @@ export async function getBriefTherapyOffer(userId:string,email:string|null){
   const progress=await savedProgress(customer.id);
   const enrolledAt=(enrollment?.enrolled_at??order?.created_at??null) as string|null;
   const elapsedDays=owner?MINIMUM_DAYS:daysSince(enrolledAt);
-  const maxUnlockedLesson=owner?TOTAL_LESSONS:Math.min(TOTAL_LESSONS,elapsedDays+1);
+  const maxUnlockedLesson=entitled?TOTAL_LESSONS:0;
   const progressPercent=Number(progress?.progress_percent??enrollment?.progress_percent??0);
   const projectApproved=await paidCourseProjectApproved(customer.id,"formacao-terapia-breve-psicanalitica");
   const certificateEligible=entitled&&elapsedDays>=MINIMUM_DAYS&&progressPercent>=100&&projectApproved;
