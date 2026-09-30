@@ -338,6 +338,13 @@ function EcosystemMap() {
           <span className="shrink-0 text-sm font-black text-[#f4c76b]">BIOGRAFIA →</span>
         </Link>
 
+        <section className="mt-8 overflow-hidden rounded-[30px] border border-[#d6ad63]/60 bg-white p-6 shadow-xl sm:p-8">
+          <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-center">
+            <div><p className="text-xs font-black uppercase tracking-[.2em] text-[#9a6a20]">Novo · LDR Carreira</p><h2 className="mt-3 font-serif text-2xl font-bold leading-tight text-[#071426] sm:text-3xl">Diagnóstico Profissional LDR</h2><p className="mt-3 max-w-3xl text-sm leading-7 text-[#42526b]">Descubra seu próximo passo profissional em cerca de 10 minutos. Receba prioridades, ações para 72 horas e um plano prático de 30 dias baseado nas suas respostas.</p><p className="mt-3 text-sm font-black text-[#071426]">€9,90 · Brasil R$49 · pagamento único</p></div>
+            <Link to="/carreira/diagnostico" className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#07345b] px-6 py-3 text-sm font-black text-white">FAZER DIAGNÓSTICO →</Link>
+          </div>
+        </section>
+
         <section className="mt-8 min-w-0 rounded-[30px] border border-[#9abbe0] bg-[#edf5ff] p-6 shadow-lg sm:p-8">
           <p className="text-xs font-black uppercase tracking-[.2em] text-[#37658f]">{(MOTOR_CARD_COPY[locale]??MOTOR_CARD_COPY.pt).eyebrow}</p>
           <h2 className="mt-3 font-serif text-2xl font-bold leading-tight text-[#071426] sm:text-3xl">{(MOTOR_CARD_COPY[locale]??MOTOR_CARD_COPY.pt).title}</h2>
