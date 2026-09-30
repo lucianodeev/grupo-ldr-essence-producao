@@ -7,7 +7,13 @@ export const Route = createFileRoute("/ai-ready")({
     meta: [
       { title: "AI READY 2026 | LDR RH & Estratégia" },
       { name: "description", content: "Treinamento e kit empresarial para estruturar o uso responsável de inteligência artificial na sua empresa." },
+      { name: "robots", content: "index,follow" },
+      { property: "og:title", content: "AI READY 2026 | LDR RH & Estratégia" },
+      { property: "og:description", content: "Treinamento e kit empresarial para uso responsável de IA, com acesso para até 10 colaboradores." },
+      { property: "og:type", content: "product" },
+      { property: "og:url", content: "https://ldrrhestrategia.com/ai-ready" },
     ],
+    links: [{ rel: "canonical", href: "https://ldrrhestrategia.com/ai-ready" }],
   }),
   component: AiReadyPage,
 });
@@ -24,8 +30,21 @@ const items = [
 ];
 
 function AiReadyPage() {
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: "AI READY 2026",
+    description: "Treinamento e kit empresarial para estruturar o uso responsável de inteligência artificial na empresa, com acesso para até 10 colaboradores.",
+    url: "https://ldrrhestrategia.com/ai-ready",
+    brand: { "@type": "Brand", name: "LDR RH & Estratégia" },
+    offers: [
+      { "@type": "Offer", price: "49.00", priceCurrency: "EUR", availability: "https://schema.org/InStock", url: "https://ldrrhestrategia.com/ai-ready" },
+      { "@type": "Offer", price: "297.00", priceCurrency: "BRL", availability: "https://schema.org/InStock", url: "https://ldrrhestrategia.com/ai-ready" },
+    ],
+  };
   return (
     <main className="min-h-screen bg-[#f7f3e9] text-[#0b2341]">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }} />
       <section className="bg-[#071426] px-5 py-16 text-white sm:py-24">
         <div className="mx-auto max-w-6xl">
           <p className="text-xs font-black uppercase tracking-[.25em] text-[#d6ad63]">AI READY 2026 · by LDR RH & Estratégia</p>
