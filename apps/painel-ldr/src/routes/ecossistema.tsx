@@ -318,6 +318,15 @@ function EcosystemMap() {
           </div>
         </div>
 
+        <Link to="/luciano" className="mt-5 flex min-w-0 items-center justify-between gap-4 rounded-2xl border border-[#d6ad63]/55 bg-[#071426] px-5 py-4 text-white shadow-lg transition hover:-translate-y-0.5 hover:shadow-xl">
+          <div className="min-w-0">
+            <p className="text-[10px] font-black uppercase tracking-[.2em] text-[#f4c76b]">Fundador do Ecossistema LDR</p>
+            <p className="mt-1 font-serif text-lg font-bold leading-tight sm:text-xl">Luciano Rodrigues Almeida</p>
+            <p className="mt-1 text-xs leading-5 text-white/70">Conheça a trajetória, atuação profissional, projetos e publicações na imprensa.</p>
+          </div>
+          <span className="shrink-0 text-sm font-black text-[#f4c76b]">BIOGRAFIA →</span>
+        </Link>
+
         <section className="mt-8 min-w-0 rounded-[30px] border border-[#9abbe0] bg-[#edf5ff] p-6 shadow-lg sm:p-8">
           <p className="text-xs font-black uppercase tracking-[.2em] text-[#37658f]">{(MOTOR_CARD_COPY[locale]??MOTOR_CARD_COPY.pt).eyebrow}</p>
           <h2 className="mt-3 font-serif text-2xl font-bold leading-tight text-[#071426] sm:text-3xl">{(MOTOR_CARD_COPY[locale]??MOTOR_CARD_COPY.pt).title}</h2>
