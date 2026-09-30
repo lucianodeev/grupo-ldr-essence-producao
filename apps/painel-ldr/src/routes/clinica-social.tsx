@@ -8,8 +8,13 @@ export const Route = createFileRoute("/clinica-social")({
   loader: () => socialClinicLanding(),
   head: () => ({ meta: [
     { title: "Clínica Social LDR de Psicanálise" },
-    { name: "description", content: "Atendimento psicanalítico com valor social: R$ 80 no Brasil e € 25 na Europa, mediante cadastro e disponibilidade." },
-  ]}),
+    { name: "description", content: "Atendimento psicanalítico com valor social: R$ 80 no Brasil e € 30 na Europa, mediante cadastro e disponibilidade." },
+    { name: "robots", content: "index,follow" },
+    { property: "og:title", content: "Clínica Social LDR de Psicanálise" },
+    { property: "og:description", content: "Atendimento psicanalítico com valor social: R$ 80 no Brasil e € 30 na Europa, mediante cadastro e disponibilidade." },
+    { property: "og:type", content: "website" },
+    { property: "og:url", content: "https://ldrrhestrategia.com/clinica-social" },
+  ], links: [{ rel: "canonical", href: "https://ldrrhestrategia.com/clinica-social" }] }),
   component: SocialClinicPage,
 });
 
