@@ -10,5 +10,5 @@ services:
     startCommand: npm --prefix apps/painel-ldr run start:render
     autoDeployTrigger: commit
     domains:
-      - ldracademy.online
+      - ldrrhestrategia.com
     renderSubdomainPolicy: enabled
