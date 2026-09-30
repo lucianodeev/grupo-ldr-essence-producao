@@ -1,0 +1,27 @@
+name: Validate AI READY MVP branch
+
+on:
+  push:
+    branches:
+      - feat/ai-ready-2026-mvp
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'apps/painel-ldr/**'
+      - '.github/workflows/validate-ai-ready-mvp.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      - run: npm install --no-package-lock
+      - run: npm run build:painel
