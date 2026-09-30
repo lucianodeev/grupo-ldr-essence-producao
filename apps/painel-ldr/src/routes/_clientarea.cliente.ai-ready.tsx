@@ -1,8 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { aiReadyAccess, aiReadyCheckout } from "@/lib/ai-ready.functions";\nimport { clientSaveProgress } from "@/lib/learning.functions";\nimport { useEffect, useState } from "react";
-import { CheckCircle2, ShieldCheck } from "lucide-react";\nimport { AiNarrator } from "@/components/ai-ready/ai-narrator";
+import { aiReadyAccess, aiReadyCheckout } from "@/lib/ai-ready.functions";
+import { clientSaveProgress } from "@/lib/learning.functions";
+import { useEffect, useState } from "react";
+import { CheckCircle2, ShieldCheck } from "lucide-react";
+import { AiNarrator } from "@/components/ai-ready/ai-narrator";
 
 export const Route=createFileRoute("/_clientarea/cliente/ai-ready")({component:AiReadyClient});
 
@@ -49,7 +52,15 @@ const kit=[
 ];
 
 function AiReadyClient(){
- const accessFn=useServerFn(aiReadyAccess),checkoutFn=useServerFn(aiReadyCheckout),saveProgressFn=useServerFn(clientSaveProgress);\n const [completed,setCompleted]=useState<number[]>([]);\n const [quizAnswers,setQuizAnswers]=useState<Record<number,number>>({});\n const [quizResult,setQuizResult]=useState<{score:number;passed:boolean}|null>(null);\n const [project,setProject]=useState({process:"",purpose:"",data:"",affected:"",owner:"",risks:"",controls:""});\n const [projectDone,setProjectDone]=useState(false);\n const [certificateName,setCertificateName]=useState("");\n useEffect(()=>{try{setCompleted(JSON.parse(localStorage.getItem("ai-ready-2026-completed")||"[]"))}catch{}},[]);\n const markLesson=async(index:number)=>{const next=Array.from(new Set([...completed,index])).sort();setCompleted(next);localStorage.setItem("ai-ready-2026-completed",JSON.stringify(next));await saveProgressFn({data:{productKey:"ai_ready_2026",progressPercent:Math.round((next.length/7)*80),currentLocation:`module-${index+1}`}})};
+ const accessFn=useServerFn(aiReadyAccess),checkoutFn=useServerFn(aiReadyCheckout),saveProgressFn=useServerFn(clientSaveProgress);
+ const [completed,setCompleted]=useState<number[]>([]);
+ const [quizAnswers,setQuizAnswers]=useState<Record<number,number>>({});
+ const [quizResult,setQuizResult]=useState<{score:number;passed:boolean}|null>(null);
+ const [project,setProject]=useState({process:"",purpose:"",data:"",affected:"",owner:"",risks:"",controls:""});
+ const [projectDone,setProjectDone]=useState(false);
+ const [certificateName,setCertificateName]=useState("");
+ useEffect(()=>{try{setCompleted(JSON.parse(localStorage.getItem("ai-ready-2026-completed")||"[]"))}catch{}},[]);
+ const markLesson=async(index:number)=>{const next=Array.from(new Set([...completed,index])).sort();setCompleted(next);localStorage.setItem("ai-ready-2026-completed",JSON.stringify(next));await saveProgressFn({data:{productKey:"ai_ready_2026",progressPercent:Math.round((next.length/7)*80),currentLocation:`module-${index+1}`}})};
  const q=useQuery({queryKey:["ai-ready-access"],queryFn:()=>accessFn({})});
  const checkout=useMutation({mutationFn:(market:"BR"|"INTL")=>checkoutFn({data:{market}}),onSuccess:r=>{location.href=r.url}});
  if(q.isLoading)return <div className="p-8">Carregando AI READY 2026…</div>;
