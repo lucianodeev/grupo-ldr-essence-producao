@@ -52,8 +52,10 @@ function buildResult(answers: Record<string,Answer>) {
 
 function DiagnosticoProfissional(){
   const [step,setStep]=useState(0);
-  const [answers,setAnswers]=useState<Record<string,Answer>>({});\n  const [reflection,setReflection]=useState({impact:"",tried:""});
-  const objectiveDone=step>=questions.length;\n  const done=objectiveDone&&reflection.impact.trim().length>=10&&reflection.tried.trim().length>=10;
+  const [answers,setAnswers]=useState<Record<string,Answer>>({});
+  const [reflection,setReflection]=useState({impact:"",tried:""});
+  const objectiveDone=step>=questions.length;
+  const done=objectiveDone&&reflection.impact.trim().length>=10&&reflection.tried.trim().length>=10;
   const result=useMemo(()=>done?buildResult(answers):null,[done,answers]);
   const q=questions[step];
   const choose=(value:string,score:number)=>{setAnswers(a=>({...a,[q.id]:{value,score}}));setStep(s=>s+1)};
