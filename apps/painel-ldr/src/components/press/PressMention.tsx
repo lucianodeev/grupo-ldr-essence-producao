@@ -29,7 +29,9 @@ export const rysentraMention: PressMentionData = { logoSrc:"brand:rysentra", id:
 
 export const escapeArtistMention: PressMentionData = { logoSrc:"brand:escapeartist", id:"escape-artist-luciano-2026", mediaOutlet:"Escape Artist", title:"From Selling Bananas in Brazil to Building a Life in Europe", description:"História editorial sobre a trajetória de Bahia a São Paulo e Europa, publicada pela Escape Artist.", publicationDate:"2026-09-24", originalUrl:"https://www.escapeartist.com/blog/moving-from-brazil-to-europe/", language:"English", country:"International", mediaType:"Feature Story", relatedProject:"Luciano Rodrigues Almeida / Ecossistema LDR" };
 
-export const internationalPressMentions=[startupValleyMention, rysentraMention, escapeArtistMention];
+export const startupMafiaMention: PressMentionData = { logoSrc:"brand:startupmafia", id:"startupmafia-luciano-ldr-2026", mediaOutlet:"StartupMafia", title:"Startup Profile: Building an Ecosystem, Not Just a Startup — Luciano Almeida’s LDR Project Connects Brazil and Europe", description:"Perfil editorial sobre a construção do Ecossistema LDR e a conexão de projetos entre Brasil e Europa.", publicationDate:"2026-10-01", originalUrl:"https://startupmafia.eu/startup-profile-building-an-ecosystem-not-just-a-startup-luciano-almeidas-ldr-project-connects-brazil-and-europe", language:"English", country:"International", mediaType:"Startup Profile", relatedProject:"Luciano Rodrigues Almeida / Ecossistema LDR" };
+
+export const internationalPressMentions=[startupValleyMention, rysentraMention, escapeArtistMention, startupMafiaMention];
 
 export function PressMention({ mention = startupValleyMention }: { mention?: PressMentionData }) {
   return (
@@ -46,6 +48,12 @@ export function PressMention({ mention = startupValleyMention }: { mention?: Pre
             ) : mention.logoSrc === "brand:escapeartist" ? (
               <div role="img" aria-label="Escape Artist" className="flex items-center justify-center">
                 <div className="flex h-24 w-24 items-center justify-center rounded-full bg-[#d8cabf] font-serif text-[42px] leading-none text-white">EA</div>
+              </div>
+            ) : mention.logoSrc === "brand:startupmafia" ? (
+              <div role="img" aria-label="StartupMafia" className="flex w-full max-w-[220px] flex-col items-center justify-center px-2 py-3 text-center">
+                <div className="whitespace-nowrap font-sans text-[29px] font-black leading-none tracking-[-.045em] text-[#111111]">StartupMafia</div>
+                <div className="mt-2 h-px w-full bg-[#111111]" aria-hidden="true" />
+                <div className="mt-2 text-[10px] font-bold uppercase tracking-[.2em] text-slate-600">European Tech</div>
               </div>
             ) : (
               <div role="img" aria-label="StartupValley.news" className="flex w-full max-w-[220px] flex-col items-center justify-center px-2 py-3">
