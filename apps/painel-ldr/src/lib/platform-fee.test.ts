@@ -29,12 +29,12 @@ test("R$80 da Clínica Social divide R$16/R$64", () =>
     professionalNetCents: 6400,
   }));
 
-test("€25 da Clínica Social divide €5/€20", () =>
-  assert.deepEqual(calculatePlatformSplit(2500), {
-    grossAmountCents: 2500,
+test("€30 da Clínica Social divide €6/€24", () =>
+  assert.deepEqual(calculatePlatformSplit(3000), {
+    grossAmountCents: 3000,
     platformFeePercent: 20,
-    platformFeeCents: 500,
-    professionalNetCents: 2000,
+    platformFeeCents: 600,
+    professionalNetCents: 2400,
   }));
 
 test("R$180 da sessão padrão divide R$36/R$144", () =>
