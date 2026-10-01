@@ -85,9 +85,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Grupo LDR Essence — Plataforma e Painéis" },
-      { name: "description", content: "Plataforma Grupo LDR Essence para clientes, profissionais, empresas, funcionários e administração do ecossistema LDR." },
-      { name: "author", content: "Grupo LDR Essence" },
+      { title: "LDR RH & Estratégia | Ecossistema LDR" },
+      { name: "description", content: "Ecossistema LDR para educação, carreira, oportunidades, saúde e bem-estar, soluções para empresas e desenvolvimento profissional." },
+      { name: "author", content: "LDR RH & Estratégia" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
