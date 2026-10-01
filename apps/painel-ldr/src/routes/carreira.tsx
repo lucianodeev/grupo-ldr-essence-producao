@@ -9,7 +9,12 @@ export const Route = createFileRoute("/carreira")({
       { title: "LDR Carreira | Oportunidades e Talentos" },
       { name: "description", content: "Conectando profissionais e empresas em uma plataforma internacional, inclusiva e gratuita de oportunidades profissionais." },
       { name: "robots", content: "index,follow" },
+      { property: "og:title", content: "LDR Carreira | Oportunidades e Talentos" },
+      { property: "og:description", content: "Plataforma gratuita que conecta profissionais e empresas a oportunidades, vagas e recursos de carreira." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://ldrrhestrategia.com/carreira" },
     ],
+    links: [{ rel: "canonical", href: "https://ldrrhestrategia.com/carreira" }],
   }),
   component: CareerRouterGuard,
 });
