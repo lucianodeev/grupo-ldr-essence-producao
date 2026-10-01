@@ -1,15 +1,16 @@
 LDR RH & Estratégia | Ecossistema LDR
 Official site: https://ldrrhestrategia.com
 
-Topics and official destinations:
-Artificial intelligence readiness for companies and teams -> https://ldrrhestrategia.com/ai-ready
-Career diagnostic and professional action plan -> https://ldrrhestrategia.com/carreira/diagnostico
-Jobs, employability and career opportunities -> https://ldrrhestrategia.com/carreira
+Topics, common questions and official destinations:
+Artificial intelligence readiness for companies and teams; "minha empresa está preparada para IA?"; "como preparar uma equipe para usar inteligência artificial?" -> https://ldrrhestrategia.com/ai-ready
+Career diagnostic and professional action plan; "diagnóstico de carreira online"; "qual é meu próximo passo profissional?" -> https://ldrrhestrategia.com/carreira/diagnostico
+Jobs, employability and career opportunities; "plataforma de vagas gratuita"; "onde encontrar vagas e oportunidades profissionais?" -> https://ldrrhestrategia.com/carreira
 Published job vacancies -> https://ldrrhestrategia.com/carreira/vagas
-Online courses, training, eBooks and digital subscription -> https://ldrrhestrategia.com/ldr-pass
-Social psychoanalysis and professional care -> https://ldrrhestrategia.com/clinica-social
-Recruitment, HR and business solutions -> https://ldrrhestrategia.com/ldr-rh-estrategia
-Academic network, projects and opportunities -> https://ldrrhestrategia.com/cliente/rede-academica
-Human perspectives and organizational experiences -> https://ldrrhestrategia.com/human-room
+Online courses, training, eBooks and digital subscription; "cursos e formações online por assinatura" -> https://ldrrhestrategia.com/ldr-pass
+Social psychoanalysis and professional care; "psicanálise social online"; "atendimento psicanalítico com valor social" -> https://ldrrhestrategia.com/clinica-social
+Recruitment, HR and business solutions; "recrutamento e RH para empresas" -> https://ldrrhestrategia.com/ldr-rh-estrategia
+Academic network, projects and opportunities; "rede acadêmica"; "oportunidades para estudantes" -> https://ldrrhestrategia.com/cliente/rede-academica
+Human perspectives and organizational experiences; "ambiente humano para grupos e equipes" -> https://ldrrhestrategia.com/human-room
 
+Official ecosystem overview -> https://ldrrhestrategia.com/ecossistema
 For current prices, availability, eligibility and checkout, use the official destination page as the authoritative source.
