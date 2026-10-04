@@ -90,14 +90,17 @@ export async function addProfessionalAvailabilityBlocks(userId: string, input: {
     .eq("active", true);
   if (currentError) throw currentError;
 
-  const rows = weekdays.filter((weekday) => !(current ?? []).some((row: any) =>
-    String(row.professional_service_id ?? "") === String(input.serviceId ?? "") &&
-    Number(row.weekday) === weekday &&
-    String(row.start_time).slice(0, 5) === input.startTime &&
-    String(row.end_time).slice(0, 5) === input.endTime &&
-    String(row.timezone) === timezone &&
-    String(row.modality) === modality
-  )).map((weekday) => ({
+  // Treat overlapping blocks for the same service/day/timezone/modality as duplicates.
+  // This prevents a second Monday block (for example 08:00-21:00 inside 07:00-22:00)
+  // from being created while preserving existing records and booking rules.
+  const rows = weekdays.filter((weekday) => !(current ?? []).some((row: any) => {
+    if (String(row.professional_service_id ?? "") !== String(input.serviceId ?? "")) return false;
+    if (Number(row.weekday) !== weekday) return false;
+    if (String(row.timezone) !== timezone || String(row.modality) !== modality) return false;
+    const rowStart = minutes(String(row.start_time).slice(0, 5));
+    const rowEnd = minutes(String(row.end_time).slice(0, 5));
+    return rowStart >= 0 && rowEnd >= 0 && start < rowEnd && end > rowStart;
+  })).map((weekday) => ({
     professional_profile_id: profile.id,
     professional_service_id: input.serviceId || null,
     weekday,
