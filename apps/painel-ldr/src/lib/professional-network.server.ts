@@ -145,6 +145,16 @@ export async function getProfessionalDashboard(userId: string, email: string | n
 export async function saveProfessionalOnboarding(userId: string, email: string | null, input: { step: number; countryCode?: string; currency?: "EUR"|"BRL"; displayName?: string; slug?: string; professionalTitle?: string; categoryId?: string; city?: string; languages?: string[]; onlineEnabled?: boolean; inPersonEnabled?: boolean; about?: string; experienceSummary?: string; educationSummary?: string; specialties?: string[] }) {
   const account = await ensureAccount(userId, email);
   const step = Math.max(1, Math.min(7, Number(input.step || 1)));
+  // The country step runs before identification fields are shown.
+  if (step <= 2) {
+    const accountPatch: Record<string, unknown> = { updated_at: new Date().toISOString() };
+    if (input.countryCode) accountPatch.country_code = input.countryCode.toUpperCase();
+    if (input.currency) accountPatch.preferred_currency = input.currency;
+    if (!account.onboarding_completed) accountPatch.onboarding_step = step;
+    const { error } = await db.from("professional_accounts").update(accountPatch).eq("id", account.id);
+    if (error) throw error;
+    return getProfessionalDashboard(userId, email);
+  }
   if (!input.displayName?.trim() || !input.professionalTitle?.trim() || !input.categoryId) fail("Preencha nome, título e categoria.");
   const { data: current } = await db.from("professional_profiles").select("*").eq("professional_account_id", account.id).maybeSingle();
   const alreadyApproved = Boolean(current?.is_public && current?.profile_status === "active" && current?.compliance_status === "approved");
@@ -166,12 +176,13 @@ export async function saveProfessionalOnboarding(userId: string, email: string |
   else if(step>=7 && complete){
     accountPatch.onboarding_step=7; accountPatch.onboarding_completed=true; accountPatch.status="active";
     const publishedAt=new Date().toISOString();
-    Object.assign(payload,{compliance_status:"approved",profile_status:"active",is_public:true,published_at:publishedAt});
-    const {error:publishError}=await db.from("professional_profiles").update({compliance_status:"approved",profile_status:"active",is_public:true,published_at:publishedAt,updated_at:publishedAt}).eq("professional_account_id",account.id);
+    Object.assign(payload,{compliance_status:"approved",profile_status:"active",is_public:true});
+    const {error:publishError}=await db.from("professional_profiles").update({compliance_status:"approved",profile_status:"active",is_public:true,updated_at:publishedAt}).eq("professional_account_id",account.id);
     if(publishError)throw publishError;
   }
   else {accountPatch.onboarding_step=Math.min(step,6);accountPatch.onboarding_completed=false;accountPatch.status="incomplete";}
-  await db.from("professional_accounts").update(accountPatch).eq("id",account.id);
+  const { error: accountError } = await db.from("professional_accounts").update(accountPatch).eq("id",account.id);
+  if (accountError) throw accountError;
   if(step>=7 && !complete) fail("Complete 100% do perfil antes de publicar. A foto é obrigatória; vídeo, agenda e serviços são opcionais para a completude.");
   return getProfessionalDashboard(userId,email);
 }
