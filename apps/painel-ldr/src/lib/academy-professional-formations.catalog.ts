@@ -5,6 +5,7 @@ import { NEUROSCIENCE_OFFICIAL_FORMATION } from "@/lib/neuroscience-official-for
 import { TRICHOLOGY_FORMATION } from "@/lib/trichology-formation.catalog";
 import { PROJECT_MANAGEMENT_FORMATION } from "@/lib/project-management-formation.catalog";
 import { HIV_SCIENCE_FORMATION } from "@/lib/hiv-science-formation.catalog";
+import { MESTRE_DE_OBRAS_FORMATION } from "@/lib/mestre-de-obras-formation.adapter";
 
 const HEALTH_WITHOUT_NEUROSCIENCE = HEALTH_PSYCHOANALYSIS_FORMATIONS.filter(
   (formation) => formation.slug !== "neurociencias-comportamento-humano",
@@ -19,6 +20,7 @@ export const PROFESSIONAL_FORMATIONS: PF[] = [
   ...TRICHOLOGY_FORMATION,
   ...PROJECT_MANAGEMENT_FORMATION,
   ...HIV_SCIENCE_FORMATION,
+  ...MESTRE_DE_OBRAS_FORMATION,
 ];
 export function getProfessionalFormation(slug: string) {
   return PROFESSIONAL_FORMATIONS.find((x) => x.slug === slug) ?? null;
