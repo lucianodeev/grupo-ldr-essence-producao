@@ -273,8 +273,25 @@ function ApplicationCenter() {
       }`,
     ].join(" | ");
 
-    const { error: applicationError } = await (supabase.from("career_applications" as never) as any).insert({
+    // RLS requires candidate ownership for authenticated users and a claim token for guests.
+    const { data: authData } = await supabase.auth.getUser();
+    const user = authData.user;
+    const claimToken = !user ? crypto.randomUUID() + crypto.randomUUID() : null;
+    const claimHash = claimToken
+      ? Array.from(
+          new Uint8Array(
+            await crypto.subtle.digest("SHA-256", new TextEncoder().encode(claimToken)),
+          ),
+        )
+          .map((byte) => byte.toString(16).padStart(2, "0"))
+          .join("")
+      : null;
+
+    const { data: application, error: applicationError } = await (supabase.from("career_applications" as never) as any)
+      .insert({
       job_id: job?.id ?? jobId,
+      candidate_user_id: user?.id ?? null,
+      claim_token_hash: claimHash,
       candidate_name: form.name.trim(),
       candidate_email: form.email.trim(),
       candidate_phone: form.phone.trim() || null,
@@ -285,13 +302,23 @@ function ApplicationCenter() {
       share_accessibility_with_company: form.shareAccessibility,
       resume_path: resumePath,
       status: "submitted",
-    });
+    })
+      .select("id")
+      .single();
 
     if (applicationError) {
       if (resumePath) await supabase.storage.from("career-resumes").remove([resumePath]);
       setStatus("error");
       setSubmitting(false);
       return;
+    }
+
+    if (claimToken && application?.id) {
+      try {
+        localStorage.setItem(`ldr-career-claim:${application.id}`, claimToken);
+      } catch {
+        // Application is already persisted; local tracking is best-effort only.
+      }
     }
 
     setStatus("success");
