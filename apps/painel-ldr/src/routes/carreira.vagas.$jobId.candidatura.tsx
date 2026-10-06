@@ -287,8 +287,10 @@ function ApplicationCenter() {
           .join("")
       : null;
 
-    const { data: application, error: applicationError } = await (supabase.from("career_applications" as never) as any)
+    const applicationId = crypto.randomUUID();
+    const { error: applicationError } = await (supabase.from("career_applications" as never) as any)
       .insert({
+      id: applicationId,
       job_id: job?.id ?? jobId,
       candidate_user_id: user?.id ?? null,
       claim_token_hash: claimHash,
@@ -302,20 +304,19 @@ function ApplicationCenter() {
       share_accessibility_with_company: form.shareAccessibility,
       resume_path: resumePath,
       status: "submitted",
-    })
-      .select("id")
-      .single();
+    });
 
     if (applicationError) {
+      console.error("Career application insert failed", { code: applicationError.code, message: applicationError.message, details: applicationError.details, hint: applicationError.hint });
       if (resumePath) await supabase.storage.from("career-resumes").remove([resumePath]);
       setStatus("error");
       setSubmitting(false);
       return;
     }
 
-    if (claimToken && application?.id) {
+    if (claimToken) {
       try {
-        localStorage.setItem(`ldr-career-claim:${application.id}`, claimToken);
+        localStorage.setItem(`ldr-career-claim:${applicationId}`, claimToken);
       } catch {
         // Application is already persisted; local tracking is best-effort only.
       }
