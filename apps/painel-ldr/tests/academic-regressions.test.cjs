@@ -371,7 +371,7 @@ test('career intelligence guards source failures before atomic recommendation re
 
 test('career intelligence marks its generated recommendations for atomic ownership',()=>{const source=fs.readFileSync(path.resolve(ROOT,'lib/career-intelligence.functions.ts'),'utf8');assert.match(source,/generator:"career_intelligence"/);assert.match(source,/ldr_refresh_career_intelligence_atomic/);});
 
-test('academic opportunities route filters suggested and expired recommendations',()=>{const source=fs.readFileSync(path.resolve(ROOT,'routes/_clientarea.cliente.rede-academica.oportunidades.tsx'),'utf8');assert.match(source,/\.eq\("status","suggested"\)/);assert.match(source,/expires_at\.is\.null,expires_at\.gt/);});
+test('academic opportunities route filters suggested and expired recommendations',()=>{const source=fs.readFileSync(path.resolve(ROOT,'routes/_clientarea.cliente.rede-academica.oportunidades.tsx'),'utf8');assert.match(source,/\.eq\("status",showDismissed\?"dismissed":"suggested"\)/);assert.match(source,/if\(!showDismissed\)query=query\.or/);assert.match(source,/expires_at\.is\.null,expires_at\.gt/);});
 
 test('LDR NEXT and Copilot filter inactive and expired suggestions',()=>{for(const file of ['routes/carreira.next.tsx','routes/carreira.copilot.tsx']){const source=fs.readFileSync(path.resolve(ROOT,file),'utf8');assert.match(source,/\.eq\("status","suggested"\)/);assert.match(source,/expires_at\.is\.null,expires_at\.gt/);}});
 
@@ -490,4 +490,31 @@ test('opportunity auth middleware rejects missing identity and uses the verified
   await assert.rejects(requireSupabaseAuth({ next: () => assert.fail('Unauthenticated continuation') }), /Unauthorized/);
   auth = { authenticated: true, userId: 'verified-owner', supabase: {}, claims: {}, accessToken: 'test-token' };
   await requireSupabaseAuth({ next: ({ context }) => assert.equal(context.userId, 'verified-owner') });
+});
+test('dismissed opportunities can be reviewed and explicit interest restores only the owner row', async () => {
+  const db = database({ ldr_opportunity_recommendations: [
+    { id: 'rec', user_id: 'owner', status: 'dismissed', opportunity_type: 'job', source_reference: 'job-a' },
+    { id: 'foreign', user_id: 'other', status: 'dismissed' },
+  ] });
+  db.auth = { getUser: async () => ({ data: { user: { id: 'owner' } } }) };
+  let queryOptions, mutationOptions, invalidated = false, view;
+  const { Route } = load('routes/_clientarea.cliente.rede-academica.oportunidades.tsx', {
+    react: { ...React, useState: () => [true, value => { view = value; }] },
+    '@tanstack/react-router': { createFileRoute: () => config => config, Link: ({ children }) => React.createElement('a', null, children) },
+    '@tanstack/react-query': {
+      useQueryClient: () => ({ invalidateQueries: () => { invalidated = true; } }),
+      useQuery: opts => { queryOptions = opts; return { data: [] }; },
+      useMutation: opts => { mutationOptions = opts; return {}; },
+    },
+    '@/integrations/supabase/client': { supabase: db },
+  });
+  assert.match(renderToStaticMarkup(React.createElement(Route.component)), /Ver sugestões/);
+  const rows = await queryOptions.queryFn(); assert.equal(rows.length, 1); assert.equal(rows[0].id, 'rec');
+  const result = await mutationOptions.mutationFn({ row: rows[0], type: 'interested' });
+  mutationOptions.onSuccess(result);
+  assert.equal(db.rows.ldr_opportunity_recommendations[0].status, 'suggested');
+  assert.equal(db.rows.ldr_opportunity_recommendations[1].status, 'dismissed');
+  assert.equal(db.rows.ldr_opportunity_feedback_events[0].feedback_type, 'interested');
+  assert.equal(db.rows.ldr_opportunity_feedback_events[0].user_id, 'owner');
+  assert.equal(invalidated, true); assert.equal(view, false);
 });
