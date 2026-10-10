@@ -6,19 +6,29 @@ const norm=(v:any)=>String(v??"").trim().toLowerCase();
 
 export const refreshCareerIntelligence=createServerFn({method:"POST"}).middleware([requireSupabaseAuth]).handler(async({context})=>{
  const {supabaseAdmin}=await import("@/integrations/supabase/client.server"); const db=supabaseAdmin as any; const uid=context.userId;
+ // Read every explicit career preference in stable pages; never drop an old refusal.
+ const readFeedback=async()=>{
+  const feedback:any[]=[]; const snapshot=new Date().toISOString();
+  for(let offset=0;;offset+=100){
+   const result=await db.from("ldr_opportunity_feedback_events").select("id,created_at,feedback_type,source_reference,opportunity_type").eq("user_id",uid).in("opportunity_type",CAREER_TYPES).in("feedback_type",["more_like_this","not_interested","interested"]).lte("created_at",snapshot).order("created_at",{ascending:false}).order("id",{ascending:false}).range(offset,offset+99);
+   if(result.error)return {data:null,error:result.error};
+   feedback.push(...(result.data??[]));
+   if((result.data??[]).length<100)return {data:feedback,error:null};
+  }
+ };
  const [goalsResult,proofsResult,jobsResult,projectsResult,feedbackResult]=await Promise.all([
   db.from("ldr_career_goals").select("id,target_title,target_country,target_work_mode,target_competency_keys").eq("user_id",uid).eq("status","active").order("updated_at",{ascending:false}).order("created_at",{ascending:false}).limit(5),
   db.from("ldr_proofs").select("id,title,competency_key,verification_status").eq("user_id",uid).limit(50),
-  db.from("career_jobs").select("id,title,city,country,work_mode,status").eq("status","published").limit(50),
-  db.from("ldr_experience_projects").select("id,title,modality,status").in("status",["open","in_progress"]).limit(30),
-  db.from("ldr_opportunity_feedback_events").select("feedback_type,source_reference,opportunity_type").eq("user_id",uid).in("feedback_type",["more_like_this","not_interested","interested"]).order("created_at",{ascending:false}).limit(100)
+  db.from("career_jobs").select("id,title,city,country,work_mode,status").eq("status","published").order("id",{ascending:true}).limit(50),
+  db.from("ldr_experience_projects").select("id,title,modality,status").in("status",["open","in_progress"]).order("id",{ascending:true}).limit(30),
+  readFeedback()
  ]);
  const failed=[goalsResult,proofsResult,jobsResult,projectsResult,feedbackResult].find((result:any)=>result.error);
  if(failed?.error)throw new Error("Não foi possível atualizar as oportunidades com segurança. As sugestões atuais foram preservadas.");
  const goals=goalsResult.data,proofs=proofsResult.data,jobs=jobsResult.data,projects=projectsResult.data,feedback=feedbackResult.data??[];
  const latestPreference=new Map<string,string>();for(const event of feedback){const key=`${String(event.opportunity_type)}:${String(event.source_reference??"")}`;if(!latestPreference.has(key))latestPreference.set(key,String(event.feedback_type));}
  const rejected=(type:string,id:any)=>latestPreference.get(`${type}:${String(id??"")}`)==="not_interested";
- const feedbackAdjustment=(sourceReference:any)=>{let adjustment=0;for(const event of feedback){if(String(event.opportunity_type)!=="job"||String(event.source_reference??"")!==String(sourceReference??""))continue;if(event.feedback_type==="more_like_this")adjustment=Math.min(10,adjustment+5);if(event.feedback_type==="not_interested")adjustment=Math.max(-10,adjustment-5);}return adjustment;};
+ const feedbackAdjustment=(sourceReference:any)=>{let adjustment=0;for(const event of feedback){if(String(event.opportunity_type)!=="job"||String(event.source_reference??"")!==String(sourceReference??""))continue;if(event.feedback_type==="interested"||event.feedback_type==="not_interested")break;if(event.feedback_type==="more_like_this")adjustment=Math.min(10,adjustment+5);}return adjustment;};
  const goal=(goals??[])[0]; const targetTitle=String(goal?.target_title??"").trim(); const normalizedTargetTitle=targetTitle.toLowerCase(); const verifiedProofs=(proofs??[]).filter((p:any)=>String(p.verification_status??"").toLowerCase()==="verified"); const skills=[...new Set(verifiedProofs.map((p:any)=>p.competency_key).filter(Boolean))];
  const targetCountry=norm(goal?.target_country),targetWorkMode=norm(goal?.target_work_mode); const targetCompetencies=(goal?.target_competency_keys??[]).map(norm).filter(Boolean);
  const scoredJobs=(jobs??[]).filter((j:any)=>!rejected("job",j.id)).map((j:any)=>{const title=String(j.title??"");const reasons:string[]=[];let score=0;const titleHit=Boolean(normalizedTargetTitle)&&norm(title).includes(normalizedTargetTitle);if(titleHit){score+=50;reasons.push("título alinhado ao objetivo ativo");}const countryHit=Boolean(targetCountry)&&norm(j.country)===targetCountry;if(countryHit){score+=20;reasons.push("país alinhado ao objetivo");}const modeHit=Boolean(targetWorkMode)&&norm(j.work_mode)===targetWorkMode;if(modeHit){score+=15;reasons.push("modalidade de trabalho alinhada");}const verifiedTargetSkills=skills.filter((s:any)=>targetCompetencies.includes(norm(s)));if(verifiedTargetSkills.length){score+=Math.min(15,verifiedTargetSkills.length*5);reasons.push("competências verificadas relacionadas ao objetivo");}if(!goal){score=1;reasons.push("vaga aberta disponível no ecossistema");}const feedbackScore=feedbackAdjustment(j.id);if(feedbackScore>0){score+=feedbackScore;reasons.push("ajuste limitado pelo seu feedback explícito");}if(feedbackScore<0){score+=feedbackScore;reasons.push("redução limitada pelo seu feedback explícito");}return {j,score,reasons,verifiedTargetSkills};}).filter((x:any)=>!goal||x.score>0).sort((a:any,b:any)=>b.score-a.score||String(a.j.id).localeCompare(String(b.j.id)));

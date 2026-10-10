@@ -41,6 +41,7 @@ function database(seed = {}, options = {}) {
         in(key, values) { filters.push(row => values.includes(row[key])); return q; },
         is(key, value) { filters.push(row => (row[key] ?? null) === value); return q; },
         gte(key, value) { filters.push(row => row[key] >= value); return q; },
+        lte(key, value) { filters.push(row => row[key] <= value); return q; },
         ilike(key, value) { filters.push(row => String(row[key] || '').toLowerCase().includes(value.replaceAll('%', '').toLowerCase())); return q; },
         or() { return q; },
         like() { return q; },
@@ -402,4 +403,91 @@ test('career intelligence keeps open-job discovery when no active goal exists',(
 test('opportunity feedback snapshots durable context',()=>{const source=fs.readFileSync(path.resolve(ROOT,'routes/_clientarea.cliente.rede-academica.oportunidades.tsx'),'utf8');assert.match(source,/opportunity_title:row\.title\?\?null/);assert.match(source,/rationale_snapshot:row\.rationale\?\?null/);});
 
 
-test('career ranking uses only bounded explicit opportunity feedback',()=>{const source=fs.readFileSync(path.resolve(ROOT,'lib/career-intelligence.functions.ts'),'utf8');assert.match(source,/\["more_like_this","not_interested","interested"\]/);assert.match(source,/Math\.min\(10,adjustment\+5\)/);assert.match(source,/Math\.max\(-10,adjustment-5\)/);assert.match(source,/feedbackAdjustment\(j\.id\)/);});
+test('career ranking uses only bounded explicit opportunity feedback',()=>{const source=fs.readFileSync(path.resolve(ROOT,'lib/career-intelligence.functions.ts'),'utf8');assert.match(source,/\["more_like_this","not_interested","interested"\]/);assert.match(source,/Math\.min\(10,adjustment\+5\)/);assert.match(source,/if\(event\.feedback_type==="interested"\|\|event\.feedback_type==="not_interested"\)break/);assert.match(source,/feedbackAdjustment\(j\.id\)/);});
+
+function careerEngine(seed, options = {}) {
+  const db = database(seed, options);
+  let payload;
+  db.rpc = async (name, args) => { payload = args; return { data: {}, error: null }; };
+  const auth = {};
+  const engine = load('lib/career-intelligence.functions.ts', {
+    '@tanstack/react-start': { createServerFn: () => ({ middleware: list => {
+      assert.equal(list.length, 1); assert.equal(list[0], auth);
+      return { handler: fn => fn };
+    } }) },
+    '@/integrations/supabase/auth-middleware': { requireSupabaseAuth: auth },
+    '@/integrations/supabase/client.server': { supabaseAdmin: db },
+  });
+  return { run: () => engine.refreshCareerIntelligence({ context: { userId: 'owner' } }), payload: () => payload, db };
+}
+const careerSeed = feedback => ({
+  career_jobs: [{ id: 'job-a', title: 'Developer', status: 'published' }],
+  ldr_experience_projects: [{ id: 'project-a', title: 'Practice', status: 'open' }],
+  ldr_opportunity_feedback_events: feedback,
+});
+const careerFeedback = (type, source = 'job-a', extra = {}) => ({
+  id: '001', user_id: 'owner', opportunity_type: source.startsWith('job') ? 'job' : 'project',
+  source_reference: source, feedback_type: type, created_at: '2026-10-10T10:00:00Z', ...extra,
+});
+test('career refresh respects refusals beyond the first 100 feedback events', async () => {
+  const feedback = Array.from({ length: 110 }, (_, i) => careerFeedback('interested', `job-other-${i}`, { id: String(i), created_at: '2026-10-10T11:00:00Z' }));
+  feedback.push(careerFeedback('not_interested'), careerFeedback('not_interested', 'project-a'));
+  const engine = careerEngine(careerSeed(feedback)); await engine.run();
+  assert.equal(engine.payload().p_recommendations.length, 0);
+});
+for (const type of ['interested', 'more_like_this']) test(`career refresh lets ${type} reverse an earlier refusal`, async () => {
+  const seed = careerSeed([careerFeedback(type, 'job-a', { id: '002', created_at: '2026-10-10T11:00:00Z' }), careerFeedback('not_interested')]);
+  seed.ldr_career_goals = [{ id: 'goal', user_id: 'owner', status: 'active', target_country: 'PT' }];
+  seed.career_jobs[0].country = 'PT';
+  const engine = careerEngine(seed); await engine.run();
+  const job = engine.payload().p_recommendations.find(r => r.source_reference === 'job-a');
+  assert.ok(job); assert.ok(job.rationale.ranking_score >= 20);
+});
+test('career refresh resolves timestamp ties deterministically and isolates users and types', async () => {
+  const seed = careerSeed([
+    careerFeedback('not_interested', 'job-a', { id: '001' }),
+    careerFeedback('interested', 'job-a', { id: '002' }),
+    careerFeedback('not_interested', 'job-a', { id: '999', user_id: 'other' }),
+    careerFeedback('not_interested', 'project-a'),
+  ]);
+  const engine = careerEngine(seed); await engine.run();
+  assert.deepEqual(Array.from(engine.payload().p_recommendations, r => r.source_reference), ['job-a']);
+  const first = JSON.stringify(engine.payload()); await engine.run(); assert.equal(JSON.stringify(engine.payload()), first);
+});
+test('career refresh preserves suggestions when feedback retrieval fails', async () => {
+  const engine = careerEngine(careerSeed([]), { fail: table => table === 'ldr_opportunity_feedback_events' });
+  await assert.rejects(engine.run(), /sugestões atuais foram preservadas/);
+  assert.equal(engine.payload(), undefined);
+});
+test('career refresh preserves suggestions when a later feedback page fails', async () => {
+  let pages = 0;
+  const seed = careerSeed(Array.from({ length: 101 }, (_, i) => careerFeedback('interested', `job-${i}`, { id: String(i) })));
+  const engine = careerEngine(seed, { fail: table => table === 'ldr_opportunity_feedback_events' && ++pages === 2 });
+  await assert.rejects(engine.run(), /sugestões atuais foram preservadas/);
+  assert.equal(engine.payload(), undefined);
+});
+test('career refresh lets a later refusal supersede positive job and project preferences', async () => {
+  const feedback = ['job-a', 'project-a'].flatMap(source => [
+    careerFeedback('interested', source),
+    careerFeedback('not_interested', source, { id: '002', created_at: '2026-10-10T11:00:00Z' }),
+  ]);
+  const engine = careerEngine(careerSeed(feedback)); await engine.run();
+  assert.equal(engine.payload().p_recommendations.length, 0);
+});
+test('career refresh lets a positive project preference reverse an earlier refusal', async () => {
+  const engine = careerEngine(careerSeed([
+    careerFeedback('not_interested', 'project-a'),
+    careerFeedback('more_like_this', 'project-a', { id: '002', created_at: '2026-10-10T11:00:00Z' }),
+  ]));
+  await engine.run(); assert.ok(engine.payload().p_recommendations.some(r => r.source_reference === 'project-a'));
+});
+test('opportunity auth middleware rejects missing identity and uses the verified user', async () => {
+  let auth = { authenticated: false };
+  const { requireSupabaseAuth } = load('integrations/supabase/auth-middleware.ts', {
+    '@tanstack/react-start': { createMiddleware: () => ({ server: fn => fn }) },
+    './request-auth.server': { resolveRequestAuth: async () => auth },
+  });
+  await assert.rejects(requireSupabaseAuth({ next: () => assert.fail('Unauthenticated continuation') }), /Unauthorized/);
+  auth = { authenticated: true, userId: 'verified-owner', supabase: {}, claims: {}, accessToken: 'test-token' };
+  await requireSupabaseAuth({ next: ({ context }) => assert.equal(context.userId, 'verified-owner') });
+});
