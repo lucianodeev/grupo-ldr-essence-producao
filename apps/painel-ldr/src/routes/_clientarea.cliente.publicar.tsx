@@ -155,7 +155,7 @@ function CreatorPublishingPage() {
       <h2 className="font-serif text-2xl">{t.creator}</h2>
       <div className="grid gap-4 sm:grid-cols-2">
         <Field name="creatorName" label="Nome completo *" required/><Field name="publicName" label="Nome público / autor"/>
-        <Field name="email" label="E-mail *" type="email" required/><Field name="phone" label="WhatsApp / telefone"/>
+        <Field name="email" label="E-mail *" type="email" required/><Field name="phone" label="Telefone"/>
         <Field name="country" label="País"/><Field name="city" label="Cidade"/>
       </div>
       <TextArea name="bio" label="Mini biografia"/>

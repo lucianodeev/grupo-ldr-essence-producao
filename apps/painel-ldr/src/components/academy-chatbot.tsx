@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { BookOpen, Bot, ChevronLeft, ExternalLink, GraduationCap, MessageCircle, Search, X } from "lucide-react";
 import { useLocation } from "@tanstack/react-router";
 
+import { useSupportInbox } from "@/lib/support-inbox";
 import { useI18n } from "@/lib/i18n";
 import { ECOSYSTEM_TICKER } from "@/lib/ecosystem-ticker";
 
@@ -60,12 +61,16 @@ const EDITORIAL_INFO: Record<Locale, string> = {
 
 export function AcademyChatbot() {
   const { locale } = useI18n();
+  const inbox = useSupportInbox();
+  const official = {pt:"Suporte oficial",en:"Official support",fr:"Support officiel",es:"Soporte oficial"}[locale];
+  const conversations = {pt:"Minhas conversas",en:"My conversations",fr:"Mes conversations",es:"Mis conversaciones"}[locale];
+  const waiting = {pt:"Envie sua mensagem e aguarde a resposta da equipe nesta conversa.",en:"Send your message and wait for the team’s reply in your conversation.",fr:"Envoyez votre message et attendez la réponse de notre équipe dans votre conversation.",es:"Envía tu mensaje y espera la respuesta del equipo en tu conversación."}[locale];
   const location = useLocation();
   const lang = (locale in COPY ? locale : "pt") as Locale;
   const baseCopy = COPY[lang];
   const careerCopy = { pt:{title:"LDR Carreira",hello:"Olá 👋 Sou o assistente do LDR Carreira.",prompt:"Você é profissional ou representa uma empresa? Posso orientar seu cadastro ou conectar você ao atendimento.",help:"Dúvidas sobre o LDR Carreira?"}, en:{title:"LDR Carreira",hello:"Hi 👋 I’m the LDR Carreira assistant.",prompt:"Are you a professional or representing a company? I can guide your registration or connect you with support.",help:"Questions about LDR Carreira?"}, fr:{title:"LDR Carreira",hello:"Bonjour 👋 Je suis l’assistant LDR Carreira.",prompt:"Êtes-vous professionnel ou représentez-vous une entreprise ? Je peux vous guider dans l’inscription ou vous mettre en contact avec notre équipe.",help:"Des questions sur LDR Carreira ?"}, es:{title:"LDR Carreira",hello:"Hola 👋 Soy el asistente de LDR Carreira.",prompt:"¿Eres profesional o representas a una empresa? Puedo orientarte con el registro o conectarte con nuestro equipo.",help:"¿Dudas sobre LDR Carreira?"} } as const;
   const careerPage = location.pathname === "/carreira" || location.pathname.startsWith("/carreira/");
-  const inlineAssistant = careerPage || location.pathname === "/empresa/login" || location.pathname.startsWith("/ebooks/") || location.pathname.startsWith("/cliente/ebooks/") || location.pathname.startsWith("/cliente/biblioteca");
+  const inlineAssistant = false;
   const careerActions = { pt:{candidate:"👤 Sou profissional",company:"🏢 Sou empresa",human:"💬 Falar com a LDR"}, en:{candidate:"👤 I’m a professional",company:"🏢 I’m a company",human:"💬 Talk to LDR"}, fr:{candidate:"👤 Je suis professionnel",company:"🏢 Je suis une entreprise",human:"💬 Parler à LDR"}, es:{candidate:"👤 Soy profesional",company:"🏢 Soy empresa",human:"💬 Hablar con LDR"} } as const;
   const c = careerPage ? {...baseCopy,...careerCopy[lang]} : baseCopy;
   const showAnnouncement = location.pathname === "/" || location.pathname === "/cliente/biblioteca";
@@ -131,7 +136,7 @@ export function AcademyChatbot() {
         </div>
       )}
 
-      <div className={inlineAssistant ? "relative z-[30] mx-auto flex max-w-6xl flex-col items-end px-5 py-4" : "fixed z-[95]"} style={inlineAssistant ? undefined : { bottom: academicNetwork ? "calc(11rem + env(safe-area-inset-bottom))" : "calc(1rem + env(safe-area-inset-bottom))", right: "calc(1rem + env(safe-area-inset-right))" }}>
+      <div className={inlineAssistant ? "relative z-[30] mx-auto flex max-w-6xl flex-col items-end px-5 py-4" : "fixed z-[95]"} style={inlineAssistant ? undefined : { bottom: academicNetwork ? "calc(11rem + env(safe-area-inset-bottom))" : "calc(5.5rem + env(safe-area-inset-bottom))", right: "calc(1rem + env(safe-area-inset-right))" }}>
         {!open && teaser && !academicNetwork && !inlineAssistant && (
           <div className="mb-3 ml-auto flex max-w-[18rem] items-start gap-2 rounded-2xl border border-[#d5bd78]/50 bg-white p-3 text-sm text-slate-800 shadow-2xl">
             <Bot className="mt-0.5 h-5 w-5 shrink-0 text-[#102a43]" aria-hidden="true" />
@@ -150,6 +155,9 @@ export function AcademyChatbot() {
             </header>
 
             <div className="overflow-y-auto p-4">
+              <a href={`${SUPPORT_URL}?lang=${lang}`} className="block rounded-xl bg-[#102a43] p-3 text-center font-bold text-white">{official}</a>
+              <a href={`${SUPPORT_URL}?lang=${lang}#conversas`} className="mt-2 block rounded-xl border p-3 text-center font-bold">{conversations}{inbox.unread > 0 && ` (${inbox.unread})`}</a>
+              <p className="mt-2 text-sm text-slate-600">{waiting}</p>
               <div className="rounded-2xl bg-[#f7f1df] p-3 text-sm leading-6 text-slate-800">
                 <strong>{c.hello}</strong><br />{c.prompt}
               </div>
@@ -190,9 +198,9 @@ export function AcademyChatbot() {
           </section>
         )}
 
-        <button type="button" onClick={() => { setOpen((value) => !value); setTeaser(false); }} aria-label={c.help} aria-expanded={open} className={`ml-auto flex items-center justify-center gap-2 rounded-full border border-[#fff0c2] bg-[#F4B942] text-sm font-black text-[#071426] shadow-2xl transition hover:-translate-y-0.5 hover:bg-[#FFD36B] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F4B942] focus-visible:ring-offset-2 ${academicNetwork ? "h-12 w-12 p-0 sm:h-14 sm:w-auto sm:px-4 sm:py-3" : "min-h-14 px-4 py-3"}`}>
+        <button type="button" onClick={() => { setOpen((value) => !value); setTeaser(false); }} aria-label={official} aria-expanded={open} className={`ml-auto flex items-center justify-center gap-2 rounded-full border border-[#fff0c2] bg-[#F4B942] text-sm font-black text-[#071426] shadow-2xl transition hover:-translate-y-0.5 hover:bg-[#FFD36B] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F4B942] focus-visible:ring-offset-2 ${"min-h-14 px-4 py-3"}`}>
           {open ? <X className="h-5 w-5" /> : <MessageCircle className="h-5 w-5" />}
-          <span className="hidden sm:inline">{c.help}</span>
+          <span>{official}</span>{inbox.unread > 0 && <span role="status" className="rounded-full bg-[#102a43] px-2 py-1 text-xs text-white">{inbox.unread}</span>}
         </button>
       </div>
     </>

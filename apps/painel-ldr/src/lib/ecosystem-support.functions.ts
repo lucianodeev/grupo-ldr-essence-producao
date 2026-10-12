@@ -36,6 +36,22 @@ export const addEcosystemAdminReply=createServerFn({method:"POST"}).middleware([
  const body=data.body.trim();if(!body||body.length>10000)throw new Error("Invalid reply");
  const db=await requireMaster(context.supabase,context.userId); const {data:contact,error:ce}=await (db as any).from("ecosystem_contacts").select("email,first_response_at").eq("id",data.contactId).single();if(ce)throw ce;
  const now=new Date().toISOString(); const {error}=await (db as any).from("ecosystem_contact_messages").insert({contact_id:data.contactId,direction:"outbound",channel:"admin",body,sender:"LDR",recipient:contact.email,created_by:context.userId});if(error)throw error;
- const patch:any={status:"respondido",updated_at:now};if(!contact.first_response_at)patch.first_response_at=now;const {error:ue}=await (db as any).from("ecosystem_contacts").update(patch).eq("id",data.contactId);if(ue)throw ue;
+ const patch:any={status:"respondido",updated_at:now};if(!contact.first_response_at)patch.first_response_at=now;const {error:ue}=await (db as any).from("ecosystem_contacts").update(patch).eq("id",data.contactId);if(ue)console.warn("[support] Reply saved; status update pending");
  return {ok:true,email:contact.email,emailSent:false};
+});
+
+export const listMySupportConversations=createServerFn({method:"GET"}).middleware([requireSupabaseAuth]).handler(async({context})=>{
+ const {listSupportConversations}=await import("@/lib/support-conversation.server");return listSupportConversations(context);
+});
+export const getMySupportConversation=createServerFn({method:"GET"}).middleware([requireSupabaseAuth]).inputValidator((d:{id:string})=>d).handler(async({data,context})=>{
+ const {readSupportConversation}=await import("@/lib/support-conversation.server");return readSupportConversation(context,data.id);
+});
+export const sendMySupportMessage=createServerFn({method:"POST"}).middleware([requireSupabaseAuth]).inputValidator((d:{id:string;body:string})=>d).handler(async({data,context})=>{
+ const {sendSupportMessage}=await import("@/lib/support-conversation.server");return sendSupportMessage(context,data);
+});
+export const getMySupportAttachmentUrl=createServerFn({method:"POST"}).middleware([requireSupabaseAuth]).inputValidator((d:{id:string})=>d).handler(async({data,context})=>{
+ const {supportAttachmentUrl}=await import("@/lib/support-conversation.server");return supportAttachmentUrl(context,data.id);
+});
+export const prepareMySupportUpload=createServerFn({method:"POST"}).middleware([requireSupabaseAuth]).inputValidator((d:{id:string})=>d).handler(async({data,context})=>{
+ const {supportUploadAuthorization}=await import("@/lib/support-conversation.server");return supportUploadAuthorization(context,data.id);
 });

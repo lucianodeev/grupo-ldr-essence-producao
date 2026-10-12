@@ -92,7 +92,7 @@ function ProfessionalPayoutsPage() {
 
       <section className="rounded-3xl border bg-card p-6">
         <h2 className="font-serif text-2xl">Trocar a conta bancária depois</h2>
-        <p className="mt-2 text-sm text-muted-foreground">Depois que o cadastro estiver concluído, clique em <strong>Abrir Stripe Express</strong>. Lá você poderá alterar a conta bancária diretamente no Stripe. Não envie IBAN, número de conta ou outros dados bancários pelo WhatsApp, e-mail ou painel LDR.</p>
+        <p className="mt-2 text-sm text-muted-foreground">Depois que o cadastro estiver concluído, clique em <strong>Abrir Stripe Express</strong>. Lá você poderá alterar a conta bancária diretamente no Stripe. Não envie IBAN, número de conta ou outros dados bancários pelo suporte ou outros canais do painel LDR.</p>
       </section>
 
       {Array.isArray(data?.requirementsDue) && data.requirementsDue.length > 0 && <section className="rounded-3xl border bg-amber-50 p-6 text-amber-950">
