@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { BookOpen, Brain, CheckCircle2, GraduationCap, MessageCircle, ShieldCheck, Sparkles, Star, UsersRound, Video } from "lucide-react";
+import { BookOpen, Brain, CheckCircle2, GraduationCap, MessageCircle, ShieldCheck, Sparkles, UsersRound, Video } from "lucide-react";
 import { LanguageSelect } from "@/lib/i18n";
 
 const modules=[
@@ -20,14 +20,7 @@ const modules=[
 ["15","Psicanálise Internacional, Neurodiversidade e Autismo","Atuação internacional, carreira no exterior, ética, GDPR, migração, neurodiversidade, autismo e trabalho interdisciplinar."],
 ] as const;
 
-const reviews=[
- {name:"Thaisa",date:"02/2023",text:"Está me ajudando a me autoconhecer e estou adorando seu trabalho."},
- {name:"Jessica",date:"07/2025",text:"Luciano foi e é um achado na minha vida. Situações e sentimentos antes obscuros se tornam mais compreensíveis e, juntos, conseguimos trilhar uma nova história."},
- {name:"Jose",date:"09/2023",text:"Luciano foi extremamente atencioso, fez questionamentos pertinentes do início ao fim e tem uma escuta ativa incrível."},
- {name:"Jenifer",date:"10/2023",text:"Ótimo profissional, soube me ouvir e me ajuda com minhas queixas. Super indico!"},
- {name:"Ana",date:"04/2023",text:"Excelente profissional, me acolheu e me ajudou muito nesse momento."},
- {name:"Murilo",date:"12/2023",text:"Uma ótima primeira sessão, me senti acolhido. Um excelente profissional."},
-] as const;
+
 
 const SUPPORT="/falar-com-ecossistema";
 
@@ -55,7 +48,7 @@ export function PsychoanalysisTrainingPage(){
     <div className="border-t border-white/10 p-5 sm:p-7"><PriceBlock compact/></div>
    </section>
 
-   <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{[["1.200 horas","Carga horária formativa total do percurso, incluindo estudo orientado, atividades, análise pessoal e prática supervisionada."],["+3.000 atendimentos","Experiência em clínica online com pessoas no Brasil e no exterior."],["15 módulos · 240 unidades de aprendizagem","Conteúdo organizado para avançar com clareza, sem se perder no excesso de informação."],["Acesso enquanto o LDR ONE estiver ativo","Textos, materiais, atividades e conteúdos disponibilizados permanecem na sua Biblioteca LDR."]].map(([n,t])=><article key={n} className="rounded-3xl border border-[#ded0eb] bg-white p-5 shadow-sm"><p className="font-serif text-2xl font-bold text-[#5b2b86]">{n}</p><p className="mt-2 text-sm leading-6 text-[#66576f]">{t}</p></article>)}</section>
+   <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{[["1.200 horas","Carga horária formativa total do percurso, incluindo estudo orientado, atividades, análise pessoal e prática supervisionada."],["Estudo e prática clínica","Fundamentos teóricos, reflexão ética e prática supervisionada no percurso formativo."],["15 módulos · 240 unidades de aprendizagem","Conteúdo organizado para avançar com clareza, sem se perder no excesso de informação."],["Acesso enquanto o LDR ONE estiver ativo","Textos, materiais, atividades e conteúdos disponibilizados permanecem na sua Biblioteca LDR."]].map(([n,t])=><article key={n} className="rounded-3xl border border-[#ded0eb] bg-white p-5 shadow-sm"><p className="font-serif text-2xl font-bold text-[#5b2b86]">{n}</p><p className="mt-2 text-sm leading-6 text-[#66576f]">{t}</p></article>)}</section>
 
     <section className="rounded-[2rem] border border-[#ded0eb] bg-white p-6 shadow-sm sm:p-9"><p className="text-xs font-black uppercase tracking-[.18em] text-[#7b4aa3]">Sobre a formação</p><h2 className="mt-3 font-serif text-3xl font-bold">Uma proposta de estudo, escuta e aprofundamento clínico</h2><p className="mt-5 text-sm leading-7 text-[#66576f]">O percurso reúne fundamentos teóricos, leitura crítica, pesquisa, reflexão ética e aproximação com a prática clínica. Informações sobre docentes, supervisão e certificação devem ser disponibilizadas conforme a oferta efetivamente realizada.</p></section>
 
@@ -69,7 +62,7 @@ export function PsychoanalysisTrainingPage(){
 
    <section className="grid gap-4 md:grid-cols-3">{[[Video,"100% online e sob demanda","Fundamentos, inconsciente, pulsões, técnica, clínica contemporânea e supervisão/fechamento."],[GraduationCap,"Professores convidados","Participações especiais podem ser adicionadas ao percurso quando os profissionais e datas forem confirmados."],[ShieldCheck,"Prática supervisionada","Alunos que cumprirem critérios poderão se candidatar a futuras oportunidades na Rede LDR, conforme disponibilidade, avaliação e requisitos aplicáveis."]].map(([Icon,t,d]:any)=><article key={t} className="rounded-3xl bg-[#32155c] p-6 text-white"><Icon className="h-7 w-7 text-[#e2c372]"/><h3 className="mt-4 font-serif text-xl font-bold">{t}</h3><p className="mt-2 text-sm leading-6 text-white/75">{d}</p></article>)}</section>
 
-   <section className="rounded-[2rem] border border-[#ded0eb] bg-white p-6 sm:p-8"><p className="text-xs font-black uppercase tracking-[.18em] text-[#7b4aa3]">O que dizem sobre meu trabalho clínico</p><h2 className="mt-2 font-serif text-3xl font-bold sm:text-4xl">Antes da formação, existe uma história de escuta.</h2><p className="mt-3 max-w-3xl text-sm leading-7 text-[#66576f]">Depoimentos de pessoas atendidas em Psicanálise. Eles refletem experiências individuais e não representam promessa de resultado.</p><div className="mt-7 grid gap-4 md:grid-cols-2 lg:grid-cols-3">{reviews.map(r=><article key={`${r.name}-${r.date}`} className="rounded-2xl border border-[#e6dbea] bg-[#fcfaff] p-5"><div className="flex gap-1 text-[#d6ad63]" aria-label="5 estrelas">{[1,2,3,4,5].map(i=><Star key={i} className="h-4 w-4 fill-current"/>)}</div><p className="mt-4 text-sm leading-7 text-[#51445a]">“{r.text}”</p><p className="mt-4 border-t border-[#eee5f3] pt-3 text-xs font-bold text-[#5b2b86]">{r.name} · {r.date}</p></article>)}</div></section>
+
 
    <section className="overflow-hidden rounded-[2rem] border border-[#caa85d] bg-[#2f1457] p-6 text-white shadow-xl sm:p-9"><div className="grid gap-8 lg:grid-cols-[1fr_.75fr] lg:items-center"><div><p className="text-xs font-black uppercase tracking-[.18em] text-[#e2c372]">Seu próximo passo</p><h2 className="mt-3 max-w-2xl font-serif text-3xl font-bold leading-tight sm:text-4xl">Você não precisa saber tudo para começar. Precisa de um percurso que faça sentido.</h2><p className="mt-4 max-w-2xl text-sm leading-7 text-white/75">Entre na formação, avance no seu ritmo e construa repertório para compreender a teoria, a técnica e a complexidade da escuta psicanalítica.</p><a href={SUPPORT} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-xl border border-white/20 px-4 text-sm font-bold"><MessageCircle className="h-4 w-4"/>Falar comigo no Falar com o Ecossistema</a></div><PriceBlock/></div></section>
 
