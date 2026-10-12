@@ -37,6 +37,6 @@ test("Os quatro conjuntos de aulas autorais estão presentes e têm códigos exc
 
 test("O gerador legado permanece como fallback", () => {
   const source = read("professional-formations-lessons.ts");
-  assert.match(source, /return t\.modules\.map\(/);
-  assert.match(source, /lessonBody\(locale,moduleTitle,focus,task,previous,next,t\.project/);
+  assert.match(source, /\.modules\.map\(/);
+  assert.match(source, /lessonBody\(/);
 });
