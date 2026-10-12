@@ -33,7 +33,7 @@ const SUPPORT = "/falar-com-ecossistema";
 const COPY = {
   pt: {
     back: "Voltar ao início",
-    founder: "Luciano Rodrigues Almeida · Fundador e CEO do Grupo LDR Essence",
+    founder: "Grupo LDR Essence · Desenvolvimento humano e soluções profissionais",
     ecosystem: "Conheça o ecossistema LDR",
     ecosystemText:
       "Um único ecossistema para desenvolver pessoas, profissionais, empreendedores e empresas.",
@@ -368,7 +368,7 @@ const COPY = {
   },
   en: {
     back: "Back to home",
-    founder: "Luciano Rodrigues Almeida · Founder & CEO of Grupo LDR Essence",
+    founder: "Grupo LDR Essence · Human development and professional solutions",
     ecosystem: "Explore the LDR ecosystem",
     ecosystemText: "One ecosystem to develop people, professionals, entrepreneurs and companies.",
     next: "Next paths",
@@ -690,7 +690,7 @@ const COPY = {
   },
   fr: {
     back: "Retour à l'accueil",
-    founder: "Luciano Rodrigues Almeida · Fondateur et CEO de Grupo LDR Essence",
+    founder: "Grupo LDR Essence · Développement humain et solutions professionnelles",
     ecosystem: "Découvrez l’écosystème LDR",
     ecosystemText:
       "Un seul écosystème pour développer les personnes, les professionnels, les entrepreneurs et les entreprises.",
@@ -1019,7 +1019,7 @@ const COPY = {
   },
   es: {
     back: "Volver al inicio",
-    founder: "Luciano Rodrigues Almeida · Fundador y CEO de Grupo LDR Essence",
+    founder: "Grupo LDR Essence · Desarrollo humano y soluciones profesionales",
     ecosystem: "Conoce el ecosistema LDR",
     ecosystemText:
       "Un único ecosistema para desarrollar personas, profesionales, emprendedores y empresas.",
