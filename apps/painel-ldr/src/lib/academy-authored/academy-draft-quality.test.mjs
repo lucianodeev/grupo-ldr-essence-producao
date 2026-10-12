@@ -35,6 +35,7 @@ test("oito frentes autorais permanecem em rascunho e com campos pedagógicos", (
     }
     const lessonIds = [...source.matchAll(/id:\s*"((?:hotel|obra|gas|api|edu|beauty|saude|psi)\d+-m\d+-a\d+)"/g)].map(m => m[1]);
     assert.equal(lessonIds.length, 2, `${file}: duas aulas esperadas`);
+    assert.equal([...source.matchAll(/\\bid:\\s*"/g)].length, 2, `${file}: IDs adicionais não reconhecidos`);
     for (const id of lessonIds) {
       assert.ok(!ids.has(id), `id de aula repetido: ${id}`);
       ids.add(id);
