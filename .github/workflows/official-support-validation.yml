@@ -1,0 +1,30 @@
+name: Official support privacy and regression checks
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'apps/painel-ldr/src/lib/support-*'
+      - 'apps/painel-ldr/src/lib/ecosystem-support.functions.ts'
+      - 'apps/painel-ldr/src/components/support-inbox.tsx'
+      - 'apps/painel-ldr/src/components/academy-chatbot.tsx'
+      - 'apps/painel-ldr/tests/support-conversation.test.cjs'
+      - '.github/workflows/official-support-validation.yml'
+permissions:
+  contents: read
+jobs:
+  support:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm install --no-package-lock --no-audit --no-fund
+      - name: Unit regressions
+        working-directory: apps/painel-ldr
+        run: npm test
+      - name: Support isolation, login, academic and checkout regressions
+        working-directory: apps/painel-ldr
+        run: node --test tests/support-conversation.test.cjs tests/academic-login-return.test.cjs tests/academic-regressions.test.cjs tests/ldr-one-checkout-resume.test.cjs
