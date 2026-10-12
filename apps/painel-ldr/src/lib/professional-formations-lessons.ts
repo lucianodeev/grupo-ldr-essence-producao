@@ -1,3 +1,4 @@
+import { getPlanejamentoControleObrasDraft, validatePlanejamentoControleObrasDraft } from "@/lib/academy-authored/planejamento-controle-obras.adapter";
 import type { PF, PFLocale, PFSlug } from "@/lib/academy-professional-formations.catalog";
 
 const labels={
@@ -58,6 +59,12 @@ function lessonBody(locale:PFLocale,moduleTitle:string,focus:string,task:string,
 }
 
 export function buildProfessionalFormationLessons(f:PF,locale:PFLocale){
+ // Usar conteúdo autoral somente após validação integral. Não afeta cursos existentes.
+ if (f.slug === "planejamento-controle-obras" && locale === "pt" && validatePlanejamentoControleObrasDraft().length === 0) {
+  const authored = getPlanejamentoControleObrasDraft(locale);
+  if (authored) return authored;
+ }
+
  const t=f.i18n[locale]??f.i18n.pt;
  const perModule=Math.max(1,Math.floor(f.lessons/f.modulesCount));
  const L=labels[locale],S=stages[locale];
