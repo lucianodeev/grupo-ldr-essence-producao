@@ -33,7 +33,7 @@ const SUPPORT = "/falar-com-ecossistema";
 const COPY = {
   pt: {
     back: "Voltar ao início",
-    founder: "Luciano Rodrigues Almeida · Fundador e CEO do Grupo LDR Essence",
+    founder: "Grupo LDR Essence · Desenvolvimento humano e soluções profissionais",
     ecosystem: "Conheça o ecossistema LDR",
     ecosystemText:
       "Um único ecossistema para desenvolver pessoas, profissionais, empreendedores e empresas.",
@@ -121,7 +121,7 @@ const COPY = {
         "Coragem, experiência e oportunidades",
         "Saúde mental na jornada empreendedora",
         "Decisão, consistência e adaptação",
-        "Experiência de Luciano entre desenvolvimento humano e negócios",
+        "Experiência prática em desenvolvimento humano e negócios",
         "Convidados especiais quando previstos na programação",
       ],
       steps: [
@@ -368,7 +368,7 @@ const COPY = {
   },
   en: {
     back: "Back to home",
-    founder: "Luciano Rodrigues Almeida · Founder & CEO of Grupo LDR Essence",
+    founder: "Grupo LDR Essence · Human development and professional solutions",
     ecosystem: "Explore the LDR ecosystem",
     ecosystemText: "One ecosystem to develop people, professionals, entrepreneurs and companies.",
     next: "Next paths",
@@ -449,7 +449,7 @@ const COPY = {
         "Courage, experience and opportunities",
         "Mental health in the entrepreneurial journey",
         "Decision-making, consistency and adaptation",
-        "Luciano's experience across human development and business",
+        "Practical experience across human development and business",
         "Special guests when confirmed for the edition",
       ],
       steps: [
@@ -690,7 +690,7 @@ const COPY = {
   },
   fr: {
     back: "Retour à l'accueil",
-    founder: "Luciano Rodrigues Almeida · Fondateur et CEO de Grupo LDR Essence",
+    founder: "Grupo LDR Essence · Développement humain et solutions professionnelles",
     ecosystem: "Découvrez l’écosystème LDR",
     ecosystemText:
       "Un seul écosystème pour développer les personnes, les professionnels, les entrepreneurs et les entreprises.",
@@ -772,7 +772,7 @@ const COPY = {
         "Courage, expérience et opportunités",
         "Santé mentale dans le parcours entrepreneurial",
         "Décision, constance et adaptation",
-        "Expérience de Luciano entre développement humain et affaires",
+        "Expérience pratique en développement humain et affaires",
         "Invités spéciaux lorsqu’ils sont confirmés",
       ],
       steps: [
@@ -1019,7 +1019,7 @@ const COPY = {
   },
   es: {
     back: "Volver al inicio",
-    founder: "Luciano Rodrigues Almeida · Fundador y CEO de Grupo LDR Essence",
+    founder: "Grupo LDR Essence · Desarrollo humano y soluciones profesionales",
     ecosystem: "Conoce el ecosistema LDR",
     ecosystemText:
       "Un único ecosistema para desarrollar personas, profesionales, emprendedores y empresas.",
@@ -1101,7 +1101,7 @@ const COPY = {
         "Coraje, experiencia y oportunidades",
         "Salud mental en el camino emprendedor",
         "Decisión, constancia y adaptación",
-        "Experiencia de Luciano entre desarrollo humano y negocios",
+        "Experiencia práctica en desarrollo humano y negocios",
         "Invitados especiales cuando estén confirmados",
       ],
       steps: [
@@ -1345,15 +1345,6 @@ const COPY = {
   },
 } as const;
 
-const kindPhoto: Record<Kind, string> = {
-  training: "/ldr/luciano-treinamento.webp",
-  webinar: "/ldr/luciano-reflexao.webp",
-  seller: "/ldr/luciano-lideranca.webp",
-  ebook: "/ldr/luciano-livros.webp",
-  books: "/ldr/luciano-livros.webp",
-  sellerAcademy: "/ldr/luciano-ceo.webp",
-  sellerPresentation: "/ldr/luciano-ceo.webp",
-};
 
 export function CommercialPublicPage({ kind }: { kind: Kind }) {
   const { locale } = useI18n();
@@ -1446,16 +1437,8 @@ export function CommercialPublicPage({ kind }: { kind: Kind }) {
               </div>
               <p className="mt-6 max-w-2xl text-xs leading-5 text-white/65">{c.noPromise}</p>
             </div>
-            <div className="overflow-hidden rounded-[2rem] border border-white/15 bg-white/5 shadow-2xl">
-              <img
-                src={kindPhoto[kind]}
-                width="900"
-                height="1125"
-                loading="eager"
-                fetchPriority="high"
-                className="aspect-[4/5] w-full object-cover"
-                alt="Luciano Rodrigues Almeida, Fundador e CEO do Grupo LDR Essence"
-              />
+            <div className="flex min-h-[320px] items-center justify-center rounded-[2rem] border border-white/15 bg-white/5 p-8 text-center shadow-2xl">
+              <p className="font-serif text-4xl font-bold tracking-wide text-[#d6ad63]">Grupo LDR Essence</p>
             </div>
           </div>
         </section>
@@ -1528,59 +1511,7 @@ export function CommercialPublicPage({ kind }: { kind: Kind }) {
           </div>
         </section>
 
-        <section className="mx-auto grid max-w-7xl gap-8 px-4 py-14 sm:px-6 lg:grid-cols-[.8fr_1.2fr] lg:items-center">
-          <img
-            src="/ldr/luciano-ceo.webp"
-            width="900"
-            height="1125"
-            loading="lazy"
-            className="max-h-[520px] w-full rounded-[2rem] object-cover"
-            alt="Luciano Rodrigues Almeida em apresentação institucional"
-          />
-          <div>
-            <p className="text-xs font-black uppercase tracking-[.18em] text-[#9b7d24]">
-              {c.creator}
-            </p>
-            <h2 className="mt-3 font-serif text-4xl">{c.founder}</h2>
-            <p className="mt-4 text-base leading-7 text-[#5f6673]">
-              {locale === "en"
-                ? "Grupo LDR Essence connects human development, entrepreneurship, careers, wellbeing and business solutions. Luciano appears as Founder and CEO to provide context, accountability and direction without taking focus away from the visitor’s needs."
-                : locale === "fr"
-                  ? "Grupo LDR Essence relie développement humain, entrepreneuriat, carrière, bien-être et solutions pour les entreprises. Luciano apparaît comme Fondateur et CEO pour apporter contexte, responsabilité et direction sans détourner l’attention des besoins du visiteur."
-                  : locale === "es"
-                    ? "Grupo LDR Essence conecta desarrollo humano, emprendimiento, carrera, bienestar y soluciones para empresas. Luciano aparece como Fundador y CEO para aportar contexto, responsabilidad y dirección sin quitar el foco de las necesidades del visitante."
-                    : "O Grupo LDR Essence conecta desenvolvimento humano, empreendedorismo, carreira, bem-estar e soluções para empresas. Luciano aparece como Fundador e CEO para dar contexto, responsabilidade e direção ao ecossistema — sem tirar o foco da necessidade de quem chega até aqui."}
-            </p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Link
-                to="/profissionais"
-                className="inline-flex items-center gap-2 rounded-xl border border-[#0b1428] px-5 py-3 text-sm font-black"
-              >
-                <BadgeCheck className="h-4 w-4" />
-                {locale === "en"
-                  ? "Professional Network"
-                  : locale === "fr"
-                    ? "Réseau de Professionnels"
-                    : locale === "es"
-                      ? "Red de Profesionales"
-                      : "Rede de Profissionais"}
-              </Link>
-              <Link
-                to="/para-profissionais"
-                className="inline-flex items-center gap-2 rounded-xl border border-[#0b1428] px-5 py-3 text-sm font-black"
-              >
-                <Globe2 className="h-4 w-4" />
-                {locale === "en"
-                  ? "Professional ecosystem"
-                  : locale === "fr"
-                    ? "Écosystème professionnel"
-                    : locale === "es"
-                      ? "Ecosistema profesional"
-                      : "Ecossistema profissional"}
-              </Link>
-            </div>
-          </div>
-        </section>
+
 
         <section className="border-y border-[#c9a63a]/20 bg-white">
           <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
