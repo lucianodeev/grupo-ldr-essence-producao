@@ -30,7 +30,9 @@ const cookie = ssr.serializeCookieHeader(helper.ACADEMIC_RETURN_COOKIE, next);
 test('academic return preserves nested route, search and hash; rejects external or unrelated destinations', () => {
   assert.equal(helper.academicReturnPath(next), next);
   assert.equal(helper.academicLoginHref(next), `/cliente/login?next=${encodeURIComponent(next)}`);
-  for (const target of ['https://evil.test', '//evil.test/cliente/rede-academica', '/\\evil.test', '/cliente/biblioteca', '/cliente/rede-academica-falsa', '/cliente/rede-academica/../../admin', '/cliente/rede-academica\r\nLocation: bad', null, 1]) {
+  assert.equal(helper.academicReturnPath('/cliente/biblioteca'), '/cliente/biblioteca');
+  assert.equal(helper.academicLoginHref('/cliente/biblioteca'), '/cliente/login?next=%2Fcliente%2Fbiblioteca');
+  for (const target of ['https://evil.test', '//evil.test/cliente/rede-academica', '/\\evil.test', '/cliente/rede-academica-falsa', '/cliente/rede-academica/../../admin', '/cliente/rede-academica\r\nLocation: bad', null, 1]) {
     assert.equal(helper.academicReturnPath(target), null, String(target));
     assert.equal(helper.academicLoginHref(target), '/cliente/login');
   }
@@ -67,7 +69,7 @@ test('successful academic callback receives same-origin verifier and returns to 
 });
 
 test('preview academic callback stays on the preview origin and returns to exact route', async () => {
-  const previewOrigin = 'https://example-preview.vercel.app';
+  const previewOrigin = 'https://example-preview.onrender.com';
   const handler = callback();
   const response = await handler.run(`${previewOrigin}/api/auth/callback?code=test-only`, `${cookie}; test-code-verifier=fixture`);
   assert.equal(response.status, 303);
@@ -101,6 +103,15 @@ test('academic navigation cookie cannot redirect another portal or an external h
   }
 });
 
+function findElement(tree, predicate) {
+  if (!tree || typeof tree !== 'object') return undefined;
+  if (Array.isArray(tree)) {
+    for (const child of tree) { const match = findElement(child, predicate); if (match) return match; }
+    return undefined;
+  }
+  return predicate(tree) ? tree : findElement(tree.props?.children, predicate);
+}
+
 function login(host, search = {}, session = null) {
   const effects = [], oauth = [], redirects = [], cookies = [];
   const location = { hostname: host, origin: `https://${host}`, replace: url => redirects.push(url) };
@@ -109,6 +120,7 @@ function login(host, search = {}, session = null) {
     '@tanstack/react-router': { createFileRoute: () => options => ({ ...options, useSearch: () => options.validateSearch(search) }), Link: 'a' },
     'react': { useEffect: fn => effects.push(fn), useRef: value => ({ current: value }), useState: value => [value, () => {}] },
     'sonner': { toast: { error: () => {} } },
+    '@/lib/i18n': { LanguageSelect: 'select', useI18n: () => ({ locale: 'pt' }) },
     '@/integrations/supabase/client': { supabase: { auth: {
       onAuthStateChange: () => ({ data: { subscription: { unsubscribe() {} } } }),
       getSession: async () => ({ data: { session } }),
@@ -116,7 +128,8 @@ function login(host, search = {}, session = null) {
     } } },
   }, { window: { location }, document, fetch: async () => ({ ok: true }) }).Route;
   const tree = route.component();
-  const button = tree.props.children.find(child => child?.type === 'button');
+  const button = findElement(tree, child => child.type === 'button');
+  assert.ok(button, 'Google login button remains available');
   return { tree, effects, oauth, redirects, cookies, click: () => button.props.onClick() };
 }
 
@@ -130,17 +143,17 @@ test('Google login uses canonical callback and bounded academic return cookie be
   assert.deepEqual(page.redirects, ['https://accounts.google.com/test-only']);
 });
 
-test('Google login on Vercel preview uses the same preview callback origin', async () => {
-  const page = login('example-preview.vercel.app', { next });
+test('Google login on Render preview uses the same preview callback origin', async () => {
+  const page = login('example-preview.onrender.com', { next });
   await page.click();
-  assert.equal(page.oauth[0].options.redirectTo, 'https://example-preview.vercel.app/api/auth/callback');
+  assert.equal(page.oauth[0].options.redirectTo, 'https://example-preview.onrender.com/api/auth/callback');
   assert.match(page.cookies[0], /Max-Age=600; Path=\/; Secure; SameSite=Lax/);
   assert.equal(ssr.parseCookieHeader(page.cookies[0])[0].value, next);
   assert.deepEqual(page.redirects, ['https://accounts.google.com/test-only']);
 });
 
 test('existing authenticated session returns to requested academic route on production and preview', async () => {
-  for (const host of ['ldracademy.online', 'example-preview.vercel.app']) {
+  for (const host of ['ldracademy.online', 'example-preview.onrender.com']) {
     const page = login(host, { next }, { access_token: 'fixture', refresh_token: 'fixture' });
     page.effects.forEach(effect => effect());
     await new Promise(resolve => setImmediate(resolve));
@@ -157,7 +170,8 @@ test('services OAuth callback and absence of academic cookies are preserved', as
 
 test('failed login presents an accessible retry message instead of a silent loop', () => {
   const page = login('ldracademy.online', { next, auth_error: 'exchange_failed' });
-  const alert = page.tree.props.children.find(child => child?.props?.role === 'alert');
+  const alert = findElement(page.tree, child => child.props?.role === 'alert');
+  assert.ok(alert, 'OAuth failure remains accessible');
   assert.match(alert.props.children, /Não foi possível concluir o login/);
 });
 
