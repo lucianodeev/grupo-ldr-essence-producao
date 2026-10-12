@@ -76,7 +76,6 @@ export function AcademyChatbot() {
   const showAnnouncement = location.pathname === "/" || location.pathname === "/cliente/biblioteca";
   const academicNetwork = location.pathname.startsWith("/cliente/rede-academica");
   const [open, setOpen] = useState(false);
-  const [teaser, setTeaser] = useState(false);
   const [selected, setSelected] = useState<Topic | null>(null);
   const [query, setQuery] = useState("");
   const [primaryInstance, setPrimaryInstance] = useState(false);
@@ -92,11 +91,6 @@ export function AcademyChatbot() {
     };
   }, []);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const timer = window.setTimeout(() => setTeaser(true), 6500);
-    return () => window.clearTimeout(timer);
-  }, []);
 
   const searchMatch = useMemo(() => {
     const normalized = query.trim().toLowerCase();
@@ -137,13 +131,6 @@ export function AcademyChatbot() {
       )}
 
       <div className={inlineAssistant ? "relative z-[30] mx-auto flex max-w-6xl flex-col items-end px-5 py-4" : "fixed z-[95]"} style={inlineAssistant ? undefined : { bottom: academicNetwork ? "calc(11rem + env(safe-area-inset-bottom))" : "calc(5.5rem + env(safe-area-inset-bottom))", right: "calc(1rem + env(safe-area-inset-right))" }}>
-        {!open && teaser && !academicNetwork && !inlineAssistant && (
-          <div className="mb-3 ml-auto flex max-w-[18rem] items-start gap-2 rounded-2xl border border-[#d5bd78]/50 bg-white p-3 text-sm text-slate-800 shadow-2xl">
-            <Bot className="mt-0.5 h-5 w-5 shrink-0 text-[#102a43]" aria-hidden="true" />
-            <button type="button" onClick={() => { setOpen(true); setTeaser(false); }} className="text-left font-semibold leading-5">{c.help}</button>
-            <button type="button" onClick={() => setTeaser(false)} aria-label={c.close} className="ml-auto rounded-full p-1 text-slate-500 hover:bg-slate-100"><X className="h-4 w-4" /></button>
-          </div>
-        )}
 
         {open && (
           <section role="dialog" aria-label={c.title} className="mb-3 flex max-h-[70vh] w-[min(92vw,380px)] flex-col overflow-hidden rounded-3xl border border-[#d5bd78]/40 bg-white shadow-2xl">
@@ -198,7 +185,7 @@ export function AcademyChatbot() {
           </section>
         )}
 
-        <button type="button" onClick={() => { setOpen((value) => !value); setTeaser(false); }} aria-label={official} aria-expanded={open} className={`ml-auto flex items-center justify-center gap-2 rounded-full border border-[#fff0c2] bg-[#F4B942] text-sm font-black text-[#071426] shadow-2xl transition hover:-translate-y-0.5 hover:bg-[#FFD36B] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F4B942] focus-visible:ring-offset-2 ${"min-h-14 px-4 py-3"}`}>
+        <button type="button" onClick={() => { setOpen((value) => !value); }} aria-label={official} aria-expanded={open} className={`ml-auto flex items-center justify-center gap-2 rounded-full border border-[#fff0c2] bg-[#F4B942] text-sm font-black text-[#071426] shadow-2xl transition hover:-translate-y-0.5 hover:bg-[#FFD36B] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F4B942] focus-visible:ring-offset-2 ${"min-h-14 px-4 py-3"}`}>
           {open ? <X className="h-5 w-5" /> : <MessageCircle className="h-5 w-5" />}
           <span>{official}</span>{inbox.unread > 0 && <span role="status" className="rounded-full bg-[#102a43] px-2 py-1 text-xs text-white">{inbox.unread}</span>}
         </button>
