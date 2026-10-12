@@ -1454,7 +1454,7 @@ export function CommercialPublicPage({ kind }: { kind: Kind }) {
                 loading="eager"
                 fetchPriority="high"
                 className="aspect-[4/5] w-full object-cover"
-                alt="Luciano Rodrigues Almeida, Fundador e CEO do Grupo LDR Essence"
+                alt="Imagem ilustrativa dos serviços do Ecossistema LDR"
               />
             </div>
           </div>
@@ -1528,59 +1528,7 @@ export function CommercialPublicPage({ kind }: { kind: Kind }) {
           </div>
         </section>
 
-        <section className="mx-auto grid max-w-7xl gap-8 px-4 py-14 sm:px-6 lg:grid-cols-[.8fr_1.2fr] lg:items-center">
-          <img
-            src="/ldr/luciano-ceo.webp"
-            width="900"
-            height="1125"
-            loading="lazy"
-            className="max-h-[520px] w-full rounded-[2rem] object-cover"
-            alt="Luciano Rodrigues Almeida em apresentação institucional"
-          />
-          <div>
-            <p className="text-xs font-black uppercase tracking-[.18em] text-[#9b7d24]">
-              {c.creator}
-            </p>
-            <h2 className="mt-3 font-serif text-4xl">{c.founder}</h2>
-            <p className="mt-4 text-base leading-7 text-[#5f6673]">
-              {locale === "en"
-                ? "Grupo LDR Essence connects human development, entrepreneurship, careers, wellbeing and business solutions. Luciano appears as Founder and CEO to provide context, accountability and direction without taking focus away from the visitor’s needs."
-                : locale === "fr"
-                  ? "Grupo LDR Essence relie développement humain, entrepreneuriat, carrière, bien-être et solutions pour les entreprises. Luciano apparaît comme Fondateur et CEO pour apporter contexte, responsabilité et direction sans détourner l’attention des besoins du visiteur."
-                  : locale === "es"
-                    ? "Grupo LDR Essence conecta desarrollo humano, emprendimiento, carrera, bienestar y soluciones para empresas. Luciano aparece como Fundador y CEO para aportar contexto, responsabilidad y dirección sin quitar el foco de las necesidades del visitante."
-                    : "O Grupo LDR Essence conecta desenvolvimento humano, empreendedorismo, carreira, bem-estar e soluções para empresas. Luciano aparece como Fundador e CEO para dar contexto, responsabilidade e direção ao ecossistema — sem tirar o foco da necessidade de quem chega até aqui."}
-            </p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Link
-                to="/profissionais"
-                className="inline-flex items-center gap-2 rounded-xl border border-[#0b1428] px-5 py-3 text-sm font-black"
-              >
-                <BadgeCheck className="h-4 w-4" />
-                {locale === "en"
-                  ? "Professional Network"
-                  : locale === "fr"
-                    ? "Réseau de Professionnels"
-                    : locale === "es"
-                      ? "Red de Profesionales"
-                      : "Rede de Profissionais"}
-              </Link>
-              <Link
-                to="/para-profissionais"
-                className="inline-flex items-center gap-2 rounded-xl border border-[#0b1428] px-5 py-3 text-sm font-black"
-              >
-                <Globe2 className="h-4 w-4" />
-                {locale === "en"
-                  ? "Professional ecosystem"
-                  : locale === "fr"
-                    ? "Écosystème professionnel"
-                    : locale === "es"
-                      ? "Ecosistema profesional"
-                      : "Ecossistema profissional"}
-              </Link>
-            </div>
-          </div>
-        </section>
+
 
         <section className="border-y border-[#c9a63a]/20 bg-white">
           <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
