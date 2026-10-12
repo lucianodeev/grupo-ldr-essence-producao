@@ -32,7 +32,7 @@ test("divergências apenas nos pedidos 1002 e 1003", () => {
   assert.deepEqual(divergentes, [{ id: 1002, diferenca: 10 }, { id: 1003, diferenca: 30 }]);
 });
 
-test("cinco pedidos possuem dois itens, incluindo um cancelado", () => {
+test("quatro pedidos possuem dois itens, incluindo um cancelado", () => {
   assert.deepEqual(pedidos.filter(p => p.itens.length === 2).map(p => p.id),
     [1005, 1010, 1015, 1020]);
 });
