@@ -1,5 +1,12 @@
 name: Academy SQL validation (draft)
 on:
+  push:
+    branches:
+      - feat/academy-120-formations-20261012
+    paths:
+      - 'apps/painel-ldr/tests/academy-sql-60h-*.sql'
+      - 'apps/painel-ldr/tests/academy-sql-60h-*.mjs'
+      - '.github/workflows/academy-sql-validation.yml'
   pull_request:
     paths:
       - 'apps/painel-ldr/tests/academy-sql-60h-*.sql'
