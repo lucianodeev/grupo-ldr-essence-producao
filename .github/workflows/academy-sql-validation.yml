@@ -1,0 +1,52 @@
+name: Academy SQL validation (draft)
+on:
+  pull_request:
+    paths:
+      - 'apps/painel-ldr/tests/academy-sql-60h-*.sql'
+      - 'apps/painel-ldr/tests/academy-sql-60h-*.mjs'
+      - '.github/workflows/academy-sql-validation.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  sql-laboratories:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: academy_test
+          POSTGRES_USER: academy_test
+          POSTGRES_PASSWORD: academy_test_local_only
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U academy_test -d academy_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      PGHOST: localhost
+      PGPORT: 5432
+      PGUSER: academy_test
+      PGPASSWORD: academy_test_local_only
+      PGDATABASE: academy_test
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate fixture calculations
+        run: node --test apps/painel-ldr/tests/academy-sql-60h-fixture.test.mjs
+      - name: Execute independent PostgreSQL labs
+        shell: bash
+        run: |
+          set -euo pipefail
+          for lab in \
+            apps/painel-ldr/tests/academy-sql-60h-lab.sql \
+            apps/painel-ldr/tests/academy-sql-60h-eventos-tempo-lab.sql \
+            apps/painel-ldr/tests/academy-sql-60h-projeto-24-pedidos.sql; do
+            echo "Validating $lab"
+            psql -X -v ON_ERROR_STOP=1 -f "$lab"
+          done
+      - name: Confirm laboratory leaves no permanent tables
+        run: |
+          test "$(psql -XAt -c "SELECT COUNT(*) FROM pg_tables WHERE schemaname='public'")" = "0"
