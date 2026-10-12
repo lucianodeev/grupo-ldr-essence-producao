@@ -92,3 +92,30 @@ export async function supportUploadAuthorization(context: any, id: string, db = 
   if (error) throw new Error("Não foi possível autorizar o anexo.");
   return { protocol: contact.protocol, uploadToken: token };
 }
+
+// Preserve the existing form contract without changing the database RPC/schema.
+// Tokens are generated on the server because the legacy RPC cannot resolve pgcrypto.
+export async function submitSupportContact(input: any, db = database) {
+  const text = (key: string) => typeof input?.[key] === "string" ? input[key].trim() : "";
+  const name = text("p_name"), email = text("p_email").toLowerCase(), subject = text("p_subject"), message = text("p_message");
+  if (text("p_website") || input?.p_consent !== true || name.length < 2 || name.length > 120 || email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || subject.length < 2 || subject.length > 100 || message.length < 5 || message.length > 4000 || !["pt","en","fr","es"].includes(input?.p_language)) {
+    throw new Error("Verifique os dados da solicitação.");
+  }
+  const token = randomBytes(32).toString("hex");
+  const { data: contact, error } = await db.from("ecosystem_contacts").insert({
+    name, email, phone: text("p_phone").slice(0,40) || null, subject, message,
+    source_project: text("p_source_project").slice(0,200) || "LDR Ecosystem",
+    source_url: text("p_source_url").slice(0,2000) || null, language: input.p_language,
+    wants_luciano: subject === "Quero falar com Luciano", consent_contact: true,
+    upload_token_hash: createHash("sha256").update(token).digest("hex"),
+    upload_token_expires_at: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(),
+  }).select("id,protocol").single();
+  if (error || !contact?.id || !contact?.protocol) throw new Error("Não foi possível registrar a solicitação.");
+  // The original message is already durable in the contact record. Never suggest
+  // resubmitting a persisted request when its optional timeline copy fails.
+  const { error: messageError } = await db.from("ecosystem_contact_messages").insert({
+    contact_id: contact.id, direction: "inbound", channel: "admin", body: message, sender: email, recipient: "LDR",
+  });
+  if (messageError) console.warn("[support] Request saved; timeline copy pending");
+  return { protocol: contact.protocol, uploadToken: token };
+}

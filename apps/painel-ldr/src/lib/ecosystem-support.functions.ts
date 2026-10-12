@@ -55,3 +55,7 @@ export const getMySupportAttachmentUrl=createServerFn({method:"POST"}).middlewar
 export const prepareMySupportUpload=createServerFn({method:"POST"}).middleware([requireSupabaseAuth]).inputValidator((d:{id:string})=>d).handler(async({data,context})=>{
  const {supportUploadAuthorization}=await import("@/lib/support-conversation.server");return supportUploadAuthorization(context,data.id);
 });
+
+export const submitEcosystemSupport=createServerFn({method:"POST"}).inputValidator((d:Record<string,unknown>)=>d).handler(async({data})=>{
+ const {submitSupportContact}=await import("@/lib/support-conversation.server");return submitSupportContact(data);
+});
