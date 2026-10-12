@@ -121,7 +121,7 @@ const COPY = {
         "Coragem, experiência e oportunidades",
         "Saúde mental na jornada empreendedora",
         "Decisão, consistência e adaptação",
-        "Experiência de Luciano entre desenvolvimento humano e negócios",
+        "Experiência prática em desenvolvimento humano e negócios",
         "Convidados especiais quando previstos na programação",
       ],
       steps: [
@@ -449,7 +449,7 @@ const COPY = {
         "Courage, experience and opportunities",
         "Mental health in the entrepreneurial journey",
         "Decision-making, consistency and adaptation",
-        "Luciano's experience across human development and business",
+        "Practical experience across human development and business",
         "Special guests when confirmed for the edition",
       ],
       steps: [
@@ -772,7 +772,7 @@ const COPY = {
         "Courage, expérience et opportunités",
         "Santé mentale dans le parcours entrepreneurial",
         "Décision, constance et adaptation",
-        "Expérience de Luciano entre développement humain et affaires",
+        "Expérience pratique en développement humain et affaires",
         "Invités spéciaux lorsqu’ils sont confirmés",
       ],
       steps: [
@@ -1101,7 +1101,7 @@ const COPY = {
         "Coraje, experiencia y oportunidades",
         "Salud mental en el camino emprendedor",
         "Decisión, constancia y adaptación",
-        "Experiencia de Luciano entre desarrollo humano y negocios",
+        "Experiencia práctica en desarrollo humano y negocios",
         "Invitados especiales cuando estén confirmados",
       ],
       steps: [
@@ -1345,15 +1345,6 @@ const COPY = {
   },
 } as const;
 
-const kindPhoto: Record<Kind, string> = {
-  training: "/ldr/luciano-treinamento.webp",
-  webinar: "/ldr/luciano-reflexao.webp",
-  seller: "/ldr/luciano-lideranca.webp",
-  ebook: "/ldr/luciano-livros.webp",
-  books: "/ldr/luciano-livros.webp",
-  sellerAcademy: "/ldr/luciano-ceo.webp",
-  sellerPresentation: "/ldr/luciano-ceo.webp",
-};
 
 export function CommercialPublicPage({ kind }: { kind: Kind }) {
   const { locale } = useI18n();
@@ -1446,16 +1437,8 @@ export function CommercialPublicPage({ kind }: { kind: Kind }) {
               </div>
               <p className="mt-6 max-w-2xl text-xs leading-5 text-white/65">{c.noPromise}</p>
             </div>
-            <div className="overflow-hidden rounded-[2rem] border border-white/15 bg-white/5 shadow-2xl">
-              <img
-                src={kindPhoto[kind]}
-                width="900"
-                height="1125"
-                loading="eager"
-                fetchPriority="high"
-                className="aspect-[4/5] w-full object-cover"
-                alt="Imagem ilustrativa dos serviços do Ecossistema LDR"
-              />
+            <div className="flex min-h-[320px] items-center justify-center rounded-[2rem] border border-white/15 bg-white/5 p-8 text-center shadow-2xl">
+              <p className="font-serif text-4xl font-bold tracking-wide text-[#d6ad63]">Grupo LDR Essence</p>
             </div>
           </div>
         </section>
