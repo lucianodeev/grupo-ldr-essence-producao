@@ -7,11 +7,15 @@ on:
       - 'apps/painel-ldr/tests/academy-sql-60h-*.sql'
       - 'apps/painel-ldr/tests/academy-sql-60h-*.mjs'
       - '.github/workflows/academy-sql-validation.yml'
+      - 'apps/painel-ldr/src/lib/academy-authored/*.initial.ts'
+      - 'apps/painel-ldr/src/lib/academy-authored/academy-draft-quality.test.mjs'
   pull_request:
     paths:
       - 'apps/painel-ldr/tests/academy-sql-60h-*.sql'
       - 'apps/painel-ldr/tests/academy-sql-60h-*.mjs'
       - '.github/workflows/academy-sql-validation.yml'
+      - 'apps/painel-ldr/src/lib/academy-authored/*.initial.ts'
+      - 'apps/painel-ldr/src/lib/academy-authored/academy-draft-quality.test.mjs'
   workflow_dispatch:
 permissions:
   contents: read
@@ -41,6 +45,8 @@ jobs:
       PGDATABASE: academy_test
     steps:
       - uses: actions/checkout@v4
+      - name: Validate authored course drafts
+        run: node --test apps/painel-ldr/src/lib/academy-authored/academy-draft-quality.test.mjs
       - name: Validate fixture calculations
         run: node --test apps/painel-ldr/tests/academy-sql-60h-fixture.test.mjs
       - name: Execute independent PostgreSQL labs
