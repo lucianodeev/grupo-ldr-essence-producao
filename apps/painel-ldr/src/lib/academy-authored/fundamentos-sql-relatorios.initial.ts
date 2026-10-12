@@ -20,7 +20,7 @@ export const SQL_RELATORIOS_AUTHORED_DRAFT: SqlAuthoredLesson[] = [
     objective: "Distinguir a unidade de análise da linha física produzida por uma junção.",
     content: [
       "Um pedido pode ter muitos itens. Após unir pedidos e itens, COUNT(*) mede linhas de itens, não necessariamente pedidos. Defina o denominador antes de escrever a consulta.",
-      "No laboratório, o pedido 501 tem dois itens e o 502 tem um. COUNT(*) após o JOIN retorna três linhas; COUNT(DISTINCT p.id_pedido) retorna dois pedidos.",
+      "Considerando apenas os pedidos 501 e 502 do laboratório, o primeiro tem dois itens e o segundo tem um: COUNT(*) após o JOIN retorna três linhas e COUNT(DISTINCT p.id_pedido) retorna dois pedidos. No conjunto completo, inclua também os itens do pedido 503.",
       "Um INNER JOIN também elimina pedidos sem itens. Para contar todos os pedidos concluídos, consulte a tabela pedidos diretamente, com o filtro de status."
     ],
     sql: "SELECT COUNT(DISTINCT p.id_pedido) AS pedidos_com_itens FROM pedidos p JOIN itens_pedido i ON i.id_pedido = p.id_pedido WHERE p.status = 'concluido';",
