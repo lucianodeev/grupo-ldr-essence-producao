@@ -133,3 +133,68 @@ export async function disableProfessionalAvailability(userId: string, availabili
   if (!data) fail("Disponibilidade não encontrada.");
   return { ok: true as const };
 }
+
+
+export async function updateProfessionalAvailability(userId: string, input: {
+  availabilityId: string;
+  startTime: string;
+  endTime: string;
+  timezone: string;
+  intervalMinutes: number;
+  bufferMinutes: number;
+  modality: "online" | "in_person" | "both";
+  locationLabel?: string | null;
+}) {
+  const profile = await ownProfile(userId);
+  const { data: existing, error: existingError } = await db.from("professional_availability")
+    .select("id,professional_service_id,weekday")
+    .eq("id", input.availabilityId)
+    .eq("professional_profile_id", profile.id)
+    .eq("active", true)
+    .maybeSingle();
+  if (existingError) throw existingError;
+  if (!existing) fail("Disponibilidade não encontrada.");
+  const start = minutes(input.startTime);
+  const end = minutes(input.endTime);
+  if (start < 0 || end <= start) fail("Informe horários válidos.");
+  const timezone = input.timezone?.trim();
+  if (!timezone || !validTimezone(timezone)) fail("Fuso horário inválido.");
+  const interval = Number(input.intervalMinutes);
+  const buffer = Number(input.bufferMinutes);
+  if (!Number.isInteger(interval) || interval < 15 || interval > 240) fail("Intervalo inválido.");
+  if (!Number.isInteger(buffer) || buffer < 0 || buffer > 120) fail("Pausa inválida.");
+  if (!["online", "in_person", "both"].includes(input.modality)) fail("Modalidade inválida.");
+  if (existing.professional_service_id) {
+    const { data: service, error: serviceError } = await db.from("professional_services")
+      .select("id,modality").eq("id", existing.professional_service_id)
+      .eq("professional_profile_id", profile.id).eq("active", true).maybeSingle();
+    if (serviceError) throw serviceError;
+    if (!service) fail("Serviço indisponível.");
+    if (service.modality !== "both" && input.modality !== "both" && service.modality !== input.modality)
+      fail("Modalidade incompatível com o serviço.");
+  }
+  const { data: other, error: otherError } = await db.from("professional_availability")
+    .select("id,professional_service_id,weekday,start_time,end_time,timezone,modality")
+    .eq("professional_profile_id", profile.id).eq("active", true)
+    .neq("id", existing.id);
+  if (otherError) throw otherError;
+  const overlap = (other ?? []).some((row: any) =>
+    String(row.professional_service_id ?? "") === String(existing.professional_service_id ?? "") &&
+    Number(row.weekday) === Number(existing.weekday) &&
+    row.timezone === timezone && row.modality === input.modality &&
+    start < minutes(String(row.end_time).slice(0, 5)) &&
+    end > minutes(String(row.start_time).slice(0, 5))
+  );
+  if (overlap) fail("Este horário sobrepõe outra disponibilidade.");
+  const { data: updated, error } = await db.from("professional_availability")
+    .update({
+      start_time: input.startTime, end_time: input.endTime, timezone,
+      slot_interval_minutes: interval, buffer_minutes: buffer,
+      modality: input.modality, location_label: input.locationLabel?.trim() || null,
+    })
+    .eq("id", existing.id).eq("professional_profile_id", profile.id).eq("active", true)
+    .select("id").maybeSingle();
+  if (error) throw error;
+  if (!updated) fail("Disponibilidade não encontrada.");
+  return { ok: true as const };
+}

@@ -24,4 +24,5 @@ jobs:
           node-version: '22'
           cache: 'npm'
       - run: npm install --no-package-lock
+      - run: node --test apps/painel-ldr/tests/professional-availability-ownership.test.cjs apps/painel-ldr/tests/professional-availability-behavior.test.cjs
       - run: npm run build:painel
