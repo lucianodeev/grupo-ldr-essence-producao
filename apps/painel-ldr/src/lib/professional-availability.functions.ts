@@ -33,3 +33,21 @@ export const professionalAvailabilityDisable = createServerFn({ method: "POST" }
     const { disableProfessionalAvailability } = await import("@/lib/professional-availability.server");
     return disableProfessionalAvailability(context.userId, data.availabilityId);
   });
+
+
+export const professionalAvailabilityUpdate = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: {
+    availabilityId: string;
+    startTime: string;
+    endTime: string;
+    timezone: string;
+    intervalMinutes: number;
+    bufferMinutes: number;
+    modality: "online" | "in_person" | "both";
+    locationLabel?: string | null;
+  }) => data)
+  .handler(async ({ context, data }) => {
+    const { updateProfessionalAvailability } = await import("@/lib/professional-availability.server");
+    return updateProfessionalAvailability(context.userId, data);
+  });
