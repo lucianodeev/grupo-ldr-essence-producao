@@ -9,6 +9,7 @@ import {
   professionalAvailabilityAdd,
   professionalAvailabilityDisable,
   professionalAvailabilitySettings,
+  professionalAvailabilityUpdate,
 } from "@/lib/professional-availability.functions";
 import { useI18n } from "@/lib/i18n";
 
@@ -37,7 +38,7 @@ const COPY = {
     adding: "Salvando…",
     current: "Disponibilidade publicada",
     empty: "Você ainda não publicou horários.",
-    remove: "Remover",
+    remove: "Remover", edit: "Editar", cancelEdit: "Cancelar edição", saveEdit: "Salvar alterações",
     online: "Online",
     inPerson: "Presencial",
     both: "Online e presencial",
@@ -49,19 +50,19 @@ const COPY = {
     title: "My availability",
     subtitle: "Define when clients can request your services. These hours belong only to your profile.",
     explain: "Each professional manages their own schedule. No other professional's hours are copied automatically.",
-    service: "Service", allServices: "All services", days: "Available days", start: "Start", end: "End", timezone: "Time zone", interval: "Start interval", buffer: "Extra buffer (min)", modality: "Modality", location: "Public location (optional)", add: "Add availability", adding: "Saving…", current: "Published availability", empty: "You have not published any hours yet.", remove: "Remove", online: "Online", inPerson: "In person", both: "Online and in person", recommendation: "For 50-minute appointments, we recommend 60-minute start intervals to prevent overlap.", saved: "Availability updated.", removed: "Availability removed.",
+    service: "Service", allServices: "All services", days: "Available days", start: "Start", end: "End", timezone: "Time zone", interval: "Start interval", buffer: "Extra buffer (min)", modality: "Modality", location: "Public location (optional)", add: "Add availability", adding: "Saving…", current: "Published availability", empty: "You have not published any hours yet.", remove: "Remove", edit: "Edit", cancelEdit: "Cancel editing", saveEdit: "Save changes", online: "Online", inPerson: "In person", both: "Online and in person", recommendation: "For 50-minute appointments, we recommend 60-minute start intervals to prevent overlap.", saved: "Availability updated.", removed: "Availability removed.",
   },
   fr: {
     title: "Mes disponibilités",
     subtitle: "Définissez quand les clients peuvent demander vos services. Ces horaires appartiennent uniquement à votre profil.",
     explain: "Chaque professionnel gère son propre agenda. Les horaires d'un autre professionnel ne sont jamais copiés automatiquement.",
-    service: "Service", allServices: "Tous les services", days: "Jours disponibles", start: "Début", end: "Fin", timezone: "Fuseau horaire", interval: "Intervalle de début", buffer: "Pause supplémentaire (min)", modality: "Modalité", location: "Lieu public (facultatif)", add: "Ajouter une disponibilité", adding: "Enregistrement…", current: "Disponibilités publiées", empty: "Vous n'avez pas encore publié d'horaires.", remove: "Supprimer", online: "En ligne", inPerson: "Présentiel", both: "En ligne et présentiel", recommendation: "Pour des rendez-vous de 50 minutes, nous recommandons des départs toutes les 60 minutes afin d'éviter les chevauchements.", saved: "Disponibilité mise à jour.", removed: "Disponibilité supprimée.",
+    service: "Service", allServices: "Tous les services", days: "Jours disponibles", start: "Début", end: "Fin", timezone: "Fuseau horaire", interval: "Intervalle de début", buffer: "Pause supplémentaire (min)", modality: "Modalité", location: "Lieu public (facultatif)", add: "Ajouter une disponibilité", adding: "Enregistrement…", current: "Disponibilités publiées", empty: "Vous n'avez pas encore publié d'horaires.", remove: "Supprimer", edit: "Modifier", cancelEdit: "Annuler", saveEdit: "Enregistrer", online: "En ligne", inPerson: "Présentiel", both: "En ligne et présentiel", recommendation: "Pour des rendez-vous de 50 minutes, nous recommandons des départs toutes les 60 minutes afin d'éviter les chevauchements.", saved: "Disponibilité mise à jour.", removed: "Disponibilité supprimée.",
   },
   es: {
     title: "Mi disponibilidad",
     subtitle: "Define cuándo los clientes pueden solicitar tus servicios. Estos horarios pertenecen solo a tu perfil.",
     explain: "Cada profesional configura su propia agenda. Los horarios de otros profesionales no se copian automáticamente.",
-    service: "Servicio", allServices: "Todos los servicios", days: "Días disponibles", start: "Inicio", end: "Fin", timezone: "Zona horaria", interval: "Intervalo de inicio", buffer: "Pausa adicional (min)", modality: "Modalidad", location: "Ubicación pública (opcional)", add: "Añadir disponibilidad", adding: "Guardando…", current: "Disponibilidad publicada", empty: "Todavía no publicaste horarios.", remove: "Eliminar", online: "Online", inPerson: "Presencial", both: "Online y presencial", recommendation: "Para citas de 50 minutos, recomendamos intervalos de 60 minutos para evitar superposiciones.", saved: "Disponibilidad actualizada.", removed: "Horario eliminado.",
+    service: "Servicio", allServices: "Todos los servicios", days: "Días disponibles", start: "Inicio", end: "Fin", timezone: "Zona horaria", interval: "Intervalo de inicio", buffer: "Pausa adicional (min)", modality: "Modalidad", location: "Ubicación pública (opcional)", add: "Añadir disponibilidad", adding: "Guardando…", current: "Disponibilidad publicada", empty: "Todavía no publicaste horarios.", remove: "Eliminar", edit: "Editar", cancelEdit: "Cancelar edición", saveEdit: "Guardar cambios", online: "Online", inPerson: "Presencial", both: "Online y presencial", recommendation: "Para citas de 50 minutos, recomendamos intervalos de 60 minutos para evitar superposiciones.", saved: "Disponibilidad actualizada.", removed: "Horario eliminado.",
   },
 } as const;
 
@@ -77,11 +78,13 @@ function ProfessionalAvailabilityPage() {
   const listFn = useServerFn(professionalAvailabilitySettings);
   const addFn = useServerFn(professionalAvailabilityAdd);
   const removeFn = useServerFn(professionalAvailabilityDisable);
+  const updateFn = useServerFn(professionalAvailabilityUpdate);
   const { locale } = useI18n();
   const c = COPY[locale];
   const dayLabels = DAY_LABELS[locale];
 
   const [serviceId, setServiceId] = useState("");
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [days, setDays] = useState<number[]>([]);
   const [startTime, setStartTime] = useState("09:00");
   const [endTime, setEndTime] = useState("18:00");
@@ -123,6 +126,20 @@ function ProfessionalAvailabilityPage() {
     onError: (error) => toast.error(error instanceof Error ? error.message : "Não foi possível salvar a disponibilidade."),
   });
 
+  const update = useMutation({
+    mutationFn: () => updateFn({ data: {
+      availabilityId: editingId!,
+      startTime, endTime, timezone, intervalMinutes, bufferMinutes, modality,
+      locationLabel: locationLabel || null,
+    } }),
+    onSuccess: async () => {
+      setEditingId(null);
+      await queryClient.invalidateQueries({ queryKey: ["professional-availability-settings"] });
+      toast.success(c.saved);
+    },
+    onError: (error) => toast.error(error instanceof Error ? error.message : "Não foi possível editar a disponibilidade."),
+  });
+
   const remove = useMutation({
     mutationFn: (availabilityId: string) => removeFn({ data: { availabilityId } }),
     onSuccess: async () => {
@@ -135,6 +152,20 @@ function ProfessionalAvailabilityPage() {
   const services = (settings.data?.services ?? []) as Row[];
   const availability = (settings.data?.availability ?? []) as Row[];
   const serviceNames = useMemo(() => new Map(services.map((s) => [String(s.id), String(s.name)])), [services]);
+
+  function beginEdit(row: Row) {
+    setEditingId(String(row.id));
+    setServiceId(String(row.professional_service_id ?? ""));
+    setDays([Number(row.weekday)]);
+    setStartTime(String(row.start_time).slice(0, 5));
+    setEndTime(String(row.end_time).slice(0, 5));
+    setTimezone(String(row.timezone));
+    setIntervalMinutes(Number(row.slot_interval_minutes));
+    setBufferMinutes(Number(row.buffer_minutes));
+    setModality(row.modality);
+    setLocationLabel(String(row.location_label ?? ""));
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
 
   function toggleDay(day: number) {
     setDays((current) => current.includes(day) ? current.filter((v) => v !== day) : [...current, day].sort());
@@ -151,7 +182,7 @@ function ProfessionalAvailabilityPage() {
     <section className="s8-card mb-6">
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <label className="grid gap-1.5 text-sm font-semibold">{c.service}
-          <select className="s8-field" value={serviceId} onChange={(e) => setServiceId(e.target.value)}>
+          <select className="s8-field" value={serviceId} disabled={editingId !== null} onChange={(e) => setServiceId(e.target.value)}>
             <option value="">{c.allServices}</option>
             {services.map((s) => <option key={s.id} value={s.id}>{s.name}{s.booking_enabled ? "" : " · não reservável"}</option>)}
           </select>
@@ -175,10 +206,13 @@ function ProfessionalAvailabilityPage() {
 
       <div className="mt-5">
         <p className="text-sm font-semibold">{c.days}</p>
-        <div className="mt-2 flex flex-wrap gap-2">{dayLabels.map((label, day) => <button key={day} type="button" onClick={() => toggleDay(day)} className={`rounded-xl border px-4 py-2 text-sm font-bold ${days.includes(day) ? "border-primary bg-primary text-primary-foreground" : "bg-background"}`} aria-pressed={days.includes(day)}>{label}</button>)}</div>
+        <div className="mt-2 flex flex-wrap gap-2">{dayLabels.map((label, day) => <button key={day} type="button" disabled={editingId !== null} onClick={() => toggleDay(day)} className={`rounded-xl border px-4 py-2 text-sm font-bold ${days.includes(day) ? "border-primary bg-primary text-primary-foreground" : "bg-background"}`} aria-pressed={days.includes(day)}>{label}</button>)}</div>
       </div>
 
-      <button type="button" disabled={add.isPending || !days.length} onClick={() => add.mutate()} className="mt-5 rounded-xl bg-primary px-5 py-3 font-bold text-primary-foreground disabled:opacity-50">{add.isPending ? c.adding : c.add}</button>
+      {editingId ? <div className="mt-5 flex gap-2">
+        <button type="button" disabled={update.isPending} onClick={() => update.mutate()} className="rounded-xl bg-primary px-5 py-3 font-bold text-primary-foreground disabled:opacity-50">{update.isPending ? c.adding : c.saveEdit}</button>
+        <button type="button" onClick={() => setEditingId(null)} className="rounded-xl border px-5 py-3 font-bold">{c.cancelEdit}</button>
+      </div> : <button type="button" disabled={add.isPending || !days.length} onClick={() => add.mutate()} className="mt-5 rounded-xl bg-primary px-5 py-3 font-bold text-primary-foreground disabled:opacity-50">{add.isPending ? c.adding : c.add}</button>}
     </section>
 
     <section>
@@ -190,7 +224,7 @@ function ProfessionalAvailabilityPage() {
             <p className="mt-1 text-sm text-muted-foreground">{dayLabels[Number(row.weekday)]} · {String(row.start_time).slice(0,5)}–{String(row.end_time).slice(0,5)}</p>
             <p className="mt-1 text-xs text-muted-foreground">{row.timezone} · {row.slot_interval_minutes} min · {row.modality === "online" ? c.online : row.modality === "in_person" ? c.inPerson : c.both}{row.location_label ? ` · ${row.location_label}` : ""}</p>
           </div>
-          <button type="button" onClick={() => remove.mutate(String(row.id))} disabled={remove.isPending} className="rounded-lg border px-3 py-2 text-xs font-bold hover:bg-muted disabled:opacity-50">{c.remove}</button>
+          <div className="flex gap-2"><button type="button" onClick={() => beginEdit(row)} disabled={update.isPending} className="rounded-lg border px-3 py-2 text-xs font-bold hover:bg-muted">{c.edit}</button><button type="button" onClick={() => remove.mutate(String(row.id))} disabled={remove.isPending} className="rounded-lg border px-3 py-2 text-xs font-bold hover:bg-muted disabled:opacity-50">{c.remove}</button></div>
         </div>
       </article>)}</div>}
     </section>
