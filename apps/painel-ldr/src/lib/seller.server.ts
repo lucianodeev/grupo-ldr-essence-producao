@@ -47,7 +47,9 @@ export async function getSellerDashboard(userId: string) {
 export async function registerSellerSale(userId: string, input: any) {
   const { data: account } = await db.from("seller_accounts").select("user_id,status").eq("user_id", userId).maybeSingle();
   if (!account || account.status !== "active") fail("Vendedor não autorizado.");
-  const rate = RATES[input.productCategory] ?? RATES.service;
+  const whiteLabel = input.productName.trim().toLocaleLowerCase("pt").includes("white label");
+  if (whiteLabel && input.productCategory !== "business") fail("Selecione a categoria Contrato empresarial para White Label.");
+  const rate = whiteLabel ? 0 : (RATES[input.productCategory] ?? RATES.service);
   const amountCents = Math.round(Number(input.amount) * 100);
   const commissionCents = Math.round(amountCents * rate / 100);
   const { data, error } = await db.from("seller_sales").insert({
@@ -62,7 +64,7 @@ export async function registerSellerSale(userId: string, input: any) {
     commission_rate: rate,
     commission_cents: commissionCents,
     payment_reference: input.paymentReference?.trim() || null,
-    notes: input.notes?.trim() || null,
+    notes: whiteLabel ? `WHITE LABEL — comissão a negociar e aprovar antes da liberação. ${input.notes?.trim() || ""}`.trim() : (input.notes?.trim() || null),
     status: "pending",
   }).select("*").single();
   if (error) fail(error.message);
@@ -115,6 +117,9 @@ export async function reviewSellerApplication(supabase: Client, userId: string, 
 
 export async function setSellerSaleStatus(supabase: Client, userId: string, saleId: string, status: string) {
   await requireAdmin(supabase, userId);
+  const { data: sale } = await db.from("seller_sales").select("product_name,commission_rate").eq("id",saleId).maybeSingle();
+  if (!sale) fail("Venda não encontrada.");
+  if (String(sale.product_name).toLowerCase().includes("white label") && ["available","paid"].includes(status)) fail("Comissão White Label exige acordo específico e aprovação antes da liberação.");
   const patch: any = { status, updated_at: new Date().toISOString() };
   if (["confirmed","available"].includes(status)) patch.confirmed_at = new Date().toISOString();
   const { error } = await db.from("seller_sales").update(patch).eq("id", saleId);
