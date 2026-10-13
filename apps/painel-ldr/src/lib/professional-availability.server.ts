@@ -123,10 +123,12 @@ export async function addProfessionalAvailabilityBlocks(userId: string, input: {
 
 export async function disableProfessionalAvailability(userId: string, availabilityId: string) {
   const profile = await ownProfile(userId);
+  // Desativar sem apagar o registo preserva histórico e referências de agendamentos.
   const { data, error } = await db.from("professional_availability")
-    .delete()
+    .update({ active: false })
     .eq("id", availabilityId)
     .eq("professional_profile_id", profile.id)
+    .eq("active", true)
     .select("id")
     .maybeSingle();
   if (error) throw error;
