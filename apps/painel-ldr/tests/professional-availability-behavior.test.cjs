@@ -34,7 +34,7 @@ function harness(){
  };
  const module={exports:{}};
  vm.runInNewContext(compiled,{module,exports:module.exports,require(name){if(name==="@/integrations/supabase/client.server")return {supabaseAdmin:{from}};throw Error("Unexpected import: "+name)},Intl,Date,Number,String,Error,Set,Promise}, {filename:"availability.js"});
- return {update:module.exports.updateProfessionalAvailability,rows,writes:()=>writes};
+ return {update:module.exports.updateProfessionalAvailability,disable:module.exports.disableProfessionalAvailability,rows,writes:()=>writes};
 }
 const input=(id)=>({availabilityId:id,startTime:"10:00",endTime:"13:00",timezone:"Europe/Brussels",intervalMinutes:60,bufferMinutes:0,modality:"online"});
 
@@ -56,4 +56,25 @@ test("invalid time is rejected without mutation",async()=>{
  const h=harness();
  await assert.rejects(h.update("user-A",{...input("slot-A"),startTime:"15:00",endTime:"12:00"}),/horários válidos/);
  assert.equal(h.writes(),0);
+});
+
+test("owner can disable own availability without deleting historical row",async()=>{
+ const h=harness();
+ await h.disable("user-A","slot-A");
+ assert.equal(h.rows.professional_availability.length,2);
+ assert.equal(h.rows.professional_availability[0].active,false);
+ assert.equal(h.rows.professional_availability[1].active,true);
+ assert.equal(h.writes(),1);
+});
+test("cannot disable another professional availability",async()=>{
+ const h=harness();
+ await assert.rejects(h.disable("user-A","slot-B"),/Disponibilidade não encontrada/);
+ assert.equal(h.rows.professional_availability[1].active,true);
+ assert.equal(h.writes(),0);
+});
+test("disabled availability cannot be updated",async()=>{
+ const h=harness();
+ await h.disable("user-A","slot-A");
+ await assert.rejects(h.update("user-A",input("slot-A")) ,/Disponibilidade não encontrada/);
+ assert.equal(h.writes(),1);
 });
