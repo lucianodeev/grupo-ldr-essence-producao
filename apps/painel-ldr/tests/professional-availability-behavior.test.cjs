@@ -24,6 +24,7 @@ function harness(){
   let action="select",changes;
   const builder={
    select(){return builder},
+   order(){return builder},
    eq(key,value){filters.push(row=>row[key]===value);return builder},
    neq(key,value){exclusions.push(row=>row[key]!==value);return builder},
    update(values){action="update";changes=values;return builder},
@@ -34,7 +35,7 @@ function harness(){
  };
  const module={exports:{}};
  vm.runInNewContext(compiled,{module,exports:module.exports,require(name){if(name==="@/integrations/supabase/client.server")return {supabaseAdmin:{from}};throw Error("Unexpected import: "+name)},Intl,Date,Number,String,Error,Set,Promise}, {filename:"availability.js"});
- return {update:module.exports.updateProfessionalAvailability,disable:module.exports.disableProfessionalAvailability,rows,writes:()=>writes};
+ return {list:module.exports.getProfessionalAvailabilitySettings,update:module.exports.updateProfessionalAvailability,disable:module.exports.disableProfessionalAvailability,rows,writes:()=>writes};
 }
 const input=(id)=>({availabilityId:id,startTime:"10:00",endTime:"13:00",timezone:"Europe/Brussels",intervalMinutes:60,bufferMinutes:0,modality:"online"});
 
@@ -77,4 +78,31 @@ test("disabled availability cannot be updated",async()=>{
  await h.disable("user-A","slot-A");
  await assert.rejects(h.update("user-A",input("slot-A")) ,/Disponibilidade não encontrada/);
  assert.equal(h.writes(),1);
+});
+
+test("listing is scoped to the owner and persists edits on a fresh load",async()=>{
+ const h=harness();
+ const before=await h.list("user-A");
+ assert.deepEqual(Array.from(before.availability,r=>r.id),["slot-A"]);
+ await h.update("user-A",input("slot-A"));
+ const reloaded=await h.list("user-A");
+ assert.equal(reloaded.availability[0].start_time,"10:00");
+ assert.equal((await h.list("user-B")).availability[0].start_time,"09:00");
+});
+test("soft removal remains absent on reload and preserves stored history",async()=>{
+ const h=harness();
+ await h.disable("user-A","slot-A");
+ assert.equal((await h.list("user-A")).availability.length,0);
+ assert.equal(h.rows.professional_availability.length,2);
+ assert.equal((await h.list("user-B")).availability.length,1);
+});
+test("the network dashboard exposes existing edit and soft-remove actions",()=>{
+ const page=fs.readFileSync(path.resolve(__dirname,"../src/routes/profissional-painel.tsx"),"utf8");
+ assert.match(page,/professionalAvailabilityUpdate/);
+ assert.match(page,/professionalAvailabilityDisable/);
+ assert.match(page,/availabilityId:editingId/);
+ assert.match(page,/onClick=\{\(\)=>beginEdit\(a\)\}/);
+ assert.match(page,/onClick=\{\(\)=>removeAvail\(String\(a.id\)\)\}/);
+ assert.match(page,/Cancelar edição/);
+ assert.match(page,/disabled=\{busy\|\|editingId!==null\}/);
 });

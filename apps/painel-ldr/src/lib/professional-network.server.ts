@@ -111,7 +111,7 @@ export async function getPublicProfessional(slug: string) {
 export async function getProfessionalDashboard(userId: string, email: string | null) {
   const account = await ensureAccount(userId, email);
   const { data: profile } = await db.from("professional_profiles").select("*").eq("professional_account_id", account.id).maybeSingle();
-  const [{ data: subscription }, { data: plans }, { data: bookings }, { data: payments }, { data: balances }, { data: payouts }, { data: documents }, { data: events }, { data: community }, { data: services }, { data: availability }, { data: categories }, { data: config }] = await Promise.all([
+  const [{ data: subscription }, { data: plans }, { data: bookings }, { data: payments }, { data: balances }, { data: payouts }, { data: documents }, { data: events }, { data: community }, { data: services }, { data: availability, error: availabilityError }, { data: categories }, { data: config }] = await Promise.all([
     Promise.resolve({ data: null }),
     Promise.resolve({ data: [] }),
     profile ? db.from("marketplace_bookings").select("id,customer_name,service_provider_type,modality,starts_at,ends_at,status,gross_amount_cents,currency,professional_services(name)").eq("professional_profile_id", profile.id).order("starts_at", { ascending: false }).limit(50) : Promise.resolve({ data: [] }),
@@ -122,10 +122,11 @@ export async function getProfessionalDashboard(userId: string, email: string | n
     db.from("professional_events").select("id,event_type,title,description,instructor,starts_at,ends_at,timezone,meeting_url,published,access_tier").eq("published", true).gte("starts_at", new Date().toISOString()).order("starts_at").limit(12),
     db.from("community_posts").select("id,post_type,title,body,locale,published_at,created_at,access_tier").eq("published", true).order("published_at", { ascending: false }).limit(20),
     profile ? db.from("professional_services").select("*").eq("professional_profile_id", profile.id).order("sort_order") : Promise.resolve({ data: [] }),
-    profile ? db.from("professional_availability").select("*").eq("professional_profile_id", profile.id).order("weekday").order("start_time") : Promise.resolve({ data: [] }),
+    profile ? db.from("professional_availability").select("*").eq("professional_profile_id", profile.id).eq("active", true).order("weekday").order("start_time") : Promise.resolve({ data: [] }),
     db.from("professional_categories").select("id,slug,name_pt,name_en,name_fr,name_es,regulated_by_default,requires_admin_review").eq("active", true).order("sort_order"),
     db.from("platform_financial_config").select("config_key,numeric_value,text_value,json_value").eq("active", true),
   ]);
+  if (availabilityError) throw availabilityError;
   const planCode = null;
   const visibleEvents = events ?? [];
   const visibleCommunity = community ?? [];
