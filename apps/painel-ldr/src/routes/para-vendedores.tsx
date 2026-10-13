@@ -31,6 +31,7 @@ const BENEFITS = [
 const CATALOG = [
   ["Pessoas e bem-estar", "Psicanálise, Mentoria, Orientação Profissional, Transição de Carreira e Carreira Internacional."],
   ["Empresas e RH", "Recrutamento operacional e especializado, Consultoria de RH e planos empresariais."],
+  ["Portal Empresarial White Label LDR", "Portal com identidade visual da empresa, serviços de RH, benefícios, formação, carreira e recursos do Ecossistema LDR conforme contratação. Implantação, mensalidade e comissão mediante proposta comercial específica."],
   ["Bem-estar corporativo", "Massagem Laboral e Hora de Bem-Estar LDR."],
   ["Educação", "Treinamentos empresariais e Plataforma de Treinamento para Empreendedores."],
   ["Marketing e tecnologia", "Marketing, presença digital, sites profissionais, sistemas e automações."],
