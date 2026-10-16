@@ -74,9 +74,15 @@ export async function resolveAccess(supabase: Client, userId: string) {
   if (profileError || rolesError) fail("Não foi possível validar sua permissão.");
 
   const role = (roles?.[0]?.role ?? null) as AppRole | null;
-  // Master is reserved exclusively for the verified owner account.
+  // Master requires an explicitly allowed, verified Auth identity.
+  // Internal callers supply the userId verified by requireSupabaseAuth.
   const allowedMasterEmails = new Set(["llucianouam@gmail.com", "tcanaveze@gmail.com"]);
-  const verifiedEmail = (await supabase.auth.getUser()).data.user?.email?.trim().toLowerCase();
+  const { data: authData, error: authError } = supabase === supabaseAdmin
+    ? await supabaseAdmin.auth.admin.getUserById(userId)
+    : await supabase.auth.getUser();
+  const verifiedUser = !authError && authData.user?.id === userId && authData.user.email_confirmed_at
+    ? authData.user : null;
+  const verifiedEmail = verifiedUser?.email?.trim().toLowerCase();
   const effectiveRole = role === "superadmin" && (!verifiedEmail || verifiedEmail !== profile?.email?.trim().toLowerCase() || !allowedMasterEmails.has(verifiedEmail)) ? null : role;
   const authorized = Boolean(profile?.is_active && effectiveRole);
 
