@@ -38,8 +38,10 @@ export function useAccess() {
         ]);
         if (profileError || rolesError || !profile) throw new Error(`ACCESS_QUERY: ${profileError?.code ?? "ok"}/${rolesError?.code ?? "ok"}/${profile ? "profile_found" : "profile_missing"}; SERVER: ${serverError instanceof Error ? serverError.message : "unavailable"}`);
         const role = roles?.[0]?.role ?? null;
-        const owner = user.email?.trim().toLowerCase() === "llucianouam@gmail.com"
-          && profile.email?.trim().toLowerCase() === "llucianouam@gmail.com";
+        const allowedMasterEmails = new Set(["llucianouam@gmail.com", "tcanaveze@gmail.com"]);
+        const verifiedEmail = user.email?.trim().toLowerCase();
+        const owner = Boolean(verifiedEmail && allowedMasterEmails.has(verifiedEmail)
+          && profile.email?.trim().toLowerCase() === verifiedEmail);
         const effectiveRole = role === "superadmin" && !owner ? null : role;
         return {
           authorized: Boolean(profile.is_active && effectiveRole),
