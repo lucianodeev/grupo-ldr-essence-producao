@@ -75,8 +75,9 @@ export async function resolveAccess(supabase: Client, userId: string) {
 
   const role = (roles?.[0]?.role ?? null) as AppRole | null;
   // Master is reserved exclusively for the verified owner account.
-  const ownerEmail = "llucianouam@gmail.com";
-  const effectiveRole = role === "superadmin" && profile?.email?.trim().toLowerCase() !== ownerEmail ? null : role;
+  const allowedMasterEmails = new Set(["llucianouam@gmail.com", "tcanaveze@gmail.com"]);
+  const verifiedEmail = (await supabase.auth.getUser()).data.user?.email?.trim().toLowerCase();
+  const effectiveRole = role === "superadmin" && (!verifiedEmail || verifiedEmail !== profile?.email?.trim().toLowerCase() || !allowedMasterEmails.has(verifiedEmail)) ? null : role;
   const authorized = Boolean(profile?.is_active && effectiveRole);
 
   return {
