@@ -198,27 +198,33 @@ function Jobs() {
       setLoading(true);
       setError(null);
 
-      const request = (select: string) =>
-        (supabase.from("career_jobs" as never) as any)
-          .select(select)
-          .eq("status", "published")
-          .order("published_at", { ascending: false })
-          .limit(50);
+      try {
+        const request = (select: string) =>
+          (supabase.from("career_jobs" as never) as any)
+            .select(select)
+            .eq("status", "published")
+            .order("published_at", { ascending: false })
+            .limit(50);
 
-      const enhanced = await request(enhancedSelect);
-      const result = enhanced.error ? await request(baseSelect) : enhanced;
+        const enhanced = await request(enhancedSelect);
+        const result = enhanced.error ? await request(baseSelect) : enhanced;
 
-      if (!alive) return;
+        if (!alive) return;
 
-      if (enhanced.error && !result.error) setUsedFallback(true);
-      if (result.error) {
+        if (enhanced.error && !result.error) setUsedFallback(true);
+        if (result.error) {
+          setError("Não foi possível carregar as vagas. Tente novamente.");
+          setJobs([]);
+        } else {
+          setJobs(result.data ?? []);
+        }
+      } catch {
+        if (!alive) return;
         setError("Não foi possível carregar as vagas. Tente novamente.");
         setJobs([]);
-      } else {
-        setJobs(result.data ?? []);
+      } finally {
+        if (alive) setLoading(false);
       }
-
-      setLoading(false);
     }
 
     void loadJobs();
