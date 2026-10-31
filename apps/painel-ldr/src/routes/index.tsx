@@ -38,6 +38,7 @@ function PublicHome() {
         <Link to="/ldr-pass" className="inline-flex w-auto items-center justify-center rounded-full border border-white/20 px-4 py-2 text-center text-[11px] font-black uppercase tracking-[.10em] text-white hover:bg-white/10">LDR PASS</Link>
       </div>
     </section>
+    <div className="bg-[#f8f6f1] px-5 py-3 text-center text-xs text-[#42546b]"><span>Oportunidades institucionais: </span><Link to="/aquisicao" className="font-semibold underline underline-offset-4 hover:text-[#071426]">aquisição estratégica de ativos tecnológicos</Link></div>
     <AcademyInstitutionalIntro />
     <AcademyEcosystemSection />
     <div className="academy-integrated-legacy">
