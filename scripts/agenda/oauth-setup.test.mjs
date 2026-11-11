@@ -1,4 +1,5 @@
 import test from "node:test";
+import { createCalendarOAuthHttpHandlers } from "../../apps/painel-ldr/src/lib/google-calendar-oauth-http.server.ts";
 import { completeCalendarOAuthCallback } from "../../apps/painel-ldr/src/lib/google-calendar-oauth-callback.server.ts";
 import { consumeCalendarOAuthState } from "../../apps/painel-ldr/src/lib/google-calendar-oauth-nonce.server.ts";
 import assert from "node:assert/strict";
@@ -104,4 +105,28 @@ test("callback requires verified administrator and never returns refresh token",
   assert.deepEqual(result, { connected: true });
   assert.deepEqual(saved, { token: "private-refresh", scopes: "calendar.events" });
   await assert.rejects(completeCalendarOAuthCallback({ code: "test", state }, { isAdministrator: true, sessionBinding: "admin" }, store, vault), /oauth_state_replayed/);
+});
+
+test("HTTP OAuth start rejects unauthenticated sessions and redirects admins only", async () => {
+  const deps = { authenticateAdmin: async () => ({ isAdministrator: false, sessionBinding: "guest" }), nonceStore: { claim: async () => true }, vault: { saveRefreshToken: async () => {} } };
+  const handlers = createCalendarOAuthHttpHandlers(deps);
+  const req = new Request("https://example.invalid/oauth/start");
+  assert.equal((await handlers.start(req)).status, 403);
+  deps.authenticateAdmin = async () => ({ isAdministrator: true, sessionBinding: "admin" });
+  const response = await handlers.start(req);
+  assert.equal(response.status, 302);
+  assert.match(response.headers.get("location"), /^https:\/\/accounts\.google\.com\//);
+  assert.equal(response.headers.get("cache-control"), "no-store");
+});
+
+test("HTTP OAuth callback never returns refresh tokens or internal errors", async () => {
+  const handlers = createCalendarOAuthHttpHandlers({
+    authenticateAdmin: async () => ({ isAdministrator: true, sessionBinding: "admin" }),
+    nonceStore: { claim: async () => false },
+    vault: { saveRefreshToken: async () => {} },
+  });
+  const state = new URL(createCalendarAuthorizationUrl("admin")).searchParams.get("state");
+  const response = await handlers.callback(new Request("https://example.invalid/oauth/callback?code=test&state=" + encodeURIComponent(state)));
+  assert.equal(response.status, 400);
+  assert.equal(await response.text(), "Google Calendar connection failed");
 });
