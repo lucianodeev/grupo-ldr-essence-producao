@@ -1,21 +1,15 @@
-// Server-only: cliente mínimo do Google Calendar via conector oficial Lovable.
-// Nenhum token OAuth é lido, gravado ou trafegado pela aplicação: o gateway
-// mantém e renova a credencial. Nunca enviamos prontuário, notas internas,
-// preço, telefone, documentos ou número de pedido para o Google.
-const GATEWAY = "https://connector-gateway.lovable.dev/google_calendar/calendar/v3";
+// Server-only Google Calendar API client using Google's OAuth 2.0 refresh-token grant.
+// Secrets are supplied exclusively by the server environment; never by VITE_ variables.
+const GOOGLE_API = "https://www.googleapis.com/calendar/v3";
+const GOOGLE_TOKEN_ENDPOINT = "https://oauth2.googleapis.com/token";
 
 export const CALENDAR_ID = process.env["GOOGLE_CALENDAR_ID"] || "contacto@ldrrhestrategia.com";
 export const CALENDAR_TIMEZONE = "Europe/Brussels";
 
 export type CalendarErrorCode =
-  | "nao_configurado"
-  | "credencial_invalida"
-  | "permissao_negada"
-  | "nao_encontrado"
-  | "limite_google"
-  | "indisponivel"
-  | "resposta_invalida"
-  | "evento_existente";
+  | "nao_configurado" | "credencial_invalida" | "permissao_negada"
+  | "nao_encontrado" | "limite_google" | "indisponivel"
+  | "resposta_invalida" | "evento_existente";
 
 export class CalendarError extends Error {
   code: CalendarErrorCode;
@@ -25,9 +19,11 @@ export class CalendarError extends Error {
   }
 }
 
-/** Booleano apenas: nunca expomos valor ou hash das credenciais. */
 export function isCalendarConfigured(): boolean {
-  return Boolean(process.env["LOVABLE_API_KEY"] && process.env["GOOGLE_CALENDAR_API_KEY"]);
+  return Boolean(process.env["GOOGLE_OAUTH_CLIENT_ID"] &&
+    process.env["GOOGLE_OAUTH_CLIENT_SECRET"] &&
+    process.env["GOOGLE_OAUTH_REFRESH_TOKEN"] &&
+    process.env["GOOGLE_CALENDAR_ID"]);
 }
 
 function mapStatus(status: number): CalendarErrorCode {
@@ -39,36 +35,63 @@ function mapStatus(status: number): CalendarErrorCode {
   return "indisponivel";
 }
 
+let cachedToken: { value: string; expiresAt: number } | null = null;
+let pendingRefresh: Promise<string> | null = null;
+
+async function accessToken(): Promise<string> {
+  if (!isCalendarConfigured()) throw new CalendarError("nao_configurado");
+  if (cachedToken && cachedToken.expiresAt > Date.now() + 60_000) return cachedToken.value;
+  if (pendingRefresh) return pendingRefresh;
+  pendingRefresh = (async () => {
+    let response: Response;
+    try {
+      response = await fetch(GOOGLE_TOKEN_ENDPOINT, {
+        method: "POST",
+        signal: AbortSignal.timeout(15_000),
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          client_id: process.env["GOOGLE_OAUTH_CLIENT_ID"]!,
+          client_secret: process.env["GOOGLE_OAUTH_CLIENT_SECRET"]!,
+          refresh_token: process.env["GOOGLE_OAUTH_REFRESH_TOKEN"]!,
+          grant_type: "refresh_token",
+        }),
+      });
+    } catch {
+      throw new CalendarError("indisponivel");
+    }
+    if (!response.ok) throw new CalendarError(response.status >= 400 && response.status < 500 ? "credencial_invalida" : "indisponivel");
+    let data: { access_token?: string; expires_in?: number };
+    try { data = await response.json() as typeof data; }
+    catch { throw new CalendarError("resposta_invalida"); }
+    if (!data.access_token || !Number.isFinite(data.expires_in) || (data.expires_in ?? 0) <= 0) {
+      throw new CalendarError("resposta_invalida");
+    }
+    cachedToken = { value: data.access_token, expiresAt: Date.now() + data.expires_in! * 1000 };
+    return data.access_token;
+  })();
+  try { return await pendingRefresh; }
+  finally { pendingRefresh = null; }
+}
+
 async function gateway<T>(
   path: string,
   init: { method: string; body?: unknown } = { method: "GET" },
 ): Promise<T> {
-  if (!isCalendarConfigured()) throw new CalendarError("nao_configurado");
-
+  const token = await accessToken();
   let response: Response;
   try {
-    response = await fetch(`${GATEWAY}${path}`, {
+    response = await fetch(`${GOOGLE_API}${path}`, {
       method: init.method,
       signal: AbortSignal.timeout(15_000),
-      headers: {
-        Authorization: `Bearer ${process.env["LOVABLE_API_KEY"]}`,
-        "X-Connection-Api-Key": process.env["GOOGLE_CALENDAR_API_KEY"]!,
-        "Content-Type": "application/json",
-      },
+      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
       ...(init.body === undefined ? {} : { body: JSON.stringify(init.body) }),
     });
-  } catch {
-    throw new CalendarError("indisponivel");
-  }
-
+  } catch { throw new CalendarError("indisponivel"); }
+  if (response.status === 401) cachedToken = null;
   if (!response.ok) throw new CalendarError(mapStatus(response.status));
   if (response.status === 204) return {} as T;
-
-  try {
-    return (await response.json()) as T;
-  } catch {
-    throw new CalendarError("resposta_invalida");
-  }
+  try { return await response.json() as T; }
+  catch { throw new CalendarError("resposta_invalida"); }
 }
 
 const calendarPath = `/calendars/${encodeURIComponent(CALENDAR_ID)}`;
