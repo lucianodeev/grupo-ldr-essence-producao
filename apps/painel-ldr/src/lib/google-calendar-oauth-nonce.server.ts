@@ -3,7 +3,7 @@
  * (e.g. Redis SET NX EX or a PostgreSQL unique insert) in multi-instance deployments.
  * Never use process-local memory to prevent replay in production.
  */
-import { validateCalendarOAuthState } from "./google-calendar-oauth-setup.server";
+import { validateCalendarOAuthState } from "./google-calendar-oauth-setup.server.ts";
 
 export type OAuthNonceStore = {
   /** Atomically claim the nonce once; return false if already claimed. */
