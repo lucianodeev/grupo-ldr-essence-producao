@@ -8,6 +8,7 @@ on:
       - 'scripts/agenda/calendar.test.mjs'
       - 'scripts/agenda/oauth-setup.test.mjs'
       - 'apps/painel-ldr/src/lib/google-calendar-oauth-setup.server.ts'
+      - 'apps/painel-ldr/src/lib/google-calendar-oauth-nonce.server.ts'
       - '.github/workflows/calendar-oauth-validation.yml'
   pull_request:
     paths:
@@ -15,6 +16,7 @@ on:
       - 'scripts/agenda/calendar.test.mjs'
       - 'scripts/agenda/oauth-setup.test.mjs'
       - 'apps/painel-ldr/src/lib/google-calendar-oauth-setup.server.ts'
+      - 'apps/painel-ldr/src/lib/google-calendar-oauth-nonce.server.ts'
       - '.github/workflows/calendar-oauth-validation.yml'
   workflow_dispatch:
 jobs:
