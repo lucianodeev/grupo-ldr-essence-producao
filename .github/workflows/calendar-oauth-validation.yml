@@ -1,5 +1,14 @@
 name: Calendar OAuth direct validation
 on:
+  push:
+    branches:
+      - feat/central-empresas-ldr
+    paths:
+      - 'apps/painel-ldr/src/lib/google-calendar.server.ts'
+      - 'scripts/agenda/calendar.test.mjs'
+      - 'scripts/agenda/oauth-setup.test.mjs'
+      - 'apps/painel-ldr/src/lib/google-calendar-oauth-setup.server.ts'
+      - '.github/workflows/calendar-oauth-validation.yml'
   pull_request:
     paths:
       - 'apps/painel-ldr/src/lib/google-calendar.server.ts'
