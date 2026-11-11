@@ -12,7 +12,8 @@ export const Route = createFileRoute("/empresas")({
 const offers = [
   { title: "RH & Estratégia", description: "Consultoria, organização de processos e desenvolvimento de pessoas.", href: "/empresas/servicos", icon: BriefcaseBusiness },
   { title: "Recrutamento e seleção", description: "Conheça as soluções e solicite uma proposta adaptada à sua empresa.", href: "/empresas/proposta", icon: UsersRound },
-  { title: "Formação empresarial", description: "Cursos e conteúdos de desenvolvimento profissional do Ecossistema LDR.", href: "/ecossistema", icon: GraduationCap },
+  { title: "Formação empresarial", description: "Cursos e conteúdos de desenvolvimento profissional do Ecossistema LDR.", href: "/empresas/academy", icon: GraduationCap },
+  { title: "LDR ONE Business", description: "Conheça as soluções digitais para equipas e empresas.", href: "/empresas/ldr-one", icon: BriefcaseBusiness },
 ] as const;
 
 function CentralEmpresas() {
