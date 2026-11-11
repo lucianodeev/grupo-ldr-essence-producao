@@ -147,8 +147,21 @@ jobs:
             IF token IS NULL THEN RAISE EXCEPTION 'lease claim failed'; END IF;
             SELECT public.release_calendar_sync('00000000-0000-4000-8000-000000000010',gen_random_uuid(),'sincronizado','evt',NULL,NULL) INTO ok;
             IF ok THEN RAISE EXCEPTION 'wrong lease token accepted'; END IF;
+            -- The active lease must reject a second claimant.
+            IF EXISTS (SELECT 1 FROM public.claim_calendar_sync(
+                '00000000-0000-4000-8000-000000000010','primary',120) WHERE claimed) THEN
+              RAISE EXCEPTION 'second active calendar lease accepted';
+            END IF;
+            -- The calendar identifier must remain stable for this appointment.
+            BEGIN
+              PERFORM public.claim_calendar_sync('00000000-0000-4000-8000-000000000010','wrong-calendar',120);
+              RAISE EXCEPTION 'calendar mismatch accepted';
+            EXCEPTION WHEN OTHERS THEN
+              IF SQLERRM = 'calendar mismatch accepted' THEN RAISE; END IF;
+              IF SQLERRM NOT LIKE '%calendar mismatch%' THEN RAISE; END IF;
+            END;
             SELECT public.release_calendar_sync('00000000-0000-4000-8000-000000000010',token,'sincronizado','evt',NULL,NULL) INTO ok;
             IF NOT ok THEN RAISE EXCEPTION 'correct lease token rejected'; END IF;
           END $$;
           SQL
-          echo 'PASS: unpaid orders, exhausted credits, wrong customers and invalid durations rejected; idempotency and leases checked'
+          echo 'PASS: unpaid orders, exhausted credits, wrong customers and invalid durations rejected; idempotency, active lease exclusivity and calendar mismatch checked'
