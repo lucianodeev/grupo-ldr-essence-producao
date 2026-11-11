@@ -23,3 +23,11 @@ Read-only inspection of Supabase project `sfrcsrzuoqdscflfuwik` compared with `d
 4. No production database DDL was executed during this inspection. Do not modify production without explicit approval.
 
 This document records the real blocker; do not suppress errors using unsafe casts or relaxing TypeScript checks.
+
+## Follow-up verification — project identity blocker
+
+A subsequent read-only query confirmed that `public.appointments` **does not exist** in connected Supabase project `sfrcsrzuoqdscflfuwik`. The app's `types.ts` includes appointments and `confirm_mentorship_session_tx`, while `types.generated.ts` does not include either. A lookup for `public.confirm_mentorship_session_tx` in this project returned no function.
+
+**Do not assume this connected project is the application's production database.** Confirm the actual Supabase project reference used by the Render service and deployed environment (without exposing credentials) before proposing or executing schema migrations. The 20 TypeScript errors are caused by reconciling different schema snapshots; changing this project without identification could target the wrong database.
+
+No database mutation was made. Migration and runtime-code changes are blocked pending environment-to-project identification.
