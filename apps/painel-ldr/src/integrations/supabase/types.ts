@@ -1,3 +1,5 @@
+import type { Database as ObservedDatabase } from "./types.generated";
+
 export type Json =
   | string
   | number
@@ -6,7 +8,7 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
-export type Database = {
+type LegacyDatabase = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
@@ -1528,6 +1530,19 @@ export type Database = {
     }
   }
 }
+
+/**
+ * Additive schema contract: verified public-project tables take precedence.
+ * Legacy-only tables/RPCs remain declared for existing deployments. This is
+ * not proof they exist on the public project; see docs/audit-20261111/REPORT.md.
+ */
+export type Database = Omit<ObservedDatabase, "public"> & {
+  public: Omit<ObservedDatabase["public"], "Tables" | "Functions" | "Enums"> & {
+    Enums: Omit<LegacyDatabase["public"]["Enums"], keyof ObservedDatabase["public"]["Enums"]> & ObservedDatabase["public"]["Enums"];
+    Tables: Omit<LegacyDatabase["public"]["Tables"], keyof ObservedDatabase["public"]["Tables"]> & ObservedDatabase["public"]["Tables"];
+    Functions: Omit<LegacyDatabase["public"]["Functions"], keyof ObservedDatabase["public"]["Functions"]> & ObservedDatabase["public"]["Functions"];
+  };
+};
 
 type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
 
