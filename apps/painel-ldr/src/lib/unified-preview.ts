@@ -1,6 +1,7 @@
 const PREVIEW_SUFFIXES = [".chatgpt.site", ".workers.dev", ".pages.dev", ".onrender.com"] as const;
 
 const INTERNAL_HOSTS = new Set([
+  "ldr-ecossistema-validacao.onrender.com",
   "ldrecossistema.online",
   "www.ldrecossistema.online",
   "ldracademy.online",

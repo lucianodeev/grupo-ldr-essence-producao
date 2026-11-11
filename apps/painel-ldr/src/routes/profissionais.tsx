@@ -222,28 +222,28 @@ function Directory() {
 
   const categories = (data?.categories ?? []) as AnyRow[];
   const profiles = (data?.profiles ?? []) as AnyRow[];
-  const catMap = useMemo(() => new Map(categories.map((x) => [x.id, x])), [categories]);
-  const countries = [...new Set(profiles.map((p) => p.country_code).filter(Boolean))].sort();
+  const catMap = useMemo(() => new Map(categories.map((x) => [x["id"], x])), [categories]);
+  const countries = [...new Set(profiles.map((p) => p["country_code"]).filter(Boolean))].sort();
   const cities = [
     ...new Set(
       profiles
-        .filter((p) => !country || p.country_code === country)
-        .map((p) => p.city)
+        .filter((p) => !country || p["country_code"] === country)
+        .map((p) => p["city"])
         .filter(Boolean),
     ),
   ].sort();
-  const languages = [...new Set(profiles.flatMap((p) => p.languages ?? []))].sort();
+  const languages = [...new Set(profiles.flatMap((p) => p["languages"] ?? []))].sort();
 
   const filtered = profiles.filter((p) => {
     const hay =
-      `${p.display_name} ${p.professional_title} ${(p.specialties ?? []).join(" ")} ${p.city ?? ""}`.toLowerCase();
+      `${p["display_name"]} ${p["professional_title"]} ${(p["specialties"] ?? []).join(" ")} ${p["city"] ?? ""}`.toLowerCase();
     return (
       (!q || hay.includes(q.toLowerCase())) &&
-      (!cat || p.category_id === cat) &&
-      (!country || p.country_code === country) &&
-      (!city || p.city === city) &&
-      (!lang || (p.languages ?? []).includes(lang)) &&
-      (!mode || (mode === "online" ? p.online_enabled : p.in_person_enabled))
+      (!cat || p["category_id"] === cat) &&
+      (!country || p["country_code"] === country) &&
+      (!city || p["city"] === city) &&
+      (!lang || (p["languages"] ?? []).includes(lang)) &&
+      (!mode || (mode === "online" ? p["online_enabled"] : p["in_person_enabled"]))
     );
   });
 
@@ -313,9 +313,9 @@ function Directory() {
               profiles={profiles.map((profile) => ({
                 ...profile,
                 area_label:
-                  catMap.get(profile.category_id)?.[`name_${locale}`] ||
-                  catMap.get(profile.category_id)?.name_pt ||
-                  profile.professional_title,
+                  catMap.get(profile["category_id"])?.[`name_${locale}`] ||
+                  catMap.get(profile["category_id"])?.["name_pt"] ||
+                  profile["professional_title"],
               }))}
               title={c.mapTitle}
               text={c.mapText}
@@ -400,8 +400,8 @@ function Directory() {
                   {c.area}: {c.all}
                 </option>
                 {categories.map((x) => (
-                  <option key={x.id} value={x.id}>
-                    {x[`name_${locale}`] || x.name_pt}
+                  <option key={x["id"]} value={x["id"]}>
+                    {x[`name_${locale}`] || x["name_pt"]}
                   </option>
                 ))}
               </select>
@@ -512,16 +512,16 @@ function Directory() {
                 </button>
                 {categories.map((x) => (
                   <button
-                    key={x.id}
-                    onClick={() => setCat(x.id)}
+                    key={x["id"]}
+                    onClick={() => setCat(x["id"])}
                     className="shrink-0 rounded-full border px-4 py-2 text-sm font-black"
                     style={{
-                      borderColor: cat === x.id ? NAVY : "rgba(11,20,40,.15)",
-                      background: cat === x.id ? NAVY : "white",
-                      color: cat === x.id ? "white" : NAVY,
+                      borderColor: cat === x["id"] ? NAVY : "rgba(11,20,40,.15)",
+                      background: cat === x["id"] ? NAVY : "white",
+                      color: cat === x["id"] ? "white" : NAVY,
                     }}
                   >
-                    {x[`name_${locale}`] || x.name_pt}
+                    {x[`name_${locale}`] || x["name_pt"]}
                   </button>
                 ))}
               </div>
@@ -539,13 +539,13 @@ function Directory() {
           </div>
           <section className="mt-5 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
             {filtered.map((p) => {
-              const category = catMap.get(p.category_id);
+              const category = catMap.get(p["category_id"]);
               const isVerified = Boolean(
-                p.profile_verified || p.identity_verified || p.documents_verified,
+                p["profile_verified"] || p["identity_verified"] || p["documents_verified"],
               );
               return (
                 <article
-                  key={p.id}
+                  key={p["id"]}
                   className="group relative overflow-hidden rounded-[2rem] border bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-2xl"
                   style={{ borderColor: "rgba(201,166,58,.4)" }}
                 >
@@ -555,10 +555,10 @@ function Directory() {
                       className="grid h-20 w-20 shrink-0 place-items-center overflow-hidden rounded-3xl"
                       style={{ background: CREAM }}
                     >
-                      {p.photo_url ? (
+                      {p["photo_url"] ? (
                         <img
-                          src={p.photo_url}
-                          alt={p.display_name || "Profissional da Rede LDR"}
+                          src={p["photo_url"]}
+                          alt={p["display_name"] || "Profissional da Rede LDR"}
                           loading="lazy"
                           className="h-full w-full object-cover"
                         />
@@ -570,10 +570,10 @@ function Directory() {
                       <div className="flex items-start justify-between gap-2">
                         <div>
                           <h2 className="break-words font-serif text-2xl leading-tight">
-                            {p.display_name}
+                            {p["display_name"]}
                           </h2>
                           <p className="mt-1 text-sm font-black" style={{ color: GOLD }}>
-                            {p.professional_title}
+                            {p["professional_title"]}
                           </p>
                         </div>
                         {isVerified ? (
@@ -594,24 +594,24 @@ function Directory() {
                   </div>
                   <div className="mt-5 rounded-2xl p-4" style={{ background: CREAM }}>
                     <p className="text-sm font-semibold">
-                      {category?.[`name_${locale}`] || category?.name_pt || p.professional_title}
+                      {category?.[`name_${locale}`] || category?.["name_pt"] || p["professional_title"]}
                     </p>
                     <div className="mt-3 grid gap-2 text-sm" style={{ color: MUTED }}>
                       <p className="flex items-center gap-2">
                         <MapPin className="h-4 w-4 shrink-0" style={{ color: GOLD }} />
-                        {p.city ? `${p.city} · ` : ""}
-                        {p.country_code}
+                        {p["city"] ? `${p["city"]} · ` : ""}
+                        {p["country_code"]}
                       </p>
-                      {(p.languages ?? []).length ? (
+                      {(p["languages"] ?? []).length ? (
                         <p className="flex items-center gap-2">
                           <Languages className="h-4 w-4 shrink-0" style={{ color: GOLD }} />
-                          {(p.languages ?? []).map((x: string) => x.toUpperCase()).join(" · ")}
+                          {(p["languages"] ?? []).map((x: string) => x.toUpperCase()).join(" · ")}
                         </p>
                       ) : null}
                     </div>
                   </div>
                   <div className="mt-4 flex flex-wrap gap-2">
-                    {p.online_enabled ? (
+                    {p["online_enabled"] ? (
                       <span
                         className="inline-flex items-center rounded-full border px-3 py-1.5 text-xs font-black"
                         style={{
@@ -623,7 +623,7 @@ function Directory() {
                         {c.online.toUpperCase()}
                       </span>
                     ) : null}
-                    {p.in_person_enabled ? (
+                    {p["in_person_enabled"] ? (
                       <span
                         className="inline-flex items-center rounded-full border px-3 py-1.5 text-xs font-black"
                         style={{ borderColor: "rgba(11,20,40,.14)" }}
@@ -633,14 +633,14 @@ function Directory() {
                       </span>
                     ) : null}
                   </div>
-                  {p.about ? (
+                  {p["about"] ? (
                     <p className="mt-4 line-clamp-3 text-sm leading-6" style={{ color: MUTED }}>
-                      {p.about}
+                      {p["about"]}
                     </p>
                   ) : null}
                   <Link
                     to="/profissional/$slug"
-                    params={{ slug: p.slug }}
+                    params={{ slug: p["slug"] }}
                     className="mt-6 flex items-center justify-between rounded-full px-5 py-4 text-sm font-black text-white transition group-hover:-translate-y-0.5"
                     style={{ background: NAVY }}
                   >

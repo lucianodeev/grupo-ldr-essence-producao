@@ -163,12 +163,12 @@ function isExternalJob(job: JobRow) {
 
 function isInclusiveJob(job: JobRow) {
   return [
-    job.accessibility_inclusive,
-    job.accessibility_pcd_open,
-    job.accessibility_pcd_only,
-    job.accessibility_resources,
-    job.accessibility_interview_support,
-    job.accessibility_sign_language,
+    job["accessibility_inclusive"],
+    job["accessibility_pcd_open"],
+    job["accessibility_pcd_only"],
+    job["accessibility_resources"],
+    job["accessibility_interview_support"],
+    job["accessibility_sign_language"],
   ].some(hasValue);
 }
 
@@ -367,7 +367,7 @@ function Jobs() {
                             <Accessibility size={14} /> {t.inclusive}
                           </span>
                         )}
-                        {hasValue(job.accessibility_pcd_open) || hasValue(job.accessibility_pcd_only) ? (
+                        {hasValue(job["accessibility_pcd_open"]) || hasValue(job["accessibility_pcd_only"]) ? (
                           <span className="inline-flex rounded-full bg-blue-50 px-3 py-1 text-xs font-bold text-blue-800 ring-1 ring-blue-100">
                             {t.pcd}
                           </span>
@@ -389,9 +389,9 @@ function Jobs() {
 
                       {inclusive && (
                         <div className="mt-4 flex flex-wrap gap-2 text-xs font-semibold text-slate-700">
-                          {hasValue(job.accessibility_resources) && <span className="rounded-full bg-slate-100 px-3 py-1">{t.resources}</span>}
-                          {hasValue(job.accessibility_interview_support) && <span className="rounded-full bg-slate-100 px-3 py-1">{t.interview}</span>}
-                          {hasValue(job.accessibility_sign_language) && <span className="rounded-full bg-slate-100 px-3 py-1">{t.sign}</span>}
+                          {hasValue(job["accessibility_resources"]) && <span className="rounded-full bg-slate-100 px-3 py-1">{t.resources}</span>}
+                          {hasValue(job["accessibility_interview_support"]) && <span className="rounded-full bg-slate-100 px-3 py-1">{t.interview}</span>}
+                          {hasValue(job["accessibility_sign_language"]) && <span className="rounded-full bg-slate-100 px-3 py-1">{t.sign}</span>}
                         </div>
                       )}
                     </div>

@@ -102,7 +102,7 @@ test("the network dashboard exposes existing edit and soft-remove actions",()=>{
  assert.match(page,/professionalAvailabilityDisable/);
  assert.match(page,/availabilityId:editingId/);
  assert.match(page,/onClick=\{\(\)=>beginEdit\(a\)\}/);
- assert.match(page,/onClick=\{\(\)=>removeAvail\(String\(a.id\)\)\}/);
+ assert.match(page,/onClick=\{\(\)=>removeAvail\(String\(a\["id"\]\)\)\}/);
  assert.match(page,/Cancelar edição/);
  assert.match(page,/disabled=\{busy\|\|editingId!==null\}/);
 });

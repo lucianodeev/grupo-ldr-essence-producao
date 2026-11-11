@@ -42,6 +42,18 @@ export function LibrarySalesHomeAccessChoice(){
   const {locale:raw}=useI18n();
   const locale=(raw==="pt"||raw==="en"||raw==="fr"||raw==="es"?raw:"pt") as Locale;
   const t=copy[locale];
+  const [showLibraryAll,setShowLibraryAll]=useState(false);
+  const showcase={...libraryShowcase[locale],items:{...libraryShowcase.pt.items,...libraryShowcase[locale].items}};
+  const destinations:Record<keyof typeof libraryShowcase.pt.items,string>={
+    psycho:"/cliente/treinamentos/psicanalise",intlPsycho:"/cliente/treinamentos/psicanalise-internacional",
+    business:"/cliente/treinamentos/negocio-24-horas",massage:"/cliente/treinamentos/massoterapia",
+    mentor:"/cliente/treinamentos/mentoria-carreira",psychoWrite:"/cliente/biblioteca",careerWrite:"/cliente/biblioteca",
+    news:"/cliente/biblioteca/jornal-ldr",mag:"/cliente/biblioteca/revista-ldr",ebooks:"/cliente/biblioteca",books:"/livros",
+    brief:"/cliente/treinamentos/terapia-breve-psicanalitica",lead:"/cliente/treinamentos/lideranca-gestao",
+    rh:"/cliente/formacoes/gestao-pessoas-rh",free:"/cliente/biblioteca/cursos-gratuitos",ai:"/cliente/ai-ready",film:"/film"
+  };
+  const cardDefs=(Object.keys(destinations) as Array<keyof typeof destinations>).map(k=>({k,to:destinations[k],tone:"from-white to-slate-100",icon:"↗"}));
+
   const tx=(pt:string,en:string,fr:string,es:string)=>locale==="en"?en:locale==="fr"?fr:locale==="es"?es:pt;
   return <main className="min-h-screen bg-[#f7f3e9] text-[#071426]">
     <header className="sticky top-0 z-50 border-b border-[#d6ad63]/25 bg-[#071426]/95 text-white backdrop-blur"><div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6"><a href="#top" className="font-serif text-xl text-[#fff7e7]">{t.brand}</a><div className="flex items-center gap-2"><LanguageSelect/><Link to="/cliente/login" className="rounded-lg border border-white/15 px-3 py-2 text-xs font-black">{t.login}</Link></div></div></header>
@@ -54,7 +66,7 @@ export function LibrarySalesHomeAccessChoice(){
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="rounded-[32px] border border-slate-200 bg-[#f5f8fc] p-5 shadow-sm sm:p-8">
         <div className="max-w-3xl text-left"><p className="text-xs font-black uppercase tracking-[.22em] text-[#a36d19]">{showcase.eyebrow}</p><h2 className="mt-3 font-serif text-3xl text-[#071426] sm:text-4xl">{showcase.title}</h2><p className="mt-3 text-sm leading-6 text-slate-600 sm:text-base">{showcase.sub}</p></div>
-        <div className="mt-7 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">{cardDefs.slice(0,showLibraryAll?cardDefs.length:8).map((card)=>{const item=showcase.items[card.k];return <Link key={card.k} to={card.to} className={`group relative min-h-[148px] overflow-hidden rounded-[24px] bg-gradient-to-br ${card.tone} p-4 text-[#071426] shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-lg focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#d6ad63]/40 sm:p-5`}><span className="text-3xl" aria-hidden="true">{card.icon}</span><h3 className="mt-5 pr-8 text-base font-black leading-tight sm:text-lg">{item[0]}</h3><p className="mt-1 text-[11px] font-semibold uppercase tracking-[.08em] text-slate-600 sm:text-xs">{item[1]}</p><span className="absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-full bg-white/95 text-lg font-black text-[#071426] shadow-sm transition group-hover:translate-x-0.5">›</span><span className="sr-only">{showcase.cta}: {item[0]}</span></Link>})}</div>
+        <div className="mt-7 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">{cardDefs.slice(0,showLibraryAll?cardDefs.length:8).map((card)=>{const item=showcase.items[card.k];return <a key={card.k} href={card.to} className={`group relative min-h-[148px] overflow-hidden rounded-[24px] bg-gradient-to-br ${card.tone} p-4 text-[#071426] shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-lg focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#d6ad63]/40 sm:p-5`}><span className="text-3xl" aria-hidden="true">{card.icon}</span><h3 className="mt-5 pr-8 text-base font-black leading-tight sm:text-lg">{item[0]}</h3><p className="mt-1 text-[11px] font-semibold uppercase tracking-[.08em] text-slate-600 sm:text-xs">{item[1]}</p><span className="absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-full bg-white/95 text-lg font-black text-[#071426] shadow-sm transition group-hover:translate-x-0.5">›</span><span className="sr-only">{showcase.cta}: {item[0]}</span></a>})}</div>
         <div className="mt-6 text-center"><button type="button" onClick={()=>setShowLibraryAll(v=>!v)} className="inline-flex min-h-11 items-center justify-center rounded-xl border border-[#071426]/15 bg-[#f7f3e9] px-6 py-3 text-xs font-black uppercase tracking-[.08em] text-[#071426] transition hover:bg-[#efe7d6] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#d6ad63]/35">{showLibraryAll?showcase.less:showcase.more}<span className="ml-2">{showLibraryAll?'↑':'↓'}</span></button></div>
         </div>
       </div>

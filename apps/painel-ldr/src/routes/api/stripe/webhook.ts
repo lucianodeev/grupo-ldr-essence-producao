@@ -189,15 +189,15 @@ async function setCompanySubscription(metadata: Record<string, string>, object: 
   // A tabela atual não oferece período de teste; se a Stripe enviar trialing, os benefícios seguem ativos.
   const status = rawStatus === "trialing" ? "active" : allowed.has(rawStatus) ? rawStatus : "incomplete";
   const patch: Record<string, unknown> = { status, updated_at: new Date().toISOString() };
-  if (eventType === "checkout.session.completed" || eventType === "checkout.session.expired") patch.stripe_checkout_session_id = object.id ?? null;
-  if (subscriptionId) patch.stripe_subscription_id = subscriptionId;
+  if (eventType === "checkout.session.completed" || eventType === "checkout.session.expired") patch["stripe_checkout_session_id"] = object.id ?? null;
+  if (subscriptionId) patch["stripe_subscription_id"] = subscriptionId;
   const customerId = stripeId(object.customer);
-  if (customerId) patch.stripe_customer_id = customerId;
+  if (customerId) patch["stripe_customer_id"] = customerId;
   const periodStart = isoFromUnix(object.current_period_start);
   const periodEnd = isoFromUnix(object.current_period_end);
-  if (periodStart) patch.current_period_start = periodStart;
-  if (periodEnd) patch.current_period_end = periodEnd;
-  if (typeof object.cancel_at_period_end === "boolean") patch.cancel_at_period_end = object.cancel_at_period_end;
+  if (periodStart) patch["current_period_start"] = periodStart;
+  if (periodEnd) patch["current_period_end"] = periodEnd;
+  if (typeof object.cancel_at_period_end === "boolean") patch["cancel_at_period_end"] = object.cancel_at_period_end;
 
   const db = await database();
   let query = db.from("company_subscriptions").update(patch);
@@ -253,12 +253,12 @@ async function setLdrPassSubscription(metadata: Record<string,string>, object: S
   if(eventType==="checkout.session.expired"||eventType==="customer.subscription.deleted")status="canceled";
   const allowed=new Set(["pending","active","trialing","past_due","canceled","unpaid","paused","incomplete"]); if(!allowed.has(status))status="incomplete";
   const patch:Record<string,unknown>={status,updated_at:new Date().toISOString()};
-  const seats=Number(metadata["seats"]);if(Number.isSafeInteger(seats)&&seats>0)patch.ldr_one_seats=seats;
-  if(metadata["plan"]==="individual"||metadata["plan"]==="business")patch.ldr_one_offer=metadata["plan"];
-  if(eventType==="checkout.session.completed"||eventType==="checkout.session.expired")patch.stripe_checkout_session_id=object.id??null;
-  if(subscriptionId)patch.stripe_subscription_id=subscriptionId; const customer=stripeId(object.customer);if(customer)patch.stripe_customer_id=customer;
-  const start=isoFromUnix(object.current_period_start);if(start)patch.current_period_start=start;const end=isoFromUnix(object.current_period_end);if(end)patch.current_period_end=end;
-  if(typeof object.cancel_at_period_end==="boolean")patch.cancel_at_period_end=object.cancel_at_period_end;
+  const seats=Number(metadata["seats"]);if(Number.isSafeInteger(seats)&&seats>0)patch["ldr_one_seats"]=seats;
+  if(metadata["plan"]==="individual"||metadata["plan"]==="business")patch["ldr_one_offer"]=metadata["plan"];
+  if(eventType==="checkout.session.completed"||eventType==="checkout.session.expired")patch["stripe_checkout_session_id"]=object.id??null;
+  if(subscriptionId)patch["stripe_subscription_id"]=subscriptionId; const customer=stripeId(object.customer);if(customer)patch["stripe_customer_id"]=customer;
+  const start=isoFromUnix(object.current_period_start);if(start)patch["current_period_start"]=start;const end=isoFromUnix(object.current_period_end);if(end)patch["current_period_end"]=end;
+  if(typeof object.cancel_at_period_end==="boolean")patch["cancel_at_period_end"]=object.cancel_at_period_end;
   let q=db.from("ldr_pass_subscriptions").update(patch);q=rowId?q.eq("id",rowId):q.eq("stripe_subscription_id",subscriptionId);const {error}=await q;if(error)throw error;return true;
 }
 

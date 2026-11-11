@@ -85,10 +85,10 @@ function NetworkAdmin() {
     const result = await load();
     setData(result);
     const currentCommission = (result.config ?? []).find(
-      (item: AnyRow) => item.config_key === "platform_commission_rate",
+      (item: AnyRow) => item["config_key"] === "platform_commission_rate",
     );
     const currentDays = (result.config ?? []).find(
-      (item: AnyRow) => item.config_key === "payout_frequency_days",
+      (item: AnyRow) => item["config_key"] === "payout_frequency_days",
     );
     setCommission(String(Number(currentCommission?.numeric_value ?? 0.1) * 100));
     setPayoutDays(String(Number(currentDays?.numeric_value ?? 30)));
@@ -107,10 +107,10 @@ function NetworkAdmin() {
   const payouts = (data?.payouts ?? []) as AnyRow[];
   const categories = (data?.categories ?? []) as AnyRow[];
   const paid = payments.filter(
-    (payment) => payment.status === "paid" || payment.status === "partially_refunded",
+    (payment) => payment["status"] === "paid" || payment["status"] === "partially_refunded",
   );
-  const gmv = paid.reduce((sum, payment) => sum + Number(payment.gross_amount_cents || 0), 0);
-  const fee = paid.reduce((sum, payment) => sum + Number(payment.platform_fee_cents || 0), 0);
+  const gmv = paid.reduce((sum, payment) => sum + Number(payment["gross_amount_cents"] || 0), 0);
+  const fee = paid.reduce((sum, payment) => sum + Number(payment["platform_fee_cents"] || 0), 0);
 
   function closeForm() {
     setForm(EMPTY_FORM);
@@ -118,20 +118,20 @@ function NetworkAdmin() {
   }
   function editProfessional(profile: AnyRow) {
     setForm({
-      profileId: profile.id,
-      email: profile.account?.email || "",
-      displayName: profile.display_name || "",
-      professionalTitle: profile.professional_title || "",
-      slug: profile.slug || "",
-      categoryId: profile.category_id || "",
-      countryCode: profile.country_code || "BE",
-      city: profile.city || "",
-      languages: (profile.languages || []).join(", "),
-      onlineEnabled: Boolean(profile.online_enabled),
-      inPersonEnabled: Boolean(profile.in_person_enabled),
-      engagementModel: profile.account?.engagement_model || "subscription",
-      commissionPercent: String(Number(profile.account?.custom_commission_rate || 0.1) * 100),
-      publish: Boolean(profile.is_public && profile.profile_status === "active"),
+      profileId: profile["id"],
+      email: profile["account"]?.email || "",
+      displayName: profile["display_name"] || "",
+      professionalTitle: profile["professional_title"] || "",
+      slug: profile["slug"] || "",
+      categoryId: profile["category_id"] || "",
+      countryCode: profile["country_code"] || "BE",
+      city: profile["city"] || "",
+      languages: (profile["languages"] || []).join(", "),
+      onlineEnabled: Boolean(profile["online_enabled"]),
+      inPersonEnabled: Boolean(profile["in_person_enabled"]),
+      engagementModel: profile["account"]?.engagement_model || "subscription",
+      commissionPercent: String(Number(profile["account"]?.custom_commission_rate || 0.1) * 100),
+      publish: Boolean(profile["is_public"] && profile["profile_status"] === "active"),
     });
     setFormOpen(true);
     requestAnimationFrame(() =>
@@ -222,10 +222,10 @@ function NetworkAdmin() {
     try {
       await preparePayout({
         data: {
-          professionalAccountId: profile.professional_account_id,
+          professionalAccountId: profile["professional_account_id"],
           periodStart: first.toISOString().slice(0, 10),
           periodEnd: last.toISOString().slice(0, 10),
-          currency: profile.account?.preferred_currency === "BRL" ? "BRL" : "EUR",
+          currency: profile["account"]?.preferred_currency === "BRL" ? "BRL" : "EUR",
         },
       });
       toast.success("Ciclo de repasse preparado.");
@@ -269,14 +269,14 @@ function NetworkAdmin() {
         <Stat
           label="PERFIS ATIVOS"
           value={
-            profiles.filter((profile) => profile.profile_status === "active" && profile.is_public)
+            profiles.filter((profile) => profile["profile_status"] === "active" && profile["is_public"])
               .length
           }
         />
         <Stat label="ATENDIMENTOS PAGOS" value={paid.length} />
         <Stat
           label="REPASSES PENDENTES"
-          value={payouts.filter((payout) => payout.status !== "paid").length}
+          value={payouts.filter((payout) => payout["status"] !== "paid").length}
         />
       </div>
 
@@ -355,8 +355,8 @@ function NetworkAdmin() {
               >
                 <option value="">Selecione</option>
                 {categories.map((category) => (
-                  <option key={category.id} value={category.id}>
-                    {category.name_pt}
+                  <option key={category["id"]} value={category["id"]}>
+                    {category["name_pt"]}
                   </option>
                 ))}
               </select>
@@ -480,11 +480,11 @@ function NetworkAdmin() {
         </div>
         <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {plans.map((plan) => (
-            <div key={plan.id} className="rounded-2xl border p-4">
-              <p className="text-xs font-black text-primary">{plan.market}</p>
-              <p className="font-bold">{plan.name}</p>
+            <div key={plan["id"]} className="rounded-2xl border p-4">
+              <p className="text-xs font-black text-primary">{plan["market"]}</p>
+              <p className="font-bold">{plan["name"]}</p>
               <p className="mt-2 text-xl font-black">
-                {money(plan.amount_cents, plan.currency)}/mês
+                {money(plan["amount_cents"], plan["currency"])}/mês
               </p>
             </div>
           ))}
@@ -508,30 +508,30 @@ function NetworkAdmin() {
             </thead>
             <tbody>
               {profiles.map((profile) => (
-                <tr key={profile.id} className="border-b last:border-0">
+                <tr key={profile["id"]} className="border-b last:border-0">
                   <td className="py-3">
-                    <strong>{profile.display_name}</strong>
+                    <strong>{profile["display_name"]}</strong>
                     <p className="max-w-xs text-xs text-muted-foreground">
-                      {profile.professional_title}
+                      {profile["professional_title"]}
                     </p>
-                    <p className="text-xs text-muted-foreground">{profile.account?.email}</p>
+                    <p className="text-xs text-muted-foreground">{profile["account"]?.email}</p>
                   </td>
-                  <td>{profile.country_code}</td>
+                  <td>{profile["country_code"]}</td>
                   <td>
-                    {modelLabel(profile.account?.engagement_model)}
-                    {profile.account?.engagement_model === "commission" ? (
+                    {modelLabel(profile["account"]?.engagement_model)}
+                    {profile["account"]?.engagement_model === "commission" ? (
                       <p className="text-xs font-bold">
-                        {Number(profile.account.custom_commission_rate || 0) * 100}%
+                        {Number(profile["account"].custom_commission_rate || 0) * 100}%
                       </p>
                     ) : null}
                   </td>
-                  <td>{profile.account?.status}</td>
-                  <td>{profile.compliance_status}</td>
+                  <td>{profile["account"]?.status}</td>
+                  <td>{profile["compliance_status"]}</td>
                   <td>
-                    {profile.profile_status}
-                    {profile.is_public ? " · público" : ""}
+                    {profile["profile_status"]}
+                    {profile["is_public"] ? " · público" : ""}
                   </td>
-                  <td>{profile.subscription?.status || "—"}</td>
+                  <td>{profile["subscription"]?.status || "—"}</td>
                   <td>
                     <div className="flex flex-wrap gap-2">
                       <button
@@ -544,21 +544,21 @@ function NetworkAdmin() {
                       </button>
                       <button
                         disabled={busy}
-                        onClick={() => doReview(profile.id, "approve")}
+                        onClick={() => doReview(profile["id"], "approve")}
                         className="rounded-lg bg-primary px-3 py-2 text-xs font-black text-primary-foreground"
                       >
                         ATIVAR / PUBLICAR
                       </button>
                       <button
                         disabled={busy}
-                        onClick={() => doReview(profile.id, "request_documents")}
+                        onClick={() => doReview(profile["id"], "request_documents")}
                         className="rounded-lg border px-3 py-2 text-xs font-bold"
                       >
                         PEDIR DOC.
                       </button>
                       <button
                         disabled={busy}
-                        onClick={() => doReview(profile.id, "pause")}
+                        onClick={() => doReview(profile["id"], "pause")}
                         className="rounded-lg border px-3 py-2 text-xs font-bold"
                       >
                         DESATIVAR
@@ -581,8 +581,8 @@ function NetworkAdmin() {
       <section className="rounded-3xl border bg-card p-5 sm:p-6">
         <h2 className="font-serif text-2xl">Financeiro da Rede</h2>
         <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          <Stat label="GMV (histórico carregado)" value={money(gmv, paid[0]?.currency || "EUR")} />
-          <Stat label="RECEITA DE COMISSÃO" value={money(fee, paid[0]?.currency || "EUR")} />
+          <Stat label="GMV (histórico carregado)" value={money(gmv, paid[0]?.["currency"] || "EUR")} />
+          <Stat label="RECEITA DE COMISSÃO" value={money(fee, paid[0]?.["currency"] || "EUR")} />
           <Stat label="PAGAMENTOS" value={payments.length} />
           <Stat label="REPASSES" value={payouts.length} />
         </div>

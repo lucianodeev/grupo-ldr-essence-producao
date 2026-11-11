@@ -222,8 +222,8 @@ function RootComponent() {
     if (typeof window === "undefined") return;
     const onImageError = (event: Event) => {
       const img = event.target as HTMLImageElement | null;
-      if (!img || img.tagName !== "IMG" || img.dataset.ldrFallback === "1") return;
-      img.dataset.ldrFallback = "1";
+      if (!img || img.tagName !== "IMG" || img.dataset["ldrFallback"] === "1") return;
+      img.dataset["ldrFallback"] = "1";
       img.src = "/ldr/image-placeholder.svg";
     };
     window.addEventListener("error", onImageError, true);

@@ -27,7 +27,7 @@ import {
 } from "@/lib/professional-social.functions";
 
 export const Route = createFileRoute("/profissional/$slug")({
-  validateSearch: (search: Record<string, unknown>) => ({ source: search.source === "social_clinic" ? "social_clinic" as const : undefined, service: typeof search.service === "string" ? search.service : undefined }),
+  validateSearch: (search: Record<string, unknown>) => ({ source: search["source"] === "social_clinic" ? "social_clinic" as const : undefined, service: typeof search["service"] === "string" ? search["service"] : undefined }),
   loader: ({ params }) => enhancedPublicProfessional({ data: { slug: params.slug } }),
   head: ({ loaderData, params }) => {
     const p = (loaderData as any)?.profile;
@@ -226,9 +226,9 @@ const REVIEW_TRANSLATIONS: Record<string, { en: string; fr: string; es: string }
 };
 
 function reviewText(r: AnyRow, locale: string) {
-  if (locale === "pt") return r.body;
-  const key = `${String(r.reviewer_name || "")}|${String(r.review_date || "")}`;
-  return REVIEW_TRANSLATIONS[key]?.[locale as "en" | "fr" | "es"] || r.body;
+  if (locale === "pt") return r["body"];
+  const key = `${String(r["reviewer_name"] || "")}|${String(r["review_date"] || "")}`;
+  return REVIEW_TRANSLATIONS[key]?.[locale as "en" | "fr" | "es"] || r["body"];
 }
 
 function money(c: number | null, currency: string | null, locale: string) {
@@ -271,12 +271,12 @@ function Page() {
   const p = data.profile;
   const services = (data.services ?? []) as AnyRow[];
   const reviews = (data.reviews ?? []) as AnyRow[];
-  const service = services.find((s) => s.id === selected);
-  const baseDisplayedPrice = (s: AnyRow) => search.source === "social_clinic" && s.available_for_social ? (String(s.currency).toUpperCase() === "BRL" ? 8000 : String(s.currency).toUpperCase() === "EUR" ? 3000 : s.price_cents) : s.price_cents;
+  const service = services.find((s) => s["id"] === selected);
+  const baseDisplayedPrice = (s: AnyRow) => search.source === "social_clinic" && s["available_for_social"] ? (String(s["currency"]).toUpperCase() === "BRL" ? 8000 : String(s["currency"]).toUpperCase() === "EUR" ? 3000 : s["price_cents"]) : s["price_cents"];
   const oneDiscount = search.source === "social_clinic" ? 0 : Number(data.ldrOneBenefit?.discountPercent || 0);
   const displayedPrice = (s: AnyRow) => { const base=baseDisplayedPrice(s); return base == null ? base : Math.max(0, Math.round(Number(base)*(100-oneDiscount)/100)); };
   const rules = ((data.availability ?? []) as AnyRow[]).filter(
-    (r) => !selected || !r.professional_service_id || r.professional_service_id === selected,
+    (r) => !selected || !r["professional_service_id"] || r["professional_service_id"] === selected,
   );
   const busySlots = (data.busy ?? []) as AnyRow[];
   const dateKey = (d: Date) => [d.getFullYear(), String(d.getMonth()+1).padStart(2,"0"), String(d.getDate()).padStart(2,"0")].join("-");
@@ -285,12 +285,12 @@ function Page() {
     const out:{label:string;value:string}[]=[];
     const dayRules=rules.filter((r:any)=>Number(r.weekday)===day.getDay() && (!r.effective_from || dateKey(day)>=String(r.effective_from)) && (!r.effective_until || dateKey(day)<=String(r.effective_until)));
     for(const r of dayRules){
-      const [sh,sm]=String(r.start_time).split(":").map(Number), [eh,em]=String(r.end_time).split(":").map(Number);
-      const step=Math.max(5,Number(r.slot_interval_minutes||service.duration_minutes||30));
+      const [sh,sm]=String(r["start_time"]).split(":").map(Number), [eh,em]=String(r["end_time"]).split(":").map(Number);
+      const step=Math.max(5,Number(r["slot_interval_minutes"]||service["duration_minutes"]||30));
       let mins=sh*60+sm, endMins=eh*60+em;
-      while(mins+Number(service.duration_minutes)<=endMins){
+      while(mins+Number(service["duration_minutes"])<=endMins){
         const start=new Date(day.getFullYear(),day.getMonth(),day.getDate(),Math.floor(mins/60),mins%60);
-        const finish=new Date(start.getTime()+Number(service.duration_minutes)*60000);
+        const finish=new Date(start.getTime()+Number(service["duration_minutes"])*60000);
         const blocked=busySlots.some((b:any)=>new Date(b.starts_at)<finish && new Date(b.ends_at)>start);
         if(start.getTime()>Date.now()+5*60000 && !blocked) out.push({label:start.toLocaleTimeString(locale==="pt"?"pt-BR":locale,{hour:"2-digit",minute:"2-digit"}),value:start.toISOString()});
         mins+=step;
@@ -306,10 +306,10 @@ function Page() {
   const selectedDateObj = selectedDay ? new Date(selectedDay+"T12:00:00") : null;
   const availableSlots = selectedDateObj ? slotsForDay(selectedDateObj) : [];
   useEffect(() => {
-    if (service) { setMode(service.modality === "in_person" ? "in_person" : "online"); setDate(""); setSelectedDay(""); }
+    if (service) { setMode(service["modality"] === "in_person" ? "in_person" : "online"); setDate(""); setSelectedDay(""); }
   }, [service]);
   const avg = reviews.length
-    ? reviews.reduce((s, r) => s + Number(r.rating || 0), 0) / reviews.length
+    ? reviews.reduce((s, r) => s + Number(r["rating"] || 0), 0) / reviews.length
     : 0;
   async function pay() {
     if (!service || !date) {
@@ -321,7 +321,7 @@ function Page() {
       const r = await checkout({
         data: {
           profileSlug: slug,
-          serviceId: service.id,
+          serviceId: service["id"],
           startAt: new Date(date).toISOString(),
           customerName: name,
           customerEmail: email,
@@ -350,8 +350,8 @@ function Page() {
     }
   }
   function goToBooking() {
-    const first = service || services.find((s) => s.booking_enabled) || services[0];
-    if (!selected && first) setSelected(first.id);
+    const first = service || services.find((s) => s["booking_enabled"]) || services[0];
+    if (!selected && first) setSelected(first["id"]);
     requestAnimationFrame(() => {
       const target = document.getElementById("agendar");
       target?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -576,25 +576,25 @@ function Page() {
               <div className="mt-4 space-y-3">
                 {services.map((s) => (
                   <button
-                    key={s.id}
-                    onClick={() => setSelected(s.id)}
-                    className={`w-full rounded-2xl border p-4 text-left ${selected === s.id ? "border-primary bg-primary/5" : "bg-background"}`}
+                    key={s["id"]}
+                    onClick={() => setSelected(s["id"])}
+                    className={`w-full rounded-2xl border p-4 text-left ${selected === s["id"] ? "border-primary bg-primary/5" : "bg-background"}`}
                   >
                     <div className="flex flex-wrap justify-between gap-3">
                       <div>
-                        <p className="font-bold">{s.name}</p>
-                        <p className="mt-1 text-sm text-muted-foreground">{s.description}</p>
+                        <p className="font-bold">{s["name"]}</p>
+                        <p className="mt-1 text-sm text-muted-foreground">{s["description"]}</p>
                         <p className="mt-2 text-xs">
                           <Clock3 className="mr-1 inline h-3 w-3" />
-                          {s.duration_minutes} min ·{" "}
-                          {s.modality === "online"
+                          {s["duration_minutes"]} min ·{" "}
+                          {s["modality"] === "online"
                             ? c.online
-                            : s.modality === "in_person"
+                            : s["modality"] === "in_person"
                               ? c.present
                               : `${c.online} / ${c.present}`}
                         </p>
                       </div>
-                      <strong>{money(displayedPrice(s), s.currency, locale)}</strong>
+                      <strong>{money(displayedPrice(s), s["currency"], locale)}</strong>
                     </div>
                   </button>
                 ))}
@@ -657,33 +657,33 @@ function Page() {
               ) : null}
               <div className="mt-5 space-y-4">
                 {reviews.map((r) => (
-                  <article key={r.id} className="rounded-2xl border bg-background p-4">
+                  <article key={r["id"]} className="rounded-2xl border bg-background p-4">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="font-black">{"★".repeat(Number(r.rating || 0))}</span>
-                      {r.verified_booking ? (
+                      <span className="font-black">{"★".repeat(Number(r["rating"] || 0))}</span>
+                      {r["verified_booking"] ? (
                         <span className="rounded-full bg-primary/10 px-2 py-1 text-[10px] font-black text-primary">
                           {c.verifiedReview}
                         </span>
                       ) : null}
-                      {r.external ? (
+                      {r["external"] ? (
                         <span className="rounded-full border px-2 py-1 text-[10px] font-black text-muted-foreground">
                           {c.publicReview}
                         </span>
                       ) : null}
                     </div>
-                    {r.reviewer_name || r.review_date ? (
+                    {r["reviewer_name"] || r["review_date"] ? (
                       <p className="mt-2 text-xs font-bold text-muted-foreground">
-                        {r.reviewer_name || "Cliente"}
-                        {r.review_date
-                          ? ` · ${new Intl.DateTimeFormat(locale === "pt" ? "pt-BR" : locale, { dateStyle: "medium" }).format(new Date(`${r.review_date}T12:00:00Z`))}`
+                        {r["reviewer_name"] || "Cliente"}
+                        {r["review_date"]
+                          ? ` · ${new Intl.DateTimeFormat(locale === "pt" ? "pt-BR" : locale, { dateStyle: "medium" }).format(new Date(`${r["review_date"]}T12:00:00Z`))}`
                           : ""}
                       </p>
                     ) : null}
                     <p className="mt-2 text-sm leading-6">{reviewText(r, locale)}</p>
-                    {r.professional_reply ? (
+                    {r["professional_reply"] ? (
                       <div className="mt-3 rounded-xl bg-muted p-3 text-sm">
                         <strong>Resposta do profissional</strong>
-                        <p className="mt-1 text-muted-foreground">{r.professional_reply}</p>
+                        <p className="mt-1 text-muted-foreground">{r["professional_reply"]}</p>
                       </div>
                     ) : null}
                   </article>
@@ -701,12 +701,12 @@ function Page() {
             {service ? (
               <>
                 <div className="mt-4 rounded-xl bg-primary/5 p-4 text-sm">
-                  <p className="font-bold">{service.name}</p>
+                  <p className="font-bold">{service["name"]}</p>
                                     <p className="mt-1">
-                    {money(displayedPrice(service), service.currency, locale)} ·{" "}
-                    {service.duration_minutes} min
+                    {money(displayedPrice(service), service["currency"], locale)} ·{" "}
+                    {service["duration_minutes"]} min
                   </p>
-                  {oneDiscount > 0 ? <div className="mt-2 rounded-lg bg-primary/10 px-3 py-2 text-xs"><p className="font-black text-primary">Benefício LDR ONE: −{oneDiscount}%</p><p className="mt-1 text-muted-foreground"><span className="line-through">{money(baseDisplayedPrice(service), service.currency, locale)}</span> → <strong className="text-foreground">{money(displayedPrice(service), service.currency, locale)}</strong></p></div> : search.source !== "social_clinic" ? <p className="mt-2 text-xs font-bold text-primary">Assinantes LDR ONE economizam até 10% neste serviço.</p> : null}
+                  {oneDiscount > 0 ? <div className="mt-2 rounded-lg bg-primary/10 px-3 py-2 text-xs"><p className="font-black text-primary">Benefício LDR ONE: −{oneDiscount}%</p><p className="mt-1 text-muted-foreground"><span className="line-through">{money(baseDisplayedPrice(service), service["currency"], locale)}</span> → <strong className="text-foreground">{money(displayedPrice(service), service["currency"], locale)}</strong></p></div> : search.source !== "social_clinic" ? <p className="mt-2 text-xs font-bold text-primary">Assinantes LDR ONE economizam até 10% neste serviço.</p> : null}
                 </div>
                 <div className="mt-5 rounded-2xl border bg-background p-3">
                   <div className="flex items-center justify-between gap-2">
@@ -718,7 +718,7 @@ function Page() {
                   <div className="mt-1 grid grid-cols-7 gap-1">{calendarDays.map((d)=>{const key=dateKey(d),slots=slotsForDay(d),same=d.getMonth()===calendarMonth.getMonth(),active=selectedDay===key;return <button type="button" key={key} disabled={!same||!slots.length} onClick={()=>{setSelectedDay(key);setDate("");}} className={`aspect-square rounded-lg text-sm font-bold transition ${!same?"opacity-20":!slots.length?"text-muted-foreground opacity-35":active?"bg-primary text-primary-foreground":"border bg-background hover:border-primary"}`}>{d.getDate()}</button>})}</div>
                 </div>
                 {selectedDateObj ? <div className="mt-4"><div className="flex items-center gap-2"><CalendarDays className="h-4 w-4 text-primary"/><p className="text-sm font-black">{new Intl.DateTimeFormat(locale==="pt"?"pt-BR":locale,{weekday:"long",day:"2-digit",month:"long"}).format(selectedDateObj)}</p></div>{availableSlots.length?<div className="mt-3 grid grid-cols-3 gap-2">{availableSlots.map(slot=><button type="button" key={slot.value} onClick={()=>setDate(slot.value)} className={`rounded-xl border px-2 py-2.5 text-sm font-black ${date===slot.value?"border-primary bg-primary text-primary-foreground":"bg-background hover:border-primary"}`}>{slot.label}</button>)}</div>:<p className="mt-2 text-sm text-muted-foreground">Sem horários livres nesta data.</p>}</div>:null}
-                {service.booking_enabled && rules.length ? (
+                {service["booking_enabled"] && rules.length ? (
                   <div className="mt-5 grid gap-3">
                     <input
                       value={name}
@@ -734,7 +734,7 @@ function Page() {
                       className="rounded-xl border bg-background px-3 py-3 text-sm"
                     />
 {date ? <div className="rounded-xl border border-primary/30 bg-primary/5 p-3 text-sm"><p className="text-xs font-black uppercase tracking-wide text-primary">Horário selecionado</p><p className="mt-1 font-bold">{new Intl.DateTimeFormat(locale==="pt"?"pt-BR":locale,{dateStyle:"medium",timeStyle:"short"}).format(new Date(date))}</p></div> : null}
-                    {service.modality === "both" ? (
+                    {service["modality"] === "both" ? (
                       <select
                         value={mode}
                         onChange={(e) => setMode(e.target.value as any)}

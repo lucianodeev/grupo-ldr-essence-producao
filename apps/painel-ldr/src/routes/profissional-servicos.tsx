@@ -51,17 +51,17 @@ function money(cents: number, currency: string) {
 }
 
 function marketReference(service: AnyRow, market: "BR" | "EU", currency: "BRL" | "EUR") {
-  const refs = (service.professional_service_price_reference ?? []) as AnyRow[];
-  return refs.find((row) => row.active !== false && row.market_code === market && row.currency === currency) ?? null;
+  const refs = (service["professional_service_price_reference"] ?? []) as AnyRow[];
+  return refs.find((row) => row["active"] !== false && row["market_code"] === market && row["currency"] === currency) ?? null;
 }
 
 function referenceText(ref: AnyRow | null) {
   if (!ref) return "Sem referência cadastrada";
-  if (ref.min_amount_cents == null && ref.max_amount_cents == null) return "Orçamento / definir conforme escopo";
-  if (ref.min_amount_cents != null && ref.max_amount_cents != null) {
-    return `${money(ref.min_amount_cents, ref.currency)} – ${money(ref.max_amount_cents, ref.currency)} ${UNIT_LABELS[ref.billing_unit as BillingUnit] ?? ""}`;
+  if (ref["min_amount_cents"] == null && ref["max_amount_cents"] == null) return "Orçamento / definir conforme escopo";
+  if (ref["min_amount_cents"] != null && ref["max_amount_cents"] != null) {
+    return `${money(ref["min_amount_cents"], ref["currency"])} – ${money(ref["max_amount_cents"], ref["currency"])} ${UNIT_LABELS[ref["billing_unit"] as BillingUnit] ?? ""}`;
   }
-  return money(ref.min_amount_cents ?? ref.max_amount_cents ?? 0, ref.currency);
+  return money(ref["min_amount_cents"] ?? ref["max_amount_cents"] ?? 0, ref["currency"]);
 }
 
 function ServicesPage() {
@@ -92,7 +92,7 @@ function ServicesPage() {
   }, []);
 
   const services = (data?.services ?? []) as AnyRow[];
-  const existingCatalogKeys = useMemo(() => new Set(services.map((service) => service.catalog_key).filter(Boolean)), [services]);
+  const existingCatalogKeys = useMemo(() => new Set(services.map((service) => service["catalog_key"]).filter(Boolean)), [services]);
   const catalog = (catalogData?.catalog ?? []) as AnyRow[];
   const currency: "EUR" | "BRL" = catalogData?.account?.preferred_currency === "BRL" || catalogData?.profile?.country_code === "BR" ? "BRL" : "EUR";
   const market: "BR" | "EU" = catalogData?.profile?.country_code === "BR" ? "BR" : "EU";
@@ -101,34 +101,34 @@ function ServicesPage() {
   const visibleCatalog = useMemo(() => {
     const term = search.trim().toLowerCase();
     return catalog.filter((service) => {
-      if (existingCatalogKeys.has(service.catalog_key)) return false;
+      if (existingCatalogKeys.has(service["catalog_key"])) return false;
       if (!term) return true;
-      return `${service.name_pt ?? ""} ${service.description_pt ?? ""}`.toLowerCase().includes(term);
+      return `${service["name_pt"] ?? ""} ${service["description_pt"] ?? ""}`.toLowerCase().includes(term);
     });
   }, [catalog, existingCatalogKeys, search]);
 
   function addSelected() {
-    const chosen = catalog.filter((service) => selected.includes(service.catalog_key) && !existingCatalogKeys.has(service.catalog_key));
+    const chosen = catalog.filter((service) => selected.includes(service["catalog_key"]) && !existingCatalogKeys.has(service["catalog_key"]));
     if (!chosen.length) return;
     setDrafts((current) => [
       ...current,
       ...chosen.map((service): Draft => ({
-        catalogKey: service.catalog_key,
-        name: service.name_pt,
-        description: service.description_pt ?? "",
+        catalogKey: service["catalog_key"],
+        name: service["name_pt"],
+        description: service["description_pt"] ?? "",
         modality: "online",
-        durationMinutes: Number(service.default_duration_minutes ?? 50),
+        durationMinutes: Number(service["default_duration_minutes"] ?? 50),
         currency,
         price: "",
-        billingUnit: (service.default_billing_unit ?? "session") as BillingUnit,
+        billingUnit: (service["default_billing_unit"] ?? "session") as BillingUnit,
         city: catalogData?.profile?.city ?? "",
         publicLocation: "",
-        quoteRequired: service.default_billing_unit === "custom_quote",
+        quoteRequired: service["default_billing_unit"] === "custom_quote",
         bookingEnabled: true,
         availableForPrivate: true,
         availableForCompany: ["recursos-humanos", "consultoria-carreira", "mentoria"].includes(catalogData?.category?.slug),
         availableForSocial: false,
-        feeComplianceStatus: service.fee_compliance_status ?? "allowed",
+        feeComplianceStatus: service["fee_compliance_status"] ?? "allowed",
       })),
     ]);
     setSelected([]);
@@ -244,7 +244,7 @@ function ServicesPage() {
         {catalogData.specialties?.length ? (
           <section className="rounded-3xl border bg-card p-5">
             <p className="text-xs font-black uppercase tracking-[.16em] text-primary">Especialidades compatíveis</p>
-            <div className="mt-3 flex flex-wrap gap-2">{catalogData.specialties.map((item: AnyRow) => <span key={item.id} className="rounded-full border bg-muted/30 px-3 py-2 text-xs font-bold">{item.name_pt}</span>)}</div>
+            <div className="mt-3 flex flex-wrap gap-2">{catalogData.specialties.map((item: AnyRow) => <span key={item["id"]} className="rounded-full border bg-muted/30 px-3 py-2 text-xs font-bold">{item["name_pt"]}</span>)}</div>
           </section>
         ) : null}
 
@@ -257,11 +257,11 @@ function ServicesPage() {
           <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
             {visibleCatalog.map((service) => {
               const ref = marketReference(service, market, currency);
-              const checked = selected.includes(service.catalog_key);
-              return <label key={service.catalog_key} className={`cursor-pointer rounded-2xl border p-4 transition ${checked ? "border-primary bg-primary/5" : "hover:border-primary/40"}`}>
-                <div className="flex items-start gap-3"><input type="checkbox" checked={checked} onChange={() => setSelected((current) => checked ? current.filter((key) => key !== service.catalog_key) : [...current, service.catalog_key])} className="mt-1" /><div><h3 className="font-bold">{service.name_pt}</h3><p className="mt-1 text-xs text-muted-foreground">{UNIT_LABELS[service.default_billing_unit as BillingUnit] ?? service.default_billing_unit} · {service.default_duration_minutes ?? 50} min</p></div></div>
+              const checked = selected.includes(service["catalog_key"]);
+              return <label key={service["catalog_key"]} className={`cursor-pointer rounded-2xl border p-4 transition ${checked ? "border-primary bg-primary/5" : "hover:border-primary/40"}`}>
+                <div className="flex items-start gap-3"><input type="checkbox" checked={checked} onChange={() => setSelected((current) => checked ? current.filter((key) => key !== service["catalog_key"]) : [...current, service["catalog_key"]])} className="mt-1" /><div><h3 className="font-bold">{service["name_pt"]}</h3><p className="mt-1 text-xs text-muted-foreground">{UNIT_LABELS[service["default_billing_unit"] as BillingUnit] ?? service["default_billing_unit"]} · {service["default_duration_minutes"] ?? 50} min</p></div></div>
                 <div className="mt-3 rounded-xl bg-muted/40 p-3"><p className="text-[11px] font-black uppercase tracking-[.1em] text-muted-foreground">Referência de mercado</p><p className="mt-1 text-sm font-bold text-primary">{referenceText(ref)}</p><p className="mt-1 text-[11px] text-muted-foreground">Não é preço obrigatório.</p></div>
-                {service.fee_compliance_status !== "allowed" ? <div className="mt-3 rounded-lg border border-amber-300 bg-amber-50 px-3 py-2 text-xs font-semibold text-amber-900">Compliance financeiro: revisão necessária antes do checkout.</div> : null}
+                {service["fee_compliance_status"] !== "allowed" ? <div className="mt-3 rounded-lg border border-amber-300 bg-amber-50 px-3 py-2 text-xs font-semibold text-amber-900">Compliance financeiro: revisão necessária antes do checkout.</div> : null}
               </label>;
             })}
           </div>
@@ -282,7 +282,7 @@ function ServicesPage() {
             <h2 className="font-serif text-2xl">Configurar serviços selecionados</h2>
             <div className="mt-5 space-y-5">
               {drafts.map((draft, index) => {
-                const catalogRow = catalog.find((item) => item.catalog_key === draft.catalogKey);
+                const catalogRow = catalog.find((item) => item["catalog_key"] === draft.catalogKey);
                 const ref = catalogRow ? marketReference(catalogRow, market, draft.currency) : null;
                 const numericPrice = Number(String(draft.price).replace(",", "."));
                 const grossCents = Number.isFinite(numericPrice) ? Math.round(numericPrice * 100) : 0;
@@ -315,11 +315,11 @@ function ServicesPage() {
         <section className="rounded-3xl border bg-card p-6">
           <h2 className="font-serif text-2xl">Serviços cadastrados</h2>
           <div className="mt-4 grid gap-3 md:grid-cols-2">
-            {services.map((service) => <article key={service.id} className="rounded-2xl border p-5">
-              <div className="flex items-start justify-between gap-3"><div><h3 className="font-bold">{service.name}</h3><p className="mt-1 text-xs text-muted-foreground">{UNIT_LABELS[service.billing_unit as BillingUnit] ?? service.billing_unit ?? "por sessão"} · {service.modality} · {service.duration_minutes} min</p></div><strong>{service.quote_required ? "ORÇAMENTO" : service.price_cents == null ? "Preço não definido" : money(service.price_cents, service.currency || "EUR")}</strong></div>
-              <p className="mt-3 text-sm text-muted-foreground">{service.description}</p>
-              <div className="mt-3 flex flex-wrap gap-2 text-xs"><span className={`rounded-full px-2 py-1 font-bold ${service.active ? "bg-emerald-100 text-emerald-800" : "bg-muted"}`}>{service.active ? "ATIVO" : "PAUSADO"}</span><span className="rounded-full bg-muted px-2 py-1 font-bold">{service.approval_status ?? "approved"}</span><span className="rounded-full bg-muted px-2 py-1 font-bold">{service.fee_compliance_status === "allowed" ? "20% / 80% LIBERADO" : "COMPLIANCE PENDENTE"}</span><span className="rounded-full bg-muted px-2 py-1 font-bold">{service.booking_enabled ? "CHECKOUT ATIVO" : "SEM CHECKOUT"}</span><span className={`rounded-full px-2 py-1 font-bold ${service.available_for_social ? "bg-amber-100 text-amber-900" : "bg-muted"}`}>{service.available_for_social ? "CLÍNICA SOCIAL ATIVA" : "CLÍNICA SOCIAL NÃO"}</span></div>
-              <div className="mt-4 flex flex-wrap gap-2"><button disabled={busy} onClick={async () => { setBusy(true); try { await toggle({ data: { id: service.id, active: !service.active } }); await refresh(); } catch (error) { toast.error(error instanceof Error ? error.message : "Erro"); } finally { setBusy(false); } }} className="rounded-lg border px-3 py-2 text-xs font-bold">{service.active ? "PAUSAR" : "REATIVAR"}</button><button disabled={busy||(!service.available_for_social&&(!service.active||!service.booking_enabled||service.approval_status!=="approved"))} onClick={async()=>{setBusy(true);try{await toggleSocial({data:{id:service.id,available:!service.available_for_social}});await refresh();toast.success(service.available_for_social?"Serviço removido da Clínica Social.":"Serviço disponibilizado na Clínica Social.");}catch(error){toast.error(error instanceof Error?error.message:"Erro");}finally{setBusy(false);}}} className="rounded-lg border px-3 py-2 text-xs font-bold">{service.available_for_social?"SAIR DA CLÍNICA SOCIAL":"ENTRAR NA CLÍNICA SOCIAL"}</button></div>
+            {services.map((service) => <article key={service["id"]} className="rounded-2xl border p-5">
+              <div className="flex items-start justify-between gap-3"><div><h3 className="font-bold">{service["name"]}</h3><p className="mt-1 text-xs text-muted-foreground">{UNIT_LABELS[service["billing_unit"] as BillingUnit] ?? service["billing_unit"] ?? "por sessão"} · {service["modality"]} · {service["duration_minutes"]} min</p></div><strong>{service["quote_required"] ? "ORÇAMENTO" : service["price_cents"] == null ? "Preço não definido" : money(service["price_cents"], service["currency"] || "EUR")}</strong></div>
+              <p className="mt-3 text-sm text-muted-foreground">{service["description"]}</p>
+              <div className="mt-3 flex flex-wrap gap-2 text-xs"><span className={`rounded-full px-2 py-1 font-bold ${service["active"] ? "bg-emerald-100 text-emerald-800" : "bg-muted"}`}>{service["active"] ? "ATIVO" : "PAUSADO"}</span><span className="rounded-full bg-muted px-2 py-1 font-bold">{service["approval_status"] ?? "approved"}</span><span className="rounded-full bg-muted px-2 py-1 font-bold">{service["fee_compliance_status"] === "allowed" ? "20% / 80% LIBERADO" : "COMPLIANCE PENDENTE"}</span><span className="rounded-full bg-muted px-2 py-1 font-bold">{service["booking_enabled"] ? "CHECKOUT ATIVO" : "SEM CHECKOUT"}</span><span className={`rounded-full px-2 py-1 font-bold ${service["available_for_social"] ? "bg-amber-100 text-amber-900" : "bg-muted"}`}>{service["available_for_social"] ? "CLÍNICA SOCIAL ATIVA" : "CLÍNICA SOCIAL NÃO"}</span></div>
+              <div className="mt-4 flex flex-wrap gap-2"><button disabled={busy} onClick={async () => { setBusy(true); try { await toggle({ data: { id: service["id"], active: !service["active"] } }); await refresh(); } catch (error) { toast.error(error instanceof Error ? error.message : "Erro"); } finally { setBusy(false); } }} className="rounded-lg border px-3 py-2 text-xs font-bold">{service["active"] ? "PAUSAR" : "REATIVAR"}</button><button disabled={busy||(!service["available_for_social"]&&(!service["active"]||!service["booking_enabled"]||service["approval_status"]!=="approved"))} onClick={async()=>{setBusy(true);try{await toggleSocial({data:{id:service["id"],available:!service["available_for_social"]}});await refresh();toast.success(service["available_for_social"]?"Serviço removido da Clínica Social.":"Serviço disponibilizado na Clínica Social.");}catch(error){toast.error(error instanceof Error?error.message:"Erro");}finally{setBusy(false);}}} className="rounded-lg border px-3 py-2 text-xs font-bold">{service["available_for_social"]?"SAIR DA CLÍNICA SOCIAL":"ENTRAR NA CLÍNICA SOCIAL"}</button></div>
             </article>)}
           </div>
           {services.length === 0 ? <p className="mt-4 text-sm text-muted-foreground">Nenhum serviço cadastrado.</p> : null}

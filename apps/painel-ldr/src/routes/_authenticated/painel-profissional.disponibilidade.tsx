@@ -151,19 +151,19 @@ function ProfessionalAvailabilityPage() {
 
   const services = (settings.data?.services ?? []) as Row[];
   const availability = (settings.data?.availability ?? []) as Row[];
-  const serviceNames = useMemo(() => new Map(services.map((s) => [String(s.id), String(s.name)])), [services]);
+  const serviceNames = useMemo(() => new Map(services.map((s) => [String(s["id"]), String(s["name"])])), [services]);
 
   function beginEdit(row: Row) {
-    setEditingId(String(row.id));
-    setServiceId(String(row.professional_service_id ?? ""));
-    setDays([Number(row.weekday)]);
-    setStartTime(String(row.start_time).slice(0, 5));
-    setEndTime(String(row.end_time).slice(0, 5));
-    setTimezone(String(row.timezone));
-    setIntervalMinutes(Number(row.slot_interval_minutes));
-    setBufferMinutes(Number(row.buffer_minutes));
-    setModality(row.modality);
-    setLocationLabel(String(row.location_label ?? ""));
+    setEditingId(String(row["id"]));
+    setServiceId(String(row["professional_service_id"] ?? ""));
+    setDays([Number(row["weekday"])]);
+    setStartTime(String(row["start_time"]).slice(0, 5));
+    setEndTime(String(row["end_time"]).slice(0, 5));
+    setTimezone(String(row["timezone"]));
+    setIntervalMinutes(Number(row["slot_interval_minutes"]));
+    setBufferMinutes(Number(row["buffer_minutes"]));
+    setModality(row["modality"]);
+    setLocationLabel(String(row["location_label"] ?? ""));
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -184,7 +184,7 @@ function ProfessionalAvailabilityPage() {
         <label className="grid gap-1.5 text-sm font-semibold">{c.service}
           <select className="s8-field" value={serviceId} disabled={editingId !== null} onChange={(e) => setServiceId(e.target.value)}>
             <option value="">{c.allServices}</option>
-            {services.map((s) => <option key={s.id} value={s.id}>{s.name}{s.booking_enabled ? "" : " · não reservável"}</option>)}
+            {services.map((s) => <option key={s["id"]} value={s["id"]}>{s["name"]}{s["booking_enabled"] ? "" : " · não reservável"}</option>)}
           </select>
         </label>
         <label className="grid gap-1.5 text-sm font-semibold">{c.start}<input className="s8-field" type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)} /></label>
@@ -217,14 +217,14 @@ function ProfessionalAvailabilityPage() {
 
     <section>
       <h2 className="font-serif text-2xl">{c.current}</h2>
-      {settings.isLoading ? <p className="mt-3 text-sm text-muted-foreground">…</p> : availability.length === 0 ? <div className="s8-card mt-3 text-sm text-muted-foreground">{c.empty}</div> : <div className="mt-3 grid gap-3 md:grid-cols-2">{availability.map((row) => <article key={row.id} className="s8-card">
+      {settings.isLoading ? <p className="mt-3 text-sm text-muted-foreground">…</p> : availability.length === 0 ? <div className="s8-card mt-3 text-sm text-muted-foreground">{c.empty}</div> : <div className="mt-3 grid gap-3 md:grid-cols-2">{availability.map((row) => <article key={row["id"]} className="s8-card">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <p className="font-bold">{row.professional_service_id ? serviceNames.get(String(row.professional_service_id)) ?? c.service : c.allServices}</p>
-            <p className="mt-1 text-sm text-muted-foreground">{dayLabels[Number(row.weekday)]} · {String(row.start_time).slice(0,5)}–{String(row.end_time).slice(0,5)}</p>
-            <p className="mt-1 text-xs text-muted-foreground">{row.timezone} · {row.slot_interval_minutes} min · {row.modality === "online" ? c.online : row.modality === "in_person" ? c.inPerson : c.both}{row.location_label ? ` · ${row.location_label}` : ""}</p>
+            <p className="font-bold">{row["professional_service_id"] ? serviceNames.get(String(row["professional_service_id"])) ?? c.service : c.allServices}</p>
+            <p className="mt-1 text-sm text-muted-foreground">{dayLabels[Number(row["weekday"])]} · {String(row["start_time"]).slice(0,5)}–{String(row["end_time"]).slice(0,5)}</p>
+            <p className="mt-1 text-xs text-muted-foreground">{row["timezone"]} · {row["slot_interval_minutes"]} min · {row["modality"] === "online" ? c.online : row["modality"] === "in_person" ? c.inPerson : c.both}{row["location_label"] ? ` · ${row["location_label"]}` : ""}</p>
           </div>
-          <div className="flex gap-2"><button type="button" onClick={() => beginEdit(row)} disabled={update.isPending} className="rounded-lg border px-3 py-2 text-xs font-bold hover:bg-muted">{c.edit}</button><button type="button" onClick={() => remove.mutate(String(row.id))} disabled={remove.isPending} className="rounded-lg border px-3 py-2 text-xs font-bold hover:bg-muted disabled:opacity-50">{c.remove}</button></div>
+          <div className="flex gap-2"><button type="button" onClick={() => beginEdit(row)} disabled={update.isPending} className="rounded-lg border px-3 py-2 text-xs font-bold hover:bg-muted">{c.edit}</button><button type="button" onClick={() => remove.mutate(String(row["id"]))} disabled={remove.isPending} className="rounded-lg border px-3 py-2 text-xs font-bold hover:bg-muted disabled:opacity-50">{c.remove}</button></div>
         </div>
       </article>)}</div>}
     </section>

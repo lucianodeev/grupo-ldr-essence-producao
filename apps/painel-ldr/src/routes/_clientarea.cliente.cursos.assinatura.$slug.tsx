@@ -59,6 +59,7 @@ function Page(){
   const complete=()=>persist(done.includes(index)?done:[...done,index]);
   const next=()=>{const nextDone=done.includes(index)?done:[...done,index];persist(nextDone,Math.min(course.modules.length-1,index+1));};
   const module=course.modules[index];
+  if(!module)return <section className="s8-card">{u.notFound}</section>;
 
   return <div className="space-y-5 pb-10">
     <section className="rounded-[28px] bg-gradient-to-br from-[#071426] via-[#0b2341] to-[#163b67] p-6 text-white">
