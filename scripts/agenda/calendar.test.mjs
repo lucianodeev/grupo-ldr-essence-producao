@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { createEvent, patchEvent, cancelEvent, hasConflict, findEventByAppointment, CalendarError, isCalendarConfigured } from '../../apps/painel-ldr/src/lib/google-calendar.server.ts';
 
 const originalFetch = globalThis.fetch;
+const testCalendarId = 'calendar-test@example.invalid';
 const input = { appointmentId: '00000000-0000-4000-8000-000000000001', summary: 'Synthetic test', startsAtIso: '2026-12-01T12:00:00Z', endsAtIso: '2026-12-01T13:00:00Z', attendeeEmail: 'test@example.invalid' };
 const reply = (data, status = 200) => new Response(status === 204 ? null : JSON.stringify(data), { status });
 function mockGoogle(calendarHandler, tokenHandler = () => reply({ access_token: 'synthetic-access', expires_in: 3600 })) {
@@ -21,7 +22,7 @@ beforeEach(() => {
   process.env.GOOGLE_OAUTH_CLIENT_ID = 'synthetic';
   process.env.GOOGLE_OAUTH_CLIENT_SECRET = 'synthetic';
   process.env.GOOGLE_OAUTH_REFRESH_TOKEN = 'synthetic';
-  process.env.GOOGLE_CALENDAR_ID = 'contacto@ldrrhestrategia.com';
+  process.env.GOOGLE_CALENDAR_ID = 'calendar-test@example.invalid';
 });
 afterEach(() => {
   globalThis.fetch = originalFetch;
@@ -92,19 +93,19 @@ test('cancel is idempotent on 404, 410 and 204', async () => {
   }
 });
 test('freeBusy errors fail closed', async () => {
-  for (const data of [{}, { calendars: { 'contacto@ldrrhestrategia.com': { errors: [{ reason: 'notFound' }] } } }]) {
+  for (const data of [{}, { calendars: { [testCalendarId]: { errors: [{ reason: 'notFound' }] } } }]) {
     mockGoogle(() => reply(data));
     await assert.rejects(() => hasConflict(input.startsAtIso, input.endsAtIso, null), { code: 'indisponivel' });
   }
 });
 test('other overlapping event cannot be hidden by own event', async () => {
   let n = 0;
-  mockGoogle(() => ++n === 1 ? reply({ calendars: { 'contacto@ldrrhestrategia.com': { busy: [{ start: input.startsAtIso, end: input.endsAtIso }] } } }) : reply({ items: [{ id: 'own' }, { id: 'other' }] }));
+  mockGoogle(() => ++n === 1 ? reply({ calendars: { [testCalendarId]: { busy: [{ start: input.startsAtIso, end: input.endsAtIso }] } } }) : reply({ items: [{ id: 'own' }, { id: 'other' }] }));
   assert.equal(await hasConflict(input.startsAtIso, input.endsAtIso, 'own'), true);
 });
 test('own event alone permits reschedule', async () => {
   let n = 0;
-  mockGoogle(() => ++n === 1 ? reply({ calendars: { 'contacto@ldrrhestrategia.com': { busy: [{ start: input.startsAtIso, end: input.endsAtIso }] } } }) : reply({ items: [{ id: 'own' }] }));
+  mockGoogle(() => ++n === 1 ? reply({ calendars: { [testCalendarId]: { busy: [{ start: input.startsAtIso, end: input.endsAtIso }] } } }) : reply({ items: [{ id: 'own' }] }));
   assert.equal(await hasConflict(input.startsAtIso, input.endsAtIso, 'own'), false);
 });
 test('Google errors do not leak remote response body', async () => {
