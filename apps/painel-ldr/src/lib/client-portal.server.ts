@@ -15,6 +15,7 @@ export type ClientCustomer = {
   fullName: string;
   email: string | null;
   phone: string | null;
+  country: string | null;
 };
 
 export type ClientContext =
@@ -28,6 +29,7 @@ type CustomerLinkRow = {
   email: string | null;
   phone: string | null;
   portal_active: boolean;
+  country?: string | null;
 };
 
 function linkedCustomerContext(customer: CustomerLinkRow): ClientContext {
@@ -39,6 +41,7 @@ function linkedCustomerContext(customer: CustomerLinkRow): ClientContext {
       fullName: customer.full_name,
       email: customer.email,
       phone: customer.phone,
+      country: customer.country ?? null,
     },
   };
 }
@@ -62,7 +65,7 @@ export async function resolveClient(userId: string, email: string | null): Promi
 
   const { data: linked, error: linkedError } = await supabaseAdmin
     .from("customers")
-    .select("id, full_name, email, phone, portal_active")
+    .select("id, full_name, email, phone, portal_active, country")
     .eq("auth_user_id", userId)
     .maybeSingle();
 
@@ -75,7 +78,7 @@ export async function resolveClient(userId: string, email: string | null): Promi
   if (mail) {
     const { data: byEmail, error: byEmailError } = await supabaseAdmin
       .from("customers")
-      .select("id, full_name, email, phone, portal_active, auth_user_id")
+      .select("id, full_name, email, phone, portal_active, country, auth_user_id")
       .ilike("email", mail)
       .is("auth_user_id", null)
       .maybeSingle();
@@ -88,7 +91,7 @@ export async function resolveClient(userId: string, email: string | null): Promi
         .update({ auth_user_id: userId, portal_linked_at: new Date().toISOString() })
         .eq("id", byEmail.id)
         .is("auth_user_id", null)
-        .select("id, full_name, email, phone, portal_active")
+        .select("id, full_name, email, phone, portal_active, country")
         .maybeSingle();
 
       if (bindError) fail("Não foi possível vincular o acesso do cliente.");
@@ -109,7 +112,7 @@ export async function resolveClient(userId: string, email: string | null): Promi
         portal_linked_at: new Date().toISOString(),
         source: "portal_auto",
       })
-      .select("id, full_name, email, phone, portal_active")
+      .select("id, full_name, email, phone, portal_active, country")
       .maybeSingle();
 
     if (created) {
@@ -120,7 +123,7 @@ export async function resolveClient(userId: string, email: string | null): Promi
     if (createError?.code === "23505") {
       const { data: concurrentLink, error: concurrentLinkError } = await supabaseAdmin
         .from("customers")
-        .select("id, full_name, email, phone, portal_active")
+        .select("id, full_name, email, phone, portal_active, country")
         .eq("auth_user_id", userId)
         .maybeSingle();
       if (concurrentLinkError) fail("Não foi possível validar o acesso do cliente.");
@@ -1139,11 +1142,7 @@ function stripePriceFor(productKey: DigitalProductKey, market: DigitalMarket): s
 }
 
 /** Cria Checkout Stripe no backend e registra o pedido pendente no painel. */
-export async function createClientDigitalCheckout(
-  userId: string,
-  email: string | null,
-  input: { productKey: DigitalProductKey; market: DigitalMarket },
-) {
+export async function createClientDigitalCheckout(userId: string, email: string | null, input: { productKey: DigitalProductKey; market: DigitalMarket }):Promise<{url:string;orderId:string;orderNumber:string}> {
   logDigitalCheckout("info", "started", {
     productKey: input.productKey,
     market: input.market,
@@ -1169,6 +1168,10 @@ export async function createClientDigitalCheckout(
   const config = DIGITAL_CHECKOUT_CONFIG[input.productKey];
   if (!config) fail("Produto inválido.");
   fail("Novas compras individuais de eBooks foram encerradas. Este conteúdo está incluído no LDR ONE.");
+}
+
+// Retain and typecheck the legacy implementation without re-enabling retired sales.
+async function legacy_createClientDigitalCheckout(userId: string, email: string | null, input: { productKey: DigitalProductKey; market: DigitalMarket }, customer: ClientCustomer, config: NonNullable<(typeof DIGITAL_CHECKOUT_CONFIG)[DigitalProductKey]>) {
 
   // Evita nova cobrança quando o cliente já possui acesso.
   const library = await getClientDigitalLibrary(userId, email);
@@ -1202,7 +1205,7 @@ export async function createClientDigitalCheckout(
         market: input.market,
         auth_user_id: userId,
       },
-    } as never)
+    })
     .select("id, order_number")
     .single();
 
@@ -1335,7 +1338,7 @@ export async function createClientDigitalCheckout(
         auth_user_id: userId,
         stripe_price_id: priceId,
       },
-    } as never)
+    })
     .eq("id", order.id);
 
   if (sessionUpdateError) {
@@ -1360,6 +1363,7 @@ export async function createClientDigitalCheckout(
   });
 
   return { url: session.url, orderId: order.id, orderNumber: order.order_number };
+
 }
 
 
