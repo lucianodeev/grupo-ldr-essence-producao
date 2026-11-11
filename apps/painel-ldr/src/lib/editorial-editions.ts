@@ -1,6 +1,6 @@
 export type EditorialStory={title:string;deck:string;body:string;source?:string;url?:string;sourceDate?:string};
 export type EditorialEdition={number:string;date:string;headline:string;stories:EditorialStory[]};
-const s=(title:string,deck:string,body:string,source?:string,url?:string,sourceDate?:string):EditorialStory=>({title,deck,body,source,url,sourceDate});
+const s=(title:string,deck:string,body:string,source?:string,url?:string,sourceDate?:string):EditorialStory=>({title,deck,body,...(source !== undefined ? {source} : {}),...(url !== undefined ? {url} : {}),...(sourceDate !== undefined ? {sourceDate} : {})});
 export const EDITORIAL_EDITIONS:Record<string,EditorialEdition>={
 "jornal-negocios-economia":{number:"01",date:"SETEMBRO 2026",headline:"Mercado, trabalho e inovação em uma semana de decisões",stories:[
 s("Economia em modo de atenção","Crescimento fraco em partes da Europa mantém empresas cautelosas.","Com crescimento francês estagnado no segundo trimestre e indicadores mistos na indústria, empresas seguem mais seletivas em investimentos. Para pequenos negócios, o recado é simples: proteger caixa, medir margem e testar demanda antes de expandir continua sendo mais importante do que crescer por impulso.","INSEE","https://www.insee.fr/en/statistiques/2405582","09/09/2026"),
