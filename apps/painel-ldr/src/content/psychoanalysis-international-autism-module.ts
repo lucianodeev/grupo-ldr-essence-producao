@@ -43,7 +43,7 @@ const lessons=[
 export const psychoanalysisInternationalAutismModule:PsychoanalysisModule={
   id:15,
   title:"Psicanálise Internacional, Neurodiversidade e Autismo",
-  description:"Atuação internacional, carreira no exterior, ética, proteção de dados, migração, neurodiversidade e autismo.",
+  focus:"Atuação internacional, carreira no exterior, ética, proteção de dados, migração, neurodiversidade e autismo.",
   lessons,
   deeper:[
     {author:"União Europeia",title:"Proteção de dados e GDPR",year:"atual",note:"Consulte sempre o portal oficial da União Europeia e a autoridade de proteção de dados do país de atuação."},
