@@ -9,6 +9,7 @@
 - Funções invoker exclusivas de `service_role`; tabelas novas com RLS e sem grants aos papéis públicos. Backend mantém autenticação e autorização de staff e deriva o cliente da sessão.
 - Trigger impede confirmação direta sem pagamento, titular/catalogo e saldo válidos. Um lock no pedido serializa confirmações; UNIQUE(order_id) na concessão real impede créditos duplicados.
 - Reserva é mantida em reagendamentos e conclusões; cancelamento libera a reserva. Estados terminais não reabrem. Redução de concessão abaixo das reservas é rejeitada. O cliente apresenta o mesmo saldo reservado.
+- Leitura das tabelas exclusivas passa por funções autenticadas do backend, inclusive a lista da agenda e seu histórico. O formulário de mentoria seleciona o agendamento explicitamente e confirma pelo backend; alterações de horário/estado em sessões vinculadas passam pela agenda canónica.
 - Mentorias exigem vínculo explícito. Confirmação usa a mesma função de pagamento; mentorias gratuitas sem pedido/crédito continuam possíveis. Atualização/cancelamento espelha apenas a sessão vinculada por UUID, nunca por data ou número.
 - RPCs de solicitação e reagendamento do cliente incluídas; pedido pago/posse/catalogo/créditos verificados em transação. Vinte solicitações simultâneas não criam vinte reservas pendentes.
 - Integração protegida por `AGENDA_INTEGRATION_ENABLED=true`, desativada por padrão. Links de mentoria só são entregues com confirmação, vínculo/titular corretos, elegibilidade financeira e sincronização pronta. Nenhum segredo vai ao cliente.

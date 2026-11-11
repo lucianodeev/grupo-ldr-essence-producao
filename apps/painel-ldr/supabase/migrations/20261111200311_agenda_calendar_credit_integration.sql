@@ -223,13 +223,16 @@ GRANT EXECUTE ON FUNCTION public.mirror_appointment_session() TO service_role;
 CREATE TRIGGER appointment_session_mirror AFTER UPDATE ON public.appointments
  FOR EACH ROW EXECUTE FUNCTION public.mirror_appointment_session();
 
-CREATE OR REPLACE FUNCTION public.confirm_mentorship_session_tx(_session_id uuid,_scheduled timestamptz,_meeting text)
+CREATE OR REPLACE FUNCTION public.confirm_mentorship_session_tx(_session_id uuid,_scheduled timestamptz,_meeting text,_appointment_id uuid DEFAULT NULL)
 RETURNS void LANGUAGE plpgsql SECURITY INVOKER SET search_path='' AS $$
 DECLARE s public.mentorship_sessions%ROWTYPE; m public.mentorships%ROWTYPE; a public.appointments%ROWTYPE;
 BEGIN
  IF _scheduled IS NULL OR coalesce(length(trim(_meeting)),0)=0 THEN RAISE EXCEPTION 'invalid session confirmation'; END IF;
  SELECT * INTO s FROM public.mentorship_sessions WHERE id=_session_id;
  IF NOT FOUND THEN RAISE EXCEPTION 'sessão não encontrada'; END IF;
+ IF s.status IN ('cancelada','concluida') THEN RAISE EXCEPTION 'session not confirmable'; END IF;
+ IF s.appointment_id IS NOT NULL AND _appointment_id IS NOT NULL AND s.appointment_id<>_appointment_id THEN RAISE EXCEPTION 'session already linked'; END IF;
+ s.appointment_id:=coalesce(s.appointment_id,_appointment_id);
  IF s.appointment_id IS NULL THEN RAISE EXCEPTION 'explicit appointment link required'; END IF;
  -- Same lock order as ordinary confirmation: appointment, order, session.
  SELECT * INTO a FROM public.appointments WHERE id=s.appointment_id FOR UPDATE;
@@ -240,10 +243,12 @@ BEGIN
   RAISE EXCEPTION 'paid order ownership mismatch'; END IF;
  IF EXISTS(SELECT 1 FROM public.session_credits WHERE order_id=a.order_id) AND NOT a.consumes_credit THEN
   RAISE EXCEPTION 'credit-consuming appointment requires payment-validated confirmation'; END IF;
+ UPDATE public.mentorship_sessions SET appointment_id=a.id WHERE id=s.id AND (appointment_id IS NULL OR appointment_id=a.id);
+ IF NOT FOUND THEN RAISE EXCEPTION 'session already linked'; END IF;
  PERFORM public.confirm_appointment_tx(a.id,_scheduled,s.duration_minutes,_meeting,NULL);
 END $$;
-REVOKE ALL ON FUNCTION public.confirm_mentorship_session_tx(uuid,timestamptz,text) FROM PUBLIC,anon,authenticated;
-GRANT EXECUTE ON FUNCTION public.confirm_mentorship_session_tx(uuid,timestamptz,text) TO service_role;
+REVOKE ALL ON FUNCTION public.confirm_mentorship_session_tx(uuid,timestamptz,text,uuid) FROM PUBLIC,anon,authenticated;
+GRANT EXECUTE ON FUNCTION public.confirm_mentorship_session_tx(uuid,timestamptz,text,uuid) TO service_role;
 -- The backend role must have the privileges used by invoker RPCs.
 GRANT SELECT,UPDATE ON public.orders,public.mentorship_sessions TO service_role;
 GRANT SELECT ON public.mentorships,public.session_credits TO service_role;

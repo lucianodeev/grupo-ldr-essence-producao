@@ -758,8 +758,8 @@ type LegacyDatabase = {
       mentorship_sessions: {
         Row: {
           appointment_id: string | null
-          client_notes: string | null
           confirmed_at: string | null
+          client_notes: string | null
           created_at: string
           created_by: string | null
           duration_minutes: number
@@ -775,8 +775,8 @@ type LegacyDatabase = {
         }
         Insert: {
           appointment_id?: string | null
-          client_notes?: string | null
           confirmed_at?: string | null
+          client_notes?: string | null
           created_at?: string
           created_by?: string | null
           duration_minutes?: number
@@ -792,8 +792,8 @@ type LegacyDatabase = {
         }
         Update: {
           appointment_id?: string | null
-          client_notes?: string | null
           confirmed_at?: string | null
+          client_notes?: string | null
           created_at?: string
           created_by?: string | null
           duration_minutes?: number
@@ -1431,7 +1431,7 @@ type LegacyDatabase = {
         Returns: Json
       }
       confirm_mentorship_session_tx: {
-        Args: { _meeting: string; _scheduled: string; _session_id: string }
+        Args: { _meeting: string; _scheduled: string; _session_id: string; _appointment_id?: string }
         Returns: Json
       }
       process_site_order: {
@@ -1542,10 +1542,17 @@ type LegacyDatabase = {
  * Legacy-only tables/RPCs remain declared for existing deployments. This is
  * not proof they exist on the public project; see docs/audit-20261111/REPORT.md.
  */
+type AgendaMentorshipSessionTable = {
+  Row: ObservedDatabase["public"]["Tables"]["mentorship_sessions"]["Row"] & { appointment_id: string | null; confirmed_at: string | null };
+  Insert: ObservedDatabase["public"]["Tables"]["mentorship_sessions"]["Insert"] & { appointment_id?: string | null; confirmed_at?: string | null };
+  Update: ObservedDatabase["public"]["Tables"]["mentorship_sessions"]["Update"] & { appointment_id?: string | null; confirmed_at?: string | null };
+  Relationships: ObservedDatabase["public"]["Tables"]["mentorship_sessions"]["Relationships"];
+};
+
 export type Database = Omit<ObservedDatabase, "public"> & {
   public: Omit<ObservedDatabase["public"], "Tables" | "Functions" | "Enums"> & {
     Enums: Omit<LegacyDatabase["public"]["Enums"], keyof ObservedDatabase["public"]["Enums"]> & ObservedDatabase["public"]["Enums"];
-    Tables: Omit<LegacyDatabase["public"]["Tables"], keyof ObservedDatabase["public"]["Tables"]> & ObservedDatabase["public"]["Tables"];
+    Tables: Omit<LegacyDatabase["public"]["Tables"], keyof ObservedDatabase["public"]["Tables"]> & Omit<ObservedDatabase["public"]["Tables"], "mentorship_sessions"> & { mentorship_sessions: AgendaMentorshipSessionTable };
     Functions: Omit<LegacyDatabase["public"]["Functions"], keyof ObservedDatabase["public"]["Functions"]> & ObservedDatabase["public"]["Functions"];
   };
 };

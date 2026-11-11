@@ -449,6 +449,7 @@ export async function confirmMentorshipSession(supabase: Client, userId: string,
 
   const { error } = await supabaseAdmin.rpc("confirm_mentorship_session_tx", {
     _session_id: input.sessionId,
+    ...(input.appointmentId ? {_appointment_id: input.appointmentId} : {}),
     _scheduled: new Date(input.scheduledAt).toISOString(),
     _meeting: input.meetingUrl,
   });
@@ -460,8 +461,11 @@ export async function confirmMentorshipSession(supabase: Client, userId: string,
     );
   }
 
+  const {data: linked} = await supabaseAdmin.from("mentorship_sessions").select("appointment_id").eq("id",input.sessionId).single();
+  if (!linked?.appointment_id) fail("Agendamento vinculado não encontrado.");
+  const manual = await markManualLink(linked.appointment_id);
   await audit(userId, access.email, "mentorship_session.confirmed", input.sessionId);
-  return { ok: true as const };
+  return { ok: manual.status === "manual", status: manual.status };
 }
 
 /**
@@ -552,4 +556,17 @@ export async function linkPaidOrder(supabase: Client, userId: string, raw: unkno
   });
 
   return { ok: true as const };
+}
+
+export async function listStaffAppointments(supabase: Client, userId: string) {
+  await requireStaff(supabase, userId);
+  const {data,error} = await supabaseAdmin.from("appointments").select("*").order("starts_at",{ascending:true,nullsFirst:false});
+  if(error) fail("Não foi possível carregar a agenda.");
+  return data ?? [];
+}
+export async function listStaffAppointmentEvents(supabase: Client, userId: string, appointmentId: string) {
+  await requireStaff(supabase, userId);
+  const {data,error} = await supabaseAdmin.from("appointment_events").select("*").eq("appointment_id",appointmentId).order("created_at",{ascending:false});
+  if(error) fail("Não foi possível carregar o histórico.");
+  return data ?? [];
 }

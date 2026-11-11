@@ -389,7 +389,17 @@ export async function cancelAppointmentEvent(appointmentId: string): Promise<Syn
     return { status: "pendente", meetUrl: null, errorCode: "ocupado" };
   }
   const token = claim.lease_token;
-  const eventId = claim.google_event_id ?? existing.google_event_id;
+  let eventId = claim.google_event_id ?? existing.google_event_id;
+  if (!eventId && isCalendarConfigured()) {
+    try {
+      eventId = (await findEventByAppointment(appointmentId,null))?.eventId ?? null;
+      if (eventId) await persistEventId(appointmentId,token,eventId);
+    } catch (error) {
+      const code=codeOf(error);
+      await releaseSync(appointmentId,token,"erro",null,null,code);
+      return {status:"erro",meetUrl:null,errorCode:code};
+    }
+  }
 
   if (!eventId) {
     await releaseSync(appointmentId, token, "cancelado", null, null, null);
@@ -420,6 +430,11 @@ export async function markSyncPending(appointmentId: string) {
 
 /** Registra que o link foi definido manualmente pela equipe (fallback auditado). */
 export async function markManualLink(appointmentId: string): Promise<SyncOutcome> {
+  const existing = await readSyncRow(appointmentId);
+  if (existing?.google_event_id && existing.sync_status !== "cancelado") {
+    const cancelled = await cancelAppointmentEvent(appointmentId);
+    if (cancelled.status !== "cancelado") return cancelled;
+  }
   const claim = await claimSync(appointmentId);
   if (!claim.claimed || !claim.lease_token) {
     // Sincronização em andamento: nunca sobrescrevemos.

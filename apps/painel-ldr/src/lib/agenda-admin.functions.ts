@@ -90,3 +90,19 @@ export const linkPaidOrderFn = createServerFn({ method: "POST" })
     const { linkPaidOrder } = await import("@/lib/agenda-admin.server");
     return linkPaidOrder(context.supabase, context.userId, data);
   });
+
+/** New agenda tables are service-only; staff reads go through authorization. */
+export const listStaffAppointmentsFn = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const { listStaffAppointments } = await import("@/lib/agenda-admin.server");
+    return listStaffAppointments(context.supabase, context.userId);
+  });
+
+export const listStaffAppointmentEventsFn = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: unknown) => calendarSyncSchema.parse(data))
+  .handler(async ({ context, data }) => {
+    const { listStaffAppointmentEvents } = await import("@/lib/agenda-admin.server");
+    return listStaffAppointmentEvents(context.supabase, context.userId, data.appointmentId);
+  });

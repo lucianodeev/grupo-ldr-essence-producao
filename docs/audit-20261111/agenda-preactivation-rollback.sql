@@ -14,7 +14,7 @@ DROP TRIGGER appointment_credit_guard ON public.appointments;
 DROP FUNCTION public.guard_appointment_credit();
 DROP FUNCTION public.client_request_appointment(uuid,uuid,timestamptz,integer,text,uuid,text);
 DROP FUNCTION public.client_reschedule_appointment(uuid,uuid,timestamptz,text,uuid,text);
-DROP FUNCTION public.confirm_mentorship_session_tx(uuid,timestamptz,text);
+DROP FUNCTION public.confirm_mentorship_session_tx(uuid,timestamptz,text,uuid);
 DROP FUNCTION public.confirm_appointment_tx(uuid,timestamptz,integer,text,text);
 DROP FUNCTION public.claim_calendar_sync(uuid,text,integer);
 DROP FUNCTION public.release_calendar_sync(uuid,uuid,text,text,text,text);

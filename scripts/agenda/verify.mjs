@@ -41,8 +41,10 @@ try{
  const recovered=(await query('SELECT * FROM claim_calendar_sync($1,\'test-calendar\',120)',[id(20)])).rows[0];assert.equal(recovered.claimed,true);pass('expired lease recovered; stale release rejected; calendar mismatch rejected');
  await query(`INSERT INTO mentorships(id,customer_id,order_id) VALUES ('${id(50)}','${id(2)}','${id(1)}'); INSERT INTO mentorship_sessions(id,mentorship_id,appointment_id) VALUES ('${id(51)}','${id(50)}','${id(13)}')`);
  await reject(()=>query('SELECT confirm_mentorship_session_tx($1,now(),$2)',[id(51),'https://meet.google.com/test']),/insufficient session credits/);pass('mentorship cannot bypass exhausted credits');
- await query(`INSERT INTO appointments(id,title,consumes_credit) VALUES ('${id(60)}','Free',false); INSERT INTO mentorships(id) VALUES ('${id(61)}'); INSERT INTO mentorship_sessions(id,mentorship_id,appointment_id) VALUES ('${id(62)}','${id(61)}','${id(60)}')`);
- await query('SET ROLE service_role');await query('SELECT confirm_mentorship_session_tx($1,now()+interval \'1 day\',$2)',[id(62),'https://meet.google.com/free']);await query('RESET ROLE');
+ await query(`INSERT INTO appointments(id,title,consumes_credit) VALUES ('${id(60)}','Free',false); INSERT INTO mentorships(id) VALUES ('${id(61)}'); INSERT INTO mentorship_sessions(id,mentorship_id) VALUES ('${id(62)}','${id(61)}')`);
+ await reject(()=>query('SELECT confirm_mentorship_session_tx($1,now(),$2,$3)',[id(62),'https://meet.google.com/test',id(13)]),/mentorship ownership mismatch/);
+ assert.equal((await query('SELECT appointment_id FROM mentorship_sessions WHERE id=$1',[id(62)])).rows[0].appointment_id,null);pass('explicit mentorship link rejects wrong owner and rolls back');
+ await query('SET ROLE service_role');await query('SELECT confirm_mentorship_session_tx($1,now()+interval \'1 day\',$2,$3)',[id(62),'https://meet.google.com/free',id(60)]);await query('RESET ROLE');
  assert.equal((await query('SELECT confirmed_at IS NOT NULL AS ok FROM mentorship_sessions WHERE id=$1',[id(62)])).rows[0].ok,true);pass('free mentorship confirms and mirrors atomically as service_role');
  await query(`UPDATE appointments SET status='cancelada' WHERE id='${id(60)}'`);assert.equal((await query('SELECT meeting_url,confirmed_at FROM mentorship_sessions WHERE id=$1',[id(62)])).rows[0].meeting_url,null);pass('cancellation clears linked mentorship URL');
  await query(`UPDATE orders SET payment_status='reembolsado' WHERE id='${id(1)}'`);await reject(()=>confirm(14),/paid order ownership mismatch/);pass('refunded payment rejected');
