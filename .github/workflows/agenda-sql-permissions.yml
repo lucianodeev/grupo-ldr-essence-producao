@@ -1,0 +1,81 @@
+name: Agenda SQL permissions isolated
+on:
+  workflow_dispatch:
+  push:
+    branches: [feat/central-empresas-ldr]
+    paths: ['.github/workflows/agenda-sql-permissions.yml']
+jobs:
+  permissions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:16
+        env: { POSTGRES_PASSWORD: test_only, POSTGRES_DB: agenda_test }
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      PGHOST: localhost
+      PGPORT: '5432'
+      PGUSER: postgres
+      PGPASSWORD: test_only
+      PGDATABASE: agenda_test
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install PostgreSQL client
+        run: sudo apt-get update -qq && sudo apt-get install -y postgresql-client
+      - name: Apply actual SQL drafts in disposable database
+        shell: bash
+        run: |
+          set -euo pipefail
+          psql -v ON_ERROR_STOP=1 <<'SQL'
+          CREATE ROLE anon NOLOGIN;
+          CREATE ROLE authenticated NOLOGIN;
+          CREATE ROLE service_role NOLOGIN BYPASSRLS;
+          CREATE TYPE public.payment_status AS ENUM ('pendente','pago','reembolsado','falhou');
+          CREATE TYPE public.session_status AS ENUM ('agendada','concluida','cancelada','reagendada');
+          CREATE TABLE public.orders(id uuid PRIMARY KEY,customer_id uuid,catalog_key text,payment_status public.payment_status);
+          CREATE TABLE public.session_credits(id uuid PRIMARY KEY DEFAULT gen_random_uuid(),order_id uuid,customer_id uuid,catalog_key text,granted integer,source text,created_at timestamptz DEFAULT now());
+          CREATE TABLE public.mentorship_sessions(id uuid PRIMARY KEY,scheduled_at timestamptz,duration_minutes integer DEFAULT 50,meeting_url text,status public.session_status DEFAULT 'agendada',updated_at timestamptz DEFAULT now());
+          SQL
+          for f in agenda-migration-draft.sql agenda-calendar-schema-draft.sql agenda-rpc-safe-draft.sql agenda-credit-confirmation-draft.sql agenda-calendar-rpc-draft.sql agenda-service-role-hardening-draft.sql; do
+            sed -e '/^BEGIN;[[:space:]]*$/d' -e '/^ROLLBACK;.*$/d' "docs/audit-20261111/$f" | psql -v ON_ERROR_STOP=1
+          done
+      - name: Verify grants and RLS
+        shell: bash
+        run: |
+          set -euo pipefail
+          psql -v ON_ERROR_STOP=1 <<'SQL'
+          DO $$
+          DECLARE f regprocedure;
+          BEGIN
+            FOREACH f IN ARRAY ARRAY[
+              'public.confirm_appointment_tx(uuid,timestamptz,integer,text,text)'::regprocedure,
+              'public.confirm_mentorship_session_tx(uuid,timestamptz,text)'::regprocedure,
+              'public.claim_calendar_sync(uuid,text,integer)'::regprocedure,
+              'public.release_calendar_sync(uuid,uuid,text,text,text,text)'::regprocedure
+            ] LOOP
+              IF NOT has_function_privilege('service_role',f,'EXECUTE')
+                 OR has_function_privilege('anon',f,'EXECUTE')
+                 OR has_function_privilege('authenticated',f,'EXECUTE') THEN
+                RAISE EXCEPTION 'unsafe RPC privilege: %', f;
+              END IF;
+            END LOOP;
+            IF EXISTS (
+              SELECT 1 FROM pg_class
+              WHERE oid IN ('public.appointments'::regclass,'public.appointment_events'::regclass,'public.appointment_calendar_sync'::regclass)
+              AND NOT relrowsecurity
+            ) THEN RAISE EXCEPTION 'RLS disabled'; END IF;
+          END $$;
+          SQL
+          for role in anon authenticated; do
+            if psql -v ON_ERROR_STOP=1 -c "SET ROLE $role; SELECT public.confirm_appointment_tx(NULL,NULL,NULL,NULL,NULL);" >/tmp/denied.log 2>&1; then
+              echo "ERROR: $role executed restricted function"; exit 1
+            fi
+            grep -q 'permission denied for function' /tmp/denied.log || { cat /tmp/denied.log; exit 1; }
+          done
+          echo 'PASS: service role allowed; public roles denied; RLS enabled'
