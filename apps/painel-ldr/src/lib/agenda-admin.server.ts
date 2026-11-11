@@ -29,6 +29,7 @@ function fail(message: string): never {
 }
 
 async function requireStaff(supabase: Client, userId: string) {
+  if (process.env["AGENDA_INTEGRATION_ENABLED"] !== "true") fail("Integração de agenda ainda não ativada.");
   const access = await resolveAccess(supabase, userId);
   if (!access.authorized) fail("Acesso negado.");
   return access;
@@ -81,7 +82,7 @@ async function loadAppointment(id: string) {
 
 /** Traduz erros do banco em mensagens genéricas, sem vazar detalhe interno. */
 function scheduleFailure(message: string): never {
-  if (message.includes("sessões restantes")) fail("Pacote sem sessões restantes.");
+  if (message.includes("insufficient session credits") || message.includes("sessões restantes")) fail("Pacote sem sessões restantes.");
   if (message.includes("sem créditos")) fail("Pedido sem créditos de sessão.");
   if (message.includes("não encontrad")) fail("Agendamento não encontrado.");
   fail("Não foi possível confirmar o agendamento.");
@@ -89,7 +90,7 @@ function scheduleFailure(message: string): never {
 
 /**
  * Confirma o horário e libera o link da videochamada para o dono do dado.
- * Appointment + mentorship_sessions + espelho S8 são gravados numa única
+ * Appointment + explicit linked mentorship_sessions são gravados numa única
  * transação no banco (lock por pedido): se a vinculação falhar, nada é
  * confirmado e o link nunca chega a existir.
  */
@@ -137,6 +138,12 @@ export async function confirmWithGoogleMeet(supabase: Client, userId: string, ra
 
   const duration = input.durationMinutes ?? appointment.duration_minutes ?? 50;
   const startsAt = new Date(input.startsAt).toISOString();
+
+  const { error: reservationError } = await supabaseAdmin.rpc("confirm_appointment_tx", {
+    _appointment_id: appointment.id, _starts: startsAt, _duration: duration,
+    _meeting: null, _client_note: input.clientNote ?? "",
+  } as never);
+  if (reservationError) scheduleFailure(reservationError.message);
 
   const outcome = await syncAppointmentEvent(appointment.id, {
     overrideStart: startsAt,
@@ -384,13 +391,13 @@ export async function createStaffAppointment(supabase: Client, userId: string, r
       customer_id: customerId,
       catalog_key: catalogKey,
       title: input.title,
-      status: input.meetingUrl ? "confirmada" : "agendada",
+      status: "agendada",
       starts_at: startsAt,
       ends_at: startsAt
         ? new Date(new Date(startsAt).getTime() + duration * 60000).toISOString()
         : null,
       duration_minutes: duration,
-      meeting_url: input.meetingUrl ?? null,
+      meeting_url: null,
       client_notes: input.clientNotes ?? null,
       internal_notes: input.internalNotes ?? null,
       consumes_credit: input.consumesCredit,
@@ -408,6 +415,16 @@ export async function createStaffAppointment(supabase: Client, userId: string, r
   }
   if (!created) fail("Não foi possível criar o agendamento.");
 
+  if (input.meetingUrl) {
+    if (!startsAt) fail("Defina o horário antes de confirmar.");
+    const { error: confirmationError } = await supabaseAdmin.rpc("confirm_appointment_tx", {
+      _appointment_id: created.id, _starts: startsAt, _duration: duration,
+      _meeting: input.meetingUrl, _client_note: input.clientNotes ?? "",
+    });
+    if (confirmationError) scheduleFailure(confirmationError.message);
+    await markManualLink(created.id);
+  }
+
   await event(created.id, "criada", userId, access.email, null, false);
   await audit(userId, access.email, "appointment.created", created.id);
 
@@ -416,7 +433,7 @@ export async function createStaffAppointment(supabase: Client, userId: string, r
 
 /**
  * Confirma uma sessão de mentoria/S8 e libera o link para o cliente.
- * Sessão, espelho S8 e o agendamento vinculado são atualizados na mesma
+ * Sessão e o agendamento explicitamente vinculado são atualizados na mesma
  * transação do banco — sem updates sequenciais que possam divergir.
  */
 export async function confirmMentorshipSession(supabase: Client, userId: string, raw: unknown) {

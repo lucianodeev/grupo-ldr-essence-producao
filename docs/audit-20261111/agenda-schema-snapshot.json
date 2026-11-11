@@ -1,0 +1,2617 @@
+{
+  "enums": [
+    {
+      "name": "factor_type",
+      "labels": [
+        "totp",
+        "webauthn",
+        "phone",
+        "recovery_code"
+      ],
+      "schema": "auth"
+    },
+    {
+      "name": "factor_status",
+      "labels": [
+        "unverified",
+        "verified"
+      ],
+      "schema": "auth"
+    },
+    {
+      "name": "aal_level",
+      "labels": [
+        "aal1",
+        "aal2",
+        "aal3"
+      ],
+      "schema": "auth"
+    },
+    {
+      "name": "code_challenge_method",
+      "labels": [
+        "s256",
+        "plain"
+      ],
+      "schema": "auth"
+    },
+    {
+      "name": "one_time_token_type",
+      "labels": [
+        "confirmation_token",
+        "reauthentication_token",
+        "recovery_token",
+        "email_change_token_new",
+        "email_change_token_current",
+        "phone_change_token"
+      ],
+      "schema": "auth"
+    },
+    {
+      "name": "oauth_registration_type",
+      "labels": [
+        "dynamic",
+        "manual"
+      ],
+      "schema": "auth"
+    },
+    {
+      "name": "oauth_authorization_status",
+      "labels": [
+        "pending",
+        "approved",
+        "denied",
+        "expired"
+      ],
+      "schema": "auth"
+    },
+    {
+      "name": "oauth_response_type",
+      "labels": [
+        "code"
+      ],
+      "schema": "auth"
+    },
+    {
+      "name": "oauth_client_type",
+      "labels": [
+        "public",
+        "confidential"
+      ],
+      "schema": "auth"
+    },
+    {
+      "name": "app_role",
+      "labels": [
+        "superadmin",
+        "colaborador"
+      ],
+      "schema": "public"
+    },
+    {
+      "name": "service_type",
+      "labels": [
+        "recrutamento_selecao",
+        "site",
+        "mentoria",
+        "produto_digital",
+        "palestra",
+        "outros"
+      ],
+      "schema": "public"
+    },
+    {
+      "name": "order_status",
+      "labels": [
+        "novo",
+        "em_analise",
+        "em_andamento",
+        "aguardando_cliente",
+        "em_revisao",
+        "concluido",
+        "cancelado"
+      ],
+      "schema": "public"
+    },
+    {
+      "name": "payment_status",
+      "labels": [
+        "pendente",
+        "pago",
+        "reembolsado",
+        "falhou"
+      ],
+      "schema": "public"
+    },
+    {
+      "name": "priority_level",
+      "labels": [
+        "baixa",
+        "media",
+        "alta",
+        "urgente"
+      ],
+      "schema": "public"
+    },
+    {
+      "name": "mentorship_status",
+      "labels": [
+        "intake",
+        "aguardando_pagamento",
+        "aguardando_agendamento",
+        "agendada",
+        "em_andamento",
+        "concluida",
+        "cancelada"
+      ],
+      "schema": "public"
+    },
+    {
+      "name": "delivery_status",
+      "labels": [
+        "pendente",
+        "em_producao",
+        "em_revisao",
+        "entregue",
+        "cancelada"
+      ],
+      "schema": "public"
+    },
+    {
+      "name": "session_status",
+      "labels": [
+        "agendada",
+        "concluida",
+        "cancelada",
+        "reagendada"
+      ],
+      "schema": "public"
+    },
+    {
+      "name": "delivery_event_type",
+      "labels": [
+        "entregue",
+        "aprovada",
+        "ajuste_solicitado",
+        "comentario",
+        "revisada"
+      ],
+      "schema": "public"
+    }
+  ],
+  "tables": [
+    {
+      "acl": "{postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}",
+      "rls": true,
+      "name": "audit_logs",
+      "schema": "public",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "actor_id",
+          "type": "uuid",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "actor_email",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "action",
+          "type": "text",
+          "default": null,
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "target",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "details",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "notnull": true,
+          "generated": ""
+        }
+      ]
+    },
+    {
+      "acl": "{postgres=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}",
+      "rls": true,
+      "name": "mentorship_sessions",
+      "schema": "public",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "mentorship_id",
+          "type": "uuid",
+          "default": null,
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "default": "'Sess\u00e3o de mentoria'::text",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "session_number",
+          "type": "smallint",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "scheduled_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "duration_minutes",
+          "type": "integer",
+          "default": "50",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "meeting_url",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "session_status",
+          "default": "'agendada'::session_status",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "client_notes",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "internal_notes",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "created_by",
+          "type": "uuid",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "notnull": true,
+          "generated": ""
+        }
+      ]
+    },
+    {
+      "acl": "{postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}",
+      "rls": true,
+      "name": "mentorships",
+      "schema": "public",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "customer_id",
+          "type": "uuid",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "order_id",
+          "type": "uuid",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "participant_id",
+          "type": "uuid",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "intake_answers",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "goal",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "payment_status",
+          "type": "payment_status",
+          "default": "'pendente'::payment_status",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "scheduled_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "mentorship_status",
+          "default": "'intake'::mentorship_status",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "external_ref",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "created_by",
+          "type": "uuid",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "program_name",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "client_summary",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "next_steps",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        }
+      ]
+    },
+    {
+      "acl": "{postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}",
+      "rls": true,
+      "name": "order_history",
+      "schema": "public",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "order_id",
+          "type": "uuid",
+          "default": null,
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "actor_id",
+          "type": "uuid",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "actor_email",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "field",
+          "type": "text",
+          "default": null,
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "old_value",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "new_value",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "note",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "notnull": true,
+          "generated": ""
+        }
+      ]
+    },
+    {
+      "acl": "{postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}",
+      "rls": true,
+      "name": "orders",
+      "schema": "public",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "order_number",
+          "type": "text",
+          "default": null,
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "customer_id",
+          "type": "uuid",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "contact_email",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "contact_phone",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "service_type",
+          "type": "service_type",
+          "default": "'outros'::service_type",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "default": null,
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "quantity",
+          "type": "integer",
+          "default": "1",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "amount_cents",
+          "type": "integer",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "currency",
+          "type": "text",
+          "default": "'BRL'::text",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "payment_status",
+          "type": "payment_status",
+          "default": "'pendente'::payment_status",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "order_status",
+          "default": "'novo'::order_status",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "priority",
+          "type": "priority_level",
+          "default": "'media'::priority_level",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "assignee_id",
+          "type": "uuid",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "due_date",
+          "type": "date",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "internal_notes",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "created_by",
+          "type": "uuid",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "catalog_key",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "stripe_checkout_session_id",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "stripe_payment_intent_id",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "stripe_price_id",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "paid_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "organization_id",
+          "type": "uuid",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "external_ref",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "category",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "source",
+          "type": "text",
+          "default": "'painel'::text",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "stripe_payment_link_id",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "is_request",
+          "type": "boolean",
+          "default": "false",
+          "notnull": true,
+          "generated": ""
+        }
+      ]
+    },
+    {
+      "acl": "{postgres=arwdDxtm/postgres,service_role=arwdDxtm/postgres}",
+      "rls": true,
+      "name": "professional_subscriptions",
+      "schema": "public",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "professional_account_id",
+          "type": "uuid",
+          "default": null,
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "plan_id",
+          "type": "uuid",
+          "default": null,
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "stripe_subscription_id",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "stripe_checkout_session_id",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'pending'::text",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "current_period_start",
+          "type": "timestamp with time zone",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "current_period_end",
+          "type": "timestamp with time zone",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "cancel_at_period_end",
+          "type": "boolean",
+          "default": "false",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "notnull": true,
+          "generated": ""
+        }
+      ]
+    },
+    {
+      "acl": "{postgres=arwdDxtm/postgres,service_role=arwdDxtm/postgres}",
+      "rls": true,
+      "name": "session_credits",
+      "schema": "public",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "order_id",
+          "type": "uuid",
+          "default": null,
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "customer_id",
+          "type": "uuid",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "catalog_key",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "granted",
+          "type": "integer",
+          "default": "0",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "source",
+          "type": "text",
+          "default": "'pagamento'::text",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "notnull": true,
+          "generated": ""
+        }
+      ]
+    },
+    {
+      "acl": "{postgres=arwdDxtm/postgres,service_role=arwdDxtm/postgres}",
+      "rls": true,
+      "name": "subscription_plan_entitlements",
+      "schema": "public",
+      "columns": [
+        {
+          "name": "plan_id",
+          "type": "uuid",
+          "default": null,
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "entitlement_key",
+          "type": "text",
+          "default": null,
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "enabled",
+          "type": "boolean",
+          "default": "true",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "config",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "notnull": true,
+          "generated": ""
+        }
+      ]
+    },
+    {
+      "acl": "{postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}",
+      "rls": true,
+      "name": "user_roles",
+      "schema": "public",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "user_id",
+          "type": "uuid",
+          "default": null,
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "role",
+          "type": "app_role",
+          "default": null,
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "notnull": true,
+          "generated": ""
+        }
+      ]
+    },
+    {
+      "acl": "{postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}",
+      "rls": true,
+      "name": "customers",
+      "schema": "public",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "full_name",
+          "type": "text",
+          "default": null,
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "email",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "phone",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "country",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "language",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "source",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "created_by",
+          "type": "uuid",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "auth_user_id",
+          "type": "uuid",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "portal_active",
+          "type": "boolean",
+          "default": "true",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "portal_linked_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "birth_date",
+          "type": "date",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "vacation_start",
+          "type": "date",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "vacation_end",
+          "type": "date",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "next_day_off",
+          "type": "date",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        }
+      ]
+    },
+    {
+      "acl": "{postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}",
+      "rls": true,
+      "name": "participants",
+      "schema": "public",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "full_name",
+          "type": "text",
+          "default": null,
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "email",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "phone",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "city",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "birth_date",
+          "type": "date",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "business_stage",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "business_area",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "goal",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "created_by",
+          "type": "uuid",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "professional_account_id",
+          "type": "uuid",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        }
+      ]
+    },
+    {
+      "acl": "{postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}",
+      "rls": true,
+      "name": "profiles",
+      "schema": "public",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "default": null,
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "email",
+          "type": "text",
+          "default": null,
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "full_name",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "is_active",
+          "type": "boolean",
+          "default": "true",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "phone",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "birth_date",
+          "type": "date",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "vacation_start",
+          "type": "date",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "vacation_end",
+          "type": "date",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "next_day_off",
+          "type": "date",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        }
+      ]
+    },
+    {
+      "acl": "{postgres=arwdDxtm/postgres,service_role=arwdDxtm/postgres}",
+      "rls": true,
+      "name": "organizations",
+      "schema": "public",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "default": null,
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "billing_email",
+          "type": "text",
+          "default": null,
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "country",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "phone",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "tax_id",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "owner_auth_user_id",
+          "type": "uuid",
+          "default": null,
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "active",
+          "type": "boolean",
+          "default": "true",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "notnull": true,
+          "generated": ""
+        }
+      ]
+    },
+    {
+      "acl": "{postgres=arwdDxtm/postgres,service_role=arwdDxtm/postgres,anon=r/postgres,authenticated=r/postgres}",
+      "rls": true,
+      "name": "subscription_plans",
+      "schema": "public",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "market",
+          "type": "text",
+          "default": null,
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "plan_code",
+          "type": "text",
+          "default": null,
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "default": null,
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "currency",
+          "type": "text",
+          "default": null,
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "amount_cents",
+          "type": "integer",
+          "default": null,
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "interval",
+          "type": "text",
+          "default": "'month'::text",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "benefits",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "admin_config",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "stripe_price_id",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "active",
+          "type": "boolean",
+          "default": "true",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "sort_order",
+          "type": "integer",
+          "default": "100",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "notnull": true,
+          "generated": ""
+        }
+      ]
+    },
+    {
+      "acl": "{postgres=arwdDxtm/postgres,service_role=arwdDxtm/postgres}",
+      "rls": true,
+      "name": "professional_accounts",
+      "schema": "public",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "auth_user_id",
+          "type": "uuid",
+          "default": null,
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'incomplete'::text",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "onboarding_step",
+          "type": "integer",
+          "default": "1",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "onboarding_completed",
+          "type": "boolean",
+          "default": "false",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "country_code",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "preferred_currency",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "stripe_customer_id",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "stripe_connected_account_id",
+          "type": "text",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "connect_status",
+          "type": "text",
+          "default": "'not_started'::text",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "payout_method_status",
+          "type": "text",
+          "default": "'pending'::text",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "engagement_model",
+          "type": "text",
+          "default": "'commission'::text",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "custom_commission_rate",
+          "type": "numeric(5,4)",
+          "default": "0.20",
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "managed_by_admin",
+          "type": "boolean",
+          "default": "false",
+          "notnull": true,
+          "generated": ""
+        }
+      ]
+    },
+    {
+      "acl": "{supabase_auth_admin=arwdDxtm/supabase_auth_admin,dashboard_user=arwdDxtm/supabase_auth_admin,postgres=ar*wdDxtm/supabase_auth_admin}",
+      "rls": true,
+      "name": "users",
+      "schema": "auth",
+      "columns": [
+        {
+          "name": "instance_id",
+          "type": "uuid",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "id",
+          "type": "uuid",
+          "default": null,
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "aud",
+          "type": "character varying(255)",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "role",
+          "type": "character varying(255)",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "email",
+          "type": "character varying(255)",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "encrypted_password",
+          "type": "character varying(255)",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "email_confirmed_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "invited_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "confirmation_token",
+          "type": "character varying(255)",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "confirmation_sent_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "recovery_token",
+          "type": "character varying(255)",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "recovery_sent_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "email_change_token_new",
+          "type": "character varying(255)",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "email_change",
+          "type": "character varying(255)",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "email_change_sent_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "last_sign_in_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "raw_app_meta_data",
+          "type": "jsonb",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "raw_user_meta_data",
+          "type": "jsonb",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "is_super_admin",
+          "type": "boolean",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "phone",
+          "type": "text",
+          "default": "NULL::character varying",
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "phone_confirmed_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "phone_change",
+          "type": "text",
+          "default": "''::character varying",
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "phone_change_token",
+          "type": "character varying(255)",
+          "default": "''::character varying",
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "phone_change_sent_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "confirmed_at",
+          "type": "timestamp with time zone",
+          "default": "LEAST(email_confirmed_at, phone_confirmed_at)",
+          "notnull": false,
+          "generated": "s"
+        },
+        {
+          "name": "email_change_token_current",
+          "type": "character varying(255)",
+          "default": "''::character varying",
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "email_change_confirm_status",
+          "type": "smallint",
+          "default": "0",
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "banned_until",
+          "type": "timestamp with time zone",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "reauthentication_token",
+          "type": "character varying(255)",
+          "default": "''::character varying",
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "reauthentication_sent_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "is_sso_user",
+          "type": "boolean",
+          "default": "false",
+          "notnull": true,
+          "generated": ""
+        },
+        {
+          "name": "deleted_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "notnull": false,
+          "generated": ""
+        },
+        {
+          "name": "is_anonymous",
+          "type": "boolean",
+          "default": "false",
+          "notnull": true,
+          "generated": ""
+        }
+      ]
+    }
+  ],
+  "indexes": [
+    "CREATE UNIQUE INDEX users_pkey ON auth.users USING btree (id)",
+    "CREATE INDEX users_instance_id_idx ON auth.users USING btree (instance_id)",
+    "CREATE INDEX users_instance_id_email_idx ON auth.users USING btree (instance_id, lower((email)::text))",
+    "CREATE UNIQUE INDEX confirmation_token_idx ON auth.users USING btree (confirmation_token) WHERE ((confirmation_token)::text !~ '^[0-9 ]*$'::text)",
+    "CREATE UNIQUE INDEX recovery_token_idx ON auth.users USING btree (recovery_token) WHERE ((recovery_token)::text !~ '^[0-9 ]*$'::text)",
+    "CREATE UNIQUE INDEX email_change_token_current_idx ON auth.users USING btree (email_change_token_current) WHERE ((email_change_token_current)::text !~ '^[0-9 ]*$'::text)",
+    "CREATE UNIQUE INDEX email_change_token_new_idx ON auth.users USING btree (email_change_token_new) WHERE ((email_change_token_new)::text !~ '^[0-9 ]*$'::text)",
+    "CREATE UNIQUE INDEX reauthentication_token_idx ON auth.users USING btree (reauthentication_token) WHERE ((reauthentication_token)::text !~ '^[0-9 ]*$'::text)",
+    "CREATE UNIQUE INDEX users_email_partial_key ON auth.users USING btree (email) WHERE (is_sso_user = false)",
+    "CREATE UNIQUE INDEX users_phone_key ON auth.users USING btree (phone)",
+    "CREATE INDEX users_is_anonymous_idx ON auth.users USING btree (is_anonymous)",
+    "CREATE INDEX idx_users_email ON auth.users USING btree (email)",
+    "CREATE INDEX idx_users_created_at_desc ON auth.users USING btree (created_at DESC)",
+    "CREATE INDEX idx_users_last_sign_in_at_desc ON auth.users USING btree (last_sign_in_at DESC)",
+    "CREATE INDEX idx_users_name ON auth.users USING btree (((raw_user_meta_data ->> 'name'::text))) WHERE ((raw_user_meta_data ->> 'name'::text) IS NOT NULL)",
+    "CREATE UNIQUE INDEX profiles_pkey ON public.profiles USING btree (id)",
+    "CREATE UNIQUE INDEX user_roles_pkey ON public.user_roles USING btree (id)",
+    "CREATE UNIQUE INDEX user_roles_user_id_role_key ON public.user_roles USING btree (user_id, role)",
+    "CREATE UNIQUE INDEX audit_logs_pkey ON public.audit_logs USING btree (id)",
+    "CREATE UNIQUE INDEX participants_pkey ON public.participants USING btree (id)",
+    "CREATE UNIQUE INDEX customers_pkey ON public.customers USING btree (id)",
+    "CREATE UNIQUE INDEX customers_email_unique ON public.customers USING btree (lower(email)) WHERE ((email IS NOT NULL) AND (email <> ''::text))",
+    "CREATE UNIQUE INDEX orders_pkey ON public.orders USING btree (id)",
+    "CREATE UNIQUE INDEX orders_order_number_key ON public.orders USING btree (order_number)",
+    "CREATE UNIQUE INDEX order_history_pkey ON public.order_history USING btree (id)",
+    "CREATE INDEX order_history_order_idx ON public.order_history USING btree (order_id, created_at DESC)",
+    "CREATE UNIQUE INDEX mentorships_pkey ON public.mentorships USING btree (id)",
+    "CREATE UNIQUE INDEX customers_auth_user_id_key ON public.customers USING btree (auth_user_id) WHERE (auth_user_id IS NOT NULL)",
+    "CREATE UNIQUE INDEX customers_email_unique_ci ON public.customers USING btree (lower(email)) WHERE (email IS NOT NULL)",
+    "CREATE UNIQUE INDEX mentorship_sessions_pkey ON public.mentorship_sessions USING btree (id)",
+    "CREATE INDEX mentorship_sessions_mentorship_idx ON public.mentorship_sessions USING btree (mentorship_id, scheduled_at)",
+    "CREATE INDEX orders_customer_catalog_payment_idx ON public.orders USING btree (customer_id, catalog_key, payment_status)",
+    "CREATE UNIQUE INDEX orders_stripe_checkout_session_key ON public.orders USING btree (stripe_checkout_session_id) WHERE (stripe_checkout_session_id IS NOT NULL)",
+    "CREATE INDEX orders_stripe_payment_intent_idx ON public.orders USING btree (stripe_payment_intent_id) WHERE (stripe_payment_intent_id IS NOT NULL)",
+    "CREATE INDEX mentorships_customer_id_idx ON public.mentorships USING btree (customer_id)",
+    "CREATE INDEX mentorships_order_id_idx ON public.mentorships USING btree (order_id)",
+    "CREATE INDEX mentorships_participant_id_idx ON public.mentorships USING btree (participant_id)",
+    "CREATE INDEX orders_assignee_id_idx ON public.orders USING btree (assignee_id)",
+    "CREATE UNIQUE INDEX organizations_pkey ON public.organizations USING btree (id)",
+    "CREATE UNIQUE INDEX organizations_owner_unique ON public.organizations USING btree (owner_auth_user_id)",
+    "CREATE INDEX orders_organization_id_idx ON public.orders USING btree (organization_id)",
+    "CREATE UNIQUE INDEX professional_accounts_pkey ON public.professional_accounts USING btree (id)",
+    "CREATE UNIQUE INDEX professional_accounts_auth_user_id_key ON public.professional_accounts USING btree (auth_user_id)",
+    "CREATE UNIQUE INDEX subscription_plans_pkey ON public.subscription_plans USING btree (id)",
+    "CREATE UNIQUE INDEX subscription_plans_market_plan_code_key ON public.subscription_plans USING btree (market, plan_code)",
+    "CREATE UNIQUE INDEX professional_subscriptions_pkey ON public.professional_subscriptions USING btree (id)",
+    "CREATE UNIQUE INDEX professional_subscriptions_stripe_subscription_id_key ON public.professional_subscriptions USING btree (stripe_subscription_id)",
+    "CREATE UNIQUE INDEX professional_subscriptions_stripe_checkout_session_id_key ON public.professional_subscriptions USING btree (stripe_checkout_session_id)",
+    "CREATE INDEX professional_subscriptions_account_idx ON public.professional_subscriptions USING btree (professional_account_id)",
+    "CREATE INDEX professional_subscriptions_plan_idx ON public.professional_subscriptions USING btree (plan_id)",
+    "CREATE UNIQUE INDEX subscription_plan_entitlements_pkey ON public.subscription_plan_entitlements USING btree (plan_id, entitlement_key)",
+    "CREATE INDEX participants_professional_account_idx ON public.participants USING btree (professional_account_id)",
+    "CREATE UNIQUE INDEX orders_external_ref_key ON public.orders USING btree (external_ref) WHERE (external_ref IS NOT NULL)",
+    "CREATE INDEX orders_catalog_idx ON public.orders USING btree (catalog_key)",
+    "CREATE INDEX orders_customer_idx ON public.orders USING btree (customer_id)",
+    "CREATE UNIQUE INDEX session_credits_pkey ON public.session_credits USING btree (id)",
+    "CREATE UNIQUE INDEX session_credits_order_id_key ON public.session_credits USING btree (order_id)",
+    "CREATE INDEX session_credits_customer_id_idx ON public.session_credits USING btree (customer_id)"
+  ],
+  "policies": [
+    {
+      "cmd": "DELETE",
+      "qual": "(is_superadmin(( SELECT auth.uid() AS uid)) OR (created_by = ( SELECT auth.uid() AS uid)))",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "customers",
+      "permissive": "PERMISSIVE",
+      "policyname": "customers_delete_scoped",
+      "schemaname": "public",
+      "with_check": null
+    },
+    {
+      "cmd": "INSERT",
+      "qual": null,
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "customers",
+      "permissive": "PERMISSIVE",
+      "policyname": "customers_insert_scoped",
+      "schemaname": "public",
+      "with_check": "(is_superadmin(( SELECT auth.uid() AS uid)) OR (created_by = ( SELECT auth.uid() AS uid)))"
+    },
+    {
+      "cmd": "ALL",
+      "qual": "(is_authorized(( SELECT auth.uid() AS uid)) OR ((professional_account_id IS NOT NULL) AND (professional_account_id = private.current_network_professional_account('mentoria_s8'::text))))",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "participants",
+      "permissive": "PERMISSIVE",
+      "policyname": "participants_authorized",
+      "schemaname": "public",
+      "with_check": "(is_authorized(( SELECT auth.uid() AS uid)) OR ((professional_account_id IS NOT NULL) AND (professional_account_id = private.current_network_professional_account('mentoria_s8'::text))))"
+    },
+    {
+      "cmd": "SELECT",
+      "qual": "((id = ( SELECT auth.uid() AS uid)) OR is_superadmin(( SELECT auth.uid() AS uid)))",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "profiles",
+      "permissive": "PERMISSIVE",
+      "policyname": "profiles_select_self",
+      "schemaname": "public",
+      "with_check": null
+    },
+    {
+      "cmd": "SELECT",
+      "qual": "(is_superadmin(( SELECT auth.uid() AS uid)) OR (created_by = ( SELECT auth.uid() AS uid)) OR (auth_user_id = ( SELECT auth.uid() AS uid)) OR (EXISTS ( SELECT 1\n   FROM orders o\n  WHERE ((o.customer_id = customers.id) AND ((o.created_by = ( SELECT auth.uid() AS uid)) OR (o.assignee_id = ( SELECT auth.uid() AS uid)))))))",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "customers",
+      "permissive": "PERMISSIVE",
+      "policyname": "customers_select_scoped",
+      "schemaname": "public",
+      "with_check": null
+    },
+    {
+      "cmd": "SELECT",
+      "qual": "(active = true)",
+      "roles": [
+        "anon",
+        "authenticated"
+      ],
+      "tablename": "subscription_plans",
+      "permissive": "PERMISSIVE",
+      "policyname": "subscription_plans_public_read",
+      "schemaname": "public",
+      "with_check": null
+    },
+    {
+      "cmd": "UPDATE",
+      "qual": "(is_superadmin(( SELECT auth.uid() AS uid)) OR (created_by = ( SELECT auth.uid() AS uid)))",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "customers",
+      "permissive": "PERMISSIVE",
+      "policyname": "customers_update_scoped",
+      "schemaname": "public",
+      "with_check": "(is_superadmin(( SELECT auth.uid() AS uid)) OR (created_by = ( SELECT auth.uid() AS uid)))"
+    },
+    {
+      "cmd": "DELETE",
+      "qual": "(is_superadmin(( SELECT auth.uid() AS uid)) OR (created_by = ( SELECT auth.uid() AS uid)) OR (assignee_id = ( SELECT auth.uid() AS uid)))",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "orders",
+      "permissive": "PERMISSIVE",
+      "policyname": "orders_delete_scoped",
+      "schemaname": "public",
+      "with_check": null
+    },
+    {
+      "cmd": "INSERT",
+      "qual": null,
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "orders",
+      "permissive": "PERMISSIVE",
+      "policyname": "orders_insert_scoped",
+      "schemaname": "public",
+      "with_check": "(is_superadmin(( SELECT auth.uid() AS uid)) OR (created_by = ( SELECT auth.uid() AS uid)))"
+    },
+    {
+      "cmd": "SELECT",
+      "qual": "(is_superadmin(( SELECT auth.uid() AS uid)) OR (created_by = ( SELECT auth.uid() AS uid)) OR (assignee_id = ( SELECT auth.uid() AS uid)))",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "orders",
+      "permissive": "PERMISSIVE",
+      "policyname": "orders_select_scoped",
+      "schemaname": "public",
+      "with_check": null
+    },
+    {
+      "cmd": "UPDATE",
+      "qual": "(is_superadmin(( SELECT auth.uid() AS uid)) OR (created_by = ( SELECT auth.uid() AS uid)) OR (assignee_id = ( SELECT auth.uid() AS uid)))",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "orders",
+      "permissive": "PERMISSIVE",
+      "policyname": "orders_update_scoped",
+      "schemaname": "public",
+      "with_check": "(is_superadmin(( SELECT auth.uid() AS uid)) OR (created_by = ( SELECT auth.uid() AS uid)) OR (assignee_id = ( SELECT auth.uid() AS uid)))"
+    },
+    {
+      "cmd": "ALL",
+      "qual": "false",
+      "roles": [
+        "anon",
+        "authenticated"
+      ],
+      "tablename": "organizations",
+      "permissive": "PERMISSIVE",
+      "policyname": "deny_client_access_internal_only",
+      "schemaname": "public",
+      "with_check": "false"
+    },
+    {
+      "cmd": "ALL",
+      "qual": "false",
+      "roles": [
+        "anon",
+        "authenticated"
+      ],
+      "tablename": "professional_accounts",
+      "permissive": "PERMISSIVE",
+      "policyname": "deny_client_access_internal_only",
+      "schemaname": "public",
+      "with_check": "false"
+    },
+    {
+      "cmd": "UPDATE",
+      "qual": "(id = ( SELECT auth.uid() AS uid))",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "profiles",
+      "permissive": "PERMISSIVE",
+      "policyname": "profiles_update_self_name",
+      "schemaname": "public",
+      "with_check": "(id = ( SELECT auth.uid() AS uid))"
+    },
+    {
+      "cmd": "SELECT",
+      "qual": "((user_id = ( SELECT auth.uid() AS uid)) OR is_superadmin(( SELECT auth.uid() AS uid)))",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "user_roles",
+      "permissive": "PERMISSIVE",
+      "policyname": "user_roles_select",
+      "schemaname": "public",
+      "with_check": null
+    },
+    {
+      "cmd": "SELECT",
+      "qual": "is_superadmin(( SELECT auth.uid() AS uid))",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "audit_logs",
+      "permissive": "PERMISSIVE",
+      "policyname": "audit_select_superadmin",
+      "schemaname": "public",
+      "with_check": null
+    },
+    {
+      "cmd": "INSERT",
+      "qual": null,
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "audit_logs",
+      "permissive": "PERMISSIVE",
+      "policyname": "audit_insert_authorized",
+      "schemaname": "public",
+      "with_check": "(is_authorized(( SELECT auth.uid() AS uid)) AND (actor_id = ( SELECT auth.uid() AS uid)))"
+    },
+    {
+      "cmd": "SELECT",
+      "qual": "is_authorized(( SELECT auth.uid() AS uid))",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "order_history",
+      "permissive": "PERMISSIVE",
+      "policyname": "order_history_select",
+      "schemaname": "public",
+      "with_check": null
+    },
+    {
+      "cmd": "INSERT",
+      "qual": null,
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "order_history",
+      "permissive": "PERMISSIVE",
+      "policyname": "order_history_insert",
+      "schemaname": "public",
+      "with_check": "is_authorized(( SELECT auth.uid() AS uid))"
+    },
+    {
+      "cmd": "ALL",
+      "qual": "false",
+      "roles": [
+        "anon",
+        "authenticated"
+      ],
+      "tablename": "professional_subscriptions",
+      "permissive": "PERMISSIVE",
+      "policyname": "deny_client_access_internal_only",
+      "schemaname": "public",
+      "with_check": "false"
+    },
+    {
+      "cmd": "ALL",
+      "qual": "is_authorized(( SELECT auth.uid() AS uid))",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "mentorships",
+      "permissive": "PERMISSIVE",
+      "policyname": "mentorships_authorized",
+      "schemaname": "public",
+      "with_check": "is_authorized(( SELECT auth.uid() AS uid))"
+    },
+    {
+      "cmd": "ALL",
+      "qual": "private.is_authorized(( SELECT auth.uid() AS uid))",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "mentorship_sessions",
+      "permissive": "PERMISSIVE",
+      "policyname": "mentorship_sessions_authorized",
+      "schemaname": "public",
+      "with_check": "private.is_authorized(( SELECT auth.uid() AS uid))"
+    },
+    {
+      "cmd": "ALL",
+      "qual": "false",
+      "roles": [
+        "anon",
+        "authenticated"
+      ],
+      "tablename": "subscription_plan_entitlements",
+      "permissive": "PERMISSIVE",
+      "policyname": "deny_client_access_internal_only",
+      "schemaname": "public",
+      "with_check": "false"
+    },
+    {
+      "cmd": "ALL",
+      "qual": "false",
+      "roles": [
+        "anon",
+        "authenticated"
+      ],
+      "tablename": "session_credits",
+      "permissive": "PERMISSIVE",
+      "policyname": "deny_client_access_internal_only",
+      "schemaname": "public",
+      "with_check": "false"
+    }
+  ],
+  "triggers": [
+    {
+      "def": "CREATE TRIGGER t_participants_updated BEFORE UPDATE ON public.participants FOR EACH ROW EXECUTE FUNCTION touch_updated_at()",
+      "table": "participants",
+      "function": "CREATE OR REPLACE FUNCTION public.touch_updated_at()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'public'\nAS $function$\nBEGIN NEW.updated_at = now(); RETURN NEW; END; $function$\n"
+    },
+    {
+      "def": "CREATE TRIGGER t_profiles_updated BEFORE UPDATE ON public.profiles FOR EACH ROW EXECUTE FUNCTION touch_updated_at()",
+      "table": "profiles",
+      "function": "CREATE OR REPLACE FUNCTION public.touch_updated_at()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'public'\nAS $function$\nBEGIN NEW.updated_at = now(); RETURN NEW; END; $function$\n"
+    },
+    {
+      "def": "CREATE TRIGGER t_customers_updated BEFORE UPDATE ON public.customers FOR EACH ROW EXECUTE FUNCTION touch_updated_at()",
+      "table": "customers",
+      "function": "CREATE OR REPLACE FUNCTION public.touch_updated_at()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'public'\nAS $function$\nBEGIN NEW.updated_at = now(); RETURN NEW; END; $function$\n"
+    },
+    {
+      "def": "CREATE TRIGGER t_orders_updated BEFORE UPDATE ON public.orders FOR EACH ROW EXECUTE FUNCTION touch_updated_at()",
+      "table": "orders",
+      "function": "CREATE OR REPLACE FUNCTION public.touch_updated_at()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'public'\nAS $function$\nBEGIN NEW.updated_at = now(); RETURN NEW; END; $function$\n"
+    },
+    {
+      "def": "CREATE TRIGGER t_mentorships_updated BEFORE UPDATE ON public.mentorships FOR EACH ROW EXECUTE FUNCTION touch_updated_at()",
+      "table": "mentorships",
+      "function": "CREATE OR REPLACE FUNCTION public.touch_updated_at()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'public'\nAS $function$\nBEGIN NEW.updated_at = now(); RETURN NEW; END; $function$\n"
+    },
+    {
+      "def": "CREATE TRIGGER t_orders_number BEFORE INSERT ON public.orders FOR EACH ROW EXECUTE FUNCTION set_order_number()",
+      "table": "orders",
+      "function": "CREATE OR REPLACE FUNCTION public.set_order_number()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'public'\nAS $function$\nBEGIN\n  IF NEW.order_number IS NULL OR NEW.order_number = '' THEN\n    NEW.order_number := 'PED-' || to_char(now(), 'YYYY') || '-' || lpad(nextval('public.order_number_seq')::text, 4, '0');\n  END IF;\n  RETURN NEW;\nEND $function$\n"
+    },
+    {
+      "def": "CREATE TRIGGER t_orders_track AFTER INSERT OR UPDATE ON public.orders FOR EACH ROW EXECUTE FUNCTION track_order_changes()",
+      "table": "orders",
+      "function": "CREATE OR REPLACE FUNCTION public.track_order_changes()\n RETURNS trigger\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'public', 'pg_temp'\nAS $function$\nDECLARE _email text;\nBEGIN\n  SELECT email INTO _email FROM public.profiles WHERE id = auth.uid();\n  IF TG_OP = 'INSERT' THEN\n    INSERT INTO public.order_history (order_id, actor_id, actor_email, field, old_value, new_value)\n    VALUES (NEW.id, auth.uid(), _email, 'criado', NULL, NEW.order_number);\n    PERFORM public.audit_event('order.created', NEW.id::text, jsonb_build_object('order_number', NEW.order_number));\n    RETURN NEW;\n  END IF;\n  IF NEW.status IS DISTINCT FROM OLD.status THEN\n    INSERT INTO public.order_history (order_id, actor_id, actor_email, field, old_value, new_value)\n    VALUES (NEW.id, auth.uid(), _email, 'status', OLD.status::text, NEW.status::text);\n    PERFORM public.audit_event('order.status_changed', NEW.id::text, jsonb_build_object('from', OLD.status, 'to', NEW.status));\n  END IF;\n  IF NEW.payment_status IS DISTINCT FROM OLD.payment_status THEN\n    INSERT INTO public.order_history (order_id, actor_id, actor_email, field, old_value, new_value)\n    VALUES (NEW.id, auth.uid(), _email, 'pagamento', OLD.payment_status::text, NEW.payment_status::text);\n    PERFORM public.audit_event('order.payment_changed', NEW.id::text, jsonb_build_object('from', OLD.payment_status, 'to', NEW.payment_status));\n  END IF;\n  IF NEW.assignee_id IS DISTINCT FROM OLD.assignee_id THEN\n    INSERT INTO public.order_history (order_id, actor_id, actor_email, field, old_value, new_value)\n    VALUES (NEW.id, auth.uid(), _email, 'responsavel', OLD.assignee_id::text, NEW.assignee_id::text);\n    PERFORM public.audit_event('order.assigned', NEW.id::text, jsonb_build_object('assignee', NEW.assignee_id));\n  END IF;\n  IF NEW.priority IS DISTINCT FROM OLD.priority THEN\n    INSERT INTO public.order_history (order_id, actor_id, actor_email, field, old_value, new_value)\n    VALUES (NEW.id, auth.uid(), _email, 'prioridade', OLD.priority::text, NEW.priority::text);\n  END IF;\n  IF NEW.due_date IS DISTINCT FROM OLD.due_date THEN\n    INSERT INTO public.order_history (order_id, actor_id, actor_email, field, old_value, new_value)\n    VALUES (NEW.id, auth.uid(), _email, 'prazo', OLD.due_date::text, NEW.due_date::text);\n  END IF;\n  RETURN NEW;\nEND $function$\n"
+    },
+    {
+      "def": "CREATE TRIGGER t_mentorships_track AFTER INSERT OR UPDATE ON public.mentorships FOR EACH ROW EXECUTE FUNCTION track_mentorship_changes()",
+      "table": "mentorships",
+      "function": "CREATE OR REPLACE FUNCTION public.track_mentorship_changes()\n RETURNS trigger\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF TG_OP = 'INSERT' THEN\n    PERFORM public.audit_event('mentorship.created', NEW.id::text, '{}'::jsonb);\n  ELSE\n    IF NEW.status IS DISTINCT FROM OLD.status THEN\n      PERFORM public.audit_event('mentorship.status_changed', NEW.id::text, jsonb_build_object('from', OLD.status, 'to', NEW.status));\n    END IF;\n    IF NEW.scheduled_at IS DISTINCT FROM OLD.scheduled_at THEN\n      PERFORM public.audit_event('mentorship.scheduled', NEW.id::text, jsonb_build_object('at', NEW.scheduled_at));\n    END IF;\n    IF NEW.payment_status IS DISTINCT FROM OLD.payment_status THEN\n      PERFORM public.audit_event('mentorship.payment_changed', NEW.id::text, jsonb_build_object('to', NEW.payment_status));\n    END IF;\n  END IF;\n  RETURN NEW;\nEND $function$\n"
+    },
+    {
+      "def": "CREATE TRIGGER t_mentorship_sessions_updated BEFORE UPDATE ON public.mentorship_sessions FOR EACH ROW EXECUTE FUNCTION touch_updated_at()",
+      "table": "mentorship_sessions",
+      "function": "CREATE OR REPLACE FUNCTION public.touch_updated_at()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'public'\nAS $function$\nBEGIN NEW.updated_at = now(); RETURN NEW; END; $function$\n"
+    },
+    {
+      "def": "CREATE TRIGGER organizations_touch_updated_at BEFORE UPDATE ON public.organizations FOR EACH ROW EXECUTE FUNCTION touch_updated_at()",
+      "table": "organizations",
+      "function": "CREATE OR REPLACE FUNCTION public.touch_updated_at()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'public'\nAS $function$\nBEGIN NEW.updated_at = now(); RETURN NEW; END; $function$\n"
+    },
+    {
+      "def": "CREATE TRIGGER customers_set_created_by BEFORE INSERT ON public.customers FOR EACH ROW EXECUTE FUNCTION private.set_created_by_if_missing()",
+      "table": "customers",
+      "function": "CREATE OR REPLACE FUNCTION private.set_created_by_if_missing()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'public', 'pg_temp'\nAS $function$\nbegin\n  if new.created_by is null and auth.uid() is not null then\n    new.created_by := auth.uid();\n  end if;\n  return new;\nend;\n$function$\n"
+    },
+    {
+      "def": "CREATE TRIGGER orders_set_created_by BEFORE INSERT ON public.orders FOR EACH ROW EXECUTE FUNCTION private.set_created_by_if_missing()",
+      "table": "orders",
+      "function": "CREATE OR REPLACE FUNCTION private.set_created_by_if_missing()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'public', 'pg_temp'\nAS $function$\nbegin\n  if new.created_by is null and auth.uid() is not null then\n    new.created_by := auth.uid();\n  end if;\n  return new;\nend;\n$function$\n"
+    }
+  ],
+  "constraints": [
+    {
+      "def": "PRIMARY KEY (id)",
+      "name": "users_pkey",
+      "table": "auth.users"
+    },
+    {
+      "def": "CHECK (((email_change_confirm_status >= 0) AND (email_change_confirm_status <= 2)))",
+      "name": "users_email_change_confirm_status_check",
+      "table": "auth.users"
+    },
+    {
+      "def": "UNIQUE (phone)",
+      "name": "users_phone_key",
+      "table": "auth.users"
+    },
+    {
+      "def": "UNIQUE (order_number)",
+      "name": "orders_order_number_key",
+      "table": "orders"
+    },
+    {
+      "def": "PRIMARY KEY (id)",
+      "name": "profiles_pkey",
+      "table": "profiles"
+    },
+    {
+      "def": "PRIMARY KEY (id)",
+      "name": "user_roles_pkey",
+      "table": "user_roles"
+    },
+    {
+      "def": "UNIQUE (user_id, role)",
+      "name": "user_roles_user_id_role_key",
+      "table": "user_roles"
+    },
+    {
+      "def": "PRIMARY KEY (id)",
+      "name": "audit_logs_pkey",
+      "table": "audit_logs"
+    },
+    {
+      "def": "PRIMARY KEY (id)",
+      "name": "participants_pkey",
+      "table": "participants"
+    },
+    {
+      "def": "PRIMARY KEY (id)",
+      "name": "customers_pkey",
+      "table": "customers"
+    },
+    {
+      "def": "PRIMARY KEY (id)",
+      "name": "orders_pkey",
+      "table": "orders"
+    },
+    {
+      "def": "FOREIGN KEY (customer_id) REFERENCES customers(id) ON DELETE SET NULL",
+      "name": "orders_customer_id_fkey",
+      "table": "orders"
+    },
+    {
+      "def": "FOREIGN KEY (assignee_id) REFERENCES profiles(id) ON DELETE SET NULL",
+      "name": "orders_assignee_id_fkey",
+      "table": "orders"
+    },
+    {
+      "def": "PRIMARY KEY (id)",
+      "name": "order_history_pkey",
+      "table": "order_history"
+    },
+    {
+      "def": "FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE",
+      "name": "order_history_order_id_fkey",
+      "table": "order_history"
+    },
+    {
+      "def": "PRIMARY KEY (id)",
+      "name": "mentorships_pkey",
+      "table": "mentorships"
+    },
+    {
+      "def": "FOREIGN KEY (customer_id) REFERENCES customers(id) ON DELETE SET NULL",
+      "name": "mentorships_customer_id_fkey",
+      "table": "mentorships"
+    },
+    {
+      "def": "FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE SET NULL",
+      "name": "mentorships_order_id_fkey",
+      "table": "mentorships"
+    },
+    {
+      "def": "FOREIGN KEY (participant_id) REFERENCES participants(id) ON DELETE SET NULL",
+      "name": "mentorships_participant_id_fkey",
+      "table": "mentorships"
+    },
+    {
+      "def": "PRIMARY KEY (id)",
+      "name": "mentorship_sessions_pkey",
+      "table": "mentorship_sessions"
+    },
+    {
+      "def": "FOREIGN KEY (mentorship_id) REFERENCES mentorships(id) ON DELETE CASCADE",
+      "name": "mentorship_sessions_mentorship_id_fkey",
+      "table": "mentorship_sessions"
+    },
+    {
+      "def": "PRIMARY KEY (id)",
+      "name": "organizations_pkey",
+      "table": "organizations"
+    },
+    {
+      "def": "UNIQUE (owner_auth_user_id)",
+      "name": "organizations_owner_unique",
+      "table": "organizations"
+    },
+    {
+      "def": "FOREIGN KEY (owner_auth_user_id) REFERENCES auth.users(id) ON DELETE CASCADE",
+      "name": "organizations_owner_auth_user_id_fkey",
+      "table": "organizations"
+    },
+    {
+      "def": "FOREIGN KEY (organization_id) REFERENCES organizations(id) ON DELETE SET NULL",
+      "name": "orders_organization_id_fkey",
+      "table": "orders"
+    },
+    {
+      "def": "CHECK ((status = ANY (ARRAY['incomplete'::text, 'under_review'::text, 'documents_pending'::text, 'approved'::text, 'active'::text, 'paused'::text, 'subscription_pending'::text, 'suspended'::text])))",
+      "name": "professional_accounts_status_check",
+      "table": "professional_accounts"
+    },
+    {
+      "def": "CHECK (((onboarding_step >= 1) AND (onboarding_step <= 7)))",
+      "name": "professional_accounts_onboarding_step_check",
+      "table": "professional_accounts"
+    },
+    {
+      "def": "CHECK (((preferred_currency = ANY (ARRAY['EUR'::text, 'BRL'::text])) OR (preferred_currency IS NULL)))",
+      "name": "professional_accounts_preferred_currency_check",
+      "table": "professional_accounts"
+    },
+    {
+      "def": "CHECK ((connect_status = ANY (ARRAY['not_started'::text, 'onboarding'::text, 'restricted'::text, 'enabled'::text, 'disabled'::text])))",
+      "name": "professional_accounts_connect_status_check",
+      "table": "professional_accounts"
+    },
+    {
+      "def": "CHECK ((payout_method_status = ANY (ARRAY['pending'::text, 'ready'::text, 'restricted'::text])))",
+      "name": "professional_accounts_payout_method_status_check",
+      "table": "professional_accounts"
+    },
+    {
+      "def": "PRIMARY KEY (id)",
+      "name": "professional_accounts_pkey",
+      "table": "professional_accounts"
+    },
+    {
+      "def": "UNIQUE (auth_user_id)",
+      "name": "professional_accounts_auth_user_id_key",
+      "table": "professional_accounts"
+    },
+    {
+      "def": "FOREIGN KEY (auth_user_id) REFERENCES auth.users(id) ON DELETE CASCADE",
+      "name": "professional_accounts_auth_user_id_fkey",
+      "table": "professional_accounts"
+    },
+    {
+      "def": "CHECK ((market = ANY (ARRAY['BR'::text, 'EU'::text])))",
+      "name": "subscription_plans_market_check",
+      "table": "subscription_plans"
+    },
+    {
+      "def": "CHECK ((currency = ANY (ARRAY['BRL'::text, 'EUR'::text])))",
+      "name": "subscription_plans_currency_check",
+      "table": "subscription_plans"
+    },
+    {
+      "def": "CHECK ((amount_cents > 0))",
+      "name": "subscription_plans_amount_cents_check",
+      "table": "subscription_plans"
+    },
+    {
+      "def": "CHECK ((\"interval\" = ANY (ARRAY['month'::text, 'year'::text])))",
+      "name": "subscription_plans_interval_check",
+      "table": "subscription_plans"
+    },
+    {
+      "def": "PRIMARY KEY (id)",
+      "name": "subscription_plans_pkey",
+      "table": "subscription_plans"
+    },
+    {
+      "def": "UNIQUE (market, plan_code)",
+      "name": "subscription_plans_market_plan_code_key",
+      "table": "subscription_plans"
+    },
+    {
+      "def": "CHECK ((status = ANY (ARRAY['pending'::text, 'active'::text, 'past_due'::text, 'canceled'::text, 'unpaid'::text, 'paused'::text, 'incomplete'::text])))",
+      "name": "professional_subscriptions_status_check",
+      "table": "professional_subscriptions"
+    },
+    {
+      "def": "PRIMARY KEY (id)",
+      "name": "professional_subscriptions_pkey",
+      "table": "professional_subscriptions"
+    },
+    {
+      "def": "UNIQUE (stripe_subscription_id)",
+      "name": "professional_subscriptions_stripe_subscription_id_key",
+      "table": "professional_subscriptions"
+    },
+    {
+      "def": "UNIQUE (stripe_checkout_session_id)",
+      "name": "professional_subscriptions_stripe_checkout_session_id_key",
+      "table": "professional_subscriptions"
+    },
+    {
+      "def": "FOREIGN KEY (professional_account_id) REFERENCES professional_accounts(id) ON DELETE CASCADE",
+      "name": "professional_subscriptions_professional_account_id_fkey",
+      "table": "professional_subscriptions"
+    },
+    {
+      "def": "FOREIGN KEY (plan_id) REFERENCES subscription_plans(id)",
+      "name": "professional_subscriptions_plan_id_fkey",
+      "table": "professional_subscriptions"
+    },
+    {
+      "def": "PRIMARY KEY (plan_id, entitlement_key)",
+      "name": "subscription_plan_entitlements_pkey",
+      "table": "subscription_plan_entitlements"
+    },
+    {
+      "def": "FOREIGN KEY (plan_id) REFERENCES subscription_plans(id) ON DELETE CASCADE",
+      "name": "subscription_plan_entitlements_plan_id_fkey",
+      "table": "subscription_plan_entitlements"
+    },
+    {
+      "def": "FOREIGN KEY (professional_account_id) REFERENCES professional_accounts(id) ON DELETE SET NULL",
+      "name": "participants_professional_account_id_fkey",
+      "table": "participants"
+    },
+    {
+      "def": "CHECK ((granted >= 0))",
+      "name": "session_credits_granted_check",
+      "table": "session_credits"
+    },
+    {
+      "def": "PRIMARY KEY (id)",
+      "name": "session_credits_pkey",
+      "table": "session_credits"
+    },
+    {
+      "def": "UNIQUE (order_id)",
+      "name": "session_credits_order_id_key",
+      "table": "session_credits"
+    },
+    {
+      "def": "FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE",
+      "name": "session_credits_order_id_fkey",
+      "table": "session_credits"
+    },
+    {
+      "def": "FOREIGN KEY (customer_id) REFERENCES customers(id) ON DELETE SET NULL",
+      "name": "session_credits_customer_id_fkey",
+      "table": "session_credits"
+    },
+    {
+      "def": "CHECK ((engagement_model = ANY (ARRAY['subscription'::text, 'commission'::text, 'exempt'::text])))",
+      "name": "professional_accounts_engagement_model_check",
+      "table": "professional_accounts"
+    },
+    {
+      "def": "CHECK ((((engagement_model = 'commission'::text) AND ((custom_commission_rate >= 0.10) AND (custom_commission_rate <= 0.20))) OR ((engagement_model <> 'commission'::text) AND (custom_commission_rate IS NULL))))",
+      "name": "professional_accounts_custom_commission_check",
+      "table": "professional_accounts"
+    }
+  ],
+  "supportFunctions": [
+    {
+      "schema": "auth",
+      "proname": "uid",
+      "def": "CREATE OR REPLACE FUNCTION auth.uid()\n RETURNS uuid\n LANGUAGE sql\n STABLE\nAS $function$\n  select \n  coalesce(\n    nullif(current_setting('request.jwt.claim.sub', true), ''),\n    (nullif(current_setting('request.jwt.claims', true), '')::jsonb ->> 'sub')\n  )::uuid\n$function$\n"
+    },
+    {
+      "schema": "auth",
+      "proname": "role",
+      "def": "CREATE OR REPLACE FUNCTION auth.role()\n RETURNS text\n LANGUAGE sql\n STABLE\nAS $function$\n  select \n  coalesce(\n    nullif(current_setting('request.jwt.claim.role', true), ''),\n    (nullif(current_setting('request.jwt.claims', true), '')::jsonb ->> 'role')\n  )::text\n$function$\n"
+    },
+    {
+      "schema": "auth",
+      "proname": "jwt",
+      "def": "CREATE OR REPLACE FUNCTION auth.jwt()\n RETURNS jsonb\n LANGUAGE sql\n STABLE\nAS $function$\n  select \n    coalesce(\n        nullif(current_setting('request.jwt.claim', true), ''),\n        nullif(current_setting('request.jwt.claims', true), '')\n    )::jsonb\n$function$\n"
+    },
+    {
+      "schema": "private",
+      "proname": "is_authorized",
+      "def": "CREATE OR REPLACE FUNCTION private.is_authorized(_user_id uuid)\n RETURNS boolean\n LANGUAGE sql\n STABLE SECURITY DEFINER\n SET search_path TO 'public'\nAS $function$\n  select public.is_authorized(_user_id)\n$function$\n"
+    },
+    {
+      "schema": "public",
+      "proname": "audit_event",
+      "def": "CREATE OR REPLACE FUNCTION public.audit_event(_action text, _target text, _details jsonb)\n RETURNS void\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'public', 'pg_temp'\nAS $function$\nDECLARE _email text;\nBEGIN\n  SELECT email INTO _email FROM public.profiles WHERE id = auth.uid();\n  INSERT INTO public.audit_logs (actor_id, actor_email, action, target, details)\n  VALUES (auth.uid(), _email, _action, _target, COALESCE(_details, '{}'::jsonb));\nEND $function$\n"
+    },
+    {
+      "schema": "public",
+      "proname": "is_authorized",
+      "def": "CREATE OR REPLACE FUNCTION public.is_authorized(_user_id uuid)\n RETURNS boolean\n LANGUAGE sql\n STABLE SECURITY DEFINER\n SET search_path TO 'public', 'pg_temp'\nAS $function$\n  SELECT EXISTS (\n    SELECT 1 FROM public.profiles p\n    JOIN public.user_roles r ON r.user_id = p.id\n    WHERE p.id = _user_id AND p.is_active = true\n  )\n$function$\n"
+    },
+    {
+      "schema": "public",
+      "proname": "is_superadmin",
+      "def": "CREATE OR REPLACE FUNCTION public.is_superadmin(_user_id uuid)\n RETURNS boolean\n LANGUAGE sql\n STABLE SECURITY DEFINER\n SET search_path TO 'public', 'pg_temp'\nAS $function$\n  SELECT EXISTS (\n    SELECT 1 FROM public.profiles p\n    JOIN public.user_roles r ON r.user_id = p.id\n    WHERE p.id = _user_id AND p.is_active = true AND r.role = 'superadmin'\n  )\n$function$\n"
+    },
+    {
+      "schema": "private",
+      "proname": "current_network_professional_account",
+      "def": "CREATE OR REPLACE FUNCTION private.current_network_professional_account(required_entitlement text)\n RETURNS uuid\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'public', 'pg_temp'\nAS $function$\ndeclare\n  uid uuid := auth.uid();\n  account_id uuid;\nbegin\n  if uid is null then return null; end if;\n  select pa.id into account_id\n  from public.professional_accounts pa\n  join public.professional_subscriptions ps on ps.professional_account_id=pa.id\n  join public.subscription_plan_entitlements e on e.plan_id=ps.plan_id and e.entitlement_key=required_entitlement and e.enabled=true\n  where pa.auth_user_id=uid\n    and ps.status='active'\n    and (ps.current_period_end is null or ps.current_period_end > now())\n  order by ps.created_at desc\n  limit 1;\n  return account_id;\nend;\n$function$\n"
+    }
+  ]
+}

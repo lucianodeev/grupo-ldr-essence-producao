@@ -1,0 +1,111 @@
+{
+  "acl": "{postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}",
+  "rls": true,
+  "name": "service_catalog",
+  "schema": "public",
+  "columns": [
+    {
+      "name": "catalog_key",
+      "type": "text",
+      "default": null,
+      "notnull": true
+    },
+    {
+      "name": "name",
+      "type": "text",
+      "default": null,
+      "notnull": true
+    },
+    {
+      "name": "category",
+      "type": "text",
+      "default": "'outros'::text",
+      "notnull": true
+    },
+    {
+      "name": "currency",
+      "type": "text",
+      "default": "'EUR'::text",
+      "notnull": true
+    },
+    {
+      "name": "amount_cents",
+      "type": "integer",
+      "default": null,
+      "notnull": true
+    },
+    {
+      "name": "stripe_payment_link_id",
+      "type": "text",
+      "default": null,
+      "notnull": false
+    },
+    {
+      "name": "billing_model",
+      "type": "text",
+      "default": "'project'::text",
+      "notnull": true
+    },
+    {
+      "name": "package_sessions",
+      "type": "integer",
+      "default": "0",
+      "notnull": true
+    },
+    {
+      "name": "billing_cadence",
+      "type": "text",
+      "default": "'one_time'::text",
+      "notnull": true
+    },
+    {
+      "name": "repeat_payment_url",
+      "type": "text",
+      "default": null,
+      "notnull": false
+    },
+    {
+      "name": "payment_url",
+      "type": "text",
+      "default": null,
+      "notnull": false
+    },
+    {
+      "name": "is_clinical",
+      "type": "boolean",
+      "default": "false",
+      "notnull": true
+    },
+    {
+      "name": "active",
+      "type": "boolean",
+      "default": "true",
+      "notnull": true
+    },
+    {
+      "name": "sort_order",
+      "type": "integer",
+      "default": "0",
+      "notnull": true
+    },
+    {
+      "name": "created_at",
+      "type": "timestamp with time zone",
+      "default": "now()",
+      "notnull": true
+    },
+    {
+      "name": "updated_at",
+      "type": "timestamp with time zone",
+      "default": "now()",
+      "notnull": true
+    }
+  ],
+  "constraints": [
+    {
+      "def": "PRIMARY KEY (catalog_key)",
+      "name": "service_catalog_pkey",
+      "table": "service_catalog"
+    }
+  ]
+}

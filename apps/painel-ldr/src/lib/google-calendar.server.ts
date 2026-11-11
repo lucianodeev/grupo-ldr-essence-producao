@@ -4,7 +4,7 @@
 // preço, telefone, documentos ou número de pedido para o Google.
 const GATEWAY = "https://connector-gateway.lovable.dev/google_calendar/calendar/v3";
 
-export const CALENDAR_ID = "contacto@ldrrhestrategia.com";
+export const CALENDAR_ID = process.env["GOOGLE_CALENDAR_ID"] || "contacto@ldrrhestrategia.com";
 export const CALENDAR_TIMEZONE = "Europe/Brussels";
 
 export type CalendarErrorCode =
@@ -14,7 +14,8 @@ export type CalendarErrorCode =
   | "nao_encontrado"
   | "limite_google"
   | "indisponivel"
-  | "resposta_invalida";
+  | "resposta_invalida"
+  | "evento_existente";
 
 export class CalendarError extends Error {
   code: CalendarErrorCode;
@@ -32,7 +33,8 @@ export function isCalendarConfigured(): boolean {
 function mapStatus(status: number): CalendarErrorCode {
   if (status === 401) return "credencial_invalida";
   if (status === 403) return "permissao_negada";
-  if (status === 404) return "nao_encontrado";
+  if (status === 409) return "evento_existente";
+  if (status === 404 || status === 410) return "nao_encontrado";
   if (status === 429) return "limite_google";
   return "indisponivel";
 }
@@ -47,6 +49,7 @@ async function gateway<T>(
   try {
     response = await fetch(`${GATEWAY}${path}`, {
       method: init.method,
+      signal: AbortSignal.timeout(15_000),
       headers: {
         Authorization: `Bearer ${process.env["LOVABLE_API_KEY"]}`,
         "X-Connection-Api-Key": process.env["GOOGLE_CALENDAR_API_KEY"]!,
@@ -102,29 +105,27 @@ export async function hasConflict(
   ignoreEventId: string | null,
 ): Promise<boolean> {
   const data = await gateway<{
-    calendars?: Record<string, { busy?: Array<{ start: string; end: string }> }>;
+    calendars?: Record<string, { busy?: Array<{ start: string; end: string }>; errors?: unknown[] }>;
   }>("/freeBusy", {
     method: "POST",
     body: { timeMin: startsAtIso, timeMax: endsAtIso, items: [{ id: CALENDAR_ID }] },
   });
 
-  const busy = data.calendars?.[CALENDAR_ID]?.busy ?? [];
+  const calendar = data.calendars?.[CALENDAR_ID];
+  if (!calendar || calendar.errors?.length || !Array.isArray(calendar.busy)) {
+    throw new CalendarError("indisponivel");
+  }
+  const busy = calendar.busy;
   if (busy.length === 0) return false;
   if (!ignoreEventId) return true;
 
-  // Reagendamento: o próprio evento pode ocupar a janela consultada.
-  const own = await findEventByAppointment(null, ignoreEventId);
-  if (!own) return true;
-
-  const start = new Date(startsAtIso).getTime();
-  const end = new Date(endsAtIso).getTime();
-  return busy.some((slot) => {
-    const bs = new Date(slot.start).getTime();
-    const be = new Date(slot.end).getTime();
-    const overlaps = bs < end && be > start;
-    const isOwn = bs === own.start && be === own.end;
-    return overlaps && !isOwn;
-  });
+  // freeBusy merges occupied windows. Subtracting the own interval can hide a
+  // second event at exactly the same time; inspect event identities instead.
+  const events = await gateway<{ items?: Array<GoogleEvent & { transparency?: string }>; nextPageToken?: string }>(
+    `${calendarPath}/events?singleEvents=true&timeMin=${encodeURIComponent(startsAtIso)}&timeMax=${encodeURIComponent(endsAtIso)}&maxResults=2500`,
+  );
+  if (!Array.isArray(events.items) || events.nextPageToken) throw new CalendarError("indisponivel");
+  return events.items.some((event) => event.id !== ignoreEventId && event.status !== "cancelled" && event.transparency !== "transparent");
 }
 
 /** Recupera evento por id, ou pelo marcador privado do agendamento (anti-órfão). */
@@ -170,6 +171,7 @@ export async function findEventByAppointment(
 
 type EventInput = {
   appointmentId: string;
+  generation?: number;
   /** Título seguro: nome do serviço no catálogo. Sem pedido, preço ou notas. */
   summary: string;
   startsAtIso: string;
@@ -182,11 +184,14 @@ const SAFE_DESCRIPTION =
 
 /** Cria evento privado com Google Meet e um único convidado (o cliente). */
 export async function createEvent(input: EventInput): Promise<CalendarEventResult> {
-  const event = await gateway<GoogleEvent>(
+  let event: GoogleEvent;
+  try {
+  event = await gateway<GoogleEvent>(
     `${calendarPath}/events?conferenceDataVersion=1&sendUpdates=all`,
     {
       method: "POST",
       body: {
+        id: `ldr${input.appointmentId.replaceAll("-", "")}g${input.generation ?? 0}`,
         summary: input.summary,
         description: SAFE_DESCRIPTION,
         visibility: "private",
@@ -208,6 +213,12 @@ export async function createEvent(input: EventInput): Promise<CalendarEventResul
       },
     },
   );
+  } catch (error) {
+    if (!(error instanceof CalendarError) || error.code !== "evento_existente") throw error;
+    event = await gateway<GoogleEvent>(`${calendarPath}/events/${encodeURIComponent(`ldr${input.appointmentId.replaceAll("-", "")}g${input.generation ?? 0}`)}`);
+    if (event.status === "cancelled") throw new CalendarError("nao_encontrado");
+    return patchEvent(toResult(event).eventId, input);
+  }
   return toResult(event);
 }
 

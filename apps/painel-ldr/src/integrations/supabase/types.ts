@@ -40,6 +40,7 @@ type LegacyDatabase = {
           attempts: number
           calendar_id: string
           created_at: string
+          event_generation: number
           google_event_id: string | null
           last_attempt_at: string | null
           last_error_code: string | null
@@ -54,6 +55,7 @@ type LegacyDatabase = {
           attempts?: number
           calendar_id?: string
           created_at?: string
+          event_generation?: number
           google_event_id?: string | null
           last_attempt_at?: string | null
           last_error_code?: string | null
@@ -68,6 +70,7 @@ type LegacyDatabase = {
           attempts?: number
           calendar_id?: string
           created_at?: string
+          event_generation?: number
           google_event_id?: string | null
           last_attempt_at?: string | null
           last_error_code?: string | null
@@ -136,6 +139,7 @@ type LegacyDatabase = {
           catalog_key: string | null
           client_notes: string | null
           client_visible: boolean
+          credit_reserved: boolean
           consumes_credit: boolean
           created_at: string
           created_by: string | null
@@ -156,6 +160,7 @@ type LegacyDatabase = {
           catalog_key?: string | null
           client_notes?: string | null
           client_visible?: boolean
+          credit_reserved?: boolean
           consumes_credit?: boolean
           created_at?: string
           created_by?: string | null
@@ -176,6 +181,7 @@ type LegacyDatabase = {
           catalog_key?: string | null
           client_notes?: string | null
           client_visible?: boolean
+          credit_reserved?: boolean
           consumes_credit?: boolean
           created_at?: string
           created_by?: string | null

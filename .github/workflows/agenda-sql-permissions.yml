@@ -3,15 +3,23 @@ on:
   workflow_dispatch:
   push:
     branches: [feat/central-empresas-ldr]
-    paths: ['.github/workflows/agenda-sql-permissions.yml']
+    paths:
+      - '.github/workflows/agenda-*.yml'
+      - 'scripts/agenda/**'
+      - 'docs/audit-20261111/agenda-*-snapshot.json'
+      - 'docs/audit-20261111/agenda-preactivation-rollback.sql'
+      - 'apps/painel-ldr/supabase/migrations/*agenda_calendar_credit_integration.sql'
+      - 'apps/painel-ldr/src/lib/*calendar*.ts'
+permissions:
+  contents: read
 jobs:
-  permissions:
+  verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 12
     services:
       postgres:
-        image: postgres:16
-        env: { POSTGRES_PASSWORD: test_only, POSTGRES_DB: agenda_test }
+        image: postgres:17.6
+        env: {POSTGRES_PASSWORD: test_only, POSTGRES_DB: agenda_test}
         ports: ['5432:5432']
         options: >-
           --health-cmd "pg_isready -U postgres"
@@ -24,183 +32,22 @@ jobs:
       PGUSER: postgres
       PGPASSWORD: test_only
       PGDATABASE: agenda_test
+      AGENDA_PG_PACKAGE: /tmp/agenda-pg/package.json
     steps:
       - uses: actions/checkout@v4
-      - name: Install PostgreSQL client
-        run: sudo apt-get update -qq && sudo apt-get install -y postgresql-client
-      - name: Apply actual SQL drafts in disposable database
-        shell: bash
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated PostgreSQL driver
+        run: npm install --prefix /tmp/agenda-pg --no-audit --no-fund pg@8.23.1
+      - name: Apply captured schema and versioned migration; execute actual RPC, RLS and concurrency tests
         run: |
-          set -euo pipefail
-          psql -v ON_ERROR_STOP=1 <<'SQL'
-          CREATE ROLE anon NOLOGIN;
-          CREATE ROLE authenticated NOLOGIN;
-          CREATE ROLE service_role NOLOGIN BYPASSRLS;
-          CREATE TYPE public.payment_status AS ENUM ('pendente','pago','reembolsado','falhou');
-          CREATE TYPE public.session_status AS ENUM ('agendada','concluida','cancelada','reagendada');
-          CREATE TABLE public.orders(id uuid PRIMARY KEY,customer_id uuid,catalog_key text,payment_status public.payment_status);
-          CREATE TABLE public.session_credits(id uuid PRIMARY KEY DEFAULT gen_random_uuid(),order_id uuid,customer_id uuid,catalog_key text,granted integer,source text,created_at timestamptz DEFAULT now());
-          CREATE TABLE public.mentorship_sessions(id uuid PRIMARY KEY,scheduled_at timestamptz,duration_minutes integer DEFAULT 50,meeting_url text,status public.session_status DEFAULT 'agendada',updated_at timestamptz DEFAULT now());
-          SQL
-          for f in agenda-migration-draft.sql agenda-calendar-schema-draft.sql agenda-rpc-safe-draft.sql agenda-credit-confirmation-draft.sql agenda-calendar-rpc-draft.sql agenda-service-role-hardening-draft.sql; do
-            sed -e '/^BEGIN;[[:space:]]*$/d' -e '/^ROLLBACK;.*$/d' "docs/audit-20261111/$f" | psql -v ON_ERROR_STOP=1
-          done
-      - name: Verify grants and RLS
-        shell: bash
-        run: |
-          set -euo pipefail
-          psql -v ON_ERROR_STOP=1 <<'SQL'
-          DO $$
-          DECLARE f regprocedure;
-          BEGIN
-            FOREACH f IN ARRAY ARRAY[
-              'public.confirm_appointment_tx(uuid,timestamptz,integer,text,text)'::regprocedure,
-              'public.confirm_mentorship_session_tx(uuid,timestamptz,text)'::regprocedure,
-              'public.claim_calendar_sync(uuid,text,integer)'::regprocedure,
-              'public.release_calendar_sync(uuid,uuid,text,text,text,text)'::regprocedure
-            ] LOOP
-              IF NOT has_function_privilege('service_role',f,'EXECUTE')
-                 OR has_function_privilege('anon',f,'EXECUTE')
-                 OR has_function_privilege('authenticated',f,'EXECUTE') THEN
-                RAISE EXCEPTION 'unsafe RPC privilege: %', f;
-              END IF;
-            END LOOP;
-            IF EXISTS (
-              SELECT 1 FROM pg_class
-              WHERE oid IN ('public.appointments'::regclass,'public.appointment_events'::regclass,'public.appointment_calendar_sync'::regclass)
-              AND NOT relrowsecurity
-            ) THEN RAISE EXCEPTION 'RLS disabled'; END IF;
-          END $$;
-          SQL
-          for role in anon authenticated; do
-            if psql -v ON_ERROR_STOP=1 -c "SET ROLE $role; SELECT public.confirm_appointment_tx(NULL,NULL,NULL,NULL,NULL);" >/tmp/denied.log 2>&1; then
-              echo "ERROR: $role executed restricted function"; exit 1
-            fi
-            grep -q 'permission denied for function' /tmp/denied.log || { cat /tmp/denied.log; exit 1; }
-          done
-          echo 'PASS: service role allowed; public roles denied; RLS enabled'
-      - name: Negative business and lease tests
-        shell: bash
-        run: |
-          set -euo pipefail
-          psql -v ON_ERROR_STOP=1 <<'SQL'
-          INSERT INTO public.orders(id,customer_id,catalog_key,payment_status)
-          VALUES ('00000000-0000-4000-8000-000000000001','00000000-0000-4000-8000-000000000002','mentoria','pendente');
-          INSERT INTO public.session_credits(order_id,customer_id,catalog_key,granted)
-          VALUES ('00000000-0000-4000-8000-000000000001','00000000-0000-4000-8000-000000000002','mentoria',1);
-          INSERT INTO public.appointments(id,order_id,customer_id,catalog_key,title,consumes_credit)
-          VALUES ('00000000-0000-4000-8000-000000000010','00000000-0000-4000-8000-000000000001',
-          '00000000-0000-4000-8000-000000000002','mentoria','Negative test',true);
-          DO $$
-          DECLARE token uuid; ok boolean;
-          BEGIN
-            BEGIN
-              PERFORM public.confirm_appointment_tx('00000000-0000-4000-8000-000000000010',now()+interval '1 day',50,NULL,NULL);
-              RAISE EXCEPTION 'unpaid order was accepted';
-            EXCEPTION WHEN OTHERS THEN
-              IF SQLERRM = 'unpaid order was accepted' THEN RAISE; END IF;
-              IF SQLERRM NOT LIKE '%paid order ownership mismatch%' THEN RAISE; END IF;
-            END;
-            UPDATE public.orders SET payment_status='pago' WHERE id='00000000-0000-4000-8000-000000000001';
-            PERFORM public.confirm_appointment_tx('00000000-0000-4000-8000-000000000010',now()+interval '1 day',50,NULL,NULL);
-            -- Confirmation must be idempotent: confirming the same appointment twice
-            -- must not consume a second credit or change the number of confirmed rows.
-            PERFORM public.confirm_appointment_tx('00000000-0000-4000-8000-000000000010',now()+interval '1 day',50,NULL,NULL);
-            IF (SELECT count(*) FROM public.appointments
-                WHERE order_id='00000000-0000-4000-8000-000000000001'
-                  AND consumes_credit AND status='confirmada') <> 1 THEN
-              RAISE EXCEPTION 'idempotent confirmation duplicated credit usage';
-            END IF;
-            -- Invalid duration must fail before any appointment mutation.
-            BEGIN
-              PERFORM public.confirm_appointment_tx('00000000-0000-4000-8000-000000000010',now()+interval '1 day',0,NULL,NULL);
-              RAISE EXCEPTION 'zero-minute appointment accepted';
-            EXCEPTION WHEN OTHERS THEN
-              IF SQLERRM = 'zero-minute appointment accepted' THEN RAISE; END IF;
-              IF SQLERRM NOT LIKE '%invalid appointment schedule%' THEN RAISE; END IF;
-            END;
-            -- A second credit-consuming appointment must fail after the only credit is used.
-            INSERT INTO public.appointments(id,order_id,customer_id,catalog_key,title,consumes_credit)
-            VALUES ('00000000-0000-4000-8000-000000000011',
-              '00000000-0000-4000-8000-000000000001',
-              '00000000-0000-4000-8000-000000000002','mentoria','Exhausted credit test',true);
-            BEGIN
-              PERFORM public.confirm_appointment_tx('00000000-0000-4000-8000-000000000011',now()+interval '2 days',50,NULL,NULL);
-              RAISE EXCEPTION 'exhausted credit was accepted';
-            EXCEPTION WHEN OTHERS THEN
-              IF SQLERRM = 'exhausted credit was accepted' THEN RAISE; END IF;
-              IF SQLERRM NOT LIKE '%insufficient session credits%' THEN RAISE; END IF;
-            END;
-            -- Mentorship must not bypass the payment/credit confirmation path.
-            INSERT INTO public.mentorship_sessions(id,appointment_id)
-            VALUES ('00000000-0000-4000-8000-000000000020',
-                    '00000000-0000-4000-8000-000000000011');
-            BEGIN
-              PERFORM public.confirm_mentorship_session_tx(
-                '00000000-0000-4000-8000-000000000020',
-                now()+interval '5 days','https://example.test/meeting');
-              RAISE EXCEPTION 'mentorship credit bypass accepted';
-            EXCEPTION WHEN OTHERS THEN
-              IF SQLERRM = 'mentorship credit bypass accepted' THEN RAISE; END IF;
-              IF SQLERRM NOT LIKE '%credit-consuming appointment requires payment-validated confirmation%' THEN RAISE; END IF;
-            END;
-            -- A mentorship linked to a non-credit appointment may still be confirmed.
-            INSERT INTO public.appointments(id,title,consumes_credit)
-            VALUES ('00000000-0000-4000-8000-000000000014','Free mentorship',false);
-            INSERT INTO public.mentorship_sessions(id,appointment_id)
-            VALUES ('00000000-0000-4000-8000-000000000021',
-                    '00000000-0000-4000-8000-000000000014');
-            PERFORM public.confirm_mentorship_session_tx(
-              '00000000-0000-4000-8000-000000000021',
-              now()+interval '6 days','https://example.test/free-meeting');
-            IF NOT EXISTS (
-              SELECT 1 FROM public.appointments
-              WHERE id='00000000-0000-4000-8000-000000000014'
-                AND status='confirmada' AND consumes_credit=false
-            ) THEN RAISE EXCEPTION 'free mentorship confirmation failed'; END IF;
-            -- A cancelled appointment cannot be confirmed, even with a paid order.
-            INSERT INTO public.appointments(id,order_id,customer_id,catalog_key,title,consumes_credit,status)
-            VALUES ('00000000-0000-4000-8000-000000000013',
-              '00000000-0000-4000-8000-000000000001',
-              '00000000-0000-4000-8000-000000000002','mentoria','Cancelled test',true,'cancelada');
-            BEGIN
-              PERFORM public.confirm_appointment_tx('00000000-0000-4000-8000-000000000013',now()+interval '4 days',50,NULL,NULL);
-              RAISE EXCEPTION 'cancelled appointment was accepted';
-            EXCEPTION WHEN OTHERS THEN
-              IF SQLERRM = 'cancelled appointment was accepted' THEN RAISE; END IF;
-              IF SQLERRM NOT LIKE '%appointment not confirmable%' THEN RAISE; END IF;
-            END;
-            -- A mismatched customer must never consume another customer's credit.
-            INSERT INTO public.appointments(id,order_id,customer_id,catalog_key,title,consumes_credit)
-            VALUES ('00000000-0000-4000-8000-000000000012',
-              '00000000-0000-4000-8000-000000000001',
-              '00000000-0000-4000-8000-000000000099','mentoria','Wrong customer test',true);
-            BEGIN
-              PERFORM public.confirm_appointment_tx('00000000-0000-4000-8000-000000000012',now()+interval '3 days',50,NULL,NULL);
-              RAISE EXCEPTION 'wrong customer was accepted';
-            EXCEPTION WHEN OTHERS THEN
-              IF SQLERRM = 'wrong customer was accepted' THEN RAISE; END IF;
-              IF SQLERRM NOT LIKE '%paid order ownership mismatch%' THEN RAISE; END IF;
-            END;
-            SELECT lease_token INTO token FROM public.claim_calendar_sync('00000000-0000-4000-8000-000000000010','primary',120) WHERE claimed;
-            IF token IS NULL THEN RAISE EXCEPTION 'lease claim failed'; END IF;
-            SELECT public.release_calendar_sync('00000000-0000-4000-8000-000000000010',gen_random_uuid(),'sincronizado','evt',NULL,NULL) INTO ok;
-            IF ok THEN RAISE EXCEPTION 'wrong lease token accepted'; END IF;
-            -- The active lease must reject a second claimant.
-            IF EXISTS (SELECT 1 FROM public.claim_calendar_sync(
-                '00000000-0000-4000-8000-000000000010','primary',120) WHERE claimed) THEN
-              RAISE EXCEPTION 'second active calendar lease accepted';
-            END IF;
-            -- The calendar identifier must remain stable for this appointment.
-            BEGIN
-              PERFORM public.claim_calendar_sync('00000000-0000-4000-8000-000000000010','wrong-calendar',120);
-              RAISE EXCEPTION 'calendar mismatch accepted';
-            EXCEPTION WHEN OTHERS THEN
-              IF SQLERRM = 'calendar mismatch accepted' THEN RAISE; END IF;
-              IF SQLERRM NOT LIKE '%calendar mismatch%' THEN RAISE; END IF;
-            END;
-            SELECT public.release_calendar_sync('00000000-0000-4000-8000-000000000010',token,'sincronizado','evt',NULL,NULL) INTO ok;
-            IF NOT ok THEN RAISE EXCEPTION 'correct lease token rejected'; END IF;
-          END $$;
-          SQL
-          echo 'PASS: unpaid orders, exhausted credits, wrong customers, cancelled appointments, mentorship credit bypass and invalid durations rejected; free mentorship confirmed; idempotency, active lease exclusivity and calendar mismatch checked'
+          set -o pipefail
+          node scripts/agenda/verify.mjs | tee /tmp/agenda-postgres-results.txt
+      - name: Google Calendar transport failure and idempotency tests (mocked)
+        run: node --experimental-strip-types --test scripts/agenda/calendar.test.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: agenda-results-${{ github.workflow }}
+          path: /tmp/agenda-postgres-results.txt

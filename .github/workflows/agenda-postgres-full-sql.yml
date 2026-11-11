@@ -3,15 +3,23 @@ on:
   workflow_dispatch:
   push:
     branches: [feat/central-empresas-ldr]
-    paths: ['.github/workflows/agenda-postgres-full-sql.yml']
+    paths:
+      - '.github/workflows/agenda-*.yml'
+      - 'scripts/agenda/**'
+      - 'docs/audit-20261111/agenda-*-snapshot.json'
+      - 'docs/audit-20261111/agenda-preactivation-rollback.sql'
+      - 'apps/painel-ldr/supabase/migrations/*agenda_calendar_credit_integration.sql'
+      - 'apps/painel-ldr/src/lib/*calendar*.ts'
+permissions:
+  contents: read
 jobs:
-  full-sql:
+  verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 12
     services:
       postgres:
-        image: postgres:16
-        env: { POSTGRES_PASSWORD: test_only, POSTGRES_DB: agenda_test }
+        image: postgres:17.6
+        env: {POSTGRES_PASSWORD: test_only, POSTGRES_DB: agenda_test}
         ports: ['5432:5432']
         options: >-
           --health-cmd "pg_isready -U postgres"
@@ -24,56 +32,22 @@ jobs:
       PGUSER: postgres
       PGPASSWORD: test_only
       PGDATABASE: agenda_test
+      AGENDA_PG_PACKAGE: /tmp/agenda-pg/package.json
     steps:
       - uses: actions/checkout@v4
-      - name: Install PostgreSQL client
-        run: sudo apt-get update -qq && sudo apt-get install -y postgresql-client
-      - name: Bootstrap isolated schema
-        shell: bash
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated PostgreSQL driver
+        run: npm install --prefix /tmp/agenda-pg --no-audit --no-fund pg@8.23.1
+      - name: Apply captured schema and versioned migration; execute actual RPC, RLS and concurrency tests
         run: |
-          set -euo pipefail
-          psql -v ON_ERROR_STOP=1 <<'SQL'
-          CREATE ROLE anon NOLOGIN;
-          CREATE ROLE authenticated NOLOGIN;
-          CREATE ROLE service_role NOLOGIN BYPASSRLS;
-          CREATE SCHEMA IF NOT EXISTS public;
-          CREATE TYPE public.payment_status AS ENUM ('pendente','pago','reembolsado','falhou');
-          CREATE TYPE public.session_status AS ENUM ('agendada','concluida','cancelada','reagendada');
-          CREATE TABLE public.orders(id uuid PRIMARY KEY,customer_id uuid,catalog_key text,payment_status public.payment_status);
-          CREATE TABLE public.session_credits(id uuid PRIMARY KEY DEFAULT gen_random_uuid(),order_id uuid,customer_id uuid,catalog_key text,granted integer,source text,created_at timestamptz DEFAULT now());
-          CREATE TABLE public.mentorship_sessions(id uuid PRIMARY KEY,scheduled_at timestamptz,duration_minutes integer DEFAULT 50,meeting_url text,status public.session_status DEFAULT 'agendada',updated_at timestamptz DEFAULT now());
-          SQL
-          for f in docs/audit-20261111/agenda-migration-draft.sql docs/audit-20261111/agenda-calendar-schema-draft.sql docs/audit-20261111/agenda-rpc-safe-draft.sql docs/audit-20261111/agenda-credit-confirmation-draft.sql docs/audit-20261111/agenda-calendar-rpc-draft.sql; do
-            sed -e '/^BEGIN;[[:space:]]*$/d' -e '/^ROLLBACK;.*$/d' "$f" | psql -v ON_ERROR_STOP=1
-          done
-      - name: Validate actual SQL functions and privileges
-        shell: bash
-        run: |
-          set -euo pipefail
-          psql -v ON_ERROR_STOP=1 <<'SQL'
-          DO $$
-          BEGIN
-            IF (SELECT count(*) FROM pg_proc WHERE pronamespace='public'::regnamespace AND proname IN ('confirm_appointment_tx','confirm_mentorship_session_tx','claim_calendar_sync','release_calendar_sync')) <> 4 THEN
-              RAISE EXCEPTION 'missing actual migration RPCs';
-            END IF;
-          END $$;
-          INSERT INTO public.orders VALUES ('00000000-0000-4000-8000-000000000001','00000000-0000-4000-8000-000000000002','mentoria','pago');
-          INSERT INTO public.session_credits(order_id,customer_id,catalog_key,granted) VALUES ('00000000-0000-4000-8000-000000000001','00000000-0000-4000-8000-000000000002','mentoria',1);
-          INSERT INTO public.appointments(id,order_id,customer_id,catalog_key,title,consumes_credit)
-          SELECT ('00000000-0000-4000-8000-' || lpad(n::text,12,'0'))::uuid,
-          '00000000-0000-4000-8000-000000000001','00000000-0000-4000-8000-000000000002','mentoria','Test',true
-          FROM generate_series(10,29) n;
-          SQL
-          for n in $(seq 10 29); do
-            id=$(printf '00000000-0000-4000-8000-%012d' "$n")
-            psql -Atc "SELECT public.confirm_appointment_tx('$id'::uuid,now()+interval '1 day',50,NULL,NULL)" >"/tmp/confirm-$n" 2>&1 &
-          done
-          wait
-          test "$(psql -Atc "SELECT count(*) FROM public.appointments WHERE status='confirmada'")" = 1
-          echo "PASS: one of 20 concurrent confirmations consumed the single credit"
-          for n in $(seq 1 20); do
-            psql -Atc "SELECT claimed FROM public.claim_calendar_sync('00000000-0000-4000-8000-000000000010','primary',120)" >"/tmp/lease-$n" 2>&1 &
-          done
-          wait
-          test "$(grep -l '^t$' /tmp/lease-* | wc -l)" = 1
-          echo "PASS: one of 20 concurrent calendar leases claimed"
+          set -o pipefail
+          node scripts/agenda/verify.mjs | tee /tmp/agenda-postgres-results.txt
+      - name: Google Calendar transport failure and idempotency tests (mocked)
+        run: node --experimental-strip-types --test scripts/agenda/calendar.test.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: agenda-results-${{ github.workflow }}
+          path: /tmp/agenda-postgres-results.txt

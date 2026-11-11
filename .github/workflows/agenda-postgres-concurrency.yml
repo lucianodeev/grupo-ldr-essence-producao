@@ -4,17 +4,22 @@ on:
   push:
     branches: [feat/central-empresas-ldr]
     paths:
-      - '.github/workflows/agenda-postgres-concurrency.yml'
+      - '.github/workflows/agenda-*.yml'
+      - 'scripts/agenda/**'
+      - 'docs/audit-20261111/agenda-*-snapshot.json'
+      - 'docs/audit-20261111/agenda-preactivation-rollback.sql'
+      - 'apps/painel-ldr/supabase/migrations/*agenda_calendar_credit_integration.sql'
+      - 'apps/painel-ldr/src/lib/*calendar*.ts'
+permissions:
+  contents: read
 jobs:
-  postgres-concurrency:
+  verify:
     runs-on: ubuntu-latest
     timeout-minutes: 12
     services:
       postgres:
-        image: postgres:16
-        env:
-          POSTGRES_PASSWORD: test_only
-          POSTGRES_DB: agenda_test
+        image: postgres:17.6
+        env: {POSTGRES_PASSWORD: test_only, POSTGRES_DB: agenda_test}
         ports: ['5432:5432']
         options: >-
           --health-cmd "pg_isready -U postgres"
@@ -27,47 +32,22 @@ jobs:
       PGUSER: postgres
       PGPASSWORD: test_only
       PGDATABASE: agenda_test
+      AGENDA_PG_PACKAGE: /tmp/agenda-pg/package.json
     steps:
-      - name: Install PostgreSQL client
-        run: sudo apt-get update -qq && sudo apt-get install -y postgresql-client
-      - name: Run real concurrent transactions
-        shell: bash
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated PostgreSQL driver
+        run: npm install --prefix /tmp/agenda-pg --no-audit --no-fund pg@8.23.1
+      - name: Apply captured schema and versioned migration; execute actual RPC, RLS and concurrency tests
         run: |
-          set -euo pipefail
-          psql -v ON_ERROR_STOP=1 <<'SQL'
-          CREATE TABLE orders(id int PRIMARY KEY, payment_status text NOT NULL);
-          CREATE TABLE appointments(id int PRIMARY KEY,order_id int NOT NULL REFERENCES orders(id),status text NOT NULL);
-          CREATE TABLE credits(order_id int PRIMARY KEY REFERENCES orders(id),granted int NOT NULL);
-          INSERT INTO orders VALUES(1,'pago');
-          INSERT INTO credits VALUES(1,1);
-          INSERT INTO appointments SELECT n,1,'agendada' FROM generate_series(1,20) n;
-          CREATE FUNCTION confirm_credit(p_id int) RETURNS boolean LANGUAGE plpgsql AS $$
-          DECLARE n int; g int; s text;
-          BEGIN
-            SELECT payment_status INTO s FROM orders WHERE id=1 FOR UPDATE;
-            IF s <> 'pago' THEN RETURN false; END IF;
-            SELECT granted INTO g FROM credits WHERE order_id=1;
-            SELECT count(*) INTO n FROM appointments WHERE order_id=1 AND status='confirmada';
-            IF n>=g THEN RETURN false; END IF;
-            UPDATE appointments SET status='confirmada' WHERE id=p_id AND status='agendada';
-            RETURN FOUND;
-          END $$;
-          CREATE TABLE calendar_sync(appointment_id int PRIMARY KEY, lease_token uuid, lease_expires_at timestamptz);
-          INSERT INTO calendar_sync VALUES(1,NULL,NULL);
-          CREATE FUNCTION claim_lease(p_id int) RETURNS boolean LANGUAGE plpgsql AS $$
-          DECLARE current_token uuid; expires timestamptz;
-          BEGIN
-            SELECT lease_token,lease_expires_at INTO current_token,expires FROM calendar_sync WHERE appointment_id=p_id FOR UPDATE;
-            IF current_token IS NOT NULL AND expires>now() THEN RETURN false; END IF;
-            UPDATE calendar_sync SET lease_token='00000000-0000-4000-8000-000000000001',lease_expires_at=now()+interval '120 seconds' WHERE appointment_id=p_id;
-            RETURN true;
-          END $$;
-          SQL
-          for n in $(seq 1 20); do psql -v ON_ERROR_STOP=1 -Atc "SELECT confirm_credit($n)" > "/tmp/credit-$n" & done
-          wait
-          test "$(psql -Atc "SELECT count(*) FROM appointments WHERE status='confirmada'")" = 1
-          test "$(grep -l '^t$' /tmp/credit-* | wc -l)" = 1
-          for n in $(seq 1 20); do psql -v ON_ERROR_STOP=1 -Atc "SELECT claim_lease(1)" > "/tmp/lease-$n" & done
-          wait
-          test "$(grep -l '^t$' /tmp/lease-* | wc -l)" = 1
-          echo "PASS: real PostgreSQL 20 credit transactions and 20 lease claims"
+          set -o pipefail
+          node scripts/agenda/verify.mjs | tee /tmp/agenda-postgres-results.txt
+      - name: Google Calendar transport failure and idempotency tests (mocked)
+        run: node --experimental-strip-types --test scripts/agenda/calendar.test.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: agenda-results-${{ github.workflow }}
+          path: /tmp/agenda-postgres-results.txt
