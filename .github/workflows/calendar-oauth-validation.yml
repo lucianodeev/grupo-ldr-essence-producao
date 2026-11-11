@@ -9,6 +9,12 @@ on:
       - 'scripts/agenda/oauth-setup.test.mjs'
       - 'apps/painel-ldr/src/lib/google-calendar-oauth-setup.server.ts'
       - 'apps/painel-ldr/src/lib/google-calendar-oauth-nonce.server.ts'
+      - 'apps/painel-ldr/supabase/migrations/20261112000100_calendar_oauth_private_storage.sql'
+      - 'apps/painel-ldr/src/lib/google-calendar-oauth-http.server.ts'
+      - 'apps/painel-ldr/src/lib/google-calendar-oauth-admin.server.ts'
+      - 'apps/painel-ldr/src/lib/google-calendar-oauth-storage.server.ts'
+      - 'apps/painel-ldr/src/lib/google-calendar-oauth-callback.server.ts'
+      - 'scripts/agenda/oauth-storage-schema.test.mjs'
       - '.github/workflows/calendar-oauth-validation.yml'
   pull_request:
     paths:
@@ -17,6 +23,12 @@ on:
       - 'scripts/agenda/oauth-setup.test.mjs'
       - 'apps/painel-ldr/src/lib/google-calendar-oauth-setup.server.ts'
       - 'apps/painel-ldr/src/lib/google-calendar-oauth-nonce.server.ts'
+      - 'apps/painel-ldr/supabase/migrations/20261112000100_calendar_oauth_private_storage.sql'
+      - 'apps/painel-ldr/src/lib/google-calendar-oauth-http.server.ts'
+      - 'apps/painel-ldr/src/lib/google-calendar-oauth-admin.server.ts'
+      - 'apps/painel-ldr/src/lib/google-calendar-oauth-storage.server.ts'
+      - 'apps/painel-ldr/src/lib/google-calendar-oauth-callback.server.ts'
+      - 'scripts/agenda/oauth-storage-schema.test.mjs'
       - '.github/workflows/calendar-oauth-validation.yml'
   workflow_dispatch:
 jobs:
@@ -30,4 +42,4 @@ jobs:
         with:
           node-version: '22'
       - name: Validate direct Google OAuth calendar client (mocked, no secrets)
-        run: node --experimental-strip-types --test scripts/agenda/calendar.test.mjs scripts/agenda/oauth-setup.test.mjs
+        run: node --experimental-strip-types --test scripts/agenda/calendar.test.mjs scripts/agenda/oauth-setup.test.mjs scripts/agenda/oauth-storage-schema.test.mjs
