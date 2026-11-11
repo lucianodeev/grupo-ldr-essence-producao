@@ -6,7 +6,7 @@ import { resolveAccess } from "@/lib/access.server";
 type Client = SupabaseClient<Database>;
 const db = supabaseAdmin as unknown as { from: (table: string) => any };
 
-const RATES: Record<string, number> = {
+const RATES: Record<string, number> & { service: number } = {
   digital: 20,
   training: 15,
   mentoring: 15,

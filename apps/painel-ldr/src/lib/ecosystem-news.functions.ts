@@ -24,7 +24,7 @@ export const ecosystemNews=createServerFn({method:"GET"})
      const xml=await res.text();
      const seen=new Set<string>();
      return [...xml.matchAll(/<item>([\s\S]*?)<\/item>/gi)].map(m=>{
-       const block=m[1], raw=tag(block,"title"), link=tag(block,"link"), publishedAt=tag(block,"pubDate");
+       const block=m[1] ?? "", raw=tag(block,"title"), link=tag(block,"link"), publishedAt=tag(block,"pubDate");
        const parts=raw.split(" - "); const source=parts.length>1?(parts.pop()||""):"";
        const title=cleanTitle(parts.join(" - ")||raw);
        return {title,url:link,source:cleanTitle(source),publishedAt};

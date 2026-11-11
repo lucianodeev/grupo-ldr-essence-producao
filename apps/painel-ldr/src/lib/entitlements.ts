@@ -181,8 +181,8 @@ export function resolveLegacyEntitlement(
       resourceKey,
       source: "pass",
       accessType: "recurring",
-      subscriptionId: signals.passSubscriptionId,
-      expiresAt: signals.passExpiresAt,
+      ...(signals.passSubscriptionId !== undefined ? {subscriptionId: signals.passSubscriptionId} : {}),
+      ...(signals.passExpiresAt !== undefined ? {expiresAt: signals.passExpiresAt} : {}),
       legacy: false,
       reasons: ["active_ldr_pass"],
     };
@@ -194,8 +194,8 @@ export function resolveLegacyEntitlement(
       resourceKey,
       source: "library_subscription",
       accessType: "recurring",
-      subscriptionId: signals.librarySubscriptionId,
-      expiresAt: signals.libraryExpiresAt,
+      ...(signals.librarySubscriptionId !== undefined ? {subscriptionId: signals.librarySubscriptionId} : {}),
+      ...(signals.libraryExpiresAt !== undefined ? {expiresAt: signals.libraryExpiresAt} : {}),
       legacy: true,
       reasons: ["active_library_subscription"],
     };
@@ -207,8 +207,8 @@ export function resolveLegacyEntitlement(
       resourceKey,
       source: "editorial_subscription",
       accessType: "recurring",
-      subscriptionId: signals.editorialSubscriptionId,
-      expiresAt: signals.editorialExpiresAt,
+      ...(signals.editorialSubscriptionId !== undefined ? {subscriptionId: signals.editorialSubscriptionId} : {}),
+      ...(signals.editorialExpiresAt !== undefined ? {expiresAt: signals.editorialExpiresAt} : {}),
       legacy: true,
       reasons: ["active_editorial_subscription"],
     };

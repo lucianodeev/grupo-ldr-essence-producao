@@ -1,3 +1,4 @@
+import { clientContextSchema, clientOverviewSchema, clientAgendaSchema, clientLibrarySchema } from "@/lib/client-response.schemas";
 import { createServerFn } from "@tanstack/react-start";
 import { getRequest } from "@tanstack/react-start/server";
 
@@ -82,7 +83,7 @@ export const getClientContext = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     if (!process.env["SUPABASE_SERVICE_ROLE_KEY"]) {
-      return clientSelfEdge<any>(context.accessToken, "context");
+      return clientContextSchema.parse(await clientSelfEdge<unknown>(context.accessToken, "context"));
     }
     const { resolveClient } = await import("@/lib/client-portal.server");
     return resolveClient(context.userId, emailOf(context.claims));
@@ -99,10 +100,10 @@ export const clientOverview = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     if (!process.env["SUPABASE_SERVICE_ROLE_KEY"]) {
-      return clientSelfEdge<any>(context.accessToken, "overview");
+      return clientOverviewSchema.parse(await clientSelfEdge<unknown>(context.accessToken, "overview"));
     }
     const { getClientOverview } = await import("@/lib/client-portal.server");
-    return getClientOverview(context.userId, emailOf(context.claims));
+    return clientOverviewSchema.parse(await getClientOverview(context.userId, emailOf(context.claims)));
   });
 
 export const clientOrderDetail = createServerFn({ method: "GET" })
@@ -172,9 +173,9 @@ export const clientContractCatalog = createServerFn({ method: "GET" })
 export const clientAgenda = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
-    if (!process.env["SUPABASE_SERVICE_ROLE_KEY"]) return clientSelfEdge<any>(context.accessToken, "agenda");
+    if (!process.env["SUPABASE_SERVICE_ROLE_KEY"]) return clientAgendaSchema.parse(await clientSelfEdge<unknown>(context.accessToken, "agenda"));
     const { getClientAgenda } = await import("@/lib/client-portal.server");
-    return getClientAgenda(context.userId, emailOf(context.claims));
+    return clientAgendaSchema.parse(await getClientAgenda(context.userId, emailOf(context.claims)));
   });
 
 export const clientRequestAppointment = createServerFn({ method: "POST" })
@@ -197,11 +198,11 @@ export const clientDigitalLibrary = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     if (!process.env["SUPABASE_SERVICE_ROLE_KEY"]) {
-      const library = await clientSelfEdge<any>(context.accessToken, "digital_library");
+      const library = clientLibrarySchema.parse(await clientSelfEdge<unknown>(context.accessToken, "digital_library"));
       return { ...library, market: requestMarket() };
     }
     const { getClientDigitalLibrary } = await import("@/lib/client-portal.server");
-    const library = await getClientDigitalLibrary(context.userId, emailOf(context.claims));
+    const library = clientLibrarySchema.parse(await getClientDigitalLibrary(context.userId, emailOf(context.claims)));
     return { ...library, market: requestMarket() };
   });
 

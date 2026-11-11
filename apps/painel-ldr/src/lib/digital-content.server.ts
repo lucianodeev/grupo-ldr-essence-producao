@@ -1,3 +1,4 @@
+import type { Json } from "@/integrations/supabase/types";
 import { gunzipSync } from "node:zlib";
 
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
@@ -68,13 +69,13 @@ async function assertEntitlement(customerId: string, productKey: DigitalReaderPr
   if (!entitled) fail("Conteúdo disponível somente após confirmação da compra.");
 }
 
-function decodeContent(value: unknown): unknown {
+function decodeContent(value: Json): Json {
   if (!value || typeof value !== "object") fail("Conteúdo indisponível.");
   const obj = value as { encoding?: unknown; payload?: unknown };
   if (obj.encoding === "gzip-base64" && typeof obj.payload === "string") {
     try {
       const text = gunzipSync(Buffer.from(obj.payload, "base64")).toString("utf8");
-      return JSON.parse(text) as unknown;
+      return JSON.parse(text) as Json;
     } catch {
       fail("Não foi possível abrir este conteúdo.");
     }

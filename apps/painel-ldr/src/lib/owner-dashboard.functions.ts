@@ -1,3 +1,4 @@
+import { ownerSummarySchema } from "@/lib/client-response.schemas";
 import { createServerFn } from "@tanstack/react-start";
 
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
@@ -17,7 +18,7 @@ async function masterEdgeSummary(accessToken: string | null | undefined) {
   });
   const body = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(response.status === 403 ? "Acesso negado." : "Não foi possível carregar os indicadores do Painel Master.");
-  return body;
+  return ownerSummarySchema.parse(body);
 }
 
 export const ownerDashboardSummary = createServerFn({ method: "GET" })
@@ -27,5 +28,5 @@ export const ownerDashboardSummary = createServerFn({ method: "GET" })
       return masterEdgeSummary(context.accessToken);
     }
     const { getOwnerDashboardSummary } = await import("@/lib/owner-dashboard.server");
-    return getOwnerDashboardSummary(context.supabase, context.userId);
+    return ownerSummarySchema.parse(await getOwnerDashboardSummary(context.supabase, context.userId));
   });

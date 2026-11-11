@@ -1,3 +1,4 @@
+import type { Json } from "@/integrations/supabase/types";
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
@@ -37,7 +38,7 @@ export const clientDoMamaoTrainingExperience = createServerFn({ method: "GET" })
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { resolveClient } = await import("@/lib/client-portal.server");
     const client = await resolveClient(context.userId, emailOf(context.claims));
-    let trainingState: Record<string, unknown> = {};
+    let trainingState: Record<string, Json | undefined> = {};
     if (client.status === "ok") {
       const { data } = await supabaseAdmin
         .from("training_state")
@@ -45,7 +46,7 @@ export const clientDoMamaoTrainingExperience = createServerFn({ method: "GET" })
         .eq("training_id", result.trainingId)
         .eq("customer_id", client.customer.id)
         .maybeSingle();
-      if (data?.state && typeof data.state === "object") trainingState = data.state as Record<string, unknown>;
+      if (data?.state && typeof data.state === "object" && !Array.isArray(data.state)) trainingState = data.state;
     }
     return { ...result, html: "", trainingState, state: trainingState };
   });
