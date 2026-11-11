@@ -16,7 +16,9 @@ import { Route as PortalRouteImport } from './routes/_portal'
 import { Route as AcessoRouteImport } from './routes/acesso'
 import { Route as AcessoCompraRouteImport } from './routes/acesso-compra'
 import { Route as AcoragemdecomecarRouteImport } from './routes/acoragemdecomecar'
+import { Route as AiReadyRouteImport } from './routes/ai-ready'
 import { Route as AmostraGratisRouteImport } from './routes/amostra-gratis'
+import { Route as AquisicaoRouteImport } from './routes/aquisicao'
 import { Route as BioRouteImport } from './routes/bio'
 import { Route as BootstrapRouteImport } from './routes/bootstrap'
 import { Route as CarreiraRouteImport } from './routes/carreira'
@@ -27,6 +29,7 @@ import { Route as EbookPsicanaliseAutismoRouteImport } from './routes/ebook-psic
 import { Route as EbookPsicanaliseNoMundoRouteImport } from './routes/ebook-psicanalise-no-mundo'
 import { Route as EcossistemaRouteImport } from './routes/ecossistema'
 import { Route as EmpreendedoresRouteImport } from './routes/empreendedores'
+import { Route as EmpresasRouteImport } from './routes/empresas'
 import { Route as FalarComEcossistemaRouteImport } from './routes/falar-com-ecossistema'
 import { Route as FilmRouteImport } from './routes/film'
 import { Route as FormacaoComunicacaoOratoriaRouteImport } from './routes/formacao-comunicacao-oratoria'
@@ -54,6 +57,7 @@ import { Route as LdrPassRouteImport } from './routes/ldr-pass'
 import { Route as LdrRhEstrategiaRouteImport } from './routes/ldr-rh-estrategia'
 import { Route as LivrosRouteImport } from './routes/livros'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as LucianoRouteImport } from './routes/luciano'
 import { Route as LucianoRodriguesAlmeidaRouteImport } from './routes/luciano-rodrigues-almeida'
 import { Route as MensagensProfissionaisRouteImport } from './routes/mensagens-profissionais'
 import { Route as ParaProfissionaisRouteImport } from './routes/para-profissionais'
@@ -90,6 +94,7 @@ import { Route as ApiTrainingOfferRouteImport } from './routes/api/training-offe
 import { Route as CarreiraSplatRouteImport } from './routes/carreira.$'
 import { Route as CarreiraContratarRouteImport } from './routes/carreira.contratar'
 import { Route as CarreiraCopilotRouteImport } from './routes/carreira.copilot'
+import { Route as CarreiraDiagnosticoRouteImport } from './routes/carreira.diagnostico'
 import { Route as CarreiraEmpresaRouteImport } from './routes/carreira.empresa'
 import { Route as CarreiraEmpresaEscolaRouteImport } from './routes/carreira.empresa-escola'
 import { Route as CarreiraGpsRouteImport } from './routes/carreira.gps'
@@ -117,6 +122,11 @@ import { Route as ClinicaSocialProfissionaisRouteImport } from './routes/clinica
 import { Route as ClinicaSocialSolicitarRouteImport } from './routes/clinica-social_.solicitar'
 import { Route as EbooksSlugRouteImport } from './routes/ebooks.$slug'
 import { Route as EmpresaLoginRouteImport } from './routes/empresa.login'
+import { Route as EmpresasIndexRouteImport } from './routes/empresas.index'
+import { Route as EmpresasAcademyRouteImport } from './routes/empresas.academy'
+import { Route as EmpresasLdrOneRouteImport } from './routes/empresas.ldr-one'
+import { Route as EmpresasPropostaRouteImport } from './routes/empresas.proposta'
+import { Route as EmpresasServicosRouteImport } from './routes/empresas.servicos'
 import { Route as FormacaoSlugRouteImport } from './routes/formacao.$slug'
 import { Route as FormacoesSlugRouteImport } from './routes/formacoes.$slug'
 import { Route as FuncionarioLoginRouteImport } from './routes/funcionario.login'
@@ -202,6 +212,7 @@ import { Route as AuthenticatedPainelProfissionalS8RouteImport } from './routes/
 import { Route as AuthenticatedPainelProfissionalTreinamentosRouteImport } from './routes/_authenticated/painel-profissional.treinamentos'
 import { Route as ClientareaClienteIndexRouteImport } from './routes/_clientarea.cliente.index'
 import { Route as ClientareaClienteAgendaRouteImport } from './routes/_clientarea.cliente.agenda'
+import { Route as ClientareaClienteAiReadyRouteImport } from './routes/_clientarea.cliente.ai-ready'
 import { Route as ClientareaClienteBibliotecaRouteImport } from './routes/_clientarea.cliente.biblioteca'
 import { Route as ClientareaClienteContratarRouteImport } from './routes/_clientarea.cliente.contratar'
 import { Route as ClientareaClienteEntregasRouteImport } from './routes/_clientarea.cliente.entregas'
@@ -320,9 +331,19 @@ const AcoragemdecomecarRoute = AcoragemdecomecarRouteImport.update({
   path: '/acoragemdecomecar',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AiReadyRoute = AiReadyRouteImport.update({
+  id: '/ai-ready',
+  path: '/ai-ready',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AmostraGratisRoute = AmostraGratisRouteImport.update({
   id: '/amostra-gratis',
   path: '/amostra-gratis',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AquisicaoRoute = AquisicaoRouteImport.update({
+  id: '/aquisicao',
+  path: '/aquisicao',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BioRoute = BioRouteImport.update({
@@ -375,6 +396,11 @@ const EcossistemaRoute = EcossistemaRouteImport.update({
 const EmpreendedoresRoute = EmpreendedoresRouteImport.update({
   id: '/empreendedores',
   path: '/empreendedores',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EmpresasRoute = EmpresasRouteImport.update({
+  id: '/empresas',
+  path: '/empresas',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FalarComEcossistemaRoute = FalarComEcossistemaRouteImport.update({
@@ -524,6 +550,11 @@ const LivrosRoute = LivrosRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LucianoRoute = LucianoRouteImport.update({
+  id: '/luciano',
+  path: '/luciano',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LucianoRodriguesAlmeidaRoute = LucianoRodriguesAlmeidaRouteImport.update({
@@ -707,6 +738,11 @@ const CarreiraCopilotRoute = CarreiraCopilotRouteImport.update({
   path: '/copilot',
   getParentRoute: () => CarreiraRoute,
 } as any)
+const CarreiraDiagnosticoRoute = CarreiraDiagnosticoRouteImport.update({
+  id: '/diagnostico',
+  path: '/diagnostico',
+  getParentRoute: () => CarreiraRoute,
+} as any)
 const CarreiraEmpresaRoute = CarreiraEmpresaRouteImport.update({
   id: '/empresa',
   path: '/empresa',
@@ -845,6 +881,31 @@ const EmpresaLoginRoute = EmpresaLoginRouteImport.update({
   id: '/empresa/login',
   path: '/empresa/login',
   getParentRoute: () => rootRouteImport,
+} as any)
+const EmpresasIndexRoute = EmpresasIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => EmpresasRoute,
+} as any)
+const EmpresasAcademyRoute = EmpresasAcademyRouteImport.update({
+  id: '/academy',
+  path: '/academy',
+  getParentRoute: () => EmpresasRoute,
+} as any)
+const EmpresasLdrOneRoute = EmpresasLdrOneRouteImport.update({
+  id: '/ldr-one',
+  path: '/ldr-one',
+  getParentRoute: () => EmpresasRoute,
+} as any)
+const EmpresasPropostaRoute = EmpresasPropostaRouteImport.update({
+  id: '/proposta',
+  path: '/proposta',
+  getParentRoute: () => EmpresasRoute,
+} as any)
+const EmpresasServicosRoute = EmpresasServicosRouteImport.update({
+  id: '/servicos',
+  path: '/servicos',
+  getParentRoute: () => EmpresasRoute,
 } as any)
 const FormacaoSlugRoute = FormacaoSlugRouteImport.update({
   id: '/formacao/$slug',
@@ -1327,6 +1388,12 @@ const ClientareaClienteAgendaRoute = ClientareaClienteAgendaRouteImport.update({
   path: '/agenda',
   getParentRoute: () => ClientareaClienteRoute,
 } as any)
+const ClientareaClienteAiReadyRoute =
+  ClientareaClienteAiReadyRouteImport.update({
+    id: '/ai-ready',
+    path: '/ai-ready',
+    getParentRoute: () => ClientareaClienteRoute,
+  } as any)
 const ClientareaClienteBibliotecaRoute =
   ClientareaClienteBibliotecaRouteImport.update({
     id: '/biblioteca',
@@ -1832,7 +1899,9 @@ export interface FileRoutesByFullPath {
   '/acesso': typeof AcessoRoute
   '/acesso-compra': typeof AcessoCompraRoute
   '/acoragemdecomecar': typeof AcoragemdecomecarRoute
+  '/ai-ready': typeof AiReadyRoute
   '/amostra-gratis': typeof AmostraGratisRoute
+  '/aquisicao': typeof AquisicaoRoute
   '/bio': typeof BioRoute
   '/bootstrap': typeof BootstrapRoute
   '/carreira': typeof CarreiraRouteWithChildren
@@ -1843,6 +1912,7 @@ export interface FileRoutesByFullPath {
   '/ebook-psicanalise-no-mundo': typeof EbookPsicanaliseNoMundoRoute
   '/ecossistema': typeof EcossistemaRoute
   '/empreendedores': typeof EmpreendedoresRoute
+  '/empresas': typeof EmpresasRouteWithChildren
   '/falar-com-ecossistema': typeof FalarComEcossistemaRoute
   '/film': typeof FilmRoute
   '/formacao-comunicacao-oratoria': typeof FormacaoComunicacaoOratoriaRoute
@@ -1870,6 +1940,7 @@ export interface FileRoutesByFullPath {
   '/ldr-rh-estrategia': typeof LdrRhEstrategiaRoute
   '/livros': typeof LivrosRoute
   '/login': typeof LoginRoute
+  '/luciano': typeof LucianoRoute
   '/luciano-rodrigues-almeida': typeof LucianoRodriguesAlmeidaRoute
   '/mensagens-profissionais': typeof MensagensProfissionaisRoute
   '/para-profissionais': typeof ParaProfissionaisRoute
@@ -1905,6 +1976,7 @@ export interface FileRoutesByFullPath {
   '/carreira/$': typeof CarreiraSplatRoute
   '/carreira/contratar': typeof CarreiraContratarRoute
   '/carreira/copilot': typeof CarreiraCopilotRoute
+  '/carreira/diagnostico': typeof CarreiraDiagnosticoRoute
   '/carreira/empresa': typeof CarreiraEmpresaRouteWithChildren
   '/carreira/empresa-escola': typeof CarreiraEmpresaEscolaRoute
   '/carreira/gps': typeof CarreiraGpsRoute
@@ -1932,6 +2004,10 @@ export interface FileRoutesByFullPath {
   '/clinica-social/solicitar': typeof ClinicaSocialSolicitarRoute
   '/ebooks/$slug': typeof EbooksSlugRoute
   '/empresa/login': typeof EmpresaLoginRoute
+  '/empresas/academy': typeof EmpresasAcademyRoute
+  '/empresas/ldr-one': typeof EmpresasLdrOneRoute
+  '/empresas/proposta': typeof EmpresasPropostaRoute
+  '/empresas/servicos': typeof EmpresasServicosRoute
   '/formacao/$slug': typeof FormacaoSlugRoute
   '/formacoes/$slug': typeof FormacoesSlugRoute
   '/funcionario/login': typeof FuncionarioLoginRoute
@@ -1958,6 +2034,7 @@ export interface FileRoutesByFullPath {
   '/rede-profissionais/termos': typeof RedeProfissionaisTermosRoute
   '/vendedor/academia': typeof VendedorAcademiaRoute
   '/vendedor/apresentacao': typeof VendedorApresentacaoRoute
+  '/empresas/': typeof EmpresasIndexRoute
   '/imprensa/': typeof ImprensaIndexRoute
   '/admin/acessos': typeof AuthenticatedAdminAcessosRoute
   '/admin/alunos-matriculas': typeof AuthenticatedAdminAlunosMatriculasRoute
@@ -2015,6 +2092,7 @@ export interface FileRoutesByFullPath {
   '/painel-profissional/s8': typeof AuthenticatedPainelProfissionalS8Route
   '/painel-profissional/treinamentos': typeof AuthenticatedPainelProfissionalTreinamentosRoute
   '/cliente/agenda': typeof ClientareaClienteAgendaRoute
+  '/cliente/ai-ready': typeof ClientareaClienteAiReadyRoute
   '/cliente/biblioteca': typeof ClientareaClienteBibliotecaRouteWithChildren
   '/cliente/contratar': typeof ClientareaClienteContratarRoute
   '/cliente/entregas': typeof ClientareaClienteEntregasRoute
@@ -2108,7 +2186,9 @@ export interface FileRoutesByTo {
   '/acesso': typeof AcessoRoute
   '/acesso-compra': typeof AcessoCompraRoute
   '/acoragemdecomecar': typeof AcoragemdecomecarRoute
+  '/ai-ready': typeof AiReadyRoute
   '/amostra-gratis': typeof AmostraGratisRoute
+  '/aquisicao': typeof AquisicaoRoute
   '/bio': typeof BioRoute
   '/bootstrap': typeof BootstrapRoute
   '/carreira': typeof CarreiraRouteWithChildren
@@ -2145,6 +2225,7 @@ export interface FileRoutesByTo {
   '/ldr-rh-estrategia': typeof LdrRhEstrategiaRoute
   '/livros': typeof LivrosRoute
   '/login': typeof LoginRoute
+  '/luciano': typeof LucianoRoute
   '/luciano-rodrigues-almeida': typeof LucianoRodriguesAlmeidaRoute
   '/mensagens-profissionais': typeof MensagensProfissionaisRoute
   '/para-profissionais': typeof ParaProfissionaisRoute
@@ -2178,6 +2259,7 @@ export interface FileRoutesByTo {
   '/carreira/$': typeof CarreiraSplatRoute
   '/carreira/contratar': typeof CarreiraContratarRoute
   '/carreira/copilot': typeof CarreiraCopilotRoute
+  '/carreira/diagnostico': typeof CarreiraDiagnosticoRoute
   '/carreira/empresa': typeof CarreiraEmpresaRouteWithChildren
   '/carreira/empresa-escola': typeof CarreiraEmpresaEscolaRoute
   '/carreira/gps': typeof CarreiraGpsRoute
@@ -2205,6 +2287,10 @@ export interface FileRoutesByTo {
   '/clinica-social/solicitar': typeof ClinicaSocialSolicitarRoute
   '/ebooks/$slug': typeof EbooksSlugRoute
   '/empresa/login': typeof EmpresaLoginRoute
+  '/empresas/academy': typeof EmpresasAcademyRoute
+  '/empresas/ldr-one': typeof EmpresasLdrOneRoute
+  '/empresas/proposta': typeof EmpresasPropostaRoute
+  '/empresas/servicos': typeof EmpresasServicosRoute
   '/formacao/$slug': typeof FormacaoSlugRoute
   '/formacoes/$slug': typeof FormacoesSlugRoute
   '/funcionario/login': typeof FuncionarioLoginRoute
@@ -2231,6 +2317,7 @@ export interface FileRoutesByTo {
   '/rede-profissionais/termos': typeof RedeProfissionaisTermosRoute
   '/vendedor/academia': typeof VendedorAcademiaRoute
   '/vendedor/apresentacao': typeof VendedorApresentacaoRoute
+  '/empresas': typeof EmpresasIndexRoute
   '/imprensa': typeof ImprensaIndexRoute
   '/admin/acessos': typeof AuthenticatedAdminAcessosRoute
   '/admin/alunos-matriculas': typeof AuthenticatedAdminAlunosMatriculasRoute
@@ -2288,6 +2375,7 @@ export interface FileRoutesByTo {
   '/painel-profissional/s8': typeof AuthenticatedPainelProfissionalS8Route
   '/painel-profissional/treinamentos': typeof AuthenticatedPainelProfissionalTreinamentosRoute
   '/cliente/agenda': typeof ClientareaClienteAgendaRoute
+  '/cliente/ai-ready': typeof ClientareaClienteAiReadyRoute
   '/cliente/biblioteca': typeof ClientareaClienteBibliotecaRouteWithChildren
   '/cliente/contratar': typeof ClientareaClienteContratarRoute
   '/cliente/entregas': typeof ClientareaClienteEntregasRoute
@@ -2385,7 +2473,9 @@ export interface FileRoutesById {
   '/acesso': typeof AcessoRoute
   '/acesso-compra': typeof AcessoCompraRoute
   '/acoragemdecomecar': typeof AcoragemdecomecarRoute
+  '/ai-ready': typeof AiReadyRoute
   '/amostra-gratis': typeof AmostraGratisRoute
+  '/aquisicao': typeof AquisicaoRoute
   '/bio': typeof BioRoute
   '/bootstrap': typeof BootstrapRoute
   '/carreira': typeof CarreiraRouteWithChildren
@@ -2396,6 +2486,7 @@ export interface FileRoutesById {
   '/ebook-psicanalise-no-mundo': typeof EbookPsicanaliseNoMundoRoute
   '/ecossistema': typeof EcossistemaRoute
   '/empreendedores': typeof EmpreendedoresRoute
+  '/empresas': typeof EmpresasRouteWithChildren
   '/falar-com-ecossistema': typeof FalarComEcossistemaRoute
   '/film': typeof FilmRoute
   '/formacao-comunicacao-oratoria': typeof FormacaoComunicacaoOratoriaRoute
@@ -2423,6 +2514,7 @@ export interface FileRoutesById {
   '/ldr-rh-estrategia': typeof LdrRhEstrategiaRoute
   '/livros': typeof LivrosRoute
   '/login': typeof LoginRoute
+  '/luciano': typeof LucianoRoute
   '/luciano-rodrigues-almeida': typeof LucianoRodriguesAlmeidaRoute
   '/mensagens-profissionais': typeof MensagensProfissionaisRoute
   '/para-profissionais': typeof ParaProfissionaisRoute
@@ -2459,6 +2551,7 @@ export interface FileRoutesById {
   '/carreira/$': typeof CarreiraSplatRoute
   '/carreira/contratar': typeof CarreiraContratarRoute
   '/carreira/copilot': typeof CarreiraCopilotRoute
+  '/carreira/diagnostico': typeof CarreiraDiagnosticoRoute
   '/carreira/empresa': typeof CarreiraEmpresaRouteWithChildren
   '/carreira/empresa-escola': typeof CarreiraEmpresaEscolaRoute
   '/carreira/gps': typeof CarreiraGpsRoute
@@ -2486,6 +2579,10 @@ export interface FileRoutesById {
   '/clinica-social_/solicitar': typeof ClinicaSocialSolicitarRoute
   '/ebooks/$slug': typeof EbooksSlugRoute
   '/empresa/login': typeof EmpresaLoginRoute
+  '/empresas/academy': typeof EmpresasAcademyRoute
+  '/empresas/ldr-one': typeof EmpresasLdrOneRoute
+  '/empresas/proposta': typeof EmpresasPropostaRoute
+  '/empresas/servicos': typeof EmpresasServicosRoute
   '/formacao/$slug': typeof FormacaoSlugRoute
   '/formacoes/$slug': typeof FormacoesSlugRoute
   '/funcionario/login': typeof FuncionarioLoginRoute
@@ -2512,6 +2609,7 @@ export interface FileRoutesById {
   '/rede-profissionais/termos': typeof RedeProfissionaisTermosRoute
   '/vendedor/academia': typeof VendedorAcademiaRoute
   '/vendedor/apresentacao': typeof VendedorApresentacaoRoute
+  '/empresas/': typeof EmpresasIndexRoute
   '/imprensa/': typeof ImprensaIndexRoute
   '/_authenticated/admin/acessos': typeof AuthenticatedAdminAcessosRoute
   '/_authenticated/admin/alunos-matriculas': typeof AuthenticatedAdminAlunosMatriculasRoute
@@ -2569,6 +2667,7 @@ export interface FileRoutesById {
   '/_authenticated/painel-profissional/s8': typeof AuthenticatedPainelProfissionalS8Route
   '/_authenticated/painel-profissional/treinamentos': typeof AuthenticatedPainelProfissionalTreinamentosRoute
   '/_clientarea/cliente/agenda': typeof ClientareaClienteAgendaRoute
+  '/_clientarea/cliente/ai-ready': typeof ClientareaClienteAiReadyRoute
   '/_clientarea/cliente/biblioteca': typeof ClientareaClienteBibliotecaRouteWithChildren
   '/_clientarea/cliente/contratar': typeof ClientareaClienteContratarRoute
   '/_clientarea/cliente/entregas': typeof ClientareaClienteEntregasRoute
@@ -2664,7 +2763,9 @@ export interface FileRouteTypes {
     | '/acesso'
     | '/acesso-compra'
     | '/acoragemdecomecar'
+    | '/ai-ready'
     | '/amostra-gratis'
+    | '/aquisicao'
     | '/bio'
     | '/bootstrap'
     | '/carreira'
@@ -2675,6 +2776,7 @@ export interface FileRouteTypes {
     | '/ebook-psicanalise-no-mundo'
     | '/ecossistema'
     | '/empreendedores'
+    | '/empresas'
     | '/falar-com-ecossistema'
     | '/film'
     | '/formacao-comunicacao-oratoria'
@@ -2702,6 +2804,7 @@ export interface FileRouteTypes {
     | '/ldr-rh-estrategia'
     | '/livros'
     | '/login'
+    | '/luciano'
     | '/luciano-rodrigues-almeida'
     | '/mensagens-profissionais'
     | '/para-profissionais'
@@ -2737,6 +2840,7 @@ export interface FileRouteTypes {
     | '/carreira/$'
     | '/carreira/contratar'
     | '/carreira/copilot'
+    | '/carreira/diagnostico'
     | '/carreira/empresa'
     | '/carreira/empresa-escola'
     | '/carreira/gps'
@@ -2764,6 +2868,10 @@ export interface FileRouteTypes {
     | '/clinica-social/solicitar'
     | '/ebooks/$slug'
     | '/empresa/login'
+    | '/empresas/academy'
+    | '/empresas/ldr-one'
+    | '/empresas/proposta'
+    | '/empresas/servicos'
     | '/formacao/$slug'
     | '/formacoes/$slug'
     | '/funcionario/login'
@@ -2790,6 +2898,7 @@ export interface FileRouteTypes {
     | '/rede-profissionais/termos'
     | '/vendedor/academia'
     | '/vendedor/apresentacao'
+    | '/empresas/'
     | '/imprensa/'
     | '/admin/acessos'
     | '/admin/alunos-matriculas'
@@ -2847,6 +2956,7 @@ export interface FileRouteTypes {
     | '/painel-profissional/s8'
     | '/painel-profissional/treinamentos'
     | '/cliente/agenda'
+    | '/cliente/ai-ready'
     | '/cliente/biblioteca'
     | '/cliente/contratar'
     | '/cliente/entregas'
@@ -2940,7 +3050,9 @@ export interface FileRouteTypes {
     | '/acesso'
     | '/acesso-compra'
     | '/acoragemdecomecar'
+    | '/ai-ready'
     | '/amostra-gratis'
+    | '/aquisicao'
     | '/bio'
     | '/bootstrap'
     | '/carreira'
@@ -2977,6 +3089,7 @@ export interface FileRouteTypes {
     | '/ldr-rh-estrategia'
     | '/livros'
     | '/login'
+    | '/luciano'
     | '/luciano-rodrigues-almeida'
     | '/mensagens-profissionais'
     | '/para-profissionais'
@@ -3010,6 +3123,7 @@ export interface FileRouteTypes {
     | '/carreira/$'
     | '/carreira/contratar'
     | '/carreira/copilot'
+    | '/carreira/diagnostico'
     | '/carreira/empresa'
     | '/carreira/empresa-escola'
     | '/carreira/gps'
@@ -3037,6 +3151,10 @@ export interface FileRouteTypes {
     | '/clinica-social/solicitar'
     | '/ebooks/$slug'
     | '/empresa/login'
+    | '/empresas/academy'
+    | '/empresas/ldr-one'
+    | '/empresas/proposta'
+    | '/empresas/servicos'
     | '/formacao/$slug'
     | '/formacoes/$slug'
     | '/funcionario/login'
@@ -3063,6 +3181,7 @@ export interface FileRouteTypes {
     | '/rede-profissionais/termos'
     | '/vendedor/academia'
     | '/vendedor/apresentacao'
+    | '/empresas'
     | '/imprensa'
     | '/admin/acessos'
     | '/admin/alunos-matriculas'
@@ -3120,6 +3239,7 @@ export interface FileRouteTypes {
     | '/painel-profissional/s8'
     | '/painel-profissional/treinamentos'
     | '/cliente/agenda'
+    | '/cliente/ai-ready'
     | '/cliente/biblioteca'
     | '/cliente/contratar'
     | '/cliente/entregas'
@@ -3216,7 +3336,9 @@ export interface FileRouteTypes {
     | '/acesso'
     | '/acesso-compra'
     | '/acoragemdecomecar'
+    | '/ai-ready'
     | '/amostra-gratis'
+    | '/aquisicao'
     | '/bio'
     | '/bootstrap'
     | '/carreira'
@@ -3227,6 +3349,7 @@ export interface FileRouteTypes {
     | '/ebook-psicanalise-no-mundo'
     | '/ecossistema'
     | '/empreendedores'
+    | '/empresas'
     | '/falar-com-ecossistema'
     | '/film'
     | '/formacao-comunicacao-oratoria'
@@ -3254,6 +3377,7 @@ export interface FileRouteTypes {
     | '/ldr-rh-estrategia'
     | '/livros'
     | '/login'
+    | '/luciano'
     | '/luciano-rodrigues-almeida'
     | '/mensagens-profissionais'
     | '/para-profissionais'
@@ -3290,6 +3414,7 @@ export interface FileRouteTypes {
     | '/carreira/$'
     | '/carreira/contratar'
     | '/carreira/copilot'
+    | '/carreira/diagnostico'
     | '/carreira/empresa'
     | '/carreira/empresa-escola'
     | '/carreira/gps'
@@ -3317,6 +3442,10 @@ export interface FileRouteTypes {
     | '/clinica-social_/solicitar'
     | '/ebooks/$slug'
     | '/empresa/login'
+    | '/empresas/academy'
+    | '/empresas/ldr-one'
+    | '/empresas/proposta'
+    | '/empresas/servicos'
     | '/formacao/$slug'
     | '/formacoes/$slug'
     | '/funcionario/login'
@@ -3343,6 +3472,7 @@ export interface FileRouteTypes {
     | '/rede-profissionais/termos'
     | '/vendedor/academia'
     | '/vendedor/apresentacao'
+    | '/empresas/'
     | '/imprensa/'
     | '/_authenticated/admin/acessos'
     | '/_authenticated/admin/alunos-matriculas'
@@ -3400,6 +3530,7 @@ export interface FileRouteTypes {
     | '/_authenticated/painel-profissional/s8'
     | '/_authenticated/painel-profissional/treinamentos'
     | '/_clientarea/cliente/agenda'
+    | '/_clientarea/cliente/ai-ready'
     | '/_clientarea/cliente/biblioteca'
     | '/_clientarea/cliente/contratar'
     | '/_clientarea/cliente/entregas'
@@ -3497,7 +3628,9 @@ export interface RootRouteChildren {
   AcessoRoute: typeof AcessoRoute
   AcessoCompraRoute: typeof AcessoCompraRoute
   AcoragemdecomecarRoute: typeof AcoragemdecomecarRoute
+  AiReadyRoute: typeof AiReadyRoute
   AmostraGratisRoute: typeof AmostraGratisRoute
+  AquisicaoRoute: typeof AquisicaoRoute
   BioRoute: typeof BioRoute
   BootstrapRoute: typeof BootstrapRoute
   CarreiraRoute: typeof CarreiraRouteWithChildren
@@ -3508,6 +3641,7 @@ export interface RootRouteChildren {
   EbookPsicanaliseNoMundoRoute: typeof EbookPsicanaliseNoMundoRoute
   EcossistemaRoute: typeof EcossistemaRoute
   EmpreendedoresRoute: typeof EmpreendedoresRoute
+  EmpresasRoute: typeof EmpresasRouteWithChildren
   FalarComEcossistemaRoute: typeof FalarComEcossistemaRoute
   FilmRoute: typeof FilmRoute
   FormacaoComunicacaoOratoriaRoute: typeof FormacaoComunicacaoOratoriaRoute
@@ -3535,6 +3669,7 @@ export interface RootRouteChildren {
   LdrRhEstrategiaRoute: typeof LdrRhEstrategiaRoute
   LivrosRoute: typeof LivrosRoute
   LoginRoute: typeof LoginRoute
+  LucianoRoute: typeof LucianoRoute
   LucianoRodriguesAlmeidaRoute: typeof LucianoRodriguesAlmeidaRoute
   MensagensProfissionaisRoute: typeof MensagensProfissionaisRoute
   ParaProfissionaisRoute: typeof ParaProfissionaisRoute
@@ -3635,11 +3770,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AcoragemdecomecarRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ai-ready': {
+      id: '/ai-ready'
+      path: '/ai-ready'
+      fullPath: '/ai-ready'
+      preLoaderRoute: typeof AiReadyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/amostra-gratis': {
       id: '/amostra-gratis'
       path: '/amostra-gratis'
       fullPath: '/amostra-gratis'
       preLoaderRoute: typeof AmostraGratisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/aquisicao': {
+      id: '/aquisicao'
+      path: '/aquisicao'
+      fullPath: '/aquisicao'
+      preLoaderRoute: typeof AquisicaoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/bio': {
@@ -3710,6 +3859,13 @@ declare module '@tanstack/react-router' {
       path: '/empreendedores'
       fullPath: '/empreendedores'
       preLoaderRoute: typeof EmpreendedoresRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/empresas': {
+      id: '/empresas'
+      path: '/empresas'
+      fullPath: '/empresas'
+      preLoaderRoute: typeof EmpresasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/falar-com-ecossistema': {
@@ -3899,6 +4055,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/luciano': {
+      id: '/luciano'
+      path: '/luciano'
+      fullPath: '/luciano'
+      preLoaderRoute: typeof LucianoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/luciano-rodrigues-almeida': {
@@ -4153,6 +4316,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CarreiraCopilotRouteImport
       parentRoute: typeof CarreiraRoute
     }
+    '/carreira/diagnostico': {
+      id: '/carreira/diagnostico'
+      path: '/diagnostico'
+      fullPath: '/carreira/diagnostico'
+      preLoaderRoute: typeof CarreiraDiagnosticoRouteImport
+      parentRoute: typeof CarreiraRoute
+    }
     '/carreira/empresa': {
       id: '/carreira/empresa'
       path: '/empresa'
@@ -4341,6 +4511,41 @@ declare module '@tanstack/react-router' {
       fullPath: '/empresa/login'
       preLoaderRoute: typeof EmpresaLoginRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/empresas/': {
+      id: '/empresas/'
+      path: '/'
+      fullPath: '/empresas/'
+      preLoaderRoute: typeof EmpresasIndexRouteImport
+      parentRoute: typeof EmpresasRoute
+    }
+    '/empresas/academy': {
+      id: '/empresas/academy'
+      path: '/academy'
+      fullPath: '/empresas/academy'
+      preLoaderRoute: typeof EmpresasAcademyRouteImport
+      parentRoute: typeof EmpresasRoute
+    }
+    '/empresas/ldr-one': {
+      id: '/empresas/ldr-one'
+      path: '/ldr-one'
+      fullPath: '/empresas/ldr-one'
+      preLoaderRoute: typeof EmpresasLdrOneRouteImport
+      parentRoute: typeof EmpresasRoute
+    }
+    '/empresas/proposta': {
+      id: '/empresas/proposta'
+      path: '/proposta'
+      fullPath: '/empresas/proposta'
+      preLoaderRoute: typeof EmpresasPropostaRouteImport
+      parentRoute: typeof EmpresasRoute
+    }
+    '/empresas/servicos': {
+      id: '/empresas/servicos'
+      path: '/servicos'
+      fullPath: '/empresas/servicos'
+      preLoaderRoute: typeof EmpresasServicosRouteImport
+      parentRoute: typeof EmpresasRoute
     }
     '/formacao/$slug': {
       id: '/formacao/$slug'
@@ -4935,6 +5140,13 @@ declare module '@tanstack/react-router' {
       path: '/agenda'
       fullPath: '/cliente/agenda'
       preLoaderRoute: typeof ClientareaClienteAgendaRouteImport
+      parentRoute: typeof ClientareaClienteRoute
+    }
+    '/_clientarea/cliente/ai-ready': {
+      id: '/_clientarea/cliente/ai-ready'
+      path: '/ai-ready'
+      fullPath: '/cliente/ai-ready'
+      preLoaderRoute: typeof ClientareaClienteAiReadyRouteImport
       parentRoute: typeof ClientareaClienteRoute
     }
     '/_clientarea/cliente/biblioteca': {
@@ -5937,6 +6149,7 @@ const ClientareaClienteTreinamentosRouteWithChildren =
 
 interface ClientareaClienteRouteChildren {
   ClientareaClienteAgendaRoute: typeof ClientareaClienteAgendaRoute
+  ClientareaClienteAiReadyRoute: typeof ClientareaClienteAiReadyRoute
   ClientareaClienteBibliotecaRoute: typeof ClientareaClienteBibliotecaRouteWithChildren
   ClientareaClienteContratarRoute: typeof ClientareaClienteContratarRoute
   ClientareaClienteEntregasRoute: typeof ClientareaClienteEntregasRoute
@@ -5967,6 +6180,7 @@ interface ClientareaClienteRouteChildren {
 
 const ClientareaClienteRouteChildren: ClientareaClienteRouteChildren = {
   ClientareaClienteAgendaRoute: ClientareaClienteAgendaRoute,
+  ClientareaClienteAiReadyRoute: ClientareaClienteAiReadyRoute,
   ClientareaClienteBibliotecaRoute:
     ClientareaClienteBibliotecaRouteWithChildren,
   ClientareaClienteContratarRoute: ClientareaClienteContratarRoute,
@@ -6090,6 +6304,7 @@ interface CarreiraRouteChildren {
   CarreiraSplatRoute: typeof CarreiraSplatRoute
   CarreiraContratarRoute: typeof CarreiraContratarRoute
   CarreiraCopilotRoute: typeof CarreiraCopilotRoute
+  CarreiraDiagnosticoRoute: typeof CarreiraDiagnosticoRoute
   CarreiraEmpresaRoute: typeof CarreiraEmpresaRouteWithChildren
   CarreiraEmpresaEscolaRoute: typeof CarreiraEmpresaEscolaRoute
   CarreiraGpsRoute: typeof CarreiraGpsRoute
@@ -6118,6 +6333,7 @@ const CarreiraRouteChildren: CarreiraRouteChildren = {
   CarreiraSplatRoute: CarreiraSplatRoute,
   CarreiraContratarRoute: CarreiraContratarRoute,
   CarreiraCopilotRoute: CarreiraCopilotRoute,
+  CarreiraDiagnosticoRoute: CarreiraDiagnosticoRoute,
   CarreiraEmpresaRoute: CarreiraEmpresaRouteWithChildren,
   CarreiraEmpresaEscolaRoute: CarreiraEmpresaEscolaRoute,
   CarreiraGpsRoute: CarreiraGpsRoute,
@@ -6144,6 +6360,26 @@ const CarreiraRouteChildren: CarreiraRouteChildren = {
 
 const CarreiraRouteWithChildren = CarreiraRoute._addFileChildren(
   CarreiraRouteChildren,
+)
+
+interface EmpresasRouteChildren {
+  EmpresasAcademyRoute: typeof EmpresasAcademyRoute
+  EmpresasLdrOneRoute: typeof EmpresasLdrOneRoute
+  EmpresasPropostaRoute: typeof EmpresasPropostaRoute
+  EmpresasServicosRoute: typeof EmpresasServicosRoute
+  EmpresasIndexRoute: typeof EmpresasIndexRoute
+}
+
+const EmpresasRouteChildren: EmpresasRouteChildren = {
+  EmpresasAcademyRoute: EmpresasAcademyRoute,
+  EmpresasLdrOneRoute: EmpresasLdrOneRoute,
+  EmpresasPropostaRoute: EmpresasPropostaRoute,
+  EmpresasServicosRoute: EmpresasServicosRoute,
+  EmpresasIndexRoute: EmpresasIndexRoute,
+}
+
+const EmpresasRouteWithChildren = EmpresasRoute._addFileChildren(
+  EmpresasRouteChildren,
 )
 
 interface HumanRoomSalasRouteChildren {
@@ -6256,7 +6492,9 @@ const rootRouteChildren: RootRouteChildren = {
   AcessoRoute: AcessoRoute,
   AcessoCompraRoute: AcessoCompraRoute,
   AcoragemdecomecarRoute: AcoragemdecomecarRoute,
+  AiReadyRoute: AiReadyRoute,
   AmostraGratisRoute: AmostraGratisRoute,
+  AquisicaoRoute: AquisicaoRoute,
   BioRoute: BioRoute,
   BootstrapRoute: BootstrapRoute,
   CarreiraRoute: CarreiraRouteWithChildren,
@@ -6267,6 +6505,7 @@ const rootRouteChildren: RootRouteChildren = {
   EbookPsicanaliseNoMundoRoute: EbookPsicanaliseNoMundoRoute,
   EcossistemaRoute: EcossistemaRoute,
   EmpreendedoresRoute: EmpreendedoresRoute,
+  EmpresasRoute: EmpresasRouteWithChildren,
   FalarComEcossistemaRoute: FalarComEcossistemaRoute,
   FilmRoute: FilmRoute,
   FormacaoComunicacaoOratoriaRoute: FormacaoComunicacaoOratoriaRoute,
@@ -6296,6 +6535,7 @@ const rootRouteChildren: RootRouteChildren = {
   LdrRhEstrategiaRoute: LdrRhEstrategiaRoute,
   LivrosRoute: LivrosRoute,
   LoginRoute: LoginRoute,
+  LucianoRoute: LucianoRoute,
   LucianoRodriguesAlmeidaRoute: LucianoRodriguesAlmeidaRoute,
   MensagensProfissionaisRoute: MensagensProfissionaisRoute,
   ParaProfissionaisRoute: ParaProfissionaisRoute,

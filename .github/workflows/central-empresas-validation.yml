@@ -29,6 +29,10 @@ jobs:
         run: npm --prefix apps/painel-ldr run typecheck
       - name: Unit tests
         run: npm --prefix apps/painel-ldr run test
+      - name: Commercial, curriculum and module regressions
+        run: npm --prefix apps/painel-ldr run test:regressions
+      - name: Enterprise HTTP routing and link smoke tests (no live credentials)
+        run: npm --prefix apps/painel-ldr run test:enterprise-http
       - name: Central Empresas route audit
         run: |
           test -f apps/painel-ldr/src/routes/empresas.tsx

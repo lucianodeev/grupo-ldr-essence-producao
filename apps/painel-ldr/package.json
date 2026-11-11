@@ -18,7 +18,9 @@
     "test:academic": "node --test tests/academic-regressions.test.cjs",
     "test:preview": "node --test tests/unified-preview.test.cjs",
     "build:render": "RENDER=true npm run build",
-    "start:render": "node .output/server/index.mjs"
+    "start:render": "node .output/server/index.mjs",
+    "test:regressions": "node --test tests/*.test.cjs",
+    "test:enterprise-http": "node tests/enterprise-http-smoke.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
