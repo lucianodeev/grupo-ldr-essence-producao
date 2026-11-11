@@ -60,3 +60,9 @@ Backup integral/restauração: plano preparado, sem extração de dados de clien
 ## Verificação de produção
 
 SELECT final em transação READ ONLY: PostgreSQL 17.6; appointments/appointment_events/appointment_calendar_sync ausentes; zero colunas novas de sessão; zero RPCs novas. Render permanece no deploy `dep-dbq51bajnfac739rbl2g`, commit `da91c4fc8dd80a5c660bedd9d747caadaccdcf8b`. Nenhum merge, deploy, DDL/DML de produção, serviço pago ou alteração de DNS foi executado.
+
+## Advisors e ativação
+
+A consulta de segurança Supabase também foi executada em modo leitura: 3 avisos informativos de RLS sem políticas em tabelas de outros módulos, avisos de execução SECURITY DEFINER em `submit_ecosystem_contact` e `is_superadmin`, e proteção de senhas comprometidas desativada. Não foram alterados; o acesso público da função de contacto pode ser intencional e não foi revogado nesta missão. As novas funções de agenda são SECURITY INVOKER e tiveram grants testados no banco isolado. Referências: [funções definer expostas](https://supabase.com/docs/guides/database/database-linter) e [segurança de senhas](https://supabase.com/docs/guides/auth/password-security).
+
+A flag de ativação é verificada também nas duas mutações de agenda do cliente; CI agora observa alterações do backend e formulário, além de SQL/Calendar. Esses ajustes finais não mudam a migração nem os resultados PostgreSQL.

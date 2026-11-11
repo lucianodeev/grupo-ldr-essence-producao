@@ -10,6 +10,10 @@ on:
       - 'docs/audit-20261111/agenda-preactivation-rollback.sql'
       - 'apps/painel-ldr/supabase/migrations/*agenda_calendar_credit_integration.sql'
       - 'apps/painel-ldr/src/lib/*calendar*.ts'
+      - 'apps/painel-ldr/src/lib/agenda-admin*'
+      - 'apps/painel-ldr/src/lib/client-portal.server.ts'
+      - 'apps/painel-ldr/src/lib/central-data.ts'
+      - 'apps/painel-ldr/src/components/central/mentorship-sessions.tsx'
 permissions:
   contents: read
 jobs:

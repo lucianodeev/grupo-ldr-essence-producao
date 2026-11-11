@@ -894,6 +894,7 @@ export async function requestClientAppointment(
   email: string | null,
   input: { orderId: string; startsAt: string; note?: string | null | undefined },
 ) {
+  if (process.env["AGENDA_INTEGRATION_ENABLED"] !== "true") fail("Integração de agenda ainda não ativada.");
   const customer = await requireClient(userId, email);
   const startsAt = parseFutureDate(input.startsAt);
   const note = input.note?.trim().slice(0, 800) || null;
@@ -925,6 +926,7 @@ export async function rescheduleClientAppointment(
   email: string | null,
   input: { appointmentId: string; startsAt: string; note?: string | null | undefined },
 ) {
+  if (process.env["AGENDA_INTEGRATION_ENABLED"] !== "true") fail("Integração de agenda ainda não ativada.");
   const customer = await requireClient(userId, email);
   const startsAt = parseFutureDate(input.startsAt);
   const note = input.note?.trim().slice(0, 800) || null;
