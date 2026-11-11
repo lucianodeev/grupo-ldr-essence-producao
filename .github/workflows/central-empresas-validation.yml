@@ -29,6 +29,15 @@ jobs:
         run: npm --prefix apps/painel-ldr run typecheck
       - name: Unit tests
         run: npm --prefix apps/painel-ldr run test
+      - name: Central Empresas route audit
+        run: |
+          test -f apps/painel-ldr/src/routes/empresas.tsx
+          test -f apps/painel-ldr/src/routes/empresas.servicos.tsx
+          test -f apps/painel-ldr/src/routes/empresas.proposta.tsx
+          test -f apps/painel-ldr/src/routes/empresas.ldr-one.tsx
+          test -f apps/painel-ldr/src/routes/empresas.academy.tsx
+          ! grep -R 'to="/academy"' apps/painel-ldr/src/routes/empresas*.tsx
+          echo 'Central Empresas: five route files present and deprecated Academy link absent.'
       - name: Enforce typecheck result
         if: always() && steps.typecheck.outcome == 'failure'
         run: |
