@@ -1,5 +1,5 @@
 -- Staging migration only: do not apply until the integration is reviewed.
--- A private schema is intentionally inaccessible through the public Data API.
+-- Tables reside in public for compatibility with the server client; RLS and\n-- revoked grants deny anon/authenticated access. Only service_role is granted access.
 
 create table if not exists public.ldr_calendar_oauth_nonces (
   nonce text primary key,
