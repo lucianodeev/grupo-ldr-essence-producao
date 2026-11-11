@@ -144,6 +144,20 @@ jobs:
               IF SQLERRM = 'mentorship credit bypass accepted' THEN RAISE; END IF;
               IF SQLERRM NOT LIKE '%credit-consuming appointment requires payment-validated confirmation%' THEN RAISE; END IF;
             END;
+            -- A mentorship linked to a non-credit appointment may still be confirmed.
+            INSERT INTO public.appointments(id,title,consumes_credit)
+            VALUES ('00000000-0000-4000-8000-000000000014','Free mentorship',false);
+            INSERT INTO public.mentorship_sessions(id,appointment_id)
+            VALUES ('00000000-0000-4000-8000-000000000021',
+                    '00000000-0000-4000-8000-000000000014');
+            PERFORM public.confirm_mentorship_session_tx(
+              '00000000-0000-4000-8000-000000000021',
+              now()+interval '6 days','https://example.test/free-meeting');
+            IF NOT EXISTS (
+              SELECT 1 FROM public.appointments
+              WHERE id='00000000-0000-4000-8000-000000000014'
+                AND status='confirmada' AND consumes_credit=false
+            ) THEN RAISE EXCEPTION 'free mentorship confirmation failed'; END IF;
             -- A cancelled appointment cannot be confirmed, even with a paid order.
             INSERT INTO public.appointments(id,order_id,customer_id,catalog_key,title,consumes_credit,status)
             VALUES ('00000000-0000-4000-8000-000000000013',
@@ -189,4 +203,4 @@ jobs:
             IF NOT ok THEN RAISE EXCEPTION 'correct lease token rejected'; END IF;
           END $$;
           SQL
-          echo 'PASS: unpaid orders, exhausted credits, wrong customers, cancelled appointments, mentorship credit bypass and invalid durations rejected; idempotency, active lease exclusivity and calendar mismatch checked'
+          echo 'PASS: unpaid orders, exhausted credits, wrong customers, cancelled appointments, mentorship credit bypass and invalid durations rejected; free mentorship confirmed; idempotency, active lease exclusivity and calendar mismatch checked'
