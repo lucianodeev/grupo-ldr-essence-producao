@@ -79,3 +79,36 @@ jobs:
             grep -q 'permission denied for function' /tmp/denied.log || { cat /tmp/denied.log; exit 1; }
           done
           echo 'PASS: service role allowed; public roles denied; RLS enabled'
+      - name: Negative business and lease tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          psql -v ON_ERROR_STOP=1 <<'SQL'
+          INSERT INTO public.orders(id,customer_id,catalog_key,payment_status)
+          VALUES ('00000000-0000-4000-8000-000000000001','00000000-0000-4000-8000-000000000002','mentoria','pendente');
+          INSERT INTO public.session_credits(order_id,customer_id,catalog_key,granted)
+          VALUES ('00000000-0000-4000-8000-000000000001','00000000-0000-4000-8000-000000000002','mentoria',1);
+          INSERT INTO public.appointments(id,order_id,customer_id,catalog_key,title,consumes_credit)
+          VALUES ('00000000-0000-4000-8000-000000000010','00000000-0000-4000-8000-000000000001',
+          '00000000-0000-4000-8000-000000000002','mentoria','Negative test',true);
+          DO $$
+          DECLARE token uuid; ok boolean;
+          BEGIN
+            BEGIN
+              PERFORM public.confirm_appointment_tx('00000000-0000-4000-8000-000000000010',now()+interval '1 day',50,NULL,NULL);
+              RAISE EXCEPTION 'unpaid order was accepted';
+            EXCEPTION WHEN OTHERS THEN
+              IF SQLERRM = 'unpaid order was accepted' THEN RAISE; END IF;
+              IF SQLERRM NOT LIKE '%paid order ownership mismatch%' THEN RAISE; END IF;
+            END;
+            UPDATE public.orders SET payment_status='pago' WHERE id='00000000-0000-4000-8000-000000000001';
+            PERFORM public.confirm_appointment_tx('00000000-0000-4000-8000-000000000010',now()+interval '1 day',50,NULL,NULL);
+            SELECT lease_token INTO token FROM public.claim_calendar_sync('00000000-0000-4000-8000-000000000010','primary',120) WHERE claimed;
+            IF token IS NULL THEN RAISE EXCEPTION 'lease claim failed'; END IF;
+            SELECT public.release_calendar_sync('00000000-0000-4000-8000-000000000010',gen_random_uuid(),'sincronizado','evt',NULL,NULL) INTO ok;
+            IF ok THEN RAISE EXCEPTION 'wrong lease token accepted'; END IF;
+            SELECT public.release_calendar_sync('00000000-0000-4000-8000-000000000010',token,'sincronizado','evt',NULL,NULL) INTO ok;
+            IF NOT ok THEN RAISE EXCEPTION 'correct lease token rejected'; END IF;
+          END $$;
+          SQL
+          echo 'PASS: unpaid orders rejected, valid orders confirmed, invalid leases rejected'
