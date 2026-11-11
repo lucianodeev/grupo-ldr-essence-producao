@@ -1,4 +1,5 @@
 import test from "node:test";
+import { consumeCalendarOAuthState } from "../../apps/painel-ldr/src/lib/google-calendar-oauth-nonce.server.ts";
 import assert from "node:assert/strict";
 import {
   createCalendarAuthorizationUrl,
@@ -75,4 +76,17 @@ test("token exchange refuses missing refresh token", async () => {
 test("state cannot be replayed in another admin session", () => {
   const state = new URL(createCalendarAuthorizationUrl("session-A")).searchParams.get("state");
   assert.throws(() => validateCalendarOAuthState(state, "session-B"), /oauth_state_invalid/);
+});
+
+test("OAuth nonce is consumed exactly once", async () => {
+  const used = new Set();
+  const store = { async claim(nonce) { if (used.has(nonce)) return false; used.add(nonce); return true; } };
+  const state = new URL(createCalendarAuthorizationUrl("admin-session")).searchParams.get("state");
+  await consumeCalendarOAuthState(state, "admin-session", store);
+  await assert.rejects(consumeCalendarOAuthState(state, "admin-session", store), /oauth_state_replayed/);
+});
+
+test("OAuth callback fails closed without atomic store", async () => {
+  const state = new URL(createCalendarAuthorizationUrl("admin-session")).searchParams.get("state");
+  await assert.rejects(consumeCalendarOAuthState(state, "admin-session", null), /oauth_store_unavailable/);
 });
