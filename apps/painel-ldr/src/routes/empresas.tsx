@@ -37,7 +37,7 @@ function CentralEmpresas() {
       <section className="border-t border-[#e2dac9] bg-white py-16">
         <div className="mx-auto max-w-6xl px-5">
           <h2 className="font-serif text-3xl font-bold">Soluções para empresas</h2>
-          <div className="mt-8 grid gap-5 md:grid-cols-3">
+          <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
             {offers.map(({ title, description, href, icon: Icon }) => (
               <article key={title} className="rounded-2xl border border-[#e2dac9] p-6">
                 <Icon className="h-7 w-7 text-[#866a3c]" aria-hidden="true" />
