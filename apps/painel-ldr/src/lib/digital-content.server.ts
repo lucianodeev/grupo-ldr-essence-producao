@@ -62,7 +62,7 @@ async function assertEntitlement(customerId: string, productKey: DigitalReaderPr
   const entitled = (orders ?? []).some((order) => {
     if (order.catalog_key && allowed.has(order.catalog_key)) return true;
     const metadata = order.metadata as Record<string, unknown> | null;
-    const key = metadata && typeof metadata.product_key === "string" ? metadata.product_key : null;
+    const key = metadata && typeof metadata['product_key'] === "string" ? metadata['product_key'] : null;
     return Boolean(key && allowed.has(key));
   });
   if (!entitled) fail("Conteúdo disponível somente após confirmação da compra.");
