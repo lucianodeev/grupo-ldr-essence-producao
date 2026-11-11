@@ -27,7 +27,7 @@ const money=(c:number,cur:string,l:Locale)=>new Intl.NumberFormat(INTL[l],{style
 function showMemberError(error: unknown, copy: Copy, fallback: string) {
  const message=error instanceof Error?error.message:fallback;
  const limit=/Seu plano atual permite até (\d+) funcionários\./.exec(message);
- if(limit){toast.error(copy.employeeLimit.replace("{count}",limit[1]),{action:{label:copy.upgradePlan,onClick:()=>window.location.assign("/assinatura-empresa")}});return;}
+ if(limit){toast.error(copy.employeeLimit.replace("{count}",limit[1] ?? ""),{action:{label:copy.upgradePlan,onClick:()=>window.location.assign("/assinatura-empresa")}});return;}
  toast.error(message);
 }
 

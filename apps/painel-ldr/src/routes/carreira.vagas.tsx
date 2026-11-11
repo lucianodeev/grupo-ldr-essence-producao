@@ -172,7 +172,7 @@ function isInclusiveJob(job: JobRow) {
   ].some(hasValue);
 }
 
-function getWorkModeLabel(value: string | null | undefined, t: (typeof C)["pt"]) {
+function getWorkModeLabel(value: string | null | undefined, t: (typeof C)[keyof typeof C]) {
   const normalized = String(value ?? "").toLowerCase();
   if (normalized.includes("remote") || normalized.includes("remoto")) return t.remote;
   if (normalized.includes("hybrid") || normalized.includes("hibrid") || normalized.includes("híbrid")) return t.hybrid;

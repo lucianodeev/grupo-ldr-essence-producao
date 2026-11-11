@@ -20,7 +20,7 @@ export const Route = createFileRoute("/carreira/empresa/candidaturas")({
 
 type Locale = "pt" | "en" | "fr" | "es";
 type StatusKey = "received" | "in_review" | "interview" | "finalist" | "rejected" | "hired" | "archived";
-type Copy = typeof C.pt;
+type Copy = (typeof C)[keyof typeof C];
 
 type ApplicationRow = {
   id: string;

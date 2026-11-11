@@ -146,14 +146,14 @@ function NetworkAdmin() {
     try {
       await upsert({
         data: {
-          profileId: form.profileId || undefined,
-          email: form.email || undefined,
+          ...(form.profileId ? {profileId: form.profileId} : {}),
+          ...(form.email ? {email: form.email} : {}),
           displayName: form.displayName,
           professionalTitle: form.professionalTitle,
-          slug: form.slug || undefined,
+          ...(form.slug ? {slug: form.slug} : {}),
           categoryId: form.categoryId,
           countryCode: form.countryCode,
-          city: form.city || undefined,
+          ...(form.city ? {city: form.city} : {}),
           languages: form.languages
             .split(",")
             .map((value) => value.trim())

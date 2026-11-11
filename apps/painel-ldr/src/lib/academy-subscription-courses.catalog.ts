@@ -74,6 +74,7 @@ projeto-de-vida-trabalho-e-futuro-profissional|curso_assinatura_projeto_de_vida_
 
 const rows:CourseRow[]=rawCourses.trim().split("\n").map((line)=>{
   const [slug,productKey,category,track,hours,title,focus]=line.split("|");
+  if(!slug||!productKey||!category||!track||!hours||!title||!focus)throw new Error("Linha inválida no catálogo de cursos.");
   return {slug,productKey,category:category as CourseRow["category"],track,hours:Number(hours),title,focus};
 });
 
@@ -147,7 +148,7 @@ export const ACADEMY_SUBSCRIPTION_COURSES:SubscriptionCourse[] = rows.map((row)=
   description:descriptionFor(row),
   modules:modulesFor(row),
   materials:materialsFor(row),
-  disclaimer:disclaimerFor(row.slug),
+  ...(disclaimerFor(row.slug) ? {disclaimer:disclaimerFor(row.slug) as I18nText} : {}),
 }));
 
 export const ACADEMY_SUBSCRIPTION_TRACKS = Array.from(new Set(ACADEMY_SUBSCRIPTION_COURSES.map((course)=>course.track)));

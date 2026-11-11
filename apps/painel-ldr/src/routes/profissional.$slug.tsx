@@ -1,3 +1,4 @@
+import type { SearchSchemaInput } from "@tanstack/react-router";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useMemo, useState } from "react";
@@ -27,7 +28,7 @@ import {
 } from "@/lib/professional-social.functions";
 
 export const Route = createFileRoute("/profissional/$slug")({
-  validateSearch: (search: Record<string, unknown>) => ({ source: search["source"] === "social_clinic" ? "social_clinic" as const : undefined, service: typeof search["service"] === "string" ? search["service"] : undefined }),
+  validateSearch: (search: {source?:unknown;service?:unknown} & SearchSchemaInput) => ({ source: search["source"] === "social_clinic" ? "social_clinic" as const : undefined, service: typeof search["service"] === "string" ? search["service"] : undefined }),
   loader: ({ params }) => enhancedPublicProfessional({ data: { slug: params.slug } }),
   head: ({ loaderData, params }) => {
     const p = (loaderData as any)?.profile;
@@ -286,6 +287,7 @@ function Page() {
     const dayRules=rules.filter((r:any)=>Number(r.weekday)===day.getDay() && (!r.effective_from || dateKey(day)>=String(r.effective_from)) && (!r.effective_until || dateKey(day)<=String(r.effective_until)));
     for(const r of dayRules){
       const [sh,sm]=String(r["start_time"]).split(":").map(Number), [eh,em]=String(r["end_time"]).split(":").map(Number);
+      if(sh===undefined||sm===undefined||eh===undefined||em===undefined||![sh,sm,eh,em].every(Number.isFinite))continue;
       const step=Math.max(5,Number(r["slot_interval_minutes"]||service["duration_minutes"]||30));
       let mins=sh*60+sm, endMins=eh*60+em;
       while(mins+Number(service["duration_minutes"])<=endMins){

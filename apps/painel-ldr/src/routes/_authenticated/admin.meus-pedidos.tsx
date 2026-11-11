@@ -19,8 +19,8 @@ function MeusPedidosAdmin() {
   const list = orders.data ?? [];
   const recent = list.slice(0, 24);
   const customerById = new Map((customers.data ?? []).map((item) => [item.id, item]));
-  const paid = list.filter((item) => item.payment_status === "paid").length;
-  const pending = list.filter((item) => item.payment_status !== "paid").length;
+  const paid = list.filter((item) => item.payment_status === "pago").length;
+  const pending = list.filter((item) => item.payment_status !== "pago").length;
 
   return <div className="space-y-6">
     <section className="rounded-2xl border border-[#C7A33B]/60 bg-[#F8F3E8] p-6 shadow-sm sm:p-8"><p className="text-xs font-bold uppercase tracking-[0.22em] text-[#C7A33B]">Painel Master LDR</p><h1 className="mt-2 font-serif text-3xl text-[#0B1F3A] sm:text-4xl">Meus pedidos</h1><p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600">Acompanhe pedidos, valores e status de pagamento usando a mesma fonte operacional já existente.</p><div className="mt-5 flex flex-wrap gap-3"><span className="rounded-xl bg-white px-4 py-3 text-sm font-bold text-[#0B1F3A]">Pedidos visíveis: {list.length}</span><span className="rounded-xl bg-white px-4 py-3 text-sm font-bold text-[#0B1F3A]">Pagos: {paid}</span><span className="rounded-xl bg-white px-4 py-3 text-sm font-bold text-[#0B1F3A]">Outros status: {pending}</span></div></section>

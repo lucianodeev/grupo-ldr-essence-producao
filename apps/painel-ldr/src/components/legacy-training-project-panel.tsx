@@ -4,7 +4,7 @@ import { FileCheck2, Send, RefreshCw, CheckCircle2, Clock3 } from "lucide-react"
 import { useState } from "react";
 import { clientLegacyTrainingProject, clientSubmitLegacyTrainingProject } from "@/lib/legacy-training-projects.functions";
 
-type LegacyProjectSlug="formacao-psicanalise"|"formacao-terapia-breve-psicanalitica"|"formacao-completa-massoterapia"|"formacao-mentoria-profissional-carreira"|"formacao-lideranca-gestao-pessoas";
+import type { LegacyProjectSlug } from "@/lib/legacy-training-projects.server";
 
 function statusText(status?:string|null){
   if(status==="approved")return "Aprovado";

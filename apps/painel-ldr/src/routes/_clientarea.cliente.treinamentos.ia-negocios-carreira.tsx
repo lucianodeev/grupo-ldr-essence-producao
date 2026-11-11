@@ -1,3 +1,4 @@
+import { curriculumItem } from "@/lib/curriculum-item";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
@@ -15,14 +16,14 @@ function AIFormation() {
   const qc = useQueryClient();
   const { data, isLoading, error } = useQuery({ queryKey: ["ai-formation-experience"], queryFn: () => expFn({}) });
   const all = useMemo(() => AI_BUSINESS_CAREER_MODULES.flatMap((m) => m.lessons.map((l) => ({ ...l, module: m }))), []);
-  const [lessonId, setLessonId] = useState(all[0].id);
+  const [lessonId, setLessonId] = useState(curriculumItem(all,0).id);
   const [tab, setTab] = useState<"curso" | "projetos">("curso");
   const [projectNumber, setProjectNumber] = useState(1);
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [url, setUrl] = useState("");
   const completed: string[] = data?.completedLessons ?? [];
-  const current = all.find((x) => x.id === lessonId) ?? all[0];
+  const current = curriculumItem(all, all.findIndex((x) => x.id === lessonId));
   const currentIndex = Math.max(0, all.findIndex((x) => x.id === current?.id));
   const hasPrevious = currentIndex > 0;
   const hasNext = currentIndex >= 0 && currentIndex < all.length - 1;
@@ -50,11 +51,11 @@ function AIFormation() {
   };
   const previous = () => {
     if (!hasPrevious) return;
-    setLessonId(all[currentIndex - 1].id);
+    setLessonId(curriculumItem(all,currentIndex-1).id);
   };
   const next = () => {
     if (!hasNext) return;
-    setLessonId(all[currentIndex + 1].id);
+    setLessonId(curriculumItem(all,currentIndex+1).id);
   };
   const p = AI_PROJECTS.find((x) => x.number === projectNumber)!;
   const submission = (data.projectSubmissions ?? []).find((s: any) => s.submission_number === projectNumber);

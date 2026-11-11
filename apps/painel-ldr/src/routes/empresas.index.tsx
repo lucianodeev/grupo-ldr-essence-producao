@@ -5,7 +5,7 @@ export const Route = createFileRoute("/empresas/")({
   head: () => ({ meta: [
     { title: "Central Empresas LDR | RH, recrutamento e formação" },
     { name: "description", content: "Soluções empresariais LDR em recursos humanos, recrutamento, formação e desenvolvimento de equipas." },
-  ] }),
+  ], links:[{rel:"canonical",href:"https://ldrecossistema.online/empresas"}] }),
   component: CentralEmpresas,
 });
 

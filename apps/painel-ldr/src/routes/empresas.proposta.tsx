@@ -4,7 +4,7 @@ import { useState, type FormEvent } from "react";
 import { EnterprisePage } from "@/components/enterprise-page";
 import { submitEcosystemSupport } from "@/lib/ecosystem-support.functions";
 import { COMMERCIAL_INTERESTS, COMMERCIAL_SOLUTIONS, commercialProtocol, commercialSupportPayload } from "@/lib/commercial-request";
-export const Route = createFileRoute("/empresas/proposta")({head:()=>({meta:[{title:"Proposta empresarial | Ecossistema LDR"}]}),component:Proposal});
+export const Route = createFileRoute("/empresas/proposta")({head:()=>({meta:[{title:"Proposta empresarial | Ecossistema LDR"}],links:[{rel:"canonical",href:"https://ldrecossistema.online/empresas/proposta"}]}),component:Proposal});
 function Proposal(){
   const send=useServerFn(submitEcosystemSupport);
   const [sending,setSending]=useState(false),[protocol,setProtocol]=useState(""),[error,setError]=useState("");
