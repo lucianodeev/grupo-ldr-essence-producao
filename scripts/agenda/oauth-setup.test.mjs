@@ -1,4 +1,5 @@
 import test from "node:test";
+import { completeCalendarOAuthCallback } from "../../apps/painel-ldr/src/lib/google-calendar-oauth-callback.server.ts";
 import { consumeCalendarOAuthState } from "../../apps/painel-ldr/src/lib/google-calendar-oauth-nonce.server.ts";
 import assert from "node:assert/strict";
 import {
@@ -89,4 +90,18 @@ test("OAuth nonce is consumed exactly once", async () => {
 test("OAuth callback fails closed without atomic store", async () => {
   const state = new URL(createCalendarAuthorizationUrl("admin-session")).searchParams.get("state");
   await assert.rejects(consumeCalendarOAuthState(state, "admin-session", null), /oauth_store_unavailable/);
+});
+
+test("callback requires verified administrator and never returns refresh token", async () => {
+  const state = new URL(createCalendarAuthorizationUrl("admin")).searchParams.get("state");
+  const used = new Set();
+  const store = { async claim(nonce) { if (used.has(nonce)) return false; used.add(nonce); return true; } };
+  let saved = null;
+  const vault = { async saveRefreshToken(token, scopes) { saved = { token, scopes }; } };
+  await assert.rejects(completeCalendarOAuthCallback({ code: "test", state }, { isAdministrator: false, sessionBinding: "admin" }, store, vault), /oauth_admin_required/);
+  globalThis.fetch = async () => new Response(JSON.stringify({ refresh_token: "private-refresh", scope: "calendar.events" }), { status: 200 });
+  const result = await completeCalendarOAuthCallback({ code: "test", state }, { isAdministrator: true, sessionBinding: "admin" }, store, vault);
+  assert.deepEqual(result, { connected: true });
+  assert.deepEqual(saved, { token: "private-refresh", scopes: "calendar.events" });
+  await assert.rejects(completeCalendarOAuthCallback({ code: "test", state }, { isAdministrator: true, sessionBinding: "admin" }, store, vault), /oauth_state_replayed/);
 });
