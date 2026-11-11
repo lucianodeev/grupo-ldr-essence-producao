@@ -24,6 +24,13 @@ jobs:
       - name: Build application (Render mode)
         run: npm --prefix apps/painel-ldr run build:render
       - name: Typecheck
+        id: typecheck
+        continue-on-error: true
         run: npm --prefix apps/painel-ldr run typecheck
       - name: Unit tests
         run: npm --prefix apps/painel-ldr run test
+      - name: Enforce typecheck result
+        if: always() && steps.typecheck.outcome == 'failure'
+        run: |
+          echo 'Typecheck failed. See Typecheck step for errors.'
+          exit 1
