@@ -35,7 +35,7 @@ const HUB_COPY = {
   pt: [
   {
     name: "LDR Academy",
-    url: "/",
+    url: "/?area=academy",
     tag: "Entrada principal",
     featured: "academy",
     desc: "A entrada central do ecossistema LDR para cursos, formações, biblioteca digital, conteúdos gratuitos, desenvolvimento profissional e acesso às principais soluções educacionais.",
@@ -131,7 +131,7 @@ const HUB_COPY = {
   },
 ] as Hub[],
   en: [
-    { name:"LDR Academy", url:"/", tag:"Main entry", featured:"academy", desc:"The central entry point to the LDR ecosystem for courses, professional programs, the digital library, free content and educational solutions." },
+    { name:"LDR Academy", url:"/?area=academy", tag:"Main entry", featured:"academy", desc:"The central entry point to the LDR ecosystem for courses, professional programs, the digital library, free content and educational solutions." },
     { name:"AI READY 2026", url:"/ai-ready", tag:"AI for companies", featured:"pass", desc:"Prepare your company and team to use artificial intelligence responsibly, with training, practical materials and individual certificates.", cta:"Discover AI READY 2026" },
     { name:"LDR ONE", url:"/ldr-pass", tag:"Premium experience", featured:"pass", desc:"The ecosystem premium layer for eligible digital resources and advanced experiences. Existing free access remains free and previous purchases or access remain preserved.", cta:"Discover LDR ONE" },
     { name:"LDR Library", url:"/cliente/biblioteca", tag:"Content and subscription", desc:"Digital library with courses, eBooks, publications, free materials and programs for continuous learning.", cta:"Open Library" },
@@ -147,7 +147,7 @@ const HUB_COPY = {
     { name:"Instagram Human Room", url:"https://www.instagram.com/humanroom.world", tag:"Social", desc:"Human Room social channel for public communication and reflections." }
   ] as Hub[],
   fr: [
-    { name:"LDR Academy", url:"/", tag:"Entrée principale", featured:"academy", desc:"L’entrée centrale de l’écosystème LDR pour les cours, formations, bibliothèque numérique, contenus gratuits et solutions éducatives." },
+    { name:"LDR Academy", url:"/?area=academy", tag:"Entrée principale", featured:"academy", desc:"L’entrée centrale de l’écosystème LDR pour les cours, formations, bibliothèque numérique, contenus gratuits et solutions éducatives." },
     { name:"AI READY 2026", url:"/ai-ready", tag:"IA pour les entreprises", featured:"pass", desc:"Préparez votre entreprise et votre équipe à utiliser l’intelligence artificielle de manière responsable, avec formation, ressources pratiques et certificats individuels.", cta:"Découvrir AI READY 2026" },
     { name:"LDR ONE", url:"/ldr-pass", tag:"Expérience premium", featured:"pass", desc:"La couche premium de l’écosystème pour les ressources numériques éligibles et les expériences avancées. Les accès gratuits actuels restent gratuits et les achats ou accès antérieurs sont préservés.", cta:"Découvrir LDR ONE" },
     { name:"Bibliothèque LDR", url:"/cliente/biblioteca", tag:"Contenus et abonnement", desc:"Bibliothèque numérique avec cours, eBooks, publications, ressources gratuites et formations.", cta:"Accéder à la bibliothèque" },
@@ -163,7 +163,7 @@ const HUB_COPY = {
     { name:"Instagram Human Room", url:"https://www.instagram.com/humanroom.world", tag:"Social", desc:"Canal social de Human Room pour la communication publique." }
   ] as Hub[],
   es: [
-    { name:"LDR Academy", url:"/", tag:"Entrada principal", featured:"academy", desc:"La entrada central del ecosistema LDR para cursos, formaciones, biblioteca digital, contenidos gratuitos y soluciones educativas." },
+    { name:"LDR Academy", url:"/?area=academy", tag:"Entrada principal", featured:"academy", desc:"La entrada central del ecosistema LDR para cursos, formaciones, biblioteca digital, contenidos gratuitos y soluciones educativas." },
     { name:"AI READY 2026", url:"/ai-ready", tag:"IA para empresas", featured:"pass", desc:"Prepara tu empresa y tu equipo para usar inteligencia artificial de forma responsable, con formación, materiales prácticos y certificados individuales.", cta:"Conocer AI READY 2026" },
     { name:"LDR ONE", url:"/ldr-pass", tag:"Experiencia premium", featured:"pass", desc:"La capa premium del ecosistema para recursos digitales elegibles y experiencias avanzadas. Los accesos gratuitos actuales siguen siendo gratuitos y las compras o accesos anteriores se conservan.", cta:"Conocer LDR ONE" },
     { name:"Biblioteca LDR", url:"/cliente/biblioteca", tag:"Contenidos y suscripción", desc:"Biblioteca digital con cursos, eBooks, publicaciones, materiales gratuitos y formaciones.", cta:"Acceder a la Biblioteca" },
@@ -318,7 +318,7 @@ function EcosystemMap() {
       </div>
       <section className="mx-auto w-full max-w-6xl px-4 pb-12 pt-24 sm:px-5 sm:pb-16 sm:pt-24">
         <div className="mb-4 ml-auto w-36"><LanguageSelect /></div>
-        <Link to="/" className="text-sm font-bold text-[#8a4c18]">{copy.back}</Link>
+        <a href="/?area=academy" className="text-sm font-bold text-[#8a4c18]">{copy.back}</a>
         <div className="mt-7 min-w-0 rounded-[34px] border border-[#d6ad63]/40 bg-white p-6 shadow-xl sm:p-9">
           <p className="text-xs font-black uppercase tracking-[.2em] text-[#9a6a20]">{copy.welcome}</p>
           <h1 className="mt-3 font-serif text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">{copy.hello}</h1>
@@ -378,11 +378,11 @@ function EcosystemMap() {
               <h3 className="mt-2 font-serif text-2xl font-bold">{central.clinic}</h3>
               <p className="mt-2 text-sm leading-6 text-[#6f6358]">{central.clinicText}</p>
             </Link>
-            <Link to="/" className="min-w-0 rounded-2xl border border-[#1d3158]/25 bg-[#eef5ff] p-5 transition hover:-translate-y-0.5 hover:shadow-md">
+            <a href="/?area=academy" className="min-w-0 rounded-2xl border border-[#1d3158]/25 bg-[#eef5ff] p-5 transition hover:-translate-y-0.5 hover:shadow-md">
               <p className="text-xs font-black uppercase tracking-[.14em] text-[#1d3158]">03</p>
               <h3 className="mt-2 font-serif text-2xl font-bold">{central.academy}</h3>
               <p className="mt-2 text-sm leading-6 text-[#6f6358]">{central.academyText}</p>
-            </Link>
+            </a>
           </div>
           <div className="mt-7 border-t border-[#e5d1ac] pt-6">
             <p className="text-xs font-black uppercase tracking-[.18em] text-[#9a6a20]">{central.access}</p>
