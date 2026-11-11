@@ -1,4 +1,4 @@
-import { createCipheriv, randomBytes } from "node:crypto";
+import { createCipheriv, createDecipheriv, randomBytes } from "node:crypto";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import type { OAuthNonceStore } from "./google-calendar-oauth-nonce.server.ts";
 import type { CalendarOAuthTokenVault } from "./google-calendar-oauth-callback.server.ts";
@@ -40,3 +40,23 @@ export const calendarOAuthTokenVault: CalendarOAuthTokenVault = {
     if (error) throw new Error("oauth_vault_unavailable");
   },
 };
+
+/** Read and decrypt the stored token only on the trusted server. */
+export async function loadCalendarOAuthRefreshToken(): Promise<string | null> {
+  const { data, error } = await (supabaseAdmin as any)
+    .from("ldr_calendar_oauth_secrets")
+    .select("encrypted_value")
+    .eq("secret_name", "google_calendar_refresh_token")
+    .maybeSingle();
+  if (error) throw new Error("oauth_vault_unavailable");
+  if (!data?.encrypted_value) return null;
+  try {
+    const bytes = Buffer.from(data.encrypted_value, "base64");
+    if (bytes.length < 29) throw new Error("invalid_ciphertext");
+    const decipher = createDecipheriv("aes-256-gcm", key(), bytes.subarray(0, 12));
+    decipher.setAuthTag(bytes.subarray(12, 28));
+    return Buffer.concat([decipher.update(bytes.subarray(28)), decipher.final()]).toString("utf8");
+  } catch {
+    throw new Error("oauth_vault_unavailable");
+  }
+}
