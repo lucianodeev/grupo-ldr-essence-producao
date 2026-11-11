@@ -103,6 +103,30 @@ jobs:
             END;
             UPDATE public.orders SET payment_status='pago' WHERE id='00000000-0000-4000-8000-000000000001';
             PERFORM public.confirm_appointment_tx('00000000-0000-4000-8000-000000000010',now()+interval '1 day',50,NULL,NULL);
+            -- A second credit-consuming appointment must fail after the only credit is used.
+            INSERT INTO public.appointments(id,order_id,customer_id,catalog_key,title,consumes_credit)
+            VALUES ('00000000-0000-4000-8000-000000000011',
+              '00000000-0000-4000-8000-000000000001',
+              '00000000-0000-4000-8000-000000000002','mentoria','Exhausted credit test',true);
+            BEGIN
+              PERFORM public.confirm_appointment_tx('00000000-0000-4000-8000-000000000011',now()+interval '2 days',50,NULL,NULL);
+              RAISE EXCEPTION 'exhausted credit was accepted';
+            EXCEPTION WHEN OTHERS THEN
+              IF SQLERRM = 'exhausted credit was accepted' THEN RAISE; END IF;
+              IF SQLERRM NOT LIKE '%insufficient session credits%' THEN RAISE; END IF;
+            END;
+            -- A mismatched customer must never consume another customer's credit.
+            INSERT INTO public.appointments(id,order_id,customer_id,catalog_key,title,consumes_credit)
+            VALUES ('00000000-0000-4000-8000-000000000012',
+              '00000000-0000-4000-8000-000000000001',
+              '00000000-0000-4000-8000-000000000099','mentoria','Wrong customer test',true);
+            BEGIN
+              PERFORM public.confirm_appointment_tx('00000000-0000-4000-8000-000000000012',now()+interval '3 days',50,NULL,NULL);
+              RAISE EXCEPTION 'wrong customer was accepted';
+            EXCEPTION WHEN OTHERS THEN
+              IF SQLERRM = 'wrong customer was accepted' THEN RAISE; END IF;
+              IF SQLERRM NOT LIKE '%paid order ownership mismatch%' THEN RAISE; END IF;
+            END;
             SELECT lease_token INTO token FROM public.claim_calendar_sync('00000000-0000-4000-8000-000000000010','primary',120) WHERE claimed;
             IF token IS NULL THEN RAISE EXCEPTION 'lease claim failed'; END IF;
             SELECT public.release_calendar_sync('00000000-0000-4000-8000-000000000010',gen_random_uuid(),'sincronizado','evt',NULL,NULL) INTO ok;
@@ -111,4 +135,4 @@ jobs:
             IF NOT ok THEN RAISE EXCEPTION 'correct lease token rejected'; END IF;
           END $$;
           SQL
-          echo 'PASS: unpaid orders rejected, valid orders confirmed, invalid leases rejected'
+          echo 'PASS: unpaid orders, exhausted credits and wrong customers rejected; valid leases enforced'
