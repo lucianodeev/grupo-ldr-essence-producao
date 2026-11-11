@@ -1,0 +1,65 @@
+{
+  "commit": "9f88a543ec458e8e89361915dca0706fc9664762",
+  "runs": [
+    {
+      "id": 43036550276,
+      "name": "LDR ONE sandbox unit checks",
+      "status": "completed",
+      "conclusion": "success",
+      "run_number": 185,
+      "jobs_url": "https://api.github.com/repos/lucianodeev/grupo-ldr-essence-producao/actions/runs/43036550276/jobs",
+      "logs_url": "https://api.github.com/repos/lucianodeev/grupo-ldr-essence-producao/actions/runs/43036550276/logs",
+      "workflow_id": 368256191
+    },
+    {
+      "id": 43036550382,
+      "name": "Apply Academy subscription courses 2026-09-14",
+      "status": "completed",
+      "conclusion": "success",
+      "run_number": 153,
+      "jobs_url": "https://api.github.com/repos/lucianodeev/grupo-ldr-essence-producao/actions/runs/43036550382/jobs",
+      "logs_url": "https://api.github.com/repos/lucianodeev/grupo-ldr-essence-producao/actions/runs/43036550382/logs",
+      "workflow_id": 357668512
+    },
+    {
+      "id": 43036549810,
+      "name": "Official support privacy and regression checks",
+      "status": "completed",
+      "conclusion": "success",
+      "run_number": 20,
+      "jobs_url": "https://api.github.com/repos/lucianodeev/grupo-ldr-essence-producao/actions/runs/43036549810/jobs",
+      "logs_url": "https://api.github.com/repos/lucianodeev/grupo-ldr-essence-producao/actions/runs/43036549810/logs",
+      "workflow_id": 382596063
+    },
+    {
+      "id": 43036549729,
+      "name": "Central Empresas validation",
+      "status": "completed",
+      "conclusion": "failure",
+      "run_number": 62,
+      "jobs_url": "https://api.github.com/repos/lucianodeev/grupo-ldr-essence-producao/actions/runs/43036549729/jobs",
+      "logs_url": "https://api.github.com/repos/lucianodeev/grupo-ldr-essence-producao/actions/runs/43036549729/logs",
+      "workflow_id": 414605940
+    },
+    {
+      "id": 43036550263,
+      "name": "Opportunity Engine Safe Validation",
+      "status": "completed",
+      "conclusion": "success",
+      "run_number": 31,
+      "jobs_url": "https://api.github.com/repos/lucianodeev/grupo-ldr-essence-producao/actions/runs/43036550263/jobs",
+      "logs_url": "https://api.github.com/repos/lucianodeev/grupo-ldr-essence-producao/actions/runs/43036550263/logs",
+      "workflow_id": 365617437
+    },
+    {
+      "id": 43036549580,
+      "name": "Validate AI READY MVP branch",
+      "status": "completed",
+      "conclusion": "success",
+      "run_number": 203,
+      "jobs_url": "https://api.github.com/repos/lucianodeev/grupo-ldr-essence-producao/actions/runs/43036549580/jobs",
+      "logs_url": "https://api.github.com/repos/lucianodeev/grupo-ldr-essence-producao/actions/runs/43036549580/logs",
+      "workflow_id": 371606687
+    }
+  ]
+}

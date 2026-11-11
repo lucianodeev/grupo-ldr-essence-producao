@@ -23,6 +23,6 @@ jobs:
         with:
           node-version: '22'
           cache: 'npm'
-      - run: npm install --no-package-lock
+      - run: npm ci --no-audit --no-fund
       - run: node --test apps/painel-ldr/tests/professional-availability-ownership.test.cjs apps/painel-ldr/tests/professional-availability-behavior.test.cjs
       - run: npm run build:painel
