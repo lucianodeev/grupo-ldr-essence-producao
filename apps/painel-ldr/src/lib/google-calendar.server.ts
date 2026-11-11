@@ -3,7 +3,7 @@
 const GOOGLE_API = "https://www.googleapis.com/calendar/v3";
 const GOOGLE_TOKEN_ENDPOINT = "https://oauth2.googleapis.com/token";
 
-export const CALENDAR_ID = process.env["GOOGLE_CALENDAR_ID"] || "contacto@ldrrhestrategia.com";
+export const CALENDAR_ID = process.env["GOOGLE_CALENDAR_ID"] || "";
 export const CALENDAR_TIMEZONE = "Europe/Brussels";
 
 export type CalendarErrorCode =
@@ -22,7 +22,6 @@ export class CalendarError extends Error {
 export function isCalendarConfigured(): boolean {
   return Boolean(process.env["GOOGLE_OAUTH_CLIENT_ID"] &&
     process.env["GOOGLE_OAUTH_CLIENT_SECRET"] &&
-    process.env["GOOGLE_OAUTH_REFRESH_TOKEN"] &&
     process.env["GOOGLE_CALENDAR_ID"]);
 }
 
@@ -38,11 +37,21 @@ function mapStatus(status: number): CalendarErrorCode {
 let cachedToken: { value: string; expiresAt: number } | null = null;
 let pendingRefresh: Promise<string> | null = null;
 
+async function getRefreshToken(): Promise<string> {
+  if (process.env["GOOGLE_OAUTH_REFRESH_TOKEN"]) return process.env["GOOGLE_OAUTH_REFRESH_TOKEN"]!;
+  try {
+    const { loadCalendarOAuthRefreshToken } = await import("./google-calendar-oauth-storage.server.ts");
+    return (await loadCalendarOAuthRefreshToken()) || "";
+  } catch { return ""; }
+}
+
 async function accessToken(): Promise<string> {
   if (!isCalendarConfigured()) throw new CalendarError("nao_configurado");
   if (cachedToken && cachedToken.expiresAt > Date.now() + 60_000) return cachedToken.value;
   if (pendingRefresh) return pendingRefresh;
   pendingRefresh = (async () => {
+    const refreshToken = await getRefreshToken();
+    if (!refreshToken) throw new CalendarError("nao_configurado");
     let response: Response;
     try {
       response = await fetch(GOOGLE_TOKEN_ENDPOINT, {
@@ -52,7 +61,7 @@ async function accessToken(): Promise<string> {
         body: new URLSearchParams({
           client_id: process.env["GOOGLE_OAUTH_CLIENT_ID"]!,
           client_secret: process.env["GOOGLE_OAUTH_CLIENT_SECRET"]!,
-          refresh_token: process.env["GOOGLE_OAUTH_REFRESH_TOKEN"]!,
+          refresh_token: refreshToken,
           grant_type: "refresh_token",
         }),
       });
