@@ -253,18 +253,13 @@ export async function cancelCalendarEvent(supabase: Client, userId: string, raw:
  * segue oculto ao cliente pelo sync_status, mas não afirmamos que limpou.
  */
 async function clearMeetingMirrors(appointmentId: string): Promise<{ ok: boolean }> {
-  const results = await Promise.all([
-    supabaseAdmin.from("appointments").update({ meeting_url: null }).eq("id", appointmentId),
-    supabaseAdmin
-      .from("mentorship_sessions")
-      .update({ meeting_url: null, confirmed_at: null })
-      .eq("appointment_id", appointmentId),
-    supabaseAdmin
-      .from("s8_sessions")
-      .update({ meeting_url: null })
-      .eq("appointment_id", appointmentId),
-  ]);
-  return { ok: results.every((result) => !result.error) };
+  // Legacy session tables have no appointment_id link in the verified schema.
+  // Never claim that session mirrors were cleared when no safe relation exists.
+  const { error } = await supabaseAdmin
+    .from("appointments")
+    .update({ meeting_url: null })
+    .eq("id", appointmentId);
+  return { ok: !error };
 }
 
 /** Cancelar/concluir/reagendar. Cancelamento e reagendamento removem o link. */
@@ -284,16 +279,10 @@ export async function setAppointmentStatus(supabase: Client, userId: string, raw
     .eq("id", appointment.id);
   if (error) fail("Não foi possível atualizar o agendamento.");
 
-  if (clearsLink) {
-    await supabaseAdmin
-      .from("mentorship_sessions")
-      .update({ meeting_url: null, confirmed_at: null })
-      .eq("appointment_id", appointment.id);
-    await supabaseAdmin
-      .from("s8_sessions")
-      .update({ meeting_url: null })
-      .eq("appointment_id", appointment.id);
-  }
+  // No appointment_id exists on mentorship_sessions or s8_sessions in the
+  // verified schema; clearing the canonical appointment above is the only
+  // supported operation. Client meeting links remain fail-closed.
+
 
   if (input.status === "cancelada") {
     const outcome = await cancelAppointmentEvent(appointment.id);
