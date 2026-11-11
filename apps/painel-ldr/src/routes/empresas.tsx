@@ -10,8 +10,8 @@ export const Route = createFileRoute("/empresas")({
 });
 
 const offers = [
-  { title: "RH & Estratégia", description: "Consultoria, organização de processos e desenvolvimento de pessoas.", href: "/ldr-rh-estrategia", icon: BriefcaseBusiness },
-  { title: "Recrutamento e seleção", description: "Conheça as soluções e solicite uma proposta adaptada à sua empresa.", href: "/falar-com-ecossistema", icon: UsersRound },
+  { title: "RH & Estratégia", description: "Consultoria, organização de processos e desenvolvimento de pessoas.", href: "/empresas/servicos", icon: BriefcaseBusiness },
+  { title: "Recrutamento e seleção", description: "Conheça as soluções e solicite uma proposta adaptada à sua empresa.", href: "/empresas/proposta", icon: UsersRound },
   { title: "Formação empresarial", description: "Cursos e conteúdos de desenvolvimento profissional do Ecossistema LDR.", href: "/ecossistema", icon: GraduationCap },
 ] as const;
 
@@ -29,7 +29,7 @@ function CentralEmpresas() {
         <h1 className="mt-4 max-w-4xl font-serif text-4xl font-bold leading-tight sm:text-6xl">Pessoas, estratégia e desenvolvimento para a sua empresa.</h1>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">Explore os serviços de RH, recrutamento e formação do Ecossistema LDR. Fale com a nossa equipa para identificar a solução adequada ao seu negócio.</p>
         <div className="mt-8 flex flex-wrap gap-3">
-          <Link to="/falar-com-ecossistema" className="inline-flex items-center gap-2 rounded-xl bg-[#12233a] px-6 py-3 font-semibold text-white">Solicitar proposta <ArrowRight className="h-4 w-4" /></Link>
+          <Link to="/empresas/proposta" className="inline-flex items-center gap-2 rounded-xl bg-[#12233a] px-6 py-3 font-semibold text-white">Solicitar proposta <ArrowRight className="h-4 w-4" /></Link>
           <Link to="/ldr-rh-estrategia" className="rounded-xl border border-slate-300 px-6 py-3 font-semibold">Conhecer serviços de RH</Link>
         </div>
       </section>
