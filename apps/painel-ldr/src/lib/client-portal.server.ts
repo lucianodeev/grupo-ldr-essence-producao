@@ -291,43 +291,25 @@ async function listClientDeliveries(customerId: string, orderIds: string[]) {
 async function listClientSessions(mentorships: { id: string; payment_status: string }[]) {
   const ids = mentorships.map((m) => m.id);
   if (!ids.length) return [];
-  const paid = new Set(mentorships.filter((m) => m.payment_status === "pago").map((m) => m.id));
 
-  const { data } = await supabaseAdmin
+  const { data, error } = await supabaseAdmin
     .from("mentorship_sessions")
     .select(
-      "id, mentorship_id, appointment_id, title, session_number, scheduled_at, duration_minutes, meeting_url, status, client_notes, confirmed_at",
+      "id, mentorship_id, title, session_number, scheduled_at, duration_minutes, meeting_url, status, client_notes",
     )
     .in("mentorship_id", ids)
     .order("scheduled_at", { ascending: true, nullsFirst: false });
 
-  const appointmentIds = (data ?? [])
-    .map((s) => s.appointment_id)
-    .filter((id): id is string => Boolean(id));
+  if (error) fail("Não foi possível carregar as sessões.");
 
-  const readyAppointments = new Set<string>();
-  if (appointmentIds.length) {
-    const { data: syncRows } = await supabaseAdmin
-      .from("appointment_calendar_sync")
-      .select("appointment_id, sync_status")
-      .in("appointment_id", appointmentIds);
-    for (const row of syncRows ?? []) {
-      if (row.sync_status === "sincronizado" || row.sync_status === "manual") {
-        readyAppointments.add(row.appointment_id);
-      }
-    }
-  }
-
-  return (data ?? []).map((s) => ({
-    ...s,
-    meeting_url:
-      paid.has(s.mentorship_id) &&
-      s.status === "agendada" &&
-      Boolean(s.confirmed_at) &&
-      Boolean(s.appointment_id) &&
-      readyAppointments.has(s.appointment_id as string)
-        ? s.meeting_url
-        : null,
+  // The current schema has no appointment_id/confirmed_at on mentorship_sessions.
+  // Do not expose a video link without a verified payment + confirmation +
+  // calendar-sync association. Restore access after the reviewed schema migration.
+  return (data ?? []).map((session) => ({
+    ...session,
+    appointment_id: null as string | null,
+    confirmed_at: null as string | null,
+    meeting_url: null as string | null,
   }));
 }
 
@@ -502,7 +484,7 @@ export async function approveDelivery(userId: string, email: string | null, deli
 
   await supabaseAdmin
     .from("deliveries")
-    .update({ status: "aprovada", approved_at: now, needs_client_approval: false })
+    .update({ status: "entregue", approved_at: now, needs_client_approval: false })
     .eq("id", delivery.id);
 
   await supabaseAdmin.from("delivery_events").insert({
@@ -544,7 +526,7 @@ export async function requestDeliveryAdjustment(
   await supabaseAdmin
     .from("deliveries")
     .update({
-      status: "ajustes_solicitados",
+      status: "em_revisao",
       needs_client_approval: false,
       approved_at: null,
     })
