@@ -103,6 +103,22 @@ jobs:
             END;
             UPDATE public.orders SET payment_status='pago' WHERE id='00000000-0000-4000-8000-000000000001';
             PERFORM public.confirm_appointment_tx('00000000-0000-4000-8000-000000000010',now()+interval '1 day',50,NULL,NULL);
+            -- Confirmation must be idempotent: confirming the same appointment twice
+            -- must not consume a second credit or change the number of confirmed rows.
+            PERFORM public.confirm_appointment_tx('00000000-0000-4000-8000-000000000010',now()+interval '1 day',50,NULL,NULL);
+            IF (SELECT count(*) FROM public.appointments
+                WHERE order_id='00000000-0000-4000-8000-000000000001'
+                  AND consumes_credit AND status='confirmada') <> 1 THEN
+              RAISE EXCEPTION 'idempotent confirmation duplicated credit usage';
+            END IF;
+            -- Invalid duration must fail before any appointment mutation.
+            BEGIN
+              PERFORM public.confirm_appointment_tx('00000000-0000-4000-8000-000000000010',now()+interval '1 day',0,NULL,NULL);
+              RAISE EXCEPTION 'zero-minute appointment accepted';
+            EXCEPTION WHEN OTHERS THEN
+              IF SQLERRM = 'zero-minute appointment accepted' THEN RAISE; END IF;
+              IF SQLERRM NOT LIKE '%invalid appointment schedule%' THEN RAISE; END IF;
+            END;
             -- A second credit-consuming appointment must fail after the only credit is used.
             INSERT INTO public.appointments(id,order_id,customer_id,catalog_key,title,consumes_credit)
             VALUES ('00000000-0000-4000-8000-000000000011',
@@ -135,4 +151,4 @@ jobs:
             IF NOT ok THEN RAISE EXCEPTION 'correct lease token rejected'; END IF;
           END $$;
           SQL
-          echo 'PASS: unpaid orders, exhausted credits and wrong customers rejected; valid leases enforced'
+          echo 'PASS: unpaid orders, exhausted credits, wrong customers and invalid durations rejected; idempotency and leases checked'
