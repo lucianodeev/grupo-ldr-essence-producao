@@ -61,6 +61,18 @@ function academyCanonicalRedirect(request: Request): Response | null {
   const isLegacyLucianoHost = host === "lucianoconecta.online" || host === "www.lucianoconecta.online";
   const isFilmHost = host === "film.lucianoconecta.online";
 
+  // The definitive public domain opens the ecosystem map. Keep the existing
+  // Academy storefront available through its explicit entry on the same origin.
+  if (host === "ldrecossistema.online" || host === "www.ldrecossistema.online") {
+    const needsCanonicalHost = host === "www.ldrecossistema.online";
+    if (needsCanonicalHost) url.hostname = "ldrecossistema.online";
+    if ((url.pathname === "/" || url.pathname === "/index.html") && url.searchParams.get("area") !== "academy") {
+      url.pathname = "/ecossistema";
+      return temporaryRedirect(url.toString());
+    }
+    return needsCanonicalHost ? temporaryRedirect(url.toString()) : null;
+  }
+
   // Preview/staging hosts intentionally keep the full ecosystem on one origin.
   // This makes deep links testable before any official-domain cutover.
   if (isUnifiedPreviewHost(host)) {
