@@ -25,10 +25,10 @@ const COPY = {
 function oauthReturnUrl() {
   if (typeof window === "undefined") return "/api/auth/callback?admin=1";
 
-  // Keep the administrator OAuth callback on the same canonical Academy host.
+  // Keep the administrator OAuth callback on the origin that holds its intent cookie.
   // Sending it through the legacy Learn host loses the host-only admin-intent
   // cookie and can make the callback fall through to the public/client flow.
-  return `https://ldrrhestrategia.com/api/auth/callback?portal=admin`;
+  return `${window.location.origin}/api/auth/callback?portal=admin`;
 }
 
 async function syncBrowserSession(session: Session) {
