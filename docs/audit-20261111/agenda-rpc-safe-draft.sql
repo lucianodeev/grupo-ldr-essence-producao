@@ -1,12 +1,13 @@
 -- DRAFT ONLY. Run after agenda-migration-draft.sql and agenda-calendar-schema-draft.sql
 -- have been converted into reviewed migrations. Never apply directly to production.
 BEGIN;
--- Mentorship confirmation is deliberately separate from payment-credit allocation.
+-- Mentorship confirmation is separate from payment-credit allocation;
+-- credit-consuming linked appointments are rejected, not silently confirmed.
 -- SECURITY INVOKER; service-role invocation only, explicitly revoke PUBLIC.
 CREATE OR REPLACE FUNCTION public.confirm_mentorship_session_tx(
  _session_id uuid, _scheduled timestamptz, _meeting text
 ) RETURNS void LANGUAGE plpgsql SECURITY INVOKER SET search_path = '' AS $$
-DECLARE v_appointment uuid;
+DECLARE v_appointment uuid; v_consumes_credit boolean;
 BEGIN
  IF _scheduled IS NULL OR _meeting IS NULL OR length(trim(_meeting)) = 0 THEN
   RAISE EXCEPTION 'invalid session confirmation';
@@ -15,8 +16,13 @@ BEGIN
  FROM public.mentorship_sessions WHERE id = _session_id FOR UPDATE;
  IF NOT FOUND THEN RAISE EXCEPTION 'sessão não encontrada'; END IF;
  IF v_appointment IS NOT NULL THEN
-  PERFORM 1 FROM public.appointments WHERE id = v_appointment FOR UPDATE;
+  SELECT consumes_credit INTO v_consumes_credit
+  FROM public.appointments WHERE id = v_appointment FOR UPDATE;
   IF NOT FOUND THEN RAISE EXCEPTION 'linked appointment missing'; END IF;
+  -- Prevent bypassing payment and credit validation in confirm_appointment_tx.
+  IF v_consumes_credit THEN
+   RAISE EXCEPTION 'credit-consuming appointment requires payment-validated confirmation';
+  END IF;
   UPDATE public.appointments SET starts_at = _scheduled,
    ends_at = _scheduled + (duration_minutes * interval '1 minute'),
    meeting_url = _meeting, status = 'confirmada', updated_at = now()
