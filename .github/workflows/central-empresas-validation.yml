@@ -1,5 +1,6 @@
 name: Central Empresas validation
 on:
+  workflow_dispatch:
   push:
     branches:
       - feat/central-empresas-ldr
