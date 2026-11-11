@@ -1,6 +1,8 @@
 const PREVIEW_SUFFIXES = [".chatgpt.site", ".workers.dev", ".pages.dev", ".onrender.com"] as const;
 
 const INTERNAL_HOSTS = new Set([
+  "ldrecossistema.online",
+  "www.ldrecossistema.online",
   "ldracademy.online",
   "www.ldracademy.online",
   "ldrrhestrategia.com",
@@ -21,11 +23,11 @@ export function isUnifiedPreviewHost(hostname: string): boolean {
   return host === "localhost" || host === "127.0.0.1" || PREVIEW_SUFFIXES.some((suffix) => host.endsWith(suffix));
 }
 
-export const CANONICAL_ECOSYSTEM_HOST = "ldrrhestrategia.com";
+export const CANONICAL_ECOSYSTEM_HOST = "ldrecossistema.online";
 
 export function isUnifiedEcosystemHost(hostname: string): boolean {
   const host = hostname.trim().toLowerCase();
-  return host === CANONICAL_ECOSYSTEM_HOST || host === "ldrrhestrategia.com" || isUnifiedPreviewHost(host);
+  return host === CANONICAL_ECOSYSTEM_HOST || host === "www.ldrecossistema.online" || host === "ldrrhestrategia.com" || isUnifiedPreviewHost(host);
 }
 
 function withQuery(pathname: string, url: URL, extra?: Record<string, string>): string {
@@ -111,6 +113,7 @@ export function unifiedPreviewTarget(
   }
 
   if (host === "www.ldracademy.online" || host === "ldracademy.online") {
+    if ((currentHostname === CANONICAL_ECOSYSTEM_HOST || currentHostname === "www.ldrecossistema.online") && (pathname === "/" || pathname === "/index.html")) return withQuery("/", url, { area: "academy" });
     if (pathname === "/biblioteca") pathname = "/cliente/biblioteca";
     else if (pathname.startsWith("/biblioteca/")) pathname = `/cliente${pathname}`;
     return withQuery(pathname, url);
