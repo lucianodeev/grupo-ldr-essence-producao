@@ -21,13 +21,15 @@ function sign(payload: string, secret: string): string {
   return createHmac("sha256", secret).update(payload).digest("base64url");
 }
 
-export function createCalendarAuthorizationUrl(): string {
+export function createCalendarAuthorizationUrl(sessionBinding: string): string {
+  if (!sessionBinding || sessionBinding.length > 512) throw new Error("oauth_session_invalid");
   const clientId = required("GOOGLE_OAUTH_CLIENT_ID");
   const redirectUri = required("GOOGLE_OAUTH_REDIRECT_URI");
   const stateSecret = required("GOOGLE_OAUTH_STATE_SECRET");
   const nonce = randomBytes(24).toString("base64url");
   const payload = Buffer.from(JSON.stringify({
     nonce,
+    sessionHash: sign(sessionBinding, stateSecret),
     exp: Date.now() + 10 * 60 * 1000,
   })).toString("base64url");
   const state = `${payload}.${sign(payload, stateSecret)}`;
@@ -42,7 +44,8 @@ export function createCalendarAuthorizationUrl(): string {
   return url.toString();
 }
 
-export function validateCalendarOAuthState(state: string): void {
+export function validateCalendarOAuthState(state: string, sessionBinding: string): string {
+  if (!sessionBinding || sessionBinding.length > 512) throw new Error("oauth_session_invalid");
   const secret = required("GOOGLE_OAUTH_STATE_SECRET");
   const [payload, mac, extra] = state.split(".");
   if (!payload || !mac || extra) throw new Error("oauth_state_invalid");
@@ -51,14 +54,16 @@ export function validateCalendarOAuthState(state: string): void {
   if (actual.length !== expected.length || !timingSafeEqual(actual, expected)) {
     throw new Error("oauth_state_invalid");
   }
-  let decoded: { nonce?: string; exp?: number };
+  let decoded: { nonce?: string; exp?: number; sessionHash?: string };
   try { decoded = JSON.parse(Buffer.from(payload, "base64url").toString("utf8")); }
   catch { throw new Error("oauth_state_invalid"); }
   if (typeof decoded.nonce !== "string" || decoded.nonce.length < 16 ||
       typeof decoded.exp !== "number" || decoded.exp <= Date.now() ||
-      decoded.exp > Date.now() + 10 * 60 * 1000) {
+      decoded.exp > Date.now() + 10 * 60 * 1000 ||
+      decoded.sessionHash !== sign(sessionBinding, secret)) {
     throw new Error("oauth_state_invalid");
   }
+  return decoded.nonce;
 }
 
 /**
