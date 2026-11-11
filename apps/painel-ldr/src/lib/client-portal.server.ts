@@ -482,10 +482,14 @@ export async function approveDelivery(userId: string, email: string | null, deli
   const delivery = await loadOwnedDelivery(customer.id, deliveryId);
   const now = new Date().toISOString();
 
-  await supabaseAdmin
+  const { data: approved, error: approvalError } = await supabaseAdmin
     .from("deliveries")
     .update({ status: "entregue", approved_at: now, needs_client_approval: false })
-    .eq("id", delivery.id);
+    .eq("id", delivery.id)
+    .eq("needs_client_approval", true)
+    .select("id")
+    .maybeSingle();
+  if (approvalError || !approved) fail("Entrega não está disponível para aprovação.");
 
   await supabaseAdmin.from("delivery_events").insert({
     delivery_id: delivery.id,
@@ -523,14 +527,18 @@ export async function requestDeliveryAdjustment(
 
   const delivery = await loadOwnedDelivery(customer.id, input.deliveryId);
 
-  await supabaseAdmin
+  const { data: adjusted, error: adjustmentError } = await supabaseAdmin
     .from("deliveries")
     .update({
       status: "em_revisao",
       needs_client_approval: false,
       approved_at: null,
     })
-    .eq("id", delivery.id);
+    .eq("id", delivery.id)
+    .eq("needs_client_approval", true)
+    .select("id")
+    .maybeSingle();
+  if (adjustmentError || !adjusted) fail("Entrega não está disponível para solicitar ajustes.");
 
   await supabaseAdmin.from("delivery_events").insert({
     delivery_id: delivery.id,
