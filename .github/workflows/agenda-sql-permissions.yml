@@ -131,6 +131,18 @@ jobs:
               IF SQLERRM = 'exhausted credit was accepted' THEN RAISE; END IF;
               IF SQLERRM NOT LIKE '%insufficient session credits%' THEN RAISE; END IF;
             END;
+            -- A cancelled appointment cannot be confirmed, even with a paid order.
+            INSERT INTO public.appointments(id,order_id,customer_id,catalog_key,title,consumes_credit,status)
+            VALUES ('00000000-0000-4000-8000-000000000013',
+              '00000000-0000-4000-8000-000000000001',
+              '00000000-0000-4000-8000-000000000002','mentoria','Cancelled test',true,'cancelada');
+            BEGIN
+              PERFORM public.confirm_appointment_tx('00000000-0000-4000-8000-000000000013',now()+interval '4 days',50,NULL,NULL);
+              RAISE EXCEPTION 'cancelled appointment was accepted';
+            EXCEPTION WHEN OTHERS THEN
+              IF SQLERRM = 'cancelled appointment was accepted' THEN RAISE; END IF;
+              IF SQLERRM NOT LIKE '%appointment not confirmable%' THEN RAISE; END IF;
+            END;
             -- A mismatched customer must never consume another customer's credit.
             INSERT INTO public.appointments(id,order_id,customer_id,catalog_key,title,consumes_credit)
             VALUES ('00000000-0000-4000-8000-000000000012',
@@ -164,4 +176,4 @@ jobs:
             IF NOT ok THEN RAISE EXCEPTION 'correct lease token rejected'; END IF;
           END $$;
           SQL
-          echo 'PASS: unpaid orders, exhausted credits, wrong customers and invalid durations rejected; idempotency, active lease exclusivity and calendar mismatch checked'
+          echo 'PASS: unpaid orders, exhausted credits, wrong customers, cancelled appointments and invalid durations rejected; idempotency, active lease exclusivity and calendar mismatch checked'
