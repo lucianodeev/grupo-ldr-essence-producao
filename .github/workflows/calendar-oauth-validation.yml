@@ -1,0 +1,20 @@
+name: Calendar OAuth direct validation
+on:
+  pull_request:
+    paths:
+      - 'apps/painel-ldr/src/lib/google-calendar.server.ts'
+      - 'scripts/agenda/calendar.test.mjs'
+      - '.github/workflows/calendar-oauth-validation.yml'
+  workflow_dispatch:
+jobs:
+  calendar-oauth:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate direct Google OAuth calendar client (mocked, no secrets)
+        run: node --experimental-strip-types --test scripts/agenda/calendar.test.mjs
