@@ -20,7 +20,7 @@ const REGULAR_PRICES={
 } as const;
 
 function fail(message:string):never{throw new Error(message)}
-function appOrigin(){const request=getRequest();const requestUrl=request?new URL(request.url):null;return process.env.CLIENT_PANEL_URL?.replace(/\/$/,"")||requestUrl?.origin||"https://ldracademy.online";}
+function appOrigin(){const request=getRequest();const requestUrl=request?new URL(request.url):null;return process.env["CLIENT_PANEL_URL"]?.replace(/\/$/,"")||requestUrl?.origin||"https://ldracademy.online";}
 async function customerFor(userId:string,email:string|null){const ctx=await resolveClient(userId,email);if(ctx.status!=="ok")fail("Acesso do cliente não disponível.");return ctx.customer;}
 async function requireMaster(supabase:any,userId:string){const access=await resolveAccess(supabase,userId);if(!access.authorized||access.role!=="superadmin")fail("Acesso negado.");}
 
@@ -50,7 +50,7 @@ export async function createProfessionalOrientationCheckout(userId:string,email:
   const metadata={product_key:PRODUCT_KEY,package_minutes:String(packageMinutes),promo_applied:String(promo.active),market,auth_user_id:userId};
   const {data:order,error}=await db.from("orders").insert({order_number:"",customer_id:customer.id,contact_email:customer.email,contact_phone:customer.phone,service_type:"produto_digital",title:`${TITLE} — ${packageMinutes} minutos`,description:`Orientação profissional por texto · ${packageMinutes} minutos`,quantity:1,amount_cents:amountCents,currency,payment_status:"pendente",status:"novo",priority:"media",catalog_key:PRODUCT_KEY,metadata}).select("id").single();
   if(error||!order)fail("Não foi possível iniciar o pagamento.");
-  const secret=process.env.STRIPE_SECRET_KEY;if(!secret){await db.from("orders").delete().eq("id",order.id);fail("Pagamento temporariamente indisponível.");}
+  const secret=process.env["STRIPE_SECRET_KEY"];if(!secret){await db.from("orders").delete().eq("id",order.id);fail("Pagamento temporariamente indisponível.");}
   const params=new URLSearchParams();
   params.set("mode","payment");params.set("line_items[0][price_data][currency]",currency.toLowerCase());params.set("line_items[0][price_data][unit_amount]",String(amountCents));params.set("line_items[0][price_data][product_data][name]",`${TITLE} — ${packageMinutes} minutos`);params.set("line_items[0][quantity]","1");
   params.set("success_url",`${appOrigin()}/cliente/orientacao-profissional?payment=success&session_id={CHECKOUT_SESSION_ID}`);params.set("cancel_url",`${appOrigin()}/cliente/orientacao-profissional?payment=cancel`);params.set("client_reference_id",userId);
@@ -66,7 +66,7 @@ export async function activateProfessionalOrientationCheckout(userId:string,emai
   if(!checkoutSessionId)fail("Sessão de pagamento inválida.");
   const customer=await customerFor(userId,email);
   const {data:existing}=await db.from("professional_written_sessions").select("id").eq("stripe_checkout_session_id",checkoutSessionId).maybeSingle();if(existing?.id)return {sessionId:existing.id};
-  const secret=process.env.STRIPE_SECRET_KEY;if(!secret)fail("Pagamento temporariamente indisponível.");
+  const secret=process.env["STRIPE_SECRET_KEY"];if(!secret)fail("Pagamento temporariamente indisponível.");
   const response=await fetch(`https://api.stripe.com/v1/checkout/sessions/${encodeURIComponent(checkoutSessionId)}`,{headers:{Authorization:`Bearer ${secret}`}});const session=await response.json() as any;
   if(!response.ok||session.payment_status!=="paid")fail("Pagamento ainda não confirmado.");
   if(session.metadata?.product_key!==PRODUCT_KEY||session.metadata?.user_id!==userId)fail("Pagamento não pertence a esta conta.");

@@ -60,7 +60,7 @@ export const professionalCompleteOrganizationBenefit = createServerFn({ method: 
     if (updateError || !updated) throw new Error("O benefício foi alterado por outra operação. Atualize a página e tente novamente.");
 
     try {
-      const actorEmail = typeof context.claims?.email === "string" ? context.claims.email : null;
+      const actorEmail = typeof context.claims?.["email"] === "string" ? context.claims["email"] : null;
       await db.from("audit_logs").insert({
         actor_id: context.userId,
         actor_email: actorEmail,

@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
-function emailOf(c:Record<string,unknown>){return typeof c.email==="string"?c.email:null;}
+function emailOf(c:Record<string,unknown>){return typeof c["email"]==="string"?c["email"]:null;}
 export const clientPerformanceOverview=createServerFn({method:"GET"}).middleware([requireSupabaseAuth]).handler(async({context})=>{const m=await import("@/lib/psychoanalyst-performance.server");return m.getPsychoanalystPerformanceOverview(context.userId,emailOf(context.claims));});
 export const clientPerformanceCourse=createServerFn({method:"GET"}).middleware([requireSupabaseAuth]).inputValidator((d:{key:string})=>d).handler(async({context,data})=>{const m=await import("@/lib/psychoanalyst-performance.server");return m.getPsychoanalystPerformanceCourse(context.userId,emailOf(context.claims),data.key as any);});
 export const clientPerformanceProgress=createServerFn({method:"POST"}).middleware([requireSupabaseAuth]).inputValidator((d:{key:string;progressPercent:number;currentLocation?:string|null})=>d).handler(async({context,data})=>{const m=await import("@/lib/psychoanalyst-performance.server");return m.setPsychoanalystPerformanceProgress(context.userId,emailOf(context.claims),data.key as any,data.progressPercent,data.currentLocation);});

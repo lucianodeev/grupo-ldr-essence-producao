@@ -191,35 +191,35 @@ export async function saveProfessionalMediaAndIdentity(
     const v = input.photoUrl?.trim() || null;
     if (v && !(v.startsWith("https://") || v.startsWith("data:image/")))
       fail("Use uma imagem válida.");
-    patch.photo_url = v;
+    patch["photo_url"] = v;
   }
   if (input.introVideoUrl !== undefined) {
     const v = input.introVideoUrl?.trim() || null;
     if (v && !v.startsWith("https://")) fail("Use um link HTTPS para o vídeo de apresentação.");
-    patch.intro_video_url = v;
+    patch["intro_video_url"] = v;
   }
   if (input.profileHeadline !== undefined)
-    patch.profile_headline = input.profileHeadline?.trim().slice(0, 140) || null;
+    patch["profile_headline"] = input.profileHeadline?.trim().slice(0, 140) || null;
   if (input.lgbtqSelfIdentified !== undefined)
-    patch.lgbtq_self_identified = input.lgbtqSelfIdentified;
+    patch["lgbtq_self_identified"] = input.lgbtqSelfIdentified;
   if (input.showLgbtqBadge !== undefined)
-    patch.show_lgbtq_badge = Boolean(input.showLgbtqBadge && input.lgbtqSelfIdentified === true);
+    patch["show_lgbtq_badge"] = Boolean(input.showLgbtqBadge && input.lgbtqSelfIdentified === true);
   if (input.operatingCountries !== undefined)
-    patch.operating_countries = [
+    patch["operating_countries"] = [
       ...new Set(input.operatingCountries.map((x) => x.trim().toUpperCase()).filter(Boolean)),
     ].slice(0, 20);
   if (input.openToInternationalProjects !== undefined)
-    patch.open_to_international_projects = Boolean(input.openToInternationalProjects);
+    patch["open_to_international_projects"] = Boolean(input.openToInternationalProjects);
   if (input.openToPartnerships !== undefined)
-    patch.open_to_partnerships = Boolean(input.openToPartnerships);
+    patch["open_to_partnerships"] = Boolean(input.openToPartnerships);
   if (input.internationalPositioning !== undefined)
-    patch.international_positioning = input.internationalPositioning?.trim().slice(0, 500) || null;
+    patch["international_positioning"] = input.internationalPositioning?.trim().slice(0, 500) || null;
   if (input.showPassportBadge !== undefined)
-    patch.show_passport_badge = Boolean(input.showPassportBadge);
-  if (input.availableForPress !== undefined) patch.available_for_press = Boolean(input.availableForPress);
-  if (input.pressTopics !== undefined) patch.press_topics = [...new Set(input.pressTopics.map((x) => x.trim()).filter(Boolean))].slice(0, 30);
-  if (input.pressLanguages !== undefined) patch.press_languages = [...new Set(input.pressLanguages.map((x) => x.trim()).filter(Boolean))].slice(0, 12);
-  if (input.pressContactConsent !== undefined) patch.press_contact_consent = Boolean(input.pressContactConsent);
+    patch["show_passport_badge"] = Boolean(input.showPassportBadge);
+  if (input.availableForPress !== undefined) patch["available_for_press"] = Boolean(input.availableForPress);
+  if (input.pressTopics !== undefined) patch["press_topics"] = [...new Set(input.pressTopics.map((x) => x.trim()).filter(Boolean))].slice(0, 30);
+  if (input.pressLanguages !== undefined) patch["press_languages"] = [...new Set(input.pressLanguages.map((x) => x.trim()).filter(Boolean))].slice(0, 12);
+  if (input.pressContactConsent !== undefined) patch["press_contact_consent"] = Boolean(input.pressContactConsent);
   if (input.googleReviewsUrl !== undefined) {
     const v = input.googleReviewsUrl?.trim() || null;
     if (v) {
@@ -230,7 +230,7 @@ export async function saveProfessionalMediaAndIdentity(
       const allowed = host === "google.com" || host.endsWith(".google.com") || host === "goo.gl" || host.endsWith(".goo.gl") || host === "share.google";
       if (!allowed) fail("Use o link oficial da sua página ou avaliações no Google.");
     }
-    patch.google_reviews_url = v;
+    patch["google_reviews_url"] = v;
   }
   const { error } = await db
     .from("professional_profiles")

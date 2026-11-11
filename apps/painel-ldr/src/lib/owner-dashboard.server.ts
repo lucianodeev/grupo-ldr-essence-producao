@@ -155,18 +155,18 @@ export async function getOwnerDashboardSummary(supabase: Client, userId: string)
   };
 
   for (const payment of payments) {
-    const row = rowFor(payment.currency);
+    const row = rowFor(payment["currency"]);
     row.paymentsCount += 1;
-    row.grossCents += cents(payment.gross_amount_cents);
-    row.commissionCents += cents(payment.platform_fee_cents);
-    row.providerNetCents += cents(payment.provider_net_cents);
+    row.grossCents += cents(payment["gross_amount_cents"]);
+    row.commissionCents += cents(payment["platform_fee_cents"]);
+    row.providerNetCents += cents(payment["provider_net_cents"]);
   }
 
   for (const payout of payouts) {
-    const row = rowFor(payout.currency);
-    const amount = cents(payout.net_cents);
-    if (payout.status === "paid") row.paidPayoutCents += amount;
-    else if (PENDING_PAYOUT_STATUSES.includes(String(payout.status))) row.pendingPayoutCents += amount;
+    const row = rowFor(payout["currency"]);
+    const amount = cents(payout["net_cents"]);
+    if (payout["status"] === "paid") row.paidPayoutCents += amount;
+    else if (PENDING_PAYOUT_STATUSES.includes(String(payout["status"]))) row.pendingPayoutCents += amount;
   }
 
   return {
@@ -178,7 +178,7 @@ export async function getOwnerDashboardSummary(supabase: Client, userId: string)
       activeEmployees,
       activeSubscriptions,
       paidPayments: payments.length,
-      pendingPayouts: payouts.filter((row) => PENDING_PAYOUT_STATUSES.includes(String(row.status))).length,
+      pendingPayouts: payouts.filter((row) => PENDING_PAYOUT_STATUSES.includes(String(row["status"]))).length,
       pendingNotifications,
     },
     financialByCurrency: [...financial.values()].sort((a, b) => a.currency.localeCompare(b.currency)),

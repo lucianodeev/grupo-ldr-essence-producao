@@ -49,7 +49,7 @@ export async function registerSellerSale(userId: string, input: any) {
   if (!account || account.status !== "active") fail("Vendedor não autorizado.");
   const whiteLabel = input.productName.trim().toLocaleLowerCase("pt").includes("white label");
   if (whiteLabel && input.productCategory !== "business") fail("Selecione a categoria Contrato empresarial para White Label.");
-  const rate = whiteLabel ? 0 : (RATES[input.productCategory] ?? RATES.service);
+  const rate = whiteLabel ? 0 : (RATES[input.productCategory] ?? RATES["service"]);
   const amountCents = Math.round(Number(input.amount) * 100);
   const commissionCents = Math.round(amountCents * rate / 100);
   const { data, error } = await db.from("seller_sales").insert({

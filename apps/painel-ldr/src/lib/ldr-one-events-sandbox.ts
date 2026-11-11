@@ -14,8 +14,8 @@ export function reduceOneSandboxEvent(previous: OneSubscription, event: OneWebho
   if (event.livemode !== false) throw Error("Live Stripe event rejected");
   if (!event.id) throw Error("Event ID required");
   const metadata = { ...event.metadata, ...event.object.metadata };
-  if (metadata.checkout_kind !== "ldr_one_subscription" || metadata.sandbox !== "true") return { handled: false, next: previous };
-  if (metadata.ldr_one_subscription_id !== previous.recordId || metadata.customer_id !== previous.customerId) throw Error("Subscription ownership mismatch");
+  if (metadata["checkout_kind"] !== "ldr_one_subscription" || metadata["sandbox"] !== "true") return { handled: false, next: previous };
+  if (metadata["ldr_one_subscription_id"] !== previous.recordId || metadata["customer_id"] !== previous.customerId) throw Error("Subscription ownership mismatch");
   if (previous.lastEventId === event.id) return { handled: true, duplicate: true, next: previous };
   const subId = event.type.startsWith("customer.subscription.") ? event.object.id : event.object.subscription;
   if (previous.stripeSubscriptionId && subId && subId !== previous.stripeSubscriptionId) throw Error("Stripe subscription mismatch");
