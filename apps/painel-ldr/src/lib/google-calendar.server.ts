@@ -4,6 +4,11 @@ const GOOGLE_API = "https://www.googleapis.com/calendar/v3";
 const GOOGLE_TOKEN_ENDPOINT = "https://oauth2.googleapis.com/token";
 
 export const CALENDAR_ID = process.env["GOOGLE_CALENDAR_ID"] || "";
+function calendarId(): string {
+  const id = process.env["GOOGLE_CALENDAR_ID"];
+  if (!id) throw new CalendarError("nao_configurado");
+  return id;
+}
 export const CALENDAR_TIMEZONE = "Europe/Brussels";
 
 export type CalendarErrorCode =
@@ -103,7 +108,7 @@ async function gateway<T>(
   catch { throw new CalendarError("resposta_invalida"); }
 }
 
-const calendarPath = `/calendars/${encodeURIComponent(CALENDAR_ID)}`;
+const calendarPath = () => `/calendars/${encodeURIComponent(calendarId())}`;
 
 type GoogleEvent = {
   id?: string;
@@ -140,10 +145,10 @@ export async function hasConflict(
     calendars?: Record<string, { busy?: Array<{ start: string; end: string }>; errors?: unknown[] }>;
   }>("/freeBusy", {
     method: "POST",
-    body: { timeMin: startsAtIso, timeMax: endsAtIso, items: [{ id: CALENDAR_ID }] },
+    body: { timeMin: startsAtIso, timeMax: endsAtIso, items: [{ id: calendarId() }] },
   });
 
-  const calendar = data.calendars?.[CALENDAR_ID];
+  const calendar = data.calendars?.[calendarId()];
   if (!calendar || calendar.errors?.length || !Array.isArray(calendar.busy)) {
     throw new CalendarError("indisponivel");
   }
@@ -154,7 +159,7 @@ export async function hasConflict(
   // freeBusy merges occupied windows. Subtracting the own interval can hide a
   // second event at exactly the same time; inspect event identities instead.
   const events = await gateway<{ items?: Array<GoogleEvent & { transparency?: string }>; nextPageToken?: string }>(
-    `${calendarPath}/events?singleEvents=true&timeMin=${encodeURIComponent(startsAtIso)}&timeMax=${encodeURIComponent(endsAtIso)}&maxResults=2500`,
+    `${calendarPath()}/events?singleEvents=true&timeMin=${encodeURIComponent(startsAtIso)}&timeMax=${encodeURIComponent(endsAtIso)}&maxResults=2500`,
   );
   if (!Array.isArray(events.items) || events.nextPageToken) throw new CalendarError("indisponivel");
   return events.items.some((event) => event.id !== ignoreEventId && event.status !== "cancelled" && event.transparency !== "transparent");
@@ -168,7 +173,7 @@ export async function findEventByAppointment(
   try {
     if (eventId) {
       const event = await gateway<GoogleEvent & { start?: { dateTime?: string }; end?: { dateTime?: string } }>(
-        `${calendarPath}/events/${encodeURIComponent(eventId)}`,
+        `${calendarPath()}/events/${encodeURIComponent(eventId)}`,
       );
       if (!event.id || event.status === "cancelled") return null;
       return {
@@ -183,7 +188,7 @@ export async function findEventByAppointment(
     const list = await gateway<{
       items?: Array<GoogleEvent & { start?: { dateTime?: string }; end?: { dateTime?: string } }>;
     }>(
-      `${calendarPath}/events?privateExtendedProperty=${encodeURIComponent(
+      `${calendarPath()}/events?privateExtendedProperty=${encodeURIComponent(
         `ldr_appointment=${appointmentId}`,
       )}&showDeleted=false&maxResults=5`,
     );
@@ -219,7 +224,7 @@ export async function createEvent(input: EventInput): Promise<CalendarEventResul
   let event: GoogleEvent;
   try {
   event = await gateway<GoogleEvent>(
-    `${calendarPath}/events?conferenceDataVersion=1&sendUpdates=all`,
+    `${calendarPath()}/events?conferenceDataVersion=1&sendUpdates=all`,
     {
       method: "POST",
       body: {
@@ -247,7 +252,7 @@ export async function createEvent(input: EventInput): Promise<CalendarEventResul
   );
   } catch (error) {
     if (!(error instanceof CalendarError) || error.code !== "evento_existente") throw error;
-    event = await gateway<GoogleEvent>(`${calendarPath}/events/${encodeURIComponent(`ldr${input.appointmentId.replaceAll("-", "")}g${input.generation ?? 0}`)}`);
+    event = await gateway<GoogleEvent>(`${calendarPath()}/events/${encodeURIComponent(`ldr${input.appointmentId.replaceAll("-", "")}g${input.generation ?? 0}`)}`);
     if (event.status === "cancelled") throw new CalendarError("nao_encontrado");
     return patchEvent(toResult(event).eventId, input);
   }
@@ -260,7 +265,7 @@ export async function patchEvent(
   input: Omit<EventInput, "appointmentId">,
 ): Promise<CalendarEventResult> {
   const event = await gateway<GoogleEvent>(
-    `${calendarPath}/events/${encodeURIComponent(eventId)}?conferenceDataVersion=1&sendUpdates=all`,
+    `${calendarPath()}/events/${encodeURIComponent(eventId)}?conferenceDataVersion=1&sendUpdates=all`,
     {
       method: "PATCH",
       body: {
@@ -278,7 +283,7 @@ export async function patchEvent(
 export async function cancelEvent(eventId: string): Promise<void> {
   try {
     await gateway<unknown>(
-      `${calendarPath}/events/${encodeURIComponent(eventId)}?sendUpdates=all`,
+      `${calendarPath()}/events/${encodeURIComponent(eventId)}?sendUpdates=all`,
       { method: "DELETE" },
     );
   } catch (error) {
