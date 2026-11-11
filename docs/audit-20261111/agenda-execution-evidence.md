@@ -55,7 +55,7 @@ A API retornou `queued`, sem jobs, em consultas sucessivas. Não existem logs no
 
 Google Calendar real: `403 notACalendarUser` na leitura de calendários. Não houve evento nem convite real. Credenciais do gateway estão ausentes neste ambiente. São necessários conta Calendar ativa/conexão autorizada, calendário de teste separado e convidado de teste; detalhes em [plano de publicação](agenda-final-release.md).
 
-Backup integral/restauração: plano preparado, sem extração de dados de clientes. Ensaio com dump integral permanece dependente de acesso seguro e ambiente autorizado. Reversão da migração foi executada somente no PostgreSQL descartável.
+Backup/restauração do banco isolado: **executado e aprovado**, com arquivo custom, segundo banco vazio, dados sintéticos e comparação de 20 tabelas, 494 definições e 485 grants, além de sequência, RLS e vínculo de mentoria. [Log completo](agenda-evidence/backup-restore-synthetic.txt). O ensaio com dump integral de produção continua dependente de acesso e janela autorizados; nenhum dado de cliente foi extraído.
 
 ## Verificação de produção
 
@@ -66,3 +66,11 @@ SELECT final em transação READ ONLY: PostgreSQL 17.6; appointments/appointment
 A consulta de segurança Supabase também foi executada em modo leitura: 3 avisos informativos de RLS sem políticas em tabelas de outros módulos, avisos de execução SECURITY DEFINER em `submit_ecosystem_contact` e `is_superadmin`, e proteção de senhas comprometidas desativada. Não foram alterados; o acesso público da função de contacto pode ser intencional e não foi revogado nesta missão. As novas funções de agenda são SECURITY INVOKER e tiveram grants testados no banco isolado. Referências: [funções definer expostas](https://supabase.com/docs/guides/database/database-linter) e [segurança de senhas](https://supabase.com/docs/guides/auth/password-security).
 
 A flag de ativação é verificada também nas duas mutações de agenda do cliente; CI agora observa alterações do backend e formulário, além de SQL/Calendar. Esses ajustes finais não mudam a migração nem os resultados PostgreSQL.
+
+## Continuação: backup/restauração
+
+O runner agora oferece `AGENDA_VERIFY_BACKUP=true`. Foram executados novamente os 31 controlos SQL e sete verificações de backup/restauração em PostgreSQL isolado. Utilizado cliente oficial Debian pg_dump/pg_restore 17.11, instalado apenas num diretório temporário de ferramentas; servidor 17.6. O dump é removido após a restauração e verificação.
+
+O comparador de schema usa nomes de colunas, evitando falsa divergência por números internos de colunas removidas/recriadas no ensaio de rollback. pg_dump renumera essas posições físicas ao reconstruir a tabela; não houve perda de colunas ou conteúdo.
+
+Nova consulta ao Calendar manteve `403 notACalendarUser`. Nova consulta às execuções do commit `9a01ca1f` manteve `queued`, sem jobs. Esses gates permanecem abertos.

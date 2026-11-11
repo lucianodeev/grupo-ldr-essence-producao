@@ -11,4 +11,5 @@ try{
  await new Promise((resolve,reject)=>{child.stderr.on('data',d=>{if(d.toString().includes('ready to accept connections'))resolve()});child.on('exit',c=>reject(Error('postgres exited '+c)));});
  Object.assign(process.env,{PGHOST:'127.0.0.1',PGPORT:'55439',PGUSER:'postgres',PGDATABASE:'postgres'});
  await import('./verify.mjs');
+ if(process.env.AGENDA_VERIFY_BACKUP === 'true') await import('./backup-restore.mjs');
 }finally{child.kill('SIGTERM');await new Promise(r=>child.on('exit',r));fs.rmSync(dir,{recursive:true,force:true});}

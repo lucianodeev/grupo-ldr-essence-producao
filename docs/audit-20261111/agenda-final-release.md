@@ -31,13 +31,13 @@ Os testes Calendar com respostas simuladas não comprovam acesso OAuth nem compo
 3. Definir `GOOGLE_CALENDAR_ID` para um calendário de testes separado, com permissão de escrita para a identidade do gateway. Informar também um endereço de convidado de testes autorizado; nenhum cliente real.
 4. Validar criar → repetir → reagendar → cancelar → repetir cancelamento, conferir um único evento ativo e sala Meet. Revogar temporariamente acesso para conferir erro seguro e repetir após restaurar acesso. Testar dois horários concorrentes no calendário de teste.
 
-## Backup, restauração e publicação (preparado, não executado)
+## Backup, restauração e publicação (produção não executada)
 
 Responsável: operador autorizado. Janela: definida pelo proprietário. Registrar SHA aprovado, horário UTC, contagem de tabelas e migrações antes de começar.
 
 1. Obter autorização específica para backup de dados e execução em produção. Usar ferramenta pg_dump 17 compatível; credencial por PGSERVICE/PGPASSFILE protegido, sem URL contendo senha em logs/comandos compartilhados.
 2. Com acesso de leitura: `pg_dump --dbname=service=ldr_production --format=custom --file=ldr-pre-agenda.dump`. Exportar separadamente os papéis necessários sem senhas. Guardar o dump cifrado fora do git, com acesso restrito e checksum SHA256; não anexar a esta PR.
-3. Restaurar o dump num PostgreSQL isolado autorizado: `pg_restore --exit-on-error --single-transaction --no-owner --dbname=service=ldr_restore_test ldr-pre-agenda.dump`. Comparar contagens, constraints, funções, políticas, integridade de pedidos/créditos e histórico. Registrar tempo de restauração. Esse ensaio com o dump integral **depende de acesso de backup/infraestrutura e ainda não foi executado**; o ensaio local cobre a reversão da migração com dados sintéticos.
+3. Restaurar o dump num PostgreSQL isolado autorizado: `pg_restore --exit-on-error --single-transaction --no-owner --dbname=service=ldr_restore_test ldr-pre-agenda.dump`. Comparar contagens, constraints, funções, políticas, integridade de pedidos/créditos e histórico. Registrar tempo de restauração. Esse ensaio com o dump integral **depende de acesso de backup/infraestrutura e ainda não foi executado**; o ensaio local agora cobre tanto a reversão como backup custom e restauração integral do banco isolado com dados sintéticos (20 tabelas, 494 definições, 485 grants e estado da sequência). Isso não equivale à restauração de um dump integral de produção.
 4. Verificar drift de schema desde os snapshots. Somente após aprovação: aplicar exclusivamente a migração versionada em transação. Não usar db push indiscriminado: há migrações históricas não reconciliadas com o projeto.
 5. Confirmar seis RPCs, triggers, grants, RLS, FK explícita e checks; manter a flag desativada. Verificar advisors em modo leitura, sem corrigir achados de outros módulos nesta publicação.
 6. Após autorização de merge/publicação: Render `ldr-ecossistema-validacao`, serviço `srv-daqq2gfavr4c7394hb1g`, usa `main`, autoDeploy ligado. Um merge em main pode iniciar publicação; coordenar esse passo como deploy. Não mudar branch do serviço. Domínio público: `https://ldrecossistema.online`.
@@ -51,3 +51,18 @@ Responsável: operador autorizado. Janela: definida pelo proprietário. Registra
 - Checklist: service_role somente no servidor; OAuth somente no gateway; sem notas/preços/documentos no evento; privilégio mínimo; URLs de reunião validadas no backend; callbacks autenticados; RLS/grants verificados; convidados de testes explícitos; nenhuma modificação remota de produção durante a validação.
 
 **Estado: candidato validado em PostgreSQL isolado. Não liberado para produção enquanto faltarem teste Calendar real e ensaio de restauração do backup integral, além da autorização final.**
+
+## Ensaio local de backup/restauração executado
+
+`pg_dump`/`pg_restore` 17.11 contra PostgreSQL 17.6 descartável. Resultado: arquivo custom restaurado em um segundo banco vazio; conteúdo e contagens de 20 tabelas, RLS, 494 definições (colunas, enums, triggers, constraints, índices, políticas e funções), 485 grants de schema/tabela/função e sequência comparados. As restrições de acesso público e o vínculo mentoria/agendamento também passaram após a restauração. O arquivo e os bancos temporários são removidos no final. Nenhuma leitura de dados de produção.
+
+Reprodução com binários locais de PostgreSQL 17 e o pacote Node `pg` já instalado:
+
+```bash
+AGENDA_POSTGRES_BIN=/caminho/engine17/bin \
+AGENDA_POSTGRES_CLIENT_BIN=/caminho/client17/bin \
+AGENDA_PG_PACKAGE=/caminho/pgtools/package.json \
+AGENDA_VERIFY_BACKUP=true node scripts/agenda/run-isolated.mjs
+```
+
+O runner cria o cluster, executa os 31 controlos anteriores, faz dump/restore num banco novo e remove o ambiente temporário. O script recusa host remoto, DATABASE_URL, PGSERVICE ou PGHOSTADDR. O ensaio com arquivo real de produção continua reservado à janela e ao acesso autorizados.
