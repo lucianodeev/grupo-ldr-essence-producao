@@ -73,6 +73,17 @@ function academyCanonicalRedirect(request: Request): Response | null {
     return needsCanonicalHost ? temporaryRedirect(url.toString()) : null;
   }
 
+  // Keep the public Render fallback online, but start portal sessions on the
+  // definitive origin. Do not forward POST bodies, OAuth callbacks or APIs:
+  // their existing origin-bound cookies and credentials must stay intact.
+  const isRenderFallback = host === "ldr-ecossistema-validacao.onrender.com";
+  const isPortalPage = /^\/(?:profissional(?:\/|-|$)|profissionais(?:\/|$)|para-profissionais(?:\/|$)|painel-profissional(?:\/|$)|cliente(?:\/|$)|empresa(?:\/|$)|funcionario(?:\/|$)|admin(?:\/|$)|login(?:\/|$)|acesso(?:\/|$))/.test(url.pathname);
+  if (isRenderFallback && isPortalPage && (request.method === "GET" || request.method === "HEAD")) {
+    url.protocol = "https:";
+    url.hostname = "ldrecossistema.online";
+    return temporaryRedirect(url.toString());
+  }
+
   // Preview/staging hosts intentionally keep the full ecosystem on one origin.
   // This makes deep links testable before any official-domain cutover.
   if (isUnifiedPreviewHost(host)) {
