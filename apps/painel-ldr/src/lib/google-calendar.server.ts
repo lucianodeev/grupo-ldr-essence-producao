@@ -113,6 +113,11 @@ const calendarPath = () => `/calendars/${encodeURIComponent(calendarId())}`;
 type GoogleEvent = {
   id?: string;
   status?: string;
+  summary?: string;
+  start?: { dateTime?: string };
+  end?: { dateTime?: string };
+  attendees?: Array<{ email?: string }>;
+  extendedProperties?: { private?: { ldr_appointment?: string } };
   hangoutLink?: string;
   htmlLink?: string;
   conferenceData?: { entryPoints?: Array<{ entryPointType?: string; uri?: string }> };
@@ -251,9 +256,21 @@ export async function createEvent(input: EventInput): Promise<CalendarEventResul
     },
   );
   } catch (error) {
-    if (!(error instanceof CalendarError) || error.code !== "evento_existente") throw error;
+    if (!(error instanceof CalendarError) || !["evento_existente", "permissao_negada"].includes(error.code)) throw error;
     event = await gateway<GoogleEvent>(`${calendarPath()}/events/${encodeURIComponent(`ldr${input.appointmentId.replaceAll("-", "")}g${input.generation ?? 0}`)}`);
     if (event.status === "cancelled") throw new CalendarError("nao_encontrado");
+    // Repeated inserts may be refused even when the original event exists.
+    // Recover an exact app-owned match without another write or invitation.
+    const attendees = event.attendees ?? [];
+    const expectedAttendees = input.attendeeEmail ? [input.attendeeEmail.toLowerCase()] : [];
+    const exactMatch = event.extendedProperties?.private?.ldr_appointment === input.appointmentId &&
+      event.summary === input.summary &&
+      new Date(event.start?.dateTime ?? "").getTime() === new Date(input.startsAtIso).getTime() &&
+      new Date(event.end?.dateTime ?? "").getTime() === new Date(input.endsAtIso).getTime() &&
+      attendees.length === expectedAttendees.length &&
+      expectedAttendees.every(email => attendees.some(attendee => attendee.email?.toLowerCase() === email));
+    if (exactMatch) return toResult(event);
+    if (error.code === "permissao_negada") throw error;
     return patchEvent(toResult(event).eventId, input);
   }
   return toResult(event);

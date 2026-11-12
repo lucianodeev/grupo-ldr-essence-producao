@@ -77,6 +77,35 @@ test('409 on create recovers existing event via GET and PATCH', async () => {
   assert.equal((await createEvent(input)).eventId, 'existing');
   assert.equal(count, 3);
 });
+test('refused repeated insert recovers only an exact app-owned event without a second write', async () => {
+  for (const status of [403, 409]) {
+    const methods = [];
+    mockGoogle((_url, options) => {
+      methods.push(options.method);
+      if (options.method === 'POST') return reply({}, status);
+      assert.equal(options.method, 'GET');
+      return reply({ id: 'existing', summary: input.summary,
+        start: { dateTime: input.startsAtIso }, end: { dateTime: input.endsAtIso },
+        attendees: [{ email: input.attendeeEmail }],
+        extendedProperties: { private: { ldr_appointment: input.appointmentId } } });
+    });
+    assert.equal((await createEvent(input)).eventId, 'existing');
+    assert.deepEqual(methods, ['POST', 'GET']);
+  }
+});
+test('permission denial is preserved for a different event marker or payload', async () => {
+  for (const difference of [{ marker: 'other' }, { summary: 'other' }]) {
+    mockGoogle((_url, options) => {
+      if (options.method === 'POST') return reply({}, 403);
+      assert.equal(options.method, 'GET');
+      return reply({ id: 'existing', summary: difference.summary || input.summary,
+        start: { dateTime: input.startsAtIso }, end: { dateTime: input.endsAtIso },
+        attendees: [{ email: input.attendeeEmail }],
+        extendedProperties: { private: { ldr_appointment: difference.marker || input.appointmentId } } });
+    });
+    await assert.rejects(() => createEvent(input), { code: 'permissao_negada' });
+  }
+});
 test('reschedule PATCH keeps event identity', async () => {
   mockGoogle((url, options) => {
     assert.match(url, /events\/existing\?/);
