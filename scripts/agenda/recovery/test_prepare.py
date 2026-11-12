@@ -12,6 +12,25 @@ spec=importlib.util.spec_from_file_location('recovery',Path(__file__).with_name(
 r=importlib.util.module_from_spec(spec);spec.loader.exec_module(r)
 
 class RecoverySecurityTests(unittest.TestCase):
+    def test_restore_errors_never_disclose_arbitrary_sql_or_object_names(self):
+        for message, code in [
+            (b'ERROR: schema "graphql" already exists; private-credential', 'isolated_restore_schema_already_exists_graphql'),
+            (b'ERROR: schema "private-secret" already exists; private-credential', 'isolated_restore_duplicate_object'),
+            (b'ERROR: extension "pg_net" is not available; private-value', 'isolated_restore_extension_unavailable_pg_net'),
+            (b'ERROR: private-credential private-sql private-customer', 'isolated_restore_failed_details_withheld'),
+        ]:
+            self.assertEqual(r.restore_failure_code(message),code)
+            self.assertNotIn('private',r.restore_failure_code(message))
+    def test_schema_preflight_dump_is_explicit_and_full_dump_remains_default(self):
+        with tempfile.TemporaryDirectory() as p,patch.object(r,'run') as run:
+            def emit(*args,**kwargs): kwargs['output'].write(b'synthetic')
+            run.side_effect=emit
+            pg=r.Pg(container='ldr-recovery-test')
+            pg.dump(Path(p)/'schema.dump',schema_only=True)
+            self.assertIn('--schema-only',run.call_args.args[0])
+            pg.dump(Path(p)/'full.dump')
+            self.assertNotIn('--schema-only',run.call_args.args[0])
+
     def test_official_ca_is_pinned_and_read_only_inside_client(self):
         self.assertEqual(r.sha(r.ROOT_CA), r.ROOT_CA_SHA256)
         cmd=r.Pg(remote_env={'PGPASSWORD':'synthetic-secret'}).command('psql')
