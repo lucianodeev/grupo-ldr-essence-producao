@@ -167,7 +167,7 @@ console.log("LDR ONE SANDBOX DB CONFIG: " + dbConfig);
 const persistSandboxEvents=process.env.LDR_ONE_SANDBOX_PERSIST_EVENTS==="yes";
 let eventDb=null;
 if(persistSandboxEvents){
-  if(process.env.RENDER_SERVICE_ID!=="srv-das6drvavr4c7397dflg")throw Error("Sandbox persistence forbidden on other services");
+  if(process.env.RENDER_SERVICE_ID!=="srv-dbqpb3mi0phs73dc5egg")throw Error("Sandbox persistence forbidden on other services");
   const dbUrl=process.env.DATABASE_URL;
   if(!dbUrl)throw Error("Private sandbox database required");
   const parsed=new URL(dbUrl);
@@ -236,19 +236,22 @@ createServer(async(req,res)=>{
   }
   // Explicit one-shot test: local signed HTTP delivery and cleanup of synthetic rows.
   if(process.env.LDR_ONE_SANDBOX_SIGNED_HTTP_SELFTEST!=="yes")return;
-  if(!persistSandboxEvents||!ready||process.env.RENDER_SERVICE_ID!=="srv-das6drvavr4c7397dflg"){
+  if(!persistSandboxEvents||!ready||process.env.RENDER_SERVICE_ID!=="srv-dbqpb3mi0phs73dc5egg"){
     console.error("LDR ONE SIGNED HTTP SELFTEST GUARD FAILED");process.exitCode=1;return;
   }
   const {randomUUID}=await import("node:crypto");
-  const recordId=randomUUID(),customerId=randomUUID(),userId=randomUUID();
+  const recordId=randomUUID(),customerId=randomUUID(),userId=randomUUID(),memberIds=Array.from({length:5},()=>randomUUID());
   const evtId="evt_"+randomUUID().replaceAll("-","");
   let created=false;
   try{
-    await eventDb.query("INSERT INTO public.ldr_one_sandbox_subscriptions(id,customer_id,user_id,plan,billing_cycle,seats) VALUES($1,$2,$3,'individual','monthly',1)",[recordId,customerId,userId]);
+    await eventDb.query("INSERT INTO public.ldr_one_sandbox_subscriptions(id,customer_id,user_id,plan,billing_cycle,seats) VALUES($1,$2,$3,'business','monthly',5)",[recordId,customerId,userId]);
     created=true;
+    for(const member of memberIds)await eventDb.query("INSERT INTO public.ldr_one_sandbox_seat_assignments(subscription_id,user_id) VALUES($1,$2)",[recordId,member]);
+    const allocated=await eventDb.query("SELECT count(*)::int AS n FROM public.ldr_one_sandbox_seat_assignments WHERE subscription_id=$1",[recordId]);
+    if(allocated.rows[0]?.n!==5)throw Error("Five sandbox business seats were not allocated");
     const body=JSON.stringify({id:evtId,created:Math.floor(Date.now()/1000),livemode:false,type:"customer.subscription.updated",data:{object:{id:"sub_"+randomUUID().replaceAll("-",""),status:"active",metadata:{sandbox:"true",checkout_kind:"ldr_one_subscription",ldr_one_subscription_id:recordId,customer_id:customerId}}}});
     const {checkSandboxEntitlement}=await import("./ldr-one-sandbox-entitlement-gate.mjs");
-    const identity={verified:true,userId,customerId};
+    const identity={verified:true,userId:memberIds[0],customerId};
     const deliver=async(payload=body)=>{
       const stamp=Math.floor(Date.now()/1000);
       const signature=createHmac("sha256",secret).update(stamp+"."+payload).digest("hex");
@@ -264,6 +267,10 @@ createServer(async(req,res)=>{
     if(count.rows[0]?.n!==1)throw Error("Duplicate event inserted");
     const active=await checkSandboxEntitlement({db:eventDb,identity});
     if(!active.allowed||active.subscriptionId!==recordId)throw Error("Signed activation did not grant entitlement");
+    for(const member of memberIds){
+      const check=await checkSandboxEntitlement({db:eventDb,identity:{verified:true,userId:member,customerId}});
+      if(!check.allowed||check.subscriptionId!==recordId)throw Error("One of five company members lacked access");
+    }
     const stranger=await checkSandboxEntitlement({db:eventDb,identity:{...identity,userId:randomUUID()}});
     if(stranger.allowed)throw Error("Signed activation leaked entitlement");
     const canceled=JSON.stringify({id:"evt_"+randomUUID().replaceAll("-",""),created:Math.floor(Date.now()/1000)+1,livemode:false,type:"customer.subscription.deleted",data:{object:{id:JSON.parse(body).data.object.id,status:"canceled",metadata:JSON.parse(body).data.object.metadata}}});
@@ -271,16 +278,21 @@ createServer(async(req,res)=>{
     if(cancelResponse.status!==200)throw Error("Signed cancellation rejected");
     const revoked=await checkSandboxEntitlement({db:eventDb,identity});
     if(revoked.allowed)throw Error("Signed cancellation did not revoke access");
+    for(const member of memberIds){
+      if((await checkSandboxEntitlement({db:eventDb,identity:{verified:true,userId:member,customerId}})).allowed)
+        throw Error("A company member retained access after cancellation");
+    }
     const staleResponse=await deliver(body);
     if(staleResponse.status!==200)throw Error("Signed replay after cancellation rejected");
     if((await checkSandboxEntitlement({db:eventDb,identity})).allowed)throw Error("Replay restored canceled access");
-    console.log("LDR ONE SANDBOX SIGNED HTTP SELFTEST VERIFIED; ENTITLEMENT GRANT AND REVOCATION VERIFIED");
+    console.log("LDR ONE SANDBOX SIGNED HTTP SELFTEST VERIFIED; FIVE BUSINESS SEATS GRANTED AND REVOKED; IDEMPOTENCY VERIFIED");
   }catch{
     console.error("LDR ONE SANDBOX SIGNED HTTP SELFTEST FAILED");
     process.exitCode=1;
   }finally{
     if(created){
       try{
+        await eventDb.query("DELETE FROM public.ldr_one_sandbox_seat_assignments WHERE subscription_id=$1",[recordId]);
         await eventDb.query("DELETE FROM public.ldr_one_sandbox_stripe_events WHERE subscription_id=$1",[recordId]);
         await eventDb.query("DELETE FROM public.ldr_one_sandbox_subscriptions WHERE id=$1",[recordId]);
         console.log("LDR ONE SANDBOX SIGNED HTTP SELFTEST CLEANUP VERIFIED");

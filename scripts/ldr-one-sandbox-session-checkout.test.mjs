@@ -14,11 +14,11 @@ test("session-bound checkout fails closed without session and never contacts Str
  assert.equal(calls,0);
 });
 
-test("verified private session creates only Stripe TEST checkout for its server-resolved customer",async()=>{
+test("verified private session creates Business 5-seat Stripe TEST checkout for server-resolved customer",async()=>{
  const {hashSandboxPassword}=await import("./ldr-one-sandbox-local-auth.mjs");
  const {loginInvitedSandboxUser}=await import("./ldr-one-sandbox-login-service.mjs");
  const user="e49bc51e-2af6-4c3d-a91e-a713e1ed69cb",customer="1e2f550b-a4c1-4788-8d34-f0b159c0dc41";
- const fullEnv={...env,LDR_ONE_STRIPE_TEST_SECRET_KEY:"sk_test_dummy123",LDR_ONE_TEST_PRICE_INDIVIDUAL_MONTHLY:"price_dummy123"};
+ const fullEnv={...env,LDR_ONE_STRIPE_TEST_SECRET_KEY:"sk_test_dummy123",LDR_ONE_TEST_PRICE_BUSINESS_MONTHLY:"price_dummy123"};
  const password="isolated-session-checkout-password-123",password_hash=await hashSandboxPassword(password);
  let session,checkout,callCount=0;
  const db={query:async(sql,args)=>{
@@ -31,9 +31,45 @@ test("verified private session creates only Stripe TEST checkout for its server-
   throw Error("Unexpected query");
  }};
  const login=await loginInvitedSandboxUser({email:"test@example.com",password,db,env:fullEnv});
- const stripe=async(params)=>{callCount++;assert.equal(params.get("metadata[customer_id]"),customer);assert.equal(params.get("client_reference_id"),user);return {livemode:false,id:"cs_test_dummy123",mode:"subscription",status:"open",url:"https://checkout.stripe.com/c/pay/cs_test_dummy123"};};
- const fetcher=async()=>({ok:true,json:async()=>({livemode:false,active:true,currency:"eur",unit_amount:3990,recurring:{interval:"month",interval_count:1}})});
- const req=new Request(origin+"/internal/checkout",{method:"POST",headers:{origin,"content-type":"application/json","x-ldr-one-csrf":"1",cookie:"ldr_one_sandbox_session="+login.token},body:JSON.stringify({plan:"individual",cycle:"monthly",seats:1})});
+ const stripe=async(params)=>{callCount++;assert.equal(params.get("metadata[customer_id]"),customer);assert.equal(params.get("client_reference_id"),user);assert.equal(params.get("line_items[0][quantity]"),"5");assert.equal(params.get("metadata[plan]"),"business");assert.equal(params.get("subscription_data[metadata][seats]"),"5");return {livemode:false,id:"cs_test_dummy123",mode:"subscription",status:"open",url:"https://checkout.stripe.com/c/pay/cs_test_dummy123"};};
+ const fetcher=async()=>({ok:true,json:async()=>({livemode:false,active:true,currency:"eur",unit_amount:1990,recurring:{interval:"month",interval_count:1}})});
+ const req=new Request(origin+"/internal/checkout",{method:"POST",headers:{origin,"content-type":"application/json","x-ldr-one-csrf":"1",cookie:"ldr_one_sandbox_session="+login.token},body:JSON.stringify({plan:"business",cycle:"monthly",seats:5})});
  const result=await handleSessionBoundSandboxCheckout({request:req,db,env:fullEnv,stripe,fetcher});
- assert.equal(result.status,200);assert.equal(result.body.url,"https://checkout.stripe.com/c/pay/cs_test_dummy123");assert.equal(checkout.customerId,customer);assert.equal(checkout.userId,user);assert.equal(checkout.seats,1);assert.equal(callCount,1);
+ assert.equal(result.status,200);assert.equal(result.body.url,"https://checkout.stripe.com/c/pay/cs_test_dummy123");assert.equal(checkout.customerId,customer);assert.equal(checkout.userId,user);assert.equal(checkout.seats,5);assert.equal(checkout.plan,"business");assert.equal(callCount,1);
+});
+
+
+test("Business request with fewer than five seats never reaches Stripe",async()=>{
+ const {hashSandboxPassword}=await import("./ldr-one-sandbox-local-auth.mjs");
+ const {loginInvitedSandboxUser}=await import("./ldr-one-sandbox-login-service.mjs");
+ const user="e49bc51e-2af6-4c3d-a91e-a713e1ed69cb",customer="1e2f550b-a4c1-4788-8d34-f0b159c0dc41";
+ const password="isolated-checkout-business-test-password-123",hash=await hashSandboxPassword(password);
+ const fullEnv={...env,LDR_ONE_STRIPE_TEST_SECRET_KEY:"sk_test_dummy123",LDR_ONE_TEST_PRICE_BUSINESS_MONTHLY:"price_dummy123"};
+ let session,dbWrites=0,stripeCalls=0;
+ const db={query:async(sql,args)=>{
+   if(sql.includes("FROM public.ldr_one_sandbox_invited_users"))return {rows:[{user_id:user,customer_id:customer,password_hash:hash}]};
+   if(sql.includes("FROM public.ldr_one_sandbox_customer_members"))return {rows:[{customer_id:customer}]};
+   if(sql.startsWith("INSERT INTO public.ldr_one_sandbox_sessions")){session={tokenHash:args[0],user_id:args[1],customer_id:args[2],expires_at:args[3]};return {rows:[]};}
+   if(sql.startsWith("SELECT user_id,customer_id,expires_at"))return {rows:session&&session.tokenHash===args[0]?[session]:[]};
+   if(sql.startsWith("INSERT INTO public.ldr_one_sandbox_subscriptions")){dbWrites++;throw Error("Unexpected business subscription write");}
+   throw Error("Unexpected query");
+ }};
+ const login=await loginInvitedSandboxUser({email:"test@example.com",password,db,env:fullEnv});
+ const stripe=async()=>{stripeCalls++;throw Error("Stripe called with invalid seats");};
+ const fetcher=async()=>({ok:true,json:async()=>({livemode:false,active:true,currency:"eur",unit_amount:1990,recurring:{interval:"month",interval_count:1}})});
+ for(const seats of [0,1,2,3,4,10001]){
+   const req=new Request(origin+"/internal/checkout",{method:"POST",headers:{origin,"content-type":"application/json","x-ldr-one-csrf":"1",cookie:"ldr_one_sandbox_session="+login.token},body:JSON.stringify({plan:"business",cycle:"monthly",seats})});
+   const response=await handleSessionBoundSandboxCheckout({request:req,db,env:fullEnv,stripe,fetcher});
+   assert.notEqual(response.status,200);
+ }
+ assert.equal(stripeCalls,0);
+ assert.equal(dbWrites,0);
+});
+
+test("spoofed customer and user identifiers are never accepted from checkout JSON",async()=>{
+ const stripe=async()=>{throw Error("Stripe must not be reached");};
+ const req=new Request(origin+"/internal/checkout",{method:"POST",headers:{origin,"content-type":"application/json","x-ldr-one-csrf":"1",cookie:"ldr_one_sandbox_session="+("a".repeat(64))},body:JSON.stringify({plan:"business",cycle:"monthly",seats:5,customerId:"attacker"})});
+ const db={query:async()=>({rows:[]})};
+ const response=await handleSessionBoundSandboxCheckout({request:req,db,env,stripe});
+ assert.notEqual(response.status,200);
 });
