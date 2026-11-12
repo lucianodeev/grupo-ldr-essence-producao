@@ -30,3 +30,14 @@ test("LDR ONE sales text states five-seat minimum in all supported languages", (
   }
   assert.doesNotMatch(page, /mínimo 2|minimum 2/i);
 });
+
+
+test("LDR ONE handles invoice.paid as a confirmed renewal without changing other products", () => {
+  const webhook = read("src/routes/api/stripe/webhook.ts");
+  const handler = webhook.slice(webhook.indexOf("async function setLdrPassSubscription("), webhook.indexOf("async function balanceCredit("));
+  assert.match(handler, /eventType==="invoice\\.payment_succeeded"\\|\\|eventType==="invoice\\.paid"/);
+  assert.match(webhook, /!checkoutKind && \\(event\\.type === "invoice\\.payment_succeeded" \\|\\| event\\.type === "invoice\\.paid" \\|\\| event\\.type === "invoice\\.payment_failed"\\)/);
+  assert.match(webhook, /checkoutKind === "ldr_pass_subscription" && \\(subscriptionCheckoutEvent \\|\\| recurringSubscriptionEvent \\|\\| event\\.type === "invoice\\.paid"\\)/);
+  const otherHandlers = webhook.slice(webhook.indexOf('} else if (checkoutKind === "company_subscription"'), webhook.indexOf('} else if (checkoutKind === "professional_subscription"'));
+  assert.doesNotMatch(otherHandlers, /invoice\\.paid/);
+});
