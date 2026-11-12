@@ -136,8 +136,7 @@ TABLES = """SELECT coalesce(jsonb_agg(jsonb_build_object('schema',n.nspname,'nam
  'rls',c.relrowsecurity,'force_rls',c.relforcerowsecurity,'owner',pg_get_userbyid(c.relowner))
  ORDER BY n.nspname,c.relname),'[]') FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace
  WHERE c.relkind IN ('r','p','m') AND n.nspname !~ '^pg_' AND n.nspname<>'information_schema'
- AND NOT EXISTS(SELECT 1 FROM pg_depend d WHERE d.classid='pg_class'::regclass
- AND d.objid=c.oid AND d.deptype='e');"""
+;"""
 CATALOG = """SELECT coalesce(jsonb_agg(x ORDER BY x::text COLLATE "C"),'[]') FROM (
  SELECT jsonb_build_object('kind','column','schema',n.nspname,'table',c.relname,'name',a.attname,
  'type',format_type(a.atttypid,a.atttypmod),'notnull',a.attnotnull,'identity',a.attidentity,
@@ -159,6 +158,12 @@ CATALOG = """SELECT coalesce(jsonb_agg(x ORDER BY x::text COLLATE "C"),'[]') FRO
  'owner',pg_get_userbyid(p.proowner)) FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace
  WHERE p.prokind IN ('f','p') AND n.nspname !~ '^pg_' AND n.nspname<>'information_schema'
  AND NOT EXISTS(SELECT 1 FROM pg_depend d WHERE d.classid='pg_proc'::regclass AND d.objid=p.oid AND d.deptype='e')
+ UNION ALL SELECT jsonb_build_object('kind','extension_function_owner','schema',n.nspname,
+ 'name',p.proname,'args',pg_get_function_identity_arguments(p.oid),
+ 'routine_type',CASE WHEN p.prokind='p' THEN 'PROCEDURE' ELSE 'FUNCTION' END,
+ 'owner',pg_get_userbyid(p.proowner)) FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace
+ WHERE p.prokind IN ('f','p') AND n.nspname !~ '^pg_' AND n.nspname<>'information_schema'
+ AND EXISTS(SELECT 1 FROM pg_depend d WHERE d.classid='pg_proc'::regclass AND d.objid=p.oid AND d.deptype='e')
  UNION ALL SELECT jsonb_build_object('kind','trigger','schema',n.nspname,'table',c.relname,
  'definition',pg_get_triggerdef(t.oid)) FROM pg_trigger t JOIN pg_class c ON c.oid=t.tgrelid
  JOIN pg_namespace n ON n.oid=c.relnamespace WHERE NOT t.tgisinternal AND n.nspname !~ '^pg_'
@@ -332,6 +337,14 @@ def rehearse(source, work, out, passphrase, live=False):
     with isolated() as target:
         restore(target,recovered/'database.dump',recovered/'roles.sql')
         print('PASS restore completed in a network-isolated container',flush=True)
+        # PostgreSQL creates extension routines under the restoring role.
+        # Replay original routine ownership using supported ALTER statements;
+        # this also preserves the owner/grantor entries in extension ACLs.
+        # Keep exact catalog comparison: no privileges or grantors are ignored.
+        for entry in before['catalog']:
+            if entry.get('kind')=='extension_function_owner':
+                routine=identifier(entry['schema'])+'.'+identifier(entry['name'])+'('+entry['args']+')'
+                target.raw('ALTER '+entry['routine_type']+' '+routine+' OWNER TO '+identifier(entry['owner'])+';',snapshot=False)
         after=inventory(target,work.parent)
         if before!=after and SYNTHETIC_DIAGNOSTICS:
             for group in before:
