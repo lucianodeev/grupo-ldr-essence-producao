@@ -54,6 +54,13 @@ def snapshot_failure_code(stderr):
 
 def restore_failure_code(stderr):
     message = stderr.lower()
+    for parameter in ('transaction_timeout','idle_session_timeout','idle_in_transaction_session_timeout'):
+        if ('unrecognized configuration parameter "'+parameter+'"').encode() in message:
+            return 'isolated_restore_unknown_parameter_'+parameter
+    if b'can only be loaded via shared_preload_libraries' in message:
+        return 'isolated_restore_shared_preload_required'
+    if b'can only be created in database' in message:
+        return 'isolated_restore_extension_database_mismatch'
     # Only fixed public platform identifiers may appear in a diagnostic code.
     # SQL statements and arbitrary object names remain completely withheld.
     for schema in ('public','extensions','auth','storage','realtime','graphql','graphql_public','net','vault','pgsodium','pgsodium_masks','cron'):
@@ -275,7 +282,9 @@ def isolated():
     # No ports, bind mounts, production credentials or outbound network.
     run(['docker','run','-d','--name',name,'--network','none',
          '-e','POSTGRES_HOST_AUTH_METHOD=trust','-e','POSTGRES_PASSWORD='+secrets.token_urlsafe(32),
-         IMAGE,'postgres','-c','cron.launch_active_jobs=off','-c','cron.database_name=ldr_restore'])
+         IMAGE,'postgres','-c','shared_preload_libraries=pg_cron,pg_net,pg_stat_statements,supabase_vault',
+         '-c','cron.launch_active_jobs=off','-c','cron.database_name=ldr_restore',
+         '-c','pg_net.database_name=ldr_restore'])
     pg=Pg(name,user='supabase_admin')
     try:
         for _ in range(90):
@@ -287,6 +296,8 @@ def isolated():
             if ready.returncode==0 and ready.stdout.strip()==b't': break
             time.sleep(1)
         else: raise Blocked('isolated_postgres_not_ready')
+        require(pg.json("SELECT to_jsonb(current_setting('cron.launch_active_jobs')='off' AND current_setting('cron.database_name')='ldr_restore');"),
+                'isolated_scheduler_configuration_invalid')
         yield pg
     finally:
         # Only the random disposable container created here is removed, never a remote resource.
@@ -479,6 +490,11 @@ def main():
     with tempfile.TemporaryDirectory(prefix='ldr-rehearsal-') as tmp:
         root=Path(tmp);work=root/'payload';work.mkdir()
         if args.self_test:
+            with isolated() as probe:
+                probe.raw('CREATE DATABASE ldr_restore TEMPLATE template0;',snapshot=False)
+                probe.db='ldr_restore'
+                probe.raw('CREATE SCHEMA extensions; CREATE EXTENSION pg_cron WITH SCHEMA pg_catalog; CREATE EXTENSION pg_net WITH SCHEMA extensions;',snapshot=False)
+                print('PASS isolated platform extension startup with scheduler disabled',flush=True)
             with isolated() as source:
                 source.raw("DO $roles$ BEGIN CREATE ROLE anon NOLOGIN; EXCEPTION WHEN duplicate_object THEN NULL; END $roles$; DO $roles$ BEGIN CREATE ROLE authenticated NOLOGIN; EXCEPTION WHEN duplicate_object THEN NULL; END $roles$; DO $roles$ BEGIN CREATE ROLE service_role NOLOGIN BYPASSRLS; EXCEPTION WHEN duplicate_object THEN NULL; END $roles$; CREATE TABLE public.recovery_fixture(id integer PRIMARY KEY, secret text); ALTER TABLE public.recovery_fixture ENABLE ROW LEVEL SECURITY; REVOKE ALL ON public.recovery_fixture FROM PUBLIC; INSERT INTO public.recovery_fixture VALUES (1,'synthetic only'); CREATE SEQUENCE public.recovery_seq; SELECT nextval('public.recovery_seq');",snapshot=False)
                 result=rehearse(source,work,out,secrets.token_urlsafe(32))
