@@ -18,9 +18,10 @@ import urllib.parse
 import urllib.request
 
 PROJECT = 'sfrcsrzuoqdscflfuwik'
-IMAGE = 'supabase/postgres:17.6.1.155'
+IMAGE = 'supabase/postgres:17.6.1.155@sha256:3866d94d8426927e8db3f1c5d790752292bfbe27b5f1f46e199ae1b7d3c1710b'
 MIGRATION = Path('apps/painel-ldr/supabase/migrations/20261111200311_agenda_calendar_credit_integration.sql')
 MAX_BYTES = 256 * 1024 * 1024
+SYNTHETIC_DIAGNOSTICS = False
 
 class Blocked(Exception):
     """Only a constant, non-sensitive message may be printed outside the archive."""
@@ -49,6 +50,8 @@ def run(cmd, *, data=None, output=None, env=None, timeout=300):
                            stderr=subprocess.PIPE, env=env, timeout=timeout, check=False)
     except (OSError, subprocess.TimeoutExpired):
         raise Blocked('subprocess_unavailable_or_timeout') from None
+    if r.returncode and SYNTHETIC_DIAGNOSTICS:
+        print('SYNTHETIC ONLY '+r.stderr.decode(errors='replace'),file=sys.stderr)
     require(r.returncode == 0, 'subprocess_failed_details_withheld')
     return r.stdout
 
@@ -334,7 +337,9 @@ def rehearse(source, work, out, passphrase, live=False):
             'encrypted_archive_sha256':sha(out/'recovery.tar.gpg')}
 
 def main():
+    global SYNTHETIC_DIAGNOSTICS
     parser=argparse.ArgumentParser();parser.add_argument('--self-test',action='store_true');args=parser.parse_args()
+    SYNTHETIC_DIAGNOSTICS = args.self_test
     os.umask(0o077)
     out=Path(os.environ.get('LDR_BACKUP_OUTPUT',tempfile.mkdtemp(prefix='ldr-ciphertext-'))).resolve()
     require(not out.exists() or not any(out.iterdir()),'output_directory_must_be_empty')
