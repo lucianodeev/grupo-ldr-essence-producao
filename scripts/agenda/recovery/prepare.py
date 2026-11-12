@@ -360,6 +360,15 @@ def rehearse(source, work, out, passphrase, live=False):
             elif entry.get('kind')=='extension_function_owner':
                 routine=identifier(entry['schema'])+'.'+identifier(entry['name'])+'('+entry['args']+')'
                 target.raw('ALTER '+entry['routine_type']+' '+routine+' OWNER TO '+identifier(entry['owner'])+';',snapshot=False)
+        # Managed extension schemas can carry grants from image bootstrap that
+        # pg_dump does not replay. Restore the captured source grants explicitly
+        # on the isolated clone, then insist on an exact ACL comparison.
+        for entry in before['catalog']:
+            if entry.get('kind')=='schema_acl':
+                grantee='PUBLIC' if entry['grantee']=='PUBLIC' else identifier(entry['grantee'])
+                option=' WITH GRANT OPTION' if entry['grantable'] else ''
+                target.raw('SET ROLE '+identifier(entry['grantor'])+'; GRANT '+entry['privilege']+
+                           ' ON SCHEMA '+identifier(entry['name'])+' TO '+grantee+option+'; RESET ROLE;',snapshot=False)
         after=inventory(target,work.parent)
         if before!=after and SYNTHETIC_DIAGNOSTICS:
             for group in before:
