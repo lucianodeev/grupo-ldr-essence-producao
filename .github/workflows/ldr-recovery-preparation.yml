@@ -20,8 +20,8 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: ldr-recovery-preparation
-  cancel-in-progress: false
+  group: ${{ github.event_name == 'workflow_dispatch' && inputs.mode == 'backup_restore' && 'ldr-recovery-live' || 'ldr-recovery-preparation' }}
+  cancel-in-progress: ${{ github.event_name != 'workflow_dispatch' || inputs.mode != 'backup_restore' }}
 jobs:
   preparation:
     runs-on: ubuntu-24.04

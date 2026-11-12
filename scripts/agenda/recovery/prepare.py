@@ -8,6 +8,7 @@ import os
 from pathlib import Path
 import re
 import secrets
+import select
 import shutil
 import subprocess
 import sys
@@ -108,9 +109,10 @@ def snapshot(pg):
                             stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                             stderr=errors, env=pg.env)
     try:
-        proc.stdin.write(b'BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY;\nSELECT pg_export_snapshot();\n')
+        proc.stdin.write(b'BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY;\nSELECT pg_export_snapshot() \\g /dev/stdout\n')
         proc.stdin.flush()
         # A CLI/server error closes stdout. Connection timeout is enforced in env.
+        require(bool(select.select([proc.stdout],[],[],20)[0]),'snapshot_export_timeout')
         value = proc.stdout.readline().decode().strip()
         if SYNTHETIC_DIAGNOSTICS and not re.fullmatch(r'[0-9A-Fa-f]+-[0-9A-Fa-f]+-[0-9]+',value):
             errors.seek(0)
