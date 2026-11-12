@@ -10,6 +10,7 @@ on:
       - "apps/painel-ldr/tests/ldr-one-business-min-seats.test.cjs"
       - ".github/workflows/ldr-one-business-safe-checks.yml"
       - "apps/painel-ldr/tests/ldr-one-cancellation.test.cjs"
+      - "apps/painel-ldr/src/routes/_clientarea.cliente.ldr-pass.tsx"
   workflow_dispatch:
 
 permissions:
@@ -43,3 +44,5 @@ jobs:
         run: node --test scripts/ldr-one-sandbox-webhook-bridge.test.mjs scripts/ldr-one-sandbox-checkout-service.test.mjs scripts/ldr-one-sandbox-checkout-integration.test.mjs scripts/ldr-one-sandbox-real-webhook-lifecycle.test.mjs
       - name: Verify authenticated cancellation with Stripe and database mocks
         run: node --test apps/painel-ldr/tests/ldr-one-cancellation.test.cjs
+      - name: Check application TypeScript and production build (not deployed)
+        run: npm run build:painel
