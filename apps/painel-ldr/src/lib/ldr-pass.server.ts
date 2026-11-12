@@ -14,7 +14,7 @@ async function customerFor(u:string,e:string|null){const c=await resolveClient(u
 export function ldrPassPrice(plan:LdrPassPlan,market:LdrPassMarket,billing:LdrPassBilling){const envName=PRICE_ENV[market][plan][billing];const priceId=process.env[envName]??"";if(!/^price_[A-Za-z0-9]+$/.test(priceId))fail(market==="BR"?"Preço LDR ONE Brasil ainda não configurado.":"Preço LDR ONE indisponível.");const amount=AMOUNTS[market][plan][billing];return {priceId,amount,currency:market==="BR"?"BRL":"EUR"}}
 export async function getLdrPassContext(u:string,e:string|null){const customer=await customerFor(u,e);const {data,error}=await db.from("ldr_pass_subscriptions").select("*").eq("customer_id",customer.id).order("created_at",{ascending:false}).limit(1).maybeSingle();if(error)fail("Não foi possível carregar o LDR ONE.");return {customer,subscription:data??null,active:data?.status==="active"||data?.status==="trialing"}}
 export async function createLdrPassCheckout(u:string,e:string|null,plan:LdrPassPlan,market:LdrPassMarket,billing:LdrPassBilling,source:string,seats=1){
- const quantity=plan==="individual"?1:seats;if(!Number.isSafeInteger(quantity)||(plan==="business"&&(quantity<2||quantity>10000)))fail("Quantidade de colaboradores inválida.");
+ const quantity=plan==="individual"?1:seats;if(!Number.isSafeInteger(quantity)||(plan==="business"&&(quantity<5||quantity>10000)))fail("Quantidade de colaboradores inválida.");
  const customer=await customerFor(u,e);const {data:existing}=await db.from("ldr_pass_subscriptions").select("id,status").eq("customer_id",customer.id).in("status",["active","trialing","past_due","unpaid","paused","incomplete"]).limit(1).maybeSingle();if(existing)fail("Você já possui um LDR ONE em andamento.");
  const p=ldrPassPrice(plan,market,billing),safeSource=["academy","ldrrhestrategia","ecossistema"].includes(source)?source:"ecossistema";
  const {data:row,error}=await db.from("ldr_pass_subscriptions").insert({customer_id:customer.id,plan,market,currency:p.currency,billing_cycle:billing,amount_cents:p.amount*quantity,status:"pending",source:safeSource,ldr_one_seats:quantity,ldr_one_offer:plan}).select("id").single();if(error||!row)fail("Não foi possível preparar o LDR ONE.");
@@ -25,4 +25,37 @@ export async function createLdrPassCheckout(u:string,e:string|null,plan:LdrPassP
  const response=await fetch("https://api.stripe.com/v1/checkout/sessions",{method:"POST",headers:{Authorization:`Bearer ${secret}`,"Content-Type":"application/x-www-form-urlencoded","Idempotency-Key":`ldr-one-live-${row.id}`},body:q});const session=await response.json() as any;
  if(!response.ok||session.livemode!==true||!/^cs_live_[A-Za-z0-9]+$/.test(session.id??"")||typeof session.url!=="string"){await db.from("ldr_pass_subscriptions").delete().eq("id",row.id);fail(session?.error?.message||"Não foi possível abrir o checkout LIVE.");}
  await db.from("ldr_pass_subscriptions").update({stripe_checkout_session_id:session.id,updated_at:new Date().toISOString()}).eq("id",row.id);return {url:session.url}
+}
+
+/**
+ * Customer-requested cancellation of LDR ONE renewal, effective at period end.
+ * Authenticated caller ownership is resolved server-side; no subscription IDs are accepted from clients.
+ * This method is inert unless invoked from a trusted customer action after deployment.
+ */
+export async function cancelLdrPassRenewal(userId:string,email:string|null){
+ const customer=await customerFor(userId,email);
+ const {data:row,error:lookupError}=await db.from("ldr_pass_subscriptions")
+  .select("id,status,stripe_subscription_id,cancel_at_period_end")
+  .eq("customer_id",customer.id).in("status",["active","trialing","past_due"])
+  .order("created_at",{ascending:false}).limit(1).maybeSingle();
+ if(lookupError)fail("Não foi possível consultar a assinatura.");
+ if(!row?.id||!/^sub_[A-Za-z0-9]+$/.test(row.stripe_subscription_id??""))fail("Assinatura renovável não encontrada.");
+ if(row.cancel_at_period_end===true)return {ok:true,cancelAtPeriodEnd:true,alreadyScheduled:true};
+ const secret=process.env["STRIPE_SECRET_KEY"];
+ if(!secret?.startsWith("sk_live_"))fail("Gestão de cancelamento indisponível.");
+ const body=new URLSearchParams({cancel_at_period_end:"true"});
+ const response=await fetch("https://api.stripe.com/v1/subscriptions/"+encodeURIComponent(row.stripe_subscription_id),{
+  method:"POST",headers:{Authorization:"Bearer "+secret,"Content-Type":"application/x-www-form-urlencoded"},
+  body,signal:AbortSignal.timeout(10000),
+ });
+ const subscription=await response.json() as any;
+ if(!response.ok||subscription.id!==row.stripe_subscription_id||subscription.livemode!==true||subscription.cancel_at_period_end!==true)
+  fail("Stripe não confirmou o cancelamento da renovação.");
+ const periodEnd=Number(subscription.current_period_end);
+ const patch:Record<string,unknown>={cancel_at_period_end:true,updated_at:new Date().toISOString()};
+ if(Number.isFinite(periodEnd)&&periodEnd>0)patch["current_period_end"]=new Date(periodEnd*1000).toISOString();
+ const {error:updateError}=await db.from("ldr_pass_subscriptions").update(patch)
+  .eq("id",row.id).eq("customer_id",customer.id);
+ if(updateError)fail("A renovação foi cancelada no Stripe, mas a atualização local falhou. Contacte o suporte.");
+ return {ok:true,cancelAtPeriodEnd:true,alreadyScheduled:false};
 }

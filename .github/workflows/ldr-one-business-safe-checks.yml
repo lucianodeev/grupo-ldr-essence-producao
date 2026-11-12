@@ -1,0 +1,86 @@
+name: LDR ONE Business safe checks
+
+on:
+  pull_request:
+    paths:
+      - "apps/painel-ldr/src/lib/ldr-pass.server.ts"
+      - "apps/painel-ldr/src/lib/ldr-pass.functions.ts"
+      - "apps/painel-ldr/src/routes/ldr-pass.tsx"
+      - "apps/painel-ldr/src/routes/__root.tsx"
+      - "apps/painel-ldr/tests/ldr-one-business-min-seats.test.cjs"
+      - ".github/workflows/ldr-one-business-safe-checks.yml"
+      - "apps/painel-ldr/tests/ldr-one-cancellation.test.cjs"
+      - "apps/painel-ldr/src/routes/_clientarea.cliente.ldr-pass.tsx"
+      - "apps/painel-ldr/tests/ldr-one-postgres-lifecycle.sql"
+      - "docs/ldr-pass/sql/ldr-one-sandbox-schema-REVIEW-ONLY.sql"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ldr-one-business-unit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      CI: "true"
+    steps:
+      - name: Checkout PR source
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Check five-seat minimum (no network calls)
+        run: node --test apps/painel-ldr/tests/ldr-one-business-min-seats.test.cjs
+      - name: Check checkout resume (mock Stripe)
+        run: node --test apps/painel-ldr/tests/ldr-one-checkout-resume.test.cjs
+      - name: Exercise isolated entitlement, checkout and webhook lifecycle (mocks only)
+        run: node --experimental-strip-types --test apps/painel-ldr/src/lib/ldr-one-sandbox.test.ts apps/painel-ldr/src/lib/ldr-one-checkout-sandbox.test.ts apps/painel-ldr/src/lib/ldr-one-events-sandbox.test.ts
+      - name: Exercise isolated seat assignment and revocation (mocks only)
+        run: node --test scripts/ldr-one-sandbox-access.test.mjs scripts/ldr-one-sandbox-revoke-seat.test.mjs scripts/ldr-one-sandbox-seat-roster.test.mjs
+      - name: Exercise isolated Stripe event and checkout integration guards (mocks only)
+        run: node --test scripts/ldr-one-sandbox-webhook-bridge.test.mjs scripts/ldr-one-sandbox-checkout-service.test.mjs scripts/ldr-one-sandbox-checkout-integration.test.mjs scripts/ldr-one-sandbox-real-webhook-lifecycle.test.mjs
+      - name: Verify authenticated cancellation with Stripe and database mocks
+        run: node --test apps/painel-ldr/tests/ldr-one-cancellation.test.cjs
+      - name: Check application TypeScript and production build (not deployed)
+        run: npm run build:painel
+
+  ldr-one-real-db-isolated:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: ldr_test
+          POSTGRES_PASSWORD: ci_local_only
+          POSTGRES_DB: ldr_one_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ldr_test -d ldr_one_ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      PGHOST: localhost
+      PGPORT: "5432"
+      PGUSER: ldr_test
+      PGPASSWORD: ci_local_only
+      PGDATABASE: ldr_one_ci
+    steps:
+      - uses: actions/checkout@v4
+      - name: Ensure PostgreSQL client available
+        run: command -v psql || (sudo apt-get update -qq && sudo apt-get install -y postgresql-client)
+      - name: Apply sandbox-only schema to ephemeral CI PostgreSQL
+        run: psql -v ON_ERROR_STOP=1 -f docs/ldr-pass/sql/ldr-one-sandbox-schema-REVIEW-ONLY.sql
+      - name: Exercise real PostgreSQL seat, lifecycle and rollback constraints
+        run: psql -v ON_ERROR_STOP=1 -f apps/painel-ldr/tests/ldr-one-postgres-lifecycle.sql
+      - name: Confirm no persistent fixture rows
+        run: |
+          result=$(psql -At -c "SELECT count(*) FROM public.ldr_one_sandbox_subscriptions;")
+          test "$result" = "0"

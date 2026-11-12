@@ -248,7 +248,7 @@ async function setLdrPassSubscription(metadata: Record<string,string>, object: S
   if(!rowId&&!subscriptionId)return false;
   const db=await database(); let status=String(object.status??"pending");
   if(eventType==="checkout.session.completed")status=object.payment_status==="paid"||object.payment_status==="no_payment_required"?"active":"pending";
-  if(eventType==="invoice.payment_succeeded")status="active";
+  if(eventType==="invoice.payment_succeeded"||eventType==="invoice.paid")status="active";
   if(eventType==="invoice.payment_failed")status="past_due";
   if(eventType==="checkout.session.expired"||eventType==="customer.subscription.deleted")status="canceled";
   const allowed=new Set(["pending","active","trialing","past_due","canceled","unpaid","paused","incomplete"]); if(!allowed.has(status))status="incomplete";
@@ -640,7 +640,7 @@ export const Route = createFileRoute("/api/stripe/webhook")({
           // Assinaturas recorrentes são roteadas exclusivamente pelo checkout_kind.
           // Isso impede que um evento de um produto tente atualizar tabelas de outro produto.
           let checkoutKind = metadata["checkout_kind"];
-          if (!checkoutKind && (event.type === "invoice.payment_succeeded" || event.type === "invoice.payment_failed")) {
+          if (!checkoutKind && (event.type === "invoice.payment_succeeded" || event.type === "invoice.paid" || event.type === "invoice.payment_failed")) {
             checkoutKind = (await resolveRecurringCheckoutKind(object)) ?? undefined;
           }
           const recurringSubscriptionEvent =
@@ -653,7 +653,7 @@ export const Route = createFileRoute("/api/stripe/webhook")({
             event.type === "checkout.session.completed" ||
             event.type === "checkout.session.expired";
 
-          if (checkoutKind === "ldr_pass_subscription" && (subscriptionCheckoutEvent || recurringSubscriptionEvent)) {
+          if (checkoutKind === "ldr_pass_subscription" && (subscriptionCheckoutEvent || recurringSubscriptionEvent || event.type === "invoice.paid")) {
             await setLdrPassSubscription(metadata, object, event.type);
           } else if (checkoutKind === "company_subscription" && (subscriptionCheckoutEvent || recurringSubscriptionEvent)) {
             await setCompanySubscription(metadata, object, event.type);
