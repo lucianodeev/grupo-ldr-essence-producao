@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "generate-routes": "npx @tanstack/router-cli@latest generate",
+    "generate-routes": "tsr generate",
     "build": "rm -rf .output .tanstack node_modules/.vite && npm run generate-routes && vite build",
     "build:cloudflare": "CLOUDFLARE=true npm run build",
     "deploy:cloudflare": "npm run build:cloudflare && wrangler deploy",
@@ -18,7 +18,9 @@
     "test:academic": "node --test tests/academic-regressions.test.cjs",
     "test:preview": "node --test tests/unified-preview.test.cjs",
     "build:render": "RENDER=true npm run build",
-    "start:render": "node .output/server/index.mjs"
+    "start:render": "node .output/server/index.mjs",
+    "test:regressions": "node --test tests/*.test.cjs",
+    "test:enterprise-http": "node tests/enterprise-http-smoke.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -81,6 +83,7 @@
     "@cloudflare/vite-plugin": "1.59.0",
     "@eslint/js": "^9.32.0",
     "@netlify/vite-plugin-tanstack-start": "1.3.17",
+    "@tanstack/router-cli": "1.168.0",
     "@types/node": "^22.16.5",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
@@ -91,11 +94,11 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^15.15.0",
+    "nitro": "3.0.260610-beta",
     "prettier": "^3.7.3",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.56.1",
-    "wrangler": "4.138.0",
     "vite": "7.3.2",
-    "nitro": "3.0.260610-beta"
+    "wrangler": "4.138.0"
   }
 }

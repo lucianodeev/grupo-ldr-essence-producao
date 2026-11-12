@@ -34,13 +34,13 @@ async function customerFor(userId: string, email: string | null) {
 
 function productMatches(order: any) {
   const metadata = (order?.metadata ?? {}) as Record<string, unknown>;
-  const key = typeof metadata.product_key === "string" ? metadata.product_key : "";
+  const key = typeof metadata["product_key"] === "string" ? metadata["product_key"] : "";
   return order?.catalog_key === PRODUCT_KEY || key === PRODUCT_KEY || key === TRAINING_SLUG || order?.catalog_key === "combo_empreendedor" || key === "combo_empreendedor";
 }
 
 function projectReviewMatches(order: any) {
   const metadata = (order?.metadata ?? {}) as Record<string, unknown>;
-  const key = typeof metadata.product_key === "string" ? metadata.product_key : "";
+  const key = typeof metadata["product_key"] === "string" ? metadata["product_key"] : "";
   return order?.catalog_key === PROJECT_REVIEW_KEY || key === PROJECT_REVIEW_KEY;
 }
 
@@ -81,8 +81,8 @@ async function provisionFromPaidOrder(customerId: string, order: any) {
   const { error } = await db.rpc("assign_do_mamao_training_enrollment", {
     _customer_id: customerId,
     _checkout_session_id: order.stripe_checkout_session_id ?? null,
-    _payment_intent_id: typeof metadata.stripe_payment_intent_id === "string" ? metadata.stripe_payment_intent_id : null,
-    _price_id: typeof metadata.stripe_price_id === "string" ? metadata.stripe_price_id : null,
+    _payment_intent_id: typeof metadata["stripe_payment_intent_id"] === "string" ? metadata["stripe_payment_intent_id"] : null,
+    _price_id: typeof metadata["stripe_price_id"] === "string" ? metadata["stripe_price_id"] : null,
     _currency: order.currency ?? null,
     _amount_minor: order.amount_cents ?? null,
   });
@@ -149,7 +149,7 @@ export async function getDoMamaoTrainingOffer(userId: string, email: string | nu
 function appOrigin() {
   const request = getRequest();
   const requestUrl = request ? new URL(request.url) : null;
-  return process.env.CLIENT_PANEL_URL?.replace(/\/$/, "") || requestUrl?.origin || "https://ldracademy.online";
+  return process.env["CLIENT_PANEL_URL"]?.replace(/\/$/, "") || requestUrl?.origin || "https://ldracademy.online";
 }
 
 export async function createDoMamaoTrainingCheckout(userId: string, email: string | null, market: Market) {
@@ -168,7 +168,7 @@ export async function createDoMamaoTrainingCheckout(userId: string, email: strin
   }).select("id,order_number").single();
   if (orderError || !order) fail("Não foi possível iniciar o pedido do treinamento.");
 
-  const secret = process.env.STRIPE_SECRET_KEY;
+  const secret = process.env["STRIPE_SECRET_KEY"];
   if (!secret) { await db.from("orders").delete().eq("id", order.id); fail("Pagamento temporariamente indisponível."); }
   const params = new URLSearchParams();
   params.set("mode", "payment");
@@ -207,7 +207,7 @@ export async function createDoMamaoProjectReviewCheckout(userId: string, email: 
   const currency = market === "BR" ? "BRL" : "EUR";
   const { data: order, error: orderError } = await db.from("orders").insert({ order_number: "", customer_id: customer.id, contact_email: customer.email, contact_phone: customer.phone, service_type: "produto_digital", title: PROJECT_REVIEW_TITLE, description: "Crédito para uma nova entrega e avaliação individual de projeto", quantity: 1, amount_cents: amountCents, currency, payment_status: "pendente", status: "novo", priority: "media", catalog_key: PROJECT_REVIEW_KEY, metadata: { product_key: PROJECT_REVIEW_KEY, training_slug: TRAINING_SLUG, market, auth_user_id: userId } }).select("id").single();
   if (orderError || !order) fail("Não foi possível iniciar a compra da nova avaliação.");
-  const secret = process.env.STRIPE_SECRET_KEY;
+  const secret = process.env["STRIPE_SECRET_KEY"];
   if (!secret) { await db.from("orders").delete().eq("id", order.id); fail("Pagamento temporariamente indisponível."); }
   const params = new URLSearchParams();
   params.set("mode", "payment"); params.set("line_items[0][price_data][currency]", currency.toLowerCase()); params.set("line_items[0][price_data][unit_amount]", String(amountCents)); params.set("line_items[0][price_data][product_data][name]", PROJECT_REVIEW_TITLE); params.set("line_items[0][quantity]", "1");
@@ -299,7 +299,7 @@ export async function submitDoMamaoProject(userId: string, email: string | null,
 }
 
 function completeDailyLessons(state: StateRecord) {
-  const activities = (state.dailyActivities && typeof state.dailyActivities === "object" ? state.dailyActivities : {}) as Record<string, any>;
+  const activities = (state["dailyActivities"] && typeof state["dailyActivities"] === "object" ? state["dailyActivities"] : {}) as Record<string, any>;
   let complete = 0;
   for (let day = 1; day <= 90; day++) {
     const value = activities[String(day)] ?? activities[`day_${day}`];
@@ -317,13 +317,13 @@ function completeDailyLessons(state: StateRecord) {
 
 function countTrainingProgress(state: StateRecord) {
   const dailyCount = completeDailyLessons(state);
-  if (state.dailyActivities && typeof state.dailyActivities === "object") return Math.max(0, Math.min(100, Math.round((dailyCount / 90) * 100)));
-  const guided = (state.guidedAnswers && typeof state.guidedAnswers === "object" ? state.guidedAnswers : {}) as Record<string, unknown>;
+  if (state["dailyActivities"] && typeof state["dailyActivities"] === "object") return Math.max(0, Math.min(100, Math.round((dailyCount / 90) * 100)));
+  const guided = (state["guidedAnswers"] && typeof state["guidedAnswers"] === "object" ? state["guidedAnswers"] : {}) as Record<string, unknown>;
   const guidedCount = Object.values(guided).filter((value) => typeof value === "string" && value.trim().length > 0).length;
   if (guidedCount > 0) return Math.max(0, Math.min(100, Math.round((Math.min(9, guidedCount) / 9) * 100)));
-  const answers = (state.answers && typeof state.answers === "object" ? state.answers : {}) as Record<string, unknown>;
-  const quiz = (state.quiz && typeof state.quiz === "object" ? state.quiz : {}) as Record<string, unknown>;
-  const reflections = (state.reflections && typeof state.reflections === "object" ? state.reflections : {}) as Record<string, unknown>;
+  const answers = (state["answers"] && typeof state["answers"] === "object" ? state["answers"] : {}) as Record<string, unknown>;
+  const quiz = (state["quiz"] && typeof state["quiz"] === "object" ? state["quiz"] : {}) as Record<string, unknown>;
+  const reflections = (state["reflections"] && typeof state["reflections"] === "object" ? state["reflections"] : {}) as Record<string, unknown>;
   let written = 0; for (const value of Object.values(reflections)) if (typeof value === "string" && value.trim().length >= 40) written++;
   const done = Math.min(60, Object.keys(answers).length) + Math.min(36, Object.keys(quiz).length) + Math.min(30, written);
   return Math.max(0, Math.min(100, Math.round((done / 126) * 100)));
@@ -331,7 +331,7 @@ function countTrainingProgress(state: StateRecord) {
 
 export async function saveDoMamaoTrainingState(userId: string, email: string | null, state: StateRecord) {
   const customer = await customerFor(userId, email); const training = await trainingRow(); let currentEnrollment = await enrollment(customer.id, training.id); if (!currentEnrollment) currentEnrollment = await ensureOwnerEnrollment(customer.id, training.id, email, userId); if (!currentEnrollment) fail("Matrícula não encontrada.");
-  const activitiesForValidation=(state?.dailyActivities&&typeof state.dailyActivities==="object"?state.dailyActivities:{}) as Record<string,any>;
+  const activitiesForValidation=(state?.["dailyActivities"]&&typeof state["dailyActivities"]==="object"?state["dailyActivities"]:{}) as Record<string,any>;
   for(const day of Object.values(activitiesForValidation)){
     if(!day||typeof day!=="object")continue;
     const written=day.writtenAnswers&&typeof day.writtenAnswers==="object"?day.writtenAnswers:{};
@@ -342,7 +342,7 @@ export async function saveDoMamaoTrainingState(userId: string, email: string | n
   let completedAt = currentEnrollment.completed_at as string | null; let certificateAvailableAt = currentEnrollment.certificate_available_at as string | null;
   const { count: approvedReviews } = await db.from("training_project_submissions").select("id", { count:"exact", head:true }).eq("training_id", training.id).eq("customer_id", customer.id).eq("status", "approved").lte("submission_number", 3);
   if (!completedAt && progress >= 100 && Date.now() >= eligibleDay && Number(approvedReviews ?? 0) >= 3) { completedAt = new Date().toISOString(); certificateAvailableAt = new Date(Date.now() + 15 * 86400000).toISOString(); }
-  const currentPanel = typeof state.lastPanel === "string" ? state.lastPanel.slice(0, 80) : "inicio";
+  const currentPanel = typeof state["lastPanel"] === "string" ? state["lastPanel"].slice(0, 80) : "inicio";
   const { error } = await db.from("training_state").upsert({ training_id: training.id, customer_id: customer.id, state, progress_percent: progress, current_panel: currentPanel, completed_at: completedAt, certificate_available_at: certificateAvailableAt, updated_at: new Date().toISOString() }, { onConflict: "training_id,customer_id" }); if (error) fail("Não foi possível sincronizar seu progresso.");
   await db.from("training_enrollments").update({ progress_percent: progress, completed_at: completedAt, certificate_available_at: certificateAvailableAt }).eq("id", currentEnrollment.id);
   await db.from("library_progress").upsert({ customer_id: customer.id, product_key: TRAINING_SLUG, progress_percent: progress, current_location: currentPanel, updated_at: new Date().toISOString() }, { onConflict: "customer_id,product_key" });

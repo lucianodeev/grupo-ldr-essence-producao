@@ -1,3 +1,4 @@
+import { curriculumItem } from "@/lib/curriculum-item";
 import type { PsychoanalysisModule } from "@/content/psychoanalysis-curriculum";
 
 export type AcademicLevel="Fundamentos"|"Intermediário"|"Avançado"|"Pesquisa e Clínica Avançada"|"Especialista Internacional";
@@ -39,7 +40,7 @@ export function getAcademicLevel(moduleIndex:number):AcademicLevel{
 export function enhancePsychoanalysisCurriculum(modules:PsychoanalysisModule[]):PsychoanalysisModule[]{
   return modules.map((module,moduleIndex)=>{
     const level=getAcademicLevel(moduleIndex);
-    const rigor=rigorByPosition[moduleIndex]??rigorByPosition[rigorByPosition.length-1];
+    const rigor=curriculumItem(rigorByPosition, moduleIndex);
     const lessons=module.lessons.map((lesson,lessonIndex)=>({
       ...lesson,
       content:[

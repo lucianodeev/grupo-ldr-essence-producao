@@ -1,3 +1,4 @@
+import { curriculumItem } from "@/lib/curriculum-item";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
@@ -21,7 +22,7 @@ function Business24Training() {
   const [text, setText] = useState("");
   const [url, setUrl] = useState("");
   const completed: string[] = data?.completedLessons ?? [];
-  const current = all.find((x) => x.id === lessonId) ?? all[0];
+  const current = curriculumItem(all, all.findIndex((x) => x.id === lessonId));
   const currentIndex = Math.max(0, all.findIndex((x) => x.id === current?.id));
   const hasPrevious = currentIndex > 0;
   const hasNext = currentIndex >= 0 && currentIndex < all.length - 1;
@@ -50,11 +51,11 @@ function Business24Training() {
   };
   const previous = () => {
     if (!hasPrevious) return;
-    setLessonId(all[currentIndex - 1].id);
+    setLessonId(curriculumItem(all,currentIndex-1).id);
   };
   const next = () => {
     if (!hasNext) return;
-    setLessonId(all[currentIndex + 1].id);
+    setLessonId(curriculumItem(all,currentIndex+1).id);
   };
 
   return <div className="min-h-screen bg-[#fff8ef] text-[#071426]">

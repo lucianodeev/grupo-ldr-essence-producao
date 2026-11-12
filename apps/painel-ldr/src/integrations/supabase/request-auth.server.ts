@@ -82,7 +82,7 @@ export async function resolveRequestAuth() {
         return {
           authenticated: true as const,
           userId: String(data.claims.sub),
-          email: typeof claims.email === "string" ? claims.email : null,
+          email: typeof claims["email"] === "string" ? claims["email"] : null,
           claims,
           supabase,
           source: "bearer" as const,

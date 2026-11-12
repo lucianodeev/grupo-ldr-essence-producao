@@ -59,7 +59,8 @@ const COPY = {
   }
 } as const;
 
-// Paid formations previously sold at R$299.99 are now LDR ONE-only and on-demand.\nexport function TrainingLaunchPage() {
+// Paid formations previously sold at R$299.99 are now LDR ONE-only and on-demand.
+export function TrainingLaunchPage() {
   const { locale } = useI18n();
   const c = COPY[locale];
   return <div className="min-h-screen bg-[#fffaf2] text-[#33111c]">

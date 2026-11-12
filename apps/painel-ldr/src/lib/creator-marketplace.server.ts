@@ -175,8 +175,8 @@ export async function updateAdminCreatorProduct(
     admin_notes: cleanText(input.adminNotes, 5000) || null,
     updated_at: new Date().toISOString(),
   };
-  if (input.suggestedPriceCents !== undefined) patch.suggested_price_cents = input.suggestedPriceCents == null ? null : Math.max(0, Math.round(Number(input.suggestedPriceCents)));
-  if (input.status === "published") patch.published_at = new Date().toISOString();
+  if (input.suggestedPriceCents !== undefined) patch["suggested_price_cents"] = input.suggestedPriceCents == null ? null : Math.max(0, Math.round(Number(input.suggestedPriceCents)));
+  if (input.status === "published") patch["published_at"] = new Date().toISOString();
   const { error } = await db.from("creator_product_submissions").update(patch).eq("id", input.id);
   if (error) fail("Não foi possível atualizar a submissão.");
   return { ok: true as const };

@@ -149,9 +149,9 @@ export async function saveProfessionalOnboarding(userId: string, email: string |
   // The country step runs before identification fields are shown.
   if (step <= 2) {
     const accountPatch: Record<string, unknown> = { updated_at: new Date().toISOString() };
-    if (input.countryCode) accountPatch.country_code = input.countryCode.toUpperCase();
-    if (input.currency) accountPatch.preferred_currency = input.currency;
-    if (!account.onboarding_completed) accountPatch.onboarding_step = step;
+    if (input.countryCode) accountPatch["country_code"] = input.countryCode.toUpperCase();
+    if (input.currency) accountPatch["preferred_currency"] = input.currency;
+    if (!account.onboarding_completed) accountPatch["onboarding_step"] = step;
     const { error } = await db.from("professional_accounts").update(accountPatch).eq("id", account.id);
     if (error) throw error;
     return getProfessionalDashboard(userId, email);
@@ -172,16 +172,16 @@ export async function saveProfessionalOnboarding(userId: string, email: string |
   const merged={...(current??{}),...payload};
   const complete = alreadyApproved || Boolean(account.onboarding_completed) || Boolean(merged.photo_url && String(merged.display_name||"").trim() && String(merged.professional_title||"").trim() && merged.category_id && String(merged.city||"").trim() && Array.isArray(merged.languages) && merged.languages.length && String(merged.about||"").trim() && String(merged.experience_summary||"").trim() && String(merged.education_summary||"").trim() && Array.isArray(merged.specialties) && merged.specialties.length && (merged.online_enabled || merged.in_person_enabled));
   const accountPatch: Record<string,unknown>={updated_at:new Date().toISOString()};
-  if(input.countryCode)accountPatch.country_code=input.countryCode.toUpperCase(); if(input.currency)accountPatch.preferred_currency=input.currency;
-  if(alreadyApproved){accountPatch.onboarding_step=7;accountPatch.onboarding_completed=true;}
+  if(input.countryCode)accountPatch["country_code"]=input.countryCode.toUpperCase(); if(input.currency)accountPatch["preferred_currency"]=input.currency;
+  if(alreadyApproved){accountPatch["onboarding_step"]=7;accountPatch["onboarding_completed"]=true;}
   else if(step>=7 && complete){
-    accountPatch.onboarding_step=7; accountPatch.onboarding_completed=true; accountPatch.status="active";
+    accountPatch["onboarding_step"]=7; accountPatch["onboarding_completed"]=true; accountPatch["status"]="active";
     const publishedAt=new Date().toISOString();
     Object.assign(payload,{compliance_status:"approved",profile_status:"active",is_public:true});
     const {error:publishError}=await db.from("professional_profiles").update({compliance_status:"approved",profile_status:"active",is_public:true,updated_at:publishedAt}).eq("professional_account_id",account.id);
     if(publishError)throw publishError;
   }
-  else {accountPatch.onboarding_step=Math.min(step,6);accountPatch.onboarding_completed=false;accountPatch.status="incomplete";}
+  else {accountPatch["onboarding_step"]=Math.min(step,6);accountPatch["onboarding_completed"]=false;accountPatch["status"]="incomplete";}
   const { error: accountError } = await db.from("professional_accounts").update(accountPatch).eq("id",account.id);
   if (accountError) throw accountError;
   if(step>=7 && !complete) fail("Complete 100% do perfil antes de publicar. A foto é obrigatória; vídeo, agenda e serviços são opcionais para a completude.");

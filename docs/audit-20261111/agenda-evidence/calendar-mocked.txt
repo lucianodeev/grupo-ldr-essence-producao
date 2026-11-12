@@ -1,0 +1,25 @@
+✔ lost DB write after Google create recovers remote event without a second create (8.29883ms)
+✔ lease denial never calls Google create (3.351848ms)
+✔ unpaid appointment never creates an external invitation (5.170317ms)
+✔ lost lease release is not reported as synchronized (3.320492ms)
+✔ cancellation recovers orphan event by appointment marker (4.238206ms)
+✔ manual fallback cancels the previous external event first (5.180217ms)
+✔ missing credentials fail before network (4.99895ms)
+✔ create uses stable event ID, private UUID marker and safe payload (8.597021ms)
+✔ lost create response followed by 409 recovers the same event (8.924514ms)
+✔ reschedule PATCH targets same event without new conference request (2.087772ms)
+✔ cancel idempotent on 404, 410 and 204 (2.322258ms)
+✔ freeBusy missing calendar or per-calendar errors fail closed (3.295094ms)
+✔ overlapping second event is not hidden by own busy interval (5.405049ms)
+✔ own event alone allows rescheduling (0.654336ms)
+✔ gateway errors return short codes without remote body or credentials (2.870276ms)
+✔ network and malformed JSON failures are recoverable errors (1.264447ms)
+✔ deleted events are not reused (0.835363ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 757.354321

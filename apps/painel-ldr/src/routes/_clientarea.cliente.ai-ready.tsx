@@ -96,7 +96,7 @@ function AiReadyClient(){
  <h2 className="mt-2 font-serif text-2xl font-bold text-[#0b2341]">Projeto Final — Mapa de Maturidade em IA</h2>
  <p className="mt-2 text-sm leading-6 text-slate-600">Escolha um uso real ou planejado de IA na organização. O objetivo é sair do curso com um primeiro mapa de governança aplicável ao trabalho.</p>
  <div className="mt-5 grid gap-4 md:grid-cols-2">
- {[
+ {([
  ["process","Ferramenta ou processo","Ex.: IA para apoiar respostas ao cliente"],
  ["purpose","Finalidade","Que problema empresarial este uso pretende resolver?"],
  ["data","Dados envolvidos","Que tipos de informação entram ou podem entrar na ferramenta?"],
@@ -104,7 +104,7 @@ function AiReadyClient(){
  ["owner","Responsável humano","Quem responde pela revisão e pela decisão final?"],
  ["risks","Riscos principais","O que pode dar errado? Considere erro, viés, privacidade, segurança e impacto."],
  ["controls","Controles e próximos passos","Que revisão, limite, autorização, registro ou monitoramento será adotado?"],
- ].map(([key,label,placeholder])=><label key={key} className={key==="controls"?"md:col-span-2":""}><span className="text-sm font-black text-[#0b2341]">{label}</span><textarea value={project[key as keyof typeof project]} onChange={e=>{setProject(v=>({...v,[key]:e.target.value}));setProjectDone(false)}} placeholder={placeholder} className="mt-2 min-h-24 w-full rounded-xl border bg-white p-3 text-sm outline-none focus:border-indigo-500"/></label>)}
+ ] as const).map(([key,label,placeholder])=><label key={key} className={key==="controls"?"md:col-span-2":""}><span className="text-sm font-black text-[#0b2341]">{label}</span><textarea value={project[key as keyof typeof project]} onChange={e=>{setProject(v=>({...v,[key]:e.target.value}));setProjectDone(false)}} placeholder={placeholder} className="mt-2 min-h-24 w-full rounded-xl border bg-white p-3 text-sm outline-none focus:border-indigo-500"/></label>)}
  </div>
  <button type="button" disabled={!quizResult?.passed||Object.values(project).some(v=>v.trim().length<8)} onClick={async()=>{localStorage.setItem("ai-ready-2026-project",JSON.stringify({...project,completedAt:new Date().toISOString()}));setProjectDone(true);await saveProgressFn({data:{productKey:"ai_ready_2026",progressPercent:100,currentLocation:"projeto-final-concluido"}})}} className="mt-5 min-h-12 rounded-xl bg-indigo-800 px-6 font-black text-white disabled:cursor-not-allowed disabled:opacity-40">Concluir meu Mapa de Maturidade</button>
  {!quizResult?.passed&&<p className="mt-3 text-xs text-slate-500">O projeto final é liberado após aprovação no Quiz Final.</p>}

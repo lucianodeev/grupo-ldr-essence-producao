@@ -4,6 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
 import { getMyAccess, listTeam } from "@/lib/access.functions";
+import { listStaffAppointmentsFn, listStaffAppointmentEventsFn } from "@/lib/agenda-admin.functions";
 import { listSessionCredits } from "@/lib/session-credits.functions";
 
 export type Customer = Tables<"customers">;
@@ -226,31 +227,14 @@ export function useCatalogAll() {
 }
 
 export function useAppointments() {
-  return useQuery({
-    queryKey: ["appointments"],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("appointments")
-        .select("*")
-        .order("starts_at", { ascending: true, nullsFirst: false });
-      return guard<Appointment[]>(data, error, "Não foi possível carregar a agenda.");
-    },
-  });
+  const fetchAppointments = useServerFn(listStaffAppointmentsFn);
+  return useQuery({queryKey:["appointments"],queryFn:()=>fetchAppointments({})});
 }
 
 export function useAppointmentEvents(appointmentId: string | null) {
-  return useQuery({
-    queryKey: ["appointment-events", appointmentId],
-    enabled: Boolean(appointmentId),
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("appointment_events")
-        .select("*")
-        .eq("appointment_id", appointmentId!)
-        .order("created_at", { ascending: false });
-      return guard<AppointmentEvent[]>(data, error, "Não foi possível carregar o histórico.");
-    },
-  });
+  const fetchEvents = useServerFn(listStaffAppointmentEventsFn);
+  return useQuery({queryKey:["appointment-events",appointmentId],enabled:Boolean(appointmentId),
+    queryFn:()=>fetchEvents({data:{appointmentId:appointmentId!}})});
 }
 
 export function useSessionCredits() {

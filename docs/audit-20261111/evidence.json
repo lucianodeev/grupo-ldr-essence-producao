@@ -1,0 +1,80 @@
+{
+  "date": "2026-11-11",
+  "branch": "feat/central-empresas-ldr",
+  "pull_request": 273,
+  "initial_commit": "2988c658bd428752644f7070e2f3d4c6d1434361",
+  "initial_typecheck_workflow_run": 43025410002,
+  "initial_errors": 2061,
+  "initial_codes": {
+    "TS4111": 1339,
+    "TS2345": 86,
+    "TS2604": 3,
+    "TS2786": 3,
+    "TS2322": 102,
+    "TS2367": 8,
+    "TS18048": 265,
+    "TS2339": 81,
+    "TS2741": 19,
+    "TS2304": 15,
+    "TS7006": 20,
+    "TS2551": 7,
+    "TS2769": 60,
+    "TS18047": 26,
+    "TS2375": 8,
+    "TS2488": 1,
+    "TS2379": 2,
+    "TS2353": 4,
+    "TS2464": 1,
+    "TS18046": 3,
+    "TS2532": 7,
+    "TS2352": 1
+  },
+  "final_errors": 20,
+  "final_codes": {
+    "TS2322": 6,
+    "TS2345": 4,
+    "TS2353": 2,
+    "TS2339": 7,
+    "TS2698": 1
+  },
+  "strict_typecheck_passed": false,
+  "render_build_passed": true,
+  "unit_tests": {
+    "passed": 59,
+    "failed": 0
+  },
+  "regressions": {
+    "passed": 139,
+    "failed": 0
+  },
+  "sandbox_units": {
+    "passed": 12,
+    "failed": 0
+  },
+  "sandbox_integration_guards": {
+    "passed": 109,
+    "failed": 0
+  },
+  "browser_visual_qa": "blocked: missing headless shell, syscall restriction; cloud browser cannot reach local server",
+  "production_changes": false,
+  "merge": false,
+  "real_transactions": false,
+  "validated_code_commit": "9f88a543ec458e8e89361915dca0706fc9664762",
+  "http_smoke": {
+    "enterprise_routes_passed": 5,
+    "http_assets_passed": 16,
+    "registered_internal_targets": 30,
+    "live_form_submissions": 0
+  },
+  "remote_central_validation": {
+    "run_id": 43036549729,
+    "job_id": 130576767799,
+    "type_errors": 20,
+    "build": "success",
+    "unit_tests": 59,
+    "regressions": 139,
+    "http_smoke": "success",
+    "conclusion": "failure: strict typecheck gate enforced"
+  },
+  "package_lock_dry_run": "npm ci --ignore-scripts --dry-run --no-audit --no-fund: success"
+}

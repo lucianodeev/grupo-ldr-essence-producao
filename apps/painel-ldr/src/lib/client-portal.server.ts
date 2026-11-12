@@ -15,6 +15,7 @@ export type ClientCustomer = {
   fullName: string;
   email: string | null;
   phone: string | null;
+  country: string | null;
 };
 
 export type ClientContext =
@@ -28,6 +29,7 @@ type CustomerLinkRow = {
   email: string | null;
   phone: string | null;
   portal_active: boolean;
+  country?: string | null;
 };
 
 function linkedCustomerContext(customer: CustomerLinkRow): ClientContext {
@@ -39,6 +41,7 @@ function linkedCustomerContext(customer: CustomerLinkRow): ClientContext {
       fullName: customer.full_name,
       email: customer.email,
       phone: customer.phone,
+      country: customer.country ?? null,
     },
   };
 }
@@ -62,7 +65,7 @@ export async function resolveClient(userId: string, email: string | null): Promi
 
   const { data: linked, error: linkedError } = await supabaseAdmin
     .from("customers")
-    .select("id, full_name, email, phone, portal_active")
+    .select("id, full_name, email, phone, portal_active, country")
     .eq("auth_user_id", userId)
     .maybeSingle();
 
@@ -75,7 +78,7 @@ export async function resolveClient(userId: string, email: string | null): Promi
   if (mail) {
     const { data: byEmail, error: byEmailError } = await supabaseAdmin
       .from("customers")
-      .select("id, full_name, email, phone, portal_active, auth_user_id")
+      .select("id, full_name, email, phone, portal_active, country, auth_user_id")
       .ilike("email", mail)
       .is("auth_user_id", null)
       .maybeSingle();
@@ -88,7 +91,7 @@ export async function resolveClient(userId: string, email: string | null): Promi
         .update({ auth_user_id: userId, portal_linked_at: new Date().toISOString() })
         .eq("id", byEmail.id)
         .is("auth_user_id", null)
-        .select("id, full_name, email, phone, portal_active")
+        .select("id, full_name, email, phone, portal_active, country")
         .maybeSingle();
 
       if (bindError) fail("Não foi possível vincular o acesso do cliente.");
@@ -109,7 +112,7 @@ export async function resolveClient(userId: string, email: string | null): Promi
         portal_linked_at: new Date().toISOString(),
         source: "portal_auto",
       })
-      .select("id, full_name, email, phone, portal_active")
+      .select("id, full_name, email, phone, portal_active, country")
       .maybeSingle();
 
     if (created) {
@@ -120,7 +123,7 @@ export async function resolveClient(userId: string, email: string | null): Promi
     if (createError?.code === "23505") {
       const { data: concurrentLink, error: concurrentLinkError } = await supabaseAdmin
         .from("customers")
-        .select("id, full_name, email, phone, portal_active")
+        .select("id, full_name, email, phone, portal_active, country")
         .eq("auth_user_id", userId)
         .maybeSingle();
       if (concurrentLinkError) fail("Não foi possível validar o acesso do cliente.");
@@ -241,7 +244,7 @@ export async function getClientOverview(userId: string, email: string | null) {
     supabaseAdmin
       .from("mentorships")
       .select(
-        "id, program_name, status, payment_status, scheduled_at, goal, client_summary, next_steps, created_at",
+        "id, customer_id, program_name, status, payment_status, scheduled_at, goal, client_summary, next_steps, created_at",
       )
       .eq("customer_id", customer.id)
       .order("created_at", { ascending: false }),
@@ -285,47 +288,50 @@ async function listClientDeliveries(customerId: string, orderIds: string[]) {
  * 'manual'). Sem agendamento vinculado ou sem linha de sincronização, o link
  * nunca é exposto. A propriedade já foi garantida pelo chamador.
  */
-async function listClientSessions(mentorships: { id: string; payment_status: string }[]) {
+async function listClientSessions(mentorships: { id: string; payment_status: string; customer_id?: string | null }[]) {
   const ids = mentorships.map((m) => m.id);
   if (!ids.length) return [];
-  const paid = new Set(mentorships.filter((m) => m.payment_status === "pago").map((m) => m.id));
 
-  const { data } = await supabaseAdmin
+  const enabled = process.env["AGENDA_INTEGRATION_ENABLED"] === "true";
+  const { data, error } = await supabaseAdmin
     .from("mentorship_sessions")
     .select(
-      "id, mentorship_id, appointment_id, title, session_number, scheduled_at, duration_minutes, meeting_url, status, client_notes, confirmed_at",
+      enabled
+        ? "id, mentorship_id, title, session_number, scheduled_at, duration_minutes, meeting_url, status, client_notes, appointment_id, confirmed_at"
+        : "id, mentorship_id, title, session_number, scheduled_at, duration_minutes, meeting_url, status, client_notes",
     )
     .in("mentorship_id", ids)
     .order("scheduled_at", { ascending: true, nullsFirst: false });
 
-  const appointmentIds = (data ?? [])
-    .map((s) => s.appointment_id)
-    .filter((id): id is string => Boolean(id));
+  if (error) fail("Não foi possível carregar as sessões.");
 
-  const readyAppointments = new Set<string>();
-  if (appointmentIds.length) {
-    const { data: syncRows } = await supabaseAdmin
-      .from("appointment_calendar_sync")
-      .select("appointment_id, sync_status")
-      .in("appointment_id", appointmentIds);
-    for (const row of syncRows ?? []) {
-      if (row.sync_status === "sincronizado" || row.sync_status === "manual") {
-        readyAppointments.add(row.appointment_id);
-      }
-    }
-  }
-
-  return (data ?? []).map((s) => ({
-    ...s,
-    meeting_url:
-      paid.has(s.mentorship_id) &&
-      s.status === "agendada" &&
-      Boolean(s.confirmed_at) &&
-      Boolean(s.appointment_id) &&
-      readyAppointments.has(s.appointment_id as string)
-        ? s.meeting_url
-        : null,
-  }));
+  const sessions = (data ?? []) as unknown as Array<{
+    id: string; mentorship_id: string; title: string; session_number: number | null;
+    scheduled_at: string | null; duration_minutes: number; meeting_url: string | null;
+    status: string; client_notes: string | null; appointment_id?: string | null; confirmed_at?: string | null;
+  }>;
+  if (!enabled) return sessions.map(s => ({...s, appointment_id: null, confirmed_at: null, meeting_url: null}));
+  const linkedIds = sessions.flatMap(s => s.appointment_id ? [s.appointment_id] : []);
+  const [appointments, syncs] = linkedIds.length ? await Promise.all([
+    supabaseAdmin.from("appointments").select("id,customer_id,order_id,status,meeting_url,consumes_credit").in("id",linkedIds),
+    supabaseAdmin.from("appointment_calendar_sync").select("appointment_id,sync_status").in("appointment_id",linkedIds),
+  ]) : [{data: [],error: null},{data: [],error: null}];
+  if (appointments.error || syncs.error) fail("Não foi possível verificar a videochamada.");
+  const orderIds = (appointments.data ?? []).flatMap(a => a.order_id ? [a.order_id] : []);
+  const orders = orderIds.length ? await supabaseAdmin.from("orders").select("id,customer_id,payment_status").in("id",orderIds) : {data: [],error: null};
+  if (orders.error) fail("Não foi possível verificar o pagamento.");
+  return sessions.map(session => {
+    const parent = mentorships.find(m => m.id === session.mentorship_id);
+    const appointment = (appointments.data ?? []).find(a => a.id === session.appointment_id);
+    const sync = (syncs.data ?? []).find(s => s.appointment_id === session.appointment_id);
+    const order = (orders.data ?? []).find(o => o.id === appointment?.order_id);
+    const eligible = appointment && parent?.customer_id === appointment.customer_id &&
+      (order ? order.payment_status === "pago" && order.customer_id === appointment.customer_id : !appointment.order_id && !appointment.consumes_credit);
+    const ready = eligible && session.confirmed_at && appointment.status === "confirmada" &&
+      ["manual","sincronizado"].includes(sync?.sync_status ?? "");
+    return {...session, appointment_id: session.appointment_id ?? null, confirmed_at: session.confirmed_at ?? null,
+      meeting_url: ready ? appointment.meeting_url : null};
+  });
 }
 
 async function listClientHistory(orderIds: string[], limit: number) {
@@ -390,7 +396,7 @@ export async function getClientMentorship(userId: string, email: string | null) 
   const { data: mentorships } = await supabaseAdmin
     .from("mentorships")
     .select(
-      "id, program_name, status, payment_status, scheduled_at, goal, client_summary, next_steps, created_at",
+      "id, customer_id, program_name, status, payment_status, scheduled_at, goal, client_summary, next_steps, created_at",
     )
     .eq("customer_id", customer.id)
     .order("created_at", { ascending: false });
@@ -497,10 +503,14 @@ export async function approveDelivery(userId: string, email: string | null, deli
   const delivery = await loadOwnedDelivery(customer.id, deliveryId);
   const now = new Date().toISOString();
 
-  await supabaseAdmin
+  const { data: approved, error: approvalError } = await supabaseAdmin
     .from("deliveries")
-    .update({ status: "aprovada", approved_at: now, needs_client_approval: false })
-    .eq("id", delivery.id);
+    .update({ status: "entregue", approved_at: now, needs_client_approval: false })
+    .eq("id", delivery.id)
+    .eq("needs_client_approval", true)
+    .select("id")
+    .maybeSingle();
+  if (approvalError || !approved) fail("Entrega não está disponível para aprovação.");
 
   await supabaseAdmin.from("delivery_events").insert({
     delivery_id: delivery.id,
@@ -538,14 +548,18 @@ export async function requestDeliveryAdjustment(
 
   const delivery = await loadOwnedDelivery(customer.id, input.deliveryId);
 
-  await supabaseAdmin
+  const { data: adjusted, error: adjustmentError } = await supabaseAdmin
     .from("deliveries")
     .update({
-      status: "ajustes_solicitados",
+      status: "em_revisao",
       needs_client_approval: false,
       approved_at: null,
     })
-    .eq("id", delivery.id);
+    .eq("id", delivery.id)
+    .eq("needs_client_approval", true)
+    .select("id")
+    .maybeSingle();
+  if (adjustmentError || !adjusted) fail("Entrega não está disponível para solicitar ajustes.");
 
   await supabaseAdmin.from("delivery_events").insert({
     delivery_id: delivery.id,
@@ -603,7 +617,7 @@ export async function getClientAgenda(userId: string, email: string | null) {
     supabaseAdmin
       .from("appointments")
       .select(
-        "id, order_id, catalog_key, title, status, starts_at, ends_at, duration_minutes, meeting_url, client_notes, client_visible, consumes_credit",
+        "id, order_id, catalog_key, title, status, starts_at, ends_at, duration_minutes, meeting_url, client_notes, client_visible, consumes_credit, credit_reserved",
       )
       .eq("customer_id", customer.id)
       .eq("client_visible", true)
@@ -684,7 +698,7 @@ export async function getClientAgenda(userId: string, email: string | null) {
   // Saldo por pedido: cancelada nunca consome; reagendar não gera consumo novo.
   const balances = (credits ?? []).map((c) => {
     const used = (appointments ?? []).filter(
-      (a) => a.order_id === c.order_id && a.consumes_credit && a.status !== "cancelada",
+      (a) => a.order_id === c.order_id && a.consumes_credit && a.credit_reserved,
     ).length;
     const order = orderById.get(c.order_id);
     const item = c.catalog_key ? catalogByKey.get(c.catalog_key) : undefined;
@@ -758,7 +772,7 @@ async function schedulingOptions(customerId: string): Promise<{
       .eq("payment_status", "pago"),
     supabaseAdmin
       .from("appointments")
-      .select("id, order_id, status, consumes_credit")
+      .select("id, order_id, status, consumes_credit, credit_reserved")
       .eq("customer_id", customerId),
     supabaseAdmin.from("session_credits").select("order_id, granted").eq("customer_id", customerId),
   ]);
@@ -780,7 +794,7 @@ async function schedulingOptions(customerId: string): Promise<{
     const key = order.catalog_key;
     const item = key ? catalogByKey.get(key) : undefined;
     const used = (appointments ?? []).filter(
-      (a) => a.order_id === order.id && a.consumes_credit && a.status !== "cancelada",
+      (a) => a.order_id === order.id && a.consumes_credit && a.credit_reserved,
     ).length;
 
     let kind: ScheduleOption["kind"] = "project";
@@ -880,6 +894,7 @@ export async function requestClientAppointment(
   email: string | null,
   input: { orderId: string; startsAt: string; note?: string | null | undefined },
 ) {
+  if (process.env["AGENDA_INTEGRATION_ENABLED"] !== "true") fail("Integração de agenda ainda não ativada.");
   const customer = await requireClient(userId, email);
   const startsAt = parseFutureDate(input.startsAt);
   const note = input.note?.trim().slice(0, 800) || null;
@@ -911,6 +926,7 @@ export async function rescheduleClientAppointment(
   email: string | null,
   input: { appointmentId: string; startsAt: string; note?: string | null | undefined },
 ) {
+  if (process.env["AGENDA_INTEGRATION_ENABLED"] !== "true") fail("Integração de agenda ainda não ativada.");
   const customer = await requireClient(userId, email);
   const startsAt = parseFutureDate(input.startsAt);
   const note = input.note?.trim().slice(0, 800) || null;
@@ -1139,11 +1155,7 @@ function stripePriceFor(productKey: DigitalProductKey, market: DigitalMarket): s
 }
 
 /** Cria Checkout Stripe no backend e registra o pedido pendente no painel. */
-export async function createClientDigitalCheckout(
-  userId: string,
-  email: string | null,
-  input: { productKey: DigitalProductKey; market: DigitalMarket },
-) {
+export async function createClientDigitalCheckout(userId: string, email: string | null, input: { productKey: DigitalProductKey; market: DigitalMarket }):Promise<{url:string;orderId:string;orderNumber:string}> {
   logDigitalCheckout("info", "started", {
     productKey: input.productKey,
     market: input.market,
@@ -1169,6 +1181,10 @@ export async function createClientDigitalCheckout(
   const config = DIGITAL_CHECKOUT_CONFIG[input.productKey];
   if (!config) fail("Produto inválido.");
   fail("Novas compras individuais de eBooks foram encerradas. Este conteúdo está incluído no LDR ONE.");
+}
+
+// Retain and typecheck the legacy implementation without re-enabling retired sales.
+async function legacy_createClientDigitalCheckout(userId: string, email: string | null, input: { productKey: DigitalProductKey; market: DigitalMarket }, customer: ClientCustomer, config: NonNullable<(typeof DIGITAL_CHECKOUT_CONFIG)[DigitalProductKey]>) {
 
   // Evita nova cobrança quando o cliente já possui acesso.
   const library = await getClientDigitalLibrary(userId, email);
@@ -1202,7 +1218,7 @@ export async function createClientDigitalCheckout(
         market: input.market,
         auth_user_id: userId,
       },
-    } as never)
+    })
     .select("id, order_number")
     .single();
 
@@ -1335,7 +1351,7 @@ export async function createClientDigitalCheckout(
         auth_user_id: userId,
         stripe_price_id: priceId,
       },
-    } as never)
+    })
     .eq("id", order.id);
 
   if (sessionUpdateError) {
@@ -1360,6 +1376,7 @@ export async function createClientDigitalCheckout(
   });
 
   return { url: session.url, orderId: order.id, orderNumber: order.order_number };
+
 }
 
 

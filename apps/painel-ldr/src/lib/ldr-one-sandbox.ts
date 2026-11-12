@@ -17,9 +17,9 @@ export function validateOneSelection(input: OneSelection) {
   return { ...item, quantity: input.seats, totalCents: item.cents * input.seats, currency: "eur" as const };
 }
 export function sandboxOneConfig(input: OneSelection, env: Record<string, string | undefined>) {
-  if (env.LDR_ONE_SANDBOX_CHECKOUT_ENABLED !== "true") throw Error("Sandbox checkout disabled");
+  if (env["LDR_ONE_SANDBOX_CHECKOUT_ENABLED"] !== "true") throw Error("Sandbox checkout disabled");
   const item = validateOneSelection(input);
-  const key = env.LDR_ONE_STRIPE_TEST_SECRET_KEY ?? "";
+  const key = env["LDR_ONE_STRIPE_TEST_SECRET_KEY"] ?? "";
   if (!/^sk_test_[A-Za-z0-9]+$/.test(key)) throw Error("Stripe test key required");
   const priceId = env[item.env] ?? "";
   if (!/^price_[A-Za-z0-9]+$/.test(priceId)) throw Error("Stripe test price required");

@@ -79,11 +79,11 @@ export async function updatePersonalLibraryFile(userId: string, input: { id: str
   if (input.title !== undefined) {
     const title = clean(input.title, 220);
     if (!title) fail("O título não pode ficar vazio.");
-    patch.title = title;
+    patch["title"] = title;
   }
-  if (input.category !== undefined) patch.category = ALLOWED_CATEGORIES.has(clean(input.category, 80)) ? clean(input.category, 80) : "Outros";
-  if (input.author !== undefined) patch.author = clean(input.author, 180) || null;
-  if (input.notes !== undefined) patch.notes = clean(input.notes, 1500) || null;
+  if (input.category !== undefined) patch["category"] = ALLOWED_CATEGORIES.has(clean(input.category, 80)) ? clean(input.category, 80) : "Outros";
+  if (input.author !== undefined) patch["author"] = clean(input.author, 180) || null;
+  if (input.notes !== undefined) patch["notes"] = clean(input.notes, 1500) || null;
   const { error } = await db.from("personal_library_files").update(patch).eq("id", input.id).eq("user_id", userId);
   if (error) fail("Não foi possível atualizar o PDF.");
   return { ok: true as const };

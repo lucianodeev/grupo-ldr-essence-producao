@@ -1,3 +1,5 @@
+import type { Database as ObservedDatabase } from "./types.generated";
+
 export type Json =
   | string
   | number
@@ -6,7 +8,7 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
-export type Database = {
+type LegacyDatabase = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
@@ -38,6 +40,7 @@ export type Database = {
           attempts: number
           calendar_id: string
           created_at: string
+          event_generation: number
           google_event_id: string | null
           last_attempt_at: string | null
           last_error_code: string | null
@@ -52,6 +55,7 @@ export type Database = {
           attempts?: number
           calendar_id?: string
           created_at?: string
+          event_generation?: number
           google_event_id?: string | null
           last_attempt_at?: string | null
           last_error_code?: string | null
@@ -66,6 +70,7 @@ export type Database = {
           attempts?: number
           calendar_id?: string
           created_at?: string
+          event_generation?: number
           google_event_id?: string | null
           last_attempt_at?: string | null
           last_error_code?: string | null
@@ -134,6 +139,7 @@ export type Database = {
           catalog_key: string | null
           client_notes: string | null
           client_visible: boolean
+          credit_reserved: boolean
           consumes_credit: boolean
           created_at: string
           created_by: string | null
@@ -154,6 +160,7 @@ export type Database = {
           catalog_key?: string | null
           client_notes?: string | null
           client_visible?: boolean
+          credit_reserved?: boolean
           consumes_credit?: boolean
           created_at?: string
           created_by?: string | null
@@ -174,6 +181,7 @@ export type Database = {
           catalog_key?: string | null
           client_notes?: string | null
           client_visible?: boolean
+          credit_reserved?: boolean
           consumes_credit?: boolean
           created_at?: string
           created_by?: string | null
@@ -750,8 +758,8 @@ export type Database = {
       mentorship_sessions: {
         Row: {
           appointment_id: string | null
-          client_notes: string | null
           confirmed_at: string | null
+          client_notes: string | null
           created_at: string
           created_by: string | null
           duration_minutes: number
@@ -767,8 +775,8 @@ export type Database = {
         }
         Insert: {
           appointment_id?: string | null
-          client_notes?: string | null
           confirmed_at?: string | null
+          client_notes?: string | null
           created_at?: string
           created_by?: string | null
           duration_minutes?: number
@@ -784,8 +792,8 @@ export type Database = {
         }
         Update: {
           appointment_id?: string | null
-          client_notes?: string | null
           confirmed_at?: string | null
+          client_notes?: string | null
           created_at?: string
           created_by?: string | null
           duration_minutes?: number
@@ -1423,7 +1431,7 @@ export type Database = {
         Returns: Json
       }
       confirm_mentorship_session_tx: {
-        Args: { _meeting: string; _scheduled: string; _session_id: string }
+        Args: { _meeting: string; _scheduled: string; _session_id: string; _appointment_id?: string }
         Returns: Json
       }
       process_site_order: {
@@ -1528,6 +1536,26 @@ export type Database = {
     }
   }
 }
+
+/**
+ * Additive schema contract: verified public-project tables take precedence.
+ * Legacy-only tables/RPCs remain declared for existing deployments. This is
+ * not proof they exist on the public project; see docs/audit-20261111/REPORT.md.
+ */
+type AgendaMentorshipSessionTable = {
+  Row: ObservedDatabase["public"]["Tables"]["mentorship_sessions"]["Row"] & { appointment_id: string | null; confirmed_at: string | null };
+  Insert: ObservedDatabase["public"]["Tables"]["mentorship_sessions"]["Insert"] & { appointment_id?: string | null; confirmed_at?: string | null };
+  Update: ObservedDatabase["public"]["Tables"]["mentorship_sessions"]["Update"] & { appointment_id?: string | null; confirmed_at?: string | null };
+  Relationships: ObservedDatabase["public"]["Tables"]["mentorship_sessions"]["Relationships"];
+};
+
+export type Database = Omit<ObservedDatabase, "public"> & {
+  public: Omit<ObservedDatabase["public"], "Tables" | "Functions" | "Enums"> & {
+    Enums: Omit<LegacyDatabase["public"]["Enums"], keyof ObservedDatabase["public"]["Enums"]> & ObservedDatabase["public"]["Enums"];
+    Tables: Omit<LegacyDatabase["public"]["Tables"], keyof ObservedDatabase["public"]["Tables"]> & Omit<ObservedDatabase["public"]["Tables"], "mentorship_sessions"> & { mentorship_sessions: AgendaMentorshipSessionTable };
+    Functions: Omit<LegacyDatabase["public"]["Functions"], keyof ObservedDatabase["public"]["Functions"]> & ObservedDatabase["public"]["Functions"];
+  };
+};
 
 type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
 

@@ -58,8 +58,6 @@ export const DELIVERY_STATUSES: { value: DeliveryStatus; label: string; tone: To
   { value: "em_producao", label: "Em produção", tone: "gold" },
   { value: "em_revisao", label: "Em revisão", tone: "info" },
   { value: "entregue", label: "Entregue", tone: "success" },
-  { value: "ajustes_solicitados", label: "Ajustes solicitados", tone: "gold" },
-  { value: "aprovada", label: "Aprovada pelo cliente", tone: "success" },
   { value: "cancelada", label: "Cancelada", tone: "danger" },
 ];
 

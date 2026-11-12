@@ -29,6 +29,7 @@ function fail(message: string): never {
 }
 
 async function requireStaff(supabase: Client, userId: string) {
+  if (process.env["AGENDA_INTEGRATION_ENABLED"] !== "true") fail("Integração de agenda ainda não ativada.");
   const access = await resolveAccess(supabase, userId);
   if (!access.authorized) fail("Acesso negado.");
   return access;
@@ -81,7 +82,7 @@ async function loadAppointment(id: string) {
 
 /** Traduz erros do banco em mensagens genéricas, sem vazar detalhe interno. */
 function scheduleFailure(message: string): never {
-  if (message.includes("sessões restantes")) fail("Pacote sem sessões restantes.");
+  if (message.includes("insufficient session credits") || message.includes("sessões restantes")) fail("Pacote sem sessões restantes.");
   if (message.includes("sem créditos")) fail("Pedido sem créditos de sessão.");
   if (message.includes("não encontrad")) fail("Agendamento não encontrado.");
   fail("Não foi possível confirmar o agendamento.");
@@ -89,7 +90,7 @@ function scheduleFailure(message: string): never {
 
 /**
  * Confirma o horário e libera o link da videochamada para o dono do dado.
- * Appointment + mentorship_sessions + espelho S8 são gravados numa única
+ * Appointment + explicit linked mentorship_sessions são gravados numa única
  * transação no banco (lock por pedido): se a vinculação falhar, nada é
  * confirmado e o link nunca chega a existir.
  */
@@ -137,6 +138,12 @@ export async function confirmWithGoogleMeet(supabase: Client, userId: string, ra
 
   const duration = input.durationMinutes ?? appointment.duration_minutes ?? 50;
   const startsAt = new Date(input.startsAt).toISOString();
+
+  const { error: reservationError } = await supabaseAdmin.rpc("confirm_appointment_tx", {
+    _appointment_id: appointment.id, _starts: startsAt, _duration: duration,
+    _meeting: null, _client_note: input.clientNote ?? "",
+  } as never);
+  if (reservationError) scheduleFailure(reservationError.message);
 
   const outcome = await syncAppointmentEvent(appointment.id, {
     overrideStart: startsAt,
@@ -253,18 +260,13 @@ export async function cancelCalendarEvent(supabase: Client, userId: string, raw:
  * segue oculto ao cliente pelo sync_status, mas não afirmamos que limpou.
  */
 async function clearMeetingMirrors(appointmentId: string): Promise<{ ok: boolean }> {
-  const results = await Promise.all([
-    supabaseAdmin.from("appointments").update({ meeting_url: null }).eq("id", appointmentId),
-    supabaseAdmin
-      .from("mentorship_sessions")
-      .update({ meeting_url: null, confirmed_at: null })
-      .eq("appointment_id", appointmentId),
-    supabaseAdmin
-      .from("s8_sessions")
-      .update({ meeting_url: null })
-      .eq("appointment_id", appointmentId),
-  ]);
-  return { ok: results.every((result) => !result.error) };
+  // Legacy session tables have no appointment_id link in the verified schema.
+  // Never claim that session mirrors were cleared when no safe relation exists.
+  const { error } = await supabaseAdmin
+    .from("appointments")
+    .update({ meeting_url: null })
+    .eq("id", appointmentId);
+  return { ok: !error };
 }
 
 /** Cancelar/concluir/reagendar. Cancelamento e reagendamento removem o link. */
@@ -284,16 +286,10 @@ export async function setAppointmentStatus(supabase: Client, userId: string, raw
     .eq("id", appointment.id);
   if (error) fail("Não foi possível atualizar o agendamento.");
 
-  if (clearsLink) {
-    await supabaseAdmin
-      .from("mentorship_sessions")
-      .update({ meeting_url: null, confirmed_at: null })
-      .eq("appointment_id", appointment.id);
-    await supabaseAdmin
-      .from("s8_sessions")
-      .update({ meeting_url: null })
-      .eq("appointment_id", appointment.id);
-  }
+  // No appointment_id exists on mentorship_sessions or s8_sessions in the
+  // verified schema; clearing the canonical appointment above is the only
+  // supported operation. Client meeting links remain fail-closed.
+
 
   if (input.status === "cancelada") {
     const outcome = await cancelAppointmentEvent(appointment.id);
@@ -395,13 +391,13 @@ export async function createStaffAppointment(supabase: Client, userId: string, r
       customer_id: customerId,
       catalog_key: catalogKey,
       title: input.title,
-      status: input.meetingUrl ? "confirmada" : "agendada",
+      status: "agendada",
       starts_at: startsAt,
       ends_at: startsAt
         ? new Date(new Date(startsAt).getTime() + duration * 60000).toISOString()
         : null,
       duration_minutes: duration,
-      meeting_url: input.meetingUrl ?? null,
+      meeting_url: null,
       client_notes: input.clientNotes ?? null,
       internal_notes: input.internalNotes ?? null,
       consumes_credit: input.consumesCredit,
@@ -419,6 +415,16 @@ export async function createStaffAppointment(supabase: Client, userId: string, r
   }
   if (!created) fail("Não foi possível criar o agendamento.");
 
+  if (input.meetingUrl) {
+    if (!startsAt) fail("Defina o horário antes de confirmar.");
+    const { error: confirmationError } = await supabaseAdmin.rpc("confirm_appointment_tx", {
+      _appointment_id: created.id, _starts: startsAt, _duration: duration,
+      _meeting: input.meetingUrl, _client_note: input.clientNotes ?? "",
+    });
+    if (confirmationError) scheduleFailure(confirmationError.message);
+    await markManualLink(created.id);
+  }
+
   await event(created.id, "criada", userId, access.email, null, false);
   await audit(userId, access.email, "appointment.created", created.id);
 
@@ -427,7 +433,7 @@ export async function createStaffAppointment(supabase: Client, userId: string, r
 
 /**
  * Confirma uma sessão de mentoria/S8 e libera o link para o cliente.
- * Sessão, espelho S8 e o agendamento vinculado são atualizados na mesma
+ * Sessão e o agendamento explicitamente vinculado são atualizados na mesma
  * transação do banco — sem updates sequenciais que possam divergir.
  */
 export async function confirmMentorshipSession(supabase: Client, userId: string, raw: unknown) {
@@ -443,6 +449,7 @@ export async function confirmMentorshipSession(supabase: Client, userId: string,
 
   const { error } = await supabaseAdmin.rpc("confirm_mentorship_session_tx", {
     _session_id: input.sessionId,
+    ...(input.appointmentId ? {_appointment_id: input.appointmentId} : {}),
     _scheduled: new Date(input.scheduledAt).toISOString(),
     _meeting: input.meetingUrl,
   });
@@ -454,8 +461,11 @@ export async function confirmMentorshipSession(supabase: Client, userId: string,
     );
   }
 
+  const {data: linked} = await supabaseAdmin.from("mentorship_sessions").select("appointment_id").eq("id",input.sessionId).single();
+  if (!linked?.appointment_id) fail("Agendamento vinculado não encontrado.");
+  const manual = await markManualLink(linked.appointment_id);
   await audit(userId, access.email, "mentorship_session.confirmed", input.sessionId);
-  return { ok: true as const };
+  return { ok: manual.status === "manual", status: manual.status };
 }
 
 /**
@@ -546,4 +556,17 @@ export async function linkPaidOrder(supabase: Client, userId: string, raw: unkno
   });
 
   return { ok: true as const };
+}
+
+export async function listStaffAppointments(supabase: Client, userId: string) {
+  await requireStaff(supabase, userId);
+  const {data,error} = await supabaseAdmin.from("appointments").select("*").order("starts_at",{ascending:true,nullsFirst:false});
+  if(error) fail("Não foi possível carregar a agenda.");
+  return data ?? [];
+}
+export async function listStaffAppointmentEvents(supabase: Client, userId: string, appointmentId: string) {
+  await requireStaff(supabase, userId);
+  const {data,error} = await supabaseAdmin.from("appointment_events").select("*").eq("appointment_id",appointmentId).order("created_at",{ascending:false});
+  if(error) fail("Não foi possível carregar o histórico.");
+  return data ?? [];
 }

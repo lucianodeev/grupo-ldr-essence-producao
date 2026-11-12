@@ -1,3 +1,4 @@
+import { curriculumItem } from "@/lib/curriculum-item";
 import type { PF, PFLocale, PFSlug } from "@/lib/academy-professional-formations.catalog";
 
 const labels={
@@ -65,11 +66,11 @@ export function buildProfessionalFormationLessons(f:PF,locale:PFLocale){
  return t.modules.map((moduleTitle,mi)=>({
   id:mi+1,title:moduleTitle,
   lessons:Array.from({length:perModule},(_,li)=>{
-   const n=mi*perModule+li+1,[focus,task]=S[li%S.length];
-   const previous=t.modules[Math.max(0,mi-1)],next=t.modules[Math.min(t.modules.length-1,mi+1)];
+   const n=mi*perModule+li+1,[focus,task]=curriculumItem<readonly [string,string]>(S,li%S.length);
+   const previous=curriculumItem(t.modules,mi-1),next=curriculumItem(t.modules,mi+1);
    const body=lessonBody(locale,moduleTitle,focus,task,previous,next,t.project,specialRule(f.slug,locale));
    const headings=[L.objective,L.question,L.concepts,L.context,L.caseLabel,L.critical,L.practice,L.errors,L.synthesis,L.refs];
-   return {id:`${f.slug}-m${mi+1}-l${li+1}`,title:`${L.lesson} ${n} · ${moduleTitle} — ${focus}`,summary:`${moduleTitle}: ${focus}.`,content:body.map((text,i)=>join(headings[i],text))};
+   return {id:`${f.slug}-m${mi+1}-l${li+1}`,title:`${L.lesson} ${n} · ${moduleTitle} — ${focus}`,summary:`${moduleTitle}: ${focus}.`,content:body.map((text,i)=>join(curriculumItem(headings,i),text))};
   }),
  }));
 }

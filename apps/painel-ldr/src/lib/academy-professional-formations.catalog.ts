@@ -7,7 +7,7 @@ import { PROJECT_MANAGEMENT_FORMATION } from "@/lib/project-management-formation
 import { HIV_SCIENCE_FORMATION } from "@/lib/hiv-science-formation.catalog";
 
 const HEALTH_WITHOUT_NEUROSCIENCE = HEALTH_PSYCHOANALYSIS_FORMATIONS.filter(
-  (formation) => formation.slug !== "neurociencias-comportamento-humano",
+  (formation) => String(formation.slug) !== "neurociencias-comportamento-humano",
 );
 
 export type { PF, PFLocale, PFSlug } from "@/lib/professional-formations.catalog";

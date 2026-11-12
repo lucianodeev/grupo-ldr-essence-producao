@@ -20,7 +20,7 @@ export const Route = createFileRoute("/carreira/empresa/candidaturas")({
 
 type Locale = "pt" | "en" | "fr" | "es";
 type StatusKey = "received" | "in_review" | "interview" | "finalist" | "rejected" | "hired" | "archived";
-type Copy = typeof C.pt;
+type Copy = (typeof C)[keyof typeof C];
 
 type ApplicationRow = {
   id: string;
@@ -352,23 +352,23 @@ function CompanyApplicationsPage() {
     }
 
     const mapped = ((result.data ?? []) as Array<Record<string, any>>).map((item) => ({
-      id: String(item.id),
-      jobId: String(item.job_id),
-      jobTitle: jobTitleById.get(String(item.job_id)) ?? t.untitledJob,
-      candidateName: String(item.candidate_name ?? ""),
-      candidateEmail: String(item.candidate_email ?? ""),
-      candidatePhone: item.candidate_phone ?? null,
-      candidateLocation: item.candidate_location ?? null,
-      profileUrl: item.profile_url ?? null,
-      summary: item.summary ?? null,
-      accessibilityNeeds: item.accessibility_needs ?? null,
-      communicationPreference: item.communication_preference ?? null,
-      shareAccessibility: Boolean(item.share_accessibility_with_company),
-      allowLdrSupport: Boolean(item.allow_ldr_accessibility_support),
-      status: normalizeStatus(item.status),
-      createdAt: item.created_at ?? null,
-      companyNote: item.company_note ?? null,
-      rejectionReason: item.rejection_reason ?? null,
+      id: String(item["id"]),
+      jobId: String(item["job_id"]),
+      jobTitle: jobTitleById.get(String(item["job_id"])) ?? t.untitledJob,
+      candidateName: String(item["candidate_name"] ?? ""),
+      candidateEmail: String(item["candidate_email"] ?? ""),
+      candidatePhone: item["candidate_phone"] ?? null,
+      candidateLocation: item["candidate_location"] ?? null,
+      profileUrl: item["profile_url"] ?? null,
+      summary: item["summary"] ?? null,
+      accessibilityNeeds: item["accessibility_needs"] ?? null,
+      communicationPreference: item["communication_preference"] ?? null,
+      shareAccessibility: Boolean(item["share_accessibility_with_company"]),
+      allowLdrSupport: Boolean(item["allow_ldr_accessibility_support"]),
+      status: normalizeStatus(item["status"]),
+      createdAt: item["created_at"] ?? null,
+      companyNote: item["company_note"] ?? null,
+      rejectionReason: item["rejection_reason"] ?? null,
     }));
 
     setRows(mapped);

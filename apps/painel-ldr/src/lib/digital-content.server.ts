@@ -1,3 +1,4 @@
+import type { Json } from "@/integrations/supabase/types";
 import { gunzipSync } from "node:zlib";
 
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
@@ -62,19 +63,19 @@ async function assertEntitlement(customerId: string, productKey: DigitalReaderPr
   const entitled = (orders ?? []).some((order) => {
     if (order.catalog_key && allowed.has(order.catalog_key)) return true;
     const metadata = order.metadata as Record<string, unknown> | null;
-    const key = metadata && typeof metadata.product_key === "string" ? metadata.product_key : null;
+    const key = metadata && typeof metadata['product_key'] === "string" ? metadata['product_key'] : null;
     return Boolean(key && allowed.has(key));
   });
   if (!entitled) fail("Conteúdo disponível somente após confirmação da compra.");
 }
 
-function decodeContent(value: unknown): unknown {
+function decodeContent(value: Json): Json {
   if (!value || typeof value !== "object") fail("Conteúdo indisponível.");
   const obj = value as { encoding?: unknown; payload?: unknown };
   if (obj.encoding === "gzip-base64" && typeof obj.payload === "string") {
     try {
       const text = gunzipSync(Buffer.from(obj.payload, "base64")).toString("utf8");
-      return JSON.parse(text) as unknown;
+      return JSON.parse(text) as Json;
     } catch {
       fail("Não foi possível abrir este conteúdo.");
     }

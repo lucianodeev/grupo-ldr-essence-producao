@@ -191,6 +191,7 @@ async function writeSyncRow(
 }
 
 type Claim = {
+  event_generation: number;
   claimed: boolean;
   lease_token: string | null;
   google_event_id: string | null;
@@ -306,6 +307,7 @@ export async function syncAppointmentEvent(
     );
 
     let eventId = claim.google_event_id ?? null;
+    let generation = claim.event_generation ?? 0;
     if (!eventId) {
       const recovered = await findEventByAppointment(appointmentId, null);
       if (recovered) {
@@ -336,13 +338,18 @@ export async function syncAppointmentEvent(
         // Evento apagado manualmente no Google: recria uma única vez.
         if (error instanceof CalendarError && error.code === "nao_encontrado") {
           await persistEventId(appointmentId, token, null);
-          result = await createEvent(context);
+          generation += 1;
+          const { data: advanced, error: generationError } = await supabaseAdmin.from("appointment_calendar_sync")
+            .update({event_generation: generation}).eq("appointment_id",appointmentId).eq("lease_token",token)
+            .select("appointment_id").maybeSingle();
+          if (generationError || !advanced) throw new CalendarSyncError("banco_indisponivel");
+          result = await createEvent({...context, generation});
         } else {
           throw error;
         }
       }
     } else {
-      result = await createEvent(context);
+      result = await createEvent({...context, generation});
     }
 
     // Id primeiro: mesmo que a etapa seguinte falhe, não fica evento órfão.
@@ -382,7 +389,17 @@ export async function cancelAppointmentEvent(appointmentId: string): Promise<Syn
     return { status: "pendente", meetUrl: null, errorCode: "ocupado" };
   }
   const token = claim.lease_token;
-  const eventId = claim.google_event_id ?? existing.google_event_id;
+  let eventId = claim.google_event_id ?? existing.google_event_id;
+  if (!eventId && isCalendarConfigured()) {
+    try {
+      eventId = (await findEventByAppointment(appointmentId,null))?.eventId ?? null;
+      if (eventId) await persistEventId(appointmentId,token,eventId);
+    } catch (error) {
+      const code=codeOf(error);
+      await releaseSync(appointmentId,token,"erro",null,null,code);
+      return {status:"erro",meetUrl:null,errorCode:code};
+    }
+  }
 
   if (!eventId) {
     await releaseSync(appointmentId, token, "cancelado", null, null, null);
@@ -413,6 +430,11 @@ export async function markSyncPending(appointmentId: string) {
 
 /** Registra que o link foi definido manualmente pela equipe (fallback auditado). */
 export async function markManualLink(appointmentId: string): Promise<SyncOutcome> {
+  const existing = await readSyncRow(appointmentId);
+  if (existing?.google_event_id && existing.sync_status !== "cancelado") {
+    const cancelled = await cancelAppointmentEvent(appointmentId);
+    if (cancelled.status !== "cancelado") return cancelled;
+  }
   const claim = await claimSync(appointmentId);
   if (!claim.claimed || !claim.lease_token) {
     // Sincronização em andamento: nunca sobrescrevemos.

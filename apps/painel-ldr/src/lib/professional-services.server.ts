@@ -199,7 +199,7 @@ export async function setProfessionalServiceActive(userId: string, input: { id: 
     active: Boolean(input.active),
     updated_at: new Date().toISOString(),
   };
-  if (!input.active) patch.booking_enabled = false;
+  if (!input.active) patch["booking_enabled"] = false;
   const { error } = await db
     .from("professional_services")
     .update(patch)

@@ -19,6 +19,11 @@ vm.runInNewContext(output, {
 });
 const { isUnifiedPreviewHost, isUnifiedEcosystemHost, unifiedPreviewTarget } = moduleBox.exports;
 
+test("keeps provisional Render links on the official domain without losing navigation context", () => {
+  assert.equal(unifiedPreviewTarget("https://ldr-ecossistema-validacao.onrender.com/profissional-onboarding?step=2#perfil", "https://ldrecossistema.online", "ldrecossistema.online"), "/profissional-onboarding?step=2#perfil");
+  assert.equal(unifiedPreviewTarget("https://unrelated-service.onrender.com/", "https://ldrecossistema.online", "ldrecossistema.online"), null);
+});
+
 test("recognizes unified preview hosts without affecting official hosts", () => {
   assert.equal(isUnifiedPreviewHost("ecossistema-ldr-validacao.llucianouam.chatgpt.site"), true);
   assert.equal(isUnifiedPreviewHost("ecossistema-ldr-provisorio.workers.dev"), true);

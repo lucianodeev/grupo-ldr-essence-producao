@@ -200,11 +200,11 @@ function isExternalJob(job: JobRow) {
 
 function getBadges(job: JobRow, t: Copy) {
   return [
-    job.accessibility_inclusive ? t.inclusive : null,
-    job.accessibility_pcd_open || job.accessibility_pcd_only ? t.pcd : null,
-    hasValue(job.accessibility_resources) ? t.resources : null,
-    job.accessibility_interview_support ? t.interview : null,
-    job.accessibility_sign_language ? t.sign : null,
+    job["accessibility_inclusive"] ? t.inclusive : null,
+    job["accessibility_pcd_open"] || job["accessibility_pcd_only"] ? t.pcd : null,
+    hasValue(job["accessibility_resources"]) ? t.resources : null,
+    job["accessibility_interview_support"] ? t.interview : null,
+    job["accessibility_sign_language"] ? t.sign : null,
   ].filter(Boolean) as string[];
 }
 

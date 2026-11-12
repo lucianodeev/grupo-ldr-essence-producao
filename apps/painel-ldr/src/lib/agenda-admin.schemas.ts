@@ -82,6 +82,7 @@ export const createAppointmentSchema = z
 export const confirmSessionSchema = z
   .object({
     sessionId: z.string().uuid(),
+    appointmentId: z.string().uuid().optional(),
     scheduledAt: isoFuture,
     meetingUrl: meetingUrlSchema,
   })

@@ -32,7 +32,7 @@ export function useSupportInbox() {
   }, [userId]);
   const query = useQuery({ queryKey: ["support-inbox", userId], queryFn: () => list(), enabled: !!userId, refetchInterval: 30000, staleTime: 15000, retry: 1 });
   const contacts = (query.data ?? []) as Conversation[];
-  const isUnread = (contact: Conversation) => !!contact.lastReplyAt && (!markers[contact.id] || contact.lastReplyAt > markers[contact.id]);
+  const isUnread = (contact: Conversation) => { const marker = markers[contact.id]; return !!contact.lastReplyAt && (!marker || contact.lastReplyAt > marker); };
   function markRead(id: string, at: string | null) {
     if (!userId || !at) return;
     const next = { ...readMarkers(userId), [id]: at };

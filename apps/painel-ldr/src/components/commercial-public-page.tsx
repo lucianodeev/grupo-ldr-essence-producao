@@ -1529,7 +1529,7 @@ export function CommercialPublicPage({ kind }: { kind: Kind }) {
                   UsersRound,
                   BookOpen,
                 ];
-                const I = icons[i];
+                const I = icons[i] ?? BookOpen;
                 return (
                   <article
                     key={t}

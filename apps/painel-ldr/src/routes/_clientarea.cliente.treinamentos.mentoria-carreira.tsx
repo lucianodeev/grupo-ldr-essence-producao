@@ -1,3 +1,4 @@
+import { curriculumItem } from "@/lib/curriculum-item";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
@@ -20,16 +21,16 @@ function MentorshipCareerTraining(){
  const checkout=useMutation({mutationFn:(market:"BR"|"INTL")=>checkoutFn({data:{market}}),onSuccess:r=>{window.location.href=r.url;}});
  const [state,setState]=useState<Saved>(EMPTY);const [answer,setAnswer]=useState("");
  useEffect(()=>setState(loadState()),[]);
- const mod=mentorshipCareerModules[Math.min(state.module,mentorshipCareerModules.length-1)];const current=mod.lessons[Math.min(state.lesson,mod.lessons.length-1)];
+ const mod=curriculumItem(mentorshipCareerModules, Math.min(state.module,mentorshipCareerModules.length-1));const current=curriculumItem(mod.lessons, Math.min(state.lesson,mod.lessons.length-1));
  useEffect(()=>setAnswer(state.answers[`m${mod.id}`]??""),[mod.id,state.answers]);
  const progress=Math.round((state.completed.length/MENTORSHIP_TOTAL_LESSONS)*100);
  const maxUnlockedLesson=offer?.entitled?MENTORSHIP_TOTAL_LESSONS:0;
  const currentGlobalIndex=mentorshipCareerModules.slice(0,state.module).reduce((sum,m)=>sum+m.lessons.length,0)+state.lesson;
  const nextLocked=false;
- const persist=(next:Saved)=>{setState(next);try{localStorage.setItem(KEY,JSON.stringify(next));}catch{}const pct=Math.round((next.completed.length/MENTORSHIP_TOTAL_LESSONS)*100);const m=mentorshipCareerModules[Math.min(next.module,mentorshipCareerModules.length-1)];const l=m.lessons[Math.min(next.lesson,m.lessons.length-1)];saveProgressFn({data:{productKey:"formacao_mentoria_profissional_carreira",progressPercent:pct,currentLocation:`Módulo ${m.id} · ${l.title}`}}).catch(()=>undefined);};
+ const persist=(next:Saved)=>{setState(next);try{localStorage.setItem(KEY,JSON.stringify(next));}catch{}const pct=Math.round((next.completed.length/MENTORSHIP_TOTAL_LESSONS)*100);const m=curriculumItem(mentorshipCareerModules, Math.min(next.module,mentorshipCareerModules.length-1));const l=curriculumItem(m.lessons, Math.min(next.lesson,m.lessons.length-1));saveProgressFn({data:{productKey:"formacao_mentoria_profissional_carreira",progressPercent:pct,currentLocation:`Módulo ${m.id} · ${l.title}`}}).catch(()=>undefined);};
  const markDone=()=>{const completed=state.completed.includes(current.id)?state.completed:[...state.completed,current.id];persist({...state,completed});};
  const next=()=>{const completed=state.completed.includes(current.id)?state.completed:[...state.completed,current.id];if(state.lesson<mod.lessons.length-1){persist({...state,completed,lesson:state.lesson+1});return;}if(state.module<mentorshipCareerModules.length-1)persist({...state,completed,module:state.module+1,lesson:0});else persist({...state,completed});};
- const previous=()=>{if(state.lesson>0)return persist({...state,lesson:state.lesson-1});if(state.module>0){const prev=mentorshipCareerModules[state.module-1];persist({...state,module:state.module-1,lesson:prev.lessons.length-1});}};
+ const previous=()=>{if(state.lesson>0)return persist({...state,lesson:state.lesson-1});if(state.module>0){const prev=curriculumItem(mentorshipCareerModules, state.module-1);persist({...state,module:state.module-1,lesson:prev.lessons.length-1});}};
  const saveAnswer=()=>persist({...state,answers:{...state.answers,[`m${mod.id}`]:answer}});
  const doneThis=state.completed.includes(current.id);
  if(isLoading)return <section className="s8-card">Carregando formação…</section>;

@@ -1,0 +1,50 @@
+name: Central Empresas validation
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feat/central-empresas-ldr
+  pull_request:
+    paths:
+      - 'apps/painel-ldr/src/routes/empresas*.tsx'
+      - '.github/workflows/central-empresas-validation.yml'
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Build application (Render mode)
+        run: npm --prefix apps/painel-ldr run build:render
+      - name: Typecheck
+        id: typecheck
+        continue-on-error: true
+        run: npm --prefix apps/painel-ldr run typecheck
+      - name: Unit tests
+        run: npm --prefix apps/painel-ldr run test
+      - name: Commercial, curriculum and module regressions
+        run: npm --prefix apps/painel-ldr run test:regressions
+      - name: Enterprise HTTP routing and link smoke tests (no live credentials)
+        run: npm --prefix apps/painel-ldr run test:enterprise-http
+      - name: Central Empresas route audit
+        run: |
+          test -f apps/painel-ldr/src/routes/empresas.tsx
+          test -f apps/painel-ldr/src/routes/empresas.servicos.tsx
+          test -f apps/painel-ldr/src/routes/empresas.proposta.tsx
+          test -f apps/painel-ldr/src/routes/empresas.ldr-one.tsx
+          test -f apps/painel-ldr/src/routes/empresas.academy.tsx
+          ! grep -R 'to="/academy"' apps/painel-ldr/src/routes/empresas*.tsx
+          echo 'Central Empresas: five route files present and deprecated Academy link absent.'
+      - name: Enforce typecheck result
+        if: always() && steps.typecheck.outcome == 'failure'
+        run: |
+          echo 'Typecheck failed. See Typecheck step for errors.'
+          exit 1

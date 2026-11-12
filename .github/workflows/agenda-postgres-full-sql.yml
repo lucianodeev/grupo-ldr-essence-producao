@@ -1,0 +1,57 @@
+name: Agenda full SQL PostgreSQL integration
+on:
+  workflow_dispatch:
+  push:
+    branches: [feat/central-empresas-ldr]
+    paths:
+      - '.github/workflows/agenda-*.yml'
+      - 'scripts/agenda/**'
+      - 'docs/audit-20261111/agenda-*-snapshot.json'
+      - 'docs/audit-20261111/agenda-preactivation-rollback.sql'
+      - 'apps/painel-ldr/supabase/migrations/*agenda_calendar_credit_integration.sql'
+      - 'apps/painel-ldr/src/lib/*calendar*.ts'
+      - 'apps/painel-ldr/src/lib/agenda-admin*'
+      - 'apps/painel-ldr/src/lib/client-portal.server.ts'
+      - 'apps/painel-ldr/src/lib/central-data.ts'
+      - 'apps/painel-ldr/src/components/central/mentorship-sessions.tsx'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    services:
+      postgres:
+        image: postgres:17.6
+        env: {POSTGRES_PASSWORD: test_only, POSTGRES_DB: agenda_test}
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      PGHOST: localhost
+      PGPORT: '5432'
+      PGUSER: postgres
+      PGPASSWORD: test_only
+      PGDATABASE: agenda_test
+      AGENDA_PG_PACKAGE: /tmp/agenda-pg/package.json
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated PostgreSQL driver
+        run: npm install --prefix /tmp/agenda-pg --no-audit --no-fund pg@8.23.1 typescript@5.8.3
+      - name: Apply captured schema and versioned migration; execute actual RPC, RLS and concurrency tests
+        run: |
+          set -o pipefail
+          node scripts/agenda/verify.mjs | tee /tmp/agenda-postgres-results.txt
+      - name: Google Calendar transport failure and idempotency tests (mocked)
+        run: node --experimental-strip-types --test scripts/agenda/calendar*.test.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: agenda-results-${{ github.workflow }}
+          path: /tmp/agenda-postgres-results.txt

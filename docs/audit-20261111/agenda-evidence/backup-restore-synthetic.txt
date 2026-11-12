@@ -1,0 +1,41 @@
+PASS captured schema: columns, FKs, checks, enums, indexes, triggers, policies and API table grants
+PASS versioned migration applied to real schema dependencies
+PASS unpaid order rejected
+PASS wrong customer rejected
+PASS wrong catalog rejected
+PASS null and zero duration rejected
+PASS confirmation idempotent
+PASS exhausted credits rejected
+PASS direct write cannot bypass credits
+PASS reschedule retains the same reservation
+PASS cancellation clears reservation; terminal appointment cannot reopen
+PASS 20 concurrent actual confirmations: exactly one reservation
+PASS 20 concurrent actual calendar claims: exactly one owner
+PASS wrong lease token rejected
+PASS expired lease recovered; stale release rejected; calendar mismatch rejected
+PASS mentorship cannot bypass exhausted credits
+PASS explicit mentorship link rejects wrong owner and rolls back
+PASS free mentorship confirms and mirrors atomically as service_role
+PASS cancellation clears linked mentorship URL
+PASS refunded payment rejected
+PASS public RPC/table access denied
+PASS existing RLS denies credit rows even with SELECT privilege
+PASS 20 concurrent client requests: exactly one pending request
+PASS client reschedule denies wrong owner
+PASS client reschedule succeeds on owned paid appointment
+PASS grant cannot shrink below reserved credits
+PASS completed appointment cannot be rescheduled and keeps credit
+PASS calendar-wide lease serializes different appointments
+PASS all six RPC privileges verified
+PASS rollback refuses to discard appointment data
+PASS empty pre-activation rollback preserves orders; migration reapplies
+SUCCESS 31 checks; real PostgreSQL 17.6; synthetic data only
+pg_dump (PostgreSQL) 17.11 (Debian 17.11-0+deb13u1)
+PASS custom archive created; only isolated synthetic database
+PASS restored rows, counts, SHA256 content digests and RLS match for 20 tables
+PASS restored columns, enums, triggers, constraints, indexes, policies and functions match (494 definitions)
+PASS restored schema, table and function grants match (485 grants)
+PASS restored sequence position matches
+PASS restored public access remains denied
+PASS restored mentorship and appointment relationship remains confirmed
+SUCCESS synthetic full-database backup/restore; archive SHA256 18d62b024cd663aeea7cb849971a292f3bb14368ce03470314431e2de0003da3; elapsed_ms 834

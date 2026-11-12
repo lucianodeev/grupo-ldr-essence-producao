@@ -1,3 +1,4 @@
+import { curriculumItem } from "@/lib/curriculum-item";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
@@ -81,7 +82,7 @@ function DiagnosticoProfissional(){
   const objectiveDone=step>=questions.length;
   const done=objectiveDone&&reflection.impact.trim().length>=10&&reflection.tried.trim().length>=10;
   const result=useMemo(()=>done?buildResult(answers):null,[done,answers]);
-  const q=questions[step];
+  const q=curriculumItem(questions,step);
   const choose=(value:string,score:number)=>{setAnswers(a=>({...a,[q.id]:{value,score}}));setStep(s=>s+1)};
   const restart=()=>{setAnswers({});setReflection({impact:"",tried:""});setStep(0)};
   if(access.isLoading)return <><main className="min-h-screen bg-slate-50"><div className="mx-auto max-w-3xl px-5 py-16 text-slate-600">Validando seu acesso…</div></main>{schemaTag}</>;

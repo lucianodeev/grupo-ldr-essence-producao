@@ -58,7 +58,7 @@ async function findOrCreateCustomer(email: string, name?: string) {
 function hotmartKind(event: HotmartEvent): "combo" | "psychoanalysis" {
   const id = String(event.data?.product?.id ?? "").trim();
   const name = String(event.data?.product?.name ?? "").trim().toLowerCase();
-  const configured = process.env.HOTMART_PSYCHOANALYSIS_PRODUCT_ID?.trim() ?? "";
+  const configured = process.env["HOTMART_PSYCHOANALYSIS_PRODUCT_ID"]?.trim() ?? "";
   if ((configured && id === configured) || name.includes("psican")) return "psychoanalysis";
   return "combo";
 }

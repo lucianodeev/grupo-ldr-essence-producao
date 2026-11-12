@@ -44,7 +44,7 @@ export const professionalNetworkUpsert = createServerFn({ method: "POST" })
   )
   .handler(async ({ context, data }) => {
     const { upsertProfessionalByAdmin } = await import("@/lib/professional-network-admin.server");
-    return upsertProfessionalByAdmin(context.supabase, context.userId, data);
+    return upsertProfessionalByAdmin(context.supabase, context.userId, {...data, engagementModel:"commission"});
   });
 export const professionalNetworkFinancialUpdate = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
