@@ -15,6 +15,26 @@ spec=importlib.util.spec_from_file_location('recovery',Path(__file__).with_name(
 r=importlib.util.module_from_spec(spec);spec.loader.exec_module(r)
 
 class RecoverySecurityTests(unittest.TestCase):
+    def test_policy_role_set_is_canonical_without_losing_policy_details(self):
+        a=[{'kind':'policy','value':{'roles':['authenticated','anon'],'qual':'false'}}]
+        b=[{'kind':'policy','value':{'roles':['anon','authenticated'],'qual':'false'}}]
+        self.assertEqual(r.canonical_catalog(a),r.canonical_catalog(b))
+        b[0]['value']['qual']='true'
+        self.assertNotEqual(r.canonical_catalog(a),r.canonical_catalog(b))
+
+    def test_platform_recovery_cannot_target_a_remote_database(self):
+        with self.assertRaisesRegex(r.Blocked,'isolated_recovery_target_required'):
+            r.restore_platform_state(r.Pg(remote_env={'PGHOST':'remote'}),Path('/unused'),{})
+
+    def test_complementary_copy_is_read_only_and_only_for_fixed_platform_tables(self):
+        pg=Mock();pg.raw.side_effect=lambda sql,output: output.write(b'synthetic only\n')
+        manifest={'tables':[{'schema':'net','name':'_http_response'},{'schema':'public','name':'private'}]}
+        with tempfile.TemporaryDirectory() as p:
+            r.backup_platform_data(pg,Path(p),manifest)
+            self.assertEqual([x.name for x in Path(p).iterdir()],['platform-net-_http_response.csv'])
+        self.assertEqual(pg.raw.call_count,1)
+        self.assertEqual(pg.raw.call_args.args[0],'COPY "net"."_http_response" TO STDOUT WITH (FORMAT csv);')
+
     def test_inventory_diagnostics_only_contain_counts_and_fixed_kinds(self):
         left={'tables':[], 'catalog':[{'kind':'policy','name':'private-secret','sql':'private-sql'}], 'sequences':[]}
         right={'tables':[], 'catalog':[], 'sequences':[]}
@@ -27,7 +47,7 @@ class RecoverySecurityTests(unittest.TestCase):
         row=b'{"synthetic": "escaped\\ntext"}\n'
         def emit(sql,output):
             self.assertIn('COLLATE "C"',sql)
-            for marker in re.findall(r'^\\echo (LDR_RECOVERY_[^\n]+)$',sql,re.M):
+            for marker in re.findall(r"'(LDR_RECOVERY_[^']+)' AS value",sql):
                 output.write(marker.encode()+b'\n')
                 if not marker.endswith('END'): output.write(row)
         pg.raw.side_effect=emit
