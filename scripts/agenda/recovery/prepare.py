@@ -577,6 +577,14 @@ def rehearse(source, work, out, passphrase, live=False):
         after=inventory(target,work.parent)
         if before!=after:
             print('DIAGNOSTIC inventory_diff '+json.dumps(safe_inventory_diff(before,after),sort_keys=True),flush=True)
+            private_diff={}
+            for group in ('catalog',):
+                left={json.dumps(v,sort_keys=True) for v in before[group]}
+                right={json.dumps(v,sort_keys=True) for v in after[group]}
+                private_diff[group]={'missing':[json.loads(x) for x in sorted(left-right)],
+                                     'added':[json.loads(x) for x in sorted(right-left)]}
+            run(['node',str(Path(__file__).with_name('encrypt-diagnostic.mjs')),
+                 str(out/'diagnostic-cipher.json')],data=json.dumps(private_diff).encode())
         if before!=after and SYNTHETIC_DIAGNOSTICS:
             for group in before:
                 left={json.dumps(v,sort_keys=True) for v in before[group]}
