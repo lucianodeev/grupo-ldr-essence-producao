@@ -350,25 +350,40 @@ def rehearse(source, work, out, passphrase, live=False):
         # Replay original routine ownership using supported ALTER statements;
         # this also preserves the owner/grantor entries in extension ACLs.
         # Keep exact catalog comparison: no privileges or grantors are ignored.
+        ddl=[]
+        relation_kinds={}
         for entry in before['catalog']:
             if entry.get('kind')=='schema_owner':
-                target.raw('ALTER SCHEMA '+identifier(entry['name'])+' OWNER TO '+identifier(entry['owner'])+';',snapshot=False)
+                ddl.append('ALTER SCHEMA '+identifier(entry['name'])+' OWNER TO '+identifier(entry['owner'])+';')
             elif entry.get('kind')=='relation_owner':
+                relation_kinds[(entry['schema'],entry['name'])]=entry['relation_kind']
                 kind={'r':'TABLE','p':'TABLE','m':'MATERIALIZED VIEW','v':'VIEW','S':'SEQUENCE','f':'FOREIGN TABLE'}[entry['relation_kind']]
                 name=identifier(entry['schema'])+'.'+identifier(entry['name'])
-                target.raw('ALTER '+kind+' '+name+' OWNER TO '+identifier(entry['owner'])+';',snapshot=False)
+                ddl.append('ALTER '+kind+' '+name+' OWNER TO '+identifier(entry['owner'])+';')
             elif entry.get('kind')=='extension_function_owner':
                 routine=identifier(entry['schema'])+'.'+identifier(entry['name'])+'('+entry['args']+')'
-                target.raw('ALTER '+entry['routine_type']+' '+routine+' OWNER TO '+identifier(entry['owner'])+';',snapshot=False)
-        # Managed extension schemas can carry grants from image bootstrap that
-        # pg_dump does not replay. Restore the captured source grants explicitly
-        # on the isolated clone, then insist on an exact ACL comparison.
+                ddl.append('ALTER '+entry['routine_type']+' '+routine+' OWNER TO '+identifier(entry['owner'])+';')
+        target.raw('\n'.join(ddl),snapshot=False)
+        # Recreate explicit source ACLs, including explicit owner grants that a
+        # logical restore may leave implicit. This does not invent permissions:
+        # every grant is from the captured source catalog and the final comparison
+        # still rejects any missing or additional privilege or grantor.
+        grants=[]
         for entry in before['catalog']:
-            if entry.get('kind')=='schema_acl':
-                grantee='PUBLIC' if entry['grantee']=='PUBLIC' else identifier(entry['grantee'])
-                option=' WITH GRANT OPTION' if entry['grantable'] else ''
-                target.raw('SET ROLE '+identifier(entry['grantor'])+'; GRANT '+entry['privilege']+
-                           ' ON SCHEMA '+identifier(entry['name'])+' TO '+grantee+option+'; RESET ROLE;',snapshot=False)
+            kind=entry.get('kind')
+            if kind not in ('schema_acl','table_acl','function_acl'): continue
+            grantee='PUBLIC' if entry['grantee']=='PUBLIC' else identifier(entry['grantee'])
+            option=' WITH GRANT OPTION' if entry['grantable'] else ''
+            if kind=='schema_acl':
+                obj='SCHEMA '+identifier(entry['name'])
+            elif kind=='table_acl':
+                object_type='SEQUENCE' if relation_kinds.get((entry['schema'],entry['name']))=='S' else 'TABLE'
+                obj=object_type+' '+identifier(entry['schema'])+'.'+identifier(entry['name'])
+            else:
+                obj='ROUTINE '+identifier(entry['schema'])+'.'+identifier(entry['name'])+'('+entry['args']+')'
+            grants.append('SET ROLE '+identifier(entry['grantor'])+'; GRANT '+entry['privilege']+
+                          ' ON '+obj+' TO '+grantee+option+'; RESET ROLE;')
+        target.raw('\n'.join(grants),snapshot=False)
         after=inventory(target,work.parent)
         if before!=after and SYNTHETIC_DIAGNOSTICS:
             for group in before:
