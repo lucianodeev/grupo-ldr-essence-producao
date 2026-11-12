@@ -493,7 +493,7 @@ def main():
             with isolated() as probe:
                 probe.raw('CREATE DATABASE ldr_restore TEMPLATE template0;',snapshot=False)
                 probe.db='ldr_restore'
-                probe.raw('CREATE EXTENSION pg_cron; CREATE EXTENSION pg_net;',snapshot=False)
+                probe.raw('CREATE SCHEMA extensions; CREATE EXTENSION pg_cron WITH SCHEMA pg_catalog; CREATE EXTENSION pg_net WITH SCHEMA extensions;',snapshot=False)
                 print('PASS isolated platform extension startup with scheduler disabled',flush=True)
             with isolated() as source:
                 source.raw("DO $roles$ BEGIN CREATE ROLE anon NOLOGIN; EXCEPTION WHEN duplicate_object THEN NULL; END $roles$; DO $roles$ BEGIN CREATE ROLE authenticated NOLOGIN; EXCEPTION WHEN duplicate_object THEN NULL; END $roles$; DO $roles$ BEGIN CREATE ROLE service_role NOLOGIN BYPASSRLS; EXCEPTION WHEN duplicate_object THEN NULL; END $roles$; CREATE TABLE public.recovery_fixture(id integer PRIMARY KEY, secret text); ALTER TABLE public.recovery_fixture ENABLE ROW LEVEL SECURITY; REVOKE ALL ON public.recovery_fixture FROM PUBLIC; INSERT INTO public.recovery_fixture VALUES (1,'synthetic only'); CREATE SEQUENCE public.recovery_seq; SELECT nextval('public.recovery_seq');",snapshot=False)
