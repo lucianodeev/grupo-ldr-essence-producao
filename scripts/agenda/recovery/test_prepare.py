@@ -8,10 +8,46 @@ import tarfile
 import tempfile
 import unittest
 from unittest.mock import patch
+from unittest.mock import Mock
+import hashlib
+import re
 spec=importlib.util.spec_from_file_location('recovery',Path(__file__).with_name('prepare.py'))
 r=importlib.util.module_from_spec(spec);spec.loader.exec_module(r)
 
 class RecoverySecurityTests(unittest.TestCase):
+    def test_inventory_diagnostics_only_contain_counts_and_fixed_kinds(self):
+        left={'tables':[], 'catalog':[{'kind':'policy','name':'private-secret','sql':'private-sql'}], 'sequences':[]}
+        right={'tables':[], 'catalog':[], 'sequences':[]}
+        report=r.safe_inventory_diff(left,right)
+        self.assertEqual(report,{'catalog':{'missing':1,'added':0,'kinds':{'policy':{'missing':1,'added':0}}}})
+        self.assertNotIn('private',str(report))
+    def test_batched_inventory_preserves_exact_canonical_bytes_and_limits_connections(self):
+        tables=[{'schema':'public','name':'synthetic_'+str(i)} for i in range(26)]
+        pg=Mock(); pg.json.side_effect=[tables,[],[]]
+        row=b'{"synthetic": "escaped\\ntext"}\n'
+        def emit(sql,output):
+            self.assertIn('COLLATE "C"',sql)
+            for marker in re.findall(r'^\\echo (LDR_RECOVERY_[^\n]+)$',sql,re.M):
+                output.write(marker.encode()+b'\n')
+                if not marker.endswith('END'): output.write(row)
+        pg.raw.side_effect=emit
+        with tempfile.TemporaryDirectory() as p:
+            result=r.inventory(pg,Path(p))
+            self.assertEqual(list(Path(p).iterdir()),[])
+        self.assertEqual(pg.raw.call_count,2)
+        self.assertEqual(len(result['tables']),26)
+        for table in result['tables']:
+            self.assertEqual(table['rows'],1)
+            self.assertEqual(table['sha256'],hashlib.sha256(row).hexdigest())
+
+    def test_batched_inventory_rejects_incomplete_output(self):
+        pg=Mock();pg.json.return_value=[{'schema':'public','name':'synthetic'}]
+        pg.raw.side_effect=lambda sql,output: output.write(b'')
+        with tempfile.TemporaryDirectory() as p:
+            with self.assertRaisesRegex(r.Blocked,'inventory_batch_incomplete'):
+                r.inventory(pg,Path(p))
+            self.assertEqual(list(Path(p).iterdir()),[])
+
     def test_restore_errors_never_disclose_arbitrary_sql_or_object_names(self):
         for message, code in [
             (b'ERROR: pg_cron can only be loaded via shared_preload_libraries; private-value', 'isolated_restore_shared_preload_required'),
