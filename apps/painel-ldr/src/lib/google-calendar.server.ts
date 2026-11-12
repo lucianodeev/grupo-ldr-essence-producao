@@ -224,7 +224,7 @@ export async function createEvent(input: EventInput): Promise<CalendarEventResul
   let event: GoogleEvent;
   try {
   event = await gateway<GoogleEvent>(
-    `${calendarPath()}/events?conferenceDataVersion=1&sendUpdates=all`,
+    `${calendarPath()}/events?conferenceDataVersion=1&sendUpdates=${input.attendeeEmail ? "all" : "none"}`,
     {
       method: "POST",
       body: {
@@ -238,7 +238,7 @@ export async function createEvent(input: EventInput): Promise<CalendarEventResul
         guestsCanModify: false,
         start: { dateTime: input.startsAtIso, timeZone: CALENDAR_TIMEZONE },
         end: { dateTime: input.endsAtIso, timeZone: CALENDAR_TIMEZONE },
-        attendees: [{ email: input.attendeeEmail }],
+        attendees: input.attendeeEmail ? [{ email: input.attendeeEmail }] : [],
         extendedProperties: { private: { ldr_appointment: input.appointmentId } },
         conferenceData: {
           createRequest: {
@@ -265,14 +265,14 @@ export async function patchEvent(
   input: Omit<EventInput, "appointmentId">,
 ): Promise<CalendarEventResult> {
   const event = await gateway<GoogleEvent>(
-    `${calendarPath()}/events/${encodeURIComponent(eventId)}?conferenceDataVersion=1&sendUpdates=all`,
+    `${calendarPath()}/events/${encodeURIComponent(eventId)}?conferenceDataVersion=1&sendUpdates=${input.attendeeEmail ? "all" : "none"}`,
     {
       method: "PATCH",
       body: {
         summary: input.summary,
         start: { dateTime: input.startsAtIso, timeZone: CALENDAR_TIMEZONE },
         end: { dateTime: input.endsAtIso, timeZone: CALENDAR_TIMEZONE },
-        attendees: [{ email: input.attendeeEmail }],
+        attendees: input.attendeeEmail ? [{ email: input.attendeeEmail }] : [],
       },
     },
   );
@@ -291,4 +291,13 @@ export async function cancelEvent(eventId: string): Promise<void> {
     if (error instanceof CalendarError && error.code === "nao_encontrado") return;
     throw error;
   }
+}
+
+/** Counts only this synthetic appointment marker, never returns unrelated events. */
+export async function countEventsByAppointment(appointmentId: string): Promise<number> {
+  const result = await gateway<{ items?: GoogleEvent[]; nextPageToken?: string }>(
+    `${calendarPath()}/events?privateExtendedProperty=${encodeURIComponent(`ldr_appointment=${appointmentId}`)}&showDeleted=false&maxResults=5`,
+  );
+  if (!Array.isArray(result.items) || result.nextPageToken) throw new CalendarError("resposta_invalida");
+  return result.items.filter(event => event.status !== "cancelled").length;
 }
