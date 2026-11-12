@@ -278,6 +278,74 @@ CATALOG = """SELECT coalesce(jsonb_agg(x ORDER BY x::text COLLATE "C"),'[]') FRO
  ) v;"""
 
 # Metadata only in public evidence; detailed catalog, data hashes and filenames stay encrypted.
+def canonical_catalog(entries):
+    # pg_policies.roles is an unordered set represented as an array. Its OID
+    # traversal order can change on restore without changing permissions.
+    for entry in entries:
+        if entry.get('kind')=='policy':
+            entry['value']['roles']=sorted(entry['value']['roles'])
+    return sorted(entries,key=lambda x:json.dumps(x,sort_keys=True))
+
+PLATFORM_TABLES=(('net','http_request_queue'),('net','_http_response'))
+
+def backup_platform_data(source,work,manifest):
+    present={(t['schema'],t['name']) for t in manifest['tables']}
+    for schema,table in PLATFORM_TABLES:
+        if (schema,table) not in present: continue
+        path=work/('platform-'+schema+'-'+table+'.csv')
+        with path.open('wb') as f:
+            source.raw('COPY '+identifier(schema)+'.'+identifier(table)+' TO STDOUT WITH (FORMAT csv);',output=f)
+        require(path.stat().st_size<=MAX_BYTES,'platform_table_size_limit')
+
+def restore_platform_state(target,work,manifest):
+    require(bool(target.container) and bool(re.fullmatch(r'ldr-recovery-[0-9a-f]{12}',target.container))
+            and target.db=='ldr_restore','isolated_recovery_target_required')
+    for schema,table in PLATFORM_TABLES:
+        path=work/('platform-'+schema+'-'+table+'.csv')
+        if not path.exists(): continue
+        with path.open('rb') as f:
+            result=subprocess.run(target.command('psql','-X','-q','-v','ON_ERROR_STOP=1','-c',
+                'COPY '+identifier(schema)+'.'+identifier(table)+' FROM STDIN WITH (FORMAT csv);'),
+                stdin=f,stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=120)
+        require(result.returncode==0,'isolated_platform_data_restore_failed')
+    ddl=[]
+    for seq in manifest['sequences']:
+        state=seq['state'];name=identifier(seq['schema'])+'.'+identifier(seq['name'])
+        require(isinstance(state['is_called'],bool),'invalid_sequence_state')
+        ddl.append('SELECT pg_catalog.setval('+literal(name)+'::regclass,'+literal(state['last_value'])+
+                   '::bigint,'+('true' if state['is_called'] else 'false')+');')
+    # Extension installation can recreate its packaged defaults rather than
+    # hosted/custom rules. Reconstruct changed rules from the decrypted manifest.
+    current=canonical_catalog(target.json(CATALOG,snapshot=False))
+    constraints={(e['schema'],e['table'],e['name']):e for e in current if e.get('kind')=='constraint'}
+    policies={(e['value']['schemaname'],e['value']['tablename'],e['value']['policyname']):e
+              for e in current if e.get('kind')=='policy'}
+    for entry in manifest['catalog']:
+        if entry.get('kind')=='constraint':
+            key=(entry['schema'],entry['table'],entry['name']);old=constraints.get(key)
+            if old==entry: continue
+            relation=identifier(key[0])+'.'+identifier(key[1]);constraint=identifier(key[2])
+            if old: ddl.append('ALTER TABLE '+relation+' DROP CONSTRAINT '+constraint+';')
+            ddl.append('ALTER TABLE '+relation+' ADD CONSTRAINT '+constraint+' '+entry['definition']+';')
+        elif entry.get('kind')=='policy':
+            p=entry['value'];key=(p['schemaname'],p['tablename'],p['policyname']);old=policies.get(key)
+            if old==entry: continue
+            require(p['permissive'] in ('PERMISSIVE','RESTRICTIVE') and p['cmd'] in ('ALL','SELECT','INSERT','UPDATE','DELETE'),
+                    'invalid_policy_metadata')
+            relation=identifier(key[0])+'.'+identifier(key[1]);policy=identifier(key[2])
+            if old: ddl.append('DROP POLICY '+policy+' ON '+relation+';')
+            roles=','.join('PUBLIC' if role=='public' else identifier(role) for role in p['roles'])
+            statement='CREATE POLICY '+policy+' ON '+relation+' AS '+p['permissive']+' FOR '+p['cmd']+' TO '+roles
+            if p['qual'] is not None: statement+=' USING ('+p['qual']+')'
+            if p['with_check'] is not None: statement+=' WITH CHECK ('+p['with_check']+')'
+            ddl.append(statement+';')
+    for table in manifest['tables']:
+        if table['kind'] not in ('r','p'): continue
+        relation=identifier(table['schema'])+'.'+identifier(table['name'])
+        ddl.append('ALTER TABLE '+relation+(' ENABLE' if table['rls'] else ' DISABLE')+' ROW LEVEL SECURITY;')
+        ddl.append('ALTER TABLE '+relation+(' FORCE' if table['force_rls'] else ' NO FORCE')+' ROW LEVEL SECURITY;')
+    target.raw('\n'.join(ddl),snapshot=False)
+
 def inventory(pg, work):
     tables = pg.json(TABLES)
     # Keep the exact canonical row bytes/hash, but avoid one TLS connection and
@@ -288,12 +356,13 @@ def inventory(pg, work):
         statements=[]
         for i,table in enumerate(batch):
             name=identifier(table['schema'])+'.'+identifier(table['name'])
-            statements += ['\\echo '+marker+str(i),
-                           'SELECT to_jsonb(t)::text FROM '+name+' t ORDER BY to_jsonb(t)::text COLLATE "C";']
-        statements += ['\\echo '+marker+'END']
+            statements += ["SELECT "+str(i)+" AS table_index,0 AS phase,''::text AS row_value,"+literal(marker+str(i))+" AS value",
+                           'SELECT '+str(i)+',1,to_jsonb(t)::text,to_jsonb(t)::text FROM '+name+' t']
+        statements += ["SELECT "+str(len(batch))+",0,''::text,"+literal(marker+'END')+" AS value"]
+        sql='SELECT value FROM ('+' UNION ALL '.join(statements)+') inventory_rows ORDER BY table_index,phase,row_value COLLATE "C";'
         path=work/'inventory-batch'
         try:
-            with path.open('wb') as f: pg.raw('\n'.join(statements),output=f)
+            with path.open('wb') as f: pg.raw(sql,output=f)
             require(path.stat().st_size<=MAX_BYTES*len(batch),'inventory_batch_size_limit')
             current=-1; digest=None; rows=0; size=0; ended=False
             with path.open('rb') as f:
@@ -322,7 +391,7 @@ def inventory(pg, work):
         values=pg.json('SELECT jsonb_build_array('+','.join(states)+');')
         require(len(values)==len(seqs),'sequence_inventory_incomplete')
         for seq,state in zip(seqs,values): seq['state']=state
-    return {'tables':tables,'catalog':pg.json(CATALOG),'sequences':seqs}
+    return {'tables':tables,'catalog':canonical_catalog(pg.json(CATALOG)),'sequences':seqs}
 
 @contextlib.contextmanager
 def isolated():
@@ -332,7 +401,7 @@ def isolated():
          '-e','POSTGRES_HOST_AUTH_METHOD=trust','-e','POSTGRES_PASSWORD='+secrets.token_urlsafe(32),
          IMAGE,'postgres','-c','shared_preload_libraries=pg_cron,pg_net,pg_stat_statements,supabase_vault',
          '-c','cron.launch_active_jobs=off','-c','cron.database_name=ldr_restore',
-         '-c','pg_net.database_name=ldr_restore'])
+         '-c','pg_net.database_name=ldr_worker_disabled'])
     pg=Pg(name,user='supabase_admin')
     try:
         for _ in range(90):
@@ -344,7 +413,7 @@ def isolated():
             if ready.returncode==0 and ready.stdout.strip()==b't': break
             time.sleep(1)
         else: raise Blocked('isolated_postgres_not_ready')
-        require(pg.json("SELECT to_jsonb(current_setting('cron.launch_active_jobs')='off' AND current_setting('cron.database_name')='ldr_restore');"),
+        require(pg.json("SELECT to_jsonb(current_setting('cron.launch_active_jobs')='off' AND current_setting('cron.database_name')='ldr_restore' AND current_setting('pg_net.database_name')='ldr_worker_disabled');"),
                 'isolated_scheduler_configuration_invalid')
         yield pg
     finally:
@@ -453,6 +522,7 @@ def rehearse(source, work, out, passphrase, live=False):
         before=inventory(source,work)
         source.dump(work/'database.dump')
         source.roles(work/'roles.sql')
+        backup_platform_data(source,work,before)
         print('PASS database and password-free roles exported',flush=True)
         if live:
             objects=source.json(OBJECTS)
@@ -464,6 +534,7 @@ def rehearse(source, work, out, passphrase, live=False):
     print('PASS encrypted payload decrypted with matching hashes',flush=True)
     with isolated() as target:
         restore(target,recovered/'database.dump',recovered/'roles.sql')
+        restore_platform_state(target,recovered,json.loads((recovered/'source-manifest.json').read_text()))
         print('PASS restore completed in a network-isolated container',flush=True)
         # PostgreSQL creates extension routines under the restoring role.
         # Replay original routine ownership using supported ALTER statements;
@@ -547,6 +618,7 @@ def main():
                 print('PASS isolated platform extension startup with scheduler disabled',flush=True)
             with isolated() as source:
                 source.raw("DO $roles$ BEGIN CREATE ROLE anon NOLOGIN; EXCEPTION WHEN duplicate_object THEN NULL; END $roles$; DO $roles$ BEGIN CREATE ROLE authenticated NOLOGIN; EXCEPTION WHEN duplicate_object THEN NULL; END $roles$; DO $roles$ BEGIN CREATE ROLE service_role NOLOGIN BYPASSRLS; EXCEPTION WHEN duplicate_object THEN NULL; END $roles$; CREATE TABLE public.recovery_fixture(id integer PRIMARY KEY, secret text); ALTER TABLE public.recovery_fixture ENABLE ROW LEVEL SECURITY; REVOKE ALL ON public.recovery_fixture FROM PUBLIC; INSERT INTO public.recovery_fixture VALUES (1,'synthetic only'); CREATE SEQUENCE public.recovery_seq; SELECT nextval('public.recovery_seq');",snapshot=False)
+                source.raw("CREATE SCHEMA IF NOT EXISTS extensions; CREATE EXTENSION IF NOT EXISTS pg_net WITH SCHEMA extensions; INSERT INTO net._http_response(id,status_code,body,timed_out,created) VALUES (7001,200,E'synthetic only\\nsecond line',false,now()); SELECT pg_catalog.setval('net.http_request_queue_id_seq'::regclass,42,true); ALTER TABLE net._http_response ADD CONSTRAINT ldr_synthetic_positive_id CHECK (id>0); ALTER TABLE net._http_response ENABLE ROW LEVEL SECURITY; CREATE POLICY ldr_synthetic_response ON net._http_response TO authenticated,anon USING (false);",snapshot=False)
                 result=rehearse(source,work,out,secrets.token_urlsafe(32))
             # Self-test ciphertext contains synthetic fixtures and has no reusable recovery key.
             (out/'recovery.tar.gpg').unlink()
