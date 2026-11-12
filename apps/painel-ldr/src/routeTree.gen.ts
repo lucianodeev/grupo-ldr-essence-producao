@@ -282,6 +282,8 @@ import { Route as ClientareaClienteTreinamentosPsicanaliseRouteImport } from './
 import { Route as ClientareaClienteTreinamentosPsicanaliseInternacionalRouteImport } from './routes/_clientarea.cliente.treinamentos.psicanalise-internacional'
 import { Route as ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRouteImport } from './routes/_clientarea.cliente.treinamentos.terapia-breve-psicanalitica'
 import { Route as ClientareaClienteTreinamentosTricologiaTerapiaCapilarRouteImport } from './routes/_clientarea.cliente.treinamentos.tricologia-terapia-capilar'
+import { Route as ApiIntegrationsGoogleCalendarCallbackRouteImport } from './routes/api/integrations/google-calendar/callback'
+import { Route as ApiIntegrationsGoogleCalendarStartRouteImport } from './routes/api/integrations/google-calendar/start'
 import { Route as CarreiraVagasJobIdCandidaturaRouteImport } from './routes/carreira.vagas.$jobId.candidatura'
 import { Route as ClientareaClienteBibliotecaPublicacoesSlugRouteImport } from './routes/_clientarea.cliente.biblioteca.publicacoes.$slug'
 import { Route as ClientareaClienteCursosAcademySlugRouteImport } from './routes/_clientarea.cliente.cursos.academy.$slug'
@@ -1797,6 +1799,18 @@ const ClientareaClienteTreinamentosTricologiaTerapiaCapilarRoute =
     path: '/tricologia-terapia-capilar',
     getParentRoute: () => ClientareaClienteTreinamentosRoute,
   } as any)
+const ApiIntegrationsGoogleCalendarCallbackRoute =
+  ApiIntegrationsGoogleCalendarCallbackRouteImport.update({
+    id: '/api/integrations/google-calendar/callback',
+    path: '/api/integrations/google-calendar/callback',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiIntegrationsGoogleCalendarStartRoute =
+  ApiIntegrationsGoogleCalendarStartRouteImport.update({
+    id: '/api/integrations/google-calendar/start',
+    path: '/api/integrations/google-calendar/start',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const CarreiraVagasJobIdCandidaturaRoute =
   CarreiraVagasJobIdCandidaturaRouteImport.update({
     id: '/candidatura',
@@ -2164,6 +2178,8 @@ export interface FileRoutesByFullPath {
   '/cliente/treinamentos/psicanalise-internacional': typeof ClientareaClienteTreinamentosPsicanaliseInternacionalRoute
   '/cliente/treinamentos/terapia-breve-psicanalitica': typeof ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRoute
   '/cliente/treinamentos/tricologia-terapia-capilar': typeof ClientareaClienteTreinamentosTricologiaTerapiaCapilarRoute
+  '/api/integrations/google-calendar/callback': typeof ApiIntegrationsGoogleCalendarCallbackRoute
+  '/api/integrations/google-calendar/start': typeof ApiIntegrationsGoogleCalendarStartRoute
   '/carreira/vagas/$jobId/candidatura': typeof CarreiraVagasJobIdCandidaturaRoute
   '/cliente/biblioteca/publicacoes/$slug': typeof ClientareaClienteBibliotecaPublicacoesSlugRoute
   '/cliente/cursos/academy/$slug': typeof ClientareaClienteCursosAcademySlugRoute
@@ -2447,6 +2463,8 @@ export interface FileRoutesByTo {
   '/cliente/treinamentos/psicanalise-internacional': typeof ClientareaClienteTreinamentosPsicanaliseInternacionalRoute
   '/cliente/treinamentos/terapia-breve-psicanalitica': typeof ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRoute
   '/cliente/treinamentos/tricologia-terapia-capilar': typeof ClientareaClienteTreinamentosTricologiaTerapiaCapilarRoute
+  '/api/integrations/google-calendar/callback': typeof ApiIntegrationsGoogleCalendarCallbackRoute
+  '/api/integrations/google-calendar/start': typeof ApiIntegrationsGoogleCalendarStartRoute
   '/carreira/vagas/$jobId/candidatura': typeof CarreiraVagasJobIdCandidaturaRoute
   '/cliente/biblioteca/publicacoes/$slug': typeof ClientareaClienteBibliotecaPublicacoesSlugRoute
   '/cliente/cursos/academy/$slug': typeof ClientareaClienteCursosAcademySlugRoute
@@ -2739,6 +2757,8 @@ export interface FileRoutesById {
   '/_clientarea/cliente/treinamentos/psicanalise-internacional': typeof ClientareaClienteTreinamentosPsicanaliseInternacionalRoute
   '/_clientarea/cliente/treinamentos/terapia-breve-psicanalitica': typeof ClientareaClienteTreinamentosTerapiaBrevePsicanaliticaRoute
   '/_clientarea/cliente/treinamentos/tricologia-terapia-capilar': typeof ClientareaClienteTreinamentosTricologiaTerapiaCapilarRoute
+  '/api/integrations/google-calendar/callback': typeof ApiIntegrationsGoogleCalendarCallbackRoute
+  '/api/integrations/google-calendar/start': typeof ApiIntegrationsGoogleCalendarStartRoute
   '/carreira/vagas/$jobId/candidatura': typeof CarreiraVagasJobIdCandidaturaRoute
   '/_clientarea/cliente/biblioteca/publicacoes/$slug': typeof ClientareaClienteBibliotecaPublicacoesSlugRoute
   '/_clientarea/cliente/cursos/academy/$slug': typeof ClientareaClienteCursosAcademySlugRoute
@@ -3028,6 +3048,8 @@ export interface FileRouteTypes {
     | '/cliente/treinamentos/psicanalise-internacional'
     | '/cliente/treinamentos/terapia-breve-psicanalitica'
     | '/cliente/treinamentos/tricologia-terapia-capilar'
+    | '/api/integrations/google-calendar/callback'
+    | '/api/integrations/google-calendar/start'
     | '/carreira/vagas/$jobId/candidatura'
     | '/cliente/biblioteca/publicacoes/$slug'
     | '/cliente/cursos/academy/$slug'
@@ -3311,6 +3333,8 @@ export interface FileRouteTypes {
     | '/cliente/treinamentos/psicanalise-internacional'
     | '/cliente/treinamentos/terapia-breve-psicanalitica'
     | '/cliente/treinamentos/tricologia-terapia-capilar'
+    | '/api/integrations/google-calendar/callback'
+    | '/api/integrations/google-calendar/start'
     | '/carreira/vagas/$jobId/candidatura'
     | '/cliente/biblioteca/publicacoes/$slug'
     | '/cliente/cursos/academy/$slug'
@@ -3602,6 +3626,8 @@ export interface FileRouteTypes {
     | '/_clientarea/cliente/treinamentos/psicanalise-internacional'
     | '/_clientarea/cliente/treinamentos/terapia-breve-psicanalitica'
     | '/_clientarea/cliente/treinamentos/tricologia-terapia-capilar'
+    | '/api/integrations/google-calendar/callback'
+    | '/api/integrations/google-calendar/start'
     | '/carreira/vagas/$jobId/candidatura'
     | '/_clientarea/cliente/biblioteca/publicacoes/$slug'
     | '/_clientarea/cliente/cursos/academy/$slug'
@@ -3717,6 +3743,8 @@ export interface RootRouteChildren {
   ApiHotmartWebhookRoute: typeof ApiHotmartWebhookRoute
   ApiIntegrationsSiteOrdersRoute: typeof ApiIntegrationsSiteOrdersRoute
   ApiStripeWebhookRoute: typeof ApiStripeWebhookRoute
+  ApiIntegrationsGoogleCalendarCallbackRoute: typeof ApiIntegrationsGoogleCalendarCallbackRoute
+  ApiIntegrationsGoogleCalendarStartRoute: typeof ApiIntegrationsGoogleCalendarStartRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -5632,6 +5660,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClientareaClienteTreinamentosTricologiaTerapiaCapilarRouteImport
       parentRoute: typeof ClientareaClienteTreinamentosRoute
     }
+    '/api/integrations/google-calendar/callback': {
+      id: '/api/integrations/google-calendar/callback'
+      path: '/api/integrations/google-calendar/callback'
+      fullPath: '/api/integrations/google-calendar/callback'
+      preLoaderRoute: typeof ApiIntegrationsGoogleCalendarCallbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/integrations/google-calendar/start': {
+      id: '/api/integrations/google-calendar/start'
+      path: '/api/integrations/google-calendar/start'
+      fullPath: '/api/integrations/google-calendar/start'
+      preLoaderRoute: typeof ApiIntegrationsGoogleCalendarStartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/carreira/vagas/$jobId/candidatura': {
       id: '/carreira/vagas/$jobId/candidatura'
       path: '/candidatura'
@@ -6583,6 +6625,10 @@ const rootRouteChildren: RootRouteChildren = {
   ApiHotmartWebhookRoute: ApiHotmartWebhookRoute,
   ApiIntegrationsSiteOrdersRoute: ApiIntegrationsSiteOrdersRoute,
   ApiStripeWebhookRoute: ApiStripeWebhookRoute,
+  ApiIntegrationsGoogleCalendarCallbackRoute:
+    ApiIntegrationsGoogleCalendarCallbackRoute,
+  ApiIntegrationsGoogleCalendarStartRoute:
+    ApiIntegrationsGoogleCalendarStartRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

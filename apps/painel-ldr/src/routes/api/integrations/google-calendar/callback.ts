@@ -4,7 +4,8 @@ export const Route = createFileRoute("/api/integrations/google-calendar/callback
   server: {
     handlers: {
       GET: async ({ request }) => {
-        if (process.env["AGENDA_INTEGRATION_ENABLED"] !== "true") {
+        // OAuth setup does not enable booking/calendar operations.
+        if (process.env["GOOGLE_CALENDAR_OAUTH_SETUP_ENABLED"] !== "true") {
           return new Response("Not available", { status: 404, headers: { "Cache-Control": "no-store" } });
         }
         const [{ createCalendarOAuthHttpHandlers }, { authenticateCalendarOAuthAdmin }, { calendarOAuthNonceStore, calendarOAuthTokenVault }] = await Promise.all([
