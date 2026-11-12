@@ -167,7 +167,7 @@ console.log("LDR ONE SANDBOX DB CONFIG: " + dbConfig);
 const persistSandboxEvents=process.env.LDR_ONE_SANDBOX_PERSIST_EVENTS==="yes";
 let eventDb=null;
 if(persistSandboxEvents){
-  if(process.env.RENDER_SERVICE_ID!=="srv-das6drvavr4c7397dflg")throw Error("Sandbox persistence forbidden on other services");
+  if(process.env.RENDER_SERVICE_ID!=="srv-dbqpb3mi0phs73dc5egg")throw Error("Sandbox persistence forbidden on other services");
   const dbUrl=process.env.DATABASE_URL;
   if(!dbUrl)throw Error("Private sandbox database required");
   const parsed=new URL(dbUrl);
@@ -236,7 +236,7 @@ createServer(async(req,res)=>{
   }
   // Explicit one-shot test: local signed HTTP delivery and cleanup of synthetic rows.
   if(process.env.LDR_ONE_SANDBOX_SIGNED_HTTP_SELFTEST!=="yes")return;
-  if(!persistSandboxEvents||!ready||process.env.RENDER_SERVICE_ID!=="srv-das6drvavr4c7397dflg"){
+  if(!persistSandboxEvents||!ready||process.env.RENDER_SERVICE_ID!=="srv-dbqpb3mi0phs73dc5egg"){
     console.error("LDR ONE SIGNED HTTP SELFTEST GUARD FAILED");process.exitCode=1;return;
   }
   const {randomUUID}=await import("node:crypto");
