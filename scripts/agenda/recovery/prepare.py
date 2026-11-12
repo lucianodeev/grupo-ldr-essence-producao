@@ -209,10 +209,10 @@ def isolated():
     run(['docker','run','-d','--name',name,'--network','none',
          '-e','POSTGRES_HOST_AUTH_METHOD=trust','-e','POSTGRES_PASSWORD='+secrets.token_urlsafe(32),
          IMAGE,'postgres','-c','cron.launch_active_jobs=off','-c','cron.database_name=ldr_restore'])
-    pg=Pg(name)
+    pg=Pg(name,user='supabase_admin')
     try:
         for _ in range(90):
-            ready=subprocess.run(['docker','exec',name,'pg_isready','-U','postgres'],
+            ready=subprocess.run(['docker','exec',name,'pg_isready','-U','supabase_admin'],
                                  stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
             if ready.returncode==0: break
             time.sleep(1)
@@ -357,6 +357,9 @@ def main():
             require(os.environ.get('GITHUB_REF')=='refs/heads/main','reviewed_main_branch_required')
             require(os.environ.get('LDR_BACKUP_CONFIRM')==PROJECT,'project_confirmation_missing')
             require(os.environ.get('ACTIONS_STEP_DEBUG','').lower()!='true' and os.environ.get('RUNNER_DEBUG','')!='1','debug_logging_must_be_disabled')
+            require(bool(os.environ.get('LDR_BACKUP_STORAGE_KEY','')),'storage_credential_missing')
+            phrase=os.environ.get('LDR_BACKUP_PASSPHRASE','')
+            require(len(phrase)>=24 and not any(c in phrase for c in ('\n','\r','\x00')),'valid_backup_passphrase_required')
             source=Pg(remote_env=remote_environment())
             result=rehearse(source,work,out,os.environ.get('LDR_BACKUP_PASSPHRASE',''),live=True)
         result['self_test']=args.self_test
