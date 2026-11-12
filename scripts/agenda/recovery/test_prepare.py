@@ -14,6 +14,9 @@ r=importlib.util.module_from_spec(spec);spec.loader.exec_module(r)
 class RecoverySecurityTests(unittest.TestCase):
     def test_restore_errors_never_disclose_arbitrary_sql_or_object_names(self):
         for message, code in [
+            (b'ERROR: pg_cron can only be loaded via shared_preload_libraries; private-value', 'isolated_restore_shared_preload_required'),
+            (b'ERROR: can only be created in database private-db', 'isolated_restore_extension_database_mismatch'),
+            (b'ERROR: unrecognized configuration parameter "transaction_timeout"', 'isolated_restore_unknown_parameter_transaction_timeout'),
             (b'ERROR: schema "graphql" already exists; private-credential', 'isolated_restore_schema_already_exists_graphql'),
             (b'ERROR: schema "private-secret" already exists; private-credential', 'isolated_restore_duplicate_object'),
             (b'ERROR: extension "pg_net" is not available; private-value', 'isolated_restore_extension_unavailable_pg_net'),
