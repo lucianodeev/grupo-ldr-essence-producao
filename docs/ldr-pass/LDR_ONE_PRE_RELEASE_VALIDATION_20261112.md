@@ -33,3 +33,14 @@
 2. Preparar e executar teste integrado isolado com Stripe TEST e PostgreSQL durável acessível (sem tocar LIVE).
 3. Configurar a entrega definitiva de eventos do Stripe (endpoint, eventos de renovação e segredo), somente mediante autorização separada.
 4. Aprovar política de cobrança/faturação, catálogo, suporte e confirmação final de PR e deploy.
+
+
+## Stripe TEST: primeira sessão real de checkout (verificação adicional)
+- O conector Stripe foi reconectado ao ambiente **TEST** (`livemode=false`) da conta `acct_1U28k7Klx2LyNGeB`.
+- Produtos TEST ativos: Business `prod_VKuOYWvxCLofRL`; preço mensal `price_1UKEZQKlx2LyNGeB97DEKLBT` (1.990 cêntimos por colaborador).
+- Criada uma sessão Stripe Checkout **TEST** para cinco colaboradores: `cs_test_a080d5C4hQPJAtpJvVuVy50yQ4JoyAbUQNxXL9dKqHHl3QvM60FiscPF8I`.
+- Recuperação via Stripe API confirmou: `livemode=false`, `mode=subscription`, `status=open`, `payment_status=unpaid`, `amount_total=9950` EUR cents (€99,50), `subscription=null`.
+- **Nenhuma cobrança ou subscrição criada.** A sessão foi criada diretamente pela API TEST para verificar a configuração Stripe, não pelo checkout autenticado da aplicação: **não** atesta integração com a base de dados do LDR nem entrega webhook.
+- Stripe TEST tem webhook habilitado `we_1UK6O3Klx2LyNGeBxSmTtynH` com destino `https://ldr-one-stripe-sandbox.onrender.com/stripe/test-webhook`. A API TEST devolveu zero eventos até à consulta.
+- O Render sandbox mantém o deploy de 28/09/2026, autoDeploy desligado, sem logs recentes; não há ramo isolado Supabase para o projecto LDR, e o conector não permite ler os segredos Render.
+- Próxima prova exigida para o GO: transação **TEST** autenticada *dentro do aplicativo*, webhook Stripe TEST assinado entregue ao Render, persistência efetiva e atribuição/revogação de cinco acessos em banco segregado. Exige garantir banco segregado e variáveis TEST sem interferir na produção.
