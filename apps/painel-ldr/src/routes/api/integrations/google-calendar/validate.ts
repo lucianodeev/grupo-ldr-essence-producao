@@ -29,7 +29,15 @@ async function handle(request: Request): Promise<Response> {
     return new Response(`<!doctype html><html lang="pt"><meta charset="utf-8"><title>Teste real Google Calendar</title><h1>Teste real Google Calendar</h1><p>Cria um evento técnico privado de cinco minutos no calendário de testes configurado, verifica conflitos, duplicação e reagendamento, cancela o evento e confirma a limpeza. Sem convidados, clientes, pagamentos ou créditos. A agenda permanece desativada.</p><form method="post"><input type="hidden" name="token" value="${token}"><button type="submit">Executar teste real e limpar evento</button></form></html>`, { headers });
   }
   if (request.method !== "POST") return new Response(null, { status: 405, headers });
-  if (request.headers.get("origin") !== new URL(request.url).origin ||
+  // Render terminates TLS before forwarding to Nitro. request.url can therefore
+  // use the internal HTTP scheme; trust only the configured public callback origin.
+  let publicOrigin: string;
+  try {
+    const callback = new URL(process.env["GOOGLE_OAUTH_REDIRECT_URI"] || "");
+    if (callback.protocol !== "https:") throw new Error("invalid_public_origin");
+    publicOrigin = callback.origin;
+  } catch { return new Response("Not configured", { status: 503, headers }); }
+  if (request.headers.get("origin") !== publicOrigin ||
       !request.headers.get("content-type")?.startsWith("application/x-www-form-urlencoded")) {
     return new Response("Forbidden", { status: 403, headers });
   }
