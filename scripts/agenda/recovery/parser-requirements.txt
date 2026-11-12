@@ -1,0 +1,2 @@
+# CPython 3.12 Linux x86-64 wheel; pglast v7 uses the PostgreSQL 17 parser.
+pglast==7.22 --hash=sha256:24285a069961bac538ac2a450e4ccdffa5cc300b54ef167b2a792f67dcb5d1ed
