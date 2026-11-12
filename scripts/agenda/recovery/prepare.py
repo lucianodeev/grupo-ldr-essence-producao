@@ -31,6 +31,24 @@ def require(ok, code):
     if not ok:
         raise Blocked(code)
 
+def snapshot_failure_code(stderr):
+    # Return fixed categories only. Never return fragments of server messages,
+    # which can contain usernames, connection strings, SQL, or credential values.
+    message = stderr.lower()
+    categories = (
+        ('snapshot_database_authentication_failed', (b'password authentication failed', b'sasl authentication failed')),
+        ('snapshot_pooler_tenant_or_user_not_found', (b'tenant or user not found',)),
+        ('snapshot_tls_verification_failed', (b'certificate verify failed', b'root certificate file', b'sslrootcert', b'certificate validation failed')),
+        ('snapshot_dns_resolution_failed', (b'could not translate host name', b'name or service not known')),
+        ('snapshot_connection_unavailable', (b'connection timed out', b'connection refused', b'network is unreachable')),
+        ('snapshot_database_permission_denied', (b'permission denied', b'must be superuser')),
+        ('snapshot_client_unavailable', (b'executable file not found', b'cannot connect to the docker daemon')),
+    )
+    for code, patterns in categories:
+        if any(pattern in message for pattern in patterns):
+            return code
+    return 'snapshot_export_failed_details_withheld'
+
 def identifier(value):
     return '"' + value.replace('"', '""') + '"'
 
@@ -116,10 +134,12 @@ def snapshot(pg):
         # A CLI/server error closes stdout. Connection timeout is enforced in env.
         require(bool(select.select([proc.stdout],[],[],20)[0]),'snapshot_export_timeout')
         value = proc.stdout.readline().decode().strip()
-        if SYNTHETIC_DIAGNOSTICS and not re.fullmatch(r'[0-9A-Fa-f]+-[0-9A-Fa-f]+-[0-9]+',value):
+        if not re.fullmatch(r'[0-9A-Fa-f]+-[0-9A-Fa-f]+-[0-9]+',value):
             errors.seek(0)
-            print('SYNTHETIC SNAPSHOT '+repr(value)+' '+errors.read().decode(errors='replace'),file=sys.stderr)
-        require(bool(re.fullmatch(r'[0-9A-Fa-f]+-[0-9A-Fa-f]+-[0-9]+',value)), 'snapshot_export_failed')
+            stderr = errors.read()
+            if SYNTHETIC_DIAGNOSTICS:
+                print('SYNTHETIC SNAPSHOT '+repr(value)+' '+stderr.decode(errors='replace'),file=sys.stderr)
+            raise Blocked(snapshot_failure_code(stderr))
         pg.snapshot = value
         yield
     finally:
