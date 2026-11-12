@@ -12,6 +12,19 @@ spec=importlib.util.spec_from_file_location('recovery',Path(__file__).with_name(
 r=importlib.util.module_from_spec(spec);spec.loader.exec_module(r)
 
 class RecoverySecurityTests(unittest.TestCase):
+    def test_snapshot_error_categories_never_include_credentials(self):
+        for message, expected in [
+            (b'password authentication failed for user private-user password=private-value', 'snapshot_database_authentication_failed'),
+            (b'SSL error: certificate verify failed host=private-host', 'snapshot_tls_verification_failed'),
+            (b'FATAL: Tenant or user not found private-user', 'snapshot_pooler_tenant_or_user_not_found'),
+            (b'permission denied for private-table', 'snapshot_database_permission_denied'),
+        ]:
+            self.assertEqual(r.snapshot_failure_code(message), expected)
+            self.assertNotIn('private', r.snapshot_failure_code(message))
+    def test_unknown_snapshot_errors_are_fully_withheld(self):
+        self.assertEqual(r.snapshot_failure_code(b'private-credential private-sql private-data'),
+                         'snapshot_export_failed_details_withheld')
+
     def test_rejects_arbitrary_remote_hosts_before_credentials(self):
         with patch.dict(os.environ,{'LDR_BACKUP_DB_HOST':'attacker.example','LDR_BACKUP_DB_PASSWORD':'not-a-real-secret'}):
             with self.assertRaisesRegex(r.Blocked,'unapproved_database_host'): r.remote_environment()
