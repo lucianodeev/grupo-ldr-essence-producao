@@ -333,6 +333,12 @@ def rehearse(source, work, out, passphrase, live=False):
         restore(target,recovered/'database.dump',recovered/'roles.sql')
         print('PASS restore completed in a network-isolated container',flush=True)
         after=inventory(target,work.parent)
+        if before!=after and SYNTHETIC_DIAGNOSTICS:
+            for group in before:
+                left={json.dumps(v,sort_keys=True) for v in before[group]}
+                right={json.dumps(v,sort_keys=True) for v in after[group]}
+                if left!=right:
+                    print('SYNTHETIC DIFF '+group+' missing='+json.dumps(sorted(left-right)[:8])+' added='+json.dumps(sorted(right-left)[:8]),file=sys.stderr)
         require(before==after,'restored_data_schema_rls_acl_or_sequence_mismatch')
         migration_ok=False
         if live:
