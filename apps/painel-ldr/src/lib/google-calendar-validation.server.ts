@@ -18,7 +18,8 @@ export async function validateRealCalendar() {
   const checks: string[] = [];
   let eventMayExist = false;
   let cleanupComplete = false;
-  const result: { ok: boolean; checks: string[]; cleanupComplete: boolean; failureCode?: string; remainingTestEventId?: string } = {
+  let operation = "availability_read";
+  const result: { ok: boolean; checks: string[]; cleanupComplete: boolean; failureCode?: string; failureOperation?: string; remainingTestEventId?: string } = {
     ok: false, checks, cleanupComplete: false,
   };
   try {
@@ -34,19 +35,24 @@ export async function validateRealCalendar() {
     if (await hasConflict(input.startsAtIso, input.endsAtIso, null)) throw new Error("test_slot_busy");
     checks.push("availability_read");
     eventMayExist = true; // A timeout can happen after Google has created the event.
+    operation = "create_and_readback";
     const created = await createEvent(input);
     if (created.eventId !== deterministicId) throw new Error("unexpected_event_identity");
     const read = await findEventByAppointment(appointmentId, created.eventId);
     if (!read || read.start !== +start) throw new Error("create_readback_failed");
     checks.push("create_and_readback");
+    operation = "conflict_and_own_event";
     if (!await hasConflict(input.startsAtIso, input.endsAtIso, null)) throw new Error("busy_not_detected");
     if (await hasConflict(input.startsAtIso, input.endsAtIso, created.eventId)) throw new Error("own_event_conflict");
     checks.push("conflict_and_own_event");
+    operation = "duplicate_create_recovery";
     const duplicate = await createEvent(input);
+    operation = "duplicate_count";
     if (duplicate.eventId !== created.eventId || await countEventsByAppointment(appointmentId) !== 1) {
       throw new Error("duplicate_event_detected");
     }
     checks.push("duplicate_prevention");
+    operation = "reschedule_same_identity";
     const newStart = new Date(+start + 86400000);
     const update = { ...input, startsAtIso: newStart.toISOString(), endsAtIso: new Date(+newStart + 300000).toISOString() };
     if (await hasConflict(update.startsAtIso, update.endsAtIso, null)) throw new Error("reschedule_slot_busy");
@@ -56,9 +62,11 @@ export async function validateRealCalendar() {
       throw new Error("reschedule_readback_failed");
     }
     checks.push("reschedule_same_identity");
+    operation = "cancel_and_readback";
     await cancelEvent(created.eventId);
     if (await findEventByAppointment(appointmentId, created.eventId)) throw new Error("cancel_readback_failed");
     checks.push("cancel_and_readback");
+    operation = "idempotent_cancel_and_zero_remaining";
     await cancelEvent(created.eventId);
     if (await countEventsByAppointment(appointmentId) !== 0) throw new Error("remaining_test_event");
     cleanupComplete = true;
@@ -68,6 +76,7 @@ export async function validateRealCalendar() {
     return result;
   } catch (error) {
     result.failureCode = error instanceof CalendarError ? error.code : "validation_assertion_failed";
+    result.failureOperation = operation;
     return result;
   } finally {
     try {
