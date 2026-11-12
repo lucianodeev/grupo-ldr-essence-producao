@@ -133,7 +133,7 @@ def snapshot(pg):
         errors.close()
 
 TABLES = """SELECT coalesce(jsonb_agg(jsonb_build_object('schema',n.nspname,'name',c.relname,
- 'rls',c.relrowsecurity,'force_rls',c.relforcerowsecurity,'owner',pg_get_userbyid(c.relowner))
+ 'kind',c.relkind,'rls',c.relrowsecurity,'force_rls',c.relforcerowsecurity,'owner',pg_get_userbyid(c.relowner))
  ORDER BY n.nspname,c.relname),'[]') FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace
  WHERE c.relkind IN ('r','p','m') AND n.nspname !~ '^pg_' AND n.nspname<>'information_schema'
 ;"""
@@ -341,6 +341,10 @@ def rehearse(source, work, out, passphrase, live=False):
         # Replay original routine ownership using supported ALTER statements;
         # this also preserves the owner/grantor entries in extension ACLs.
         # Keep exact catalog comparison: no privileges or grantors are ignored.
+        for table in before['tables']:
+            kind='MATERIALIZED VIEW' if table['kind']=='m' else 'TABLE'
+            name=identifier(table['schema'])+'.'+identifier(table['name'])
+            target.raw('ALTER '+kind+' '+name+' OWNER TO '+identifier(table['owner'])+';',snapshot=False)
         for entry in before['catalog']:
             if entry.get('kind')=='extension_function_owner':
                 routine=identifier(entry['schema'])+'.'+identifier(entry['name'])+'('+entry['args']+')'
