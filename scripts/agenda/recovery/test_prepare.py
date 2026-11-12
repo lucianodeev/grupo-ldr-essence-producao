@@ -12,6 +12,14 @@ spec=importlib.util.spec_from_file_location('recovery',Path(__file__).with_name(
 r=importlib.util.module_from_spec(spec);spec.loader.exec_module(r)
 
 class RecoverySecurityTests(unittest.TestCase):
+    def test_official_ca_is_pinned_and_read_only_inside_client(self):
+        self.assertEqual(r.sha(r.ROOT_CA), r.ROOT_CA_SHA256)
+        cmd=r.Pg(remote_env={'PGPASSWORD':'synthetic-secret'}).command('psql')
+        self.assertIn('type=bind,src='+str(r.ROOT_CA)+',dst='+r.ROOT_CA_CONTAINER_PATH+',readonly', cmd)
+        self.assertNotIn('synthetic-secret', ' '.join(cmd))
+        with patch.object(r,'sha',return_value='modified'):
+            with self.assertRaisesRegex(r.Blocked,'official_database_ca_checksum_mismatch'):
+                r.Pg(remote_env={'PGPASSWORD':'synthetic'}).command('psql')
     def test_snapshot_error_categories_never_include_credentials(self):
         for message, expected in [
             (b'password authentication failed for user private-user password=private-value', 'snapshot_database_authentication_failed'),
@@ -35,6 +43,7 @@ class RecoverySecurityTests(unittest.TestCase):
                 self.assertIn('default_transaction_read_only=on',env['PGOPTIONS'])
                 self.assertEqual(env['PGPORT'],'5432')
                 self.assertEqual(env['PGSSLMODE'],'verify-full')
+                self.assertEqual(env['PGSSLROOTCERT'],r.ROOT_CA_CONTAINER_PATH)
     def test_subprocess_failure_never_exposes_stderr_or_secret(self):
         result=subprocess.CompletedProcess([],1,b'',b'credential=private-value customer=private-name')
         with patch.object(r.subprocess,'run',return_value=result):
