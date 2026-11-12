@@ -74,6 +74,8 @@ class Pg:
                 IMAGE, *args]
 
     def raw(self, sql, output=None, snapshot=True):
+        # Canonical pg_get_* output must not depend on per-role search_path.
+        sql="SET search_path='';\n"+sql
         if self.snapshot and snapshot:
             sql = ('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY; '
                    'SET TRANSACTION SNAPSHOT ' + literal(self.snapshot) + ';\n' + sql + '\nCOMMIT;')
@@ -158,6 +160,13 @@ CATALOG = """SELECT coalesce(jsonb_agg(x ORDER BY x::text COLLATE "C"),'[]') FRO
  'owner',pg_get_userbyid(p.proowner)) FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace
  WHERE p.prokind IN ('f','p') AND n.nspname !~ '^pg_' AND n.nspname<>'information_schema'
  AND NOT EXISTS(SELECT 1 FROM pg_depend d WHERE d.classid='pg_proc'::regclass AND d.objid=p.oid AND d.deptype='e')
+ UNION ALL SELECT jsonb_build_object('kind','schema_owner','name',n.nspname,
+ 'owner',pg_get_userbyid(n.nspowner)) FROM pg_namespace n
+ WHERE n.nspname !~ '^pg_' AND n.nspname<>'information_schema'
+ UNION ALL SELECT jsonb_build_object('kind','relation_owner','schema',n.nspname,'name',c.relname,
+ 'relation_kind',c.relkind,'owner',pg_get_userbyid(c.relowner)) FROM pg_class c
+ JOIN pg_namespace n ON n.oid=c.relnamespace WHERE c.relkind IN ('r','p','m','v','S','f')
+ AND n.nspname !~ '^pg_' AND n.nspname<>'information_schema'
  UNION ALL SELECT jsonb_build_object('kind','extension_function_owner','schema',n.nspname,
  'name',p.proname,'args',pg_get_function_identity_arguments(p.oid),
  'routine_type',CASE WHEN p.prokind='p' THEN 'PROCEDURE' ELSE 'FUNCTION' END,
@@ -341,12 +350,14 @@ def rehearse(source, work, out, passphrase, live=False):
         # Replay original routine ownership using supported ALTER statements;
         # this also preserves the owner/grantor entries in extension ACLs.
         # Keep exact catalog comparison: no privileges or grantors are ignored.
-        for table in before['tables']:
-            kind='MATERIALIZED VIEW' if table['kind']=='m' else 'TABLE'
-            name=identifier(table['schema'])+'.'+identifier(table['name'])
-            target.raw('ALTER '+kind+' '+name+' OWNER TO '+identifier(table['owner'])+';',snapshot=False)
         for entry in before['catalog']:
-            if entry.get('kind')=='extension_function_owner':
+            if entry.get('kind')=='schema_owner':
+                target.raw('ALTER SCHEMA '+identifier(entry['name'])+' OWNER TO '+identifier(entry['owner'])+';',snapshot=False)
+            elif entry.get('kind')=='relation_owner':
+                kind={'r':'TABLE','p':'TABLE','m':'MATERIALIZED VIEW','v':'VIEW','S':'SEQUENCE','f':'FOREIGN TABLE'}[entry['relation_kind']]
+                name=identifier(entry['schema'])+'.'+identifier(entry['name'])
+                target.raw('ALTER '+kind+' '+name+' OWNER TO '+identifier(entry['owner'])+';',snapshot=False)
+            elif entry.get('kind')=='extension_function_owner':
                 routine=identifier(entry['schema'])+'.'+identifier(entry['name'])+'('+entry['args']+')'
                 target.raw('ALTER '+entry['routine_type']+' '+routine+' OWNER TO '+identifier(entry['owner'])+';',snapshot=False)
         after=inventory(target,work.parent)
