@@ -84,6 +84,25 @@ def restore_failure_code(stderr):
 def identifier(value):
     return '"' + value.replace('"', '""') + '"'
 
+def safe_inventory_diff(before,after):
+    # Counts and fixed catalog categories only. Never emit SQL, identifiers,
+    # data, hashes, role names or arbitrary keys from either inventory.
+    result={}
+    kinds=('column','policy','constraint','index','function','schema_owner','relation_owner',
+           'extension_function_owner','trigger','enum','view','extension','table_acl',
+           'function_acl','schema_acl','default_acl')
+    for group in ('tables','catalog','sequences'):
+        left={json.dumps(v,sort_keys=True) for v in before[group]}
+        right={json.dumps(v,sort_keys=True) for v in after[group]}
+        if left!=right:
+            entry={'missing':len(left-right),'added':len(right-left)}
+            if group=='catalog':
+                entry['kinds']={kind:{'missing':sum(json.loads(x).get('kind')==kind for x in left-right),
+                                     'added':sum(json.loads(x).get('kind')==kind for x in right-left)}
+                                for kind in kinds if any(json.loads(x).get('kind')==kind for x in (left^right))}
+            result[group]=entry
+    return result
+
 def literal(value):
     return "'" + value.replace("'", "''") + "'"
 
@@ -261,19 +280,48 @@ CATALOG = """SELECT coalesce(jsonb_agg(x ORDER BY x::text COLLATE "C"),'[]') FRO
 # Metadata only in public evidence; detailed catalog, data hashes and filenames stay encrypted.
 def inventory(pg, work):
     tables = pg.json(TABLES)
-    for i, table in enumerate(tables):
-        name = identifier(table['schema'])+'.'+identifier(table['name'])
-        path = work / ('rows-'+str(i))
-        with path.open('wb') as f:
-            pg.raw('SELECT to_jsonb(t)::text FROM '+name+' t ORDER BY to_jsonb(t)::text COLLATE "C";', output=f)
-        require(path.stat().st_size <= MAX_BYTES,'table_size_limit')
-        table['sha256'] = sha(path)
-        with path.open('rb') as f: table['rows'] = sum(1 for _ in f)
-        path.unlink()
+    # Keep the exact canonical row bytes/hash, but avoid one TLS connection and
+    # Docker startup per table. JSON object rows cannot equal our plain markers.
+    for start in range(0,len(tables),25):
+        batch=tables[start:start+25]
+        marker='LDR_RECOVERY_'+secrets.token_hex(16)+'_'
+        statements=[]
+        for i,table in enumerate(batch):
+            name=identifier(table['schema'])+'.'+identifier(table['name'])
+            statements += ['\\echo '+marker+str(i),
+                           'SELECT to_jsonb(t)::text FROM '+name+' t ORDER BY to_jsonb(t)::text COLLATE "C";']
+        statements += ['\\echo '+marker+'END']
+        path=work/'inventory-batch'
+        try:
+            with path.open('wb') as f: pg.raw('\n'.join(statements),output=f)
+            require(path.stat().st_size<=MAX_BYTES*len(batch),'inventory_batch_size_limit')
+            current=-1; digest=None; rows=0; size=0; ended=False
+            with path.open('rb') as f:
+                for line in f:
+                    if line.startswith(marker.encode()):
+                        expected=marker+(str(current+1) if current+1<len(batch) else 'END')+'\n'
+                        require(line==expected.encode(),'inventory_marker_order_invalid')
+                        if current>=0:
+                            batch[current].update(sha256=digest.hexdigest(),rows=rows)
+                        current+=1
+                        if current==len(batch): ended=True; break
+                        digest=hashlib.sha256(); rows=0; size=0
+                    else:
+                        require(0<=current<len(batch) and line.startswith(b'{'),'inventory_row_framing_invalid')
+                        size+=len(line); require(size<=MAX_BYTES,'table_size_limit')
+                        digest.update(line); rows+=1
+                require(ended and not f.read(1),'inventory_batch_incomplete')
+        finally:
+            path.unlink(missing_ok=True)
     seqs = pg.json("SELECT coalesce(jsonb_agg(jsonb_build_object('schema',schemaname,'name',sequencename) ORDER BY schemaname,sequencename),'[]') FROM pg_sequences WHERE schemaname !~ '^pg_';")
-    for seq in seqs:
-        name=identifier(seq['schema'])+'.'+identifier(seq['name'])
-        seq['state']=pg.json('SELECT jsonb_build_object(\'last_value\',last_value::text,\'is_called\',is_called) FROM '+name+';')
+    if seqs:
+        states=[]
+        for seq in seqs:
+            name=identifier(seq['schema'])+'.'+identifier(seq['name'])
+            states.append("(SELECT jsonb_build_object('last_value',last_value::text,'is_called',is_called) FROM "+name+")")
+        values=pg.json('SELECT jsonb_build_array('+','.join(states)+');')
+        require(len(values)==len(seqs),'sequence_inventory_incomplete')
+        for seq,state in zip(seqs,values): seq['state']=state
     return {'tables':tables,'catalog':pg.json(CATALOG),'sequences':seqs}
 
 @contextlib.contextmanager
@@ -456,6 +504,8 @@ def rehearse(source, work, out, passphrase, live=False):
                           ' ON '+obj+' TO '+grantee+option+'; RESET ROLE;')
         target.raw('\n'.join(grants),snapshot=False)
         after=inventory(target,work.parent)
+        if before!=after:
+            print('DIAGNOSTIC inventory_diff '+json.dumps(safe_inventory_diff(before,after),sort_keys=True),flush=True)
         if before!=after and SYNTHETIC_DIAGNOSTICS:
             for group in before:
                 left={json.dumps(v,sort_keys=True) for v in before[group]}
