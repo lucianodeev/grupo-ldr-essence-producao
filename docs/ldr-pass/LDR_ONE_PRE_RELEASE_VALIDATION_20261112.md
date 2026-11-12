@@ -44,3 +44,15 @@
 - Stripe TEST tem webhook habilitado `we_1UK6O3Klx2LyNGeBxSmTtynH` com destino `https://ldr-one-stripe-sandbox.onrender.com/stripe/test-webhook`. A API TEST devolveu zero eventos até à consulta.
 - O Render sandbox mantém o deploy de 28/09/2026, autoDeploy desligado, sem logs recentes; não há ramo isolado Supabase para o projecto LDR, e o conector não permite ler os segredos Render.
 - Próxima prova exigida para o GO: transação **TEST** autenticada *dentro do aplicativo*, webhook Stripe TEST assinado entregue ao Render, persistência efetiva e atribuição/revogação de cinco acessos em banco segregado. Exige garantir banco segregado e variáveis TEST sem interferir na produção.
+
+
+## Base de dados isolada gratuita — execução de 12/11/2026
+- Organização Neon **Luciano** confirmada em plano `free`. Criado projeto **`ldr-one-homologacao-isolada`** (`cool-wave-53666235`), Frankfurt, PostgreSQL 17, sem criar plano pago nem tocar em projetos anteriores.
+- Base exclusiva `ldr_one_sandbox_db` na branch `br-falling-bonus-b97dgjmr`. Foram aplicadas sete instruções do esquema de homologação do repositório: três tabelas, índice e RLS. Nenhuma tabela de produção importada.
+- Verificações SQL na nova base confirmaram as três tabelas `ldr_one_sandbox_subscriptions`, `ldr_one_sandbox_stripe_events`, `ldr_one_sandbox_seat_assignments`, RLS ativo nas três e zero políticas de acesso público; regra CHECK Business exige 5 a 10.000 colaboradores.
+- Teste transacional **diretamente no Neon real**: inscrição fictícia Business (5), cinco atribuições, evento fictício, alteração de estado para `canceled`, rollback protegido e rejeição de quatro lugares. Executado com sucesso. Consulta posterior: **0 assinaturas, 0 colaboradores, 0 eventos**.
+- Configurado **somente** `DATABASE_URL` no Render `srv-das6drvavr4c7397dflg`, por ligação segura Neon → Render, merge de variável existente; URL validada previamente para Neon e nome `ldr_one_sandbox_db`, sem imprimir credenciais. Não foram alterados outros serviços.
+- Render desencadeou apenas deploy sandbox `dep-dbqp1v5g1s2s73f0eud0`, concluído em `live` a 12/11/2026 10:14:39 UTC, commit `73a2316ce62a703e229983795ff7af61cca0dda5`. Logs confirmam build, arranque Node e disponibilidade pública.
+- **Limitação importante:** startup deste serviço é `node .output/server/index.mjs`; o recetor exclusivo do webhook de testes é o script independente `scripts/ldr-one-stripe-test-webhook.mjs`. Esta etapa **não comprova** que `/stripe/test-webhook` responde corretamente ou que persiste eventos. Persistência de eventos está protegida pela flag `LDR_ONE_SANDBOX_PERSIST_EVENTS=yes`, que **não foi ativada**.
+- Não foram alterados `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, recursos LIVE, env de produção, deploy de produção ou contas de clientes.
+- **Próximo gate:** confirmar execução do recetor Stripe TEST (ou disponibilizar serviço/rota própria), assinatura `whsec_test` correspondente, `sk_test` validada, entrega de evento assinado e persistência/entitlements de cinco colaboradores de ponta a ponta antes do GO.
