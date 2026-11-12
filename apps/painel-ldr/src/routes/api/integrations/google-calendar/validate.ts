@@ -3,7 +3,7 @@ import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
 
 const headers = {
   "Cache-Control": "no-store",
-  "Referrer-Policy": "no-referrer",
+  "Referrer-Policy": "same-origin",
   "Content-Security-Policy": "default-src 'none'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'",
   "Content-Type": "text/html; charset=utf-8",
 };
@@ -39,7 +39,7 @@ async function handle(request: Request): Promise<Response> {
   } catch { return new Response("Not configured", { status: 503, headers }); }
   if (request.headers.get("origin") !== publicOrigin ||
       !request.headers.get("content-type")?.startsWith("application/x-www-form-urlencoded")) {
-    return new Response("Forbidden", { status: 403, headers });
+    return new Response("Forbidden: request origin or content type", { status: 403, headers });
   }
   const body = await request.text();
   if (body.length > 4096) return new Response(null, { status: 413, headers });
@@ -50,7 +50,7 @@ async function handle(request: Request): Promise<Response> {
   }
   const actual = Buffer.from(mac);
   const expected = Buffer.from(sign(`${nonce}.${expiry}`));
-  if (actual.length !== expected.length || !timingSafeEqual(actual, expected)) return new Response("Forbidden", { status: 403, headers });
+  if (actual.length !== expected.length || !timingSafeEqual(actual, expected)) return new Response("Forbidden: request signature", { status: 403, headers });
   try {
     const { calendarOAuthNonceStore } = await import("@/lib/google-calendar-oauth-storage.server");
     if (!await calendarOAuthNonceStore.claim(nonce, 600)) return new Response("Validation request already consumed", { status: 409, headers });
