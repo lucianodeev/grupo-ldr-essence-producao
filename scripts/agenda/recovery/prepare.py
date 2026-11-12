@@ -23,6 +23,9 @@ IMAGE = 'supabase/postgres:17.6.1.155@sha256:3866d94d8426927e8db3f1c5d790752292b
 MIGRATION = Path('apps/painel-ldr/supabase/migrations/20261111200311_agenda_calendar_credit_integration.sql')
 MAX_BYTES = 256 * 1024 * 1024
 SYNTHETIC_DIAGNOSTICS = False
+ROOT_CA = Path(__file__).with_name('supabase-prod-ca-2021.crt').resolve()
+ROOT_CA_SHA256 = '700723581420dd1ac98fd7e9ac529f0ef210eadcaf87fc868a3ad7d114c2f3b7'
+ROOT_CA_CONTAINER_PATH = '/etc/ssl/ldr-supabase-root.crt'
 
 class Blocked(Exception):
     """Only a constant, non-sensitive message may be printed outside the archive."""
@@ -88,7 +91,9 @@ class Pg:
         flags = [flag for k in ('PGHOST','PGPORT','PGUSER','PGDATABASE','PGPASSWORD',
                                 'PGSSLMODE','PGSSLROOTCERT','PGCONNECT_TIMEOUT','PGOPTIONS')
                  for flag in ('--env', k)]
-        return ['docker', 'run', '--rm', '-i', *flags, '--entrypoint', program,
+        require(ROOT_CA.is_file() and sha(ROOT_CA) == ROOT_CA_SHA256, 'official_database_ca_checksum_mismatch')
+        mount = 'type=bind,src='+str(ROOT_CA)+',dst='+ROOT_CA_CONTAINER_PATH+',readonly'
+        return ['docker', 'run', '--rm', '-i', *flags, '--mount', mount, '--entrypoint', program,
                 IMAGE, *args]
 
     def raw(self, sql, output=None, snapshot=True):
@@ -344,7 +349,7 @@ def remote_environment():
     password=env.get('LDR_BACKUP_DB_PASSWORD','')
     require(bool(password),'database_password_missing')
     env.update(PGHOST=host,PGPORT='5432',PGUSER=user,PGDATABASE='postgres',PGPASSWORD=password,
-               PGSSLMODE='verify-full',PGSSLROOTCERT='system',PGCONNECT_TIMEOUT='15',
+               PGSSLMODE='verify-full',PGSSLROOTCERT=ROOT_CA_CONTAINER_PATH,PGCONNECT_TIMEOUT='15',
                PGOPTIONS='-c default_transaction_read_only=on -c statement_timeout=120000')
     return env
 
