@@ -52,6 +52,28 @@ def snapshot_failure_code(stderr):
             return code
     return 'snapshot_export_failed_details_withheld'
 
+def restore_failure_code(stderr):
+    message = stderr.lower()
+    # Only fixed public platform identifiers may appear in a diagnostic code.
+    # SQL statements and arbitrary object names remain completely withheld.
+    for schema in ('public','extensions','auth','storage','realtime','graphql','graphql_public','net','vault','pgsodium','pgsodium_masks','cron'):
+        if ('schema "'+schema+'" already exists').encode() in message:
+            return 'isolated_restore_schema_already_exists_'+schema
+    for extension in ('pg_graphql','pg_net','pgsodium','supabase_vault','pg_cron','pg_stat_statements','pgcrypto','uuid-ossp','vector'):
+        if extension.encode() in message and any(p in message for p in (b'is not available',b'could not open extension control file',b'could not access file',b'has no installation script')):
+            return 'isolated_restore_extension_unavailable_'+extension.replace('-','_')
+    if re.search(rb'role "[^"\r\n]+" does not exist',message):
+        return 'isolated_restore_missing_role'
+    for code, patterns in (
+        ('isolated_restore_configuration_incompatible',(b'unrecognized configuration parameter',b'can only be loaded via shared_preload_libraries',b'can only be created in database')),
+        ('isolated_restore_permission_denied',(b'permission denied',b'must be owner',b'must be superuser')),
+        ('isolated_restore_duplicate_object',(b'already exists',)),
+        ('isolated_restore_dependency_missing',(b'does not exist',)),
+        ('isolated_restore_data_constraint_failed',(b'violates ',b'duplicate key value')),
+    ):
+        if any(p in message for p in patterns): return code
+    return 'isolated_restore_failed_details_withheld'
+
 def identifier(value):
     return '"' + value.replace('"', '""') + '"'
 
@@ -108,8 +130,9 @@ class Pg:
     def json(self, sql, snapshot=True):
         return json.loads(self.raw(sql, snapshot=snapshot))
 
-    def dump(self, dest):
+    def dump(self, dest, schema_only=False):
         args = ['--format=custom', '--no-password', '--lock-wait-timeout=30s']
+        if schema_only: args += ['--schema-only']
         if self.snapshot:
             args += ['--snapshot', self.snapshot]
         with dest.open('wb') as f:
@@ -284,7 +307,8 @@ def restore(pg, archive, roles):
         except (OSError,subprocess.TimeoutExpired): raise Blocked('isolated_restore_timeout') from None
     if r.returncode and SYNTHETIC_DIAGNOSTICS:
         print('SYNTHETIC RESTORE '+r.stderr.decode(errors='replace'),file=sys.stderr)
-    require(r.returncode==0,'isolated_restore_failed_no_errors_ignored')
+    if r.returncode:
+        raise Blocked(restore_failure_code(r.stderr))
 
 def seal(work, out, passphrase):
     require(len(passphrase)>=24,'backup_passphrase_minimum_24_characters')
@@ -354,6 +378,17 @@ def remote_environment():
     return env
 
 def rehearse(source, work, out, passphrase, live=False):
+    if live:
+        # Fail early on platform schema/extension incompatibility, before the
+        # expensive full row inventory. This is not a recovery proof and never
+        # replaces the later complete encrypted archive restore/comparison.
+        schema_archive=work.parent/'preflight-schema.dump'
+        schema_roles=work.parent/'preflight-roles.sql'
+        source.dump(schema_archive,schema_only=True)
+        source.roles(schema_roles)
+        with isolated() as preflight:
+            restore(preflight,schema_archive,schema_roles)
+        print('PASS isolated schema restore preflight; full recovery still required',flush=True)
     with snapshot(source):
         print('PASS read-only snapshot opened',flush=True)
         before=inventory(source,work)
