@@ -13,7 +13,7 @@ on:
         type: string
         default: ''
   push:
-    branches: [chore/ldr-recovery-preparation-20261112, fix/ldr-recovery-safe-diagnostics-20261112, fix/ldr-recovery-official-ca-20261112, fix/ldr-recovery-restore-preflight-20261112, fix/ldr-recovery-platform-libraries-20261112, fix/ldr-recovery-batch-inventory-20261112]
+    branches: [chore/ldr-recovery-preparation-20261112, fix/ldr-recovery-safe-diagnostics-20261112, fix/ldr-recovery-official-ca-20261112, fix/ldr-recovery-restore-preflight-20261112, fix/ldr-recovery-platform-libraries-20261112, fix/ldr-recovery-batch-inventory-20261112, fix/ldr-recovery-equivalence-20261112]
     paths:
       - '.github/workflows/ldr-recovery-preparation.yml'
       - 'scripts/agenda/recovery/**'
