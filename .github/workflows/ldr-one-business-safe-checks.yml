@@ -11,6 +11,8 @@ on:
       - ".github/workflows/ldr-one-business-safe-checks.yml"
       - "apps/painel-ldr/tests/ldr-one-cancellation.test.cjs"
       - "apps/painel-ldr/src/routes/_clientarea.cliente.ldr-pass.tsx"
+      - "apps/painel-ldr/tests/ldr-one-postgres-lifecycle.sql"
+      - "docs/ldr-pass/sql/ldr-one-sandbox-schema-REVIEW-ONLY.sql"
   workflow_dispatch:
 
 permissions:
@@ -46,3 +48,39 @@ jobs:
         run: node --test apps/painel-ldr/tests/ldr-one-cancellation.test.cjs
       - name: Check application TypeScript and production build (not deployed)
         run: npm run build:painel
+
+  ldr-one-real-db-isolated:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: ldr_test
+          POSTGRES_PASSWORD: ci_local_only
+          POSTGRES_DB: ldr_one_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ldr_test -d ldr_one_ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      PGHOST: localhost
+      PGPORT: "5432"
+      PGUSER: ldr_test
+      PGPASSWORD: ci_local_only
+      PGDATABASE: ldr_one_ci
+    steps:
+      - uses: actions/checkout@v4
+      - name: Ensure PostgreSQL client available
+        run: command -v psql || (sudo apt-get update -qq && sudo apt-get install -y postgresql-client)
+      - name: Apply sandbox-only schema to ephemeral CI PostgreSQL
+        run: psql -v ON_ERROR_STOP=1 -f docs/ldr-pass/sql/ldr-one-sandbox-schema-REVIEW-ONLY.sql
+      - name: Exercise real PostgreSQL seat, lifecycle and rollback constraints
+        run: psql -v ON_ERROR_STOP=1 -f apps/painel-ldr/tests/ldr-one-postgres-lifecycle.sql
+      - name: Confirm no persistent fixture rows
+        run: |
+          result=$(psql -At -c "SELECT count(*) FROM public.ldr_one_sandbox_subscriptions;")
+          test "$result" = "0"
