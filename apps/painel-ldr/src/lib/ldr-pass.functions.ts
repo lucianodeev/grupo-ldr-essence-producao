@@ -7,3 +7,11 @@ export const clientCreateLdrPassCheckout=createServerFn({method:"POST"}).middlew
  const seats=data.plan==="individual"?1:Number(data.seats??0);if(!Number.isSafeInteger(seats)||(data.plan==="business"&&(seats<5||seats>10000)))throw new Error("Quantidade de colaboradores inválida.");
  const {createLdrPassCheckout}=await import("@/lib/ldr-pass.server");return createLdrPassCheckout(context.userId,emailOf(context.claims),data.plan,data.market,data.billing,data.source??"ecossistema",seats)
 });
+
+/** Server-only, authenticated customer request. Never accept customer or Stripe subscription IDs from the browser. */
+export const clientCancelLdrPassRenewal=createServerFn({method:"POST"})
+ .middleware([requireSupabaseAuth])
+ .handler(async({context})=>{
+  const {cancelLdrPassRenewal}=await import("@/lib/ldr-pass.server");
+  return cancelLdrPassRenewal(context.userId,emailOf(context.claims));
+ });
