@@ -217,10 +217,12 @@ def isolated():
     pg=Pg(name,user='supabase_admin')
     try:
         for _ in range(90):
-            ready=subprocess.run(['docker','exec',name,'sh','-c',
-                                  'test "$(cat /proc/1/comm)" = postgres && pg_isready -U supabase_admin'],
-                                 stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
-            if ready.returncode==0: break
+            # The image can run PostgreSQL under a supervisor, so PID 1 is not
+            # reliable. Its temporary init server has listen_addresses=''.
+            ready=subprocess.run(pg.command('psql','-X','-qAt','-v','ON_ERROR_STOP=1',
+                                  '-c',"SELECT current_setting('listen_addresses') <> '';"),
+                                 stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=5)
+            if ready.returncode==0 and ready.stdout.strip()==b't': break
             time.sleep(1)
         else: raise Blocked('isolated_postgres_not_ready')
         yield pg
@@ -314,9 +316,11 @@ def remote_environment():
 
 def rehearse(source, work, out, passphrase, live=False):
     with snapshot(source):
+        print('PASS read-only snapshot opened',flush=True)
         before=inventory(source,work)
         source.dump(work/'database.dump')
         source.roles(work/'roles.sql')
+        print('PASS database and password-free roles exported',flush=True)
         if live:
             objects=source.json(OBJECTS)
             storage_copy(objects,work,os.environ.get('LDR_BACKUP_STORAGE_KEY',''))
@@ -324,8 +328,10 @@ def rehearse(source, work, out, passphrase, live=False):
         (work/'source-manifest.json').write_text(json.dumps(before,sort_keys=True))
         require(inventory(source,work)==before,'source_changed_during_snapshot')
     recovered=seal(work,out,passphrase)
+    print('PASS encrypted payload decrypted with matching hashes',flush=True)
     with isolated() as target:
         restore(target,recovered/'database.dump',recovered/'roles.sql')
+        print('PASS restore completed in a network-isolated container',flush=True)
         after=inventory(target,work.parent)
         require(before==after,'restored_data_schema_rls_acl_or_sequence_mismatch')
         migration_ok=False
