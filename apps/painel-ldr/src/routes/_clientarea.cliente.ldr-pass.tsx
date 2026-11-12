@@ -1,4 +1,8 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import { useState } from "react";
+import { clientCancelLdrPassRenewal, clientLdrPass } from "@/lib/ldr-pass.functions";
 import { LanguageSelect, useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_clientarea/cliente/ldr-pass")({
@@ -11,6 +15,37 @@ const PASS_COPY = {
   fr:{back:"← Ma bibliothèque",eyebrow:"Mon LDR PASS",title:"Votre tableau de bord d’accès numérique LDR.",intro:"Suivez l’offre PASS, les avantages éligibles et les raccourcis de l’écosystème sans mélanger les produits distincts.",status:"Statut commercial",ready:"Prêt pour l’activation Stripe",statusText:"La base technique est publiée ; le paiement ne doit être activé qu’après validation du produit et du prix définitifs.",links:"Liens de l’écosystème pour le client",linksText:"Utilisez ces raccourcis comme centre de navigation pendant la préparation sécurisée du paiement PASS.",benefits:[["Contenus numériques éligibles","Les cours numériques, eBooks et ressources approuvées pour PASS sont libérés via la couche d’éligibilité."],["Achats antérieurs préservés","Tout achat ou accès à vie déjà accordé continue de fonctionner hors PASS."],["Séparation sécurisée","Bibliothèque historique, éditorial, clinique, services humains, B2B et cours en direct restent séparés."]],access:[["Page commerciale PASS","/ldr-pass"],["Carte de l’écosystème","/ecossistema"],["Ma bibliothèque","/cliente/biblioteca"],["Réseau académique","/cliente/rede-academica"],["Cours gratuits","/cliente/biblioteca/cursos-gratuitos"],["Commandes et paiements","/cliente/pedidos"]]},
   es:{back:"← Mi Biblioteca",eyebrow:"Mi LDR PASS",title:"Tu panel de acceso digital LDR.",intro:"Consulta la propuesta PASS, los beneficios elegibles y los accesos del ecosistema sin mezclar productos separados.",status:"Estado comercial",ready:"Listo para activación de Stripe",statusText:"La base técnica está publicada; el checkout solo debe activarse cuando se aprueben el producto y precio finales.",links:"Enlaces del ecosistema para el cliente",linksText:"Usa estos accesos como centro de navegación mientras se prepara de forma segura el checkout específico de PASS.",benefits:[["Contenidos digitales elegibles","Cursos digitales, eBooks y materiales aprobados para PASS se liberan mediante la capa de elegibilidad."],["Compras anteriores preservadas","Lo ya comprado o concedido como acceso vitalicio sigue funcionando fuera de PASS."],["Separación segura","Biblioteca anterior, editorial, clínica, servicios humanos, B2B y clases en vivo permanecen separados."]],access:[["Página comercial de PASS","/ldr-pass"],["Mapa del ecosistema","/ecossistema"],["Mi Biblioteca","/cliente/biblioteca"],["Red Académica","/cliente/rede-academica"],["Cursos gratuitos","/cliente/biblioteca/cursos-gratuitos"],["Pedidos y pagos","/cliente/pedidos"]]}
 } as const;
+
+
+function LdrPassSubscriptionManager() {
+  const contextFn=useServerFn(clientLdrPass);
+  const cancelFn=useServerFn(clientCancelLdrPassRenewal);
+  const [confirmed,setConfirmed]=useState(false);
+  const {data,isLoading,error,refetch}=useQuery({queryKey:["client-ldr-pass-manager"],queryFn:()=>contextFn({})});
+  const cancel=useMutation({mutationFn:()=>cancelFn({}),onSuccess:async()=>{setConfirmed(false);await refetch();}});
+  const subscription=data?.subscription;
+  const renewable=subscription?.status==="active"||subscription?.status==="trialing"||subscription?.status==="past_due";
+  const canCancel=Boolean(renewable&&subscription?.stripe_subscription_id&&!subscription?.cancel_at_period_end);
+  return <section className="rounded-[28px] border border-[#ead6c7] bg-white p-5 sm:p-7" aria-label="Gestão da assinatura LDR ONE">
+    <h2 className="font-serif text-2xl font-bold text-[#5d2917]">Gerir assinatura LDR ONE</h2>
+    {isLoading?<p className="mt-3 text-sm text-slate-600">A consultar a sua assinatura…</p>:
+    error?<p role="alert" className="mt-3 text-sm text-red-700">Não foi possível carregar o estado da assinatura.</p>:
+    !subscription?<p className="mt-3 text-sm text-slate-600">Ainda não existe uma assinatura associada à sua conta.</p>:
+    <div className="mt-4 space-y-3 text-sm text-slate-700">
+      <p><strong>Plano:</strong> {subscription.plan==="business"?"LDR ONE Business":"LDR ONE Individual"} · <strong>Estado:</strong> {subscription.status}</p>
+      {subscription.plan==="business"&&<p><strong>Colaboradores:</strong> {subscription.ldr_one_seats??"—"}</p>}
+      {subscription.current_period_end&&<p><strong>Acesso até:</strong> {new Date(subscription.current_period_end).toLocaleDateString("pt-PT")}</p>}
+      {subscription.cancel_at_period_end?<p className="font-semibold text-amber-700">Renovação cancelada. O acesso mantém-se até ao fim do período pago, conforme as condições da assinatura.</p>:
+      canCancel?<div className="space-y-3 rounded-xl border border-amber-200 bg-amber-50 p-4">
+        <p>Cancelar a renovação impede a próxima cobrança, sem terminar imediatamente o período já contratado.</p>
+        <label className="flex items-start gap-2"><input type="checkbox" checked={confirmed} onChange={event=>setConfirmed(event.target.checked)} className="mt-1"/><span>Confirmo que quero cancelar a renovação desta assinatura.</span></label>
+        <button type="button" disabled={!confirmed||cancel.isPending} onClick={()=>cancel.mutate()} className="rounded-lg border border-amber-800 px-4 py-2 font-semibold text-amber-900 disabled:opacity-50">{cancel.isPending?"A processar…":"Cancelar renovação"}</button>
+        {cancel.isError&&<p role="alert" className="text-red-700">Não foi possível confirmar o cancelamento. Contacte o suporte antes de repetir.</p>}
+        {cancel.isSuccess&&<p role="status" className="text-green-700">Pedido confirmado. Consulte o estado atualizado acima.</p>}
+      </div>:<p>O cancelamento automático não está disponível para este estado. Contacte o suporte para gerir a assinatura.</p>}
+    </div>}
+  </section>;
+}
 
 function ClientLdrPass() {
   const { locale } = useI18n();
@@ -32,6 +67,8 @@ function ClientLdrPass() {
           </div>
         </div>
       </section>
+
+      <LdrPassSubscriptionManager />
 
       <section className="grid gap-4 lg:grid-cols-3">
         {t.benefits.map((item) => (
