@@ -16,6 +16,7 @@ Este processo prepara e verifica a recuperação da base de dados PostgreSQL e d
 - Restauração do arquivo **decifrado** num contentor descartável sem rede nem portas publicadas. Compara linhas, hashes, RLS, colunas, funções, gatilhos, enums, índices, políticas, proprietários, ACLs, privilégios por omissão e sequências. Apenas depois tenta a migração indicada nesse clone isolado e verifica permissões básicas.
 - Só o `.gpg` e o resultado público saneado podem ser enviados como artefatos, e apenas após todos os passos terem sucesso. Nada de dumps SQL ou ficheiros em claro nos commits, logs, PRs ou artefatos.
 - A imagem oficial Supabase PostgreSQL está fixada em `17.6.1.155`; as ações checkout e upload-artifact estão fixadas por SHA. A preparação confirma se a imagem consegue restaurar o exemplo; diferenças de extensões ou objetos geridos bloqueiam, sem enfraquecer a comparação.
+- Os clientes PostgreSQL usam `verify-full` e o certificado público oficial Supabase Root 2021 CA, montado apenas para leitura. O SHA256 do ficheiro é fixado em `700723581420dd1ac98fd7e9ac529f0ef210eadcaf87fc868a3ad7d114c2f3b7`; alterações inesperadas bloqueiam antes da ligação. Fonte do certificado: https://supabase-downloads.s3-ap-southeast-1.amazonaws.com/prod/ssl/prod-ca-2021.crt . Referência oficial: https://supabase.com/docs/guides/platform/ssl-enforcement . Não altera a configuração SSL do projeto.
 
 ## Custo
 
