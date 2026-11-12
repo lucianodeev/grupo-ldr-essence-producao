@@ -635,6 +635,7 @@ def rehearse(source, work, out, passphrase, live=False):
                 if left!=right:
                     print('SYNTHETIC DIFF '+group+' missing='+json.dumps(sorted(left-right)[:8])+' added='+json.dumps(sorted(right-left)[:8]),file=sys.stderr)
         require(matches,'restored_data_schema_rls_acl_or_sequence_mismatch')
+        print('PASS exact data, sequence, RLS, ACL and parsed rule comparison',flush=True)
         migration_ok=False
         if live:
             # Only the disposable no-network container can ever receive this SQL.
@@ -642,7 +643,9 @@ def rehearse(source, work, out, passphrase, live=False):
             result=target.json("SELECT jsonb_build_object('rls',(SELECT bool_and(relrowsecurity) FROM pg_class WHERE oid IN ('public.appointments'::regclass,'public.appointment_events'::regclass,'public.appointment_calendar_sync'::regclass)), 'browser_denied', NOT has_table_privilege('anon','public.appointments','SELECT') AND NOT has_table_privilege('authenticated','public.appointments','SELECT'));",snapshot=False)
             require(result=={'rls':True,'browser_denied':True},'restored_migration_permissions_failed')
             migration_ok=True
+            print('PASS agenda migration and basic permissions in isolated clone',flush=True)
     return {'database_restore_verified':True,'encrypted_payload_roundtrip_verified':True,
+            'table_count':len(before['tables']),'sequence_count':len(before['sequences']),
             'storage_files_recovered':live,'storage_service_restore_tested':False,
             'migration_applied_to_isolated_clone':migration_ok,
             'production_gate':False,'project_backup_complete':False,
