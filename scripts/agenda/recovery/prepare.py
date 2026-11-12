@@ -112,6 +112,9 @@ def snapshot(pg):
         proc.stdin.flush()
         # A CLI/server error closes stdout. Connection timeout is enforced in env.
         value = proc.stdout.readline().decode().strip()
+        if SYNTHETIC_DIAGNOSTICS and not re.fullmatch(r'[0-9A-Fa-f]+-[0-9A-Fa-f]+-[0-9]+',value):
+            errors.seek(0)
+            print('SYNTHETIC SNAPSHOT '+repr(value)+' '+errors.read().decode(errors='replace'),file=sys.stderr)
         require(bool(re.fullmatch(r'[0-9A-Fa-f]+-[0-9A-Fa-f]+-[0-9]+',value)), 'snapshot_export_failed')
         pg.snapshot = value
         yield
@@ -212,7 +215,8 @@ def isolated():
     pg=Pg(name,user='supabase_admin')
     try:
         for _ in range(90):
-            ready=subprocess.run(['docker','exec',name,'pg_isready','-U','supabase_admin'],
+            ready=subprocess.run(['docker','exec',name,'sh','-c',
+                                  'test "$(cat /proc/1/comm)" = postgres && pg_isready -U supabase_admin'],
                                  stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
             if ready.returncode==0: break
             time.sleep(1)
@@ -235,6 +239,8 @@ def restore(pg, archive, roles):
                               '-d',pg.db,'--exit-on-error','--single-transaction'],stdin=f,
                               stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=600)
         except (OSError,subprocess.TimeoutExpired): raise Blocked('isolated_restore_timeout') from None
+    if r.returncode and SYNTHETIC_DIAGNOSTICS:
+        print('SYNTHETIC RESTORE '+r.stderr.decode(errors='replace'),file=sys.stderr)
     require(r.returncode==0,'isolated_restore_failed_no_errors_ignored')
 
 def seal(work, out, passphrase):
