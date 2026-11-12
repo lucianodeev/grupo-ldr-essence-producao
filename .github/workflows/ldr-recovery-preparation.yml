@@ -1,0 +1,113 @@
+name: LDR encrypted recovery preparation
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Synthetic preparation or a real encrypted backup rehearsal
+        type: choice
+        options: [preparation, backup_restore]
+        default: preparation
+        required: true
+      project_confirmation:
+        description: For a real run, type sfrcsrzuoqdscflfuwik (never a password)
+        type: string
+        default: ''
+  push:
+    branches: [chore/ldr-recovery-preparation-20261112]
+    paths:
+      - '.github/workflows/ldr-recovery-preparation.yml'
+      - 'scripts/agenda/recovery/**'
+permissions:
+  contents: read
+concurrency:
+  group: ldr-recovery-preparation
+  cancel-in-progress: false
+jobs:
+  preparation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Require a public repository and standard free Linux runner
+        env:
+          REPOSITORY_PRIVATE: ${{ github.event.repository.private }}
+        run: test "$REPOSITORY_PRIVATE" = false
+      - name: Validate local security controls without credentials
+        run: python3 -m unittest discover -s scripts/agenda/recovery -p 'test_*.py' -v
+      - name: Retrieve pinned official Supabase PostgreSQL image
+        run: docker pull supabase/postgres:17.6.1.155
+      - name: Rehearse encrypted dump and restore using synthetic data only
+        run: python3 scripts/agenda/recovery/prepare.py --self-test
+  verify_environment:
+    if: >-
+      github.event_name == 'workflow_dispatch' && inputs.mode == 'backup_restore' &&
+      github.ref == 'refs/heads/main' && github.actor == github.repository_owner
+    needs: preparation
+    permissions:
+      contents: read
+      actions: read
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - name: Require a reviewed zero-cost storage allowance and protected environment
+        env:
+          FREE_STORAGE_CONFIRMED: ${{ vars.LDR_BACKUP_ZERO_COST_CONFIRMED }}
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          OWNER: ${{ github.repository_owner }}
+          CONFIRMATION: ${{ inputs.project_confirmation }}
+        shell: python
+        run: |
+          import json, os, sys, urllib.request
+          def blocked():
+              sys.exit('BLOCKED: verify free artifact allowance and owner-reviewed environment ldr-backup; no source access performed')
+          if os.environ['FREE_STORAGE_CONFIRMED'] != 'true' or os.environ['CONFIRMATION'] != 'sfrcsrzuoqdscflfuwik': blocked()
+          def get(path):
+              req=urllib.request.Request('https://api.github.com/repos/'+os.environ['REPOSITORY']+path,
+                  headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'})
+              try:
+                  with urllib.request.urlopen(req,timeout=20) as r: return json.load(r)
+              except Exception: blocked()
+          env=get('/environments/ldr-backup')
+          rules=env.get('protection_rules',[])
+          reviewers=[x['reviewer'].get('login') for r in rules if r['type']=='required_reviewers' for x in r.get('reviewers',[])]
+          if reviewers != [os.environ['OWNER']]: blocked()
+          policy=env.get('deployment_branch_policy') or {}
+          if not policy.get('custom_branch_policies'): blocked()
+          branches=get('/environments/ldr-backup/deployment-branch-policies').get('branch_policies',[])
+          if len(branches)!=1 or branches[0].get('name')!='main' or branches[0].get('type','branch')!='branch': blocked()
+          print('PASS owner approval, main-only environment and explicit zero-cost gate')
+  backup_restore:
+    if: >-
+      github.event_name == 'workflow_dispatch' && inputs.mode == 'backup_restore' &&
+      github.ref == 'refs/heads/main' && github.actor == github.repository_owner
+    needs: [preparation, verify_environment]
+    environment: ldr-backup
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - run: docker pull supabase/postgres:17.6.1.155
+      - name: Export source read-only, encrypt, decrypt and restore in a network-isolated container
+        env:
+          LDR_BACKUP_DB_HOST: ${{ vars.LDR_BACKUP_DB_HOST }}
+          LDR_BACKUP_DB_PASSWORD: ${{ secrets.LDR_BACKUP_DB_PASSWORD }}
+          LDR_BACKUP_STORAGE_KEY: ${{ secrets.LDR_BACKUP_STORAGE_KEY }}
+          LDR_BACKUP_PASSPHRASE: ${{ secrets.LDR_BACKUP_PASSPHRASE }}
+          LDR_BACKUP_CONFIRM: ${{ inputs.project_confirmation }}
+          LDR_BACKUP_OUTPUT: ${{ runner.temp }}/ldr-encrypted-output
+        run: python3 scripts/agenda/recovery/prepare.py
+      - name: Retain only ciphertext and sanitized verification after all preceding checks succeed
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ldr-encrypted-recovery-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/ldr-encrypted-output/recovery.tar.gpg
+            ${{ runner.temp }}/ldr-encrypted-output/verification.json
+          if-no-files-found: error
+          retention-days: 1
+          compression-level: 0
