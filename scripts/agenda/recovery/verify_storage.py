@@ -13,7 +13,8 @@ import time
 import urllib.parse
 import uuid
 
-IMAGE='supabase/storage-api:v1.90.3'
+IMAGE='supabase/storage-api:v1.90.3@sha256:17010384ae107d663638aac64aaa794c23d5e9b834ebbe206eb392290b37e358'
+SYNTHETIC_DIAGNOSTICS=False
 TENANT='ldr-recovery-local'
 BUCKET='ldr-recovery-files'
 ROOT='/var/lib/ldr-storage-recovery'
@@ -103,6 +104,14 @@ def service(pg):
             except (RuntimeError,ValueError):pass
             time.sleep(1)
         else:
+            if SYNTHETIC_DIAGNOSTICS:
+                diagnostic=subprocess.run(['docker','logs',name],capture_output=True,timeout=10)
+                text=(diagnostic.stdout+diagnostic.stderr).decode(errors='replace')
+                for value in [password,secret,*settings.values(),*tokens.values()]:
+                    if len(value)>=16:text=text.replace(value,'[redacted]')
+                text=re.sub(r'postgres(?:ql)?://[^\s"\\]+','[redacted-local-uri]',text)
+                text=re.sub(r'eyJ[A-Za-z0-9_.-]+','[redacted-local-jwt]',text)
+                print('SYNTHETIC STORAGE ONLY '+text[-6000:],flush=True)
             raise RuntimeError('isolated_storage_not_ready')
         yield name,request,tokens,secret
     finally:
@@ -169,6 +178,7 @@ def verify_storage(pg,payload):
 
 if __name__=='__main__':
     import prepare as recovery
+    SYNTHETIC_DIAGNOSTICS=True
     try:
         with recovery.isolated() as pg,tempfile.TemporaryDirectory(prefix='ldr-storage-synthetic-') as directory:
             pg.raw("CREATE DATABASE ldr_restore TEMPLATE template0;",snapshot=False);pg.db='ldr_restore'
