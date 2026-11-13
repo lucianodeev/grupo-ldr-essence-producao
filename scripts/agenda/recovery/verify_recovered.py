@@ -153,7 +153,7 @@ if __name__ == '__main__':
                 "import {bootstrap} from './scripts/agenda/schema-bootstrap.mjs'; process.stdout.write(bootstrap());"]).decode()
             bootstrap=re.sub(r'CREATE ROLE (anon|authenticated) NOLOGIN;',r'DO $r$ BEGIN CREATE ROLE \1 NOLOGIN; EXCEPTION WHEN duplicate_object THEN NULL; END $r$;',bootstrap)
             bootstrap=bootstrap.replace('CREATE ROLE service_role NOLOGIN BYPASSRLS;', 'DO $r$ BEGIN CREATE ROLE service_role NOLOGIN BYPASSRLS; EXCEPTION WHEN duplicate_object THEN NULL; END $r$;')
-            pg.raw(bootstrap, snapshot=False)
+            pg.raw('SET search_path=public,extensions;\n'+bootstrap, snapshot=False)
             pg.raw(recovery.MIGRATION.read_text(), snapshot=False)
             count=verify_recovered(pg)
             print(f'PASS {count} functional checks on synthetic dependency schema; recovered data still required')
