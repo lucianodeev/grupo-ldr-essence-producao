@@ -55,3 +55,21 @@ Pendências efetivas:
 3. Completar validação de checkout/webhooks em modo de testes caso exigida para liberação de pagamentos externos.
 
 Somente depois dessas provas revisar a migração de produção e ativar a agenda. Não confundir banco recuperável com backup integral do projeto já concluído.
+
+
+## Atualização — preparação das pendências (08:11 UTC)
+
+O candidato do PR #292 passou no commit `d81644175aca4404c16beac30bd8da5f91bb4f50`:
+https://github.com/lucianodeev/grupo-ldr-essence-producao/actions/runs/43391039207
+
+- 35 verificações de segurança/configuração/guardas.
+- Roundtrip cifrado, restauração sintética e 24 verificações SQL.
+- Restauração de dois ficheiros sintéticos numa nova API oficial Storage: 10 verificações de conteúdo/acesso, incluindo anonimato, outro utilizador, proprietário e rotas públicas/privadas. Metadados preservados.
+- Imagem Storage v1.90.3 fixada por digest `sha256:17010384ae107d663638aac64aaa794c23d5e9b834ebbe206eb392290b37e358`.
+- Preparado o ensaio com os objetos reais, que comparará novamente o inventário completo depois do serviço Storage e antes dos testes da agenda. **Este ensaio real do Storage ainda não foi executado.**
+- Preparada entrada opcional `LDR_BACKUP_APP_CONFIG_JSON`, guardada somente no payload cifrado e conferida depois da decifragem, com teste da chave recuperada sobre o token Calendar recuperado.
+- A transferência das variáveis Render (que incluem credenciais Google, Supabase e Stripe) para esse novo segredo do ambiente protegido `ldr-backup` daria um novo acesso ao job. **Não foi efetuada.** Exige confirmação específica antes da transmissão.
+- Procedimento para revisão: https://github.com/lucianodeev/grupo-ldr-essence-producao/blob/d81644175aca4404c16beac30bd8da5f91bb4f50/docs/audit-20261113/external-config-recovery-review.md
+
+O PR #292 permanece separado e não integrado: https://github.com/lucianodeev/grupo-ldr-essence-producao/pull/292 .
+A cópia das configurações do Render não comprova, por si só, recuperação de configurações geridas/segredos de Edge Functions do Supabase ou checkout/webhooks externos.
