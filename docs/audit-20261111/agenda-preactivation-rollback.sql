@@ -6,6 +6,10 @@ DO $$ BEGIN
   RAISE EXCEPTION 'rollback refused: retain live data; disable feature flag and use a reviewed forward fix';
  END IF;
 END $$;
+DROP TRIGGER ldr_issue_paid_order_session_credits ON public.orders;
+DROP FUNCTION private.ldr_issue_paid_order_session_credits();
+DROP TRIGGER ldr_paid_order_transition_guard ON public.orders;
+DROP FUNCTION public.ldr_guard_paid_order_transition();
 DROP TRIGGER session_credit_capacity_guard ON public.session_credits;
 DROP FUNCTION public.guard_session_credit_capacity();
 DROP TRIGGER appointment_session_mirror ON public.appointments;
