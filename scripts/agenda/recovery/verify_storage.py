@@ -65,8 +65,9 @@ try {
 
 
 @contextlib.contextmanager
-def service(pg):
+def service(pg,install_synthetic_roles=False):
     guard(pg)
+    require(not install_synthetic_roles or SYNTHETIC_DIAGNOSTICS,'role_bootstrap_is_synthetic_only')
     name='ldr-storage-'+secrets.token_hex(6)
     secret=secrets.token_urlsafe(48)
     password=secrets.token_urlsafe(32)
@@ -80,7 +81,7 @@ def service(pg):
         'TENANT_ID':TENANT,'REGION':'local','SERVER_HOST':'127.0.0.1','SERVER_PORT':'5000',
         'POSTGREST_URL':'http://127.0.0.1:3000','STORAGE_PUBLIC_URL':'http://127.0.0.1:5000',
         'ENABLE_IMAGE_TRANSFORMATION':'false','TUS_USE_FILE_VERSION_SEPARATOR':'false',
-        'DB_ALLOW_MIGRATION_REFRESH':'false','DB_INSTALL_ROLES':'false',
+        'DB_ALLOW_MIGRATION_REFRESH':'false','DB_INSTALL_ROLES':'true' if install_synthetic_roles else 'false',
         'DB_SUPER_USER':'supabase_storage_admin','PG_QUEUE_ENABLE':'false',
         'PG_QUEUE_WORKERS_ENABLE':'false','VECTOR_ENABLED':'false','VECTOR_STORE_MIGRATIONS_ENABLED':'false',
         'HTTP_PROXY':'','HTTPS_PROXY':'','ALL_PROXY':'',
@@ -134,9 +135,9 @@ def verify_storage(pg,payload):
             require(file.stat().st_size==entry['bytes'] and hashlib.sha256(file.read_bytes()).hexdigest()==entry['sha256'],
                     'storage_payload_hash_mismatch')
             # Official FileBackend layout, fixed root, stdin bytes, no shell interpolation or mounts.
-            seed="const fs=require('node:fs'),p=require('node:path');const f=process.argv[1];if(!f.startsWith('"+ROOT+"/'))process.exit(2);fs.mkdirSync(p.dirname(f),{recursive:true});fs.writeFileSync(f,fs.readFileSync(0));"
+            seed="const fs=require('node:fs'),p=require('node:path'),x=require('fs-xattr');const f=process.argv[1],m=JSON.parse(process.argv[2]);if(!f.startsWith('"+ROOT+"/'))process.exit(2);fs.mkdirSync(p.dirname(f),{recursive:true});fs.writeFileSync(f,fs.readFileSync(0));for(const [k,v] of [['content-type',m.mimetype],['cache-control',m.cacheControl],['content-encoding',m.contentEncoding]]){if(typeof v==='string')x.setAttributeSync(f,'user.supabase.'+k,v);}if(m.lastModified&&!Number.isNaN(Date.parse(m.lastModified)))fs.utimesSync(f,new Date(m.lastModified),new Date(m.lastModified));"
             with file.open('rb') as content:
-                r=subprocess.run(['docker','exec','-i',name,'node','-e',seed,path],stdin=content,
+                r=subprocess.run(['docker','exec','-i',name,'node','-e',seed,path,json.dumps(obj.get('metadata') or {})],stdin=content,
                                  stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=60)
             require(r.returncode==0,'isolated_storage_file_seed_failed')
             url='/object/authenticated/'+urllib.parse.quote(obj['bucket_id'],safe='')+'/'+urllib.parse.quote(obj['name'],safe='/')
@@ -184,7 +185,7 @@ if __name__=='__main__':
             pg.raw("CREATE DATABASE ldr_restore TEMPLATE template0;",snapshot=False);pg.db='ldr_restore'
             pg.raw("CREATE SCHEMA auth; CREATE TABLE auth.users(id uuid PRIMARY KEY); CREATE FUNCTION auth.uid() RETURNS uuid LANGUAGE sql AS $$ SELECT nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$; DO $r$ BEGIN CREATE ROLE anon NOLOGIN; EXCEPTION WHEN duplicate_object THEN NULL; END $r$; DO $r$ BEGIN CREATE ROLE authenticated NOLOGIN; EXCEPTION WHEN duplicate_object THEN NULL; END $r$; DO $r$ BEGIN CREATE ROLE service_role NOLOGIN BYPASSRLS; EXCEPTION WHEN duplicate_object THEN NULL; END $r$; DO $r$ BEGIN CREATE ROLE supabase_storage_admin LOGIN SUPERUSER; EXCEPTION WHEN duplicate_object THEN ALTER ROLE supabase_storage_admin SUPERUSER; END $r$; GRANT anon,authenticated,service_role TO supabase_storage_admin;",snapshot=False)
             payload=Path(directory)
-            with service(pg) as (name,request,tokens,_):
+            with service(pg,install_synthetic_roles=True) as (name,request,tokens,_):
                 for public in (False,True):
                     bucket='recovery-public' if public else 'recovery-private'
                     body=json.dumps({'id':bucket,'name':bucket,'public':public}).encode()
