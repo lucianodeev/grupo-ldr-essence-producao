@@ -24,7 +24,7 @@ export async function stripeRequest(key,path,method='GET',params=null,idempotenc
  if(params)headers['Content-Type']='application/x-www-form-urlencoded';
  if(idempotency)headers['Idempotency-Key']=idempotency;
  const r=await fetch('https://api.stripe.com'+path,{method,headers,redirect:'error',signal:AbortSignal.timeout(20000),...(params?{body:new URLSearchParams(params)}:{})});
- assert(r.ok);const text=await r.text();assert(text.length<2097152);return JSON.parse(text);
+ if(!r.ok)throw Error(`stripe_http_${r.status}`);const text=await r.text();assert(text.length<2097152);return JSON.parse(text);
 }
 export async function inventory(api){
  let path='/v1/webhook_endpoints?limit=100',rows=[];
@@ -38,7 +38,8 @@ export async function inventory(api){
 export async function prepare(api){
  assert((await api('/v1/account')).id===ACCOUNT);
  const existing=(await inventory(api)).filter(e=>e.url===TARGET);
- assert(existing.length<=1&&existing.every(e=>e.metadata?.purpose===PURPOSE));
+ assert(existing.filter(e=>e.metadata?.purpose===PURPOSE).length<=1);
+ assert(existing.every(e=>e.metadata?.purpose===PURPOSE||e.status==='disabled'));
  const params={url:TARGET,description:'Ecossistema LDR agenda — controlled activation', 'metadata[project]':'ecossistema-ldr','metadata[purpose]':PURPOSE};
  EVENTS.forEach((e,i)=>params[`enabled_events[${i}]`]=e);
  // A fixed key makes interrupted/repeated preparation replay the same creation,
@@ -110,4 +111,4 @@ async function main(){
  }finally{plain.fill(0);rmSync(tmp,{recursive:true,force:true});}
  console.log('PASS dedicated Stripe webhook prepared disabled; configuration encrypted and recovered without emitting secrets');
 }
-if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href)main().catch(()=>{console.error('BLOCKED Stripe bootstrap failed; details withheld; agenda remains disabled');process.exitCode=1;});
+if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href)main().catch(error=>{const code=/^stripe_http_[0-9]{3}$/.test(error?.message??'')?error.message:'details_withheld';console.error('BLOCKED Stripe bootstrap failed: '+code+'; agenda remains disabled');process.exitCode=1;});
