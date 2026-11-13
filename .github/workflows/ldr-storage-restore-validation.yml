@@ -6,6 +6,9 @@ on:
     paths: ['scripts/agenda/recovery/verify_storage.py', '.github/workflows/ldr-storage-restore-validation.yml']
 permissions:
   contents: read
+concurrency:
+  group: ldr-isolated-storage-validation
+  cancel-in-progress: true
 jobs:
   synthetic_storage:
     runs-on: ubuntu-24.04
