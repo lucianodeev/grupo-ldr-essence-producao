@@ -60,7 +60,20 @@ A prova cobre integralmente o banco PostgreSQL, bytes do Storage e configuraçã
 
 Consulta de produção após as correções: appointments ausente; 41 pedidos; zero session_credits. session_credits e as duas tabelas privadas de OAuth têm RLS ativo e SELECT negado a anon/authenticated. O serviço Render continua free.
 
-## Ensaio 43 em execução
+## Ensaio 43 — concluído com sucesso
 https://github.com/lucianodeev/grupo-ldr-essence-producao/actions/runs/43420267390
 
-Repetição da restauração real com a guarda corrigida e auditoria Stripe somente de leitura. Resultado ainda pendente; não é autorização automática de produção.
+Concluído às 12:59 de Bruxelas, em 13/11/2026. Banco, 24 objetos/8 buckets, 96 verificações Storage, configurações Render e chave/token Calendar recuperados e comparados novamente. A migração corrigida passou no clone, incluindo as 31 verificações funcionais SQL. A restrição real de anon foi reproduzida e o teste passou; Master ativo autenticado também passou.
+
+- Backup guardado: https://chatgpt.com/library?file_id=libfile_0971c182b9c0819186b6e7830bc1f5d7&account_id=personal
+- ZIP: LDR_Backup_Cifrado_2026-11-13_43420267390.zip, 20.068.923 bytes.
+- SHA256 ZIP: 2d33f16240b2e82e05f004a44bc1b565d53534d1891cfdc7da331d216b380ff4.
+- SHA256 GPG: 0725e0d1863efa7facecd821c863c0fd488d81ee94f57e49cb583bd0132e279f.
+- Os dois hashes foram conferidos depois do download; ZIP contém apenas GPG e verification.json.
+
+A consulta oficial Stripe, somente de leitura, confirmou mode=live e account_matches_expected=true. endpoint_enabled=false e configuration_ready=false: nenhum webhook ativo corresponde aos endereços atuais verificados. signing_secret_present=true não comprova ligação correta a um endpoint. Nenhuma cobrança ou alteração Stripe foi feita por esse ensaio.
+
+Histórico agregado da tabela stripe_webhook_events: um checkout.session.completed e um charge.refunded em setembro; 57 checkout.session.expired, último em 15/10/2026. Isso não prova entrega ao endereço atual.
+
+## Próxima correção preparada
+PR 295: https://github.com/lucianodeev/grupo-ldr-essence-producao/pull/295 . Prepara um webhook dedicado inicialmente desativado, transferência exclusivamente cifrada da nova configuração e um teste real de receção com customer.created em modo sandbox, sem operações financeiras. O ramo de validação exige assinatura distinta, nonce e expiração curta e nunca executa pedidos/créditos. A ativação do webhook exige prova da receção sandbox, esquema da agenda instalado e testes de assinatura/idempotência no receptor. A publicação da agenda continua condicionada aos resultados.
