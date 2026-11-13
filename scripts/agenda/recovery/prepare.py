@@ -644,14 +644,17 @@ def rehearse(source, work, out, passphrase, live=False):
             require(result=={'rls':True,'browser_denied':True},'restored_migration_permissions_failed')
             migration_ok=True
             print('PASS agenda migration and basic permissions in isolated clone',flush=True)
+            from verify_recovered import verify_recovered
+            functional_checks=verify_recovered(target)
     return {'database_restore_verified':True,'encrypted_payload_roundtrip_verified':True,
             'table_count':len(before['tables']),'sequence_count':len(before['sequences']),
             'storage_files_recovered':live,'storage_service_restore_tested':False,
             'migration_applied_to_isolated_clone':migration_ok,
+            'recovered_functional_checks':functional_checks if live else 0,
+            'payment_and_credit_tests_on_recovered_database':live,
             'production_gate':False,'project_backup_complete':False,
             'pending':['external_service_configuration_and_encryption_keys',
-                       'isolated_storage_service_restore','live_google_calendar_tests',
-                       'payment_and_credit_tests_on_recovered_database'],
+                       'isolated_storage_service_restore','live_google_calendar_tests'],
             'encrypted_archive_sha256':sha(out/'recovery.tar.gpg')}
 
 def main():
