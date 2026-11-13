@@ -1,7 +1,9 @@
 # Agenda LDR — evidências de 13 de novembro de 2026
 
-## Estado atual
-A agenda permanece desativada. Nenhuma migração da agenda foi aplicada ao Supabase principal. Não houve cobrança, contratação de plano pago nem remoção de dados existentes.
+## Estado atual — atualizado em 13/11/2026 às 17:54 de Bruxelas
+A agenda está ativada em produção. Migração 20261111200311 aplicada depois do backup 44 recuperado e validado. Webhook Stripe live habilitado após os testes do receptor; deploy Render dep-dbrk07jtqb8s73epfta0 em estado live. Não houve cobrança, contratação de plano pago nem remoção de dados existentes.
+
+As secções abaixo preservam a cronologia; estados anteriores de desativação/pendência foram superados pelas evidências finais ao fim deste documento.
 
 ## Backup comprovado — execução 41
 - Execução: https://github.com/lucianodeev/grupo-ldr-essence-producao/actions/runs/43394363515
@@ -99,4 +101,39 @@ Após autorização específica do proprietário para criar os webhooks e guarda
 
 A atualização da configuração de backup foi submetida pela interface. O campo Last updated continuou a mostrar o horário anterior; não foi usado como prova de atualização. Uma tentativa de repetir a preparação Stripe para conferir o arquivo foi rejeitada pela revisão automática por risco de duplicação e NÃO foi executada. O formulário foi cancelado. Optou-se por novo backup somente de leitura e pela validação posterior exclusivamente do webhook já criado, sem nova criação.
 
-A migração de produção e a ativação da agenda continuam pendentes dos gates finais.
+A migração e a ativação ainda estavam pendentes naquele momento; foram concluídas conforme as etapas finais seguintes.
+
+
+## Backup 44 — última recuperação antes da migração
+- Execução aprovada: https://github.com/lucianodeev/grupo-ldr-essence-producao/actions/runs/43427122622 . Commit 5cabfbd6732e757f0fde018f6fde54fa97d7a9cb.
+- 251 tabelas, 12 sequências; comparação de dados, esquema, RLS, políticas, ACLs e proprietários em ambiente isolado. Todos os 31 testes SQL funcionais passaram sobre o clone recuperado.
+- Storage: 24 objetos reais, 8 buckets, 96 verificações de conteúdo e permissões; inventário preservado. Configuração Render cifrada/recuperada; chave recuperada decifra token Calendar recuperado.
+- Cópia durável: https://chatgpt.com/library?file_id=libfile_cbadf2c10d148191ab239b00f85e5ebb&account_id=personal
+- ZIP: LDR_Backup_Cifrado_2026-11-13_43427122622.zip, 20.069.019 bytes, SHA256 1c44f4da553ea7d8b5d383930690822f012cce06625cca6e5eb1b5ab03723d6b.
+- GPG SHA256 0fec6723583e14e584b76ad33f714a71d0903b64736aefe98b71671a1197778d. Hashes conferidos após download.
+- A configuração com a nova chave Stripe também tem o patch GPG independente já guardado (execução 43424792670). A interface GitHub não confirmou a atualização do segredo APP_CONFIG; não afirmar que essa cópia foi atualizada. Para recuperar a configuração nova, aplicar o patch cifrado documentado acima ao backup. Não reutilizar automaticamente a chave antiga.
+- Limite explícito: banco completo, bytes Storage e configuração Render capturada; não é uma recuperação integral de configurações geridas Auth/Realtime, código/segredos das Edge Functions ou de outros provedores. production_gate/project_backup_complete do artefato permanecem false, sem adulteração. As provas operacionais Google/Stripe são separadas.
+
+## Migração de produção — aplicada após recuperação comprovada
+- Aplicada às 12:51:19 UTC pelo mecanismo oficial Supabase, arquivo apps/painel-ldr/supabase/migrations/20261111200311_agenda_calendar_credit_integration.sql, blob b50162e98a4a09c963a5483f5da9d5be8f624ccc.
+- Histórico confirmado como version=20261111200311, name=agenda_calendar_credit_integration. Apenas a nova entrada de histórico gerada pela aplicação foi alinhada ao identificador canónico do arquivo.
+- Sem DROP/TRUNCATE/DELETE de dados existentes e sem recalcular créditos históricos. A comparação realizada imediatamente antes/depois preservou as cinco tabelas de negócio verificadas; contagens finais: customers=69, orders=41, session_credits=0, mentorships=0, mentorship_sessions=0, appointments=0.
+- appointments, appointment_events, appointment_calendar_sync e session_credits: RLS ativo, SELECT negado a anon/authenticated e permitido a service_role. Operações são mediadas pelo backend com sessão e autorização. Seis RPCs transacionais restringidas ao service_role; emissor privado sem EXECUTE público.
+- Gatilhos orders ldr_paid_order_transition_guard e ldr_issue_paid_order_session_credits presentes e ativos (tgenabled=O). Testes negativos de acesso anon/authenticated passaram; RPC sem agendamento recusada em transação revertida.
+- Pagamentos/créditos: 31 cenários SQL no clone recuperado e 10 testes de handler aprovado no CI; incluem pagamento não confirmado/reembolso recusado, crédito único/pacote, concorrência e idempotência. Não houve cobrança financeira real em produção.
+
+## Stripe — verificação direta e ativação do endpoint existente
+- A execução GitHub enable 43429098211 falhou com details_withheld; não identifica a guarda específica. A hipótese de configuração protegida antiga não foi convertida em certeza.
+- Não se repetiu prepare nem se criou outro endpoint. Após diagnóstico, executou-se exclusivamente a função enable do bootstrap versionado em main via API oficial Stripe, com a configuração nova já recuperada e cifrada. Rotas Stripe limitadas a /v1/account e ao webhook existente; zero chamadas financeiras.
+- Em 13/11/2026 às 16:51:22 UTC, conta esperada conferida, endpoint dedicado live inicialmente disabled, recibo real sandbox confirmado por REST 200, esquema appointments confirmado por REST 200.
+- Receptor: assinatura inválida HTTP 400; assinatura live correta HTTP 200/received=true; repetição do mesmo evento HTTP 200/duplicate=true. Evento técnico ldr.integration_probe sem cliente, pedido ou pagamento; nenhum ramo financeiro executado.
+- Só depois foi atualizado disabled=false no endpoint we_1UbJXAKlx2LyNGeBUmx7dgJo; resposta status=enabled. Seis eventos configurados conferidos. Endpoint de testes permanece desativado; validação temporária permanece desligada, sem chave/nonce/expiração temporários ativos.
+- Resultado: endpoint_enabled=true, account_matches_expected=true, real_sandbox_delivery_verified=true, live_receiver_signature_verified=true, duplicate_prevention_verified=true, invalid_signature_rejected=true, charges_created=0.
+
+## Publicação e conferência final
+- Alteração Render limitada a AGENDA_INTEGRATION_ENABLED=true, merge de variáveis (replace=false), serviço srv-daqq2gfavr4c7394hb1g no workspace tea-daqpr6nf3r2c73bnaijg. Plano free preservado.
+- Deploy dep-dbrk07jtqb8s73epfta0: commit 5cabfbd6732e757f0fde018f6fde54fa97d7a9cb, início 16:51:42 UTC, live 16:54:08 UTC. Mesma versão de código previamente validada; nenhuma migração reaplicada.
+- Interface profissional autenticada como proprietário/superadmin: https://ldrecossistema.online/painel-profissional/agenda abriu com o estado vazio correto. Formulário Novo agendamento abriu; foi fechado sem submeter, sem criar dados de teste em produção.
+- Interface do cliente: https://ldrecossistema.online/cliente/agenda abriu e informou que não há pedido pago elegível nesta conta; nenhum link Meet indevido foi exibido. Zero agendamentos e créditos é o estado real, não indisponibilidade técnica.
+- Google Calendar: sete verificações reais anteriores aprovadas, evento técnico cancelado sem remanescentes; validação temporária desligada. Criação de evento de cliente depende de pedido elegível e confirmação da equipa.
+- Limite da prova: não foi feita uma compra/cobrança real nem um novo agendamento de cliente em produção. Validação financeira foi no clone/simulador de handler; entrega externa real Stripe foi sandbox não financeira.
