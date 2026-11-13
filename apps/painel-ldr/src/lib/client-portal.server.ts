@@ -79,13 +79,13 @@ export async function resolveClient(userId: string, email: string | null): Promi
     const { data: byEmail, error: byEmailError } = await supabaseAdmin
       .from("customers")
       .select("id, full_name, email, phone, portal_active, country, auth_user_id")
-      .ilike("email", mail)
+      .ilike("email", mail.replace(/[\\%_]/g, "\\$&"))
       .is("auth_user_id", null)
       .maybeSingle();
 
     if (byEmailError) fail("Não foi possível validar o acesso do cliente.");
 
-    if (byEmail) {
+    if (byEmail && byEmail.email?.trim().toLowerCase() === mail) {
       const { data: bound, error: bindError } = await supabaseAdmin
         .from("customers")
         .update({ auth_user_id: userId, portal_linked_at: new Date().toISOString() })
