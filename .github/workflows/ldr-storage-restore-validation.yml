@@ -1,0 +1,27 @@
+name: LDR isolated Storage recovery validation
+on:
+  workflow_dispatch:
+  push:
+    branches: [fix/ldr-isolated-storage-restore-20261113]
+    paths: ['scripts/agenda/recovery/verify_storage.py', '.github/workflows/ldr-storage-restore-validation.yml']
+permissions:
+  contents: read
+jobs:
+  synthetic_storage:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Require public repository and no credentials
+        env:
+          REPOSITORY_PRIVATE: ${{ github.event.repository.private }}
+        run: test "$REPOSITORY_PRIVATE" = false
+      - name: Retrieve official versioned images before any isolated service starts
+        run: |
+          docker pull supabase/postgres:17.6.1.155
+          docker pull supabase/storage-api:v1.90.3
+          docker image inspect supabase/storage-api:v1.90.3 --format '{{json .RepoDigests}}'
+      - name: Restore synthetic file bytes to a fresh isolated official Storage service
+        run: python3 scripts/agenda/recovery/verify_storage.py
