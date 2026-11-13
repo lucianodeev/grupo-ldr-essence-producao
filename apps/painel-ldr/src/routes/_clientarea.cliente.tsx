@@ -49,6 +49,9 @@ function ClientShell() {
   const c=SHELL[locale];
   const defaultNav = [
     { to: "/cliente", label: c.home, exact: true, icon: Home },
+    { to: "/cliente/contratar", label: c.contract, icon: MessageCircle },
+    { to: "/cliente/pedidos", label: c.orders, icon: ClipboardList },
+    { to: "/cliente/agenda", label: c.agenda, icon: CalendarDays },
     { to: "/cliente/biblioteca", label: c.library, icon: BookOpen, featured: true },
     { to: "/cliente/treinamentos", label: c.training, icon: GraduationCap },
     { to: "/cliente/perfil", label: c.profile, icon: UserRound },

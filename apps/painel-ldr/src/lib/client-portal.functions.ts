@@ -4,6 +4,7 @@ import { getRequest } from "@tanstack/react-start/server";
 
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { parseRescheduleRequest, parseScheduleRequest } from "@/lib/client-agenda.schemas";
+import { z } from "zod";
 
 function emailOf(claims: Record<string, unknown>): string | null {
   const value = claims["email"];
@@ -168,6 +169,14 @@ export const clientContractCatalog = createServerFn({ method: "GET" })
   .handler(async ({ context }) => {
     const { getClientContractCatalog } = await import("@/lib/client-portal.server");
     return getClientContractCatalog(context.userId, emailOf(context.claims));
+  });
+
+export const clientServiceCheckout = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: unknown) => z.object({ catalogKey: z.string().min(1).max(100), requestId: z.string().uuid() }).strict().parse(input))
+  .handler(async ({ context, data }) => {
+    const { createClientServiceCheckout } = await import("@/lib/client-portal.server");
+    return createClientServiceCheckout(context.userId, emailOf(context.claims), data);
   });
 
 export const clientAgenda = createServerFn({ method: "GET" })

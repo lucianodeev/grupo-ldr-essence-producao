@@ -57,4 +57,9 @@ export type ContractItem = {
   originalCents: number | null;
   sessions: number;
   paymentUrl: string | null;
+  billingModel: string;
 };
+
+export function isIndividualSession(item: Pick<ContractItem, "billingModel">): boolean {
+  return item.billingModel === "single_paid_session" || item.billingModel === "package_sessions";
+}

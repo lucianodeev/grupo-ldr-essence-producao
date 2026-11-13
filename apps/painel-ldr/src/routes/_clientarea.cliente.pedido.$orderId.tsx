@@ -2,6 +2,7 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 
 import { EmptyState, PageHeader, StatusBadge } from "@/components/central/ui";
 import { DeliveryCard } from "@/components/cliente/delivery-card";
+import { useServicePurchaseCopy } from "@/components/cliente/service-purchase-journey";
 import {
   ORDER_STATUSES,
   PAYMENT_STATUSES,
@@ -31,7 +32,9 @@ export const Route = createFileRoute("/_clientarea/cliente/pedido/$orderId")({
 
 function ClientOrderDetail() {
   const { orderId } = Route.useParams();
-  const { data, isLoading, isError } = useClientOrder(orderId);
+  const orderQuery = useClientOrder(orderId);
+  const { data, isLoading, isError } = orderQuery;
+  const purchaseCopy = useServicePurchaseCopy();
   const cancelOrder = useCancelClientOrder();
 
   if (isLoading) return <p className="text-sm text-muted-foreground">Carregando…</p>;
@@ -60,11 +63,20 @@ function ClientOrderDetail() {
         title={order.title}
         subtitle={`${order.order_number} · ${labelOf(SERVICE_TYPES, order.service_type)}`}
         actions={
+          <div className="flex flex-wrap items-center gap-3">
+          <button type="button" disabled={orderQuery.isFetching} onClick={() => { void orderQuery.refetch(); }} className="rounded-lg border px-3 py-2 text-sm font-semibold disabled:opacity-60">{purchaseCopy.refresh}</button>
           <Link to="/cliente/pedidos" className="text-sm font-semibold text-primary underline">
             Voltar
           </Link>
+          </div>
         }
       />
+
+      {order.payment_status === "pendente" && <p className="s8-notice mb-4 text-sm" role="status">{purchaseCopy.pendingPayment}</p>}
+      {order.payment_status === "pago" && order.service_type !== "produto_digital" && !cancelled && !finished && <div className="s8-notice mb-4 text-sm">
+        <p>{purchaseCopy.paid}</p>
+        <Link to="/cliente/agenda" className="mt-2 inline-block font-bold text-primary underline">{purchaseCopy.agenda}</Link>
+      </div>}
 
       <section className="s8-card">
         <div className="flex flex-wrap gap-2">

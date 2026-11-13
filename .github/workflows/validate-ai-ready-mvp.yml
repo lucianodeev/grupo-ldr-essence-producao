@@ -25,4 +25,10 @@ jobs:
           cache: 'npm'
       - run: npm ci --no-audit --no-fund
       - run: node --test apps/painel-ldr/tests/professional-availability-ownership.test.cjs apps/painel-ldr/tests/professional-availability-behavior.test.cjs
+      - name: Individual service checkout and credit ownership (synthetic data)
+        run: node --test apps/painel-ldr/tests/individual-service-*.test.cjs
+      - name: Signed payment webhook (synthetic signatures, no financial operations)
+        env:
+          AGENDA_PG_PACKAGE: ${{ github.workspace }}/apps/painel-ldr/package.json
+        run: node --test scripts/agenda/payment-webhook.test.mjs
       - run: npm run build:painel
