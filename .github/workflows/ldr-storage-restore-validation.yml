@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches: [fix/agenda-stripe-delivery-validation-20261113, fix/agenda-anonymous-payment-guard-20261113, fix/ldr-isolated-storage-restore-20261113, fix/agenda-payment-credit-completion-20261113]
-    paths: ['scripts/agenda/recovery/**', 'scripts/agenda/verify.mjs', 'scripts/agenda/payment-webhook.test.mjs', 'apps/painel-ldr/src/routes/api/stripe/webhook.ts', 'apps/painel-ldr/supabase/migrations/*agenda_calendar_credit_integration.sql', 'docs/audit-20261111/agenda-preactivation-rollback.sql', '.github/workflows/ldr-storage-restore-validation.yml', '.github/workflows/ldr-recovery-preparation.yml']
+    paths: ['scripts/agenda/bootstrap-stripe*', 'scripts/agenda/stripe-bootstrap-recipient.pub', '.github/workflows/ldr-stripe-controlled-setup.yml', 'scripts/agenda/recovery/**', 'scripts/agenda/verify.mjs', 'scripts/agenda/payment-webhook.test.mjs', 'apps/painel-ldr/src/routes/api/stripe/webhook.ts', 'apps/painel-ldr/supabase/migrations/*agenda_calendar_credit_integration.sql', 'docs/audit-20261111/agenda-preactivation-rollback.sql', '.github/workflows/ldr-storage-restore-validation.yml', '.github/workflows/ldr-recovery-preparation.yml']
 permissions:
   contents: read
 concurrency:
@@ -69,4 +69,6 @@ jobs:
       - name: Re-run full original SQL checks including non-destructive rollback guard
         run: node scripts/agenda/verify.mjs
       - name: Verify actual webhook handler signatures, paid status, asynchronous methods and retries
-        run: node --test scripts/agenda/payment-webhook.test.mjs
+        run: |
+          node --test scripts/agenda/payment-webhook.test.mjs
+          node --test scripts/agenda/bootstrap-stripe.test.mjs
