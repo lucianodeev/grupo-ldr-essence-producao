@@ -24,6 +24,7 @@ async function fixture(){
     return {data:null,error:null};
    },then(resolve,reject){return this.maybeSingle().then(resolve,reject)}};return q;
  },async rpc(){throw Error('Unexpected unrelated RPC in agenda payment test');}};
+ for(const k of ['STRIPE_WEBHOOK_VALIDATION_ENABLED','STRIPE_WEBHOOK_VALIDATION_EXPIRES_AT','STRIPE_WEBHOOK_VALIDATION_NONCE','STRIPE_WEBHOOK_TEST_SECRET'])delete process.env[k];
  process.env.STRIPE_WEBHOOK_SECRET=secret;
  const module=await import('data:text/javascript;base64,'+Buffer.from(code).toString('base64')+'#'+randomUUID());
  const post=module.Route.server.handlers.POST;
@@ -59,4 +60,32 @@ test('failed asynchronous checkout records failed payment',async()=>{
 });
 test('signed refund marks its order refunded and remains idempotent',async()=>{
  const {state,event,send}=await fixture();const e=event('charge.refunded');assert.equal((await send(e)).status,200);assert.equal((await send(e)).status,200);assert.equal(state.updates.length,1);assert.equal(state.updates[0].payment_status,'reembolsado');
+});
+
+function enableDeliveryValidation(){
+ process.env.STRIPE_WEBHOOK_VALIDATION_ENABLED='true';
+ process.env.STRIPE_WEBHOOK_VALIDATION_EXPIRES_AT=new Date(Date.now()+1800000).toISOString();
+ process.env.STRIPE_WEBHOOK_VALIDATION_NONCE='a'.repeat(48);
+ process.env.STRIPE_WEBHOOK_TEST_SECRET='whsec_synthetic_delivery_only';
+}
+function testSignature(e){const t=Math.floor(Date.now()/1000);return {signature:`t=${t},v1=${createHmac('sha256','whsec_synthetic_delivery_only').update(`${t}.${JSON.stringify(e)}`).digest('hex')}`};}
+test('sandbox delivery receipt is scoped, prefixed, idempotent and never updates orders',async()=>{
+ const {state,event,send}=await fixture();enableDeliveryValidation();const e=event('customer.created');e.livemode=false;e.data.object.metadata={ldr_agenda_validation:'a'.repeat(48)};e.id='evt_fixtureDelivery';
+ const first=await send(e,testSignature(e));assert.equal(first.status,200);assert.equal((await first.json()).validationOnly,true);
+ const again=await send(e,testSignature(e));assert.equal((await again.json()).duplicate,true);
+ assert.deepEqual([...state.events],['ldr_validation:evt_fixtureDelivery']);assert.equal(state.updates.length,0);
+});
+test('sandbox key cannot confirm payments, accept live events or bypass nonce',async()=>{
+ for(const change of ['payment','live','nonce']){
+  const {state,event,send}=await fixture();enableDeliveryValidation();const e=event('customer.created');e.id='evt_fixtureBlocked';e.livemode=false;e.data.object.metadata={ldr_agenda_validation:'a'.repeat(48)};
+  if(change==='payment')e.type='checkout.session.completed';if(change==='live')e.livemode=true;if(change==='nonce')e.data.object.metadata.ldr_agenda_validation='wrong';
+  assert.equal((await send(e,testSignature(e))).status,400);assert.equal(state.calls,0);
+ }
+});
+test('disabled or expired sandbox validation fails before database access',async()=>{
+ for(const change of ['disabled','expired']){
+  const {state,event,send}=await fixture();enableDeliveryValidation();const e=event('customer.created');e.id='evt_fixtureExpired';e.livemode=false;e.data.object.metadata={ldr_agenda_validation:'a'.repeat(48)};
+  if(change==='disabled')process.env.STRIPE_WEBHOOK_VALIDATION_ENABLED='false';else process.env.STRIPE_WEBHOOK_VALIDATION_EXPIRES_AT=new Date(Date.now()-1).toISOString();
+  assert.equal((await send(e,testSignature(e))).status,400);assert.equal(state.calls,0);
+ }
 });
