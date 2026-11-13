@@ -551,7 +551,7 @@ def rehearse(source, work, out, passphrase, live=False):
     render_config_verified=False
     if live:
         from external_config import capture
-        capture(work,os.environ.get('LDR_BACKUP_RENDER_ENV_JSON',''))
+        capture(work,os.environ.get('LDR_BACKUP_APP_CONFIG_JSON',''))
     if live:
         # Fail early on platform schema/extension incompatibility, before the
         # expensive full row inventory. This is not a recovery proof and never
