@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { PageHeader } from "@/components/central/ui";
+import { AgendaQueryFeedback } from "@/components/central/agenda-query-feedback";
 import {
   professionalAvailabilityAdd,
   professionalAvailabilityDisable,
@@ -152,6 +153,11 @@ function ProfessionalAvailabilityPage() {
   const services = (settings.data?.services ?? []) as Row[];
   const availability = (settings.data?.availability ?? []) as Row[];
   const serviceNames = useMemo(() => new Map(services.map((s) => [String(s["id"]), String(s["name"])])), [services]);
+
+  if (settings.isPending || settings.isError) return <AgendaQueryFeedback
+    error={settings.isError} retrying={settings.isFetching}
+    onRetry={() => { void settings.refetch(); }}
+  />;
 
   function beginEdit(row: Row) {
     setEditingId(String(row["id"]));

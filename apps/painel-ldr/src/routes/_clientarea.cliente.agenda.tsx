@@ -3,6 +3,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 import { EmptyState, Field, StatusBadge } from "@/components/central/ui";
+import { AgendaQueryFeedback } from "@/components/central/agenda-query-feedback";
 import { APPOINTMENT_STATUSES } from "@/lib/catalog";
 import { formatDateTime, safeUrl, toneOf } from "@/lib/central";
 import { useAgendaActions, useClientAgenda } from "@/lib/client-portal-data";
@@ -31,7 +32,10 @@ function ClientAgendaPage() {
   const [rescheduleId, setRescheduleId] = useState<string | null>(null);
   const [rescheduleAt, setRescheduleAt] = useState("");
 
-  if (agenda.isLoading) return <p className="s8-card">{t("state.loading")}</p>;
+  if (agenda.isPending || agenda.isError) return <AgendaQueryFeedback
+    error={agenda.isError} retrying={agenda.isFetching}
+    onRetry={() => { void agenda.refetch(); }}
+  />;
 
   const appointments = agenda.data?.appointments ?? [];
   const balances = agenda.data?.balances ?? [];
