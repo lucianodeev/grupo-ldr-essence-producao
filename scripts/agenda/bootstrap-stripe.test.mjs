@@ -10,7 +10,7 @@ test('invalid project, enabled agenda, or test key stops before any API',()=>{
 });
 test('wrong account or unrelated existing endpoint cannot create or change a webhook',async()=>{
  for(const wrongAccount of [true,false]){
-  const calls=[];const api=async(path,method='GET')=>{calls.push(method);if(path==='/v1/account')return {id:wrongAccount?'acct_other':ACCOUNT};return {data:[{...endpoint,metadata:{purpose:'unrelated'}}]};};
+  const calls=[];const api=async(path,method='GET')=>{calls.push(method);if(path==='/v1/account')return {id:wrongAccount?'acct_other':ACCOUNT};return {data:[{...endpoint,metadata:{purpose:'unrelated'},status:'enabled'}]};};
   await assert.rejects(()=>prepare(api));assert(!calls.includes('POST'));
  }
 });
