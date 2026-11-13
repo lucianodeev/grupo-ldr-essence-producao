@@ -50,6 +50,7 @@ type StripeObject = {
 };
 
 type StripeEvent = {
+  livemode?: boolean;
   id: string;
   type: string;
   created?: number;
@@ -602,10 +603,31 @@ export const Route = createFileRoute("/api/stripe/webhook")({
         const signature = request.headers.get("stripe-signature") ?? "";
         const raw = await request.text();
         if (new TextEncoder().encode(raw).length > MAX_BODY) return json(413, { ok: false });
-        if (!verifyStripeSignature(raw, signature, secret)) return json(400, { ok: false });
+        const liveSignature = verifyStripeSignature(raw, signature, secret);
+        const validationExpiry = Date.parse(process.env["STRIPE_WEBHOOK_VALIDATION_EXPIRES_AT"] ?? "");
+        const validationNonce = process.env["STRIPE_WEBHOOK_VALIDATION_NONCE"] ?? "";
+        const validationSecret = process.env["STRIPE_WEBHOOK_TEST_SECRET"] ?? "";
+        const validationEnabled = process.env["STRIPE_WEBHOOK_VALIDATION_ENABLED"] === "true" &&
+          Number.isFinite(validationExpiry) && validationExpiry > Date.now() &&
+          validationExpiry <= Date.now() + 3600000 && /^[a-f0-9]{48}$/.test(validationNonce) &&
+          validationSecret.startsWith("whsec_");
+        const testSignature = !liveSignature && validationEnabled && verifyStripeSignature(raw, signature, validationSecret);
+        if (!liveSignature && !testSignature) return json(400, { ok: false });
         let event: StripeEvent;
         try { event = JSON.parse(raw) as StripeEvent; } catch { return json(400, { ok: false }); }
         if (!event.id || !event.type) return json(400, { ok: false });
+        // The temporary sandbox receipt branch never reaches orders, credits,
+        // subscriptions or marketplace fulfillment. Its key cannot authorize payment.
+        if (testSignature) {
+          if (event.livemode !== false || event.type !== "customer.created" ||
+              event.data?.object?.metadata?.["ldr_agenda_validation"] !== validationNonce ||
+              !/^evt_[A-Za-z0-9]+$/.test(event.id)) return json(400, { ok: false });
+          try {
+            const receipt = await markEvent(`ldr_validation:${event.id}`, "ldr_validation.customer.created");
+            if (receipt === "metadata_fallback") return json(503, { ok: false });
+            return json(200, { received: true, validationOnly: true, duplicate: receipt === "duplicate" });
+          } catch { return json(503, { received: false }); }
+        }
 
         try {
           const eventMark = await markEvent(event.id, event.type);
