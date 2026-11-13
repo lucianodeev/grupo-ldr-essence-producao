@@ -56,6 +56,8 @@ Fontes oficiais:
 
 ## O que ainda será obrigatório para liberar produção
 
+O ensaio real executa agora também as RPCs de pagamentos e créditos **depois** de comparar o banco recuperado e aplicar a migração no clone. Usa UUIDs e referências aleatórios, ligações PostgreSQL independentes para concorrência e o mesmo contentor sem rede/portas/mounts. Não substitui o esquema recuperado, não trunca nem apaga registos existentes e não chama processadores de pagamento. O resumo distingue explicitamente essas verificações de cobranças/webhooks externos, que ainda precisam de validação em modo de testes.
+
 - Cópia integral dos componentes e chaves externas, com recuperação comprovada, incluindo OAuth.
 - Restauração num Storage isolado com objetos, metadados e políticas, não apenas recuperação dos bytes.
 - Testes completos de pagamentos, créditos, concorrência e isolamento sobre o clone recuperado.
