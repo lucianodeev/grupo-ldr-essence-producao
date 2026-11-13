@@ -65,9 +65,8 @@ try {
 
 
 @contextlib.contextmanager
-def service(pg,install_synthetic_roles=False):
+def service(pg):
     guard(pg)
-    require(not install_synthetic_roles or SYNTHETIC_DIAGNOSTICS,'role_bootstrap_is_synthetic_only')
     name='ldr-storage-'+secrets.token_hex(6)
     secret=secrets.token_urlsafe(48)
     password=secrets.token_urlsafe(32)
@@ -81,7 +80,7 @@ def service(pg,install_synthetic_roles=False):
         'TENANT_ID':TENANT,'REGION':'local','SERVER_HOST':'127.0.0.1','SERVER_PORT':'5000',
         'POSTGREST_URL':'http://127.0.0.1:3000','STORAGE_PUBLIC_URL':'http://127.0.0.1:5000',
         'ENABLE_IMAGE_TRANSFORMATION':'false','TUS_USE_FILE_VERSION_SEPARATOR':'false',
-        'DB_ALLOW_MIGRATION_REFRESH':'false','DB_INSTALL_ROLES':'true' if install_synthetic_roles else 'false',
+        'DB_ALLOW_MIGRATION_REFRESH':'false','DB_INSTALL_ROLES':'false',
         'DB_SUPER_USER':'supabase_storage_admin','PG_QUEUE_ENABLE':'false',
         'PG_QUEUE_WORKERS_ENABLE':'false','VECTOR_ENABLED':'false','VECTOR_STORE_MIGRATIONS_ENABLED':'false',
         'HTTP_PROXY':'','HTTPS_PROXY':'','ALL_PROXY':'',
@@ -190,12 +189,15 @@ if __name__=='__main__':
             pg.raw("CREATE DATABASE ldr_restore TEMPLATE template0;",snapshot=False);pg.db='ldr_restore'
             pg.raw("CREATE SCHEMA auth; CREATE TABLE auth.users(id uuid PRIMARY KEY); CREATE FUNCTION auth.uid() RETURNS uuid LANGUAGE sql AS $$ SELECT nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$; DO $r$ BEGIN CREATE ROLE anon NOLOGIN; EXCEPTION WHEN duplicate_object THEN NULL; END $r$; DO $r$ BEGIN CREATE ROLE authenticated NOLOGIN; EXCEPTION WHEN duplicate_object THEN NULL; END $r$; DO $r$ BEGIN CREATE ROLE service_role NOLOGIN BYPASSRLS; EXCEPTION WHEN duplicate_object THEN NULL; END $r$; DO $r$ BEGIN CREATE ROLE supabase_storage_admin LOGIN SUPERUSER; EXCEPTION WHEN duplicate_object THEN ALTER ROLE supabase_storage_admin SUPERUSER; END $r$; GRANT anon,authenticated,service_role TO supabase_storage_admin;",snapshot=False)
             payload=Path(directory)
-            with service(pg,install_synthetic_roles=True) as (name,request,tokens,_):
+            pg.raw("CREATE SCHEMA storage; GRANT USAGE ON SCHEMA storage,auth TO anon,authenticated,service_role; ALTER DEFAULT PRIVILEGES FOR ROLE supabase_storage_admin IN SCHEMA storage GRANT ALL ON TABLES TO service_role; ALTER DEFAULT PRIVILEGES FOR ROLE supabase_storage_admin IN SCHEMA storage GRANT ALL ON SEQUENCES TO service_role; ALTER DEFAULT PRIVILEGES FOR ROLE supabase_storage_admin IN SCHEMA storage GRANT EXECUTE ON FUNCTIONS TO service_role;",snapshot=False)
+            with service(pg) as (name,request,tokens,secret):
+                owner=str(uuid.uuid4())
+                pg.raw("INSERT INTO auth.users(id) VALUES ('"+owner+"'); GRANT SELECT ON storage.objects,storage.buckets TO anon,authenticated; CREATE POLICY synthetic_owner ON storage.objects FOR SELECT TO authenticated USING (owner_id=auth.uid()::text);",snapshot=False)
                 for public in (False,True):
                     bucket='recovery-public' if public else 'recovery-private'
                     body=json.dumps({'id':bucket,'name':bucket,'public':public}).encode()
                     require(request('/bucket',tokens['service_role'],'POST',body,{'Content-Type':'application/json'})['status']==200,'synthetic_bucket_creation_failed')
-                    require(request('/object/'+bucket+'/nested/fixture.txt',tokens['service_role'],'POST',b'synthetic restored bytes',{'Content-Type':'text/plain'})['status']==200,'synthetic_object_upload_failed')
+                    require(request('/object/'+bucket+'/nested/fixture.txt',jwt(secret,'service_role',owner),'POST',b'synthetic restored bytes',{'Content-Type':'text/plain'})['status']==200,'synthetic_object_upload_failed')
                 objects=pg.json("SELECT jsonb_agg(to_jsonb(o) ORDER BY bucket_id,name) FROM storage.objects o;",snapshot=False)
                 entries=[]
                 for i,obj in enumerate(objects):
