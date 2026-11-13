@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches: [fix/ldr-isolated-storage-restore-20261113]
-    paths: ['scripts/agenda/recovery/verify_storage.py', '.github/workflows/ldr-storage-restore-validation.yml']
+    paths: ['scripts/agenda/recovery/**', '.github/workflows/ldr-storage-restore-validation.yml', '.github/workflows/ldr-recovery-preparation.yml']
 permissions:
   contents: read
 concurrency:
