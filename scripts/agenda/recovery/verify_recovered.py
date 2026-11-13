@@ -98,7 +98,7 @@ def verify_recovered(pg):
     expect(f"SELECT public.confirm_mentorship_session_tx({q(51)},now(),'https://meet.google.com/synthetic')", 'insufficient session credits')
     passed('mentorship cannot bypass exhausted credits')
     raw(f"INSERT INTO public.appointments(id,title,consumes_credit) VALUES ({q(60)},'Recovery free',false); INSERT INTO public.mentorships(id) VALUES ({q(61)}); INSERT INTO public.mentorship_sessions(id,mentorship_id) VALUES ({q(62)},{q(61)});")
-    expect(f"SELECT public.confirm_mentorship_session_tx({q(62)},now(),NULL,{q(13)})", 'mentorship ownership mismatch')
+    expect(f"SELECT public.confirm_mentorship_session_tx({q(62)},now(),'https://meet.google.com/synthetic',{q(13)})", 'mentorship ownership mismatch')
     assert scalar(f"(SELECT appointment_id IS NULL FROM public.mentorship_sessions WHERE id={q(62)})")
     passed('wrong mentorship ownership rolls back')
     raw(f"SET ROLE service_role; SELECT public.confirm_mentorship_session_tx({q(62)},now()+interval '7 days','https://meet.google.com/synthetic',{q(60)}); RESET ROLE;")
