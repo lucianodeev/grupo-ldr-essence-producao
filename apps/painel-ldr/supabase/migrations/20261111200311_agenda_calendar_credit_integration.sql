@@ -326,4 +326,51 @@ REVOKE ALL ON FUNCTION public.guard_session_credit_capacity() FROM PUBLIC,anon,a
 GRANT EXECUTE ON FUNCTION public.guard_session_credit_capacity() TO service_role;
 CREATE TRIGGER session_credit_capacity_guard BEFORE INSERT OR UPDATE ON public.session_credits
  FOR EACH ROW EXECUTE FUNCTION public.guard_session_credit_capacity();
+
+-- Payment-to-credit dependency is missing from the deployed orders triggers.
+-- No historical rows are changed. Only future trusted paid transitions issue
+-- one grant per order; retries never add another grant or overwrite a grant.
+CREATE FUNCTION public.ldr_guard_paid_order_transition() RETURNS trigger
+LANGUAGE plpgsql SECURITY INVOKER SET search_path='' AS $$
+BEGIN
+ IF NEW.payment_status='pago' AND
+    (TG_OP='INSERT' OR OLD.payment_status IS DISTINCT FROM NEW.payment_status
+     OR OLD.customer_id IS DISTINCT FROM NEW.customer_id OR OLD.catalog_key IS DISTINCT FROM NEW.catalog_key) THEN
+  IF current_user NOT IN ('postgres','supabase_admin','service_role','ldr_restore_admin')
+     AND NOT coalesce(public.is_superadmin(auth.uid()),false) THEN
+   RAISE EXCEPTION 'trusted payment confirmation required' USING ERRCODE='42501';
+  END IF;
+ END IF;
+ RETURN NEW;
+END $$;
+REVOKE ALL ON FUNCTION public.ldr_guard_paid_order_transition() FROM PUBLIC,anon,authenticated;
+GRANT EXECUTE ON FUNCTION public.ldr_guard_paid_order_transition() TO service_role;
+CREATE TRIGGER ldr_paid_order_transition_guard
+ BEFORE INSERT OR UPDATE OF payment_status,customer_id,catalog_key ON public.orders
+ FOR EACH ROW EXECUTE FUNCTION public.ldr_guard_paid_order_transition();
+
+-- A trigger needs privileged access to the private credit ledger, while the
+-- preceding invoker guard checks the actual caller before that privilege change.
+CREATE FUNCTION private.ldr_issue_paid_order_session_credits() RETURNS trigger
+LANGUAGE plpgsql SECURITY DEFINER SET search_path='' AS $$
+DECLARE model text; package_count integer; capacity integer;
+BEGIN
+ IF NEW.payment_status<>'pago' OR NEW.customer_id IS NULL OR NEW.catalog_key IS NULL THEN RETURN NEW; END IF;
+ PERFORM 1 FROM public.orders WHERE id=NEW.id FOR UPDATE;
+ SELECT billing_model,package_sessions INTO model,package_count
+  FROM public.service_catalog WHERE catalog_key=NEW.catalog_key;
+ IF NOT FOUND THEN RETURN NEW; END IF;
+ capacity:=CASE WHEN model='single_paid_session' THEN 1
+  WHEN model='package_sessions' THEN greatest(coalesce(package_count,0),0) ELSE 0 END;
+ IF capacity>0 THEN
+  INSERT INTO public.session_credits(order_id,customer_id,catalog_key,granted)
+   VALUES(NEW.id,NEW.customer_id,NEW.catalog_key,capacity)
+   ON CONFLICT(order_id) DO NOTHING;
+ END IF;
+ RETURN NEW;
+END $$;
+REVOKE ALL ON FUNCTION private.ldr_issue_paid_order_session_credits() FROM PUBLIC,anon,authenticated;
+CREATE TRIGGER ldr_issue_paid_order_session_credits
+ AFTER INSERT OR UPDATE OF payment_status,customer_id,catalog_key ON public.orders
+ FOR EACH ROW EXECUTE FUNCTION private.ldr_issue_paid_order_session_credits();
 COMMIT;
