@@ -59,7 +59,7 @@ try {
  const r=await fetch('http://127.0.0.1:5000'+p.path,{method:p.method||'GET',headers,
  body:p.body?Buffer.from(p.body,'base64'):undefined,signal:AbortSignal.timeout(10000)});
  const b=Buffer.from(await r.arrayBuffer());
- console.log(JSON.stringify({status:r.status,bytes:b.length,sha256:(await import('node:crypto')).createHash('sha256').update(b).digest('hex')}));
+ console.log(JSON.stringify({status:r.status,bytes:b.length,sha256:(await import('node:crypto')).createHash('sha256').update(b).digest('hex'),detail:p.diagnostic&&!r.ok?b.toString('utf8').slice(0,2048):undefined}));
 }catch{console.log(JSON.stringify({status:0}));}
 """
 
@@ -92,12 +92,17 @@ def service(pg,install_synthetic_roles=False):
     result=subprocess.run(cmd,capture_output=True,timeout=60)
     require(result.returncode==0,'isolated_storage_start_failed')
     def request(path,token=None,method='GET',body=None,headers=None):
-        data={'path':path,'token':token,'method':method,'headers':headers}
+        data={'path':path,'token':token,'method':method,'headers':headers,'diagnostic':SYNTHETIC_DIAGNOSTICS}
         if body is not None:data['body']=base64.b64encode(body).decode()
         r=subprocess.run(['docker','exec','-i',name,'node','--input-type=module','-e',CLIENT],input=json.dumps(data).encode(),
                          capture_output=True,timeout=20)
         require(r.returncode==0,'isolated_storage_client_failed')
-        return json.loads(r.stdout)
+        response=json.loads(r.stdout)
+        detail=response.pop('detail',None)
+        if SYNTHETIC_DIAGNOSTICS and detail and path!='/status':
+            for value in [password,secret,*tokens.values()]:detail=detail.replace(value,'[redacted-local-credential]')
+            print('SYNTHETIC API ONLY '+detail,flush=True)
+        return response
     try:
         for _ in range(60):
             try:
