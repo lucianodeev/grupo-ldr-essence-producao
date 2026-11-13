@@ -4,7 +4,7 @@ Este procedimento ainda exige autorização específica antes de copiar credenci
 
 ## Ação proposta
 
-Copiar o conjunto de variáveis do serviço Render `srv-daqq2gfavr4c7394hb1g` para **um único Environment secret** chamado `LDR_BACKUP_RENDER_ENV_JSON` no ambiente GitHub já protegido `ldr-backup`, do repositório `lucianodeev/grupo-ldr-essence-producao`. Não usar segredo de repositório, commit, variável pública, log ou mensagem. O objeto JSON preserva os nomes/valores existentes; não redefine chaves.
+Copiar o conjunto de variáveis do serviço Render `srv-daqq2gfavr4c7394hb1g` para **um único Environment secret** chamado `LDR_BACKUP_APP_CONFIG_JSON` no ambiente GitHub já protegido `ldr-backup`, do repositório `lucianodeev/grupo-ldr-essence-producao`. Não usar segredo de repositório, commit, variável pública, log ou mensagem. O objeto JSON preserva os nomes/valores existentes; não redefine chaves.
 
 Isso dá ao job aprovado pelo proprietário acesso às credenciais Google Calendar, Supabase e Stripe contidas nesse conjunto. O job limita-se a guardá-las no mesmo payload GnuPG do backup, conferir o roundtrip e testar localmente que a chave recuperada decifra o refresh token Calendar recuperado. Não chama o Stripe nem efetua cobranças. Não usa essas credenciais para modificar serviços.
 
