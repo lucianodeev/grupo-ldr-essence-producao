@@ -286,6 +286,48 @@ def canonical_catalog(entries):
             entry['value']['roles']=sorted(entry['value']['roles'])
     return sorted(entries,key=lambda x:json.dumps(x,sort_keys=True))
 
+def sql_ast(sql):
+    # Use PostgreSQL 17's real parser. Keep every semantic node, literal,
+    # operator, cast and identifier; omit only source character positions.
+    try:
+        from pglast.parser import parse_sql_json,get_postgresql_version
+        require(get_postgresql_version()[0]==17,'postgres_parser_major_mismatch')
+        tree=json.loads(parse_sql_json(sql))
+    except Blocked: raise
+    except Exception: raise Blocked('catalog_sql_parse_failed') from None
+    def visit(value):
+        if isinstance(value,list): return [visit(x) for x in value]
+        if not isinstance(value,dict): return value
+        result={k:visit(v) for k,v in value.items() if k not in ('location','stmt_location','stmt_len')}
+        # AND is associative in PostgreSQL's three-valued Boolean logic.
+        # Preserve argument order and every OR/NOT boundary; never sort terms.
+        if result.get('boolop')=='AND_EXPR' and set(result)<= {'boolop','args'}:
+            args=[]
+            for arg in result.get('args',[]):
+                nested=arg.get('BoolExpr') if isinstance(arg,dict) else None
+                if isinstance(nested,dict) and nested.get('boolop')=='AND_EXPR' and set(nested)<= {'boolop','args'}:
+                    args.extend(nested.get('args',[]))
+                else: args.append(arg)
+            result['args']=args
+        return result
+    return visit(tree)
+
+def comparable_inventory(manifest):
+    result=json.loads(json.dumps(manifest))
+    for entry in result['catalog']:
+        if entry.get('kind')=='constraint':
+            entry['definition']=sql_ast('ALTER TABLE '+identifier(entry['schema'])+'.'+identifier(entry['table'])+
+                ' ADD CONSTRAINT '+identifier(entry['name'])+' '+entry['definition']+';')
+        elif entry.get('kind')=='policy':
+            policy=entry['value'];policy['roles']=sorted(policy['roles'])
+            for field in ('qual','with_check'):
+                if policy.get(field) is not None: policy[field]=sql_ast('SELECT '+policy[field]+';')
+    result['catalog']=sorted(result['catalog'],key=lambda x:json.dumps(x,sort_keys=True))
+    return result
+
+def inventories_equivalent(before,after):
+    return before==after or comparable_inventory(before)==comparable_inventory(after)
+
 PLATFORM_TABLES=(('net','http_request_queue'),('net','_http_response'))
 
 def backup_platform_data(source,work,manifest):
@@ -575,7 +617,8 @@ def rehearse(source, work, out, passphrase, live=False):
                           ' ON '+obj+' TO '+grantee+option+'; RESET ROLE;')
         target.raw('\n'.join(grants),snapshot=False)
         after=inventory(target,work.parent)
-        if before!=after:
+        matches=inventories_equivalent(before,after)
+        if not matches:
             print('DIAGNOSTIC inventory_diff '+json.dumps(safe_inventory_diff(before,after),sort_keys=True),flush=True)
             private_diff={}
             for group in ('catalog',):
@@ -585,13 +628,14 @@ def rehearse(source, work, out, passphrase, live=False):
                                      'added':[json.loads(x) for x in sorted(right-left)]}
             run(['node',str(Path(__file__).with_name('encrypt-diagnostic.mjs')),
                  str(out/'diagnostic-cipher.json')],data=json.dumps(private_diff).encode())
-        if before!=after and SYNTHETIC_DIAGNOSTICS:
+        if not matches and SYNTHETIC_DIAGNOSTICS:
             for group in before:
                 left={json.dumps(v,sort_keys=True) for v in before[group]}
                 right={json.dumps(v,sort_keys=True) for v in after[group]}
                 if left!=right:
                     print('SYNTHETIC DIFF '+group+' missing='+json.dumps(sorted(left-right)[:8])+' added='+json.dumps(sorted(right-left)[:8]),file=sys.stderr)
-        require(before==after,'restored_data_schema_rls_acl_or_sequence_mismatch')
+        require(matches,'restored_data_schema_rls_acl_or_sequence_mismatch')
+        print('PASS exact data, sequence, RLS, ACL and parsed rule comparison',flush=True)
         migration_ok=False
         if live:
             # Only the disposable no-network container can ever receive this SQL.
@@ -599,7 +643,9 @@ def rehearse(source, work, out, passphrase, live=False):
             result=target.json("SELECT jsonb_build_object('rls',(SELECT bool_and(relrowsecurity) FROM pg_class WHERE oid IN ('public.appointments'::regclass,'public.appointment_events'::regclass,'public.appointment_calendar_sync'::regclass)), 'browser_denied', NOT has_table_privilege('anon','public.appointments','SELECT') AND NOT has_table_privilege('authenticated','public.appointments','SELECT'));",snapshot=False)
             require(result=={'rls':True,'browser_denied':True},'restored_migration_permissions_failed')
             migration_ok=True
+            print('PASS agenda migration and basic permissions in isolated clone',flush=True)
     return {'database_restore_verified':True,'encrypted_payload_roundtrip_verified':True,
+            'table_count':len(before['tables']),'sequence_count':len(before['sequences']),
             'storage_files_recovered':live,'storage_service_restore_tested':False,
             'migration_applied_to_isolated_clone':migration_ok,
             'production_gate':False,'project_backup_complete':False,
@@ -612,6 +658,7 @@ def main():
     global SYNTHETIC_DIAGNOSTICS
     parser=argparse.ArgumentParser();parser.add_argument('--self-test',action='store_true');args=parser.parse_args()
     SYNTHETIC_DIAGNOSTICS = args.self_test
+    sql_ast('SELECT true;')
     os.umask(0o077)
     out=Path(os.environ.get('LDR_BACKUP_OUTPUT',tempfile.mkdtemp(prefix='ldr-ciphertext-'))).resolve()
     require(not out.exists() or not any(out.iterdir()),'output_directory_must_be_empty')

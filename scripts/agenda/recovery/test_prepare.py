@@ -1,6 +1,7 @@
 import contextlib
 import importlib.util
 import io
+import json
 import os
 from pathlib import Path
 import subprocess
@@ -15,6 +16,32 @@ spec=importlib.util.spec_from_file_location('recovery',Path(__file__).with_name(
 r=importlib.util.module_from_spec(spec);spec.loader.exec_module(r)
 
 class RecoverySecurityTests(unittest.TestCase):
+    def test_postgres_parser_accepts_only_associative_and_grouping(self):
+        self.assertEqual(r.sql_ast('SELECT (a AND b) AND c'),r.sql_ast('SELECT a AND (b AND c)'))
+        for left,right in [
+            ('SELECT (a OR b) AND c','SELECT a OR (b AND c)'),
+            ('SELECT a AND NOT b','SELECT a AND b'),
+            ('SELECT amount>=3','SELECT amount>=4'),
+            ("SELECT currency IN ('EUR','BRL')","SELECT currency IN ('EUR','USD')"),
+            ('SELECT is_owner() AND valid','SELECT other_function() AND valid'),
+            ('SELECT a AND b','SELECT b AND a'),
+        ]: self.assertNotEqual(r.sql_ast(left),r.sql_ast(right))
+
+    def test_inventory_ast_comparison_preserves_rls_roles_and_data_hashes(self):
+        left={'catalog':[{'kind':'policy','value':{'roles':['anon'],'qual':None,'with_check':'(a AND b) AND c'}}],
+              'tables':[{'sha256':'original','rls':True}],'sequences':[]}
+        right=json.loads(json.dumps(left));right['catalog'][0]['value']['with_check']='a AND (b AND c)'
+        self.assertTrue(r.inventories_equivalent(left,right))
+        for mutate in [lambda x:x['tables'][0].update(sha256='changed'),
+                       lambda x:x['tables'][0].update(rls=False),
+                       lambda x:x['catalog'][0]['value'].update(roles=['authenticated'])]:
+            changed=json.loads(json.dumps(right));mutate(changed)
+            self.assertFalse(r.inventories_equivalent(left,changed))
+
+    def test_invalid_sql_blocks_comparison_without_disclosing_sql(self):
+        with self.assertRaisesRegex(r.Blocked,'catalog_sql_parse_failed'):
+            r.sql_ast('SELECT private_secret FROM (')
+
     def test_policy_role_set_is_canonical_without_losing_policy_details(self):
         a=[{'kind':'policy','value':{'roles':['authenticated','anon'],'qual':'false'}}]
         b=[{'kind':'policy','value':{'roles':['anon','authenticated'],'qual':'false'}}]

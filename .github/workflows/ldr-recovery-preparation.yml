@@ -13,7 +13,7 @@ on:
         type: string
         default: ''
   push:
-    branches: [chore/ldr-recovery-preparation-20261112, fix/ldr-recovery-safe-diagnostics-20261112, fix/ldr-recovery-official-ca-20261112, fix/ldr-recovery-restore-preflight-20261112, fix/ldr-recovery-platform-libraries-20261112, fix/ldr-recovery-batch-inventory-20261112, fix/ldr-recovery-equivalence-20261112, fix/ldr-recovery-private-diagnostic-20261112]
+    branches: [chore/ldr-recovery-preparation-20261112, fix/ldr-recovery-safe-diagnostics-20261112, fix/ldr-recovery-official-ca-20261112, fix/ldr-recovery-restore-preflight-20261112, fix/ldr-recovery-platform-libraries-20261112, fix/ldr-recovery-batch-inventory-20261112, fix/ldr-recovery-equivalence-20261112, fix/ldr-recovery-private-diagnostic-20261112, fix/ldr-recovery-expression-equivalence-20261112]
     paths:
       - '.github/workflows/ldr-recovery-preparation.yml'
       - 'scripts/agenda/recovery/**'
@@ -34,6 +34,10 @@ jobs:
         env:
           REPOSITORY_PRIVATE: ${{ github.event.repository.private }}
         run: test "$REPOSITORY_PRIVATE" = false
+      - name: Install hash-pinned PostgreSQL 17 parser without credentials
+        run: |
+          python3 -m pip install --no-deps --only-binary=:all: --require-hashes --target "$RUNNER_TEMP/ldr-parser-deps" -r scripts/agenda/recovery/parser-requirements.txt
+          echo "PYTHONPATH=$RUNNER_TEMP/ldr-parser-deps" >> "$GITHUB_ENV"
       - name: Validate local security controls without credentials
         run: python3 -m unittest discover -s scripts/agenda/recovery -p 'test_*.py' -v
       - name: Verify private diagnostic encryption with synthetic text only
@@ -93,6 +97,10 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           persist-credentials: false
+      - name: Install hash-pinned PostgreSQL 17 parser before accessing credentials
+        run: |
+          python3 -m pip install --no-deps --only-binary=:all: --require-hashes --target "$RUNNER_TEMP/ldr-parser-deps" -r scripts/agenda/recovery/parser-requirements.txt
+          echo "PYTHONPATH=$RUNNER_TEMP/ldr-parser-deps" >> "$GITHUB_ENV"
       - run: docker pull supabase/postgres:17.6.1.155
       - name: Export source read-only, encrypt, decrypt and restore in a network-isolated container
         env:
