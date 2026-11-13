@@ -110,7 +110,7 @@ jobs:
           LDR_BACKUP_DB_PASSWORD: ${{ secrets.LDR_BACKUP_DB_PASSWORD }}
           LDR_BACKUP_STORAGE_KEY: ${{ secrets.LDR_BACKUP_STORAGE_KEY }}
           LDR_BACKUP_PASSPHRASE: ${{ secrets.LDR_BACKUP_PASSPHRASE }}
-          LDR_BACKUP_RENDER_ENV_JSON: ${{ secrets.LDR_BACKUP_RENDER_ENV_JSON }}
+          LDR_BACKUP_APP_CONFIG_JSON: ${{ secrets.LDR_BACKUP_APP_CONFIG_JSON }}
           LDR_BACKUP_CONFIRM: ${{ inputs.project_confirmation }}
           LDR_BACKUP_OUTPUT: ${{ runner.temp }}/ldr-encrypted-output
         run: python3 scripts/agenda/recovery/prepare.py
