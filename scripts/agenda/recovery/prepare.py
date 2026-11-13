@@ -549,6 +549,7 @@ def remote_environment():
 
 def rehearse(source, work, out, passphrase, live=False):
     render_config_verified=False
+    stripe_configuration_checks=None
     storage_service_verified=False
     storage_service_checks=None
     if live:
@@ -578,6 +579,11 @@ def rehearse(source, work, out, passphrase, live=False):
             require(source.json(OBJECTS,snapshot=False)==objects,'storage_changed_during_backup')
         (work/'source-manifest.json').write_text(json.dumps(before,sort_keys=True))
         require(inventory(source,work)==before,'source_changed_during_snapshot')
+    if live and (work/'render-environment.json').exists():
+        from verify_stripe import verify_configuration
+        stripe_configuration_checks=verify_configuration(json.loads((work/'render-environment.json').read_text())['env'])
+        (work/'stripe-configuration-checks.json').write_text(json.dumps(stripe_configuration_checks,sort_keys=True))
+        print('INFO read-only Stripe configuration: '+json.dumps(stripe_configuration_checks,sort_keys=True),flush=True)
     recovered=seal(work,out,passphrase)
     print('PASS encrypted payload decrypted with matching hashes',flush=True)
     with isolated() as target:
@@ -672,6 +678,7 @@ def rehearse(source, work, out, passphrase, live=False):
             'payment_and_credit_tests_on_recovered_database':live,
             'render_configuration_backup_verified':render_config_verified,
             'calendar_token_key_recovery_verified':render_config_verified,
+            'stripe_configuration_checks':stripe_configuration_checks,
             'production_gate':False,'project_backup_complete':False,
             'pending':['external_service_configuration_and_encryption_keys','live_google_calendar_tests']+
                       ([] if storage_service_verified else ['isolated_storage_service_restore']),

@@ -336,8 +336,13 @@ BEGIN
  IF NEW.payment_status='pago' AND
     (TG_OP='INSERT' OR OLD.payment_status IS DISTINCT FROM NEW.payment_status
      OR OLD.customer_id IS DISTINCT FROM NEW.customer_id OR OLD.catalog_key IS DISTINCT FROM NEW.catalog_key) THEN
-  IF current_user NOT IN ('postgres','supabase_admin','service_role','ldr_restore_admin')
-     AND NOT coalesce(public.is_superadmin(auth.uid()),false) THEN
+  IF current_user IN ('postgres','supabase_admin','service_role','ldr_restore_admin') THEN RETURN NEW; END IF;
+  -- Anonymous callers cannot execute is_superadmin in the recovered production
+  -- ACL. Reject before consulting that function; do not broaden its grants.
+  IF current_user <> 'authenticated' THEN
+   RAISE EXCEPTION 'trusted payment confirmation required' USING ERRCODE='42501';
+  END IF;
+  IF NOT coalesce(public.is_superadmin(auth.uid()),false) THEN
    RAISE EXCEPTION 'trusted payment confirmation required' USING ERRCODE='42501';
   END IF;
  END IF;
