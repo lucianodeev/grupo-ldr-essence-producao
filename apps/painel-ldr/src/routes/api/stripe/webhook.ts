@@ -143,9 +143,12 @@ async function handleIndividualServiceEvent(event: StripeEvent, object: StripeOb
     }
     const amount = Number(object.amount_refunded ?? 0);
     if (!Number.isSafeInteger(amount) || amount < 0 || amount > order.amount_cents) throw new Error("individual_service_refund_mismatch");
-    if (order.payment_status !== "pago" || amount <= Number(order.metadata.refund_amount_cents ?? 0)) return true;
+    if (order.payment_status === "reembolsado" || amount <= Number(order.metadata.refund_amount_cents ?? 0)) return true;
+    // Stripe does not guarantee event order: a full refund is final even when
+    // checkout completion has not arrived yet. A late completion cannot grant credit.
     await apply({ ...(amount >= order.amount_cents ? { payment_status: "reembolsado", status: "cancelado" } : {}),
-      metadata: { ...details, refund_amount_cents: amount } }, ["pago"]);
+      metadata: { ...details, refund_amount_cents: amount,
+        stripe_payment_intent_id: order.metadata.stripe_payment_intent_id ?? stripeId(object.payment_intent) } }, ["pendente", "falhou", "pago"]);
   }
   return true;
 }

@@ -132,3 +132,15 @@ test('full individual refund is final; partial refund is recorded without preten
  assert.equal((await f.send(full)).status,200);assert.equal(f.state.order.payment_status,'reembolsado');
  await f.send(individualEvent(f));assert.equal(f.state.order.payment_status,'reembolsado');
 });
+test('full refund arriving before checkout completion prevents later credit release',async()=>{
+ const f=await fixture(individualOrder()),refund=individualEvent(f,'charge.refunded');
+ Object.assign(refund.data.object,{amount:100,amount_refunded:100});
+ assert.equal((await f.send(refund)).status,200);assert.equal(f.state.order.payment_status,'reembolsado');
+ assert.equal((await f.send(individualEvent(f))).status,200);assert.equal(f.state.updates.length,1);
+ assert.equal(f.state.order.payment_status,'reembolsado');
+});
+test('refund confirmed while checkout completion is in flight wins the conditional payment update',async()=>{
+ const f=await fixture(individualOrder());f.state.beforeUpdate=()=>{f.state.order.payment_status='reembolsado';};
+ assert.equal((await f.send(individualEvent(f))).status,200);assert.equal(f.state.updates.length,0);
+ assert.equal(f.state.order.payment_status,'reembolsado');
+});
