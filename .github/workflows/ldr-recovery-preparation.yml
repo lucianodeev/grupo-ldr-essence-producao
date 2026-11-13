@@ -43,11 +43,15 @@ jobs:
       - name: Verify private diagnostic encryption with synthetic text only
         run: node --test scripts/agenda/recovery/diagnostic.test.mjs
       - name: Retrieve pinned official Supabase PostgreSQL image
-        run: docker pull supabase/postgres:17.6.1.155
+        run: |
+          docker pull supabase/postgres:17.6.1.155
+          docker pull supabase/storage-api:v1.90.3@sha256:17010384ae107d663638aac64aaa794c23d5e9b834ebbe206eb392290b37e358
       - name: Rehearse encrypted dump and restore using synthetic data only
         run: python3 scripts/agenda/recovery/prepare.py --self-test
       - name: Validate actual payment, credit and permission RPC tests without source access
         run: python3 scripts/agenda/recovery/verify_recovered.py
+      - name: Rehearse official Storage API using synthetic objects before source access
+        run: python3 scripts/agenda/recovery/verify_storage.py
   verify_environment:
     if: >-
       github.event_name == 'workflow_dispatch' && inputs.mode == 'backup_restore' &&
@@ -103,7 +107,9 @@ jobs:
         run: |
           python3 -m pip install --no-deps --only-binary=:all: --require-hashes --target "$RUNNER_TEMP/ldr-parser-deps" -r scripts/agenda/recovery/parser-requirements.txt
           echo "PYTHONPATH=$RUNNER_TEMP/ldr-parser-deps" >> "$GITHUB_ENV"
-      - run: docker pull supabase/postgres:17.6.1.155
+      - run: |
+          docker pull supabase/postgres:17.6.1.155
+          docker pull supabase/storage-api:v1.90.3@sha256:17010384ae107d663638aac64aaa794c23d5e9b834ebbe206eb392290b37e358
       - name: Export source read-only, encrypt, decrypt and restore in a network-isolated container
         env:
           LDR_BACKUP_DB_HOST: ${{ vars.LDR_BACKUP_DB_HOST }}
