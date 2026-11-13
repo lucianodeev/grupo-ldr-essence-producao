@@ -84,3 +84,19 @@ PR 295 integrado no commit 5cabfbd6732e757f0fde018f6fde54fa97d7a9cb, preservando
 Workflow: https://github.com/lucianodeev/grupo-ldr-essence-producao/actions/workflows/ldr-stripe-controlled-setup.yml . O formulário está preparado em main, action=prepare, confirmação do projeto preenchida. Zero execuções observadas; Run workflow ainda não foi submetido. Não foi criado webhook nem chave Stripe nova, não se alteraram variáveis Render e não se aplicou migração de produção.
 
 A próxima submissão cria uma nova credencial de assinatura em produção e um webhook dedicado inicialmente desativado. A execução pelo navegador aguarda confirmação específica dessa criação de acesso. A chave será entregue apenas em configuração cifrada e configurada no serviço Render já autorizado. Nenhuma cobrança, plano pago ou eliminação de endpoint/dados existentes faz parte dessa operação.
+
+## Execução autorizada — webhook e entrega real sandbox
+Após autorização específica do proprietário para criar os webhooks e guardar as chaves no Render/backup protegido:
+
+- Workflow 43424792670, sucesso: https://github.com/lucianodeev/grupo-ldr-essence-producao/actions/runs/43424792670 . Criou webhook live dedicado we_1UbJXAKlx2LyNGeBUmx7dgJo, inicialmente desativado; não alterou endpoints preexistentes. Zero cobranças.
+- Handoff RSA-OAEP-SHA256/AES-256-GCM decifrado em ficheiro privado, sem valores no chat/logs. Patch GPG decifrado no job e comparado exatamente antes do upload.
+- Cópia cifrada guardada: https://chatgpt.com/library?file_id=libfile_8584bd1eb01c8191a2a3f28894e671a6&account_id=personal . ZIP SHA256 9e5ad171a996c64295872a468b3654871c30e35c66811744d4491a11556b894c; patch GPG SHA256 fed067f3e7eeca847d1eb863c421e7746c8990714a43d9b8deb8c91007e450ce.
+- Receptor no Render publicado com agenda desativada, deploy dep-dbrg3uc9v7es73cg8oug, live 12:28:40 UTC. Incluiu nova chave de produção e validação sandbox temporária com expiração e nonce privado.
+- Webhook TEST we_1UbJXKKlx2LyNGeBi4V5U0wT criado via conector, apenas customer.created. Fixture cus_VcYjNY0V26TQqY em modo de testes, sem dados de contacto/cartão ou pagamento.
+- Evento real do Stripe evt_1UbJc9Klx2LyNGeBzJvNWnZn, livemode=false, pending_webhooks=0, metadata de validação coincidente. Recebido em stripe_webhook_events como ldr_validation:evt_1UbJc9Klx2LyNGeBzJvNWnZn, tipo ldr_validation.customer.created, às 12:29:58 UTC. Não executou ramos financeiros.
+- Webhook TEST desativado após sucesso. Flag de validação desligada e chave/nonce/expiração temporários esvaziados no Render; deploy dep-dbrg6hc9v7es73cggl40 live 12:34:16 UTC. AGENDA_INTEGRATION_ENABLED continua false.
+- stripe_webhook_events: RLS ativo, INSERT negado a anon/authenticated, política ALL false para os dois papéis. Nenhuma função pública SECURITY DEFINER executável por estes papéis foi encontrada a escrever payment_status em orders.
+
+A atualização da configuração de backup foi submetida pela interface. O campo Last updated continuou a mostrar o horário anterior; não foi usado como prova de atualização. Uma tentativa de repetir a preparação Stripe para conferir o arquivo foi rejeitada pela revisão automática por risco de duplicação e NÃO foi executada. O formulário foi cancelado. Optou-se por novo backup somente de leitura e pela validação posterior exclusivamente do webhook já criado, sem nova criação.
+
+A migração de produção e a ativação da agenda continuam pendentes dos gates finais.
