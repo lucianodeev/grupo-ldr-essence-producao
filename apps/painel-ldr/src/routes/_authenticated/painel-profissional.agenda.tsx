@@ -3,6 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useCallback, useMemo, useState } from "react";
 import { toast } from "sonner";
+import { AgendaQueryFeedback } from "@/components/central/agenda-query-feedback";
 
 import {
   EmptyState,
@@ -257,6 +258,13 @@ function AgendaPage() {
   }, [credits.data, appointments.data, catalog.data, orderNumber]);
 
   const selected = (appointments.data ?? []).find((a) => a.id === selectedId) ?? null;
+
+  const requiredQueries = [appointments, customers, orders, catalog, credits, calendarSync];
+  if (requiredQueries.some((query) => query.isPending || query.isError)) return <AgendaQueryFeedback
+    error={requiredQueries.some((query) => query.isError)}
+    retrying={requiredQueries.some((query) => query.isFetching)}
+    onRetry={() => { void Promise.all(requiredQueries.map((query) => query.refetch())); }}
+  />;
 
   return (
     <div>
