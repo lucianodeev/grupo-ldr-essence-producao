@@ -77,3 +77,10 @@ Histórico agregado da tabela stripe_webhook_events: um checkout.session.complet
 
 ## Próxima correção preparada
 PR 295: https://github.com/lucianodeev/grupo-ldr-essence-producao/pull/295 . Prepara um webhook dedicado inicialmente desativado, transferência exclusivamente cifrada da nova configuração e um teste real de receção com customer.created em modo sandbox, sem operações financeiras. O ramo de validação exige assinatura distinta, nonce e expiração curta e nunca executa pedidos/créditos. A ativação do webhook exige prova da receção sandbox, esquema da agenda instalado e testes de assinatura/idempotência no receptor. A publicação da agenda continua condicionada aos resultados.
+
+## Preparação automática concluída — ainda não executada
+PR 295 integrado no commit 5cabfbd6732e757f0fde018f6fde54fa97d7a9cb, preservando histórico e com [skip render]. CI 43423606042 e build 43423609582 aprovados no head 835e2668a8a5d71c64c41cfdcdc8dbdcb91cf57c. Dez testes do handler (sete financeiros originais e três de isolamento da receção sandbox) e seis testes de guardas/cifragem do bootstrap passaram.
+
+Workflow: https://github.com/lucianodeev/grupo-ldr-essence-producao/actions/workflows/ldr-stripe-controlled-setup.yml . O formulário está preparado em main, action=prepare, confirmação do projeto preenchida. Zero execuções observadas; Run workflow ainda não foi submetido. Não foi criado webhook nem chave Stripe nova, não se alteraram variáveis Render e não se aplicou migração de produção.
+
+A próxima submissão cria uma nova credencial de assinatura em produção e um webhook dedicado inicialmente desativado. A execução pelo navegador aguarda confirmação específica dessa criação de acesso. A chave será entregue apenas em configuração cifrada e configurada no serviço Render já autorizado. Nenhuma cobrança, plano pago ou eliminação de endpoint/dados existentes faz parte dessa operação.
