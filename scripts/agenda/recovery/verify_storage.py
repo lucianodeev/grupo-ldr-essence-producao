@@ -11,6 +11,7 @@ import subprocess
 import tempfile
 import time
 import urllib.parse
+import uuid
 
 IMAGE='supabase/storage-api:v1.90.3'
 TENANT='ldr-recovery-local'
@@ -139,6 +140,25 @@ def verify_storage(pg,payload):
             else:
                 require(400<=public['status']<500,'private_storage_public_route_not_denied')
             checks+=1
+            subjects=[('anon',None),('authenticated',str(uuid.uuid4()))]
+            owner=obj.get('owner_id') or obj.get('owner')
+            if owner:
+                try:subjects.append(('authenticated',str(uuid.UUID(owner))))
+                except (ValueError,TypeError):pass
+            for role,subject in subjects:
+                object_id=str(uuid.UUID(obj['id']))
+                claims=json.dumps({'role':role,'sub':subject or ''},separators=(',',':')).replace("'","''")
+                if bucket_by_id[obj['bucket_id']]['public']:
+                    visible=True  # Official public buckets intentionally bypass row SELECT policies.
+                else:
+                    has_select=pg.json(f"SELECT to_jsonb(has_table_privilege('{role}','storage.objects','SELECT'));",snapshot=False)
+                    visible=has_select and pg.json(f"BEGIN; SET LOCAL ROLE {role}; DO $c$ BEGIN PERFORM set_config('request.jwt.claims','{claims}',true); PERFORM set_config('request.jwt.claim.sub','{subject or ''}',true); END $c$; SELECT to_jsonb(EXISTS(SELECT 1 FROM storage.objects WHERE id='{object_id}')); ROLLBACK;",snapshot=False)
+                result=request(url,jwt(secret,role,subject))
+                if visible:
+                    require(result==response,'storage_rls_allowed_readback_mismatch')
+                else:
+                    require(400<=result['status']<500,'storage_rls_denied_read_exposed')
+                checks+=1
         require(pg.json("SELECT coalesce(jsonb_agg(to_jsonb(o) ORDER BY bucket_id,name),'[]') FROM storage.objects o;",snapshot=False)==before,
                 'storage_service_changed_recovered_metadata')
         require(pg.json("SELECT coalesce(jsonb_agg(to_jsonb(b) ORDER BY id),'[]') FROM storage.buckets b;",snapshot=False)==buckets,
