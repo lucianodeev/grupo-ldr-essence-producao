@@ -93,7 +93,7 @@ def service(pg):
     def request(path,token=None,method='GET',body=None,headers=None):
         data={'path':path,'token':token,'method':method,'headers':headers}
         if body is not None:data['body']=base64.b64encode(body).decode()
-        r=subprocess.run(['docker','exec','-i',name,'node','-e',CLIENT],input=json.dumps(data).encode(),
+        r=subprocess.run(['docker','exec','-i',name,'node','--input-type=module','-e',CLIENT],input=json.dumps(data).encode(),
                          capture_output=True,timeout=20)
         require(r.returncode==0,'isolated_storage_client_failed')
         return json.loads(r.stdout)
