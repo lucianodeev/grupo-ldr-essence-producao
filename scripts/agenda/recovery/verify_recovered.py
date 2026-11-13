@@ -151,6 +151,7 @@ def verify_recovered(pg):
     passed('refunded automatic grant cannot fund a new appointment')
     # Ignore table RLS ONLY inside a rolled-back disposable test so this proves
     # the payment guard independently rejects a browser caller with table grants.
+    raw("REVOKE EXECUTE ON FUNCTION public.is_superadmin(uuid) FROM PUBLIC,anon;")
     for role in ('anon','authenticated'):
         raw(f"BEGIN; ALTER TABLE public.orders DISABLE ROW LEVEL SECURITY; SET LOCAL ROLE {role}; DO $t$ BEGIN BEGIN UPDATE public.orders SET payment_status='pago' WHERE id={q(80)}; EXCEPTION WHEN insufficient_privilege THEN IF SQLERRM='trusted payment confirmation required' THEN RETURN; END IF; RAISE; END; RAISE EXCEPTION 'browser paid transition unexpectedly allowed'; END $t$; ROLLBACK;")
     passed('browser roles cannot self-confirm payment even if table RLS is bypassed in the test')
