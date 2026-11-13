@@ -1,0 +1,67 @@
+name: LDR controlled Stripe webhook setup
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: Prepare a disabled webhook or enable after verified sandbox delivery
+        type: choice
+        options: [prepare, enable]
+        default: prepare
+        required: true
+      project_confirmation:
+        description: Type sfrcsrzuoqdscflfuwik only (never a password)
+        type: string
+        required: true
+      endpoint_id:
+        description: Existing dedicated endpoint ID for enable only
+        type: string
+      proof_event_id:
+        description: Verified sandbox customer.created event ID for enable only
+        type: string
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: ldr-controlled-stripe-setup
+  cancel-in-progress: false
+jobs:
+  setup:
+    if: >-
+      github.ref == 'refs/heads/main' && github.actor == github.repository_owner &&
+      inputs.project_confirmation == 'sfrcsrzuoqdscflfuwik'
+    environment: ldr-backup
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Require public repository and existing zero-cost allowance
+        env:
+          PRIVATE: ${{ github.event.repository.private }}
+          FREE_ALLOWED: ${{ vars.LDR_BACKUP_ZERO_COST_CONFIRMED }}
+        run: test "$PRIVATE" = false && test "$FREE_ALLOWED" = true
+      - name: Verify no-charge configuration guards and encrypted handoff with synthetic input
+        run: node --test scripts/agenda/bootstrap-stripe.test.mjs
+      - name: Prepare or enable only the dedicated webhook after recovery evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PROJECT_CONFIRMATION: ${{ inputs.project_confirmation }}
+          BOOTSTRAP_ACTION: ${{ inputs.action }}
+          ENDPOINT_ID: ${{ inputs.endpoint_id }}
+          PROOF_EVENT_ID: ${{ inputs.proof_event_id }}
+          BOOTSTRAP_OUTPUT: ${{ runner.temp }}/ldr-stripe-encrypted-output
+          LDR_BACKUP_APP_CONFIG_JSON: ${{ secrets.LDR_BACKUP_APP_CONFIG_JSON }}
+          LDR_BACKUP_PASSPHRASE: ${{ secrets.LDR_BACKUP_PASSPHRASE }}
+        run: node scripts/agenda/bootstrap-stripe.mjs
+      - name: Retain only encrypted configuration and sanitized verification
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: ldr-stripe-protected-setup-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/ldr-stripe-encrypted-output/handoff-cipher.json
+            ${{ runner.temp }}/ldr-stripe-encrypted-output/render-stripe-configuration.json.gpg
+            ${{ runner.temp }}/ldr-stripe-encrypted-output/verification.json
+          if-no-files-found: error
+          retention-days: 1
+          compression-level: 0
