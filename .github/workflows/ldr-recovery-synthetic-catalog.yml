@@ -3,6 +3,9 @@ on:
   push:
     branches:
       - fix/ldr-recovery-platform-catalog-reconcile-20261112
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 permissions:
   contents: read
