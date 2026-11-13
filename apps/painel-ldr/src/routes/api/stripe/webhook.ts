@@ -622,14 +622,14 @@ export const Route = createFileRoute("/api/stripe/webhook")({
           // Mantém intacto o fluxo já validado de pedidos e benefícios corporativos.
           if (orderId) {
             if (eventMark === "metadata_fallback" && (await orderAlreadyProcessedEvent(orderId, event.id))) return json(200, { received: true, duplicate: true });
-            if (event.type === "checkout.session.completed") {
+            if (event.type === "checkout.session.completed" || event.type === "checkout.session.async_payment_succeeded") {
               if (object.payment_status !== "paid") return json(200, { received: true });
               await updateOrder(orderId, { payment_status: "pago", status: "concluido", stripe_checkout_session_id: object.id ?? null, metadata: { ...metadata, stripe_event_id: event.id, paid_at: new Date().toISOString() } });
               await completeOrganizationPurchase(metadata);
             } else if (event.type === "checkout.session.expired") {
               await updateOrder(orderId, { payment_status: "falhou", status: "cancelado", metadata: { ...metadata, stripe_event_id: event.id, expired: true } });
               await setOrganizationPurchaseStatus(metadata, "cancelled");
-            } else if (event.type === "payment_intent.payment_failed") {
+            } else if (event.type === "payment_intent.payment_failed" || event.type === "checkout.session.async_payment_failed") {
               await updateOrder(orderId, { payment_status: "falhou", metadata: { ...metadata, stripe_event_id: event.id, payment_failed: true } });
             } else if (event.type === "charge.refunded") {
               await updateOrder(orderId, { payment_status: "reembolsado", status: "cancelado", metadata: { ...metadata, stripe_event_id: event.id, refunded: true } });

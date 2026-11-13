@@ -115,7 +115,9 @@ def verify_recovered(pg):
     passed('anonymous and authenticated table and RPC access denied')
     raw("BEGIN; GRANT SELECT ON public.session_credits TO authenticated; SET ROLE authenticated; DO $t$ BEGIN IF EXISTS(SELECT 1 FROM public.session_credits) THEN RAISE EXCEPTION 'credit RLS failed'; END IF; END $t$; ROLLBACK;")
     passed('credit RLS denies rows even with temporary SELECT grant')
-    raw(f"INSERT INTO public.service_catalog(catalog_key,name,billing_model,amount_cents) VALUES ('{key}','Recovery single','single_paid_session',0); INSERT INTO public.orders(id,order_number,title,customer_id,catalog_key,payment_status) VALUES ({q(70)},'{key}-70','Recovery synthetic',{q(2)},'{key}','pago'); INSERT INTO public.session_credits(order_id,customer_id,catalog_key,granted) VALUES ({q(70)},{q(2)},'{key}',1);")
+    raw(f"INSERT INTO public.service_catalog(catalog_key,name,billing_model,amount_cents) VALUES ('{key}','Recovery single','single_paid_session',0); INSERT INTO public.orders(id,order_number,title,customer_id,catalog_key,payment_status) VALUES ({q(70)},'{key}-70','Recovery synthetic',{q(2)},'{key}','pago');")
+    assert scalar(f"(SELECT count(*)=1 AND sum(granted)=1 FROM public.session_credits WHERE order_id={q(70)})")
+    passed('trusted paid single-session order automatically grants exactly one credit')
     def request(_):
         return pg.json(f"SET ROLE service_role; SELECT public.client_request_appointment({q(2)},{q(70)},now()+interval '7 days',50,'',NULL,'Recovery synthetic');", snapshot=False)
     with ThreadPoolExecutor(max_workers=20) as pool:
@@ -137,6 +139,29 @@ def verify_recovered(pg):
     passed('completed appointment keeps its credit and stays closed')
     assert scalar("(SELECT count(*)=6 AND bool_and(has_function_privilege('service_role',oid,'EXECUTE') AND NOT has_function_privilege('anon',oid,'EXECUTE') AND NOT has_function_privilege('authenticated',oid,'EXECUTE')) FROM pg_proc WHERE pronamespace='public'::regnamespace AND proname IN ('confirm_appointment_tx','confirm_mentorship_session_tx','claim_calendar_sync','release_calendar_sync','client_request_appointment','client_reschedule_appointment'))")
     passed('six RPCs restricted to service_role')
+    raw(f"INSERT INTO public.service_catalog(catalog_key,name,billing_model,amount_cents,package_sessions) VALUES ('{key}-package','Recovery package','package_sessions',100,4); INSERT INTO public.orders(id,order_number,title,customer_id,catalog_key,payment_status) VALUES ({q(80)},'{key}-80','Recovery package',{q(2)},'{key}-package','pendente');")
+    assert scalar(f"(SELECT count(*)=0 FROM public.session_credits WHERE order_id={q(80)})")
+    passed('unpaid package does not issue credits')
+    raw(f"SET ROLE service_role; UPDATE public.orders SET payment_status='pago' WHERE id={q(80)}; UPDATE public.orders SET payment_status='pago' WHERE id={q(80)}; RESET ROLE;")
+    assert scalar(f"(SELECT count(*)=1 AND sum(granted)=4 FROM public.session_credits WHERE order_id={q(80)})")
+    passed('service-role paid package grants four credits once on repeated confirmation')
+    raw(f"UPDATE public.orders SET payment_status='reembolsado' WHERE id={q(80)};")
+    denied=pg.json(f"SET ROLE service_role; SELECT public.client_request_appointment({q(2)},{q(80)},now()+interval '7 days',50,'',NULL,'Recovery synthetic');",snapshot=False)
+    assert not denied['ok'] and denied['error']=='not_paid'
+    passed('refunded automatic grant cannot fund a new appointment')
+    # Ignore table RLS ONLY inside a rolled-back disposable test so this proves
+    # the payment guard independently rejects a browser caller with table grants.
+    for role in ('anon','authenticated'):
+        raw(f"BEGIN; ALTER TABLE public.orders DISABLE ROW LEVEL SECURITY; SET LOCAL ROLE {role}; DO $t$ BEGIN BEGIN UPDATE public.orders SET payment_status='pago' WHERE id={q(80)}; EXCEPTION WHEN insufficient_privilege THEN IF SQLERRM='trusted payment confirmation required' THEN RETURN; END IF; RAISE; END; RAISE EXCEPTION 'browser paid transition unexpectedly allowed'; END $t$; ROLLBACK;")
+    passed('browser roles cannot self-confirm payment even if table RLS is bypassed in the test')
+    assert scalar(f"(SELECT payment_status='reembolsado' FROM public.orders WHERE id={q(80)})")
+    assert scalar("NOT has_function_privilege('authenticated','private.ldr_issue_paid_order_session_credits()','EXECUTE') AND NOT has_function_privilege('anon','private.ldr_issue_paid_order_session_credits()','EXECUTE')")
+    passed('privileged credit issuer is private and unavailable to browser roles')
+    raw(f"INSERT INTO auth.users(id,email) VALUES ({q(90)},'recovery-{ids[90]}@example.invalid'); INSERT INTO public.profiles(id,email,full_name,is_active) VALUES ({q(90)},'recovery-{ids[90]}@example.invalid','Recovery Master',true) ON CONFLICT(id) DO UPDATE SET is_active=true; INSERT INTO public.user_roles(user_id,role) VALUES ({q(90)},'superadmin') ON CONFLICT DO NOTHING; INSERT INTO public.orders(id,order_number,title,customer_id,catalog_key,payment_status) VALUES ({q(81)},'{key}-81','Recovery Master paid',{q(2)},'{key}-package','pendente');")
+    claims=json.dumps({'sub':ids[90],'role':'authenticated'},separators=(',',':'))
+    raw(f"BEGIN; SET LOCAL ROLE authenticated; DO $c$ BEGIN PERFORM set_config('request.jwt.claim.sub','{ids[90]}',true); PERFORM set_config('request.jwt.claims','{claims}',true); END $c$; UPDATE public.orders SET payment_status='pago' WHERE id={q(81)}; COMMIT;")
+    assert scalar(f"(SELECT count(*)=1 AND sum(granted)=4 FROM public.session_credits WHERE order_id={q(81)})")
+    passed('authenticated active Master retains authorized manual payment confirmation')
     # No TRUNCATE, DELETE, bootstrap, or rollback script. The caller destroys only
     # its disposable container. Original recovered records are never fixtures.
     return checks

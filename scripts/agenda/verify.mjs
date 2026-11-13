@@ -58,7 +58,7 @@ try{
  await query('GRANT SELECT ON session_credits TO authenticated');await query('SET ROLE authenticated');assert.equal((await query('SELECT * FROM session_credits')).rows.length,0);await query('RESET ROLE');await query('REVOKE SELECT ON session_credits FROM authenticated');pass('existing RLS denies credit rows even with SELECT privilege');
  await query(`INSERT INTO service_catalog(catalog_key,name,billing_model,amount_cents) VALUES ('test-single','Synthetic single','single_paid_session',0);
  INSERT INTO orders(id,order_number,title,customer_id,catalog_key,payment_status) VALUES ('${id(70)}','TEST-70','Synthetic','${id(2)}','test-single','pago');
- INSERT INTO session_credits(order_id,customer_id,catalog_key,granted) VALUES ('${id(70)}','${id(2)}','test-single',1)`);
+ `);
  const requests=await Promise.all(Array.from({length:20},async()=>{const d=new Client();await d.connect();try{await d.query('SET ROLE service_role');return (await d.query("SELECT client_request_appointment($1,$2,now()+interval '1 day',50,'test',NULL,'Synthetic') AS result",[id(2),id(70)])).rows[0].result;}finally{await d.end()}}));
  assert.equal(requests.filter(x=>x.ok).length,1);assert(requests.filter(x=>!x.ok).every(x=>x.error==='no_credit'));pass('20 concurrent client requests: exactly one pending request');
  const requested=requests.find(x=>x.ok).appointment_id;
