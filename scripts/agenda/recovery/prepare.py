@@ -320,6 +320,20 @@ def restore_platform_state(target,work,manifest):
     constraints={(e['schema'],e['table'],e['name']):e for e in current if e.get('kind')=='constraint'}
     policies={(e['value']['schemaname'],e['value']['tablename'],e['value']['policyname']):e
               for e in current if e.get('kind')=='policy'}
+    # Remove only extension-packaged rules absent from the source snapshot.
+    # Never reconcile arbitrary application tables or weaken comparison checks.
+    source_constraints={(e['schema'],e['table'],e['name']) for e in manifest['catalog']
+                        if e.get('kind')=='constraint'}
+    source_policies={(e['value']['schemaname'],e['value']['tablename'],e['value']['policyname'])
+                     for e in manifest['catalog'] if e.get('kind')=='policy'}
+    for key in sorted(constraints.keys()-source_constraints):
+        require(key[:2] in PLATFORM_TABLES,'unexpected_extra_constraint_outside_platform')
+        ddl.append('ALTER TABLE '+identifier(key[0])+'.'+identifier(key[1])+
+                   ' DROP CONSTRAINT '+identifier(key[2])+';')
+    for key in sorted(policies.keys()-source_policies):
+        require(key[:2] in PLATFORM_TABLES,'unexpected_extra_policy_outside_platform')
+        ddl.append('DROP POLICY '+identifier(key[2])+' ON '+
+                   identifier(key[0])+'.'+identifier(key[1])+';')
     for entry in manifest['catalog']:
         if entry.get('kind')=='constraint':
             key=(entry['schema'],entry['table'],entry['name']);old=constraints.get(key)
