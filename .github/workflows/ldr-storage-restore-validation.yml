@@ -23,5 +23,13 @@ jobs:
           docker pull supabase/postgres:17.6.1.155
           docker pull supabase/storage-api:v1.90.3
           docker image inspect supabase/storage-api:v1.90.3 --format '{{json .RepoDigests}}'
+      - name: Validate recovery and optional configuration with synthetic credentials only
+        run: |
+          python3 -m pip install --no-deps --only-binary=:all: --require-hashes --target "$RUNNER_TEMP/ldr-parser-deps" -r scripts/agenda/recovery/parser-requirements.txt
+          export PYTHONPATH="$RUNNER_TEMP/ldr-parser-deps"
+          python3 -m unittest discover -s scripts/agenda/recovery -p 'test_*.py' -v
+          node --test scripts/agenda/recovery/diagnostic.test.mjs
+          python3 scripts/agenda/recovery/prepare.py --self-test
+          python3 scripts/agenda/recovery/verify_recovered.py
       - name: Restore synthetic file bytes to a fresh isolated official Storage service
         run: python3 scripts/agenda/recovery/verify_storage.py
