@@ -98,6 +98,61 @@ async function updateOrder(orderId: string, patch: Record<string, unknown>) {
   if (error) throw error;
 }
 
+/** Only the signed provider event can confirm an individual service payment. */
+async function handleIndividualServiceEvent(event: StripeEvent, object: StripeObject) {
+  const metadata = object.metadata ?? {};
+  if (metadata["checkout_kind"] !== "individual_service") return false;
+  const success = event.type === "checkout.session.completed" || event.type === "checkout.session.async_payment_succeeded";
+  const failed = event.type === "payment_intent.payment_failed" || event.type === "checkout.session.async_payment_failed" || event.type === "checkout.session.expired";
+  if (!success && !failed && event.type !== "charge.refunded") return true;
+  if (success && object.payment_status !== "paid") return true;
+  const db = await database();
+  const { data: order, error } = await db.from("orders")
+    .select("id,customer_id,catalog_key,amount_cents,currency,payment_status,stripe_checkout_session_id,metadata")
+    .eq("id", metadata["order_id"]).maybeSingle();
+  if (error || !order || order.metadata?.checkout_kind !== "individual_service" ||
+      order.customer_id !== metadata["customer_id"] || order.catalog_key !== metadata["catalog_key"]) {
+    throw new Error("individual_service_payment_mismatch");
+  }
+  if (event.type.startsWith("checkout.session.") && order.stripe_checkout_session_id && order.stripe_checkout_session_id !== object.id) {
+    throw new Error("individual_service_session_mismatch");
+  }
+  const details = { ...order.metadata, ...metadata, stripe_event_id: event.id };
+  const apply = async (patch: Record<string, unknown>, allowed: string[]) => {
+    const { error: updateError } = await db.from("orders").update(patch).eq("id", order.id).in("payment_status", allowed);
+    if (updateError) throw updateError;
+  };
+  if (success) {
+    if (object.amount_total !== order.amount_cents || object.currency?.toUpperCase() !== order.currency) {
+      throw new Error("individual_service_amount_mismatch");
+    }
+    if (order.payment_status === "pago" || order.payment_status === "reembolsado") return true;
+    await apply({ payment_status: "pago", status: "em_andamento",
+      stripe_checkout_session_id: object.id,
+      metadata: { ...details, stripe_payment_intent_id: stripeId(object.payment_intent), paid_at: new Date().toISOString() } }, ["pendente", "falhou"]);
+  } else if (failed) {
+    // A late failed/expired event must not undo an already confirmed payment.
+    if (order.payment_status === "pago" || order.payment_status === "reembolsado") return true;
+    await apply({ payment_status: "falhou",
+      ...(event.type === "checkout.session.expired" ? { status: "cancelado" } : {}),
+      metadata: { ...details, payment_failed: true } }, ["pendente", "falhou"]);
+  } else {
+    if (object.amount !== order.amount_cents || object.currency?.toUpperCase() !== order.currency ||
+        (order.metadata.stripe_payment_intent_id && order.metadata.stripe_payment_intent_id !== stripeId(object.payment_intent))) {
+      throw new Error("individual_service_refund_mismatch");
+    }
+    const amount = Number(object.amount_refunded ?? 0);
+    if (!Number.isSafeInteger(amount) || amount < 0 || amount > order.amount_cents) throw new Error("individual_service_refund_mismatch");
+    if (order.payment_status === "reembolsado" || amount <= Number(order.metadata.refund_amount_cents ?? 0)) return true;
+    // Stripe does not guarantee event order: a full refund is final even when
+    // checkout completion has not arrived yet. A late completion cannot grant credit.
+    await apply({ ...(amount >= order.amount_cents ? { payment_status: "reembolsado", status: "cancelado" } : {}),
+      metadata: { ...details, refund_amount_cents: amount,
+        stripe_payment_intent_id: order.metadata.stripe_payment_intent_id ?? stripeId(object.payment_intent) } }, ["pendente", "falhou", "pago"]);
+  }
+  return true;
+}
+
 async function completeOrganizationPurchase(metadata: Record<string, string>) {
   const purchaseId = metadata["purchase_id"];
   const orderId = metadata["order_id"];
@@ -642,7 +697,8 @@ export const Route = createFileRoute("/api/stripe/webhook")({
           await handleSellerReferralEvent(event, object);
 
           // Mantém intacto o fluxo já validado de pedidos e benefícios corporativos.
-          if (orderId) {
+          const individualServiceHandled = await handleIndividualServiceEvent(event, object);
+          if (orderId && !individualServiceHandled) {
             if (eventMark === "metadata_fallback" && (await orderAlreadyProcessedEvent(orderId, event.id))) return json(200, { received: true, duplicate: true });
             if (event.type === "checkout.session.completed" || event.type === "checkout.session.async_payment_succeeded") {
               if (object.payment_status !== "paid") return json(200, { received: true });
@@ -706,7 +762,7 @@ export const Route = createFileRoute("/api/stripe/webhook")({
           return json(200, { received: true });
         } catch (error) {
           try { const db = await database(); await db.from("stripe_webhook_events").delete().eq("event_id", event.id); } catch { /* best effort */ }
-          console.error("Stripe webhook processing failed", error);
+          console.error("Stripe webhook processing failed; details withheld");
           return json(503, { received: false });
         }
       },

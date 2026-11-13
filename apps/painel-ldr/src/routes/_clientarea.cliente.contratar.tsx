@@ -1,10 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
+import { useMutation } from "@tanstack/react-query";
+import { useMemo, useRef, useState } from "react";
+import { toast } from "sonner";
 
 import { Field, PageHeader } from "@/components/central/ui";
+import { AgendaQueryFeedback } from "@/components/central/agenda-query-feedback";
+import { IndividualServiceSummary, ServiceCheckoutAction, ServicePurchaseJourney, useServicePurchaseCopy } from "@/components/cliente/service-purchase-journey";
+import { clientServiceCheckout } from "@/lib/client-portal.functions";
 import { useClientContractCatalog } from "@/lib/client-portal-data";
 import { formatMoney, safeUrl } from "@/lib/central";
 import type { ContractItem } from "@/lib/contract-catalog";
+import { isIndividualSession } from "@/lib/contract-catalog";
 import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_clientarea/cliente/contratar")({
@@ -134,8 +141,10 @@ const SUPPORT = "/falar-com-ecossistema";
 type Copy = (typeof COPY)[keyof typeof COPY];
 type Locale = keyof typeof COPY;
 
-function Card({ item, copy }: { item: ContractItem; copy: Copy }) {
+function Card({ item, copy, checkoutEnabled, busy, pending, onCheckout }: { item: ContractItem; copy: Copy; checkoutEnabled: boolean; busy: boolean; pending: boolean; onCheckout: () => void }) {
   const link = safeUrl(item.paymentUrl);
+  const individual = isIndividualSession(item);
+  const originalCents = !individual && item.originalCents && item.originalCents > item.amountCents ? item.originalCents : null;
   const category = CATEGORY_BY_KEY[item.catalogKey] ?? "other";
   return (
     <li className="group flex h-full min-w-0 flex-col rounded-2xl border border-border/70 bg-background p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md">
@@ -145,16 +154,16 @@ function Card({ item, copy }: { item: ContractItem; copy: Copy }) {
             {item.region === "br" ? copy.brazil : item.region === "eu" ? copy.europeShort : copy.categories[category]}
           </span>
           <h3 className="mt-3 break-words font-serif text-lg leading-snug">{item.name}</h3>
-          {item.sessions > 0 && <p className="mt-1 text-xs font-bold text-muted-foreground">{item.sessions} {item.sessions === 1 ? copy.session : copy.sessions}</p>}
+          {!individual && item.sessions > 0 && <p className="mt-1 text-xs font-bold text-muted-foreground">{item.sessions} {item.sessions === 1 ? copy.session : copy.sessions}</p>}
         </div>
         <div className="shrink-0 text-right">
-          {item.originalCents ? <p className="whitespace-nowrap text-xs text-muted-foreground line-through">{formatMoney(item.originalCents, item.currency)}</p> : null}
+          {originalCents ? <p className="whitespace-nowrap text-xs text-muted-foreground line-through">{formatMoney(originalCents, item.currency)}</p> : null}
           <p className="whitespace-nowrap text-xl font-extrabold text-primary">{formatMoney(item.amountCents, item.currency)}</p>
-          {item.originalCents ? <span className="text-[11px] font-bold text-primary">{copy.discount}</span> : null}
+          {originalCents ? <span className="text-[11px] font-bold text-primary">{copy.discount}</span> : null}
         </div>
       </div>
-      <p className="mt-3 flex-1 break-words text-sm leading-relaxed text-muted-foreground">{copy.paymentText}</p>
-      {link ? (
+      {individual ? <IndividualServiceSummary sessions={item.sessions} /> : <p className="mt-3 flex-1 break-words text-sm leading-relaxed text-muted-foreground">{copy.paymentText}</p>}
+      {individual ? <ServiceCheckoutAction name={item.name} enabled={checkoutEnabled} busy={busy} pending={pending} onCheckout={onCheckout} /> : link ? (
         <a className="mt-4 inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-primary px-4 py-3 text-center text-sm font-extrabold leading-snug text-primary-foreground shadow-sm transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" href={link} target="_blank" rel="noreferrer noopener">
           {copy.buyNow}
         </a>
@@ -217,16 +226,31 @@ function ClientContract() {
   const { t, locale } = useI18n();
   const copy = COPY[locale];
   const catalog = useClientContractCatalog();
+  const startCheckout = useServerFn(clientServiceCheckout);
+  const purchaseCopy = useServicePurchaseCopy();
+  const attempts = useRef(new Map<string, string>());
+  const checkout = useMutation({
+    mutationFn: async (item: ContractItem) => {
+      let requestId = attempts.current.get(item.catalogKey);
+      if (!requestId) { requestId = crypto.randomUUID(); attempts.current.set(item.catalogKey, requestId); }
+      return startCheckout({ data: { catalogKey: item.catalogKey, requestId } });
+    },
+    onSuccess: (result) => window.location.assign(result.url),
+    onError: () => toast.error(purchaseCopy.error),
+  });
   const [region, setRegion] = useState<"eu" | "br">("eu");
   const [search, setSearch] = useState("");
   const items = catalog.data?.items ?? [];
-  const psicanalise = items.filter((i) => i.group === "psicanalise" && i.region === region);
-  const mentoria = items.filter((i) => i.group === "mentoria");
+  const matchesIndividual = (item: ContractItem) => item.currency === (region === "br" ? "BRL" : "EUR") &&
+    (!search.trim() || item.name.toLocaleLowerCase(locale).includes(search.trim().toLocaleLowerCase(locale)));
+  const psicanalise = items.filter((i) => i.group === "psicanalise" && i.region === region && matchesIndividual(i));
+  const mentoria = items.filter((i) => i.group === "mentoria" && matchesIndividual(i));
   const services = items.filter((i) => i.group === "servicos");
   const filtered = useMemo(() => {
     const q = search.trim().toLocaleLowerCase(locale);
     return services.filter((item) => {
       if (item.region && item.region !== region) return false;
+      if (isIndividualSession(item) && !matchesIndividual(item)) return false;
       const category = CATEGORY_BY_KEY[item.catalogKey] ?? "other";
       return !q || `${item.name} ${copy.categories[category]}`.toLocaleLowerCase(locale).includes(q);
     });
@@ -240,10 +264,15 @@ function ClientContract() {
     return Array.from(map.entries());
   }, [filtered]);
 
-  if (catalog.isLoading) return <p className="text-sm text-muted-foreground">{t("state.loading")}</p>;
+  if (catalog.isPending || catalog.isError) return <AgendaQueryFeedback resource="catalog" error={catalog.isError} retrying={catalog.isFetching} onRetry={() => { void catalog.refetch(); }} />;
+  const card = (item: ContractItem) => <Card key={item.catalogKey} item={item} copy={copy}
+    checkoutEnabled={catalog.data?.checkoutEnabled === true} busy={checkout.isPending}
+    pending={checkout.isPending && checkout.variables.catalogKey === item.catalogKey}
+    onCheckout={() => checkout.mutate(item)} />;
 
   return <div className="grid min-w-0 gap-8">
     <PageHeader title={t("contract.title")} subtitle={copy.pageSubtitle} />
+    <ServicePurchaseJourney />
     <section data-section="priority-services-20260831" className="grid gap-3 md:grid-cols-2">
       <div className="rounded-2xl border-2 border-primary bg-primary p-5 text-primary-foreground shadow-md"><p className="text-xs font-extrabold uppercase tracking-[.16em] opacity-80">1º destaque</p><h2 className="mt-2 font-serif text-2xl">Psicanálise</h2><p className="mt-2 text-sm opacity-90">Sessão individual e pacotes de 4, 8 e 12 sessões. Para empresas, pacotes por funcionário com créditos para acompanhamento.</p></div>
       <div className="rounded-2xl border border-secondary/60 bg-secondary/10 p-5"><p className="text-xs font-extrabold uppercase tracking-[.16em] text-primary">2º destaque</p><h2 className="mt-2 font-serif text-2xl">Massagem Laboral + Hora de Bem-Estar</h2><p className="mt-2 text-sm text-muted-foreground">Bem-estar corporativo com contratação organizada para equipes e empresas.</p></div>
@@ -258,11 +287,12 @@ function ClientContract() {
       </div>
     </section>
 
+    {!psicanalise.length && !mentoria.length && !filtered.length && <p className="s8-card text-sm text-muted-foreground">{purchaseCopy.noResults}</p>}
+
+    {psicanalise.length > 0 && <section className="min-w-0"><p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">{copy.attendance}</p><h2 className="mt-1 break-words font-serif text-2xl">{t("contract.psychoanalysis")}</h2><ul className="mt-4 grid min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-3">{psicanalise.map(card)}</ul></section>}
+    {mentoria.length > 0 && <section className="min-w-0"><p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">{copy.mentorshipStrategy}</p><h2 className="mt-1 break-words font-serif text-2xl">{t("contract.mentorship")}</h2><ul className="mt-4 grid min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-3">{mentoria.map(card)}</ul></section>}
+
+    {grouped.map(([category, categoryItems]) => <section key={category} className="min-w-0 rounded-3xl border border-border/70 bg-card p-5 sm:p-6"><div className="mb-4 min-w-0"><p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">{copy.serviceSolutions}</p><h2 className="mt-1 break-words font-serif text-2xl">{copy.categories[category]}</h2></div><ul className="grid min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-3">{categoryItems.map(card)}</ul></section>)}
     <CorporateWellbeing copy={copy} locale={locale} />
-
-    <section className="min-w-0"><p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">{copy.attendance}</p><h2 className="mt-1 break-words font-serif text-2xl">{t("contract.psychoanalysis")}</h2><ul className="mt-4 grid min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-3">{psicanalise.map((i) => <Card key={i.catalogKey} item={i} copy={copy} />)}</ul></section>
-    <section className="min-w-0"><p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">{copy.mentorshipStrategy}</p><h2 className="mt-1 break-words font-serif text-2xl">{t("contract.mentorship")}</h2><ul className="mt-4 grid min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-3">{mentoria.map((i) => <Card key={i.catalogKey} item={i} copy={copy} />)}</ul></section>
-
-    {grouped.map(([category, categoryItems]) => <section key={category} className="min-w-0 rounded-3xl border border-border/70 bg-card p-5 sm:p-6"><div className="mb-4 min-w-0"><p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">{copy.serviceSolutions}</p><h2 className="mt-1 break-words font-serif text-2xl">{copy.categories[category]}</h2></div><ul className="grid min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-3">{categoryItems.map((i) => <Card key={i.catalogKey} item={i} copy={copy} />)}</ul></section>)}
   </div>;
 }

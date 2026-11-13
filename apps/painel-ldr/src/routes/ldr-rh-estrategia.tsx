@@ -16,7 +16,9 @@ const COPY = {
   pt: {
     eye: "LDR RH & ESTRATÉGIA",
     title: "Pessoas, carreira, empresas e bem-estar conectados ao mesmo ecossistema.",
-    intro: "Esta página organiza as entradas já existentes da LDR RH & Estratégia. Nenhum painel, banco, login ou fluxo validado foi reconstruído.",
+    intro: "Encontre serviços para você, soluções para sua empresa e profissionais da rede. Na Minha Área, consulte os serviços e acompanhe pedidos e agendamentos.",
+    individual: "Serviços individuais",
+    individualText: "Consulte sessões e pacotes, confira valores e acompanhe a contratação e a agenda na Minha Área. É necessário entrar na sua conta.",
     map: "Mapa do Ecossistema",
     company: "Empresas",
     companyText: "Vagas, recrutamento, benefícios, colaboradores e soluções corporativas.",
@@ -29,12 +31,14 @@ const COPY = {
     academy: "LDR Academy",
     academyText: "Biblioteca, cursos, formações, Rede Acadêmica e desenvolvimento contínuo.",
     open: "Abrir",
-    preservation: "Tudo permanece ligado ao mesmo Supabase e às rotas já validadas. Esta página funciona apenas como organização institucional e de navegação.",
+    preservation: "Precisa de ajuda para escolher? O atendimento do Ecossistema orienta sobre os serviços e os próximos passos da contratação.",
   },
   en: {
     eye: "LDR HR & STRATEGY",
     title: "People, careers, companies and wellbeing connected in one ecosystem.",
-    intro: "This page organizes the existing LDR HR & Strategy entries. No validated panel, database, login or workflow was rebuilt.",
+    intro: "Find services for you, solutions for your company and network professionals. In My Area, browse services and follow your orders and appointments.",
+    individual: "Individual services",
+    individualText: "Browse sessions and packages, check prices and follow bookings and appointments in My Area. Sign-in is required.",
     map: "Ecosystem Map",
     company: "Companies",
     companyText: "Jobs, recruitment, benefits, employees and corporate solutions.",
@@ -47,12 +51,14 @@ const COPY = {
     academy: "LDR Academy",
     academyText: "Library, courses, programs, Academic Network and continuous development.",
     open: "Open",
-    preservation: "Everything remains connected to the same Supabase project and validated routes. This page only organizes institutional navigation.",
+    preservation: "Need help choosing? Our team can guide you through the services and the next steps of your booking.",
   },
   fr: {
     eye: "LDR RH & STRATÉGIE",
     title: "Personnes, carrière, entreprises et bien-être connectés dans un même écosystème.",
-    intro: "Cette page organise les accès LDR RH & Stratégie déjà existants. Aucun panneau, base, login ou flux validé n'a été reconstruit.",
+    intro: "Découvrez les services individuels, les solutions pour votre entreprise et les professionnels du réseau. Dans Mon Espace, consultez les services et suivez commandes et rendez-vous.",
+    individual: "Services individuels",
+    individualText: "Consultez séances, forfaits et tarifs, puis suivez commandes et rendez-vous dans Mon Espace. Une connexion est nécessaire.",
     map: "Carte de l'écosystème",
     company: "Entreprises",
     companyText: "Offres, recrutement, avantages, collaborateurs et solutions d'entreprise.",
@@ -65,12 +71,14 @@ const COPY = {
     academy: "LDR Academy",
     academyText: "Bibliothèque, cours, formations, Réseau Académique et développement continu.",
     open: "Ouvrir",
-    preservation: "Tout reste connecté au même projet Supabase et aux routes déjà validées. Cette page organise uniquement la navigation institutionnelle.",
+    preservation: "Besoin d’aide pour choisir ? Notre équipe vous guide parmi les services et les prochaines étapes de votre réservation.",
   },
   es: {
     eye: "LDR RR. HH. & ESTRATEGIA",
     title: "Personas, carrera, empresas y bienestar conectados en un mismo ecosistema.",
-    intro: "Esta página organiza los accesos existentes de LDR RH & Estrategia. No se reconstruyó ningún panel, base, acceso o flujo validado.",
+    intro: "Encuentra servicios para ti, soluciones para tu empresa y profesionales de la red. En Mi Área, consulta servicios y sigue pedidos y citas.",
+    individual: "Servicios individuales",
+    individualText: "Consulta sesiones, paquetes y precios, y sigue la contratación y las citas en Mi Área. Es necesario iniciar sesión.",
     map: "Mapa del Ecosistema",
     company: "Empresas",
     companyText: "Vacantes, reclutamiento, beneficios, empleados y soluciones corporativas.",
@@ -83,7 +91,7 @@ const COPY = {
     academy: "LDR Academy",
     academyText: "Biblioteca, cursos, formaciones, Red Académica y desarrollo continuo.",
     open: "Abrir",
-    preservation: "Todo permanece conectado al mismo proyecto Supabase y a las rutas ya validadas. Esta página solo organiza la navegación institucional.",
+    preservation: "¿Necesitas ayuda para elegir? Nuestro equipo te orienta sobre los servicios y los próximos pasos de la contratación.",
   },
 } as const;
 
@@ -91,6 +99,7 @@ function LdrRhStrategyPage() {
   const { locale } = useI18n();
   const c = COPY[locale] ?? COPY.pt;
   const cards = [
+    { title: c.individual, text: c.individualText, to: "/cliente/contratar", icon: HeartHandshake },
     { title: c.company, text: c.companyText, to: "/empresa/login", icon: Building2 },
     { title: c.career, text: c.careerText, to: "/carreira", icon: BriefcaseBusiness },
     { title: c.professional, text: c.professionalText, to: "/profissional/cadastro", icon: UsersRound },

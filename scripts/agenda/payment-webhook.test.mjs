@@ -11,16 +11,18 @@ const source=original.replace('import { createFileRoute } from "@tanstack/react-
 assert.notEqual(source,original);
 assert(!source.includes('await import("@/integrations/supabase/client.server")'));
 const code=ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText;
-async function fixture(){
- const state={events:new Set(),updates:[],calls:0};
+async function fixture(order=null){
+ const state={events:new Set(),updates:[],calls:0,order};
  globalThis.__agendaWebhookDB={from(table){
-  state.calls++;const q={op:'read',row:null,filters:{},select(){return this},insert(row){this.op='insert';this.row=row;return this},update(row){this.op='update';this.row=row;return this},delete(){this.op='delete';return this},eq(k,v){this.filters[k]=v;return this},order(){return this},limit(){return this},
+  state.calls++;const q={op:'read',row:null,filters:{},select(){return this},insert(row){this.op='insert';this.row=row;return this},update(row){this.op='update';this.row=row;return this},delete(){this.op='delete';return this},eq(k,v){this.filters[k]=v;return this},in(k,v){this.filters[k]={in:v};return this},order(){return this},limit(){return this},
    async maybeSingle(){
     if(table==='stripe_webhook_events'&&this.op==='insert'){
      if(state.events.has(this.row.event_id))return {data:null,error:{code:'23505'}};
      state.events.add(this.row.event_id);return {data:{event_id:this.row.event_id},error:null};
     }
-    if(table==='orders'&&this.op==='update'){state.updates.push({id:this.filters.id,...this.row});return {data:null,error:null};}
+    if(table==='stripe_webhook_events'&&this.op==='delete'){state.events.delete(this.filters.event_id);return {data:null,error:null};}
+    if(table==='orders'&&this.op==='update'){if(state.beforeUpdate){state.beforeUpdate();state.beforeUpdate=null;}if(state.order&&Object.entries(this.filters).some(([k,v])=>v&&typeof v==='object'&&v.in&&!v.in.includes(state.order[k])))return {data:null,error:null};state.updates.push({id:this.filters.id,...this.row});if(state.order)Object.assign(state.order,this.row);return {data:null,error:null};}
+    if(table==='orders'&&this.op==='read'&&state.order?.id===this.filters.id)return {data:state.order,error:null};
     return {data:null,error:null};
    },then(resolve,reject){return this.maybeSingle().then(resolve,reject)}};return q;
  },async rpc(){throw Error('Unexpected unrelated RPC in agenda payment test');}};
@@ -88,4 +90,57 @@ test('disabled or expired sandbox validation fails before database access',async
   if(change==='disabled')process.env.STRIPE_WEBHOOK_VALIDATION_ENABLED='false';else process.env.STRIPE_WEBHOOK_VALIDATION_EXPIRES_AT=new Date(Date.now()-1).toISOString();
   assert.equal((await send(e,testSignature(e))).status,400);assert.equal(state.calls,0);
  }
+});
+
+const individualOrder=()=>({id:'synthetic-order',customer_id:'customer-A',catalog_key:'mentoria_4',amount_cents:100,currency:'EUR',payment_status:'pendente',status:'novo',stripe_checkout_session_id:'cs_synthetic',metadata:{checkout_kind:'individual_service',checkout_expires_at:1800003600}});
+function individualEvent(f,type='checkout.session.completed'){
+ const e=f.event(type);e.data.object.metadata={checkout_kind:'individual_service',order_id:'synthetic-order',customer_id:'customer-A',catalog_key:'mentoria_4'};
+ e.data.object.payment_intent='pi_synthetic';return e;
+}
+test('individual payment validates ownership, price, currency and session before confirming',async()=>{
+ const f=await fixture(individualOrder()),e=individualEvent(f);
+ assert.equal((await f.send(e)).status,200);assert.equal(f.state.order.payment_status,'pago');assert.equal(f.state.order.status,'em_andamento');
+ assert.equal(f.state.order.metadata.checkout_expires_at,1800003600);
+ assert.equal((await f.send(e)).status,200);assert.equal(f.state.updates.length,1);
+});
+test('individual mismatched amount, currency, customer, product or session cannot release credits',async()=>{
+ for(const mismatch of ['amount','currency','customer','catalog','session']){
+  const f=await fixture(individualOrder()),e=individualEvent(f),o=e.data.object;
+  if(mismatch==='amount')o.amount_total=1;if(mismatch==='currency')o.currency='brl';if(mismatch==='customer')o.metadata.customer_id='customer-B';if(mismatch==='catalog')o.metadata.catalog_key='mentoria_8';if(mismatch==='session')o.id='cs_other';
+  assert.equal((await f.send(e)).status,503);assert.equal(f.state.updates.length,0);assert.equal(f.state.order.payment_status,'pendente');
+ }
+});
+test('unpaid individual checkout remains pending and cannot be used as payment proof',async()=>{
+ const f=await fixture(individualOrder()),e=individualEvent(f);e.data.object.payment_status='unpaid';
+ assert.equal((await f.send(e)).status,200);assert.equal(f.state.updates.length,0);
+});
+test('late failed or expired events cannot undo a confirmed individual service payment',async()=>{
+ const f=await fixture(individualOrder());await f.send(individualEvent(f));
+ for(const type of ['checkout.session.async_payment_succeeded','checkout.session.expired','checkout.session.async_payment_failed','payment_intent.payment_failed'])assert.equal((await f.send(individualEvent(f,type))).status,200);
+ assert.equal(f.state.updates.length,1);assert.equal(f.state.order.payment_status,'pago');
+});
+test('payment confirmed while a failed event is in flight is protected by the database update predicate',async()=>{
+ const f=await fixture(individualOrder());f.state.beforeUpdate=()=>{f.state.order.payment_status='pago';};
+ assert.equal((await f.send(individualEvent(f,'checkout.session.expired'))).status,200);
+ assert.equal(f.state.updates.length,0);assert.equal(f.state.order.payment_status,'pago');
+});
+test('full individual refund is final; partial refund is recorded without pretending it is full',async()=>{
+ const f=await fixture(individualOrder());await f.send(individualEvent(f));
+ const partial=individualEvent(f,'charge.refunded');Object.assign(partial.data.object,{amount:100,amount_refunded:50});
+ assert.equal((await f.send(partial)).status,200);assert.equal(f.state.order.payment_status,'pago');assert.equal(f.state.order.metadata.refund_amount_cents,50);
+ const full=individualEvent(f,'charge.refunded');Object.assign(full.data.object,{amount:100,amount_refunded:100});
+ assert.equal((await f.send(full)).status,200);assert.equal(f.state.order.payment_status,'reembolsado');
+ await f.send(individualEvent(f));assert.equal(f.state.order.payment_status,'reembolsado');
+});
+test('full refund arriving before checkout completion prevents later credit release',async()=>{
+ const f=await fixture(individualOrder()),refund=individualEvent(f,'charge.refunded');
+ Object.assign(refund.data.object,{amount:100,amount_refunded:100});
+ assert.equal((await f.send(refund)).status,200);assert.equal(f.state.order.payment_status,'reembolsado');
+ assert.equal((await f.send(individualEvent(f))).status,200);assert.equal(f.state.updates.length,1);
+ assert.equal(f.state.order.payment_status,'reembolsado');
+});
+test('refund confirmed while checkout completion is in flight wins the conditional payment update',async()=>{
+ const f=await fixture(individualOrder());f.state.beforeUpdate=()=>{f.state.order.payment_status='reembolsado';};
+ assert.equal((await f.send(individualEvent(f))).status,200);assert.equal(f.state.updates.length,0);
+ assert.equal(f.state.order.payment_status,'reembolsado');
 });

@@ -79,13 +79,13 @@ export async function resolveClient(userId: string, email: string | null): Promi
     const { data: byEmail, error: byEmailError } = await supabaseAdmin
       .from("customers")
       .select("id, full_name, email, phone, portal_active, country, auth_user_id")
-      .ilike("email", mail)
+      .ilike("email", mail.replace(/[\\%_]/g, "\\$&"))
       .is("auth_user_id", null)
       .maybeSingle();
 
     if (byEmailError) fail("Não foi possível validar o acesso do cliente.");
 
-    if (byEmail) {
+    if (byEmail && byEmail.email?.trim().toLowerCase() === mail) {
       const { data: bound, error: bindError } = await supabaseAdmin
         .from("customers")
         .update({ auth_user_id: userId, portal_linked_at: new Date().toISOString() })
@@ -613,14 +613,13 @@ export async function updateClientProfile(
 export async function getClientAgenda(userId: string, email: string | null) {
   const customer = await requireClient(userId, email);
 
-  const [{ data: appointments }, { data: orders }, { data: credits }] = await Promise.all([
+  const [appointmentRead, orderRead, creditRead] = await Promise.all([
     supabaseAdmin
       .from("appointments")
       .select(
         "id, order_id, catalog_key, title, status, starts_at, ends_at, duration_minutes, meeting_url, client_notes, client_visible, consumes_credit, credit_reserved",
       )
       .eq("customer_id", customer.id)
-      .eq("client_visible", true)
       .order("starts_at", { ascending: true, nullsFirst: false }),
     supabaseAdmin
       .from("orders")
@@ -632,14 +631,22 @@ export async function getClientAgenda(userId: string, email: string | null) {
       .eq("customer_id", customer.id),
   ]);
 
+  if (appointmentRead.error || orderRead.error || creditRead.error) fail("Não foi possível carregar a agenda.");
+  const appointments = appointmentRead.data;
+  const orders = orderRead.data;
+  const credits = creditRead.data;
+  // Hidden rows still reserve credits, but their details never leave the server.
+  const visibleAppointments = (appointments ?? []).filter((a) => a.client_visible);
+
   // Estado da sincronização Google: o Meet só vai ao cliente quando concluída.
-  const appointmentIds = (appointments ?? []).map((a) => a.id);
-  const { data: syncRows } = appointmentIds.length
+  const appointmentIds = visibleAppointments.map((a) => a.id);
+  const { data: syncRows, error: syncError } = appointmentIds.length
     ? await supabaseAdmin
         .from("appointment_calendar_sync")
         .select("appointment_id, sync_status")
         .in("appointment_id", appointmentIds)
-    : { data: [] as { appointment_id: string; sync_status: string }[] };
+    : { data: [] as { appointment_id: string; sync_status: string }[], error: null };
+  if (syncError) fail("Não foi possível verificar a agenda.");
   const syncByAppointment = new Map((syncRows ?? []).map((r) => [r.appointment_id, r.sync_status]));
 
   const orderById = new Map((orders ?? []).map((o) => [o.id, o]));
@@ -652,16 +659,17 @@ export async function getClientAgenda(userId: string, email: string | null) {
     ),
   );
 
-  const { data: catalog } = catalogKeys.length
+  const { data: catalog, error: catalogError } = catalogKeys.length
     ? await supabaseAdmin
         .from("service_catalog")
         .select("catalog_key, name, billing_model, repeat_payment_url, currency, amount_cents")
         .in("catalog_key", catalogKeys)
-    : { data: [] as never[] };
+    : { data: [] as never[], error: null };
+  if (catalogError) fail("Não foi possível carregar os serviços da agenda.");
 
   const catalogByKey = new Map((catalog ?? []).map((c) => [c.catalog_key, c]));
 
-  const safeAppointments = (appointments ?? []).map((a) => {
+  const safeAppointments = visibleAppointments.map((a) => {
     const order = a.order_id ? orderById.get(a.order_id) : undefined;
     const paid = order?.payment_status === "pago";
     // Confirmação profissional explícita é obrigatória para o link existir.
@@ -712,8 +720,8 @@ export async function getClientAgenda(userId: string, email: string | null) {
       remaining: Math.max(c.granted - used, 0),
       // Botão "Pagar próxima sessão": apenas serviços de 1 sessão por pagamento.
       repeatPaymentUrl:
-        item?.billing_model === "single_paid_session" && c.granted - used <= 0
-          ? (item.repeat_payment_url ?? null)
+        item?.billing_model === "single_paid_session" && c.granted - used <= 0 && CONTRACT_OPTIONS.some((option) => option.catalogKey === c.catalog_key)
+          ? "https://ldrecossistema.online/cliente/contratar"
           : null,
     };
   });
@@ -764,7 +772,7 @@ async function schedulingOptions(customerId: string): Promise<{
   options: ScheduleOption[];
   byOrderId: Map<string, ScheduleOption>;
 }> {
-  const [{ data: orders }, { data: appointments }, { data: credits }] = await Promise.all([
+  const [orderRead, appointmentRead, creditRead] = await Promise.all([
     supabaseAdmin
       .from("orders")
       .select("id, order_number, title, catalog_key, payment_status")
@@ -776,16 +784,21 @@ async function schedulingOptions(customerId: string): Promise<{
       .eq("customer_id", customerId),
     supabaseAdmin.from("session_credits").select("order_id, granted").eq("customer_id", customerId),
   ]);
+  if (orderRead.error || appointmentRead.error || creditRead.error) fail("Não foi possível verificar os créditos da agenda.");
+  const orders = orderRead.data;
+  const appointments = appointmentRead.data;
+  const credits = creditRead.data;
 
   const keys = Array.from(
     new Set((orders ?? []).map((o) => o.catalog_key).filter((k): k is string => Boolean(k))),
   );
-  const { data: catalog } = keys.length
+  const { data: catalog, error: catalogError } = keys.length
     ? await supabaseAdmin
         .from("service_catalog")
         .select("catalog_key, name, billing_model, package_sessions")
         .in("catalog_key", keys)
-    : { data: [] as never[] };
+    : { data: [] as never[], error: null };
+  if (catalogError) fail("Não foi possível verificar os serviços da agenda.");
 
   const catalogByKey = new Map((catalog ?? []).map((c) => [c.catalog_key, c]));
   const grantedByOrder = new Map((credits ?? []).map((c) => [c.order_id, c.granted]));
@@ -802,14 +815,10 @@ async function schedulingOptions(customerId: string): Promise<{
 
     if ((key && SINGLE_SESSION_KEYS.has(key)) || item?.billing_model === "single_paid_session") {
       kind = "single";
-      limit = 1;
+      limit = Math.min(1, grantedByOrder.get(order.id) ?? 0);
     } else if ((key && key in PACKAGE_SESSION_KEYS) || item?.billing_model === "package_sessions") {
       kind = "package";
-      limit =
-        grantedByOrder.get(order.id) ??
-        (key ? PACKAGE_SESSION_KEYS[key] : undefined) ??
-        item?.package_sessions ??
-        0;
+      limit = grantedByOrder.get(order.id) ?? 0;
     }
 
     const canRequest = limit === null ? true : used < limit;
@@ -825,7 +834,7 @@ async function schedulingOptions(customerId: string): Promise<{
       // Reuniões de projeto não consomem crédito; sessão/pacote sim.
       consumesCredit: kind !== "project",
       canRequest,
-      blockedReason: canRequest ? null : kind === "single" ? "sessao_unica_usada" : "sem_credito",
+      blockedReason: canRequest ? null : kind === "single" && limit === 1 ? "sessao_unica_usada" : "sem_credito",
     };
   });
 
@@ -960,11 +969,12 @@ export async function getClientContractCatalog(userId: string, email: string | n
   await requireClient(userId, email);
 
   const keys = CONTRACT_OPTIONS.map((o) => o.catalogKey);
-  const { data } = await supabaseAdmin
+  const { data, error } = await supabaseAdmin
     .from("service_catalog")
-    .select("catalog_key, name, category, currency, amount_cents, package_sessions, payment_url")
+    .select("catalog_key, name, category, currency, amount_cents, package_sessions, payment_url, billing_model")
     .in("catalog_key", keys)
     .eq("active", true);
+  if (error) fail("Não foi possível carregar o catálogo de serviços.");
 
   const items: ContractItem[] = (data ?? [])
     .map((row) => {
@@ -978,13 +988,22 @@ export async function getClientContractCatalog(userId: string, email: string | n
         currency: row.currency,
         amountCents: row.amount_cents,
         originalCents: opt.originalCents,
-        sessions: row.package_sessions ?? 1,
+        sessions: row.billing_model === "single_paid_session" ? 1 : row.billing_model === "package_sessions" ? row.package_sessions ?? 0 : 0,
         paymentUrl: row.payment_url,
+        billingModel: row.billing_model,
       };
     })
     .filter((i): i is ContractItem => i !== null);
 
-  return { items };
+  const { individualServiceCheckoutEnabled } = await import("@/lib/individual-service-checkout.server");
+  return { items, checkoutEnabled: individualServiceCheckoutEnabled() };
+}
+
+export async function createClientServiceCheckout(userId: string, email: string | null, input: { catalogKey: string; requestId: string }) {
+  const { individualServiceCheckoutEnabled, createIndividualServiceCheckout } = await import("@/lib/individual-service-checkout.server");
+  if (!individualServiceCheckoutEnabled()) fail("Contratação assistida disponível pelo atendimento.");
+  const customer = await requireClient(userId, email);
+  return createIndividualServiceCheckout(supabaseAdmin, userId, customer, input);
 }
 
 // ---------------------------------------------------------------- biblioteca digital
