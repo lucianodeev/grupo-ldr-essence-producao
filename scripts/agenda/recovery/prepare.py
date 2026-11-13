@@ -548,6 +548,12 @@ def remote_environment():
     return env
 
 def rehearse(source, work, out, passphrase, live=False):
+    render_config_verified=False
+    storage_service_verified=False
+    storage_service_checks=None
+    if live:
+        from external_config import capture
+        capture(work,os.environ.get('LDR_BACKUP_APP_CONFIG_JSON',''))
     if live:
         # Fail early on platform schema/extension incompatibility, before the
         # expensive full row inventory. This is not a recovery proof and never
@@ -636,6 +642,17 @@ def rehearse(source, work, out, passphrase, live=False):
                     print('SYNTHETIC DIFF '+group+' missing='+json.dumps(sorted(left-right)[:8])+' added='+json.dumps(sorted(right-left)[:8]),file=sys.stderr)
         require(matches,'restored_data_schema_rls_acl_or_sequence_mismatch')
         print('PASS exact data, sequence, RLS, ACL and parsed rule comparison',flush=True)
+        if live:
+            from verify_storage import verify_storage
+            storage_service_checks=verify_storage(target,recovered)
+            require(inventories_equivalent(before,inventory(target,work.parent)),
+                    'storage_service_changed_recovered_data_schema_or_permissions')
+            storage_service_verified=True
+        if live and (recovered/'render-environment.json').exists():
+            from external_config import verify_calendar_key
+            render_config_verified=verify_calendar_key(target,recovered,run)
+            require(render_config_verified,'recovered_calendar_key_failed')
+            print('PASS encrypted Render configuration roundtrip and recovered Calendar token decryption',flush=True)
         migration_ok=False
         if live:
             # Only the disposable no-network container can ever receive this SQL.
@@ -648,13 +665,16 @@ def rehearse(source, work, out, passphrase, live=False):
             functional_checks=verify_recovered(target)
     return {'database_restore_verified':True,'encrypted_payload_roundtrip_verified':True,
             'table_count':len(before['tables']),'sequence_count':len(before['sequences']),
-            'storage_files_recovered':live,'storage_service_restore_tested':False,
+            'storage_files_recovered':live,'storage_service_restore_tested':storage_service_verified,
+            'storage_service_checks':storage_service_checks,
             'migration_applied_to_isolated_clone':migration_ok,
             'recovered_functional_checks':functional_checks if live else 0,
             'payment_and_credit_tests_on_recovered_database':live,
+            'render_configuration_backup_verified':render_config_verified,
+            'calendar_token_key_recovery_verified':render_config_verified,
             'production_gate':False,'project_backup_complete':False,
-            'pending':['external_service_configuration_and_encryption_keys',
-                       'isolated_storage_service_restore','live_google_calendar_tests'],
+            'pending':['external_service_configuration_and_encryption_keys','live_google_calendar_tests']+
+                      ([] if storage_service_verified else ['isolated_storage_service_restore']),
             'encrypted_archive_sha256':sha(out/'recovery.tar.gpg')}
 
 def main():

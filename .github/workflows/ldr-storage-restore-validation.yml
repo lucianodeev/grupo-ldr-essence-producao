@@ -1,0 +1,38 @@
+name: LDR isolated Storage recovery validation
+on:
+  workflow_dispatch:
+  push:
+    branches: [fix/ldr-isolated-storage-restore-20261113]
+    paths: ['scripts/agenda/recovery/**', '.github/workflows/ldr-storage-restore-validation.yml', '.github/workflows/ldr-recovery-preparation.yml']
+permissions:
+  contents: read
+concurrency:
+  group: ldr-isolated-storage-validation
+  cancel-in-progress: true
+jobs:
+  synthetic_storage:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Require public repository and no credentials
+        env:
+          REPOSITORY_PRIVATE: ${{ github.event.repository.private }}
+        run: test "$REPOSITORY_PRIVATE" = false
+      - name: Retrieve official versioned images before any isolated service starts
+        run: |
+          docker pull supabase/postgres:17.6.1.155
+          docker pull supabase/storage-api:v1.90.3@sha256:17010384ae107d663638aac64aaa794c23d5e9b834ebbe206eb392290b37e358
+          docker image inspect supabase/storage-api:v1.90.3@sha256:17010384ae107d663638aac64aaa794c23d5e9b834ebbe206eb392290b37e358 --format '{{json .RepoDigests}}'
+      - name: Validate recovery and optional configuration with synthetic credentials only
+        run: |
+          python3 -m pip install --no-deps --only-binary=:all: --require-hashes --target "$RUNNER_TEMP/ldr-parser-deps" -r scripts/agenda/recovery/parser-requirements.txt
+          export PYTHONPATH="$RUNNER_TEMP/ldr-parser-deps"
+          python3 -m unittest discover -s scripts/agenda/recovery -p 'test_*.py' -v
+          node --test scripts/agenda/recovery/diagnostic.test.mjs
+          python3 scripts/agenda/recovery/prepare.py --self-test
+          python3 scripts/agenda/recovery/verify_recovered.py
+      - name: Restore synthetic file bytes to a fresh isolated official Storage service
+        run: python3 scripts/agenda/recovery/verify_storage.py
