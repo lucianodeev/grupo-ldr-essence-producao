@@ -22,7 +22,7 @@ const checkout = load("individual-service-checkout.server.ts", { "@/lib/contract
 const now = 1800000000000;
 const input = { catalogKey: "mentoria_4", requestId: "aabbccdd-1111-4111-a111-123456789abc" };
 const customer = { id: "customer-A", email: "owner@example.invalid", phone: null };
-const env = { INDIVIDUAL_SERVICE_CHECKOUT_ENABLED: "true", AGENDA_INTEGRATION_ENABLED: "true", STRIPE_SECRET_KEY: "sk_test_fixtureOnly", STRIPE_WEBHOOK_SECRET: "whsec_fixtureOnly" };
+const env = { INDIVIDUAL_SERVICE_CHECKOUT_ENABLED: "true", INDIVIDUAL_SERVICE_CHECKOUT_CATALOG_KEYS: "mentoria_4", AGENDA_INTEGRATION_ENABLED: "true", STRIPE_SECRET_KEY: "sk_test_fixtureOnly", STRIPE_WEBHOOK_SECRET: "whsec_fixtureOnly" };
 
 function fixture() {
   const state = { reads: 0, writes: 0, requests: [], failSave: false, rows: {
@@ -59,6 +59,30 @@ function fixture() {
   const run = (value=input, user="user-A", owner=customer, overrides={}) => checkout.createIndividualServiceCheckout(db, user, owner, value, { env, now: () => now, request, ...overrides });
   return { state, run };
 }
+
+test("release defaults to the single mentorship and never opens packages or other services implicitly", async () => {
+  const firstRelease = { ...env }; delete firstRelease.INDIVIDUAL_SERVICE_CHECKOUT_CATALOG_KEYS;
+  assert.deepEqual([...checkout.individualServiceCheckoutKeys(firstRelease)], ["mentoria_sessao"]);
+  assert.deepEqual([...checkout.individualServiceCheckoutKeys({ ...env, INDIVIDUAL_SERVICE_CHECKOUT_ENABLED: "false" })], []);
+  assert.deepEqual([...checkout.individualServiceCheckoutKeys({ ...env, INDIVIDUAL_SERVICE_CHECKOUT_CATALOG_KEYS: "" })], []);
+  assert.deepEqual([...checkout.individualServiceCheckoutKeys({ ...env, INDIVIDUAL_SERVICE_CHECKOUT_CATALOG_KEYS: "unknown, mentoria_sessao,mentoria_sessao" })], ["mentoria_sessao"]);
+  const f = fixture();
+  await assert.rejects(f.run(input, "user-A", customer, { env: firstRelease }));
+  assert.equal(f.state.reads, 0); assert.equal(f.state.requests.length, 0);
+});
+
+test("single mentorship checkout uses the catalogue's 75 EUR and never issues credit before payment", async () => {
+  const f = fixture();
+  Object.assign(f.state.rows.service_catalog[0], { catalog_key: "mentoria_sessao", name: "Sessão Individual de Mentoria", amount_cents: 7500, billing_model: "single_paid_session", package_sessions: 1 });
+  const firstRelease = { ...env }; delete firstRelease.INDIVIDUAL_SERVICE_CHECKOUT_CATALOG_KEYS;
+  await f.run({ ...input, catalogKey: "mentoria_sessao" }, "user-A", customer, { env: firstRelease });
+  const order = f.state.rows.orders[0];
+  const params = new URLSearchParams(f.state.requests[0].body);
+  assert.equal(order.amount_cents, 7500); assert.equal(order.metadata.sessions, 1);
+  assert.equal(params.get("line_items[0][price_data][unit_amount]"), "7500");
+  assert.equal(params.get("line_items[0][price_data][currency]"), "eur");
+  assert.equal(order.payment_status, "pendente");
+});
 
 test("disabled or incomplete checkout configuration fails before database/network work", async () => {
   for (const name of Object.keys(env)) {

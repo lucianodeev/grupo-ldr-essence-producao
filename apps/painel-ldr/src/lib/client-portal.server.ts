@@ -995,8 +995,9 @@ export async function getClientContractCatalog(userId: string, email: string | n
     })
     .filter((i): i is ContractItem => i !== null);
 
-  const { individualServiceCheckoutEnabled } = await import("@/lib/individual-service-checkout.server");
-  return { items, checkoutEnabled: individualServiceCheckoutEnabled() };
+  const { individualServiceCheckoutKeys } = await import("@/lib/individual-service-checkout.server");
+  const checkoutCatalogKeys = individualServiceCheckoutKeys();
+  return { items, checkoutEnabled: checkoutCatalogKeys.length > 0, checkoutCatalogKeys };
 }
 
 export async function createClientServiceCheckout(userId: string, email: string | null, input: { catalogKey: string; requestId: string }) {

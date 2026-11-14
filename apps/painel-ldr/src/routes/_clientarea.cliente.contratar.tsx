@@ -266,7 +266,7 @@ function ClientContract() {
 
   if (catalog.isPending || catalog.isError) return <AgendaQueryFeedback resource="catalog" error={catalog.isError} retrying={catalog.isFetching} onRetry={() => { void catalog.refetch(); }} />;
   const card = (item: ContractItem) => <Card key={item.catalogKey} item={item} copy={copy}
-    checkoutEnabled={catalog.data?.checkoutEnabled === true} busy={checkout.isPending}
+    checkoutEnabled={catalog.data?.checkoutEnabled === true && catalog.data.checkoutCatalogKeys?.includes(item.catalogKey) === true} busy={checkout.isPending}
     pending={checkout.isPending && checkout.variables.catalogKey === item.catalogKey}
     onCheckout={() => checkout.mutate(item)} />;
 
