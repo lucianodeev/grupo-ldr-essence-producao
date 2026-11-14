@@ -278,7 +278,7 @@ async function setEditorialSubscription(metadata: Record<string, string>, object
 type RecurringCheckoutKind = "company_subscription" | "editorial_subscription" | "library_subscription" | "professional_subscription" | "ldr_pass_subscription";
 
 async function resolveRecurringCheckoutKind(object: StripeObject): Promise<RecurringCheckoutKind | null> {
-  const subscriptionId = stripeId(object.subscription) ?? stripeId(object.parent?.subscription_details?.subscription);
+  const subscriptionId = stripeId(object.subscription) ?? stripeId(object.parent?.subscription_details?.subscription) ?? (typeof object.id === "string" && object.id.startsWith("sub_") ? object.id : null);
   if (!subscriptionId) return null;
   const db = await database();
   const tables: Array<[RecurringCheckoutKind, string]> = [
