@@ -31,4 +31,6 @@ jobs:
         env:
           AGENDA_PG_PACKAGE: ${{ github.workspace }}/apps/painel-ldr/package.json
         run: node --test scripts/agenda/payment-webhook.test.mjs
+      - name: Stripe recurring lifecycle regression (synthetic only)
+        run: node --test scripts/stripe-recurring-lifecycle.test.mjs
       - run: npm run build:painel

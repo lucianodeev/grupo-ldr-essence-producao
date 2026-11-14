@@ -238,7 +238,7 @@ async function setCompanySubscription(metadata: Record<string, string>, object: 
 
   let rawStatus = String(object.status ?? "pending");
   if (eventType === "checkout.session.completed") rawStatus = object.payment_status === "paid" || object.payment_status === "no_payment_required" ? "active" : "pending";
-  if (eventType === "invoice.payment_succeeded") rawStatus = "active";
+  if (eventType === "invoice.payment_succeeded" || eventType === "invoice.paid") rawStatus = "active";
   if (eventType === "checkout.session.expired" || eventType === "customer.subscription.deleted") rawStatus = "canceled";
   if (eventType === "invoice.payment_failed") rawStatus = "past_due";
   const allowed = new Set(["pending", "active", "past_due", "canceled", "unpaid", "paused", "incomplete"]);
@@ -278,7 +278,7 @@ async function setEditorialSubscription(metadata: Record<string, string>, object
 type RecurringCheckoutKind = "company_subscription" | "editorial_subscription" | "library_subscription" | "professional_subscription" | "ldr_pass_subscription";
 
 async function resolveRecurringCheckoutKind(object: StripeObject): Promise<RecurringCheckoutKind | null> {
-  const subscriptionId = stripeId(object.subscription) ?? stripeId(object.parent?.subscription_details?.subscription);
+  const subscriptionId = stripeId(object.subscription) ?? stripeId(object.parent?.subscription_details?.subscription) ?? (typeof object.id === "string" && object.id.startsWith("sub_") ? object.id : null);
   if (!subscriptionId) return null;
   const db = await database();
   const tables: Array<[RecurringCheckoutKind, string]> = [
@@ -718,7 +718,7 @@ export const Route = createFileRoute("/api/stripe/webhook")({
           // Assinaturas recorrentes são roteadas exclusivamente pelo checkout_kind.
           // Isso impede que um evento de um produto tente atualizar tabelas de outro produto.
           let checkoutKind = metadata["checkout_kind"];
-          if (!checkoutKind && (event.type === "invoice.payment_succeeded" || event.type === "invoice.paid" || event.type === "invoice.payment_failed")) {
+          if (!checkoutKind && (event.type.startsWith("customer.subscription.") || event.type === "invoice.payment_succeeded" || event.type === "invoice.paid" || event.type === "invoice.payment_failed")) {
             checkoutKind = (await resolveRecurringCheckoutKind(object)) ?? undefined;
           }
           const recurringSubscriptionEvent =
@@ -733,7 +733,7 @@ export const Route = createFileRoute("/api/stripe/webhook")({
 
           if (checkoutKind === "ldr_pass_subscription" && (subscriptionCheckoutEvent || recurringSubscriptionEvent || event.type === "invoice.paid")) {
             await setLdrPassSubscription(metadata, object, event.type);
-          } else if (checkoutKind === "company_subscription" && (subscriptionCheckoutEvent || recurringSubscriptionEvent)) {
+          } else if (checkoutKind === "company_subscription" && (subscriptionCheckoutEvent || recurringSubscriptionEvent || event.type === "invoice.paid")) {
             await setCompanySubscription(metadata, object, event.type);
           } else if (checkoutKind === "editorial_subscription" && (subscriptionCheckoutEvent || recurringSubscriptionEvent)) {
             await setEditorialSubscription(metadata, object, event.type);
