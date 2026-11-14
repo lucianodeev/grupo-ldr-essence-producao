@@ -97,6 +97,16 @@ function individualEvent(f,type='checkout.session.completed'){
  const e=f.event(type);e.data.object.metadata={checkout_kind:'individual_service',order_id:'synthetic-order',customer_id:'customer-A',catalog_key:'mentoria_4'};
  e.data.object.payment_intent='pi_synthetic';return e;
 }
+test('single mentorship releases its paid state only from a matching signed 75 EUR checkout',async()=>{
+ const f=await fixture({...individualOrder(),catalog_key:'mentoria_sessao',amount_cents:7500});
+ const e=individualEvent(f);e.data.object.metadata.catalog_key='mentoria_sessao';e.data.object.amount_total=7500;
+ e.data.object.payment_status='unpaid';
+ assert.equal((await f.send(e)).status,200);assert.equal(f.state.updates.length,0);
+ e.id='evt_'+randomUUID();e.type='checkout.session.async_payment_succeeded';e.data.object.payment_status='paid';
+ assert.equal((await f.send(e)).status,200);assert.equal(f.state.order.payment_status,'pago');
+ assert.equal(f.state.order.catalog_key,'mentoria_sessao');assert.equal(f.state.order.amount_cents,7500);
+ assert.equal((await f.send(e)).status,200);assert.equal(f.state.updates.length,1);
+});
 test('individual payment validates ownership, price, currency and session before confirming',async()=>{
  const f=await fixture(individualOrder()),e=individualEvent(f);
  assert.equal((await f.send(e)).status,200);assert.equal(f.state.order.payment_status,'pago');assert.equal(f.state.order.status,'em_andamento');
