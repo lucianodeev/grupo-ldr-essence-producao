@@ -1,0 +1,309 @@
+{
+  "productKey": "curso_assinatura_como_se_preparar_para_uma_entrevista_de_emprego",
+  "slug": "como-se-preparar-para-uma-entrevista-de-emprego",
+  "title": "Como se Preparar para uma Entrevista de Emprego",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 80,
+  "validatedHours": null,
+  "expectedModuleCount": 15,
+  "scope": "Primeiro lote editorial: quatro módulos desenvolvidos de quinze planeados. Não importado pelo leitor, não altera o catálogo ativo e não habilita conclusão ou certificado. Exercícios, personagens, dados e rubricas são originais e fictícios. As estimativas de prática são hipóteses para pilotagem, não carga horária certificada. Não garante contratação nem prevê a decisão de um empregador.",
+  "courseObjectives": [
+    "Construir uma matriz entre quatro requisitos de uma vaga, evidências disponíveis e lacunas a esclarecer.",
+    "Apresentar dois episódios profissionais ou de aprendizagem delimitando a contribuição individual e os limites dos resultados.",
+    "Distinguir uma pergunta sobre experiência passada de uma pergunta hipotética e responder sem inventar realizações.",
+    "Rever uma simulação segundo critérios explícitos e justificar as alterações entre duas versões."
+  ],
+  "sources": [
+    {
+      "id": "opm2008",
+      "title": "U.S. Office of Personnel Management (2008). Structured Interviews: A Practical Guide.",
+      "url": "https://www.opm.gov/policy-data-oversight/assessment-and-selection/structured-interviews/guide/",
+      "consulted": "2026-11-15",
+      "scope": "Introdução e secção I, passos 1–3, páginas impressas 3–7, consultados. Apoiam a distinção entre requisitos, competências e perguntas comportamentais/situacionais. É orientação para seleção federal norte-americana, não uma norma universal, parecer jurídico ou validação das rubricas LDR. Não se reproduzem os exemplos do guia."
+    },
+    {
+      "id": "ncs-star",
+      "title": "National Careers Service. The STAR method. Sem data indicada na página consultada.",
+      "url": "https://nationalcareers.service.gov.uk/careers-advice/interview-advice/the-star-method/",
+      "consulted": "2026-11-15",
+      "scope": "Página consultada: componentes Situation, Task, Action e Result e orientações de uso. Utilizada apenas como estrutura de organização da resposta; não como teste científico ou promessa de aprovação. Casos e exercícios LDR são originais."
+    },
+    {
+      "id": "ncs-interview",
+      "title": "National Careers Service. Interview tips. Sem data indicada na página consultada.",
+      "url": "https://nationalcareers.service.gov.uk/careers-advice/interview-advice/",
+      "consulted": "2026-11-15",
+      "scope": "Página consultada, incluindo preparação, prática, esclarecimento de perguntas e reflexão posterior. Contexto de orientação britânico; sem transferir regras locais de emprego ou acessibilidade para outras jurisdições."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Ler a vaga como um conjunto de problemas de trabalho"
+    },
+    {
+      "id": "2",
+      "title": "Construir evidências sem fabricar experiência"
+    },
+    {
+      "id": "3",
+      "title": "Responder à pergunta que foi realmente feita"
+    },
+    {
+      "id": "4",
+      "title": "Ensaiar, observar e rever com critérios"
+    },
+    {
+      "id": "5",
+      "title": "Investigar a organização e formular hipóteses verificáveis"
+    },
+    {
+      "id": "6",
+      "title": "Apresentar a trajetória sem transformar a resposta num currículo oral"
+    },
+    {
+      "id": "7",
+      "title": "Discutir erros e conflitos sem exposição indevida de terceiros"
+    },
+    {
+      "id": "8",
+      "title": "Explicar mudanças, intervalos e transições profissionais"
+    },
+    {
+      "id": "9",
+      "title": "Resolver exercícios e amostras de trabalho com rastreabilidade"
+    },
+    {
+      "id": "10",
+      "title": "Preparar entrevistas remotas, por telefone e assíncronas"
+    },
+    {
+      "id": "11",
+      "title": "Organizar necessidades de participação e limites de privacidade"
+    },
+    {
+      "id": "12",
+      "title": "Fazer perguntas sobre trabalho, equipa e critérios de sucesso"
+    },
+    {
+      "id": "13",
+      "title": "Conversar sobre disponibilidade e condições sem aceitar às cegas"
+    },
+    {
+      "id": "14",
+      "title": "Realizar uma simulação integrada com revisão externa"
+    },
+    {
+      "id": "15",
+      "title": "Analisar o processo e produzir um plano de preparação transferível"
+    }
+  ],
+  "modules": [
+    {
+      "id": "1",
+      "title": "Ler a vaga como um conjunto de problemas de trabalho",
+      "estimatedPracticeMinutes": 75,
+      "objectives": [
+        "Separar tarefas, critérios e informação em falta num anúncio.",
+        "Justificar quatro relações entre requisito e evidência sem presumir conhecer a avaliação interna."
+      ],
+      "sourceIds": [
+        "opm2008"
+      ],
+      "sections": [
+        {
+          "title": "Do adjetivo à tarefa",
+          "paragraphs": [
+            "Uma vaga pode pedir alguém dinâmico e organizado, mas estas palavras não dizem, por si, que situações a pessoa encontrará. Preparar uma entrevista começa por formular perguntas sobre o trabalho. Que entregas aparecem no anúncio? Quem depende delas? Que erros precisam de ser prevenidos? Esta leitura produz hipóteses que podem ser esclarecidas na conversa. Não permite descobrir secretamente a grelha do recrutador nem autoriza tratar um anúncio incompleto como descrição perfeita do posto.",
+            "O guia da OPM relaciona o desenho de uma entrevista estruturada com a análise das tarefas e das competências exigidas pelo trabalho. Do lado do candidato, interessa retirar uma consequência modesta: organizar a preparação em torno de requisitos identificáveis. Essa orientação tem um contexto institucional específico. A ficha usada neste curso é uma ferramenta pedagógica própria e não uma reprodução de um procedimento oficial de contratação."
+          ]
+        },
+        {
+          "title": "Uma matriz de leitura com quatro colunas",
+          "paragraphs": [
+            "Considere um anúncio fictício para assistente de operações: conferir pedidos, registar alterações numa folha partilhada, comunicar atrasos e encaminhar divergências ao responsável. Uma primeira coluna transcreve apenas esses requisitos. A segunda traduz cada um numa pergunta de trabalho: como perceber que faltam dados antes de confirmar um pedido? A terceira identifica um episódio que o candidato pode efetivamente explicar. A quarta regista o que ainda não sabe, como o sistema utilizado ou o nível de autonomia esperado.",
+            "Joana, personagem fictícia, nunca trabalhou em operações, mas organizou inscrições numa atividade de bairro. Pode apresentar a conferência da lista de participantes como experiência relevante para verificação de informação. Não deve dizer que domina o sistema interno da empresa, que nunca viu. A transferência está na prática de conferir dados, não na equivalência entre todos os contextos. Uma resposta rigorosa explicita essa diferença: descreve o que já fez e reconhece o que precisará de aprender.",
+            "A matriz também evita estudar apenas os pontos confortáveis. Se Joana encontra três episódios de comunicação e nenhum de registo, tem uma lacuna de preparação. Pode procurar uma experiência real esquecida ou preparar uma explicação honesta sobre como abordaria a tarefa. Inventar um episódio resolve a aparência da ficha e cria um problema na entrevista. A ausência de experiência é informação de trabalho, não uma célula que deva obrigatoriamente ser preenchida com uma história."
+          ]
+        },
+        {
+          "title": "Priorizar e levar perguntas úteis",
+          "paragraphs": [
+            "Quatro requisitos não precisam de receber o mesmo tempo de ensaio. Joana atribui prioridade à conferência e ao encaminhamento de divergências porque o anúncio os apresenta como responsabilidades centrais. Esta é uma decisão justificada pelo texto disponível; se o entrevistador esclarecer que a função é sobretudo atendimento, ela deve atualizar a leitura. Preparação útil admite revisão. Um guião demasiado fechado pode impedir que o candidato ouça informação nova e ajuste a resposta à função efetivamente discutida.",
+            "Uma pergunta final coerente com a matriz seria: quando há uma divergência entre o pedido e a folha partilhada, o que esta função pode decidir e o que precisa de encaminhar? A pergunta investiga autonomia e fluxo de trabalho. Perguntar apenas se a empresa valoriza a organização tende a produzir uma resposta menos específica. O objetivo não é impressionar pelo vocabulário, mas reduzir uma incerteza relevante para compreender se a função e a experiência se encontram."
+          ]
+        }
+      ],
+      "case": "Caso fictício: o anúncio de assistente de operações exige conferir pedidos, atualizar registos, comunicar atrasos e escalar divergências. Joana organizou inscrições numa atividade de bairro, mas desconhece o sistema da empresa.",
+      "exercise": "Construa a matriz de quatro linhas. Inclua em cada uma: requisito literal, pergunta de trabalho, evidência possível e informação em falta. Em duas linhas, assinale explicitamente onde a transferência de experiência deixa de ser demonstrada.",
+      "assessment": {
+        "question": "A experiência de organizar inscrições comprova domínio do sistema de pedidos da empresa? Justifique e formule uma pergunta para esclarecer a lacuna.",
+        "answer": "Não. Pode fornecer evidência de conferência de dados se Joana explicar a ação e o contexto; não demonstra utilização de um sistema desconhecido. Uma pergunta adequada identifica o sistema, a formação inicial ou a autonomia exigida, sem apresentar a lacuna como competência já adquirida.",
+        "rubric": [
+          "Relaciona cada requisito com uma tarefa identificável.",
+          "Separa experiência real de hipótese de transferência.",
+          "Expõe pelo menos duas incertezas em vez de as preencher com suposições."
+        ]
+      }
+    },
+    {
+      "id": "2",
+      "title": "Construir evidências sem fabricar experiência",
+      "estimatedPracticeMinutes": 90,
+      "objectives": [
+        "Distinguir ação individual, resultado coletivo e interpretação causal num episódio.",
+        "Preparar dois registos de experiência com limites e proteção de informação de terceiros."
+      ],
+      "sourceIds": [
+        "ncs-star"
+      ],
+      "sections": [
+        {
+          "title": "A experiência precisa de fronteiras",
+          "paragraphs": [
+            "Uma frase como fui responsável pelo sucesso do evento mistura uma função, uma avaliação e uma explicação do resultado. Antes de a usar numa entrevista, reconstrua o episódio. O que estava sob a sua responsabilidade? O que fez pessoalmente? O que dependeu de outras pessoas? Que consequência conseguiu observar? Separar estas perguntas ajuda a falar com precisão, mesmo quando o trabalho foi pequeno ou aconteceu fora de um emprego formal. O tamanho do episódio não substitui a qualidade da explicação.",
+            "O National Careers Service apresenta STAR como organização por situação, tarefa, ação e resultado. Neste módulo, a estrutura serve para ordenar informação e preparar esclarecimentos. Não é um certificado de competência nem prova de que o candidato causou tudo o que ocorreu depois da sua ação. O trabalho central é verificar o episódio escolhido e os limites do que pode ser afirmado. Uma resposta pode estar bem organizada e ainda assim exagerar a contribuição individual."
+          ]
+        },
+        {
+          "title": "Um caso com resultados incompletos",
+          "paragraphs": [
+            "Miguel, personagem fictícia, participou numa feira de uma associação. A equipa registou sessenta visitantes; ele ficou encarregado de confirmar horários de quatro expositores. Ao rever a ficha, percebe que escreveu trouxe sessenta pessoas ao evento. Essa afirmação não é sustentada pela tarefa descrita. A comunicação, a localização, as redes dos expositores e o trabalho dos colegas também podem ter influenciado a participação. Uma versão defensável separa os sessenta visitantes registados pela equipa das quatro confirmações que Miguel efetuou.",
+            "O episódio pode ganhar conteúdo sem ganhar uma percentagem inventada. Miguel explica que encontrou duas respostas pendentes, verificou os contactos com a coordenação, enviou uma confirmação com o horário correto e atualizou a lista partilhada. Estes detalhes permitem discutir verificação e comunicação. Se não sabe se o procedimento evitou atrasos, não deve apresentar essa prevenção como resultado medido. Pode dizer que os quatro horários ficaram confirmados na lista antes da abertura, caso isso corresponda ao registo fictício utilizado no exercício.",
+            "Há também uma diferença entre um documento que apoia a memória e um documento que pode ser mostrado. Uma folha de contactos pode conter telefones e informações de outras pessoas. Não é necessário anexá-la à candidatura para tornar o relato concreto. No exercício, use nomes e dados inventados. Numa experiência real, escolha uma descrição que explique o processo sem revelar informação confidencial. Quando a prova exigiria divulgação indevida, assinale o limite em vez de criar uma falsa autorização."
+          ]
+        },
+        {
+          "title": "Um banco de episódios com qualidade desigual",
+          "paragraphs": [
+            "Prepare duas fichas, cada uma com contexto, responsabilidade delimitada, decisões, consequência observada e informação não confirmada. Acrescente a competência a que o episódio pode responder e uma pergunta de seguimento difícil. Por exemplo: quem decidiu alterar o horário? Se a resposta for a coordenação, Miguel deve reconhecê-lo. Não perde a sua contribuição por distinguir decisão e execução. Pelo contrário, essa distinção permite explicar com maior exatidão o lugar ocupado no trabalho coletivo.",
+            "Depois compare as fichas. Um episódio antigo, mas claro, pode ser mais útil para determinada pergunta do que uma experiência recente descrita de modo vago. Não transforme esta comparação numa classificação global de valor pessoal. Trata-se de escolher informação adequada a uma pergunta. Se a ficha não permite explicar uma decisão concreta, marque-a para revisão. O produto final deste módulo é um pequeno arquivo de experiências verificáveis e lacunas reconhecidas, não um repertório de histórias decoradas para qualquer situação."
+          ]
+        }
+      ],
+      "case": "Caso fictício: Miguel confirmou horários de quatro expositores numa feira com sessenta visitantes. Não há dados que atribuam a participação à sua ação. A coordenação tomou a decisão sobre horários.",
+      "exercise": "Redija duas fichas de episódio com os campos do módulo. Para Miguel, risque duas afirmações exageradas e substitua-as por descrições delimitadas. Para a segunda ficha, invente um cenário de aprendizagem e assinale-o como simulação; não o reutilize como experiência pessoal real.",
+      "assessment": {
+        "question": "Qual é o problema de afirmar que Miguel atraiu sessenta visitantes e decidiu os novos horários?",
+        "answer": "A participação é um resultado coletivo sem atribuição causal demonstrada. A decisão sobre horários pertenceu à coordenação. Miguel pode explicar a conferência e confirmação que realizou, reconhecendo ambos os limites.",
+        "rubric": [
+          "Identifica contribuição individual e responsabilidade de terceiros.",
+          "Distingue resultado observado de causalidade não demonstrada.",
+          "Preserva privacidade e identifica claramente dados fictícios."
+        ]
+      }
+    },
+    {
+      "id": "3",
+      "title": "Responder à pergunta que foi realmente feita",
+      "estimatedPracticeMinutes": 75,
+      "objectives": [
+        "Classificar perguntas sobre episódios passados e situações hipotéticas.",
+        "Construir respostas que explicitem ação, informação em falta e limites de decisão."
+      ],
+      "sourceIds": [
+        "opm2008",
+        "ncs-star"
+      ],
+      "sections": [
+        {
+          "title": "O tempo da pergunta muda o trabalho da resposta",
+          "paragraphs": [
+            "Relate uma ocasião em que identificou uma informação errada pede um episódio que aconteceu. O que faria se recebesse dois pedidos incompatíveis pede uma proposta de ação. O guia da OPM distingue perguntas comportamentais sobre experiências passadas e perguntas situacionais sobre cenários hipotéticos. Para preparar uma resposta, comece por reconhecer qual desses trabalhos está a ser pedido. Se mudar silenciosamente de um para outro, poderá dar uma explicação organizada que não fornece a informação solicitada.",
+            "A estrutura STAR pode ajudar a organizar o relato de uma experiência. Num cenário hipotético, é necessário preservar o estatuto de proposta: eu começaria por confirmar, e não eu confirmei. A escolha verbal protege a honestidade da resposta. Não é preciso transformar toda a entrevista num exercício de siglas. O interlocutor precisa de compreender o raciocínio e a ação; se a estrutura se tornar mais visível do que o conteúdo, vale a pena simplificar a linguagem."
+          ]
+        },
+        {
+          "title": "Dois pedidos, duas respostas possíveis",
+          "paragraphs": [
+            "Imagine uma situação fictícia: Leonor recebe uma solicitação urgente para alterar o endereço de uma entrega, mas a encomenda já está em processamento. A pergunta hipotética não informa se ela tem autorização para alterar dados. Uma resposta cuidadosa começa por identificar a encomenda e confirmar o pedido através do canal definido, verifica o estado do processamento e consulta o procedimento de alteração. Se a decisão ultrapassar a sua responsabilidade, encaminha a informação ao responsável e explica ao cliente o que consegue confirmar naquele momento.",
+            "A resposta não precisa de prometer que a entrega será alterada. Esse desfecho depende de condições que o cenário não fornece. Uma proposta como eu garantia a entrega correta substitui o processo por uma promessa. Também não é suficiente dizer eu chamava o chefe, sem explicar o que seria verificado e transmitido. Há uma zona entre agir sem autoridade e encaminhar sem informação: organizar os factos necessários para que a decisão possa ser tomada. Esta é a competência explorada pelo exercício.",
+            "Se a pergunta fosse conte uma ocasião em que teve de encaminhar um pedido, Leonor precisaria de escolher um episódio real. Se não o tiver num emprego, pode pedir para utilizar uma experiência de estudo ou voluntariado que seja pertinente, deixando claro o contexto. Se não conseguir encontrar nenhuma, uma resposta honesta reconhece a ausência e oferece discutir a abordagem hipotética. Isso não garante uma boa classificação; evita apresentar uma invenção como realização."
+          ]
+        },
+        {
+          "title": "Esclarecer sem fugir",
+          "paragraphs": [
+            "Nem todas as perguntas chegam bem delimitadas. Como lida com pressão pode pedir uma descrição geral ou abrir espaço para um exemplo. Uma pergunta curta de esclarecimento pode ajudar: gostaria que eu descrevesse um episódio específico? Se o entrevistador preferir uma resposta direta, adapte-se. O esclarecimento deve resolver uma ambiguidade relevante, não adiar indefinidamente a resposta ou devolver ao interlocutor todo o trabalho de formular o que precisa de ouvir.",
+            "Ao terminar o ensaio, sublinhe os verbos da resposta. Marque os que descrevem acontecimentos e os que apresentam intenções. Verifique se a mudança de tempo foi anunciada. Depois identifique a decisão central e a sua justificação. Uma resposta longa que não permite localizar essa decisão precisa de revisão, ainda que contenha muitos detalhes. A meta deste módulo é manter coerência entre a pergunta, o estatuto da experiência e o alcance da ação proposta."
+          ]
+        }
+      ],
+      "case": "Cenário inteiramente fictício: Leonor recebe uma alteração urgente de endereço quando o pedido já está em processamento. Não conhece ainda o limite de autorização para alterar dados.",
+      "exercise": "Escreva uma resposta hipotética em até 180 palavras para Leonor, com uma verificação, um limite de autonomia e uma comunicação ao cliente. Depois formule uma pergunta sobre experiência passada que avaliaria um aspeto semelhante e explique por que a resposta anterior não pode ser apresentada como um acontecimento real.",
+      "assessment": {
+        "question": "Por que 'eu garantia que a entrega chegava ao novo endereço' é uma resposta insuficiente ao cenário?",
+        "answer": "Promete um resultado sem conhecer o estado operacional ou a autorização disponível. Uma resposta fundamentada indica verificações, decisão ou encaminhamento conforme o limite de autonomia, e comunica apenas o que pode confirmar.",
+        "rubric": [
+          "Distingue episódio passado de hipótese.",
+          "Apresenta ações numa sequência inteligível.",
+          "Explicita uma condição ou informação em falta e evita garantir o desfecho."
+        ]
+      }
+    },
+    {
+      "id": "4",
+      "title": "Ensaiar, observar e rever com critérios",
+      "estimatedPracticeMinutes": 90,
+      "objectives": [
+        "Aplicar quatro critérios de revisão a uma resposta simulada.",
+        "Justificar duas alterações entre versões sem confundir desempenho no ensaio com previsão de contratação."
+      ],
+      "sourceIds": [
+        "ncs-interview"
+      ],
+      "sections": [
+        {
+          "title": "O ensaio precisa de uma pergunta de observação",
+          "paragraphs": [
+            "Repetir uma resposta até a conhecer de memória não revela necessariamente o que o interlocutor conseguiu compreender. Um ensaio útil precisa de uma pergunta de observação: a ação ficou identificável? O exemplo respondeu ao que foi pedido? Os limites foram reconhecidos? O National Careers Service recomenda praticar respostas e refletir sobre dificuldades. A proposta LDR deste módulo transforma essa orientação geral numa atividade de revisão escrita, com critérios próprios. Não foi validada como instrumento de seleção ou medida psicológica.",
+            "Escolha uma pergunta do módulo anterior e responda sem consultar uma resposta modelo. Pode escrever ou fazer uma gravação privada, se isso lhe for confortável; a gravação não é obrigatória. Se trabalhar com outra pessoa, combine previamente o objetivo do exercício e o destino das notas. Não use dados de candidatos reais nem transforme um colega num avaliador da sua personalidade. O objeto de análise é aquela resposta, naquele exercício."
+          ]
+        },
+        {
+          "title": "Uma rubrica descritiva e limitada",
+          "paragraphs": [
+            "Use quatro critérios: pertinência à pergunta, delimitação da ação, sustentação do resultado e clareza dos limites. Em cada critério, registe ausente, parcial ou explícito e transcreva uma pequena passagem da sua própria resposta que justifique a classificação. Pertinência explícita significa que a resposta trata o problema pedido; ação explícita significa que se percebe o que a pessoa fez ou propõe fazer. O nome dos critérios é menos importante do que a ligação entre o julgamento e um trecho observável.",
+            "Num exemplo fictício, Sara responde a uma pergunta sobre conferência de documentos: sou bastante atenta, a minha equipa sempre funcionou bem e gosto de ajudar. A resposta oferece uma autoavaliação e um resultado coletivo, mas ainda não permite localizar um episódio ou uma verificação. Na ficha de revisão, não escreva Sara é desatenta. Registe que a ação de conferir não está descrita. A diferença orienta uma revisão possível e impede que a rubrica faça um julgamento que os dados não sustentam.",
+            "Sara pode rever a resposta acrescentando um episódio inventado exclusivamente para a simulação: ao conferir uma lista de inscrições, encontrei dois campos de contacto vazios; devolvi esses registos para confirmação e mantive-os sinalizados até receber a informação. O exemplo agora torna a verificação e o encaminhamento discutíveis. Não comprova que Sara faria sempre o mesmo, nem demonstra competência para qualquer função administrativa. O exercício melhora a informação disponível sobre a resposta, sem produzir uma conclusão global sobre a pessoa."
+          ]
+        },
+        {
+          "title": "Rever sem fabricar uma pessoa ideal",
+          "paragraphs": [
+            "Selecione apenas duas mudanças para a segunda versão. Se a primeira não descreve uma ação, começar pela escolha de palavras mais sofisticadas dificilmente resolve o problema principal. Uma mudança pode acrescentar a verificação realizada; outra pode retirar uma promessa ou atribuição causal que o episódio não sustenta. Guarde as duas versões e escreva o motivo de cada alteração. Sem esse registo, pode ficar apenas a sensação de que a segunda soa melhor, sem saber o que foi efetivamente corrigido.",
+            "Se houver um observador, peça que identifique o que ainda não compreendeu antes de sugerir frases prontas. Uma divergência entre a sua leitura e a dele é material de aprendizagem: qual passagem motivou cada interpretação? Não se pretende forçar consenso sobre uma nota. O registo final reúne resposta inicial, revisão, justificação e uma questão a praticar noutra sessão. A decisão de contratação continua dependente do empregador, da função e do processo; esta atividade não converte um ensaio bem revisto numa previsão de sucesso."
+          ]
+        }
+      ],
+      "case": "Caso fictício: Sara afirma que é atenta e que a equipa funcionava bem, sem descrever conferência, decisão ou resultado delimitado. A segunda versão deve tornar uma ação discutível sem inventar um historial pessoal real.",
+      "exercise": "Produza duas versões de uma resposta de 120–180 palavras. Avalie cada uma pelos quatro critérios, citando trechos da sua própria redação. Justifique duas alterações. Utilize apenas experiências suas verificáveis ou identifique todo o caso como simulação fictícia.",
+      "assessment": {
+        "question": "Uma melhoria na rubrica permite afirmar que o participante terá maior probabilidade de contratação?",
+        "answer": "Não se pode inferir essa probabilidade desta atividade. A rubrica é pedagógica e descreve a resposta no exercício. Pode mostrar uma ação antes ausente ou um limite mais claro; não foi validada para prever decisões de contratação.",
+        "rubric": [
+          "Fundamenta cada classificação numa passagem concreta.",
+          "Justifica duas revisões relacionadas com os problemas identificados.",
+          "Limita a conclusão à qualidade da resposta ensaiada e preserva o caráter fictício dos casos."
+        ]
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Desenvolver os módulos 5–15 sem repetir atividades ou explicações.",
+    "Pilotar tempo de estudo e rever a correspondência com as 80 horas anunciadas; não assumir equivalência.",
+    "Produzir e testar materiais acessíveis e simulação integrada.",
+    "Revisão especializada e verificação de adequação às diferentes realidades de emprego.",
+    "Integrar no leitor apenas após conclusão e validação, preservando direitos e registos existentes."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

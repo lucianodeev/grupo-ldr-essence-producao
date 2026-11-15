@@ -14,8 +14,8 @@ test('Academy CI validates curated files without running legacy generators or wr
 test('Academy CI installs the root lockfile and checks library, drafts, types and build', () => {
   assert.match(workflow, /run: npm ci --no-audit --no-fund/);
   assert.doesNotMatch(workflow, /working-directory:/);
-  for (const command of ['node --test apps/painel-ldr/tests/library-*.test.cjs apps/painel-ldr/tests/editorial-drafts.test.cjs', 'node tools/validate-editorial-drafts.cjs', 'npm --prefix apps/painel-ldr run typecheck', 'npm --prefix apps/painel-ldr run build'])
+  for (const command of ['node --test apps/painel-ldr/tests/library-*.test.cjs apps/painel-ldr/tests/editorial-drafts.test.cjs', 'node tools/validate-editorial-drafts.cjs', 'node tools/validate-course-drafts.cjs', 'npm --prefix apps/painel-ldr run typecheck', 'npm --prefix apps/painel-ldr run build'])
     assert.ok(workflow.includes('run: ' + command), command);
-  for (const changedArea of ['src/content/academy-free/**', 'editorial/drafts/**', 'tests/helpers/**'])
+  for (const changedArea of ['src/content/academy-free/**', 'editorial/drafts/**', 'editorial/courses/**', 'tests/helpers/**'])
     assert.ok(workflow.includes(changedArea), changedArea);
 });

@@ -717,7 +717,9 @@
       "materialsListed": 3,
       "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
       "source": "src/lib/academy-subscription-courses.catalog.ts",
-      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 4/15 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/interview-preparation.pt.json",
+      "authoredDraftModules": 4
     },
     {
       "product_key": "curso_assinatura_redacao_profissional_e_escrita_para_processos_seletivos",
@@ -1671,6 +1673,23 @@
       "authoredChapters": 3,
       "expectedChapters": 20,
       "complete": false,
+      "activationEligible": false
+    }
+  ],
+  "courseCandidates": [
+    {
+      "productKey": "curso_assinatura_como_se_preparar_para_uma_entrevista_de_emprego",
+      "title": "Como se Preparar para uma Entrevista de Emprego",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 80,
+      "path": "editorial/courses/interview-preparation.pt.json",
+      "errors": [],
+      "authoredModules": 4,
+      "expectedModules": 15,
+      "complete": false,
+      "validatedHours": null,
       "activationEligible": false
     }
   ],

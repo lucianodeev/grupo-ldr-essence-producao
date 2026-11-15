@@ -151,6 +151,14 @@ Data: 15/11/2026. Nenhum produto foi aprovado como integralmente concluído nest
 
 As versões candidatas não são usadas pelo leitor de produção. O original e o acesso dos compradores permanecem inalterados.
 
+## Cursos de assinatura em desenvolvimento editorial
+
+| Curso | Módulos desenvolvidos / previstos | Carga anunciada / validada | Estado |
+| --- | --- | --- | --- |
+| Como se Preparar para uma Entrevista de Emprego | 4 / 15 | 80h / por validar | draft; published=false; elegível=false |
+
+Rascunhos separados do leitor. Número de módulos e tempo de prática estimado não validam a carga anunciada.
+
 ## Duplicação e limites
 
 0 grupos de parágrafos exatamente repetidos após normalização; 11710 pares próximos por Jaccard de palavras ≥0,78 (mesmo idioma, mínimo 20 palavras). Revisão humana necessária; os hashes e locais constam no JSON. Textos genéricos gerados em código foram identificados separadamente; não confundir esta contagem com a duplicação total dos cursos.

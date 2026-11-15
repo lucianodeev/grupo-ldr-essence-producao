@@ -21,6 +21,12 @@ Cada módulo contém objetivos, desenvolvimento próprio, caso explicitamente fi
 
 No curso Freud, os textos distinguem história da disciplina, inconsciente/recalque, resistência, transferência, associação livre, interpretação, primeira e segunda tópicas, terminologia sobre desenvolvimento, sintomas, sonhos e enquadramento. Explicações da teoria histórica, exemplos inventados e avaliação crítica ficam identificados. Foram consultadas passagens de fontes primárias em arquivos como York University, UCSB, Gutenberg e Lutecium; a bibliografia indica edição, tradução e alcance de consulta. Não se declara leitura integral de todas as obras nem se copiam as traduções para a plataforma.
 
+## Primeiro lote dos cursos de assinatura
+
+Foi criada uma edição candidata separada para **Como se Preparar para uma Entrevista de Emprego**, com quatro módulos desenvolvidos e onze ainda pendentes num currículo próprio de quinze módulos. O lote contém 2.141 palavras de desenvolvimento, além de casos, exercícios e rubricas: leitura da vaga, evidências delimitadas, perguntas comportamentais/situacionais e simulação com revisão. As fontes consultadas são o guia OPM de 2008 (passagens identificadas) e duas páginas do National Careers Service; os casos são fictícios e as rubricas pedagógicas LDR não são testes psicométricos ou previsões de contratação.
+
+A candidata está em `editorial/courses/interview-preparation.pt.json`, com checksum do catálogo de origem, `published=false` e `validatedHours=null`. Os 330 minutos de prática estimada são uma hipótese de pilotagem para este lote e não sustentam as 80 horas anunciadas no catálogo histórico. O leitor, a assinatura e os identificadores ativos não foram alterados. Cinco testes verificam desenvolvimento, referências, duplicação, limites da carga e impossibilidade de aprovar uma sequência parcial apenas mudando flags.
+
 ## Revisão editorial dos eBooks
 
 A matriz conserva a auditoria das **17 obras, em 23 versões linguísticas**. Os 19 produtos anteriormente relatados não foram confirmados na tabela: não foram inventadas duas obras para completar a contagem.
@@ -65,7 +71,7 @@ Isto valida o encaminhamento sintético, não uma cobrança ou renovação finan
 
 A execução GitHub Actions `43730866960` falhou antes da instalação, com `Library hero start not found`: o patch posicional de setembro procurava a estrutura antiga da biblioteca. O workflow preserva o nome e o identificador do job para continuidade dos checks, mas agora apenas instala o lockfile da raiz, executa contratos sintéticos da biblioteca, verifica candidatas editoriais, TypeScript e build. Foram retirados os geradores legados e o commit/push automático à `main`; a permissão passou a `contents: read`, sem credenciais persistidas no checkout. Os scripts históricos continuam disponíveis para consulta manual.
 
-Dois testes verificam que esta automação permanece sem escrita de branches ou acesso a secrets e que mantém os comandos de validação. Os outros três workflows do head anterior passaram. A execução do novo head será registada após a atualização do PR; o resultado local não é apresentado como resultado remoto.
+Dois testes verificam que esta automação permanece sem escrita de branches ou acesso a secrets e que mantém os comandos de validação. Os outros três workflows do head anterior passaram. Os quatro workflows do commit `2cf028f` passaram no GitHub: Academy (`43731339671`), Enterprise (`43731339634`), LDR ONE (`43731339552`) e AI READY (`43731339544`). O novo lote editorial acrescenta validação dos rascunhos de cursos ao workflow; o resultado desse head será distinguido destas execuções.
 
 ## Validação
 
@@ -73,9 +79,9 @@ Dois testes verificam que esta automação permanece sem escrita de branches ou 
 | --- | --- |
 | TypeScript | Passou, sem erros |
 | Build | Passou, sem deploy |
-| Suíte de regressão | 209/209 passaram |
+| Suíte de regressão | 214/214 passaram |
 | Suíte unitária existente | 59/59 passaram |
-| Testes específicos `library-*.test.cjs` | 33/33 passaram |
+| Testes específicos `library-*.test.cjs` | 38/38 passaram |
 | Validação da edição candidata | Quatro testes passaram; candidata parcial continua inelegível |
 | Encaminhamento Stripe | Sete testes de encaminhamento e contrato passaram; handlers e dados simulados |
 | Progresso monotónico | Oito cenários sintéticos passaram, incluindo atualizações e primeiras gravações concorrentes, isolamento de cliente e falhas |
@@ -90,7 +96,7 @@ A suíte de regressão inclui vários dos testes específicos; estas quantidades
 ## Pendências que continuam abertas
 
 1. Revisão pedagógica especializada dos 59 módulos, testes com alunos, materiais complementares e dimensionamento de carga real; completar áudio e avaliação oral nos idiomas.
-2. Desenvolver as aulas próprias dos 50 roteiros de assinatura, de RH e de cada formação profissional. A contagem de títulos ou texto gerado não comprova 600/1200 horas.
+2. Completar os onze módulos pendentes da candidata de entrevistas, realizar revisão e pilotagem. Desenvolver as aulas próprias dos restantes 49 roteiros de assinatura, de RH e de cada formação profissional. A contagem de títulos ou texto gerado não comprova 600/1200 horas.
 3. Concluir os 17 capítulos restantes da candidata editorial iniciada e revisar as outras 16 obras, com verificação intelectual, bibliográfica e de direitos, sem substituir versões antigas automaticamente.
 4. Testar a prévia com sessões sintéticas reais: comprador, assinante ativo/inativo e aluno sem compra. Verificar acessibilidade interativa, visual e overflow em dispositivos móveis.
 5. Validar anexos externos, emissão e consulta de certificados e concorrência entre dispositivos num ambiente de testes. Os mocks e a presença de RLS não substituem essa etapa.
@@ -100,6 +106,7 @@ A suíte de regressão inclui vários dos testes específicos; estas quantidades
 
 - `node tools/audit-library-content.cjs <export-digital-content.json> <export-programas.json> docs/audit-20261115`
 - `node tools/validate-editorial-drafts.cjs`
+- `node tools/validate-course-drafts.cjs`
 - `node --test apps/painel-ldr/tests/library-*.test.cjs apps/painel-ldr/tests/editorial-drafts.test.cjs`
 - `npm --prefix apps/painel-ldr run test:regressions`
 - `npm --prefix apps/painel-ldr test`

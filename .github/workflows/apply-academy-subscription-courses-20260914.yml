@@ -18,6 +18,8 @@ on:
       - 'apps/painel-ldr/tests/editorial-drafts.test.cjs'
       - 'apps/painel-ldr/tests/helpers/**'
       - 'editorial/drafts/**'
+      - 'editorial/courses/**'
+      - 'tools/validate-course-drafts.cjs'
       - 'tools/validate-editorial-drafts.cjs'
       - 'package-lock.json'
       - 'apps/painel-ldr/package.json'
@@ -38,6 +40,8 @@ on:
       - 'apps/painel-ldr/tests/editorial-drafts.test.cjs'
       - 'apps/painel-ldr/tests/helpers/**'
       - 'editorial/drafts/**'
+      - 'editorial/courses/**'
+      - 'tools/validate-course-drafts.cjs'
       - 'tools/validate-editorial-drafts.cjs'
       - 'package-lock.json'
       - 'apps/painel-ldr/package.json'
@@ -62,6 +66,8 @@ jobs:
         run: node --test apps/painel-ldr/tests/library-*.test.cjs apps/painel-ldr/tests/editorial-drafts.test.cjs
       - name: Validate unpublished editorial candidates
         run: node tools/validate-editorial-drafts.cjs
+      - name: Validate unpublished course candidates
+        run: node tools/validate-course-drafts.cjs
       - name: Check Academy TypeScript
         run: npm --prefix apps/painel-ldr run typecheck
       - name: Build Academy without deployment
