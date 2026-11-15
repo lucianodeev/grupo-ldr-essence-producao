@@ -1,0 +1,487 @@
+{
+  "productKey": "curso_assinatura_redacao_profissional_e_escrita_para_processos_seletivos",
+  "slug": "redacao-profissional-e-escrita-para-processos-seletivos",
+  "title": "Redação Profissional e Escrita para Processos Seletivos",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 100,
+  "validatedHours": null,
+  "expectedModuleCount": 8,
+  "scope": "Nova sequência editorial de oito oficinas próprias, distinta do roteiro automático histórico de quinze títulos. Não é substituição ativa nem migração de progresso. Textos, dados, nomes e enunciados são didáticos e sintéticos. As cem horas históricas não foram validadas e as estimativas de prática exigem pilotagem. Não garante aprovação em seleção.",
+  "courseObjectives": [
+    "Transformar uma intenção vaga num briefing com leitor, ação, informação e restrição.",
+    "Distinguir o pedido central de informação que pode ficar para outra comunicação.",
+    "Organizar um parágrafo com afirmação, suporte e ligação à finalidade.",
+    "Rever a ordem de três parágrafos preservando a distinção entre evidência e conclusão.",
+    "Reformular um correio eletrónico com pedido, responsável, prazo e condição explícitos.",
+    "Identificar ambiguidades de referência e de tempo numa sequência de mensagens.",
+    "Selecionar requisitos e exemplos para uma carta específica sem inventar realizações.",
+    "Justificar uma adaptação entre duas vagas preservando os mesmos factos profissionais.",
+    "Identificar alterações linguísticas que mudam responsabilidade, quantidade ou certeza.",
+    "Revisar concordância, referência e pontuação em exemplos próprios, justificando decisões de sentido.",
+    "Produzir uma síntese que preserve decisão, condição e informação pendente.",
+    "Distinguir citação, paráfrase e redação própria num exercício de seleção.",
+    "Planear e executar uma resposta dentro de um enunciado com limite, destinatário e dados definidos.",
+    "Documentar revisão e uso de recursos sem apresentar ajuda externa como autoria individual não assistida.",
+    "Aplicar critérios diferentes a mensagens, candidatura e prova escrita, sem usar uma grelha única indiferenciada.",
+    "Produzir um plano de revisão com evidências de leitura e limites explicitamente registados."
+  ],
+  "sources": [
+    {
+      "id": "ec-clear",
+      "title": "Comissão Europeia, Direção-Geral da Tradução. Plain language – making European Commission texts clear. Atualização indicada: 20 de outubro de 2026.",
+      "url": "https://translation.ec.europa.eu/languages-and-translation-european-commission/plain-language-making-european-commission-texts-clear_en",
+      "consulted": "2026-11-15",
+      "scope": "Página e princípios textuais consultados: finalidade, público, estrutura, concretude e revisão. As mensagens, briefings e análises em português são originais; não se reproduzem exemplos da fonte nem se afirma eficácia mensurada."
+    },
+    {
+      "id": "nara-checklist",
+      "title": "U.S. National Archives and Records Administration. Plain Writing Checklist. Revisão indicada: 2 de julho de 2019.",
+      "url": "https://www.archives.gov/open/plain-writing/checklist.html",
+      "consulted": "2026-11-15",
+      "scope": "Checklist consultada sobre organização, palavras, concordância, pontuação e legibilidade. Não é gramática normativa portuguesa; os exemplos e decisões linguísticas em português são próprios deste curso."
+    },
+    {
+      "id": "europass-letter",
+      "title": "União Europeia / Europass. Create your Europass Cover Letter. Sem data de atualização indicada na página consultada.",
+      "url": "https://europass.europa.eu/en/create-europass-cover-letter",
+      "consulted": "2026-11-15",
+      "scope": "Recomendações para leitura do anúncio, pertinência de competências, concisão e revisão consultadas. Não se impõe um formato Europass obrigatório nem se promete contratação; prevalecem as instruções do processo fictício."
+    },
+    {
+      "id": "eu-publications",
+      "title": "Serviço das Publicações da União Europeia. Web Guide: Plain language and Easy-to-read. Atualização indicada na página: 7/10/2026.",
+      "url": "https://op.europa.eu/en/web/webguide/plain-language-and-easy-to-read",
+      "consulted": "2026-11-15",
+      "scope": "Página consultada, incluindo distinção entre linguagem clara e formato especializado de leitura fácil, consistência terminológica e organização. Não se declara certificação de acessibilidade ou conformidade do material com todas as orientações de leitura fácil."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Definir o trabalho que o texto precisa de realizar"
+    },
+    {
+      "id": "2",
+      "title": "Construir parágrafos que desenvolvem uma ideia"
+    },
+    {
+      "id": "3",
+      "title": "Escrever mensagens que permitem agir sem adivinhar"
+    },
+    {
+      "id": "4",
+      "title": "Produzir uma carta de candidatura com evidências pertinentes"
+    },
+    {
+      "id": "5",
+      "title": "Revisar a língua sem apagar o sentido"
+    },
+    {
+      "id": "6",
+      "title": "Sintetizar informação sem perder condições ou autoria"
+    },
+    {
+      "id": "7",
+      "title": "Responder a uma prova escrita com restrições verificáveis"
+    },
+    {
+      "id": "8",
+      "title": "Rever um portefólio com um leitor e uma decisão final"
+    }
+  ],
+  "modules": [
+    {
+      "id": "1",
+      "title": "Definir o trabalho que o texto precisa de realizar",
+      "estimatedPracticeMinutes": 90,
+      "objectives": [
+        "Transformar uma intenção vaga num briefing com leitor, ação, informação e restrição.",
+        "Distinguir o pedido central de informação que pode ficar para outra comunicação."
+      ],
+      "sourceIds": [
+        "ec-clear"
+      ],
+      "sections": [
+        {
+          "title": "Antes da primeira frase existe uma decisão",
+          "paragraphs": [
+            "Uma mensagem profissional entra num processo: alguém precisa de compreender uma situação, escolher uma alternativa ou executar uma ação. O texto falha quando parece correto, mas deixa esse trabalho indeterminado. Antes de redigir, escreva para si uma frase que identifique o que o destinatário deverá conseguir fazer depois da leitura. Essa frase não precisa de aparecer na versão final. Funciona como critério para decidir o que entra, o que será explicado e o que pertence a outra conversa.",
+            "A Comissão Europeia apresenta propósito, público e mensagem entre as questões a considerar na escrita clara. O briefing usado neste curso desenvolve essa orientação numa ferramenta própria. Ele contém destinatário principal, conhecimento disponível, ação pretendida, dados necessários e restrições do canal. Uma mensagem dirigida a quem aprova uma despesa precisa de informação diferente de uma nota para quem apenas organiza o calendário. Chamar todos de equipa não elimina essas responsabilidades distintas."
+          ]
+        },
+        {
+          "title": "Um pedido fictício com duas necessidades diferentes",
+          "paragraphs": [
+            "Rita, personagem fictícia, precisa de reservar uma sala para uma oficina e de obter autorização para contratar um intérprete. Se escrever precisamos de apoio para a oficina, poderá receber uma resposta cordial sem decisão sobre nenhum dos dois assuntos. O responsável pelo espaço consegue confirmar a sala, mas não aprova a contratação. A primeira escolha editorial é identificar dois destinatários ou dois pedidos explicitamente separados. Uma frase abrangente não cria uma competência de decisão que o destinatário não possui.",
+            "Para a reserva, Rita reúne data, intervalo de utilização, número previsto de participantes e equipamento necessário. Para a autorização, precisará de explicar finalidade, alternativa proposta e informação de custo que realmente possua. Se ainda não tem orçamento, deve marcar esse ponto como pendente. O briefing impede que um dado em falta seja escondido por uma expressão vaga como valor habitual. O leitor deve conseguir distinguir uma decisão que já pode tomar de outra que depende de confirmação.",
+            "Uma restrição de canal também modifica a entrega. Um formulário com campos definidos não se resolve colando uma carta inteira no primeiro campo. Um correio eletrónico admite assunto e parágrafos, mas ainda precisa de uma ordem que facilite encontrar a solicitação. O conteúdo deve respeitar instruções recebidas. Neste exercício, o aluno fará dois briefings, sem enviar mensagens nem usar contactos reais. A avaliação observa a relação entre destinatário, dados e decisão, em vez de procurar uma frase supostamente adequada a qualquer contexto."
+          ]
+        },
+        {
+          "title": "Redigir apenas depois de escolher o alcance",
+          "paragraphs": [
+            "Faça uma versão de três frases para o pedido de sala: identifique a oficina e a data, apresente as condições essenciais e solicite confirmação. Compare-a com o briefing. Se a pergunta é sobre disponibilidade, não introduza uma discussão longa sobre a história do projeto, a menos que essa informação seja necessária para a decisão. Reduzir não significa retirar condições importantes. O texto curto continua incompleto se não permite saber para quando ou para quantas pessoas se pretende reservar o espaço.",
+            "O produto desta etapa é um par de decisões editoriais justificadas. O aluno deve explicar por que separou os pedidos e o que ficou pendente em cada um. Ao longo do curso, esse modo de decidir reaparecerá em situações mais exigentes: justificar uma candidatura, resolver ambiguidades e revisar uma prova escrita. A competência inicial é reconhecer que um texto tem uma função situada. A aparência formal só ganha utilidade quando a comunicação permite ao leitor realizar o trabalho que lhe cabe."
+          ]
+        }
+      ],
+      "case": "Rita precisa de sala e de autorização para intérprete; o responsável pela reserva não aprova contratações. O orçamento ainda não foi recebido.",
+      "exercise": "Produza dois briefings de cinco campos e uma mensagem de três frases para reservar a sala. Identifique um dado que pode ser comunicado como confirmado e outro que deve ficar pendente.",
+      "assessment": {
+        "question": "Por que o pedido precisamos de apoio não define suficientemente a comunicação?",
+        "answer": "Porque reúne decisões diferentes sem identificar ação, condições ou autoridade do destinatário. É preciso separar reserva e autorização, indicar os dados necessários e conservar a ausência do orçamento como pendência.",
+        "rubric": [
+          "Relaciona destinatário com decisão possível.",
+          "Inclui os dados necessários sem inventar orçamento.",
+          "Justifica o que ficou fora da primeira mensagem."
+        ]
+      }
+    },
+    {
+      "id": "2",
+      "title": "Construir parágrafos que desenvolvem uma ideia",
+      "estimatedPracticeMinutes": 105,
+      "objectives": [
+        "Organizar um parágrafo com afirmação, suporte e ligação à finalidade.",
+        "Rever a ordem de três parágrafos preservando a distinção entre evidência e conclusão."
+      ],
+      "sourceIds": [
+        "nara-checklist"
+      ],
+      "sections": [
+        {
+          "title": "Uma frase de abertura cria uma expectativa",
+          "paragraphs": [
+            "Um parágrafo não é apenas um bloco separado por espaço. A primeira frase orienta o leitor para uma ideia que as seguintes devem desenvolver. Se a abertura anuncia experiência em organização de informação e o resto enumera interesses pessoais, a promessa fica por cumprir. Na redação profissional, a coerência pode ser examinada com uma pergunta prática: que afirmação este bloco procura sustentar e que informação cada frase acrescenta? A resposta permite cortar desvios sem reduzir o texto a slogans.",
+            "A checklist dos National Archives chama a atenção para a organização lógica e para começar pelo ponto principal. Neste curso, a unidade de revisão é o parágrafo: afirmação delimitada, suporte relevante e relação com o objetivo. Não se impõe uma quantidade universal de frases. Um aviso operacional pode precisar de duas; uma explicação de decisão pode exigir mais. O critério é que as frases trabalhem juntas e que a conclusão não ultrapasse a informação apresentada."
+          ]
+        },
+        {
+          "title": "Do currículo acumulado ao argumento verificável",
+          "paragraphs": [
+            "Considere este material inteiramente fictício de uma candidatura: Luís conferiu fichas de inscrição num projeto escolar, corrigiu contactos duplicados com autorização do responsável e tem interesse em rotinas administrativas. Um parágrafo pode explicar que praticou conferência de dados e ilustrar com a identificação de duplicações. A conclusão poderá ligar essa experiência a uma tarefa da vaga. Não deve afirmar que Luís domina todos os processos administrativos, porque uma atividade delimitada não sustenta essa generalização.",
+            "A ordem importa. Começar por uma conclusão ampla e acrescentar uma experiência pequena pode expor o desajuste entre ambas. Começar por cinco detalhes sem apresentar a ideia deixa o leitor a procurar por conta própria a relação com a função. No exercício, teste duas ordens e explique qual produz uma ligação mais clara. A avaliação não depende de encontrar uma frase bonita, mas de tornar visível como o exemplo apoia uma afirmação proporcional ao que aconteceu no cenário.",
+            "As ligações entre parágrafos também precisam de precisão. Por isso anuncia consequência; além disso acrescenta outro ponto; porém introduz uma diferença relevante. Um conector não cria uma relação que os dados não possuem. Se o primeiro bloco descreve um curso e o segundo afirma uma qualificação profissional que o curso não concede, escrever portanto não resolve o salto. Releia o conteúdo que está de cada lado da ligação e nomeie a relação antes de escolher a expressão que a assinalará."
+          ]
+        },
+        {
+          "title": "Rever pelo que o leitor consegue reconstruir",
+          "paragraphs": [
+            "Faça um esquema depois de escrever: resuma cada parágrafo numa linha e compare a sequência com o objetivo da comunicação. Esse procedimento revela repetições de função, como dois blocos que apenas anunciam motivação, e lacunas, como uma competência declarada sem exemplo. A revisão pode exigir deslocar frases, dividir um bloco com duas ideias ou juntar duas explicações da mesma informação. Não significa que todas as frases curtas sejam melhores; a divisão deve preservar relações compreensíveis.",
+            "A entrega deste módulo inclui o texto e o mapa que explica a sua organização. Outra pessoa deve conseguir localizar a afirmação, o suporte e o alcance da conclusão sem conhecer o autor. Se houver leituras diferentes, registe o trecho que as provocou e revise a passagem. O resultado procurado é uma sequência argumentativa que possa ser inspecionada, com cada exemplo a trabalhar para uma finalidade concreta. Isso prepara a escrita de candidaturas sem transformar a apresentação de experiência numa coleção de adjetivos."
+          ]
+        }
+      ],
+      "case": "Material fictício Luís: conferiu fichas escolares, identificou contactos duplicados e corrigiu-os com autorização. A vaga envolve conferir pedidos. Não há outras experiências fornecidas.",
+      "exercise": "Redija três parágrafos curtos: competência delimitada, exemplo e ligação à vaga. Faça um mapa de uma linha por parágrafo. Depois una os dois primeiros e explique o que se ganha ou perde nessa alternativa.",
+      "assessment": {
+        "question": "O conector portanto torna válida a conclusão de que Luís domina todos os processos administrativos?",
+        "answer": "Não. O conector apenas sinaliza uma relação; não fornece suporte que falta. O episódio permite discutir conferência de dados, sem demonstrar domínio de todos os processos.",
+        "rubric": [
+          "Cada parágrafo tem uma função identificável.",
+          "O exemplo sustenta uma afirmação de alcance proporcional.",
+          "Os conectores exprimem relações existentes no conteúdo."
+        ]
+      }
+    },
+    {
+      "id": "3",
+      "title": "Escrever mensagens que permitem agir sem adivinhar",
+      "estimatedPracticeMinutes": 90,
+      "objectives": [
+        "Reformular um correio eletrónico com pedido, responsável, prazo e condição explícitos.",
+        "Identificar ambiguidades de referência e de tempo numa sequência de mensagens."
+      ],
+      "sourceIds": [
+        "ec-clear"
+      ],
+      "sections": [
+        {
+          "title": "O leitor precisa de localizar a ação",
+          "paragraphs": [
+            "Uma mensagem pode ter gramática correta e continuar difícil de executar. Envie aquilo até lá depende de referências que talvez só o autor conheça. Para revisar um pedido, identifique o objeto, a ação, o destinatário responsável e o momento relevante. Nem todos os textos exigem prazo; quando a decisão depende dele, o momento precisa de ser inequívoco. Escrever de modo claro significa também saber quando confirmar uma informação que o autor ainda não possui, em vez de criar precisão fictícia.",
+            "A orientação de escrita clara da Comissão Europeia favorece termos concretos e indicação de quem faz o quê. A aplicação deste módulo é um conjunto de mensagens originais. O foco não é substituir cada palavra por uma mais curta: é retirar dependências de contexto que impedem o destinatário de agir. Uma designação técnica pode ser necessária se identifica exatamente o documento; uma expressão familiar pode ser ambígua se diferentes pessoas a usam para coisas diferentes."
+          ]
+        },
+        {
+          "title": "Um encadeamento fictício com referências perdidas",
+          "paragraphs": [
+            "Numa equipa fictícia, Marta escreve a Paulo depois de duas reuniões: pode enviar a versão final para eles amanhã? Existem uma lista de participantes e um programa de atividades; dois grupos diferentes aguardam informação. A frase não permite saber o documento, os destinatários nem que reunião determina a versão final. A revisão começa pela recolha desses dados. Não é defensável escolher a lista apenas porque parece mais provável. Uma pergunta de confirmação pode ser o próximo texto necessário.",
+            "Suponha que o responsável esclarece: trata-se do programa aprovado pela coordenação, a enviar aos formadores até às 12h de 18 de novembro de 2026. Agora Marta pode identificar o documento e o grupo. Se houver colaboradores em locais diferentes, deve confirmar também a referência horária quando isso for relevante. O prazo deste cenário é um dado sintético do exercício, não uma regra de correspondência. O objetivo é demonstrar como a mensagem se torna executável depois de resolvidas as lacunas.",
+            "O assunto deve ajudar a encontrar o pedido posteriormente. Programa da oficina — envio aos formadores comunica mais do que urgente ou informação. No corpo, separe o contexto mínimo da ação e da condição de aprovação. Um anexo pode ter um nome que indique o conteúdo e a versão, mas esse nome não substitui a explicação de qual ficheiro está autorizado. Antes de pedir um envio, verifique se a versão aprovada está efetivamente disponível e se o canal de partilha é o acordado no caso."
+          ]
+        },
+        {
+          "title": "Fechar o ciclo sem criar confirmações inexistentes",
+          "paragraphs": [
+            "Uma resposta de receção e uma confirmação de execução não são a mesma coisa. Recebi o pedido mostra apenas que a mensagem chegou ao destinatário. Programa enviado indica uma ação concluída, que deve corresponder ao que ocorreu. Se Paulo ainda aguarda o ficheiro aprovado, pode responder indicando esse impedimento. A comunicação útil localiza o bloqueio e o próximo passo; não usa uma confirmação vaga que faça a equipa acreditar que o envio já aconteceu.",
+            "No exercício, o aluno deverá escrever três mensagens diferentes: esclarecimento, pedido executável e resposta sobre bloqueio. A sequência permite observar como uma comunicação avança sem repetir o contexto inteiro em cada etapa. A revisão final deve verificar se cada texto acrescenta informação nova e se a ação declarada corresponde ao estado do processo. Assim, a concisão resulta de referências resolvidas e de uma ordem clara, em vez de depender de frases telegráficas que deixam o trabalho de interpretação para outra pessoa."
+          ]
+        }
+      ],
+      "case": "Marta pede a Paulo o envio da versão final para eles amanhã. Há dois documentos e dois grupos. Depois confirma-se: programa aprovado, formadores, 12h de 18/11/2026. Paulo ainda não recebeu o ficheiro aprovado.",
+      "exercise": "Redija uma pergunta de esclarecimento, um pedido completo após confirmação e uma resposta de Paulo que localize o bloqueio. Acrescente um assunto para cada mensagem e identifique as referências ambíguas que eliminou.",
+      "assessment": {
+        "question": "Recebi pode ser usado como prova de que o programa foi enviado?",
+        "answer": "Não. Confirma receção da solicitação, não execução. O estado descrito deve indicar que o ficheiro aprovado ainda falta e qual confirmação permite prosseguir.",
+        "rubric": [
+          "Resolve documento, destinatário e referência temporal.",
+          "Não inventa aprovação ou disponibilidade do anexo.",
+          "Distingue receção, impedimento e execução."
+        ]
+      }
+    },
+    {
+      "id": "4",
+      "title": "Produzir uma carta de candidatura com evidências pertinentes",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Selecionar requisitos e exemplos para uma carta específica sem inventar realizações.",
+        "Justificar uma adaptação entre duas vagas preservando os mesmos factos profissionais."
+      ],
+      "sourceIds": [
+        "europass-letter"
+      ],
+      "sections": [
+        {
+          "title": "A carta estabelece uma relação que o currículo pode não explicitar",
+          "paragraphs": [
+            "Uma carta de candidatura tem um destinatário e uma função. Não precisa de reproduzir todo o histórico profissional, mas deve ajudar a compreender a relação entre a experiência apresentada e a oportunidade. O Europass recomenda ler o anúncio e relacionar competências com requisitos da função. Neste módulo, a preparação parte de um pequeno dossiê fictício. O trabalho do aluno é selecionar e explicar correspondências, sem copiar expressões do anúncio como se a sua presença demonstrasse a competência declarada.",
+            "O enunciado pode impor extensão ou estrutura. Se pedir até duzentas palavras, esse limite prevalece sobre uma recomendação geral de uma página. Quando não há instrução específica, o candidato pode organizar uma carta concisa com motivo, contribuição e interesse pela função. Esta organização é uma escolha de comunicação, não um molde que deva produzir o mesmo texto para todas as vagas. Uma adaptação legítima modifica a seleção e a relação entre factos; não acrescenta uma experiência inexistente."
+          ]
+        },
+        {
+          "title": "Dois anúncios, uma trajetória e contribuições diferentes",
+          "paragraphs": [
+            "No dossiê, Soraia apoiou reservas de um centro cultural, confirmou horários e preparou uma lista semanal de pedidos pendentes. A vaga A procura apoio a inscrições; a vaga B procura comunicação digital com criação de campanhas. Há material diretamente relacionado com A. Para B, o dossiê não demonstra produção de campanhas. A carta pode reconhecer experiência de comunicação com participantes, mas não deve afirmar que Soraia geriu marketing digital. Identificar a distância entre experiência e requisito faz parte de uma escolha de candidatura informada.",
+            "Para A, escolha um episódio curto: Soraia reunia pedidos que dependiam de confirmação e enviava uma lista à coordenação. Explique por que esse trabalho é pertinente para acompanhar inscrições. Não transforme a lista num sistema criado por ela se o dossiê apenas informa que a preparava. A precisão dos verbos preserva o papel efetivo: reunir, conferir, encaminhar e confirmar não equivalem a dirigir, desenvolver ou autorizar. Um verbo mais prestigiante pode tornar a frase menos verdadeira.",
+            "O motivo de candidatura deve ter relação com a função e a organização conhecida. Se o anúncio descreve acompanhamento regular de participantes, Soraia pode explicar o interesse nesse tipo de continuidade. Não precisa de atribuir à entidade uma cultura interna que desconhece. Frases como admiro o ambiente inclusivo só devem ser utilizadas com alcance adequado à informação disponível. A carta pode referir uma iniciativa pública específica, desde que tenha sido efetivamente consultada e não seja tratada como prova de toda a experiência de trabalho."
+          ]
+        },
+        {
+          "title": "Revisar pela evidência que cada frase exige",
+          "paragraphs": [
+            "Sublinhe as afirmações sobre si e assinale o episódio ou dado que as sustenta. Uma afirmação sem suporte não precisa necessariamente de desaparecer, mas deve ser reavaliada: é uma preferência, uma intenção ou uma competência apresentada como demonstrada? Essas categorias exigem linguagem diferente. Tenho interesse em aprender não significa já executei. A carta ganha credibilidade quando o leitor consegue distinguir contribuição disponível e aprendizagem futura, sem precisar de desconfiar de cada expressão ampla.",
+            "A segunda entrega será uma nota sobre a vaga B, não outra carta quase idêntica. O aluno deverá identificar que informação adicional permitiria decidir se vale a pena candidatar-se e que alegações ficariam excluídas. Esse contraste trabalha seleção estratégica de conteúdo. O resultado não é um texto universal pronto para disparar em massa: é uma carta específica para A e uma análise honesta de adequação a B. O envio real e qualquer garantia de seleção permanecem fora da atividade."
+          ]
+        }
+      ],
+      "case": "Soraia confirmou reservas e horários e preparou listas de pendências num centro cultural. A pede apoio a inscrições; B pede criação de campanhas digitais. Não há experiência de campanhas no dossiê.",
+      "exercise": "Escreva uma carta de 170–200 palavras para A. Anote o suporte de cada afirmação de competência. Para B, produza uma nota de decisão de até 100 palavras com lacunas e afirmações que não pode fazer.",
+      "assessment": {
+        "question": "Trocar o título da vaga e acrescentar gestão de campanhas seria adaptação legítima?",
+        "answer": "Não. O dossiê não fornece essa experiência. A adaptação deve selecionar factos existentes e explicitar a sua relação com a função; novas competências exigem evidência adicional ou linguagem de aprendizagem, sem simular realização anterior.",
+        "rubric": [
+          "Relaciona pelo menos dois requisitos com informação do dossiê.",
+          "Preserva o papel efetivo de Soraia na escolha dos verbos.",
+          "Distingue adaptação, lacuna e experiência não demonstrada."
+        ]
+      }
+    },
+    {
+      "id": "5",
+      "title": "Revisar a língua sem apagar o sentido",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Identificar alterações linguísticas que mudam responsabilidade, quantidade ou certeza.",
+        "Revisar concordância, referência e pontuação em exemplos próprios, justificando decisões de sentido."
+      ],
+      "sourceIds": [
+        "nara-checklist"
+      ],
+      "sections": [
+        {
+          "title": "A revisão linguística precisa de uma ordem",
+          "paragraphs": [
+            "Revisar um documento não consiste apenas em procurar palavras assinaladas pelo corretor. Um texto pode não apresentar alertas e atribuir uma decisão à pessoa errada. Comece pelo conteúdo e pelo encadeamento; depois examine frases e formas linguísticas. A checklist dos National Archives inclui concordância, pontuação e adequação lexical entre os pontos de revisão. Os exemplos em português deste módulo são originais e não uma tradução de regras inglesas. O propósito é mostrar como uma alteração local pode modificar o trabalho que o texto realiza.",
+            "No exercício fictício, a frase a coordenação e o apoio confirmou a sala tem um problema de concordância, mas ainda há uma questão anterior: quem confirmou? Se apenas a coordenação pode aprovar, escrever ambos confirmaram corrigiria a concordância e criaria uma atribuição falsa. Uma revisão adequada pode separar as ações: a coordenação confirmou a sala; a equipa de apoio comunicou a confirmação. A forma corrigida precisa de continuar fiel à distribuição de responsabilidades informada."
+          ]
+        },
+        {
+          "title": "Referências, quantidades e graus de certeza",
+          "paragraphs": [
+            "Uma sequência como Leonor falou com Ana depois de ela conferir a lista deixa em aberto quem conferiu. A revisão deve nomear a responsável quando o contexto não a torna inequívoca. Não basta trocar a ordem dos nomes e esperar que o leitor escolha a interpretação pretendida. Se o autor não sabe quem realizou a ação, precisa de confirmar esse dado antes de reescrever. A clareza não deve ser fabricada com uma certeza que o processo ainda não fornece.",
+            "Os quantificadores também merecem atenção. Alguns pedidos foram verificados não equivale a todos os pedidos foram verificados. Trocar a primeira formulação pela segunda para tornar a frase mais afirmativa altera a informação. No dossiê, doze pedidos chegaram e nove foram conferidos. O texto deve conservar essa diferença. Pode indicar nove de doze ou descrever três por conferir, conforme a finalidade. Não pode declarar o processo concluído apenas porque a segunda frase parece mais direta e positiva.",
+            "A pontuação ajuda a mostrar relações e fronteiras, mas não resolve sozinha uma lógica contraditória. A frase confirmei a inscrição, embora ainda aguarde a autorização exige examinar o que confirmação significa nesse processo. Talvez o autor tenha apenas recebido o pedido. Nesse caso, o verbo precisa de mudar. Uma vírgula bem colocada não transforma receção em autorização. A revisão terminológica deve manter palavras estáveis para estados diferentes, especialmente quando outras pessoas tomarão decisões a partir delas."
+          ]
+        },
+        {
+          "title": "Justificar alterações e conservar uma versão de referência",
+          "paragraphs": [
+            "Trabalhe com uma tabela de revisão: trecho inicial, problema identificado, versão proposta e justificação. Nem toda a mudança precisa de uma explicação gramatical extensa. Pode bastar indicar que o pronome tinha duas referências possíveis ou que o verbo atribuía uma decisão a quem apenas a comunicou. Quando houver dúvida sobre uma convenção específica, consulte um recurso linguístico adequado e indique a consulta. Não aceite automaticamente a sugestão de uma ferramenta sem comparar o sentido antes e depois.",
+            "No fim, faça uma leitura orientada por dados: nomes de funções, números, datas e estados do processo. Essa passagem tem finalidade diferente da leitura de fluidez. O leitor pode compreender perfeitamente uma frase com um número errado; por isso, compreensão e exatidão precisam de ser verificadas separadamente. A entrega mostrará cinco decisões de revisão e uma nota sobre uma sugestão rejeitada. A qualidade do trabalho inclui saber por que não alterar uma formulação, preservando informação que uma revisão apressada apagaria."
+          ]
+        }
+      ],
+      "case": "Dossiê sintético: só a coordenação aprova salas; apoio comunica. Há doze pedidos, nove conferidos. Leonor conferiu a lista antes de falar com Ana. Inscrições dependem de autorização ainda pendente.",
+      "exercise": "Reescreva cinco frases problemáticas construídas com os dados do dossiê. Registe problema e justificação. Inclua uma sugestão aparentemente mais fluida que deve ser rejeitada porque altera responsabilidade, quantidade ou certeza.",
+      "assessment": {
+        "question": "Por que ambos confirmaram pode corrigir a concordância e ainda produzir uma informação falsa?",
+        "answer": "Porque o dossiê atribui aprovação apenas à coordenação. A revisão precisa de distinguir quem confirmou e quem comunicou, sem transformar uma correção formal numa alteração do facto.",
+        "rubric": [
+          "Preserva responsabilidade e os números nove/doze.",
+          "Resolve referências com base no dossiê, não em suposição.",
+          "Justifica mudanças e uma rejeição por diferença de sentido."
+        ]
+      }
+    },
+    {
+      "id": "6",
+      "title": "Sintetizar informação sem perder condições ou autoria",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Produzir uma síntese que preserve decisão, condição e informação pendente.",
+        "Distinguir citação, paráfrase e redação própria num exercício de seleção."
+      ],
+      "sourceIds": [
+        "eu-publications"
+      ],
+      "sections": [
+        {
+          "title": "Resumir exige escolher o que a finalidade torna essencial",
+          "paragraphs": [
+            "Uma síntese é menor do que a fonte, mas não pode eliminar as condições que determinam o sentido da decisão. Se um comunicado autoriza uma atividade apenas depois da confirmação da sala, escrever atividade autorizada pode induzir uma ação prematura. Antes de reduzir, identifique o que é decisão, fundamento, condição e pendência. Esses elementos não têm necessariamente a mesma extensão. Uma condição de poucas palavras pode ser mais importante para a execução do que um parágrafo inteiro de contexto histórico.",
+            "O Web Guide do Serviço das Publicações da União Europeia distingue linguagem clara de formatos especializados de leitura fácil. Neste módulo, clareza não é tratada como autorização para reduzir toda a complexidade. A proposta é tornar as condições visíveis e adequar o texto ao destinatário. Uma síntese pode ser clara e ainda exigir termos técnicos definidos. O aluno deverá explicar o que conservou e por que uma simplificação aparentemente elegante seria imprecisa no caso fornecido."
+          ]
+        },
+        {
+          "title": "Uma fonte fictícia e três produtos possíveis",
+          "paragraphs": [
+            "O comunicado sintético informa que a oficina ocorrerá em 26 de novembro, com limite de dezasseis participantes; a abertura das inscrições depende da confirmação do espaço; a coordenação responderá até ao dia 20; os interessados podem manifestar interesse, mas isso ainda não constitui inscrição. Para uma nota interna de decisão, o centro da síntese é a dependência da confirmação. Para um aviso ao público, é essencial distinguir manifestação de interesse e inscrição. Os mesmos dados pedem ordens diferentes conforme a tarefa do leitor.",
+            "Escrever inscrições abertas contradiz a fonte. Escrever oficina cancelada também. A ausência de confirmação não permite escolher um desses estados. O aluno pode indicar atividade prevista, confirmação pendente e próximo momento de informação. O limite de dezasseis deve ser mantido quando a capacidade for relevante para o destinatário. A síntese não precisa de reproduzir toda a redação original, mas cada afirmação deve poder ser ligada a um dado do comunicado, sem completar lacunas por plausibilidade.",
+            "Num processo seletivo, o enunciado pode pedir análise de um texto fornecido. As palavras copiadas precisam de ser identificadas quando utilizadas como citação; a paráfrase continua a depender da ideia da fonte. Neste exercício, o comunicado é original LDR e o aluno irá sinalizar o que retomou. A atividade não impõe um sistema bibliográfico universal a mensagens de trabalho. Ensina a distinguir o material de partida, a sua reformulação e uma conclusão própria, para não apresentar informação alheia como descoberta pessoal."
+          ]
+        },
+        {
+          "title": "Testar a síntese por decisões que ela permitiria tomar",
+          "paragraphs": [
+            "Depois de escrever, pergunte o que o destinatário poderia fazer com o texto. Se a versão permite abrir inscrições antes da confirmação, a condição ficou mal representada. Se impede manifestar interesse quando isso era permitido, retirou uma possibilidade existente. Esta leitura por consequência ajuda a perceber erros que uma contagem de palavras não mostra. Uma síntese com cinquenta palavras pode ser fiel ou enganadora; a extensão, por si só, não resolve a questão.",
+            "A entrega inclui uma nota interna, um aviso ao público e um quadro que relaciona cada afirmação com o comunicado. As duas versões devem diferir pela finalidade e pela ordem, sem alterar datas ou estados. Acrescente uma frase excluída e a razão da exclusão. Esse contraste permite observar a competência de seleção: conservar o que torna a ação correta e retirar o que não é necessário para aquele leitor. A autoria aparece no trabalho de organizar e justificar, sem ocultar a origem dos dados."
+          ]
+        }
+      ],
+      "case": "Comunicado fictício: oficina prevista para 26/11; dezasseis lugares; inscrições dependem de confirmação da sala; coordenação responde até 20/11; manifestação de interesse é permitida e ainda não é inscrição.",
+      "exercise": "Produza uma nota interna de 60–80 palavras e um aviso público de 45–60. Faça um quadro afirmação/origem e identifique citação, paráfrase ou inferência quando aplicável. Explique por que excluiu uma frase que alteraria o estado da atividade.",
+      "assessment": {
+        "question": "Pode a síntese anunciar inscrições abertas porque já é possível manifestar interesse?",
+        "answer": "Não. A fonte distingue explicitamente esses estados. A síntese deve manter a condição de confirmação e não transformar uma manifestação de interesse numa inscrição.",
+        "rubric": [
+          "Mantém data, limite e condição quando relevantes.",
+          "Adapta ordem e finalidade sem mudar o estado do processo.",
+          "Identifica a origem da informação e não introduz decisão inexistente."
+        ]
+      }
+    },
+    {
+      "id": "7",
+      "title": "Responder a uma prova escrita com restrições verificáveis",
+      "estimatedPracticeMinutes": 150,
+      "objectives": [
+        "Planear e executar uma resposta dentro de um enunciado com limite, destinatário e dados definidos.",
+        "Documentar revisão e uso de recursos sem apresentar ajuda externa como autoria individual não assistida."
+      ],
+      "sourceIds": [
+        "nara-checklist"
+      ],
+      "sections": [
+        {
+          "title": "Ler o enunciado faz parte da execução",
+          "paragraphs": [
+            "Uma prova escrita pode avaliar seleção de informação, capacidade de explicar uma decisão e respeito por condições. Antes de começar, transforme o enunciado em verificações: qual o produto, quem o recebe, que dados estão disponíveis, qual a extensão e que recursos são permitidos? O texto não deve responder a uma tarefa mais confortável que o candidato inventou. Uma carta excelente não substitui uma nota de serviço quando essa era a entrega solicitada. O primeiro minuto de trabalho precisa de resolver essa diferença.",
+            "A checklist dos National Archives oferece questões de revisão de organização e linguagem. Aqui, elas entram depois das condições específicas do exercício. Primeiro é necessário saber se o produto responde ao pedido; só depois se examinam estrutura e frases. O procedimento LDR é uma proposta de prática, sem equivalência a uma prova de recrutamento validada. O tempo sugerido serve para observar o processo do aluno e não define um padrão de desempenho profissional."
+          ]
+        },
+        {
+          "title": "Uma prova sintética com dados e limites explícitos",
+          "paragraphs": [
+            "O enunciado pede uma nota de 180–220 palavras à coordenação de uma oficina. Há dezoito interessados, sala confirmada para catorze pessoas e seis inscrições ainda sem confirmação de presença. Não foi autorizada alteração de espaço nem divisão em duas sessões. A nota deve identificar o problema de capacidade, distinguir interesse e presença confirmada, propor verificações e solicitar uma decisão. O aluno dispõe de trinta minutos de execução e pode consultar apenas o dossiê e as suas notas deste curso.",
+            "A informação não permite calcular automaticamente quantas pessoas comparecerão. Também não indica que as seis pendências correspondem a seis desistências. Uma resposta rigorosa evita anunciar que a capacidade já ficou resolvida ou que faltam exatamente quatro lugares para presenças certas. Pode identificar a diferença entre dezoito interessados e catorze lugares e explicar que a confirmação das presenças é necessária para caracterizar a situação. O dado pendente afeta a decisão e precisa de permanecer visível.",
+            "Prepare um esquema curto com problema, informação em falta, verificações e decisão solicitada. Reserve uma passagem final para números e limites do enunciado. Se terminar antes, não acrescente informação inventada para preencher o tempo. Se não conseguir concluir, indique o estado da resposta no registo de prática. Esse registo é usado para aprendizagem, não para disfarçar uma execução incompleta. A qualidade da nota depende da fidelidade ao problema, e não de reproduzir termos administrativos de aparência sofisticada."
+          ]
+        },
+        {
+          "title": "Autoria, recursos e revisão do processo",
+          "paragraphs": [
+            "Neste ensaio, não utilize um serviço externo para produzir a resposta: a restrição foi dada no próprio enunciado. Noutras seleções, as regras podem ser diferentes e devem ser confirmadas. Usar uma ferramenta de apoio não autoriza afirmar execução individual sem ajuda quando o processo exige essa condição. A atividade pede uma declaração simples dos recursos utilizados e das revisões feitas. Não recolhe credenciais, dados de empregadores ou documentos pessoais para demonstrar autoria.",
+            "Após os trinta minutos, compare a nota com o enunciado em quatro passagens: produto e destinatário, dados e condições, decisão solicitada, língua e apresentação. Faça a revisão numa cor ou versão separada para conservar a primeira tentativa. O aluno deverá justificar duas mudanças e um ponto que decidiu manter. A entrega mostra como o texto foi construído sob restrições e como melhorou depois, em vez de oferecer apenas uma versão polida cuja relação com a tarefa original se perdeu."
+          ]
+        }
+      ],
+      "case": "Prova sintética: nota à coordenação, 180–220 palavras, dezoito interessados, sala de catorze, seis presenças por confirmar, sem autorização para mudar sala ou dividir sessões. Trinta minutos; apenas dossiê e notas do curso.",
+      "exercise": "Execute a prova e conserve a primeira versão. Entregue versão revista, declaração de recursos e justificações de duas alterações e uma manutenção. Marque qualquer condição não cumprida em vez de a ocultar.",
+      "assessment": {
+        "question": "É correto tratar as seis presenças pendentes como desistências e anunciar o problema resolvido?",
+        "answer": "Não. Ausência de confirmação não é desistência. A nota deve manter a incerteza, localizar a diferença entre interessados e lugares e pedir verificações e decisão sem alterar a sala por conta própria.",
+        "rubric": [
+          "Entrega o género e a extensão solicitados ou declara o incumprimento.",
+          "Preserva os estados distintos dos números fornecidos.",
+          "Explicita recursos e apresenta revisões justificadas."
+        ]
+      }
+    },
+    {
+      "id": "8",
+      "title": "Rever um portefólio com um leitor e uma decisão final",
+      "estimatedPracticeMinutes": 150,
+      "objectives": [
+        "Aplicar critérios diferentes a mensagens, candidatura e prova escrita, sem usar uma grelha única indiferenciada.",
+        "Produzir um plano de revisão com evidências de leitura e limites explicitamente registados."
+      ],
+      "sourceIds": [
+        "eu-publications",
+        "europass-letter"
+      ],
+      "sections": [
+        {
+          "title": "A qualidade depende do trabalho que cada género exige",
+          "paragraphs": [
+            "Uma mensagem de reserva, uma carta de candidatura e uma nota de decisão não são avaliadas apenas pela mesma impressão de elegância. A primeira precisa de tornar um pedido executável; a segunda relaciona experiência e oportunidade; a terceira organiza informação para uma decisão. O portefólio final deve conservar essas finalidades. Uma grelha genérica que pergunta apenas se o texto está claro pode deixar passar uma carta sem evidência ou uma nota que omite uma condição decisiva.",
+            "A orientação europeia de linguagem clara e as recomendações Europass consultadas têm contextos diferentes. A articulação feita aqui é pedagógica: escolher critérios conforme o documento e verificar o que o leitor consegue fazer. A atividade não certifica conformidade com um formato especializado de leitura fácil nem prevê aprovação num recrutamento. O aluno precisa de distinguir qualidade observada na redação, condições ainda por testar e resultado externo que o texto não controla."
+          ]
+        },
+        {
+          "title": "Um teste de leitura com tarefas concretas",
+          "paragraphs": [
+            "Selecione quatro peças: pedido operacional, carta para a vaga A, síntese pública e nota da prova escrita. Para cada uma, crie duas perguntas que o leitor deverá responder a partir do próprio texto. No pedido, pode localizar documento e ação; na carta, identificar uma contribuição e o seu suporte; na síntese, distinguir interesse e inscrição; na nota, apontar a decisão ainda necessária. As perguntas precisam de permitir observar compreensão, em vez de solicitar apenas uma opinião sobre se gostou da escrita.",
+            "Se houver um leitor disponível, apresente uma peça de cada vez sem explicar oralmente o que quis dizer. Registe a resposta e o trecho utilizado. Quando a pessoa não conseguir localizar informação, pergunte onde procurou, sem fornecer imediatamente a solução. Se trabalhar sozinho, faça a leitura num segundo momento e identifique a atividade como autoavaliação. Não invente uma revisão externa para preencher o portefólio. A diferença entre teste executado e teste planeado deve permanecer visível.",
+            "Um erro do leitor também precisa de análise cuidadosa. Pode haver uma formulação ambígua, uma condição escondida ou uma pergunta de teste mal construída. Volte ao texto antes de concluir que a pessoa não prestou atenção. No caso fictício final, o aviso diz pode manifestar interesse e, depois, chama aos interessados participantes inscritos. Essa mudança de termo explica uma possível interpretação errada. A revisão deve estabilizar os estados, e não apenas acrescentar uma frase genérica sobre ler com atenção."
+          ]
+        },
+        {
+          "title": "Fechar com uma decisão editorial e uma próxima verificação",
+          "paragraphs": [
+            "Classifique cada peça como pronta para nova leitura, exige revisão de conteúdo ou depende de informação que falta. Essa classificação é uma decisão sobre o exercício, sem equivalência a autorização de envio real. Uma carta pode estar bem redigida e depender de confirmar o nome da entidade; uma nota pode precisar de corrigir um dado antes de qualquer polimento. Priorize problemas que afetam ação, responsabilidade ou verdade das afirmações. A ordem da revisão deve refletir o efeito do erro.",
+            "Entregue uma nota editorial que compare uma versão inicial com a revista e explique três decisões de natureza diferente: conteúdo, organização e língua. Acrescente uma condição que não foi possível testar e uma ação para a verificar. O percurso encerra com uma capacidade de revisão que pode ser aplicada a documentos novos, sem transportar frases prontas de uma vaga para outra. O portefólio mostra o trabalho de selecionar, sustentar e revisar informação; não substitui a leitura das instruções de cada novo processo seletivo."
+          ]
+        }
+      ],
+      "case": "No aviso fictício final, manifestação de interesse é permitida, mas uma frase posterior chama aos interessados participantes inscritos. As inscrições ainda dependem da confirmação da sala.",
+      "exercise": "Monte o portefólio de quatro peças, escreva oito perguntas de leitura e realize o teste com leitor ou autoavaliação identificada. Entregue registo, versões revistas e nota editorial com três decisões e uma limitação ainda por testar.",
+      "assessment": {
+        "question": "Por que trocar interessados por inscritos não é apenas uma variação estilística neste portefólio?",
+        "answer": "Porque os termos designam estados diferentes no dossiê. A troca pode levar o público a acreditar que a inscrição foi confirmada. A revisão deve manter a distinção e verificar a compreensão dessa condição.",
+        "rubric": [
+          "Usa critérios adequados a cada género.",
+          "Regista respostas e trechos em vez de elogios vagos.",
+          "Prioriza erros de sentido e distingue revisão externa de autoavaliação."
+        ]
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão editorial e linguística externa, teste com participantes e dimensionamento de carga.",
+    "Validar instruções e materiais com tecnologias de apoio e leitor isolado.",
+    "Definir correspondência entre roteiro histórico e nova sequência sem apagar progresso ou certificados.",
+    "Aprovação e autorização antes de qualquer integração ou produção."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}
