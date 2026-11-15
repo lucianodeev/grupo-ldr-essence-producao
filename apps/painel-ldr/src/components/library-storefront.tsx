@@ -89,7 +89,7 @@ export function LibraryStorefront({locale,progress}:{locale:Locale;progress?:any
   const filtered=useMemo(()=>ITEMS.filter(item=>(filter==="all"||item.group===filter)&&(`${item.title} ${item.subtitle} ${item.tag}`).toLowerCase().includes(q.trim().toLowerCase())),[q,filter]);
   const tabs:[["all"|Group,string],...(readonly ["all"|Group,string])[]]=[["all",t.all],["banca",t.newsstand],["livraria",t.bookstore],["formacoes",t.formations],["gratis",t.free]];
   const by=(group:Group)=>ITEMS.filter(i=>i.group===group);
-  const highlights=[ITEMS[0],ITEMS[1],ITEMS[2],ITEMS[5]].filter(Boolean) as Item[];
+  const highlights=["Revista Psicanálise no Mundo","eBook A Coragem de Começar","O Menino que Vendia Mamão","Formação em IA"].map(title=>ITEMS.find(item=>item.title===title)).filter((item):item is Item=>Boolean(item));
   const searching=q.trim().length>0||filter!=="all";
 
   return <section className="min-w-0 space-y-8" aria-label={t.title}>
@@ -107,7 +107,7 @@ export function LibraryStorefront({locale,progress}:{locale:Locale;progress?:any
 
     {!searching ? <section id="novidades" className="scroll-mt-24">
       <Heading icon={<Sparkles className="h-7 w-7"/>} title={locale==="pt"?"Novidades na Biblioteca":locale==="fr"?"Nouveautés de la Bibliothèque":locale==="es"?"Novedades en la Biblioteca":"New in the Library"} desc={locale==="pt"?"Publicações e conteúdos para descobrir agora.":locale==="fr"?"Publications et contenus à découvrir maintenant.":locale==="es"?"Publicaciones y contenidos para descubrir ahora.":"Fresh publications and content to discover now."} label={t.seeAll}/>
-      <div className="grid min-w-0 grid-cols-1 gap-4 min-[520px]:grid-cols-2 lg:grid-cols-4">{[ITEMS[2],ITEMS[3],ITEMS[4],ITEMS[8]].filter((item): item is Item => item !== undefined).map(item=><NoveltyCard key={item.title} item={item} locale={locale} t={t}/>)}</div>
+      <div className="grid min-w-0 grid-cols-1 gap-4 min-[520px]:grid-cols-2 lg:grid-cols-4">{["O Menino que Vendia Mamão","Livros LDR","Formação em IA","Psicanalista de Alta Performance"].map(title=>ITEMS.find(item=>item.title===title)).filter((item):item is Item=>Boolean(item)).map(item=><NoveltyCard key={item.title} item={item} locale={locale} t={t}/>)}</div>
     </section>:null}
 
     {searching?<section><Heading icon={<Search className="h-6 w-6"/>} title={filter==="all"?t.all:filter==="banca"?t.newsstand:filter==="livraria"?t.bookstore:filter==="formacoes"?t.formations:t.free} desc={t.featuredDesc} label={t.seeAll}/><div className="grid min-w-0 grid-cols-1 gap-3 min-[480px]:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">{filtered.map(item=><ShelfCard key={item.title} item={item} t={t}/>)}</div></section>:<>
