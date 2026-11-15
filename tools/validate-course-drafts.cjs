@@ -1,6 +1,7 @@
 // Offline editorial checks only. No reader imports, database access or publication.
 const fs = require('node:fs');
 const path = require('node:path');
+const { reviewCourseRepetitions } = require('./course-repetition-review.cjs');
 
 function validateCourseDraft(draft) {
   const errors = [];
@@ -30,10 +31,12 @@ function validateCourseDraft(draft) {
   if (!Number.isFinite(draft.advertisedHours) || draft.advertisedHours <= 0) errors.push('Invalid advertised hours');
   if (draft.validatedHours !== null && (!Number.isFinite(draft.validatedHours) || draft.validatedHours <= 0)) errors.push('Invalid validated workload');
   const complete = plan.length > 0 && modules.length === plan.length && plan.every(item => seen.has(item.id));
+  const repetitionReview = reviewCourseRepetitions(draft);
+  if (repetitionReview.exact.length || repetitionReview.near.length) errors.push('Teaching text repetition requires review');
   const reviewed = ['scientific', 'editorial', 'rights', 'reader', 'workload'].every(key => draft.review?.[key] === true);
   // This is an offline review indicator, never an activation operation. Word count alone is not quality approval.
   const activationEligible = errors.length === 0 && complete && reviewed && draft.status === 'approved' && draft.validatedHours === draft.advertisedHours;
-  return { errors, authoredModules: modules.length, expectedModules: draft.expectedModuleCount, complete, validatedHours: draft.validatedHours, activationEligible };
+  return { errors, authoredModules: modules.length, expectedModules: draft.expectedModuleCount, complete, validatedHours: draft.validatedHours, activationEligible, repetitionReview };
 }
 module.exports = { validateCourseDraft };
 if (require.main === module) {

@@ -155,7 +155,7 @@ As versões candidatas não são usadas pelo leitor de produção. O original e 
 
 | Curso | Módulos desenvolvidos / previstos | Carga anunciada / validada | Estado |
 | --- | --- | --- | --- |
-| Como se Preparar para uma Entrevista de Emprego | 4 / 15 | 80h / por validar | draft; published=false; elegível=false |
+| Como se Preparar para uma Entrevista de Emprego | 15 / 15 | 80h / por validar | draft; published=false; elegível=false |
 
 Rascunhos separados do leitor. Número de módulos e tempo de prática estimado não validam a carga anunciada.
 

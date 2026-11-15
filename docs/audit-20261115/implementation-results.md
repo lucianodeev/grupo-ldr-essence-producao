@@ -21,11 +21,17 @@ Cada módulo contém objetivos, desenvolvimento próprio, caso explicitamente fi
 
 No curso Freud, os textos distinguem história da disciplina, inconsciente/recalque, resistência, transferência, associação livre, interpretação, primeira e segunda tópicas, terminologia sobre desenvolvimento, sintomas, sonhos e enquadramento. Explicações da teoria histórica, exemplos inventados e avaliação crítica ficam identificados. Foram consultadas passagens de fontes primárias em arquivos como York University, UCSB, Gutenberg e Lutecium; a bibliografia indica edição, tradução e alcance de consulta. Não se declara leitura integral de todas as obras nem se copiam as traduções para a plataforma.
 
-## Primeiro lote dos cursos de assinatura
+## Curso de assinatura: preparação para entrevistas
 
-Foi criada uma edição candidata separada para **Como se Preparar para uma Entrevista de Emprego**, com quatro módulos desenvolvidos e onze ainda pendentes num currículo próprio de quinze módulos. O lote contém 2.141 palavras de desenvolvimento, além de casos, exercícios e rubricas: leitura da vaga, evidências delimitadas, perguntas comportamentais/situacionais e simulação com revisão. As fontes consultadas são o guia OPM de 2008 (passagens identificadas) e duas páginas do National Careers Service; os casos são fictícios e as rubricas pedagógicas LDR não são testes psicométricos ou previsões de contratação.
+Os **quinze módulos previstos têm agora desenvolvimento próprio** em `editorial/courses/interview-preparation.pt.json`. Foram acrescentados os onze módulos pendentes. O conjunto contém **8.376 palavras de desenvolvimento**, além de objetivos, quinze casos sintéticos, quinze atividades distintas, perguntas e respostas comentadas, rubricas e bibliografia. Não é aprovação pedagógica ou comprovação das 80 horas históricas.
 
-A candidata está em `editorial/courses/interview-preparation.pt.json`, com checksum do catálogo de origem, `published=false` e `validatedHours=null`. Os 330 minutos de prática estimada são uma hipótese de pilotagem para este lote e não sustentam as 80 horas anunciadas no catálogo histórico. O leitor, a assinatura e os identificadores ativos não foram alterados. Cinco testes verificam desenvolvimento, referências, duplicação, limites da carga e impossibilidade de aprovar uma sequência parcial apenas mudando flags.
+Os novos módulos tratam pesquisa da organização; apresentação da trajetória; erros e conflitos; intervalos e transições; amostras de trabalho; modalidades remotas; participação e privacidade; perguntas ao empregador; condições de proposta; simulação integrada; e balanço transferível. Cada um exige uma entrega específica. A amostra de trabalho tem quatro registos e solução verificável. O módulo 14 inclui anúncio, dois perfis fictícios, cinco enunciados, alteração de cenário, papéis, tempos, ficha de observação e debrief; não obriga a gravação ou exposição de dados pessoais.
+
+As fontes primárias consultadas incluem OPM, National Careers Service, EURES e GOV.UK, com alcance e contexto identificados. A página Civil Service que devolveu 403 não foi incluída como fonte consultada. Não se atribui eficácia científica às rubricas pedagógicas nem se universalizam regras jurídicas britânicas. Os exemplos e dados são inventados e assinalados como tal.
+
+A triagem de repetição comparou **105 parágrafos em 5.460 pares**: nenhum parágrafo idêntico e nenhum par próximo pelo limiar Jaccard de seis palavras ≥0,40. Exercícios, casos, perguntas e respostas também são distintos. Isto deteta cópia textual e edições superficiais; não substitui a revisão conceptual humana. Os conceitos que reaparecem passam de delimitação do relato para aplicação a dados, condições, decisões e avaliação integrada.
+
+A edição permanece `draft`, `published=false`, `validatedHours=null`, sem importação pelo leitor. As estimativas de prática somam **1.485 minutos (24h45)**, ainda sem pilotagem e sem contabilização validada de leitura e trabalho. Não se converte essa estimativa nas 80 horas anunciadas. O validador conserva bloqueio de elegibilidade até revisão científica/contextual, editorial, direitos, leitor e carga. Nove testes verificam conteúdo, repetição por edição ligeira, limites da revisão e pacote integrado.
 
 ## Revisão editorial dos eBooks
 
@@ -71,7 +77,7 @@ Isto valida o encaminhamento sintético, não uma cobrança ou renovação finan
 
 A execução GitHub Actions `43730866960` falhou antes da instalação, com `Library hero start not found`: o patch posicional de setembro procurava a estrutura antiga da biblioteca. O workflow preserva o nome e o identificador do job para continuidade dos checks, mas agora apenas instala o lockfile da raiz, executa contratos sintéticos da biblioteca, verifica candidatas editoriais, TypeScript e build. Foram retirados os geradores legados e o commit/push automático à `main`; a permissão passou a `contents: read`, sem credenciais persistidas no checkout. Os scripts históricos continuam disponíveis para consulta manual.
 
-Dois testes verificam que esta automação permanece sem escrita de branches ou acesso a secrets e que mantém os comandos de validação. Os outros três workflows do head anterior passaram. Os quatro workflows do commit `2cf028f` passaram no GitHub: Academy (`43731339671`), Enterprise (`43731339634`), LDR ONE (`43731339552`) e AI READY (`43731339544`). O novo lote editorial acrescenta validação dos rascunhos de cursos ao workflow; o resultado desse head será distinguido destas execuções.
+Dois testes verificam que esta automação permanece sem escrita de branches ou acesso a secrets e que mantém os comandos de validação. Os outros três workflows do head anterior passaram. Os quatro workflows do commit `2cf028f` passaram no GitHub: Academy (`43731339671`), Enterprise (`43731339634`), LDR ONE (`43731339552`) e AI READY (`43731339544`). O lote de quatro módulos também passou nos quatro workflows do head `d778d42` (Academy `43732157636`, Enterprise `43732157647`, LDR ONE `43732157660`, AI READY `43732157648`). Os quinze módulos e a nova triagem serão validados num novo head; os resultados por commit constam no PR.
 
 ## Validação
 
@@ -79,9 +85,9 @@ Dois testes verificam que esta automação permanece sem escrita de branches ou 
 | --- | --- |
 | TypeScript | Passou, sem erros |
 | Build | Passou, sem deploy |
-| Suíte de regressão | 214/214 passaram |
+| Suíte de regressão | 218/218 passaram |
 | Suíte unitária existente | 59/59 passaram |
-| Testes específicos `library-*.test.cjs` | 38/38 passaram |
+| Testes específicos `library-*.test.cjs` | 42/42 passaram |
 | Validação da edição candidata | Quatro testes passaram; candidata parcial continua inelegível |
 | Encaminhamento Stripe | Sete testes de encaminhamento e contrato passaram; handlers e dados simulados |
 | Progresso monotónico | Oito cenários sintéticos passaram, incluindo atualizações e primeiras gravações concorrentes, isolamento de cliente e falhas |
@@ -96,7 +102,7 @@ A suíte de regressão inclui vários dos testes específicos; estas quantidades
 ## Pendências que continuam abertas
 
 1. Revisão pedagógica especializada dos 59 módulos, testes com alunos, materiais complementares e dimensionamento de carga real; completar áudio e avaliação oral nos idiomas.
-2. Completar os onze módulos pendentes da candidata de entrevistas, realizar revisão e pilotagem. Desenvolver as aulas próprias dos restantes 49 roteiros de assinatura, de RH e de cada formação profissional. A contagem de títulos ou texto gerado não comprova 600/1200 horas.
+2. Realizar revisão externa e pilotagem dos quinze módulos da candidata de entrevistas, incluindo dimensionamento da carga. Desenvolver as aulas próprias dos restantes 49 roteiros de assinatura, de RH e de cada formação profissional. A contagem de títulos ou texto gerado não comprova 600/1200 horas.
 3. Concluir os 17 capítulos restantes da candidata editorial iniciada e revisar as outras 16 obras, com verificação intelectual, bibliográfica e de direitos, sem substituir versões antigas automaticamente.
 4. Testar a prévia com sessões sintéticas reais: comprador, assinante ativo/inativo e aluno sem compra. Verificar acessibilidade interativa, visual e overflow em dispositivos móveis.
 5. Validar anexos externos, emissão e consulta de certificados e concorrência entre dispositivos num ambiente de testes. Os mocks e a presença de RLS não substituem essa etapa.

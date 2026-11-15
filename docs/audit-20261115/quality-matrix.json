@@ -717,9 +717,9 @@
       "materialsListed": 3,
       "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
       "source": "src/lib/academy-subscription-courses.catalog.ts",
-      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 4/15 módulos; não integrado no leitor",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 15/15 módulos; não integrado no leitor",
       "editorialDraft": "editorial/courses/interview-preparation.pt.json",
-      "authoredDraftModules": 4
+      "authoredDraftModules": 15
     },
     {
       "product_key": "curso_assinatura_redacao_profissional_e_escrita_para_processos_seletivos",
@@ -1686,11 +1686,18 @@
       "advertisedHours": 80,
       "path": "editorial/courses/interview-preparation.pt.json",
       "errors": [],
-      "authoredModules": 4,
+      "authoredModules": 15,
       "expectedModules": 15,
-      "complete": false,
+      "complete": true,
       "validatedHours": null,
-      "activationEligible": false
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 105,
+        "pairsChecked": 5460,
+        "exact": [],
+        "near": []
+      }
     }
   ],
   "exactDuplicates": [],

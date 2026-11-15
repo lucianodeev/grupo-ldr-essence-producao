@@ -8,12 +8,18 @@
   "advertisedHours": 80,
   "validatedHours": null,
   "expectedModuleCount": 15,
-  "scope": "Primeiro lote editorial: quatro módulos desenvolvidos de quinze planeados. Não importado pelo leitor, não altera o catálogo ativo e não habilita conclusão ou certificado. Exercícios, personagens, dados e rubricas são originais e fictícios. As estimativas de prática são hipóteses para pilotagem, não carga horária certificada. Não garante contratação nem prevê a decisão de um empregador.",
+  "scope": "Quinze módulos com redação própria, casos sintéticos, exercícios distintos, avaliações comentadas e materiais de simulação. Edição candidata em revisão: não importada pelo leitor, não altera o catálogo ativo e não habilita conclusão ou certificado. Desenvolvimento textual completo não equivale a aprovação pedagógica ou às 80 horas anunciadas. Estimativas de prática destinam-se a pilotagem. Não garante contratação nem prevê decisões de empregadores.",
   "courseObjectives": [
     "Construir uma matriz entre quatro requisitos de uma vaga, evidências disponíveis e lacunas a esclarecer.",
     "Apresentar dois episódios profissionais ou de aprendizagem delimitando a contribuição individual e os limites dos resultados.",
     "Distinguir uma pergunta sobre experiência passada de uma pergunta hipotética e responder sem inventar realizações.",
-    "Rever uma simulação segundo critérios explícitos e justificar as alterações entre duas versões."
+    "Rever uma simulação segundo critérios explícitos e justificar as alterações entre duas versões.",
+    "Classificar fontes de pesquisa e construir perguntas que confirmem hipóteses sobre a organização.",
+    "Selecionar uma apresentação pertinente e explicar erros, intervalos e transições com cronologia e limites claros.",
+    "Conferir quatro registos sintéticos e entregar uma amostra de trabalho rastreável sem alterar entradas.",
+    "Preparar participação por canal, pedidos operacionais de acessibilidade e contingências sem presumir funcionalidades ou regras universais.",
+    "Comparar condições de propostas fictícias e explicitar lacunas antes de uma decisão.",
+    "Realizar uma simulação integrada e produzir um portefólio com revisões fundamentadas e um plano transferível."
   ],
   "sources": [
     {
@@ -36,6 +42,48 @@
       "url": "https://nationalcareers.service.gov.uk/careers-advice/interview-advice/",
       "consulted": "2026-11-15",
       "scope": "Página consultada, incluindo preparação, prática, esclarecimento de perguntas e reflexão posterior. Contexto de orientação britânico; sem transferir regras locais de emprego ou acessibilidade para outras jurisdições."
+    },
+    {
+      "id": "eures-interview2022",
+      "title": "European Labour Authority / EURES (2022). How to impress employers in job interviews. 8 de abril de 2022.",
+      "url": "https://eures.europa.eu/how-impress-employers-job-interviews-2022-04-08_en",
+      "consulted": "2026-11-15",
+      "scope": "Secções sobre pesquisa da empresa e perguntas ao empregador consultadas. Orientação prática, não ensaio de eficácia. As fichas de pesquisa e critérios de decisão LDR são originais; não se adotam prescrições universais de aparência ou linguagem corporal."
+    },
+    {
+      "id": "ncs-common",
+      "title": "National Careers Service. How to answer common interview questions. Sem data indicada na página consultada.",
+      "url": "https://nationalcareers.service.gov.uk/careers-advice/top-10-interview-questions",
+      "consulted": "2026-11-15",
+      "scope": "Secções sobre exemplos relevantes, histórico profissional e dificuldades consultadas. Usadas para delimitar tipos de pergunta; personagens, apresentações e análise de erros são originais. Não se reproduzem respostas modelo da fonte."
+    },
+    {
+      "id": "ncs-gaps",
+      "title": "National Careers Service. Explain a gap in your employment. Sem data indicada na página consultada.",
+      "url": "https://nationalcareers.service.gov.uk/careers-advice/explain-gaps-in-work-history",
+      "consulted": "2026-11-15",
+      "scope": "Página consultada, especialmente honestidade da cronologia e limites de detalhe pessoal. Não se transferem orientações jurídicas britânicas sobre antecedentes, despedimentos ou deveres de divulgação para outras jurisdições."
+    },
+    {
+      "id": "opm-work-samples",
+      "title": "U.S. Office of Personnel Management. Work Samples and Simulations. Sem data indicada na página consultada.",
+      "url": "https://www.opm.gov/policy-data-oversight/assessment-and-selection/other-assessment-methods/work-samples-and-simulations/",
+      "consulted": "2026-11-15",
+      "scope": "Definição e descrição de execução de tarefas representativas consultadas. A tabela de quatro registos é uma simulação LDR própria. Não se alega validação psicométrica ou previsão de desempenho e não se declaram lidos os estudos listados na bibliografia da página."
+    },
+    {
+      "id": "ncs-video",
+      "title": "National Careers Service. Video interview tips. Sem data indicada na página consultada.",
+      "url": "https://nationalcareers.service.gov.uk/careers-advice/how-to-do-well-in-video-interviews",
+      "consulted": "2026-11-15",
+      "scope": "Secções de preparação técnica, entrevista ao vivo e pré-gravada consultadas. O plano de contingência, fuso a confirmar e tempos do exercício são propostas e dados fictícios LDR, não características universais de plataformas."
+    },
+    {
+      "id": "govuk-adjustments",
+      "title": "GOV.UK. Recruitment and disabled people: Reasonable adjustments. Sem data indicada na página consultada.",
+      "url": "https://www.gov.uk/recruitment-disabled-people/reasonable-adjustments",
+      "consulted": "2026-11-15",
+      "scope": "Página oficial consultada para enquadrar exemplos de ajustes no recrutamento britânico. O módulo é comunicação operacional em cenário sintético; não fornece parecer jurídico ou prazo aplicável a outros países e não exige dados reais de saúde."
     }
   ],
   "curriculum": [
@@ -289,6 +337,587 @@
           "Limita a conclusão à qualidade da resposta ensaiada e preserva o caráter fictício dos casos."
         ]
       }
+    },
+    {
+      "id": "5",
+      "title": "Investigar a organização e formular hipóteses verificáveis",
+      "estimatedPracticeMinutes": 90,
+      "objectives": [
+        "Distinguir informação institucional, interpretação e hipótese numa pesquisa sobre um empregador.",
+        "Produzir três perguntas de confirmação com origem, data e utilidade explícitas."
+      ],
+      "sourceIds": [
+        "eures-interview2022"
+      ],
+      "sections": [
+        {
+          "title": "Uma página institucional não é uma descrição completa do trabalho",
+          "paragraphs": [
+            "Pesquisar uma organização serve para compreender o contexto da candidatura e preparar perguntas informadas. A orientação EURES recomenda conhecer a empresa antes da entrevista. Neste módulo, o passo seguinte é editorialmente próprio: avaliar o estatuto da informação encontrada. Uma página de serviços informa o que a organização apresenta ao público; não revela automaticamente os recursos da equipa, a distribuição de responsabilidades ou os problemas do posto. Ler bem exige conservar essa distância entre comunicação institucional e funcionamento interno.",
+            "Numa organização fictícia chamada Horizonte Formação, o site anuncia cursos em três cidades e atendimento de segunda a sexta-feira. A vaga pede apoio à inscrição de participantes. É legítimo registar que o site lista três localidades. Ainda não é legítimo concluir que o assistente viajará entre elas, que trabalhará presencialmente em todas ou que existe uma equipa por cidade. Cada uma dessas afirmações acrescenta informação ausente. O candidato deve poder mostrar onde termina o dado e começa a sua hipótese."
+          ]
+        },
+        {
+          "title": "Construir um registo de pesquisa que permita voltar à origem",
+          "paragraphs": [
+            "Crie uma ficha com cinco campos: afirmação encontrada, página de origem, data de consulta, relação com a função e questão ainda aberta. Acrescente uma categoria: informação publicada, interpretação ou ponto por confirmar. Uma publicação antiga sobre a abertura de uma unidade pode explicar a trajetória da organização, mas não comprova que essa unidade continue ativa. A data da notícia e a data da consulta respondem a perguntas diferentes. Guardar ambas evita apresentar um acontecimento passado como uma condição atual.",
+            "No caso Horizonte, uma notícia fictícia de dois anos antes menciona inscrições presenciais, enquanto o anúncio atual refere apoio digital. Não escolha silenciosamente a versão que combina melhor com o seu currículo. Registe a diferença e transforme-a numa pergunta: o atendimento desta função acontece por canais digitais, presencialmente ou por uma combinação? A divergência pode refletir mudança, equipas diferentes ou informação desatualizada. A pesquisa não fornece elementos suficientes para decidir qual destas explicações está correta.",
+            "Uma fonte independente pode acrescentar contexto, mas também requer delimitação. Um comentário anónimo sobre uma experiência negativa não representa necessariamente todos os trabalhadores. Uma apresentação promocional tampouco comprova satisfação interna. Para este exercício, não recolha dados pessoais de empregados nem os contacte. Trabalhe com o pequeno dossiê fictício fornecido e avalie afirmações, datas e lacunas. A competência procurada é rastrear uma conclusão até à informação que a suporta, sem transformar uma impressão numa certeza."
+          ]
+        },
+        {
+          "title": "Escolher o que realmente merece entrar na entrevista",
+          "paragraphs": [
+            "Nem tudo o que foi pesquisado merece ser mencionado. Para a vaga de apoio à inscrição, compreender os canais de atendimento pode ajudar a escolher um exemplo relevante; decorar o nome de cada dirigente pode não resolver qualquer dúvida sobre o trabalho. Para cada nota, escreva a decisão de preparação que ela modifica. Se não altera a escolha de exemplos, a compreensão da função ou uma questão importante, mantenha-a como contexto secundário. Esta seleção protege o tempo de preparação e a clareza da conversa.",
+            "A apresentação da pesquisa pode caber em duas frases: identifiquei no anúncio o apoio digital às inscrições e vi que a organização oferece formação em diferentes localidades; gostaria de compreender como a equipa distribui esse atendimento. A formulação demonstra o caminho da pergunta sem fingir conhecimento interno. Uma resposta do entrevistador poderá corrigir a hipótese inicial. Registe essa correção com naturalidade: a utilidade da pesquisa está em tornar a conversa mais informativa, não em defender a primeira interpretação a qualquer custo."
+          ]
+        }
+      ],
+      "case": "Dossiê fictício Horizonte: site atual com três cidades; anúncio de apoio digital às inscrições; notícia de dois anos antes sobre inscrições presenciais. Não há informação sobre deslocações do assistente.",
+      "exercise": "Prepare uma ficha de pesquisa de cinco linhas a partir do dossiê. Classifique cada afirmação pelo seu estatuto. Selecione três perguntas de confirmação e explique qual decisão de preparação cada resposta poderá alterar.",
+      "assessment": {
+        "question": "O anúncio permite afirmar que o candidato terá de viajar entre três cidades?",
+        "answer": "Não. As localidades publicadas descrevem a oferta apresentada, enquanto o anúncio apenas menciona apoio digital. A necessidade de deslocação deve ser confirmada; o candidato pode perguntar onde a função será exercida e se envolve viagens.",
+        "rubric": [
+          "Identifica a origem e a data de cada informação.",
+          "Não confunde local de oferta, canal de atendimento e local de trabalho.",
+          "Prioriza perguntas cuja resposta modifica uma decisão concreta."
+        ]
+      }
+    },
+    {
+      "id": "6",
+      "title": "Apresentar a trajetória sem transformar a resposta num currículo oral",
+      "estimatedPracticeMinutes": 90,
+      "objectives": [
+        "Selecionar dois elementos da trajetória em função de uma vaga, justificando exclusões.",
+        "Construir uma apresentação breve com ligação verificável entre experiência, motivação e aprendizagem necessária."
+      ],
+      "sourceIds": [
+        "ncs-common"
+      ],
+      "sections": [
+        {
+          "title": "Uma apresentação inicial tem uma função diferente de um histórico completo",
+          "paragraphs": [
+            "Quando o entrevistador pede uma apresentação, o candidato precisa de criar um ponto de entrada para a conversa. Ler todos os cargos pela ordem em que aconteceram pode ocupar esse espaço sem explicar a relação com a vaga. O National Careers Service recomenda preparar exemplos pertinentes às competências pedidas. A proposta deste módulo é selecionar, não maquilhar: escolher dois elementos que ajudem a compreender o que a pessoa traz e por que deseja discutir aquela função, preservando a possibilidade de aprofundar outros pontos depois.",
+            "Imagine Beatriz, personagem fictícia, candidata a apoio ao cliente numa escola de línguas. Trabalhou em atendimento numa padaria, organizou reservas de uma atividade cultural e concluiu um curso introdutório de folhas de cálculo. Os três factos podem ser verdadeiros sem merecer o mesmo destaque inicial. Se a função envolve esclarecer horários e registar pedidos, o atendimento e as reservas oferecem duas ligações identificáveis. O curso pode surgir quando o interlocutor perguntar sobre ferramentas, sem ser apresentado como domínio de sistemas que Beatriz nunca utilizou."
+          ]
+        },
+        {
+          "title": "Escolher um fio de apresentação e deixar portas abertas",
+          "paragraphs": [
+            "Uma apresentação pode ligar situação profissional atual, duas experiências relevantes e interesse específico pela função. Não é uma fórmula obrigatória nem uma promessa de eficácia. Serve para testar a ordem da informação. Beatriz pode começar por dizer que procura aplicar a experiência de atendimento a um contexto com acompanhamento de inscrições. Depois indica onde praticou esclarecimento de pedidos e organização de reservas. Termina com uma questão de aprendizagem: conhecer os procedimentos e o sistema da escola. Cada parte precisa de poder ser explicada se houver uma pergunta de seguimento.",
+            "O interesse pela função deve ter um objeto reconhecível. A frase quero crescer é compatível com quase qualquer candidatura e pouco informa sobre esta escolha. No caso fictício, acompanhar uma inscrição desde o primeiro contacto até à confirmação constitui um interesse mais delimitado. Não é necessário afirmar paixão por um setor que acabou de conhecer. Uma motivação profissional pode combinar condições de trabalho, tipo de tarefa e possibilidade de aprender, sem criar uma biografia idealizada para corresponder à imagem da organização.",
+            "O que fica de fora também merece justificação. Beatriz não precisa de incluir todos os detalhes do trabalho na padaria para provar que não está a esconder nada. A apresentação é uma seleção com finalidade explícita; o currículo continua disponível para o histórico. No exercício, anote ao lado de cada elemento excluído a razão: pouco relacionado com a pergunta inicial, dependente de contexto longo ou reservado para uma questão específica. O critério é pertinência, não prestígio social da experiência."
+          ]
+        },
+        {
+          "title": "Ouvir a própria resposta sem a transformar num anúncio",
+          "paragraphs": [
+            "Escreva uma primeira versão e procure palavras que não indicam ações: excelência, versatilidade, determinação. Algumas podem fazer sentido, mas precisam de conteúdo. Substituir todas por uma lista de realizações também não resolve a questão se a ligação com a vaga desaparecer. Leia a resposta perguntando que informação nova cada frase oferece. Uma apresentação com poucas frases distintas pode ser mais inteligível do que uma enumeração rápida de dez qualidades. O limite de palavras do exercício é didático; não constitui regra para todas as entrevistas.",
+            "Prepare uma versão mais curta para quando o entrevistador interromper com uma pergunta. Essa interrupção não precisa de ser interpretada como desinteresse; pode indicar que encontrou um ponto a aprofundar ou que há um formato previsto. Responda ao que foi perguntado e evite insistir em terminar um texto decorado. O produto deste módulo inclui uma apresentação principal, uma versão reduzida e um mapa de possíveis aprofundamentos. Assim, a preparação conserva coerência sem depender de uma recitação completa."
+          ]
+        }
+      ],
+      "case": "Caso fictício Beatriz: atendimento em padaria, reservas de atividade cultural e curso básico de folhas de cálculo; candidatura a apoio ao cliente numa escola de línguas.",
+      "exercise": "Escreva uma apresentação de 130–170 palavras e uma versão de 60–80 palavras. Anote duas ligações à função, uma competência ainda por aprender e três detalhes deliberadamente excluídos. Formule duas perguntas que o entrevistador poderia fazer a seguir.",
+      "assessment": {
+        "question": "Por que mencionar um curso básico como domínio do sistema da escola prejudicaria a apresentação?",
+        "answer": "Porque conhecer fundamentos de folhas de cálculo não demonstra utilização de um sistema específico desconhecido. A apresentação deve delimitar a aprendizagem realizada e o que ainda exige formação, mantendo a ligação com a função sem transformar interesse em experiência.",
+        "rubric": [
+          "Escolhe experiências pelas tarefas relevantes, não por adjetivos.",
+          "Mantém os mesmos factos nas duas versões.",
+          "Identifica uma necessidade de aprendizagem e prepara aprofundamentos verificáveis."
+        ]
+      }
+    },
+    {
+      "id": "7",
+      "title": "Discutir erros e conflitos sem exposição indevida de terceiros",
+      "estimatedPracticeMinutes": 105,
+      "objectives": [
+        "Reconstituir um erro distinguindo acontecimento, responsabilidade e ação corretiva.",
+        "Descrever um desacordo profissional sem identificar terceiros ou atribuir intenções não observadas."
+      ],
+      "sourceIds": [
+        "ncs-common"
+      ],
+      "sections": [
+        {
+          "title": "Responsabilização não exige um relato de culpa total",
+          "paragraphs": [
+            "Uma pergunta sobre um erro permite examinar como a pessoa percebeu o problema, o que estava ao seu alcance e o que fez depois. O National Careers Service inclui falhas e situações difíceis entre perguntas que podem surgir. Neste módulo, a preparação trabalha a qualidade do relato. Assumir responsabilidade não significa atribuir a si todas as causas; reconhecer a participação da equipa não significa diluir a própria ação. O episódio precisa de mostrar um encadeamento que o candidato consiga explicar sem acusação vaga ou autodepreciação.",
+            "Tomás, personagem fictícia, enviou uma versão antiga de um horário a um grupo de participantes. Existiam dois ficheiros com nomes parecidos; ele abriu o primeiro e não verificou a data de atualização. A semelhança dos nomes constitui uma condição do processo. A ausência de conferência constitui uma ação que Tomás pode reconhecer. Dizer que o sistema era um caos não substitui a explicação; dizer que estragou tudo também não informa quais efeitos ocorreram. No dossiê do exercício, apenas cinco destinatários confirmaram ter recebido a mensagem incorreta."
+          ]
+        },
+        {
+          "title": "Reconstruir correção e prevenção sem anunciar um final perfeito",
+          "paragraphs": [
+            "Uma sequência útil começa pelo sinal que revelou o erro: um participante perguntou por que o horário diferia da confirmação anterior. Tomás comparou os ficheiros, confirmou com a coordenação qual era a versão válida e enviou uma retificação pelo canal autorizado. Pode explicar essas ações. Se não dispõe de confirmação de todos os destinatários, não pode afirmar que ninguém foi afetado. Um resultado parcial continua relatável: houve retificação enviada e cinco confirmações recebidas, enquanto o alcance total permaneceu desconhecido.",
+            "O relato precisa de separar uma correção imediata de uma alteração preventiva. Reenviar o horário correto atende ao problema daquele envio. Propor identificação de versão e um ponto de conferência procura reduzir uma condição que contribuiu para o erro. A implementação depende da equipa; se Tomás apenas sugeriu a mudança, deve usar esse verbo. Se a equipa a adotou, pode explicitar o que sabe sobre a adoção. Nem a proposta nem a adoção provam que erros futuros se tornaram impossíveis.",
+            "Ao falar de um desacordo, substitua interpretações sobre caráter por diferenças de tarefa ou critério. Num segundo caso fictício, uma colega queria comunicar logo uma alteração e Tomás preferia confirmar a sala antes. O desacordo pode ser descrito como tensão entre rapidez e exatidão. Não há necessidade de dizer que a colega era irresponsável. O candidato pode explicar que informação apresentou, como procurou uma decisão e o que continuou sem consenso. Uma entrevista não é um espaço adequado para expor mensagens privadas ou obter um veredicto sobre antigos colegas."
+          ]
+        },
+        {
+          "title": "Escolher o nível de detalhe e responder a uma pergunta difícil",
+          "paragraphs": [
+            "O entrevistador pode perguntar por que Tomás não conferiu a data antes do envio. Uma resposta defensável reconhece que não fez essa verificação e descreve o procedimento que agora procura aplicar. Afirmar que o episódio o tornou incapaz de voltar a falhar transforma aprendizagem em garantia. No ensaio, procure uma frase que mostre o critério usado atualmente sem declarar perfeição. O valor informativo vem da relação entre o problema identificado e a prática de trabalho descrita.",
+            "Remova nomes, contactos, identificação de clientes e detalhes que tornem uma pessoa reconhecível sem necessidade. Essa remoção não deve apagar a lógica do episódio. É possível indicar que houve um responsável pela confirmação, um canal autorizado e uma versão válida sem revelar quem eram os envolvidos. A entrega deste módulo será uma linha temporal com três camadas: factos disponíveis, ações individuais e questões em aberto. Depois, uma resposta curta selecionará apenas o necessário para discutir responsabilidade e revisão do processo."
+          ]
+        }
+      ],
+      "case": "Caso fictício Tomás: envio de horário antigo sem conferir a data; coordenação confirma versão correta; retificação enviada; cinco destinatários confirmam receção, mas não há confirmação total.",
+      "exercise": "Faça a linha temporal em três camadas e redija uma resposta de até 200 palavras sobre o erro. Acrescente uma resposta de 50 palavras à pergunta por que não conferiu a data. Numa nota separada, reformule o desacordo rapidez/exatidão sem julgar a personalidade da colega.",
+      "assessment": {
+        "question": "A existência de ficheiros com nomes semelhantes elimina a responsabilidade de Tomás? A retificação prova ausência de impacto?",
+        "answer": "Não. A condição dos ficheiros pode contribuir para o problema, mas não apaga a verificação omitida. A retificação é uma ação corretiva; sem informação sobre todos os destinatários, não demonstra ausência de impacto. As duas limitações devem permanecer distintas.",
+        "rubric": [
+          "Distingue condição do processo e ação individual.",
+          "Não converte resultado parcial em resolução total.",
+          "Apresenta prevenção como prática ou proposta verificável e protege terceiros."
+        ]
+      }
+    },
+    {
+      "id": "8",
+      "title": "Explicar mudanças, intervalos e transições profissionais",
+      "estimatedPracticeMinutes": 90,
+      "objectives": [
+        "Produzir uma cronologia consistente de trabalho, intervalo e aprendizagem sem preencher lacunas com experiência inventada.",
+        "Delimitar uma explicação de transição em relação à disponibilidade e às tarefas futuras."
+      ],
+      "sourceIds": [
+        "ncs-gaps"
+      ],
+      "sections": [
+        {
+          "title": "Um intervalo não precisa de ser transformado numa realização",
+          "paragraphs": [
+            "Uma cronologia profissional inclui períodos com atividades diferentes e pode incluir períodos sem emprego. O National Careers Service orienta a explicar intervalos com honestidade e permite limitar o detalhe pessoal partilhado. A aplicação pedagógica aqui é distinguir três coisas: as datas, a descrição do período e o que é relevante para a função atual. Não é necessário atribuir uma competência nova a cada mês do passado. Um intervalo pode ter existido sem curso, voluntariado ou projeto que deva ser inventado para o justificar.",
+            "Clara, personagem fictícia, terminou um trabalho de atendimento em março, ficou sem emprego entre abril e agosto e iniciou uma formação em setembro. O seu currículo menciona apenas o ano da saída e o ano da formação. A entrevista pode trazer uma pergunta sobre a sequência. Antes de ensaiar uma resposta, Clara precisa de conferir as datas disponíveis e manter a mesma cronologia nos documentos. Se não recorda o dia exato, deve distinguir a precisão possível de uma data criada apenas para tornar a linha temporal visualmente completa."
+          ]
+        },
+        {
+          "title": "Explicar uma decisão e delimitar o que não será discutido",
+          "paragraphs": [
+            "No exercício, o intervalo de Clara decorreu de uma mudança de cidade e de circunstâncias pessoais que ela não deseja detalhar. Pode preparar uma explicação breve sobre a reorganização desse período e concentrar-se depois no que procura e na disponibilidade atual. Esta proposta de linguagem não define um direito universal de recusa nem resolve obrigações documentais específicas. Situações que envolvam requisitos legais, verificação formal ou condições reguladas exigem informação adequada ao local e ao processo, fora do âmbito deste caso pedagógico.",
+            "A formação iniciada em setembro pode apoiar uma intenção de transição, mas não reescreve o período anterior como se já tivesse sido um percurso de estudo. Uma frase factual identifica quando começou, o que foi efetivamente estudado e o que ainda está em curso. Se a candidatura é para assistência administrativa, Clara pode explicar por que se interessa por registo e organização de informação. Não deve atribuir ao curso básico uma experiência profissional que ele não forneceu. A transição combina recursos existentes e necessidades de aprendizagem.",
+            "Também há diferença entre a razão de saída de um posto e a razão de candidatura a outro. A primeira pertence a um acontecimento passado; a segunda é uma escolha atual sobre tarefas e condições. Uma resposta ocupada apenas a justificar a saída deixa pouco espaço para compreender o projeto seguinte. No exercício, reserve frases distintas para ambos os assuntos. Evite apresentar todas as mudanças como se tivessem sido um plano linear desde o início: uma trajetória pode incluir tentativas, limites e decisões revistas."
+          ]
+        },
+        {
+          "title": "Verificar coerência antes de ensaiar fluidez",
+          "paragraphs": [
+            "Construa uma linha temporal com datas aproximadas quando necessário, categoria da atividade e documento ou memória que sustenta a anotação. Marque sobreposições possíveis, como formação em paralelo com emprego, e não as elimine para obter uma narrativa mais simples. A coerência significa que as diferentes versões podem ser conciliadas, não que todo o tempo deve caber numa única categoria. Trabalhe apenas com os dados fictícios deste caso; não é necessário expor circunstâncias pessoais para realizar a atividade.",
+            "Em seguida, escreva uma explicação de até cem palavras e teste três questões: a cronologia permanece correta, a privacidade foi preservada no nível escolhido e a ligação ao próximo trabalho ficou compreensível? Se a resposta exige uma história muito longa para justificar uma data, volte primeiro à ficha. A meta não é soar espontâneo a qualquer custo. É conseguir responder com clareza a uma questão concreta e reconhecer onde uma confirmação documental ou orientação local seria necessária."
+          ]
+        }
+      ],
+      "case": "Caso fictício Clara: emprego terminado em março; sem emprego de abril a agosto, durante mudança de cidade e circunstâncias pessoais; formação básica iniciada em setembro; candidatura a assistência administrativa.",
+      "exercise": "Desenhe a cronologia com quatro marcos e identifique duas afirmações que seriam falsas, apesar de parecerem favorecer a candidatura. Escreva uma explicação de até cem palavras, sem detalhes pessoais adicionais, e uma frase separada sobre o interesse pela função atual.",
+      "assessment": {
+        "question": "Pode Clara apresentar abril a agosto como formação para evitar um intervalo na cronologia?",
+        "answer": "Não: a formação começou apenas em setembro. Deve preservar a distinção entre período sem emprego e aprendizagem posterior. Uma explicação breve pode contextualizar a mudança sem criar atividade ou revelar detalhes que não integram o exercício.",
+        "rubric": [
+          "Preserva datas e identifica o grau de precisão disponível.",
+          "Não cria atividades nem qualificações para preencher intervalos.",
+          "Separa explicação do passado, disponibilidade presente e interesse pelo próximo trabalho."
+        ]
+      }
+    },
+    {
+      "id": "9",
+      "title": "Resolver exercícios e amostras de trabalho com rastreabilidade",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Resolver uma pequena amostra de trabalho seguindo regras de conferência fornecidas.",
+        "Entregar um resultado rastreável com divergências e informação em falta identificadas."
+      ],
+      "sourceIds": [
+        "opm-work-samples"
+      ],
+      "sections": [
+        {
+          "title": "A amostra pede uma execução, não apenas uma promessa de competência",
+          "paragraphs": [
+            "A OPM descreve amostras de trabalho como tarefas que procuram representar atividades do posto. Para o candidato, isso muda a preparação: em vez de dizer que sabe conferir registos, precisa de executar uma conferência segundo instruções. A atividade deste módulo é uma simulação original de baixa complexidade, sem dados reais. Não mede toda a capacidade administrativa, não reproduz uma prova oficial e não permite inferir desempenho futuro apenas pelo resultado de quatro linhas de uma tabela.",
+            "Leia primeiro o que deve ser entregue, quais recursos estão autorizados e que decisões pode tomar. No caso fictício, o objetivo é comparar quantidades pedidas e recebidas. A regra é marcar confirmado apenas quando os dois valores estão presentes e são iguais; marcar divergência quando são diferentes; marcar por verificar quando falta um valor. Não se pede que corrija os dados de origem nem que deduza uma quantidade a partir de outra linha. Resolver bem inclui respeitar esse limite de intervenção."
+          ]
+        },
+        {
+          "title": "Quatro registos e uma regra operacional explícita",
+          "paragraphs": [
+            "O conjunto sintético contém A17, com doze unidades pedidas e dez recebidas; B21, com oito pedidas e oito recebidas; C09, com cinco pedidas e quantidade recebida em falta; D04, com três pedidas e quatro recebidas. A classificação esperada é divergência em A17 e D04, confirmado em B21 e por verificar em C09. A ausência em C09 não significa zero. Registar zero mudaria um dado desconhecido para uma quantidade conhecida e poderia produzir uma conclusão diferente da permitida pelas instruções.",
+            "Acrescente uma coluna de observação que permita refazer o raciocínio. Em A17, indique diferença de duas unidades a menos; em D04, uma a mais. Declare a convenção usada, como recebido menos pedido, para evitar sinais ambíguos. Em C09, uma observação adequada identifica que o valor recebido precisa de confirmação. Não é necessário inventar a causa: o conjunto não informa se houve atraso, erro de contagem, entrega parcial ou simples omissão do registo. A tarefa permite localizar o problema, não explicar a sua origem.",
+            "Uma entrega rastreável conserva os identificadores e distingue entrada, operação e conclusão. Se usar uma folha de cálculo, indique a regra ou fórmula; se trabalhar em papel, mostre uma comparação equivalente. A apresentação visual não deve esconder o critério. Um quadro muito elaborado que substitui informação em falta por zero falha num ponto mais importante do que a estética. Revise primeiro a integridade dos valores, depois a classificação e apenas depois a forma de apresentar a tabela."
+          ]
+        },
+        {
+          "title": "Entregar com notas de método e limites de uso de ferramentas",
+          "paragraphs": [
+            "Prepare uma nota de entrega com três componentes: o que foi conferido, o que ficou pendente e o que precisaria de confirmação antes de uma ação operacional. Não anuncie que a encomenda está regularizada: a atividade termina na conferência de dados sintéticos. Num processo real, confirme se a utilização de ferramentas externas é permitida e não envie informação do empregador para serviços de terceiros sem autorização. Aqui, todo o exercício pode ser feito localmente e sem ferramentas automáticas.",
+            "Se o tempo terminar antes da revisão, entregue um estado claro do trabalho. Distinguir duas linhas conferidas de duas ainda não verificadas é mais informativo do que marcar todas por hábito. Na atividade proposta, o aluno terá tempo para executar e rever, mas deverá registar qual erro procurou na segunda passagem. Esse registo permite discutir método: um valor, uma regra de classificação ou uma inferência indevida. O objetivo é mostrar como a resposta pode ser inspecionada, não apenas apresentar um ficheiro final com aparência profissional."
+          ]
+        }
+      ],
+      "case": "Dados inteiramente sintéticos: A17 pedido 12/recebido 10; B21 8/8; C09 5/valor ausente; D04 3/4. Regra: valores iguais e presentes = confirmado; diferentes = divergência; valor ausente = por verificar.",
+      "exercise": "Entregue uma tabela com identificador, valores originais, diferença quando calculável, classificação e observação. Inclua uma nota de método de 80–120 palavras e um registo da segunda passagem de conferência. Não altere os valores de entrada.",
+      "assessment": {
+        "question": "Como deve ser tratado o valor recebido ausente em C09 e quais linhas podem ser confirmadas?",
+        "answer": "C09 permanece por verificar, com diferença não calculada; ausência não equivale a zero. Apenas B21 pode ser confirmado. A17 e D04 são divergências, respetivamente com menos duas e mais uma unidade na convenção recebido menos pedido.",
+        "rubric": [
+          "Mantém quatro identificadores e todos os valores de origem.",
+          "Aplica a regra sem converter ausência em zero.",
+          "Explicita a convenção aritmética e separa classificação de causa desconhecida."
+        ]
+      }
+    },
+    {
+      "id": "10",
+      "title": "Preparar entrevistas remotas, por telefone e assíncronas",
+      "estimatedPracticeMinutes": 105,
+      "objectives": [
+        "Diferenciar preparação e contingência em canais ao vivo, telefónicos e assíncronos.",
+        "Construir um plano de participação que conserve instruções, tempo e canal de contacto sem presumir funcionalidades da plataforma."
+      ],
+      "sourceIds": [
+        "ncs-video"
+      ],
+      "sections": [
+        {
+          "title": "O canal altera as condições de participação",
+          "paragraphs": [
+            "Uma conversa por vídeo ao vivo permite esclarecer uma pergunta no momento; numa entrevista assíncrona, a resposta pode ser gravada sem interlocutor disponível. O National Careers Service distingue esses formatos e recomenda conhecer as instruções e testar recursos técnicos. A preparação aqui não assume que uma plataforma permite repetir uma resposta, pausar o cronómetro ou substituir uma gravação. Essas funções precisam de constar nas instruções do processo. Conhecer uma ferramenta parecida não comprova que a configuração desta candidatura seja igual.",
+            "Numa entrevista telefónica, o suporte visual deixa de estar disponível. Pode ser útil ter uma folha de apoio com palavras-chave, sem fazer ruído de consulta contínua ou ler respostas completas. Na modalidade ao vivo por vídeo, a preparação inclui perceber como iniciar a sessão e gerir o áudio. Nenhum destes canais exige demonstrar qualidade de um estúdio doméstico. O objetivo operacional do exercício é que pergunta e resposta possam ser recebidas e compreendidas, identificando limitações que precisam de ser comunicadas."
+          ]
+        },
+        {
+          "title": "Planear o que fazer antes de surgir uma falha",
+          "paragraphs": [
+            "Inês, personagem fictícia, recebe um convite para uma entrevista às 14h, mas o texto não identifica o fuso horário. O primeiro problema é de confirmação, não de equipamento. Deve perguntar a que local ou fuso se refere o convite, em vez de calcular a partir de uma suposição. Uma vez confirmado, regista o horário e verifica o convite recebido. O curso não fornece uma tabela fixa de diferenças entre países, porque a data e as mudanças sazonais podem alterar essa relação.",
+            "A folha de contingência de Inês contém um canal de contacto previamente indicado pelo recrutador, o identificador da candidatura e uma mensagem curta sobre falha de ligação. Se o áudio deixar de funcionar, pode informar o problema pelo canal disponível e perguntar como prosseguir. Não deve mudar para um número, aplicação ou envio de ficheiro não autorizado apenas porque lhe parece mais rápido. A alternativa precisa de ser combinada; uma falha técnica não torna todas as formas de contacto equivalentes.",
+            "Para o cenário assíncrono, o convite fictício informa uma tentativa, dois minutos de preparação e três de resposta. Inês deve tratar esses limites como instruções deste exercício, não como padrão geral. O ensaio utiliza uma pergunta inventada e um cronómetro local. A gravação é opcional: uma resposta escrita dentro do mesmo intervalo permite trabalhar seleção e fecho sem recolher imagem ou voz. Não se procura treinar a violação dos limites, mas organizar uma resposta que consiga terminar dentro das condições anunciadas."
+          ]
+        },
+        {
+          "title": "Testar a participação e interpretar com cautela a experiência",
+          "paragraphs": [
+            "Um teste técnico pode registar apenas o que foi observado: microfone audível numa chamada de ensaio, ficheiro local legível ou instruções compreendidas. Não comprova que a entrevista decorrerá sem falhas. Escolha um ponto de verificação próximo da sessão e mantenha o plano de contacto acessível. Ao preparar o espaço, minimize interrupções possíveis sem impor ao aluno um ambiente doméstico ideal. Uma necessidade que não consegue resolver sozinho deve entrar na lista de questões a combinar, não numa avaliação moral da sua preparação.",
+            "Depois do ensaio, compare as dificuldades dos três canais. Uma resposta que depende de apontar para um quadro precisa de adaptação para telefone; uma explicação que só termina após uma pergunta de seguimento pode necessitar de maior autonomia no formato assíncrono. Registe a alteração concreta feita em cada caso. O produto deste módulo é um plano de participação por canal, com instruções confirmadas, teste realizado e contingência combinável. Não é uma coleção de recomendações sobre aparência ou gestos universais."
+          ]
+        }
+      ],
+      "case": "Caso fictício Inês: convite inicial às 14h sem fuso; versão assíncrona do exercício permite uma tentativa, dois minutos de preparação e três de resposta; contacto do recrutador já indicado no convite.",
+      "exercise": "Crie três linhas de planeamento: telefone, vídeo ao vivo e assíncrono. Para cada uma, indique informação a confirmar, teste local e resposta a uma falha. Execute o ensaio de dois mais três minutos, por escrito ou com gravação privada opcional, e anote uma adaptação entre canais.",
+      "assessment": {
+        "question": "Pode Inês presumir que consegue voltar a gravar porque já o fez noutra plataforma?",
+        "answer": "Não. As instruções deste cenário permitem uma única tentativa. A experiência noutra ferramenta não define a configuração atual. Se houver dúvida, deve esclarecê-la antes da participação, assim como o fuso horário omitido no convite.",
+        "rubric": [
+          "Distingue os três canais e os seus limites de interação.",
+          "Não inventa fuso, repetição ou pausa de gravação.",
+          "Descreve teste observado e contingência sem prometer ausência de falhas."
+        ]
+      }
+    },
+    {
+      "id": "11",
+      "title": "Organizar necessidades de participação e limites de privacidade",
+      "estimatedPracticeMinutes": 90,
+      "objectives": [
+        "Descrever uma barreira de participação e formular um pedido operacional sem diagnóstico pessoal.",
+        "Distinguir informação necessária à organização do exercício e dados que exigem finalidade e canal esclarecidos."
+      ],
+      "sourceIds": [
+        "govuk-adjustments"
+      ],
+      "sections": [
+        {
+          "title": "Uma necessidade de participação deve ser formulada em relação à atividade",
+          "paragraphs": [
+            "Uma pessoa pode precisar de um formato de documento, condições de acesso ou esclarecimento sobre uma tarefa para participar numa seleção. A orientação GOV.UK consultada apresenta exemplos de ajustes no recrutamento no contexto britânico. Não se transfere daqui um direito, prazo ou obrigação idênticos para todos os países. O exercício LDR é de comunicação prática: identificar a barreira, explicar o efeito na atividade e perguntar como organizar uma alternativa. Não solicita diagnóstico nem substitui aconselhamento local sobre direitos.",
+            "No cenário fictício, Daniela recebe um documento de preparação composto apenas por imagens de texto. O leitor utilizado por ela não consegue extrair o conteúdo. A necessidade operacional pode ser descrita sem um relato clínico: o formato recebido não permite ler as instruções com a ferramenta que utiliza; uma versão de texto acessível permitiria preparar a atividade. A descrição liga um problema verificável ao material da entrevista. Não afirma que todas as pessoas com a mesma condição utilizam a mesma solução."
+          ]
+        },
+        {
+          "title": "Um pedido com objeto, prazo de resposta e alternativa discutível",
+          "paragraphs": [
+            "Uma mensagem de preparação identifica a candidatura, o material ou etapa, a barreira e o formato pedido. Daniela pode indicar a data da entrevista e perguntar quando receberá uma resposta sobre a alternativa. Não precisa de apresentar uma data inventada como prazo legal. Se não sabe qual formato será compatível, pode pedir um exemplo para testar. O objetivo é permitir uma decisão operacional antes da sessão, evitando que a primeira tentativa de leitura do novo material aconteça apenas no momento da prova.",
+            "Há uma diferença entre combinar a participação e responder a pedidos adicionais de dados. Se receber um formulário que solicita informação de saúde sem explicar a finalidade, Daniela pode pedir esclarecimento sobre a necessidade, o destinatário e o canal adequado. Este módulo não decide, num caso real, que informação é obrigatória ou proibida. Ensina a reconhecer que esses pontos não devem ser preenchidos por suposição. Uma dúvida jurídica ou documental específica deve ser encaminhada a um serviço competente na jurisdição aplicável.",
+            "No exercício, todos os dados são sintéticos e a alternativa solicitada é uma versão textual das instruções. Não use um relatório médico próprio nem simule o envio de documentos sensíveis para terceiros. A tarefa avalia se o pedido permite compreender o obstáculo e organizar uma resposta. O detalhe pessoal deve ser proporcional ao objetivo da mensagem. Acrescentar informação íntima não torna automaticamente o pedido mais claro, assim como omitir o material afetado pode torná-lo impossível de executar."
+          ]
+        },
+        {
+          "title": "Confirmar o acordo e testar a solução",
+          "paragraphs": [
+            "Se o recrutador confirmar uma alternativa, registe o que foi combinado e verifique se resolve a barreira descrita. No caso fictício, chega um ficheiro com texto selecionável, mas a ordem das instruções ficou trocada. O problema deixou de ser apenas extração de texto: agora é compreender a sequência da atividade. Daniela deve apontar essa dificuldade específica e pedir correção. Aceitar um formato nominalmente acessível sem o testar pode deixar a barreira operacional por resolver.",
+            "Quando não houver resposta, mantenha separadas três informações: pedido enviado, confirmação recebida ou ausente e decisão sobre o próximo contacto. Não conclua automaticamente que a alternativa foi recusada ou aceite. Prepare uma mensagem de seguimento curta pelo canal previsto. O produto final reúne pedido inicial, verificação da alternativa fictícia e seguimento. O percurso permite trabalhar autonomia na comunicação sem obrigar o aluno a revelar uma condição real para demonstrar a competência."
+          ]
+        }
+      ],
+      "case": "Caso fictício Daniela: instruções em imagens ilegíveis na sua ferramenta; pede texto acessível; recebe depois texto selecionável com sequência das instruções trocada. Não são fornecidos dados de saúde.",
+      "exercise": "Escreva um pedido inicial de 100–140 palavras, uma nota sobre o teste da alternativa e um seguimento de até 60 palavras. Separe o pedido operacional de três perguntas que faria antes de fornecer dados adicionais cuja finalidade não foi explicada.",
+      "assessment": {
+        "question": "Receber texto selecionável prova que a barreira ficou resolvida? O caso permite exigir um prazo legal universal?",
+        "answer": "Não. A ordem trocada ainda compromete a compreensão das instruções e deve ser verificada. O caso é pedagógico e a fonte tem contexto britânico; não estabelece prazo ou obrigação universal. Deve distinguir solução testada, acordo recebido e informação jurídica local por esclarecer.",
+        "rubric": [
+          "Descreve a barreira e uma alternativa relacionada com a atividade.",
+          "Não exige exposição de diagnóstico ou documentos pessoais no exercício.",
+          "Testa a solução e conserva limites de contexto jurídico."
+        ]
+      }
+    },
+    {
+      "id": "12",
+      "title": "Fazer perguntas sobre trabalho, equipa e critérios de sucesso",
+      "estimatedPracticeMinutes": 90,
+      "objectives": [
+        "Priorizar perguntas segundo uma decisão de candidatura e a informação já disponível.",
+        "Construir um seguimento que peça um exemplo operacional sem induzir uma resposta favorável."
+      ],
+      "sourceIds": [
+        "eures-interview2022"
+      ],
+      "sections": [
+        {
+          "title": "Perguntar também é avaliar a função",
+          "paragraphs": [
+            "A orientação EURES inclui preparar perguntas ao empregador. Nesta etapa, a finalidade é compreender condições concretas do trabalho e reduzir incertezas relevantes para o candidato. Não se trata apenas de demonstrar interesse. Uma pergunta pode ajudar a perceber como a equipa distribui tarefas, que apoio inicial existe ou como se revê uma entrega. Se a resposta não puder mudar a sua compreensão ou decisão, talvez tenha menor prioridade do que outra questão ainda aberta e diretamente relacionada com o trabalho.",
+            "No cenário fictício de apoio a uma equipa de formação, o anúncio promete autonomia e colaboração. Nenhuma expressão identifica quem confirma uma alteração de sala ou como se atua quando dois pedidos chegam juntos. Uma pergunta como a equipa é colaborativa convida a uma avaliação geral. Pedir um exemplo de como se coordena uma alteração de última hora permite conhecer um processo. O objetivo é obter informação utilizável, sem fazer o entrevistador confirmar um elogio que o candidato já incluiu na pergunta."
+          ]
+        },
+        {
+          "title": "Organizar perguntas por decisão, não por efeito retórico",
+          "paragraphs": [
+            "Monte uma lista com a dúvida, a decisão que depende dela, a informação já disponível e a pergunta ainda necessária. Se a localização foi esclarecida durante a conversa, risque essa pergunta ou reformule-a para o ponto que falta. Repetir o que acabou de ser respondido pode desperdiçar o tempo reservado. Isso não impede pedir confirmação de uma informação importante: nesse caso, indique o que compreendeu e qual detalhe deseja verificar. A diferença entre repetição e confirmação está no propósito que torna explícito.",
+            "Imagine que o candidato tem três dúvidas: apoio inicial, sequência de aprovação e disponibilidade para deslocações. O entrevistador oferece espaço para duas perguntas. Se a deslocação determina a possibilidade de aceitar a função, ela pode vir antes de uma pergunta sobre desenvolvimento de carreira. A prioridade não precisa de ser a mesma para todos. O exercício pede uma justificação ligada às condições do candidato fictício, não a identificação de uma pergunta universalmente mais impressionante.",
+            "Uma primeira resposta pode continuar vaga: damos bastante apoio a quem chega. O seguimento deve aproximar-se da atividade sem soar a interrogatório: como costuma acontecer esse apoio nas primeiras tarefas de confirmação de inscrições? A pergunta procura um exemplo e mantém o tema. Se o interlocutor não souber, essa ausência é informação em aberto, não prova automática de que não haverá apoio. Registe o ponto que necessita de confirmação e pergunte quem poderá esclarecê-lo numa etapa posterior."
+          ]
+        },
+        {
+          "title": "Usar respostas incompletas sem tirar conclusões excessivas",
+          "paragraphs": [
+            "Perguntas podem revelar diferenças entre o anúncio e a descrição oral. Uma função anunciada como remota pode envolver encontros presenciais ainda não detalhados. O candidato deve procurar delimitar frequência, local e previsibilidade, em vez de classificar imediatamente a organização como enganadora. Algumas diferenças podem ser materiais para a decisão, outras podem refletir linguagem imprecisa. O trabalho deste módulo é localizar a divergência e formular a confirmação necessária, preservando o registo do que foi efetivamente dito.",
+            "No fecho, confirme o próximo passo quando isso ainda não tiver sido explicado. Não transforme cada entrevista numa lista rígida que precisa de ser esgotada. O portefólio desta atividade contém uma lista inicial, a seleção de duas perguntas, um seguimento e uma nota de decisão provisória. A nota distingue o que ficou claro, o que permanece incerto e qual informação falta antes de uma escolha. A qualidade está nessa ligação entre pergunta e decisão, não na quantidade de questões feitas."
+          ]
+        }
+      ],
+      "case": "Caso fictício: vaga de apoio a formação anuncia autonomia, colaboração e trabalho remoto. Candidato só pode fazer deslocações planeadas com antecedência. Há tempo para duas perguntas; apoio inicial, aprovações e deslocações ainda são pouco claros.",
+      "exercise": "Prepare cinco perguntas com a decisão associada a cada uma. Escolha duas para o caso e justifique a prioridade. Escreva um seguimento à resposta damos bastante apoio e uma nota provisória separando informação clara, ausente e potencialmente decisiva.",
+      "assessment": {
+        "question": "Por que perguntar a equipa é colaborativa oferece menos informação operacional do que pedir um exemplo de coordenação?",
+        "answer": "Porque favorece uma avaliação global sem especificar práticas. Um exemplo permite conhecer ações, intervenientes e limites de decisão. Ainda assim, um único exemplo não demonstra como toda a equipa age em todas as situações.",
+        "rubric": [
+          "Relaciona cada pergunta com uma decisão identificável.",
+          "Usa o tempo limitado para priorizar dúvidas materiais.",
+          "Pede exemplos sem induzir elogios nem universalizar uma resposta."
+        ]
+      }
+    },
+    {
+      "id": "13",
+      "title": "Conversar sobre disponibilidade e condições sem aceitar às cegas",
+      "estimatedPracticeMinutes": 105,
+      "objectives": [
+        "Separar disponibilidade confirmada, preferência e condição ainda negociável numa conversa de contratação.",
+        "Comparar duas propostas fictícias por campos equivalentes e identificar informação ausente antes de aceitar."
+      ],
+      "sourceIds": [
+        "ncs-interview"
+      ],
+      "sections": [
+        {
+          "title": "Disponibilidade não é uma promessa sem condições",
+          "paragraphs": [
+            "A disponibilidade pode envolver início, horários, local e deslocações. Uma resposta ampla como posso começar a qualquer momento pode entrar em conflito com compromissos que o candidato já conhece. Preparar esta conversa exige distinguir o que está confirmado, o que prefere e o que precisa de combinar. O National Careers Service aconselha confirmar informações da oferta antes da aceitação. O exercício amplia essa ideia com uma ficha de decisão própria; não fornece aconselhamento contratual, fiscal ou regras de pré-aviso para uma jurisdição específica.",
+            "No caso fictício, André consegue iniciar atividade a partir do dia quinze do mês seguinte e pode trabalhar presencialmente em dois dias fixos. O anúncio apenas refere regime híbrido. Se disser disponibilidade total para parecer flexível, deixa por resolver uma condição central. Pode comunicar a data que consegue confirmar e perguntar como são definidos os dias presenciais. Isso oferece base para uma negociação real. Não há garantia de compatibilidade; a precisão pode revelar uma diferença que já existia, embora ainda não estivesse discutida."
+          ]
+        },
+        {
+          "title": "Comparar propostas exige unidades e condições equivalentes",
+          "paragraphs": [
+            "André recebe duas descrições fictícias. A proposta A menciona um valor mensal bruto, horário definido e local habitual. A proposta B apresenta um intervalo de remuneração com componente variável, sem esclarecer horário nem local. Não é possível escolher a melhor apenas comparando o maior número impresso. A ficha precisa de separar valor fixo e variável, moeda, período de referência, carga de trabalho e custos de deslocação que o próprio candidato terá de avaliar. O módulo não converte valores brutos em líquidos nem presume regras fiscais.",
+            "A ausência de um campo não deve ser preenchida com a condição da outra proposta. Se A tem dois dias presenciais e B diz flexível, não conclua que B também terá dois. Registe o que foi informado e formule a pergunta correspondente. Quando a resposta puder mudar a viabilidade da oferta, marque-a como condição de decisão. Uma preferência por determinado horário pode ser negociável; uma data de início já incompatível com um compromisso confirmado exige esclarecimento antes de assumir uma obrigação.",
+            "Uma conversa sobre remuneração também precisa de delimitar o estatuto da informação. Um intervalo anunciado não equivale a valor acordado; uma expectativa do candidato não equivale a proposta do empregador. Ao resumir o diálogo, use campos separados para anunciado, solicitado e confirmado. Esta separação reduz confusões sem criar uma regra de negociação infalível. Se o processo exigir análise de contrato, estatuto de trabalho ou documentação legal, obtenha orientação adequada antes da decisão; a tabela pedagógica não substitui essa análise."
+          ]
+        },
+        {
+          "title": "Pedir confirmação sem aceitar involuntariamente uma interpretação",
+          "paragraphs": [
+            "Uma mensagem de síntese pode indicar que compreendeu a data prevista, o regime descrito e os pontos que continuam por confirmar. Escolha palavras compatíveis com a sua intenção: agradecer a proposta e pedir esclarecimento é diferente de anunciar que aceita todas as condições. Este módulo não determina o efeito jurídico de uma mensagem real. O objetivo é tornar a intenção comunicativa explícita e localizar dúvidas, evitando que uma frase vaga seja usada para encobrir a ausência de uma decisão consciente.",
+            "Defina ainda como decidirá depois das respostas. André pode estabelecer que precisa de confirmar os dias presenciais e a remuneração fixa antes de comparar as propostas. Se ambas forem compatíveis, poderá então ponderar tarefas e aprendizagem. O produto final contém a tabela, as perguntas de esclarecimento e uma regra pessoal de decisão aplicável ao caso fictício. A atividade termina com uma escolha justificada ou uma decisão de aguardar informação, nunca com a exigência de aceitar uma das opções a qualquer custo."
+          ]
+        }
+      ],
+      "case": "Caso fictício André: início possível no dia quinze do mês seguinte; dois dias presenciais fixos. Oferta A informa valor mensal bruto fixo, horário e local. Oferta B informa intervalo com variável, mas omite horário, local e valor fixo confirmado.",
+      "exercise": "Faça uma tabela com oito campos comparáveis para as ofertas, marcando ausências. Distinga disponibilidade confirmada e preferência. Redija uma mensagem de esclarecimento de até 160 palavras e uma regra com duas condições mínimas para decidir, sem calcular remuneração líquida.",
+      "assessment": {
+        "question": "É defensável escolher B pelo limite superior do intervalo anunciado sem esclarecer a componente fixa e o horário?",
+        "answer": "Não há informação suficiente para uma comparação equivalente. O limite superior não é valor confirmado e faltam condições relevantes. A resposta adequada explicita as lacunas e solicita confirmação antes de uma decisão fundamentada.",
+        "rubric": [
+          "Separa anunciado, solicitado e confirmado.",
+          "Não presume horários, local, valores líquidos ou regras jurídicas.",
+          "Relaciona condições de decisão com a disponibilidade concreta do caso."
+        ]
+      }
+    },
+    {
+      "id": "14",
+      "title": "Realizar uma simulação integrada com revisão externa",
+      "estimatedPracticeMinutes": 150,
+      "objectives": [
+        "Integrar leitura de vaga, apresentação, decisão situacional e pergunta ao empregador numa simulação documentada.",
+        "Comparar autoavaliação e observação externa mediante evidências textuais, sem converter a atividade em certificação."
+      ],
+      "sourceIds": [
+        "opm2008"
+      ],
+      "sections": [
+        {
+          "title": "Integrar significa gerir mudanças durante uma conversa",
+          "paragraphs": [
+            "Uma preparação dividida em exercícios isolados permite aprender componentes; uma simulação integrada examina como eles se articulam quando a conversa muda de direção. O guia OPM já consultado apoia a relação entre perguntas e requisitos da função. O pacote LDR abaixo é original e tem finalidade formativa. Não reproduz uma entrevista oficial nem foi validado para classificar candidatos reais. O observador usa os critérios fornecidos para descrever a resposta no exercício, sem emitir diagnóstico, nota de empregabilidade ou previsão de contratação.",
+            "A vaga fictícia é de apoio à organização de sessões de formação. As tarefas são confirmar inscrições, verificar a sala reservada, comunicar alterações aprovadas e manter um registo. A pessoa não pode mudar uma sala sem confirmação da coordenação. O pacote inclui um anúncio curto, duas experiências inventadas de candidato e uma alteração de cenário. Todas as pessoas que participam sabem que as experiências pertencem a personagens; ninguém deve reutilizá-las depois como realizações pessoais. A integração avalia escolhas de informação e limites de ação."
+          ]
+        },
+        {
+          "title": "Uma sessão com papéis, tempos e informação distribuída",
+          "paragraphs": [
+            "Reserve dez minutos para preparar o anúncio e escolher uma experiência. Depois realize uma conversa de doze minutos: apresentação inicial, pergunta sobre conferência de informação, cenário de mudança e pergunta do candidato. O entrevistador lê os enunciados do pacote sem sugerir respostas. O candidato pode pedir esclarecimentos. O observador anota passagens e ações descritas. Se houver apenas uma pessoa, execute uma versão escrita e identifique a observação externa como ainda não realizada; não invente um avaliador para completar a ficha.",
+            "O cenário começa com vinte inscrições confirmadas para a sala Azul, que tem capacidade indicada de vinte e quatro lugares. Durante a conversa surge uma mensagem fictícia: a sala Azul ficou indisponível e existe uma sala Verde com dezoito lugares. O candidato não dispõe de autorização para mudar a sala nem de confirmação de vagas alternativas. O exercício pede que explique verificações, encaminhamento e comunicação. Dividir os participantes por conta própria, prometer um espaço extra ou anunciar uma nova sala excederia a informação e a autonomia fornecidas.",
+            "O observador usa cinco critérios: seleção de experiência pertinente, distinção entre informação confirmada e hipótese, respeito pelo limite de decisão, comunicação compreensível e pergunta final útil. Para cada um, regista não observado, parcialmente observado ou observado, acompanhado de uma passagem que sustente a escolha. Estas categorias não compõem uma escala psicométrica. Ausência de observação pode resultar de uma pergunta não feita ou de um trecho insuficiente; a ficha deve distinguir essas situações em vez de as tratar automaticamente como falha pessoal."
+          ]
+        },
+        {
+          "title": "Debater uma divergência e produzir uma segunda decisão",
+          "paragraphs": [
+            "Após a conversa, o candidato faz a própria análise antes de ouvir o observador. Escolham um ponto de divergência e voltem ao trecho concreto. Se o candidato considera que respeitou a autorização, mas disse eu mudava para a Verde e avisava depois, a discussão pode localizar a incompatibilidade. Se a frase foi eu verificava a opção Verde e pedia confirmação, a ação proposta tem outro alcance. A atividade exige examinar a formulação, não decidir quem tem mais autoridade para julgar a pessoa.",
+            "Use os minutos restantes para rever apenas a resposta ao cenário alterado e justificar a mudança. A segunda tentativa não precisa de repetir toda a entrevista. Entregue o anúncio anotado, a ficha de observação, a autoavaliação e a decisão revista. Marque se a revisão externa ocorreu de facto e que limitações teve. O pacote integrado permite verificar relações entre tarefas anteriores sem reapresentar as mesmas introduções. A carga estimada inclui preparação e análise; ainda precisa de pilotagem antes de sustentar qualquer duração oficial do curso."
+          ]
+        }
+      ],
+      "case": "Simulação original: vinte inscrições; sala Azul com vinte e quatro lugares fica indisponível; alternativa Verde tem dezoito. Apenas a coordenação autoriza mudanças. Não há informação sobre outro espaço ou cancelamentos.",
+      "exercise": "Execute o pacote de simulação incluído no módulo. Entregue quatro artefactos: anúncio anotado, autoavaliação, observação externa com trechos (ou marcação explícita de não realizada) e decisão revista sobre a sala. Justifique uma alteração com base no limite de autonomia e outra na informação em falta.",
+      "assessment": {
+        "question": "Por que a sala Verde não pode ser anunciada de imediato como solução confirmada?",
+        "answer": "Porque tem menos lugares do que as inscrições e não há autorização de mudança. É necessário confirmar opções e encaminhar a incompatibilidade à coordenação, comunicando aos envolvidos apenas o que esteja aprovado. O cenário não permite garantir acomodação, cancelar inscrições ou inventar lugares adicionais.",
+        "rubric": [
+          "Integra os requisitos sem recitar respostas de outros módulos.",
+          "Identifica a incompatibilidade vinte/dezoito e o limite de autorização.",
+          "Regista evidências de observação e distingue revisão realizada de revisão ainda pendente."
+        ]
+      },
+      "simulationPacket": {
+        "status": "synthetic-training-only",
+        "vacancy": "Apoio à organização de sessões: confirmar inscrições, conferir sala, comunicar alterações aprovadas e manter registos. Apenas a coordenação autoriza mudanças.",
+        "candidateExamples": [
+          {
+            "id": "A",
+            "text": "Personagem organizou a lista de participantes de um encontro de leitura; conferiu nomes duplicados e pediu confirmação de três inscrições incompletas. A coordenação decidiu a lista final."
+          },
+          {
+            "id": "B",
+            "text": "Personagem acompanhou a montagem de uma exposição escolar; sinalizou ausência de duas etiquetas e comunicou ao responsável. Não geriu as inscrições nem autorizou alterações de espaço."
+          }
+        ],
+        "preparationMinutes": 10,
+        "conversationMinutes": 12,
+        "prompts": [
+          {
+            "stage": "opening",
+            "text": "Apresente a experiência que considera mais relevante para esta função e explique a ligação com as tarefas."
+          },
+          {
+            "stage": "past-experience",
+            "text": "Descreva, a partir da personagem escolhida, uma conferência que realizou e como tratou informação incompleta."
+          },
+          {
+            "stage": "scenario",
+            "text": "Há vinte inscrições confirmadas para a sala Azul, com vinte e quatro lugares. O que conferiria antes de enviar uma confirmação?"
+          },
+          {
+            "stage": "change",
+            "text": "A coordenação informa agora que a Azul está indisponível. Existe uma Verde com dezoito lugares, mas nenhuma mudança foi autorizada. Como procede e o que comunica?"
+          },
+          {
+            "stage": "candidate-question",
+            "text": "Faça uma pergunta que ajude a compreender o trabalho ou a decisão ainda em aberto."
+          }
+        ],
+        "observerCriteria": [
+          "Seleção de experiência pertinente",
+          "Informação confirmada versus hipótese",
+          "Limite de decisão",
+          "Comunicação compreensível",
+          "Pergunta final útil"
+        ],
+        "observerLevels": [
+          "não observado",
+          "parcialmente observado",
+          "observado"
+        ],
+        "observerRecordFields": [
+          "critério",
+          "nível",
+          "trecho ou ação que sustenta a observação",
+          "questão de seguimento"
+        ],
+        "debrief": [
+          "Autoavaliação antes de ler a observação externa",
+          "Um ponto de divergência e respetiva evidência",
+          "Resposta revista ao cenário alterado",
+          "Declaração sobre se houve observador externo real ou apenas exercício individual"
+        ],
+        "recordingRequired": false,
+        "certificateEligible": false
+      }
+    },
+    {
+      "id": "15",
+      "title": "Analisar o processo e produzir um plano de preparação transferível",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Separar resultado de candidatura, observação sobre a entrevista e hipótese explicativa.",
+        "Produzir um plano de preparação transferível com ações, critérios de revisão e limites de recolha de informação."
+      ],
+      "sourceIds": [
+        "ncs-interview"
+      ],
+      "sections": [
+        {
+          "title": "Um resultado de seleção não explica sozinho a sua causa",
+          "paragraphs": [
+            "Receber uma resposta negativa informa o resultado daquele processo, mas não revela automaticamente a razão. O National Careers Service sugere refletir sobre perguntas difíceis e pedir feedback quando adequado. Neste módulo, essa reflexão é organizada sem transformar uma decisão externa num diagnóstico do candidato. A pessoa pode identificar que não respondeu com clareza a uma pergunta e trabalhar esse ponto. Não pode concluir, apenas porque não foi escolhida, que essa dificuldade foi a causa decisiva ou que corrigir a resposta garantirá aprovação na próxima seleção.",
+            "Num caso fictício, Paula participou em duas entrevistas. Na primeira, não compreendeu a distinção entre apoio remoto e trabalho inteiramente à distância; na segunda, conseguiu esclarecer os dias presenciais. Nenhuma resultou numa oferta, e só a segunda enviou uma mensagem geral de encerramento. Há evidência de uma melhoria específica na obtenção de informação, mas não de melhoria global medida em empregabilidade. A ausência de oferta não apaga a aprendizagem observável, assim como a aprendizagem não autoriza inventar a razão da decisão do empregador."
+          ]
+        },
+        {
+          "title": "Fazer um balanço que separe registos e interpretações",
+          "paragraphs": [
+            "Construa três colunas: acontecimento observado, interpretação provisória e informação que falta. Na primeira entrevista de Paula, pode constar que respondeu à pergunta sobre disponibilidade antes de confirmar o regime. A interpretação pode ser que preparou uma resposta demasiado geral. Falta saber o peso desse ponto na decisão. Escrever as três colunas ajuda a evitar uma narrativa fechada baseada apenas no desfecho. As interpretações devem permanecer revisáveis quando surgir informação nova, sem substituir a memória dos factos por uma explicação conveniente.",
+            "Um pedido de feedback pode ser curto e relacionado com desenvolvimento: agradecer a participação e perguntar se há um aspeto da resposta ou da preparação que possa melhorar. O envio não integra este exercício e depende do canal do processo. Não há garantia de resposta nem obrigação universal aqui estabelecida. Uma mensagem geral como escolhemos outro perfil também não identifica uma competência em falta. Registe-a com o seu alcance real, sem produzir uma lista de defeitos que o empregador não referiu.",
+            "Ao conservar notas, prefira dados necessários à sua preparação: pergunta, síntese da resposta, ponto a rever e próxima ação. Não precisa de recolher informação pessoal do entrevistador ou acumular gravações de terceiros. Neste curso, o dossiê final utiliza apenas casos sintéticos e textos do próprio aluno. A duração de conservação e os canais de partilha de um caso real exigem uma decisão proporcional ao contexto; a atividade não prescreve recolha contínua nem publicação de relatos identificáveis sobre processos seletivos."
+          ]
+        },
+        {
+          "title": "Transferir um método sem transportar respostas prontas",
+          "paragraphs": [
+            "Escolha três ações para a próxima preparação, cada uma ligada a um problema identificado. Se Paula confundiu regime híbrido e remoto, uma ação é confirmar local, frequência e previsibilidade antes de declarar compatibilidade. Se o exemplo escolhido não mostrava uma decisão individual, outra é rever a ficha desse episódio. A terceira pode trabalhar uma dificuldade ainda não ensaiada. Defina o produto de cada ação e como reconhecerá que foi realizada; não utilize apenas objetivos abstratos como ganhar confiança ou ser melhor.",
+            "O dossiê final reúne uma matriz de requisitos, uma ficha de pesquisa, duas evidências delimitadas, uma apresentação, uma amostra de trabalho, um plano de participação e a análise da simulação integrada. A finalidade é demonstrar um percurso de preparação e as razões das revisões. Ao aplicar o método a outra vaga, volte às tarefas e às condições dessa função; não copie as respostas de um setor para outro mudando nomes. O curso termina com um plano transferível e limites reconhecidos. A aprovação pedagógica, a carga horária e qualquer certificação permanecem decisões distintas da existência deste conjunto de textos."
+          ]
+        }
+      ],
+      "case": "Caso fictício Paula: duas entrevistas sem oferta; na primeira, responde sobre disponibilidade antes de esclarecer o regime; na segunda, confirma os dias presenciais; não recebe motivo específico de rejeição.",
+      "exercise": "Produza um balanço em três colunas para Paula e um plano de três ações com produto e critério de revisão. Organize o dossiê final descrito no módulo e escreva uma nota de 150–200 palavras sobre o que teria de ser refeito para outra vaga. Identifique a revisão externa efetivamente realizada e a que continua em falta.",
+      "assessment": {
+        "question": "O resultado de duas candidaturas permite afirmar que a preparação de Paula não melhorou ou que esclarecer o regime garante contratação?",
+        "answer": "Nenhuma conclusão é sustentada. Há uma melhoria observável na confirmação dos dias presenciais, enquanto os motivos das decisões permanecem desconhecidos. A aprendizagem deve ser descrita no seu alcance e o plano seguinte deve responder a dificuldades identificadas, sem garantir um resultado de seleção.",
+        "rubric": [
+          "Separa resultado, observação e hipótese causal.",
+          "Define três ações com produtos verificáveis e adequados às dificuldades.",
+          "Integra o portefólio sem o apresentar como prova de horas, certificação ou contratação."
+        ]
+      }
     }
   ],
   "review": {
@@ -299,11 +928,11 @@
     "workload": false
   },
   "remaining": [
-    "Desenvolver os módulos 5–15 sem repetir atividades ou explicações.",
-    "Pilotar tempo de estudo e rever a correspondência com as 80 horas anunciadas; não assumir equivalência.",
-    "Produzir e testar materiais acessíveis e simulação integrada.",
-    "Revisão especializada e verificação de adequação às diferentes realidades de emprego.",
-    "Integrar no leitor apenas após conclusão e validação, preservando direitos e registos existentes."
+    "Revisão científica/contextual, editorial, de direitos e terminológica de todos os quinze módulos; revisão externa não presumida.",
+    "Pilotar tempo de leitura, prática e simulação e rever a correspondência com as 80 horas anunciadas. Ajustar catálogo apenas após decisão fundamentada; não alterar silenciosamente a carga histórica.",
+    "Testar materiais e navegação acessíveis no leitor isolado, incluindo execução real da observação externa; o pacote disponibilizado não comprova que foi realizado.",
+    "Validar a avaliação integrada com participantes e critérios adequados; rubricas pedagógicas não são instrumentos psicométricos validados.",
+    "Integrar no leitor somente após aprovação editorial e técnica, preservando direitos, progresso e certificados anteriores; sem produção ou merge nesta etapa."
   ],
   "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
 }
