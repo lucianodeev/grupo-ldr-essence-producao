@@ -147,7 +147,7 @@ Data: 15/11/2026. Nenhum produto foi aprovado como integralmente concluído nest
 
 | Produto | Versão base / candidata | Capítulos desenvolvidos / previstos | Estado / ativação |
 | --- | --- | --- | --- |
-| ebook_comportamento_humano | 1 / 2 | 3 / 20 | draft; published=false; elegível=false |
+| ebook_comportamento_humano | 1 / 2 | 20 / 20 | draft; published=false; elegível=false |
 
 As versões candidatas não são usadas pelo leitor de produção. O original e o acesso dos compradores permanecem inalterados.
 
@@ -156,8 +156,14 @@ As versões candidatas não são usadas pelo leitor de produção. O original e 
 | Curso | Módulos desenvolvidos / previstos | Carga anunciada / validada | Estado |
 | --- | --- | --- | --- |
 | Como se Preparar para uma Entrevista de Emprego | 15 / 15 | 80h / por validar | draft; published=false; elegível=false |
+| Redação Profissional e Escrita para Processos Seletivos | 8 / 8 | 100h / por validar | draft; published=false; elegível=false |
+| Como Selecionar a Vaga Certa para o Seu Perfil | 6 / 6 | 80h / por validar | draft; published=false; elegível=false |
 
 Rascunhos separados do leitor. Número de módulos e tempo de prática estimado não validam a carga anunciada.
+
+## Triagem entre candidatas originais
+
+4 produtos; 49 unidades; 317 parágrafos e 50086 pares. Cópias exatas: 0; pares próximos: 0. Método: paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required. A ausência de sinal não equivale a aprovação conceptual ou científica.
 
 ## Duplicação e limites
 

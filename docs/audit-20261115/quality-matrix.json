@@ -731,7 +731,9 @@
       "materialsListed": 3,
       "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
       "source": "src/lib/academy-subscription-courses.catalog.ts",
-      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 8/8 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/professional-writing.pt.json",
+      "authoredDraftModules": 8
     },
     {
       "product_key": "curso_assinatura_orientacao_de_carreira",
@@ -791,7 +793,9 @@
       "materialsListed": 3,
       "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
       "source": "src/lib/academy-subscription-courses.catalog.ts",
-      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/vacancy-selection.pt.json",
+      "authoredDraftModules": 6
     },
     {
       "product_key": "curso_assinatura_orientacao_de_carreira_internacional",
@@ -1670,10 +1674,17 @@
       "baseCanonicalSha256": "9a626bdf7721cae096015efdf3c2e4af03677e1d5f72a32cd6df7116ae56bcee",
       "path": "editorial/drafts/ebook_comportamento_humano_v2.json",
       "errors": [],
-      "authoredChapters": 3,
+      "authoredChapters": 20,
       "expectedChapters": 20,
-      "complete": false,
-      "activationEligible": false
+      "complete": true,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 120,
+        "pairsChecked": 7140,
+        "exact": [],
+        "near": []
+      }
     }
   ],
   "courseCandidates": [
@@ -1698,8 +1709,61 @@
         "exact": [],
         "near": []
       }
+    },
+    {
+      "productKey": "curso_assinatura_redacao_profissional_e_escrita_para_processos_seletivos",
+      "title": "Redação Profissional e Escrita para Processos Seletivos",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 100,
+      "path": "editorial/courses/professional-writing.pt.json",
+      "errors": [],
+      "authoredModules": 8,
+      "expectedModules": 8,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 56,
+        "pairsChecked": 1540,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
+      "productKey": "curso_assinatura_como_selecionar_a_vaga_certa_para_o_seu_perfil",
+      "title": "Como Selecionar a Vaga Certa para o Seu Perfil",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 80,
+      "path": "editorial/courses/vacancy-selection.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
+        "exact": [],
+        "near": []
+      }
     }
   ],
+  "editorialCorpusReview": {
+    "documents": 4,
+    "units": 49,
+    "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+    "paragraphsChecked": 317,
+    "pairsChecked": 50086,
+    "exact": [],
+    "near": []
+  },
   "exactDuplicates": [],
   "nearDuplicateGroups": [
     {

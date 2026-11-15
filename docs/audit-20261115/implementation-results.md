@@ -33,20 +33,36 @@ A triagem de repetição comparou **105 parágrafos em 5.460 pares**: nenhum par
 
 A edição permanece `draft`, `published=false`, `validatedHours=null`, sem importação pelo leitor. As estimativas de prática somam **1.485 minutos (24h45)**, ainda sem pilotagem e sem contabilização validada de leitura e trabalho. Não se converte essa estimativa nas 80 horas anunciadas. O validador conserva bloqueio de elegibilidade até revisão científica/contextual, editorial, direitos, leitor e carga. Nove testes verificam conteúdo, repetição por edição ligeira, limites da revisão e pacote integrado.
 
+## Dois cursos adicionais de assinatura
+
+Foram redigidas duas sequências próprias, sem substituir o catálogo ativo nem o roteiro histórico:
+
+| Curso | Oficinas desenvolvidas | Desenvolvimento | Prática estimada, sem pilotagem |
+| --- | --- | --- | --- |
+| Redação Profissional e Escrita para Processos Seletivos | 8 | 4.372 palavras, além de casos e avaliações | 945 minutos; não comprova 100 horas |
+| Como Selecionar a Vaga Certa para o Seu Perfil | 6 | 2.854 palavras, além de casos e avaliações | 705 minutos; não comprova 80 horas |
+
+Redação trabalha briefing, parágrafos, mensagens operacionais, carta específica, revisão de sentido e língua, síntese, prova escrita e portefólio com teste de leitura. Inclui enunciados e dados para realizar as atividades, com respostas comentadas. Fontes: Comissão Europeia, Europass, National Archives e Serviço das Publicações da UE, com âmbito de consulta identificado.
+
+Seleção de vagas trabalha tarefas e requisitos, evidências e aprendizagem, condições de viabilidade, origem de oportunidades, matriz de decisão e lista curta. Inclui cálculos sintéticos de deslocação e de pesos, com soluções, sem apresentar matrizes como testes psicométricos. Fontes: National Careers Service e EURES. Não foram contactados recrutadores, enviadas candidaturas ou efetuados pagamentos.
+
+Os oito e seis módulos substituem editorialmente o molde conceptual anterior, mas **não há migração ativa** dos quinze títulos históricos. A correspondência de módulos e a preservação de posições precisam de ser decididas antes de integrar uma nova sequência. Ambas as candidatas estão `draft`, `published=false`, `validatedHours=null`; revisão externa, leitor e carga continuam pendentes.
+
 ## Revisão editorial dos eBooks
 
-A matriz conserva a auditoria das **17 obras, em 23 versões linguísticas**. Os 19 produtos anteriormente relatados não foram confirmados na tabela: não foram inventadas duas obras para completar a contagem.
+A matriz conserva a auditoria das **17 obras, em 23 versões linguísticas**. Os 19 produtos anteriormente relatados não foram confirmados na tabela.
 
-Foi iniciada uma **versão candidata 2 de “Como Mudar o Comportamento Humano”**, separada do original:
+A **candidata v2 de “Como Mudar o Comportamento Humano” tem agora vinte capítulos desenvolvidos**, com 9.539 palavras de explicação, além de objetivos, casos sintéticos, atividades distintas e avaliações comentadas. Foram acrescentados os dezassete capítulos pendentes. A sequência aprofunda metas, planeamento situacional, ambiente, registos, consequências, motivação, autoeficácia, experiência emocional, coordenação, prioridades, meios digitais, interrupções, ética, processos, aprendizagem, caso integrado e leitura crítica da evidência.
 
-- Três capítulos desenvolvidos de 20 previstos, com explicação, casos, atividades e critérios: comportamento observável; condições e aprendizagem; formação de hábitos.
-- Referências verificáveis de Michie e colegas, Lally e colegas e Harkin e colegas, com alcance de consulta explícito. Não se convertem médias de estudos em garantias individuais ou prazos universais.
-- A versão 1 continua ativa no Supabase. A verificação SELECT desta continuação confirmou `version=1`, `active=true` e atualização em 14/09/2026. Nenhum conteúdo foi regravado.
-- A candidata contém identificação do produto, versão base e checksum canónico do conteúdo analisado. Não contém cópia integral da obra antiga.
-- `published=false`, `status=draft`, três de 20 capítulos; o validador offline indica `activationEligible=false`. Alterar apenas o estado e os campos de revisão não torna uma edição parcial elegível.
-- O rascunho não é importado pelo leitor, não cria um produto e não muda acesso, compra, preço ou progresso.
+As referências incluem os artigos de Michie, Lally, Harkin, Gollwitzer, Ryan/Deci, Bandura e Roediger/Karpicke, além de definições do manual OpenStax. O alcance de consulta está declarado: não se afirma leitura integral quando apenas resumo ou passagens foram consultados. O DOI de Gollwitzer bloqueou a abertura direta; o resumo indexado foi consultado. O PDF universitário de Roediger devolveu timeout; foi consultado o resumo da editora. O capítulo metodológico inicial identifica explicitamente a análise original, em vez de acrescentar uma referência decorativa.
 
-A revisão intelectual completa das 17 obras permanece pendente. A auditoria encontrou obras de 20 capítulos com cerca de 583–747 palavras no total e dois eBooks de seis páginas com 325 e 416 palavras. Também encontrou sinais de semelhança concentrados em duas obras: 11.710 pares pelo critério de triagem, não 11.710 erros editoriais independentes comprovados. Os textos originais, incluindo a autobiografia, não foram substituídos ou completados com acontecimentos inventados.
+A versão 1 original permanece preservada. Esta etapa não escreveu no Supabase, não substituiu a obra, não alterou compras ou progresso e não importa a candidata pelo leitor. `status=draft`, `published=false`, todas as revisões exigidas continuam falsas. O conteúdo textual está completo para revisão; isso não é aprovação científica, terapêutica, editorial ou de direitos. Sete testes verificam estrutura, versões, casos, referências e limites de elegibilidade.
+
+A revisão das **outras dezasseis obras** continua pendente, incluindo validação específica de alegações em temas clínicos e preservação dos factos das obras autobiográficas. As obras originais não foram completadas com acontecimentos inventados.
+
+## Repetição entre produtos
+
+A triagem conjunta das quatro candidatas (três cursos e um eBook) examinou **49 unidades, 317 parágrafos e 50.086 pares**: zero cópias exatas e zero pares próximos pelo limiar Jaccard de seis palavras ≥0,40. Os testes incluem uma cópia introduzida entre produtos para confirmar a deteção. Não se lê nem reemite a obra protegida original neste verificador; apenas as novas candidatas são comparadas. Isto não substitui revisão semântica ou pedagógica externa.
 
 ## Correções técnicas
 
@@ -77,7 +93,7 @@ Isto valida o encaminhamento sintético, não uma cobrança ou renovação finan
 
 A execução GitHub Actions `43730866960` falhou antes da instalação, com `Library hero start not found`: o patch posicional de setembro procurava a estrutura antiga da biblioteca. O workflow preserva o nome e o identificador do job para continuidade dos checks, mas agora apenas instala o lockfile da raiz, executa contratos sintéticos da biblioteca, verifica candidatas editoriais, TypeScript e build. Foram retirados os geradores legados e o commit/push automático à `main`; a permissão passou a `contents: read`, sem credenciais persistidas no checkout. Os scripts históricos continuam disponíveis para consulta manual.
 
-Dois testes verificam que esta automação permanece sem escrita de branches ou acesso a secrets e que mantém os comandos de validação. Os outros três workflows do head anterior passaram. Os quatro workflows do commit `2cf028f` passaram no GitHub: Academy (`43731339671`), Enterprise (`43731339634`), LDR ONE (`43731339552`) e AI READY (`43731339544`). O lote de quatro módulos também passou nos quatro workflows do head `d778d42` (Academy `43732157636`, Enterprise `43732157647`, LDR ONE `43732157660`, AI READY `43732157648`). Os quinze módulos e a nova triagem serão validados num novo head; os resultados por commit constam no PR.
+Dois testes verificam que esta automação permanece sem escrita de branches ou acesso a secrets e que mantém os comandos de validação. Os outros três workflows do head anterior passaram. Os quatro workflows do commit `2cf028f` passaram no GitHub: Academy (`43731339671`), Enterprise (`43731339634`), LDR ONE (`43731339552`) e AI READY (`43731339544`). O lote de quatro módulos também passou nos quatro workflows do head `d778d42` (Academy `43732157636`, Enterprise `43732157647`, LDR ONE `43732157660`, AI READY `43732157648`). Os quinze módulos e a triagem passaram nos quatro workflows do head `63dbfb5` (Academy `43733554684`, Enterprise `43733554687`, LDR ONE `43733554682`, AI READY `43733554752`). O lote com novas candidatas terá validação remota própria, registada no PR.
 
 ## Validação
 
@@ -85,10 +101,10 @@ Dois testes verificam que esta automação permanece sem escrita de branches ou 
 | --- | --- |
 | TypeScript | Passou, sem erros |
 | Build | Passou, sem deploy |
-| Suíte de regressão | 218/218 passaram |
+| Suíte de regressão | 225/225 passaram |
 | Suíte unitária existente | 59/59 passaram |
-| Testes específicos `library-*.test.cjs` | 42/42 passaram |
-| Validação da edição candidata | Quatro testes passaram; candidata parcial continua inelegível |
+| Testes específicos `library-*.test.cjs` | 46/46 passaram |
+| Validação da edição candidata | Sete testes passaram; candidata com vinte capítulos continua inelegível sem as revisões |
 | Encaminhamento Stripe | Sete testes de encaminhamento e contrato passaram; handlers e dados simulados |
 | Progresso monotónico | Oito cenários sintéticos passaram, incluindo atualizações e primeiras gravações concorrentes, isolamento de cliente e falhas |
 | Estrutura de eBooks | 23/23 versões normalizadas sem erro estrutural; não é aprovação editorial |
@@ -102,8 +118,8 @@ A suíte de regressão inclui vários dos testes específicos; estas quantidades
 ## Pendências que continuam abertas
 
 1. Revisão pedagógica especializada dos 59 módulos, testes com alunos, materiais complementares e dimensionamento de carga real; completar áudio e avaliação oral nos idiomas.
-2. Realizar revisão externa e pilotagem dos quinze módulos da candidata de entrevistas, incluindo dimensionamento da carga. Desenvolver as aulas próprias dos restantes 49 roteiros de assinatura, de RH e de cada formação profissional. A contagem de títulos ou texto gerado não comprova 600/1200 horas.
-3. Concluir os 17 capítulos restantes da candidata editorial iniciada e revisar as outras 16 obras, com verificação intelectual, bibliográfica e de direitos, sem substituir versões antigas automaticamente.
+2. Realizar revisão externa e pilotagem dos quinze módulos da candidata de entrevistas, incluindo dimensionamento da carga. Desenvolver as aulas próprias dos restantes 47 roteiros de assinatura, de RH e de cada formação profissional. A contagem de títulos ou texto gerado não comprova 600/1200 horas.
+3. Rever externamente os vinte capítulos da candidata desenvolvida e revisar as outras 16 obras, com verificação intelectual, bibliográfica e de direitos, sem substituir versões antigas automaticamente.
 4. Testar a prévia com sessões sintéticas reais: comprador, assinante ativo/inativo e aluno sem compra. Verificar acessibilidade interativa, visual e overflow em dispositivos móveis.
 5. Validar anexos externos, emissão e consulta de certificados e concorrência entre dispositivos num ambiente de testes. Os mocks e a presença de RLS não substituem essa etapa.
 6. Manter a promoção a produção bloqueada até as validações e a autorização explícita do utilizador. Esta entrega não fez merge, deploy, alteração de assinatura, criação de serviço pago ou escrita em produção.
@@ -113,6 +129,7 @@ A suíte de regressão inclui vários dos testes específicos; estas quantidades
 - `node tools/audit-library-content.cjs <export-digital-content.json> <export-programas.json> docs/audit-20261115`
 - `node tools/validate-editorial-drafts.cjs`
 - `node tools/validate-course-drafts.cjs`
+- `node tools/review-editorial-corpus.cjs`
 - `node --test apps/painel-ldr/tests/library-*.test.cjs apps/painel-ldr/tests/editorial-drafts.test.cjs`
 - `npm --prefix apps/painel-ldr run test:regressions`
 - `npm --prefix apps/painel-ldr test`

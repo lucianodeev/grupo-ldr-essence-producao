@@ -21,6 +21,7 @@ on:
       - 'editorial/courses/**'
       - 'tools/validate-course-drafts.cjs'
       - 'tools/course-repetition-review.cjs'
+      - 'tools/review-editorial-corpus.cjs'
       - 'tools/validate-editorial-drafts.cjs'
       - 'package-lock.json'
       - 'apps/painel-ldr/package.json'
@@ -44,6 +45,7 @@ on:
       - 'editorial/courses/**'
       - 'tools/validate-course-drafts.cjs'
       - 'tools/course-repetition-review.cjs'
+      - 'tools/review-editorial-corpus.cjs'
       - 'tools/validate-editorial-drafts.cjs'
       - 'package-lock.json'
       - 'apps/painel-ldr/package.json'
@@ -70,6 +72,8 @@ jobs:
         run: node tools/validate-editorial-drafts.cjs
       - name: Validate unpublished course candidates
         run: node tools/validate-course-drafts.cjs
+      - name: Check repetition across all authored candidates
+        run: node tools/review-editorial-corpus.cjs
       - name: Check Academy TypeScript
         run: npm --prefix apps/painel-ldr run typecheck
       - name: Build Academy without deployment
