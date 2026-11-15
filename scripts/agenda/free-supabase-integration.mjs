@@ -56,7 +56,7 @@ try{
   const client=createClient(url,status.ANON_KEY,{auth:{persistSession:false,autoRefreshToken:false}});
   const login=await client.auth.signInWithPassword({email,password});
   if(!verified)return {user,login};
-  const session=unwrap(login).session;return {user,context:{userId:user.id,accessToken:session.access_token,supabase:client}};
+  const session=unwrap(login).session;return {user,session:{access_token:session.access_token,refresh_token:session.refresh_token},context:{userId:user.id,accessToken:session.access_token,supabase:client}};
  }
  // The allowlisted address is only a synthetic local identity. No email is sent.
  const master=await identity('llucianouam@gmail.com'),owner=await identity('owner@example.test'),other=await identity('other@example.test');
@@ -120,5 +120,8 @@ try{
  assert.equal((await send(refund)).status,200);
  await assert.rejects(()=>customer.requestClientAppointment(owner.user.id,owner.user.email,{orderId:draft.id,startsAt:next}));
  pass('refund fixture blocks further bookings; existing Calendar cancellation remains operational');
+ if(process.env.LDR_LOCAL_BROWSER_IDENTITIES){
+  fs.writeFileSync(process.env.LDR_LOCAL_BROWSER_IDENTITIES,JSON.stringify({master:master.session,owner:owner.session,other:other.session,protocol:contact.protocol,title:input.title}),{mode:0o600});
+ }
  console.log(`PASS ${checks} free local Supabase integrated checks; no remote providers or production writes`);
 }finally{await pg.end();}

@@ -59,7 +59,16 @@ jobs:
         env:
           AGENDA_PG_PACKAGE: /tmp/free-pg/package.json
           LDR_LOCAL_SUPABASE_STATUS: /tmp/ldr-local-status.json
+          LDR_LOCAL_BROWSER_IDENTITIES: /tmp/ldr-local-browser-identities.json
         run: node scripts/agenda/free-supabase-integration.mjs
+      - run: npm install --prefix /tmp/free-browser --no-audit --no-fund playwright@1.56.1
+      - run: /tmp/free-browser/node_modules/.bin/playwright install --with-deps chromium
+      - name: Verify cookie sessions and private pages in the real local application
+        env:
+          PLAYWRIGHT_PACKAGE: /tmp/free-browser/package.json
+          LDR_LOCAL_SUPABASE_STATUS: /tmp/ldr-local-status.json
+          LDR_LOCAL_BROWSER_IDENTITIES: /tmp/ldr-local-browser-identities.json
+        run: node scripts/agenda/free-supabase-browser.mjs
       - name: Remove disposable stack and local data
         if: always()
         run: supabase stop --workdir /tmp/ldr-free-supabase --no-backup
