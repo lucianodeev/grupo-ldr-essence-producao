@@ -6,6 +6,7 @@ export function bootstrap({supabaseLocal=false}={}){
  s.tables.push(catalog);s.constraints.push(...catalog.constraints);
  if(supabaseLocal){
   s.tables=s.tables.filter(t=>t.schema!=='auth');
+  s.enums=s.enums.filter(e=>e.schema!=='auth');
   s.constraints=s.constraints.filter(c=>!c.table.startsWith('auth.'));
   s.supportFunctions=s.supportFunctions.filter(f=>f.schema!=='auth');
   s.indexes=s.indexes.filter(i=>!i.includes(' ON auth.'));
