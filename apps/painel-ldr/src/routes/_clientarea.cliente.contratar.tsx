@@ -289,10 +289,10 @@ function ClientContract() {
 
     {!psicanalise.length && !mentoria.length && !filtered.length && <p className="s8-card text-sm text-muted-foreground">{purchaseCopy.noResults}</p>}
 
-    {psicanalise.length > 0 && <section className="min-w-0"><p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">{copy.attendance}</p><h2 className="mt-1 break-words font-serif text-2xl">{t("contract.psychoanalysis")}</h2><ul className="mt-4 grid min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-3">{psicanalise.map(card)}</ul></section>}
-    {mentoria.length > 0 && <section className="min-w-0"><p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">{copy.mentorshipStrategy}</p><h2 className="mt-1 break-words font-serif text-2xl">{t("contract.mentorship")}</h2><ul className="mt-4 grid min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-3">{mentoria.map(card)}</ul></section>}
+    {psicanalise.length > 0 && <section id="psicanalise" className="min-w-0 scroll-mt-24"><p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">{copy.attendance}</p><h2 className="mt-1 break-words font-serif text-2xl">{t("contract.psychoanalysis")}</h2><ul className="mt-4 grid min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-3">{psicanalise.map(card)}</ul></section>}
+    {mentoria.length > 0 && <section id="mentoria" className="min-w-0 scroll-mt-24"><p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">{copy.mentorshipStrategy}</p><h2 className="mt-1 break-words font-serif text-2xl">{t("contract.mentorship")}</h2><ul className="mt-4 grid min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-3">{mentoria.map(card)}</ul></section>}
 
-    {grouped.map(([category, categoryItems]) => <section key={category} className="min-w-0 rounded-3xl border border-border/70 bg-card p-5 sm:p-6"><div className="mb-4 min-w-0"><p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">{copy.serviceSolutions}</p><h2 className="mt-1 break-words font-serif text-2xl">{copy.categories[category]}</h2></div><ul className="grid min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-3">{categoryItems.map(card)}</ul></section>)}
+    {grouped.map(([category, categoryItems]) => <section id={category} key={category} className="min-w-0 scroll-mt-24 rounded-3xl border border-border/70 bg-card p-5 sm:p-6"><div className="mb-4 min-w-0"><p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">{copy.serviceSolutions}</p><h2 className="mt-1 break-words font-serif text-2xl">{copy.categories[category]}</h2></div><ul className="grid min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-3">{categoryItems.map(card)}</ul></section>)}
     <CorporateWellbeing copy={copy} locale={locale} />
   </div>;
 }
