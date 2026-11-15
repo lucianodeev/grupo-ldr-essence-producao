@@ -7,13 +7,13 @@ const {normalizeDigitalReaderContent,readerProgressFloor}=load('lib/digital-read
 const {libraryMatches,libraryOwned,libraryContinueItems}=load('lib/library-dashboard.ts');
 const plain=x=>JSON.parse(JSON.stringify(x));
 test('authored batches cover their actual curricula, with distinct developed sections, exercises and assessments',()=>{
- const all=[];for(const slug of ['orientacao-trabalho-cientifico','ingles-basico-a1']){
+ const all=[];for(const slug of ['orientacao-trabalho-cientifico','ingles-basico-a1','espanhol-basico-a1','portugues-para-falantes-de-outras-linguas-a1','neerlandes-basico-a1','alemao-basico-a1','modelos-documentos-psicanaliticos']){
   const c=ACADEMY_FREE_COURSES.find(c=>c.slug===slug),lessons=freeCourseLessons(slug);assert.equal(lessons.length,c.modules.length);
   for(const l of lessons){assert.ok(l.objectives.length>=2);assert.ok(l.sections.flatMap(s=>s.paragraphs).join(' ').split(/\s+/).length>=200,l.id);assert.ok(l.caseStudy.includes('fictíci'));assert.ok(l.assessment.criteria.length>=3);for(const id of l.sourceIds)assert.ok(EDITORIAL_SOURCES[id],id);all.push(l);}
  }
- assert.equal(all.length,17);assert.equal(new Set(all.map(l=>l.id)).size,17);assert.equal(new Set(all.map(l=>l.exercise)).size,17);assert.equal(new Set(all.flatMap(l=>l.sections.flatMap(s=>s.paragraphs))).size,all.flatMap(l=>l.sections.flatMap(s=>s.paragraphs)).length);
+ assert.equal(all.length,47);assert.equal(new Set(all.map(l=>l.id)).size,47);assert.equal(new Set(all.map(l=>l.exercise)).size,47);assert.equal(new Set(all.flatMap(l=>l.sections.flatMap(s=>s.paragraphs))).size,all.flatMap(l=>l.sections.flatMap(s=>s.paragraphs)).length);
 });
-test('unknown and pending courses have no fabricated lessons',()=>{assert.equal(freeCourseLessons('alemao-basico-a1').length,0);assert.equal(freeCourseLessons('missing').length,0);});
+test('unknown and pending courses have no fabricated lessons',()=>{assert.equal(freeCourseLessons('clinica-psicanalitica-sigmund-freud').length,0);assert.equal(freeCourseLessons('missing').length,0);});
 test('corrupt local state is bounded without losing valid legacy completions',()=>{assert.deepEqual(plain(restoreFreeLearningState({index:99,done:[0,0,2,-1,'3',999]},5)),{index:4,done:[0,2]});assert.deepEqual(plain(restoreFreeLearningState(null,5)),{index:0,done:[]});});
 test('pending lessons and unreviewed activities cannot complete; completion is idempotent',()=>{const state={index:0,done:[]};assert.equal(recordFreeLesson(state,[],true),state);assert.equal(recordFreeLesson(state,freeCourseLessons('ingles-basico-a1'),false),state);const next=recordFreeLesson(state,freeCourseLessons('ingles-basico-a1'),true);assert.deepEqual(plain(recordFreeLesson(next,freeCourseLessons('ingles-basico-a1'),true)),plain(next));});
 test('saved progress is a floor when a revised batch has fewer completed lessons',()=>{assert.equal(freeStudyPercent([0],12,75),75);assert.equal(freeStudyPercent([0,0,999],12,0),8);assert.equal(freeStudyPercent([],0,50),50);assert.equal(readerProgressFloor(1,100,90),90);assert.equal(readerProgressFloor(30,100,10),30);});

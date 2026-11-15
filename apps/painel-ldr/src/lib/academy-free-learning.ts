@@ -1,9 +1,21 @@
+import { DOCUMENTATION_LESSONS } from "../content/academy-free/documentation";
+import {
+  SPANISH_LESSONS,
+  PORTUGUESE_LESSONS,
+  DUTCH_LESSONS,
+  GERMAN_LESSONS,
+} from "../content/academy-free/language-batches";
 import { ENGLISH_LESSONS } from "../content/academy-free/english-a1";
 import { RESEARCH_LESSONS } from "../content/academy-free/research-methods";
 import type { EditorialLesson } from "../content/academy-free/types";
 export function freeCourseLessons(slug: string): readonly EditorialLesson[] {
   if (slug === "orientacao-trabalho-cientifico") return RESEARCH_LESSONS;
   if (slug === "ingles-basico-a1") return ENGLISH_LESSONS;
+  if (slug === "espanhol-basico-a1") return SPANISH_LESSONS;
+  if (slug === "portugues-para-falantes-de-outras-linguas-a1") return PORTUGUESE_LESSONS;
+  if (slug === "neerlandes-basico-a1") return DUTCH_LESSONS;
+  if (slug === "alemao-basico-a1") return GERMAN_LESSONS;
+  if (slug === "modelos-documentos-psicanaliticos") return DOCUMENTATION_LESSONS;
   return [];
 }
 export type FreeLearningState = { index: number; done: number[] };

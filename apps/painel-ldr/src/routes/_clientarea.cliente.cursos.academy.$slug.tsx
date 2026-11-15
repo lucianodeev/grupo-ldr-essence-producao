@@ -100,7 +100,7 @@ function FreeCourse({ slug }: { slug: string }) {
         <p className="mt-3 leading-7 text-slate-200">{course.description.pt}</p>
         <p className="mt-3 text-sm text-[#f4d99a]">
           {lessons.length}/{course.modules.length} módulos com texto específico nesta edição.
-          Conteúdo em português.
+          Texto-base em português; o curso de português para estrangeiros inclui apoio em inglês.
         </p>
         <p className="mt-2 text-sm leading-6 text-slate-200">
           {course.hours
@@ -200,6 +200,18 @@ function FreeCourse({ slug }: { slug: string }) {
                   </ul>
                 </details>
               </section>
+              {lesson.template && (
+                <section className="mt-8 rounded-xl border border-slate-300 bg-slate-50 p-5">
+                  <h3 className="font-bold">{lesson.template.title}</h3>
+                  <pre className="mt-4 whitespace-pre-wrap break-words font-mono text-sm leading-7">
+                    {lesson.template.body}
+                  </pre>
+                  <p className="mt-3 text-sm leading-6">
+                    Exemplo educacional. Não é contrato, diagnóstico ou documento profissional
+                    validado para uso real.
+                  </p>
+                </section>
+              )}
               {lesson.sourceIds.length > 0 && (
                 <section className="mt-8 border-t pt-6">
                   <h3 className="font-serif text-2xl">Fontes consultadas</h3>
