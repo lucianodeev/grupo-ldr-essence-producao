@@ -2,15 +2,21 @@
 import {createDecipheriv} from 'node:crypto';
 export const TEST_CALENDAR='e23f50c0bd5d6e0674959daa9ac822861319d9da464bfd6e17327eae3ea457a7@group.calendar.google.com';
 const SOURCE='https://sfrcsrzuoqdscflfuwik.supabase.co';
-export async function prepareRemoteCalendar(raw,request=fetch){
+export async function prepareRemoteCalendar(raw,request=fetch,report=()=>{}){
  let key,bytes;
  try{
-  const config=JSON.parse(raw);
-  if(config.SUPABASE_URL?.replace(/\/$/,'')!==SOURCE || config.GOOGLE_CALENDAR_TEST_ID!==TEST_CALENDAR ||
-   !config.GOOGLE_CALENDAR_ID || config.GOOGLE_CALENDAR_ID===TEST_CALENDAR ||
-   !config.GOOGLE_OAUTH_CLIENT_ID?.endsWith('.apps.googleusercontent.com') || !config.GOOGLE_OAUTH_CLIENT_SECRET ||
-   !config.SUPABASE_SERVICE_ROLE_KEY)throw Error();
-  key=Buffer.from(config.GOOGLE_CALENDAR_TOKEN_ENCRYPTION_KEY??'','base64');if(key.length!==32)throw Error();
+  const input=JSON.parse(raw);
+  // The recovery payload has an explicitly versioned wrapper; raw maps remain supported.
+  const wrapped=input?.schema_version===1&&input?.render_service==='srv-daqq2gfavr4c7394hb1g'&&input?.env;
+  const config=wrapped?input.env:input;
+  key=Buffer.from(config?.GOOGLE_CALENDAR_TOKEN_ENCRYPTION_KEY??'','base64');
+  const readiness={wrapped:!!wrapped,source:config?.SUPABASE_URL?.replace(/\/$/,'')===SOURCE,
+   test_destination:config?.GOOGLE_CALENDAR_TEST_ID===TEST_CALENDAR,
+   production_distinct:!!config?.GOOGLE_CALENDAR_ID&&config.GOOGLE_CALENDAR_ID!==TEST_CALENDAR,
+   oauth_client:!!config?.GOOGLE_OAUTH_CLIENT_ID?.endsWith('.apps.googleusercontent.com'),
+   oauth_secret:!!config?.GOOGLE_OAUTH_CLIENT_SECRET,source_key:!!config?.SUPABASE_SERVICE_ROLE_KEY,encryption_key:key.length===32};
+  report(readiness);
+  if(Object.entries(readiness).some(([name,ok])=>name!=='wrapped'&&!ok))throw Error();
   const headers={apikey:config.SUPABASE_SERVICE_ROLE_KEY};
   if(!config.SUPABASE_SERVICE_ROLE_KEY.startsWith('sb_secret_'))headers.Authorization='Bearer '+config.SUPABASE_SERVICE_ROLE_KEY;
   const response=await request(SOURCE+'/rest/v1/ldr_calendar_oauth_secrets?select=encrypted_value,granted_scopes&secret_name=eq.google_calendar_refresh_token',{
