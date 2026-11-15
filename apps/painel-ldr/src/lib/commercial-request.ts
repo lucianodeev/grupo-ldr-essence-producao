@@ -1,6 +1,6 @@
 import { z } from "zod";
 export const COMMERCIAL_INTERESTS = ["Contratação de serviços", "Demonstração comercial", "Parceria institucional", "Licenciamento de módulos", "Proposta de aquisição de ativos"] as const;
-export const COMMERCIAL_SOLUTIONS = ["Recrutamento e seleção", "Consultoria de recursos humanos", "Desenvolvimento de talentos", "Gestão de pessoas", "Formação empresarial", "Empregabilidade e carreira", "Bem-estar organizacional", "Rede Acadêmica", "LDR ONE", "Soluções personalizadas"] as const;
+export const COMMERCIAL_SOLUTIONS = ["Consultoria estratégica", "Tecnologia, IA e automação", "Mentoria profissional", "Recrutamento e seleção", "Consultoria de recursos humanos", "Desenvolvimento de talentos", "Gestão de pessoas", "Formação empresarial", "Empregabilidade e carreira", "Bem-estar organizacional", "Rede Acadêmica", "LDR ONE", "Soluções personalizadas"] as const;
 const schema = z.object({
   organization: z.string().trim().min(2).max(160), name: z.string().trim().min(2).max(120),
   email: z.string().trim().email().max(254), interest: z.enum(COMMERCIAL_INTERESTS), solution: z.enum(COMMERCIAL_SOLUTIONS),
