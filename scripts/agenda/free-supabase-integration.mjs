@@ -133,13 +133,16 @@ try{
  const saga=load('lib/calendar-sync.server.ts');
  const agendaAdmin=load('lib/agenda-admin.server.ts');
  const firstSync=await agendaAdmin.confirmWithGoogleMeet(master.context.supabase,master.user.id,{appointmentId:booked.appointmentId,startsAt});
+ assert.equal(firstSync.ok,true,firstSync.errorCode??'Google Meet confirmation did not complete');
  assert.equal(firstSync.status,'sincronizado',firstSync.errorCode);
  assert.equal((await saga.syncAppointmentEvent(booked.appointmentId)).status,'sincronizado');
  assert.equal(await ownedCalendar.countEventsByAppointment(booked.appointmentId),1);
  pass(`${remote?'REMOTE TEST':'synthetic'} Calendar saga uses actual local payment, lease and persistent event identity`);
  const next=atMinute(new Date(Date.now()+4*86400000));
  await customer.rescheduleClientAppointment(owner.user.id,owner.user.email,{appointmentId:booked.appointmentId,startsAt:next});
- assert.equal((await agendaAdmin.confirmWithGoogleMeet(master.context.supabase,master.user.id,{appointmentId:booked.appointmentId,startsAt:next})).status,'sincronizado');
+ const confirmedAgain=await agendaAdmin.confirmWithGoogleMeet(master.context.supabase,master.user.id,{appointmentId:booked.appointmentId,startsAt:next});
+ assert.equal(confirmedAgain.ok,true,confirmedAgain.errorCode??'Rescheduled Google Meet confirmation did not complete');
+ assert.equal(confirmedAgain.status,'sincronizado');
  assert.equal((await ownedCalendar.findEventByAppointment(booked.appointmentId,null)).start,Date.parse(next));
  assert.equal(await ownedCalendar.countEventsByAppointment(booked.appointmentId),1);
  pass('real client appointment and reschedule through REST/RPC; wrong owner denied');
