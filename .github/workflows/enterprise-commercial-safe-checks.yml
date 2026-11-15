@@ -51,6 +51,7 @@ jobs:
       - name: Start disposable local Auth, Data API and database
         run: |
           supabase init --workdir /tmp/ldr-free-supabase --yes
+          sed -i 's/enable_confirmations = false/enable_confirmations = true/' /tmp/ldr-free-supabase/supabase/config.toml
           supabase start --workdir /tmp/ldr-free-supabase --exclude storage-api,imgproxy,realtime,studio,postgres-meta,edge-runtime,logflare,vector,supavisor > /tmp/ldr-local-start.log 2>&1
           umask 077
           supabase status --workdir /tmp/ldr-free-supabase -o json > /tmp/ldr-local-status.json
