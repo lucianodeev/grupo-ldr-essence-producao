@@ -120,7 +120,8 @@ try{
   assert.equal(process.env.GITHUB_REF,'refs/heads/main');assert.equal(process.env.GITHUB_ACTOR,'lucianodeev');
   assert.equal(process.env.GITHUB_EVENT_NAME,'workflow_dispatch');
   const {prepareRemoteCalendar}=await import('./remote-calendar-config.mjs');
-  Object.assign(process.env,await prepareRemoteCalendar(process.env.LDR_CALENDAR_CONFIG_JSON));
+  Object.assign(process.env,await prepareRemoteCalendar(process.env.LDR_CALENDAR_CONFIG_JSON,fetch,
+   readiness=>console.log('Calendar configuration readiness (booleans only): '+JSON.stringify(readiness))));
   delete process.env.LDR_CALENDAR_CONFIG_JSON;
   ownedCalendar=await import(new URL('lib/google-calendar.server.ts',root));
  }else{ownedCalendar=(await import('./synthetic-calendar.mjs')).syntheticCalendar();}
