@@ -70,3 +70,10 @@ test("account linking treats underscore and percent in an email as literal chara
  assert.equal(f.state.emailPattern,"victim\\_name\\%@example.invalid");assert.equal(f.state.updateCalls,0);
  assert.equal(f.state.rows.customers[0].auth_user_id,null);
 });
+
+test("paid enterprise deliveries and cancelled orders are excluded from self-service scheduling",async()=>{
+ for(const patch of [{metadata:{checkout_kind:"enterprise_quote",sessions:0},catalog_key:null},{metadata:{checkout_kind:"catalog_service",sessions:0},catalog_key:"landing_page"},{status:"cancelado"}]){
+  const f=fixture();Object.assign(f.state.rows.orders[0],patch);f.state.rows.appointments=[];
+  const data=await f.api.getClientAgenda("user-A","owner@example.invalid");assert.equal(data.schedulable.length,0);assert.equal(f.state.writes,0);
+ }
+});

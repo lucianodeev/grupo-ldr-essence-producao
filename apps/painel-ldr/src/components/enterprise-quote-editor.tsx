@@ -30,7 +30,8 @@ export function EnterpriseQuoteEditor({ contactId }: { contactId: string }) {
     {query.isError ? <p role="alert">Não foi possível consultar as propostas.</p> : query.isLoading ? <p>Carregando propostas…</p> : <>
       <ul className="mt-4 space-y-3">{query.data?.orders.map((order: any) => <li key={order.id} className="rounded-xl bg-slate-50 p-4">
         <p className="font-bold">{order.order_number} · {order.title}</p>
-        <p className="mt-1">{formatMoney(order.amount_cents, order.currency)} · {order.metadata.quote_state} · {order.payment_status} · {order.status}</p>
+        <p className="mt-1 text-sm">Empresa: {order.metadata.organization || "Ver solicitação"} · Origem: {order.metadata.source_project || "Central Empresas LDR"}</p>
+        <p className="mt-1">{formatMoney(order.amount_cents, order.currency)} · {({draft:"Rascunho",approved:"Aprovada",accepted:"Aceita"} as Record<string,string>)[order.metadata.quote_state] ?? order.metadata.quote_state} · {order.payment_status} · {order.status}</p>
         <p className="mt-2 whitespace-pre-wrap text-sm">{order.description}</p>
         <p className="mt-2 text-xs">Responsável: {order.assignee_id} · Validade: {new Date(order.metadata.quote_valid_until * 1000).toLocaleString("pt-PT")}</p>
         <p className="mt-1 text-xs">Preparada: {order.metadata.prepared_at} · Aprovada: {order.metadata.approved_at ?? "—"} · Aceita: {order.metadata.accepted_at ?? "—"}</p>

@@ -28,7 +28,7 @@ function fixture() {
   const state = { reads: 0, writes: 0, requests: [], failSave: false, rows: {
     service_catalog: [{ catalog_key: "mentoria_4", name: "Mentoria — 4 sessões", category: "mentoria", billing_model: "package_sessions", billing_cadence: "one_time", package_sessions: 4, amount_cents: 24300, currency: "EUR", active: true }], orders: [],
   } };
-  const db = { from(table) {
+  const db = { async rpc(name) { assert.equal(name,"ldr_enterprise_quote_checkout_ready"); return {data:state.ready !== false,error:null}; }, from(table) {
     assert.ok(table in state.rows, "checkout must not access credits or appointments");
     const filters = []; let op = "read", row;
     const q = { select() { return q; }, eq(k,v) { filters.push(r => r[k] === v); return q; },
@@ -167,4 +167,14 @@ test("server function requires authentication and rejects client-supplied price 
   assert.equal(api.clientServiceCheckout.guards[0],auth);
   assert.equal(api.clientServiceCheckout.parse(input).catalogKey,"mentoria_4");
   for(const extra of [{amountCents:1},{customerId:"someone-else"},{email:"other@example.invalid"},{currency:"BRL"}])assert.throws(()=>api.clientServiceCheckout.parse({...input,...extra}));
+});
+
+test("fixed projects are opt-in, use the database price, grant zero sessions and do not need the calendar", async () => {
+  const f=fixture();Object.assign(f.state.rows.service_catalog[0],{catalog_key:"landing_page",billing_model:"project",package_sessions:0});
+  const projectEnv={...env,INDIVIDUAL_SERVICE_CHECKOUT_ENABLED:"false",AGENDA_INTEGRATION_ENABLED:"false",FIXED_PROJECT_CHECKOUT_ENABLED:"true",FIXED_PROJECT_CHECKOUT_CATALOG_KEYS:"landing_page"};
+  await f.run({...input,catalogKey:"landing_page"},"user-A",customer,{env:projectEnv});
+  assert.equal(f.state.rows.orders[0].metadata.checkout_kind,"catalog_service");assert.equal(f.state.rows.orders[0].metadata.sessions,0);assert.equal(f.state.rows.orders[0].amount_cents,24300);
+  assert.equal(f.state.rows.orders[0].payment_status,"pendente");
+  const g=fixture();Object.assign(g.state.rows.service_catalog[0],f.state.rows.service_catalog[0]);g.state.ready=false;
+  await assert.rejects(g.run({...input,catalogKey:"landing_page"},"user-A",customer,{env:projectEnv}));assert.equal(g.state.requests.length,0);
 });

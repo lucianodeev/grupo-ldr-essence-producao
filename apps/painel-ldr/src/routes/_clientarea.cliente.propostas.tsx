@@ -28,7 +28,7 @@ function Proposals() {
         <p className="text-sm">{quote.sessions > 0 ? `${quote.sessions} sessão(ões). Após confirmação do pagamento, solicite o horário na Minha agenda. A equipe confirma a disponibilidade.` : "Projeto ou entrega. Após confirmação do pagamento, acompanhe a execução e os materiais em Meus pedidos. Não é necessário agendar."}</p>
         {payable && <><label className="flex items-start gap-3 text-sm leading-6"><input type="checkbox" className="mt-1 h-5 w-5 shrink-0" checked={accepted[quote.id] ?? false} onChange={event => setAccepted({ ...accepted, [quote.id]: event.target.checked })} />Li e aceito o âmbito, o valor total, a moeda e as condições desta proposta.</label>
           <button disabled={!accepted[quote.id] || payment.isPending} onClick={() => payment.mutate({ data: { id: quote.id, accepted: true } })} className="min-h-12 w-full rounded-xl bg-primary px-5 py-3 font-bold text-primary-foreground disabled:opacity-50">Aceitar e continuar para pagamento</button></>}
-        {expired && <p className="text-sm">Proposta expirada. Solicite uma atualização à equipe pelo suporte.</p>}
+        {expired && quote.paymentStatus === "pendente" && <p className="text-sm">Proposta expirada. Solicite uma atualização à equipe pelo suporte.</p>}
         {quote.state === "accepted" && <Link to="/cliente/pedido/$orderId" params={{ orderId: quote.id }} className="inline-flex min-h-11 items-center font-bold underline">Acompanhar pedido</Link>}
       </li>;
     })}</ul>}
