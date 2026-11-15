@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { AcademyUniversityHome } from "@/components/academy-university-home";
 import { AcademyEcosystemSection } from "@/components/academy-ecosystem-section";
 import { AcademyInstitutionalIntro } from "@/components/academy-institutional-intro";
+import { EcosystemServiceShowcase } from "@/components/ecosystem-service-showcase";
 
 // Desktop home actions intentionally compact; LDR ONE is the current digital subscription.
 export const Route = createFileRoute("/")({
@@ -39,6 +40,7 @@ function PublicHome() {
       </div>
     </section>
     <AcademyInstitutionalIntro />
+    <EcosystemServiceShowcase compact />
     <AcademyEcosystemSection />
     <div className="academy-integrated-legacy">
       <AcademyUniversityHome />

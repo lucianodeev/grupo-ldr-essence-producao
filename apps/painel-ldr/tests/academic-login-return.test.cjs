@@ -204,3 +204,17 @@ test('LDR ONE returns to the official domain checkout after login and rejects ex
   assert.equal(response.headers.get('location'), checkout);
   assert.match(response.headers.get('set-cookie'), /test-session=fixture/);
 });
+
+// Public service cards must return to the current catalogue, never to a payment provider.
+test('service showcase keeps catalogue section through login and rejects lookalike paths', async () => {
+  for (const hash of ['psicanalise', 'mentoria', 'career', 'sites']) {
+    const target = `/cliente/contratar#${hash}`;
+    assert.equal(helper.academicReturnPath(target), target);
+    const response = await callback().run(`${helper.ACADEMY_ORIGIN}/api/auth/callback?code=test-only`, ssr.serializeCookieHeader(helper.ACADEMIC_RETURN_COOKIE, target));
+    assert.equal(response.status, 303);
+    assert.equal(response.headers.get('location'), target);
+  }
+  for (const target of ['//evil.test/cliente/contratar', '/cliente/contratar-falso', '/cliente/contratar/../admin', '/cliente/pedido/123']) {
+    assert.equal(helper.academicReturnPath(target), null);
+  }
+});

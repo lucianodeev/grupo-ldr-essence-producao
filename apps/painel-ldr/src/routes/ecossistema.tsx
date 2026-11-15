@@ -3,6 +3,7 @@ import { LanguageSelect, useI18n } from "../lib/i18n";
 import { useQuery } from "@tanstack/react-query";
 import { ecosystemNews } from "../lib/ecosystem-news.functions";
 import { ECOSYSTEM_TICKER } from "../lib/ecosystem-ticker";
+import { EcosystemServiceShowcase } from "@/components/ecosystem-service-showcase";
 
 type Hub = {
   name: string;
@@ -336,6 +337,8 @@ function EcosystemMap() {
           </div>
         </div>
 
+
+        <EcosystemServiceShowcase />
 
         <section className="mt-8 overflow-hidden rounded-[30px] border border-[#d6ad63]/60 bg-white p-6 shadow-xl sm:p-8">
           <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-center">
