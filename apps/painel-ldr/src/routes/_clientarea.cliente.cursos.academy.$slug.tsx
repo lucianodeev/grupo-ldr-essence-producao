@@ -6,6 +6,7 @@ import { getAcademyFreeCourse } from "@/lib/academy-free-courses.catalog";
 import { clientSaveProgress, clientProductStudyProgress } from "@/lib/learning.functions";
 import {
   freeCourseLessons,
+  freeCourseEditorialNotice,
   freeStudyPercent,
   recordFreeLesson,
   restoreFreeLearningState,
@@ -109,6 +110,11 @@ function FreeCourse({ slug }: { slug: string }) {
           Os tempos são estimativas de estudo com atividades, não horas certificadas. Esta edição
           não emite certificados.
         </p>
+        {freeCourseEditorialNotice(slug) && (
+          <p className="mt-4 rounded-xl border border-[#d6ad63]/60 p-4 text-sm leading-7">
+            {freeCourseEditorialNotice(slug)}
+          </p>
+        )}
         <label className="mt-5 block text-sm" htmlFor="study-progress">
           Progresso de estudo preservado: {percent}%
         </label>

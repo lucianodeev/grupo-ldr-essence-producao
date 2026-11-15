@@ -13,6 +13,88 @@ export const EDITORIAL_SOURCES: Record<
   string,
   { title: string; url: string; consulted: string; scope: string }
 > = {
+  "freud-origin": {
+    title:
+      "Freud (1910). The Origin and Development of Psychoanalysis. American Journal of Psychology, 21, 181–218. Conferências I e III.",
+    url: "https://psychclassics.yorku.ca/Freud/Origin/index.htm",
+    consulted: "2026-11-15",
+    scope:
+      "Textos das conferências I e III consultados no arquivo educacional da York University; não se declara consulta direta dos atendimentos históricos.",
+  },
+  "freud-repression": {
+    title: "Freud (1915). Repression.",
+    url: "https://lutecium.org/ftp/Freud/pdf/1915_repression.pdf",
+    consulted: "2026-11-15",
+    scope:
+      "Trechos do texto primário em tradução inglesa consultados, especialmente abertura e delimitação do conceito. Não é evidência atual de eficácia.",
+  },
+  "freud-working": {
+    title: "Freud (1914). Remembering, Repeating and Working-Through.",
+    url: "https://marcuse.faculty.history.ucsb.edu/classes/201/articles/1914FreudRemembering.pdf",
+    consulted: "2026-11-15",
+    scope:
+      "Texto em tradução inglesa disponibilizado pela UCSB; abertura e distinções entre recordar, repetir e elaborar. Não reproduzido como material local.",
+  },
+  "freud-intro": {
+    title:
+      "Freud (1916–1917). A General Introduction to Psychoanalysis. Tradução G. Stanley Hall, edição inglesa de 1920.",
+    url: "https://www.gutenberg.org/files/38219/38219-h/38219-h.htm",
+    consulted: "2026-11-15",
+    scope:
+      "Passagens das conferências 23 e 27 consultadas para a exposição histórica de sintoma e transferência; não se afirma leitura integral de todas as conferências.",
+  },
+  "freud-constructions": {
+    title: "Freud (1937). Constructions in Analysis.",
+    url: "https://www.lutecium.org/ftp/Freud/pdf/1937_constructions_in_analysis.pdf",
+    consulted: "2026-11-15",
+    scope:
+      "Abertura e discussão de interpretação/construção e das respostas do interlocutor. A tradução não é reproduzida; a aula contém redação e casos originais.",
+  },
+  "freud-dream-interpretation": {
+    title:
+      "Freud (1900). The Interpretation of Dreams. Edição inglesa de 1913, tradução A. A. Brill.",
+    url: "https://www.gutenberg.org/files/66048/66048-h/66048-h.htm",
+    consulted: "2026-11-15",
+    scope:
+      "Passagens do capítulo VII sobre sistemas e consciência consultadas. Original de 1900 e edição consultada de 1913 são distinguidos.",
+  },
+  "freud-ego-id": {
+    title: "Freud (1923). The Ego and the Id. Tradução Joan Riviere, edição inglesa de 1927.",
+    url: "https://www.gutenberg.org/files/79682/79682-h/79682-h.htm",
+    consulted: "2026-11-15",
+    scope:
+      "Introdução e discussão inicial de consciência, ego e id consultadas. Disponibilidade num arquivo dos EUA não é declaração universal de direitos de tradução; nenhum texto integral foi copiado.",
+  },
+  "freud-three-essays": {
+    title:
+      "Freud (1905). Three Contributions to the Theory of Sex. Tradução A. A. Brill, edição de 1920.",
+    url: "https://www.gutenberg.org/files/14969/14969-h/14969-h.htm",
+    consulted: "2026-11-15",
+    scope:
+      "Prefácios, delimitação inicial e passagens do segundo ensaio consultados; o texto contém revisões posteriores a 1905 e terminologia histórica.",
+  },
+  "freud-on-dreams": {
+    title: "Freud (1901). On Dreams. Tradução M. D. Eder, edição de 1914.",
+    url: "https://www.gutenberg.org/files/75333/75333-h/75333-h.htm",
+    consulted: "2026-11-15",
+    scope:
+      "Secções sobre manifesto/latente e trabalho do sonho consultadas. Estudo histórico, sem uso como comprovação factual de acontecimentos.",
+  },
+  "freud-beginning": {
+    title: "Freud (1913). On Beginning the Treatment.",
+    url: "https://www.lutecium.org/ftp/Freud/pdf/1913_on_beginning_the_treatment.pdf",
+    consulted: "2026-11-15",
+    scope:
+      "Abertura sobre recomendações e limites de mecanização consultada; não apresentada como protocolo atual ou instrução para exercer clínica.",
+  },
+  "freud-recommendations": {
+    title: "Freud (1912). Recommendations to Physicians Practising Psycho-Analysis.",
+    url: "https://www.lutecium.org/ftp/Freud/pdf/1912_recommendations_to_physicians_practising_psycho_analysis.pdf",
+    consulted: "2026-11-15",
+    scope:
+      "Abertura e passagens sobre atenção e seleção de material consultadas; não se substituem requisitos atuais de registo, segurança ou prática profissional.",
+  },
+
   edpb: {
     title: "European Data Protection Board. Data protection basics — Guide for small business.",
     url: "https://www.edpb.europa.eu/sme/learn-the-basics/data-protection-basics_en",

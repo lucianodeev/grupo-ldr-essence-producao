@@ -1,3 +1,4 @@
+import { FREUD_LESSONS, FREUD_COURSE_NOTICE } from "../content/academy-free/freud-foundations";
 import { DOCUMENTATION_LESSONS } from "../content/academy-free/documentation";
 import {
   SPANISH_LESSONS,
@@ -16,6 +17,7 @@ export function freeCourseLessons(slug: string): readonly EditorialLesson[] {
   if (slug === "neerlandes-basico-a1") return DUTCH_LESSONS;
   if (slug === "alemao-basico-a1") return GERMAN_LESSONS;
   if (slug === "modelos-documentos-psicanaliticos") return DOCUMENTATION_LESSONS;
+  if (slug === "clinica-psicanalitica-sigmund-freud") return FREUD_LESSONS;
   return [];
 }
 export type FreeLearningState = { index: number; done: number[] };
@@ -49,4 +51,8 @@ export function recordFreeLesson(
 ): FreeLearningState {
   if (!reviewed || !lessons[state.index]) return state;
   return { ...state, done: [...new Set([...state.done, state.index])] };
+}
+
+export function freeCourseEditorialNotice(slug: string): string | null {
+  return slug === "clinica-psicanalitica-sigmund-freud" ? FREUD_COURSE_NOTICE : null;
 }
