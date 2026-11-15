@@ -163,7 +163,7 @@ function Card({ item, copy, checkoutEnabled, busy, pending, onCheckout }: { item
         </div>
       </div>
       {individual ? <IndividualServiceSummary sessions={item.sessions} /> : <p className="mt-3 flex-1 break-words text-sm leading-relaxed text-muted-foreground">{copy.paymentText}</p>}
-      {individual ? <ServiceCheckoutAction name={item.name} enabled={checkoutEnabled} busy={busy} pending={pending} onCheckout={onCheckout} /> : link ? (
+      {individual || checkoutEnabled ? <ServiceCheckoutAction name={item.name} enabled={checkoutEnabled} busy={busy} pending={pending} onCheckout={onCheckout} /> : link ? (
         <a className="mt-4 inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-primary px-4 py-3 text-center text-sm font-extrabold leading-snug text-primary-foreground shadow-sm transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" href={link} target="_blank" rel="noreferrer noopener">
           {copy.buyNow}
         </a>

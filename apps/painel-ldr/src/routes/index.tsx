@@ -11,8 +11,8 @@ export const Route = createFileRoute("/")({
   head: ({ match }) => ({
     meta: [
       { title: match.search.area === "academy" ? "LDR Academy | Conhecimento, Educação e Comunidade Acadêmica" : "Ecossistema LDR | Consultoria, Pessoas e Tecnologia" },
-      { name: "description", content: "Conhecimento, educação, biblioteca, comunidade acadêmica, cursos, formações e desenvolvimento profissional conectados no ecossistema LDR Academy." },
-      { property: "og:title", content: "LDR Academy | Conhecimento que conecta" },
+      { name: "description", content: match.search.area === "academy" ? "Conhecimento, educação, biblioteca, comunidade acadêmica, cursos, formações e desenvolvimento profissional conectados no ecossistema LDR Academy." : "Consultoria estratégica, recursos humanos, tecnologia, IA, formação, mentoria e bem-estar para desenvolver pessoas e empresas." },
+      { property: "og:title", content: match.search.area === "academy" ? "LDR Academy | Conhecimento que conecta" : "Ecossistema LDR | Consultoria, Pessoas e Tecnologia" },
       { property: "og:description", content: "Um ecossistema acadêmico para aprender, compartilhar conhecimento, desenvolver competências e construir novas oportunidades." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

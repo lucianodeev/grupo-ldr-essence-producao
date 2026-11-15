@@ -17,9 +17,12 @@ export function individualServiceCheckoutEnabled(env: Env = process.env): boolea
 
 /** Release only reviewed services; an absent list starts with the single mentorship session. */
 export function individualServiceCheckoutKeys(env: Env = process.env): string[] {
-  if (!individualServiceCheckoutEnabled(env)) return [];
-  const configured = env["INDIVIDUAL_SERVICE_CHECKOUT_CATALOG_KEYS"] ?? "mentoria_sessao";
-  return [...new Set(configured.split(",").map(key => key.trim())
+  const configured = individualServiceCheckoutEnabled(env) ? (env["INDIVIDUAL_SERVICE_CHECKOUT_CATALOG_KEYS"] ?? "mentoria_sessao") : "";
+  const projects = env["FIXED_PROJECT_CHECKOUT_ENABLED"] === "true" &&
+    /^[sr]k_(live|test)_[A-Za-z0-9]+$/.test(env["STRIPE_SECRET_KEY"] ?? "") &&
+    /^whsec_[A-Za-z0-9]+$/.test(env["STRIPE_WEBHOOK_SECRET"] ?? "")
+    ? env["FIXED_PROJECT_CHECKOUT_CATALOG_KEYS"] ?? "" : "";
+  return [...new Set(`${configured},${projects}`.split(",").map(key => key.trim())
     .filter(key => CONTRACT_KEYS.includes(key)))];
 }
 
@@ -54,10 +57,18 @@ export async function createIndividualServiceCheckout(
   const { data: item, error: catalogError } = await db.from("service_catalog")
     .select("catalog_key,name,category,billing_model,billing_cadence,package_sessions,amount_cents,currency,active")
     .eq("catalog_key", input.catalogKey).eq("active", true).maybeSingle();
-  if (catalogError || !item || item.billing_cadence !== "one_time" || !["single_paid_session", "package_sessions"].includes(item.billing_model) ||
+  if (catalogError || !item || item.billing_cadence !== "one_time" || !["single_paid_session", "package_sessions", "project"].includes(item.billing_model) ||
       !["EUR", "BRL"].includes(item.currency) || !Number.isSafeInteger(item.amount_cents) || item.amount_cents <= 0 ||
       (item.billing_model === "package_sessions" && (!Number.isSafeInteger(item.package_sessions) || Number(item.package_sessions) < 1))) return fail();
 
+  if (item.billing_model === "project" && (env["FIXED_PROJECT_CHECKOUT_ENABLED"] !== "true" ||
+      !(env["FIXED_PROJECT_CHECKOUT_CATALOG_KEYS"] ?? "").split(",").map(key => key.trim()).includes(input.catalogKey))) return fail();
+  if (item.billing_model !== "project" && !individualServiceCheckoutEnabled(env)) return fail();
+  if (item.billing_model === "project") {
+    const ready = await db.rpc("ldr_enterprise_quote_checkout_ready" as never);
+    if (ready.error || ready.data !== true) return fail();
+  }
+  const kind = item.billing_model === "project" ? "catalog_service" : "individual_service";
   const id = individualCheckoutOrderId(userId, input.requestId);
   const select = "id,catalog_key,customer_id,title,amount_cents,currency,payment_status,status,stripe_checkout_session_id,contact_email,metadata";
   const read = () => db.from("orders").select(select).eq("id", id).eq("customer_id", customer.id).maybeSingle();
@@ -66,12 +77,12 @@ export async function createIndividualServiceCheckout(
   if (!order) {
     const { data: recent, error: recentError } = await db.from("orders").select("id")
       .eq("customer_id", customer.id).eq("payment_status", "pendente")
-      .contains("metadata", { checkout_kind: "individual_service" })
+      .contains("metadata", { checkout_kind: kind })
       .gte("created_at", new Date((now - 3600) * 1000).toISOString()).limit(5);
     if (recentError || (recent?.length ?? 0) >= 5) return fail();
-    const metadata = { checkout_kind: "individual_service", user_id: userId,
+    const metadata = { checkout_kind: kind, user_id: userId,
       customer_id: customer.id, catalog_key: item.catalog_key, checkout_expires_at: now + 3600,
-      sessions: item.billing_model === "single_paid_session" ? 1 : item.package_sessions };
+      sessions: item.billing_model === "single_paid_session" ? 1 : item.billing_model === "package_sessions" ? item.package_sessions : 0 };
     const created = await db.from("orders").insert({ id, order_number: "", customer_id: customer.id,
       contact_email: customer.email, contact_phone: customer.phone, catalog_key: item.catalog_key,
       service_type: item.category === "mentoria" ? "mentoria" : "outros", title: item.name,
@@ -91,7 +102,7 @@ export async function createIndividualServiceCheckout(
   if (!order.metadata || typeof order.metadata !== "object" || Array.isArray(order.metadata)) return fail();
   const metadata = order.metadata as Record<string, Json | undefined>;
   const expires = Number(metadata["checkout_expires_at"]);
-  if (metadata["checkout_kind"] !== "individual_service" || metadata["user_id"] !== userId ||
+  if (metadata["checkout_kind"] !== kind || metadata["user_id"] !== userId ||
       metadata["customer_id"] !== customer.id || !Number.isSafeInteger(expires) || expires <= now + 60) return fail();
   if (order.stripe_checkout_session_id && metadata["checkout_url"]) {
     return { url: checkoutUrl(metadata["checkout_url"]), orderId: order.id };
@@ -107,7 +118,7 @@ export async function createIndividualServiceCheckout(
     "line_items[0][quantity]": "1",
   });
   // Do not send personal contact information as Stripe metadata.
-  for (const [key, value] of Object.entries({ checkout_kind: "individual_service", order_id: order.id,
+  for (const [key, value] of Object.entries({ checkout_kind: kind, order_id: order.id,
     customer_id: customer.id, catalog_key: order.catalog_key! })) {
     params.set(`metadata[${key}]`, value);
     params.set(`payment_intent_data[metadata][${key}]`, value);

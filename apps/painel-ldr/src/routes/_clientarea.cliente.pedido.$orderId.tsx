@@ -73,10 +73,12 @@ function ClientOrderDetail() {
       />
 
       {order.payment_status === "pendente" && <p className="s8-notice mb-4 text-sm" role="status">{purchaseCopy.pendingPayment}</p>}
-      {order.payment_status === "pago" && order.service_type !== "produto_digital" && !cancelled && !finished && <div className="s8-notice mb-4 text-sm">
+      {order.payment_status === "pago" && data.requiresAppointment && !cancelled && !finished && <div className="s8-notice mb-4 text-sm">
         <p>{purchaseCopy.paid}</p>
         <Link to="/cliente/agenda" className="mt-2 inline-block font-bold text-primary underline">{purchaseCopy.agenda}</Link>
       </div>}
+
+      {order.payment_status === "pago" && !data.requiresAppointment && !cancelled && <p role="status" className="s8-notice mb-4 text-sm">Pagamento confirmado. Acompanhe a execução e as entregas neste pedido.</p>}
 
       <section className="s8-card">
         <div className="flex flex-wrap gap-2">

@@ -136,7 +136,7 @@ export async function resolveClient(userId: string, email: string | null): Promi
   return { status: "unlinked", email: mail };
 }
 
-async function requireClient(userId: string, email: string | null): Promise<ClientCustomer> {
+export async function requireClient(userId: string, email: string | null): Promise<ClientCustomer> {
   const ctx = await resolveClient(userId, email);
   if (ctx.status !== "ok") fail("Acesso negado.");
   return ctx.customer;
@@ -362,6 +362,9 @@ export async function getClientOrderDetail(userId: string, email: string | null,
     listClientDeliveries(customer.id, [order.id]),
     listClientHistory([order.id], 50),
   ]);
+  const credits = await supabaseAdmin.from("session_credits").select("granted").eq("order_id", order.id).eq("customer_id", customer.id);
+  if (credits.error) fail("Não foi possível verificar os créditos deste pedido.");
+  const requiresAppointment = order.payment_status === "pago" && (credits.data ?? []).some(row => row.granted > 0);
 
   const deliveryIds = deliveries.map((d) => d.id);
   let events: {
@@ -385,6 +388,7 @@ export async function getClientOrderDetail(userId: string, email: string | null,
 
   return {
     order,
+    requiresAppointment,
     deliveries: deliveries.filter((d) => d.order_id === order.id),
     history,
     events,
@@ -775,7 +779,7 @@ async function schedulingOptions(customerId: string): Promise<{
   const [orderRead, appointmentRead, creditRead] = await Promise.all([
     supabaseAdmin
       .from("orders")
-      .select("id, order_number, title, catalog_key, payment_status")
+      .select("id, order_number, title, catalog_key, payment_status, status, metadata")
       .eq("customer_id", customerId)
       .eq("payment_status", "pago"),
     supabaseAdmin
@@ -803,7 +807,9 @@ async function schedulingOptions(customerId: string): Promise<{
   const catalogByKey = new Map((catalog ?? []).map((c) => [c.catalog_key, c]));
   const grantedByOrder = new Map((credits ?? []).map((c) => [c.order_id, c.granted]));
 
-  const options = (orders ?? []).map<ScheduleOption>((order) => {
+  const options = (orders ?? []).filter(order => order.status !== "cancelado" &&
+    !(order.metadata && typeof order.metadata === "object" && !Array.isArray(order.metadata) &&
+      ["enterprise_quote", "catalog_service"].includes(String(order.metadata["checkout_kind"])) && order.metadata["sessions"] === 0)).map<ScheduleOption>((order) => {
     const key = order.catalog_key;
     const item = key ? catalogByKey.get(key) : undefined;
     const used = (appointments ?? []).filter(
@@ -1001,8 +1007,7 @@ export async function getClientContractCatalog(userId: string, email: string | n
 }
 
 export async function createClientServiceCheckout(userId: string, email: string | null, input: { catalogKey: string; requestId: string }) {
-  const { individualServiceCheckoutEnabled, createIndividualServiceCheckout } = await import("@/lib/individual-service-checkout.server");
-  if (!individualServiceCheckoutEnabled()) fail("Contratação assistida disponível pelo atendimento.");
+  const { createIndividualServiceCheckout } = await import("@/lib/individual-service-checkout.server");
   const customer = await requireClient(userId, email);
   return createIndividualServiceCheckout(supabaseAdmin, userId, customer, input);
 }

@@ -50,6 +50,7 @@ function ClientShell() {
   const defaultNav = [
     { to: "/cliente", label: c.home, exact: true, icon: Home },
     { to: "/cliente/contratar", label: c.contract, icon: MessageCircle },
+    { to: "/cliente/propostas", label: ({pt:"Minhas propostas",en:"My proposals",fr:"Mes propositions",es:"Mis propuestas"})[locale], icon: ClipboardList },
     { to: "/cliente/pedidos", label: c.orders, icon: ClipboardList },
     { to: "/cliente/agenda", label: c.agenda, icon: CalendarDays },
     { to: "/cliente/biblioteca", label: c.library, icon: BookOpen, featured: true },
@@ -66,6 +67,7 @@ function ClientShell() {
   const serviceNav = [
     { to: "/cliente", label: c.home, exact: true, icon: Home },
     { to: "/cliente/contratar", label: c.contract, icon: MessageCircle, featured: true },
+    { to: "/cliente/propostas", label: ({pt:"Minhas propostas",en:"My proposals",fr:"Mes propositions",es:"Mis propuestas"})[locale], icon: ClipboardList },
     { to: "/cliente/agenda", label: c.agenda, icon: CalendarDays },
     { to: "/cliente/sessoes", label: c.sessions, icon: ClipboardList },
     { to: "/cliente/perfil", label: c.profile, icon: UserRound },

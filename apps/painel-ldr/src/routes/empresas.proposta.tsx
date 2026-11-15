@@ -4,8 +4,9 @@ import { useState, type FormEvent } from "react";
 import { EnterprisePage } from "@/components/enterprise-page";
 import { submitEcosystemSupport } from "@/lib/ecosystem-support.functions";
 import { COMMERCIAL_INTERESTS, COMMERCIAL_SOLUTIONS, commercialProtocol, commercialSupportPayload } from "@/lib/commercial-request";
-export const Route = createFileRoute("/empresas/proposta")({head:()=>({meta:[{title:"Proposta empresarial | Ecossistema LDR"}],links:[{rel:"canonical",href:"https://ldrecossistema.online/empresas/proposta"}]}),component:Proposal});
+export const Route = createFileRoute("/empresas/proposta")({validateSearch:(search:Record<string,unknown>)=>({solution:COMMERCIAL_SOLUTIONS.find(value=>value===search["solution"])??"Soluções personalizadas"}),head:()=>({meta:[{title:"Proposta empresarial | Ecossistema LDR"}],links:[{rel:"canonical",href:"https://ldrecossistema.online/empresas/proposta"}]}),component:Proposal});
 function Proposal(){
+  const search=Route.useSearch();
   const send=useServerFn(submitEcosystemSupport);
   const [sending,setSending]=useState(false),[protocol,setProtocol]=useState(""),[error,setError]=useState("");
   async function submit(event:FormEvent<HTMLFormElement>){
@@ -17,11 +18,11 @@ function Proposal(){
   const field="mt-2 min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-base focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#866a3c]";
   return <EnterprisePage title="Vamos construir a proposta certa." intro="Contratação, demonstrações, formação, parcerias e licenciamento. Apresente as necessidades da sua organização ao atendimento comercial institucional.">
     <div className="grid gap-8 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]"><section aria-label="Pedido de proposta" className="rounded-3xl border border-[#d8c9a9] bg-white p-5 sm:p-8">
-      {protocol?<div role="status"><h2 className="font-serif text-3xl">Pedido recebido</h2><p className="mt-4">Protocolo: <strong className="break-all">{protocol}</strong>.</p><p className="mt-3">A equipa recebe o pedido na central administrativa e analisará a sua necessidade. O pedido não constitui contrato nem ativa uma cobrança. Se houver proposta comercial, o preço e as condições serão apresentados para aprovação antes de qualquer pagamento Stripe. Serviços com agenda só podem ser agendados após confirmação do pagamento quando o respetivo fluxo estiver disponível.</p><Link to="/falar-com-ecossistema" className="mt-6 inline-block font-bold underline">Aceder ao atendimento institucional</Link></div>:<form onSubmit={submit} className="grid gap-5" aria-busy={sending}>
+      {protocol?<div role="status"><h2 className="font-serif text-3xl">Pedido recebido</h2><p className="mt-4">Protocolo: <strong className="break-all">{protocol}</strong>.</p><p className="mt-3">A equipa recebe o pedido na central administrativa e analisará a sua necessidade. O pedido não constitui contrato nem ativa uma cobrança. Se houver proposta comercial, o preço e as condições serão apresentados para aprovação antes de qualquer pagamento Stripe. Para acompanhar a proposta, entre na Minha Área com o mesmo e-mail informado neste pedido. Serviços com agenda só podem ser agendados após confirmação do pagamento.</p><Link to="/cliente/propostas" className="mt-6 inline-block font-bold underline">Acompanhar minhas propostas</Link></div>:<form onSubmit={submit} className="grid gap-5" aria-busy={sending}>
         <div className="grid gap-5 sm:grid-cols-2"><label>Organização<input name="organization" required minLength={2} maxLength={160} autoComplete="organization" className={field}/></label><label>Nome de contacto<input name="name" required minLength={2} maxLength={120} autoComplete="name" className={field}/></label></div>
         <label>E-mail profissional<input name="email" type="email" required maxLength={254} autoComplete="email" className={field}/></label>
         <label>Tipo de pedido<select name="interest" className={field}>{COMMERCIAL_INTERESTS.map(value=><option key={value}>{value}</option>)}</select></label>
-        <label>Solução de interesse<select name="solution" className={field}>{COMMERCIAL_SOLUTIONS.map(value=><option key={value}>{value}</option>)}</select></label>
+        <label>Solução de interesse<select name="solution" defaultValue={search.solution} className={field}>{COMMERCIAL_SOLUTIONS.map(value=><option key={value}>{value}</option>)}</select></label>
         <label>Como podemos ajudar?<textarea name="message" required minLength={5} maxLength={3000} rows={6} className={field} aria-describedby="commercial-data-help"/></label>
         <p id="commercial-data-help" className="text-sm leading-6 text-slate-600">Inclua objetivos, dimensão da equipa e prazo desejado. Não envie dados clínicos, documentos de candidatos, senhas ou dados financeiros.</p>
         <input name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true"/>
