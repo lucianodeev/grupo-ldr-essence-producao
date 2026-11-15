@@ -9,6 +9,7 @@ import { ownerDashboardSummary } from "@/lib/owner-dashboard.functions";
 export const Route = createFileRoute("/_authenticated/admin")({ component: MasterAdmin });
 
 const PRIMARY_AREAS = [
+  ["Pedidos e propostas", "Solicitações empresariais e contactos recebidos, com protocolo e acompanhamento. Pagamentos só após proposta aprovada.", "/admin/contatos"],
   ["Atendimentos", "Agenda, atendimentos de hoje, clientes e acompanhamento administrativo.", "/admin/meus-atendimentos"],
   ["Profissionais", "Aprovação, perfis, serviços, conformidade e operação da rede multidisciplinar.", "/admin/rede"],
   ["Clínica Social", "Solicitações, profissionais participantes, valores sociais e acompanhamento.", "/admin/clinica-social"],

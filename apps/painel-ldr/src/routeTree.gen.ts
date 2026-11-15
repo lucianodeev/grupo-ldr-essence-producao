@@ -223,6 +223,7 @@ import { Route as ClientareaClienteOrientacaoProfissionalRouteImport } from './r
 import { Route as ClientareaClienteOrientacaoPsicanaliticaRouteImport } from './routes/_clientarea.cliente.orientacao-psicanalitica'
 import { Route as ClientareaClientePedidosRouteImport } from './routes/_clientarea.cliente.pedidos'
 import { Route as ClientareaClientePerfilRouteImport } from './routes/_clientarea.cliente.perfil'
+import { Route as ClientareaClientePropostasRouteImport } from './routes/_clientarea.cliente.propostas'
 import { Route as ClientareaClientePsicanalistaAltaPerformanceRouteImport } from './routes/_clientarea.cliente.psicanalista-alta-performance'
 import { Route as ClientareaClientePublicarRouteImport } from './routes/_clientarea.cliente.publicar'
 import { Route as ClientareaClienteRedeAcademicaRouteImport } from './routes/_clientarea.cliente.rede-academica'
@@ -1456,6 +1457,12 @@ const ClientareaClientePerfilRoute = ClientareaClientePerfilRouteImport.update({
   path: '/perfil',
   getParentRoute: () => ClientareaClienteRoute,
 } as any)
+const ClientareaClientePropostasRoute =
+  ClientareaClientePropostasRouteImport.update({
+    id: '/propostas',
+    path: '/propostas',
+    getParentRoute: () => ClientareaClienteRoute,
+  } as any)
 const ClientareaClientePsicanalistaAltaPerformanceRoute =
   ClientareaClientePsicanalistaAltaPerformanceRouteImport.update({
     id: '/psicanalista-alta-performance',
@@ -2124,6 +2131,7 @@ export interface FileRoutesByFullPath {
   '/cliente/orientacao-psicanalitica': typeof ClientareaClienteOrientacaoPsicanaliticaRoute
   '/cliente/pedidos': typeof ClientareaClientePedidosRoute
   '/cliente/perfil': typeof ClientareaClientePerfilRoute
+  '/cliente/propostas': typeof ClientareaClientePropostasRoute
   '/cliente/psicanalista-alta-performance': typeof ClientareaClientePsicanalistaAltaPerformanceRouteWithChildren
   '/cliente/publicar': typeof ClientareaClientePublicarRoute
   '/cliente/rede-academica': typeof ClientareaClienteRedeAcademicaRouteWithChildren
@@ -2410,6 +2418,7 @@ export interface FileRoutesByTo {
   '/cliente/orientacao-psicanalitica': typeof ClientareaClienteOrientacaoPsicanaliticaRoute
   '/cliente/pedidos': typeof ClientareaClientePedidosRoute
   '/cliente/perfil': typeof ClientareaClientePerfilRoute
+  '/cliente/propostas': typeof ClientareaClientePropostasRoute
   '/cliente/psicanalista-alta-performance': typeof ClientareaClientePsicanalistaAltaPerformanceRouteWithChildren
   '/cliente/publicar': typeof ClientareaClientePublicarRoute
   '/cliente/rede-academica': typeof ClientareaClienteRedeAcademicaRouteWithChildren
@@ -2705,6 +2714,7 @@ export interface FileRoutesById {
   '/_clientarea/cliente/orientacao-psicanalitica': typeof ClientareaClienteOrientacaoPsicanaliticaRoute
   '/_clientarea/cliente/pedidos': typeof ClientareaClientePedidosRoute
   '/_clientarea/cliente/perfil': typeof ClientareaClientePerfilRoute
+  '/_clientarea/cliente/propostas': typeof ClientareaClientePropostasRoute
   '/_clientarea/cliente/psicanalista-alta-performance': typeof ClientareaClientePsicanalistaAltaPerformanceRouteWithChildren
   '/_clientarea/cliente/publicar': typeof ClientareaClientePublicarRoute
   '/_clientarea/cliente/rede-academica': typeof ClientareaClienteRedeAcademicaRouteWithChildren
@@ -2997,6 +3007,7 @@ export interface FileRouteTypes {
     | '/cliente/orientacao-psicanalitica'
     | '/cliente/pedidos'
     | '/cliente/perfil'
+    | '/cliente/propostas'
     | '/cliente/psicanalista-alta-performance'
     | '/cliente/publicar'
     | '/cliente/rede-academica'
@@ -3283,6 +3294,7 @@ export interface FileRouteTypes {
     | '/cliente/orientacao-psicanalitica'
     | '/cliente/pedidos'
     | '/cliente/perfil'
+    | '/cliente/propostas'
     | '/cliente/psicanalista-alta-performance'
     | '/cliente/publicar'
     | '/cliente/rede-academica'
@@ -3577,6 +3589,7 @@ export interface FileRouteTypes {
     | '/_clientarea/cliente/orientacao-psicanalitica'
     | '/_clientarea/cliente/pedidos'
     | '/_clientarea/cliente/perfil'
+    | '/_clientarea/cliente/propostas'
     | '/_clientarea/cliente/psicanalista-alta-performance'
     | '/_clientarea/cliente/publicar'
     | '/_clientarea/cliente/rede-academica'
@@ -5261,6 +5274,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClientareaClientePerfilRouteImport
       parentRoute: typeof ClientareaClienteRoute
     }
+    '/_clientarea/cliente/propostas': {
+      id: '/_clientarea/cliente/propostas'
+      path: '/propostas'
+      fullPath: '/cliente/propostas'
+      preLoaderRoute: typeof ClientareaClientePropostasRouteImport
+      parentRoute: typeof ClientareaClienteRoute
+    }
     '/_clientarea/cliente/psicanalista-alta-performance': {
       id: '/_clientarea/cliente/psicanalista-alta-performance'
       path: '/psicanalista-alta-performance'
@@ -6223,6 +6243,7 @@ interface ClientareaClienteRouteChildren {
   ClientareaClienteOrientacaoPsicanaliticaRoute: typeof ClientareaClienteOrientacaoPsicanaliticaRoute
   ClientareaClientePedidosRoute: typeof ClientareaClientePedidosRoute
   ClientareaClientePerfilRoute: typeof ClientareaClientePerfilRoute
+  ClientareaClientePropostasRoute: typeof ClientareaClientePropostasRoute
   ClientareaClientePsicanalistaAltaPerformanceRoute: typeof ClientareaClientePsicanalistaAltaPerformanceRouteWithChildren
   ClientareaClientePublicarRoute: typeof ClientareaClientePublicarRoute
   ClientareaClienteRedeAcademicaRoute: typeof ClientareaClienteRedeAcademicaRouteWithChildren
@@ -6258,6 +6279,7 @@ const ClientareaClienteRouteChildren: ClientareaClienteRouteChildren = {
     ClientareaClienteOrientacaoPsicanaliticaRoute,
   ClientareaClientePedidosRoute: ClientareaClientePedidosRoute,
   ClientareaClientePerfilRoute: ClientareaClientePerfilRoute,
+  ClientareaClientePropostasRoute: ClientareaClientePropostasRoute,
   ClientareaClientePsicanalistaAltaPerformanceRoute:
     ClientareaClientePsicanalistaAltaPerformanceRouteWithChildren,
   ClientareaClientePublicarRoute: ClientareaClientePublicarRoute,

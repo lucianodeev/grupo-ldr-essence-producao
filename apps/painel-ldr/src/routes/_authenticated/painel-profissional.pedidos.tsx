@@ -483,6 +483,7 @@ function OrdersPage() {
               <select
                 className="s8-field"
                 value={selected.payment_status}
+                disabled={Boolean(selected.metadata && typeof selected.metadata === "object" && !Array.isArray(selected.metadata) && ["enterprise_quote", "catalog_service", "individual_service"].includes(String(selected.metadata["checkout_kind"])))}
                 onChange={(e) =>
                   updateOrder.mutate({
                     id: selected.id,

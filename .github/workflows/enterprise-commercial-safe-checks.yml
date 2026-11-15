@@ -1,0 +1,73 @@
+name: Enterprise commercial safe checks
+on:
+  pull_request:
+    paths:
+      - 'apps/painel-ldr/src/**'
+      - 'apps/painel-ldr/tests/**'
+      - 'apps/painel-ldr/supabase/migrations/*enterprise_quote*'
+      - 'scripts/agenda/**'
+      - '.github/workflows/enterprise-commercial-safe-checks.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  application:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm --prefix apps/painel-ldr run generate-routes
+      - run: npm --prefix apps/painel-ldr run typecheck
+      - name: Isolated permissions, proposal, catalogue and product regressions
+        run: node --test apps/painel-ldr/tests/*.test.cjs
+      - name: Signed webhooks and Google transport failures (no provider traffic)
+        env:
+          AGENDA_PG_PACKAGE: ${{ github.workspace }}/apps/painel-ldr/package.json
+        run: node --test scripts/agenda/payment-webhook.test.mjs scripts/agenda/calendar*.test.mjs
+      - name: Production build, without deployment
+        run: npm --prefix apps/painel-ldr run build:render
+      - name: Typecheck generated production route registration
+        run: npm --prefix apps/painel-ldr run typecheck
+  database:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        suite: [enterprise, agenda]
+    services:
+      postgres:
+        image: postgres:17.6
+        env:
+          POSTGRES_PASSWORD: isolated_test_only
+          POSTGRES_DB: commercial_test
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      PGHOST: 127.0.0.1
+      PGPORT: '5432'
+      PGUSER: postgres
+      PGPASSWORD: isolated_test_only
+      PGDATABASE: commercial_test
+      ENTERPRISE_SQL_PACKAGE: /tmp/enterprise-pg/package.json
+      AGENDA_PG_PACKAGE: /tmp/enterprise-pg/package.json
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --prefix /tmp/enterprise-pg --no-audit --no-fund pg@8.23.1
+      - name: Execute quote financial guards and payment/credit lifecycle in disposable PostgreSQL
+        if: matrix.suite == 'enterprise'
+        run: node scripts/agenda/enterprise-quotes-sql.mjs
+      - name: Execute actual calendar RPC, RLS, credit and concurrency regressions
+        if: matrix.suite == 'agenda'
+        run: node scripts/agenda/verify.mjs

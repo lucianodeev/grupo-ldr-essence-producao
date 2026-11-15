@@ -32,12 +32,14 @@ test("LDR ONE sales text states five-seat minimum in all supported languages", (
 });
 
 
-test("LDR ONE handles invoice.paid as a confirmed renewal without changing other products", () => {
+test("LDR ONE resolves invoice.paid through its recurring subscription routing", () => {
   const webhook = read("src/routes/api/stripe/webhook.ts");
   const handler = webhook.slice(webhook.indexOf("async function setLdrPassSubscription("), webhook.indexOf("async function balanceCredit("));
   assert.match(handler, /eventType==="invoice\.payment_succeeded"\|\|eventType==="invoice\.paid"/);
-  assert.match(webhook, /!checkoutKind && \(event\.type === "invoice\.payment_succeeded" \|\| event\.type === "invoice\.paid" \|\| event\.type === "invoice\.payment_failed"\)/);
+  assert.match(webhook, /!checkoutKind && \(event\.type\.startsWith\("customer\.subscription\."\) \|\| event\.type === "invoice\.payment_succeeded" \|\| event\.type === "invoice\.paid" \|\| event\.type === "invoice\.payment_failed"\)/);
   assert.match(webhook, /checkoutKind === "ldr_pass_subscription" && \(subscriptionCheckoutEvent \|\| recurringSubscriptionEvent \|\| event\.type === "invoice\.paid"\)/);
   const otherHandlers = webhook.slice(webhook.indexOf('} else if (checkoutKind === "company_subscription"'), webhook.indexOf('} else if (checkoutKind === "professional_subscription"'));
-  assert.doesNotMatch(otherHandlers, /invoice\.paid/);
+  assert.match(otherHandlers, /company_subscription/);
+  const editorial = otherHandlers.slice(otherHandlers.indexOf('checkoutKind === "editorial_subscription"'));
+  assert.doesNotMatch(editorial, /invoice\.paid/);
 });

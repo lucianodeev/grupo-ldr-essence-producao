@@ -101,18 +101,24 @@ async function updateOrder(orderId: string, patch: Record<string, unknown>) {
 /** Only the signed provider event can confirm an individual service payment. */
 async function handleIndividualServiceEvent(event: StripeEvent, object: StripeObject) {
   const metadata = object.metadata ?? {};
-  if (metadata["checkout_kind"] !== "individual_service") return false;
+  const kind = metadata["checkout_kind"];
+  if (!["individual_service", "catalog_service", "enterprise_quote"].includes(kind ?? "")) return false;
   const success = event.type === "checkout.session.completed" || event.type === "checkout.session.async_payment_succeeded";
   const failed = event.type === "payment_intent.payment_failed" || event.type === "checkout.session.async_payment_failed" || event.type === "checkout.session.expired";
   if (!success && !failed && event.type !== "charge.refunded") return true;
   if (success && object.payment_status !== "paid") return true;
   const db = await database();
   const { data: order, error } = await db.from("orders")
-    .select("id,customer_id,catalog_key,amount_cents,currency,payment_status,stripe_checkout_session_id,metadata")
+    .select("id,customer_id,catalog_key,amount_cents,currency,payment_status,status,stripe_checkout_session_id,metadata")
     .eq("id", metadata["order_id"]).maybeSingle();
-  if (error || !order || order.metadata?.checkout_kind !== "individual_service" ||
-      order.customer_id !== metadata["customer_id"] || order.catalog_key !== metadata["catalog_key"]) {
+  if (error || !order || order.metadata?.checkout_kind !== kind ||
+      order.customer_id !== metadata["customer_id"] || String(order.catalog_key ?? "") !== metadata["catalog_key"]) {
     throw new Error("individual_service_payment_mismatch");
+  }
+  if ((kind === "enterprise_quote" || kind === "catalog_service") && (
+      (kind === "enterprise_quote" && order.metadata.quote_state !== "accepted") || !order.customer_id ||
+      !order.stripe_checkout_session_id || event.livemode !== /_live_/.test(process.env["STRIPE_SECRET_KEY"] ?? ""))) {
+    throw new Error("enterprise_quote_not_accepted");
   }
   if (event.type.startsWith("checkout.session.") && order.stripe_checkout_session_id && order.stripe_checkout_session_id !== object.id) {
     throw new Error("individual_service_session_mismatch");
@@ -127,7 +133,7 @@ async function handleIndividualServiceEvent(event: StripeEvent, object: StripeOb
       throw new Error("individual_service_amount_mismatch");
     }
     if (order.payment_status === "pago" || order.payment_status === "reembolsado") return true;
-    await apply({ payment_status: "pago", status: "em_andamento",
+    await apply({ payment_status: "pago", status: order.status === "cancelado" ? "cancelado" : "em_andamento",
       stripe_checkout_session_id: object.id,
       metadata: { ...details, stripe_payment_intent_id: stripeId(object.payment_intent), paid_at: new Date().toISOString() } }, ["pendente", "falhou"]);
   } else if (failed) {
@@ -685,6 +691,14 @@ export const Route = createFileRoute("/api/stripe/webhook")({
         }
 
         try {
+          const protectedObject = event.data?.object ?? {};
+          if (["enterprise_quote", "catalog_service"].includes(protectedObject.metadata?.["checkout_kind"] ?? "")) {
+            // Persist the receipt only after the guarded business transition. A concurrent
+            // delivery must not acknowledge an event whose first attempt can still fail.
+            await handleIndividualServiceEvent(event, protectedObject);
+            const receipt = await markEvent(event.id, event.type);
+            return json(200, { received: true, duplicate: receipt === "duplicate" });
+          }
           const eventMark = await markEvent(event.id, event.type);
           if (eventMark === "duplicate") return json(200, { received: true, duplicate: true });
           const object = event.data?.object ?? {};

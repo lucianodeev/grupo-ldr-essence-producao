@@ -2,8 +2,9 @@ import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
 async function requireMaster(supabase:any,userId:string) {
- const {data:role}=await supabase.from("user_roles").select("role").eq("user_id",userId).eq("role","superadmin").maybeSingle();
- if(!role) throw new Error("Forbidden");
+ const {resolveAccess}=await import("@/lib/access.server");
+ const access=await resolveAccess(supabase,userId);
+ if(!access.authorized||access.role!=="superadmin") throw new Error("Forbidden");
  return supabase;
 }
 export const listEcosystemContacts=createServerFn({method:"GET"}).middleware([requireSupabaseAuth]).handler(async({context})=>{

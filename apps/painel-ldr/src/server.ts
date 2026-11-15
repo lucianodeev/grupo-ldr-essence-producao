@@ -61,13 +61,13 @@ function academyCanonicalRedirect(request: Request): Response | null {
   const isLegacyLucianoHost = host === "lucianoconecta.online" || host === "www.lucianoconecta.online";
   const isFilmHost = host === "film.lucianoconecta.online";
 
-  // The definitive public domain opens the ecosystem map. Keep the existing
-  // Academy storefront available through its explicit entry on the same origin.
+  // The official root serves the business homepage; the ecosystem map and
+  // explicit Academy entry remain available on their existing routes.
   if (host === "ldrecossistema.online" || host === "www.ldrecossistema.online") {
     const needsCanonicalHost = host === "www.ldrecossistema.online";
     if (needsCanonicalHost) url.hostname = "ldrecossistema.online";
-    if ((url.pathname === "/" || url.pathname === "/index.html") && url.searchParams.get("area") !== "academy") {
-      url.pathname = "/ecossistema";
+    if (url.pathname === "/index.html") {
+      url.pathname = "/";
       return temporaryRedirect(url.toString());
     }
     return needsCanonicalHost ? temporaryRedirect(url.toString()) : null;

@@ -21,13 +21,13 @@ async function fixture(order=null){
      state.events.add(this.row.event_id);return {data:{event_id:this.row.event_id},error:null};
     }
     if(table==='stripe_webhook_events'&&this.op==='delete'){state.events.delete(this.filters.event_id);return {data:null,error:null};}
-    if(table==='orders'&&this.op==='update'){if(state.beforeUpdate){state.beforeUpdate();state.beforeUpdate=null;}if(state.order&&Object.entries(this.filters).some(([k,v])=>v&&typeof v==='object'&&v.in&&!v.in.includes(state.order[k])))return {data:null,error:null};state.updates.push({id:this.filters.id,...this.row});if(state.order)Object.assign(state.order,this.row);return {data:null,error:null};}
+    if(table==='orders'&&this.op==='update'){if(state.failNextUpdate){state.failNextUpdate=false;return {data:null,error:{message:'synthetic'}};}if(state.beforeUpdate){state.beforeUpdate();state.beforeUpdate=null;}if(state.order&&Object.entries(this.filters).some(([k,v])=>v&&typeof v==='object'&&v.in&&!v.in.includes(state.order[k])))return {data:null,error:null};state.updates.push({id:this.filters.id,...this.row});if(state.order)Object.assign(state.order,this.row);return {data:null,error:null};}
     if(table==='orders'&&this.op==='read'&&state.order?.id===this.filters.id)return {data:state.order,error:null};
     return {data:null,error:null};
    },then(resolve,reject){return this.maybeSingle().then(resolve,reject)}};return q;
  },async rpc(){throw Error('Unexpected unrelated RPC in agenda payment test');}};
  for(const k of ['STRIPE_WEBHOOK_VALIDATION_ENABLED','STRIPE_WEBHOOK_VALIDATION_EXPIRES_AT','STRIPE_WEBHOOK_VALIDATION_NONCE','STRIPE_WEBHOOK_TEST_SECRET'])delete process.env[k];
- process.env.STRIPE_WEBHOOK_SECRET=secret;
+ process.env.STRIPE_WEBHOOK_SECRET=secret;process.env.STRIPE_SECRET_KEY="sk_test_syntheticOnly";
  const module=await import('data:text/javascript;base64,'+Buffer.from(code).toString('base64')+'#'+randomUUID());
  const post=module.Route.server.handlers.POST;
  const event=(type='checkout.session.completed',paid='paid')=>({id:'evt_'+randomUUID(),type,data:{object:{id:'cs_synthetic',payment_status:paid,amount_total:100,currency:'eur',metadata:{order_id:'synthetic-order'}}}});
@@ -153,4 +153,36 @@ test('refund confirmed while checkout completion is in flight wins the condition
  const f=await fixture(individualOrder());f.state.beforeUpdate=()=>{f.state.order.payment_status='reembolsado';};
  assert.equal((await f.send(individualEvent(f))).status,200);assert.equal(f.state.updates.length,0);
  assert.equal(f.state.order.payment_status,'reembolsado');
+});
+
+const quoteOrder=()=>({...individualOrder(),catalog_key:null,metadata:{checkout_kind:'enterprise_quote',quote_state:'accepted',sessions:0,checkout_expires_at:1800003600}});
+function quoteEvent(f,type='checkout.session.completed',paid='paid') {
+ const e=f.event(type,paid);e.livemode=false;e.data.object.metadata={checkout_kind:'enterprise_quote',order_id:'synthetic-order',customer_id:'customer-A',catalog_key:''};return e;
+}
+test('approved quote payment validates signed exact amount, owner, currency and session and stays idempotent',async()=>{
+ const f=await fixture(quoteOrder()),e=quoteEvent(f);assert.equal((await f.send(e)).status,200);assert.equal((await f.send(e)).status,200);assert.equal(f.state.updates.length,1);assert.equal(f.state.order.payment_status,'pago');assert.equal(f.state.order.metadata.quote_state,'accepted');
+});
+test('quote cannot fulfill from unpaid, unaccepted, mismatched or wrong-mode events',async()=>{
+ const unpaid=await fixture(quoteOrder());assert.equal((await unpaid.send(quoteEvent(unpaid,'checkout.session.completed','unpaid'))).status,200);assert.equal(unpaid.state.updates.length,0);
+ for(const patch of [{amount_total:1},{currency:'brl'},{id:'cs_other'},{metadata:{checkout_kind:'enterprise_quote',order_id:'synthetic-order',customer_id:'other',catalog_key:''}}]){const f=await fixture(quoteOrder()),e=quoteEvent(f);Object.assign(e.data.object,patch);assert.equal((await f.send(e)).status,503);assert.equal(f.state.order.payment_status,'pendente');}
+ for(const patch of [{metadata:{...quoteOrder().metadata,quote_state:'approved'}},{stripe_checkout_session_id:null}]){const f=await fixture({...quoteOrder(),...patch});assert.equal((await f.send(quoteEvent(f))).status,503);assert.equal(f.state.updates.length,0);}
+ const f=await fixture(quoteOrder()),e=quoteEvent(f);e.livemode=true;assert.equal((await f.send(e)).status,503);
+});
+test('lost quote update is not acknowledged and the same signed event can retry',async()=>{
+ const f=await fixture(quoteOrder()),e=quoteEvent(f);f.state.failNextUpdate=true;assert.equal((await f.send(e)).status,503);assert.equal(f.state.events.has(e.id),false);assert.equal((await f.send(e)).status,200);assert.equal(f.state.order.payment_status,'pago');
+});
+test('delayed quote success is confirmed; late expiry and failure cannot undo payment',async()=>{
+ const f=await fixture(quoteOrder());assert.equal((await f.send(quoteEvent(f,'checkout.session.async_payment_succeeded'))).status,200);for(const type of ['checkout.session.expired','checkout.session.async_payment_failed','payment_intent.payment_failed'])assert.equal((await f.send(quoteEvent(f,type,'unpaid'))).status,200);assert.equal(f.state.order.payment_status,'pago');assert.equal(f.state.updates.length,1);
+});
+test('quote failure and expiration do not grant paid state',async()=>{
+ for(const type of ['checkout.session.expired','checkout.session.async_payment_failed']){const f=await fixture(quoteOrder());assert.equal((await f.send(quoteEvent(f,type,'unpaid'))).status,200);assert.equal(f.state.order.payment_status,'falhou');}
+});
+test('refunded quote stays refunded if completion arrives later; partial refunds are not mislabeled as full',async()=>{
+ for(const refunded of [50,100]){const f=await fixture(quoteOrder()),e=quoteEvent(f,'charge.refunded');Object.assign(e.data.object,{amount:100,amount_refunded:refunded,currency:'eur'});assert.equal((await f.send(e)).status,200);assert.equal(f.state.order.payment_status,refunded===100?'reembolsado':'pendente');if(refunded===100){assert.equal((await f.send(quoteEvent(f))).status,200);assert.equal(f.state.order.payment_status,'reembolsado');}}
+});
+test('financial confirmation preserves an already cancelled quote so it cannot reopen scheduling',async()=>{
+ const f=await fixture({...quoteOrder(),status:'cancelado'});assert.equal((await f.send(quoteEvent(f))).status,200);assert.equal(f.state.order.payment_status,'pago');assert.equal(f.state.order.status,'cancelado');
+});
+test('fixed project checkout uses the same guarded exact-price provider event path',async()=>{
+ const order={...quoteOrder(),metadata:{checkout_kind:'catalog_service',sessions:0}};const f=await fixture(order),e=quoteEvent(f);e.data.object.metadata.checkout_kind='catalog_service';assert.equal((await f.send(e)).status,200);assert.equal(f.state.order.payment_status,'pago');
 });
