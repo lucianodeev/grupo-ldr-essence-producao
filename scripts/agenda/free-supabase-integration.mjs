@@ -15,7 +15,10 @@ const url=status.API_URL,dbUrl=status.DB_URL;
 for(const value of [url,dbUrl])assert.ok(['127.0.0.1','localhost'].includes(new URL(value).hostname),'Loopback services only');
 const admin=createClient(url,status.SERVICE_ROLE_KEY,{auth:{persistSession:false,autoRefreshToken:false}});
 const anon=createClient(url,status.ANON_KEY,{auth:{persistSession:false,autoRefreshToken:false}});
-const pg=new Client({connectionString:dbUrl});await pg.connect();
+// Local fixture setup needs the container's bootstrap owner to create captured FKs
+// against native Auth. API requests below still use their real scoped JWT roles.
+const setupUrl=new URL(dbUrl);setupUrl.username='supabase_admin';
+const pg=new Client({connectionString:setupUrl.toString()});await pg.connect();
 const root=new URL('../../apps/painel-ldr/src/',import.meta.url);
 let checks=0;const pass=name=>{checks++;console.log('PASS '+name);};
 const unwrap=result=>{assert.equal(result.error,null,result.error?.message);return result.data;};
