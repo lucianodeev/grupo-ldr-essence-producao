@@ -33,6 +33,35 @@ jobs:
         run: npm --prefix apps/painel-ldr run build:render
       - name: Typecheck generated production route registration
         run: npm --prefix apps/painel-ldr run typecheck
+  local-supabase:
+    # Standard runner in this public repository. No hosted Supabase branch or secrets.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - uses: supabase/setup-cli@v1
+        with:
+          version: 2.122.1
+      - run: npm install --prefix /tmp/free-pg --no-audit --no-fund pg@8.23.1
+      - name: Start disposable local Auth, Data API and database
+        run: |
+          supabase init --workdir /tmp/ldr-free-supabase --yes
+          supabase start --workdir /tmp/ldr-free-supabase --exclude storage-api,imgproxy,realtime,studio,postgres-meta,edge-runtime,logflare,vector,supavisor > /tmp/ldr-local-start.log 2>&1
+          umask 077
+          supabase status --workdir /tmp/ldr-free-supabase -o json > /tmp/ldr-local-status.json
+      - name: Integrated authentication, free proposal, approval, signed fixture, credits and agenda
+        env:
+          AGENDA_PG_PACKAGE: /tmp/free-pg/package.json
+          LDR_LOCAL_SUPABASE_STATUS: /tmp/ldr-local-status.json
+        run: node scripts/agenda/free-supabase-integration.mjs
+      - name: Remove disposable stack and local data
+        if: always()
+        run: supabase stop --workdir /tmp/ldr-free-supabase --no-backup
   visual:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
