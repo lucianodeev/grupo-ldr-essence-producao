@@ -45,7 +45,7 @@ function PublicHome() {
         <h1 id="ldr-business-title" className="mt-3 max-w-3xl font-serif text-3xl font-bold leading-tight md:text-5xl">Consultoria, tecnologia e pessoas para desenvolver o seu negócio.</h1>
         <p className="mt-4 max-w-2xl text-sm leading-7 text-white/80 md:text-base">Conheça as soluções empresariais e solicite uma proposta adequada às necessidades da sua organização.</p>
         <div className="mt-6 flex flex-wrap gap-3">
-          <Link to="/empresas" className="rounded-full bg-[#f4c76b] px-6 py-3 text-sm font-bold text-[#1f1303]">Explorar soluções empresariais</Link>
+          <Link to="/empresas/proposta" className="rounded-full bg-[#f4c76b] px-6 py-3 text-sm font-bold text-[#1f1303]">Solicitar proposta empresarial</Link>
           <Link to="/ecossistema" className="rounded-full border border-white/30 px-6 py-3 text-sm font-bold text-white">Conhecer o ecossistema</Link>
         </div>
         <h2 className="mt-10 text-xl font-bold">Serviços para empresas</h2>
@@ -61,11 +61,11 @@ function PublicHome() {
             <article key={name} className="rounded-2xl border border-white/15 bg-white/5 p-5">
               <h3 className="font-bold">{name}</h3>
               <p className="mt-2 text-sm text-white/75">{description}</p>
-              <Link to="/empresas" className="mt-4 inline-block text-sm font-bold text-[#f4c76b]">Conhecer opções →</Link>
+              <Link to="/empresas/proposta" className="mt-4 inline-block text-sm font-bold text-[#f4c76b]">Solicitar proposta →</Link>
             </article>
           ))}
         </div>
-        <p className="mt-5 text-xs text-white/70">Os serviços sujeitos a orçamento dependem de proposta e valor aprovado antes do pagamento. Pagamentos e agendamentos seguem os fluxos disponíveis no catálogo.</p>
+        <p className="mt-5 text-xs text-white/70">O pedido de proposta não gera cobrança. Para serviços com orçamento personalizado, o preço é confirmado antes do pagamento; agendamento de serviços pagos somente após confirmação do Stripe, quando esse fluxo estiver disponível.</p>
       </div>
     </section>
     <AcademyInstitutionalIntro />
