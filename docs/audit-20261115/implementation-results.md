@@ -1,77 +1,101 @@
-# Biblioteca LDR — resultados reais da implementação
+# Biblioteca LDR — implementação e pendências reais
 
-Data: 15/11/2026. Branch: `audit/biblioteca-redesign-20261115`. PR #302. Base retomada: `2163e7bf6dd450121a65a464efed5a61d66d3397`.
+Atualização: 15/11/2026. Branch: `audit/biblioteca-redesign-20261115`. PR #302. Esta continuação partiu de `1a5813ce79d40afb570b9938f17642c5f3f1516e` e conserva os commits anteriores.
 
-## Entrega e limites
+## Resultado disponível na branch
 
-Esta é uma entrega parcial verificável, não a conclusão de toda a biblioteca. Nenhuma formação foi aprovada como integralmente concluída ou apta a sustentar a carga horária anunciada. Não houve merge, deploy, cobrança, alteração de assinatura, migração SQL ou escrita de conteúdos/progresso em produção. As consultas ao projeto `sfrcsrzuoqdscflfuwik` foram SELECT de inventário e políticas, sem ler identidades de alunos.
+O catálogo gratuito Academy tem agora **59 módulos com textos próprios em oito sequências**. Isto conclui a substituição dos três parágrafos genéricos nessa fonte, mas não equivale à aprovação pedagógica integral, validação de carga horária ou habilitação profissional.
 
-## Conteúdo original desenvolvido
+| Sequência | Módulos escritos | Estado real |
+| --- | --- | --- |
+| Orientação do Trabalho Científico | 12 | Texto, casos fictícios, exercícios e respostas comentadas; revisão e carga histórica de 120h por validar |
+| Inglês introdutório | 5 | Sequência escrita; escuta, pronúncia, interação e A1 global não certificados |
+| Espanhol introdutório | 5 | Conteúdo específico e exercícios próprios; capacidades orais e carga por validar |
+| Português para Falantes de Outras Línguas | 5 | Apoio em inglês; exemplos e tarefas em português; capacidades orais e carga por validar |
+| Neerlandês introdutório | 5 | Conteúdo específico e exercícios próprios; capacidades orais e carga por validar |
+| Alemão introdutório | 5 | Conteúdo específico e exercícios próprios; capacidades orais e carga por validar |
+| Modelos de Documentos Psicanalíticos | 10 | Oficinas e modelos didáticos; não são contratos, diagnósticos ou documentos profissionais validados |
+| Freud — fundamentos históricos e conceptuais | 12 | Fontes primárias, distinções teóricas, análise crítica e projeto escrito; não é habilitação clínica nem comprovação atual de eficácia |
 
-- **Orientação do Trabalho Científico:** 12 módulos específicos: objeto, pergunta, objetivos, hipóteses, método, pesquisa bibliográfica, leitura crítica, estrutura, citações, referências, ética e projeto final. Cada módulo contém objetivos observáveis, explicação desenvolvida, caso explicitamente fictício, tarefa e autoavaliação comentada. Estimativa editorial de estudo com atividades: 915 minutos (15h15). A carga histórica de 120h não está validada e não foi convertida em certificação.
-- **Inglês Básico A1:** cinco módulos com apresentações, verbo be, presente simples, situações de viagem e comunicação profissional; diálogos e exemplos originais, exercícios e respostas comentadas. Estimativa de estudo: 405 minutos (6h45). Não valida as 30h anunciadas nem domínio global de A1; áudio, escuta, pronúncia e interação ainda precisam de desenvolvimento e avaliação.
-- **Espanhol, Português para Falantes de Outras Línguas, Neerlandês e Alemão:** mais 20 módulos próprios, com cinco sequências diferenciadas por idioma quando se conta o Inglês. O curso de português oferece explicações de apoio em inglês. Nenhuma sequência certifica pronúncia, escuta, interação oral ou A1 global.
-- **Modelos de Documentos Psicanalíticos:** dez módulos próprios, com modelos didáticos efetivos, casos fictícios e exercícios de revisão. Distinguem ficha administrativa, narrativa, enquadramento, agenda, acompanhamento, consentimentos, comunicação, supervisão e estudo de caso. Não são contratos, diagnósticos ou documentos profissionais validados para uso real.
-- **Total desta branch: 47 módulos originais em sete sequências**, de 59 módulos no catálogo gratuito Academy. O curso Freud (12 módulos) permanece sem novos textos nesta edição; exige consulta e revisão histórica/conceptual específica. Não foi preenchido por um resumo genérico para aumentar a contagem.
-- Referências efetivamente consultadas: páginas de orientação da EQUATOR/PRISMA, ICMJE, UNESCO, Conselho da Europa, British Council, Camões, Taalunie/ANS, Taaladvies/Vlaanderen, EDPB e índice gramatical DW; o índice Cervantes e o seu inventário foram consultados por resultados de pesquisa, com manutenção na página detalhada. O alcance de cada consulta é explícito. O código identifica a página, data de consulta e alcance. Não se declara ter lido todas as obras citadas nessas páginas. Não há resultados científicos ou qualificações inventadas.
-- O curso Freud mantém os títulos e registos anteriores, mas deixa de apresentar os três parágrafos repetidos como aulas. Mostra desenvolvimento pendente e não permite novas conclusões de módulos sem conteúdo. Todos os gratuitos deixam de usar o preenchimento genérico.
-- Os roteiros de assinatura, a leitura repetida de RH e as aulas geradas pelo modelo profissional ficam identificados como programas em revisão. Novas conclusões pela interface ficam suspensas nesses roteiros; o conteúdo-fonte anterior continua no histórico Git, e compras, matrículas, conclusões e certificados anteriores não foram apagados ou reescritos.
+Cada módulo contém objetivos, desenvolvimento próprio, caso explicitamente fictício, atividade e autoavaliação comentada. O teste de extensão é apenas uma triagem estrutural, não um selo de qualidade intelectual. As cargas históricas continuam identificadas como por validar. Nenhum certificado novo é emitido por estas sequências em revisão.
 
-## Auditoria individual
+No curso Freud, os textos distinguem história da disciplina, inconsciente/recalque, resistência, transferência, associação livre, interpretação, primeira e segunda tópicas, terminologia sobre desenvolvimento, sintomas, sonhos e enquadramento. Explicações da teoria histórica, exemplos inventados e avaliação crítica ficam identificados. Foram consultadas passagens de fontes primárias em arquivos como York University, UCSB, Gutenberg e Lutecium; a bibliografia indica edição, tradução e alcance de consulta. Não se declara leitura integral de todas as obras nem se copiam as traduções para a plataforma.
 
-A matriz Markdown e o JSON cobrem **40 programas publicados**, **8 cursos gratuitos Academy**, **50 cursos de assinatura** e **23 versões linguísticas de 17 obras digitais**. Os conjuntos sobrepõem-se em algumas ofertas; não devem ser somados como número de produtos comerciais independentes.
+## Revisão editorial dos eBooks
 
-- Supabase: três módulos na tabela principal e zero materiais em `training_materials`. Todas as 40 ofertas foram cruzadas com fontes curriculares locais. Um programa com zero módulos SQL não foi classificado automaticamente como vazio.
-- Cursos profissionais: a função atualmente usada é `professional-formations-lessons.ts`, que constrói texto por substituição de título, foco e projeto. A quantidade de aulas geradas não comprova desenvolvimento pedagógico.
-- Os 19 produtos digitais do relato anterior não se confirmaram em `digital_product_content`: foram encontradas 17 chaves, sem presumir ou criar duas obras adicionais.
-- A estrutura dos 23 registos digitais foi descomprimida e validada. Todos possuem `kind` e estrutura compatível: não se confirmou a suspeita inicial de ausência desse identificador. A normalização adicional é defensiva, não uma alegação de que todos os leitores estavam vazios.
-- Há obras de 20 capítulos com cerca de 583–747 palavras no total e dois eBooks de seis páginas com 325 e 416 palavras. A estrutura existente não demonstra a profundidade editorial solicitada.
-- Triagem de repetição em eBooks: zero grupos de parágrafos exatamente iguais após normalização; 11.710 pares de trechos semelhantes pelo critério documentado. Os pares concentram-se em duas obras, incluindo versões linguísticas da autobiografia. São sinais para revisão humana, não 11.710 erros independentes comprovados. A matriz preserva contagens agrupadas e amostras de localização, sem divulgar os textos pagos.
-- A revisão intelectual, bibliográfica e de direitos de cada uma das 17 obras **não foi concluída**. Nenhum texto original foi substituído por uma reescrita automática, nem foram inventados episódios autobiográficos.
+A matriz conserva a auditoria das **17 obras, em 23 versões linguísticas**. Os 19 produtos anteriormente relatados não foram confirmados na tabela: não foram inventadas duas obras para completar a contagem.
 
-## Implementação técnica e redesign
+Foi iniciada uma **versão candidata 2 de “Como Mudar o Comportamento Humano”**, separada do original:
 
-- Painel principal em azul-marinho, branco e dourado, com continuar a aprender, cursos, formações, eBooks, catálogo, gratuitos, progresso/certificados e ligação LDR ONE.
-- Pesquisa que ignora acentos, filtro por formato, estados vazios e erro de carregamento. Os quatro idiomas têm textos de interface; os textos-base novos estão em português e o curso de português para estrangeiros inclui apoio em inglês, com exemplos na respetiva língua-alvo. Traduções pedagógicas completas não foram produzidas.
-- Acesso disponível, gratuito, oferta e acesso por confirmar têm rótulos distintos. Uma oferta sem decisão autoritativa não é apresentada como compra do aluno. Os serviços anteriores continuam numa área secundária recolhida.
-- “Continuar” usa apenas destinos mapeados; não inventa ligação circular para conteúdo desconhecido.
-- Página gratuita: navegar deixa de concluir automaticamente; registar estudo requer aula disponível e revisão da atividade. Erros de gravação são visíveis. O valor lido do servidor funciona como piso para evitar baixar o progresso ao usar um lote revisto. Isto não substitui uma futura operação atómica no servidor para concorrência entre dispositivos.
-- Leitor: compras pagas e aliases antigos são preservados; o acesso LDR ONE é verificado com a mesma função usada na biblioteca para os produtos já incluídos. Os dois eBooks especiais não foram acrescentados silenciosamente ao catálogo de assinatura.
-- Conteúdo comprimido e formatos históricos são normalizados sem regravar obras. Estruturas vazias falham de forma controlada. Quebras de linha literais são corrigidas na representação, mantendo o registo armazenado intacto.
-- Abrir o leitor deixa de gravar progresso automaticamente. A posição passa a ser guardada por ação explícita, respeitando o piso consultado. O índice muda corretamente ao trocar de idioma ou produto. Leitura e autoavaliação não são apresentadas como certificado.
+- Três capítulos desenvolvidos de 20 previstos, com explicação, casos, atividades e critérios: comportamento observável; condições e aprendizagem; formação de hábitos.
+- Referências verificáveis de Michie e colegas, Lally e colegas e Harkin e colegas, com alcance de consulta explícito. Não se convertem médias de estudos em garantias individuais ou prazos universais.
+- A versão 1 continua ativa no Supabase. A verificação SELECT desta continuação confirmou `version=1`, `active=true` e atualização em 14/09/2026. Nenhum conteúdo foi regravado.
+- A candidata contém identificação do produto, versão base e checksum canónico do conteúdo analisado. Não contém cópia integral da obra antiga.
+- `published=false`, `status=draft`, três de 20 capítulos; o validador offline indica `activationEligible=false`. Alterar apenas o estado e os campos de revisão não torna uma edição parcial elegível.
+- O rascunho não é importado pelo leitor, não cria um produto e não muda acesso, compra, preço ou progresso.
+
+A revisão intelectual completa das 17 obras permanece pendente. A auditoria encontrou obras de 20 capítulos com cerca de 583–747 palavras no total e dois eBooks de seis páginas com 325 e 416 palavras. Também encontrou sinais de semelhança concentrados em duas obras: 11.710 pares pelo critério de triagem, não 11.710 erros editoriais independentes comprovados. Os textos originais, incluindo a autobiografia, não foram substituídos ou completados com acontecimentos inventados.
+
+## Correções técnicas
+
+- Painel em azul-marinho, branco e dourado, com continuar, cursos, formações, eBooks, catálogo, gratuitos, progresso/certificados e LDR ONE.
+- Pesquisa sem acentos, filtro por formato, estados vazios e erro. Interface em quatro idiomas; textos pedagógicos novos em português, com apoios e exemplos linguísticos identificados.
+- Acesso confirmado, gratuito, oferta e acesso por verificar têm rótulos distintos. O estado editorial não é confundido com o direito adquirido. Serviços anteriores continuam numa área secundária recolhida.
+- Navegar deixa de concluir automaticamente. Nas sequências gratuitas, registar estudo exige texto disponível e revisão da atividade; uma autoavaliação não equivale a certificação.
+- Roteiros profissionais, de assinatura e RH sem desenvolvimento próprio continuam em revisão, sem novas conclusões pela interface; identificadores, compras e conclusões anteriores não são apagados.
+- O leitor verifica LDR ONE com a função existente da biblioteca para os produtos já incluídos, preservando compras pagas e aliases. Os dois eBooks especiais não foram acrescentados silenciosamente à assinatura.
+- Formatos comprimidos e históricos são validados; estruturas vazias falham de forma controlada. As 23 versões analisadas possuem estrutura reconhecível. Corrigir quebras de linha na apresentação não regrava o conteúdo armazenado.
+- A posição no leitor é guardada por ação explícita. O índice é reiniciado ao mudar idioma ou produto.
+- **Progresso no servidor:** o `upsert` que podia reduzir um percentual foi substituído por `UPDATE` condicionado a `progress_percent <= valor recebido`. Na primeira gravação, o índice único cliente/produto resolve concorrência de inserção, com nova atualização condicionada após conflito `23505`. Valores não finitos são rejeitados e falhas de escrita são devolvidas ao cliente. Não se introduziu migração, função privilegiada ou alteração de RLS. A semântica foi testada com dados sintéticos; falta um teste com duas sessões reais num ambiente isolado.
+
+## Falha de regressão resolvida
+
+A falha anterior de `invoice.paid` vinha de uma expectativa textual que exigia um formato específico da condição e proibia suporte já existente no ramo empresarial. O webhook não foi alterado nesta continuação. A verificação foi substituída por testes que extraem e executam os próprios ramos de encaminhamento do ficheiro, com handlers simulados:
+
+- LDR ONE recebe apenas o seu handler;
+- metadados ausentes são resolvidos antes de encaminhar;
+- o suporte empresarial existente permanece isolado;
+- outros produtos mantêm os seus contratos atuais de eventos.
+
+Isto valida o encaminhamento sintético, não uma cobrança ou renovação financeira real. Nenhuma chave Stripe ou pagamento real foi usado nos testes.
 
 ## Validação
 
 | Verificação | Resultado |
 | --- | --- |
-| TypeScript (`npm --prefix apps/painel-ldr run typecheck`) | Passou, sem erros |
-| Build da aplicação (`npm --prefix apps/painel-ldr run build`) | Passou; não publicou |
-| Testes específicos desta entrega (`node --test apps/painel-ldr/tests/library-*.test.cjs`) | 19/19 passaram |
-| Suíte unitária existente (`npm --prefix apps/painel-ldr test`) | 59/59 passaram |
-| Suíte de regressão (`npm --prefix apps/painel-ldr run test:regressions`) | 190/191 passaram; uma falha pré-existente |
-| Repetição da falha no ficheiro original de HEAD | Mesma falha reproduzida antes das alterações |
-| RLS em oito tabelas sensíveis | Ativada nas oito; snapshot de 11 políticas em seis tabelas; nenhuma política alterada |
-| Estrutura das obras descomprimidas | 23/23 versões normalizadas sem erro estrutural |
+| TypeScript | Passou, sem erros |
+| Build | Passou, sem deploy |
+| Suíte de regressão | 206/206 passaram |
+| Suíte unitária existente | 59/59 passaram |
+| Testes específicos `library-*.test.cjs` | 28/28 passaram |
+| Validação da edição candidata | Quatro testes passaram; candidata parcial continua inelegível |
+| Encaminhamento Stripe | Seis testes do ficheiro relevante passaram; handlers e dados simulados |
+| Progresso monotónico | Oito cenários sintéticos passaram, incluindo atualizações e primeiras gravações concorrentes, isolamento de cliente e falhas |
+| Estrutura de eBooks | 23/23 versões normalizadas sem erro estrutural; não é aprovação editorial |
 | Renderização do painel | Verificada em PT/EN/FR/ES com dados sintéticos |
-| Navegação/filtros e permissões | Testes de funções puras, renderização HTML e backend simulado; sem compras reais |
-| Inspeção visual, overflow móvel e fluxo autenticado | **Pendente**: o Chromium local falhou por restrição de sockets; o navegador partilhado não alcançou a porta da prévia |
+| Supabase nesta continuação | Apenas SELECT: metadados da obra, não nulidade e índice único de `library_progress` |
+| RLS | Snapshot anterior: ativa nas oito tabelas inspecionadas; nenhuma política foi alterada |
+| Inspeção visual e fluxo autenticado | Pendente: o Chromium local estava bloqueado por restrição de sockets e o navegador partilhado não alcançou a prévia local; não foi contornado esse limite |
 
-A regressão pré-existente é `LDR ONE handles invoice.paid as a confirmed renewal without changing other products`, em `ldr-one-business-min-seats.test.cjs`. É uma asserção textual sobre `api/stripe/webhook.ts`; o ficheiro não foi alterado nesta entrega. A repetição com o ficheiro de HEAD também falhou. Isto não comprova por si só falha operacional de renovações; requer investigação específica. Não foi marcado como teste aprovado.
+A suíte de regressão inclui vários dos testes específicos; estas quantidades não devem ser somadas como testes independentes. Os avisos existentes de descontinuação de `inputValidator` continuam no build.
 
-O build emite avisos existentes de descontinuação de `inputValidator`. Não foi feita uma migração ampla desse mecanismo durante o trabalho editorial.
+## Pendências que continuam abertas
 
-## Pendências ordenadas
+1. Revisão pedagógica especializada dos 59 módulos, testes com alunos, materiais complementares e dimensionamento de carga real; completar áudio e avaliação oral nos idiomas.
+2. Desenvolver as aulas próprias dos 50 roteiros de assinatura, de RH e de cada formação profissional. A contagem de títulos ou texto gerado não comprova 600/1200 horas.
+3. Concluir os 17 capítulos restantes da candidata editorial iniciada e revisar as outras 16 obras, com verificação intelectual, bibliográfica e de direitos, sem substituir versões antigas automaticamente.
+4. Testar a prévia com sessões sintéticas reais: comprador, assinante ativo/inativo e aluno sem compra. Verificar acessibilidade interativa, visual e overflow em dispositivos móveis.
+5. Validar anexos externos, emissão e consulta de certificados e concorrência entre dispositivos num ambiente de testes. Os mocks e a presença de RLS não substituem essa etapa.
+6. Manter a promoção a produção bloqueada até as validações e a autorização explícita do utilizador. Esta entrega não fez merge, deploy, alteração de assinatura, criação de serviço pago ou escrita em produção.
 
-1. Revisão pedagógica humana dos 47 módulos novos, teste com alunos e dimensionamento real de carga; completar materiais e capacidades linguísticas ausentes.
-2. Desenvolver os 12 módulos do curso Freud e aprofundar as sete sequências já redigidas, depois a formação RH, os 50 roteiros de assinatura e cada formação profissional com conteúdos próprios. Preservar identificadores ao substituir cada lote.
-3. Revisar as 17 obras por capítulo, priorizando as de desenvolvimento muito curto e as com sinais de repetição. Criar versões editoriais separadas, sem alterar direitos dos compradores ou inventar factos sobre o autor.
-4. Testar navegação real, leitores e formulários numa prévia acessível ao navegador, com perfis sintéticos de comprador, assinante ativo/inativo e aluno sem compra. Fazer auditoria de acessibilidade interativa e visual em dispositivos móveis.
-5. Verificar anexos externos, requisitos e emissão de certificados, sessão entre dispositivos e concorrência de gravação de progresso. A presença de RLS e os mocks não substituem testes de isolamento com sessões reais num ambiente de testes.
-6. Investigar separadamente a asserção pré-existente de `invoice.paid`.
-7. Só preparar a promoção a produção depois de resolver as validações e receber autorização explícita. Esta entrega não pede nem executa publicação.
+## Reprodução
 
-## Reprodução da matriz
+- `node tools/audit-library-content.cjs <export-digital-content.json> <export-programas.json> docs/audit-20261115`
+- `node tools/validate-editorial-drafts.cjs`
+- `node --test apps/painel-ldr/tests/library-*.test.cjs apps/painel-ldr/tests/editorial-drafts.test.cjs`
+- `npm --prefix apps/painel-ldr run test:regressions`
+- `npm --prefix apps/painel-ldr test`
+- `npm --prefix apps/painel-ldr run typecheck`
+- `npm --prefix apps/painel-ldr run build`
 
-`node tools/audit-library-content.cjs <export-digital-content.json> <export-programas.json> docs/audit-20261115`
-
-O primeiro ficheiro deve conter `product_key,locale,title,version,active,content`; o segundo, `slug,title,status,db_modules,db_materials`, obtidos por consultas SELECT. Os exports completos dos textos pagos são entradas locais de análise e **não** devem ser versionados num repositório público. A ferramenta gera apenas metadados, contagens e localizações de semelhança.
+Os exports completos dos textos pagos são entradas locais de análise e não devem ser versionados num repositório público. A matriz emite metadados, contagens e localizações de semelhança. A edição candidata contém redação original nova e está separada das obras protegidas em produção.

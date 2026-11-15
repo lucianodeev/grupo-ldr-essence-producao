@@ -8,6 +8,8 @@
     "digitalProducts": 17,
     "digitalLocaleRows": 23,
     "freeCatalog": 8,
+    "authoredFreeModules": 59,
+    "freeModules": 59,
     "subscriptionCatalog": 50,
     "exactDuplicateGroups": 0,
     "nearDuplicatePairs": 11710
@@ -612,12 +614,12 @@
       "slug": "clinica-psicanalitica-sigmund-freud",
       "title": "Clínica Psicanalítica: Sigmund Freud",
       "modules": 12,
-      "authoredLessons": 0,
-      "estimatedMinutes": 0,
+      "authoredLessons": 12,
+      "estimatedMinutes": 1170,
       "historicalHours": 120,
-      "editorial": "indisponível — títulos preservados, preenchimento retirado",
+      "editorial": "parcial — sequência original em revisão; carga não validada",
       "source": "src/lib/academy-free-courses.catalog.ts + src/content/academy-free",
-      "next": "Desenvolver cada aula, objetivos, casos, exercícios, avaliação e bibliografia"
+      "next": "Revisão externa de conteúdo, teste com alunos, materiais e dimensionamento de carga"
     },
     {
       "product_key": "curso_gratuito_orientacao_trabalho_cientifico_120h",
@@ -1654,6 +1656,22 @@
       "reader": "estrutura compatível após normalização; sessão autenticada por testar",
       "editorial": "parcial — revisão intelectual e bibliográfica pendente",
       "issues": []
+    }
+  ],
+  "editorialCandidates": [
+    {
+      "productKey": "ebook_comportamento_humano",
+      "baseVersion": 1,
+      "candidateVersion": 2,
+      "status": "draft",
+      "published": false,
+      "baseCanonicalSha256": "9a626bdf7721cae096015efdf3c2e4af03677e1d5f72a32cd6df7116ae56bcee",
+      "path": "editorial/drafts/ebook_comportamento_humano_v2.json",
+      "errors": [],
+      "authoredChapters": 3,
+      "expectedChapters": 20,
+      "complete": false,
+      "activationEligible": false
     }
   ],
   "exactDuplicates": [],

@@ -51,7 +51,7 @@ Data: 15/11/2026. Nenhum produto foi aprovado como integralmente concluído nest
 
 | Curso | Aulas originais / módulos | Carga histórica / estimativa nova | Estado |
 | --- | --- | --- | --- |
-| Clínica Psicanalítica: Sigmund Freud | 0/12 | 120h / 0min | indisponível — títulos preservados, preenchimento retirado |
+| Clínica Psicanalítica: Sigmund Freud | 12/12 | 120h / 1170min | parcial — sequência original em revisão; carga não validada |
 | Orientação do Trabalho Científico | 12/12 | 120h / 915min | parcial — sequência original em revisão; carga não validada |
 | Modelos de Documentos Psicanalíticos | 10/10 | não definidah / 900min | parcial — sequência original em revisão; carga não validada |
 | Inglês Básico — Nível A1 | 5/5 | 30h / 405min | parcial — sequência original em revisão; carga não validada |
@@ -142,6 +142,14 @@ Data: 15/11/2026. Nenhum produto foi aprovado como integralmente concluído nest
 | El Niño que Vendía Papayas | es / v2 | 40 / 12896 | parcial — revisão intelectual e bibliográfica pendente;  |
 | Le Garçon qui Vendait des Papayes | fr / v2 | 40 / 14479 | parcial — revisão intelectual e bibliográfica pendente;  |
 | O Menino que Vendia Mamão | pt / v2 | 40 / 18749 | parcial — revisão intelectual e bibliográfica pendente;  |
+
+## Versões editoriais em preparação
+
+| Produto | Versão base / candidata | Capítulos desenvolvidos / previstos | Estado / ativação |
+| --- | --- | --- | --- |
+| ebook_comportamento_humano | 1 / 2 | 3 / 20 | draft; published=false; elegível=false |
+
+As versões candidatas não são usadas pelo leitor de produção. O original e o acesso dos compradores permanecem inalterados.
 
 ## Duplicação e limites
 

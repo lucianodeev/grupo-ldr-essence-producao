@@ -1,0 +1,175 @@
+{
+  "productKey": "ebook_comportamento_humano",
+  "title": "Como Mudar o Comportamento Humano",
+  "locale": "pt",
+  "baseVersion": 1,
+  "candidateVersion": 2,
+  "status": "draft",
+  "published": false,
+  "expectedChapterCount": 20,
+  "scope": "Revisão editorial parcial. Não substitui a obra original nem modifica compras, acesso ou progresso. Os três capítulos iniciais estão em desenvolvimento; os 17 restantes não foram preenchidos automaticamente.",
+  "sources": [
+    {
+      "id": "michie2011",
+      "title": "Michie, S.; van Stralen, M. M.; West, R. (2011). The behaviour change wheel: a new method for characterising and designing behaviour change interventions. Implementation Science, 6, 42.",
+      "doi": "10.1186/1748-5908-6-42",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/21513547/",
+      "consulted": "2026-11-15",
+      "scope": "Resumo e registo bibliográfico consultados; não se declara leitura integral de todos os estudos subjacentes. COM-B é usado como quadro de perguntas, sem alegar eficácia garantida."
+    },
+    {
+      "id": "lally2010",
+      "title": "Lally, P.; van Jaarsveld, C. H. M.; Potts, H. W. W.; Wardle, J. (2010). How are habits formed: Modelling habit formation in the real world. European Journal of Social Psychology, 40, 998–1009.",
+      "doi": "10.1002/ejsp.674",
+      "url": "https://onlinelibrary.wiley.com/doi/10.1002/ejsp.674/epdf",
+      "consulted": "2026-11-15",
+      "scope": "Metadados e resumo do artigo original consultados. As limitações de autorrelato e do desenho impedem transformar o estudo num prazo universal de formação de hábitos."
+    },
+    {
+      "id": "harkin2016",
+      "title": "Harkin, B. et al. (2016). Does monitoring goal progress promote goal attainment? A meta-analysis of the experimental evidence. Psychological Bulletin, 142(2), 198–229.",
+      "doi": "10.1037/bul0000025",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/26479070/",
+      "consulted": "2026-11-15",
+      "scope": "Resumo e dados bibliográficos consultados. Não se atribuem a um leitor individual resultados médios de uma síntese de estudos."
+    }
+  ],
+  "chapters": [
+    {
+      "id": "1",
+      "title": "O que chamamos de comportamento",
+      "objectives": [
+        "Transformar um rótulo numa descrição verificável.",
+        "Distinguir a ação observada, a sua interpretação e as condições do contexto."
+      ],
+      "sections": [
+        {
+          "title": "Uma descrição muda a pergunta",
+          "paragraphs": [
+            "Dizer que alguém é desorganizado pode expressar uma frustração, mas ainda não identifica o que precisa de ser compreendido. O rótulo reúne ocorrências diferentes: perder documentos, não confirmar horários, adiar uma resposta ou guardar ficheiros em locais imprevisíveis. Cada uma pode exigir informação e soluções diferentes. Antes de falar em mudança, escolha uma ação delimitada e descreva quando ela ocorre. O ganho não é apenas de precisão verbal: uma descrição mais clara permite discutir recursos, obstáculos e alternativas sem tratar uma característica moral como explicação completa.",
+            "Uma definição de trabalho deve dizer o que será contado e o que ficará de fora. Para organizar documentos de um projeto, uma pessoa pode escolher observar se os ficheiros recebidos no dia são colocados na pasta acordada até ao fim do período de trabalho. Essa definição não mede toda a organização da pessoa. Mede uma ação específica num contexto. Se uma equipa confundir o indicador com a identidade do trabalhador, poderá produzir um julgamento injustificado mesmo usando uma tabela aparentemente objetiva. O indicador precisa de permanecer proporcional à pergunta que o motivou."
+          ]
+        },
+        {
+          "title": "Distinguir ação, contexto e inferência",
+          "paragraphs": [
+            "Considere um caso inteiramente fictício: Rui não envia dois documentos no prazo de uma semana. O que se sabe é a ausência de dois envios no prazo definido. Ainda não se sabe se recebeu os ficheiros, se tinha acesso à pasta, se compreendeu o critério ou se houve uma prioridade incompatível. Chamar-lhe desinteressado introduz uma interpretação. Ela pode parecer intuitiva, mas não deve ser registada como se tivesse sido diretamente observada. Uma conversa de esclarecimento começaria por identificar o que estava combinado e o que ocorreu, antes de escolher uma explicação.",
+            "A mesma ação pode ter sentidos e consequências diferentes conforme o contexto. Não responder imediatamente pode representar uma falha num processo urgente ou o cumprimento de um período reservado a trabalho concentrado. Por isso, uma descrição de comportamento não deve eliminar as condições da tarefa. Registe a situação, a oportunidade de agir e a consequência que consegue efetivamente observar. Quando uma informação não está disponível, marque a ausência. Completar a ficha com uma suposição torna o documento mais cheio, mas não mais informativo."
+          ]
+        },
+        {
+          "title": "Um exercício de delimitação",
+          "paragraphs": [
+            "Escolha uma rotina de estudo fictícia, sem envolver saúde ou uma relação de dependência. Substitua “estudar melhor” por uma ação que permita verificar o que foi feito: produzir uma pergunta sobre um texto e uma resposta provisória, por exemplo. Defina o momento, o material necessário e o que contará como execução. Depois escreva duas razões pelas quais a ação pode não ocorrer sem que isso demonstre falta de caráter. O propósito é abrir a investigação e tornar a revisão possível, não criar uma ferramenta de vigilância de outra pessoa.",
+            "Uma descrição bem construída também tem limites éticos e práticos. Pode ser inadequado recolher continuamente dados de terceiros ou transformar uma experiência de aprendizagem numa avaliação invasiva. O exercício deste capítulo utiliza personagens e registos inventados. A competência que se procura desenvolver é a capacidade de formular uma pergunta observável e reconhecer aquilo que o registo não revela. Essa distinção prepara a discussão seguinte: além de saber o que alguém faz, precisamos de examinar as condições que tornam a ação possível."
+          ]
+        }
+      ],
+      "caseStudy": "Caso fictício de Rui: dois envios em falta não permitem decidir entre desinteresse, ausência de acesso, instrução pouco clara ou prioridade incompatível. Cada hipótese sugere uma pergunta de verificação diferente.",
+      "exercise": "Produza uma tabela com rótulo, ação descrita, critério de observação, informação ausente e duas hipóteses alternativas. Não utilize dados de trabalhadores, clientes ou pessoas atendidas.",
+      "assessment": {
+        "question": "Por que uma tabela com duas faltas não demonstra uma identidade de desinteresse?",
+        "answer": "Porque conta ocorrências delimitadas; o rótulo sobre a pessoa acrescenta uma generalização e uma explicação que o registo não demonstra.",
+        "criteria": [
+          "Define a ação sem rótulo moral.",
+          "Mantém contexto e informação ausente.",
+          "Não converte indicador em identidade."
+        ]
+      },
+      "sourceIds": []
+    },
+    {
+      "id": "2",
+      "title": "Natureza, ambiente e aprendizagem",
+      "objectives": [
+        "Examinar capacidades e oportunidades antes de atribuir uma dificuldade apenas à vontade.",
+        "Usar um quadro teórico como orientação de perguntas, sem o apresentar como prova causal individual."
+      ],
+      "sections": [
+        {
+          "title": "Evitar explicações que encerram a investigação",
+          "paragraphs": [
+            "A oposição entre “nasceu assim” e “basta querer” pode transformar uma pergunta difícil numa resposta demasiado rápida. Um livro introdutório não consegue estabelecer que percentagem do comportamento de uma pessoa deriva de hereditariedade ou de aprendizagem a partir de um relato breve. Também não deve prometer que uma instrução elimina todas as restrições. Uma análise responsável começa por tornar explícito o que está a ser explicado, a informação disponível e o nível de conclusão que essa informação permite sustentar.",
+            "O modelo COM-B, apresentado por Michie, van Stralen e West em 2011, organiza perguntas sobre capacidade, oportunidade e motivação na análise de comportamento. O artigo propõe uma estrutura para caracterizar e desenhar intervenções e reconhece a necessidade de mais investigação sobre o seu uso para produzir intervenções eficazes. Aqui, o quadro serve para evitar uma explicação única baseada em vontade; não permite diagnosticar uma pessoa nem garantir que a ação escolhida causará uma mudança."
+          ]
+        },
+        {
+          "title": "Três perguntas para um caso de aprendizagem",
+          "paragraphs": [
+            "Imagine outra personagem fictícia, Inês, que quer rever um texto todas as noites. Quando a ação não acontece, a primeira hipótese da própria personagem é que lhe falta disciplina. Antes de aceitar essa conclusão, o exercício pergunta: ela sabe como fazer a revisão pretendida? Dispõe do texto, de acesso e de um período utilizável? A meta escolhida corresponde ao que valoriza e consegue priorizar naquele contexto? Estas perguntas não decidem a causa, mas mostram que uma dificuldade aparentemente única pode conter problemas diferentes.",
+            "As respostas também podem combinar-se. Se a tarefa é pouco clara e o único equipamento é partilhado, aumentar a frequência de lembretes pode não resolver o obstáculo principal. Uma revisão do plano poderia esclarecer o critério da atividade e procurar uma oportunidade exequível. Isto continua a ser uma proposta a testar no cenário, não um resultado científico sobre Inês. O caso é inventado precisamente para permitir examinar o raciocínio sem transformar uma experiência pessoal real em material que o leitor se sinta obrigado a expor."
+          ]
+        },
+        {
+          "title": "Do quadro de perguntas a uma decisão limitada",
+          "paragraphs": [
+            "Uma proposta educativa útil deve identificar qual condição procura alterar e como saberá se a alteração aconteceu. No caso de Inês, uma hipótese poderia ser que uma lista de critérios torna a revisão mais compreensível. O primeiro resultado a observar seria se a personagem consegue explicar e executar esses critérios num exemplo. Não seria adequado afirmar imediatamente que o problema de longo prazo foi resolvido ou que a mudança se manterá em todos os contextos. Cada decisão deve ter um alcance compatível com a verificação realizada.",
+            "A discussão sobre natureza e aprendizagem permanece mais ampla do que um único modelo. Este capítulo não oferece uma teoria completa do desenvolvimento humano, nem trata condições sociais como algo que uma pessoa pode sempre alterar sozinha. O exercício final pede que o leitor conserve no mapa uma restrição que não controla e uma pergunta que ainda não consegue responder. Reconhecer esses limites melhora a qualidade da análise e prepara a passagem para a repetição de ações em contextos específicos, sem prometer domínio total sobre o comportamento."
+          ]
+        }
+      ],
+      "caseStudy": "Caso fictício de Inês: uma tarefa pouco definida e equipamento partilhado tornam insuficiente explicar a falta de execução apenas por vontade. O quadro de perguntas identifica hipóteses, não uma causa comprovada.",
+      "exercise": "Preencha uma matriz para o caso: capacidade, oportunidade, motivação, informação disponível, lacuna e pequena alteração a testar. Declare uma condição fora do controlo da personagem.",
+      "assessment": {
+        "question": "O preenchimento da matriz COM-B comprova a causa da dificuldade?",
+        "answer": "Não. Organiza hipóteses e perguntas; a avaliação das explicações e de uma mudança exige informação e desenho adequados.",
+        "criteria": [
+          "Relaciona a pergunta com uma condição concreta.",
+          "Não reduz a dificuldade a caráter.",
+          "Distingue estrutura de análise e evidência causal."
+        ]
+      },
+      "sourceIds": [
+        "michie2011"
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Como hábitos são formados",
+      "objectives": [
+        "Distinguir repetição, frequência e automaticidade.",
+        "Desenhar um registo educativo sem prometer um prazo universal."
+      ],
+      "sections": [
+        {
+          "title": "Repetir não é medir tudo a mesma coisa",
+          "paragraphs": [
+            "Uma ação pode acontecer muitas vezes e continuar a exigir decisão consciente. Também é possível executar algo com pouca deliberação em determinado contexto e deixar de o fazer quando as condições mudam. Frequência e automaticidade são, portanto, perguntas diferentes. Um diário que conta execuções não demonstra sozinho quão automática a ação se tornou. Antes de afirmar que um hábito foi formado, esclareça que dimensão pretende observar e quais indicadores realmente reuniu.",
+            "O estudo de Lally e colegas, publicado em 2010, acompanhou comportamentos escolhidos por voluntários para repetição num contexto diário e examinou automaticidade mediante autorrelato. A investigação encontrou variação entre os percursos individuais; não sustenta um prazo único que se aplique a qualquer pessoa ou comportamento. O desenho e as medidas usados também delimitam a interpretação. Nesta revisão, o artigo é utilizado para recusar a promessa de um calendário universal, não para prescrever uma rotina clínica ou garantir transformação pessoal."
+          ]
+        },
+        {
+          "title": "O que observar num exercício fictício",
+          "paragraphs": [
+            "No cenário didático, Joana decide guardar o material de estudo depois de terminar uma atividade. O registo marca se houve oportunidade, se a ação ocorreu e o que a personagem relata sobre o esforço necessário. Se a atividade não aconteceu num dia, isso é diferente de ter acontecido e a arrumação ter sido omitida. Misturar as duas situações produz uma percentagem difícil de interpretar. O denominador deve representar oportunidades definidas, e não ser escolhido depois para tornar o resultado mais favorável.",
+            "Também importa não transformar um acontecimento isolado numa conclusão total. Uma execução esquecida não permite, sozinha, dizer que o percurso foi perdido. Da mesma forma, uma semana de repetições não autoriza afirmar que a ação será mantida indefinidamente. O exercício pode produzir uma pergunta melhor sobre contexto ou esforço, sem precisar de terminar com uma história de sucesso. Essa abertura à revisão distingue um registo de aprendizagem de uma narrativa promocional que seleciona apenas os dias convenientes."
+          ]
+        },
+        {
+          "title": "Acompanhar sem transformar o registo numa garantia",
+          "paragraphs": [
+            "A meta-análise de Harkin e colegas, de 2016, encontrou, em média, benefícios de intervenções de monitorização de progresso na realização de objetivos. Um resultado médio de estudos não equivale a uma garantia individual e não determina, por si só, que dados devem ser partilhados. Neste exercício, a monitorização é um recurso para aprender sobre a tarefa, e os registos permanecem fictícios. Não há necessidade de divulgar informações íntimas para preencher uma tabela didática.",
+            "Construa uma folha com data fictícia, oportunidade definida, execução e nota de contexto. Antes de começar a simulação, escreva qual pergunta pretende responder. Depois introduza um dia sem oportunidade e um dia com mudança de contexto, discutindo como ambos afetam a leitura. A conclusão deve separar o que foi contado, o que a personagem relatou e a hipótese que o leitor formulou. Se surgir uma promessa de prazo, pergunte que evidência a sustenta para aquele caso; quando essa evidência não existir, retire a promessa em vez de a tornar mais enfática."
+          ]
+        }
+      ],
+      "caseStudy": "Caso fictício de Joana: uma tabela contava como falha de arrumação um dia em que não houve atividade de estudo. A revisão define oportunidades antes de calcular qualquer proporção.",
+      "exercise": "Crie dez linhas sintéticas de registo, com oportunidades, execuções e dois contextos diferentes. Produza uma conclusão de 200 palavras distinguindo frequência, esforço relatado e informação que não foi medida.",
+      "assessment": {
+        "question": "Uma sequência de execuções comprova, por si só, automaticidade permanente?",
+        "answer": "Não. A frequência registada não mede todas as dimensões da ação e não demonstra manutenção em outros contextos ou por tempo indeterminado.",
+        "criteria": [
+          "Define o denominador.",
+          "Distingue execução de automaticidade.",
+          "Evita prazo universal e garantia individual."
+        ]
+      },
+      "sourceIds": [
+        "lally2010",
+        "harkin2016"
+      ]
+    }
+  ],
+  "baseCanonicalSha256": "9a626bdf7721cae096015efdf3c2e4af03677e1d5f72a32cd6df7116ae56bcee",
+  "baseSnapshotDate": "2026-11-15"
+}
