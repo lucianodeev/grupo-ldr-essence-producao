@@ -94,7 +94,8 @@ try{
  process.env.AGENDA_INTEGRATION_ENABLED='true';
  const paid=await pay(owner.context);assert.equal(paid.orderId,draft.id);assert.equal(body.get('line_items[0][price_data][unit_amount]'),'12345');
  await pay(owner.context);assert.equal(calls,1);
- const startsAt=new Date(Date.now()+3*86400000).toISOString();
+ const atMinute=date=>{date.setUTCSeconds(0,0);return date.toISOString();};
+ const startsAt=atMinute(new Date(Date.now()+3*86400000));
  await assert.rejects(()=>customer.requestClientAppointment(owner.user.id,owner.user.email,{orderId:draft.id,startsAt}));
  await owner.context.supabase.from('orders').update({payment_status:'pago'}).eq('id',draft.id);
  assert.equal(unwrap(await admin.from('orders').select('payment_status').eq('id',draft.id).single()).payment_status,'pendente');
@@ -136,7 +137,7 @@ try{
  assert.equal((await saga.syncAppointmentEvent(booked.appointmentId)).status,'sincronizado');
  assert.equal(await ownedCalendar.countEventsByAppointment(booked.appointmentId),1);
  pass(`${remote?'REMOTE TEST':'synthetic'} Calendar saga uses actual local payment, lease and persistent event identity`);
- const next=new Date(Date.now()+4*86400000).toISOString();
+ const next=atMinute(new Date(Date.now()+4*86400000));
  await customer.rescheduleClientAppointment(owner.user.id,owner.user.email,{appointmentId:booked.appointmentId,startsAt:next});
  assert.equal((await agendaAdmin.confirmWithGoogleMeet(master.context.supabase,master.user.id,{appointmentId:booked.appointmentId,startsAt:next})).status,'sincronizado');
  assert.equal((await ownedCalendar.findEventByAppointment(booked.appointmentId,null)).start,Date.parse(next));
