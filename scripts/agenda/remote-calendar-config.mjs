@@ -1,6 +1,9 @@
 // Read-only vault access. Never returns Stripe keys or the production database key.
 import {createDecipheriv} from 'node:crypto';
 export const TEST_CALENDAR='e23f50c0bd5d6e0674959daa9ac822861319d9da464bfd6e17327eae3ea457a7@group.calendar.google.com';
+// Verified directly in the live Render UI on 2026-11-15. The recovery checkpoint
+// predates activation and can still have TEST_CALENDAR as its old active value.
+export const PRODUCTION_CALENDAR='9baa053c6264ba1d0ebbfe6b93354427404d1b8f0ecbb7a29e8929cd68bf1825@group.calendar.google.com';
 const SOURCE='https://sfrcsrzuoqdscflfuwik.supabase.co';
 export async function prepareRemoteCalendar(raw,request=fetch,report=()=>{}){
  let key,bytes;
@@ -12,7 +15,8 @@ export async function prepareRemoteCalendar(raw,request=fetch,report=()=>{}){
   key=Buffer.from(config?.GOOGLE_CALENDAR_TOKEN_ENCRYPTION_KEY??'','base64');
   const readiness={wrapped:!!wrapped,source:config?.SUPABASE_URL?.replace(/\/$/,'')===SOURCE,
    test_destination:config?.GOOGLE_CALENDAR_TEST_ID===TEST_CALENDAR,
-   production_distinct:!!config?.GOOGLE_CALENDAR_ID&&config.GOOGLE_CALENDAR_ID!==TEST_CALENDAR,
+   production_distinct:PRODUCTION_CALENDAR!==TEST_CALENDAR,
+   snapshot_calendar_recognized:[PRODUCTION_CALENDAR,TEST_CALENDAR].includes(config?.GOOGLE_CALENDAR_ID),
    oauth_client:!!config?.GOOGLE_OAUTH_CLIENT_ID?.endsWith('.apps.googleusercontent.com'),
    oauth_secret:!!config?.GOOGLE_OAUTH_CLIENT_SECRET,source_key:!!config?.SUPABASE_SERVICE_ROLE_KEY,encryption_key:key.length===32};
   report(readiness);
