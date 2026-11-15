@@ -1,7 +1,19 @@
+import { LibraryLearningDashboard } from "@/components/library-learning-dashboard";
+import type { DashboardItem } from "@/lib/library-dashboard";
+import { ACADEMY_FREE_COURSES } from "@/lib/academy-free-courses.catalog";
+import { ACADEMY_SUBSCRIPTION_COURSES } from "@/lib/academy-subscription-courses.catalog";
+import { freeCourseLessons } from "@/lib/academy-free-learning";
 import { Outlet, createFileRoute, useLocation } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { BookOpen, Film, GraduationCap, MessageCircle, ReceiptText, ShoppingCart } from "lucide-react";
+import {
+  BookOpen,
+  Film,
+  GraduationCap,
+  MessageCircle,
+  ReceiptText,
+  ShoppingCart,
+} from "lucide-react";
 import { useState } from "react";
 import { clientDigitalLibrary } from "@/lib/client-portal.functions";
 import { clientLdrPass } from "@/lib/ldr-pass.functions";
@@ -15,249 +27,1499 @@ import { clientBusiness24Offer } from "@/lib/business24-commerce.functions";
 import { clientAIFormationOffer } from "@/lib/ai-formation-commerce.functions";
 import { clientMentorshipOffer } from "@/lib/mentorship-commerce.functions";
 import { clientLeadershipOffer } from "@/lib/leadership-commerce.functions";
-import { clientEnrollFreeCareerCourse, clientFreeCareerCourse } from "@/lib/free-career-course.functions";
+import {
+  clientEnrollFreeCareerCourse,
+  clientFreeCareerCourse,
+} from "@/lib/free-career-course.functions";
 import { clientEnrollFreeFrenchA1, clientFreeFrenchA1 } from "@/lib/free-french-a1.functions";
 import { clientEnrollFreeFirstAid, clientFreeFirstAid } from "@/lib/free-first-aid.functions";
 import { useI18n } from "@/lib/i18n";
 import { UNDERGRADUATE_COURSES } from "@/lib/undergraduate.catalog";
-import { libraryCardText, postgraduateCardTitle, undergraduateCardTitle } from "@/lib/library-card-i18n";
+import {
+  libraryCardText,
+  postgraduateCardTitle,
+  undergraduateCardTitle,
+} from "@/lib/library-card-i18n";
 import { libraryAcademicCardText } from "@/lib/library-academic-card-i18n";
 import { AcademicDrawers } from "@/components/academic-drawers";
 import { PROFESSIONAL_FORMATIONS, pfText } from "@/lib/academy-professional-formations.catalog";
 import { PSYCHOANALYSIS_EBOOKS } from "@/lib/psychoanalysis-ebooks.catalog";
 import { AcademySubscriptionCourseShelf } from "@/components/academy-subscription-course-shelf";
 
-export const Route=createFileRoute("/_clientarea/cliente/biblioteca")({component:ClientLibraryRoute});
+export const Route = createFileRoute("/_clientarea/cliente/biblioteca")({
+  component: ClientLibraryRoute,
+});
 
-function ClientLibraryRoute(){
-  const location=useLocation();
-  const pathname=location.pathname.replace(/\/+$/,"")||"/";
-  if(pathname!=="/cliente/biblioteca")return <Outlet/>;
-  return <ClientLibrary/>;
+function ClientLibraryRoute() {
+  const location = useLocation();
+  const pathname = location.pathname.replace(/\/+$/, "") || "/";
+  if (pathname !== "/cliente/biblioteca") return <Outlet />;
+  return <ClientLibrary />;
 }
 
-type Locale="pt"|"en"|"fr"|"es";
+type Locale = "pt" | "en" | "fr" | "es";
 
-const TXT={
-  pt:{title:"Minha Biblioteca",intro:"Aprenda no seu ritmo. Continue de onde parou ou descubra algo novo por aqui.",orders:"Ver pedidos e pagamentos",access:"Acesso liberado",buy:"Comprar",start:"Começar gratuitamente",open:"Acessar curso",comments:"Conversas sobre este conteúdo",french:"Francês A1",aid:"Primeiros Socorros",freud:"Clínica Psicanalítica: Freud",freeHours:"120h · GRATUITO"},
-  en:{title:"My Library",intro:"Your private space for reading, training and content.",orders:"View orders and payments",access:"Access granted",buy:"Buy",start:"Start for free",open:"Open course",comments:"Comments",french:"French A1",aid:"First Aid",freud:"Psychoanalytic Clinic: Freud",freeHours:"120h · FREE"},
-  fr:{title:"Ma Bibliothèque",intro:"Votre espace privé de lecture, formation et contenus.",orders:"Voir les commandes et paiements",access:"Accès autorisé",buy:"Acheter",start:"Commencer gratuitement",open:"Ouvrir le cours",comments:"Commentaires",french:"Français A1",aid:"Premiers secours",freud:"Clinique psychanalytique : Freud",freeHours:"120 h · GRATUIT"},
-  es:{title:"Mi Biblioteca",intro:"Tu espacio privado de lectura, formación y contenidos.",orders:"Ver pedidos y pagos",access:"Acceso liberado",buy:"Comprar",start:"Comenzar gratis",open:"Abrir curso",comments:"Comentarios",french:"Francés A1",aid:"Primeros Auxilios",freud:"Clínica Psicoanalítica: Freud",freeHours:"120 h · GRATIS"}
+const TXT = {
+  pt: {
+    title: "Minha Biblioteca",
+    intro: "Aprenda no seu ritmo. Continue de onde parou ou descubra algo novo por aqui.",
+    orders: "Ver pedidos e pagamentos",
+    access: "Acesso liberado",
+    buy: "Comprar",
+    start: "Começar gratuitamente",
+    open: "Acessar curso",
+    comments: "Conversas sobre este conteúdo",
+    french: "Francês A1",
+    aid: "Primeiros Socorros",
+    freud: "Clínica Psicanalítica: Freud",
+    freeHours: "120h · GRATUITO",
+  },
+  en: {
+    title: "My Library",
+    intro: "Your private space for reading, training and content.",
+    orders: "View orders and payments",
+    access: "Access granted",
+    buy: "Buy",
+    start: "Start for free",
+    open: "Open course",
+    comments: "Comments",
+    french: "French A1",
+    aid: "First Aid",
+    freud: "Psychoanalytic Clinic: Freud",
+    freeHours: "120h · FREE",
+  },
+  fr: {
+    title: "Ma Bibliothèque",
+    intro: "Votre espace privé de lecture, formation et contenus.",
+    orders: "Voir les commandes et paiements",
+    access: "Accès autorisé",
+    buy: "Acheter",
+    start: "Commencer gratuitement",
+    open: "Ouvrir le cours",
+    comments: "Commentaires",
+    french: "Français A1",
+    aid: "Premiers secours",
+    freud: "Clinique psychanalytique : Freud",
+    freeHours: "120 h · GRATUIT",
+  },
+  es: {
+    title: "Mi Biblioteca",
+    intro: "Tu espacio privado de lectura, formación y contenidos.",
+    orders: "Ver pedidos y pagos",
+    access: "Acceso liberado",
+    buy: "Comprar",
+    start: "Comenzar gratis",
+    open: "Abrir curso",
+    comments: "Comentarios",
+    french: "Francés A1",
+    aid: "Primeros Auxilios",
+    freud: "Clínica Psicoanalítica: Freud",
+    freeHours: "120 h · GRATIS",
+  },
 } as const;
 
-const SUB_TXT={
-pt:{eyebrow:"LDR ONE",title:"Sua assinatura digital LDR ONE",desc:"Cursos, formações, eBooks e conteúdos digitais pagos elegíveis em uma única assinatura. Conteúdos gratuitos continuam gratuitos.",included:"Todos os cursos, formações e eBooks pagos elegíveis",subscribe:"VER LDR ONE",active:"LDR ONE ativo",cancel:"Gerenciar assinatura",keep:"Manter assinatura",ending:"Cancelamento agendado"},
-en:{eyebrow:"LDR ONE",title:"Your LDR ONE digital subscription",desc:"Paid courses, training, eBooks and eligible digital content in one subscription. Free content stays free.",included:"All eligible paid courses, training and eBooks",subscribe:"VIEW LDR ONE",active:"LDR ONE active",cancel:"Manage subscription",keep:"Keep subscription",ending:"Cancellation scheduled"},
-fr:{eyebrow:"LDR ONE",title:"Votre abonnement numérique LDR ONE",desc:"Cours, formations, eBooks et contenus numériques payants éligibles dans un seul abonnement. Les contenus gratuits restent gratuits.",included:"Tous les cours, formations et eBooks payants éligibles",subscribe:"VOIR LDR ONE",active:"LDR ONE actif",cancel:"Gérer l’abonnement",keep:"Maintenir l’abonnement",ending:"Résiliation programmée"},
-es:{eyebrow:"LDR ONE",title:"Tu suscripción digital LDR ONE",desc:"Cursos, formaciones, eBooks y contenidos digitales de pago elegibles en una sola suscripción. Los contenidos gratuitos siguen gratis.",included:"Todos los cursos, formaciones y eBooks de pago elegibles",subscribe:"VER LDR ONE",active:"LDR ONE activo",cancel:"Gestionar suscripción",keep:"Mantener suscripción",ending:"Cancelación programada"}
+const SUB_TXT = {
+  pt: {
+    eyebrow: "LDR ONE",
+    title: "Sua assinatura digital LDR ONE",
+    desc: "Cursos, formações, eBooks e conteúdos digitais pagos elegíveis em uma única assinatura. Conteúdos gratuitos continuam gratuitos.",
+    included: "Todos os cursos, formações e eBooks pagos elegíveis",
+    subscribe: "VER LDR ONE",
+    active: "LDR ONE ativo",
+    cancel: "Gerenciar assinatura",
+    keep: "Manter assinatura",
+    ending: "Cancelamento agendado",
+  },
+  en: {
+    eyebrow: "LDR ONE",
+    title: "Your LDR ONE digital subscription",
+    desc: "Paid courses, training, eBooks and eligible digital content in one subscription. Free content stays free.",
+    included: "All eligible paid courses, training and eBooks",
+    subscribe: "VIEW LDR ONE",
+    active: "LDR ONE active",
+    cancel: "Manage subscription",
+    keep: "Keep subscription",
+    ending: "Cancellation scheduled",
+  },
+  fr: {
+    eyebrow: "LDR ONE",
+    title: "Votre abonnement numérique LDR ONE",
+    desc: "Cours, formations, eBooks et contenus numériques payants éligibles dans un seul abonnement. Les contenus gratuits restent gratuits.",
+    included: "Tous les cours, formations et eBooks payants éligibles",
+    subscribe: "VOIR LDR ONE",
+    active: "LDR ONE actif",
+    cancel: "Gérer l’abonnement",
+    keep: "Maintenir l’abonnement",
+    ending: "Résiliation programmée",
+  },
+  es: {
+    eyebrow: "LDR ONE",
+    title: "Tu suscripción digital LDR ONE",
+    desc: "Cursos, formaciones, eBooks y contenidos digitales de pago elegibles en una sola suscripción. Los contenidos gratuitos siguen gratis.",
+    included: "Todos los cursos, formaciones y eBooks de pago elegibles",
+    subscribe: "VER LDR ONE",
+    active: "LDR ONE activo",
+    cancel: "Gestionar suscripción",
+    keep: "Mantener suscripción",
+    ending: "Cancelación programada",
+  },
 } as const;
 
-function money(c:number,cur:"BRL"|"EUR",locale:Locale){
-  return new Intl.NumberFormat(locale==="pt"?(cur==="BRL"?"pt-BR":"pt-PT"):locale==="fr"?"fr-FR":locale==="es"?"es-ES":"en-US",{style:"currency",currency:cur}).format(c/100);
+function money(c: number, cur: "BRL" | "EUR", locale: Locale) {
+  return new Intl.NumberFormat(
+    locale === "pt"
+      ? cur === "BRL"
+        ? "pt-BR"
+        : "pt-PT"
+      : locale === "fr"
+        ? "fr-FR"
+        : locale === "es"
+          ? "es-ES"
+          : "en-US",
+    { style: "currency", currency: cur },
+  ).format(c / 100);
 }
 
-function ClientLibrary(){
-  const {locale:raw}=useI18n();
-  const locale=(raw==="pt"||raw==="en"||raw==="fr"||raw==="es"?raw:"pt") as Locale;
-  const t=TXT[locale];
-  const ct=libraryCardText(locale);
-  const ac=libraryAcademicCardText(locale);
-  const ldrPassFn=useServerFn(clientLdrPass),
-    fn=useServerFn(clientDigitalLibrary),
-    trainingFn=useServerFn(clientDoMamaoTrainingOffer),
-    psychoFn=useServerFn(clientPsychoanalysisOffer),
-    briefFn=useServerFn(clientBriefTherapyOffer),
-    intlPsychoFn=useServerFn(clientInternationalPsychoanalysisOffer),
-    massageFn=useServerFn(clientMassotherapyOffer),
-    business24Fn=useServerFn(clientBusiness24Offer),
-    aiFn=useServerFn(clientAIFormationOffer),
-    mentorFn=useServerFn(clientMentorshipOffer),
-    leaderFn=useServerFn(clientLeadershipOffer),
-    freeFn=useServerFn(clientFreeCareerCourse),
-    freeEnrollFn=useServerFn(clientEnrollFreeCareerCourse),
-    frenchFn=useServerFn(clientFreeFrenchA1),
-    frenchEnrollFn=useServerFn(clientEnrollFreeFrenchA1),
-    firstAidFn=useServerFn(clientFreeFirstAid),
-    firstAidEnrollFn=useServerFn(clientEnrollFreeFirstAid),
-    learningFn=useServerFn(clientLearningHub),
-    commentFn=useServerFn(clientAddLibraryComment);
+function ClientLibrary() {
+  const { locale: raw } = useI18n();
+  const locale = (
+    raw === "pt" || raw === "en" || raw === "fr" || raw === "es" ? raw : "pt"
+  ) as Locale;
+  const t = TXT[locale];
+  const ct = libraryCardText(locale);
+  const ac = libraryAcademicCardText(locale);
+  const ldrPassFn = useServerFn(clientLdrPass),
+    fn = useServerFn(clientDigitalLibrary),
+    trainingFn = useServerFn(clientDoMamaoTrainingOffer),
+    psychoFn = useServerFn(clientPsychoanalysisOffer),
+    briefFn = useServerFn(clientBriefTherapyOffer),
+    intlPsychoFn = useServerFn(clientInternationalPsychoanalysisOffer),
+    massageFn = useServerFn(clientMassotherapyOffer),
+    business24Fn = useServerFn(clientBusiness24Offer),
+    aiFn = useServerFn(clientAIFormationOffer),
+    mentorFn = useServerFn(clientMentorshipOffer),
+    leaderFn = useServerFn(clientLeadershipOffer),
+    freeFn = useServerFn(clientFreeCareerCourse),
+    freeEnrollFn = useServerFn(clientEnrollFreeCareerCourse),
+    frenchFn = useServerFn(clientFreeFrenchA1),
+    frenchEnrollFn = useServerFn(clientEnrollFreeFrenchA1),
+    firstAidFn = useServerFn(clientFreeFirstAid),
+    firstAidEnrollFn = useServerFn(clientEnrollFreeFirstAid),
+    learningFn = useServerFn(clientLearningHub),
+    commentFn = useServerFn(clientAddLibraryComment);
 
-  const qc=useQueryClient();
-  const [active,setActive]=useState<string|null>(null);
-  const [comment,setComment]=useState("");
-  const [productKey,setProductKey]=useState("ebook_coragem_comecar");
+  const qc = useQueryClient();
+  const [active, setActive] = useState<string | null>(null);
+  const [comment, setComment] = useState("");
+  const [productKey, setProductKey] = useState("ebook_coragem_comecar");
 
-  const {data,isLoading}=useQuery({queryKey:["client-digital-library"],queryFn:()=>fn({})});
-  const {data:subscriptionData}=useQuery({queryKey:["ldr-one-subscription"],queryFn:()=>ldrPassFn({})});
-  const {data:training}=useQuery({queryKey:["training-offer"],queryFn:()=>trainingFn({})});
-  const {data:psycho}=useQuery({queryKey:["psycho-offer"],queryFn:()=>psychoFn({})});
-  const {data:brief}=useQuery({queryKey:["brief-therapy-offer"],queryFn:()=>briefFn({})});
-  const {data:intlPsycho}=useQuery({queryKey:["international-psychoanalysis-offer-library"],queryFn:()=>intlPsychoFn({})});
-  const {data:massage}=useQuery({queryKey:["massotherapy-offer"],queryFn:()=>massageFn({})});
-  const {data:business24}=useQuery({queryKey:["business24-offer"],queryFn:()=>business24Fn({})});
-  const {data:ai}=useQuery({queryKey:["ai-formation-offer"],queryFn:()=>aiFn({})});
-  const {data:mentor}=useQuery({queryKey:["mentor-offer"],queryFn:()=>mentorFn({})});
-  const {data:leader}=useQuery({queryKey:["leader-offer"],queryFn:()=>leaderFn({})});
-  const {data:free,refetch:refetchFree}=useQuery({queryKey:["free-career-offer"],queryFn:()=>freeFn({})});
-  const {data:french,refetch:refetchFrench}=useQuery({queryKey:["free-french-a1-offer"],queryFn:()=>frenchFn({})});
-  const {data:firstAid,refetch:refetchFirstAid}=useQuery({queryKey:["free-first-aid-offer"],queryFn:()=>firstAidFn({})});
-  const {data:learning}=useQuery({queryKey:["client-learning-hub"],queryFn:()=>learningFn({})});
+  const { data, isLoading, isError, refetch } = useQuery({
+    queryKey: ["client-digital-library"],
+    queryFn: () => fn({}),
+  });
+  const { data: subscriptionData } = useQuery({
+    queryKey: ["ldr-one-subscription"],
+    queryFn: () => ldrPassFn({}),
+  });
+  const { data: training } = useQuery({
+    queryKey: ["training-offer"],
+    queryFn: () => trainingFn({}),
+  });
+  const { data: psycho } = useQuery({ queryKey: ["psycho-offer"], queryFn: () => psychoFn({}) });
+  const { data: brief } = useQuery({
+    queryKey: ["brief-therapy-offer"],
+    queryFn: () => briefFn({}),
+  });
+  const { data: intlPsycho } = useQuery({
+    queryKey: ["international-psychoanalysis-offer-library"],
+    queryFn: () => intlPsychoFn({}),
+  });
+  const { data: massage } = useQuery({
+    queryKey: ["massotherapy-offer"],
+    queryFn: () => massageFn({}),
+  });
+  const { data: business24 } = useQuery({
+    queryKey: ["business24-offer"],
+    queryFn: () => business24Fn({}),
+  });
+  const { data: ai } = useQuery({ queryKey: ["ai-formation-offer"], queryFn: () => aiFn({}) });
+  const { data: mentor } = useQuery({ queryKey: ["mentor-offer"], queryFn: () => mentorFn({}) });
+  const { data: leader } = useQuery({ queryKey: ["leader-offer"], queryFn: () => leaderFn({}) });
+  const { data: free, refetch: refetchFree } = useQuery({
+    queryKey: ["free-career-offer"],
+    queryFn: () => freeFn({}),
+  });
+  const { data: french, refetch: refetchFrench } = useQuery({
+    queryKey: ["free-french-a1-offer"],
+    queryFn: () => frenchFn({}),
+  });
+  const { data: firstAid, refetch: refetchFirstAid } = useQuery({
+    queryKey: ["free-first-aid-offer"],
+    queryFn: () => firstAidFn({}),
+  });
+  const { data: learning } = useQuery({
+    queryKey: ["client-learning-hub"],
+    queryFn: () => learningFn({}),
+  });
 
-  const enrollFree=useMutation({mutationFn:()=>freeEnrollFn({}),onSuccess:()=>refetchFree()});
-  const enrollFrench=useMutation({mutationFn:()=>frenchEnrollFn({}),onSuccess:()=>refetchFrench()});
-  const enrollFirstAid=useMutation({mutationFn:()=>firstAidEnrollFn({}),onSuccess:()=>refetchFirstAid()});
-  const addComment=useMutation({mutationFn:()=>commentFn({data:{body:comment,productKey}}),onSuccess:async()=>{setComment("");await qc.invalidateQueries({queryKey:["client-learning-hub"]})}});
+  const enrollFree = useMutation({
+    mutationFn: () => freeEnrollFn({}),
+    onSuccess: () => refetchFree(),
+  });
+  const enrollFrench = useMutation({
+    mutationFn: () => frenchEnrollFn({}),
+    onSuccess: () => refetchFrench(),
+  });
+  const enrollFirstAid = useMutation({
+    mutationFn: () => firstAidEnrollFn({}),
+    onSuccess: () => refetchFirstAid(),
+  });
+  const addComment = useMutation({
+    mutationFn: () => commentFn({ data: { body: comment, productKey } }),
+    onSuccess: async () => {
+      setComment("");
+      await qc.invalidateQueries({ queryKey: ["client-learning-hub"] });
+    },
+  });
 
-  if(isLoading||!data)return <p className="text-sm text-muted-foreground">{ct.loading}</p>;
+  if (isError)
+    return (
+      <section role="alert" className="rounded-2xl border p-6">
+        <p>Não foi possível carregar a biblioteca.</p>
+        <button onClick={() => refetch()} className="mt-3 underline">
+          Tentar novamente
+        </button>
+      </section>
+    );
+  if (isLoading || !data) return <p className="text-sm text-muted-foreground">{ct.loading}</p>;
 
-  const market:"BR"|"INTL"=data.market==="BR"?"BR":"INTL";
-  const owner=(data.customer?.email??"").trim().toLowerCase()==="llucianouam@gmail.com";
-  const ebook=data.products.find(p=>p.key==="ebook_coragem_comecar"),book=data.products.find(p=>p.key==="livro_menino_mamao");
-  const ent={ebook:owner||!!ebook?.entitled,book:owner||!!book?.entitled,training:owner||!!training?.entitled,psycho:owner||!!psycho?.entitled,brief:owner||!!brief?.entitled,intlPsycho:owner||!!intlPsycho?.entitled,massage:owner||!!massage?.entitled,business24:owner||!!business24?.entitled,ai:owner||!!ai?.entitled,mentor:owner||!!mentor?.entitled,leader:owner||!!leader?.entitled,free:owner||!!free?.entitled,french:owner||!!french?.entitled,firstAid:owner||!!firstAid?.entitled};
-  const comments=learning?.comments?.filter((c:any)=>c.product_key)??[];
-  const accessLabels=locale==="pt"?{included:"INCLUÍDO",single:"AVULSO",free:"GRÁTIS",editorial:"EDITORIAL"}:locale==="fr"?{included:"INCLUS",single:"À L’UNITÉ",free:"GRATUIT",editorial:"ÉDITORIAL"}:locale==="es"?{included:"INCLUIDO",single:"INDIVIDUAL",free:"GRATIS",editorial:"EDITORIAL"}:{included:"INCLUDED",single:"ONE-TIME",free:"FREE",editorial:"EDITORIAL"};
-  const includedProfessionalSlugs=new Set(["vendas-negociacao","marketing-digital","recrutamento-selecao","gestao-administrativa-financeira","comunicacao-oratoria","aba-autismo","saude-mental-praticas-clinicas","sociologia","filosofia-clinica","ciencia-politica","ciencias-felicidade","gestao-projetos-600h"]);
-  const card=(key:string,label:string,bg:string,icon="grad",status?:string)=>{const paths:Record<string,string>={ebook:"/cliente/biblioteca/ebook_coragem_comecar",book:"/cliente/biblioteca/livro_menino_mamao",training:"/cliente/treinamentos/do-mamao-ao-negocio",psycho:"/cliente/treinamentos/psicanalise",brief:"/cliente/treinamentos/terapia-breve-psicanalitica",massage:"/cliente/treinamentos/massoterapia",business24:"/cliente/treinamentos/negocio-24-horas",mentor:"/cliente/treinamentos/mentoria-carreira",leader:"/cliente/treinamentos/lideranca-gestao",ai:"/cliente/treinamentos/ia-negocios-carreira",hr:"/cliente/formacoes/gestao-pessoas-rh"};const allowed=key==="hr"||Boolean((ent as any)[key]);const body=<>{icon==="book"?<BookOpen className="mx-auto h-5 w-5"/>:icon==="film"?<Film className="mx-auto h-5 w-5"/>:<GraduationCap className="mx-auto h-5 w-5"/>}<p className="mt-2 text-[8px] font-black leading-none sm:text-[10px]">{label}</p>{status?<span className="mt-2 inline-flex rounded-full bg-white/15 px-1.5 py-0.5 text-[6px] font-black uppercase tracking-wide text-white sm:text-[7px]">{status}</span>:null}</>;return paths[key]&&allowed?<a href={paths[key]} className={`min-w-0 rounded-2xl px-1 py-4 text-center text-white shadow-sm transition hover:-translate-y-0.5 ${bg}`}>{body}</a>:<button onClick={()=>setActive(active===key?null:key)} className={`min-w-0 rounded-2xl px-1 py-4 text-center text-white shadow-sm ${bg} ${active===key?"ring-2 ring-[#d6ad63]":""}`}>{body}</button>};
-  const ldrOneButton=(color="bg-[#0b2341]")=><a href="/ldr-pass" className={`mt-3 inline-flex w-full justify-center rounded-xl ${color} px-4 py-3 text-sm font-black text-white`}>LDR ONE · ASSINAR</a>;
-  const postgrads=[
-    {key:"ia-negocios-gestao",icon:"🤖",title:"Inteligência Artificial Aplicada aos Negócios e à Gestão",highlight:true},
-    {key:"gestao-pessoas-lideranca-rh",icon:"👥",title:"Gestão Estratégica de Pessoas, Liderança e RH"},
-    {key:"empreendedorismo-inovacao-negocios",icon:"🚀",title:"Empreendedorismo, Inovação e Gestão de Negócios"},
-    {key:"carreira-mentoria-desenvolvimento",icon:"💼",title:"Gestão de Carreira, Mentoria e Desenvolvimento Profissional"},
-    {key:"marketing-vendas-ia",icon:"📈",title:"Marketing Digital, Vendas e Inteligência Artificial"},
-    {key:"negocios-internacionais-expansao",icon:"🌍",title:"Negócios Internacionais e Expansão de Empresas"},
-    {key:"psicanalise-cultura-comportamento",icon:"🧠",title:"Psicanálise, Cultura e Comportamento Organizacional"}
+  const market: "BR" | "INTL" = data.market === "BR" ? "BR" : "INTL";
+  const owner = (data.customer?.email ?? "").trim().toLowerCase() === "llucianouam@gmail.com";
+  const ebook = data.products.find((p) => p.key === "ebook_coragem_comecar"),
+    book = data.products.find((p) => p.key === "livro_menino_mamao");
+  const ent = {
+    ebook: owner || !!ebook?.entitled,
+    book: owner || !!book?.entitled,
+    training: owner || !!training?.entitled,
+    psycho: owner || !!psycho?.entitled,
+    brief: owner || !!brief?.entitled,
+    intlPsycho: owner || !!intlPsycho?.entitled,
+    massage: owner || !!massage?.entitled,
+    business24: owner || !!business24?.entitled,
+    ai: owner || !!ai?.entitled,
+    mentor: owner || !!mentor?.entitled,
+    leader: owner || !!leader?.entitled,
+    free: owner || !!free?.entitled,
+    french: owner || !!french?.entitled,
+    firstAid: owner || !!firstAid?.entitled,
+  };
+  const comments = learning?.comments?.filter((c: any) => c.product_key) ?? [];
+  const accessLabels =
+    locale === "pt"
+      ? { included: "INCLUÍDO", single: "AVULSO", free: "GRÁTIS", editorial: "EDITORIAL" }
+      : locale === "fr"
+        ? { included: "INCLUS", single: "À L’UNITÉ", free: "GRATUIT", editorial: "ÉDITORIAL" }
+        : locale === "es"
+          ? { included: "INCLUIDO", single: "INDIVIDUAL", free: "GRATIS", editorial: "EDITORIAL" }
+          : { included: "INCLUDED", single: "ONE-TIME", free: "FREE", editorial: "EDITORIAL" };
+  const includedProfessionalSlugs = new Set([
+    "vendas-negociacao",
+    "marketing-digital",
+    "recrutamento-selecao",
+    "gestao-administrativa-financeira",
+    "comunicacao-oratoria",
+    "aba-autismo",
+    "saude-mental-praticas-clinicas",
+    "sociologia",
+    "filosofia-clinica",
+    "ciencia-politica",
+    "ciencias-felicidade",
+    "gestao-projetos-600h",
+  ]);
+  const card = (key: string, label: string, bg: string, icon = "grad", status?: string) => {
+    const paths: Record<string, string> = {
+      ebook: "/cliente/biblioteca/ebook_coragem_comecar",
+      book: "/cliente/biblioteca/livro_menino_mamao",
+      training: "/cliente/treinamentos/do-mamao-ao-negocio",
+      psycho: "/cliente/treinamentos/psicanalise",
+      brief: "/cliente/treinamentos/terapia-breve-psicanalitica",
+      massage: "/cliente/treinamentos/massoterapia",
+      business24: "/cliente/treinamentos/negocio-24-horas",
+      mentor: "/cliente/treinamentos/mentoria-carreira",
+      leader: "/cliente/treinamentos/lideranca-gestao",
+      ai: "/cliente/treinamentos/ia-negocios-carreira",
+      hr: "/cliente/formacoes/gestao-pessoas-rh",
+    };
+    const allowed = key === "hr" || Boolean((ent as any)[key]);
+    const body = (
+      <>
+        {icon === "book" ? (
+          <BookOpen className="mx-auto h-5 w-5" />
+        ) : icon === "film" ? (
+          <Film className="mx-auto h-5 w-5" />
+        ) : (
+          <GraduationCap className="mx-auto h-5 w-5" />
+        )}
+        <p className="mt-2 text-[8px] font-black leading-none sm:text-[10px]">{label}</p>
+        {status ? (
+          <span className="mt-2 inline-flex rounded-full bg-white/15 px-1.5 py-0.5 text-[6px] font-black uppercase tracking-wide text-white sm:text-[7px]">
+            {status}
+          </span>
+        ) : null}
+      </>
+    );
+    return paths[key] && allowed ? (
+      <a
+        href={paths[key]}
+        className={`min-w-0 rounded-2xl px-1 py-4 text-center text-white shadow-sm transition hover:-translate-y-0.5 ${bg}`}
+      >
+        {body}
+      </a>
+    ) : (
+      <button
+        onClick={() => setActive(active === key ? null : key)}
+        className={`min-w-0 rounded-2xl px-1 py-4 text-center text-white shadow-sm ${bg} ${active === key ? "ring-2 ring-[#d6ad63]" : ""}`}
+      >
+        {body}
+      </button>
+    );
+  };
+  const ldrOneButton = (color = "bg-[#0b2341]") => (
+    <a
+      href="/ldr-pass"
+      className={`mt-3 inline-flex w-full justify-center rounded-xl ${color} px-4 py-3 text-sm font-black text-white`}
+    >
+      LDR ONE · ASSINAR
+    </a>
+  );
+  const postgrads = [
+    {
+      key: "ia-negocios-gestao",
+      icon: "🤖",
+      title: "Inteligência Artificial Aplicada aos Negócios e à Gestão",
+      highlight: true,
+    },
+    {
+      key: "gestao-pessoas-lideranca-rh",
+      icon: "👥",
+      title: "Gestão Estratégica de Pessoas, Liderança e RH",
+    },
+    {
+      key: "empreendedorismo-inovacao-negocios",
+      icon: "🚀",
+      title: "Empreendedorismo, Inovação e Gestão de Negócios",
+    },
+    {
+      key: "carreira-mentoria-desenvolvimento",
+      icon: "💼",
+      title: "Gestão de Carreira, Mentoria e Desenvolvimento Profissional",
+    },
+    {
+      key: "marketing-vendas-ia",
+      icon: "📈",
+      title: "Marketing Digital, Vendas e Inteligência Artificial",
+    },
+    {
+      key: "negocios-internacionais-expansao",
+      icon: "🌍",
+      title: "Negócios Internacionais e Expansão de Empresas",
+    },
+    {
+      key: "psicanalise-cultura-comportamento",
+      icon: "🧠",
+      title: "Psicanálise, Cultura e Comportamento Organizacional",
+    },
   ];
 
-  return <div className="min-w-0 space-y-6 pb-8">
-    <section className="rounded-[28px] bg-gradient-to-br from-[#071426] via-[#0b2341] to-[#102d50] px-5 py-7 text-white shadow-xl sm:px-8">
-      <p className="text-[11px] font-bold uppercase tracking-[.28em] text-[#d6ad63]">LDR Plataforma</p>
-      <h1 className="mt-2 font-serif text-4xl text-[#fff7e7]">{t.title}</h1>
-      <p className="mt-2 text-sm text-white/75">{t.intro}</p>
-      <a href="/cliente/pedidos" className="mt-5 inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-3 text-sm font-bold"><ReceiptText className="h-4 w-4"/>{t.orders}</a>
-    </section>
-    <AcademySubscriptionCourseShelf locale={locale} active={owner||Boolean(subscriptionData?.active)} />
+  const editorialPending =
+    locale === "pt"
+      ? "Revisão editorial e carga horária por validar."
+      : locale === "fr"
+        ? "Révision éditoriale et durée à valider."
+        : locale === "es"
+          ? "Revisión editorial y duración pendientes."
+          : "Editorial review and study hours pending validation.";
+  const dashboardItems: DashboardItem[] = [
+    ...data.products.map((p) => ({
+      key: p.key,
+      title: p.title,
+      description: p.description,
+      href: p.entitled ? `/cliente/biblioteca/${p.key}` : p.purchaseUrl,
+      kind: "ebook" as const,
+      access: p.entitled ? ("granted" as const) : ("offer" as const),
+      editorial: editorialPending,
+    })),
+    ...ACADEMY_FREE_COURSES.map((c) => ({
+      key: c.productKey,
+      title: c.name[locale],
+      description: c.description[locale],
+      href: `/cliente/cursos/academy/${c.slug}`,
+      kind: "course" as const,
+      access: "free" as const,
+      editorial:
+        locale === "pt"
+          ? `${freeCourseLessons(c.slug).length}/${c.modules.length} módulos com texto específico. Edição em revisão; carga horária por validar.`
+          : editorialPending,
+    })),
+    ...[
+      ["curso_gratuito_organizar_carreira", "Carreira", "/cliente/cursos/organizar-carreira"],
+      [
+        "curso_gratuito_frances_negocios_a1",
+        "Francês para Negócios A1",
+        "/cliente/cursos/frances-negocios-a1",
+      ],
+      [
+        "curso_gratuito_primeiros_socorros",
+        "Primeiros Socorros",
+        "/cliente/cursos/primeiros-socorros",
+      ],
+    ].map(([key, title, href]) => ({
+      key: key!,
+      title: title!,
+      description: "",
+      href: href!,
+      kind: "course" as const,
+      access: "free" as const,
+      editorial: editorialPending,
+    })),
+    ...[
+      [
+        "treinamento_do_mamao_ao_negocio",
+        "Do Mamão ao Negócio",
+        "/cliente/treinamentos/do-mamao-ao-negocio",
+        ent.training,
+      ],
+      [
+        "formacao_psicanalise",
+        "Formação em Psicanálise",
+        "/cliente/treinamentos/psicanalise",
+        ent.psycho,
+      ],
+      [
+        "formacao_terapia_breve_psicanalitica",
+        "Terapia Breve Psicanalítica",
+        "/cliente/treinamentos/terapia-breve-psicanalitica",
+        ent.brief,
+      ],
+      ["formacao_massoterapia", "Massoterapia", "/cliente/treinamentos/massoterapia", ent.massage],
+      [
+        "formacao_negocio_24_horas",
+        "Negócio em 24 Horas",
+        "/cliente/treinamentos/negocio-24-horas",
+        ent.business24,
+      ],
+      [
+        "formacao_mentoria_profissional_carreira",
+        "Mentoria e Carreira",
+        "/cliente/treinamentos/mentoria-carreira",
+        ent.mentor,
+      ],
+      [
+        "formacao_lideranca_gestao_pessoas",
+        "Liderança e Gestão",
+        "/cliente/treinamentos/lideranca-gestao",
+        ent.leader,
+      ],
+      [
+        "formacao_ia_negocios_carreira",
+        "IA nos Negócios e Carreira",
+        "/cliente/treinamentos/ia-negocios-carreira",
+        ent.ai,
+      ],
+    ].map(([key, title, href, allowed]) => ({
+      key: String(key),
+      title: String(title),
+      description: "",
+      href: String(href),
+      kind: "formation" as const,
+      access: allowed ? ("granted" as const) : ("verify" as const),
+      editorial: editorialPending,
+    })),
+    ...PROFESSIONAL_FORMATIONS.map((f) => ({
+      key: f.productKey,
+      title: pfText(f, locale).name,
+      description: pfText(f, locale).description,
+      href: f.learnerPath,
+      kind: "formation" as const,
+      access: "verify" as const,
+      editorial: editorialPending,
+    })),
+    {
+      key: "formacao_gestao_pessoas_rh",
+      title: "Gestão de Pessoas e RH",
+      description: "",
+      href: "/cliente/formacoes/gestao-pessoas-rh",
+      kind: "formation",
+      access: "verify",
+      editorial: editorialPending,
+    },
+    ...ACADEMY_SUBSCRIPTION_COURSES.map((c) => ({
+      key: c.productKey,
+      title: c.name[locale],
+      description: c.description[locale],
+      href: `/cliente/cursos/assinatura/${c.slug}`,
+      kind: "course" as const,
+      access: "verify" as const,
+      editorial:
+        locale === "pt"
+          ? "Roteiro curricular disponível. Aulas aprofundadas, materiais e carga horária por validar."
+          : editorialPending,
+    })),
+  ];
 
-    <details id="catalogo-ldr" open className="scroll-mt-24 rounded-[24px] border border-slate-200 bg-white shadow-sm">
-      <summary className="cursor-pointer list-none px-5 py-4 text-sm font-black text-[#0b2341] [&::-webkit-details-marker]:hidden">{locale==="pt"?"Cursos, conteúdos e acessos":locale==="fr"?"Cours, contenus et accès":locale==="es"?"Cursos, contenidos y accesos":"Courses, content and access"}</summary>
-      <div className="border-t border-slate-100 p-4 sm:p-6">
-      <div className="grid grid-cols-4 gap-1.5 sm:grid-cols-10 sm:gap-3">
-        {card("ebook",ct.ebooks,"bg-[#5b0824]","book",accessLabels.included)}
-        {card("book",ct.books,"bg-[#7A3E12]","book",accessLabels.included)}
-        {PSYCHOANALYSIS_EBOOKS.map((e)=>{const product=data.products.find(p=>p.key===e.key);const href=owner||product?.entitled?e.readerPath:`/cliente/ebooks/${e.key}`;return <a key={e.key} href={href} className="min-w-0 rounded-2xl px-1 py-4 text-center text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md" style={{backgroundColor:e.color}}><BookOpen className="mx-auto h-5 w-5"/><p className="mt-2 text-[8px] font-black leading-tight sm:text-[10px]">eBook: {e.short}</p><span className="mt-2 inline-flex rounded-full bg-white/15 px-1.5 py-0.5 text-[6px] font-black uppercase text-white sm:text-[7px]">{accessLabels.single}</span></a>})}
-        <a href="/cliente/biblioteca/publicacoes/revista-psicanalise-no-mundo" className="min-w-0 rounded-2xl bg-[#0b2341] px-1 py-4 text-center !text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md" aria-label="Abrir todos os jornais e revistas"><div className="mx-auto text-lg leading-none">📰</div><p className="mt-2 text-[8px] font-black leading-tight !text-white sm:text-[10px]">{ct.editorial}</p><p className="mt-1 text-[7px] !text-white/80">{ct.editorialSub}</p><span className="mt-2 inline-flex rounded-full bg-white/15 px-1.5 py-0.5 text-[6px] font-black uppercase text-white">{accessLabels.editorial}</span></a>
-        {card("training",ct.business,"bg-[#d6ad63]","grad",accessLabels.included)}
-        {card("psycho",ct.psycho,"bg-[#5b2b86]","grad",accessLabels.single)}
-        {card("brief",ct.brief,"bg-[#17645e]","grad",accessLabels.included)}
-        {card("massage",ct.massage,"bg-[#0F5E7A]","grad",accessLabels.included)}
-        <a href="/clinica-social" className="min-w-0 rounded-2xl bg-[#2F6F4E] px-1 py-4 text-center text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"><span className="mx-auto block text-lg">🤝</span><p className="mt-2 text-[8px] font-black leading-tight sm:text-[10px]">Clínica Social</p></a>
-        <a href="/cliente/orientacao-psicanalitica" className="min-w-0 rounded-2xl bg-[#263b63] px-1 py-4 text-center text-white shadow-sm"><span className="mx-auto block text-lg">✍️</span><p className="mt-2 text-[8px] font-black leading-none sm:text-[10px]">{ct.writtenPsycho}</p></a>
-        <a href="/cliente/orientacao-profissional" className="min-w-0 rounded-2xl bg-[#4B3F8F] px-1 py-4 text-center text-white shadow-sm"><span className="mx-auto block text-lg">💼</span><p className="mt-2 text-[8px] font-black leading-none sm:text-[10px]">{ct.writtenCareer}</p></a>
-        {card("business24",ct.business24,"bg-[#c85a24]","grad",accessLabels.included)}
-        {card("mentor",ct.mentorship,"bg-[#0b5cab]","grad",accessLabels.included)}
-        {card("leader",ct.leadership,"bg-[#0f5132]","grad",accessLabels.included)}
-        {card("hr",ct.hr,"bg-[#047857]","grad",accessLabels.included)}
-        <a href="/cliente/cursos/organizar-carreira" className="min-w-0 rounded-2xl bg-[#b85c2e] px-1 py-4 text-center text-white shadow-sm"><span className="mx-auto block text-lg">💼</span><p className="mt-2 text-[8px] font-black leading-tight sm:text-[10px]">Carreira</p><span className="mt-2 inline-flex rounded-full bg-white/15 px-1.5 py-0.5 text-[6px] font-black uppercase">{accessLabels.free}</span></a>
-        <a href="/cliente/cursos/frances-negocios-a1" className="min-w-0 rounded-2xl bg-[#123f73] px-1 py-4 text-center text-white shadow-sm"><span className="mx-auto block text-lg">🇫🇷</span><p className="mt-2 text-[8px] font-black leading-tight sm:text-[10px]">{t.french}</p><span className="mt-2 inline-flex rounded-full bg-white/15 px-1.5 py-0.5 text-[6px] font-black uppercase">{accessLabels.free}</span></a>
-        <a href="/cliente/cursos/primeiros-socorros" className="min-w-0 rounded-2xl bg-[#b4232a] px-1 py-4 text-center text-white shadow-sm"><span className="mx-auto block text-lg">⛑️</span><p className="mt-2 text-[8px] font-black leading-tight sm:text-[10px]">{t.aid}</p><span className="mt-2 inline-flex rounded-full bg-white/15 px-1.5 py-0.5 text-[6px] font-black uppercase">{accessLabels.free}</span></a>
-        <a href="/cliente/cursos/academy/clinica-psicanalitica-sigmund-freud" className="min-w-0 rounded-2xl bg-[#5b2b86] px-1 py-4 text-center text-white shadow-sm"><span className="mx-auto block text-lg">🛋️</span><p className="mt-2 text-[8px] font-black leading-tight sm:text-[10px]">{t.freud}</p><span className="mt-2 block text-[8px] font-bold text-white/75">{t.freeHours}</span></a>
-        <a href="/cliente/cursos/academy/orientacao-trabalho-cientifico" className="min-w-0 rounded-2xl bg-[#0F5E7A] px-1 py-4 text-center text-white shadow-sm"><span className="mx-auto block text-lg">📚</span><p className="mt-2 text-[8px] font-black leading-tight sm:text-[10px]">Orientação do Trabalho Científico</p><span className="mt-2 block text-[8px] font-bold text-white/75">120h · GRATUITO</span></a>
-        <a href="/cliente/cursos/academy/modelos-documentos-psicanaliticos" className="min-w-0 rounded-2xl bg-[#6F4E37] px-1 py-4 text-center text-white shadow-sm"><span className="mx-auto block text-lg">📄</span><p className="mt-2 text-[8px] font-black leading-tight sm:text-[10px]">Modelos de Documentos Psicanalíticos</p><span className="mt-2 block text-[8px] font-bold text-white/75">GRATUITO</span></a>
-        {card("ai","IA","bg-[#143d59]","grad",accessLabels.single)}
-        <a href="/cliente/treinamentos/psicanalise-internacional" className="min-w-0 rounded-2xl bg-[#24476f] px-1 py-4 text-center text-white shadow-sm"><span className="mx-auto block text-lg">🌍</span><p className="mt-2 text-[8px] font-black leading-tight sm:text-[10px]">Psicanálise Internacional</p><span className="mt-2 inline-flex rounded-full bg-white/15 px-1.5 py-0.5 text-[6px] font-black uppercase">{accessLabels.single}</span></a>
-        <a href="/cliente/psicanalista-alta-performance" className="min-w-0 rounded-2xl bg-[#8a6a2d] px-1 py-4 text-center text-white shadow-sm"><span className="mx-auto block text-lg">📈</span><p className="mt-2 text-[8px] font-black leading-tight sm:text-[10px]">Alta Performance</p><span className="mt-2 inline-flex rounded-full bg-white/15 px-1.5 py-0.5 text-[6px] font-black uppercase">{accessLabels.single}</span></a>
-        {card("film","Filme","bg-[#35101e]","film")}
-        {PROFESSIONAL_FORMATIONS.map((f,i)=>{const ft=pfText(f,locale);const included=includedProfessionalSlugs.has(f.slug);const colors=["#6F4E37","#3E6B89","#8C4A5B","#6A5A91","#2E7D6E","#9A6B2F","#4F6B3C","#7B4F8C","#A14F36","#356B72","#76543A","#5D6F8A","#884C63","#3E745B","#8B6A3E","#526B88","#6D3FA0","#2F6F73","#A65A3A","#7A3651","#315F86","#B1842F"];return <a key={f.slug} href={f.learnerPath} className="min-w-0 rounded-2xl px-1 py-4 text-center text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md" style={{backgroundColor:colors[i%colors.length]}}><span className="mx-auto block text-lg">{f.icon}</span><p className="mt-2 text-[8px] font-black leading-tight sm:text-[10px]">{ft.short}</p><span className="mt-2 inline-flex rounded-full bg-white/15 px-1.5 py-0.5 text-[6px] font-black uppercase tracking-wide text-white sm:text-[7px]">{included?accessLabels.included:accessLabels.single}</span></a>})}
-      </div>
-      {active?<div className="mt-4 rounded-2xl border bg-white p-5 shadow-inner">
-        {active==="hr"?<div className="rounded-2xl border border-[#a7d7c1] bg-gradient-to-br from-[#f3fbf7] to-[#ecfdf5] p-5">
-          <span className="rounded-full bg-[#047857] px-3 py-1 text-[10px] font-black uppercase tracking-[.14em] text-white">600 HORAS · 100% ONLINE</span>
-          <h3 className="mt-4 font-serif text-2xl text-[#065f46]">Formação em Gestão de Pessoas e Recursos Humanos</h3>
-          <p className="mt-2 text-sm leading-6 text-muted-foreground">12 módulos · 600 horas · 100% online · conteúdo digital elegível incluído no LDR ONE.</p>
-          <a href="/cliente/formacoes/gestao-pessoas-rh" className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#047857] px-4 py-3 text-sm font-black text-white">ABRIR FORMAÇÃO</a>
-        </div>:active==="free"?<div>
-          <div className="mb-4 flex items-center justify-between gap-3"><div><span className="rounded-full bg-[#fff0e8] px-3 py-1 text-[10px] font-black uppercase tracking-[.12em] text-[#9a4828]">Cursos gratuitos</span><h3 className="mt-3 font-serif text-2xl text-[#5d2917]">Escolha seu curso gratuito</h3></div><span className="rounded-full bg-[#0b2341] px-3 py-1 text-xs font-black text-white">3 cursos</span></div>
-          <div className="grid gap-4 md:grid-cols-2">
-            <article className="rounded-2xl border border-[#efd0bf] bg-[#fffaf7] p-4"><span className="text-[10px] font-black uppercase tracking-[.12em] text-[#9a4828]">Carreira</span><h4 className="mt-2 font-serif text-xl text-[#5d2917]">Como Organizar sua Carreira e Dar o Próximo Passo Profissional</h4><p className="mt-2 text-sm leading-6 text-muted-foreground">7 aulas · estude no seu ritmo · 100% leitura · sem aulas ao vivo · acesso sem expiração.</p>{ent.free?<a href="/cliente/cursos/organizar-carreira" className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#b85c2e] px-4 py-3 text-sm font-black text-white">{t.open}</a>:<button disabled={enrollFree.isPending} onClick={()=>enrollFree.mutate()} className="mt-4 w-full rounded-xl bg-[#b85c2e] px-4 py-3 text-sm font-black text-white">{t.start}</button>}</article>
-            <article className="rounded-2xl border border-[#8ca7c5] bg-gradient-to-br from-[#f8fbff] to-[#fff8f8] p-4"><span className="text-[10px] font-black uppercase tracking-[.12em] text-[#123f73]">🇫🇷 Francês · A1</span><h4 className="mt-2 font-serif text-xl text-[#0b294a]">Francês Básico para Negócios — Nível A1</h4><p className="mt-2 text-sm leading-6 text-muted-foreground">30 aulas · 10 horas · estude no seu ritmo · 100% leitura · sem aulas ao vivo · acesso sem expiração.</p>{ent.french?<a href="/cliente/cursos/frances-negocios-a1" className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#123f73] px-4 py-3 text-sm font-black text-white">{t.open}</a>:<button disabled={enrollFrench.isPending} onClick={()=>enrollFrench.mutate()} className="mt-4 w-full rounded-xl bg-[#123f73] px-4 py-3 text-sm font-black text-white">{t.start}</button>}</article>
-            <article className="rounded-2xl border border-[#efb2b2] bg-gradient-to-br from-[#fffafa] to-[#fff3f3] p-4"><span className="text-[10px] font-black uppercase tracking-[.12em] text-[#b4232a]">⛑️ Primeiros Socorros</span><h4 className="mt-2 font-serif text-xl text-[#7f1d1d]">Primeiros Socorros — Noções Básicas</h4><p className="mt-2 text-sm leading-6 text-muted-foreground">30 aulas · 10 horas · estude no seu ritmo · 100% leitura · sem aulas ao vivo · acesso sem expiração.</p>{ent.firstAid?<a href="/cliente/cursos/primeiros-socorros" className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#b4232a] px-4 py-3 text-sm font-black text-white">{t.open}</a>:<button disabled={enrollFirstAid.isPending} onClick={()=>enrollFirstAid.mutate()} className="mt-4 w-full rounded-xl bg-[#b4232a] px-4 py-3 text-sm font-black text-white">{t.start}</button>}</article>
+  return (
+    <div className="min-w-0 space-y-6 pb-8">
+      <LibraryLearningDashboard
+        locale={locale}
+        items={dashboardItems.filter(
+          (item, index, all) => all.findIndex((x) => x.key === item.key) === index,
+        )}
+        progress={learning?.progress ?? []}
+      />
+
+      <details
+        id="catalogo-ldr"
+        className="scroll-mt-24 rounded-[24px] border border-slate-200 bg-white shadow-sm"
+      >
+        <summary className="cursor-pointer list-none px-5 py-4 text-sm font-black text-[#0b2341] [&::-webkit-details-marker]:hidden">
+          {locale === "pt"
+            ? "Restantes serviços e acessos"
+            : locale === "fr"
+              ? "Cours, contenus et accès"
+              : locale === "es"
+                ? "Cursos, contenidos y accesos"
+                : "Courses, content and access"}
+        </summary>
+        <div className="border-t border-slate-100 p-4 sm:p-6">
+          <div className="grid grid-cols-4 gap-1.5 sm:grid-cols-10 sm:gap-3">
+            {card("ebook", ct.ebooks, "bg-[#5b0824]", "book", accessLabels.included)}
+            {card("book", ct.books, "bg-[#7A3E12]", "book", accessLabels.included)}
+            {PSYCHOANALYSIS_EBOOKS.map((e) => {
+              const product = data.products.find((p) => p.key === e.key);
+              const href = owner || product?.entitled ? e.readerPath : `/cliente/ebooks/${e.key}`;
+              return (
+                <a
+                  key={e.key}
+                  href={href}
+                  className="min-w-0 rounded-2xl px-1 py-4 text-center text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+                  style={{ backgroundColor: e.color }}
+                >
+                  <BookOpen className="mx-auto h-5 w-5" />
+                  <p className="mt-2 text-[8px] font-black leading-tight sm:text-[10px]">
+                    eBook: {e.short}
+                  </p>
+                  <span className="mt-2 inline-flex rounded-full bg-white/15 px-1.5 py-0.5 text-[6px] font-black uppercase text-white sm:text-[7px]">
+                    {accessLabels.single}
+                  </span>
+                </a>
+              );
+            })}
+            <a
+              href="/cliente/biblioteca/publicacoes/revista-psicanalise-no-mundo"
+              className="min-w-0 rounded-2xl bg-[#0b2341] px-1 py-4 text-center !text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+              aria-label="Abrir todos os jornais e revistas"
+            >
+              <div className="mx-auto text-lg leading-none">📰</div>
+              <p className="mt-2 text-[8px] font-black leading-tight !text-white sm:text-[10px]">
+                {ct.editorial}
+              </p>
+              <p className="mt-1 text-[7px] !text-white/80">{ct.editorialSub}</p>
+              <span className="mt-2 inline-flex rounded-full bg-white/15 px-1.5 py-0.5 text-[6px] font-black uppercase text-white">
+                {accessLabels.editorial}
+              </span>
+            </a>
+            {card("training", ct.business, "bg-[#d6ad63]", "grad", accessLabels.included)}
+            {card("psycho", ct.psycho, "bg-[#5b2b86]", "grad", accessLabels.single)}
+            {card("brief", ct.brief, "bg-[#17645e]", "grad", accessLabels.included)}
+            {card("massage", ct.massage, "bg-[#0F5E7A]", "grad", accessLabels.included)}
+            <a
+              href="/clinica-social"
+              className="min-w-0 rounded-2xl bg-[#2F6F4E] px-1 py-4 text-center text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+            >
+              <span className="mx-auto block text-lg">🤝</span>
+              <p className="mt-2 text-[8px] font-black leading-tight sm:text-[10px]">
+                Clínica Social
+              </p>
+            </a>
+            <a
+              href="/cliente/orientacao-psicanalitica"
+              className="min-w-0 rounded-2xl bg-[#263b63] px-1 py-4 text-center text-white shadow-sm"
+            >
+              <span className="mx-auto block text-lg">✍️</span>
+              <p className="mt-2 text-[8px] font-black leading-none sm:text-[10px]">
+                {ct.writtenPsycho}
+              </p>
+            </a>
+            <a
+              href="/cliente/orientacao-profissional"
+              className="min-w-0 rounded-2xl bg-[#4B3F8F] px-1 py-4 text-center text-white shadow-sm"
+            >
+              <span className="mx-auto block text-lg">💼</span>
+              <p className="mt-2 text-[8px] font-black leading-none sm:text-[10px]">
+                {ct.writtenCareer}
+              </p>
+            </a>
+            {card("business24", ct.business24, "bg-[#c85a24]", "grad", accessLabels.included)}
+            {card("mentor", ct.mentorship, "bg-[#0b5cab]", "grad", accessLabels.included)}
+            {card("leader", ct.leadership, "bg-[#0f5132]", "grad", accessLabels.included)}
+            {card("hr", ct.hr, "bg-[#047857]", "grad", accessLabels.included)}
+            <a
+              href="/cliente/cursos/organizar-carreira"
+              className="min-w-0 rounded-2xl bg-[#b85c2e] px-1 py-4 text-center text-white shadow-sm"
+            >
+              <span className="mx-auto block text-lg">💼</span>
+              <p className="mt-2 text-[8px] font-black leading-tight sm:text-[10px]">Carreira</p>
+              <span className="mt-2 inline-flex rounded-full bg-white/15 px-1.5 py-0.5 text-[6px] font-black uppercase">
+                {accessLabels.free}
+              </span>
+            </a>
+            <a
+              href="/cliente/cursos/frances-negocios-a1"
+              className="min-w-0 rounded-2xl bg-[#123f73] px-1 py-4 text-center text-white shadow-sm"
+            >
+              <span className="mx-auto block text-lg">🇫🇷</span>
+              <p className="mt-2 text-[8px] font-black leading-tight sm:text-[10px]">{t.french}</p>
+              <span className="mt-2 inline-flex rounded-full bg-white/15 px-1.5 py-0.5 text-[6px] font-black uppercase">
+                {accessLabels.free}
+              </span>
+            </a>
+            <a
+              href="/cliente/cursos/primeiros-socorros"
+              className="min-w-0 rounded-2xl bg-[#b4232a] px-1 py-4 text-center text-white shadow-sm"
+            >
+              <span className="mx-auto block text-lg">⛑️</span>
+              <p className="mt-2 text-[8px] font-black leading-tight sm:text-[10px]">{t.aid}</p>
+              <span className="mt-2 inline-flex rounded-full bg-white/15 px-1.5 py-0.5 text-[6px] font-black uppercase">
+                {accessLabels.free}
+              </span>
+            </a>
+            <a
+              href="/cliente/cursos/academy/clinica-psicanalitica-sigmund-freud"
+              className="min-w-0 rounded-2xl bg-[#5b2b86] px-1 py-4 text-center text-white shadow-sm"
+            >
+              <span className="mx-auto block text-lg">🛋️</span>
+              <p className="mt-2 text-[8px] font-black leading-tight sm:text-[10px]">{t.freud}</p>
+              <span className="mt-2 block text-[8px] font-bold text-white/75">{t.freeHours}</span>
+            </a>
+            <a
+              href="/cliente/cursos/academy/orientacao-trabalho-cientifico"
+              className="min-w-0 rounded-2xl bg-[#0F5E7A] px-1 py-4 text-center text-white shadow-sm"
+            >
+              <span className="mx-auto block text-lg">📚</span>
+              <p className="mt-2 text-[8px] font-black leading-tight sm:text-[10px]">
+                Orientação do Trabalho Científico
+              </p>
+              <span className="mt-2 block text-[8px] font-bold text-white/75">120h · GRATUITO</span>
+            </a>
+            <a
+              href="/cliente/cursos/academy/modelos-documentos-psicanaliticos"
+              className="min-w-0 rounded-2xl bg-[#6F4E37] px-1 py-4 text-center text-white shadow-sm"
+            >
+              <span className="mx-auto block text-lg">📄</span>
+              <p className="mt-2 text-[8px] font-black leading-tight sm:text-[10px]">
+                Modelos de Documentos Psicanalíticos
+              </p>
+              <span className="mt-2 block text-[8px] font-bold text-white/75">GRATUITO</span>
+            </a>
+            {card("ai", "IA", "bg-[#143d59]", "grad", accessLabels.single)}
+            <a
+              href="/cliente/treinamentos/psicanalise-internacional"
+              className="min-w-0 rounded-2xl bg-[#24476f] px-1 py-4 text-center text-white shadow-sm"
+            >
+              <span className="mx-auto block text-lg">🌍</span>
+              <p className="mt-2 text-[8px] font-black leading-tight sm:text-[10px]">
+                Psicanálise Internacional
+              </p>
+              <span className="mt-2 inline-flex rounded-full bg-white/15 px-1.5 py-0.5 text-[6px] font-black uppercase">
+                {accessLabels.single}
+              </span>
+            </a>
+            <a
+              href="/cliente/psicanalista-alta-performance"
+              className="min-w-0 rounded-2xl bg-[#8a6a2d] px-1 py-4 text-center text-white shadow-sm"
+            >
+              <span className="mx-auto block text-lg">📈</span>
+              <p className="mt-2 text-[8px] font-black leading-tight sm:text-[10px]">
+                Alta Performance
+              </p>
+              <span className="mt-2 inline-flex rounded-full bg-white/15 px-1.5 py-0.5 text-[6px] font-black uppercase">
+                {accessLabels.single}
+              </span>
+            </a>
+
+            {PROFESSIONAL_FORMATIONS.map((f, i) => {
+              const ft = pfText(f, locale);
+              const included = includedProfessionalSlugs.has(f.slug);
+              const colors = [
+                "#6F4E37",
+                "#3E6B89",
+                "#8C4A5B",
+                "#6A5A91",
+                "#2E7D6E",
+                "#9A6B2F",
+                "#4F6B3C",
+                "#7B4F8C",
+                "#A14F36",
+                "#356B72",
+                "#76543A",
+                "#5D6F8A",
+                "#884C63",
+                "#3E745B",
+                "#8B6A3E",
+                "#526B88",
+                "#6D3FA0",
+                "#2F6F73",
+                "#A65A3A",
+                "#7A3651",
+                "#315F86",
+                "#B1842F",
+              ];
+              return (
+                <a
+                  key={f.slug}
+                  href={f.learnerPath}
+                  className="min-w-0 rounded-2xl px-1 py-4 text-center text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+                  style={{ backgroundColor: colors[i % colors.length] }}
+                >
+                  <span className="mx-auto block text-lg">{f.icon}</span>
+                  <p className="mt-2 text-[8px] font-black leading-tight sm:text-[10px]">
+                    {ft.short}
+                  </p>
+                  <span className="mt-2 inline-flex rounded-full bg-white/15 px-1.5 py-0.5 text-[6px] font-black uppercase tracking-wide text-white sm:text-[7px]">
+                    {included ? accessLabels.included : accessLabels.single}
+                  </span>
+                </a>
+              );
+            })}
           </div>
-        </div>:active==="ai"?<div className="rounded-2xl border border-[#9ec1d6] bg-gradient-to-br from-[#f5fbff] to-[#eef5f8] p-5"><span className="rounded-full bg-[#143d59] px-3 py-1 text-[10px] font-black uppercase tracking-[.14em] text-white">600H · 100% ONLINE · SEM AULAS AO VIVO</span><h3 className="mt-4 font-serif text-2xl text-[#143d59]">🤖 Formação em Inteligência Artificial Aplicada aos Negócios e à Carreira</h3><p className="mt-3 text-base font-black text-[#143d59]">15 módulos · 225 aulas · 5 projetos avaliativos + Projeto Final.</p><p className="mt-2 text-xs font-bold text-[#143d59]">Acesso com LDR ONE. Compras anteriores continuam preservadas.</p><p className="mt-2 text-sm leading-6 text-muted-foreground">IA, conteúdo, marketing digital, vendas, gestão de cursos, programação moderna, sites e sistemas, automações, agentes, RH, produtividade, empreendedorismo e carreira.</p>{ent.ai?<a href="/cliente/treinamentos/ia-negocios-carreira" className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#143d59] px-4 py-3 text-sm font-black text-white">ACESSAR FORMAÇÃO</a>:<a href="/ldr-pass" className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#0b2341] px-4 py-3 text-sm font-black text-white">LDR ONE · ASSINAR</a>}</div>:active==="ebook"&&ebook?<div><h3 className="font-serif text-xl">A Coragem de Começar</h3>{ent.ebook?<a href="/cliente/biblioteca/ebook_coragem_comecar" className="mt-4 inline-flex w-full justify-center rounded-xl bg-primary px-4 py-3 text-sm font-bold text-white">Acessar eBook</a>:<a href="/ldr-pass" className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#0b2341] px-4 py-3 text-sm font-black text-white">LDR ONE · ASSINAR</a>}</div>:active==="book"&&book?<div><h3 className="font-serif text-xl">O Menino que Vendia Mamão</h3>{ent.book?<a href="/cliente/biblioteca/livro_menino_mamao" className="mt-4 inline-flex w-full justify-center rounded-xl bg-primary px-4 py-3 text-sm font-bold text-white">Acessar livro</a>:<a href="/ldr-pass" className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#0b2341] px-4 py-3 text-sm font-black text-white">LDR ONE · ASSINAR</a>}</div>:active==="training"?<div><h3 className="font-serif text-xl">Do Mamão ao Negócio</h3><p className="mt-2 text-xs font-bold text-[#0b2341]">✓ Acesso com LDR ONE. Compras anteriores continuam preservadas.</p><p className="mt-2 text-sm text-muted-foreground">Formação para empreendedores, atividades práticas e percurso estruturado.</p>{ent.training?<a href="/cliente/treinamentos/do-mamao-ao-negocio" className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#d6ad63] px-4 py-3 font-bold text-[#281605]">Acessar treinamento</a>:<a href="/ldr-pass" className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#0b2341] px-4 py-3 text-sm font-black text-white">LDR ONE · ASSINAR</a>}</div>:active==="psycho"?<div><h3 className="font-serif text-xl text-[#32155c]">Formação Online em Psicanálise</h3><p className="mt-2 text-xs font-bold text-[#0b2341]">✓ Acesso com LDR ONE. Compras anteriores continuam preservadas.</p><p className="mt-2 text-sm text-muted-foreground">14 módulos · 220 unidades · percurso formativo completo.</p>{ent.psycho?<a href="/cliente/treinamentos/psicanalise" className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#5b2b86] px-4 py-3 font-black text-white">Acessar formação</a>:ldrOneButton("bg-[#5b2b86]")}</div>:active==="business24"?<div><h3 className="font-serif text-xl text-[#8a3b17]">Formação Negócio em 24 Horas</h3><p className="mt-2 text-xs font-bold text-[#0b2341]">✓ Acesso com LDR ONE. Compras anteriores continuam preservadas.</p><p className="mt-2 text-sm text-muted-foreground">9 módulos · 90 aulas · 360 horas · 100% online · sem encontros ao vivo · projeto final avaliado.</p>{ent.business24?<a href="/cliente/treinamentos/negocio-24-horas" className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#c85a24] px-4 py-3 font-black text-white">Acessar formação</a>:<a href="/ldr-pass" className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#0b2341] px-4 py-3 text-sm font-black text-white">LDR ONE · ASSINAR</a>}</div>:active==="brief"?<div><h3 className="font-serif text-xl text-[#103d3a]">Formação em Terapia Breve Psicanalítica</h3><p className="mt-2 text-xs font-bold text-[#0b2341]">✓ Acesso com LDR ONE. Compras anteriores continuam preservadas.</p><p className="mt-2 text-sm text-muted-foreground">15 módulos · 300 aulas · 1.200 horas · 100% online · sob demanda.</p>{ent.brief?<a href="/cliente/treinamentos/terapia-breve-psicanalitica" className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#17645e] px-4 py-3 font-black text-white">Acessar formação</a>:ldrOneButton("bg-[#17645e]")}</div>:active==="massage"?<div><h3 className="font-serif text-xl text-[#083B50]">Formação Completa em Massoterapia</h3><p className="mt-2 text-xs font-bold text-[#0b2341]">✓ Acesso com LDR ONE. Compras anteriores continuam preservadas.</p><p className="mt-2 text-sm text-muted-foreground">15 módulos · 300 aulas · 1.200 horas · 6 a 12 meses · 100% online · sem encontros ao vivo.</p>{ent.massage?<a href="/cliente/treinamentos/massoterapia" className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#0F5E7A] px-4 py-3 font-black text-white">Acessar formação</a>:ldrOneButton("bg-[#0F5E7A]")}</div>:active==="mentor"?<div><h3 className="font-serif text-xl text-[#0f2f57]">Formação em Mentoria Profissional e de Carreira</h3><p className="mt-2 text-xs font-bold text-[#0b2341]">✓ Acesso com LDR ONE. Compras anteriores continuam preservadas.</p><p className="mt-2 text-sm text-muted-foreground">3 meses · 90 aulas · 1 aula/dia · ≈40 min/dia · acesso digital vitalício.</p>{ent.mentor?<a href="/cliente/treinamentos/mentoria-carreira" className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#0b5cab] px-4 py-3 font-black text-white">Acessar formação</a>:ldrOneButton("bg-[#0b5cab]")}</div>:active==="leader"?<div><h3 className="font-serif text-xl text-[#0f5132]">Formação em Liderança e Gestão de Pessoas</h3><p className="mt-2 text-xs font-bold text-[#0b2341]">✓ Acesso com LDR ONE. Compras anteriores continuam preservadas.</p><p className="mt-2 text-sm text-muted-foreground">3 meses · 90 aulas · 1 aula/dia · ≈40 min/dia · acesso digital vitalício.</p>{ent.leader?<a href="/cliente/treinamentos/lideranca-gestao" className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#0f5132] px-4 py-3 font-black text-white">Acessar formação</a>:ldrOneButton("bg-[#0f5132]")}</div>:<div><h3 className="font-serif text-xl">O Menino que Vendia Mamão</h3><p className="mt-2 text-sm text-muted-foreground">Filme em produção. Ainda não há conteúdo liberado.</p></div>}
-      </div>:null}
-      </div>
-    </details>
-
-    <section className="rounded-[28px] border border-[#d6ad63]/40 bg-white p-5 shadow-sm sm:p-6">
-      <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-        <div className="min-w-0">
-          <p className="text-[10px] font-black uppercase tracking-[.24em] text-[#a77b2e]">{SUB_TXT[locale].eyebrow}</p>
-          <h2 className="mt-1 font-serif text-2xl text-[#0b2341]">{SUB_TXT[locale].title}</h2>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">{SUB_TXT[locale].desc}</p>
-          <p className="mt-3 text-xs font-bold text-[#0b2341]">✓ {SUB_TXT[locale].included}</p>
+          {active ? (
+            <div className="mt-4 rounded-2xl border bg-white p-5 shadow-inner">
+              {active === "hr" ? (
+                <div className="rounded-2xl border border-[#a7d7c1] bg-gradient-to-br from-[#f3fbf7] to-[#ecfdf5] p-5">
+                  <span className="rounded-full bg-[#047857] px-3 py-1 text-[10px] font-black uppercase tracking-[.14em] text-white">
+                    600 HORAS · 100% ONLINE
+                  </span>
+                  <h3 className="mt-4 font-serif text-2xl text-[#065f46]">
+                    Formação em Gestão de Pessoas e Recursos Humanos
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                    12 módulos · 600 horas · 100% online · conteúdo digital elegível incluído no LDR
+                    ONE.
+                  </p>
+                  <a
+                    href="/cliente/formacoes/gestao-pessoas-rh"
+                    className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#047857] px-4 py-3 text-sm font-black text-white"
+                  >
+                    ABRIR FORMAÇÃO
+                  </a>
+                </div>
+              ) : active === "free" ? (
+                <div>
+                  <div className="mb-4 flex items-center justify-between gap-3">
+                    <div>
+                      <span className="rounded-full bg-[#fff0e8] px-3 py-1 text-[10px] font-black uppercase tracking-[.12em] text-[#9a4828]">
+                        Cursos gratuitos
+                      </span>
+                      <h3 className="mt-3 font-serif text-2xl text-[#5d2917]">
+                        Escolha seu curso gratuito
+                      </h3>
+                    </div>
+                    <span className="rounded-full bg-[#0b2341] px-3 py-1 text-xs font-black text-white">
+                      3 cursos
+                    </span>
+                  </div>
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <article className="rounded-2xl border border-[#efd0bf] bg-[#fffaf7] p-4">
+                      <span className="text-[10px] font-black uppercase tracking-[.12em] text-[#9a4828]">
+                        Carreira
+                      </span>
+                      <h4 className="mt-2 font-serif text-xl text-[#5d2917]">
+                        Como Organizar sua Carreira e Dar o Próximo Passo Profissional
+                      </h4>
+                      <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                        7 aulas · estude no seu ritmo · 100% leitura · sem aulas ao vivo · acesso
+                        sem expiração.
+                      </p>
+                      {ent.free ? (
+                        <a
+                          href="/cliente/cursos/organizar-carreira"
+                          className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#b85c2e] px-4 py-3 text-sm font-black text-white"
+                        >
+                          {t.open}
+                        </a>
+                      ) : (
+                        <button
+                          disabled={enrollFree.isPending}
+                          onClick={() => enrollFree.mutate()}
+                          className="mt-4 w-full rounded-xl bg-[#b85c2e] px-4 py-3 text-sm font-black text-white"
+                        >
+                          {t.start}
+                        </button>
+                      )}
+                    </article>
+                    <article className="rounded-2xl border border-[#8ca7c5] bg-gradient-to-br from-[#f8fbff] to-[#fff8f8] p-4">
+                      <span className="text-[10px] font-black uppercase tracking-[.12em] text-[#123f73]">
+                        🇫🇷 Francês · A1
+                      </span>
+                      <h4 className="mt-2 font-serif text-xl text-[#0b294a]">
+                        Francês Básico para Negócios — Nível A1
+                      </h4>
+                      <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                        30 aulas · 10 horas · estude no seu ritmo · 100% leitura · sem aulas ao vivo
+                        · acesso sem expiração.
+                      </p>
+                      {ent.french ? (
+                        <a
+                          href="/cliente/cursos/frances-negocios-a1"
+                          className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#123f73] px-4 py-3 text-sm font-black text-white"
+                        >
+                          {t.open}
+                        </a>
+                      ) : (
+                        <button
+                          disabled={enrollFrench.isPending}
+                          onClick={() => enrollFrench.mutate()}
+                          className="mt-4 w-full rounded-xl bg-[#123f73] px-4 py-3 text-sm font-black text-white"
+                        >
+                          {t.start}
+                        </button>
+                      )}
+                    </article>
+                    <article className="rounded-2xl border border-[#efb2b2] bg-gradient-to-br from-[#fffafa] to-[#fff3f3] p-4">
+                      <span className="text-[10px] font-black uppercase tracking-[.12em] text-[#b4232a]">
+                        ⛑️ Primeiros Socorros
+                      </span>
+                      <h4 className="mt-2 font-serif text-xl text-[#7f1d1d]">
+                        Primeiros Socorros — Noções Básicas
+                      </h4>
+                      <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                        30 aulas · 10 horas · estude no seu ritmo · 100% leitura · sem aulas ao vivo
+                        · acesso sem expiração.
+                      </p>
+                      {ent.firstAid ? (
+                        <a
+                          href="/cliente/cursos/primeiros-socorros"
+                          className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#b4232a] px-4 py-3 text-sm font-black text-white"
+                        >
+                          {t.open}
+                        </a>
+                      ) : (
+                        <button
+                          disabled={enrollFirstAid.isPending}
+                          onClick={() => enrollFirstAid.mutate()}
+                          className="mt-4 w-full rounded-xl bg-[#b4232a] px-4 py-3 text-sm font-black text-white"
+                        >
+                          {t.start}
+                        </button>
+                      )}
+                    </article>
+                  </div>
+                </div>
+              ) : active === "ai" ? (
+                <div className="rounded-2xl border border-[#9ec1d6] bg-gradient-to-br from-[#f5fbff] to-[#eef5f8] p-5">
+                  <span className="rounded-full bg-[#143d59] px-3 py-1 text-[10px] font-black uppercase tracking-[.14em] text-white">
+                    600H · 100% ONLINE · SEM AULAS AO VIVO
+                  </span>
+                  <h3 className="mt-4 font-serif text-2xl text-[#143d59]">
+                    🤖 Formação em Inteligência Artificial Aplicada aos Negócios e à Carreira
+                  </h3>
+                  <p className="mt-3 text-base font-black text-[#143d59]">
+                    15 módulos · 225 aulas · 5 projetos avaliativos + Projeto Final.
+                  </p>
+                  <p className="mt-2 text-xs font-bold text-[#143d59]">
+                    Acesso com LDR ONE. Compras anteriores continuam preservadas.
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                    IA, conteúdo, marketing digital, vendas, gestão de cursos, programação moderna,
+                    sites e sistemas, automações, agentes, RH, produtividade, empreendedorismo e
+                    carreira.
+                  </p>
+                  {ent.ai ? (
+                    <a
+                      href="/cliente/treinamentos/ia-negocios-carreira"
+                      className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#143d59] px-4 py-3 text-sm font-black text-white"
+                    >
+                      ACESSAR FORMAÇÃO
+                    </a>
+                  ) : (
+                    <a
+                      href="/ldr-pass"
+                      className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#0b2341] px-4 py-3 text-sm font-black text-white"
+                    >
+                      LDR ONE · ASSINAR
+                    </a>
+                  )}
+                </div>
+              ) : active === "ebook" && ebook ? (
+                <div>
+                  <h3 className="font-serif text-xl">A Coragem de Começar</h3>
+                  {ent.ebook ? (
+                    <a
+                      href="/cliente/biblioteca/ebook_coragem_comecar"
+                      className="mt-4 inline-flex w-full justify-center rounded-xl bg-primary px-4 py-3 text-sm font-bold text-white"
+                    >
+                      Acessar eBook
+                    </a>
+                  ) : (
+                    <a
+                      href="/ldr-pass"
+                      className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#0b2341] px-4 py-3 text-sm font-black text-white"
+                    >
+                      LDR ONE · ASSINAR
+                    </a>
+                  )}
+                </div>
+              ) : active === "book" && book ? (
+                <div>
+                  <h3 className="font-serif text-xl">O Menino que Vendia Mamão</h3>
+                  {ent.book ? (
+                    <a
+                      href="/cliente/biblioteca/livro_menino_mamao"
+                      className="mt-4 inline-flex w-full justify-center rounded-xl bg-primary px-4 py-3 text-sm font-bold text-white"
+                    >
+                      Acessar livro
+                    </a>
+                  ) : (
+                    <a
+                      href="/ldr-pass"
+                      className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#0b2341] px-4 py-3 text-sm font-black text-white"
+                    >
+                      LDR ONE · ASSINAR
+                    </a>
+                  )}
+                </div>
+              ) : active === "training" ? (
+                <div>
+                  <h3 className="font-serif text-xl">Do Mamão ao Negócio</h3>
+                  <p className="mt-2 text-xs font-bold text-[#0b2341]">
+                    ✓ Acesso com LDR ONE. Compras anteriores continuam preservadas.
+                  </p>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    Formação para empreendedores, atividades práticas e percurso estruturado.
+                  </p>
+                  {ent.training ? (
+                    <a
+                      href="/cliente/treinamentos/do-mamao-ao-negocio"
+                      className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#d6ad63] px-4 py-3 font-bold text-[#281605]"
+                    >
+                      Acessar treinamento
+                    </a>
+                  ) : (
+                    <a
+                      href="/ldr-pass"
+                      className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#0b2341] px-4 py-3 text-sm font-black text-white"
+                    >
+                      LDR ONE · ASSINAR
+                    </a>
+                  )}
+                </div>
+              ) : active === "psycho" ? (
+                <div>
+                  <h3 className="font-serif text-xl text-[#32155c]">
+                    Formação Online em Psicanálise
+                  </h3>
+                  <p className="mt-2 text-xs font-bold text-[#0b2341]">
+                    ✓ Acesso com LDR ONE. Compras anteriores continuam preservadas.
+                  </p>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    14 módulos · 220 unidades · percurso formativo completo.
+                  </p>
+                  {ent.psycho ? (
+                    <a
+                      href="/cliente/treinamentos/psicanalise"
+                      className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#5b2b86] px-4 py-3 font-black text-white"
+                    >
+                      Acessar formação
+                    </a>
+                  ) : (
+                    ldrOneButton("bg-[#5b2b86]")
+                  )}
+                </div>
+              ) : active === "business24" ? (
+                <div>
+                  <h3 className="font-serif text-xl text-[#8a3b17]">
+                    Formação Negócio em 24 Horas
+                  </h3>
+                  <p className="mt-2 text-xs font-bold text-[#0b2341]">
+                    ✓ Acesso com LDR ONE. Compras anteriores continuam preservadas.
+                  </p>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    9 módulos · 90 aulas · 360 horas · 100% online · sem encontros ao vivo · projeto
+                    final avaliado.
+                  </p>
+                  {ent.business24 ? (
+                    <a
+                      href="/cliente/treinamentos/negocio-24-horas"
+                      className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#c85a24] px-4 py-3 font-black text-white"
+                    >
+                      Acessar formação
+                    </a>
+                  ) : (
+                    <a
+                      href="/ldr-pass"
+                      className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#0b2341] px-4 py-3 text-sm font-black text-white"
+                    >
+                      LDR ONE · ASSINAR
+                    </a>
+                  )}
+                </div>
+              ) : active === "brief" ? (
+                <div>
+                  <h3 className="font-serif text-xl text-[#103d3a]">
+                    Formação em Terapia Breve Psicanalítica
+                  </h3>
+                  <p className="mt-2 text-xs font-bold text-[#0b2341]">
+                    ✓ Acesso com LDR ONE. Compras anteriores continuam preservadas.
+                  </p>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    15 módulos · 300 aulas · 1.200 horas · 100% online · sob demanda.
+                  </p>
+                  {ent.brief ? (
+                    <a
+                      href="/cliente/treinamentos/terapia-breve-psicanalitica"
+                      className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#17645e] px-4 py-3 font-black text-white"
+                    >
+                      Acessar formação
+                    </a>
+                  ) : (
+                    ldrOneButton("bg-[#17645e]")
+                  )}
+                </div>
+              ) : active === "massage" ? (
+                <div>
+                  <h3 className="font-serif text-xl text-[#083B50]">
+                    Formação Completa em Massoterapia
+                  </h3>
+                  <p className="mt-2 text-xs font-bold text-[#0b2341]">
+                    ✓ Acesso com LDR ONE. Compras anteriores continuam preservadas.
+                  </p>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    15 módulos · 300 aulas · 1.200 horas · 6 a 12 meses · 100% online · sem
+                    encontros ao vivo.
+                  </p>
+                  {ent.massage ? (
+                    <a
+                      href="/cliente/treinamentos/massoterapia"
+                      className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#0F5E7A] px-4 py-3 font-black text-white"
+                    >
+                      Acessar formação
+                    </a>
+                  ) : (
+                    ldrOneButton("bg-[#0F5E7A]")
+                  )}
+                </div>
+              ) : active === "mentor" ? (
+                <div>
+                  <h3 className="font-serif text-xl text-[#0f2f57]">
+                    Formação em Mentoria Profissional e de Carreira
+                  </h3>
+                  <p className="mt-2 text-xs font-bold text-[#0b2341]">
+                    ✓ Acesso com LDR ONE. Compras anteriores continuam preservadas.
+                  </p>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    3 meses · 90 aulas · 1 aula/dia · ≈40 min/dia · acesso digital vitalício.
+                  </p>
+                  {ent.mentor ? (
+                    <a
+                      href="/cliente/treinamentos/mentoria-carreira"
+                      className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#0b5cab] px-4 py-3 font-black text-white"
+                    >
+                      Acessar formação
+                    </a>
+                  ) : (
+                    ldrOneButton("bg-[#0b5cab]")
+                  )}
+                </div>
+              ) : active === "leader" ? (
+                <div>
+                  <h3 className="font-serif text-xl text-[#0f5132]">
+                    Formação em Liderança e Gestão de Pessoas
+                  </h3>
+                  <p className="mt-2 text-xs font-bold text-[#0b2341]">
+                    ✓ Acesso com LDR ONE. Compras anteriores continuam preservadas.
+                  </p>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    3 meses · 90 aulas · 1 aula/dia · ≈40 min/dia · acesso digital vitalício.
+                  </p>
+                  {ent.leader ? (
+                    <a
+                      href="/cliente/treinamentos/lideranca-gestao"
+                      className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#0f5132] px-4 py-3 font-black text-white"
+                    >
+                      Acessar formação
+                    </a>
+                  ) : (
+                    ldrOneButton("bg-[#0f5132]")
+                  )}
+                </div>
+              ) : (
+                <div>
+                  <h3 className="font-serif text-xl">O Menino que Vendia Mamão</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    Filme em produção. Ainda não há conteúdo liberado.
+                  </p>
+                </div>
+              )}
+            </div>
+          ) : null}
         </div>
-        <div className="w-full shrink-0 rounded-2xl bg-gradient-to-br from-[#071426] to-[#123a67] p-4 text-white shadow-lg sm:w-[320px]">
-          <p className="text-xs font-black uppercase tracking-[.16em] text-[#f2cf83]">{subscriptionData?.active?SUB_TXT[locale].active:"LDR ONE"}</p>
-          {!subscriptionData?.active?<><p className="mt-2 text-2xl font-black text-white">€ 39,90<span className="text-xs font-medium text-white/70"> / mês</span></p><p className="mt-1 text-sm font-bold text-[#f2cf83]">€ 399 / ano</p><p className="mt-2 text-xs text-white/70">{locale==="pt"?"Acesso a cursos, formações e eBooks pagos elegíveis.":locale==="fr"?"Cours, formations et eBooks payants éligibles inclus.":locale==="es"?"Cursos, formaciones y eBooks de pago elegibles incluidos.":"Eligible paid courses, training and eBooks included."}</p><a href="/ldr-pass" className="mt-4 inline-flex w-full justify-center rounded-xl border-2 border-[#f5cc82] bg-[#d6ad63] px-4 py-3 text-sm font-black text-[#071426]">LDR ONE · {SUB_TXT[locale].subscribe}</a></>:<div className="mt-3"><p className="text-xs text-white/75">LDR ONE ativo</p><a href="/cliente/ldr-pass" className="mt-3 inline-flex w-full justify-center rounded-xl bg-white px-3 py-2 text-xs font-black text-[#071426]">GERENCIAR LDR ONE</a></div>}
+      </details>
+
+      <section className="rounded-[28px] border border-[#d6ad63]/40 bg-white p-5 shadow-sm sm:p-6">
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+          <div className="min-w-0">
+            <p className="text-[10px] font-black uppercase tracking-[.24em] text-[#a77b2e]">
+              {SUB_TXT[locale].eyebrow}
+            </p>
+            <h2 className="mt-1 font-serif text-2xl text-[#0b2341]">{SUB_TXT[locale].title}</h2>
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
+              {SUB_TXT[locale].desc}
+            </p>
+            <p className="mt-3 text-xs font-bold text-[#0b2341]">✓ {SUB_TXT[locale].included}</p>
+          </div>
+          <div className="w-full shrink-0 rounded-2xl bg-gradient-to-br from-[#071426] to-[#123a67] p-4 text-white shadow-lg sm:w-[320px]">
+            <p className="text-xs font-black uppercase tracking-[.16em] text-[#f2cf83]">
+              {subscriptionData?.active ? SUB_TXT[locale].active : "LDR ONE"}
+            </p>
+            {!subscriptionData?.active ? (
+              <>
+                <p className="mt-2 text-2xl font-black text-white">
+                  € 39,90<span className="text-xs font-medium text-white/70"> / mês</span>
+                </p>
+                <p className="mt-1 text-sm font-bold text-[#f2cf83]">€ 399 / ano</p>
+                <p className="mt-2 text-xs text-white/70">
+                  {locale === "pt"
+                    ? "Acesso a cursos, formações e eBooks pagos elegíveis."
+                    : locale === "fr"
+                      ? "Cours, formations et eBooks payants éligibles inclus."
+                      : locale === "es"
+                        ? "Cursos, formaciones y eBooks de pago elegibles incluidos."
+                        : "Eligible paid courses, training and eBooks included."}
+                </p>
+                <a
+                  href="/ldr-pass"
+                  className="mt-4 inline-flex w-full justify-center rounded-xl border-2 border-[#f5cc82] bg-[#d6ad63] px-4 py-3 text-sm font-black text-[#071426]"
+                >
+                  LDR ONE · {SUB_TXT[locale].subscribe}
+                </a>
+              </>
+            ) : (
+              <div className="mt-3">
+                <p className="text-xs text-white/75">LDR ONE ativo</p>
+                <a
+                  href="/cliente/ldr-pass"
+                  className="mt-3 inline-flex w-full justify-center rounded-xl bg-white px-3 py-2 text-xs font-black text-[#071426]"
+                >
+                  GERENCIAR LDR ONE
+                </a>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section className="mb-6"><a href="/cliente/rede-academica" className="group block rounded-[24px] border border-[#d8cba9] bg-gradient-to-r from-[#071426] via-[#102a4a] to-[#193b62] p-5 text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"><div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"><div><p className="text-[10px] font-black tracking-[.16em] text-[#e7c979]">REDE ACADÊMICA</p><h2 className="mt-2 font-serif text-2xl">Seu diário, suas comunidades e pessoas que compartilham seus interesses.</h2><p className="mt-2 text-sm text-slate-200">{({pt:"ACESSO GRATUITO",en:"FREE ACCESS",fr:"ACCÈS GRATUIT",es:"ACCESO GRATUITO"})[locale]}</p></div><span className="inline-flex shrink-0 rounded-xl bg-white px-4 py-3 text-xs font-black text-[#071426]">ENTRAR NA REDE →</span></div></a></section>
+      <section className="mb-6">
+        <a
+          href="/cliente/rede-academica"
+          className="group block rounded-[24px] border border-[#d8cba9] bg-gradient-to-r from-[#071426] via-[#102a4a] to-[#193b62] p-5 text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
+        >
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-[10px] font-black tracking-[.16em] text-[#e7c979]">
+                REDE ACADÊMICA
+              </p>
+              <h2 className="mt-2 font-serif text-2xl">
+                Seu diário, suas comunidades e pessoas que compartilham seus interesses.
+              </h2>
+              <p className="mt-2 text-sm text-slate-200">
+                {
+                  {
+                    pt: "ACESSO GRATUITO",
+                    en: "FREE ACCESS",
+                    fr: "ACCÈS GRATUIT",
+                    es: "ACCESO GRATUITO",
+                  }[locale]
+                }
+              </p>
+            </div>
+            <span className="inline-flex shrink-0 rounded-xl bg-white px-4 py-3 text-xs font-black text-[#071426]">
+              ENTRAR NA REDE →
+            </span>
+          </div>
+        </a>
+      </section>
 
-    <AcademicDrawers locale={locale}/>
+      <AcademicDrawers locale={locale} />
 
+      <section className="hidden rounded-[28px] border border-[#d6ad63]/40 bg-gradient-to-br from-[#071426] via-[#0b2341] to-[#163b67] p-5 text-white shadow-lg sm:p-7">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <span className="rounded-full bg-[#d6ad63] px-3 py-1 text-[10px] font-black uppercase tracking-[.15em] text-[#281605]">
+              {ac.undergradSection}
+            </span>
+            <h2 className="mt-4 font-serif text-3xl text-[#fff7e7]">{ac.undergradTitle}</h2>
+            <p className="mt-2 max-w-3xl text-sm leading-6 text-white/75">{ac.undergradIntro}</p>
+          </div>
+          <span className="rounded-full border border-white/20 bg-white/10 px-3 py-2 text-xs font-bold">
+            A partir de R$ 99,90/mês*
+          </span>
+        </div>
+        <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {UNDERGRADUATE_COURSES.map((course) => (
+            <article
+              key={course.key}
+              className="rounded-2xl border border-white/15 bg-white/10 p-5 shadow-sm backdrop-blur"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div className="text-3xl">{course.icon}</div>
+                <span className="rounded-full bg-[#d6ad63] px-2.5 py-1 text-[9px] font-black uppercase tracking-[.12em] text-[#281605]">
+                  {ct.postgrad}
+                </span>
+              </div>
+              <h3 className="mt-4 font-serif text-xl leading-snug text-white">
+                {undergraduateCardTitle(locale, course.key, course.title)}
+              </h3>
+              <div className="mt-4 space-y-1.5 text-xs text-white/78">
+                <p>
+                  <b className="text-white">{ac.duration}</b> {course.years} {ac.years} ·{" "}
+                  {course.semesters} {ac.semesters}
+                </p>
+                <p>
+                  <b className="text-white">{ac.modality}</b> {ac.live}
+                </p>
+                <p>
+                  <b className="text-white">{ac.value}</b> {ac.from}
+                </p>
+              </div>
+              <a
+                href={`/cliente/graduacao/${course.key}`}
+                className="mt-5 inline-flex w-full items-center justify-center rounded-xl bg-[#d6ad63] px-4 py-3 text-sm font-black text-[#281605]"
+              >
+                {ac.know}
+              </a>
+            </article>
+          ))}
+        </div>
+        <p className="mt-5 text-[11px] leading-5 text-white/60">
+          *Valor de referência para pré-lançamento. Duração, modalidade, grade e condições poderão
+          mudar antes da eventual abertura oficial de matrículas. Oferta futura sujeita a
+          instituição de ensino superior devidamente credenciada e às exigências regulatórias
+          aplicáveis.
+        </p>
+      </section>
 
+      <section className="hidden rounded-[28px] border border-[#d6ad63]/35 bg-gradient-to-br from-[#071426] via-[#0b2341] to-[#102d50] p-5 text-white shadow-lg sm:p-7">
+        <div className="max-w-3xl">
+          <span className="rounded-full bg-[#d6ad63] px-3 py-1 text-[10px] font-black uppercase tracking-[.15em] text-[#281605]">
+            {ac.postgradSection}
+          </span>
+          <h2 className="mt-4 font-serif text-3xl text-[#fff7e7]">{ac.postgradTitle}</h2>
+          <p className="mt-2 text-sm leading-6 text-white/75">{ac.postgradIntro}</p>
+        </div>
+        <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {postgrads.map((course) => (
+            <article
+              key={postgraduateCardTitle(locale, course.key, course.title)}
+              className={`relative rounded-2xl border p-5 ${course.highlight ? "border-[#d6ad63] bg-[#fff7e7] text-[#071426] shadow-lg" : "border-white/15 bg-white/5 text-white"}`}
+            >
+              {course.highlight ? (
+                <span className="absolute right-4 top-4 rounded-full bg-[#d6ad63] px-2.5 py-1 text-[9px] font-black uppercase tracking-[.12em] text-[#281605]">
+                  {ac.featured}
+                </span>
+              ) : null}
+              <div className="text-2xl">{course.icon}</div>
+              <p
+                className={`mt-4 text-[10px] font-black uppercase tracking-[.14em] ${course.highlight ? "text-[#9a6d20]" : "text-[#d6ad63]"}`}
+              >
+                {ac.postgradLabel}
+              </p>
+              <h3 className="mt-2 font-serif text-xl leading-snug">
+                {postgraduateCardTitle(locale, course.key, course.title)}
+              </h3>
+              <a
+                href={`/cliente/interesse-pos/${course.key}`}
+                className={`mt-5 block rounded-xl border px-3 py-2 text-center text-xs font-black transition hover:-translate-y-0.5 ${course.highlight ? "border-[#d6ad63]/60 bg-white text-[#0b2341] hover:bg-[#fff3cf]" : "border-white/15 bg-white/10 text-white hover:bg-white/15"}`}
+              >
+                {ac.interested}
+              </a>
+            </article>
+          ))}
+        </div>
+        <p className="mt-5 text-[11px] leading-5 text-white/60">
+          Programas em desenvolvimento · oferta futura sujeita à parceria e validação acadêmica da
+          instituição de ensino responsável.
+        </p>
+      </section>
 
-        <section className="hidden rounded-[28px] border border-[#d6ad63]/40 bg-gradient-to-br from-[#071426] via-[#0b2341] to-[#163b67] p-5 text-white shadow-lg sm:p-7">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between"><div><span className="rounded-full bg-[#d6ad63] px-3 py-1 text-[10px] font-black uppercase tracking-[.15em] text-[#281605]">{ac.undergradSection}</span><h2 className="mt-4 font-serif text-3xl text-[#fff7e7]">{ac.undergradTitle}</h2><p className="mt-2 max-w-3xl text-sm leading-6 text-white/75">{ac.undergradIntro}</p></div><span className="rounded-full border border-white/20 bg-white/10 px-3 py-2 text-xs font-bold">A partir de R$ 99,90/mês*</span></div>
-      <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">{UNDERGRADUATE_COURSES.map(course=><article key={course.key} className="rounded-2xl border border-white/15 bg-white/10 p-5 shadow-sm backdrop-blur"><div className="flex items-start justify-between gap-3"><div className="text-3xl">{course.icon}</div><span className="rounded-full bg-[#d6ad63] px-2.5 py-1 text-[9px] font-black uppercase tracking-[.12em] text-[#281605]">{ct.postgrad}</span></div><h3 className="mt-4 font-serif text-xl leading-snug text-white">{undergraduateCardTitle(locale,course.key,course.title)}</h3><div className="mt-4 space-y-1.5 text-xs text-white/78"><p><b className="text-white">{ac.duration}</b> {course.years} {ac.years} · {course.semesters} {ac.semesters}</p><p><b className="text-white">{ac.modality}</b> {ac.live}</p><p><b className="text-white">{ac.value}</b> {ac.from}</p></div><a href={`/cliente/graduacao/${course.key}`} className="mt-5 inline-flex w-full items-center justify-center rounded-xl bg-[#d6ad63] px-4 py-3 text-sm font-black text-[#281605]">{ac.know}</a></article>)}</div>
-      <p className="mt-5 text-[11px] leading-5 text-white/60">*Valor de referência para pré-lançamento. Duração, modalidade, grade e condições poderão mudar antes da eventual abertura oficial de matrículas. Oferta futura sujeita a instituição de ensino superior devidamente credenciada e às exigências regulatórias aplicáveis.</p>
-    </section>
+      <section className="hidden rounded-[28px] border bg-[#fffdf8] p-5 shadow-sm sm:p-7">
+        <div>
+          <span className="rounded-full bg-[#0b2341] px-3 py-1 text-[10px] font-black uppercase tracking-[.15em] text-white">
+            {ac.professionalSection}
+          </span>
+          <h2 className="mt-4 font-serif text-3xl text-[#0b2341]">{ac.professionalTitle}</h2>
+          <p className="mt-2 text-sm leading-6 text-muted-foreground">{ac.professionalIntro}</p>
+        </div>
+        <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+          <article className="relative rounded-2xl border-2 border-[#34a77b] bg-gradient-to-br from-[#f0fdf7] to-[#ecfdf5] p-5 shadow-sm">
+            <span className="absolute right-4 top-4 rounded-full bg-[#047857] px-2.5 py-1 text-[9px] font-black uppercase tracking-[.12em] text-white">
+              100% GRATUITA
+            </span>
+            <span className="text-[10px] font-black uppercase tracking-[.12em] text-[#047857]">
+              Gestão de Pessoas e RH
+            </span>
+            <h3 className="mt-2 pr-16 font-serif text-xl text-[#065f46]">
+              Formação em Gestão de Pessoas e Recursos Humanos
+            </h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              600 horas · 12 módulos · 100% online · leitura e atividades · no seu ritmo.
+            </p>
+            <a
+              href="/cliente/formacoes/gestao-pessoas-rh"
+              className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#047857] px-4 py-3 text-sm font-black text-white"
+            >
+              COMEÇAR GRATUITAMENTE
+            </a>
+          </article>
+          <article className="rounded-2xl border border-[#d9c6ea] bg-[#fbf7ff] p-5">
+            <span className="text-[10px] font-black uppercase tracking-[.12em] text-[#5b2b86]">
+              Psicanálise
+            </span>
+            <h3 className="mt-2 font-serif text-xl text-[#32155c]">
+              Formação Online em Psicanálise
+            </h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              14 módulos · 220 unidades · percurso formativo completo.
+            </p>
+            {ent.psycho ? (
+              <a
+                href="/cliente/treinamentos/psicanalise"
+                className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#5b2b86] px-4 py-3 text-sm font-black text-white"
+              >
+                Acessar formação
+              </a>
+            ) : (
+              ldrOneButton("bg-[#5b2b86]")
+            )}
+          </article>
+          <article className="rounded-2xl border border-[#9fc9bf] bg-[#f1faf7] p-5">
+            <span className="text-[10px] font-black uppercase tracking-[.12em] text-[#17645e]">
+              Terapia Breve · 1.200h
+            </span>
+            <h3 className="mt-2 font-serif text-xl text-[#103d3a]">
+              Formação em Terapia Breve Psicanalítica
+            </h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              15 módulos · 300 aulas · 1.200 horas · 100% online · sob demanda.
+            </p>
+            {ent.brief ? (
+              <a
+                href="/cliente/treinamentos/terapia-breve-psicanalitica"
+                className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#17645e] px-4 py-3 text-sm font-black text-white"
+              >
+                Acessar formação
+              </a>
+            ) : (
+              ldrOneButton("bg-[#17645e]")
+            )}
+          </article>
+          <article className="rounded-2xl border border-[#b8cee5] bg-[#f7fbff] p-5">
+            <span className="text-[10px] font-black uppercase tracking-[.12em] text-[#0b5cab]">
+              Mentoria e Carreira
+            </span>
+            <h3 className="mt-2 font-serif text-xl text-[#0f2f57]">
+              Formação em Mentoria Profissional e de Carreira
+            </h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              3 meses · 90 aulas · 1 aula/dia · ≈40 min/dia · acesso digital vitalício.
+            </p>
+            {ent.mentor ? (
+              <a
+                href="/cliente/treinamentos/mentoria-carreira"
+                className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#0b5cab] px-4 py-3 text-sm font-black text-white"
+              >
+                Acessar formação
+              </a>
+            ) : (
+              ldrOneButton("bg-[#0b5cab]")
+            )}
+          </article>
+          <article className="rounded-2xl border border-[#b8d8c8] bg-[#f6fbf8] p-5">
+            <span className="text-[10px] font-black uppercase tracking-[.12em] text-[#0f5132]">
+              Liderança
+            </span>
+            <h3 className="mt-2 font-serif text-xl text-[#0f5132]">
+              Formação em Liderança e Gestão de Pessoas
+            </h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              3 meses · 90 aulas · 1 aula/dia · ≈40 min/dia · acesso digital vitalício.
+            </p>
+            {ent.leader ? (
+              <a
+                href="/cliente/treinamentos/lideranca-gestao"
+                className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#0f5132] px-4 py-3 text-sm font-black text-white"
+              >
+                Acessar formação
+              </a>
+            ) : (
+              ldrOneButton("bg-[#0f5132]")
+            )}
+          </article>
+        </div>
+      </section>
 
-<section className="hidden rounded-[28px] border border-[#d6ad63]/35 bg-gradient-to-br from-[#071426] via-[#0b2341] to-[#102d50] p-5 text-white shadow-lg sm:p-7">
-      <div className="max-w-3xl"><span className="rounded-full bg-[#d6ad63] px-3 py-1 text-[10px] font-black uppercase tracking-[.15em] text-[#281605]">{ac.postgradSection}</span><h2 className="mt-4 font-serif text-3xl text-[#fff7e7]">{ac.postgradTitle}</h2><p className="mt-2 text-sm leading-6 text-white/75">{ac.postgradIntro}</p></div>
-      <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">{postgrads.map(course=><article key={postgraduateCardTitle(locale,course.key,course.title)} className={`relative rounded-2xl border p-5 ${course.highlight?"border-[#d6ad63] bg-[#fff7e7] text-[#071426] shadow-lg":"border-white/15 bg-white/5 text-white"}`}>{course.highlight?<span className="absolute right-4 top-4 rounded-full bg-[#d6ad63] px-2.5 py-1 text-[9px] font-black uppercase tracking-[.12em] text-[#281605]">{ac.featured}</span>:null}<div className="text-2xl">{course.icon}</div><p className={`mt-4 text-[10px] font-black uppercase tracking-[.14em] ${course.highlight?"text-[#9a6d20]":"text-[#d6ad63]"}`}>{ac.postgradLabel}</p><h3 className="mt-2 font-serif text-xl leading-snug">{postgraduateCardTitle(locale,course.key,course.title)}</h3><a href={`/cliente/interesse-pos/${course.key}`} className={`mt-5 block rounded-xl border px-3 py-2 text-center text-xs font-black transition hover:-translate-y-0.5 ${course.highlight?"border-[#d6ad63]/60 bg-white text-[#0b2341] hover:bg-[#fff3cf]":"border-white/15 bg-white/10 text-white hover:bg-white/15"}`}>{ac.interested}</a></article>)}</div>
-      <p className="mt-5 text-[11px] leading-5 text-white/60">Programas em desenvolvimento · oferta futura sujeita à parceria e validação acadêmica da instituição de ensino responsável.</p>
-    </section>
-
-    <section className="hidden rounded-[28px] border bg-[#fffdf8] p-5 shadow-sm sm:p-7">
-      <div><span className="rounded-full bg-[#0b2341] px-3 py-1 text-[10px] font-black uppercase tracking-[.15em] text-white">{ac.professionalSection}</span><h2 className="mt-4 font-serif text-3xl text-[#0b2341]">{ac.professionalTitle}</h2><p className="mt-2 text-sm leading-6 text-muted-foreground">{ac.professionalIntro}</p></div>
-      <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
-        <article className="relative rounded-2xl border-2 border-[#34a77b] bg-gradient-to-br from-[#f0fdf7] to-[#ecfdf5] p-5 shadow-sm">
-          <span className="absolute right-4 top-4 rounded-full bg-[#047857] px-2.5 py-1 text-[9px] font-black uppercase tracking-[.12em] text-white">100% GRATUITA</span>
-          <span className="text-[10px] font-black uppercase tracking-[.12em] text-[#047857]">Gestão de Pessoas e RH</span>
-          <h3 className="mt-2 pr-16 font-serif text-xl text-[#065f46]">Formação em Gestão de Pessoas e Recursos Humanos</h3>
-          <p className="mt-2 text-sm text-muted-foreground">600 horas · 12 módulos · 100% online · leitura e atividades · no seu ritmo.</p>
-          <a href="/cliente/formacoes/gestao-pessoas-rh" className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#047857] px-4 py-3 text-sm font-black text-white">COMEÇAR GRATUITAMENTE</a>
-        </article>
-        <article className="rounded-2xl border border-[#d9c6ea] bg-[#fbf7ff] p-5"><span className="text-[10px] font-black uppercase tracking-[.12em] text-[#5b2b86]">Psicanálise</span><h3 className="mt-2 font-serif text-xl text-[#32155c]">Formação Online em Psicanálise</h3><p className="mt-2 text-sm text-muted-foreground">14 módulos · 220 unidades · percurso formativo completo.</p>{ent.psycho?<a href="/cliente/treinamentos/psicanalise" className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#5b2b86] px-4 py-3 text-sm font-black text-white">Acessar formação</a>:ldrOneButton("bg-[#5b2b86]")}</article>
-        <article className="rounded-2xl border border-[#9fc9bf] bg-[#f1faf7] p-5"><span className="text-[10px] font-black uppercase tracking-[.12em] text-[#17645e]">Terapia Breve · 1.200h</span><h3 className="mt-2 font-serif text-xl text-[#103d3a]">Formação em Terapia Breve Psicanalítica</h3><p className="mt-2 text-sm text-muted-foreground">15 módulos · 300 aulas · 1.200 horas · 100% online · sob demanda.</p>{ent.brief?<a href="/cliente/treinamentos/terapia-breve-psicanalitica" className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#17645e] px-4 py-3 text-sm font-black text-white">Acessar formação</a>:ldrOneButton("bg-[#17645e]")}</article>
-        <article className="rounded-2xl border border-[#b8cee5] bg-[#f7fbff] p-5"><span className="text-[10px] font-black uppercase tracking-[.12em] text-[#0b5cab]">Mentoria e Carreira</span><h3 className="mt-2 font-serif text-xl text-[#0f2f57]">Formação em Mentoria Profissional e de Carreira</h3><p className="mt-2 text-sm text-muted-foreground">3 meses · 90 aulas · 1 aula/dia · ≈40 min/dia · acesso digital vitalício.</p>{ent.mentor?<a href="/cliente/treinamentos/mentoria-carreira" className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#0b5cab] px-4 py-3 text-sm font-black text-white">Acessar formação</a>:ldrOneButton("bg-[#0b5cab]")}</article>
-        <article className="rounded-2xl border border-[#b8d8c8] bg-[#f6fbf8] p-5"><span className="text-[10px] font-black uppercase tracking-[.12em] text-[#0f5132]">Liderança</span><h3 className="mt-2 font-serif text-xl text-[#0f5132]">Formação em Liderança e Gestão de Pessoas</h3><p className="mt-2 text-sm text-muted-foreground">3 meses · 90 aulas · 1 aula/dia · ≈40 min/dia · acesso digital vitalício.</p>{ent.leader?<a href="/cliente/treinamentos/lideranca-gestao" className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#0f5132] px-4 py-3 text-sm font-black text-white">Acessar formação</a>:ldrOneButton("bg-[#0f5132]")}</article>
-      </div>
-    </section>
-
-    <section className="rounded-[28px] border bg-background p-5">
-      <div className="flex items-center gap-2"><MessageCircle className="h-5 w-5"/><h2 className="font-serif text-xl">{t.comments}</h2></div>
-      <div className="mt-4 grid gap-3 sm:grid-cols-[220px_1fr_auto]">
-        <select value={productKey} onChange={e=>setProductKey(e.target.value)} className="rounded-xl border bg-background px-3 py-2 text-sm">
-          <option value="ebook_coragem_comecar">eBook</option>
-          <option value="livro_menino_mamao">Livro</option>
-          <option value="treinamento_do_mamao_ao_negocio">Negócios</option>
-          <option value="formacao_psicanalise">Psicanálise</option>
-          <option value="formacao_terapia_breve_psicanalitica">Terapia Breve Psicanalítica</option>
-          <option value="formacao_negocio_24_horas">Negócio em 24 Horas</option>
-          <option value="formacao_mentoria_profissional_carreira">Mentoria</option>
-          <option value="formacao_lideranca_gestao_pessoas">Liderança</option>
-          <option value="formacao_gratuita_gestao_pessoas_rh">Formação gratuita — Gestão de Pessoas e RH</option>
-          <option value="curso_gratuito_organizar_carreira">Curso gratuito — Carreira</option>
-          <option value="curso_gratuito_frances_negocios_a1">Curso gratuito — Francês A1</option>
-          <option value="curso_gratuito_primeiros_socorros">Curso gratuito — Primeiros Socorros</option>
-        </select>
-        <textarea value={comment} onChange={e=>setComment(e.target.value)} rows={2} className="rounded-xl border p-3 text-sm" placeholder="Escreva seu comentário…"/>
-        <button disabled={!comment.trim()||addComment.isPending} onClick={()=>addComment.mutate()} className="rounded-xl bg-primary px-4 py-2 text-sm font-bold text-primary-foreground">Publicar</button>
-      </div>
-      <div className="mt-4 space-y-2">{comments.slice(0,6).map((c:any)=><div key={c.id} className="rounded-xl border p-3 text-sm"><p>{c.body}</p></div>)}</div>
-    </section>
-  </div>;
+      <section className="rounded-[28px] border bg-background p-5">
+        <div className="flex items-center gap-2">
+          <MessageCircle className="h-5 w-5" />
+          <h2 className="font-serif text-xl">{t.comments}</h2>
+        </div>
+        <div className="mt-4 grid gap-3 sm:grid-cols-[220px_1fr_auto]">
+          <select
+            value={productKey}
+            onChange={(e) => setProductKey(e.target.value)}
+            className="rounded-xl border bg-background px-3 py-2 text-sm"
+          >
+            <option value="ebook_coragem_comecar">eBook</option>
+            <option value="livro_menino_mamao">Livro</option>
+            <option value="treinamento_do_mamao_ao_negocio">Negócios</option>
+            <option value="formacao_psicanalise">Psicanálise</option>
+            <option value="formacao_terapia_breve_psicanalitica">
+              Terapia Breve Psicanalítica
+            </option>
+            <option value="formacao_negocio_24_horas">Negócio em 24 Horas</option>
+            <option value="formacao_mentoria_profissional_carreira">Mentoria</option>
+            <option value="formacao_lideranca_gestao_pessoas">Liderança</option>
+            <option value="formacao_gratuita_gestao_pessoas_rh">
+              Formação gratuita — Gestão de Pessoas e RH
+            </option>
+            <option value="curso_gratuito_organizar_carreira">Curso gratuito — Carreira</option>
+            <option value="curso_gratuito_frances_negocios_a1">Curso gratuito — Francês A1</option>
+            <option value="curso_gratuito_primeiros_socorros">
+              Curso gratuito — Primeiros Socorros
+            </option>
+          </select>
+          <textarea
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            rows={2}
+            className="rounded-xl border p-3 text-sm"
+            placeholder="Escreva seu comentário…"
+          />
+          <button
+            disabled={!comment.trim() || addComment.isPending}
+            onClick={() => addComment.mutate()}
+            className="rounded-xl bg-primary px-4 py-2 text-sm font-bold text-primary-foreground"
+          >
+            Publicar
+          </button>
+        </div>
+        <div className="mt-4 space-y-2">
+          {comments.slice(0, 6).map((c: any) => (
+            <div key={c.id} className="rounded-xl border p-3 text-sm">
+              <p>{c.body}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
 }
