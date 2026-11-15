@@ -57,6 +57,8 @@ A falha anterior de `invoice.paid` vinha de uma expectativa textual que exigia u
 - o suporte empresarial existente permanece isolado;
 - outros produtos mantêm os seus contratos atuais de eventos.
 
+A versão atual do teste estrutural da `main` foi preservada. Os três novos testes de execução ficam separados em `library-stripe-routing.test.cjs`, evitando sobrepor as correções concorrentes do mesmo ficheiro. Não houve integração da `main` ou merge do PR.
+
 Isto valida o encaminhamento sintético, não uma cobrança ou renovação financeira real. Nenhuma chave Stripe ou pagamento real foi usado nos testes.
 
 ## Validação
@@ -65,11 +67,11 @@ Isto valida o encaminhamento sintético, não uma cobrança ou renovação finan
 | --- | --- |
 | TypeScript | Passou, sem erros |
 | Build | Passou, sem deploy |
-| Suíte de regressão | 206/206 passaram |
+| Suíte de regressão | 207/207 passaram |
 | Suíte unitária existente | 59/59 passaram |
-| Testes específicos `library-*.test.cjs` | 28/28 passaram |
+| Testes específicos `library-*.test.cjs` | 31/31 passaram |
 | Validação da edição candidata | Quatro testes passaram; candidata parcial continua inelegível |
-| Encaminhamento Stripe | Seis testes do ficheiro relevante passaram; handlers e dados simulados |
+| Encaminhamento Stripe | Sete testes de encaminhamento e contrato passaram; handlers e dados simulados |
 | Progresso monotónico | Oito cenários sintéticos passaram, incluindo atualizações e primeiras gravações concorrentes, isolamento de cliente e falhas |
 | Estrutura de eBooks | 23/23 versões normalizadas sem erro estrutural; não é aprovação editorial |
 | Renderização do painel | Verificada em PT/EN/FR/ES com dados sintéticos |
