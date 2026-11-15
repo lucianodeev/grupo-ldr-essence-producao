@@ -106,7 +106,7 @@ export async function acceptAndPayQuote(context: any, raw: unknown, deps: {
   customer?: typeof requireClient;
 } = {}) {
   const input = acceptQuoteSchema.parse(raw), db = deps.db ?? dbDefault, env = deps.env ?? process.env, now = deps.now ?? nowSeconds();
-  if (env["ENTERPRISE_QUOTES_CHECKOUT_ENABLED"] !== "true" || !/^[sr]k_(live|test)_[A-Za-z0-9]+$/.test(env["STRIPE_SECRET_KEY"] ?? "") ||
+  if (env["ENTERPRISE_QUOTES_CHECKOUT_ENABLED"] !== "true" || !/^(?:[sr]k_(?:live|test)|rkcs_test)_[A-Za-z0-9]+$/.test(env["STRIPE_SECRET_KEY"] ?? "") ||
       !/^whsec_[A-Za-z0-9]+$/.test(env["STRIPE_WEBHOOK_SECRET"] ?? "")) fail();
   const identity = await supportIdentity(context);
   if (!await quoteReady(db)) fail();

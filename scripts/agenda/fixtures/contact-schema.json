@@ -1,0 +1,368 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "type": "uuid",
+      "table": "ecosystem_contact_messages",
+      "default": "gen_random_uuid()",
+      "nullable": "NO"
+    },
+    {
+      "name": "contact_id",
+      "type": "uuid",
+      "table": "ecosystem_contact_messages",
+      "default": null,
+      "nullable": "NO"
+    },
+    {
+      "name": "direction",
+      "type": "text",
+      "table": "ecosystem_contact_messages",
+      "default": null,
+      "nullable": "NO"
+    },
+    {
+      "name": "channel",
+      "type": "text",
+      "table": "ecosystem_contact_messages",
+      "default": "'email'::text",
+      "nullable": "NO"
+    },
+    {
+      "name": "body",
+      "type": "text",
+      "table": "ecosystem_contact_messages",
+      "default": null,
+      "nullable": "NO"
+    },
+    {
+      "name": "sender",
+      "type": "text",
+      "table": "ecosystem_contact_messages",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "name": "recipient",
+      "type": "text",
+      "table": "ecosystem_contact_messages",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "name": "external_message_id",
+      "type": "text",
+      "table": "ecosystem_contact_messages",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "name": "created_by",
+      "type": "uuid",
+      "table": "ecosystem_contact_messages",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "name": "sent_at",
+      "type": "timestamp with time zone",
+      "table": "ecosystem_contact_messages",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "name": "created_at",
+      "type": "timestamp with time zone",
+      "table": "ecosystem_contact_messages",
+      "default": "now()",
+      "nullable": "NO"
+    },
+    {
+      "name": "id",
+      "type": "uuid",
+      "table": "ecosystem_contacts",
+      "default": "gen_random_uuid()",
+      "nullable": "NO"
+    },
+    {
+      "name": "protocol",
+      "type": "text",
+      "table": "ecosystem_contacts",
+      "default": "('LDR-'::text || upper(substr(replace((gen_random_uuid())::text, '-'::text, ''::text), 1, 10)))",
+      "nullable": "NO"
+    },
+    {
+      "name": "name",
+      "type": "text",
+      "table": "ecosystem_contacts",
+      "default": null,
+      "nullable": "NO"
+    },
+    {
+      "name": "email",
+      "type": "text",
+      "table": "ecosystem_contacts",
+      "default": null,
+      "nullable": "NO"
+    },
+    {
+      "name": "phone",
+      "type": "text",
+      "table": "ecosystem_contacts",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "name": "subject",
+      "type": "text",
+      "table": "ecosystem_contacts",
+      "default": null,
+      "nullable": "NO"
+    },
+    {
+      "name": "message",
+      "type": "text",
+      "table": "ecosystem_contacts",
+      "default": null,
+      "nullable": "NO"
+    },
+    {
+      "name": "source_project",
+      "type": "text",
+      "table": "ecosystem_contacts",
+      "default": "'LDR Ecosystem'::text",
+      "nullable": "NO"
+    },
+    {
+      "name": "source_url",
+      "type": "text",
+      "table": "ecosystem_contacts",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "name": "language",
+      "type": "text",
+      "table": "ecosystem_contacts",
+      "default": "'pt'::text",
+      "nullable": "NO"
+    },
+    {
+      "name": "status",
+      "type": "text",
+      "table": "ecosystem_contacts",
+      "default": "'novo'::text",
+      "nullable": "NO"
+    },
+    {
+      "name": "priority",
+      "type": "text",
+      "table": "ecosystem_contacts",
+      "default": "'normal'::text",
+      "nullable": "NO"
+    },
+    {
+      "name": "wants_luciano",
+      "type": "boolean",
+      "table": "ecosystem_contacts",
+      "default": "false",
+      "nullable": "NO"
+    },
+    {
+      "name": "consent_contact",
+      "type": "boolean",
+      "table": "ecosystem_contacts",
+      "default": "true",
+      "nullable": "NO"
+    },
+    {
+      "name": "response_due_at",
+      "type": "timestamp with time zone",
+      "table": "ecosystem_contacts",
+      "default": "(now() + '7 days'::interval)",
+      "nullable": "NO"
+    },
+    {
+      "name": "first_response_at",
+      "type": "timestamp with time zone",
+      "table": "ecosystem_contacts",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "name": "resolved_at",
+      "type": "timestamp with time zone",
+      "table": "ecosystem_contacts",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "name": "created_at",
+      "type": "timestamp with time zone",
+      "table": "ecosystem_contacts",
+      "default": "now()",
+      "nullable": "NO"
+    },
+    {
+      "name": "updated_at",
+      "type": "timestamp with time zone",
+      "table": "ecosystem_contacts",
+      "default": "now()",
+      "nullable": "NO"
+    },
+    {
+      "name": "upload_token_hash",
+      "type": "text",
+      "table": "ecosystem_contacts",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "name": "upload_token_expires_at",
+      "type": "timestamp with time zone",
+      "table": "ecosystem_contacts",
+      "default": null,
+      "nullable": "YES"
+    }
+  ],
+  "policies": [
+    {
+      "cmd": "ALL",
+      "qual": "(EXISTS ( SELECT 1\n   FROM user_roles ur\n  WHERE ((ur.user_id = ( SELECT auth.uid() AS uid)) AND (ur.role = 'superadmin'::app_role))))",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "ecosystem_contact_messages",
+      "permissive": "PERMISSIVE",
+      "policyname": "ecosystem_contact_messages_superadmin_all",
+      "schemaname": "public",
+      "with_check": "(EXISTS ( SELECT 1\n   FROM user_roles ur\n  WHERE ((ur.user_id = ( SELECT auth.uid() AS uid)) AND (ur.role = 'superadmin'::app_role))))"
+    },
+    {
+      "cmd": "INSERT",
+      "qual": null,
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "ecosystem_contact_messages",
+      "permissive": "PERMISSIVE",
+      "policyname": "ecosystem_messages_superadmin_insert",
+      "schemaname": "public",
+      "with_check": "(EXISTS ( SELECT 1\n   FROM user_roles ur\n  WHERE ((ur.user_id = ( SELECT auth.uid() AS uid)) AND (ur.role = 'superadmin'::app_role))))"
+    },
+    {
+      "cmd": "SELECT",
+      "qual": "(EXISTS ( SELECT 1\n   FROM user_roles ur\n  WHERE ((ur.user_id = ( SELECT auth.uid() AS uid)) AND (ur.role = 'superadmin'::app_role))))",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "ecosystem_contact_messages",
+      "permissive": "PERMISSIVE",
+      "policyname": "ecosystem_messages_superadmin_select",
+      "schemaname": "public",
+      "with_check": null
+    },
+    {
+      "cmd": "SELECT",
+      "qual": "(EXISTS ( SELECT 1\n   FROM user_roles ur\n  WHERE ((ur.user_id = ( SELECT auth.uid() AS uid)) AND (ur.role = 'superadmin'::app_role))))",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "ecosystem_contacts",
+      "permissive": "PERMISSIVE",
+      "policyname": "ecosystem_contacts_superadmin_select",
+      "schemaname": "public",
+      "with_check": null
+    },
+    {
+      "cmd": "UPDATE",
+      "qual": "(EXISTS ( SELECT 1\n   FROM user_roles ur\n  WHERE ((ur.user_id = ( SELECT auth.uid() AS uid)) AND (ur.role = 'superadmin'::app_role))))",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "ecosystem_contacts",
+      "permissive": "PERMISSIVE",
+      "policyname": "ecosystem_contacts_superadmin_update",
+      "schemaname": "public",
+      "with_check": "(EXISTS ( SELECT 1\n   FROM user_roles ur\n  WHERE ((ur.user_id = ( SELECT auth.uid() AS uid)) AND (ur.role = 'superadmin'::app_role))))"
+    }
+  ],
+  "submission": "CREATE OR REPLACE FUNCTION public.submit_ecosystem_contact(p_name text, p_email text, p_phone text, p_subject text, p_message text, p_source_project text, p_source_url text, p_language text, p_wants_luciano boolean, p_consent boolean, p_website text DEFAULT NULL::text)\n RETURNS jsonb\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'public', 'pg_temp'\nAS $function$\ndeclare c public.ecosystem_contacts; raw_token text;\nbegin\n if coalesce(trim(p_website),'')<>'' then raise exception 'invalid submission'; end if;\n if not p_consent then raise exception 'consent required'; end if;\n if char_length(trim(p_name)) not between 2 and 120 or char_length(trim(p_email)) not between 5 and 254 or position('@' in p_email)<2 or char_length(trim(p_subject)) not between 2 and 100 or char_length(trim(p_message)) not between 5 and 4000 then raise exception 'invalid submission'; end if;\n if p_language not in ('pt','en','fr','es') then raise exception 'invalid language'; end if;\n raw_token:=encode(gen_random_bytes(32),'hex');\n insert into public.ecosystem_contacts(name,email,phone,subject,message,source_project,source_url,language,wants_luciano,consent_contact,upload_token_hash,upload_token_expires_at)\n values(trim(p_name),lower(trim(p_email)),nullif(trim(p_phone),''),trim(p_subject),trim(p_message),coalesce(nullif(trim(p_source_project),''),'LDR Ecosystem'),nullif(trim(p_source_url),''),p_language,coalesce(p_wants_luciano,false),true,encode(digest(raw_token,'sha256'),'hex'),now()+interval '2 hours') returning * into c;\n insert into public.ecosystem_contact_messages(contact_id,direction,channel,body,sender,recipient) values(c.id,'inbound','email',c.message,c.email,'LDR');\n return jsonb_build_object('protocol',c.protocol,'uploadToken',raw_token);\nend $function$\n",
+  "constraints": [
+    {
+      "name": "ecosystem_contacts_email_check",
+      "table": "ecosystem_contacts",
+      "definition": "CHECK (((char_length(email) >= 5) AND (char_length(email) <= 254)))"
+    },
+    {
+      "name": "ecosystem_contacts_language_check",
+      "table": "ecosystem_contacts",
+      "definition": "CHECK ((language = ANY (ARRAY['pt'::text, 'en'::text, 'fr'::text, 'es'::text])))"
+    },
+    {
+      "name": "ecosystem_contacts_message_check",
+      "table": "ecosystem_contacts",
+      "definition": "CHECK (((char_length(message) >= 5) AND (char_length(message) <= 4000)))"
+    },
+    {
+      "name": "ecosystem_contacts_name_check",
+      "table": "ecosystem_contacts",
+      "definition": "CHECK (((char_length(name) >= 2) AND (char_length(name) <= 120)))"
+    },
+    {
+      "name": "ecosystem_contacts_pkey",
+      "table": "ecosystem_contacts",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "name": "ecosystem_contacts_priority_check",
+      "table": "ecosystem_contacts",
+      "definition": "CHECK ((priority = ANY (ARRAY['normal'::text, 'alta'::text])))"
+    },
+    {
+      "name": "ecosystem_contacts_protocol_key",
+      "table": "ecosystem_contacts",
+      "definition": "UNIQUE (protocol)"
+    },
+    {
+      "name": "ecosystem_contacts_status_check",
+      "table": "ecosystem_contacts",
+      "definition": "CHECK ((status = ANY (ARRAY['novo'::text, 'em_atendimento'::text, 'aguardando_cliente'::text, 'respondido'::text, 'resolvido'::text])))"
+    },
+    {
+      "name": "ecosystem_contacts_subject_check",
+      "table": "ecosystem_contacts",
+      "definition": "CHECK (((char_length(subject) >= 2) AND (char_length(subject) <= 100)))"
+    },
+    {
+      "name": "ecosystem_contact_messages_body_check",
+      "table": "ecosystem_contact_messages",
+      "definition": "CHECK (((char_length(body) >= 1) AND (char_length(body) <= 10000)))"
+    },
+    {
+      "name": "ecosystem_contact_messages_channel_check",
+      "table": "ecosystem_contact_messages",
+      "definition": "CHECK ((channel = ANY (ARRAY['email'::text, 'admin'::text])))"
+    },
+    {
+      "name": "ecosystem_contact_messages_contact_id_fkey",
+      "table": "ecosystem_contact_messages",
+      "definition": "FOREIGN KEY (contact_id) REFERENCES ecosystem_contacts(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "ecosystem_contact_messages_created_by_fkey",
+      "table": "ecosystem_contact_messages",
+      "definition": "FOREIGN KEY (created_by) REFERENCES auth.users(id)"
+    },
+    {
+      "name": "ecosystem_contact_messages_direction_check",
+      "table": "ecosystem_contact_messages",
+      "definition": "CHECK ((direction = ANY (ARRAY['inbound'::text, 'outbound'::text])))"
+    },
+    {
+      "name": "ecosystem_contact_messages_pkey",
+      "table": "ecosystem_contact_messages",
+      "definition": "PRIMARY KEY (id)"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+name: Protected test Calendar and local commerce validation
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: Type LDR_TEST_CALENDAR_ONLY (no production events or payments)
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: ldr-protected-test-calendar
+  cancel-in-progress: false
+jobs:
+  test-calendar:
+    if: >-
+      github.ref == 'refs/heads/main' && github.actor == github.repository_owner &&
+      inputs.confirmation == 'LDR_TEST_CALENDAR_ONLY' && !github.event.repository.private
+    environment: ldr-backup
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - uses: supabase/setup-cli@v1
+        with:
+          version: 2.122.1
+      - run: npm install --prefix /tmp/free-pg --no-audit --no-fund pg@8.23.1
+      - name: Verify read-only vault and fixed test destination guards without secrets
+        run: node --test scripts/agenda/remote-calendar-config.test.mjs
+      - name: Start only disposable local database, Auth and REST services
+        run: |
+          supabase init --workdir /tmp/ldr-free-supabase --yes
+          sed -i 's/enable_confirmations = false/enable_confirmations = true/' /tmp/ldr-free-supabase/supabase/config.toml
+          supabase start --workdir /tmp/ldr-free-supabase --exclude storage-api,imgproxy,realtime,studio,postgres-meta,edge-runtime,logflare,vector,supavisor > /tmp/ldr-local-start.log 2>&1
+          umask 077
+          supabase status --workdir /tmp/ldr-free-supabase -o json > /tmp/ldr-local-status.json
+      - name: Local signed payment fixture to actual test Calendar, reschedule, refund and cleanup
+        env:
+          AGENDA_PG_PACKAGE: /tmp/free-pg/package.json
+          LDR_LOCAL_SUPABASE_STATUS: /tmp/ldr-local-status.json
+          LDR_CALENDAR_REMOTE: 'true'
+          LDR_CALENDAR_CONFIG_JSON: ${{ secrets.LDR_BACKUP_APP_CONFIG_JSON }}
+        run: node --experimental-strip-types scripts/agenda/free-supabase-integration.mjs
+      - name: Remove disposable local data even after a failure
+        if: always()
+        run: supabase stop --workdir /tmp/ldr-free-supabase --no-backup

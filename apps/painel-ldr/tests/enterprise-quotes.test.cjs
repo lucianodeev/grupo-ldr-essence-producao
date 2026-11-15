@@ -109,3 +109,14 @@ test('unsafe provider redirects, live sessions in sandbox and unavailable calend
   for(const session of [{id:'cs_test_bad',url:'https://evil.invalid',livemode:false},{id:'cs_live_bad',url:'https://checkout.stripe.com/c/pay/cs_live_bad',livemode:true}]){const f=fixture(),id=await f.approved();await assert.rejects(()=>f.pay(id,ctx,{request:async()=>new Response(JSON.stringify(session))}));assert.equal(f.state.rows.orders[0].payment_status,'pendente');}
   const f=fixture();f.raw.catalogKey='mentoria_4';const id=await f.approved();await assert.rejects(()=>f.pay(id,ctx,{env:{...f.env,AGENDA_INTEGRATION_ENABLED:'false'}}));assert.equal(f.state.requests.length,0);
 });
+
+test('temporary sandbox keys are accepted only in test mode; unknown or live temporary prefixes fail closed',async()=>{
+  const f=fixture(),id=await f.approved();
+  await f.pay(id,ctx,{env:{...f.env,STRIPE_SECRET_KEY:'rkcs_test_fixture'}});
+  assert.equal(f.state.requests.length,1);
+  for(const key of ['rkcs_live_fixture','pk_test_fixture','rkcs_fixture']){
+    const g=fixture(),qid=await g.approved();
+    await assert.rejects(()=>g.pay(qid,ctx,{env:{...g.env,STRIPE_SECRET_KEY:key}}));
+    assert.equal(g.state.requests.length,0);
+  }
+});

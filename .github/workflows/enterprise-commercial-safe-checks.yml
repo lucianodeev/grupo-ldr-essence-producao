@@ -29,10 +29,75 @@ jobs:
         env:
           AGENDA_PG_PACKAGE: ${{ github.workspace }}/apps/painel-ldr/package.json
         run: node --test scripts/agenda/payment-webhook.test.mjs scripts/agenda/calendar*.test.mjs
+      - name: Protected remote Calendar configuration guards without credentials
+        run: node --test scripts/agenda/remote-calendar-config.test.mjs
       - name: Production build, without deployment
         run: npm --prefix apps/painel-ldr run build:render
       - name: Typecheck generated production route registration
         run: npm --prefix apps/painel-ldr run typecheck
+  local-supabase:
+    # Standard runner in this public repository. No hosted Supabase branch or secrets.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - uses: supabase/setup-cli@v1
+        with:
+          version: 2.122.1
+      - run: npm install --prefix /tmp/free-pg --no-audit --no-fund pg@8.23.1
+      - name: Start disposable local Auth, Data API and database
+        run: |
+          supabase init --workdir /tmp/ldr-free-supabase --yes
+          sed -i 's/enable_confirmations = false/enable_confirmations = true/' /tmp/ldr-free-supabase/supabase/config.toml
+          supabase start --workdir /tmp/ldr-free-supabase --exclude storage-api,imgproxy,realtime,studio,postgres-meta,edge-runtime,logflare,vector,supavisor > /tmp/ldr-local-start.log 2>&1
+          umask 077
+          supabase status --workdir /tmp/ldr-free-supabase -o json > /tmp/ldr-local-status.json
+      - name: Integrated authentication, free proposal, approval, signed fixture, credits and agenda
+        env:
+          AGENDA_PG_PACKAGE: /tmp/free-pg/package.json
+          LDR_LOCAL_SUPABASE_STATUS: /tmp/ldr-local-status.json
+          LDR_LOCAL_BROWSER_IDENTITIES: /tmp/ldr-local-browser-identities.json
+        run: node scripts/agenda/free-supabase-integration.mjs
+      - run: npm install --prefix /tmp/free-browser --no-audit --no-fund playwright@1.56.1
+      - run: /tmp/free-browser/node_modules/.bin/playwright install --with-deps chromium
+      - name: Verify cookie sessions and private pages in the real local application
+        env:
+          PLAYWRIGHT_PACKAGE: /tmp/free-browser/package.json
+          LDR_LOCAL_SUPABASE_STATUS: /tmp/ldr-local-status.json
+          LDR_LOCAL_BROWSER_IDENTITIES: /tmp/ldr-local-browser-identities.json
+        run: node scripts/agenda/free-supabase-browser.mjs
+      - name: Remove disposable stack and local data
+        if: always()
+        run: supabase stop --workdir /tmp/ldr-free-supabase --no-backup
+  visual:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm --prefix apps/painel-ldr run build:render
+      - run: npm install --prefix /tmp/ldr-browser --no-audit --no-fund playwright@1.56.1
+      - run: /tmp/ldr-browser/node_modules/.bin/playwright install --with-deps chromium
+      - name: Check local desktop and mobile journeys without credentials
+        env:
+          PLAYWRIGHT_PACKAGE: /tmp/ldr-browser/package.json
+          LDR_VISUAL_OUTPUT: /tmp/ldr-commercial-visual
+        run: node scripts/agenda/commercial-visual.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: commercial-desktop-mobile
+          path: /tmp/ldr-commercial-visual/*.jpg
+          if-no-files-found: ignore
   database:
     runs-on: ubuntu-latest
     timeout-minutes: 10

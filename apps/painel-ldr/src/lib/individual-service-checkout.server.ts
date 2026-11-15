@@ -11,7 +11,7 @@ type Env = Record<string, string | undefined>;
 export function individualServiceCheckoutEnabled(env: Env = process.env): boolean {
   return env["INDIVIDUAL_SERVICE_CHECKOUT_ENABLED"] === "true" &&
     env["AGENDA_INTEGRATION_ENABLED"] === "true" &&
-    /^[sr]k_(live|test)_[A-Za-z0-9]+$/.test(env["STRIPE_SECRET_KEY"] ?? "") &&
+    /^(?:[sr]k_(?:live|test)|rkcs_test)_[A-Za-z0-9]+$/.test(env["STRIPE_SECRET_KEY"] ?? "") &&
     /^whsec_[A-Za-z0-9]+$/.test(env["STRIPE_WEBHOOK_SECRET"] ?? "");
 }
 
@@ -19,7 +19,7 @@ export function individualServiceCheckoutEnabled(env: Env = process.env): boolea
 export function individualServiceCheckoutKeys(env: Env = process.env): string[] {
   const configured = individualServiceCheckoutEnabled(env) ? (env["INDIVIDUAL_SERVICE_CHECKOUT_CATALOG_KEYS"] ?? "mentoria_sessao") : "";
   const projects = env["FIXED_PROJECT_CHECKOUT_ENABLED"] === "true" &&
-    /^[sr]k_(live|test)_[A-Za-z0-9]+$/.test(env["STRIPE_SECRET_KEY"] ?? "") &&
+    /^(?:[sr]k_(?:live|test)|rkcs_test)_[A-Za-z0-9]+$/.test(env["STRIPE_SECRET_KEY"] ?? "") &&
     /^whsec_[A-Za-z0-9]+$/.test(env["STRIPE_WEBHOOK_SECRET"] ?? "")
     ? env["FIXED_PROJECT_CHECKOUT_CATALOG_KEYS"] ?? "" : "";
   return [...new Set(`${configured},${projects}`.split(",").map(key => key.trim())
