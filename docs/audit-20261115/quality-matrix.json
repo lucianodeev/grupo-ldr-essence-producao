@@ -636,12 +636,12 @@
       "slug": "modelos-documentos-psicanaliticos",
       "title": "Modelos de Documentos Psicanalíticos",
       "modules": 10,
-      "authoredLessons": 0,
-      "estimatedMinutes": 0,
+      "authoredLessons": 10,
+      "estimatedMinutes": 900,
       "historicalHours": null,
-      "editorial": "indisponível — títulos preservados, preenchimento retirado",
+      "editorial": "parcial — sequência original em revisão; carga não validada",
       "source": "src/lib/academy-free-courses.catalog.ts + src/content/academy-free",
-      "next": "Desenvolver cada aula, objetivos, casos, exercícios, avaliação e bibliografia"
+      "next": "Revisão externa de conteúdo, teste com alunos, materiais e dimensionamento de carga"
     },
     {
       "product_key": "curso_gratuito_ingles_basico_a1",
@@ -660,48 +660,48 @@
       "slug": "espanhol-basico-a1",
       "title": "Espanhol Básico — Nível A1",
       "modules": 5,
-      "authoredLessons": 0,
-      "estimatedMinutes": 0,
+      "authoredLessons": 5,
+      "estimatedMinutes": 450,
       "historicalHours": 30,
-      "editorial": "indisponível — títulos preservados, preenchimento retirado",
+      "editorial": "parcial — sequência original em revisão; carga não validada",
       "source": "src/lib/academy-free-courses.catalog.ts + src/content/academy-free",
-      "next": "Desenvolver cada aula, objetivos, casos, exercícios, avaliação e bibliografia"
+      "next": "Revisão externa de conteúdo, teste com alunos, materiais e dimensionamento de carga"
     },
     {
       "product_key": "curso_gratuito_portugues_falantes_outras_linguas_a1",
       "slug": "portugues-para-falantes-de-outras-linguas-a1",
       "title": "Português para Falantes de Outras Línguas — Nível A1",
       "modules": 5,
-      "authoredLessons": 0,
-      "estimatedMinutes": 0,
+      "authoredLessons": 5,
+      "estimatedMinutes": 450,
       "historicalHours": 30,
-      "editorial": "indisponível — títulos preservados, preenchimento retirado",
+      "editorial": "parcial — sequência original em revisão; carga não validada",
       "source": "src/lib/academy-free-courses.catalog.ts + src/content/academy-free",
-      "next": "Desenvolver cada aula, objetivos, casos, exercícios, avaliação e bibliografia"
+      "next": "Revisão externa de conteúdo, teste com alunos, materiais e dimensionamento de carga"
     },
     {
       "product_key": "curso_gratuito_neerlandes_basico_a1",
       "slug": "neerlandes-basico-a1",
       "title": "Neerlandês Básico — Nível A1",
       "modules": 5,
-      "authoredLessons": 0,
-      "estimatedMinutes": 0,
+      "authoredLessons": 5,
+      "estimatedMinutes": 450,
       "historicalHours": 30,
-      "editorial": "indisponível — títulos preservados, preenchimento retirado",
+      "editorial": "parcial — sequência original em revisão; carga não validada",
       "source": "src/lib/academy-free-courses.catalog.ts + src/content/academy-free",
-      "next": "Desenvolver cada aula, objetivos, casos, exercícios, avaliação e bibliografia"
+      "next": "Revisão externa de conteúdo, teste com alunos, materiais e dimensionamento de carga"
     },
     {
       "product_key": "curso_gratuito_alemao_basico_a1",
       "slug": "alemao-basico-a1",
       "title": "Alemão Básico — Nível A1",
       "modules": 5,
-      "authoredLessons": 0,
-      "estimatedMinutes": 0,
+      "authoredLessons": 5,
+      "estimatedMinutes": 450,
       "historicalHours": 30,
-      "editorial": "indisponível — títulos preservados, preenchimento retirado",
+      "editorial": "parcial — sequência original em revisão; carga não validada",
       "source": "src/lib/academy-free-courses.catalog.ts + src/content/academy-free",
-      "next": "Desenvolver cada aula, objetivos, casos, exercícios, avaliação e bibliografia"
+      "next": "Revisão externa de conteúdo, teste com alunos, materiais e dimensionamento de carga"
     }
   ],
   "subscription": [

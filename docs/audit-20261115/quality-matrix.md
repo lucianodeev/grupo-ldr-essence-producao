@@ -53,12 +53,12 @@ Data: 15/11/2026. Nenhum produto foi aprovado como integralmente concluído nest
 | --- | --- | --- | --- |
 | Clínica Psicanalítica: Sigmund Freud | 0/12 | 120h / 0min | indisponível — títulos preservados, preenchimento retirado |
 | Orientação do Trabalho Científico | 12/12 | 120h / 915min | parcial — sequência original em revisão; carga não validada |
-| Modelos de Documentos Psicanalíticos | 0/10 | não definidah / 0min | indisponível — títulos preservados, preenchimento retirado |
+| Modelos de Documentos Psicanalíticos | 10/10 | não definidah / 900min | parcial — sequência original em revisão; carga não validada |
 | Inglês Básico — Nível A1 | 5/5 | 30h / 405min | parcial — sequência original em revisão; carga não validada |
-| Espanhol Básico — Nível A1 | 0/5 | 30h / 0min | indisponível — títulos preservados, preenchimento retirado |
-| Português para Falantes de Outras Línguas — Nível A1 | 0/5 | 30h / 0min | indisponível — títulos preservados, preenchimento retirado |
-| Neerlandês Básico — Nível A1 | 0/5 | 30h / 0min | indisponível — títulos preservados, preenchimento retirado |
-| Alemão Básico — Nível A1 | 0/5 | 30h / 0min | indisponível — títulos preservados, preenchimento retirado |
+| Espanhol Básico — Nível A1 | 5/5 | 30h / 450min | parcial — sequência original em revisão; carga não validada |
+| Português para Falantes de Outras Línguas — Nível A1 | 5/5 | 30h / 450min | parcial — sequência original em revisão; carga não validada |
+| Neerlandês Básico — Nível A1 | 5/5 | 30h / 450min | parcial — sequência original em revisão; carga não validada |
+| Alemão Básico — Nível A1 | 5/5 | 30h / 450min | parcial — sequência original em revisão; carga não validada |
 
 ## Cursos de assinatura
 
