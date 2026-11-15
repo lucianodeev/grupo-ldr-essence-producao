@@ -61,15 +61,21 @@ A versão atual do teste estrutural da `main` foi preservada. Os três novos tes
 
 Isto valida o encaminhamento sintético, não uma cobrança ou renovação financeira real. Nenhuma chave Stripe ou pagamento real foi usado nos testes.
 
+## Workflow automático corrigido
+
+A execução GitHub Actions `43730866960` falhou antes da instalação, com `Library hero start not found`: o patch posicional de setembro procurava a estrutura antiga da biblioteca. O workflow preserva o nome e o identificador do job para continuidade dos checks, mas agora apenas instala o lockfile da raiz, executa contratos sintéticos da biblioteca, verifica candidatas editoriais, TypeScript e build. Foram retirados os geradores legados e o commit/push automático à `main`; a permissão passou a `contents: read`, sem credenciais persistidas no checkout. Os scripts históricos continuam disponíveis para consulta manual.
+
+Dois testes verificam que esta automação permanece sem escrita de branches ou acesso a secrets e que mantém os comandos de validação. Os outros três workflows do head anterior passaram. A execução do novo head será registada após a atualização do PR; o resultado local não é apresentado como resultado remoto.
+
 ## Validação
 
 | Verificação | Resultado |
 | --- | --- |
 | TypeScript | Passou, sem erros |
 | Build | Passou, sem deploy |
-| Suíte de regressão | 207/207 passaram |
+| Suíte de regressão | 209/209 passaram |
 | Suíte unitária existente | 59/59 passaram |
-| Testes específicos `library-*.test.cjs` | 31/31 passaram |
+| Testes específicos `library-*.test.cjs` | 33/33 passaram |
 | Validação da edição candidata | Quatro testes passaram; candidata parcial continua inelegível |
 | Encaminhamento Stripe | Sete testes de encaminhamento e contrato passaram; handlers e dados simulados |
 | Progresso monotónico | Oito cenários sintéticos passaram, incluindo atualizações e primeiras gravações concorrentes, isolamento de cliente e falhas |
