@@ -27,7 +27,8 @@ export async function prepareRemoteCalendar(raw,request=fetch,report=()=>{}){
    method:'GET',redirect:'error',signal:AbortSignal.timeout(15000),headers});
   if(!response.ok)throw Error();
   const rows=await response.json();if(!Array.isArray(rows)||rows.length!==1)throw Error();
-  const scopes=rows[0].granted_scopes;
+  const storedScopes=rows[0].granted_scopes;
+  const scopes=typeof storedScopes==='string'?storedScopes.trim().split(/\s+/):storedScopes;
   if(!Array.isArray(scopes)||!scopes.includes('https://www.googleapis.com/auth/calendar.events')||
    !scopes.includes('https://www.googleapis.com/auth/calendar.freebusy'))throw Error();
   bytes=Buffer.from(rows[0].encrypted_value,'base64');if(bytes.length<29)throw Error();
