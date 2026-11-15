@@ -1,65 +1,545 @@
+import { readerProgressFloor } from "@/lib/digital-reader-content";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { ArrowLeft, ChevronLeft, ChevronRight, Moon, Sun, ZoomIn, ZoomOut } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { clientDigitalProductContent } from "@/lib/digital-content.functions";
-import { clientSaveProgress } from "@/lib/learning.functions";
+import { clientSaveProgress, clientProductStudyProgress } from "@/lib/learning.functions";
 import { useI18n } from "@/lib/i18n";
 
-type Locale="pt"|"en"|"fr"|"es";
-type ProductKey="ebook_coragem_comecar" | "livro_menino_mamao" | "ebook_pratica_clinica_psicanalise" | "ebook_psicanalise_no_mundo" | "ebook_estudos_caso_psicanalise" | "ebook_psicanalise_autismo" | "ebook_psicologia_psicanalise_terapias" | "ebook_jornalismo_era_digital" | "ebook_corpo_trabalho_escuta" | "ebook_comportamento_humano" | "ebook_estetica_bem_estar" | "ebook_tricologia_cuidado" | "ebook_ia_novos_milionarios" | "ebook_imigracao_efeitos_psicologicos" | "ebook_psicanalise_vs_psiquiatria";
-type EbookPage={titulo?:string;texto?:string};
-type BookChapter=[string|number,string,string[]];
-type ReaderPayload={kind:"ebook";pages:EbookPage[]}|{kind:"book";data:{title?:string;subtitle?:string;chapters?:BookChapter[]}};
+type Locale = "pt" | "en" | "fr" | "es";
+type ProductKey =
+  | "ebook_coragem_comecar"
+  | "livro_menino_mamao"
+  | "ebook_pratica_clinica_psicanalise"
+  | "ebook_psicanalise_no_mundo"
+  | "ebook_estudos_caso_psicanalise"
+  | "ebook_psicanalise_autismo"
+  | "ebook_psicologia_psicanalise_terapias"
+  | "ebook_jornalismo_era_digital"
+  | "ebook_corpo_trabalho_escuta"
+  | "ebook_comportamento_humano"
+  | "ebook_estetica_bem_estar"
+  | "ebook_tricologia_cuidado"
+  | "ebook_ia_novos_milionarios"
+  | "ebook_imigracao_efeitos_psicologicos"
+  | "ebook_psicanalise_vs_psiquiatria";
+type EbookPage = { titulo?: string; texto?: string };
+type BookChapter = [string | number, string, string[]];
+type ReaderPayload =
+  | { kind: "ebook"; pages: EbookPage[] }
+  | { kind: "book"; data: { title?: string; subtitle?: string; chapters?: BookChapter[] } };
 
-const COPY={
- pt:{back:"Voltar à Biblioteca",light:"Claro",dark:"Escuro",smaller:"Diminuir letra",larger:"Aumentar letra",language:"Idioma",chapter:"Capítulo",page:"Página",previous:"Anterior",next:"Próximo",loading:"Carregando conteúdo…",unavailable:"Não foi possível abrir este conteúdo.",fallback:"A tradução selecionada ainda não está disponível; exibindo a versão original.",progress:"Progresso"},
- en:{back:"Back to Library",light:"Light",dark:"Dark",smaller:"Smaller text",larger:"Larger text",language:"Language",chapter:"Chapter",page:"Page",previous:"Previous",next:"Next",loading:"Loading content…",unavailable:"This content could not be opened.",fallback:"The selected translation is not available yet; showing the original version.",progress:"Progress"},
- fr:{back:"Retour à la bibliothèque",light:"Clair",dark:"Sombre",smaller:"Réduire le texte",larger:"Agrandir le texte",language:"Langue",chapter:"Chapitre",page:"Page",previous:"Précédent",next:"Suivant",loading:"Chargement…",unavailable:"Impossible d’ouvrir ce contenu.",fallback:"La traduction sélectionnée n’est pas disponible ; version originale affichée.",progress:"Progression"},
- es:{back:"Volver a la Biblioteca",light:"Claro",dark:"Oscuro",smaller:"Reducir letra",larger:"Aumentar letra",language:"Idioma",chapter:"Capítulo",page:"Página",previous:"Anterior",next:"Siguiente",loading:"Cargando contenido…",unavailable:"No fue posible abrir este contenido.",fallback:"La traducción seleccionada no está disponible; mostrando la versión original.",progress:"Progreso"}
+const COPY = {
+  pt: {
+    back: "Voltar à Biblioteca",
+    light: "Claro",
+    dark: "Escuro",
+    smaller: "Diminuir letra",
+    larger: "Aumentar letra",
+    language: "Idioma",
+    chapter: "Capítulo",
+    page: "Página",
+    previous: "Anterior",
+    next: "Próximo",
+    loading: "Carregando conteúdo…",
+    unavailable: "Não foi possível abrir este conteúdo.",
+    fallback: "A tradução selecionada ainda não está disponível; exibindo a versão original.",
+    progress: "Progresso",
+  },
+  en: {
+    back: "Back to Library",
+    light: "Light",
+    dark: "Dark",
+    smaller: "Smaller text",
+    larger: "Larger text",
+    language: "Language",
+    chapter: "Chapter",
+    page: "Page",
+    previous: "Previous",
+    next: "Next",
+    loading: "Loading content…",
+    unavailable: "This content could not be opened.",
+    fallback: "The selected translation is not available yet; showing the original version.",
+    progress: "Progress",
+  },
+  fr: {
+    back: "Retour à la bibliothèque",
+    light: "Clair",
+    dark: "Sombre",
+    smaller: "Réduire le texte",
+    larger: "Agrandir le texte",
+    language: "Langue",
+    chapter: "Chapitre",
+    page: "Page",
+    previous: "Précédent",
+    next: "Suivant",
+    loading: "Chargement…",
+    unavailable: "Impossible d’ouvrir ce contenu.",
+    fallback: "La traduction sélectionnée n’est pas disponible ; version originale affichée.",
+    progress: "Progression",
+  },
+  es: {
+    back: "Volver a la Biblioteca",
+    light: "Claro",
+    dark: "Oscuro",
+    smaller: "Reducir letra",
+    larger: "Aumentar letra",
+    language: "Idioma",
+    chapter: "Capítulo",
+    page: "Página",
+    previous: "Anterior",
+    next: "Siguiente",
+    loading: "Cargando contenido…",
+    unavailable: "No fue posible abrir este contenido.",
+    fallback: "La traducción seleccionada no está disponible; mostrando la versión original.",
+    progress: "Progreso",
+  },
 } as const;
 
-const PRODUCT_THEME:Record<ProductKey,{light:string;dark:string;cardLight:string;cardDark:string;accent:string;soft:string}>={
- ebook_coragem_comecar:{light:"bg-[#eef5ff] text-[#10233f]",dark:"bg-[#071423] text-[#eef5ff]",cardLight:"border-[#b8cce8] bg-white",cardDark:"border-[#29486d] bg-[#0d2036]",accent:"#153a68",soft:"#dceafb"},
- livro_menino_mamao:{light:"bg-[#fbf6f3] text-[#3f0d1d]",dark:"bg-[#2a0814] text-[#fff5f7]",cardLight:"border-[#d9b3bd] bg-[#fffafa]",cardDark:"border-[#7b2944] bg-[#3b0d1e]",accent:"#6f1632",soft:"#f0dbe2"},
- ebook_pratica_clinica_psicanalise:{light:"bg-[#f4f7f7] text-[#14282a]",dark:"bg-[#0b191b] text-[#eef7f7]",cardLight:"border-[#bed0d1] bg-white",cardDark:"border-[#365d60] bg-[#102628]",accent:"#314E52",soft:"#e1ebeb"},
- ebook_psicanalise_no_mundo:{light:"bg-[#f2f6fb] text-[#10243a]",dark:"bg-[#071522] text-[#eef5fb]",cardLight:"border-[#b9cce0] bg-white",cardDark:"border-[#28547a] bg-[#0d2235]",accent:"#1F4E79",soft:"#dce8f4"},
- ebook_estudos_caso_psicanalise:{light:"bg-[#fbf5f8] text-[#351629]",dark:"bg-[#24101d] text-[#fff4fa]",cardLight:"border-[#d8bbca] bg-white",cardDark:"border-[#70405a] bg-[#341729]",accent:"#7C3A5D",soft:"#f0dce7"},
-  ebook_psicanalise_autismo:{light:"bg-[#fafaf3] text-[#303114]",dark:"bg-[#20210d] text-[#fafae9]",cardLight:"border-[#d6d7b8] bg-white",cardDark:"border-[#66682c] bg-[#2e3013]",accent:"#6B6F2A",soft:"#ececcf"},
-  ebook_psicologia_psicanalise_terapias:{light:"bg-[#f5f6fa] text-[#20283a]",dark:"bg-[#121621] text-[#f4f6fb]",cardLight:"border-[#c6cbd8] bg-white",cardDark:"border-[#46516c] bg-[#1a2030]",accent:"#4C5B7A",soft:"#e4e7ef"},
-  ebook_jornalismo_era_digital:{light:"bg-[#f3f8f8] text-[#183033]",dark:"bg-[#0d1c1e] text-[#eef8f8]",cardLight:"border-[#bdd0d2] bg-white",cardDark:"border-[#37676c] bg-[#12282b]",accent:"#315D68",soft:"#ddebec"},
-  ebook_corpo_trabalho_escuta:{light:"bg-[#faf7f4] text-[#33251d]",dark:"bg-[#211710] text-[#fff7f1]",cardLight:"border-[#d9c9bd] bg-white",cardDark:"border-[#735640] bg-[#302118]",accent:"#6A4E3B",soft:"#eee3db"},
-  ebook_comportamento_humano:{light:"bg-[#f8f6fb] text-[#2b2237]",dark:"bg-[#1b1522] text-[#faf6ff]",cardLight:"border-[#d0c5da] bg-white",cardDark:"border-[#624f76] bg-[#271d32]",accent:"#5B4A73",soft:"#e9e1ef"},
-  ebook_estetica_bem_estar:{light:"bg-[#fcf7f8] text-[#3c252b]",dark:"bg-[#241519] text-[#fff7f9]",cardLight:"border-[#dfc5cb] bg-white",cardDark:"border-[#875261] bg-[#321d23]",accent:"#8A5965",soft:"#f2e3e7"},
-  ebook_tricologia_cuidado:{light:"bg-[#f4f8f5] text-[#213129]",dark:"bg-[#111d17] text-[#f2faf5]",cardLight:"border-[#bfd0c6] bg-white",cardDark:"border-[#476956] bg-[#18281f]",accent:"#48665A",soft:"#dfeae4"},
-  ebook_ia_novos_milionarios:{light:"bg-[#f2f5fa] text-[#17253c]",dark:"bg-[#091321] text-[#f1f6ff]",cardLight:"border-[#bec9db] bg-white",cardDark:"border-[#34547f] bg-[#102039]",accent:"#273F66",soft:"#dce5f2"},
-  ebook_imigracao_efeitos_psicologicos:{light:"bg-[#f8f6f8] text-[#332b34]",dark:"bg-[#1d171e] text-[#fbf6fb]",cardLight:"border-[#d5cbd6] bg-white",cardDark:"border-[#69586b] bg-[#291f2a]",accent:"#6A586B",soft:"#ebe3ec"},
-  ebook_psicanalise_vs_psiquiatria:{light:"bg-[#f5f6f8] text-[#202733]",dark:"bg-[#11161f] text-[#f5f7fa]",cardLight:"border-[#c7ccd4] bg-white",cardDark:"border-[#4c5a6d] bg-[#19212d]",accent:"#39485F",soft:"#e6e9ef"}
+const PRODUCT_THEME: Record<
+  ProductKey,
+  { light: string; dark: string; cardLight: string; cardDark: string; accent: string; soft: string }
+> = {
+  ebook_coragem_comecar: {
+    light: "bg-[#eef5ff] text-[#10233f]",
+    dark: "bg-[#071423] text-[#eef5ff]",
+    cardLight: "border-[#b8cce8] bg-white",
+    cardDark: "border-[#29486d] bg-[#0d2036]",
+    accent: "#153a68",
+    soft: "#dceafb",
+  },
+  livro_menino_mamao: {
+    light: "bg-[#fbf6f3] text-[#3f0d1d]",
+    dark: "bg-[#2a0814] text-[#fff5f7]",
+    cardLight: "border-[#d9b3bd] bg-[#fffafa]",
+    cardDark: "border-[#7b2944] bg-[#3b0d1e]",
+    accent: "#6f1632",
+    soft: "#f0dbe2",
+  },
+  ebook_pratica_clinica_psicanalise: {
+    light: "bg-[#f4f7f7] text-[#14282a]",
+    dark: "bg-[#0b191b] text-[#eef7f7]",
+    cardLight: "border-[#bed0d1] bg-white",
+    cardDark: "border-[#365d60] bg-[#102628]",
+    accent: "#314E52",
+    soft: "#e1ebeb",
+  },
+  ebook_psicanalise_no_mundo: {
+    light: "bg-[#f2f6fb] text-[#10243a]",
+    dark: "bg-[#071522] text-[#eef5fb]",
+    cardLight: "border-[#b9cce0] bg-white",
+    cardDark: "border-[#28547a] bg-[#0d2235]",
+    accent: "#1F4E79",
+    soft: "#dce8f4",
+  },
+  ebook_estudos_caso_psicanalise: {
+    light: "bg-[#fbf5f8] text-[#351629]",
+    dark: "bg-[#24101d] text-[#fff4fa]",
+    cardLight: "border-[#d8bbca] bg-white",
+    cardDark: "border-[#70405a] bg-[#341729]",
+    accent: "#7C3A5D",
+    soft: "#f0dce7",
+  },
+  ebook_psicanalise_autismo: {
+    light: "bg-[#fafaf3] text-[#303114]",
+    dark: "bg-[#20210d] text-[#fafae9]",
+    cardLight: "border-[#d6d7b8] bg-white",
+    cardDark: "border-[#66682c] bg-[#2e3013]",
+    accent: "#6B6F2A",
+    soft: "#ececcf",
+  },
+  ebook_psicologia_psicanalise_terapias: {
+    light: "bg-[#f5f6fa] text-[#20283a]",
+    dark: "bg-[#121621] text-[#f4f6fb]",
+    cardLight: "border-[#c6cbd8] bg-white",
+    cardDark: "border-[#46516c] bg-[#1a2030]",
+    accent: "#4C5B7A",
+    soft: "#e4e7ef",
+  },
+  ebook_jornalismo_era_digital: {
+    light: "bg-[#f3f8f8] text-[#183033]",
+    dark: "bg-[#0d1c1e] text-[#eef8f8]",
+    cardLight: "border-[#bdd0d2] bg-white",
+    cardDark: "border-[#37676c] bg-[#12282b]",
+    accent: "#315D68",
+    soft: "#ddebec",
+  },
+  ebook_corpo_trabalho_escuta: {
+    light: "bg-[#faf7f4] text-[#33251d]",
+    dark: "bg-[#211710] text-[#fff7f1]",
+    cardLight: "border-[#d9c9bd] bg-white",
+    cardDark: "border-[#735640] bg-[#302118]",
+    accent: "#6A4E3B",
+    soft: "#eee3db",
+  },
+  ebook_comportamento_humano: {
+    light: "bg-[#f8f6fb] text-[#2b2237]",
+    dark: "bg-[#1b1522] text-[#faf6ff]",
+    cardLight: "border-[#d0c5da] bg-white",
+    cardDark: "border-[#624f76] bg-[#271d32]",
+    accent: "#5B4A73",
+    soft: "#e9e1ef",
+  },
+  ebook_estetica_bem_estar: {
+    light: "bg-[#fcf7f8] text-[#3c252b]",
+    dark: "bg-[#241519] text-[#fff7f9]",
+    cardLight: "border-[#dfc5cb] bg-white",
+    cardDark: "border-[#875261] bg-[#321d23]",
+    accent: "#8A5965",
+    soft: "#f2e3e7",
+  },
+  ebook_tricologia_cuidado: {
+    light: "bg-[#f4f8f5] text-[#213129]",
+    dark: "bg-[#111d17] text-[#f2faf5]",
+    cardLight: "border-[#bfd0c6] bg-white",
+    cardDark: "border-[#476956] bg-[#18281f]",
+    accent: "#48665A",
+    soft: "#dfeae4",
+  },
+  ebook_ia_novos_milionarios: {
+    light: "bg-[#f2f5fa] text-[#17253c]",
+    dark: "bg-[#091321] text-[#f1f6ff]",
+    cardLight: "border-[#bec9db] bg-white",
+    cardDark: "border-[#34547f] bg-[#102039]",
+    accent: "#273F66",
+    soft: "#dce5f2",
+  },
+  ebook_imigracao_efeitos_psicologicos: {
+    light: "bg-[#f8f6f8] text-[#332b34]",
+    dark: "bg-[#1d171e] text-[#fbf6fb]",
+    cardLight: "border-[#d5cbd6] bg-white",
+    cardDark: "border-[#69586b] bg-[#291f2a]",
+    accent: "#6A586B",
+    soft: "#ebe3ec",
+  },
+  ebook_psicanalise_vs_psiquiatria: {
+    light: "bg-[#f5f6f8] text-[#202733]",
+    dark: "bg-[#11161f] text-[#f5f7fa]",
+    cardLight: "border-[#c7ccd4] bg-white",
+    cardDark: "border-[#4c5a6d] bg-[#19212d]",
+    accent: "#39485F",
+    soft: "#e6e9ef",
+  },
 };
 
-export function DigitalReaderV2({productKey}:{productKey:ProductKey}){
- const {locale:appLocale,setLocale:setGlobalLocale}=useI18n();const initial=(appLocale==="pt"||appLocale==="en"||appLocale==="fr"||appLocale==="es"?appLocale:"pt") as Locale;
- const [locale,setLocale]=useState<Locale>(initial);const [theme,setTheme]=useState<"light"|"dark">("light");const [scale,setScale]=useState(1);const [chapterIndex,setChapterIndex]=useState(0);const [pageIndex,setPageIndex]=useState(0);
- const contentFn=useServerFn(clientDigitalProductContent);const progressFn=useServerFn(clientSaveProgress);const copy=COPY[locale];const palette=PRODUCT_THEME[productKey];
- useEffect(()=>{try{const t=localStorage.getItem(`ldr-reader-${productKey}-theme`);if(t==="light"||t==="dark")setTheme(t);const s=Number(localStorage.getItem(`ldr-reader-${productKey}-scale`));if(s>=.9&&s<=1.4)setScale(s);}catch{}},[productKey]);
- useEffect(()=>{try{localStorage.setItem(`ldr-reader-${productKey}-theme`,theme);localStorage.setItem(`ldr-reader-${productKey}-scale`,String(scale));}catch{}},[theme,scale,productKey]);
- useEffect(()=>{if((appLocale==="pt"||appLocale==="en"||appLocale==="fr"||appLocale==="es")&&appLocale!==locale)setLocale(appLocale as Locale)},[appLocale,locale]);
- const query=useQuery({queryKey:["digital-reader",productKey,locale],queryFn:()=>contentFn({data:{productKey,locale}}),retry:false,staleTime:5*60*1000,refetchOnWindowFocus:false});
- useEffect(()=>{setChapterIndex(0);setPageIndex(0)},[locale,productKey]);
- const payload=query.data?.content as ReaderPayload|undefined;const book=payload?.kind==="book"?payload.data:null;const ebookPages=payload?.kind==="ebook"&&Array.isArray(payload.pages)?payload.pages:[];const chapters=book?.chapters??[];const activeChapter=chapters[chapterIndex];const bookPages=Array.isArray(activeChapter?.[2])?activeChapter[2]:[];
- const totalUnits=payload?.kind==="ebook"?Math.max(ebookPages.length,1):Math.max(chapters.reduce((n,c)=>n+(Array.isArray(c?.[2])?c[2].length:0),0),1);
- const passed=useMemo(()=>{if(payload?.kind==="ebook")return Math.min(pageIndex+1,totalUnits);let count=0;for(let i=0;i<chapterIndex;i++)count+=chapters[i]?.[2]?.length??0;return Math.min(count+pageIndex+1,totalUnits)},[payload,pageIndex,chapterIndex,chapters,totalUnits]);const progress=Math.max(1,Math.min(100,Math.round((passed/totalUnits)*100)));
- useEffect(()=>{if(!query.data||!payload)return;const loc=payload.kind==="ebook"?`${copy.page} ${pageIndex+1}`:`${copy.chapter} ${chapterIndex+1} · ${copy.page} ${pageIndex+1}`;const timer=window.setTimeout(()=>{progressFn({data:{productKey,progressPercent:progress,currentLocation:loc}}).catch(()=>undefined)},700);return()=>window.clearTimeout(timer)},[query.data,payload,copy.page,copy.chapter,pageIndex,chapterIndex,progress,progressFn,productKey]);
- if(query.isLoading)return <section className="s8-card">{copy.loading}</section>;if(query.error||!query.data||!payload)return <section className="s8-card">{copy.unavailable}</section>;
- const dark=theme==="dark";const surface=dark?palette.dark:palette.light;const card=dark?palette.cardDark:palette.cardLight;const muted=dark?"opacity-80":"opacity-70";const fallback=query.data.requestedLocale!==query.data.locale;
- const previous=()=>{if(payload.kind==="ebook")return setPageIndex(v=>Math.max(0,v-1));if(pageIndex>0)return setPageIndex(v=>v-1);if(chapterIndex>0){const prev=chapters[chapterIndex-1]?.[2]??[];setChapterIndex(v=>v-1);setPageIndex(Math.max(0,prev.length-1))}};
- const next=()=>{if(payload.kind==="ebook")return setPageIndex(v=>Math.min(ebookPages.length-1,v+1));if(pageIndex<bookPages.length-1)return setPageIndex(v=>v+1);if(chapterIndex<chapters.length-1){setChapterIndex(v=>v+1);setPageIndex(0)}};
- const ebookPage=ebookPages[Math.min(pageIndex,Math.max(0,ebookPages.length-1))];const bookText=bookPages[Math.min(pageIndex,Math.max(0,bookPages.length-1))]??"";
- return <div className={`min-h-[calc(100vh-2rem)] rounded-3xl p-3 transition-colors sm:p-5 ${surface}`} style={{fontSize:`${scale}em`}}>
-  <header className={`sticky top-2 z-20 rounded-2xl border p-3 shadow-sm sm:p-4 ${card}`}><div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between"><div><a href="/cliente/biblioteca" className="inline-flex min-h-11 items-center gap-2 text-sm font-bold"><ArrowLeft className="h-4 w-4"/>{copy.back}</a><h1 className="mt-1 font-serif text-2xl font-bold sm:text-3xl" style={{color:dark?undefined:palette.accent}}>{query.data.title}</h1><p className={`mt-1 text-xs ${muted}`}>{copy.progress}: {progress}%</p></div><div className="flex flex-wrap gap-2"><button aria-pressed={theme==="light"} onClick={()=>setTheme("light")} className="inline-flex min-h-11 items-center gap-2 rounded-xl border px-3 py-2 text-sm font-bold"><Sun className="h-4 w-4"/>{copy.light}</button><button aria-pressed={theme==="dark"} onClick={()=>setTheme("dark")} className="inline-flex min-h-11 items-center gap-2 rounded-xl border px-3 py-2 text-sm font-bold"><Moon className="h-4 w-4"/>{copy.dark}</button><button onClick={()=>setScale(v=>Math.max(.9,+(v-.1).toFixed(1)))} className="inline-flex min-h-11 items-center gap-2 rounded-xl border px-3 py-2 text-sm font-bold"><ZoomOut className="h-4 w-4"/>A−</button><button onClick={()=>setScale(v=>Math.min(1.4,+(v+.1).toFixed(1)))} className="inline-flex min-h-11 items-center gap-2 rounded-xl border px-3 py-2 text-sm font-bold"><ZoomIn className="h-4 w-4"/>A+</button><div className="inline-grid min-h-11 flex-none grid-cols-[max-content_4.5rem] items-center gap-3 rounded-xl border px-3 py-2 text-sm font-bold"><span className="block whitespace-nowrap">{copy.language}</span><select aria-label={copy.language} value={locale} onChange={e=>{const next=e.target.value as Locale;setLocale(next);setGlobalLocale(next)}} className="block w-full min-w-0 bg-transparent text-center outline-none"><option value="pt">PT</option><option value="en">EN</option><option value="fr">FR</option><option value="es">ES</option></select></div></div></div></header>
-  {fallback?<div className="mx-auto mt-4 max-w-4xl rounded-xl border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">{copy.fallback}</div>:null}
-  <main className="mx-auto grid max-w-6xl gap-4 py-5 lg:grid-cols-[260px_minmax(0,1fr)]"><aside className={`rounded-2xl border p-3 ${card}`}><nav className="grid max-h-[72vh] gap-1 overflow-y-auto">{payload.kind==="ebook"?ebookPages.map((p,i)=><button key={i} onClick={()=>setPageIndex(i)} className={`min-h-11 rounded-xl px-3 py-2 text-left text-sm ${i===pageIndex?"font-bold text-white":""}`} style={i===pageIndex?{background:palette.accent}:undefined}>{i+1}. {p.titulo||`${copy.page} ${i+1}`}</button>):chapters.map((ch,i)=><button key={i} onClick={()=>{setChapterIndex(i);setPageIndex(0)}} className={`min-h-11 rounded-xl px-3 py-2 text-left text-sm ${i===chapterIndex?"font-bold text-white":""}`} style={i===chapterIndex?{background:palette.accent}:undefined}><span className="block font-bold">{ch[0]}</span><span className="block text-xs opacity-75">{ch[1]}</span></button>)}</nav></aside>
-   <article className={`rounded-2xl border p-5 shadow-sm sm:p-8 lg:p-10 ${card}`}>{payload.kind==="ebook"?<><p className="text-xs font-black uppercase tracking-[.14em]" style={{color:palette.accent}}>{copy.page} {pageIndex+1} / {ebookPages.length}</p><h2 className="mt-2 font-serif text-2xl font-bold sm:text-3xl">{ebookPage?.titulo}</h2><div className={`mt-6 whitespace-pre-line text-base leading-8 sm:text-lg ${muted}`}>{ebookPage?.texto}</div></>:<><p className="text-xs font-black uppercase tracking-[.14em]" style={{color:palette.accent}}>{String(activeChapter?.[0]??`${copy.chapter} ${chapterIndex+1}`)} · {copy.page} {pageIndex+1}</p><h2 className="mt-2 font-serif text-2xl font-bold sm:text-3xl">{activeChapter?.[1]}</h2><div className={`mt-6 whitespace-pre-line text-base leading-8 sm:text-lg ${muted}`}>{bookText}</div></>}<div className="mt-10 flex justify-between gap-3 border-t pt-5"><button onClick={previous} disabled={payload.kind==="ebook"?pageIndex===0:chapterIndex===0&&pageIndex===0} className="inline-flex min-h-11 items-center gap-2 rounded-xl border px-4 py-3 text-sm font-bold disabled:opacity-35"><ChevronLeft className="h-4 w-4"/>{copy.previous}</button><button onClick={next} disabled={payload.kind==="ebook"?pageIndex>=ebookPages.length-1:chapterIndex>=chapters.length-1&&pageIndex>=bookPages.length-1} className="inline-flex min-h-11 items-center gap-2 rounded-xl px-4 py-3 text-sm font-bold text-white disabled:opacity-35" style={{background:palette.accent}}>{copy.next}<ChevronRight className="h-4 w-4"/></button></div></article>
-  </main>
- </div>
+export function DigitalReaderV2({ productKey }: { productKey: ProductKey }) {
+  const { locale: appLocale, setLocale: setGlobalLocale } = useI18n();
+  const initial = (
+    appLocale === "pt" || appLocale === "en" || appLocale === "fr" || appLocale === "es"
+      ? appLocale
+      : "pt"
+  ) as Locale;
+  const [locale, setLocale] = useState<Locale>(initial);
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [scale, setScale] = useState(1);
+  const [chapterIndex, setChapterIndex] = useState(0);
+  const [pageIndex, setPageIndex] = useState(0);
+  const readProgressFn = useServerFn(clientProductStudyProgress);
+  const savedProgress = useQuery({
+    queryKey: ["reader-saved-progress", productKey],
+    queryFn: () => readProgressFn({ data: { productKey } }),
+  });
+  const [saveMessage, setSaveMessage] = useState("");
+  const [savingPosition, setSavingPosition] = useState(false);
+  const contentFn = useServerFn(clientDigitalProductContent);
+  const progressFn = useServerFn(clientSaveProgress);
+  const copy = COPY[locale];
+  const palette = PRODUCT_THEME[productKey];
+  useEffect(() => {
+    try {
+      const t = localStorage.getItem(`ldr-reader-${productKey}-theme`);
+      if (t === "light" || t === "dark") setTheme(t);
+      const s = Number(localStorage.getItem(`ldr-reader-${productKey}-scale`));
+      if (s >= 0.9 && s <= 1.4) setScale(s);
+    } catch {}
+  }, [productKey]);
+  useEffect(() => {
+    try {
+      localStorage.setItem(`ldr-reader-${productKey}-theme`, theme);
+      localStorage.setItem(`ldr-reader-${productKey}-scale`, String(scale));
+    } catch {}
+  }, [theme, scale, productKey]);
+  useEffect(() => {
+    if (
+      (appLocale === "pt" || appLocale === "en" || appLocale === "fr" || appLocale === "es") &&
+      appLocale !== locale
+    )
+      setLocale(appLocale as Locale);
+  }, [appLocale, locale]);
+  const query = useQuery({
+    queryKey: ["digital-reader", productKey, locale],
+    queryFn: () => contentFn({ data: { productKey, locale } }),
+    retry: false,
+    staleTime: 5 * 60 * 1000,
+    refetchOnWindowFocus: false,
+  });
+  useEffect(() => {
+    setChapterIndex(0);
+    setPageIndex(0);
+  }, [locale, productKey]);
+  const payload = query.data?.content as ReaderPayload | undefined;
+  const book = payload?.kind === "book" ? payload.data : null;
+  const ebookPages = payload?.kind === "ebook" && Array.isArray(payload.pages) ? payload.pages : [];
+  const chapters = book?.chapters ?? [];
+  const activeChapter = chapters[chapterIndex];
+  const bookPages = Array.isArray(activeChapter?.[2]) ? activeChapter[2] : [];
+  const totalUnits =
+    payload?.kind === "ebook"
+      ? Math.max(ebookPages.length, 1)
+      : Math.max(
+          chapters.reduce((n, c) => n + (Array.isArray(c?.[2]) ? c[2].length : 0), 0),
+          1,
+        );
+  const passed = useMemo(() => {
+    if (payload?.kind === "ebook") return Math.min(pageIndex + 1, totalUnits);
+    let count = 0;
+    for (let i = 0; i < chapterIndex; i++) count += chapters[i]?.[2]?.length ?? 0;
+    return Math.min(count + pageIndex + 1, totalUnits);
+  }, [payload, pageIndex, chapterIndex, chapters, totalUnits]);
+  const progress = Math.max(1, Math.min(100, Math.round((passed / totalUnits) * 100)));
+  const savePosition = async () => {
+    if (!savedProgress.isSuccess || savingPosition) return;
+    setSavingPosition(true);
+    try {
+      await progressFn({
+        data: {
+          productKey,
+          progressPercent: readerProgressFloor(
+            passed,
+            totalUnits,
+            savedProgress.data.progressPercent,
+          ),
+          currentLocation:
+            payload?.kind === "ebook"
+              ? `${copy.page} ${pageIndex + 1}`
+              : `${copy.chapter} ${chapterIndex + 1} · ${copy.page} ${pageIndex + 1}`,
+        },
+      });
+      await savedProgress.refetch();
+      setSaveMessage("Posição guardada.");
+    } catch {
+      setSaveMessage("Não foi possível guardar. Tente novamente.");
+    } finally {
+      setSavingPosition(false);
+    }
+  };
+  useEffect(() => {
+    setPageIndex(0);
+    setChapterIndex(0);
+  }, [locale, productKey]);
+  if (query.isLoading) return <section className="s8-card">{copy.loading}</section>;
+  if (query.error || !query.data || !payload)
+    return <section className="s8-card">{copy.unavailable}</section>;
+  const dark = theme === "dark";
+  const surface = dark ? palette.dark : palette.light;
+  const card = dark ? palette.cardDark : palette.cardLight;
+  const muted = dark ? "opacity-80" : "opacity-70";
+  const fallback = query.data.requestedLocale !== query.data.locale;
+  const previous = () => {
+    if (payload.kind === "ebook") return setPageIndex((v) => Math.max(0, v - 1));
+    if (pageIndex > 0) return setPageIndex((v) => v - 1);
+    if (chapterIndex > 0) {
+      const prev = chapters[chapterIndex - 1]?.[2] ?? [];
+      setChapterIndex((v) => v - 1);
+      setPageIndex(Math.max(0, prev.length - 1));
+    }
+  };
+  const next = () => {
+    if (payload.kind === "ebook")
+      return setPageIndex((v) => Math.min(ebookPages.length - 1, v + 1));
+    if (pageIndex < bookPages.length - 1) return setPageIndex((v) => v + 1);
+    if (chapterIndex < chapters.length - 1) {
+      setChapterIndex((v) => v + 1);
+      setPageIndex(0);
+    }
+  };
+  const ebookPage = ebookPages[Math.min(pageIndex, Math.max(0, ebookPages.length - 1))];
+  const bookText = bookPages[Math.min(pageIndex, Math.max(0, bookPages.length - 1))] ?? "";
+  return (
+    <div
+      className={`min-h-[calc(100vh-2rem)] rounded-3xl p-3 transition-colors sm:p-5 ${surface}`}
+      style={{ fontSize: `${scale}em` }}
+    >
+      <header className={`sticky top-2 z-20 rounded-2xl border p-3 shadow-sm sm:p-4 ${card}`}>
+        <div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
+          <div>
+            <a
+              href="/cliente/biblioteca"
+              className="inline-flex min-h-11 items-center gap-2 text-sm font-bold"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              {copy.back}
+            </a>
+            <h1
+              className="mt-1 font-serif text-2xl font-bold sm:text-3xl"
+              style={{ color: dark ? undefined : palette.accent }}
+            >
+              {query.data.title}
+            </h1>
+            <p className={`mt-1 text-xs ${muted}`}>
+              {copy.progress}: {progress}%
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <button
+              aria-pressed={theme === "light"}
+              onClick={() => setTheme("light")}
+              className="inline-flex min-h-11 items-center gap-2 rounded-xl border px-3 py-2 text-sm font-bold"
+            >
+              <Sun className="h-4 w-4" />
+              {copy.light}
+            </button>
+            <button
+              aria-pressed={theme === "dark"}
+              onClick={() => setTheme("dark")}
+              className="inline-flex min-h-11 items-center gap-2 rounded-xl border px-3 py-2 text-sm font-bold"
+            >
+              <Moon className="h-4 w-4" />
+              {copy.dark}
+            </button>
+            <button
+              aria-label="Diminuir tamanho do texto"
+              onClick={() => setScale((v) => Math.max(0.9, +(v - 0.1).toFixed(1)))}
+              className="inline-flex min-h-11 items-center gap-2 rounded-xl border px-3 py-2 text-sm font-bold"
+            >
+              <ZoomOut className="h-4 w-4" />
+              A−
+            </button>
+            <button
+              aria-label="Aumentar tamanho do texto"
+              onClick={() => setScale((v) => Math.min(1.4, +(v + 0.1).toFixed(1)))}
+              className="inline-flex min-h-11 items-center gap-2 rounded-xl border px-3 py-2 text-sm font-bold"
+            >
+              <ZoomIn className="h-4 w-4" />
+              A+
+            </button>
+            <div className="inline-grid min-h-11 flex-none grid-cols-[max-content_4.5rem] items-center gap-3 rounded-xl border px-3 py-2 text-sm font-bold">
+              <span className="block whitespace-nowrap">{copy.language}</span>
+              <select
+                aria-label={copy.language}
+                value={locale}
+                onChange={(e) => {
+                  const next = e.target.value as Locale;
+                  setLocale(next);
+                  setGlobalLocale(next);
+                }}
+                className="block w-full min-w-0 bg-transparent text-center outline-none"
+              >
+                <option value="pt">PT</option>
+                <option value="en">EN</option>
+                <option value="fr">FR</option>
+                <option value="es">ES</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </header>
+      {fallback ? (
+        <div className="mx-auto mt-4 max-w-4xl rounded-xl border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">
+          {copy.fallback}
+        </div>
+      ) : null}
+      <div className="mt-4 flex flex-wrap items-center gap-3">
+        <button onClick={savePosition} disabled={!savedProgress.isSuccess || savingPosition} className="rounded-xl border px-4 py-3 font-bold disabled:opacity-50">{savingPosition ? "A guardar…" : "Guardar posição de leitura"}</button>
+        <p aria-live="polite">{saveMessage}</p>
+        {savedProgress.isError ? <button onClick={()=>savedProgress.refetch()} className="underline">Tentar consultar progresso novamente</button> : null}
+      </div>
+      <main className="mx-auto grid max-w-6xl gap-4 py-5 lg:grid-cols-[260px_minmax(0,1fr)]">
+        <aside className={`rounded-2xl border p-3 ${card}`}>
+          <nav aria-label="Índice da obra" className="grid max-h-[72vh] gap-1 overflow-y-auto">
+            {payload.kind === "ebook"
+              ? ebookPages.map((p, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setPageIndex(i)}
+                    className={`min-h-11 rounded-xl px-3 py-2 text-left text-sm ${i === pageIndex ? "font-bold text-white" : ""}`}
+                    style={i === pageIndex ? { background: palette.accent } : undefined}
+                  >
+                    {i + 1}. {p.titulo || `${copy.page} ${i + 1}`}
+                  </button>
+                ))
+              : chapters.map((ch, i) => (
+                  <button
+                    key={i}
+                    onClick={() => {
+                      setChapterIndex(i);
+                      setPageIndex(0);
+                    }}
+                    className={`min-h-11 rounded-xl px-3 py-2 text-left text-sm ${i === chapterIndex ? "font-bold text-white" : ""}`}
+                    style={i === chapterIndex ? { background: palette.accent } : undefined}
+                  >
+                    <span className="block font-bold">{ch[0]}</span>
+                    <span className="block text-xs opacity-75">{ch[1]}</span>
+                  </button>
+                ))}
+          </nav>
+        </aside>
+        <article className={`rounded-2xl border p-5 shadow-sm sm:p-8 lg:p-10 ${card}`}>
+          {payload.kind === "book" &&
+          "notice" in payload.data &&
+          typeof payload.data.notice === "string" ? (
+            <p className="mb-5 rounded-xl border p-4 text-sm">{payload.data.notice}</p>
+          ) : null}
+          {payload.kind === "ebook" ? (
+            <>
+              <p
+                className="text-xs font-black uppercase tracking-[.14em]"
+                style={{ color: palette.accent }}
+              >
+                {copy.page} {pageIndex + 1} / {ebookPages.length}
+              </p>
+              <h2 className="mt-2 font-serif text-2xl font-bold sm:text-3xl">
+                {ebookPage?.titulo}
+              </h2>
+              <div className={`mt-6 whitespace-pre-line text-base leading-8 sm:text-lg ${muted}`}>
+                {ebookPage?.texto}
+              </div>
+            </>
+          ) : (
+            <>
+              <p
+                className="text-xs font-black uppercase tracking-[.14em]"
+                style={{ color: palette.accent }}
+              >
+                {String(activeChapter?.[0] ?? `${copy.chapter} ${chapterIndex + 1}`)} · {copy.page}{" "}
+                {pageIndex + 1}
+              </p>
+              <h2 className="mt-2 font-serif text-2xl font-bold sm:text-3xl">
+                {activeChapter?.[1]}
+              </h2>
+              <div className={`mt-6 whitespace-pre-line text-base leading-8 sm:text-lg ${muted}`}>
+                {bookText}
+              </div>
+            </>
+          )}
+          <div className="mt-10 flex justify-between gap-3 border-t pt-5">
+            <button
+              onClick={previous}
+              disabled={
+                payload.kind === "ebook" ? pageIndex === 0 : chapterIndex === 0 && pageIndex === 0
+              }
+              className="inline-flex min-h-11 items-center gap-2 rounded-xl border px-4 py-3 text-sm font-bold disabled:opacity-35"
+            >
+              <ChevronLeft className="h-4 w-4" />
+              {copy.previous}
+            </button>
+            <button
+              onClick={next}
+              disabled={
+                payload.kind === "ebook"
+                  ? pageIndex >= ebookPages.length - 1
+                  : chapterIndex >= chapters.length - 1 && pageIndex >= bookPages.length - 1
+              }
+              className="inline-flex min-h-11 items-center gap-2 rounded-xl px-4 py-3 text-sm font-bold text-white disabled:opacity-35"
+              style={{ background: palette.accent }}
+            >
+              {copy.next}
+              <ChevronRight className="h-4 w-4" />
+            </button>
+          </div>
+        </article>
+      </main>
+    </div>
+  );
 }
