@@ -60,3 +60,15 @@ export const professionalAddTrainingItem = createServerFn({ method: "POST" }).mi
   const { professionalAddTrainingItem } = await import("@/lib/learning.server");
   return professionalAddTrainingItem(context.userId, data);
 });
+
+// A dedicated read avoids enrollment provisioning performed by the legacy hub.
+export const clientProductStudyProgress = createServerFn({ method: 'GET' })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: { productKey: string }) => {
+    if (!/^[a-z0-9_]{1,160}$/.test(data.productKey)) throw new Error('Produto inválido.');
+    return data;
+  })
+  .handler(async ({ context, data }) => {
+    const { getClientProductStudyProgress } = await import('@/lib/learning.server');
+    return getClientProductStudyProgress(context.userId, emailOf(context.claims), data.productKey);
+  });

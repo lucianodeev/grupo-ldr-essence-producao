@@ -172,3 +172,11 @@ export async function professionalAddTrainingItem(userId: string, input: { kind:
   if (error) fail("Não foi possível publicar o conteúdo.");
   return { ok: true as const };
 }
+
+export async function getClientProductStudyProgress(userId: string, email: string | null, productKey: string) {
+  const customer = await requireClient(userId, email);
+  const { data, error } = await supabaseAdmin.from('library_progress')
+    .select('progress_percent,current_location').eq('customer_id', customer.id).eq('product_key', productKey).maybeSingle();
+  if (error) fail('Não foi possível consultar o progresso.');
+  return { progressPercent: data?.progress_percent ?? 0, currentLocation: data?.current_location ?? null };
+}
