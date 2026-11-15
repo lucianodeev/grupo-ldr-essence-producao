@@ -15,6 +15,14 @@ export function individualServiceCheckoutEnabled(env: Env = process.env): boolea
     /^whsec_[A-Za-z0-9]+$/.test(env["STRIPE_WEBHOOK_SECRET"] ?? "");
 }
 
+/** Release only reviewed services; an absent list starts with the single mentorship session. */
+export function individualServiceCheckoutKeys(env: Env = process.env): string[] {
+  if (!individualServiceCheckoutEnabled(env)) return [];
+  const configured = env["INDIVIDUAL_SERVICE_CHECKOUT_CATALOG_KEYS"] ?? "mentoria_sessao";
+  return [...new Set(configured.split(",").map(key => key.trim())
+    .filter(key => CONTRACT_KEYS.includes(key)))];
+}
+
 export function individualCheckoutOrderId(userId: string, requestId: string): string {
   const hash = createHash("sha256").update(`ldr:individual-service:${userId}:${requestId.toLowerCase()}`).digest("hex");
   return `${hash.slice(0,8)}-${hash.slice(8,12)}-5${hash.slice(13,16)}-a${hash.slice(17,20)}-${hash.slice(20,32)}`;
@@ -39,7 +47,7 @@ export async function createIndividualServiceCheckout(
   deps: { env?: Env; request?: typeof fetch; now?: () => number } = {},
 ): Promise<{ url: string; orderId: string }> {
   const env = deps.env ?? process.env;
-  if (!individualServiceCheckoutEnabled(env) || !userId || !customer.id ||
+  if (!individualServiceCheckoutKeys(env).includes(input.catalogKey) || !userId || !customer.id ||
       !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(input.requestId) ||
       !CONTRACT_KEYS.includes(input.catalogKey)) return fail();
   const now = Math.floor((deps.now?.() ?? Date.now()) / 1000);

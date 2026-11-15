@@ -22,7 +22,7 @@ function fixture(){
   maybeSingle(){return q.result(true)},then(resolve,reject){return q.result(false).then(resolve,reject)},
   insert(){state.writes++;throw Error("Unexpected write")},update(){state.updateCalls++;state.writes++;throw Error("Unexpected write")},delete(){state.writes++;throw Error("Unexpected delete")},
  };return q;}};
- const api=compiled("client-portal.server.ts",{"@tanstack/react-start/server":{getRequest(){return null}},"@/integrations/supabase/client.server":{supabaseAdmin:db},"@/lib/contract-catalog":catalogue,"@/lib/individual-service-checkout.server":{individualServiceCheckoutEnabled(){return false}}});
+ const api=compiled("client-portal.server.ts",{"@tanstack/react-start/server":{getRequest(){return null}},"@/integrations/supabase/client.server":{supabaseAdmin:db},"@/lib/contract-catalog":catalogue,"@/lib/individual-service-checkout.server":{individualServiceCheckoutKeys(){return state.checkoutKeys??[]}}});
  return {state,api};
 }
 test("hidden appointments reserve credit without revealing their details to the owner",async()=>{
@@ -30,6 +30,14 @@ test("hidden appointments reserve credit without revealing their details to the 
  assert.equal(data.appointments.length,0);assert.equal(data.balances[0].used,1);assert.equal(data.balances[0].remaining,0);
  assert.equal(data.schedulable[0].canRequest,false);assert.equal(data.schedulable[0].limit,1);
  assert.ok(!JSON.stringify(data).includes("HIDDEN"));assert.ok(!JSON.stringify(data).includes("hidden-secret"));assert.equal(f.state.writes,0);
+});
+test("catalogue exposes only the released service keys to the client",async()=>{
+ const f=fixture();f.state.checkoutKeys=["mentoria_sessao"];
+ const data=await f.api.getClientContractCatalog("user-A","owner@example.invalid");
+ assert.equal(data.checkoutEnabled,true);
+ assert.deepEqual([...data.checkoutCatalogKeys],["mentoria_sessao"]);
+ assert.equal(data.checkoutCatalogKeys.includes("mentoria_4"),false);
+ assert.equal(f.state.writes,0);
 });
 test("nominal package size never creates scheduling credit before the issuer has granted it",async()=>{
  const f=fixture();f.state.rows.session_credits=[];f.state.rows.appointments=[];
