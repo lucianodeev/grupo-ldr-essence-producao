@@ -24,9 +24,21 @@ Scripts reproduzíveis: `scripts/agenda/stripe-sandbox-smoke.py` e `scripts/agen
 
 ## Bloqueios para conclusão integral e ativação
 
-1. Supabase conectado só possui a branch principal. A proteção `ldr_enterprise_quote_checkout_ready()` ainda não existe em produção, como confirmado por consulta somente de leitura. A jornada autenticada completa Master → cliente → Stripe → créditos → Calendar exige um backend isolado com Auth e dados sintéticos. Provisionar uma branch hospedada pode implicar custo e requer decisão informada antes da criação.
+1. O bloqueio de infraestrutura paga foi removido com Supabase local descartável no GitHub Actions. A branch hospedada paga é opcional e não foi criada. A proteção `ldr_enterprise_quote_checkout_ready()` ainda não foi aplicada em produção. O ciclo remoto conjunto Stripe + Google Calendar continua separado da validação integrada local descrita abaixo.
 2. Calendar: testes de transporte, saga, propriedade, créditos e concorrência aprovados; não foi executado novo ciclo remoto via OAuth nesta etapa. O backend de homologação precisa ter apenas o calendário exclusivo de testes configurado. Nenhum evento ou flag da agenda de produção foi alterado.
 3. Só depois da homologação autenticada completa: aplicar a migração financeira em produção e ativar explicitamente os novos fluxos de propostas/projetos, com revisão do catálogo elegível. Não houve alterações de preços ou assinaturas LDR ONE.
 4. Reembolso integral bloqueia novos horários; o cancelamento de um evento já confirmado usa a operação administrativa existente. Não foi implementada remoção automática do evento apenas por receber reembolso.
 
 Não declarar "100% concluído" enquanto esses pontos permanecerem. Os testes demonstram os comportamentos exercitados; não constituem garantia de ausência de qualquer falha futura.
+
+## Alternativa gratuita implementada e aprovada
+
+Código validado: `6306df0c836cd9d86f39d0d40ca677e36874d715`. Execução: https://github.com/lucianodeev/grupo-ldr-essence-producao/actions/runs/43730209003 — seis jobs aprovados: aplicação, build, visual, PostgreSQL de propostas, PostgreSQL de agenda e Supabase local integrado. Não houve nova publicação ou alteração de ambiente em produção.
+
+O repositório é público e usa runner padrão Ubuntu 24.04. O job `local-supabase` não usa segredos da conta hospedada, não executa link/push para projetos e não cria recursos pagos. O CLI 2.122.1 inicia Auth, Data API, PostgreSQL e gateway local em Docker. Apenas metadados de esquema são reutilizados; todas as identidades, contactos, propostas e eventos financeiros são sintéticos. A carga preserva os objetos nativos do Auth e usa o proprietário do container apenas para preparar o esquema descartável; os pedidos testados usam os respetivos JWT e permissões reais.
+
+Nove verificações integradas aprovadas: esquema e proteção financeira; autenticação por senha com JWT e recusa de identidade não confirmada; permissão Master via Auth/RLS; solicitação pública gratuita; preparação/aprovação/notificação/visibilidade por cliente; aceite/preço do servidor/bloqueio de cobrança forjada e agenda não paga; handler assinado/créditos únicos; agendamento e reagendamento por dono; reembolso bloqueando novos pedidos de horário. O banco, a API REST, os JWT, as funções da aplicação e os RPC são reais nesse ambiente local. O transporte Stripe e o evento financeiro dessa jornada são fixtures de teste, claramente separados dos testes remotos Stripe documentados acima.
+
+O job também compila a aplicação apontada apenas para o backend local e executa Chromium em 390px. Usa o endpoint HTTP real `/api/auth/session-sync` e os cookies emitidos pela aplicação: visitante redirecionado ao login, sessão inválida rejeitada, Master vê o contacto privado, cliente vê a própria proposta e outro cliente não a vê. Nenhuma exceção do navegador. A sessão local por senha não equivale a testar login Google OAuth. Não há submissão de checkout nem chamada a Google Calendar nesse teste de interface.
+
+Segredos e sessões locais não são enviados a artefactos. No fim, `supabase stop --no-backup` passou e removeu containers e volumes. Não é preciso contratar uma branch Supabase para repetir estes testes. Permanecem a validação remota conjunta com Calendar e a aprovação para aplicar a migração/ativar os fluxos novos em produção.
