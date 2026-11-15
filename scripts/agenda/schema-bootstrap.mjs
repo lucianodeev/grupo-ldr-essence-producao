@@ -8,6 +8,7 @@ export function bootstrap({supabaseLocal=false}={}){
   s.tables=s.tables.filter(t=>t.schema!=='auth');
   s.constraints=s.constraints.filter(c=>!c.table.startsWith('auth.'));
   s.supportFunctions=s.supportFunctions.filter(f=>f.schema!=='auth');
+  s.indexes=s.indexes.filter(i=>!i.includes(' ON auth.'));
  }
  const q=x=>'"'+x.replaceAll('"','""')+'"';
  const sql=[supabaseLocal ? `CREATE SCHEMA private; CREATE SEQUENCE public.order_number_seq;` : `CREATE ROLE anon NOLOGIN; CREATE ROLE authenticated NOLOGIN; CREATE ROLE service_role NOLOGIN BYPASSRLS; CREATE SCHEMA auth; CREATE SCHEMA private; CREATE SEQUENCE public.order_number_seq;`];
