@@ -23,12 +23,14 @@ const root=new URL('../../apps/painel-ldr/src/',import.meta.url);
 let checks=0;const pass=name=>{checks++;console.log('PASS '+name);};
 const unwrap=result=>{assert.equal(result.error,null,result.error?.message);return result.data;};
 const cache=new Map();
+let calendarDependency,ownedCalendar,ownedAppointment;
 function load(file){
  if(cache.has(file))return cache.get(file);
  const output=ts.transpileModule(fs.readFileSync(new URL(file,root),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
  const module={exports:{}};cache.set(file,module.exports);
  vm.runInNewContext(output,{module,exports:module.exports,process,console,Date,URL,URLSearchParams,AbortSignal,Headers,Request,Response,fetch,Buffer,require(name){
   if(name==='@/integrations/supabase/client.server')return {supabaseAdmin:admin};
+  if(name==='@/lib/google-calendar.server'&&calendarDependency)return calendarDependency;
   if(name==='@tanstack/react-start/server')return {getRequest(){throw Error('No framework request available in core integration test');}};
   if(name.startsWith('@/'))return load(name.slice(2)+'.ts');return require(name);
  }},{filename:file});return module.exports;
@@ -113,15 +115,47 @@ try{
  pass('signed fixture through actual handler updates real local DB once and releases four credits');
  const booked=await customer.requestClientAppointment(owner.user.id,owner.user.email,{orderId:draft.id,startsAt});assert.ok(booked.appointmentId);
  await assert.rejects(()=>customer.requestClientAppointment(other.user.id,other.user.email,{orderId:draft.id,startsAt}));
+ const remote=process.env.LDR_CALENDAR_REMOTE==='true';
+ if(remote){
+  assert.equal(process.env.GITHUB_REF,'refs/heads/main');assert.equal(process.env.GITHUB_ACTOR,'lucianodeev');
+  assert.equal(process.env.GITHUB_EVENT_NAME,'workflow_dispatch');
+  const {prepareRemoteCalendar}=await import('./remote-calendar-config.mjs');
+  Object.assign(process.env,await prepareRemoteCalendar(process.env.LDR_CALENDAR_CONFIG_JSON));
+  delete process.env.LDR_CALENDAR_CONFIG_JSON;
+  ownedCalendar=await import(new URL('lib/google-calendar.server.ts',root));
+ }else{ownedCalendar=(await import('./synthetic-calendar.mjs')).syntheticCalendar();}
+ ownedAppointment=booked.appointmentId;
+ // No invitations or customer email leave the isolated test fixture.
+ calendarDependency={...ownedCalendar,createEvent:input=>ownedCalendar.createEvent({...input,attendeeEmail:''}),
+  patchEvent:(id,input)=>ownedCalendar.patchEvent(id,{...input,attendeeEmail:''})};
+ const saga=load('lib/calendar-sync.server.ts');
+ const firstSync=await saga.syncAppointmentEvent(booked.appointmentId);
+ assert.equal(firstSync.status,'sincronizado',firstSync.errorCode);
+ assert.equal((await saga.syncAppointmentEvent(booked.appointmentId)).status,'sincronizado');
+ assert.equal(await ownedCalendar.countEventsByAppointment(booked.appointmentId),1);
+ pass(`${remote?'REMOTE TEST':'synthetic'} Calendar saga uses actual local payment, lease and persistent event identity`);
  const next=new Date(Date.now()+4*86400000).toISOString();
  await customer.rescheduleClientAppointment(owner.user.id,owner.user.email,{appointmentId:booked.appointmentId,startsAt:next});
+ assert.equal((await saga.syncAppointmentEvent(booked.appointmentId)).status,'sincronizado');
+ assert.equal((await ownedCalendar.findEventByAppointment(booked.appointmentId,null)).start,Date.parse(next));
+ assert.equal(await ownedCalendar.countEventsByAppointment(booked.appointmentId),1);
  pass('real client appointment and reschedule through REST/RPC; wrong owner denied');
  const refund={...event,id:'evt_'+randomUUID(),type:'charge.refunded',data:{object:{...event.data.object,id:'ch_testFixture',amount:12345,amount_refunded:12345}}};
  assert.equal((await send(refund)).status,200);
  await assert.rejects(()=>customer.requestClientAppointment(owner.user.id,owner.user.email,{orderId:draft.id,startsAt:next}));
+ assert.equal((await saga.syncAppointmentEvent(booked.appointmentId)).errorCode,'nao_elegivel');
+ assert.equal((await saga.cancelAppointmentEvent(booked.appointmentId)).status,'cancelado');
+ assert.equal(await ownedCalendar.countEventsByAppointment(booked.appointmentId),0);
+ pass('Calendar event cancelled and absent after refund; further synchronization denied');
  pass('refund fixture blocks further bookings; existing Calendar cancellation remains operational');
  if(process.env.LDR_LOCAL_BROWSER_IDENTITIES){
   fs.writeFileSync(process.env.LDR_LOCAL_BROWSER_IDENTITIES,JSON.stringify({master:master.session,owner:owner.session,other:other.session,protocol:contact.protocol,title:input.title}),{mode:0o600});
  }
- console.log(`PASS ${checks} free local Supabase integrated checks; no remote providers or production writes`);
-}finally{await pg.end();}
+ console.log(`PASS ${checks} free local Supabase integrated checks; Stripe fixture; production financial data untouched`);
+}finally{
+ try{if(ownedCalendar&&ownedAppointment){
+  const event='ldr'+ownedAppointment.replaceAll('-','')+'g0';
+  try{await ownedCalendar.cancelEvent(event);assert.equal(await ownedCalendar.countEventsByAppointment(ownedAppointment),0);}
+  catch{console.error('TEST_CALENDAR_CLEANUP_REQUIRED '+event);throw Error('test_calendar_cleanup_not_confirmed');}
+ }}finally{await pg.end();}
+}

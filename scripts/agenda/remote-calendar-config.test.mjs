@@ -1,0 +1,15 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';import {createCipheriv,randomBytes} from 'node:crypto';
+import {prepareRemoteCalendar,TEST_CALENDAR} from './remote-calendar-config.mjs';
+function fixture(){const key=randomBytes(32),iv=randomBytes(12),cipher=createCipheriv('aes-256-gcm',key,iv),token='synthetic-refresh-token';
+ const encrypted=Buffer.concat([cipher.update(token),cipher.final()]);
+ const config={SUPABASE_URL:'https://sfrcsrzuoqdscflfuwik.supabase.co',SUPABASE_SERVICE_ROLE_KEY:'sb_secret_synthetic',
+  GOOGLE_CALENDAR_ID:'production-calendar',GOOGLE_CALENDAR_TEST_ID:TEST_CALENDAR,GOOGLE_OAUTH_CLIENT_ID:'synthetic.apps.googleusercontent.com',
+  GOOGLE_OAUTH_CLIENT_SECRET:'synthetic-client-secret',GOOGLE_CALENDAR_TOKEN_ENCRYPTION_KEY:key.toString('base64'),STRIPE_SECRET_KEY:'must-not-be-exported'};
+ const row={encrypted_value:Buffer.concat([iv,cipher.getAuthTag(),encrypted]).toString('base64'),granted_scopes:['https://www.googleapis.com/auth/calendar.events','https://www.googleapis.com/auth/calendar.freebusy']};
+ let calls=0;const request=async(url,options)=>{calls++;assert.ok(url.startsWith(config.SUPABASE_URL+'/rest/v1/ldr_calendar_oauth_secrets?'));assert.equal(options.method,'GET');assert.equal(options.redirect,'error');assert.equal(options.headers.Authorization,undefined);return new Response(JSON.stringify([row]));};
+ return {config,row,request,calls:()=>calls,token};}
+test('vault read is GET-only; decrypts only into a strict test-calendar credential subset',async()=>{const f=fixture(),out=await prepareRemoteCalendar(JSON.stringify(f.config),f.request);assert.equal(out.GOOGLE_CALENDAR_ID,TEST_CALENDAR);assert.equal(out.GOOGLE_OAUTH_REFRESH_TOKEN,f.token);assert.equal(out.STRIPE_SECRET_KEY,undefined);assert.equal(out.SUPABASE_SERVICE_ROLE_KEY,undefined);assert.equal(out.GOOGLE_CALENDAR_TOKEN_ENCRYPTION_KEY,undefined);assert.equal(f.calls(),1);});
+test('unknown source, production target, missing key and incomplete config fail before source access',async()=>{for(const patch of [{SUPABASE_URL:'https://other.invalid'},{GOOGLE_CALENDAR_TEST_ID:'production-calendar'},{GOOGLE_CALENDAR_ID:TEST_CALENDAR},{GOOGLE_CALENDAR_TOKEN_ENCRYPTION_KEY:''},{GOOGLE_OAUTH_CLIENT_SECRET:''},{SUPABASE_SERVICE_ROLE_KEY:''}]){const f=fixture();Object.assign(f.config,patch);await assert.rejects(()=>prepareRemoteCalendar(JSON.stringify(f.config),f.request),/remote_calendar_config_or_vault_unavailable/);assert.equal(f.calls(),0);}});
+test('wrong encryption key, missing scope, malformed row and remote errors with secrets are withheld',async()=>{for(const kind of ['key','scope','shape','network']){const f=fixture();if(kind==='key')f.config.GOOGLE_CALENDAR_TOKEN_ENCRYPTION_KEY=randomBytes(32).toString('base64');if(kind==='scope')f.row.granted_scopes=[];
+ const req=kind==='shape'?async()=>new Response('{}'):kind==='network'?async()=>{throw Error(f.config.GOOGLE_OAUTH_CLIENT_SECRET);}:f.request;
+ await assert.rejects(()=>prepareRemoteCalendar(JSON.stringify(f.config),req),e=>e.message==='remote_calendar_config_or_vault_unavailable');}});

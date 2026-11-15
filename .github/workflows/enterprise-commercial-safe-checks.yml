@@ -29,6 +29,8 @@ jobs:
         env:
           AGENDA_PG_PACKAGE: ${{ github.workspace }}/apps/painel-ldr/package.json
         run: node --test scripts/agenda/payment-webhook.test.mjs scripts/agenda/calendar*.test.mjs
+      - name: Protected remote Calendar configuration guards without credentials
+        run: node --test scripts/agenda/remote-calendar-config.test.mjs
       - name: Production build, without deployment
         run: npm --prefix apps/painel-ldr run build:render
       - name: Typecheck generated production route registration
