@@ -30,6 +30,6 @@ export function bootstrap({supabaseLocal=false}={}){
   }
  }
  for(const p of s.policies??[])sql.push(`CREATE POLICY ${q(p.policyname)} ON ${q(p.schemaname)}.${q(p.tablename)} AS ${p.permissive} FOR ${p.cmd} TO ${p.roles.map(q).join(',')}${p.qual?' USING ('+p.qual+')':''}${p.with_check?' WITH CHECK ('+p.with_check+')':''};`);
- sql.push('GRANT USAGE ON SCHEMA public,private,auth TO anon,authenticated,service_role; GRANT USAGE,SELECT ON ALL SEQUENCES IN SCHEMA public TO service_role;');
+ sql.push(`GRANT USAGE ON SCHEMA ${supabaseLocal?'public,private':'public,private,auth'} TO anon,authenticated,service_role; GRANT USAGE,SELECT ON ALL SEQUENCES IN SCHEMA public TO service_role;`);
  return sql.join('\n');
 }
