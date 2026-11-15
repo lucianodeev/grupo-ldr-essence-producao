@@ -89,9 +89,24 @@ export async function deleteClientLibraryComment(userId: string, email: string |
 
 export async function saveClientProgress(userId: string, email: string | null, input: { productKey: string; progressPercent: number; currentLocation?: string | null }) {
   const customer = await requireClient(userId, email);
+  if (!Number.isFinite(input.progressPercent) || typeof input.productKey !== "string" || !input.productKey.trim() || input.productKey.length > 180) fail("Progresso inválido.");
   const pct = Math.max(0, Math.min(100, Math.round(input.progressPercent)));
-  const { error } = await supabaseAdmin.from("library_progress").upsert({ customer_id: customer.id, product_key: input.productKey, progress_percent: pct, current_location: input.currentLocation ?? null, updated_at: new Date().toISOString() }, { onConflict: "customer_id,product_key" });
-  if (error) fail("Não foi possível salvar seu progresso.");
+  const patch = { progress_percent: pct, current_location: input.currentLocation ?? null, updated_at: new Date().toISOString() };
+  // The comparison is part of UPDATE itself: stale devices cannot lower a newer percentage.
+  const advance = () => supabaseAdmin.from("library_progress").update(patch)
+    .eq("customer_id", customer.id).eq("product_key", input.productKey)
+    .lte("progress_percent", pct).select("id");
+  const first = await advance();
+  if (first.error) fail("Não foi possível salvar seu progresso.");
+  if (first.data?.length) return { ok: true as const };
+  const inserted = await supabaseAdmin.from("library_progress").insert({ customer_id: customer.id, product_key: input.productKey, ...patch });
+  if (inserted.error) {
+    if (inserted.error.code !== "23505") fail("Não foi possível salvar seu progresso.");
+    // A row already exists (possibly created by another device). Reapply the atomic predicate.
+    const retry = await advance();
+    if (retry.error) fail("Não foi possível salvar seu progresso.");
+    // Zero updated rows means the stored percentage is already higher; preserve its position too.
+  }
   return { ok: true as const };
 }
 
