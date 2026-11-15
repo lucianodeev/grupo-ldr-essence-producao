@@ -31,6 +31,8 @@ jobs:
         run: node --test scripts/agenda/payment-webhook.test.mjs scripts/agenda/calendar*.test.mjs
       - name: Production build, without deployment
         run: npm --prefix apps/painel-ldr run build:render
+      - name: Typecheck generated production route registration
+        run: npm --prefix apps/painel-ldr run typecheck
   database:
     runs-on: ubuntu-latest
     timeout-minutes: 10

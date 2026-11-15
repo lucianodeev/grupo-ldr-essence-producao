@@ -6,8 +6,9 @@ import { AcademyInstitutionalIntro } from "@/components/academy-institutional-in
 import { EcosystemServiceShowcase } from "@/components/ecosystem-service-showcase";
 
 // Desktop home actions intentionally compact; LDR ONE is the current digital subscription.
+type HomeSearch = { area?: "academy" | "business" };
 export const Route = createFileRoute("/")({
-  validateSearch: (search: Record<string, unknown>) => ({ area: search["area"] === "academy" ? "academy" : "business" }),
+  validateSearch: (search: Record<string, unknown>): HomeSearch => search["area"] === "academy" ? { area: "academy" } : search["area"] === "business" ? { area: "business" } : {},
   head: ({ match }) => ({
     meta: [
       { title: match.search.area === "academy" ? "LDR Academy | Conhecimento, Educação e Comunidade Acadêmica" : "Ecossistema LDR | Consultoria, Pessoas e Tecnologia" },
@@ -52,14 +53,14 @@ function PublicHome() {
         </div>
         <h2 className="mt-10 text-xl font-bold text-white!">Serviços para empresas</h2>
         <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {[
+          {([
             ["Consultoria estratégica", "Diagnóstico, processos e planeamento empresarial."],
             ["Consultoria de recursos humanos", "Recrutamento, integração e desenvolvimento de talentos."],
             ["Tecnologia, IA e automação", "Soluções digitais e automatização de processos."],
             ["Formação empresarial", "Capacitação e desenvolvimento de equipas."],
             ["Mentoria profissional", "Acompanhamento de profissionais e empreendedores."],
             ["Bem-estar organizacional", "Iniciativas de desenvolvimento humano no trabalho."],
-          ].map(([name, description]) => (
+          ] as const).map(([name, description]) => (
             <article key={name} className="rounded-2xl border border-white/15 bg-white/5 p-5">
               <h3 className="font-bold text-white!">{name}</h3>
               <p className="mt-2 text-sm text-white/75">{description}</p>

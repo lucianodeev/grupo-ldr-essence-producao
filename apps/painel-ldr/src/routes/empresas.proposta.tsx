@@ -4,7 +4,8 @@ import { useState, type FormEvent } from "react";
 import { EnterprisePage } from "@/components/enterprise-page";
 import { submitEcosystemSupport } from "@/lib/ecosystem-support.functions";
 import { COMMERCIAL_INTERESTS, COMMERCIAL_SOLUTIONS, commercialProtocol, commercialSupportPayload } from "@/lib/commercial-request";
-export const Route = createFileRoute("/empresas/proposta")({validateSearch:(search:Record<string,unknown>)=>({solution:COMMERCIAL_SOLUTIONS.find(value=>value===search["solution"])??"Soluções personalizadas"}),head:()=>({meta:[{title:"Proposta empresarial | Ecossistema LDR"}],links:[{rel:"canonical",href:"https://ldrecossistema.online/empresas/proposta"}]}),component:Proposal});
+type ProposalSearch = { solution?: (typeof COMMERCIAL_SOLUTIONS)[number] };
+export const Route = createFileRoute("/empresas/proposta")({validateSearch:(search:Record<string,unknown>):ProposalSearch=>{const solution=COMMERCIAL_SOLUTIONS.find(value=>value===search["solution"]);return solution?{solution}:{}},head:()=>({meta:[{title:"Proposta empresarial | Ecossistema LDR"}],links:[{rel:"canonical",href:"https://ldrecossistema.online/empresas/proposta"}]}),component:Proposal});
 function Proposal(){
   const search=Route.useSearch();
   const send=useServerFn(submitEcosystemSupport);
@@ -22,7 +23,7 @@ function Proposal(){
         <div className="grid gap-5 sm:grid-cols-2"><label>Organização<input name="organization" required minLength={2} maxLength={160} autoComplete="organization" className={field}/></label><label>Nome de contacto<input name="name" required minLength={2} maxLength={120} autoComplete="name" className={field}/></label></div>
         <label>E-mail profissional<input name="email" type="email" required maxLength={254} autoComplete="email" className={field}/></label>
         <label>Tipo de pedido<select name="interest" className={field}>{COMMERCIAL_INTERESTS.map(value=><option key={value}>{value}</option>)}</select></label>
-        <label>Solução de interesse<select name="solution" defaultValue={search.solution} className={field}>{COMMERCIAL_SOLUTIONS.map(value=><option key={value}>{value}</option>)}</select></label>
+        <label>Solução de interesse<select name="solution" defaultValue={search.solution ?? "Soluções personalizadas"} className={field}>{COMMERCIAL_SOLUTIONS.map(value=><option key={value}>{value}</option>)}</select></label>
         <label>Como podemos ajudar?<textarea name="message" required minLength={5} maxLength={3000} rows={6} className={field} aria-describedby="commercial-data-help"/></label>
         <p id="commercial-data-help" className="text-sm leading-6 text-slate-600">Inclua objetivos, dimensão da equipa e prazo desejado. Não envie dados clínicos, documentos de candidatos, senhas ou dados financeiros.</p>
         <input name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true"/>
