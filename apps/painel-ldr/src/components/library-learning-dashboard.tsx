@@ -184,7 +184,7 @@ export function LibraryLearningDashboard({
         <p className="text-xs font-bold uppercase tracking-[.2em] text-[#d6ad63]">
           Biblioteca LDR · {t.panel}
         </p>
-        <h1 className="mt-4 max-w-3xl font-serif text-4xl leading-tight sm:text-5xl">{t.title}</h1>
+        <h1 style={{ color: "#fff7e7" }} className="mt-4 max-w-3xl font-serif text-4xl leading-tight sm:text-5xl">{t.title}</h1>
         <p className="mt-4 max-w-2xl leading-7 text-slate-200">{t.intro}</p>
         <div className="mt-6 flex flex-wrap gap-3">
           <a

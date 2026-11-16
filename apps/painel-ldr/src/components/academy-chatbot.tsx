@@ -73,7 +73,8 @@ export function AcademyChatbot() {
   const inlineAssistant = false;
   const careerActions = { pt:{candidate:"👤 Sou profissional",company:"🏢 Sou empresa",human:"💬 Falar com a LDR"}, en:{candidate:"👤 I’m a professional",company:"🏢 I’m a company",human:"💬 Talk to LDR"}, fr:{candidate:"👤 Je suis professionnel",company:"🏢 Je suis une entreprise",human:"💬 Parler à LDR"}, es:{candidate:"👤 Soy profesional",company:"🏢 Soy empresa",human:"💬 Hablar con LDR"} } as const;
   const c = careerPage ? {...baseCopy,...careerCopy[lang]} : baseCopy;
-  const showAnnouncement = location.pathname === "/" || location.pathname === "/cliente/biblioteca";
+  // Keep the fixed announcement on the public home; it must not cover library controls.
+  const showAnnouncement = location.pathname === "/";
   const academicNetwork = location.pathname.startsWith("/cliente/rede-academica");
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<Topic | null>(null);
