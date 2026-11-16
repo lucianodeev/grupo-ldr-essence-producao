@@ -1,0 +1,406 @@
+{
+  "productKey": "curso_assinatura_auxiliar_de_escritorio",
+  "slug": "auxiliar-de-escritorio",
+  "title": "Auxiliar de Escritório",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 160,
+  "validatedHours": null,
+  "expectedModuleCount": 6,
+  "scope": "Seis oficinas de apoio operacional com dados, documentos, horários e fornecedores sintéticos. Sequência própria em revisão, distinta do roteiro automático histórico. Não concede habilitação, não comprova 160 horas e não autoriza acesso, contratação, eliminação de documentos ou pagamentos.",
+  "courseObjectives": [
+    "Construir um registo mínimo de pedido que permita continuidade por outro trabalhador.",
+    "Distinguir receção, triagem, encaminhamento e decisão num fluxo fictício.",
+    "Detetar conflitos de intervalo e de preparação numa agenda sintética.",
+    "Propor alternativas que respeitem disponibilidade e autoridade de confirmação.",
+    "Construir uma convenção de nomes e um índice que permitam localizar a versão correta.",
+    "Distinguir nome do ficheiro, aprovação, acesso e política de conservação.",
+    "Validar unidades, valores ausentes e identificadores antes de calcular um resumo.",
+    "Explicar uma divergência entre registo e contagem sem corrigir a origem por suposição.",
+    "Comparar duas cotações sintéticas sobre quantidade e condições equivalentes.",
+    "Construir uma requisição com dados confirmados e decisão ainda necessária.",
+    "Integrar registo, agenda, documento e encaminhamento numa passagem de turno sintética.",
+    "Construir um resumo que permita continuar pendências sem repetir ou esconder decisões."
+  ],
+  "sources": [
+    {
+      "id": "ncs-admin",
+      "title": "National Careers Service. Admin assistant. Sem data indicada na página consultada.",
+      "url": "https://nationalcareers.service.gov.uk/job-profiles/admin-assistant",
+      "consulted": "2026-11-16",
+      "scope": "Descrição de atividades consultada: comunicação, registos, arquivo e apoio a reuniões. Não se importam remuneração, requisitos britânicos ou competências regulamentadas. Fluxos e valores dos exercícios são originais e fictícios."
+    },
+    {
+      "id": "nara-naming",
+      "title": "U.S. National Archives and Records Administration. Bulletin 2015-01 Appendix B. Atualização: 15 de abril de 2015.",
+      "url": "https://www.archives.gov/records-mgmt/bulletins/2015/2015-01-appendix-b.html",
+      "consulted": "2026-11-16",
+      "scope": "Princípios de nomes consistentes, significativos e componentes estáveis consultados. Não se apresenta o limite técnico histórico de caminhos como requisito universal de sistemas atuais."
+    },
+    {
+      "id": "tna-records",
+      "title": "The National Archives (UK). Essential Records Management: A guide to managing electronic records using existing infrastructures and resources.",
+      "url": "https://cdn.nationalarchives.gov.uk/documents/essential-records-management.pdf",
+      "consulted": "2026-11-16",
+      "scope": "Introdução e estrutura do guia consultadas, distinguindo regras, arquivo e controlo de acesso. Não se afirma leitura integral nem se transfere política de eliminação ou retenção para outras instituições ou jurisdições."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Receber, registar e encaminhar sem prometer o que não foi decidido"
+    },
+    {
+      "id": "2",
+      "title": "Organizar uma agenda com recursos e dependências"
+    },
+    {
+      "id": "3",
+      "title": "Arquivar com contexto, versões e acesso adequado"
+    },
+    {
+      "id": "4",
+      "title": "Conferir registos e produzir um resumo rastreável"
+    },
+    {
+      "id": "5",
+      "title": "Preparar uma reposição sem confundir cotação e autorização"
+    },
+    {
+      "id": "6",
+      "title": "Passar o trabalho a outra pessoa com estados verificáveis"
+    }
+  ],
+  "modules": [
+    {
+      "id": "1",
+      "title": "Receber, registar e encaminhar sem prometer o que não foi decidido",
+      "estimatedPracticeMinutes": 105,
+      "objectives": [
+        "Construir um registo mínimo de pedido que permita continuidade por outro trabalhador.",
+        "Distinguir receção, triagem, encaminhamento e decisão num fluxo fictício."
+      ],
+      "sourceIds": [
+        "ncs-admin"
+      ],
+      "sections": [
+        {
+          "title": "O apoio administrativo dá continuidade a um processo",
+          "paragraphs": [
+            "Receber uma solicitação não significa ter autoridade para a aprovar. Um auxiliar pode identificar o assunto, registar informação necessária e encaminhar ao responsável, conservando a diferença entre pedido recebido e decisão tomada. O perfil ocupacional do National Careers Service inclui manutenção de registos e apoio à comunicação. A sequência deste curso é uma proposta didática própria sobre operações de apoio; não define competências legais de uma profissão nem substitui os procedimentos de uma organização específica.",
+            "Uma boa receção permite que a pessoa seguinte compreenda o que está pendente sem refazer toda a conversa. O registo precisa de identificar o objeto, a origem, a data de entrada, o estado e o próximo responsável. Mais dados não significam necessariamente melhor registo. Se a tarefa é acompanhar a reparação de uma impressora, não é necessário recolher informação pessoal que não contribui para esse processo. Os exemplos do curso utilizam apenas pessoas, equipamentos e identificadores sintéticos."
+          ]
+        },
+        {
+          "title": "Três pedidos com exigências diferentes",
+          "paragraphs": [
+            "Na organização fictícia Oficina Norte chegam três solicitações: P11 comunica uma impressora sem funcionamento; P12 pede reserva de uma sala; P13 solicita acesso a uma pasta restrita. O auxiliar não deve tratar todos como pequenas tarefas que pode resolver sozinho. A manutenção precisa de dados do equipamento e encaminhamento técnico; a reserva depende de disponibilidade e regras de confirmação; o acesso exige autorização do responsável. Uma lista que apenas diz tratar assuntos não conserva essas diferenças.",
+            "Para P11, falta o identificador da impressora. O registo deve marcar essa ausência e indicar a pergunta necessária. Não escolha um equipamento parecido para fechar o campo. Para P12, há data e intervalo, mas ainda não foi consultada a agenda. O estado será pedido recebido, não reserva confirmada. Para P13, a identidade do solicitante não substitui a autorização. O exercício não inclui acesso real a sistemas nem tentativa de ultrapassar restrições para demonstrar iniciativa."
+          ]
+        },
+        {
+          "title": "Urgência, prioridade e confirmação de receção",
+          "paragraphs": [
+            "A palavra urgente pode refletir a perceção do solicitante, mas a prioridade operacional depende de critérios e informação. Uma impressão interrompida pode bloquear uma entrega próxima; outra pode ter alternativa disponível. O auxiliar pode registar o efeito declarado e pedir o dado necessário, sem inventar um prazo de resposta técnica. Quando o processo tem um responsável por priorização, esse ponto deve ficar claro. Encaminhar não elimina a necessidade de saber quem recebeu o pedido e qual o próximo estado esperado.",
+            "A entrega deste módulo inclui uma ficha por pedido e uma mensagem de receção para cada origem. As mensagens devem confirmar apenas o que ocorreu e indicar a pendência relevante. O teste final será entregar as fichas a um leitor que não viu o enunciado e pedir que identifique o próximo passo. A competência observada é a continuidade do trabalho, não o número de pedidos aparentemente encerrados. Um pedido corretamente mantido em aberto pode ser mais bem tratado do que uma confirmação prematura que esconde a decisão ainda necessária."
+          ]
+        }
+      ],
+      "case": "Oficina Norte: P11 impressora avariada sem identificador; P12 sala com data e intervalo, sem consulta à agenda; P13 acesso a pasta restrita, sem autorização.",
+      "exercise": "Produza três fichas com objeto, origem fictícia, entrada, estado, pendência e próximo responsável. Escreva três confirmações de receção e peça a um leitor, ou em autoavaliação identificada, que localize o passo seguinte.",
+      "assessment": {
+        "question": "Receber P13 de uma pessoa conhecida permite confirmar o acesso à pasta?",
+        "answer": "Não. A identidade ou familiaridade não substitui autorização. O registo deve conservar a solicitação e encaminhar a decisão ao responsável, sem conceder acesso no exercício.",
+        "rubric": [
+          "Distingue estados e autoridade.",
+          "Mantém dados ausentes como pendências.",
+          "Permite continuidade sem recolha excessiva."
+        ]
+      }
+    },
+    {
+      "id": "2",
+      "title": "Organizar uma agenda com recursos e dependências",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Detetar conflitos de intervalo e de preparação numa agenda sintética.",
+        "Propor alternativas que respeitem disponibilidade e autoridade de confirmação."
+      ],
+      "sourceIds": [
+        "ncs-admin"
+      ],
+      "sections": [
+        {
+          "title": "Uma marcação envolve mais do que uma hora de início",
+          "paragraphs": [
+            "Uma agenda operacional precisa de relacionar atividade, duração, recurso e confirmação. Saber que uma reunião começa às nove não informa quando a sala estará livre ou se é necessário prepará-la. O apoio a reuniões é uma das atividades descritas no perfil ocupacional consultado. Neste módulo, o aluno trabalhará com intervalos e condições definidos no enunciado, sem presumir que uma aplicação decide sozinha se uma reserva é válida. As regras do processo precisam de estar claras antes de introduzir os eventos.",
+            "Distinguir pedido e compromisso confirmado evita que uma proposta de horário seja tratada como disponibilidade garantida. Também é necessário identificar o recurso: duas pessoas podem estar disponíveis e a mesma sala já estar ocupada. Uma agenda pessoal e uma agenda de recurso respondem a perguntas diferentes. O exercício exigirá mostrar essa distinção, sem utilizar calendários reais ou enviar convites. A qualidade da organização será observada na consistência dos intervalos e na clareza dos estados."
+          ]
+        },
+        {
+          "title": "Um conflito visível e outro escondido na preparação",
+          "paragraphs": [
+            "A sala D tem uma reunião confirmada das nove às nove e meia. Surge um pedido das nove e vinte às dez. Os intervalos sobrepõem-se por dez minutos; o pedido não pode ser confirmado com base apenas no horário final da primeira atividade. Depois da reunião, a regra fictícia exige dez minutos de preparação antes de outra utilização. Assim, o primeiro início possível após o compromisso existente será às nove e quarenta, se não houver outra restrição. Essa conclusão depende da regra fornecida, não de um padrão universal de reuniões.",
+            "Se a segunda reunião mantiver os quarenta minutos pedidos, a alternativa será das nove e quarenta às dez e vinte, ainda dependente de aceitação. A pessoa que pediu o evento pode aceitar esse novo intervalo ou precisar de outro recurso. O auxiliar deverá apresentar a alternativa e obter a confirmação apropriada, em vez de deslocar uma reunião já confirmada para abrir espaço. No dossiê, a sala E está livre, mas o equipamento necessário ainda não foi verificado. A alternativa tem uma condição pendente. Chamar-lhe solução confirmada eliminaria a diferença entre espaço disponível e recurso adequado à atividade."
+          ]
+        },
+        {
+          "title": "Registar a alteração e comunicar a versão válida",
+          "paragraphs": [
+            "Uma mudança de agenda precisa de indicar o que foi alterado e quem confirmou. Se houver pessoas a utilizar uma versão anterior, a comunicação deve localizar o compromisso correto e o novo estado. Não é necessário divulgar uma lista completa de compromissos de terceiros para explicar que uma sala está ocupada. No exercício, use identificadores sintéticos e apenas os dados necessários à coordenação. A mensagem pode informar indisponibilidade e alternativa sem expor assuntos de outras reuniões.",
+            "A entrega será uma linha temporal, duas alternativas condicionadas e uma nota de confirmação após resposta fictícia do responsável. O aluno deve assinalar qual versão substitui a proposta anterior, preservando o registo da alteração. Um leitor deverá conseguir responder onde, quando e com que recurso a atividade pode ocorrer. O objetivo é reduzir conflitos operacionais e confirmações erradas, sem transformar disponibilidade numa promessa de que nenhuma alteração futura será necessária."
+          ]
+        }
+      ],
+      "case": "Sala D: reunião confirmada 09h00–09h30; preparação de dez minutos; novo pedido 09h20–10h00. Sala E livre, equipamento necessário ainda não verificado.",
+      "exercise": "Desenhe os intervalos, calcule sobreposição e primeiro início possível em D. Indique também o fim se conservar os quarenta minutos de duração. Proponha duas alternativas com condições. Após uma resposta fictícia de aprovação, produza o registo final e a comunicação de alteração.",
+      "assessment": {
+        "question": "A sala D pode receber imediatamente outro evento às 09h30 segundo este dossiê?",
+        "answer": "Não. A regra do exercício exige dez minutos de preparação, tornando 09h40 o primeiro início possível após a reunião, se as restantes condições forem satisfeitas. O pedido original tem dez minutos de sobreposição. Mantendo quarenta minutos, o intervalo proposto será 09h40–10h20 e precisa de aceitação; não é uma reserva automaticamente confirmada.",
+        "rubric": [
+          "Calcula intervalos e preparação.",
+          "Não move compromisso confirmado sem autorização.",
+          "Distingue alternativa e reserva válida."
+        ]
+      }
+    },
+    {
+      "id": "3",
+      "title": "Arquivar com contexto, versões e acesso adequado",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Construir uma convenção de nomes e um índice que permitam localizar a versão correta.",
+        "Distinguir nome do ficheiro, aprovação, acesso e política de conservação."
+      ],
+      "sourceIds": [
+        "nara-naming",
+        "tna-records"
+      ],
+      "sections": [
+        {
+          "title": "Localizar um documento exige compreender o seu contexto",
+          "paragraphs": [
+            "Um ficheiro pode estar guardado e continuar difícil de usar. Nomes como final, novo e finalíssimo não indicam necessariamente assunto, data ou estado de aprovação. A orientação NARA consultada recomenda nomes consistentes e significativos, com posições estáveis para componentes. A aplicação deste módulo é uma convenção própria para um escritório fictício. Não se impõem limites técnicos antigos como regra universal de todos os sistemas atuais, nem se afirma que um nome bem construído resolve sozinho a gestão documental.",
+            "O guia de gestão documental dos National Archives britânicos distingue estrutura de arquivo, regras e controlo de acesso. Essas funções precisam de permanecer separadas. Um nome pode ajudar a reconhecer a versão, mas a aprovação depende do processo. Uma pasta pode organizar documentos, mas não determina quem está autorizado a lê-los. Uma etiqueta arquivado também não define um prazo legal de conservação ou autorização de eliminação. O exercício não inclui apagar documentos ou aplicar políticas de retenção reais."
+          ]
+        },
+        {
+          "title": "Um conjunto de versões com estados diferentes",
+          "paragraphs": [
+            "O dossiê contém três ficheiros sintéticos de um procedimento de manutenção: uma proposta de 2 de novembro, uma revisão de 4 de novembro e uma edição aprovada de 6 de novembro. O índice deverá identificar assunto, data, versão, estado e responsável pela aprovação. Uma convenção possível mantém esses componentes na mesma ordem. O aluno deve justificar a escolha pela forma como a equipa procura os documentos, em vez de adotar abreviaturas que apenas o autor consegue interpretar.",
+            "Se a proposta e a edição aprovada coexistirem, o utilizador precisa de saber qual está válida para execução. Não é necessário destruir a proposta para eliminar a confusão. O índice e a organização podem conservar histórico e destacar o estado atual. A eliminação, quando aplicável numa organização real, exige o procedimento competente. Neste cenário, a decisão de apoio limita-se a organizar e sinalizar. O aluno não tem autoridade para declarar que um documento deixou de precisar de conservação."
+          ]
+        },
+        {
+          "title": "Uma verificação de recuperação, não apenas de aparência",
+          "paragraphs": [
+            "Teste a convenção com duas perguntas: qual edição está aprovada e onde está a revisão anterior? Se o leitor precisa de abrir todos os ficheiros para descobrir o estado, talvez falte informação no índice ou no processo. O teste não deve expor conteúdo restrito. No exercício, o leitor recebe apenas os dados sintéticos e as permissões indicadas. A capacidade de encontrar um nome não autoriza a abrir um documento real para o qual não exista acesso adequado.",
+            "Entregue o índice, os três nomes propostos e um pequeno mapa de permissões por função fictícia. Acrescente uma nota sobre o que o sistema de nomes não consegue garantir e uma decisão que precisa de ser encaminhada. A competência do auxiliar consiste em manter informação recuperável e estados claros dentro da sua responsabilidade. Um arquivo profissional não é uma coleção de pastas bonitas: permite conhecer origem, versão e limite de uso sem substituir decisões de aprovação, segurança ou conservação por convenções informais."
+          ]
+        }
+      ],
+      "case": "Três versões sintéticas de procedimento: proposta 02/11, revisão 04/11, aprovada 06/11. Histórico deve ser conservado; auxiliar organiza e sinaliza, sem eliminar ou aprovar.",
+      "exercise": "Crie índice, nomes consistentes e mapa de permissões para consulta, revisão e aprovação. Realize o teste de duas perguntas e identifique uma decisão que o nome do ficheiro não pode resolver.",
+      "assessment": {
+        "question": "Renomear um ficheiro como aprovado basta para o tornar válido ou permitir eliminar a proposta?",
+        "answer": "Não. O nome deve refletir uma aprovação real do processo. Conservação e eliminação são decisões distintas; o exercício apenas permite organizar e sinalizar, mantendo o histórico.",
+        "rubric": [
+          "Usa convenção interpretável e estável.",
+          "Separa quatro funções de gestão documental.",
+          "Preserva histórico e limites de acesso."
+        ]
+      }
+    },
+    {
+      "id": "4",
+      "title": "Conferir registos e produzir um resumo rastreável",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Validar unidades, valores ausentes e identificadores antes de calcular um resumo.",
+        "Explicar uma divergência entre registo e contagem sem corrigir a origem por suposição."
+      ],
+      "sourceIds": [
+        "ncs-admin"
+      ],
+      "sections": [
+        {
+          "title": "Introduzir dados e validar dados são operações diferentes",
+          "paragraphs": [
+            "Uma tabela pode aceitar um valor sem confirmar que ele corresponde ao que aconteceu. O apoio administrativo precisa de distinguir transcrição, verificação e decisão sobre uma divergência. O perfil ocupacional consultado inclui manutenção de registos, mas não fornece as regras deste exercício. Elas são definidas no dossiê sintético: cada equipamento tem identificador único, quantidades são expressas em unidades e campos desconhecidos permanecem assinalados. O aluno deverá aplicar essas regras sem tratar células vazias como zero ou inventar dados para completar a apresentação.",
+            "Antes de somar, confira se os registos se referem ao mesmo tipo de unidade. Uma caixa não equivale a uma unidade quando a quantidade por caixa não foi indicada. Um identificador repetido pode ser duplicação ou outra ocorrência do mesmo objeto; é preciso saber qual estrutura a tabela pretende representar. A revisão começa por compreender a unidade de registo. Fórmulas corretas sobre uma estrutura mal compreendida podem produzir um número sem utilidade operacional."
+          ]
+        },
+        {
+          "title": "Um inventário pequeno com duas pendências diferentes",
+          "paragraphs": [
+            "No caso fictício, o armário A contém oito adaptadores registados, mas a contagem física assinalada é sete. O armário B tem quatro registados e quatro contados. O armário C tem cinco registados e contagem ainda não efetuada. O total de registo é dezassete. A contagem confirmada nos dois primeiros armários é onze, mas não representa o total físico dos três. Somar a ausência como zero criaria uma discrepância de seis que mistura diferença observada e informação desconhecida.",
+            "O resumo deverá indicar uma unidade de divergência em A, igualdade em B e pendência em C. Não se pode concluir automaticamente que falta um adaptador por furto ou perda; pode haver erro de registo, contagem ou movimentação ainda não documentada. O aluno deve propor a verificação seguinte e manter as explicações possíveis separadas. Uma função de apoio não ganha autoridade para acusar alguém ou alterar um saldo apenas porque a tabela apresenta uma diferença."
+          ]
+        },
+        {
+          "title": "Entregar informação suficiente para a próxima decisão",
+          "paragraphs": [
+            "O responsável precisa de saber quais valores são conhecidos, que operações foram realizadas e o que está pendente. Uma nota de método curta pode explicar a diferença entre total registado e contagem parcial confirmada. Se a contagem de C chegar depois, o resumo poderá ser atualizado com data e origem. A versão anterior deve continuar compreensível como estado daquele momento. Apagar a pendência retroativamente sem registar a atualização pode dificultar a reconstrução de decisões tomadas com informação incompleta.",
+            "A entrega reúne tabela, cálculos e nota de encaminhamento. O aluno deverá apresentar uma hipótese que não pode confirmar e uma alteração que não realizará sem validação. A qualidade do trabalho está em permitir que outra pessoa refaça a comparação e escolha o próximo passo. Um resumo honesto pode conter mais incerteza do que uma tabela inteiramente preenchida, mas oferece uma base melhor do que números inventados para produzir aparência de controlo."
+          ]
+        }
+      ],
+      "case": "Inventário sintético: A registo 8/contagem 7; B 4/4; C 5/não contado. Todos em unidades. Auxiliar não pode alterar saldos sem validação.",
+      "exercise": "Produza tabela com estados, total registado e contagem parcial identificada. Escreva nota de método e encaminhamento. Depois introduza contagem fictícia de C igual a cinco e atualize a versão, sem apagar o estado anterior.",
+      "assessment": {
+        "question": "A contagem parcial de onze permite afirmar que só existem onze adaptadores nos três armários?",
+        "answer": "Não. C ainda não foi contado. Dezassete é o total registado e onze a contagem confirmada apenas de A e B. A divergência observada em A é uma unidade, sem causa demonstrada.",
+        "rubric": [
+          "Preserva unidades e valores ausentes.",
+          "Distingue total e parcial.",
+          "Não infere causa nem altera saldos sem validação."
+        ]
+      }
+    },
+    {
+      "id": "5",
+      "title": "Preparar uma reposição sem confundir cotação e autorização",
+      "estimatedPracticeMinutes": 105,
+      "objectives": [
+        "Comparar duas cotações sintéticas sobre quantidade e condições equivalentes.",
+        "Construir uma requisição com dados confirmados e decisão ainda necessária."
+      ],
+      "sourceIds": [
+        "ncs-admin"
+      ],
+      "sections": [
+        {
+          "title": "A função de apoio prepara informação para decidir",
+          "paragraphs": [
+            "Pedir uma cotação, comparar condições e autorizar uma compra são etapas diferentes. O auxiliar pode reunir dados e preparar uma requisição, conforme o procedimento da organização, sem assumir poder para contratar ou pagar. Este módulo utiliza valores e fornecedores inteiramente fictícios. Não é uma recomendação financeira ou comercial e não inclui qualquer transação. O objetivo é comparar alternativas de forma rastreável e identificar quem precisa de decidir antes de um compromisso.",
+            "A comparação deve usar quantidades e condições equivalentes. Um preço por caixa não é diretamente comparável a um preço por unidade sem saber o conteúdo. Também é necessário distinguir prazo informado e disponibilidade confirmada. A descrição de atividades administrativas do National Careers Service fornece contexto de apoio a processos; o método de comparação abaixo é didático e próprio do curso. O aluno não deve atribuir à fonte a validação das cotações ou regras de autorização inventadas para o exercício."
+          ]
+        },
+        {
+          "title": "Duas ofertas que parecem ter o mesmo objeto",
+          "paragraphs": [
+            "A Oficina Norte precisa de doze pastas. A cotação X oferece caixas com seis pastas por dezoito euros cada; Y oferece pastas individuais por três euros e vinte cêntimos. No cenário, ambos os valores já incluem os encargos indicados e não há portes adicionais. Para doze unidades, X exige duas caixas e soma trinta e seis euros; Y soma trinta e oito euros e quarenta cêntimos. A diferença de dois euros e quarenta cêntimos só é significativa depois de estabelecer a mesma quantidade.",
+            "X informa entrega em cinco dias, enquanto Y indica dois dias. O pedido interno precisa das pastas em três dias. A opção de menor valor não satisfaz o prazo informado. O auxiliar deve apresentar essa diferença, em vez de escolher apenas o total mais baixo. Se houver possibilidade de antecipação, ela depende de confirmação e não deve entrar na tabela como facto. O dossiê não autoriza encomendar e esperar que a entrega se resolva depois; a requisição precisa de tornar a condição visível ao responsável."
+          ]
+        },
+        {
+          "title": "Registar a recomendação como proposta, não como compra concluída",
+          "paragraphs": [
+            "Uma ficha de requisição pode indicar objeto, quantidade, comparação, prazo necessário, fonte dos dados e aprovação pendente. A recomendação deve ser proporcional: Y é compatível com o prazo informado e tem um custo total superior no cenário; X exigiria confirmar uma alternativa de entrega. O decisor pode pedir nova informação ou alterar a necessidade. O aluno não deve comunicar ao fornecedor uma aceitação em nome da organização para demonstrar iniciativa administrativa.",
+            "Entregue os cálculos e uma nota que separe dado, proposta e decisão. Depois introduza uma resposta fictícia de aprovação e identifique qual etapa seguinte passaria a ser permitida pelo procedimento, sem a executar. A atividade treina a qualidade da preparação e a clareza de responsabilidade. O produto não é uma compra simulada apresentada como venda real, mas um conjunto de informações que permite decidir com consciência de quantidade, prazo, custo e autoridade."
+          ]
+        }
+      ],
+      "case": "Necessidade sintética: 12 pastas em três dias. X: caixa de seis por €18, entrega cinco dias. Y: unidade €3,20, entrega dois dias. Sem custos adicionais no cenário; aprovação ainda pendente.",
+      "exercise": "Calcule totais equivalentes, diferença e adequação ao prazo. Prepare requisição e nota ao responsável. Inclua uma informação adicional que poderia mudar a comparação e uma ação que não executará antes de aprovação.",
+      "assessment": {
+        "question": "O menor total de X basta para confirmar a compra segundo este dossiê?",
+        "answer": "Não. X soma €36, mas o prazo informado de cinco dias não cabe nos três necessários. Y soma €38,40 e informa dois dias. A aprovação e a eventual confirmação de prazo permanecem etapas distintas.",
+        "rubric": [
+          "Compara doze unidades em ambas as ofertas.",
+          "Conserva custo e prazo como critérios diferentes.",
+          "Distingue proposta e autorização."
+        ]
+      }
+    },
+    {
+      "id": "6",
+      "title": "Passar o trabalho a outra pessoa com estados verificáveis",
+      "estimatedPracticeMinutes": 150,
+      "objectives": [
+        "Integrar registo, agenda, documento e encaminhamento numa passagem de turno sintética.",
+        "Construir um resumo que permita continuar pendências sem repetir ou esconder decisões."
+      ],
+      "sourceIds": [
+        "ncs-admin",
+        "tna-records"
+      ],
+      "sections": [
+        {
+          "title": "A continuidade depende de saber o que ficou por fazer",
+          "paragraphs": [
+            "Uma passagem de trabalho precisa de conservar estados e responsabilidades. Uma lista de tarefas concluídas não ajuda a pessoa seguinte se não mostra o que continua pendente e porquê. Neste módulo, o aluno organizará um pequeno turno administrativo sintético. A atividade integra os procedimentos anteriores sem repetir todas as fichas como se fossem capítulos novos. Cada registo terá uma função: localizar o pedido, conhecer a informação válida e identificar a decisão que permite avançar.",
+            "O guia britânico de gestão documental distingue regras, estrutura e acesso. A aplicação ao exercício é manter uma referência à versão e ao responsável, em vez de copiar documentos inteiros para uma mensagem de passagem. O perfil ocupacional consultado dá contexto ao apoio administrativo, sem estabelecer uma rotina universal de turnos. As regras e os dados do pacote são próprios deste curso. Nenhuma execução é realizada em sistemas de clientes, fornecedores ou empregadores reais."
+          ]
+        },
+        {
+          "title": "Um turno com quatro estados que não podem ser confundidos",
+          "paragraphs": [
+            "O pacote final contém quatro entradas. T01: pedido de manutenção recebido, identificador do equipamento confirmado e encaminhamento técnico ainda sem resposta. T02: sala reservada e aprovada para um intervalo definido, mas aviso aos participantes ainda não enviado. T03: procedimento revisto, à espera de aprovação; a edição anterior continua válida. T04: requisição de pastas aprovada, mas encomenda ainda não efetuada pelo responsável. Marcar todas como resolvidas apagaria precisamente o trabalho que a pessoa seguinte precisa de acompanhar.",
+            "O aluno deve selecionar o próximo passo de cada entrada e indicar o limite de responsabilidade. Em T03, revisão não equivale a aprovação e a nova edição não deve ser apresentada como instrução em vigor. Em T04, aprovação não comprova encomenda ou entrega. Em T02, é necessário saber quem comunica e que confirmação será registada. A passagem de trabalho não deve prometer um resultado técnico ou comercial que depende de outra pessoa apenas para transmitir uma sensação de controlo completo."
+          ]
+        },
+        {
+          "title": "Testar a passagem com perguntas de recuperação",
+          "paragraphs": [
+            "Peça a um leitor que identifique qual procedimento está válido, qual mensagem falta e que pedido depende de resposta externa. Se trabalhar sozinho, faça a segunda leitura depois de uma pausa e identifique a limitação de não ter observador externo. O teste precisa de usar o resumo sem explicação oral adicional. Quando uma informação não estiver localizável, revise a estrutura ou a referência correspondente, em vez de acrescentar uma recomendação vaga para prestar mais atenção.",
+            "A entrega final reúne quadro de estados, índice documental e mensagem de passagem com quatro próximos passos. Inclua uma alteração de estado ocorrida depois do resumo e mostre como seria registada sem apagar a versão anterior. O curso termina com uma capacidade operacional delimitada: apoiar continuidade com dados, condições e decisões visíveis. O conjunto de textos e simulações não equivale às cento e sessenta horas históricas do catálogo ou a uma habilitação profissional; a duração e a aplicação no leitor continuam a depender de revisão e pilotagem."
+          ]
+        }
+      ],
+      "case": "Turno sintético T01 manutenção encaminhada sem resposta; T02 sala aprovada, aviso não enviado; T03 documento revisto sem aprovação, edição anterior válida; T04 requisição aprovada sem encomenda.",
+      "exercise": "Execute o pacote de quatro entradas. Entregue quadro de estados, índice documental e mensagem de passagem. Faça três perguntas de recuperação a leitor ou autoavaliação identificada e registe uma revisão e uma atualização posterior.",
+      "assessment": {
+        "question": "T03 e T04 podem ser marcadas como concluídas porque existe revisão e aprovação, respetivamente?",
+        "answer": "Não. T03 ainda depende de aprovação e mantém a edição anterior válida. T04 tem autorização, mas não encomenda efetuada. Os estados e os próximos responsáveis precisam de permanecer distintos.",
+        "rubric": [
+          "Mantém os quatro estados.",
+          "Relaciona pendência e próximo responsável.",
+          "Permite recuperação sem explicação oral e conserva histórico."
+        ]
+      },
+      "workPacket": {
+        "synthetic": true,
+        "entries": [
+          {
+            "id": "T01",
+            "state": "encaminhado",
+            "pending": "resposta técnica",
+            "nextRole": "responsável técnico"
+          },
+          {
+            "id": "T02",
+            "state": "reserva aprovada",
+            "pending": "aviso aos participantes",
+            "nextRole": "apoio responsável pela comunicação"
+          },
+          {
+            "id": "T03",
+            "state": "revisão sem aprovação",
+            "pending": "aprovação documental",
+            "validEdition": "anterior",
+            "nextRole": "responsável pela aprovação"
+          },
+          {
+            "id": "T04",
+            "state": "requisição aprovada",
+            "pending": "encomenda não efetuada",
+            "nextRole": "responsável pela encomenda"
+          }
+        ],
+        "recoveryQuestions": [
+          "Qual edição do procedimento está válida?",
+          "Que comunicação ainda falta?",
+          "Que pedido depende de resposta técnica?"
+        ],
+        "realPayments": false,
+        "realAccessChanges": false
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão de processos e linguagem por profissional de administração e revisão editorial.",
+    "Pilotar materiais, avaliação e tempo de prática; não converter número de oficinas nas 160 horas históricas.",
+    "Testar acessibilidade, leitor e correspondência com o roteiro anterior sem apagar progresso.",
+    "Aprovação e autorização antes de qualquer integração ativa."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

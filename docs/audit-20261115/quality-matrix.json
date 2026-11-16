@@ -1,0 +1,2454 @@
+{
+  "asOf": "2026-11-16",
+  "sourceSnapshotAsOf": "2026-11-15",
+  "method": "Supabase export read-only + executable data catalogs; word counts and similarity are triage signals, not editorial certification. No full paid text emitted.",
+  "summary": {
+    "programs": 40,
+    "dbModules": 3,
+    "dbMaterials": 0,
+    "digitalProducts": 17,
+    "digitalLocaleRows": 23,
+    "freeCatalog": 8,
+    "authoredFreeModules": 59,
+    "freeModules": 59,
+    "subscriptionCatalog": 50,
+    "authoredSubscriptionCandidates": 20,
+    "authoredSubscriptionModules": 131,
+    "pendingSubscriptionCourses": 30,
+    "exactDuplicateGroups": 0,
+    "nearDuplicatePairs": 11710
+  },
+  "programs": [
+    {
+      "slug": "aba-autismo",
+      "title": "Formação em ABA Aplicada ao Autismo",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "localModules": 12,
+      "localLessons": 144,
+      "sources": [
+        "lib/academy-professional-formations.catalog.ts",
+        "lib/professional-formations-lessons.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": [
+        "Aulas geradas por modelo repetido; contagem não comprova profundidade"
+      ]
+    },
+    {
+      "slug": "ciencia-politica",
+      "title": "Ciência Política — Teoria, Instituições e Democracia",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "localModules": 12,
+      "localLessons": 144,
+      "sources": [
+        "lib/academy-professional-formations.catalog.ts",
+        "lib/professional-formations-lessons.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": [
+        "Aulas geradas por modelo repetido; contagem não comprova profundidade"
+      ]
+    },
+    {
+      "slug": "ciencias-felicidade",
+      "title": "Ciências da Felicidade e Bem-Estar — Da Neurociência à Prática",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "localModules": 12,
+      "localLessons": 144,
+      "sources": [
+        "lib/academy-professional-formations.catalog.ts",
+        "lib/professional-formations-lessons.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": [
+        "Aulas geradas por modelo repetido; contagem não comprova profundidade"
+      ]
+    },
+    {
+      "slug": "comunicacao-oratoria",
+      "title": "Formação em Comunicação, Oratória e Inteligência Emocional no Trabalho",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "localModules": 10,
+      "localLessons": 150,
+      "sources": [
+        "lib/academy-professional-formations.catalog.ts",
+        "lib/professional-formations-lessons.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": [
+        "Aulas geradas por modelo repetido; contagem não comprova profundidade"
+      ]
+    },
+    {
+      "slug": "copywriting-vendas",
+      "title": "Formação em Copywriting e Vendas Consultivas",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "localModules": 15,
+      "localLessons": 150,
+      "sources": [
+        "lib/academy-professional-formations.catalog.ts",
+        "lib/professional-formations-lessons.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": [
+        "Aulas geradas por modelo repetido; contagem não comprova profundidade"
+      ]
+    },
+    {
+      "slug": "curso-gratuito-frances-negocios-a1",
+      "title": "Francês Básico para Negócios — Nível A1",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "sources": [
+        "content/free-french-business-a1.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": []
+    },
+    {
+      "slug": "curso-gratuito-organizar-carreira",
+      "title": "Como Organizar sua Carreira e Dar o Próximo Passo Profissional",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "sources": [
+        "content/free-career-course.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": []
+    },
+    {
+      "slug": "curso-gratuito-primeiros-socorros",
+      "title": "Primeiros Socorros — Noções Básicas",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "sources": [
+        "content/free-first-aid-course.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": []
+    },
+    {
+      "slug": "do-mamao-ao-negocio",
+      "title": "Do Mamão ao Negócio — Treinamento de Empreendedorismo",
+      "status": "published",
+      "db_modules": 3,
+      "db_materials": 0,
+      "sources": [
+        "content/do-mamao-ao-negocio.server.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": []
+    },
+    {
+      "slug": "educacao-financeira",
+      "title": "Formação em Gestão Financeira, Educação Financeira e Investimentos",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "localModules": 15,
+      "localLessons": 150,
+      "sources": [
+        "lib/academy-professional-formations.catalog.ts",
+        "lib/professional-formations-lessons.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": [
+        "Aulas geradas por modelo repetido; contagem não comprova profundidade"
+      ]
+    },
+    {
+      "slug": "estetica-beleza",
+      "title": "Formação em Estética, Beleza e Gestão de Atendimento",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "localModules": 15,
+      "localLessons": 150,
+      "sources": [
+        "lib/academy-professional-formations.catalog.ts",
+        "lib/professional-formations-lessons.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": [
+        "Aulas geradas por modelo repetido; contagem não comprova profundidade"
+      ]
+    },
+    {
+      "slug": "filosofia-clinica",
+      "title": "Filosofia Clínica — Método, Escuta e Filosofia Aplicada",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "localModules": 12,
+      "localLessons": 144,
+      "sources": [
+        "lib/academy-professional-formations.catalog.ts",
+        "lib/professional-formations-lessons.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": [
+        "Aulas geradas por modelo repetido; contagem não comprova profundidade"
+      ]
+    },
+    {
+      "slug": "formacao-completa-massoterapia",
+      "title": "Formação Completa em Massoterapia",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "sources": [
+        "content/massotherapy-curriculum.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": []
+    },
+    {
+      "slug": "formacao-gratuita-gestao-pessoas-rh",
+      "title": "Formação em Gestão de Pessoas e Recursos Humanos",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "sources": [
+        "content/free-hr-formation.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": [
+        "Leitura e atividade geradas por substituição de títulos; 600h não demonstradas"
+      ]
+    },
+    {
+      "slug": "formacao-ia-negocios-carreira",
+      "title": "Formação em Inteligência Artificial Aplicada aos Negócios e à Carreira",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "sources": [
+        "content/ai-business-career-curriculum.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": []
+    },
+    {
+      "slug": "formacao-lideranca-gestao-pessoas",
+      "title": "Formação em Liderança e Gestão de Pessoas",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "sources": [
+        "content/leadership-people-curriculum.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": []
+    },
+    {
+      "slug": "formacao-mentoria-profissional-carreira",
+      "title": "Formação em Mentoria Profissional e de Carreira",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "sources": [
+        "content/mentorship-career-curriculum.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": []
+    },
+    {
+      "slug": "formacao-negocio-em-24-horas",
+      "title": "Formação Negócio em 24 Horas",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "sources": [
+        "content/business24-curriculum.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": []
+    },
+    {
+      "slug": "formacao-psicanalise",
+      "title": "Formação Online em Psicanálise",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "sources": [
+        "content/psychoanalysis-curriculum-active.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": []
+    },
+    {
+      "slug": "formacao-terapia-breve-psicanalitica",
+      "title": "Formação em Terapia Breve Psicanalítica",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "sources": [
+        "content/brief-therapy-curriculum.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": []
+    },
+    {
+      "slug": "formacao-tricologia-terapia-capilar",
+      "title": "Formação em Tricologia e Terapia Capilar",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "sources": [
+        "content/trichology-capillary-curriculum.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": []
+    },
+    {
+      "slug": "gestao-administrativa-financeira",
+      "title": "Formação em Gestão Administrativa e Financeira para Pequenos Negócios",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "localModules": 10,
+      "localLessons": 150,
+      "sources": [
+        "lib/academy-professional-formations.catalog.ts",
+        "lib/professional-formations-lessons.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": [
+        "Aulas geradas por modelo repetido; contagem não comprova profundidade"
+      ]
+    },
+    {
+      "slug": "gestao-projetos-600h",
+      "title": "Formação em Gestão de Projetos",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "localModules": 20,
+      "localLessons": 180,
+      "sources": [
+        "lib/academy-professional-formations.catalog.ts",
+        "lib/professional-formations-lessons.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": [
+        "Aulas geradas por modelo repetido; contagem não comprova profundidade"
+      ]
+    },
+    {
+      "slug": "jornalismo-digital",
+      "title": "Formação em Jornalismo Digital, Comunicação e Serviços à Comunidade",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "localModules": 15,
+      "localLessons": 150,
+      "sources": [
+        "lib/academy-professional-formations.catalog.ts",
+        "lib/professional-formations-lessons.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": [
+        "Aulas geradas por modelo repetido; contagem não comprova profundidade"
+      ]
+    },
+    {
+      "slug": "marketing-digital",
+      "title": "Formação em Marketing Digital e Redes Sociais para Negócios",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "localModules": 10,
+      "localLessons": 150,
+      "sources": [
+        "lib/academy-professional-formations.catalog.ts",
+        "lib/professional-formations-lessons.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": [
+        "Aulas geradas por modelo repetido; contagem não comprova profundidade"
+      ]
+    },
+    {
+      "slug": "mediacao-conflitos",
+      "title": "Formação em Mediação, Negociação e Resolução de Conflitos",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "localModules": 15,
+      "localLessons": 150,
+      "sources": [
+        "lib/academy-professional-formations.catalog.ts",
+        "lib/professional-formations-lessons.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": [
+        "Aulas geradas por modelo repetido; contagem não comprova profundidade"
+      ]
+    },
+    {
+      "slug": "neurociencias-comportamento-humano",
+      "title": "Formação em Neurociências e Comportamento Humano",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "localModules": 12,
+      "localLessons": 144,
+      "sources": [
+        "lib/academy-professional-formations.catalog.ts",
+        "lib/professional-formations-lessons.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": [
+        "Aulas geradas por modelo repetido; contagem não comprova profundidade"
+      ]
+    },
+    {
+      "slug": "psicanalise-contemporanea-clinicas-atuais",
+      "title": "Formação em Psicanálise Contemporânea com Ênfase nas Clínicas Atuais",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "localModules": 12,
+      "localLessons": 144,
+      "sources": [
+        "lib/academy-professional-formations.catalog.ts",
+        "lib/professional-formations-lessons.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": [
+        "Aulas geradas por modelo repetido; contagem não comprova profundidade"
+      ]
+    },
+    {
+      "slug": "psicanalise-internacional-neurodiversidade-autismo",
+      "title": "Psicanálise Internacional, Neurodiversidade e Autismo",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "sources": [
+        "content/international-psychoanalysis-course.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": []
+    },
+    {
+      "slug": "psicanalista-alta-performance-agenda-clinica",
+      "title": "Agenda Clínica — Como Atrair, Organizar e Consolidar Pacientes",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "sources": [
+        "content/psychoanalyst-performance.catalog.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": []
+    },
+    {
+      "slug": "psicanalista-alta-performance-marketing-psicanalistas",
+      "title": "Marketing para Psicanalistas — Do Posicionamento ao Primeiro Paciente",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "sources": [
+        "content/psychoanalyst-performance.catalog.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": []
+    },
+    {
+      "slug": "psicanalista-alta-performance-psicanalista-10k",
+      "title": "Psicanalista 10K+ — Gestão, Marca e Crescimento da Prática Clínica",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "sources": [
+        "content/psychoanalyst-performance.catalog.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": []
+    },
+    {
+      "slug": "psicanalista-alta-performance-trilogia",
+      "title": "Psicanalista de Alta Performance",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "sources": [
+        "content/psychoanalyst-performance.catalog.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": []
+    },
+    {
+      "slug": "recrutamento-selecao",
+      "title": "Formação em Recrutamento e Seleção Profissional",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "localModules": 10,
+      "localLessons": 150,
+      "sources": [
+        "lib/academy-professional-formations.catalog.ts",
+        "lib/professional-formations-lessons.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": [
+        "Aulas geradas por modelo repetido; contagem não comprova profundidade"
+      ]
+    },
+    {
+      "slug": "saude-mental-praticas-clinicas",
+      "title": "Saúde Mental e Práticas Clínicas Baseadas em Evidências",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "localModules": 12,
+      "localLessons": 144,
+      "sources": [
+        "lib/academy-professional-formations.catalog.ts",
+        "lib/professional-formations-lessons.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": [
+        "Aulas geradas por modelo repetido; contagem não comprova profundidade"
+      ]
+    },
+    {
+      "slug": "sexologia-humana-terapia-sexual",
+      "title": "Formação em Sexologia Humana e Terapia Sexual",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "localModules": 24,
+      "localLessons": 144,
+      "sources": [
+        "lib/academy-professional-formations.catalog.ts",
+        "lib/professional-formations-lessons.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": [
+        "Aulas geradas por modelo repetido; contagem não comprova profundidade"
+      ]
+    },
+    {
+      "slug": "sociologia",
+      "title": "Sociologia — Teorias, Métodos e Desigualdades Contemporâneas",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "localModules": 12,
+      "localLessons": 144,
+      "sources": [
+        "lib/academy-professional-formations.catalog.ts",
+        "lib/professional-formations-lessons.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": [
+        "Aulas geradas por modelo repetido; contagem não comprova profundidade"
+      ]
+    },
+    {
+      "slug": "terapias-contemporaneas",
+      "title": "Formação em Terapias Contemporâneas e Práticas de Desenvolvimento Humano",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "localModules": 15,
+      "localLessons": 150,
+      "sources": [
+        "lib/academy-professional-formations.catalog.ts",
+        "lib/professional-formations-lessons.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": [
+        "Aulas geradas por modelo repetido; contagem não comprova profundidade"
+      ]
+    },
+    {
+      "slug": "terapias-integrativas-complementares-saude",
+      "title": "Formação em Terapias Integrativas e Complementares em Saúde",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "localModules": 12,
+      "localLessons": 144,
+      "sources": [
+        "lib/academy-professional-formations.catalog.ts",
+        "lib/professional-formations-lessons.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": [
+        "Aulas geradas por modelo repetido; contagem não comprova profundidade"
+      ]
+    },
+    {
+      "slug": "vendas-negociacao",
+      "title": "Formação em Vendas, Negociação e Atendimento ao Cliente",
+      "status": "published",
+      "db_modules": 0,
+      "db_materials": 0,
+      "localModules": 10,
+      "localLessons": 150,
+      "sources": [
+        "lib/academy-professional-formations.catalog.ts",
+        "lib/professional-formations-lessons.ts"
+      ],
+      "editorial": "parcial — fonte localizada; qualidade e carga ainda não aprovadas",
+      "issues": [
+        "Aulas geradas por modelo repetido; contagem não comprova profundidade"
+      ]
+    }
+  ],
+  "free": [
+    {
+      "product_key": "curso_gratuito_clinica_psicanalitica_freud_120h",
+      "slug": "clinica-psicanalitica-sigmund-freud",
+      "title": "Clínica Psicanalítica: Sigmund Freud",
+      "modules": 12,
+      "authoredLessons": 12,
+      "estimatedMinutes": 1170,
+      "historicalHours": 120,
+      "editorial": "parcial — sequência original em revisão; carga não validada",
+      "source": "src/lib/academy-free-courses.catalog.ts + src/content/academy-free",
+      "next": "Revisão externa de conteúdo, teste com alunos, materiais e dimensionamento de carga"
+    },
+    {
+      "product_key": "curso_gratuito_orientacao_trabalho_cientifico_120h",
+      "slug": "orientacao-trabalho-cientifico",
+      "title": "Orientação do Trabalho Científico",
+      "modules": 12,
+      "authoredLessons": 12,
+      "estimatedMinutes": 915,
+      "historicalHours": 120,
+      "editorial": "parcial — sequência original em revisão; carga não validada",
+      "source": "src/lib/academy-free-courses.catalog.ts + src/content/academy-free",
+      "next": "Revisão externa de conteúdo, teste com alunos, materiais e dimensionamento de carga"
+    },
+    {
+      "product_key": "curso_gratuito_modelos_documentos_psicanaliticos",
+      "slug": "modelos-documentos-psicanaliticos",
+      "title": "Modelos de Documentos Psicanalíticos",
+      "modules": 10,
+      "authoredLessons": 10,
+      "estimatedMinutes": 900,
+      "historicalHours": null,
+      "editorial": "parcial — sequência original em revisão; carga não validada",
+      "source": "src/lib/academy-free-courses.catalog.ts + src/content/academy-free",
+      "next": "Revisão externa de conteúdo, teste com alunos, materiais e dimensionamento de carga"
+    },
+    {
+      "product_key": "curso_gratuito_ingles_basico_a1",
+      "slug": "ingles-basico-a1",
+      "title": "Inglês Básico — Nível A1",
+      "modules": 5,
+      "authoredLessons": 5,
+      "estimatedMinutes": 405,
+      "historicalHours": 30,
+      "editorial": "parcial — sequência original em revisão; carga não validada",
+      "source": "src/lib/academy-free-courses.catalog.ts + src/content/academy-free",
+      "next": "Revisão externa de conteúdo, teste com alunos, materiais e dimensionamento de carga"
+    },
+    {
+      "product_key": "curso_gratuito_espanhol_basico_a1",
+      "slug": "espanhol-basico-a1",
+      "title": "Espanhol Básico — Nível A1",
+      "modules": 5,
+      "authoredLessons": 5,
+      "estimatedMinutes": 450,
+      "historicalHours": 30,
+      "editorial": "parcial — sequência original em revisão; carga não validada",
+      "source": "src/lib/academy-free-courses.catalog.ts + src/content/academy-free",
+      "next": "Revisão externa de conteúdo, teste com alunos, materiais e dimensionamento de carga"
+    },
+    {
+      "product_key": "curso_gratuito_portugues_falantes_outras_linguas_a1",
+      "slug": "portugues-para-falantes-de-outras-linguas-a1",
+      "title": "Português para Falantes de Outras Línguas — Nível A1",
+      "modules": 5,
+      "authoredLessons": 5,
+      "estimatedMinutes": 450,
+      "historicalHours": 30,
+      "editorial": "parcial — sequência original em revisão; carga não validada",
+      "source": "src/lib/academy-free-courses.catalog.ts + src/content/academy-free",
+      "next": "Revisão externa de conteúdo, teste com alunos, materiais e dimensionamento de carga"
+    },
+    {
+      "product_key": "curso_gratuito_neerlandes_basico_a1",
+      "slug": "neerlandes-basico-a1",
+      "title": "Neerlandês Básico — Nível A1",
+      "modules": 5,
+      "authoredLessons": 5,
+      "estimatedMinutes": 450,
+      "historicalHours": 30,
+      "editorial": "parcial — sequência original em revisão; carga não validada",
+      "source": "src/lib/academy-free-courses.catalog.ts + src/content/academy-free",
+      "next": "Revisão externa de conteúdo, teste com alunos, materiais e dimensionamento de carga"
+    },
+    {
+      "product_key": "curso_gratuito_alemao_basico_a1",
+      "slug": "alemao-basico-a1",
+      "title": "Alemão Básico — Nível A1",
+      "modules": 5,
+      "authoredLessons": 5,
+      "estimatedMinutes": 450,
+      "historicalHours": 30,
+      "editorial": "parcial — sequência original em revisão; carga não validada",
+      "source": "src/lib/academy-free-courses.catalog.ts + src/content/academy-free",
+      "next": "Revisão externa de conteúdo, teste com alunos, materiais e dimensionamento de carga"
+    }
+  ],
+  "subscription": [
+    {
+      "product_key": "curso_assinatura_como_se_preparar_para_uma_entrevista_de_emprego",
+      "slug": "como-se-preparar-para-uma-entrevista-de-emprego",
+      "title": "Como se Preparar para uma Entrevista de Emprego",
+      "historicalHours": 80,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 15/15 módulos, não aprovada nem integrada",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 15/15 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/interview-preparation.pt.json",
+      "authoredDraftModules": 15
+    },
+    {
+      "product_key": "curso_assinatura_redacao_profissional_e_escrita_para_processos_seletivos",
+      "slug": "redacao-profissional-e-escrita-para-processos-seletivos",
+      "title": "Redação Profissional e Escrita para Processos Seletivos",
+      "historicalHours": 100,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 8/8 módulos, não aprovada nem integrada",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 8/8 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/professional-writing.pt.json",
+      "authoredDraftModules": 8
+    },
+    {
+      "product_key": "curso_assinatura_orientacao_de_carreira",
+      "slug": "orientacao-de-carreira",
+      "title": "Orientação de Carreira",
+      "historicalHours": 120,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/career-orientation.pt.json",
+      "authoredDraftModules": 6
+    },
+    {
+      "product_key": "curso_assinatura_auxiliar_de_escritorio",
+      "slug": "auxiliar-de-escritorio",
+      "title": "Auxiliar de Escritório",
+      "historicalHours": 160,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/office-support.pt.json",
+      "authoredDraftModules": 6
+    },
+    {
+      "product_key": "curso_assinatura_como_ganhar_dinheiro_com_inteligencia_artificial",
+      "slug": "como-ganhar-dinheiro-com-inteligencia-artificial",
+      "title": "Como Ganhar Dinheiro com Inteligência Artificial",
+      "historicalHours": 120,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+    },
+    {
+      "product_key": "curso_assinatura_como_vender_produtos_e_servicos_com_estrategia",
+      "slug": "como-vender-produtos-e-servicos-com-estrategia",
+      "title": "Como Vender Produtos e Serviços com Estratégia",
+      "historicalHours": 140,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/sales-strategy.pt.json",
+      "authoredDraftModules": 6
+    },
+    {
+      "product_key": "curso_assinatura_como_selecionar_a_vaga_certa_para_o_seu_perfil",
+      "slug": "como-selecionar-a-vaga-certa-para-o-seu-perfil",
+      "title": "Como Selecionar a Vaga Certa para o Seu Perfil",
+      "historicalHours": 80,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/vacancy-selection.pt.json",
+      "authoredDraftModules": 6
+    },
+    {
+      "product_key": "curso_assinatura_orientacao_de_carreira_internacional",
+      "slug": "orientacao-de-carreira-internacional",
+      "title": "Orientação de Carreira Internacional",
+      "historicalHours": 160,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+    },
+    {
+      "product_key": "curso_assinatura_raciocinio_logico_para_estudos_concursos_e_selecoes",
+      "slug": "raciocinio-logico-para-estudos-concursos-e-selecoes",
+      "title": "Raciocínio Lógico para Estudos, Concursos e Seleções",
+      "historicalHours": 120,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/logical-reasoning.pt.json",
+      "authoredDraftModules": 6
+    },
+    {
+      "product_key": "curso_assinatura_conhecimentos_gerais_para_vida_academica_e_profissional",
+      "slug": "conhecimentos-gerais-para-vida-academica-e-profissional",
+      "title": "Conhecimentos Gerais para Vida Acadêmica e Profissional",
+      "historicalHours": 120,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+    },
+    {
+      "product_key": "curso_assinatura_curriculo_estrategico_como_apresentar_sua_historia_profissional",
+      "slug": "curriculo-estrategico-como-apresentar-sua-historia-profissional",
+      "title": "Currículo Estratégico: Como Apresentar sua História Profissional",
+      "historicalHours": 80,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/cv-strategy.pt.json",
+      "authoredDraftModules": 6
+    },
+    {
+      "product_key": "curso_assinatura_linkedin_profissional_perfil_networking_e_oportunidades",
+      "slug": "linkedin-profissional-perfil-networking-e-oportunidades",
+      "title": "LinkedIn Profissional: Perfil, Networking e Oportunidades",
+      "historicalHours": 80,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+    },
+    {
+      "product_key": "curso_assinatura_comunicacao_profissional_para_o_mercado_de_trabalho",
+      "slug": "comunicacao-profissional-para-o-mercado-de-trabalho",
+      "title": "Comunicação Profissional para o Mercado de Trabalho",
+      "historicalHours": 100,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/workplace-communication.pt.json",
+      "authoredDraftModules": 6
+    },
+    {
+      "product_key": "curso_assinatura_atendimento_ao_cliente_com_humanizacao_e_resultado",
+      "slug": "atendimento-ao-cliente-com-humanizacao-e-resultado",
+      "title": "Atendimento ao Cliente com Humanização e Resultado",
+      "historicalHours": 120,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+    },
+    {
+      "product_key": "curso_assinatura_assistente_administrativo_na_pratica",
+      "slug": "assistente-administrativo-na-pratica",
+      "title": "Assistente Administrativo na Prática",
+      "historicalHours": 180,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/administrative-assistant.pt.json",
+      "authoredDraftModules": 6
+    },
+    {
+      "product_key": "curso_assinatura_rotinas_de_escritorio_e_organizacao_administrativa",
+      "slug": "rotinas-de-escritorio-e-organizacao-administrativa",
+      "title": "Rotinas de Escritório e Organização Administrativa",
+      "historicalHours": 160,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/office-routines.pt.json",
+      "authoredDraftModules": 6
+    },
+    {
+      "product_key": "curso_assinatura_introducao_ao_departamento_pessoal",
+      "slug": "introducao-ao-departamento-pessoal",
+      "title": "Introdução ao Departamento Pessoal",
+      "historicalHours": 140,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+    },
+    {
+      "product_key": "curso_assinatura_nocoes_de_recursos_humanos_para_iniciantes",
+      "slug": "nocoes-de-recursos-humanos-para-iniciantes",
+      "title": "Noções de Recursos Humanos para Iniciantes",
+      "historicalHours": 120,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+    },
+    {
+      "product_key": "curso_assinatura_inteligencia_artificial_para_estudantes_e_profissionais",
+      "slug": "inteligencia-artificial-para-estudantes-e-profissionais",
+      "title": "Inteligência Artificial para Estudantes e Profissionais",
+      "historicalHours": 100,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+    },
+    {
+      "product_key": "curso_assinatura_como_criar_produtos_digitais_do_zero",
+      "slug": "como-criar-produtos-digitais-do-zero",
+      "title": "Como Criar Produtos Digitais do Zero",
+      "historicalHours": 160,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/digital-product-creation.pt.json",
+      "authoredDraftModules": 6
+    },
+    {
+      "product_key": "curso_assinatura_como_divulgar_um_produto_na_internet",
+      "slug": "como-divulgar-um-produto-na-internet",
+      "title": "Como Divulgar um Produto na Internet",
+      "historicalHours": 120,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/online-product-promotion.pt.json",
+      "authoredDraftModules": 6
+    },
+    {
+      "product_key": "curso_assinatura_como_fazer_uma_proposta_comercial_profissional",
+      "slug": "como-fazer-uma-proposta-comercial-profissional",
+      "title": "Como Fazer uma Proposta Comercial Profissional",
+      "historicalHours": 100,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/commercial-proposal.pt.json",
+      "authoredDraftModules": 6
+    },
+    {
+      "product_key": "curso_assinatura_como_conduzir_reunioes_e_apresentacoes_com_seguranca",
+      "slug": "como-conduzir-reunioes-e-apresentacoes-com-seguranca",
+      "title": "Como Conduzir Reuniões e Apresentações com Segurança",
+      "historicalHours": 100,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+    },
+    {
+      "product_key": "curso_assinatura_como_sair_da_ideia_e_chegar_ao_primeiro_cliente",
+      "slug": "como-sair-da-ideia-e-chegar-ao-primeiro-cliente",
+      "title": "Como Sair da Ideia e Chegar ao Primeiro Cliente",
+      "historicalHours": 160,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/first-customer.pt.json",
+      "authoredDraftModules": 6
+    },
+    {
+      "product_key": "curso_assinatura_empreendedorismo_para_quem_esta_comecando_do_zero",
+      "slug": "empreendedorismo-para-quem-esta-comecando-do-zero",
+      "title": "Empreendedorismo para Quem Está Começando do Zero",
+      "historicalHours": 180,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/business-foundations.pt.json",
+      "authoredDraftModules": 6
+    },
+    {
+      "product_key": "curso_assinatura_organizacao_pessoal_e_gestao_do_tempo",
+      "slug": "organizacao-pessoal-e-gestao-do-tempo",
+      "title": "Organização Pessoal e Gestão do Tempo",
+      "historicalHours": 80,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/personal-time-organization.pt.json",
+      "authoredDraftModules": 6
+    },
+    {
+      "product_key": "curso_assinatura_produtividade_sem_ansiedade",
+      "slug": "produtividade-sem-ansiedade",
+      "title": "Produtividade sem Ansiedade",
+      "historicalHours": 80,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+    },
+    {
+      "product_key": "curso_assinatura_planejamento_de_estudos_para_adultos",
+      "slug": "planejamento-de-estudos-para-adultos",
+      "title": "Planejamento de Estudos para Adultos",
+      "historicalHours": 100,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/adult-study-planning.pt.json",
+      "authoredDraftModules": 6
+    },
+    {
+      "product_key": "curso_assinatura_tecnicas_de_aprendizagem_e_memorizacao",
+      "slug": "tecnicas-de-aprendizagem-e-memorizacao",
+      "title": "Técnicas de Aprendizagem e Memorização",
+      "historicalHours": 100,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/learning-memory.pt.json",
+      "authoredDraftModules": 6
+    },
+    {
+      "product_key": "curso_assinatura_escrita_academica_para_iniciantes",
+      "slug": "escrita-academica-para-iniciantes",
+      "title": "Escrita Acadêmica para Iniciantes",
+      "historicalHours": 120,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+    },
+    {
+      "product_key": "curso_assinatura_como_fazer_apresentacoes_profissionais",
+      "slug": "como-fazer-apresentacoes-profissionais",
+      "title": "Como Fazer Apresentações Profissionais",
+      "historicalHours": 100,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+    },
+    {
+      "product_key": "curso_assinatura_oratoria_e_seguranca_para_falar_em_publico",
+      "slug": "oratoria-e-seguranca-para-falar-em-publico",
+      "title": "Oratória e Segurança para Falar em Público",
+      "historicalHours": 120,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+    },
+    {
+      "product_key": "curso_assinatura_inteligencia_emocional_no_trabalho",
+      "slug": "inteligencia-emocional-no-trabalho",
+      "title": "Inteligência Emocional no Trabalho",
+      "historicalHours": 100,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+    },
+    {
+      "product_key": "curso_assinatura_autoconhecimento_e_escolhas_profissionais",
+      "slug": "autoconhecimento-e-escolhas-profissionais",
+      "title": "Autoconhecimento e Escolhas Profissionais",
+      "historicalHours": 100,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+    },
+    {
+      "product_key": "curso_assinatura_desenvolvimento_pessoal_para_vida_profissional",
+      "slug": "desenvolvimento-pessoal-para-vida-profissional",
+      "title": "Desenvolvimento Pessoal para Vida Profissional",
+      "historicalHours": 120,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+    },
+    {
+      "product_key": "curso_assinatura_como_lidar_com_rejeicao_em_processos_seletivos",
+      "slug": "como-lidar-com-rejeicao-em-processos-seletivos",
+      "title": "Como Lidar com Rejeição em Processos Seletivos",
+      "historicalHours": 80,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+    },
+    {
+      "product_key": "curso_assinatura_como_recomecar_profissionalmente",
+      "slug": "como-recomecar-profissionalmente",
+      "title": "Como Recomeçar Profissionalmente",
+      "historicalHours": 120,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+    },
+    {
+      "product_key": "curso_assinatura_transicao_de_carreira_com_planejamento",
+      "slug": "transicao-de-carreira-com-planejamento",
+      "title": "Transição de Carreira com Planejamento",
+      "historicalHours": 140,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+    },
+    {
+      "product_key": "curso_assinatura_trabalho_remoto_e_organizacao_profissional",
+      "slug": "trabalho-remoto-e-organizacao-profissional",
+      "title": "Trabalho Remoto e Organização Profissional",
+      "historicalHours": 100,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+    },
+    {
+      "product_key": "curso_assinatura_atendimento_online_e_comunicacao_digital",
+      "slug": "atendimento-online-e-comunicacao-digital",
+      "title": "Atendimento Online e Comunicação Digital",
+      "historicalHours": 100,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+    },
+    {
+      "product_key": "curso_assinatura_vendas_pelo_whatsapp_e_redes_sociais",
+      "slug": "vendas-pelo-whatsapp-e-redes-sociais",
+      "title": "Vendas pelo WhatsApp e Redes Sociais",
+      "historicalHours": 120,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+    },
+    {
+      "product_key": "curso_assinatura_como_criar_uma_oferta_irresistivel_sem_promessas_falsas",
+      "slug": "como-criar-uma-oferta-irresistivel-sem-promessas-falsas",
+      "title": "Como Criar uma Oferta Irresistível sem Promessas Falsas",
+      "historicalHours": 120,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/trustworthy-offer.pt.json",
+      "authoredDraftModules": 6
+    },
+    {
+      "product_key": "curso_assinatura_precificacao_para_servicos_e_produtos_digitais",
+      "slug": "precificacao-para-servicos-e-produtos-digitais",
+      "title": "Precificação para Serviços e Produtos Digitais",
+      "historicalHours": 100,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+    },
+    {
+      "product_key": "curso_assinatura_educacao_financeira_basica_para_profissionais",
+      "slug": "educacao-financeira-basica-para-profissionais",
+      "title": "Educação Financeira Básica para Profissionais",
+      "historicalHours": 100,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+    },
+    {
+      "product_key": "curso_assinatura_como_organizar_documentos_rotinas_e_metas",
+      "slug": "como-organizar-documentos-rotinas-e-metas",
+      "title": "Como Organizar Documentos, Rotinas e Metas",
+      "historicalHours": 80,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+    },
+    {
+      "product_key": "curso_assinatura_introducao_ao_marketing_digital_para_iniciantes",
+      "slug": "introducao-ao-marketing-digital-para-iniciantes",
+      "title": "Introdução ao Marketing Digital para Iniciantes",
+      "historicalHours": 120,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+    },
+    {
+      "product_key": "curso_assinatura_captacao_de_clientes_com_etica_e_estrategia",
+      "slug": "captacao-de-clientes-com-etica-e-estrategia",
+      "title": "Captação de Clientes com Ética e Estratégia",
+      "historicalHours": 120,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+    },
+    {
+      "product_key": "curso_assinatura_carreira_para_imigrantes_e_mercado_internacional",
+      "slug": "carreira-para-imigrantes-e-mercado-internacional",
+      "title": "Carreira para Imigrantes e Mercado Internacional",
+      "historicalHours": 160,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+    },
+    {
+      "product_key": "curso_assinatura_preparacao_para_bolsas_intercambios_e_oportunidades_academicas",
+      "slug": "preparacao-para-bolsas-intercambios-e-oportunidades-academicas",
+      "title": "Preparação para Bolsas, Intercâmbios e Oportunidades Acadêmicas",
+      "historicalHours": 140,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+    },
+    {
+      "product_key": "curso_assinatura_projeto_de_vida_trabalho_e_futuro_profissional",
+      "slug": "projeto-de-vida-trabalho-e-futuro-profissional",
+      "title": "Projeto de Vida, Trabalho e Futuro Profissional",
+      "historicalHours": 160,
+      "modules": 15,
+      "topics": 45,
+      "materialsListed": 3,
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "source": "src/lib/academy-subscription-courses.catalog.ts",
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+    }
+  ],
+  "ebooks": [
+    {
+      "product_key": "ebook_comportamento_humano",
+      "title": "Como Mudar o Comportamento Humano",
+      "locale": "pt",
+      "version": 1,
+      "active": true,
+      "units": 20,
+      "words": 652,
+      "shortestUnitWords": 27,
+      "historicalFormat": false,
+      "reader": "estrutura compatível após normalização; sessão autenticada por testar",
+      "editorial": "parcial — revisão intelectual e bibliográfica pendente",
+      "issues": [
+        "Capítulo/página curto: profundidade editorial por rever (limiar de triagem, não aprovação automática)"
+      ]
+    },
+    {
+      "product_key": "ebook_coragem_comecar",
+      "title": "The Courage to Start",
+      "locale": "en",
+      "version": 2,
+      "active": true,
+      "units": 22,
+      "words": 3202,
+      "shortestUnitWords": 128,
+      "historicalFormat": false,
+      "reader": "estrutura compatível após normalização; sessão autenticada por testar",
+      "editorial": "parcial — revisão intelectual e bibliográfica pendente",
+      "issues": []
+    },
+    {
+      "product_key": "ebook_coragem_comecar",
+      "title": "El Coraje de Empezar",
+      "locale": "es",
+      "version": 2,
+      "active": true,
+      "units": 22,
+      "words": 2917,
+      "shortestUnitWords": 121,
+      "historicalFormat": false,
+      "reader": "estrutura compatível após normalização; sessão autenticada por testar",
+      "editorial": "parcial — revisão intelectual e bibliográfica pendente",
+      "issues": []
+    },
+    {
+      "product_key": "ebook_coragem_comecar",
+      "title": "Le Courage de Commencer",
+      "locale": "fr",
+      "version": 2,
+      "active": true,
+      "units": 22,
+      "words": 3180,
+      "shortestUnitWords": 126,
+      "historicalFormat": false,
+      "reader": "estrutura compatível após normalização; sessão autenticada por testar",
+      "editorial": "parcial — revisão intelectual e bibliográfica pendente",
+      "issues": []
+    },
+    {
+      "product_key": "ebook_coragem_comecar",
+      "title": "A Coragem de Começar",
+      "locale": "pt",
+      "version": 1,
+      "active": true,
+      "units": 20,
+      "words": 4135,
+      "shortestUnitWords": 155,
+      "historicalFormat": false,
+      "reader": "estrutura compatível após normalização; sessão autenticada por testar",
+      "editorial": "parcial — revisão intelectual e bibliográfica pendente",
+      "issues": []
+    },
+    {
+      "product_key": "ebook_corpo_trabalho_escuta",
+      "title": "Corpo, Trabalho e Escuta",
+      "locale": "pt",
+      "version": 1,
+      "active": true,
+      "units": 20,
+      "words": 732,
+      "shortestUnitWords": 29,
+      "historicalFormat": false,
+      "reader": "estrutura compatível após normalização; sessão autenticada por testar",
+      "editorial": "parcial — revisão intelectual e bibliográfica pendente",
+      "issues": [
+        "Capítulo/página curto: profundidade editorial por rever (limiar de triagem, não aprovação automática)"
+      ]
+    },
+    {
+      "product_key": "ebook_da_pobreza_ao_primeiro_contrato",
+      "title": "Da Pobreza ao Primeiro Contrato",
+      "locale": "pt",
+      "version": 1,
+      "active": true,
+      "units": 6,
+      "words": 325,
+      "shortestUnitWords": 47,
+      "historicalFormat": false,
+      "reader": "estrutura compatível após normalização; sessão autenticada por testar",
+      "editorial": "parcial — revisão intelectual e bibliográfica pendente",
+      "issues": [
+        "Capítulo/página curto: profundidade editorial por rever (limiar de triagem, não aprovação automática)",
+        "Quebras de linha literais escapadas"
+      ]
+    },
+    {
+      "product_key": "ebook_estetica_bem_estar",
+      "title": "Estética Aplicada ao Bem-Estar",
+      "locale": "pt",
+      "version": 1,
+      "active": true,
+      "units": 20,
+      "words": 592,
+      "shortestUnitWords": 24,
+      "historicalFormat": false,
+      "reader": "estrutura compatível após normalização; sessão autenticada por testar",
+      "editorial": "parcial — revisão intelectual e bibliográfica pendente",
+      "issues": [
+        "Capítulo/página curto: profundidade editorial por rever (limiar de triagem, não aprovação automática)"
+      ]
+    },
+    {
+      "product_key": "ebook_estudos_caso_psicanalise",
+      "title": "Estudos de Caso",
+      "locale": "pt",
+      "version": 3,
+      "active": true,
+      "units": 196,
+      "words": 42592,
+      "shortestUnitWords": 190,
+      "historicalFormat": false,
+      "reader": "estrutura compatível após normalização; sessão autenticada por testar",
+      "editorial": "parcial — revisão intelectual e bibliográfica pendente",
+      "issues": []
+    },
+    {
+      "product_key": "ebook_falar_com_quem_feriu",
+      "title": "Falar com Quem Feriu",
+      "locale": "pt",
+      "version": 1,
+      "active": true,
+      "units": 6,
+      "words": 416,
+      "shortestUnitWords": 62,
+      "historicalFormat": false,
+      "reader": "estrutura compatível após normalização; sessão autenticada por testar",
+      "editorial": "parcial — revisão intelectual e bibliográfica pendente",
+      "issues": [
+        "Capítulo/página curto: profundidade editorial por rever (limiar de triagem, não aprovação automática)",
+        "Quebras de linha literais escapadas"
+      ]
+    },
+    {
+      "product_key": "ebook_ia_novos_milionarios",
+      "title": "Como a Inteligência Artificial Pode Criar Novos Milionários",
+      "locale": "pt",
+      "version": 1,
+      "active": true,
+      "units": 20,
+      "words": 682,
+      "shortestUnitWords": 29,
+      "historicalFormat": false,
+      "reader": "estrutura compatível após normalização; sessão autenticada por testar",
+      "editorial": "parcial — revisão intelectual e bibliográfica pendente",
+      "issues": [
+        "Capítulo/página curto: profundidade editorial por rever (limiar de triagem, não aprovação automática)"
+      ]
+    },
+    {
+      "product_key": "ebook_imigracao_efeitos_psicologicos",
+      "title": "Entre Dois Mundos",
+      "locale": "pt",
+      "version": 1,
+      "active": true,
+      "units": 20,
+      "words": 747,
+      "shortestUnitWords": 32,
+      "historicalFormat": false,
+      "reader": "estrutura compatível após normalização; sessão autenticada por testar",
+      "editorial": "parcial — revisão intelectual e bibliográfica pendente",
+      "issues": [
+        "Capítulo/página curto: profundidade editorial por rever (limiar de triagem, não aprovação automática)"
+      ]
+    },
+    {
+      "product_key": "ebook_jornalismo_era_digital",
+      "title": "Jornalismo na Era Digital",
+      "locale": "pt",
+      "version": 1,
+      "active": true,
+      "units": 20,
+      "words": 583,
+      "shortestUnitWords": 24,
+      "historicalFormat": false,
+      "reader": "estrutura compatível após normalização; sessão autenticada por testar",
+      "editorial": "parcial — revisão intelectual e bibliográfica pendente",
+      "issues": [
+        "Capítulo/página curto: profundidade editorial por rever (limiar de triagem, não aprovação automática)"
+      ]
+    },
+    {
+      "product_key": "ebook_pratica_clinica_psicanalise",
+      "title": "A Prática Clínica da Psicanálise",
+      "locale": "pt",
+      "version": 1,
+      "active": true,
+      "units": 23,
+      "words": 7066,
+      "shortestUnitWords": 103,
+      "historicalFormat": false,
+      "reader": "estrutura compatível após normalização; sessão autenticada por testar",
+      "editorial": "parcial — revisão intelectual e bibliográfica pendente",
+      "issues": [
+        "Capítulo/página curto: profundidade editorial por rever (limiar de triagem, não aprovação automática)"
+      ]
+    },
+    {
+      "product_key": "ebook_psicanalise_autismo",
+      "title": "Psicanálise e Autismo",
+      "locale": "pt",
+      "version": 1,
+      "active": true,
+      "units": 23,
+      "words": 7246,
+      "shortestUnitWords": 174,
+      "historicalFormat": false,
+      "reader": "estrutura compatível após normalização; sessão autenticada por testar",
+      "editorial": "parcial — revisão intelectual e bibliográfica pendente",
+      "issues": []
+    },
+    {
+      "product_key": "ebook_psicanalise_no_mundo",
+      "title": "A Psicanálise no Mundo",
+      "locale": "pt",
+      "version": 1,
+      "active": true,
+      "units": 23,
+      "words": 6769,
+      "shortestUnitWords": 81,
+      "historicalFormat": false,
+      "reader": "estrutura compatível após normalização; sessão autenticada por testar",
+      "editorial": "parcial — revisão intelectual e bibliográfica pendente",
+      "issues": [
+        "Capítulo/página curto: profundidade editorial por rever (limiar de triagem, não aprovação automática)"
+      ]
+    },
+    {
+      "product_key": "ebook_psicanalise_vs_psiquiatria",
+      "title": "Psicanálise vs. Psiquiatria",
+      "locale": "pt",
+      "version": 1,
+      "active": true,
+      "units": 20,
+      "words": 3552,
+      "shortestUnitWords": 140,
+      "historicalFormat": false,
+      "reader": "estrutura compatível após normalização; sessão autenticada por testar",
+      "editorial": "parcial — revisão intelectual e bibliográfica pendente",
+      "issues": []
+    },
+    {
+      "product_key": "ebook_psicologia_psicanalise_terapias",
+      "title": "Psicologia, Psicanálise e Terapias Integrativas",
+      "locale": "pt",
+      "version": 1,
+      "active": true,
+      "units": 20,
+      "words": 2138,
+      "shortestUnitWords": 94,
+      "historicalFormat": false,
+      "reader": "estrutura compatível após normalização; sessão autenticada por testar",
+      "editorial": "parcial — revisão intelectual e bibliográfica pendente",
+      "issues": [
+        "Capítulo/página curto: profundidade editorial por rever (limiar de triagem, não aprovação automática)"
+      ]
+    },
+    {
+      "product_key": "ebook_tricologia_cuidado",
+      "title": "Tricologia Capilar Aplicada ao Cuidado",
+      "locale": "pt",
+      "version": 1,
+      "active": true,
+      "units": 20,
+      "words": 626,
+      "shortestUnitWords": 27,
+      "historicalFormat": false,
+      "reader": "estrutura compatível após normalização; sessão autenticada por testar",
+      "editorial": "parcial — revisão intelectual e bibliográfica pendente",
+      "issues": [
+        "Capítulo/página curto: profundidade editorial por rever (limiar de triagem, não aprovação automática)"
+      ]
+    },
+    {
+      "product_key": "livro_menino_mamao",
+      "title": "The Boy Who Sold Papaya",
+      "locale": "en",
+      "version": 2,
+      "active": true,
+      "units": 40,
+      "words": 12856,
+      "shortestUnitWords": 304,
+      "historicalFormat": false,
+      "reader": "estrutura compatível após normalização; sessão autenticada por testar",
+      "editorial": "parcial — revisão intelectual e bibliográfica pendente",
+      "issues": []
+    },
+    {
+      "product_key": "livro_menino_mamao",
+      "title": "El Niño que Vendía Papayas",
+      "locale": "es",
+      "version": 2,
+      "active": true,
+      "units": 40,
+      "words": 12896,
+      "shortestUnitWords": 300,
+      "historicalFormat": false,
+      "reader": "estrutura compatível após normalização; sessão autenticada por testar",
+      "editorial": "parcial — revisão intelectual e bibliográfica pendente",
+      "issues": []
+    },
+    {
+      "product_key": "livro_menino_mamao",
+      "title": "Le Garçon qui Vendait des Papayes",
+      "locale": "fr",
+      "version": 2,
+      "active": true,
+      "units": 40,
+      "words": 14479,
+      "shortestUnitWords": 334,
+      "historicalFormat": false,
+      "reader": "estrutura compatível após normalização; sessão autenticada por testar",
+      "editorial": "parcial — revisão intelectual e bibliográfica pendente",
+      "issues": []
+    },
+    {
+      "product_key": "livro_menino_mamao",
+      "title": "O Menino que Vendia Mamão",
+      "locale": "pt",
+      "version": 2,
+      "active": true,
+      "units": 40,
+      "words": 18749,
+      "shortestUnitWords": 380,
+      "historicalFormat": false,
+      "reader": "estrutura compatível após normalização; sessão autenticada por testar",
+      "editorial": "parcial — revisão intelectual e bibliográfica pendente",
+      "issues": []
+    }
+  ],
+  "editorialCandidates": [
+    {
+      "productKey": "ebook_comportamento_humano",
+      "baseVersion": 1,
+      "candidateVersion": 2,
+      "status": "draft",
+      "published": false,
+      "baseCanonicalSha256": "9a626bdf7721cae096015efdf3c2e4af03677e1d5f72a32cd6df7116ae56bcee",
+      "path": "editorial/drafts/ebook_comportamento_humano_v2.json",
+      "errors": [],
+      "authoredChapters": 20,
+      "expectedChapters": 20,
+      "complete": true,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 120,
+        "pairsChecked": 7140,
+        "exact": [],
+        "near": []
+      }
+    }
+  ],
+  "courseCandidates": [
+    {
+      "productKey": "curso_assinatura_assistente_administrativo_na_pratica",
+      "title": "Assistente Administrativo na Prática",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 180,
+      "path": "editorial/courses/administrative-assistant.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
+      "productKey": "curso_assinatura_planejamento_de_estudos_para_adultos",
+      "title": "Planejamento de Estudos para Adultos",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 100,
+      "path": "editorial/courses/adult-study-planning.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
+      "productKey": "curso_assinatura_empreendedorismo_para_quem_esta_comecando_do_zero",
+      "title": "Empreendedorismo para Quem Está Começando do Zero",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 180,
+      "path": "editorial/courses/business-foundations.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
+      "productKey": "curso_assinatura_orientacao_de_carreira",
+      "title": "Orientação de Carreira",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 120,
+      "path": "editorial/courses/career-orientation.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
+      "productKey": "curso_assinatura_como_fazer_uma_proposta_comercial_profissional",
+      "title": "Como Fazer uma Proposta Comercial Profissional",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 100,
+      "path": "editorial/courses/commercial-proposal.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
+      "productKey": "curso_assinatura_curriculo_estrategico_como_apresentar_sua_historia_profissional",
+      "title": "Currículo Estratégico: Como Apresentar sua História Profissional",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 80,
+      "path": "editorial/courses/cv-strategy.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
+      "productKey": "curso_assinatura_como_criar_produtos_digitais_do_zero",
+      "title": "Como Criar Produtos Digitais do Zero",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 160,
+      "path": "editorial/courses/digital-product-creation.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
+      "productKey": "curso_assinatura_como_sair_da_ideia_e_chegar_ao_primeiro_cliente",
+      "title": "Como Sair da Ideia e Chegar ao Primeiro Cliente",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 160,
+      "path": "editorial/courses/first-customer.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
+      "productKey": "curso_assinatura_como_se_preparar_para_uma_entrevista_de_emprego",
+      "title": "Como se Preparar para uma Entrevista de Emprego",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 80,
+      "path": "editorial/courses/interview-preparation.pt.json",
+      "errors": [],
+      "authoredModules": 15,
+      "expectedModules": 15,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 105,
+        "pairsChecked": 5460,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
+      "productKey": "curso_assinatura_tecnicas_de_aprendizagem_e_memorizacao",
+      "title": "Técnicas de Aprendizagem e Memorização",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 100,
+      "path": "editorial/courses/learning-memory.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
+      "productKey": "curso_assinatura_raciocinio_logico_para_estudos_concursos_e_selecoes",
+      "title": "Raciocínio Lógico para Estudos, Concursos e Seleções",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 120,
+      "path": "editorial/courses/logical-reasoning.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
+      "productKey": "curso_assinatura_rotinas_de_escritorio_e_organizacao_administrativa",
+      "title": "Rotinas de Escritório e Organização Administrativa",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 160,
+      "path": "editorial/courses/office-routines.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
+      "productKey": "curso_assinatura_auxiliar_de_escritorio",
+      "title": "Auxiliar de Escritório",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 160,
+      "path": "editorial/courses/office-support.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
+      "productKey": "curso_assinatura_como_divulgar_um_produto_na_internet",
+      "title": "Como Divulgar um Produto na Internet",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 120,
+      "path": "editorial/courses/online-product-promotion.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
+      "productKey": "curso_assinatura_organizacao_pessoal_e_gestao_do_tempo",
+      "title": "Organização Pessoal e Gestão do Tempo",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 80,
+      "path": "editorial/courses/personal-time-organization.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
+      "productKey": "curso_assinatura_redacao_profissional_e_escrita_para_processos_seletivos",
+      "title": "Redação Profissional e Escrita para Processos Seletivos",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 100,
+      "path": "editorial/courses/professional-writing.pt.json",
+      "errors": [],
+      "authoredModules": 8,
+      "expectedModules": 8,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 56,
+        "pairsChecked": 1540,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
+      "productKey": "curso_assinatura_como_vender_produtos_e_servicos_com_estrategia",
+      "title": "Como Vender Produtos e Serviços com Estratégia",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 140,
+      "path": "editorial/courses/sales-strategy.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
+      "productKey": "curso_assinatura_como_criar_uma_oferta_irresistivel_sem_promessas_falsas",
+      "title": "Como Criar uma Oferta Irresistível sem Promessas Falsas",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 120,
+      "path": "editorial/courses/trustworthy-offer.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
+      "productKey": "curso_assinatura_como_selecionar_a_vaga_certa_para_o_seu_perfil",
+      "title": "Como Selecionar a Vaga Certa para o Seu Perfil",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 80,
+      "path": "editorial/courses/vacancy-selection.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
+      "productKey": "curso_assinatura_comunicacao_profissional_para_o_mercado_de_trabalho",
+      "title": "Comunicação Profissional para o Mercado de Trabalho",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 100,
+      "path": "editorial/courses/workplace-communication.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
+        "exact": [],
+        "near": []
+      }
+    }
+  ],
+  "editorialCorpusReview": {
+    "documents": 21,
+    "units": 151,
+    "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+    "paragraphsChecked": 929,
+    "pairsChecked": 431056,
+    "exact": [],
+    "near": []
+  },
+  "editorialRevisions": [
+    {
+      "productKey": "ebook_estudos_caso_psicanalise",
+      "locale": "pt",
+      "baseVersion": 3,
+      "candidateVersion": 4,
+      "status": "review-required",
+      "published": false,
+      "selectedGroups": 41,
+      "previewMetrics": {
+        "beforeWords": 42592,
+        "afterWords": 26883,
+        "removedCopies": 943,
+        "unitsBefore": 196,
+        "unitsAfter": 196,
+        "emptyUnits": 0,
+        "remainingRepeatedGroupsAtThreshold": 0,
+        "originalUnchanged": true
+      },
+      "path": "editorial/revisions/ebook_estudos_caso_psicanalise.pt.plan.json"
+    },
+    {
+      "productKey": "livro_menino_mamao",
+      "locale": "pt",
+      "baseVersion": 2,
+      "candidateVersion": 3,
+      "status": "review-required",
+      "published": false,
+      "selectedGroups": 16,
+      "previewMetrics": {
+        "beforeWords": 18749,
+        "afterWords": 10439,
+        "removedCopies": 512,
+        "unitsBefore": 40,
+        "unitsAfter": 40,
+        "emptyUnits": 0,
+        "remainingRepeatedGroupsAtThreshold": 0,
+        "originalUnchanged": true
+      },
+      "path": "editorial/revisions/livro_menino_mamao.pt.plan.json"
+    }
+  ],
+  "exactDuplicates": [],
+  "nearDuplicateGroups": [
+    {
+      "locale": "pt",
+      "products": [
+        "ebook_estudos_caso_psicanalise",
+        "ebook_estudos_caso_psicanalise"
+      ],
+      "count": 1787,
+      "examples": [
+        {
+          "score": 0.86,
+          "a": {
+            "product": "ebook_estudos_caso_psicanalise",
+            "unit": "3"
+          },
+          "b": {
+            "product": "ebook_estudos_caso_psicanalise",
+            "unit": "11"
+          },
+          "locale": "pt"
+        },
+        {
+          "score": 0.929,
+          "a": {
+            "product": "ebook_estudos_caso_psicanalise",
+            "unit": "3"
+          },
+          "b": {
+            "product": "ebook_estudos_caso_psicanalise",
+            "unit": "19"
+          },
+          "locale": "pt"
+        },
+        {
+          "score": 0.884,
+          "a": {
+            "product": "ebook_estudos_caso_psicanalise",
+            "unit": "3"
+          },
+          "b": {
+            "product": "ebook_estudos_caso_psicanalise",
+            "unit": "27"
+          },
+          "locale": "pt"
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "products": [
+        "livro_menino_mamao",
+        "livro_menino_mamao"
+      ],
+      "count": 3163,
+      "examples": [
+        {
+          "score": 0.791,
+          "a": {
+            "product": "livro_menino_mamao",
+            "unit": "Prologue"
+          },
+          "b": {
+            "product": "livro_menino_mamao",
+            "unit": "Chapter 1"
+          },
+          "locale": "en"
+        },
+        {
+          "score": 0.803,
+          "a": {
+            "product": "livro_menino_mamao",
+            "unit": "Prologue"
+          },
+          "b": {
+            "product": "livro_menino_mamao",
+            "unit": "Chapter 2"
+          },
+          "locale": "en"
+        },
+        {
+          "score": 0.791,
+          "a": {
+            "product": "livro_menino_mamao",
+            "unit": "Prologue"
+          },
+          "b": {
+            "product": "livro_menino_mamao",
+            "unit": "Chapter 3"
+          },
+          "locale": "en"
+        }
+      ]
+    },
+    {
+      "locale": "es",
+      "products": [
+        "livro_menino_mamao",
+        "livro_menino_mamao"
+      ],
+      "count": 3125,
+      "examples": [
+        {
+          "score": 0.925,
+          "a": {
+            "product": "livro_menino_mamao",
+            "unit": "Prólogo"
+          },
+          "b": {
+            "product": "livro_menino_mamao",
+            "unit": "Capítulo 1"
+          },
+          "locale": "es"
+        },
+        {
+          "score": 0.925,
+          "a": {
+            "product": "livro_menino_mamao",
+            "unit": "Prólogo"
+          },
+          "b": {
+            "product": "livro_menino_mamao",
+            "unit": "Capítulo 2"
+          },
+          "locale": "es"
+        },
+        {
+          "score": 0.907,
+          "a": {
+            "product": "livro_menino_mamao",
+            "unit": "Prólogo"
+          },
+          "b": {
+            "product": "livro_menino_mamao",
+            "unit": "Capítulo 3"
+          },
+          "locale": "es"
+        }
+      ]
+    },
+    {
+      "locale": "fr",
+      "products": [
+        "livro_menino_mamao",
+        "livro_menino_mamao"
+      ],
+      "count": 2919,
+      "examples": [
+        {
+          "score": 0.917,
+          "a": {
+            "product": "livro_menino_mamao",
+            "unit": "Prologue"
+          },
+          "b": {
+            "product": "livro_menino_mamao",
+            "unit": "Chapitre 1"
+          },
+          "locale": "fr"
+        },
+        {
+          "score": 0.932,
+          "a": {
+            "product": "livro_menino_mamao",
+            "unit": "Prologue"
+          },
+          "b": {
+            "product": "livro_menino_mamao",
+            "unit": "Chapitre 2"
+          },
+          "locale": "fr"
+        },
+        {
+          "score": 0.917,
+          "a": {
+            "product": "livro_menino_mamao",
+            "unit": "Prologue"
+          },
+          "b": {
+            "product": "livro_menino_mamao",
+            "unit": "Chapitre 3"
+          },
+          "locale": "fr"
+        }
+      ]
+    },
+    {
+      "locale": "pt",
+      "products": [
+        "livro_menino_mamao",
+        "livro_menino_mamao"
+      ],
+      "count": 716,
+      "examples": [
+        {
+          "score": 0.781,
+          "a": {
+            "product": "livro_menino_mamao",
+            "unit": "Prólogo"
+          },
+          "b": {
+            "product": "livro_menino_mamao",
+            "unit": "Epílogo"
+          },
+          "locale": "pt"
+        },
+        {
+          "score": 0.848,
+          "a": {
+            "product": "livro_menino_mamao",
+            "unit": "Prólogo"
+          },
+          "b": {
+            "product": "livro_menino_mamao",
+            "unit": "Capítulo 19"
+          },
+          "locale": "pt"
+        },
+        {
+          "score": 0.836,
+          "a": {
+            "product": "livro_menino_mamao",
+            "unit": "Prólogo"
+          },
+          "b": {
+            "product": "livro_menino_mamao",
+            "unit": "Capítulo 20"
+          },
+          "locale": "pt"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,372 @@
+{
+  "productKey": "curso_assinatura_como_divulgar_um_produto_na_internet",
+  "slug": "como-divulgar-um-produto-na-internet",
+  "title": "Como Divulgar um Produto na Internet",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 120,
+  "validatedHours": null,
+  "expectedModuleCount": 6,
+  "scope": "Construção de campanha digital limitada: ação, alegações, canais, destino, medição, comparação e revisão. Distingue-se de fundamentos de marketing, venda individual e criação do produto. Dados agregados e URLs de exemplo; sem rastreio, publicação, anúncio pago ou contacto real.120h históricas não validadas.",
+  "courseObjectives": [
+    "Relacionar mensagem, evidência e ação seguinte.",
+    "Reformular promessa que excede o conteúdo efetivamente disponível.",
+    "Comparar canais segundo tarefa, formato e capacidade de manutenção.",
+    "Calcular custo de produção por ação sem presumir alcance ou retorno.",
+    "Relacionar promessa, página de destino e ação disponível.",
+    "Localizar uma falha de percurso antes de aumentar distribuição.",
+    "Calcular proporções com denominadores explícitos.",
+    "Criar convenção de origem de campanha com dados não pessoais.",
+    "Distinguir comparação observacional e teste com condições controladas.",
+    "Formular uma hipótese e um critério antes de observar os resultados.",
+    "Relacionar calendário, materiais, resposta e capacidade num plano de campanha.",
+    "Produzir balanço que distingue ações realizadas, métricas e decisões pendentes."
+  ],
+  "sources": [
+    {
+      "id": "sba-promotion",
+      "title": "U.S. Small Business Administration. Marketing and sales.",
+      "url": "https://legacy.sba.gov/business-guide/manage-your-business/marketing-sales",
+      "consulted": "2026-11-16",
+      "scope": "Passagens sobre plano de ação, canais, custos, medição e operação consultadas. Não se adotam regras americanas nem se presume retorno de campanha. Plano e dados são aplicações originais."
+    },
+    {
+      "id": "ftc-claims",
+      "title": "Federal Trade Commission. Advertising and Marketing.",
+      "url": "https://www.ftc.gov/business-guidance/advertising-marketing",
+      "consulted": "2026-11-16",
+      "scope": "Página introdutória consultada sobre veracidade e base de alegações no enquadramento dos EUA. Referência ética e editorial, não parecer sobre conformidade em qualquer jurisdição."
+    },
+    {
+      "id": "google-utm",
+      "title": "Google Analytics Help. URL builders: Collect campaign data with custom URLs.",
+      "url": "https://support.google.com/analytics/answer/10917952?hl=en",
+      "consulted": "2026-11-16",
+      "scope": "Definições de source/medium/campaign/content, consistência e sensibilidade a maiúsculas consultadas. Não se configurou Analytics nem se recolheram dados; exemplos usam example.org e não demonstram conformidade de medição ou causalidade de vendas."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Escolher a ação da campanha e a afirmação que pode sustentar"
+    },
+    {
+      "id": "2",
+      "title": "Escolher canais pelo contexto e pelo custo total"
+    },
+    {
+      "id": "3",
+      "title": "Conferir o percurso entre mensagem e material"
+    },
+    {
+      "id": "4",
+      "title": "Definir métricas e identificação de origem sem prometer atribuição perfeita"
+    },
+    {
+      "id": "5",
+      "title": "Comparar variações sem declarar um vencedor a partir de diferenças frágeis"
+    },
+    {
+      "id": "6",
+      "title": "Executar um plano limitado e fechar o ciclo de revisão"
+    }
+  ],
+  "modules": [
+    {
+      "id": "1",
+      "title": "Escolher a ação da campanha e a afirmação que pode sustentar",
+      "estimatedPracticeMinutes": 105,
+      "objectives": [
+        "Relacionar mensagem, evidência e ação seguinte.",
+        "Reformular promessa que excede o conteúdo efetivamente disponível."
+      ],
+      "sourceIds": [
+        "sba-promotion",
+        "ftc-claims"
+      ],
+      "sections": [
+        {
+          "title": "Uma campanha precisa de uma ação definida",
+          "paragraphs": [
+            "Divulgar um produto pode significar apresentar uma amostra, explicar uma diferença ou convidar a conhecer condições de aquisição. Cada ação exige informação distinta e uma forma de verificar o percurso. Uma publicação que tenta simultaneamente ensinar tudo, recolher contactos e vender pode deixar o leitor sem saber qual é o passo central. O curso irá desenvolver uma campanha fictícia para um guia de organização de exposições comunitárias. Não publicará anúncios nem usará orçamento real. A prioridade é construir uma mensagem que corresponda à entrega e à decisão que o destinatário poderá tomar.",
+            "O plano de ação comercial da SBA relaciona canal, objetivo e custos. A referência não define uma fórmula universal para captar atenção. Neste exercício, a ação escolhida é consultar uma amostra de duas páginas e compreender se o guia responde à tarefa. Isso não é igual a compra. A mensagem deve dizer o que a amostra permite examinar e o que o produto contém. Uma métrica de acesso pode informar se houve visitas, mas não prova que a pessoa leu, compreendeu ou decidiu adquirir. Essa distinção orientará o plano de medição mais adiante."
+          ]
+        },
+        {
+          "title": "A alegação precisa de base antes de ganhar destaque",
+          "paragraphs": [
+            "O guia fictício contém mapa de tarefas, exemplo de cronograma e ficha de responsabilidades. A frase organize qualquer exposição sem erros promete um resultado que o conteúdo não pode garantir. Uma alternativa é descrever que o material ajuda a estruturar tarefas e responsabilidades, acompanhada por uma amostra que permita avaliar a aplicação. Mesmo a palavra ajuda não torna qualquer afirmação aceitável: é preciso explicar a relação entre material e tarefa e conservar limites. O produto não substitui competências técnicas ou obrigações de um evento real.",
+            "A FTC apresenta veracidade e fundamentação de alegações no contexto regulatório americano. Aqui, a referência sustenta uma revisão ética de mensagens; não certifica cumprimento de regras locais. O aluno não deve inventar testemunhos, certificações ou números de sucesso para tornar a campanha convincente. Um exemplo criado para o curso deve continuar identificado como exemplo, mesmo que tenha nome e aparência profissional. Se não existem resultados de clientes verificados e autorização de uso, a campanha pode demonstrar o próprio material sem simular prova social."
+          ]
+        },
+        {
+          "title": "A condição relevante deve acompanhar a promessa",
+          "paragraphs": [
+            "Se o produto exige adaptação, se é apenas texto ou se não inclui acompanhamento, essas condições precisam de estar recuperáveis antes da decisão. Uma abertura absoluta não deve depender de uma nota escondida para parecer correta. O leitor deve compreender a oferta principal e encontrar o detalhe necessário sem contradição. A clareza editorial inclui escolher o que destacar e retirar aquilo que só acrescenta aparência de valor. Uma lista longa de benefícios equivalentes pode repetir a mesma ideia e obscurecer a função real de cada peça.",
+            "Entregue uma mensagem curta, a ação seguinte e um quadro de três alegações com a respetiva base. Reescreva uma promessa absoluta e indique que evidência faltaria para publicar uma afirmação quantitativa. O avaliador procura correspondência com o produto e um passo que o leitor possa reconhecer. O objetivo não é fazer a mensagem parecer mais intensa; é permitir que a divulgação represente fielmente o material, oriente uma decisão e evite vender uma certeza que a própria experiência de aprendizagem ainda não demonstrou."
+          ]
+        }
+      ],
+      "case": "Guia fictício com mapa de tarefas,cronograma e ficha de responsáveis. Campanha convida à amostra2páginas; não há clientes/resultados verificados ou publicação real.",
+      "exercise": "Escreva mensagem e quadro de3alegações/base. Corrija organize qualquer exposição sem erros e distinga visita à amostra de compra.",
+      "assessment": {
+        "question": "Chamar ajuda a qualquer promessa elimina a necessidade de base?",
+        "answer": "Não. A relação entre material e tarefa deve continuar precisa e verificável, sem garantir resultados que não controla.",
+        "rubric": [
+          "Define ação.",
+          "Sustenta mensagem.",
+          "Não fabrica prova social."
+        ]
+      }
+    },
+    {
+      "id": "2",
+      "title": "Escolher canais pelo contexto e pelo custo total",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Comparar canais segundo tarefa, formato e capacidade de manutenção.",
+        "Calcular custo de produção por ação sem presumir alcance ou retorno."
+      ],
+      "sourceIds": [
+        "sba-promotion"
+      ],
+      "sections": [
+        {
+          "title": "O canal deve corresponder ao modo como a decisão acontece",
+          "paragraphs": [
+            "Um conteúdo encontrado por pesquisa pode responder a uma dúvida já formulada; uma publicação num espaço de comunidade pode introduzir uma solução num contexto de conversa. Essas diferenças modificam o papel da mensagem. Não se deve escolher um canal apenas porque parece popular. Pergunte onde o destinatário procura informação pertinente, que formato consegue utilizar e o que o fornecedor pode manter. O exercício compara opções fictícias sem dados atuais de algoritmos, preços de anúncios ou dimensão de audiência, que exigiriam verificação específica antes de planeamento real.",
+            "Uma ação gratuita de distribuição pode consumir produção, moderação e resposta. O custo total precisa de incluir o trabalho que o enunciado pretende comparar, mantendo exclusões. Um canal com menor custo por peça não é necessariamente mais adequado se a mensagem não chega ao contexto relevante. Também não se deve atribuir um público a um grupo apenas pelo nome. Regras de participação e adequação precisam de ser verificadas antes de qualquer publicação real. O curso não autoriza entrar em comunidades, recolher contactos ou enviar mensagens externas."
+          ]
+        },
+        {
+          "title": "Duas opções com capacidades diferentes",
+          "paragraphs": [
+            "No cenário, a opção A prepara um artigo com amostra e perguntas frequentes: três horas de produção e uma de revisão. A opção B prepara quatro peças curtas, cada uma com quarenta minutos de produção e vinte de revisão. Ambas somam quatro horas. Isso não prova equivalência de utilidade ou alcance. A opção B tem mais peças, mas pode precisar de contexto que a opção A concentra num local. O aluno deve comparar que pergunta cada formato consegue responder e que trabalho adicional de atualização ou resposta ficou fora da conta.",
+            "Uma terceira opção propõe um encontro de demonstração de trinta minutos, mas requer duas horas de preparação e uma de acompanhamento. O total considerado é três horas e meia. Não se deve compará-lo apenas pelos trinta minutos visíveis. Também não se pode chamar mais eficiente sem saber que objetivo cumpre e quem participa. O plano pode combinar formatos, desde que a capacidade exista e a repetição tenha função. Quatro peças que dizem a mesma coisa não se tornam uma sequência pedagógica apenas por serem publicadas em dias diferentes."
+          ]
+        },
+        {
+          "title": "A escolha deve ter uma condição de revisão",
+          "paragraphs": [
+            "Escolha uma opção principal e explique que informação poderia fazê-la mudar. Se a maioria das dúvidas chega antes de consultar a amostra, talvez falte contexto na mensagem. Se chega depois, pode haver problema no conteúdo ou na oferta. Um canal deve ser avaliado no percurso, não isolado por uma métrica de vaidade. O plano também precisa de indicar quem mantém a informação correta se o produto muda. Uma campanha pode continuar a encaminhar pessoas para uma versão desatualizada mesmo quando a página principal já foi corrigida.",
+            "Entregue uma comparação das três opções, contas e uma escolha condicionada. Acrescente uma distribuição de quatro peças com funções distintas, caso escolha B: problema, exemplo, limite e convite à amostra. O avaliador verifica se a decisão considera objetivo e capacidade, sem inventar alcance. O resultado é um plano de canais que pode ser executado e revisto com critérios claros. Não se apresenta a escolha como recomendação universal nem se considera tempo de trabalho ilimitado apenas porque a distribuição não exige pagamento direto a uma plataforma."
+          ]
+        }
+      ],
+      "case": "Aartigo3h+1h;B4peças×(40min+20min)=4h;Cdemonstração30min+preparação2h+acompanhamento1h=3h30. Sem dados de alcance ou custos externos.",
+      "exercise": "Compare três opções e escolha com condição de revisão. Se usarB, dê função distinta às4peças; não estime audiência ou conversão.",
+      "assessment": {
+        "question": "A demonstração custa apenas30min de trabalho no cenário?",
+        "answer": "Não. O total fornecido é3h30, incluindo preparação e acompanhamento. Isso não demonstra superioridade sem comparar a tarefa.",
+        "rubric": [
+          "Calcula4h,4h,3h30.",
+          "Compara função.",
+          "Não presume alcance."
+        ]
+      }
+    },
+    {
+      "id": "3",
+      "title": "Conferir o percurso entre mensagem e material",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Relacionar promessa, página de destino e ação disponível.",
+        "Localizar uma falha de percurso antes de aumentar distribuição."
+      ],
+      "sourceIds": [
+        "sba-promotion"
+      ],
+      "sections": [
+        {
+          "title": "Uma boa mensagem pode encaminhar para uma experiência incoerente",
+          "paragraphs": [
+            "O leitor chega com uma expectativa criada pela campanha. Se a página apresenta outro produto, exige uma condição não anunciada ou não permite localizar a amostra, o percurso perde clareza. A conferência deve começar na mensagem e terminar na ação prometida. Não basta verificar se a página abre. É necessário saber se o destinatário consegue reconhecer o objeto, compreender condições e executar o passo. O exercício utiliza um percurso sintético, sem compras, recolha de dados ou alteração de uma página de produção.",
+            "Crie uma sequência de estados: mensagem vista, ligação seguida, página encontrada, material localizado e ação compreendida. Esses estados não devem ser tratados como equivalentes. Um clique registado não prova que a página terminou de carregar; uma página aberta não demonstra que o ficheiro existe ou pode ser lido. O plano de teste deve indicar o que será observado em cada passagem. Se uma parte não pode ser executada no ambiente de revisão, ela permanece pendente em vez de ser considerada validada por estar desenhada num fluxograma."
+          ]
+        },
+        {
+          "title": "Três divergências numa campanha de amostra",
+          "paragraphs": [
+            "No cenário, a mensagem promete duas páginas de exemplo sem registo. A página chama o ficheiro manual integral, mostra um botão receber amostra e exige criar conta antes do acesso. O ficheiro, quando aberto na simulação, contém apenas o índice. Há divergência de identidade, condição e conteúdo. A correção não consiste em trocar o botão por uma cor mais forte. É preciso decidir o que realmente será disponibilizado e alinhar mensagem, página e material. O aluno deve localizar cada conflito e explicar o efeito na expectativa do leitor.",
+            "Se a organização decidir exigir conta num contexto real, essa condição precisará de ser anunciada e examinada segundo finalidade e regras aplicáveis. O curso não conclui que qualquer registo é proibido nem autoriza implementar recolha. O ponto é a correspondência com a promessa e a necessidade de evitar surpresa. Da mesma forma, uma amostra pode ser curta, mas precisa de conter o que foi descrito. Um índice pode informar estrutura; não demonstra o desenvolvimento do texto. A descrição deve distinguir os dois objetos em vez de usar amostra como rótulo para qualquer ficheiro."
+          ]
+        },
+        {
+          "title": "A correção deve ser retestada na mesma tarefa",
+          "paragraphs": [
+            "Depois de alinhar os elementos, repita o percurso como um destinatário que não conhece a organização do site. Verifique rótulos, formatos e condições de abertura nos dispositivos definidos para o teste. Uma correção no destino também pode exigir atualizar publicações anteriores que continuam a circular. O registo deve indicar a versão e o ponto alterado. Não se declara funcionamento em todos os dispositivos a partir de um único acesso. A tarefa oferece evidência limitada que precisa de acompanhar o relatório de divulgação.",
+            "Entregue um mapa do percurso, a análise dos três conflitos e uma versão coerente de mensagem e destino. Acrescente o material mínimo que a promessa exige e uma lista do que falta testar. O avaliador procura se a revisão trata a causa da discrepância. A competência comercial é perceber que aumentar visitas não resolve um destino que ainda não entrega o passo anunciado. O percurso deve permitir uma decisão informada, com o objeto e as condições disponíveis, antes de discutir ampliação de canais ou investimento de distribuição."
+          ]
+        }
+      ],
+      "case": "Mensagem:amostra2páginas sem registo. Destino:manual integral/botãoamostra/conta exigida. Ficheiro contém só índice. São3conflitos sintéticos.",
+      "exercise": "Mapeie percurso, localize3conflitos e proponha versão coerente. Defina material mínimo e reteste; não implemente conta ou pagamento.",
+      "assessment": {
+        "question": "Mudar a cor do botão resolve a divergência?",
+        "answer": "Não. Objeto, condição de acesso e conteúdo não correspondem à mensagem; precisam de decisão e revisão conjunta.",
+        "rubric": [
+          "Deteta identidade/condição/conteúdo.",
+          "Define reteste.",
+          "Não confunde clique e acesso utilizável."
+        ]
+      }
+    },
+    {
+      "id": "4",
+      "title": "Definir métricas e identificação de origem sem prometer atribuição perfeita",
+      "estimatedPracticeMinutes": 135,
+      "objectives": [
+        "Calcular proporções com denominadores explícitos.",
+        "Criar convenção de origem de campanha com dados não pessoais."
+      ],
+      "sourceIds": [
+        "google-utm",
+        "sba-promotion"
+      ],
+      "sections": [
+        {
+          "title": "Uma métrica precisa de nome, unidade e fronteira",
+          "paragraphs": [
+            "Visitas, pessoas, sessões e compras não são o mesmo objeto. Antes de calcular uma taxa, defina o numerador, o denominador e o período. Uma contagem de acessos pode incluir repetições; um clique num botão pode não resultar numa abertura válida. O curso usa números sintéticos agregados e não configura ferramentas de análise ou recolha de dados. A finalidade é construir uma ficha de medição que permita interpretar o resultado e reconhecer o que continua desconhecido. Não se colocam nomes, contactos ou dados de clientes em endereços de campanha.",
+            "No conjunto de treino, uma publicação recebe mil exposições contabilizadas segundo a definição do cenário, cinquenta cliques e trinta aberturas válidas da amostra. A proporção de cliques por exposição é cinco por cento; aberturas por clique é sessenta por cento; aberturas por exposição é três por cento. As três contas são corretas e respondem a perguntas diferentes. Não se chama taxa de compra a nenhuma delas. As vinte diferenças entre clique e abertura podem ter causas distintas que os totais não identificam, incluindo carregamento ou definição de evento."
+          ]
+        },
+        {
+          "title": "Parâmetros de origem ajudam a distinguir ligações, não a provar causalidade",
+          "paragraphs": [
+            "A documentação Google Analytics descreve parâmetros como utm_source, utm_medium, utm_campaign e utm_content para identificar origem, meio, campanha e variação. O exercício cria duas ligações em example.org, um domínio destinado a exemplos, sem aceder a um serviço real. Uma convenção pode usar source boletim, medium email, campaign guia_feira e content exemplo_a. A segunda variação muda content para exemplo_b. Essa distinção ajuda a organizar dados quando a medição está devidamente configurada, mas não demonstra que uma ligação causou uma venda.",
+            "Os valores precisam de consistência; mudanças de maiúsculas e grafia podem fragmentar a análise, conforme a documentação consultada. O aluno deve manter um registo de ligações e finalidade, evitando identificar indivíduos no endereço. A existência de parâmetros não garante que o evento foi recolhido, que a configuração está correta ou que a recolha cumpre requisitos aplicáveis. Essas verificações exigem contexto técnico e de privacidade próprios. O curso não ativa Analytics, cookies ou integrações, nem apresenta um URL de treino como prova de funcionamento de medição em produção."
+          ]
+        },
+        {
+          "title": "A leitura dos dados deve preservar as lacunas",
+          "paragraphs": [
+            "Uma visita sem origem identificada não deve ser atribuída ao canal preferido para fechar o relatório. Uma compra posterior pode ter várias influências e ocorrer noutro dispositivo. Sem desenho adequado, os dados de origem oferecem informação limitada sobre o percurso. Uma ficha pode registar fonte, definição do evento, exclusões conhecidas e data de extração. O aluno deve indicar que pergunta pode responder e qual exigiria outro método. Esse limite evita converter um painel visual em uma explicação causal completa da decisão de compra.",
+            "Entregue as três proporções, duas ligações de exemplo e uma convenção de nomes. Acrescente duas hipóteses para a diferença entre cliques e aberturas e uma verificação que permita distingui-las. O avaliador procura precisão dos denominadores e uso prudente da identificação de origem. O resultado não é um sistema de atribuição pronto: é uma estrutura de medição que pode ser revisada, com números que dizem exatamente o que se contou e sem dados pessoais introduzidos para tornar o relatório aparentemente mais detalhado."
+          ]
+        }
+      ],
+      "case": "Dados sintéticos1000exposições,50cliques,30aberturas válidas. URLs sóexample.org. Parâmetros não pessoais e sem configuração de Analytics.",
+      "exercise": "Calcule5%,60%,3%; crie2URLs comcontentdistinto e convenção. Proponha hipóteses e verificação da diferença20sem declarar causa conhecida.",
+      "assessment": {
+        "question": "30aberturas em1000exposições constituem taxa de compra?",
+        "answer": "Não. São3%de aberturas por exposição no conjunto. Compras não foram fornecidas.",
+        "rubric": [
+          "Usa denominadores corretos.",
+          "Não inclui dados pessoais.",
+          "Separa origem e causa."
+        ]
+      }
+    },
+    {
+      "id": "5",
+      "title": "Comparar variações sem declarar um vencedor a partir de diferenças frágeis",
+      "estimatedPracticeMinutes": 135,
+      "objectives": [
+        "Distinguir comparação observacional e teste com condições controladas.",
+        "Formular uma hipótese e um critério antes de observar os resultados."
+      ],
+      "sourceIds": [
+        "sba-promotion",
+        "google-utm"
+      ],
+      "sections": [
+        {
+          "title": "Mudar duas coisas impede saber qual diferença importa",
+          "paragraphs": [
+            "Uma campanha publica a mensagem A de manhã e B à noite, com públicos diferentes e imagens diferentes. Uma diferença de cliques pode refletir várias condições, não apenas o texto. Chamar a comparação teste A/B não elimina esse problema. O aluno irá definir uma hipótese limitada, uma alteração e o que precisa de permanecer comparável. A oficina não ensina a calcular significância estatística nem declara um tamanho universal de amostra. O objetivo é evitar conclusões fortes a partir de um ensaio que não permite sustentá-las.",
+            "Uma hipótese pode dizer que um título centrado na tarefa torna mais claro o conteúdo da amostra que um título vago. Isso pode ser examinado por compreensão, não apenas por cliques. Antes do teste, defina a pergunta e o critério. Se escolher abertura válida, mantenha essa definição; se escolher capacidade de explicar o que a amostra contém, prepare uma pergunta e critérios de correção. Trocar a métrica depois de observar o resultado para escolher a que favorece B exige ser registado como exploração, não como confirmação da hipótese inicial."
+          ]
+        },
+        {
+          "title": "Duas proporções diferentes podem continuar inconclusivas",
+          "paragraphs": [
+            "Os dados sintéticos mostram A com vinte cliques em duzentas exposições e B com vinte e quatro em duzentas. As proporções são dez e doze por cento, diferença de dois pontos percentuais e aumento relativo de vinte por cento em relação aos dez. Esses números não demonstram um efeito estável do texto. Faltam informações sobre distribuição, independência e incerteza. Uma apresentação que só anuncia aumento de vinte por cento pode amplificar a impressão da diferença ao omitir as contagens pequenas e a ausência de análise adequada.",
+            "Acrescente um teste de compreensão com uma pergunta sobre o que a amostra oferece, sem inventar respostas de participantes. O aluno pode preparar o instrumento e explicar como o resultado modificaria a mensagem. Se não executar, a entrega deve dizer planeado. Um título com mais cliques e menos compreensão pode atrair por uma expectativa errada. O critério precisa de considerar a correspondência entre mensagem e material, além de volume. A campanha não deve melhorar o número de acessos por meio de uma promessa que o produto não cumpre."
+          ]
+        },
+        {
+          "title": "Uma conclusão proporcional mantém a decisão revisável",
+          "paragraphs": [
+            "O relatório pode dizer que B teve mais cliques neste conjunto e que ainda não há base para atribuir a diferença ao texto ou generalizar. A próxima decisão pode ser realizar outra observação com condições melhores, corrigir uma ambiguidade identificada ou interromper a variação. Não é obrigatório escolher um vencedor para terminar a atividade. A capacidade de reconhecer informação insuficiente evita transformar variação aleatória ou contexto diferente em uma regra de marketing. O curso não promete um método que aumenta vendas em qualquer segmento.",
+            "Entregue a hipótese, o desenho proposto, as duas proporções e uma conclusão limitada. Acrescente a distinção entre dois pontos percentuais e vinte por cento relativo, com as contas. O avaliador procura se o aluno compreende a base e evita apresentar resultados planeados como executados. A competência é comparar mensagens com intenção de aprender e preservar as condições do teste. Uma decisão de divulgação pode usar dados sem fingir certeza; o essencial é que a força da conclusão corresponda ao que foi efetivamente observado e analisado."
+          ]
+        }
+      ],
+      "case": "A20/200=10%;B24/200=12%. Diferença2pontos percentuais; relativo20%. Condições e incerteza não analisadas; sem vencedor causal demonstrado.",
+      "exercise": "Defina hipótese e métrica antes do resultado; calcule diferenças e planeie teste de compreensão. Não invente participantes, significância ou garantia de melhoria.",
+      "assessment": {
+        "question": "12%contra10%prova efeito estável de20%do título?",
+        "answer": "Não.20%é a diferença relativa observada; o desenho e a incerteza ainda não permitem atribuir efeito causal ou generalizar.",
+        "rubric": [
+          "Calcula10%,12%,2pp,20%.",
+          "Mantém critério.",
+          "Admite resultado inconclusivo."
+        ]
+      }
+    },
+    {
+      "id": "6",
+      "title": "Executar um plano limitado e fechar o ciclo de revisão",
+      "estimatedPracticeMinutes": 150,
+      "objectives": [
+        "Relacionar calendário, materiais, resposta e capacidade num plano de campanha.",
+        "Produzir balanço que distingue ações realizadas, métricas e decisões pendentes."
+      ],
+      "sourceIds": [
+        "sba-promotion",
+        "ftc-claims",
+        "google-utm"
+      ],
+      "sections": [
+        {
+          "title": "A campanha inclui o que acontece depois de a pessoa responder",
+          "paragraphs": [
+            "Uma divulgação pode gerar dúvidas que a equipa não tem capacidade de tratar. O plano precisa de relacionar produção, publicação autorizada, destino, resposta e atualização. Não se deve prometer atendimento imediato ou acompanhamento ilimitado se não existe operação para isso. Uma campanha limitada pode começar com uma ação e uma janela de revisão, desde que os materiais e o percurso estejam prontos. O exercício permanece sintético e não publica mensagens, cria anúncios pagos ou utiliza dados de clientes. A prática está em tornar a operação e os limites verificáveis.",
+            "O calendário deve dizer quem confirma cada material e o que impede a ação. Se a amostra ainda contém apenas um índice, a campanha não está pronta para prometer desenvolvimento. Se o destino exige uma condição não anunciada, o envio deve aguardar correção. Uma lista de verificação precisa de poder bloquear, não apenas recolher marcações positivas. A relação entre divulgação e experiência operacional aparece na orientação da SBA; o pacote concreto de controlo desta oficina é uma aplicação original e não um procedimento certificado."
+          ]
+        },
+        {
+          "title": "Um plano de cinco dias com decisões reais de prontidão",
+          "paragraphs": [
+            "No cenário, dia um revê alegações e amostra; dia dois confere destino e ligações; dia três prepara a mensagem final; dia quatro seria a distribuição autorizada; dia cinco analisa as primeiras ocorrências e dúvidas. No dia dois, a ligação leva à edição antiga com um índice, enquanto a amostra correta está noutro local. O plano deve manter dia quatro condicionado a corrigir e retestar o destino. Não é correto publicar apenas para cumprir o calendário e explicar depois que o material estava quase pronto. A prontidão depende do critério, não da data desenhada.",
+            "Depois da correção sintética, surgem oito dúvidas: cinco sobre o que o guia inclui, duas sobre formato e uma sobre acompanhamento. O conjunto sugere examinar a clareza da descrição, mas não prova que todos os visitantes tiveram a mesma dúvida. O aluno deve localizar informação que poderia antecipar essas perguntas e verificar se ela já existia ou estava difícil de encontrar. Uma dúvida sobre acompanhamento também pede conferir a promessa, para não transformar uma expectativa criada pela campanha numa obrigação informal que a equipa não dimensionou."
+          ]
+        },
+        {
+          "title": "O balanço deve conservar custo, limites e decisão",
+          "paragraphs": [
+            "Reúna materiais usados, versões, trabalho consumido, contagens com definição e ocorrências relevantes. Não substitua custos por receita para anunciar retorno sem base. Uma ação pode ter ensinado sobre a mensagem mesmo sem dados suficientes para avaliar aquisição. Outra pode revelar um problema de produto que deve ser tratado antes de ampliar alcance. A decisão de continuar precisa de apontar a condição que foi resolvida e a que permanece aberta. A ausência de sinal de falha num período curto não comprova funcionamento universal ou conformidade integral de toda a experiência.",
+            "A entrega final contém plano condicionado, registo de prontidão e balanço das oito dúvidas, seguido de uma revisão de mensagem. Acrescente o que não foi executado e os testes que faltam. O percurso desenvolve seis oficinas de divulgação com tarefas e cálculos próprios; não comprova as cento e vinte horas históricas nem resultados comerciais reais. Revisão editorial, técnica, ética e prática com utilizadores precisam de ocorrer antes de integrar a candidata. Uma campanha intelectualmente séria permite examinar a relação entre o que afirma, o que entrega e o que os dados efetivamente permitem concluir."
+          ]
+        }
+      ],
+      "case": "Plano5dias; nodia2destino antigo contém índice; distribuição dia4condicionada. Após correção sintética,8dúvidas:5inclusões,2formato,1acompanhamento. Sem publicação ou receita real.",
+      "exercise": "Produza plano com bloqueio e reteste, análise8dúvidas e revisão. Distinga realizado/planeado e limite de interpretação antes de ampliar canais.",
+      "assessment": {
+        "question": "Chegar ao dia4torna a campanha pronta?",
+        "answer": "Não. A ligação e a amostra precisam de corresponder à promessa e passar no reteste. A data não substitui a condição de prontidão.",
+        "rubric": [
+          "Bloqueia destino errado.",
+          "Analisa5+2+1sem extrapolar.",
+          "Conserva pendências e limites."
+        ]
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão de marketing, alegações e adequação normativa no contexto de aplicação, sem presumir conformidade universal.",
+    "Verificar desenho de medição e atualizar documentação técnica antes de utilização real.",
+    "Pilotar materiais, compreensão, acessibilidade e carga de120h anunciadas.",
+    "Preservar direitos/progresso e obter aprovação editorial e autorização antes de produção."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

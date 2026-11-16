@@ -1,0 +1,353 @@
+{
+  "productKey": "curso_assinatura_como_vender_produtos_e_servicos_com_estrategia",
+  "slug": "como-vender-produtos-e-servicos-com-estrategia",
+  "title": "Como Vender Produtos e Serviços com Estratégia",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 140,
+  "validatedHours": null,
+  "expectedModuleCount": 6,
+  "scope": "Seleção de oportunidades, qualificação, demonstração, objeções, negociação e acompanhamento de vendas. Distingue-se de criação de produto, prospeção e redação de propostas. Dados sintéticos; sem contacto, cobrança, probabilidades de fecho ou garantia de vendas.140h históricas por validar.",
+  "courseObjectives": [
+    "Relacionar segmento, situação de compra e capacidade de entrega.",
+    "Distinguir potencial de contacto e oportunidade que merece análise.",
+    "Distinguir necessidade relatada, processo de decisão e condição operacional.",
+    "Definir um próximo passo proporcional à informação disponível.",
+    "Relacionar uma característica da oferta com uma tarefa do cliente.",
+    "Preparar demonstração que mostre capacidade e limites em dados sintéticos.",
+    "Distinguir dúvida de compreensão, restrição e falta de adequação.",
+    "Responder com pergunta e alternativa que preservem a possibilidade de recusa.",
+    "Calcular efeito de uma concessão no modelo sintético.",
+    "Comparar alternativas sem ocultar mudança de entrega ou prazo.",
+    "Distinguir etapas comerciais sem atribuir probabilidades fictícias.",
+    "Produzir resumo de passagem e análise limitada de conversões do conjunto fornecido."
+  ],
+  "sources": [
+    {
+      "id": "sba-sales",
+      "title": "U.S. Small Business Administration. Marketing and sales.",
+      "url": "https://legacy.sba.gov/business-guide/manage-your-business/marketing-sales",
+      "consulted": "2026-11-16",
+      "scope": "Passagens de plano de vendas, percurso de compra, objetivos, custos e relação com operação consultadas. Não se importam regras financeiras ou jurídicas americanas. Matrizes de qualificação, negociação e estados LDR são originais, sem eficácia ou probabilidades de fecho validadas."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Escolher oportunidades pela adequação da oferta"
+    },
+    {
+      "id": "2",
+      "title": "Qualificar uma oportunidade com perguntas e condições observáveis"
+    },
+    {
+      "id": "3",
+      "title": "Demonstrar valor sem inventar retorno"
+    },
+    {
+      "id": "4",
+      "title": "Investigar uma objeção antes de oferecer concessão"
+    },
+    {
+      "id": "5",
+      "title": "Negociar alcance, preço e capacidade como um conjunto"
+    },
+    {
+      "id": "6",
+      "title": "Acompanhar estados e passar o compromisso à entrega"
+    }
+  ],
+  "modules": [
+    {
+      "id": "1",
+      "title": "Escolher oportunidades pela adequação da oferta",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Relacionar segmento, situação de compra e capacidade de entrega.",
+        "Distinguir potencial de contacto e oportunidade que merece análise."
+      ],
+      "sourceIds": [
+        "sba-sales"
+      ],
+      "sections": [
+        {
+          "title": "Vender com estratégia exige escolher onde a oferta faz sentido",
+          "paragraphs": [
+            "Uma lista extensa de organizações não diz quais têm uma situação que a oferta consegue tratar. O trabalho comercial começa por relacionar necessidade, momento e capacidade do fornecedor. Um segmento pode ser definido por uma tarefa recorrente e por condições de uso, e não apenas por dimensão ou setor. O curso utilizará uma oferta fictícia de normalização de catálogos de acervo. Não ensina a insistir até qualquer pessoa comprar. Ensina a reconhecer correspondência, lacunas e razões para não avançar com determinado pedido.",
+            "A orientação da SBA sobre plano de vendas relaciona público, percurso de compra e operação. A aplicação LDR será uma matriz de adequação, sem uma pontuação validada ou garantia de conversão. Uma linha deve indicar que problema a organização quer resolver, que entrega está disponível e que condição ainda falta. Se a oferta apenas uniformiza campos existentes, não deve ser apresentada como investigação de autoria ou avaliação patrimonial. Uma estratégia comercial credível conserva o limite de competência antes de transformar uma conversa em proposta."
+          ]
+        },
+        {
+          "title": "Três organizações com motivos diferentes para procurar apoio",
+          "paragraphs": [
+            "No cenário, uma associação tem cem fichas com nomes de campos inconsistentes e pretende uma estrutura comum. Uma escola tem imagens sem identificação de origem e quer saber quem detém direitos. Um colecionador quer atribuir valor de mercado a peças. A oferta de normalização pode corresponder à primeira tarefa, desde que existam fontes e critérios. As outras exigem competências e verificações que não foram incluídas. Não é correto tratar as três como oportunidades iguais apenas porque todas mencionam catálogo. A palavra comum esconde resultados esperados muito diferentes.",
+            "A primeira organização também precisa de esclarecer se quer só um modelo ou migrar registos. Essas atividades têm esforço e risco distintos. O vendedor deve confirmar o objeto e a disponibilidade de dados antes de assumir a adequação. Uma resposta profissional pode encaminhar uma parte fora do âmbito e manter outra em análise, sem prometer resolver direitos ou valor por meio da mesma ferramenta. O aluno deverá indicar uma razão para avançar, uma para investigar e uma para recusar ou encaminhar, preservando o estado real da informação."
+          ]
+        },
+        {
+          "title": "A priorização precisa de um critério explicável",
+          "paragraphs": [
+            "Escolha critérios relacionados com o trabalho, como correspondência da tarefa, acesso autorizado às fontes e possibilidade de decisão. Não atribua intenção de compra a uma organização por visitar uma página ou por ser conhecida. Também não use características pessoais sensíveis para definir quem merece atenção. O exercício não recolhe contactos nem executa prospeção. A matriz serve para organizar o raciocínio e evitar que o esforço comercial pressione a equipa a aceitar uma operação que não pode realizar com qualidade. Os critérios poderão ser revistos quando surgirem informações novas.",
+            "Entregue uma matriz das três organizações e uma nota que escolhe uma para aprofundar. Acrescente uma hipótese de mudança que faria revisar a escolha. O avaliador procura coerência entre a oferta e o problema, em vez de premiar o maior número de contactos classificados como promissores. A estratégia ganha utilidade quando permite dizer onde a oferta tem possibilidade real de servir e onde a relação precisa de outro caminho. O resultado deste módulo é uma escolha fundamentada de investigação, não uma carteira de vendas garantidas."
+          ]
+        }
+      ],
+      "case": "Oferta fictícia normaliza campos de acervo. Associação100fichas inconsistentes; escola quer direitos de imagens; colecionador quer valor de mercado. Competências adicionais não fornecidas.",
+      "exercise": "Compare três situações, escolha uma para aprofundar e justifique investigação, encaminhamento ou recusa. Não classifique todas por terem a palavra catálogo.",
+      "assessment": {
+        "question": "Toda procura relacionada com catálogo corresponde à oferta?",
+        "answer": "Não. Normalização, direitos e avaliação de mercado são tarefas diferentes e exigem capacidades distintas.",
+        "rubric": [
+          "Prioriza adequação.",
+          "Preserva limites.",
+          "Não inventa intenção."
+        ]
+      }
+    },
+    {
+      "id": "2",
+      "title": "Qualificar uma oportunidade com perguntas e condições observáveis",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Distinguir necessidade relatada, processo de decisão e condição operacional.",
+        "Definir um próximo passo proporcional à informação disponível."
+      ],
+      "sourceIds": [
+        "sba-sales"
+      ],
+      "sections": [
+        {
+          "title": "Qualificar é esclarecer se e como a decisão pode existir",
+          "paragraphs": [
+            "Uma oportunidade pode ter necessidade clara e ainda não ter responsável por aprovar, data adequada ou informação necessária à execução. Qualificar não significa interrogar o interlocutor até obter uma promessa. Significa perceber o problema, os papéis e as condições para uma próxima decisão. Uma resposta parcial deve continuar parcial no registo. O curso não atribui percentagens de fecho a palavras como interessado. O aluno trabalhará com uma conversa fictícia e preparará perguntas que alteram efetivamente o plano comercial.",
+            "Divida a análise em tarefa, decisão e execução. A tarefa esclarece o resultado; a decisão identifica quem participa e que procedimento precisa de ocorrer; a execução verifica dados e capacidade. Não presuma que a pessoa que demonstra o problema também autoriza despesas. Perguntas sobre orçamento devem ser pertinentes à oferta e não exigir informação privada sem necessidade. O vendedor pode explicar por que uma condição é importante e oferecer uma alternativa de alcance. A qualidade da conversa está em reduzir ambiguidade, não em conseguir respostas favoráveis a qualquer custo."
+          ]
+        },
+        {
+          "title": "Uma coordenadora interessada e uma decisão coletiva",
+          "paragraphs": [
+            "Na associação fictícia, a coordenadora quer normalizar as cem fichas antes de uma exposição em oito semanas. A direção decide na reunião seguinte; a fonte de dados está acessível à equipa, mas ainda falta definir quais campos podem ser alterados. A oportunidade tem contexto e horizonte, mas não está pronta para execução. O próximo passo pode ser uma amostra de cinco registos com critérios, se existir autorização adequada, ou uma especificação baseada apenas em dados sintéticos. Não se descarregam dados reais nem se alteram permissões durante o exercício.",
+            "A frase a direção costuma aprovar não equivale à aprovação deste pedido. A data da exposição também não prova que o trabalho cabe na agenda do fornecedor. O aluno deve registar o que foi dito, o que se sabe e o que precisa de confirmação. Uma pergunta útil é quem valida a lista de campos e quando essa decisão pode ser disponibilizada? Essa resposta modifica o início da tarefa. Uma pergunta genérica como estão interessados? pode apenas repetir o estado já conhecido sem resolver a condição que impede avançar."
+          ]
+        },
+        {
+          "title": "O registo deve permitir uma decisão de continuar ou pausar",
+          "paragraphs": [
+            "Uma ficha de oportunidade pode conter última informação, fonte, lacuna, próximo passo e responsável. O próximo passo precisa de finalidade e condição de conclusão, como receber critérios autorizados para preparar a amostra. Enviar mais uma apresentação sem ligação à lacuna pode aumentar atividade sem reduzir incerteza. Se a reunião de decisão for adiada, o estado deve ser revisto. Não se mantém uma previsão antiga apenas para mostrar um funil mais cheio. Uma pausa explícita pode ser mais fiel e útil à gestão do trabalho.",
+            "Entregue cinco perguntas e uma ficha preenchida a partir do cenário. Acrescente duas perguntas que parecem comerciais mas não esclarecem a condição central, explicando a limitação. O avaliador procura se a qualificação respeita papéis e transforma a informação em um passo verificável. O resultado não é uma declaração de que a venda vai acontecer. É uma representação que permite à equipa escolher quanto esforço investir e que compromisso ainda não pode assumir, preservando a diferença entre problema real, interesse e decisão efetiva."
+          ]
+        }
+      ],
+      "case": "Coordenadora quer100fichas em8semanas; direção decide depois; campos alteráveis não definidos. Acesso da equipa não é autorização de exportar ou mudar dados.",
+      "exercise": "Prepare5perguntas e ficha com fonte, lacuna e próximo passo. Mantenha aprovação e calendário por confirmar sem percentagem fictícia de fecho.",
+      "assessment": {
+        "question": "A direção costuma aprovar significa venda confirmada?",
+        "answer": "Não. É um relato sobre outras decisões, não a decisão deste pedido. As condições atuais continuam abertas.",
+        "rubric": [
+          "Separa tarefa/decisão/execução.",
+          "Pergunta condição relevante.",
+          "Não amplia acesso."
+        ]
+      }
+    },
+    {
+      "id": "3",
+      "title": "Demonstrar valor sem inventar retorno",
+      "estimatedPracticeMinutes": 135,
+      "objectives": [
+        "Relacionar uma característica da oferta com uma tarefa do cliente.",
+        "Preparar demonstração que mostre capacidade e limites em dados sintéticos."
+      ],
+      "sourceIds": [
+        "sba-sales"
+      ],
+      "sections": [
+        {
+          "title": "Uma vantagem precisa de uma relação compreensível com o problema",
+          "paragraphs": [
+            "Campos consistentes não são um benefício apenas porque parecem organizados. Eles podem permitir localizar e comparar informação, se forem adequados à tarefa. A demonstração comercial deve tornar essa relação observável. Não é necessário prometer uma percentagem de poupança sem medição. O vendedor pode mostrar uma operação com dados sintéticos e explicar que condição a torna possível. O objetivo é ajudar o destinatário a examinar correspondência, não produzir uma apresentação em que todos os resultados já estão selecionados para favorecer a oferta.",
+            "Diferencie característica, mecanismo esperado e resultado observado. A característica pode ser um campo de data uniforme; o mecanismo, permitir ordenação coerente; o resultado observado, o leitor conseguir recuperar uma sequência no exemplo. Isso não prova que toda a equipa ganhará determinado número de horas por mês. Uma alegação de retorno exige uma base que o exercício não fornece. A SBA relaciona vantagem e experiência do cliente; o quadro de demonstração deste módulo é original e não um instrumento com eficácia comercial validada."
+          ]
+        },
+        {
+          "title": "Um exemplo em que a forma altera a interpretação",
+          "paragraphs": [
+            "Três registos fictícios apresentam datas: oito de março de dois mil e vinte e seis; dez de fevereiro do mesmo ano; primeiro de dezembro do mesmo ano. O produto demonstra uma representação com ano, mês e dia em campos definidos, acompanhada de uma forma legível para o utilizador. Ordenar os registos por data deve resultar fevereiro, março, dezembro. Se uma data original for ambígua, como três barra quatro sem convenção conhecida, não se deve converter automaticamente para abril ou março. A demonstração precisa de mostrar uma pendência em vez de fabricar uma precisão que a fonte não oferece.",
+            "A tarefa pede localizar o registo mais antigo e explicar o tratamento da data ambígua. O resultado é verificável no exemplo. Uma segunda demonstração pode comparar dois campos equivalentes que tinham nomes diferentes, desde que exista critério para confirmar equivalência. Não se fundem campos apenas por semelhança de palavras. O vendedor deve mostrar também uma situação em que a oferta precisa de decisão do cliente. Isso permite ao destinatário compreender a participação exigida e evita vender normalização como uma operação que dispensa conhecimento do acervo."
+          ]
+        },
+        {
+          "title": "A prova disponível deve acompanhar a frase de venda",
+          "paragraphs": [
+            "Uma amostra própria, um resultado de teste e um testemunho autorizado têm origens distintas. Não se deve apresentar um caso sintético como cliente atendido, nem usar uma frase de elogio fora de contexto como prova de resultados. O curso não inventa nomes de organizações, certificações ou números de retorno. A descrição pode dizer o que foi demonstrado no exemplo e que parte ainda precisa de validação. Essa clareza não reduz a capacidade de explicar valor; ajuda a impedir que a demonstração crie uma expectativa maior do que a operação pode sustentar.",
+            "Entregue uma demonstração de cinco minutos ou um roteiro equivalente, com dados, tarefa e solução. Escreva três afirmações: uma sobre característica, uma sobre uso observado no exemplo e uma que exigiria evidência adicional antes de publicação. O avaliador verifica se o valor aparece numa relação testável e se a amostra conserva a ambiguidade. O resultado esperado é uma conversa em que o cliente consegue examinar o benefício possível e as condições de realização, sem precisar de confiar em uma promessa quantitativa que o fornecedor não mediu."
+          ]
+        }
+      ],
+      "case": "Datas explícitas8março,10fevereiro,1dezembro2026; ordem fevereiro/março/dezembro. Data3/4sem convenção permanece ambígua. Todos os registos são sintéticos.",
+      "exercise": "Crie demonstração com solução, incluindo data ambígua. Redija característica, resultado observado e alegação ainda não comprovada, sem chamar amostra de caso real.",
+      "assessment": {
+        "question": "Pode transformar3/4em3deabril sem convenção conhecida?",
+        "answer": "Não. A fonte é ambígua. Normalizar exige confirmação ou representação da pendência.",
+        "rubric": [
+          "Ordena datas explícitas.",
+          "Conserva ambiguidade.",
+          "Não inventa ROI ou testemunho."
+        ]
+      }
+    },
+    {
+      "id": "4",
+      "title": "Investigar uma objeção antes de oferecer concessão",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Distinguir dúvida de compreensão, restrição e falta de adequação.",
+        "Responder com pergunta e alternativa que preservem a possibilidade de recusa."
+      ],
+      "sourceIds": [
+        "sba-sales"
+      ],
+      "sections": [
+        {
+          "title": "A mesma frase pode representar obstáculos diferentes",
+          "paragraphs": [
+            "Está caro pode significar falta de orçamento, comparação com outro objeto, benefício pouco claro ou prioridade baixa. Responder imediatamente com desconto assume uma causa que ainda não foi esclarecida. A conversa precisa de examinar a diferença relevante sem pressionar a pessoa a revelar informação desnecessária. O aluno irá praticar respostas a três objeções fictícias, mantendo aberta a possibilidade de a oferta não ser adequada. Uma objeção não é um bloqueio psicológico que deva ser vencido por qualquer técnica; pode ser informação correta sobre uma restrição real.",
+            "Comece por confirmar o entendimento e pedir contexto proporcional. Se a comparação é com uma oferta que inclui apenas modelo, esclareça que a sua inclui aplicação e conferência, sem afirmar que é melhor para qualquer pessoa. Se o orçamento é insuficiente, pode ser necessário reduzir alcance ou pausar. Se a necessidade exige outro resultado, talvez a resposta seja encaminhar. O vendedor deve distinguir explicar uma condição e insistir contra uma decisão. O curso não recomenda culpa, falsa escassez, urgência inventada ou exploração de vulnerabilidade para produzir aceitação."
+          ]
+        },
+        {
+          "title": "Três respostas sobre o catálogo",
+          "paragraphs": [
+            "No cenário, a associação diz precisamos gastar menos; a escola diz não compreendemos a diferença entre modelo e normalização; outro interessado diz precisamos de autenticar obras. Para a primeira, uma pergunta sobre alcance prioritário pode permitir uma fase menor, sujeita a nova conta e confirmação. Para a segunda, uma demonstração pode esclarecer o trabalho incluído. Para a terceira, repetir o benefício de campos uniformes não responde ao pedido de autenticação. É preciso reconhecer o limite de competência e não vender a oferta como se resolvesse essa função.",
+            "Uma alternativa de fase pode tratar vinte registos prioritários, mas a escolha dos vinte deve ter critério e participação apropriada. Não se promete que o custo será proporcional a vinte por cento se existe trabalho fixo de preparação. Também não se altera o padrão de conferência silenciosamente para manter o mesmo preço. A objeção pode revelar uma negociação possível, mas não autoriza sacrificar uma condição essencial de qualidade ou apresentar uma entrega parcial como equivalente à integral. Cada alternativa precisa de mostrar o que muda e o que permanece."
+          ]
+        },
+        {
+          "title": "Uma recusa clara deve produzir um estado claro",
+          "paragraphs": [
+            "Se o destinatário informa que não pretende avançar, o registo deve refletir essa decisão, segundo as condições de contacto aplicáveis. Não se transforma uma recusa em oportunidade quente para justificar novos envios. Se a decisão é apenas adiada e há interesse em retomar, a próxima ação deve ser combinada com finalidade e momento, não baseada em uma cadência universal de insistência. O curso trabalha encenações e não autoriza prospeção externa. As regras locais e os canais apropriados precisam de ser considerados antes de qualquer aplicação real.",
+            "Entregue três diálogos curtos, cada um com hipótese, pergunta e resposta proporcional. Acrescente um caso em que a decisão correta é não vender. O avaliador procura se a pessoa identifica o problema que a objeção informa e conserva uma saída respeitosa. A qualidade comercial não se mede pela eliminação de todas as recusas. Mede-se pela capacidade de esclarecer, propor uma alternativa pertinente e reconhecer quando o resultado pretendido não pode ser fornecido. Isso protege a credibilidade da oferta e a experiência do destinatário ao longo da relação."
+          ]
+        }
+      ],
+      "case": "Três objeções: reduzir gasto; compreender modelo versusnormalização; autenticar obras. Possível fase20/100registos, mas custo fixo e critérios não definidos.",
+      "exercise": "Encene respostas diferentes e um caso de não venda. Mostre o que precisa de recalcular antes de propor fase20 e não presuma desconto proporcional.",
+      "assessment": {
+        "question": "Autenticação de obras é resolvida explicando melhor campos uniformes?",
+        "answer": "Não. É outro resultado e requer competência específica. A resposta deve reconhecer o limite em vez de converter a objeção numa oportunidade inadequada.",
+        "rubric": [
+          "Investiga causa.",
+          "Preserva qualidade.",
+          "Respeita recusa."
+        ]
+      }
+    },
+    {
+      "id": "5",
+      "title": "Negociar alcance, preço e capacidade como um conjunto",
+      "estimatedPracticeMinutes": 135,
+      "objectives": [
+        "Calcular efeito de uma concessão no modelo sintético.",
+        "Comparar alternativas sem ocultar mudança de entrega ou prazo."
+      ],
+      "sourceIds": [
+        "sba-sales"
+      ],
+      "sections": [
+        {
+          "title": "Uma concessão tem efeito sobre a operação",
+          "paragraphs": [
+            "Um desconto pode parecer pequeno quando comparado ao preço e grande quando comparado à contribuição disponível. O vendedor precisa de compreender o modelo antes de negociar, sem usar esse cálculo como pressão sobre o cliente. O exercício considera uma oferta sintética e não recomenda um preço real, margem mínima ou conduta fiscal. A negociação também pode alterar quantidade, sequência e suporte. Cada mudança deve conservar clareza sobre o objeto. Uma alternativa mais barata que entrega outra coisa precisa de ser apresentada como diferente, não como a mesma oferta com condições escondidas.",
+            "O pacote fictício tem preço de quinhentas unidades monetárias e custo incremental definido de trezentas. A diferença antes dos restantes custos é duzentas. Um desconto de cinquenta equivale a dez por cento do preço, mas reduz essa diferença para cento e cinquenta: queda de vinte e cinco por cento na contribuição definida. Isso não informa lucro líquido nem se o negócio é viável. Mostra apenas por que é necessário examinar a base da percentagem e as exclusões antes de considerar que uma concessão não altera substancialmente a operação."
+          ]
+        },
+        {
+          "title": "Uma fase menor não é uma redução automática do mesmo total",
+          "paragraphs": [
+            "Uma alternativa divide o trabalho em preparação fixa de cem e processamento de quatro por registo, no modelo sintético. Cem registos custariam quinhentos nessa composição; vinte custariam cento e oitenta, não cem. A conta é cem mais oitenta. O preço comercial não é determinado apenas por esse custo, mas a composição mostra a parte que não diminui proporcionalmente. O aluno deve distinguir custo estimado, preço proposto e desconto. Misturar os três pode levar a apresentar uma comparação que parece vantajosa porque usa bases diferentes.",
+            "Outra alternativa mantém preço e entrega, mas faseia o calendário. Isso só funciona se a capacidade e a necessidade do cliente forem compatíveis. Não se promete prioridade sem verificar agenda, nem suporte adicional gratuito se ele consome uma função limitada. Uma negociação responsável pode terminar sem acordo quando as condições essenciais não se encontram. O objetivo da oficina é construir opções explicitadas, não ensinar uma técnica para fechar sempre. Nenhuma opção é aceite em nome de um cliente real durante o exercício."
+          ]
+        },
+        {
+          "title": "A síntese da negociação precisa de eliminar ambiguidade",
+          "paragraphs": [
+            "Depois de discutir alternativas, registe a versão escolhida, os efeitos e o que ainda depende de confirmação. Se o preço mudou, revise o subtotal e as condições relacionadas. Se o alcance diminuiu, destaque o que saiu e como isso afeta a finalidade. Não deixe uma promessa antiga na abertura e uma exclusão nova na última página. A equipa de entrega deve receber a mesma decisão que o vendedor comunica ao cliente. A negociação deixa de ser sustentável quando a venda só parece possível porque alguém terá de executar trabalho que não foi dimensionado.",
+            "Entregue o cálculo do desconto e duas alternativas com dimensões comparáveis. Acrescente uma nota de negociação em que uma condição continua aberta e impede o início. O avaliador confere percentagens, objeto e capacidade, sem premiar a concessão mais elevada. A competência é relacionar cada proposta com o efeito no trabalho e na conta, preservando o direito de recusar uma condição inviável. O resultado deve poder ser revisto por outra pessoa, que consiga perceber o que se ofereceu e por que uma opção ainda não constitui compromisso confirmado."
+          ]
+        }
+      ],
+      "case": "Preço500,custo incremental300,contribuição200. Desconto50:preço450/contribuição150. Outro modelo de custo:fixo100+4por registo;100registos500,20registos180. Não são preços recomendados.",
+      "exercise": "Calcule10%preço/25%contribuição e compare fase20comfase100. Proponha duas alternativas e uma nota com condição pendente, sem confundir custo/preço.",
+      "assessment": {
+        "question": "Desconto10%reduz a contribuição definida em apenas10%?",
+        "answer": "Não.50sobre200reduz25%; passa de200para150. A base de cálculo é diferente do preço500.",
+        "rubric": [
+          "Obtém25%.",
+          "Calcula180.",
+          "Explicita alcance e condições."
+        ]
+      }
+    },
+    {
+      "id": "6",
+      "title": "Acompanhar estados e passar o compromisso à entrega",
+      "estimatedPracticeMinutes": 150,
+      "objectives": [
+        "Distinguir etapas comerciais sem atribuir probabilidades fictícias.",
+        "Produzir resumo de passagem e análise limitada de conversões do conjunto fornecido."
+      ],
+      "sourceIds": [
+        "sba-sales"
+      ],
+      "sections": [
+        {
+          "title": "O funil deve descrever acontecimentos, não entusiasmo",
+          "paragraphs": [
+            "Uma conversa iniciada, uma proposta enviada e um acordo confirmado são estados diferentes. Misturá-los numa única coluna de clientes pode criar previsão irreal e comprometer capacidade. Defina que acontecimento permite a passagem e que evidência a sustenta. Um estado como em decisão precisa de uma condição observável, não apenas da impressão do vendedor. O curso não atribui probabilidades universais a etapas. Sem histórico adequado e definição estável, multiplicar valores por percentagens inventadas produz uma precisão que os dados não oferecem.",
+            "O acompanhamento deve mostrar próxima ação, responsável e condição, respeitando a decisão do destinatário. Também precisa de representar pausas, recusas e perdas sem apagar entradas para melhorar indicadores. Uma proposta pode continuar em análise, mas isso não é receita recebida. Um acordo pode ter início condicionado a informação. A ligação entre vendas e operação, destacada pela SBA, orienta a necessidade de manter o compromisso executável. Os estados e critérios desta oficina foram criados para o exercício e não constituem um método validado de previsão."
+          ]
+        },
+        {
+          "title": "Um conjunto de dez oportunidades com destinos distintos",
+          "paragraphs": [
+            "Os registos sintéticos são dez: duas acordadas, três em decisão, uma aguardando dados, duas recusadas e duas encerradas por falta de adequação. As categorias são exclusivas nesta fotografia do conjunto. Duas em dez correspondem a vinte por cento acordadas entre as entradas analisadas. Isso não permite estimar a probabilidade de fecho das três em decisão, nem comparar com outro período que use definição diferente. As duas sem adequação também não devem desaparecer do denominador apenas porque o vendedor prefere mostrar uma taxa mais alta.",
+            "Para uma das acordadas, a entrega depende de receber a lista de campos autorizados. A passagem deve indicar versão da oferta, alcance, preço sintético, calendário condicionado, responsáveis e pendência. Se o comercial prometeu uma demonstração adicional, ela precisa de estar registada ou esclarecida antes de a equipa começar. O envio interno não altera permissões nem concede acesso aos dados do cliente. A equipa deve conseguir reconhecer o que pode executar e o que ainda aguarda uma condição, sem descobrir compromissos por mensagens dispersas depois do início."
+          ]
+        },
+        {
+          "title": "A aprendizagem comercial exige denominadores e contexto",
+          "paragraphs": [
+            "Uma taxa pequena num conjunto de dez não demonstra que a oferta é inviável, assim como uma taxa elevada num conjunto selecionado não prova crescimento sustentável. Examine motivo de recusa, adequação e capacidade antes de decidir. O registo pode revelar que o processo qualificou tarde uma tarefa fora do âmbito ou que a demonstração não explicou uma diferença. Essas observações orientam revisão, mas não justificam inventar causalidade a partir de poucos casos. A avaliação deve preservar o que foi conhecido em cada etapa e o que foi aprendido depois.",
+            "Entregue o quadro das dez oportunidades, o cálculo limitado e a nota de passagem de uma acordada. Acrescente uma mudança no processo comercial ligada a uma ocorrência e uma previsão que os dados não permitem. O percurso termina com uma forma de escolher, esclarecer, demonstrar, negociar e acompanhar com responsabilidade. Não comprova vendas reais nem as cento e quarenta horas históricas anunciadas. Conteúdo, rubricas, prática e carga precisam de revisão e pilotagem antes de ativar a candidata ou usar os seus exemplos como resultados comerciais da organização."
+          ]
+        }
+      ],
+      "case": "Fotografia10oportunidades:2acordadas,3decisão,1dados,2recusadas,2sem adequação. Uma acordada ainda depende de campos autorizados. Valores e estados sintéticos.",
+      "exercise": "Monte quadro exclusivo, calcule20%no conjunto e produza passagem com condição. Não preveja fecho das3sem histórico nem retire recusas para melhorar taxa.",
+      "assessment": {
+        "question": "As3em decisão podem ser contadas como receita confirmada?",
+        "answer": "Não. Ainda não há acordo. Mesmo acordos precisam de distinguir condições de execução e recebimento.",
+        "rubric": [
+          "Fecha10categorias.",
+          "Limita interpretação20%.",
+          "Preserva compromisso e pendência."
+        ]
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão comercial e pedagógica, incluindo limites éticos e precisão das demonstrações.",
+    "Verificação independente de cálculos, prática adicional e pilotagem para dimensionar140h.",
+    "Testar materiais acessíveis e leitor isolado, sem alterar assinaturas, compras ou progresso.",
+    "Aprovação editorial e autorização antes de publicação."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

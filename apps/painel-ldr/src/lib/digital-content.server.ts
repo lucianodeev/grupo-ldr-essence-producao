@@ -1,14 +1,37 @@
+import { normalizeDigitalReaderContent } from "@/lib/digital-reader-content";
 import type { Json } from "@/integrations/supabase/types";
 import { gunzipSync } from "node:zlib";
 
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { hasOwnerDigitalAccess } from "@/lib/owner-digital-access.server";
 
-export type DigitalReaderProductKey = "ebook_coragem_comecar" | "livro_menino_mamao" | "ebook_pratica_clinica_psicanalise" | "ebook_psicanalise_no_mundo" | "ebook_estudos_caso_psicanalise" | "ebook_psicanalise_autismo" | "ebook_psicologia_psicanalise_terapias" | "ebook_jornalismo_era_digital" | "ebook_corpo_trabalho_escuta" | "ebook_comportamento_humano" | "ebook_estetica_bem_estar" | "ebook_tricologia_cuidado" | "ebook_ia_novos_milionarios" | "ebook_imigracao_efeitos_psicologicos" | "ebook_psicanalise_vs_psiquiatria" | "ebook_falar_com_quem_feriu" | "ebook_da_pobreza_ao_primeiro_contrato";
+export type DigitalReaderProductKey =
+  | "ebook_coragem_comecar"
+  | "livro_menino_mamao"
+  | "ebook_pratica_clinica_psicanalise"
+  | "ebook_psicanalise_no_mundo"
+  | "ebook_estudos_caso_psicanalise"
+  | "ebook_psicanalise_autismo"
+  | "ebook_psicologia_psicanalise_terapias"
+  | "ebook_jornalismo_era_digital"
+  | "ebook_corpo_trabalho_escuta"
+  | "ebook_comportamento_humano"
+  | "ebook_estetica_bem_estar"
+  | "ebook_tricologia_cuidado"
+  | "ebook_ia_novos_milionarios"
+  | "ebook_imigracao_efeitos_psicologicos"
+  | "ebook_psicanalise_vs_psiquiatria"
+  | "ebook_falar_com_quem_feriu"
+  | "ebook_da_pobreza_ao_primeiro_contrato";
 export type DigitalReaderLocale = "pt" | "en" | "fr" | "es";
 
 const ALIASES: Record<DigitalReaderProductKey, string[]> = {
-  ebook_coragem_comecar: ["ebook_coragem_comecar", "a_coragem_de_comecar", "ebook", "combo_empreendedor"],
+  ebook_coragem_comecar: [
+    "ebook_coragem_comecar",
+    "a_coragem_de_comecar",
+    "ebook",
+    "combo_empreendedor",
+  ],
   livro_menino_mamao: ["livro_menino_mamao", "menino_mamao", "livro", "combo_empreendedor"],
   ebook_pratica_clinica_psicanalise: ["ebook_pratica_clinica_psicanalise"],
   ebook_psicanalise_no_mundo: ["ebook_psicanalise_no_mundo"],
@@ -63,10 +86,20 @@ async function assertEntitlement(customerId: string, productKey: DigitalReaderPr
   const entitled = (orders ?? []).some((order) => {
     if (order.catalog_key && allowed.has(order.catalog_key)) return true;
     const metadata = order.metadata as Record<string, unknown> | null;
-    const key = metadata && typeof metadata['product_key'] === "string" ? metadata['product_key'] : null;
+    const key =
+      metadata && typeof metadata["product_key"] === "string" ? metadata["product_key"] : null;
     return Boolean(key && allowed.has(key));
   });
-  if (!entitled) fail("Conteúdo disponível somente após confirmação da compra.");
+  if (entitled) return;
+  // Match the existing library entitlement: these two special works are not in its subscription catalog.
+  if (
+    productKey !== "ebook_falar_com_quem_feriu" &&
+    productKey !== "ebook_da_pobreza_ao_primeiro_contrato"
+  ) {
+    const { hasActiveLdrOne } = await import("@/lib/ldr-one-entitlement.server");
+    if (await hasActiveLdrOne(customerId)) return;
+  }
+  fail("Conteúdo disponível somente após confirmação da compra.");
 }
 
 function decodeContent(value: Json): Json {
@@ -123,6 +156,6 @@ export async function getProtectedDigitalContent(
     locale: data.locale as DigitalReaderLocale,
     title: data.title,
     version: data.version,
-    content: decodeContent(data.content),
+    content: normalizeDigitalReaderContent(decodeContent(data.content)),
   };
 }

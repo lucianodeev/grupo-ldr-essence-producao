@@ -1,0 +1,373 @@
+{
+  "productKey": "curso_assinatura_tecnicas_de_aprendizagem_e_memorizacao",
+  "slug": "tecnicas-de-aprendizagem-e-memorizacao",
+  "title": "Técnicas de Aprendizagem e Memorização",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 100,
+  "validatedHours": null,
+  "expectedModuleCount": 6,
+  "scope": "Oficinas educacionais sobre familiaridade, recuperação, perguntas, exemplos, prática distribuída, discriminação e feedback. Distingue-se do desenho de calendário e recursos do Planejamento de Estudos. Não diagnostica memória, não utiliza estilos fixos nem promete eficácia universal. Casos, regras e números fictícios;100horas históricas por validar.",
+  "courseObjectives": [
+    "Classificar tarefas segundo o apoio e a resposta exigida.",
+    "Construir uma verificação que não confunda reconhecimento da página e explicação autónoma.",
+    "Transformar uma explicação em questões com critérios de resposta.",
+    "Distinguir recuperação antes da consulta e cópia posterior da solução.",
+    "Identificar a razão de cada operação num exemplo.",
+    "Produzir uma tentativa com parte do apoio retirada e verificar a aplicação em dados novos.",
+    "Distinguir desempenho imediato e tentativa após intervalo.",
+    "Comparar duas organizações de prática sem confundir observação individual e prova científica.",
+    "Distinguir prática de execução e prática de discriminação.",
+    "Organizar questões misturadas que exijam justificar a escolha antes do cálculo.",
+    "Classificar erros pela relação que falta e não apenas pela pontuação final.",
+    "Verificar uma correção num problema novo, mantendo o alcance da evidência."
+  ],
+  "sources": [
+    {
+      "id": "dunlosky-review",
+      "title": "Dunlosky, J., Rawson, K. A., Marsh, E. J., Nathan, M. J., & Willingham, D. T. (2013). Improving Students’ Learning With Effective Learning Techniques: Promising Directions From Cognitive and Educational Psychology. Psychological Science in the Public Interest,14(1),4–58.",
+      "doi": "10.1177/1529100612453266",
+      "url": "https://www.psychologicalscience.org/journals/pspi/1529100612453266/",
+      "consulted": "2026-11-16",
+      "scope": "Metadados e resumo integral na página da APS consultados, não o texto integral da revisão. Classificações e limites identificados como avaliação histórica de2013; não se afirma revisão atual exaustiva ou validação dos instrumentos LDR."
+    },
+    {
+      "id": "roediger-retrieval",
+      "title": "Roediger, H. L., & Karpicke, J. D. (2006). Test-enhanced learning: taking memory tests improves long-term retention. Psychological Science,17(3),249–255.",
+      "doi": "10.1111/j.1467-9280.2006.01693.x",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/16507066/",
+      "consulted": "2026-11-16",
+      "scope": "Metadados e resumo do estudo original consultados no PubMed; não se declara leitura integral. Referência para estudo/recuperação e diferença entre tentativa imediata e adiada; não se generaliza para desempenho clínico ou garantia individual."
+    },
+    {
+      "id": "ies-learning",
+      "title": "Institute of Education Sciences / What Works Clearinghouse (2007). Organizing Instruction and Study to Improve Student Learning. Practice Guide.",
+      "url": "https://ies.ed.gov/ncee/wwc/PracticeGuide/1",
+      "consulted": "2026-11-16",
+      "scope": "Recomendações e notas da página oficial consultadas sobre exemplos, problemas, perguntas e distribuição temporal; níveis de evidência não são uniformes. Não se declara leitura integral do guia. Exercícios LDR e formatos de feedback são aplicações próprias por rever."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Distinguir familiaridade, recuperação e aplicação"
+    },
+    {
+      "id": "2",
+      "title": "Construir perguntas de recuperação que conservem o sentido"
+    },
+    {
+      "id": "3",
+      "title": "Usar exemplos resolvidos para explicar passos e retirar apoio"
+    },
+    {
+      "id": "4",
+      "title": "Distribuir prática e interpretar resultados em momentos diferentes"
+    },
+    {
+      "id": "5",
+      "title": "Alternar problemas para aprender a escolher a operação"
+    },
+    {
+      "id": "6",
+      "title": "Usar feedback para rever e testar transferência"
+    }
+  ],
+  "modules": [
+    {
+      "id": "1",
+      "title": "Distinguir familiaridade, recuperação e aplicação",
+      "estimatedPracticeMinutes": 105,
+      "objectives": [
+        "Classificar tarefas segundo o apoio e a resposta exigida.",
+        "Construir uma verificação que não confunda reconhecimento da página e explicação autónoma."
+      ],
+      "sourceIds": [
+        "dunlosky-review",
+        "roediger-retrieval"
+      ],
+      "sections": [
+        {
+          "title": "A facilidade de acompanhar não responde a todas as perguntas",
+          "paragraphs": [
+            "Um texto pode parecer claro enquanto está aberto e ser difícil de explicar depois. Essa diferença não demonstra que a leitura foi inútil; mostra que acompanhar uma explicação e produzir uma resposta sem o mesmo apoio são tarefas diferentes. O curso irá trabalhar essas condições sem apresentar uma técnica como solução para toda a aprendizagem. O ponto inicial é identificar o que a atividade permite observar. Reconhecer uma definição entre alternativas não equivale a reconstruí-la, e reconstruí-la não garante aplicação correta a um caso novo.",
+            "Roediger e Karpicke compararam estudo e testes de recuperação em experiências com textos, encontrando diferenças entre avaliação imediata e adiada. O resumo consultado não permite transformar o resultado numa promessa individual. A revisão de Dunlosky e colegas também examina técnicas segundo materiais e tarefas, em vez de tratar aprendizagem como um resultado único. Usaremos essas distinções para construir exercícios próprios. Não se afirma que o curso melhora clinicamente a memória, mede inteligência ou substitui avaliação profissional quando existem dificuldades persistentes que precisam de acompanhamento adequado."
+          ]
+        },
+        {
+          "title": "Três perguntas sobre a mesma regra fictícia",
+          "paragraphs": [
+            "Leia esta regra inventada para uma biblioteca de treino: reserva é um pedido para separar um exemplar ainda não levantado; empréstimo começa quando o exemplar é entregue; renovação prolonga um empréstimo existente mediante confirmação. Depois de estudar, compare três tarefas. A primeira oferece as definições e pede apontar reserva. A segunda pede escrever a diferença entre reserva e empréstimo sem consulta. A terceira apresenta alguém que já levou o exemplar e pede mais prazo, exigindo identificar renovação e a condição de confirmação. As três usam o mesmo material, mas solicitam respostas distintas.",
+            "Uma resposta correta na primeira pode apoiar aprendizagem inicial, sem demonstrar a terceira. Se a pessoa disser que renovação é automática, omitiu uma condição central da regra fornecida. O erro deve ser confrontado com o texto, não corrigido por uma prática presumida de bibliotecas reais. O cenário é inteiramente convencional e não descreve direitos de utilizadores de qualquer instituição. Essa delimitação permite avaliar precisamente o conteúdo apresentado e evita que conhecimento externo introduza uma resposta diferente sem que o aluno perceba a mudança de domínio."
+          ]
+        },
+        {
+          "title": "Escolher o teste pela capacidade que se pretende observar",
+          "paragraphs": [
+            "Prepare uma legenda para cada tentativa: com consulta, com pistas ou sem consulta; reconhecimento, explicação ou aplicação. A legenda não serve para classificar a pessoa como boa ou má estudante. Ajuda a interpretar o resultado e a escolher o próximo passo. Se uma explicação só aparece com a definição à vista, pode ser pertinente uma tentativa posterior com menos apoio. Se a definição é recuperada, mas aplicada ao caso errado, repetir palavras pode não tratar a diferença conceptual que precisa de ser aprendida.",
+            "A atividade entrega três respostas e uma nota sobre o alcance de cada uma. Acrescente uma quarta pergunta que apresente outra situação, conservando a regra da biblioteca. O avaliador procura correspondência entre tarefa e conclusão sobre aprendizagem. Não será aceite afirmar domínio total a partir de um único acerto de reconhecimento. O percurso começa assim por uma maneira de observar o estudo: identificar o apoio disponível, a operação realizada e os limites do resultado antes de escolher uma técnica para praticar e uma evidência para comparar depois."
+          ]
+        }
+      ],
+      "case": "Biblioteca de treino: reserva separa exemplar ainda não levantado; empréstimo começa na entrega; renovação prolonga empréstimo existente mediante confirmação. Regras fictícias.",
+      "exercise": "Realize reconhecimento, explicação sem consulta e aplicação; crie quarto caso. Anote apoio, operação e limite de cada resultado.",
+      "assessment": {
+        "question": "Identificar reserva entre definições prova aplicação autónoma de renovação?",
+        "answer": "Não. São operações e conteúdos diferentes. A aplicação deve conservar empréstimo existente e confirmação, segundo a regra fictícia.",
+        "rubric": [
+          "Distingue três operações.",
+          "Preserva condição de confirmação.",
+          "Não infere domínio total por um acerto."
+        ]
+      }
+    },
+    {
+      "id": "2",
+      "title": "Construir perguntas de recuperação que conservem o sentido",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Transformar uma explicação em questões com critérios de resposta.",
+        "Distinguir recuperação antes da consulta e cópia posterior da solução."
+      ],
+      "sourceIds": [
+        "roediger-retrieval"
+      ],
+      "sections": [
+        {
+          "title": "Uma pergunta deve recuperar uma relação, não apenas uma palavra solta",
+          "paragraphs": [
+            "Um cartão com uma palavra de um lado e uma definição do outro pode ser útil para certo objetivo, mas não representa qualquer tipo de aprendizagem. Se o aluno precisa de explicar uma condição ou comparar conceitos, a pergunta deve tornar essa relação necessária. Uma questão ampla demais pode ser difícil de corrigir; uma pista que já contém a resposta pode permitir apenas completá-la. O desenho precisa de equilibrar alcance e critério. O aluno produzirá questões sobre um pequeno texto fornecido, evitando depender de materiais externos não consultados.",
+            "O estudo de Roediger e Karpicke é referência para a distinção entre recuperar e voltar a estudar, não uma validação de qualquer conjunto de cartões LDR. Neste exercício, a sequência é ler, afastar o texto, tentar responder e só depois conferir. Se for preciso consultar durante a tentativa, registe o apoio. A consulta pode contribuir para aprender; não deve ser ocultada ao descrever o desempenho inicial. Também não se exige inventar uma resposta quando nada é recuperado. Marcar uma lacuna permite orientar a releitura para um ponto específico."
+          ]
+        },
+        {
+          "title": "Um texto curto com uma condição que não pode desaparecer",
+          "paragraphs": [
+            "Use a descrição fictícia de um arquivo: cópia de consulta serve para leitura corrente; cópia de preservação é mantida sem edição de conteúdo; a mudança de formato deve conservar o conteúdo e ser documentada. O texto é uma regra de treino, não uma política técnica suficiente para um arquivo real. Crie perguntas que solicitem finalidade, restrição e condição de mudança. Uma pergunta útil é por que mudar o formato não autoriza alterar o conteúdo? A resposta deve relacionar conservação do conteúdo e documentação, sem afirmar que qualquer conversão foi tecnicamente validada.",
+            "Uma pergunta como a cópia de preservação pode ser editada livremente? permite responder não sem explicar a relação. Pode integrar uma etapa inicial, mas precisa de complemento se o objetivo é justificar. Para cada questão, escreva critérios antes da tentativa: que elemento é necessário, que alternativa verbal conserva o sentido e que resposta contradiz o texto. A correção não deve exigir as palavras exatas quando a relação foi expressa com precisão. Também não deve aceitar qualquer paráfrase que elimine a condição apenas porque parece profissional ou utiliza termos semelhantes."
+          ]
+        },
+        {
+          "title": "Corrigir a pergunta quando ela mede outra coisa",
+          "paragraphs": [
+            "Teste o conjunto com alguém que use apenas o texto fornecido. Se uma pergunta exige uma regra não apresentada, reescreva-a ou acrescente a fonte necessária. O problema pode estar no instrumento, não na pessoa que respondeu. Uma questão com duas solicitações independentes pode produzir uma resposta parcial difícil de interpretar; pode ser melhor separá-las e depois criar uma integração. O aluno deverá explicar uma revisão de pergunta a partir de uma dificuldade observada, em vez de aumentar o conjunto com dezenas de itens quase iguais.",
+            "Entregue quatro questões com critérios, uma tentativa registada e a correção de uma pergunta defeituosa. Assinale o momento da consulta e preserve a primeira resposta antes da revisão. O resultado demonstra a construção de prática verificável, não uma pontuação de memória geral. A competência é fazer a pergunta solicitar o conhecimento relevante e usar o erro para localizar trabalho de estudo. Um conjunto pequeno com relações claras e correção fundamentada oferece mais informação pedagógica que uma contagem elevada de cartões que só permite reconhecer palavras já visíveis na própria pista."
+          ]
+        }
+      ],
+      "case": "Regra de treino: consulta para leitura; preservação sem editar conteúdo; mudança de formato conserva conteúdo e é documentada. Não é política arquivística real.",
+      "exercise": "Crie quatro questões e critérios; responda antes de consultar e conserve tentativa. Reescreva uma questão que exigia informação não fornecida.",
+      "assessment": {
+        "question": "Uma resposta copiada depois da conferência deve contar como recuperação inicial?",
+        "answer": "Não. Pode documentar revisão e aprendizagem, mas precisa de ser distinguida da primeira tentativa e do apoio utilizado.",
+        "rubric": [
+          "Pergunta relações fornecidas.",
+          "Corrige por sentido e condições.",
+          "Mantém tentativa e revisão distintas."
+        ]
+      }
+    },
+    {
+      "id": "3",
+      "title": "Usar exemplos resolvidos para explicar passos e retirar apoio",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Identificar a razão de cada operação num exemplo.",
+        "Produzir uma tentativa com parte do apoio retirada e verificar a aplicação em dados novos."
+      ],
+      "sourceIds": [
+        "ies-learning",
+        "dunlosky-review"
+      ],
+      "sections": [
+        {
+          "title": "Seguir passos não basta quando não se sabe por que existem",
+          "paragraphs": [
+            "Um exemplo resolvido pode tornar uma sequência observável. A utilidade diminui se o aluno apenas copia operações sem relacioná-las com a pergunta. A prática deste módulo pede explicar o papel de cada passo, completar uma solução parcial e resolver outra situação sem a estrutura pronta. O apoio é retirado de modo explícito para que o resultado possa ser interpretado. Não há uma regra de que toda a pessoa deve começar no mesmo ponto; se o conceito básico ainda não foi compreendido, pode ser necessário retomar a explicação antes da tentativa autónoma.",
+            "O IES recomenda alternar exemplos resolvidos e resolução de problemas. A revisão de Dunlosky e colegas classifica a autoexplicação como promissora com limites de generalização na evidência então examinada. Estas referências não provam que a sequência LDR específica é superior a qualquer alternativa. O exercício abaixo é uma aplicação original com números simples. A autoexplicação deve ligar a operação ao problema, em vez de repetir primeiro multipliquei, depois dividi sem dizer o que cada valor representa e por que a relação é pertinente."
+          ]
+        },
+        {
+          "title": "Um exemplo de custo unitário sem despesas ocultas no cenário",
+          "paragraphs": [
+            "Um conjunto de oito cadernos custa vinte e quatro unidades monetárias fictícias. Todos têm o mesmo custo e não há despesas adicionais no enunciado. Dividir vinte e quatro por oito produz três por caderno. Para cinco cadernos ao mesmo custo unitário, cinco vezes três resulta quinze. A divisão encontra o valor de uma unidade; a multiplicação escala para a quantidade pretendida. Não se conclui que qualquer fornecedor real vende unidades avulsas a esse valor, porque a regra do exercício foi explicitamente estabelecida e não verificada no mercado.",
+            "Na solução parcial, seis marcadores custam dezoito unidades monetárias e o aluno precisa de completar o custo de quatro. O valor unitário é três e o total doze. Depois apresenta-se um caso novo: cinco pastas custam vinte e o objetivo é estimar sete ao mesmo custo unitário. O resultado é vinte e oito. A mudança de números e objeto exige conservar a relação. Se o aluno multiplicar vinte por sete sem dividir por cinco, o erro mostra que não separou preço do conjunto e valor unitário, e a correção deve abordar essa distinção."
+          ]
+        },
+        {
+          "title": "Explicar o erro com referência à unidade",
+          "paragraphs": [
+            "Uma resposta correta por tentativa pode não revelar o raciocínio; peça uma frase que identifique unidade e quantidade. Ao mesmo tempo, não exija um ensaio desnecessário para cada operação já compreendida. A explicação deve tornar visível a relação central com o menor peso adicional adequado. O aluno pode usar palavras, tabela acessível ou expressão numérica com legenda. Diferentes formas de expressão são aceitáveis se conservarem o significado. A atividade não classifica estilos de aprendizagem nem presume que um desenho é sempre mais eficaz para determinada pessoa.",
+            "Entregue a explicação do exemplo, a solução parcial e o caso autónomo, seguidos de uma análise do erro de multiplicar preço do conjunto pela quantidade final. Acrescente uma condição que tornaria o cálculo inadequado, como um custo adicional não incluído, sem alterar retroativamente o cenário inicial. O avaliador procura transferência da relação e reconhecimento do alcance. O aluno deve conseguir explicar por que obteve vinte e oito no caso das pastas e em que condições esse valor deixa de responder à pergunta. A aprendizagem vai além de reproduzir a ordem de operações observada no primeiro exemplo."
+          ]
+        }
+      ],
+      "case": "Cadernos8por24; marcadores6por18 para4; pastas5por20 para7. Custo unitário constante em cada caso, sem despesas adicionais; valores fictícios.",
+      "exercise": "Explique exemplo, complete marcadores12 e resolva pastas28. Analise o erro20×7 e indique uma mudança de condição que exigiria rever a conta.",
+      "assessment": {
+        "question": "Por que vinte vezes sete não responde ao caso das pastas?",
+        "answer": "Vinte é o custo de cinco, não de uma. Primeiro20/5=4 por pasta; depois7×4=28 nas condições dadas.",
+        "rubric": [
+          "Relaciona operação e unidade.",
+          "Obtém12 e28.",
+          "Reconhece limites do modelo de custo."
+        ]
+      }
+    },
+    {
+      "id": "4",
+      "title": "Distribuir prática e interpretar resultados em momentos diferentes",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Distinguir desempenho imediato e tentativa após intervalo.",
+        "Comparar duas organizações de prática sem confundir observação individual e prova científica."
+      ],
+      "sourceIds": [
+        "dunlosky-review",
+        "roediger-retrieval"
+      ],
+      "sections": [
+        {
+          "title": "A escolha do momento de avaliação modifica a pergunta",
+          "paragraphs": [
+            "Uma tentativa logo depois de ler informa algo diferente de outra feita quando a página já não está recente. Nenhuma precisa de ser eliminada: é importante saber qual condição está a ser observada. Um aluno pode acertar imediatamente e não conseguir reconstruir depois; outro pode melhorar após conferir erros e voltar ao assunto. O curso não utiliza essas diferenças para diagnosticar memória ou prometer retenção permanente. Vai construir um registo que permita comparar condições e escolher um retorno, mantendo claras as limitações do pequeno exercício.",
+            "A revisão de Dunlosky e colegas atribuiu elevada utilidade à prática distribuída no conjunto de evidência analisado. Isso não define um intervalo único nem garante o mesmo efeito para qualquer material. O estudo de Roediger e Karpicke também mostra que comparar apenas o desempenho imediato pode contar uma história diferente da avaliação adiada. A aplicação LDR será um ensaio de estudo com conteúdo novo e tempo total explicitado. Não se apresentará como experiência controlada capaz de provar causalidade a partir da participação de uma pessoa."
+          ]
+        },
+        {
+          "title": "Duas organizações com o mesmo total de minutos",
+          "paragraphs": [
+            "No cenário didático, um conjunto A recebe trinta minutos de estudo numa sessão. Um conjunto B recebe três sessões de dez minutos em dias distintos. O total é igual, mas conteúdos, momentos e experiência anterior podem diferir. Para observar o que acontece, defina previamente perguntas, critério de resposta e momento de tentativa. Se B for muito mais fácil que A, um acerto superior não pode ser atribuído com segurança à distribuição. Reconhecer esse limite é parte da aprendizagem e impede transformar qualquer diferença num testemunho de eficácia universal.",
+            "Utilize seis relações fictícias entre símbolos e funções, divididas em dois conjuntos de três, sem dados pessoais. O aluno pode criar o material, mas deve conservar uma chave de correção e evitar relações já muito conhecidas num grupo e inteiramente novas no outro. Registe exposição, tentativa, consulta e revisão. Não é necessário forçar que os dois conjuntos tenham exatamente a mesma dificuldade, algo que o exercício não demonstra; é necessário declarar a limitação e não ocultá-la na conclusão. O resultado serve para planear prática, não para publicar uma alegação científica."
+          ]
+        },
+        {
+          "title": "Um calendário de retorno é uma hipótese ajustável",
+          "paragraphs": [
+            "Defina um intervalo didático que caiba no período disponível e explique por que permite uma tentativa posterior. Não se atribui a esse número estatuto de curva universal do esquecimento. Se a pessoa não consegue recuperar relações básicas, a resposta pode exigir reaprender com explicação, em vez de apenas repetir a pergunta num intervalo maior. Se recupera, pode ser útil aplicar em outra situação. O registo precisa de mostrar o que mudou no tipo de tarefa e no apoio, pois comparar resultados de condições diferentes sem legenda torna a interpretação frágil.",
+            "A entrega contém os dois materiais, a chave, um registo de tentativas e uma conclusão limitada. Distinga observação, hipótese explicativa e decisão de estudo. Uma conclusão aceitável pode dizer que determinada relação ainda exige prática com menos pistas; não precisa de anunciar que uma técnica venceu. O avaliador procura se a pessoa preservou as condições e conseguiu escolher um próximo passo coerente. A competência consiste em usar tempo e retorno de forma refletida, sem confundir facilidade momentânea com objetivo de retenção ou converter um ensaio pessoal em prova sobre todos os estudantes."
+          ]
+        }
+      ],
+      "case": "A30min numa sessão; B3×10min em dias distintos. Criar seis relações fictícias, três por conjunto, com chave e critérios. Dificuldade equivalente não está provada.",
+      "exercise": "Crie materiais, chave e registo; execute ou planeie o ensaio indicando o que efetivamente fez. Separe observação, hipótese e decisão, sem alegar efeito causal.",
+      "assessment": {
+        "question": "Total igual de minutos torna os dois conjuntos uma comparação causal controlada?",
+        "answer": "Não. Conteúdo, dificuldade, experiência e condições podem diferir. O ensaio pode orientar estudo, mas não demonstra causalidade ou intervalo universal.",
+        "rubric": [
+          "Mantém30min nos dois formatos.",
+          "Declara condições e limitações.",
+          "Não inventa resultados de uma tentativa não executada."
+        ]
+      }
+    },
+    {
+      "id": "5",
+      "title": "Alternar problemas para aprender a escolher a operação",
+      "estimatedPracticeMinutes": 135,
+      "objectives": [
+        "Distinguir prática de execução e prática de discriminação.",
+        "Organizar questões misturadas que exijam justificar a escolha antes do cálculo."
+      ],
+      "sourceIds": [
+        "dunlosky-review"
+      ],
+      "sections": [
+        {
+          "title": "Saber calcular não garante escolher quando usar",
+          "paragraphs": [
+            "Uma série de exercícios todos do mesmo tipo permite antecipar a operação pelo formato da página. Isso pode ajudar a praticar execução, mas oferece pouca informação sobre a escolha quando os problemas aparecem misturados. Este módulo introduz uma tarefa de discriminação: identificar o que se pergunta, escolher uma relação e só depois calcular. A alternância não será apresentada como superior em toda a fase de aprendizagem. Se o aluno ainda não compreende cada relação, pode precisar de explicação e prática acompanhada antes de comparar tipos próximos.",
+            "A revisão de 2013 de Dunlosky e colegas avaliou a prática intercalada com utilidade moderada e limites na evidência então disponível. O alcance histórico é importante: não se afirma que esse resumo encerra toda a investigação posterior. A atividade LDR usa problemas originais de perímetro e área para tornar a escolha visível. Não é um programa validado de ensino de geometria. Os conceitos e cálculos precisam de revisão matemática independente, e a prática deve ser adaptada ao conhecimento demonstrado, sem usar a dificuldade criada pela mistura como prova automática de aprendizagem."
+          ]
+        },
+        {
+          "title": "O mesmo retângulo permite perguntas com unidades diferentes",
+          "paragraphs": [
+            "Um retângulo fictício tem lados de seis e quatro metros. Para delimitar a borda, calcula-se o perímetro: seis mais quatro mais seis mais quatro, ou vinte metros. Para cobrir a superfície, calcula-se a área: seis vezes quatro, ou vinte e quatro metros quadrados. Os dois resultados respondem a perguntas diferentes. A coincidência ocasional de números noutro retângulo não tornaria as relações equivalentes. O aluno deve escrever a unidade e explicar se trata de comprimento de contorno ou medida de superfície antes de efetuar a operação.",
+            "Acrescente um retângulo de oito por três metros e outro de cinco por cinco. Para o primeiro, perímetro vinte e dois e área vinte e quatro. Para o segundo, perímetro vinte e área vinte e cinco. Esses exemplos mostram que a mesma área pode coexistir com perímetros diferentes e que o mesmo perímetro pode coexistir com áreas diferentes. Não se está a demonstrar uma regra sobre todas as formas possíveis a partir de três casos; está-se a fornecer contraexemplos a equivalências indevidas que poderiam ser sugeridas por uma única figura."
+          ]
+        },
+        {
+          "title": "Misturar com finalidade, não trocar de assunto arbitrariamente",
+          "paragraphs": [
+            "Prepare uma sequência que alterne pedidos de contorno e superfície sem os anunciar pelo título da secção. Inclua também um problema que peça ambos, exigindo duas respostas com unidades. Depois da tentativa, classifique o erro: operação mal escolhida, cálculo ou unidade. Essa distinção orienta correções diferentes. Um erro de seleção pode precisar de comparação entre enunciados; um erro aritmético pode exigir conferência da operação já adequada. A prática não deve punir a tentativa com uma nota global que apaga a origem da dificuldade.",
+            "Entregue seis questões misturadas com solução e justificação de escolha, usando as três figuras dadas. Acrescente uma questão mal redigida e explique por que não permite decidir o que medir. O avaliador procura a relação entre finalidade, operação e unidade, além do valor final. O resultado esperado é aprender a reconhecer que tipo de problema está diante do aluno. A alternância torna-se assim um modo de praticar discriminação quando existem conceitos a comparar, em vez de uma recomendação genérica para mudar constantemente de tema sem construir entendimento suficiente de nenhum deles."
+          ]
+        }
+      ],
+      "case": "Retângulos6×4,8×3,5×5metros. Perímetros20,22,20m; áreas24,24,25m². Perguntas devem indicar contorno ou superfície.",
+      "exercise": "Crie seis problemas misturados e chave com operação/unidade. Analise um erro de escolha e um de cálculo; corrija uma pergunta ambígua.",
+      "assessment": {
+        "question": "Área igual nos retângulos6×4 e8×3 implica perímetro igual?",
+        "answer": "Não. Ambos têm área24m², mas perímetros20m e22m. São grandezas diferentes.",
+        "rubric": [
+          "Calcula e usa unidades corretas.",
+          "Justifica operação antes da conta.",
+          "Não confunde dificuldade com eficácia demonstrada."
+        ]
+      }
+    },
+    {
+      "id": "6",
+      "title": "Usar feedback para rever e testar transferência",
+      "estimatedPracticeMinutes": 150,
+      "objectives": [
+        "Classificar erros pela relação que falta e não apenas pela pontuação final.",
+        "Verificar uma correção num problema novo, mantendo o alcance da evidência."
+      ],
+      "sourceIds": [
+        "ies-learning",
+        "dunlosky-review"
+      ],
+      "sections": [
+        {
+          "title": "A solução deve explicar por que a resposta precisa de mudar",
+          "paragraphs": [
+            "Mostrar apenas um número correto pode permitir substituição da resposta sem compreensão. O feedback precisa de relacionar o erro com a condição relevante e orientar uma nova tentativa. Isso não exige uma explicação longa para qualquer deslize. O aluno irá diferenciar omissão de condição, escolha de operação e erro de cálculo, procurando uma intervenção proporcional. A pontuação pode resumir um resultado, mas não mostra sozinha o que estudar. O curso termina com uma prática de revisão que conserva a tentativa inicial e testa se o ajuste foi compreendido.",
+            "O guia do IES inclui questões explicativas e uso de tarefas para identificar necessidades. A aplicação final é original, sem presumir que uma rubrica LDR tem validação psicométrica. A revisão de técnicas por Dunlosky e colegas distingue resultados de memória, compreensão e resolução; essa variedade reforça a necessidade de dizer o que a nova tarefa verifica. Não se afirma que corrigir um exercício produza transferência ilimitada. A conclusão deve permanecer ligada às operações e condições efetivamente observadas no dossiê."
+          ]
+        },
+        {
+          "title": "Três respostas pedem três tipos de correção",
+          "paragraphs": [
+            "Primeiro, uma regra fictícia de laboratório escolar diz que uma amostra só entra na lista final depois de ter código e conferência. A resposta do aluno diz basta ter código. O feedback precisa de recuperar a condição de conferência e pedir aplicação a duas amostras com estados diferentes, sem transformar o exercício em instrução clínica. Segundo, um problema pede contornar um quadrado de lado sete metros e o aluno calcula quarenta e nove metros quadrados. O problema é a escolha da grandeza: o contorno mede vinte e oito metros.",
+            "Terceiro, um desconto fictício de dez por cento sobre cinquenta unidades monetárias tem redução de cinco e valor final quarenta e cinco. Se o aluno escolheu a relação adequada, mas subtraiu cinco e escreveu quarenta e seis, a correção pode concentrar-se na operação aritmética e na conferência. Não é necessário concluir que não entende percentagens. Os três episódios não devem receber a mesma prescrição de reler tudo. O feedback localiza o ponto e prepara outra tentativa que realmente exige conservar a correção, em vez de copiar a solução."
+          ]
+        },
+        {
+          "title": "Transferir significa enfrentar alguma diferença relevante",
+          "paragraphs": [
+            "Para cada episódio, crie um caso novo: outro identificador com conferência em falta, uma figura com lados diferentes ou desconto com novos valores. Declare o que permaneceu e o que mudou. Um caso quase idêntico pode verificar a relação básica; uma situação muito diferente pode exigir conhecimentos adicionais. Se o aluno falhar, examine essa diferença antes de concluir que a técnica não funcionou. O dossiê deve indicar apoio utilizado e quando a solução ficou visível, permitindo interpretar se houve tentativa independente ou revisão acompanhada.",
+            "A entrega final reúne três análises de erro, feedbacks distintos e novas tarefas com chave. Acrescente uma conclusão sobre aprendizagem que os dados permitem e outra que ainda não permitem. Não apresente o resultado como melhoria clínica da memória nem como garantia de notas futuras. As seis oficinas oferecem um percurso textual para revisão, com prática original e referências de alcance explícito. Para sustentar a carga histórica de cem horas, ainda são necessários banco graduado, pilotagem e avaliação da experiência completa. A qualidade da síntese está em mostrar como a prática foi escolhida, corrigida e testada, preservando o limite de cada evidência."
+          ]
+        }
+      ],
+      "case": "Erros sintéticos: código sem conferência; contorno de quadrado7m respondido49m²; desconto10% de50 com relação correta mas final46 em vez45.",
+      "exercise": "Classifique três erros, escreva feedback distinto e crie um problema novo com solução para cada. Declare mudança, apoio e conclusão ainda não permitida.",
+      "assessment": {
+        "question": "Os três episódios pedem simplesmente reler todo o material?",
+        "answer": "Não. Exigem tratar condição omitida, escolha da grandeza e cálculo aritmético. Os resultados do cenário são código+conferência,28m e45unidades monetárias.",
+        "rubric": [
+          "Distingue três origens de erro.",
+          "Verifica em tarefa nova.",
+          "Não amplia resultado para memória geral ou carga validada."
+        ]
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão em psicologia educacional e atualização bibliográfica aprofundada além dos resumos consultados.",
+    "Revisão matemática e de enunciados; ampliar e pilotar prática graduada antes de validar carga de100horas.",
+    "Verificar formatos acessíveis e experiência do leitor isolado, sem alterar matrículas, progresso ou certificados.",
+    "Revisão editorial e autorização antes de publicação; não apresentar como intervenção clínica."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

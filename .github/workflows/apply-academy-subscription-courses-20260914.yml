@@ -1,63 +1,125 @@
+# Legacy integration patches remain manual historical tools. Never reapply them
+# automatically to the curated library or push generated changes to main.
 name: Apply Academy subscription courses 2026-09-14
 on:
   pull_request:
     branches: [main]
     paths:
-      - 'tools/patch_academy_subscription_courses_20260914.py'
-      - 'tools/patch_hiv_academy_20260915.py'
-      - 'apps/painel-ldr/src/lib/academy-subscription-courses.catalog.ts'
-      - 'apps/painel-ldr/src/components/academy-subscription-course-shelf.tsx'
-      - 'apps/painel-ldr/src/lib/project-management-formation.catalog.ts'
-      - 'apps/painel-ldr/src/lib/academy-professional-formations.catalog.ts'
-      - 'apps/painel-ldr/src/lib/hiv-science-formation.catalog.ts'
-      - 'apps/painel-ldr/src/routes/_clientarea.cliente.cursos.assinatura.$slug.tsx'
+      - 'apps/painel-ldr/src/content/academy-free/**'
+      - 'apps/painel-ldr/src/lib/academy-*.ts'
+      - 'apps/painel-ldr/src/lib/*formation*.ts'
+      - 'apps/painel-ldr/src/lib/learning.server.ts'
+      - 'apps/painel-ldr/src/lib/library-*.ts'
+      - 'apps/painel-ldr/src/components/*library*.tsx'
+      - 'apps/painel-ldr/src/components/academy-*.tsx'
+      - 'apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca*.tsx'
+      - 'apps/painel-ldr/src/routes/_clientarea.cliente.cursos*.tsx'
+      - 'apps/painel-ldr/tests/library-*.test.cjs'
+      - 'apps/painel-ldr/tests/library-progress.pgtest.cjs'
+      - 'apps/painel-ldr/tests/editorial-drafts.test.cjs'
+      - 'apps/painel-ldr/tests/helpers/**'
+      - 'editorial/drafts/**'
+      - 'editorial/courses/**'
+      - 'tools/validate-course-drafts.cjs'
+      - 'tools/course-repetition-review.cjs'
+      - 'tools/review-editorial-corpus.cjs'
+      - 'tools/render-editorial-review.cjs'
+      - 'docs/editorial-review.html'
+      - 'tools/validate-editorial-drafts.cjs'
+      - 'package-lock.json'
+      - 'apps/painel-ldr/package.json'
       - '.github/workflows/apply-academy-subscription-courses-20260914.yml'
   push:
     branches: [main]
     paths:
-      - 'tools/patch_academy_subscription_courses_20260914.py'
-      - 'tools/patch_hiv_academy_20260915.py'
-      - 'apps/painel-ldr/src/lib/academy-subscription-courses.catalog.ts'
-      - 'apps/painel-ldr/src/components/academy-subscription-course-shelf.tsx'
-      - 'apps/painel-ldr/src/lib/project-management-formation.catalog.ts'
-      - 'apps/painel-ldr/src/lib/academy-professional-formations.catalog.ts'
-      - 'apps/painel-ldr/src/lib/hiv-science-formation.catalog.ts'
-      - 'apps/painel-ldr/src/routes/_clientarea.cliente.cursos.assinatura.$slug.tsx'
+      - 'apps/painel-ldr/src/content/academy-free/**'
+      - 'apps/painel-ldr/src/lib/academy-*.ts'
+      - 'apps/painel-ldr/src/lib/*formation*.ts'
+      - 'apps/painel-ldr/src/lib/learning.server.ts'
+      - 'apps/painel-ldr/src/lib/library-*.ts'
+      - 'apps/painel-ldr/src/components/*library*.tsx'
+      - 'apps/painel-ldr/src/components/academy-*.tsx'
+      - 'apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca*.tsx'
+      - 'apps/painel-ldr/src/routes/_clientarea.cliente.cursos*.tsx'
+      - 'apps/painel-ldr/tests/library-*.test.cjs'
+      - 'apps/painel-ldr/tests/library-progress.pgtest.cjs'
+      - 'apps/painel-ldr/tests/editorial-drafts.test.cjs'
+      - 'apps/painel-ldr/tests/helpers/**'
+      - 'editorial/drafts/**'
+      - 'editorial/courses/**'
+      - 'tools/validate-course-drafts.cjs'
+      - 'tools/course-repetition-review.cjs'
+      - 'tools/review-editorial-corpus.cjs'
+      - 'tools/render-editorial-review.cjs'
+      - 'docs/editorial-review.html'
+      - 'tools/validate-editorial-drafts.cjs'
+      - 'package-lock.json'
+      - 'apps/painel-ldr/package.json'
       - '.github/workflows/apply-academy-subscription-courses-20260914.yml'
 permissions:
-  contents: write
+  contents: read
 jobs:
   integrate-and-build:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Apply existing subscription integration
-        run: python tools/patch_academy_subscription_courses_20260914.py
-      - name: Apply additive HIV integration
-        run: python tools/patch_hiv_academy_20260915.py
-      - name: Install dependencies
-        working-directory: apps/painel-ldr
+          cache: npm
+      - name: Install locked workspace dependencies
         run: npm ci --no-audit --no-fund
-      - name: Build Academy
-        working-directory: apps/painel-ldr
-        run: npm run build
-      - name: Commit generated integration only when build succeeds on main
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      - name: Verify library contracts with synthetic data
+        run: node --test apps/painel-ldr/tests/library-*.test.cjs apps/painel-ldr/tests/editorial-drafts.test.cjs
+      - name: Validate unpublished editorial candidates
+        run: node tools/validate-editorial-drafts.cjs
+      - name: Validate unpublished course candidates
+        run: node tools/validate-course-drafts.cjs
+      - name: Check repetition across all authored candidates
+        run: node tools/review-editorial-corpus.cjs
+      - name: Verify standalone editorial review is up to date
         run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add \
-            apps/painel-ldr/src/lib/library-subscription.server.ts \
-            apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca.tsx \
-            apps/painel-ldr/src/components/library-sales-home.tsx \
-            apps/painel-ldr/src/routeTree.gen.ts \
-            apps/painel-ldr/src/lib/academy-subscription-courses.catalog.ts \
-            apps/painel-ldr/src/lib/hiv-science-formation.catalog.ts \
-            apps/painel-ldr/src/lib/academy-professional-formations.catalog.ts
-          if ! git diff --cached --quiet; then
-            git commit -m 'feat(academy): integrate subscription courses and HIV science course'
-            git push origin main
-          fi
+          node tools/render-editorial-review.cjs
+          git diff --exit-code -- docs/editorial-review.html
+      - name: Check Academy TypeScript
+        run: npm --prefix apps/painel-ldr run typecheck
+      - name: Build Academy without deployment
+        run: npm --prefix apps/painel-ldr run build
+  progress-postgres:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: ldr_library_test
+          POSTGRES_PASSWORD: ci_local_only
+          POSTGRES_DB: ldr_library_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ldr_library_test -d ldr_library_ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      LDR_LIBRARY_ISOLATED_DB: '1'
+      PGHOST: 127.0.0.1
+      PGPORT: '5432'
+      PGUSER: ldr_library_test
+      PGPASSWORD: ci_local_only
+      PGDATABASE: ldr_library_ci
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Ensure PostgreSQL client
+        run: command -v psql || (sudo apt-get update -qq && sudo apt-get install -y postgresql-client)
+      - name: Exercise concurrent progress in disposable PostgreSQL
+        run: node --test apps/painel-ldr/tests/library-progress.pgtest.cjs

@@ -1,0 +1,11 @@
+{
+  "asOf": "2026-11-16",
+  "project": "sfrcsrzuoqdscflfuwik",
+  "method": "Read-only SELECT of product_key, locale, version, active and updated_at from digital_product_content; no content or customer data emitted",
+  "editions": [
+    {"productKey":"ebook_comportamento_humano","locale":"pt","version":1,"active":true,"updatedAt":"2026-09-14 00:52:37.146418+00"},
+    {"productKey":"ebook_estudos_caso_psicanalise","locale":"pt","version":3,"active":true,"updatedAt":"2026-09-13 15:45:31.474845+00"},
+    {"productKey":"livro_menino_mamao","locale":"pt","version":2,"active":true,"updatedAt":"2026-09-03 14:56:09.243444+00"}
+  ],
+  "productionWrites": false
+}

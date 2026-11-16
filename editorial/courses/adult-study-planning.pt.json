@@ -1,0 +1,353 @@
+{
+  "productKey": "curso_assinatura_planejamento_de_estudos_para_adultos",
+  "slug": "planejamento-de-estudos-para-adultos",
+  "title": "Planejamento de Estudos para Adultos",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 100,
+  "validatedHours": null,
+  "expectedModuleCount": 6,
+  "scope": "Desenho e revisão de um ciclo de estudo adulto: metas, disponibilidade, recursos e pré-requisitos, retornos, ocorrências e ensaio. Distingue-se de técnicas específicas de memória e de gestão geral do tempo. Todos os dados e personagens são fictícios; não há diagnóstico clínico nem garantia de aprovação. Carga histórica100h não validada.",
+  "courseObjectives": [
+    "Relacionar uma finalidade de aprendizagem com uma demonstração concreta.",
+    "Distinguir exposição ao material e capacidade de realizar a tarefa.",
+    "Calcular tempo de estudo possível sob condições fornecidas.",
+    "Distinguir capacidade confirmada, hipótese de disponibilidade e dependência externa.",
+    "Relacionar recursos com objetivos e informação de origem.",
+    "Identificar uma dependência de conhecimento que altera a sequência de estudo.",
+    "Distinguir funções de sessões de aprendizagem e de retorno.",
+    "Planear reencontro com conteúdo sem apresentar um intervalo como fórmula universal.",
+    "Distinguir tarefa não realizada, tarefa realizada e aprendizagem ainda insuficiente.",
+    "Reorganizar o período por prioridades sem apagar a trajetória observada.",
+    "Organizar ensaio, conferência e revisão antes de avaliação com condições conhecidas.",
+    "Relacionar resultados com decisões para o próximo ciclo de estudo."
+  ],
+  "sources": [
+    {
+      "id": "ies-study-planning",
+      "title": "Institute of Education Sciences / What Works Clearinghouse (2007). Organizing Instruction and Study to Improve Student Learning. Practice Guide.",
+      "url": "https://ies.ed.gov/ncee/wwc/PracticeGuide/1",
+      "consulted": "2026-11-16",
+      "scope": "Página oficial, recomendações, níveis de evidência e notas de aplicação consultados; não se declara leitura integral do PDF. Referência para distribuição temporal, exemplos, perguntas e identificação de necessidades. O mapa LDR e os casos adultos são aplicações originais, sem validação específica desta sequência ou intervalo universal."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Transformar uma intenção de estudo numa tarefa verificável"
+    },
+    {
+      "id": "2",
+      "title": "Construir disponibilidade utilizável em vez de preencher horas imaginárias"
+    },
+    {
+      "id": "3",
+      "title": "Selecionar materiais e sequenciar pré-requisitos"
+    },
+    {
+      "id": "4",
+      "title": "Distribuir primeira aprendizagem, retorno e conferência"
+    },
+    {
+      "id": "5",
+      "title": "Rever o plano depois de atrasos e resultados diferentes"
+    },
+    {
+      "id": "6",
+      "title": "Preparar uma avaliação e produzir um balanço transferível"
+    }
+  ],
+  "modules": [
+    {
+      "id": "1",
+      "title": "Transformar uma intenção de estudo numa tarefa verificável",
+      "estimatedPracticeMinutes": 105,
+      "objectives": [
+        "Relacionar uma finalidade de aprendizagem com uma demonstração concreta.",
+        "Distinguir exposição ao material e capacidade de realizar a tarefa."
+      ],
+      "sourceIds": [
+        "ies-study-planning"
+      ],
+      "sections": [
+        {
+          "title": "Concluir páginas não descreve necessariamente o que se aprendeu",
+          "paragraphs": [
+            "Um plano que diz estudar contabilidade ou ler o capítulo três ainda não permite saber que trabalho será considerado suficiente. A finalidade precisa de ser traduzida numa ação delimitada: distinguir documentos num cenário, explicar uma relação ou resolver um tipo de problema. Essa tradução orienta a escolha de material e a forma de verificar progresso. Não elimina a importância da leitura; impede apenas que a passagem por páginas seja usada como única evidência de aprendizagem. O curso trabalha planeamento educacional e não oferece diagnóstico de dificuldades de atenção ou de memória.",
+            "O guia do Institute of Education Sciences sobre organização da instrução e estudo reúne recomendações de prática e revisão. A aplicação LDR começa por um mapa próprio de finalidade, tarefa e evidência. Não se apresenta esse mapa como instrumento científico validado. Uma finalidade ampla pode exigir várias tarefas e não cabe necessariamente numa sessão. O aluno deve identificar uma primeira demonstração proporcional ao tempo, conservando o que ficará para depois. Reduzir o alcance de uma sessão não significa declarar a competência inteira adquirida."
+          ]
+        },
+        {
+          "title": "Uma estudante precisa de interpretar um gráfico, não de decorar a página",
+          "paragraphs": [
+            "No caso fictício, Lídia prepara uma avaliação em que terá de interpretar um gráfico de barras. Ela dispõe de um capítulo com definições e de três gráficos sintéticos. A meta ler dez páginas não especifica a tarefa da avaliação. Uma formulação mais útil é identificar eixos, comparar valores e explicar uma limitação num gráfico ainda não analisado. Essa demonstração exige usar informação, e não apenas reconhecer expressões já vistas. O plano pode reservar leitura inicial, exemplo acompanhado e tentativa com outro gráfico.",
+            "Os dados do gráfico didático são vendas semanais de uma loja inventada: segunda quatro unidades, terça sete e quarta cinco. A tarefa inicial pede localizar o maior valor e a diferença entre terça e segunda: sete e três unidades. Outra questão pergunta se esses três dias provam crescimento contínuo; a resposta é não, porque o valor cai na quarta e o intervalo é limitado. O enunciado permite distinguir leitura de valores e conclusão excessiva. A estudante não precisa de memorizar estes números para responder a um novo conjunto."
+          ]
+        },
+        {
+          "title": "Escolher uma evidência que corresponde ao objetivo",
+          "paragraphs": [
+            "Se a meta é explicar uma limitação, uma lista de termos copiados não basta. Se a meta é localizar um valor, um ensaio extenso pode acrescentar exigências irrelevantes. A evidência deve tornar visível a operação pretendida. Registe também as condições: com ou sem consulta, com exemplo semelhante ou diferente, com ajuda ou de forma autónoma. Um resultado produzido com apoio pode ser um passo legítimo, desde que o plano não o apresente como independência já demonstrada em qualquer contexto.",
+            "A entrega contém três metas para Lídia e uma forma de as observar. Inclua o exercício dos três dias com solução e proponha um gráfico novo que teste a mesma operação sem repetir os valores. O avaliador verifica se a tarefa exige o que a meta anuncia. O produto inicial do curso é um mapa de estudo que permite escolher e revisar ações com finalidade identificável. A técnica específica de memorização será tratada noutro percurso; aqui, o foco é decidir o que precisa de ser aprendido e que evidência permitirá avaliar a aproximação a essa finalidade."
+          ]
+        }
+      ],
+      "case": "Lídia precisa de interpretar gráfico. Dados sintéticos: segunda4, terça7, quarta5 unidades. Avaliação exige eixos, comparação e limite de conclusão.",
+      "exercise": "Escreva três metas e evidências. Resolva maior valor, diferença e crescimento contínuo; crie novo gráfico com outra sequência para verificar transferência.",
+      "assessment": {
+        "question": "Ler o capítulo prova que Lídia consegue interpretar um gráfico novo?",
+        "answer": "Não. É uma atividade de exposição. É necessário observar a interpretação numa tarefa adequada; no exemplo, maior valor7, diferença3 e sem crescimento contínuo.",
+        "rubric": [
+          "Alinha meta e demonstração.",
+          "Distingue consulta e autonomia.",
+          "Não usa páginas como prova exclusiva."
+        ]
+      }
+    },
+    {
+      "id": "2",
+      "title": "Construir disponibilidade utilizável em vez de preencher horas imaginárias",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Calcular tempo de estudo possível sob condições fornecidas.",
+        "Distinguir capacidade confirmada, hipótese de disponibilidade e dependência externa."
+      ],
+      "sourceIds": [
+        "ies-study-planning"
+      ],
+      "sections": [
+        {
+          "title": "O calendário tem de representar as condições da pessoa",
+          "paragraphs": [
+            "O estudo de um adulto pode coexistir com trabalho, deslocação e responsabilidades de cuidado. Um intervalo sem evento escrito não é automaticamente tempo disponível. Antes de distribuir temas, descreva as condições necessárias: acesso ao material, local adequado à atividade e duração que pode ser assumida. Essa análise não transforma todas as barreiras em falha de organização pessoal. Algumas dependem de negociação ou apoio externo. O plano deve reconhecer o que ainda não está confirmado em vez de apresentar uma semana ideal como compromisso já viável.",
+            "A ficha deste módulo distingue janela confirmada, janela possível e impedimento conhecido. Não se exige divulgar circunstâncias pessoais para realizar o exercício. Trabalha-se com uma personagem e dados sintéticos, permitindo testar a lógica do plano sem exposição. Uma rotina pode combinar tarefas diferentes segundo a condição: leitura acessível em certo contexto e resolução escrita noutro. Essa adaptação precisa de respeitar segurança e qualidade da tarefa. O curso não recomenda estudar ao conduzir, reduzir descanso essencial ou usar deslocações sem condições como se fossem equivalentes a uma mesa de trabalho."
+          ]
+        },
+        {
+          "title": "Três janelas, mas uma depende de confirmação",
+          "paragraphs": [
+            "No cenário, Vasco tem quarenta minutos confirmados à terça, cinquenta à quinta e noventa possíveis ao sábado, dependendo de uma troca de turno ainda não aprovada. O tempo confirmado é noventa minutos; o plano com sábado teria cento e oitenta. Não é correto anunciar três horas certas. A primeira versão deve caber nos noventa minutos conhecidos e manter uma extensão opcional identificada. Se a troca for confirmada, será possível ampliar a prática; se não for, a meta do período terá de permanecer proporcional à capacidade real.",
+            "Uma proposta usa trinta minutos para leitura orientada, quarenta para resolver e conferir um exercício, vinte para retomar uma dúvida. A soma é noventa. Isso não prova que as estimativas sejam exatas: na primeira execução, o aluno deve observar se a tarefa exige mais tempo. O plano também precisa de considerar se os materiais estão acessíveis antes da sessão. Se a leitura depende de um ficheiro indisponível, os trinta minutos não se tornam automaticamente produtivos apenas porque a atividade foi colocada no calendário. A dependência deve ter um próximo passo próprio."
+          ]
+        },
+        {
+          "title": "Dar prioridade a uma versão que possa realmente ser executada",
+          "paragraphs": [
+            "Quando a disponibilidade diminui, é preciso decidir o que conservar. A escolha deve partir da finalidade e do ponto de dificuldade, não apenas da atividade mais fácil de marcar como concluída. Pode ser pertinente realizar uma tarefa menor completa, incluindo conferência, em vez de iniciar várias sem revisão. O exercício não impõe uma duração ótima de sessão. Solicita uma justificação para a distribuição e uma condição que indique necessidade de ajuste. O aluno deve poder explicar qual aprendizagem fica adiada e por que isso é preferível no cenário.",
+            "Entregue um plano-base e uma extensão condicionada para Vasco, acompanhados de cálculo e dependências. Acrescente uma ocorrência em que a tarefa de quarenta minutos demora sessenta e mostre que decisão terá de mudar. Não retire silenciosamente a etapa de conferência para preservar a aparência do plano. A competência é construir um compromisso realista e revisável, com incertezas visíveis. O horário deixa assim de funcionar como promessa de desempenho e passa a organizar oportunidades de aprendizagem que podem ser observadas e renegociadas quando a experiência mostra uma diferença relevante."
+          ]
+        }
+      ],
+      "case": "Vasco: terça40min, quinta50min confirmados; sábado90min condicionado à troca de turno. Atividades propostas30+40+20. Acesso a material deve ser verificado.",
+      "exercise": "Crie plano-base90min e extensão opcional. Refaça-o quando o exercício demora60 em vez40; identifique o que adia e a condição ainda pendente.",
+      "assessment": {
+        "question": "Pode contar sábado como disponibilidade garantida?",
+        "answer": "Não. O plano confirmado tem90min. Sábado acrescenta90 apenas se a condição for cumprida; a extensão precisa de permanecer identificada como hipótese.",
+        "rubric": [
+          "Calcula90 e180 condicionais.",
+          "Preserva conferência e dependências.",
+          "Ajusta alcance sem inventar tempo."
+        ]
+      }
+    },
+    {
+      "id": "3",
+      "title": "Selecionar materiais e sequenciar pré-requisitos",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Relacionar recursos com objetivos e informação de origem.",
+        "Identificar uma dependência de conhecimento que altera a sequência de estudo."
+      ],
+      "sourceIds": [
+        "ies-study-planning"
+      ],
+      "sections": [
+        {
+          "title": "Mais recursos não significam automaticamente mais cobertura",
+          "paragraphs": [
+            "Guardar vídeos, manuais e resumos pode produzir uma coleção que ainda não oferece um percurso. A seleção precisa de considerar objetivo, origem, acesso e nível de entrada. Um recurso pode ser confiável e inadequado à tarefa inicial por exigir conhecimentos que a pessoa ainda não tem. Outro pode ser curto e útil para um conceito delimitado, sem servir como fonte única do tema. O aluno irá construir uma ficha de recursos com papel específico, evitando usar popularidade ou aparência visual como critério suficiente de qualidade.",
+            "Indique o que o material permite estudar e o que não foi verificado. Uma referência encontrada numa pesquisa não significa que o seu conteúdo foi consultado. Se só o resumo está acessível, conserve essa condição. Um vídeo sem transcrição pode criar uma barreira para determinada forma de participação; o plano precisa de prever alternativa adequada sem presumir que todo o utilizador aprende melhor por um formato fixo. Não se atribuem estilos de aprendizagem a pessoas. A escolha é feita pela tarefa, pelas condições de acesso e pela precisão da informação."
+          ]
+        },
+        {
+          "title": "Uma média ponderada depende de proporções compreendidas",
+          "paragraphs": [
+            "No caso, Noémia pretende interpretar uma nota com duas componentes: trabalho com peso quarenta por cento e prova com peso sessenta por cento. Os valores são oito e seis numa escala sintética de zero a dez. O cálculo é oito vezes zero vírgula quatro mais seis vezes zero vírgula seis, resultando seis vírgula oito. Se Noémia ainda não compreende que quarenta por cento equivale a quatro décimos, começar por um exemplo mais complexo pode ocultar o ponto de dificuldade. O plano deve incluir primeiro essa relação e uma verificação breve.",
+            "Uma sequência possível passa por fração e percentagem, soma de pesos, exemplo resolvido e tentativa nova. Não basta copiar a fórmula se a estudante não consegue explicar por que os pesos somam um neste caso. Se os pesos fornecidos somarem outra quantidade, pode ser preciso verificar o enunciado ou compreender outro tipo de média. O curso não altera regras reais de avaliação. Usa números fictícios para mostrar como um pré-requisito modifica a ordem e a escolha de recursos. A dificuldade observada precisa de orientar uma ação, sem converter um erro isolado em incapacidade geral."
+          ]
+        },
+        {
+          "title": "Usar um recurso como parte de um percurso verificável",
+          "paragraphs": [
+            "O guia do IES recomenda articular exemplos resolvidos e resolução de problemas. Aqui, essa orientação é aplicada à sequência específica, sem afirmar que qualquer exemplo produz o mesmo resultado em todos os adultos. Se o recurso só apresenta a solução, acrescente uma tentativa que exija escolher e justificar a operação. Se só oferece questões, pode faltar uma explicação acessível do conceito inicial. O plano deve indicar a função de cada peça e evitar alternar recursos apenas para tornar a sessão mais variada.",
+            "A entrega consiste num mapa de pré-requisitos e numa seleção de três recursos hipotéticos: explicação introdutória, exemplo e prática. Para cada um, indique como verificaria a origem e o acesso num contexto real; não invente títulos ou autores. Resolva o exemplo e crie outro com valores diferentes e pesos que somem cem por cento. Explique a sequência e o sinal de que é necessário retomar um passo. O resultado é um percurso que pode ser ajustado pela compreensão demonstrada, em vez de uma lista extensa de links que transfere toda a organização para o aluno."
+          ]
+        }
+      ],
+      "case": "Noémia: trabalho8 peso40%, prova6 peso60%, escala0–10. Precisa de compreender percentagens antes de interpretar nota ponderada. Recursos do exercício são funções, não obras inventadas.",
+      "exercise": "Desenhe pré-requisitos e três funções de recursos; calcule6,8 e crie exemplo novo. Explique como verificaria origem e acesso sem atribuir consulta inexistente.",
+      "assessment": {
+        "question": "A fórmula copiada demonstra compreensão do peso de40%?",
+        "answer": "Não. Deve ser possível explicar0,4, a combinação e a soma dos pesos. No caso8×0,4+6×0,6=6,8.",
+        "rubric": [
+          "Sequencia dependências.",
+          "Obtém6,8.",
+          "Não inventa referência ou estilo pessoal fixo."
+        ]
+      }
+    },
+    {
+      "id": "4",
+      "title": "Distribuir primeira aprendizagem, retorno e conferência",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Distinguir funções de sessões de aprendizagem e de retorno.",
+        "Planear reencontro com conteúdo sem apresentar um intervalo como fórmula universal."
+      ],
+      "sourceIds": [
+        "ies-study-planning"
+      ],
+      "sections": [
+        {
+          "title": "Uma sessão concluída não encerra necessariamente o tema",
+          "paragraphs": [
+            "Um calendário pode colocar um assunto em cada dia e nunca regressar ao que foi estudado. Essa organização facilita contar tópicos, mas não mostra o que continua disponível depois. O planeamento de retornos relaciona a primeira aprendizagem com oportunidades posteriores de recuperar, aplicar e conferir. O retorno não precisa de repetir toda a sessão inicial. Deve responder ao objetivo e ao que a tentativa seguinte revelar. O aluno irá desenhar um ciclo curto para um conjunto de conteúdos delimitado, sem afirmar que um calendário padrão serve a qualquer matéria ou pessoa.",
+            "O IES recomenda distribuir aprendizagem no tempo e usar questões para retomar conteúdo. A página consultada identifica níveis de evidência diferentes entre recomendações; não se atribui a todas a mesma força. A aplicação LDR não fixa uma sequência universal de dias nem promete memória permanente. O plano do exercício usa três semanas disponíveis e precisa de prever uma tentativa depois da exposição inicial, com tempo para verificar a resposta. Se o material continuar incompreendido, apenas aumentar o intervalo não resolve a necessidade de explicação."
+          ]
+        },
+        {
+          "title": "Um ciclo de aprendizagem sobre três conceitos",
+          "paragraphs": [
+            "No caso fictício, Dalila precisa de distinguir receita, custo e resultado num pequeno projeto didático. Os valores do exemplo são receita de cem unidades monetárias e custo de setenta; o resultado é trinta, sem impostos ou outras componentes no cenário. Uma primeira sessão pode explicar as categorias com exemplo; um retorno pode pedir classificações e cálculo num caso novo. Outro retorno pode apresentar uma despesa ainda não incluída e perguntar como a interpretação muda. O conteúdo reaparece com trabalho distinto, sem copiar a mesma introdução em todas as sessões.",
+            "O plano deve identificar que resposta será conferida e onde está a explicação de referência. Uma atividade sem solução acessível pode deixar o erro por examinar; mostrar a resposta antes da tentativa altera o que a atividade permite observar. A ordem deve estar indicada. Uma revisão curta pode concentrar-se no ponto em que houve confusão, mas não deve retirar o contexto necessário para compreender as categorias. O exercício é educacional, com números fictícios, e não constitui aconselhamento contabilístico ou cálculo de rendimento real."
+          ]
+        },
+        {
+          "title": "A cobertura tem de conviver com a revisão",
+          "paragraphs": [
+            "Se todo o tempo disponível for atribuído a novos temas, os retornos dependerão de horas que não foram reservadas. Distribua explicitamente primeira aprendizagem, tentativa e conferência dentro da capacidade do caso. Não existe uma proporção obrigatória para as três funções. O aluno deve justificar a escolha e explicar o que reduzirá se a primeira sessão exigir mais tempo. Pode ser necessário estudar menos conceitos com melhor verificação, em vez de registar uma cobertura que só corresponde a exposição superficial.",
+            "Entregue um ciclo de três semanas com ações distintas e uma alteração condicionada ao resultado da tentativa. Inclua os dados e soluções para dois casos novos, mantendo o cálculo simples e o foco na interpretação. O avaliador verifica se as sessões estão ligadas por uma finalidade e se existe oportunidade real de corrigir. Um retorno registado no calendário não prova retenção; será a tentativa que produzirá informação. A competência deste módulo está em criar essas oportunidades no plano, deixando a escolha detalhada de técnicas para o percurso específico de aprendizagem e memorização."
+          ]
+        }
+      ],
+      "case": "Dalila estuda receita/custo/resultado. Exemplo100–70=30 em unidades fictícias, sem outras componentes. Há três semanas para primeira aprendizagem e retornos.",
+      "exercise": "Planeie três semanas com tentativa e conferência. Crie dois casos com soluções e indique como rever o plano se a estudante confundir custo e receita.",
+      "assessment": {
+        "question": "Regressar ao tema exige repetir toda a introdução?",
+        "answer": "Não. O retorno pode recuperar e aplicar o conceito num caso novo, com conferência e retomada dirigida ao erro, preservando o contexto necessário.",
+        "rubric": [
+          "Distingue as funções das sessões.",
+          "Reserva retorno na capacidade.",
+          "Não apresenta intervalo universal ou garantia de memória."
+        ]
+      }
+    },
+    {
+      "id": "5",
+      "title": "Rever o plano depois de atrasos e resultados diferentes",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Distinguir tarefa não realizada, tarefa realizada e aprendizagem ainda insuficiente.",
+        "Reorganizar o período por prioridades sem apagar a trajetória observada."
+      ],
+      "sourceIds": [
+        "ies-study-planning"
+      ],
+      "sections": [
+        {
+          "title": "Um atraso pode ter causas que pedem decisões diferentes",
+          "paragraphs": [
+            "Uma sessão pode não acontecer porque faltou acesso ao material; pode acontecer e durar mais; pode terminar no tempo previsto sem produzir a compreensão esperada. Registar tudo como atraso perde informação para ajustar o plano. A revisão precisa de separar execução, tempo e aprendizagem. Não é um julgamento do valor da pessoa. O aluno irá analisar três ocorrências sintéticas e escolher respostas diferentes para cada uma, evitando a solução automática de acrescentar todas as tarefas à semana seguinte e manter o restante calendário intacto.",
+            "O quadro de revisão terá previsão, ocorrência, evidência e decisão. A ocorrência deve ser descrita sem transformar uma hipótese em explicação definitiva. Se a pessoa diz que precisou de reler uma instrução, isso informa o episódio, mas não demonstra uma dificuldade clínica. A atividade pode ser realizada com a personagem, sem partilhar dados pessoais. O plano revisto precisa de conservar o anterior para permitir comparação; reescrever o calendário como se a nova distribuição sempre tivesse sido prevista apaga precisamente a informação de que a revisão depende."
+          ]
+        },
+        {
+          "title": "Uma semana seguinte com menos capacidade",
+          "paragraphs": [
+            "No caso, Joel planeou três tarefas de quarenta minutos cada. A primeira não ocorreu por material indisponível; a segunda demorou sessenta e terminou com uma dúvida; a terceira foi concluída em trinta com uma resposta correta. A execução total conhecida foi noventa minutos, e não cento e vinte. Isso não equivale a noventa minutos de aprendizagem idêntica entre tarefas. Na semana seguinte, só há oitenta minutos disponíveis. Transportar as três tarefas originais, acrescentar a dúvida e conservar todos os novos temas não cabe nas condições dadas.",
+            "A proposta deve verificar acesso para a primeira, reservar uma retomada dirigida à dúvida da segunda e decidir se a terceira precisa de nova verificação posterior. Uma resposta correta isolada não prova domínio permanente, mas também não justifica repetir toda a tarefa imediatamente sem razão. O aluno pode propor vinte minutos de esclarecimento, quarenta para a tarefa agora acessível e vinte para conferência ou retorno, desde que explique o alcance. As estimativas precisam de ser tratadas como hipóteses e o conteúdo adiado deve ficar nomeado, em vez de desaparecer da lista."
+          ]
+        },
+        {
+          "title": "A decisão de adiar deve conservar a sua consequência",
+          "paragraphs": [
+            "Uma prioridade pode mudar por proximidade de avaliação ou por ser pré-requisito para outro conteúdo. Explique que critério foi usado e que dependência continua aberta. Se o acesso não for resolvido, não basta repetir a mesma tarefa numa data futura. Deve existir uma ação para obter o material ou uma alternativa legítima. A orientação do IES sobre usar questões para identificar necessidades é uma referência para a revisão informada; não valida uma pontuação LDR nem permite concluir, a partir de uma única resposta, que toda a matéria está aprendida.",
+            "A entrega contém o quadro das três ocorrências e um plano de oitenta minutos, seguido de uma versão alternativa se o material continuar ausente. Acrescente uma decisão de não repetir uma tarefa inteira e justifique a verificação que a substitui. O avaliador procura se a revisão responde aos dados do episódio e cabe na capacidade conhecida. A aprendizagem deste módulo é manter um plano responsável diante do que aconteceu, reconhecendo que rever a sequência pode ser sinal de análise competente, e não uma falha a ocultar para conservar uma imagem de execução perfeita."
+          ]
+        }
+      ],
+      "case": "Joel: três tarefas previstas40min. T1não ocorreu por falta de acesso; T2durou60 com dúvida; T3durou30 com acerto. Semana seguinte80min.",
+      "exercise": "Calcule tempo executado e monte revisão80min com versão sem material. Identifique o que foi adiado e por que um acerto não encerra toda a aprendizagem.",
+      "assessment": {
+        "question": "Pode transportar120min de tarefas para80min sem alterar nada?",
+        "answer": "Não. É necessário rever alcance e prioridades. O executado foi90min; disponibilidade e aprendizagem precisam de ser analisadas separadamente.",
+        "rubric": [
+          "Calcula90min executados.",
+          "Constrói80min sem compressão fictícia.",
+          "Trata a dependência de acesso."
+        ]
+      }
+    },
+    {
+      "id": "6",
+      "title": "Preparar uma avaliação e produzir um balanço transferível",
+      "estimatedPracticeMinutes": 150,
+      "objectives": [
+        "Organizar ensaio, conferência e revisão antes de avaliação com condições conhecidas.",
+        "Relacionar resultados com decisões para o próximo ciclo de estudo."
+      ],
+      "sourceIds": [
+        "ies-study-planning"
+      ],
+      "sections": [
+        {
+          "title": "Preparar a avaliação exige conhecer a tarefa e as condições",
+          "paragraphs": [
+            "Uma avaliação pode pedir reconhecimento de alternativas, resolução escrita ou explicação de um caso. O planeamento deve considerar o tipo de ação e as condições divulgadas, sem transformar a preparação em adivinhação de perguntas. Verifique materiais permitidos, duração e forma de entrega quando essas regras estiverem disponíveis. Não invente instruções para preencher a ausência de informação. O aluno irá trabalhar com uma prova fictícia inteiramente especificada, construindo um ensaio que permita observar compreensão e gestão de tarefas sem usar conteúdos de uma avaliação real não autorizada.",
+            "A prova didática tem trinta minutos: duas questões de interpretação de dados e uma explicação curta. O ensaio deve reservar tempo para leitura, resolução e revisão, mas a distribuição proposta continua uma hipótese a testar. Uma estratégia que funciona num conjunto de perguntas pode precisar de ajuste noutro. O curso não garante aprovação nem recomenda memorizar respostas de um banco como substituto de compreensão. O objetivo é preparar condições de prática e produzir informação para decidir o estudo que ainda é possível antes do prazo."
+          ]
+        },
+        {
+          "title": "Um ensaio com dados e critérios explícitos",
+          "paragraphs": [
+            "Use esta tabela sintética de pedidos recebidos: segunda seis, terça nove, quarta três. A primeira questão pede o total, dezoito. A segunda pergunta se terça corresponde a metade do total: nove sobre dezoito confirma cinquenta por cento. A explicação curta pede dizer se a tabela prova que as respostas ao público ficaram mais rápidas. Não prova: descreve entradas, sem duração das respostas. Os critérios avaliam cálculo, denominador e limite de inferência. O ensaio não exige trazer informação externa nem apresenta os números como dados da plataforma.",
+            "Depois da tentativa, compare a resposta com os critérios e classifique o ponto de dificuldade. Um erro de soma pede conferência diferente de um erro que troca entrada e tempo de resposta. Se o aluno acertou após consultar a solução, conserve a indicação de apoio; não registe o resultado como tentativa autónoma inicial. O balanço deve incluir um exemplo novo para verificar o ponto revisto. Esse registo liga o planeamento a uma evidência específica, em vez de concluir apenas que foi preciso estudar mais ou que toda a estratégia falhou."
+          ]
+        },
+        {
+          "title": "Encerrar o ciclo sem transformar o resultado numa identidade",
+          "paragraphs": [
+            "Um resultado de avaliação informa o desempenho naquela tarefa e condição; não resume capacidade ou futuro académico. O balanço pode separar preparação realizada, condições encontradas e conteúdo a retomar. Algumas dificuldades dependem de instruções, acessibilidade ou contexto e podem exigir interlocução adequada, não apenas esforço adicional. O aluno deve identificar uma pergunta para esclarecer com a entidade formadora, sem presumir uma resposta ou um direito específico que não foi consultado. O curso mantém-se no âmbito educacional e não diagnostica ansiedade ou outras condições a partir da prova.",
+            "A entrega final combina mapa de metas, disponibilidade, materiais, retornos, revisão e ensaio, escolhendo apenas as partes relevantes para explicar as decisões. Acrescente uma mudança para o próximo ciclo sustentada por um resultado concreto. O dossiê não deve copiar todas as fichas sem síntese. A competência demonstrada é organizar e revisar o estudo com evidências e limites claros. A carga histórica de cem horas permanece por validar por pilotagem; terminar seis módulos escritos não produz essa equivalência nem autoriza emitir um certificado que afirme uma formação integral já comprovada."
+          ]
+        }
+      ],
+      "case": "Prova sintética30min: entradas6,9,3; total18; terça9/18=50%; dados não informam tempo de resposta. Duas questões de dados e uma explicação curta.",
+      "exercise": "Planeie e execute ensaio, confira pelos três critérios e teste um ponto revisto com novos dados. Entregue síntese do ciclo e uma mudança justificada.",
+      "assessment": {
+        "question": "A tabela de entradas permite concluir que as respostas ficaram mais rápidas?",
+        "answer": "Não. Contém quantidade recebida, sem duração de resposta. O total é18 e terça representa50%, mas rapidez não é determinada.",
+        "rubric": [
+          "Resolve18 e50%.",
+          "Distingue quantidade e duração.",
+          "Propõe revisão ligada a evidência."
+        ]
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão pedagógica para educação de adultos e verificação independente de cálculos e critérios.",
+    "Pilotar planos e tarefas, incluindo diferentes condições de acesso; validar carga anunciada antes de certificação.",
+    "Testar quadros, leitura acessível e navegação em ambiente isolado sem alterar progressos existentes.",
+    "Aprovação editorial e autorização antes de qualquer integração ou publicação."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

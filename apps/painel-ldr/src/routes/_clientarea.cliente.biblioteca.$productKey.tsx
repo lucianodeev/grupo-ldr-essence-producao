@@ -27,15 +27,24 @@ const READER_PRODUCTS = new Set([
   "ebook_da_pobreza_ao_primeiro_contrato",
 ]);
 
-export const Route = createFileRoute("/_clientarea/cliente/biblioteca/$productKey")({ component: DigitalReaderRoute });
+export const Route = createFileRoute("/_clientarea/cliente/biblioteca/$productKey")({
+  component: DigitalReaderRoute,
+});
 
-function DigitalReaderRoute(){
-  const {productKey}=Route.useParams();
-  if(!READER_PRODUCTS.has(productKey)){
+function DigitalReaderRoute() {
+  const { productKey } = Route.useParams();
+  if (!READER_PRODUCTS.has(productKey)) {
     return <section className="s8-card">Produto inválido.</section>;
   }
-  if(SPECIAL_EBOOKS.has(productKey)){
-    return <SpecialEbookReader productKey={productKey as "ebook_falar_com_quem_feriu" | "ebook_da_pobreza_ao_primeiro_contrato"}/>;
+  if (SPECIAL_EBOOKS.has(productKey)) {
+    return (
+      <SpecialEbookReader
+        key={productKey}
+        productKey={
+          productKey as "ebook_falar_com_quem_feriu" | "ebook_da_pobreza_ao_primeiro_contrato"
+        }
+      />
+    );
   }
-  return <DigitalReaderV2 productKey={productKey as any}/>;
+  return <DigitalReaderV2 key={productKey} productKey={productKey as any} />;
 }

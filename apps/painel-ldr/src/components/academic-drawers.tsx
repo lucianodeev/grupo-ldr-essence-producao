@@ -1,3 +1,4 @@
+import { academyReadingTimeLabel } from "@/lib/academy-reading-editions";
 import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { ChevronDown, Gift, GraduationCap, X } from "lucide-react";
@@ -214,7 +215,7 @@ function CatalogOrganizer({locale}:{locale:Locale}){
     const courseLabel=locale==="pt"?"Curso Livre":locale==="fr"?"Cours libre":locale==="es"?"Curso libre":"Non-degree course";
     for(const course of ACADEMY_SUBSCRIPTION_COURSES){
       const category=courseCategory(course.category);
-      result[category].push({icon:courseIcon(course.category),title:course.name[locale],meta:`60h · ${courseLabel} · ${includedLabel}`,href:`/cliente/cursos/assinatura/${course.slug}`,tone:courseTone(course.category),triggerText:course.name[locale]});
+      result[category].push({icon:courseIcon(course.category),title:course.name[locale],meta:academyReadingTimeLabel(course.slug, locale) ?? `60h · ${courseLabel} · ${includedLabel}`,href:`/cliente/cursos/assinatura/${course.slug}`,tone:courseTone(course.category),triggerText:course.name[locale]});
     }
     return result;
   },[locale]);

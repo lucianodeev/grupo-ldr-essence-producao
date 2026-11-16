@@ -1,0 +1,362 @@
+{
+  "productKey": "curso_assinatura_como_criar_uma_oferta_irresistivel_sem_promessas_falsas",
+  "slug": "como-criar-uma-oferta-irresistivel-sem-promessas-falsas",
+  "title": "Como Criar uma Oferta Irresistível sem Promessas Falsas",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 120,
+  "validatedHours": null,
+  "expectedModuleCount": 6,
+  "scope": "Desenho e revisão de oferta credível: resultado, componentes, opções, evidência, capacidade e coerência. Irresistível não significa impedir recusa. Distinto de proposta formal e negociação. Casos e preços sintéticos;sem publicação,cobrança ou certificação.120h históricas por validar.",
+  "courseObjectives": [
+    "Distinguir aspiração comercial e objetivo que o produto pode demonstrar.",
+    "Reescrever promessa que confunde participação com domínio.",
+    "Relacionar componentes da oferta com obstáculos de aprendizagem ou uso.",
+    "Distinguir complemento útil e repetição apresentada como bónus.",
+    "Comparar duas opções em dimensões equivalentes.",
+    "Detetar uma diferença de unidade que distorce a escolha.",
+    "Distinguir amostra, demonstração e resultado real documentado.",
+    "Rever afirmações de autoridade pelo que efetivamente foi verificado.",
+    "Distinguir restrição operacional e pressão artificial.",
+    "Relacionar limite anunciado com recurso ou decisão que o sustenta.",
+    "Detetar contradições entre promessa, componentes, preço e capacidade.",
+    "Produzir versão coerente e teste de recuperação antes de qualquer publicação."
+  ],
+  "sources": [
+    {
+      "id": "ftc-offer",
+      "title": "Federal Trade Commission. Advertising and Marketing.",
+      "url": "https://www.ftc.gov/business-guidance/advertising-marketing",
+      "consulted": "2026-11-16",
+      "scope": "Página introdutória consultada sobre alegações verdadeiras, sustentação e testemunhos no enquadramento americano. Referência editorial e ética, sem parecer de conformidade local."
+    },
+    {
+      "id": "au-offer",
+      "title": "Australian Government, business.gov.au. Prepare quotes.",
+      "url": "https://business.gov.au/people/contractors/prepare-quotes",
+      "consulted": "2026-11-16",
+      "scope": "Orientações de clareza sobre objeto, termos, custos e revisões consultadas. Não se transferem efeitos jurídicos, impostos, penalidades ou campos australianos; exemplos não são contratos prontos."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Substituir a promessa absoluta por um resultado examinável"
+    },
+    {
+      "id": "2",
+      "title": "Dar função a cada componente e retirar volume ornamental"
+    },
+    {
+      "id": "3",
+      "title": "Apresentar opções comparáveis sem esconder condições"
+    },
+    {
+      "id": "4",
+      "title": "Mostrar evidência sem fabricar autoridade ou testemunhos"
+    },
+    {
+      "id": "5",
+      "title": "Usar prazo e capacidade sem criar escassez falsa"
+    },
+    {
+      "id": "6",
+      "title": "Auditar a oferta pela decisão que o leitor consegue tomar"
+    }
+  ],
+  "modules": [
+    {
+      "id": "1",
+      "title": "Substituir a promessa absoluta por um resultado examinável",
+      "estimatedPracticeMinutes": 105,
+      "objectives": [
+        "Distinguir aspiração comercial e objetivo que o produto pode demonstrar.",
+        "Reescrever promessa que confunde participação com domínio."
+      ],
+      "sourceIds": [
+        "ftc-offer"
+      ],
+      "sections": [
+        {
+          "title": "Uma oferta forte não precisa de tornar impossível a recusa",
+          "paragraphs": [
+            "A expressão irresistível do título é tratada neste percurso como clareza e pertinência, não como técnica para impedir uma decisão livre. Uma oferta pode ser adequada para algumas tarefas e inadequada para outras. O trabalho é relacionar resultado, destinatário e condições, permitindo examinar a correspondência. Se a proposta promete um resultado externo que não controla, a intensidade da linguagem não resolve a falta de base. O aluno vai construir uma oferta fictícia para uma oficina introdutória de organização de tabelas, sem vender vagas ou emitir certificados reais.",
+            "Considere a promessa domine todas as folhas de cálculo em duas horas. Ela amplia ferramenta, profundidade e tempo além do que uma oficina curta pode demonstrar. Uma alternativa delimitada pode dizer que o participante praticará organização de três campos, conferência de um total e leitura de uma diferença num conjunto sintético. Isso não promete domínio de uma aplicação inteira nem empregabilidade. A tarefa pode ser verificada por um exercício. O benefício deve estar ligado à utilização dessa capacidade, sem transformar uma prática introdutória numa qualificação profissional que não foi obtida."
+          ]
+        },
+        {
+          "title": "Resultado, demonstração e condição precisam de se encontrar",
+          "paragraphs": [
+            "A oficina fictícia usa uma tabela com item, quantidade e categoria. O participante deve identificar uma quantidade ausente, obter um total após esclarecimento e explicar o que os dados não informam. A demonstração exige mais que estar presente. A oferta deve indicar o nível de entrada e os recursos necessários para realizar a tarefa. Se a prática pode ser feita em papel ou numa ferramenta disponível, isso precisa de ser descrito, sem afirmar compatibilidade com todas as aplicações. A condição de acesso não deve surgir apenas depois da decisão.",
+            "Uma pessoa que já produz análises avançadas pode não precisar desta oficina. Outra que nunca trabalhou com tabelas pode precisar de apoio inicial adicional. O aluno deve definir destinatário pela tarefa e condição, sem inventar uma persona psicológica ou prometer o mesmo resultado a todos. A oferta deve permitir reconhecer uma falta de adequação. Esse reconhecimento é parte de credibilidade comercial: uma mensagem que parece servir a qualquer pessoa dificilmente explica o trabalho com precisão suficiente para orientar uma escolha informada."
+          ]
+        },
+        {
+          "title": "A revisão da promessa começa pela evidência disponível",
+          "paragraphs": [
+            "A FTC destaca veracidade e base de alegações no seu contexto regulatório. Este curso usa a referência para revisão editorial, sem certificar cumprimento de todas as regras aplicáveis a uma oferta real. Se só existe um plano de oficina, não se deve anunciar resultados de participantes. Se houve um teste sintético, ele precisa de permanecer identificado. Uma promessa quantitativa sobre rendimento ou notas exigiria outro tipo de evidência. O material pode ser apresentado pela sua estrutura e pelo exercício, sem criar números ou credenciais para parecer mais forte.",
+            "Entregue uma formulação de oferta, a demonstração prevista e três condições de participação. Acrescente uma versão exagerada e explique exatamente que parte excede o conteúdo. O avaliador procura alinhamento entre a frase principal e a capacidade que será observada, em vez de apenas substituir um adjetivo por outro. O resultado é uma promessa suficientemente concreta para poder ser conferida e suficientemente honesta para permitir que o destinatário conclua que aquela oficina não corresponde ao que procura. Essa possibilidade não é uma falha da oferta, mas uma condição da sua seriedade."
+          ]
+        }
+      ],
+      "case": "Oficina fictícia introdutória:3campos,conferência de total,limite de interpretação. Não há prova de domínio global,emprego ou resultados de participantes.",
+      "exercise": "Reescreva domine tudo em2h como resultado demonstrável. Defina tarefa,3condições e destinatário que não seria adequado, sem inventar certificação.",
+      "assessment": {
+        "question": "Presença permite afirmar domínio de toda uma aplicação?",
+        "answer": "Não. A demonstração deve corresponder a capacidades específicas nas condições conhecidas; participação e domínio não são equivalentes.",
+        "rubric": [
+          "Delimita promessa.",
+          "Indica demonstração.",
+          "Permite reconhecer inadequação."
+        ]
+      }
+    },
+    {
+      "id": "2",
+      "title": "Dar função a cada componente e retirar volume ornamental",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Relacionar componentes da oferta com obstáculos de aprendizagem ou uso.",
+        "Distinguir complemento útil e repetição apresentada como bónus."
+      ],
+      "sourceIds": [
+        "au-offer"
+      ],
+      "sections": [
+        {
+          "title": "Quantidade de peças não mede automaticamente valor",
+          "paragraphs": [
+            "Uma oferta pode listar manual, resumo, checklist, plano e bónus, embora todos repitam a mesma orientação. O destinatário recebe volume, mas não necessariamente apoio para uma tarefa diferente. Analise cada componente pela função. Um exemplo resolvido mostra aplicação; uma ficha permite praticar; uma chave permite conferir. Se duas peças fazem o mesmo trabalho, pode ser melhor consolidá-las ou explicar a diferença. A clareza do pacote depende dessa relação, não de um valor monetário arbitrário atribuído a cada ficheiro para fabricar uma soma impressionante.",
+            "No caso da oficina, o núcleo é a explicação acompanhada por uma tabela sintética. Um material de apoio pode apresentar os critérios de conferência; outro pode oferecer um caso novo com solução separada. Uma transcrição pode permitir outra forma de acesso ao mesmo conteúdo e ter utilidade legítima, mesmo sem acrescentar um conceito. A oferta deve dizer essa função, em vez de chamar módulo exclusivo a cada formato. O aluno deve distinguir acessibilidade, aprofundamento e repetição ornamental, evitando eliminar um suporte necessário apenas porque partilha o tema."
+          ]
+        },
+        {
+          "title": "Um pacote cuja contagem precisa de revisão",
+          "paragraphs": [
+            "O pacote inicial fictício contém vídeo, texto equivalente, lista de três critérios, caso de treino, solução e dois resumos idênticos com títulos diferentes. São sete ficheiros, porque os dois resumos contam separadamente. A descrição inicial que fala em seis deve ser corrigida. O vídeo e o texto podem apoiar acesso; os critérios, a conferência; caso e solução, a prática. Os resumos precisam de função distinta ou consolidação. A análise não deve manter a contagem errada apenas para fazer o pacote parecer mais simples, nem criar mais ficheiros para valorizar a oferta.",
+            "Uma versão revista pode conservar vídeo, texto, critérios, caso e solução e retirar os dois resumos redundantes: cinco ficheiros com funções explicadas. Se o resumo tiver uma função de consulta rápida que o texto não cumpre, pode ser redesenhado como uma sexta peça com estrutura própria. Essa decisão precisa de ser justificada por uso. O exercício não afirma que uma quantidade é universalmente melhor. Mostra como contar e examinar o que se promete, sem transformar títulos novos em conteúdo intelectualmente diferente."
+          ]
+        },
+        {
+          "title": "Os limites do acompanhamento também pertencem ao pacote",
+          "paragraphs": [
+            "Se existe uma sessão de perguntas, diga o que ela permite e como será organizada. Não prometa suporte ilimitado se a operação prevê apenas uma oportunidade coletiva. Uma chave de respostas não equivale a correção individual. Um certificado de participação, quando adequado e validado, não equivale a habilitação profissional. A proposta precisa de conservar essas diferenças. O curso não cria certificados nem define direitos legais de formação; ensina a descrever componentes sem ampliar o seu alcance para justificar um preço ou tornar a oferta aparentemente mais completa.",
+            "Entregue o inventário inicial e a versão revista, com contagens e função de cada peça. Acrescente uma descrição de apoio que corresponda a uma capacidade limitada e uma afirmação que recusaria fazer sobre certificação. O avaliador procura se a pessoa conseguiu retirar redundância sem perder acesso ou prática. A oferta torna-se mais consistente quando cada componente responde a uma necessidade reconhecível. O pacote deixa de depender de uma lista de bónus para parecer substancial e passa a poder ser examinado pelo trabalho que cada elemento ajuda efetivamente a realizar."
+          ]
+        }
+      ],
+      "case": "Pacote inicial:vídeo,texto,critérios,caso,solução,2resumos iguais=7ficheiros,embora descrição diga6. Sem resumos=5;resumo redesenhado pode ser6se tiver função própria.",
+      "exercise": "Conte e classifique componentes; proponha versão5ou6com função clara. Descreva apoio limitado e distinga participação/qualificação.",
+      "assessment": {
+        "question": "Os dois resumos com títulos diferentes são automaticamente conteúdos distintos?",
+        "answer": "Não. É preciso função ou desenvolvimento diferente. No cenário são redundantes e não justificam ampliar a promessa.",
+        "rubric": [
+          "Conta7corretamente.",
+          "Preserva acesso e prática.",
+          "Não inventa valor de bónus."
+        ]
+      }
+    },
+    {
+      "id": "3",
+      "title": "Apresentar opções comparáveis sem esconder condições",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Comparar duas opções em dimensões equivalentes.",
+        "Detetar uma diferença de unidade que distorce a escolha."
+      ],
+      "sourceIds": [
+        "au-offer"
+      ],
+      "sections": [
+        {
+          "title": "Uma opção só é comparável quando se sabe o que conta",
+          "paragraphs": [
+            "Uma oferta pode apresentar acesso gravado, sessão acompanhada ou pacote com revisão. O preço não deve ser a única dimensão visível se os objetos diferem. Compare duração, material, apoio, período de acesso e condições conhecidas, sem inventar regras legais ou de reembolso. A tabela precisa de permitir reconhecer diferenças reais e limites. Uma opção não deve existir apenas para parecer absurda e empurrar outra por contraste. O objetivo pedagógico é tornar a escolha examinável, preservando a possibilidade de não adquirir nenhuma.",
+            "Evite alternar unidades numa mesma linha sem explicar. Valor por pessoa e valor por grupo não podem ser comparados apenas pelo número impresso. A quantidade e o objeto precisam de acompanhar o preço. Também não se deve apresentar uma prestação pequena como se fosse o custo total. O curso utiliza valores sintéticos para praticar leitura e não recomenda preços, parcelamento ou financiamento. Quando uma condição essencial não foi definida, a tabela deve mostrar a lacuna em vez de presumir a interpretação mais favorável à venda."
+          ]
+        },
+        {
+          "title": "Uma opção individual e uma de grupo",
+          "paragraphs": [
+            "No cenário, A custa quarenta unidades monetárias por pessoa para acesso ao material e uma sessão coletiva. B custa cento e cinquenta pelo grupo de até cinco pessoas, com o mesmo material e sessão exclusiva para esse grupo. Para cinco pessoas, A soma duzentos e B cento e cinquenta; para duas, A soma oitenta e B continua cento e cinquenta. O custo por pessoa em B seria trinta no grupo de cinco e setenta e cinco no de duas. Isso não determina a melhor escolha: exclusividade e necessidade do grupo também precisam de ser consideradas.",
+            "Uma tabela que mostra apenas A40 e B150 pode induzir uma comparação inadequada. Outra que anuncia B30por pessoa sem dizer cinco pessoas oculta a condição do cálculo. O aluno deve conservar o limite de até cinco e não presumir que uma sexta está incluída. Também deve verificar se o período de acesso é igual, pois o enunciado ainda não o definiu. Essa ausência não pode ser preenchida com vitalício para tornar o pacote atraente. O exercício permite mostrar como uma conta correta pode produzir uma mensagem incompleta quando a condição não aparece junto dela."
+          ]
+        },
+        {
+          "title": "A explicação da opção deve corresponder à decisão do destinatário",
+          "paragraphs": [
+            "Uma pessoa que procura apenas o material pode não precisar de exclusividade. Um grupo pode valorizar discutir o seu caso, mas isso não autoriza prometer análise individual ilimitada. A oferta deve explicar o benefício específico e o que não está incluído. Se houver uma escolha recomendada, a razão precisa de ser explícita e relacionada com o contexto. Não se usa urgência ou vergonha para transformar a opção mais cara numa medida de seriedade do comprador. A decisão comercial deve poder ser tomada com informação suficiente e sem uma interpretação moral da escolha.",
+            "Entregue a tabela com cálculos para duas e cinco pessoas, seguida de perguntas sobre condições ainda ausentes. Escreva duas versões de uma frase de preço, uma incompleta e outra corrigida. O avaliador procura unidade estável e clareza da comparação. O resultado esperado é uma oferta em que a pessoa consegue perceber quanto está a comparar e que experiência receberia, sem depender de letras pequenas para descobrir a quantidade necessária ao preço anunciado. Nenhum valor do exercício corresponde a uma cobrança ou recomendação de mercado real."
+          ]
+        }
+      ],
+      "case": "A40por pessoa/material+sessão coletiva. B150por grupo até5/material+sessão exclusiva. Período de acesso não definido. Dados sintéticos.",
+      "exercise": "Compare2e5pessoas:80/150e200/150. Calcule B75ou30por pessoa e mantenha condição. Liste lacunas sem inventar acesso vitalício.",
+      "assessment": {
+        "question": "B30por pessoa é correto sem mencionar o grupo de5?",
+        "answer": "Não. Esse valor depende de cinco participantes. Para dois,B75por pessoa; o total150permanece.",
+        "rubric": [
+          "Calcula dois cenários.",
+          "Explica unidade.",
+          "Não esconde condição."
+        ]
+      }
+    },
+    {
+      "id": "4",
+      "title": "Mostrar evidência sem fabricar autoridade ou testemunhos",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Distinguir amostra, demonstração e resultado real documentado.",
+        "Rever afirmações de autoridade pelo que efetivamente foi verificado."
+      ],
+      "sourceIds": [
+        "ftc-offer"
+      ],
+      "sections": [
+        {
+          "title": "A forma de apresentar uma prova modifica a sua interpretação",
+          "paragraphs": [
+            "Uma amostra original permite examinar o material; uma demonstração mostra uma tarefa num cenário; um relato real documenta uma experiência com alcance próprio. Chamar a todos caso de sucesso mistura evidências diferentes. O aluno deverá construir uma descrição que permita ao destinatário saber o que está a ver. Se a tabela foi criada para treino, isso precisa de permanecer claro. Um nome fictício e uma fotografia decorativa não devem fazer parecer que houve um cliente, uma turma ou um resultado que nunca existiu.",
+            "O mesmo cuidado vale para credenciais. Consultar uma fonte oficial não equivale a receber certificação dessa entidade. Utilizar um método conhecido não torna o curso reconhecido por uma universidade. Uma bibliografia pode apoiar o conteúdo, mas não concede autoridade institucional para vender uma qualificação. A referência da FTC sobre alegações e testemunhos é usada como enquadramento ético no contexto americano, sem concluir conformidade local. A revisão LDR deve verificar cada afirmação de autoridade e conservar a origem da informação, em vez de usar logótipos ou linguagem técnica como substituto de comprovação."
+          ]
+        },
+        {
+          "title": "Três peças com alcances diferentes",
+          "paragraphs": [
+            "No pacote fictício, P é uma tabela criada pelo autor; Q é uma encenação de conferência com dados inventados; R é uma frase proposta para a página: noventa por cento dos participantes conseguem aplicar sem ajuda. Não existe registo de participantes que sustente R. P pode ser apresentada como amostra; Q como demonstração sintética; R deve ser retirada ou mantida como pergunta de investigação, sem aparecer como resultado. A correção não consiste em trocar noventa por cento por muitos se continua a sugerir dados de uma turma inexistente.",
+            "Se futuramente houver uma avaliação real, será preciso definir tarefa, condições, denominador e forma apropriada de utilizar o resultado. Um acerto com ajuda não deve ser contado como autonomia, e ausência de resposta não pode desaparecer sem explicação. Também será necessário considerar autorização e contexto para usar relatos individuais. O curso não cria um formulário jurídico de consentimento nem prescreve publicação de dados. Ensina a identificar o que falta antes de transformar uma observação ou uma frase num argumento de autoridade comercial."
+          ]
+        },
+        {
+          "title": "Uma prova pode ser útil sem demonstrar tudo",
+          "paragraphs": [
+            "A amostra pode mostrar profundidade e clareza, mas não prova aprendizagem de qualquer pessoa. A demonstração pode explicar o processo, mas não confirma tempo médio de execução em contexto real. Um resultado de um grupo pode continuar limitado àquela tarefa. O vendedor deve poder dizer o alcance sem fazer a prova parecer inútil. Essa precisão ajuda o destinatário a avaliar o que já é conhecido e o que ainda depende da sua situação. A oferta não precisa de resultados inventados para apresentar o trabalho que efetivamente contém.",
+            "Entregue uma legenda para P e Q e uma decisão fundamentada sobre R. Acrescente duas afirmações de autoridade, uma suportada por consulta bibliográfica e outra que a excede, explicando a diferença. O avaliador procura se a linguagem mantém a origem e o limite da evidência. O resultado é uma proposta de apresentação que permite examinar o material sem fingir validação externa, estatística de sucesso ou testemunho. Nenhum nome, estudo, qualificação ou participante é criado para preencher o espaço em que ainda falta uma prova real."
+          ]
+        }
+      ],
+      "case": "Pamostra própria;Qencenação sintética;Ralega90%sem registo. Não há turma,certificação externa ou testemunho real para sustentarR.",
+      "exercise": "Escreva legendas e retire ou reclassifiqueR. Distinga citar fonte e receber certificação. Planeie o que teria de ser medido sem inventar resultados.",
+      "assessment": {
+        "question": "Trocar90%por muitos resolve uma turma inexistente?",
+        "answer": "Não. Continua a sugerir resultados não documentados. A descrição deve apoiar-se na amostra e demonstração reais, com origem explícita.",
+        "rubric": [
+          "Classifica três peças.",
+          "Não inventa autoridade.",
+          "Mantém limites de prova."
+        ]
+      }
+    },
+    {
+      "id": "5",
+      "title": "Usar prazo e capacidade sem criar escassez falsa",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Distinguir restrição operacional e pressão artificial.",
+        "Relacionar limite anunciado com recurso ou decisão que o sustenta."
+      ],
+      "sourceIds": [
+        "ftc-offer",
+        "au-offer"
+      ],
+      "sections": [
+        {
+          "title": "Um limite precisa de uma razão que continue verdadeira",
+          "paragraphs": [
+            "Uma sessão acompanhada pode ter capacidade limitada; um ficheiro distribuído digitalmente pode não ter a mesma restrição. Anunciar últimas vagas para qualquer objeto mistura condições diferentes. O aluno irá analisar prazo, capacidade e disponibilidade sem recomendar um mecanismo de pressão. Um limite pode ser comunicado quando corresponde à operação e é atualizado com fidelidade. Não se cria uma contagem regressiva que reinicia silenciosamente nem uma data final fictícia para obter decisão. A oferta deve explicar o que termina ou muda, em vez de usar urgência como substituto de adequação.",
+            "Uma data pode marcar o início de uma turma, a necessidade de preparar materiais ou o fim de uma condição comercial. Cada uma tem efeito diferente. O destinatário precisa de saber se perde acesso ao produto, se aguarda outra sessão ou se muda apenas o preço, quando isso estiver legitimamente definido. O curso não determina regras legais de promoções; prepara uma descrição coerente para revisão. A informação de prazo deve estar alinhada em todos os pontos da oferta, evitando que uma publicação antiga mantenha uma condição que deixou de existir."
+          ]
+        },
+        {
+          "title": "Capacidade de acompanhamento e cópias digitais não são a mesma unidade",
+          "paragraphs": [
+            "No cenário, uma oficina tem uma hora de análise de casos e reserva dez minutos por grupo, sem outros tempos dentro dessa hora. O limite teórico é seis grupos. Se houver uma introdução de dez minutos incluída na mesma hora, sobram cinquenta e cabem cinco grupos completos. O número precisa de ser calculado pelas condições reais. Não é correto manter seis porque a primeira conta parece mais atrativa. O material gravado pode continuar acessível a outros participantes, mas isso não significa que todos recebam a análise de caso ao vivo.",
+            "A oferta deve distinguir acesso ao material e lugar na atividade acompanhada. Se cinco grupos já estão confirmados no segundo cenário, a sessão está preenchida nas condições dadas. Não se inventa uma sexta vaga sem alterar tempo ou formato e comunicar a mudança. Uma lista de espera também não é uma inscrição confirmada. O aluno deve indicar que acontecimento atualiza a disponibilidade e quem o verifica. O exercício não executa reservas nem modifica matrículas, usando apenas um quadro sintético de capacidade para examinar a honestidade da mensagem."
+          ]
+        },
+        {
+          "title": "A comunicação deve permitir uma escolha fora do prazo",
+          "paragraphs": [
+            "Quando a condição termina, explique o que pode acontecer depois com base no que realmente existe: outra data ainda não definida, acesso apenas ao material ou ausência de alternativa confirmada. Não se promete uma nova turma para evitar perder interesse se a decisão ainda não foi tomada. Uma pessoa pode escolher esperar ou não adquirir. O vendedor não deve apresentar essa escolha como fracasso pessoal. A clareza de prazo ajuda a organizar decisões; a pressão artificial procura acelerar sem fornecer informação adicional sobre a adequação do produto.",
+            "Entregue duas versões do limite, com cálculos de seis e cinco grupos, e uma mensagem de atualização quando a capacidade se preenche. Acrescente uma frase de escassez falsa e a correção baseada na unidade real. O avaliador procura relação entre restrição e recurso. O resultado esperado é uma oferta que pode anunciar condições temporais sem fabricar urgência. A mesma precisão que se exige para preço e conteúdo aplica-se à disponibilidade, porque a decisão do destinatário depende de saber o que ainda pode receber e sob que condições."
+          ]
+        }
+      ],
+      "case": "60minanálise/10por grupo=6;com introdução10na mesma hora,50/10=5. Material gravado é outra unidade. Segundo cenário já tem5grupos confirmados.",
+      "exercise": "Calcule limites e escreva mensagem de sessão preenchida. Diferencie material/lista de espera/vaga; corrija escassez falsa sem criar nova turma.",
+      "assessment": {
+        "question": "A cópia digital disponível significa lugar na análise ao vivo?",
+        "answer": "Não. São recursos diferentes. A sessão com introdução comporta5grupos nas condições dadas e já está preenchida.",
+        "rubric": [
+          "Calcula6e5.",
+          "Distingue unidades.",
+          "Não fabrica prazo ou vaga."
+        ]
+      }
+    },
+    {
+      "id": "6",
+      "title": "Auditar a oferta pela decisão que o leitor consegue tomar",
+      "estimatedPracticeMinutes": 150,
+      "objectives": [
+        "Detetar contradições entre promessa, componentes, preço e capacidade.",
+        "Produzir versão coerente e teste de recuperação antes de qualquer publicação."
+      ],
+      "sourceIds": [
+        "ftc-offer",
+        "au-offer"
+      ],
+      "sections": [
+        {
+          "title": "A revisão final deve atravessar todas as dimensões",
+          "paragraphs": [
+            "Uma oferta pode ter uma boa abertura e ainda prometer suporte que não existe na tabela. O preço pode ser correto para um grupo completo e aparecer sem essa condição. A contagem de ficheiros pode estar errada. A revisão final precisa de relacionar promessa, material, prova, condições e disponibilidade. Não basta retirar uma palavra exagerada e conservar o resto da discrepância. O aluno irá montar um pacote coerente com os dados deste curso, mantendo pendente o que não foi definido e sem publicar a oferta em nome de uma organização real.",
+            "O teste de recuperação pode pedir a outro leitor que explique o que recebe, que tarefa pratica, que apoio existe, qual preço se aplica e que limite está confirmado. Se a resposta depende de adivinhar, a descrição precisa de revisão. A ajuda do autor deve ser registada, porque pode esconder um problema do texto. O teste não certifica eficácia comercial nem conformidade jurídica. Oferece informação sobre compreensão e consistência, que pode orientar uma correção antes de a mensagem circular e criar expectativas difíceis de cumprir."
+          ]
+        },
+        {
+          "title": "Um pacote com cinco falhas que podem ser examinadas",
+          "paragraphs": [
+            "A versão sintética promete domínio global, lista seis ficheiros embora contenha sete, anuncia grupo por trinta por pessoa sem condição de cinco, apresenta noventa por cento de sucesso sem dados e diz lugares para seis grupos numa sessão cuja introdução reduz a capacidade a cinco grupos. As falhas pertencem a dimensões diferentes. O aluno deve localizar cada uma e conservar a solução coerente: objetivo introdutório, inventário revisto, unidade de preço clara, demonstração identificada e capacidade calculada segundo o formato. Não precisa de tornar a oferta mais longa; precisa de tornar as relações corretas.",
+            "Uma versão pode escolher o pacote de cinco ficheiros e mostrar A40por pessoa ou B150por grupo até cinco, explicando o cenário. O período de acesso continua por definir, assim como condições reais que dependeriam do contexto de comercialização. A candidata deve manter esses campos em aberto no trabalho editorial e bloquear publicação antes de revisão. Não se preenchem automaticamente com vitalício ou garantia total. A ausência identificada é um problema a resolver, não um espaço em que se deve inventar uma vantagem para completar a página."
+          ]
+        },
+        {
+          "title": "Uma oferta séria pode ser clara sobre o que ainda falta",
+          "paragraphs": [
+            "A nota de prontidão deve distinguir texto revisto, material disponível, prova verificada e condições não decididas. Uma equipa pode ter concluído a redação e ainda precisar de testar leitor, suporte ou acessibilidade. Esses estados não devem ser confundidos com produto integralmente aprovado. O exercício permite preparar a decisão futura sem a executar. Direitos de compradores, regras aplicáveis e permissões não são alterados por esta oficina. A proposta pode continuar em revisão enquanto se resolve o que falta, preservando o trabalho já realizado e a possibilidade de ajustar o formato.",
+            "Entregue a oferta corrigida, o quadro de cinco falhas e respostas ao teste de recuperação, com distinção entre teste realizado e planeado. Acrescente uma condição que impede publicação e a função que precisaria de a decidir. O curso encerra seis oficinas de desenho de oferta credível, sem comprovar as cento e vinte horas históricas anunciadas. A qualidade final depende de revisão, prática e validação da experiência completa. O material deve permitir uma escolha informada com base no que existe, em vez de parecer irresistível por esconder limites ou fabricar autoridade."
+          ]
+        }
+      ],
+      "case": "Falhas:domínio global;6ficheirosditos/7reais;B30sem grupo5;90%sem dados;6grupos anunciados/capacidade5grupos. Período de acesso continua desconhecido.",
+      "exercise": "Corrija5falhas, mantenha condição de acesso pendente e teste5perguntas de recuperação. Não publique nem invente garantia, turma ou aprovação.",
+      "assessment": {
+        "question": "Preencher uma lacuna com vitalício torna a oferta pronta?",
+        "answer": "Não. Criaria uma condição não decidida. Deve permanecer pendente e ser resolvida antes de publicação.",
+        "rubric": [
+          "Corrige cinco dimensões.",
+          "Não fabrica condição.",
+          "Distingue revisão e aprovação integral."
+        ]
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão de marketing, pedagogia e condições reais com enquadramento normativo adequado antes de uso.",
+    "Pilotar compreensão e ampliar prática; validar a carga anunciada de120h.",
+    "Verificar acessibilidade e leitor isolado; preservar compras, matrículas e progresso existentes.",
+    "Aprovação editorial e autorização antes de produção."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

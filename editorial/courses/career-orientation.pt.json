@@ -1,0 +1,369 @@
+{
+  "productKey": "curso_assinatura_orientacao_de_carreira",
+  "slug": "orientacao-de-carreira",
+  "title": "Orientação de Carreira",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 120,
+  "validatedHours": null,
+  "expectedModuleCount": 6,
+  "scope": "Percurso de investigação de direção profissional: pergunta, experiência, ocupações, exploração, recursos e mapa revisável. Não substitui avaliação psicológica, orientação individualizada ou informação oficial sobre profissões reguladas. Diferencia-se da seleção de vagas e dos cursos de candidatura. Dados e personagens fictícios; 120 horas históricas não validadas.",
+  "courseObjectives": [
+    "Distinguir procura de emprego, escolha de aprendizagem e revisão de direção profissional.",
+    "Transformar uma inquietação ampla numa pergunta investigável com decisão e prazo de revisão.",
+    "Separar preferência, competência demonstrada e condição de contexto em episódios de trabalho.",
+    "Construir hipóteses de interesse que possam ser revistas por nova experiência.",
+    "Comparar duas direções ocupacionais com informação de origem e data identificadas.",
+    "Distinguir descrição geral, anúncio específico e dado de mercado com âmbito geográfico.",
+    "Transformar uma hipótese de carreira numa atividade de aprendizagem observável.",
+    "Definir limites de tempo, dados e interpretação antes de executar uma simulação.",
+    "Relacionar uma proposta de aprendizagem com tempo efetivamente disponível e dependências.",
+    "Comparar alternativas sem atribuir ao indivíduo a solução de todas as barreiras.",
+    "Integrar pergunta, evidências, exploração e condições num plano revisável.",
+    "Definir decisões condicionadas sem apresentar o mapa como previsão de futuro."
+  ],
+  "sources": [
+    {
+      "id": "oecd-adults",
+      "title": "OECD (2021). Career Guidance for Adults in a Changing World of Work. Getting Skills Right. OECD Publishing, Paris.",
+      "doi": "10.1787/9a94bfad-en",
+      "url": "https://www.oecd.org/en/publications/career-guidance-for-adults-in-a-changing-world-of-work_9a94bfad-en.html",
+      "consulted": "2026-11-16",
+      "scope": "Metadados, resumo e início do sumário executivo consultados. Usados para enquadrar informação sobre trabalho e aprendizagem e barreiras; não se declara leitura integral de 120 páginas, validação de instrumentos LDR ou previsão individual baseada no inquérito."
+    },
+    {
+      "id": "ncs-skills-career",
+      "title": "National Careers Service. Understand and develop your skills.",
+      "url": "https://nationalcareers.service.gov.uk/careers-advice/identifying-skills-and-upskilling/",
+      "consulted": "2026-11-16",
+      "scope": "Orientações anteriormente consultadas sobre reflexão em experiências, competências e aprendizagem. O quadro de hipóteses e os exercícios deste curso são originais, sem classificação de personalidade ou avaliação psicométrica."
+    },
+    {
+      "id": "ncs-profiles-career",
+      "title": "National Careers Service. Explore careers.",
+      "url": "https://nationalcareers.service.gov.uk/explore-careers",
+      "consulted": "2026-11-16",
+      "scope": "Estrutura de perfis ocupacionais consultada: tarefas, percursos e condições. Não se importam salários ou qualificações britânicas como dados de outro mercado; não foram inventados dados regionais atuais."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Formular a questão de carreira que realmente precisa de investigação"
+    },
+    {
+      "id": "2",
+      "title": "Ler a experiência sem a converter numa identidade fixa"
+    },
+    {
+      "id": "3",
+      "title": "Conhecer ocupações por tarefas, contextos e fontes"
+    },
+    {
+      "id": "4",
+      "title": "Desenhar experiências de exploração com custo e finalidade limitados"
+    },
+    {
+      "id": "5",
+      "title": "Dimensionar condições e apoios para aprender"
+    },
+    {
+      "id": "6",
+      "title": "Construir um mapa de direção com alternativas e pontos de revisão"
+    }
+  ],
+  "modules": [
+    {
+      "id": "1",
+      "title": "Formular a questão de carreira que realmente precisa de investigação",
+      "estimatedPracticeMinutes": 105,
+      "objectives": [
+        "Distinguir procura de emprego, escolha de aprendizagem e revisão de direção profissional.",
+        "Transformar uma inquietação ampla numa pergunta investigável com decisão e prazo de revisão."
+      ],
+      "sourceIds": [
+        "oecd-adults"
+      ],
+      "sections": [
+        {
+          "title": "Uma pergunta ampla pode conter decisões diferentes",
+          "paragraphs": [
+            "Não sei o que fazer profissionalmente pode reunir dificuldades distintas: falta de informação sobre ocupações, necessidade urgente de rendimento, desinteresse pelas tarefas atuais ou dúvida sobre formação. Começar por recomendar uma profissão pode responder à questão errada. O primeiro trabalho de orientação é delimitar a decisão que está em aberto e o que seria necessário saber para a discutir. Este curso é educacional e utiliza casos fictícios; não oferece avaliação psicológica nem apresenta uma profissão como destino pessoal predeterminado.",
+            "O relatório da OCDE sobre orientação de adultos descreve serviços que articulam informação sobre trabalho e aprendizagem em contextos de mudança. Não valida um diagnóstico individual nem fornece um algoritmo para escolher carreiras. A proposta LDR deste módulo é uma ficha de questão: situação atual, decisão em aberto, horizonte temporal, informação conhecida e dúvida prioritária. A ficha precisa de preservar problemas diferentes quando eles exigem respostas distintas. Uma necessidade imediata e uma direção de longo prazo podem coexistir sem serem fundidas numa escolha única."
+          ]
+        },
+        {
+          "title": "Uma personagem com dois horizontes",
+          "paragraphs": [
+            "No caso fictício, Marta precisa de procurar trabalho nos próximos meses e considera estudar desenho técnico. Ela ainda não conhece as tarefas de uma ocupação relacionada nem o tempo de formação necessário. A pergunta como entrar já nessa profissão reúne uma exigência imediata e uma aprendizagem ainda não investigada. Uma formulação mais útil separa procurar uma ocupação compatível agora de compreender se e como explorar a direção futura. Essa separação permite trabalhar sem prometer que o mesmo passo resolverá as duas necessidades.",
+            "O aluno deve identificar quem toma a decisão e que informação depende de terceiros. Um serviço de formação pode esclarecer programa e requisitos; não decide se a trajetória faz sentido para Marta. Um anúncio informa uma oportunidade concreta; não representa todo o campo profissional. A própria personagem pode dizer o que procura e que limites conhece, mas não precisa de saber antecipadamente todas as respostas. A orientação organiza a investigação e mantém a responsabilidade de decidir onde ela pertence."
+          ]
+        },
+        {
+          "title": "Definir um resultado de aprendizagem, não uma promessa de colocação",
+          "paragraphs": [
+            "Uma primeira etapa pode terminar com duas direções descritas, três dúvidas relevantes e uma ação de recolha de informação. Isso é diferente de garantir emprego ou uma escolha definitiva. O prazo de revisão serve para voltar à questão com elementos novos. Se a informação continuar insuficiente, o resultado honesto pode ser reformular a pergunta. O exercício não exige uma decisão final apenas porque chegou ao fim da página. A qualidade está em diminuir a confusão entre problemas e tornar claro o próximo trabalho de investigação.",
+            "Entregue uma ficha para Marta e um mapa de dois horizontes. Acrescente uma recomendação prematura que recusaria e explique que pergunta ela deixa sem resposta. A atividade inaugura um percurso diferente do curso de seleção de vagas: aqui, o objeto é a direção profissional e a aprendizagem a investigar; a comparação de anúncios específicos será uma aplicação posterior. Esse limite evita preencher a orientação com técnicas de currículo ou entrevista que ainda não respondem ao problema formulado pela personagem."
+          ]
+        }
+      ],
+      "case": "Marta precisa de procurar trabalho nos próximos meses e pensa estudar desenho técnico, sem conhecer tarefas, programa ou requisitos. A urgência e a exploração têm horizontes diferentes.",
+      "exercise": "Produza ficha de questão, mapa de dois horizontes e três dúvidas priorizadas. Indique uma recomendação que seria prematura e o resultado observável esperado da primeira etapa de investigação.",
+      "assessment": {
+        "question": "Recomendar imediatamente um curso resolve necessariamente a procura urgente e a dúvida de direção?",
+        "answer": "Não. Pode antecipar uma solução sem esclarecer tarefas, condições e horizonte. É necessário separar as decisões e investigar o que cada uma exige.",
+        "rubric": [
+          "Distingue decisões.",
+          "Define informação e responsabilidade.",
+          "Não confunde orientação e garantia de colocação."
+        ]
+      }
+    },
+    {
+      "id": "2",
+      "title": "Ler a experiência sem a converter numa identidade fixa",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Separar preferência, competência demonstrada e condição de contexto em episódios de trabalho.",
+        "Construir hipóteses de interesse que possam ser revistas por nova experiência."
+      ],
+      "sourceIds": [
+        "ncs-skills-career"
+      ],
+      "sections": [
+        {
+          "title": "Gostar, conseguir e valorizar não são a mesma informação",
+          "paragraphs": [
+            "Uma tarefa pode ser bem executada e pouco apreciada. Outra pode interessar, mas ainda exigir aprendizagem. Uma terceira pode ser valorizada pelo resultado que oferece, apesar de não ser agradável durante a execução. A orientação perde precisão quando transforma essas diferenças numa lista única de pontos fortes. O aluno irá analisar episódios, procurando o que a pessoa fez, como descreveu a experiência e que condições estavam presentes. Não se atribuirá um tipo de personalidade a partir de poucas preferências.",
+            "O National Careers Service propõe refletir sobre atividades e competências e identificar áreas a desenvolver. O quadro utilizado neste módulo é próprio: ação, resultado conhecido, relato de interesse e contexto. Cada coluna responde a uma pergunta diferente. O bom desempenho num ambiente com apoio não demonstra independência em qualquer situação. Um relato de desinteresse numa tarefa mal explicada não prova aversão permanente à atividade. O objetivo é construir hipóteses específicas, sem transformar episódios numa identidade profissional imutável."
+          ]
+        },
+        {
+          "title": "Dois episódios que parecem contraditórios",
+          "paragraphs": [
+            "No cenário, Samuel organizou materiais numa associação e gostou de preparar categorias. Num trabalho temporário, não gostou de preencher fichas repetidas sob instruções que mudavam diariamente. Concluir que gosta ou não gosta de administração seria demasiado amplo. Os episódios diferem em autonomia, repetição, estabilidade e tipo de problema. O aluno precisa de indicar quais aspetos podem explicar a diferença e que informação ainda falta. Uma hipótese plausível não se torna facto apenas porque oferece uma narrativa coerente.",
+            "Perguntas úteis procuram discriminar condições: que parte da classificação foi interessante, que decisões Samuel podia tomar e o que tornava as fichas difíceis? A personagem pode valorizar resolver problemas de organização e não a atividade administrativa como bloco único. Essa distinção pode orientar uma exploração de tarefas, mas não autoriza concluir que será bem-sucedida numa profissão específica. Interesse, recurso atual e requisito de entrada continuam a precisar de informação própria."
+          ]
+        },
+        {
+          "title": "Procurar também episódios que contrariam a primeira leitura",
+          "paragraphs": [
+            "Uma hipótese de interesse torna-se mais informativa quando admite um teste contrário. Se Samuel pensa gostar de classificar informação, que situação semelhante considerou aborrecida? A diferença pode mostrar que o contexto, a finalidade ou o grau de participação importam. O aluno não deve selecionar apenas memórias que confirmem a direção preferida. Uma orientação rigorosa pode manter duas explicações concorrentes e indicar uma pequena experiência que ajudaria a distingui-las, sem prometer descobrir uma vocação escondida.",
+            "A entrega consiste numa comparação de quatro episódios sintéticos, duas hipóteses e uma exceção para cada uma. Marque claramente o que é relato da personagem e o que é interpretação do aluno. O produto será usado para escolher perguntas de exploração, não para excluir ocupações de forma automática. A aprendizagem é aumentar a qualidade da observação e da linguagem sobre o percurso. Uma pessoa não precisa de caber numa etiqueta estável para investigar possibilidades e reconhecer que as suas preferências podem mudar com a experiência."
+          ]
+        }
+      ],
+      "case": "Samuel gostou de classificar materiais com autonomia e não gostou de fichas repetidas com instruções instáveis. Não há teste de personalidade nem informação sobre outras tarefas.",
+      "exercise": "Crie quatro episódios sintéticos, separando ação, resultado, relato e contexto. Formule duas hipóteses concorrentes e um exemplo que poderia contrariar cada uma. Escolha uma pergunta de exploração para o passo seguinte.",
+      "assessment": {
+        "question": "Os dois episódios permitem classificar Samuel como adequado ou inadequado para toda a área administrativa?",
+        "answer": "Não. São atividades e condições diferentes. É necessário investigar o que explica a experiência e manter as hipóteses delimitadas, sem generalizar para uma área inteira.",
+        "rubric": [
+          "Separa três dimensões pessoais e contexto.",
+          "Inclui contraexemplos.",
+          "Conserva hipóteses como perguntas de exploração."
+        ]
+      }
+    },
+    {
+      "id": "3",
+      "title": "Conhecer ocupações por tarefas, contextos e fontes",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Comparar duas direções ocupacionais com informação de origem e data identificadas.",
+        "Distinguir descrição geral, anúncio específico e dado de mercado com âmbito geográfico."
+      ],
+      "sourceIds": [
+        "ncs-profiles-career"
+      ],
+      "sections": [
+        {
+          "title": "Explorar uma ocupação exige ir além da imagem pública",
+          "paragraphs": [
+            "Uma profissão pode ser conhecida pelo resultado visível e pouco conhecida pelo trabalho quotidiano. O aluno que admira um produto gráfico pode não conhecer revisão, negociação de pedido e preparação de ficheiros. O objetivo deste módulo é descrever tarefas, contextos e caminhos de aprendizagem sem reduzir a ocupação a uma imagem idealizada. O National Careers Service apresenta perfis com atividades e percursos; a utilização aqui é de estrutura de investigação, não de importação automática de salários ou requisitos britânicos para outro país.",
+            "Uma ficha ocupacional deve indicar a fonte, a data de consulta e o alcance. Uma descrição geral ajuda a reconhecer tarefas típicas; um anúncio mostra uma combinação específica; uma entrevista informativa oferece a experiência de alguém naquele contexto. Nenhuma dessas fontes representa sozinha todo o campo. Se houver divergências, registe-as. A investigação não deve eliminar os dados menos convenientes para preservar a direção que o aluno gostaria de escolher."
+          ]
+        },
+        {
+          "title": "Comparar duas direções sem inventar o mercado",
+          "paragraphs": [
+            "A personagem fictícia Helena considera apoio logístico e desenho de conteúdos visuais. A primeira ficha pode reunir organização de recursos, acompanhamento de pedidos e comunicação de alterações; a segunda, interpretação de briefing, produção e revisão visual. O curso não fornece números atuais de emprego para essas direções. Se o aluno quiser discutir procura regional, precisará de dados oficiais com período e território. Um conjunto de anúncios recolhidos num dia não equivale à dimensão total do mercado nem à probabilidade individual de contratação.",
+            "As condições de entrada também precisam de ser verificadas no destino. Uma exigência de um empregador não deve ser convertida numa obrigação legal universal. Uma formação que aparece num perfil pode ser um caminho possível, não o único. O aluno deverá classificar cada informação como tarefa, condição de trabalho, via de aprendizagem ou questão formal a confirmar. Essa organização permite perceber que duas direções podem ter interesse semelhante e custos de preparação muito diferentes."
+          ]
+        },
+        {
+          "title": "Fazer uma pergunta informativa com finalidade definida",
+          "paragraphs": [
+            "Prepare uma conversa informativa fictícia centrada no trabalho: que entregas são frequentes, que partes consomem tempo e que aprendizagens iniciais foram necessárias? Não se pede um favor de contratação nem se solicita informação confidencial. A atividade pode ser realizada com um dossiê simulado quando não houver interlocutor disponível; nesse caso, não se inventará um contacto real ou uma resposta de profissional. O resultado precisa de identificar o que foi pesquisado e o que apenas se planeia perguntar.",
+            "Entregue duas fichas e uma síntese de diferenças relevantes para Helena. Acrescente uma afirmação que não pode sustentar com as fontes disponíveis e uma pergunta capaz de mudar a exploração. A qualidade da investigação está na relação entre fonte e conclusão. O módulo não procura produzir uma lista de profissões em alta, mas uma descrição suficientemente concreta para que a próxima experiência de aprendizagem teste algo real sobre as tarefas e as condições, em vez de confirmar apenas a imagem inicial da ocupação."
+          ]
+        }
+      ],
+      "case": "Helena explora apoio logístico e desenho de conteúdos visuais. Há descrições gerais de tarefas, mas não dados locais de procura ou exigências formais confirmadas.",
+      "exercise": "Crie duas fichas com fonte e âmbito. Classifique a informação por quatro categorias, redija seis perguntas informativas e marque quais respostas estão realmente disponíveis e quais continuam planeadas.",
+      "assessment": {
+        "question": "Uma lista de anúncios de um dia comprova a procura total e a probabilidade individual de contratação numa ocupação?",
+        "answer": "Não. Tem recorte de fonte e momento. Dados de mercado exigem âmbito e método, e ainda assim não se transformam automaticamente numa previsão para a pessoa.",
+        "rubric": [
+          "Distingue tipos de fonte.",
+          "Conserva território e período quando relevantes.",
+          "Liga diferenças de tarefas a perguntas de exploração."
+        ]
+      }
+    },
+    {
+      "id": "4",
+      "title": "Desenhar experiências de exploração com custo e finalidade limitados",
+      "estimatedPracticeMinutes": 135,
+      "objectives": [
+        "Transformar uma hipótese de carreira numa atividade de aprendizagem observável.",
+        "Definir limites de tempo, dados e interpretação antes de executar uma simulação."
+      ],
+      "sourceIds": [
+        "oecd-adults"
+      ],
+      "sections": [
+        {
+          "title": "Uma experiência de exploração precisa de uma pergunta",
+          "paragraphs": [
+            "Inscrever-se numa formação longa apenas para descobrir se a atividade interessa pode exigir um investimento que a pessoa ainda não está preparada para fazer. Uma exploração preliminar pode usar uma tarefa pequena, leitura orientada ou conversa informativa. Isso não substitui formação ou prática profissional. A utilidade depende de uma pergunta explícita: que parte do trabalho se pretende conhecer e que observação poderia modificar a hipótese? Sem essa pergunta, qualquer atividade agradável poderá ser tomada como confirmação ampla da direção.",
+            "O relatório da OCDE inclui o papel da informação sobre oportunidades de trabalho e aprendizagem, mas não valida as simulações deste curso como testes vocacionais. Elas são exercícios originais. O aluno definirá produto, tempo, recursos e limites. Não será necessário prestar trabalho gratuito a uma empresa, comprar um serviço ou recolher dados pessoais para explorar uma tarefa. Uma simulação com material sintético pode ajudar a compreender uma operação, desde que se reconheça o que não representa do contexto profissional."
+          ]
+        },
+        {
+          "title": "Uma hipótese pode ser testada sem simular uma profissão inteira",
+          "paragraphs": [
+            "No caso de Daniel, a hipótese é interessar-se por organizar informação visual. A atividade consiste em transformar um conjunto fictício de instruções num esquema para um público definido. O produto permite discutir seleção, clareza e revisão. Não demonstra que Daniel apreciará negociar prazos com clientes, trabalhar sob requisitos comerciais ou executar todas as tarefas de uma ocupação. A experiência precisa de indicar essa parte não representada, em vez de chamar ao exercício um retrato completo da carreira.",
+            "Antes de começar, Daniel escreve o que observará: que decisões consegue explicar, em que parte precisa de ajuda e como reage à revisão do próprio produto. O relato sobre interesse será separado da qualidade do resultado. Gostar da atividade não prova competência profissional; ter dificuldade inicial não demonstra falta de potencial. O aluno deverá construir duas interpretações possíveis e decidir que informação adicional as distinguiria. A exploração ganha rigor quando admite resultados mistos."
+          ]
+        },
+        {
+          "title": "Concluir com uma revisão de hipótese, não com um veredicto",
+          "paragraphs": [
+            "Reserve uma passagem para comparar expectativa e experiência. Daniel pode descobrir que gosta da organização, mas não da produção visual detalhada. Isso pode orientar uma nova pergunta sobre tarefas adjacentes. Também pode manter interesse e reconhecer que precisa de fundamentos técnicos. A próxima decisão não tem de ser abandonar ou escolher definitivamente. Pode ser aprofundar uma operação específica, procurar uma fonte melhor ou adiar investimento até conhecer condições essenciais que a simulação não representou.",
+            "A entrega contém protocolo breve, produto e análise de limites. Acrescente uma experiência que recusaria por custo, exposição ou falta de relação com a pergunta. O aluno deve mostrar como a observação alterou a hipótese sem a inflacionar. Este módulo cria uma ponte entre reflexão e ação: uma investigação de carreira pode produzir evidências pequenas e úteis, mas a sua força depende de manter o alcance correto e de não transformar uma experiência isolada numa promessa de identidade ou sucesso profissional."
+          ]
+        }
+      ],
+      "case": "Daniel quer explorar organização de informação visual. Pode criar um esquema com dados sintéticos, mas não há cliente, prazo comercial ou avaliação profissional no exercício.",
+      "exercise": "Defina pergunta, produto, tempo, observações e limites. Execute uma tarefa sintética, separe interesse e qualidade e proponha duas interpretações do resultado. Justifique uma próxima exploração.",
+      "assessment": {
+        "question": "Gostar de produzir um esquema demonstra que Daniel gostará de todas as condições da profissão?",
+        "answer": "Não. A simulação representa uma parte da atividade. Relação com clientes, exigências e contexto continuam por investigar; o resultado deve modificar uma hipótese delimitada.",
+        "rubric": [
+          "Liga atividade a pergunta.",
+          "Separa interesse, ajuda e qualidade.",
+          "Não transforma simulação em teste vocacional validado."
+        ]
+      }
+    },
+    {
+      "id": "5",
+      "title": "Dimensionar condições e apoios para aprender",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Relacionar uma proposta de aprendizagem com tempo efetivamente disponível e dependências.",
+        "Comparar alternativas sem atribuir ao indivíduo a solução de todas as barreiras."
+      ],
+      "sourceIds": [
+        "oecd-adults"
+      ],
+      "sections": [
+        {
+          "title": "Uma boa direção pode exigir condições ainda ausentes",
+          "paragraphs": [
+            "Ter interesse por uma aprendizagem não cria automaticamente tempo, acesso ou apoio. Um plano de carreira precisa de reconhecer essas condições antes de apresentar uma recomendação como simples escolha de vontade. A OCDE discute barreiras de acesso à orientação e à aprendizagem em contextos de adultos. Este módulo não transfere percentagens do relatório para uma pessoa. A aplicação será uma comparação de recursos num caso fictício, sem aconselhamento financeiro individual ou decisão sobre direitos de apoio que dependem de regras locais.",
+            "A ficha distingue recurso disponível, recurso necessário e dependência ainda por confirmar. Horas livres num calendário não são sempre horas utilizáveis para estudo; pode ser preciso considerar deslocação, acesso ao material e compromissos já assumidos. O exercício não pede que a personagem elimine cuidados essenciais ou aumente indefinidamente a carga para provar motivação. A pergunta é que proposta cabe nas condições conhecidas e que alteração depende de informação ou negociação real."
+          ]
+        },
+        {
+          "title": "Um orçamento de tempo com duas alternativas",
+          "paragraphs": [
+            "No cenário, Sofia dispõe de seis horas semanais utilizáveis. Uma formação X exige quatro horas de encontro e três de trabalho autónomo; Y exige duas de encontro e duas de prática. X soma sete e ultrapassa a disponibilidade por uma hora, antes de considerar outros custos. Y soma quatro e deixa duas horas de margem no caso. Esses cálculos não tornam Y automaticamente a melhor aprendizagem: é necessário verificar conteúdo, finalidade e reconhecimento. Mostram apenas uma diferença de viabilidade temporal.",
+            "Sofia pode perguntar se X oferece uma organização diferente, mas não deve assumir que uma exceção será concedida. Também pode escolher esperar ou explorar outra via. O aluno deve separar alternativa confirmada e condição desejada. Se uma ajuda de transporte ou financiamento parecer relevante, a sua existência e elegibilidade precisam de fonte oficial no contexto real. No exercício, não se inventam benefícios disponíveis nem se recomenda contrair dívida para tornar o plano aparentemente viável."
+          ]
+        },
+        {
+          "title": "Planeamento inclui margem e critérios de revisão",
+          "paragraphs": [
+            "Um plano sem margem pode falhar quando surge uma exigência prevista de modo insuficiente. Isso não significa acrescentar uma percentagem universal de reserva. O aluno deverá indicar que incerteza a margem procura acomodar e como saberá se ela é suficiente. Se a carga real for sistematicamente superior à anunciada, o problema precisa de ser registado e discutido. O calendário não deve ser corrigido retroativamente para mostrar que a pessoa sempre teve condições que, na prática, não existiam.",
+            "Entregue uma comparação temporal, um mapa de apoios por confirmar e uma decisão provisória. Acrescente uma condição de revisão depois de duas semanas sintéticas de experiência. A competência é relacionar direção e meios de forma responsável. A orientação não fica menos séria por reconhecer uma restrição; torna-se mais útil quando consegue distinguir o que pode ser organizado pela pessoa, o que depende de outras instituições e o que ainda não permite uma recomendação sustentada."
+          ]
+        }
+      ],
+      "case": "Sofia dispõe de seis horas semanais. X exige quatro de encontro e três autónomas; Y duas e duas. Conteúdos e reconhecimento ainda precisam de comparação; apoios não estão confirmados.",
+      "exercise": "Calcule as cargas, identifique dependências e compare a viabilidade sem escolher apenas pelo menor tempo. Redija duas perguntas a um prestador fictício e uma condição de revisão após duas semanas.",
+      "assessment": {
+        "question": "X cabe nas seis horas conhecidas apenas porque quatro são de encontro?",
+        "answer": "Não. O trabalho autónomo informado também conta: X soma sete horas. Uma organização diferente exige confirmação, e a viabilidade temporal não decide sozinha a pertinência da formação.",
+        "rubric": [
+          "Conta as duas componentes.",
+          "Não inventa apoio ou exceção.",
+          "Distingue viabilidade e adequação da aprendizagem."
+        ]
+      }
+    },
+    {
+      "id": "6",
+      "title": "Construir um mapa de direção com alternativas e pontos de revisão",
+      "estimatedPracticeMinutes": 150,
+      "objectives": [
+        "Integrar pergunta, evidências, exploração e condições num plano revisável.",
+        "Definir decisões condicionadas sem apresentar o mapa como previsão de futuro."
+      ],
+      "sourceIds": [
+        "oecd-adults",
+        "ncs-skills-career"
+      ],
+      "sections": [
+        {
+          "title": "O plano precisa de dizer por que cada ação existe",
+          "paragraphs": [
+            "Um mapa de direção profissional pode reunir muitos passos e ainda ser pouco útil se não explicar que dúvida cada um procura resolver. O produto final deste curso relaciona questão inicial, experiência analisada, informação ocupacional, exploração e condições de aprendizagem. Não é um calendário de sucesso garantido. O aluno deverá conseguir justificar a ligação entre uma ação e a decisão seguinte. Uma tarefa que não esclarece nada relevante pode ser retirada, mesmo que pareça uma prática convencional de desenvolvimento de carreira.",
+            "As fontes consultadas apoiam a articulação entre informação, competências e planeamento, mas não validam um roteiro LDR como instrumento preditivo. A síntese deve manter hipóteses e alternativas. Em vez de afirmar esta é a profissão certa, pode indicar que uma direção merece exploração adicional com determinadas condições. Essa formulação não é uma conclusão fraca: é proporcional ao tipo de evidência produzido por um percurso educacional, que ainda não representa experiência completa de trabalho numa ocupação."
+          ]
+        },
+        {
+          "title": "Um plano com ramos que dependem de informação",
+          "paragraphs": [
+            "No caso integrado, Inês compara apoio a projetos culturais e desenho de materiais educativos. Tem experiência de organização de eventos, interesse relatado por produzir esquemas e apenas quatro horas semanais para exploração. O primeiro ramo pode examinar tarefas de coordenação com uma ficha ocupacional e uma conversa informativa planeada. O segundo pode usar uma pequena produção sintética. O plano deve indicar o que será observado e que resultado levaria a aprofundar, rever ou suspender cada ramo.",
+            "Uma condição externa pode alterar a ordem. Se uma formação só tem horário incompatível, não é adequado concluir que Inês deixou de valorizar a direção. A informação modifica a viabilidade de um passo, não necessariamente o interesse. Se a simulação revelar dificuldade técnica, pode ser preciso aprender fundamentos antes de interpretar o resultado como desadequação. O mapa final deve conservar essas distinções para que a revisão não se transforme numa reescrita do passado que faça todas as decisões parecerem inevitáveis."
+          ]
+        },
+        {
+          "title": "Escolher um ponto de revisão com evidências suficientes",
+          "paragraphs": [
+            "Defina o que precisa de estar reunido no momento de voltar ao mapa: duas fichas comparáveis, produto da simulação, notas sobre ajuda e uma resposta sobre condições. Não estabeleça uma data apenas para dar aparência de plano, se não houver oportunidade de obter esses elementos. Por outro lado, uma investigação sem limite pode adiar indefinidamente qualquer decisão. O aluno deverá justificar um prazo didático e indicar o que fará se a informação essencial continuar ausente, sem inventar respostas para encerrar o percurso.",
+            "A entrega final é um mapa de uma página acompanhado do dossiê que o sustenta. Inclua uma decisão tomada, outra condicionada e uma pergunta que permanece aberta. Identifique se houve interlocução externa real ou apenas planeamento e simulação. O curso termina com uma maneira de investigar e revisar escolhas, distinta de redigir currículo, selecionar um anúncio ou negociar uma oferta. O valor do mapa está em permitir o próximo passo com razões claras e em preservar a possibilidade de mudar quando surgirem informações que a análise inicial não podia conhecer."
+          ]
+        }
+      ],
+      "case": "Inês explora projetos culturais e materiais educativos; tem experiência em eventos, interesse por esquemas e quatro horas semanais. Não existem respostas de profissionais ou de prestadores de formação ainda.",
+      "exercise": "Monte o mapa de dois ramos com ações, evidências, condições e ponto de revisão. Anexe uma decisão tomada, uma condicionada e uma pergunta aberta, distinguindo trabalho executado e contacto apenas planeado.",
+      "assessment": {
+        "question": "Um horário incompatível de uma formação demonstra que a direção deixou de interessar?",
+        "answer": "Não. Modifica a viabilidade daquele passo. Interesse, condições e via de aprendizagem são dimensões distintas e podem conduzir a uma alternativa ou a uma revisão de calendário.",
+        "rubric": [
+          "Integra sem copiar fichas inteiras.",
+          "Define ramos e condições de decisão.",
+          "Mantém limites e trabalho ainda não realizado."
+        ]
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão por profissional de orientação e revisão conceptual, sem presumir validação de instrumentos próprios.",
+    "Pilotar exploração, compreensão e tempo; avaliar correspondência com as 120 horas históricas.",
+    "Testar materiais acessíveis e leitor isolado e preservar percurso anterior.",
+    "Aprovação editorial e autorização antes de produção."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

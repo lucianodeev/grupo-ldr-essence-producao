@@ -1,0 +1,58 @@
+import { FREUD_LESSONS, FREUD_COURSE_NOTICE } from "../content/academy-free/freud-foundations";
+import { DOCUMENTATION_LESSONS } from "../content/academy-free/documentation";
+import {
+  SPANISH_LESSONS,
+  PORTUGUESE_LESSONS,
+  DUTCH_LESSONS,
+  GERMAN_LESSONS,
+} from "../content/academy-free/language-batches";
+import { ENGLISH_LESSONS } from "../content/academy-free/english-a1";
+import { RESEARCH_LESSONS } from "../content/academy-free/research-methods";
+import type { EditorialLesson } from "../content/academy-free/types";
+export function freeCourseLessons(slug: string): readonly EditorialLesson[] {
+  if (slug === "orientacao-trabalho-cientifico") return RESEARCH_LESSONS;
+  if (slug === "ingles-basico-a1") return ENGLISH_LESSONS;
+  if (slug === "espanhol-basico-a1") return SPANISH_LESSONS;
+  if (slug === "portugues-para-falantes-de-outras-linguas-a1") return PORTUGUESE_LESSONS;
+  if (slug === "neerlandes-basico-a1") return DUTCH_LESSONS;
+  if (slug === "alemao-basico-a1") return GERMAN_LESSONS;
+  if (slug === "modelos-documentos-psicanaliticos") return DOCUMENTATION_LESSONS;
+  if (slug === "clinica-psicanalitica-sigmund-freud") return FREUD_LESSONS;
+  return [];
+}
+export type FreeLearningState = { index: number; done: number[] };
+export function restoreFreeLearningState(value: unknown, count: number): FreeLearningState {
+  const x = value && typeof value === "object" ? (value as Record<string, unknown>) : {};
+  const done = Array.isArray(x["done"])
+    ? [
+        ...new Set(
+          x["done"].filter(
+            (n): n is number => typeof n === "number" && Number.isInteger(n) && n >= 0 && n < count,
+          ),
+        ),
+      ]
+    : [];
+  const index =
+    typeof x["index"] === "number" && Number.isInteger(x["index"])
+      ? Math.max(0, Math.min(Math.max(0, count - 1), x["index"]))
+      : 0;
+  return { index, done };
+}
+export function freeStudyPercent(done: number[], count: number, savedPercent = 0) {
+  const safe = restoreFreeLearningState({ done }, count);
+  const floor = Number.isFinite(savedPercent) ? Math.max(0, Math.min(100, savedPercent)) : 0;
+  return Math.max(floor, count > 0 ? Math.round((safe.done.length / count) * 100) : 0);
+}
+// Navigation is separate from completion. Retain legacy records, including pending lessons.
+export function recordFreeLesson(
+  state: FreeLearningState,
+  lessons: readonly EditorialLesson[],
+  reviewed: boolean,
+): FreeLearningState {
+  if (!reviewed || !lessons[state.index]) return state;
+  return { ...state, done: [...new Set([...state.done, state.index])] };
+}
+
+export function freeCourseEditorialNotice(slug: string): string | null {
+  return slug === "clinica-psicanalitica-sigmund-freud" ? FREUD_COURSE_NOTICE : null;
+}

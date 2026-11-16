@@ -1,0 +1,369 @@
+{
+  "productKey": "curso_assinatura_como_selecionar_a_vaga_certa_para_o_seu_perfil",
+  "slug": "como-selecionar-a-vaga-certa-para-o-seu-perfil",
+  "title": "Como Selecionar a Vaga Certa para o Seu Perfil",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 80,
+  "validatedHours": null,
+  "expectedModuleCount": 6,
+  "scope": "Seis oficinas originais de seleção e decisão. Sequência distinta do roteiro automático histórico, sem migração ativa de módulos ou progresso. Todos os anúncios, nomes, condições e números são sintéticos. Matrizes são ferramentas pedagógicas próprias, não testes psicométricos ou previsões de contratação. Carga histórica de 80 horas por validar.",
+  "courseObjectives": [
+    "Distinguir título, tarefas e critérios num conjunto de anúncios.",
+    "Separar requisito explícito, preferência e informação em falta sem os classificar por suposição.",
+    "Relacionar três experiências com exigências de uma vaga, explicitando os limites da transferência.",
+    "Construir um plano de aprendizagem sem apresentar formação prevista como competência atual.",
+    "Separar condição indispensável, preferência e informação negociável num caso fictício.",
+    "Comparar custos de participação usando as mesmas unidades e conservando incertezas.",
+    "Distinguir aparência de legitimidade e confirmação por canal independente.",
+    "Construir uma decisão de suspensão ou prosseguimento sem realizar pagamentos ou expor dados no exercício.",
+    "Comparar alternativas elegíveis com critérios e pesos declarados.",
+    "Executar uma análise de sensibilidade e reconhecer quando dados ausentes impedem um ranking.",
+    "Produzir uma lista curta com razões distintas para candidatar, esclarecer ou não avançar.",
+    "Rever a seleção depois de informação nova sem apagar critérios e decisões anteriores."
+  ],
+  "sources": [
+    {
+      "id": "ncs-profiles",
+      "title": "National Careers Service. Explore careers. Sem data indicada na página consultada.",
+      "url": "https://nationalcareers.service.gov.uk/explore-careers",
+      "consulted": "2026-11-15",
+      "scope": "Descrição dos campos dos perfis ocupacionais consultada. Não se importam salários, qualificações ou exigências legais britânicas para outros países; anúncios e valores do curso são fictícios."
+    },
+    {
+      "id": "ncs-skills",
+      "title": "National Careers Service. Understand and develop your skills. Sem data indicada na página consultada.",
+      "url": "https://nationalcareers.service.gov.uk/careers-advice/identifying-skills-and-upskilling/",
+      "consulted": "2026-11-15",
+      "scope": "Orientações de identificação de competências, aprendizagem e planeamento consultadas. Quadros de evidência, escalas e pesos LDR são originais e não validados pela fonte."
+    },
+    {
+      "id": "eures-fraud",
+      "title": "European Labour Authority / EURES (2023). How to spot fraudulent job offers and misinformation. 15 de junho de 2023.",
+      "url": "https://eures.europa.eu/how-spot-fraudulent-job-offers-and-misinformation-2023-06-15_en",
+      "consulted": "2026-11-15",
+      "scope": "Recomendações sobre verificação de remetentes, canais e pedidos financeiros consultadas. Sem repetir estatísticas históricas como atuais ou afirmar que um sinal isolado comprova fraude. As mensagens do exercício não são enviadas a terceiros."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Decifrar a função antes de decidir pelo título"
+    },
+    {
+      "id": "2",
+      "title": "Distinguir capacidade demonstrada, transferência e aprendizagem"
+    },
+    {
+      "id": "3",
+      "title": "Verificar se as condições cabem na vida disponível"
+    },
+    {
+      "id": "4",
+      "title": "Verificar a origem de uma oportunidade antes de partilhar dados"
+    },
+    {
+      "id": "5",
+      "title": "Usar uma matriz de decisão sem fingir precisão científica"
+    },
+    {
+      "id": "6",
+      "title": "Concluir uma seleção e planear o investimento na candidatura"
+    }
+  ],
+  "modules": [
+    {
+      "id": "1",
+      "title": "Decifrar a função antes de decidir pelo título",
+      "estimatedPracticeMinutes": 105,
+      "objectives": [
+        "Distinguir título, tarefas e critérios num conjunto de anúncios.",
+        "Separar requisito explícito, preferência e informação em falta sem os classificar por suposição."
+      ],
+      "sourceIds": [
+        "ncs-profiles"
+      ],
+      "sections": [
+        {
+          "title": "Um nome de cargo não descreve todo o trabalho",
+          "paragraphs": [
+            "Dois anúncios com o mesmo título podem exigir atividades e condições muito diferentes. Assistente pode designar apoio a clientes, tratamento de documentos ou organização logística. A escolha de uma vaga começa por examinar o que será feito, não apenas o nome que parece adequado ao percurso. O National Careers Service apresenta perfis que incluem tarefas e qualificações. Esses perfis ajudam a conhecer uma ocupação, mas não substituem as condições do anúncio específico nem definem requisitos legais de outro país.",
+            "O primeiro instrumento deste curso será um quadro de leitura com quatro campos: atividade, critério declarado, condição de execução e informação ausente. Copie apenas o que o anúncio realmente informa antes de interpretar. Se diz experiência desejável, não transforme isso automaticamente em requisito eliminatório. Se declara habilitação obrigatória, não a reclassifique como preferência para aumentar a aparência de adequação. Quando a redação é ambígua, o estado correto pode ser precisa de esclarecimento, sem escolher silenciosamente a interpretação mais favorável."
+          ]
+        },
+        {
+          "title": "Comparar funções que partilham apenas uma palavra",
+          "paragraphs": [
+            "No dossiê fictício, a vaga A é assistente de atendimento: esclarecer horários, registar pedidos e encaminhar situações não resolvidas. A vaga B é assistente de dados: conferir campos, comparar listas e documentar divergências. Ambas usam a palavra assistente, mas uma depende de interação frequente e outra destaca verificação. O candidato pode ter recursos para ambas, embora precise de evidências diferentes. Um currículo que contém atendimento não demonstra automaticamente experiência de conferência sistemática, e o inverso também não deve ser presumido.",
+            "Acrescente as condições conhecidas: A informa horário presencial fixo; B refere regime híbrido sem frequência definida. A diferença pode ser importante para a viabilidade, mas não altera por si a natureza das tarefas. Misturar tudo numa classificação boa ou má vaga elimina informação útil. O quadro deve permitir discutir separadamente interesse pelo trabalho, capacidade demonstrada e compatibilidade das condições. Uma opção pode ser interessante e ainda depender de um esclarecimento decisivo antes de justificar o investimento numa candidatura."
+          ]
+        },
+        {
+          "title": "Construir perguntas que resolvem a ambiguidade",
+          "paragraphs": [
+            "Uma pergunta de esclarecimento precisa de indicar o ponto concreto. Qual é o perfil ideal tende a devolver uma descrição ampla; que atividades ocupam a maior parte da semana pode delimitar o trabalho. Se a dúvida for a frequência presencial, pergunte por frequência e previsibilidade, em vez de assumir que híbrido significa dois dias. O curso não fornece uma definição universal para rótulos de anúncios. Ensina a tratar linguagem imprecisa como questão a resolver, sobretudo quando dela depende uma decisão do candidato.",
+            "A entrega contém dois quadros e três perguntas, cada uma ligada a uma decisão. Depois, escreva uma frase sobre o que ainda não é possível comparar. Essa ausência não representa fracasso da análise: mostra que o candidato sabe onde termina a informação disponível. O critério de qualidade é conseguir explicar por que o título chamou atenção, o que o anúncio acrescentou e que dado falta para avançar. Assim, a triagem deixa de ser um reflexo baseado em nomes de cargos e passa a ser uma leitura examinável do trabalho."
+          ]
+        }
+      ],
+      "case": "Anúncios sintéticos A: atendimento, horários, registo e encaminhamento, presencial fixo. B: conferência de campos e listas, divergências, híbrido sem frequência. Nenhum informa remuneração.",
+      "exercise": "Faça os dois quadros de leitura e três perguntas de esclarecimento. Classifique cinco expressões construídas a partir do dossiê como explícitas, preferenciais ou ambíguas e justifique uma comparação que ainda não pode fazer.",
+      "assessment": {
+        "question": "Ter o mesmo título assistente torna A e B equivalentes para selecionar evidências?",
+        "answer": "Não. As tarefas destacadas são diferentes e exigem exemplos pertinentes. O título orienta a busca, mas a comparação deve usar atividades e condições efetivamente informadas.",
+        "rubric": [
+          "Distingue título e tarefa.",
+          "Não promove preferência a obrigação nem o inverso.",
+          "Relaciona perguntas com decisões."
+        ]
+      }
+    },
+    {
+      "id": "2",
+      "title": "Distinguir capacidade demonstrada, transferência e aprendizagem",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Relacionar três experiências com exigências de uma vaga, explicitando os limites da transferência.",
+        "Construir um plano de aprendizagem sem apresentar formação prevista como competência atual."
+      ],
+      "sourceIds": [
+        "ncs-skills"
+      ],
+      "sections": [
+        {
+          "title": "A adequação é uma relação, não uma identidade do candidato",
+          "paragraphs": [
+            "Dizer esta vaga combina comigo ainda não informa porquê. É necessário relacionar tarefas e condições com experiências, conhecimentos e recursos disponíveis. O National Careers Service recomenda identificar competências e áreas a desenvolver a partir de atividades e descrições de trabalho. O quadro deste módulo separa evidência direta, experiência potencialmente transferível e aprendizagem necessária. Essas categorias não são uma escala psicométrica nem produzem um percentual científico de compatibilidade. Servem para justificar uma decisão e preparar verificações adicionais.",
+            "Uma evidência direta descreve uma ação semelhante, mas ainda precisa de delimitar contexto e responsabilidade. A transferência reconhece um recurso que pode ser útil sem afirmar equivalência completa. A aprendizagem necessária identifica algo que ainda não foi demonstrado. Marcar todas as linhas como competência transferível para evitar lacunas tornaria a classificação vazia. A análise ganha valor quando consegue reconhecer tanto recursos reais como limites, sem transformar uma ausência de experiência numa avaliação global de incapacidade."
+          ]
+        },
+        {
+          "title": "Um inventário com três tipos de relação",
+          "paragraphs": [
+            "No cenário, Hugo registou reservas numa associação, organizou uma lista simples de participantes e fez um curso introdutório de folhas de cálculo. A vaga B do módulo anterior exige comparar listas e documentar divergências. Organizar uma lista oferece uma ligação possível, mas o dossiê não informa se Hugo comparou versões ou seguiu um procedimento de divergência. O curso introdutório pode apoiar aprendizagem futura; não demonstra domínio de uma ferramenta específica nem execução profissional de todas essas operações.",
+            "Para cada exigência, procure uma pergunta que possa mudar a classificação. Como verificou duplicações? Que informação encaminhou quando encontrou um dado inconsistente? Se Hugo não tiver realizado essas ações, o quadro deverá indicar aprendizagem ou experiência ainda não demonstrada. Pode preparar um exercício sintético para aprender, mas deve conservá-lo como simulação, não convertê-lo em emprego passado. Essa distinção protege a integridade da candidatura e permite decidir que preparação é realmente necessária."
+          ]
+        },
+        {
+          "title": "Decidir o que aprender e quando isso altera a candidatura",
+          "paragraphs": [
+            "Uma lacuna pode ter peso diferente conforme o anúncio a apresenta como condição de entrada ou atividade com formação inicial. Não cabe ao candidato presumir que a organização dispensará um requisito explícito. Cabe-lhe identificar a dúvida e, quando adequado, esclarecê-la. Um plano de aprendizagem deve indicar operação, recurso, prática e critério de verificação, em vez de prometer adquirir experiência rapidamente sem descrever o que será feito. A formação concluída depois precisa de entrar no histórico com a data e o alcance corretos.",
+            "A entrega será um mapa de três exigências e uma decisão sobre preparação. Para uma delas, desenvolva uma atividade local com dados inventados e diga que evidência ela produziria e o que continuaria sem comprovar. O curso não exige comprar formação, aceitar trabalho não remunerado ou divulgar dados pessoais para preencher o quadro. O objetivo é tomar decisões mais fundamentadas sobre onde investir esforço, preservando a diferença entre aquilo que já sabe fazer, o que pode aprender e o que o processo de seleção precisará efetivamente de avaliar."
+          ]
+        }
+      ],
+      "case": "Hugo registou reservas, organizou lista simples e concluiu curso básico. B exige comparar listas e documentar divergências; não há evidência dessas duas operações no histórico fornecido.",
+      "exercise": "Construa o mapa de três exigências, com categoria, evidência e limite. Para uma lacuna, desenhe uma prática sintética e um critério de verificação. Justifique se precisa de esclarecimento da vaga antes de investir mais tempo.",
+      "assessment": {
+        "question": "Um exercício criado agora pode ser apresentado como experiência profissional anterior?",
+        "answer": "Não. Pode demonstrar uma prática ou aprendizagem atual, desde que identificada como tal. Não altera o histórico e não comprova atuação num posto real.",
+        "rubric": [
+          "Delimita transferência.",
+          "Não inventa experiência ou domínio de ferramenta.",
+          "Define aprendizagem verificável e o seu limite."
+        ]
+      }
+    },
+    {
+      "id": "3",
+      "title": "Verificar se as condições cabem na vida disponível",
+      "estimatedPracticeMinutes": 105,
+      "objectives": [
+        "Separar condição indispensável, preferência e informação negociável num caso fictício.",
+        "Comparar custos de participação usando as mesmas unidades e conservando incertezas."
+      ],
+      "sourceIds": [
+        "ncs-profiles"
+      ],
+      "sections": [
+        {
+          "title": "Uma função interessante pode ter condições incompatíveis",
+          "paragraphs": [
+            "A escolha de uma vaga envolve mais do que gostar das tarefas. Local, horário, previsibilidade, acesso e recursos necessários podem determinar se a oportunidade é viável. Esses fatores não são um detalhe a tratar apenas depois de aceitar. O curso trabalha uma comparação de condições com dados fictícios, sem aconselhamento financeiro individual ou análise jurídica de contratos. O aluno deverá explicitar o que consegue confirmar, o que prefere e o que precisa de saber antes de uma decisão.",
+            "Um perfil ocupacional descreve características gerais, mas a vaga pode organizar o trabalho de outra maneira. Por isso, uma informação de contexto não deve preencher automaticamente um campo omitido pelo anúncio. Se não há horário, marque-o como desconhecido. Se a remuneração é um intervalo, conserve esse estatuto. Comparar o maior valor possível de uma opção com o valor confirmado de outra criaria uma assimetria. A tabela precisa de mostrar a qualidade da informação, não apenas o número mais atraente."
+          ]
+        },
+        {
+          "title": "Um caso de deslocação, tempo e previsibilidade",
+          "paragraphs": [
+            "Olga, personagem fictícia, dispõe de duas janelas semanais para deslocações e precisa de saber os dias com antecedência. A vaga A tem presença diária e a B usa a palavra híbrido sem frequência. Ainda não é possível afirmar compatibilidade com B. A pode ser inviável nas condições atuais, mas isso deve ser dito em relação ao caso, não como julgamento sobre a qualidade da vaga. Uma oportunidade pode servir outra pessoa e não caber na disponibilidade de Olga.",
+            "Para analisar deslocações, o dossiê pode indicar minutos por trajeto e número de presenças numa semana sintética. Mantenha a mesma base ao comparar: uma ida não equivale a ida e volta, e uma semana de exemplo não representa automaticamente todos os meses. O aluno irá calcular dois cenários para B, um com uma presença e outro com três. Não escolherá o cenário mais favorável como verdadeiro. A diferença mostra por que a pergunta sobre frequência é decisiva antes de concluir a comparação."
+          ]
+        },
+        {
+          "title": "Definir limites antes de ordenar preferências",
+          "paragraphs": [
+            "Uma condição indispensável pode funcionar como filtro: se Olga não pode comparecer em três dias fixos, um resultado alto noutros critérios não elimina esse limite. Uma preferência, como proximidade, pode ser ponderada em conjunto com outras. A classificação deve ser feita de forma consciente e revista quando as condições mudam. Chamar tudo de negociável para manter todas as opções abertas pode levar a investir tempo numa candidatura que depende de uma alteração que ninguém confirmou ser possível.",
+            "Entregue uma ficha de condições com dois cenários aritméticos, uma pergunta prioritária e um limite explícito. Depois introduza uma resposta fictícia do empregador e atualize a decisão, preservando a versão anterior. O trabalho mostra como informação nova modifica a seleção. Não se pretende encontrar a vaga perfeita, mas identificar oportunidades suficientemente compatíveis e saber quais lacunas ainda impedem uma conclusão. Esse critério é mais útil do que uma classificação única baseada apenas em salário anunciado ou prestígio do cargo."
+          ]
+        }
+      ],
+      "case": "Olga tem duas janelas semanais de deslocação. A exige presença diária. B não define frequência; trajeto sintético de quarenta minutos por sentido. Compare uma e três presenças semanais.",
+      "exercise": "Classifique seis condições como indispensáveis, preferenciais ou por confirmar. Calcule ida e volta nos dois cenários de B e escreva a pergunta cuja resposta mudaria a decisão. Atualize a ficha após uma resposta fictícia identificada.",
+      "assessment": {
+        "question": "No cenário de quarenta minutos por sentido, três presenças somam o mesmo tempo de deslocação que uma?",
+        "answer": "Não. Uma presença soma oitenta minutos de ida e volta; três somam duzentos e quarenta. São cenários, não frequência confirmada de B, e a informação precisa de ser esclarecida.",
+        "rubric": [
+          "Usa unidades equivalentes.",
+          "Distingue limite e preferência.",
+          "Não escolhe cenário desconhecido como facto."
+        ]
+      }
+    },
+    {
+      "id": "4",
+      "title": "Verificar a origem de uma oportunidade antes de partilhar dados",
+      "estimatedPracticeMinutes": 105,
+      "objectives": [
+        "Distinguir aparência de legitimidade e confirmação por canal independente.",
+        "Construir uma decisão de suspensão ou prosseguimento sem realizar pagamentos ou expor dados no exercício."
+      ],
+      "sourceIds": [
+        "eures-fraud"
+      ],
+      "sections": [
+        {
+          "title": "Um anúncio plausível ainda precisa de origem verificável",
+          "paragraphs": [
+            "Uma oportunidade pode usar o nome e o logótipo de uma organização real sem ter sido publicada por ela. A orientação EURES sobre ofertas fraudulentas recomenda verificar remetente, domínio e informação em fontes apropriadas, e alerta para pedidos de dinheiro ou dados financeiros. Neste módulo, o aluno trabalha exclusivamente com mensagens inventadas. Não abrirá ligações recebidas de desconhecidos, não enviará documentos e não fará pagamentos para demonstrar que compreendeu o procedimento. O objeto é a decisão de verificação.",
+            "A confirmação deve acrescentar independência. Perguntar ao próprio remetente se é legítimo não resolve a dúvida sobre a identidade dele. Um caminho mais robusto é localizar por iniciativa própria o canal oficial da organização e verificar se a oportunidade ou o contacto existem. A disponibilidade de um site ou de um perfil social não prova toda a proposta. O exercício pedirá que o aluno explique qual dúvida cada verificação resolve e que aspetos ainda continuariam em aberto."
+          ]
+        },
+        {
+          "title": "Uma mensagem com identidade real e pedido incompatível",
+          "paragraphs": [
+            "No caso fictício, uma mensagem cita uma empresa conhecida, promete aprovação sem entrevista e exige uma transferência para libertar o contrato. O endereço imita o nome da empresa com uma alteração de letras. Não é necessário executar o pagamento para investigar. O aluno deve localizar os sinais, suspender a partilha de dados e definir um canal independente de confirmação. A conclusão operacional pode ser não avançar enquanto não houver verificação, sem transformar o exercício num inquérito que exige expor o candidato a risco.",
+            "Outra mensagem fictícia tem redação pouco cuidada, mas nenhum pedido financeiro. Um erro de escrita, isoladamente, não comprova fraude nem legitimidade. A análise precisa de considerar a origem, a coerência do processo e a confirmação. Do mesmo modo, uma mensagem muito bem escrita pode ser fraudulenta. O curso evita ensinar uma lista de características superficiais como se produzisse certeza automática. Sinais ajudam a priorizar verificações; não substituem um canal confirmado e uma decisão prudente sobre o que partilhar."
+          ]
+        },
+        {
+          "title": "Registar apenas o necessário para decidir o próximo passo",
+          "paragraphs": [
+            "A ficha de verificação contém origem recebida, alegação, sinal de alerta, confirmação independente planeada e decisão provisória. Como os casos são sintéticos, o aluno não precisa de guardar dados de pessoas reais. Se uma situação real exigir denúncia ou proteção de contas, deve usar os canais oficiais adequados ao local e ao serviço envolvido. Este módulo não simula contacto com autoridades nem apresenta um endereço universal para todos os países. A fonte EURES consultada tem os seus próprios canais e âmbito.",
+            "Entregue duas fichas e uma justificação comparativa. A primeira deve explicar por que o pagamento não é um passo aceitável de teste. A segunda deve mostrar por que a correção ortográfica não basta para decidir. O produto final é um procedimento de verificação e uma regra de suspensão, não um selo de autenticidade. Saber reconhecer o limite da informação protege a qualidade da seleção: uma oportunidade aparentemente compatível deixa de ser candidata a investimento de tempo ou dados quando a sua origem não pode ser confirmada de forma adequada."
+          ]
+        }
+      ],
+      "case": "Mensagens sintéticas: X imita domínio de empresa, promete aprovação e pede transferência para libertar contrato. Y tem erros de escrita, mas não pede dinheiro; origem ainda não confirmada.",
+      "exercise": "Faça duas fichas de verificação e uma regra de suspensão. Descreva como procuraria um canal independente, sem usar links, contactos ou pagamentos reais. Compare o alcance dos sinais nas duas mensagens.",
+      "assessment": {
+        "question": "Uma mensagem sem erros de escrita e com logótipo conhecido comprova legitimidade?",
+        "answer": "Não. Aparência não confirma identidade. É necessário verificar a origem por canal independente; pedidos financeiros e outras inconsistências exigem suspensão, não pagamento experimental.",
+        "rubric": [
+          "Não confunde aparência e confirmação.",
+          "Evita pagamentos e partilha de dados no teste.",
+          "Relaciona cada verificação com a dúvida que pretende resolver."
+        ]
+      }
+    },
+    {
+      "id": "5",
+      "title": "Usar uma matriz de decisão sem fingir precisão científica",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Comparar alternativas elegíveis com critérios e pesos declarados.",
+        "Executar uma análise de sensibilidade e reconhecer quando dados ausentes impedem um ranking."
+      ],
+      "sourceIds": [
+        "ncs-skills"
+      ],
+      "sections": [
+        {
+          "title": "Uma pontuação representa escolhas do autor",
+          "paragraphs": [
+            "Uma matriz pode ajudar a tornar critérios explícitos, mas não descobre objetivamente a vaga certa. Os pesos expressam prioridades e as classificações dependem da informação disponível. O quadro proposto neste módulo é uma ferramenta pedagógica própria, não um teste validado de carreira. Antes de pontuar, é preciso aplicar condições indispensáveis e verificar origem. Uma alternativa incompatível com um requisito essencial do candidato não se torna viável apenas porque acumula pontos em aspetos secundários.",
+            "O aluno trabalhará com três critérios: interesse pelas tarefas, oportunidade de aprendizagem e previsibilidade. Os nomes não resolvem a avaliação. Cada critério precisa de uma descrição que permita justificar uma classificação. Previsibilidade, por exemplo, pode referir a antecedência com que dias presenciais são conhecidos. Se o anúncio não informa esse ponto, a célula deve ficar desconhecida. Atribuir nota média à informação ausente esconde uma escolha e pode favorecer ou prejudicar a opção sem base."
+          ]
+        },
+        {
+          "title": "Um exemplo calculável e uma segunda leitura",
+          "paragraphs": [
+            "Considere duas alternativas fictícias já verificadas e compatíveis com os limites do caso. Na escala didática de um a três, A recebe interesse três, aprendizagem um e previsibilidade três; B recebe dois, três e dois. Com pesos iguais, ambas somam sete. Se aprendizagem recebe peso dois e os restantes ficam em um, A soma oito e B soma dez. O resultado mudou por uma decisão sobre prioridade, não por uma nova descoberta sobre o candidato ou o mercado. O exercício deve tornar essa dependência visível.",
+            "Agora retire a informação de previsibilidade de B. A comparação já não permite calcular o mesmo total sem uma suposição adicional. O aluno pode apresentar intervalos de cenário ou suspender a ordenação e pedir confirmação. Se utilizar um intervalo, precisa de mostrar o melhor e o pior valor possíveis na escala definida e explicar o que cada um significa. Não se escolhe o valor conveniente para produzir a recomendação desejada. A incerteza deve continuar a influenciar a conclusão."
+          ]
+        },
+        {
+          "title": "A matriz ajuda a perguntar o que mudaria a decisão",
+          "paragraphs": [
+            "Uma análise de sensibilidade altera um peso ou uma classificação plausível para observar se a escolha se mantém. Se pequenas mudanças invertem a ordem, a recomendação deve ser apresentada como sensível às prioridades ou aos dados. Isso não torna a ferramenta inútil. Pode indicar que as alternativas são próximas e que uma pergunta adicional tem valor elevado. O objetivo não é produzir casas decimais para parecer rigoroso, mas compreender por que a comparação conduz a determinada preferência.",
+            "Entregue os cálculos, a interpretação e uma decisão que admita incerteza. Acrescente um critério que recusaria pontuar por não ter informação suficiente. O National Careers Service apoia a reflexão sobre competências e planos; não valida esta escala, estes pesos ou a probabilidade de contratação. A matriz organiza uma deliberação, enquanto a responsabilidade de decidir permanece situada. O aluno deve conseguir explicar a escolha em palavras sem depender da autoridade aparente de um total numérico."
+          ]
+        }
+      ],
+      "case": "Alternativas sintéticas elegíveis: A=(3,1,3), B=(2,3,2), nos critérios interesse, aprendizagem e previsibilidade. Pesos iniciais iguais; depois aprendizagem recebe peso dois. Por fim, previsibilidade de B fica desconhecida.",
+      "exercise": "Calcule os dois cenários de pesos, explique a inversão e refaça a comparação com o dado ausente. Apresente uma pergunta de alto valor e uma conclusão que conserve a incerteza.",
+      "assessment": {
+        "question": "B somar dez no segundo cenário demonstra maior probabilidade científica de contratação?",
+        "answer": "Não. O total resulta de uma escala didática e de pesos escolhidos. Representa uma comparação de prioridades, sem validade preditiva de contratação. Informação ausente não deve receber nota inventada.",
+        "rubric": [
+          "Calcula sete/sete e oito/dez corretamente.",
+          "Explica o papel dos pesos.",
+          "Não converte pontuação em previsão ou dado ausente em facto."
+        ]
+      }
+    },
+    {
+      "id": "6",
+      "title": "Concluir uma seleção e planear o investimento na candidatura",
+      "estimatedPracticeMinutes": 150,
+      "objectives": [
+        "Produzir uma lista curta com razões distintas para candidatar, esclarecer ou não avançar.",
+        "Rever a seleção depois de informação nova sem apagar critérios e decisões anteriores."
+      ],
+      "sourceIds": [
+        "ncs-profiles",
+        "ncs-skills",
+        "eures-fraud"
+      ],
+      "sections": [
+        {
+          "title": "A lista curta é uma decisão de trabalho",
+          "paragraphs": [
+            "Selecionar não significa declarar que uma oportunidade é perfeita. Significa decidir onde investir tempo, que informação pedir e que opções deixar de acompanhar nas condições atuais. O dossiê final distingue três estados: candidatar com preparação definida, esclarecer antes de investir mais e não avançar com justificação. Os estados não avaliam o valor pessoal do candidato. Expressam a relação entre tarefas, recursos, limites e origem verificada da oportunidade, segundo os critérios construídos ao longo do curso.",
+            "O trabalho de síntese combina leitura de função, inventário de competências e verificação de origem, sem copiar as fichas inteiras para uma conclusão longa. Cada peça deve responder a uma pergunta diferente. Uma página de decisão pode referir onde estão as evidências e apresentar apenas os motivos decisivos. A organização final será avaliada por rastreabilidade: outra pessoa consegue compreender por que a alternativa foi classificada e que informação poderia alterar a decisão? O volume do portefólio não substitui essa relação."
+          ]
+        },
+        {
+          "title": "Um cenário final com três destinos possíveis",
+          "paragraphs": [
+            "No caso integrado, a opção L tem tarefas pertinentes, origem confirmada e condições compatíveis, mas exige preparar uma amostra de escrita. A opção M tem boa relação com competências, porém não informa a frequência presencial que determina viabilidade. A opção N pede transferência para concluir o recrutamento e não tem origem confirmada. A decisão pode ser preparar a candidatura de L, esclarecer M e suspender N. Não é necessário atribuir uma nota a N para comparar o seu aparente salário com o das outras.",
+            "O plano para L precisa de ter produto e esforço delimitados: ler instruções, selecionar evidências e produzir a amostra conforme o enunciado. Não deve transformar preparação em construção de uma experiência fictícia. Para M, uma pergunta sobre frequência pode resolver mais do que horas de reformulação do currículo. Para N, a suspensão evita tratar o pagamento como requisito de empenho. As três decisões têm funções diferentes e não devem ser reduzidas a enviar mais candidaturas como única medida de progresso."
+          ]
+        },
+        {
+          "title": "Atualizar sem reescrever o passado para parecer consistente",
+          "paragraphs": [
+            "Suponha que M responde com três dias presenciais fixos, incompatíveis com o limite do candidato fictício. A decisão passa de esclarecer para não avançar nas condições informadas. Não significa que a análise anterior estava errada: ela identificou precisamente a informação de que dependia a escolha. Registe a resposta, a data sintética e a alteração. Se as condições pessoais mudarem depois, a opção poderá ser reavaliada, sem apagar a razão pela qual não era viável naquele momento.",
+            "Entregue uma lista curta, um plano de preparação e uma nota de revisão. O leitor deverá localizar uma competência disponível, uma aprendizagem necessária, um limite e uma confirmação independente em cada opção relevante. O curso termina com capacidade de selecionar e justificar, não com garantia de emprego ou quantidade obrigatória de candidaturas. A prática transferível é voltar às tarefas e às condições de cada oportunidade, em vez de transportar um ranking antigo para vagas novas cuja informação, exigências e riscos podem ser diferentes."
+          ]
+        }
+      ],
+      "case": "Opções fictícias: L confirmada e compatível, pede amostra escrita; M depende de esclarecer presença; N pede transferência e não tem origem confirmada. M depois informa três dias fixos incompatíveis.",
+      "exercise": "Produza lista curta com três estados, plano de preparação para L e pergunta para M. Registe a resposta nova de M e a revisão de decisão. Explique por que N não entra numa soma de benefícios.",
+      "assessment": {
+        "question": "M mudar de estado depois da resposta demonstra incoerência da análise anterior?",
+        "answer": "Não. A decisão anterior era condicionada à informação em falta. A atualização deve conservar critérios e registar o dado novo que tornou a opção incompatível no caso.",
+        "rubric": [
+          "Usa três estados com razões específicas.",
+          "Investe esforço onde a informação já permite agir.",
+          "Regista revisão e mantém critérios e limites."
+        ]
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão especializada das decisões, linguagem e fontes; pilotagem das atividades e da carga.",
+    "Teste de acessibilidade e leitura isolada, sem criar dados de candidatura reais.",
+    "Definir correspondência com o roteiro histórico antes de qualquer integração, preservando progresso.",
+    "Aprovação editorial e autorização antes de produção."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

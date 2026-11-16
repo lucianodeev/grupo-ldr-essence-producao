@@ -1,0 +1,363 @@
+{
+  "productKey": "curso_assinatura_como_sair_da_ideia_e_chegar_ao_primeiro_cliente",
+  "slug": "como-sair-da-ideia-e-chegar-ao-primeiro-cliente",
+  "title": "Como Sair da Ideia e Chegar ao Primeiro Cliente",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 160,
+  "validatedHours": null,
+  "expectedModuleCount": 6,
+  "scope": "Percurso de hipóteses, episódios, amostra, oferta limitada, entrega e aprendizagem de um primeiro piloto comercial fictício. Distingue-se do plano geral de negócio e da redação de propostas. Não há contacto externo, pagamento ou promessa de clientes.160h históricas por validar.",
+  "courseObjectives": [
+    "Separar hipóteses de problema, solução e decisão de compra.",
+    "Priorizar uma pergunta pelo efeito sobre o próximo passo.",
+    "Formular perguntas sobre comportamento ocorrido e distinguir interpretação.",
+    "Analisar relatos contraditórios sem os reduzir a uma média fictícia.",
+    "Definir o que um protótipo permite testar e o que deixa fora.",
+    "Produzir duas fichas com dados suficientes para uma tarefa verificável.",
+    "Distinguir pesquisa, teste gratuito e piloto comercial.",
+    "Definir limites e responsabilidades antes de qualquer aceitação.",
+    "Relacionar dados de entrada, versão produzida e conferência.",
+    "Tratar um erro antes de apresentar o trabalho como concluído.",
+    "Separar aprendizagem de uso, operação e procura.",
+    "Escolher o próximo teste com base numa ocorrência e manter limites da amostra."
+  ],
+  "sources": [
+    {
+      "id": "gds-experiment",
+      "title": "Government Digital Service. Plan user research for your service.",
+      "url": "https://www.gov.uk/service-manual/user-research/plan-user-research-for-your-service",
+      "consulted": "2026-11-16",
+      "scope": "Passagens sobre transformar hipóteses em perguntas, escolher atividades e rever rondas consultadas. Não se importam números de participantes ou cadências como regras universais de venda. Aplicação comercial é original e não validada pelo GDS."
+    },
+    {
+      "id": "sba-discovery",
+      "title": "U.S. Small Business Administration. Plan your business — Market research and competitive analysis.",
+      "url": "https://www.sba.gov/counseling/plan-your-business/",
+      "consulted": "2026-11-16",
+      "scope": "Passagens sobre pesquisa direta e fontes existentes consultadas; enquadramento de investigação de necessidade, sem estimar mercado local ou garantir primeiro cliente."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Escolher a incerteza que impede um primeiro teste"
+    },
+    {
+      "id": "2",
+      "title": "Recolher um episódio sem induzir uma intenção de compra"
+    },
+    {
+      "id": "3",
+      "title": "Construir uma amostra que teste a tarefa central"
+    },
+    {
+      "id": "4",
+      "title": "Preparar uma oferta de piloto com compromisso limitado"
+    },
+    {
+      "id": "5",
+      "title": "Executar a primeira entrega com um registo de qualidade"
+    },
+    {
+      "id": "6",
+      "title": "Aprender com o piloto sem fabricar uma receita de conquista"
+    }
+  ],
+  "modules": [
+    {
+      "id": "1",
+      "title": "Escolher a incerteza que impede um primeiro teste",
+      "estimatedPracticeMinutes": 105,
+      "objectives": [
+        "Separar hipóteses de problema, solução e decisão de compra.",
+        "Priorizar uma pergunta pelo efeito sobre o próximo passo."
+      ],
+      "sourceIds": [
+        "gds-experiment"
+      ],
+      "sections": [
+        {
+          "title": "Uma ideia pode falhar por razões diferentes",
+          "paragraphs": [
+            "Quero ajudar artesãos a apresentar produtos reúne várias hipóteses: existe dificuldade de apresentação, um material pode tratá-la, a pessoa tem condições de o utilizar e alguém aceitará pagar. Construir uma identidade visual antes de examinar essas relações pode consumir recursos sem esclarecer a restrição principal. O objetivo deste curso é chegar a um primeiro teste comercial responsável. Não começa com uma previsão de rendimento nem com a obrigação de vender a qualquer pessoa. Começa pela pergunta que precisa de resposta para justificar um próximo investimento de trabalho.",
+            "A orientação do GDS para transformar suposições em perguntas é aplicada como método de organização, sem converter pesquisa de serviço público numa técnica de venda cientificamente validada. Uma pergunta precisa de admitir resposta desfavorável. Em vez de perguntar como convencer artesãos a comprar fichas, pode perguntar como apresentam atualmente as peças e que dificuldade concreta encontram. Se a solução atual funciona, a hipótese de necessidade pode ser revista. Se o problema está no transporte, uma ficha descritiva talvez não seja a resposta relevante."
+          ]
+        },
+        {
+          "title": "Três incógnitas com consequências diferentes",
+          "paragraphs": [
+            "A personagem fictícia Lara pensa criar fichas digitais de peças artesanais. Não sabe se os clientes dos artesãos perguntam sempre as mesmas características, se os artesãos conseguem fornecer informação correta e se o formato será utilizado. A primeira incógnita trata o problema; a segunda, uma condição de produção; a terceira, o uso da solução. Um teste de aparência do modelo não esclarece as três. O aluno deverá escolher uma sequência que evite produzir um pacote completo antes de saber se as informações necessárias existem.",
+            "Uma matriz simples pode conter hipótese, consequência se falsa, informação necessária e custo aproximado de verificar. Não atribua números de probabilidade sem dados. A ordem deve ser justificada por dependência: se não existe uma tarefa recorrente a apoiar, talvez ainda não faça sentido testar o formato; se a tarefa existe, pode ser preciso saber que campos são necessários. O exercício não pede contactar artesãos reais. O aluno trabalhará com descrições sintéticas e poderá preparar um protocolo de pesquisa, distinguindo planeamento e execução."
+          ]
+        },
+        {
+          "title": "Definir a próxima decisão em vez de prometer o desfecho",
+          "paragraphs": [
+            "Uma primeira etapa pode terminar com decidir se vale a pena criar uma amostra de duas fichas. Esse resultado é mais limitado que validar o negócio, mas permite saber o que se espera aprender. Escreva antes que informação apoiaria criar a amostra e que informação levaria a reformular a ideia. O critério não precisa de impor uma quantidade universal de pessoas. Precisa de corresponder à pergunta e à qualidade da informação disponível. Uma conversa rica e uma contagem de respostas curtas não são evidências intercambiáveis.",
+            "A entrega é um mapa de três hipóteses e uma nota que escolhe a primeira pergunta. Acrescente uma ação que ficará adiada até obter essa resposta. O avaliador procura se a sequência reduz uma incerteza importante, em vez de apenas produzir elementos que dão sensação de avanço. O curso distingue este percurso do plano global de negócio: aqui, cada atividade será escolhida pelo que permite decidir antes de tentar a primeira entrega comercial, mantendo espaço para concluir que a hipótese inicial não merece prosseguir na forma proposta."
+          ]
+        }
+      ],
+      "case": "Lara propõe fichas de peças artesanais. Incógnitas: perguntas recorrentes dos compradores, dados disponíveis e uso do formato. Pesquisa ainda não executada.",
+      "exercise": "Mapeie três hipóteses, priorize uma pergunta e defina a decisão seguinte e uma ação adiada. Não atribua probabilidades ou entrevistas inexistentes.",
+      "assessment": {
+        "question": "Testar o visual resolve automaticamente a existência do problema?",
+        "answer": "Não. Examina uma solução e pode deixar por esclarecer a necessidade e as condições de produzir informação correta.",
+        "rubric": [
+          "Separa três hipóteses.",
+          "Prioriza por consequência.",
+          "Admite revisão da ideia."
+        ]
+      }
+    },
+    {
+      "id": "2",
+      "title": "Recolher um episódio sem induzir uma intenção de compra",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Formular perguntas sobre comportamento ocorrido e distinguir interpretação.",
+        "Analisar relatos contraditórios sem os reduzir a uma média fictícia."
+      ],
+      "sourceIds": [
+        "sba-discovery",
+        "gds-experiment"
+      ],
+      "sections": [
+        {
+          "title": "O episódio concreto oferece detalhes que um elogio não oferece",
+          "paragraphs": [
+            "Perguntar compraria uma ficha bonita pode produzir uma resposta simpática que diz pouco sobre o trabalho. Um episódio permite examinar quando surgiu uma dúvida, que informação faltava e como a pessoa resolveu. O roteiro pode pedir que o interlocutor descreva a última apresentação de uma peça, sem solicitar dados pessoais de clientes ou imagens que não tem autorização para partilhar. O objetivo é compreender a tarefa e o contexto. A conversa não deve esconder uma tentativa de venda sob aparência de pesquisa nem obrigar alguém a justificar uma recusa.",
+            "Prepare poucas perguntas, cada uma ligada à hipótese. Uma pode examinar que característica precisou de explicar; outra, onde estava essa informação; outra, o que aconteceu quando não a encontrou. Perguntas que pressupõem a solução, como quanto tempo perdeu por não ter o nosso modelo, já escolhem uma causa. Separe o que foi relatado e a sua interpretação. Não transforme a frase deu trabalho numa duração medida. A pesquisa direta descrita pela SBA é enquadramento para recolher contexto, não uma autorização para extrapolar qualquer relato ao mercado inteiro."
+          ]
+        },
+        {
+          "title": "Dois episódios apontam necessidades diferentes",
+          "paragraphs": [
+            "No conjunto sintético, artesão A relata ter repetido por mensagem as dimensões e os materiais de três peças. Artesão B relata que o comprador viu as dimensões, mas queria escolher a cor disponível naquele dia. A ficha estática pode ajudar A, mas talvez precise de atualização ou outra solução para B. Não conclua que ambos precisam do mesmo produto apenas porque mencionam informação. A distinção entre característica estável e disponibilidade variável muda o tipo de material e o custo de manutenção. O aluno deve conservar essa diferença na análise.",
+            "Um terceiro relato diz que a pessoa já usa uma tabela de características e não encontrou dificuldade recente. Isso não invalida os outros episódios, mas limita a ideia de necessidade universal. Pode existir um segmento em que a solução atual é suficiente. A análise deve incluir a alternativa existente e a razão que poderia justificar mudança. Não é correto classificar automaticamente a ausência de problema como resistência ou falta de consciência. Uma investigação comercial responsável precisa de permitir que o potencial utilizador não necessite da oferta proposta."
+          ]
+        },
+        {
+          "title": "Uma síntese conserva o alcance e prepara uma verificação",
+          "paragraphs": [
+            "Para cada episódio, escreva situação, ação, obstáculo relatado e informação ainda ausente. Se as fichas são prometidas para reduzir perguntas repetidas, será necessário testar se o comprador consegue encontrar as características e se o artesão consegue mantê-las corretas. A conversa sozinha não demonstra esse resultado. O aluno deve escolher uma verificação que corresponda à dificuldade identificada, sem inventar um benefício quantificado. O relatório deve indicar que os relatos são fornecidos pelo exercício e não transcrições de pesquisa realizada pela LDR.",
+            "Entregue um roteiro de cinco perguntas e uma síntese dos três episódios. Acrescente duas perguntas indutoras e versões corrigidas. O avaliador procura se o roteiro permite encontrar informação que contrarie a oferta e se a síntese evita fundir necessidades diferentes. O resultado é uma escolha mais precisa para o protótipo seguinte. Uma boa pesquisa inicial não precisa de terminar numa frase de venda; pode revelar que a oferta deve limitar-se a características estáveis, exigir atualização ou servir apenas quem ainda não possui um procedimento suficiente."
+          ]
+        }
+      ],
+      "case": "A repete dimensões/materiais de3peças;B tem dimensões mas muda cor disponível;C já usa tabela sem dificuldade recente. Relatos sintéticos, sem pesquisa real.",
+      "exercise": "Crie roteiro5perguntas, analise três episódios e corrija duas perguntas indutoras. Diferencie informação estável e variável e escolha verificação seguinte.",
+      "assessment": {
+        "question": "Todos os episódios justificam a mesma ficha estática?",
+        "answer": "Não. A tem repetição de características;B precisa de disponibilidade atual;C pode já ter solução suficiente.",
+        "rubric": [
+          "Preserva diferenças.",
+          "Não inventa duração ou mercado.",
+          "Evita indução."
+        ]
+      }
+    },
+    {
+      "id": "3",
+      "title": "Construir uma amostra que teste a tarefa central",
+      "estimatedPracticeMinutes": 135,
+      "objectives": [
+        "Definir o que um protótipo permite testar e o que deixa fora.",
+        "Produzir duas fichas com dados suficientes para uma tarefa verificável."
+      ],
+      "sourceIds": [
+        "gds-experiment"
+      ],
+      "sections": [
+        {
+          "title": "O protótipo deve ser pequeno pelo foco, não pela falta de sentido",
+          "paragraphs": [
+            "Uma amostra útil conserva a parte necessária à pergunta. Se pretende saber se alguém encontra dimensões e material, precisa de incluir esses campos com dados e uma tarefa. Um desenho vazio pode testar preferência de aparência, mas não recuperação de informação. Um protótipo incompleto também não deve ser apresentado como produto pronto para venda. O aluno construirá uma versão de treino de duas fichas, identificada como tal, sem recolher pagamentos, criar uma loja ou publicar material em nome de um artesão real.",
+            "As fichas não precisam de fotografia se a pergunta inicial não depende da imagem. Podem usar um retângulo simples e identificação textual, evitando recursos externos de direitos desconhecidos. O teste deve distinguir conteúdo e comportamento pretendido. Se o leitor acerta porque o autor aponta o campo, registe o apoio. Se os dados estão ausentes, a falha não informa legibilidade. A pergunta do teste precisa de poder ser respondida com os elementos presentes. Esse cuidado evita corrigir o utilizador por não adivinhar aquilo que o protótipo não forneceu."
+          ]
+        },
+        {
+          "title": "Duas peças e uma seleção que tem solução determinada",
+          "paragraphs": [
+            "Dados fictícios: peça P, madeira, largura dezoito centímetros, altura doze, uso interior; peça Q, cerâmica, largura vinte e quatro, altura dez, uso interior. A tarefa pede uma peça com largura até vinte centímetros e material madeira. P satisfaz as duas condições; Q não satisfaz nenhuma delas. Outra tarefa pede localizar uma peça apropriada para exterior. Nenhuma é indicada para esse uso segundo os dados. A resposta correta é informação não disponível ou nenhuma com uso exterior declarado, sem inventar resistência ao tempo a partir do material.",
+            "Essas tarefas examinam seleção por campos e reconhecimento de limite. Não demonstram que a ficha reduz mensagens num comércio real. Para isso seria preciso observar uso no contexto e comparar condições adequadas. O aluno deve conservar o objetivo restrito e preparar um registo de tentativa com resposta e dificuldade. Se o leitor confundir largura e altura, o formato ou o rótulo pode precisar de revisão. Se interpretar uso interior como recomendação universal de segurança, a ficha deve deixar claro que o cenário é de treino e não especificação técnica de um produto comercial."
+          ]
+        },
+        {
+          "title": "Uma amostra não deve esconder trabalho futuro",
+          "paragraphs": [
+            "A versão de duas fichas pode não incluir atualização, múltiplas línguas ou impressão. Identifique essas exclusões para que um teste positivo não seja usado para prometer uma solução mais ampla sem investigação. O protótipo também pode depender de dados fornecidos pelo artesão. A qualidade da informação não é garantida pelo formato. Se os campos estiverem errados, o material comunica um erro com maior clareza, e não resolve o problema. A amostra deve separar o que foi conferido e o que é apenas dado sintético do exercício.",
+            "Entregue duas fichas, as tarefas e a chave, acompanhadas por uma declaração do que o protótipo testa. Acrescente uma observação que exigiria revisar o rótulo e outra que exigiria obter dados adicionais. O avaliador procura se a amostra permite uma experiência completa da tarefa central sem aparentar um produto integral. O avanço está em tornar a hipótese observável com um objeto limitado. O curso não pede maquilhar incompletude nem vender uma amostra como se incluísse todas as funções que só serão discutidas depois."
+          ]
+        }
+      ],
+      "case": "Pmadeira18×12cm/interior;Qcerâmica24×10cm/interior. Selecionar madeira com largura≤20 dáP. Uso exterior não é declarado. Dados e peças fictícios.",
+      "exercise": "Produza fichas e teste duas tarefas com chave. Identifique limite de evidência e duas revisões possíveis sem anunciar benefício comercial medido.",
+      "assessment": {
+        "question": "O material cerâmica permite presumir uso exterior para Q?",
+        "answer": "Não. O cenário só declara uso interior. É necessário obter especificação adequada, sem inferir uma condição técnica pelo nome do material.",
+        "rubric": [
+          "SelecionaP.",
+          "Preserva limites.",
+          "Distingue teste de uso e prova de vendas."
+        ]
+      }
+    },
+    {
+      "id": "4",
+      "title": "Preparar uma oferta de piloto com compromisso limitado",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Distinguir pesquisa, teste gratuito e piloto comercial.",
+        "Definir limites e responsabilidades antes de qualquer aceitação."
+      ],
+      "sourceIds": [
+        "gds-experiment",
+        "sba-discovery"
+      ],
+      "sections": [
+        {
+          "title": "Cada tipo de participação tem uma finalidade diferente",
+          "paragraphs": [
+            "Uma conversa de pesquisa procura informação; um teste de protótipo examina uso; um piloto comercial entrega um serviço com condições acordadas. O participante deve saber em qual está. Não se deve apresentar uma pesquisa como neutra e depois pressionar pela compra, nem chamar cliente pagante a alguém que apenas elogiou uma amostra. A progressão entre atividades depende de decisão apropriada e clareza sobre o compromisso. Neste curso, tudo permanece uma simulação editorial: não há envio de mensagens, cobrança ou contratação.",
+            "Uma oferta de piloto precisa de dizer que entrega terá valor para o destinatário e que limites existem. Usar a palavra piloto não justifica aceitar uma encomenda sem capacidade de execução nem omitir uma função essencial. Se o objeto é preparar seis fichas com dados fornecidos, o destinatário deve saber formato, entradas, revisão e prazo condicionado. A medição que o prestador pretende fazer durante o piloto deve ser distinguida da entrega que o cliente está a adquirir. O interesse de aprender não transforma o cliente em participante de pesquisa sem informação apropriada."
+          ]
+        },
+        {
+          "title": "Um limite de seis fichas precisa de fronteiras compreensíveis",
+          "paragraphs": [
+            "No caso fictício, a oferta contempla seis peças, uma língua e uma revisão de transcrição com base nos dados confirmados. Não inclui fotografia, tradução ou atualização contínua. O cliente fornece medidas e materiais e indica quem confirma a informação final. Se uma peça tem três variantes de dimensão, será necessário esclarecer se conta como uma ficha ou várias e que dados aparecem. Esse ponto modifica a unidade da entrega. Não é razoável esperar que a outra pessoa adivinhe uma regra de contagem que o fornecedor só define depois de receber o material.",
+            "A proposta de piloto pode usar preço sintético apenas para discutir condições, mas não deve ser tratada como recomendação de mercado. O aluno deverá distinguir um valor previsto de uma cobrança executada. Se o cliente pedir suporte contínuo, a resposta precisa de dimensionar essa responsabilidade ou conservar a exclusão, sem prometer acompanhamento ilimitado para facilitar o primeiro acordo. Um primeiro cliente não fica menos importante por ser o primeiro. A obrigação de comunicar limites continua a existir mesmo quando o fornecedor está a aprender sobre a própria operação."
+          ]
+        },
+        {
+          "title": "A decisão pode ser não avançar com o piloto",
+          "paragraphs": [
+            "Se faltam dados essenciais ou se a expectativa depende de uma competência que o prestador não tem, pode ser necessário suspender, reduzir ou encaminhar o pedido. Essa escolha deve estar baseada na condição, sem rotular o cliente como difícil. Uma atividade limitada e bem executada pode ser preferível a uma entrega ampla que não pode ser cumprida. O curso não oferece um contrato juridicamente válido; prepara a informação que precisa de revisão e acordo no contexto real. Nenhum direito do cliente é reduzido pela designação de piloto.",
+            "Entregue uma ficha de oferta e duas respostas a pedidos de ampliação: uma que pode ser analisada e outra que impede avançar sem competência adicional. Indique a unidade de seis fichas e a ambiguidade das variantes. O avaliador verifica se o compromisso é compreensível e se a incerteza do empreendedor não é transferida silenciosamente para o destinatário. O objetivo desta etapa é criar condições para uma primeira entrega responsável, mantendo distintas aprendizagem do prestador, decisão comercial e qualidade que a pessoa tem razão para esperar."
+          ]
+        }
+      ],
+      "case": "Piloto6fichas,1língua,1revisão de transcrição. Sem fotografia/tradução/atualização contínua. Peça com3variantes exige decisão sobre contagem; dados e confirmação vêm do cliente.",
+      "exercise": "Defina oferta de piloto e respostas a duas ampliações. Esclareça variantes, entradas, revisão e condições; mantenha simulação separada de cobrança ou contrato real.",
+      "assessment": {
+        "question": "Chamar piloto permite omitir uma função essencial esperada?",
+        "answer": "Não. Limites e finalidade precisam de ser claros antes do compromisso; a designação não autoriza uma entrega inadequada ou direitos reduzidos.",
+        "rubric": [
+          "Distingue três atividades.",
+          "Define unidade e limites.",
+          "Não promete competência ausente."
+        ]
+      }
+    },
+    {
+      "id": "5",
+      "title": "Executar a primeira entrega com um registo de qualidade",
+      "estimatedPracticeMinutes": 135,
+      "objectives": [
+        "Relacionar dados de entrada, versão produzida e conferência.",
+        "Tratar um erro antes de apresentar o trabalho como concluído."
+      ],
+      "sourceIds": [
+        "gds-experiment"
+      ],
+      "sections": [
+        {
+          "title": "Uma primeira entrega precisa de um percurso recuperável",
+          "paragraphs": [
+            "O fornecedor deve conseguir explicar que informação recebeu, que versão utilizou e que conferência realizou. Esse registo não precisa de ser complexo, mas deve localizar a fonte de um campo e o estado da decisão. Trabalhar diretamente sobre mensagens dispersas aumenta a possibilidade de utilizar dados antigos. A execução do piloto inclui receção, verificação de completude, produção, conferência e comunicação do estado. Uma tarefa só deve ser marcada concluída quando o critério definido foi satisfeito, não quando o ficheiro foi exportado ou enviado.",
+            "Use um quadro de peças com dados confirmados e pendências. O quadro serve à operação e não deve recolher informação pessoal que não é necessária à ficha. Se um campo essencial estiver ausente, indique a dúvida e o responsável pela confirmação. A pessoa que produz não deve adivinhar medidas para manter o calendário. Também não deve substituir um valor anterior sem conservar a informação de que houve correção. A rastreabilidade permite corrigir com precisão e evita atribuir ao cliente um dado que, na realidade, foi introduzido pelo fornecedor."
+          ]
+        },
+        {
+          "title": "Uma medida transposta muda a seleção do comprador",
+          "paragraphs": [
+            "No caso sintético, a peça R tem largura dezasseis e altura vinte e dois centímetros na fonte confirmada. A primeira versão mostra largura vinte e dois e altura dezasseis. A conferência por comparação deteta a transposição. Uma revisão apenas de ortografia poderia não a encontrar. A correção deve restaurar os campos, identificar a versão e repetir uma tarefa de seleção por largura. Se a pergunta é cabe num espaço com largura máxima de dezoito, a fonte correta permite responder sim para a largura, sem garantir encaixe total porque outras dimensões não foram fornecidas.",
+            "Outra peça S continua sem material confirmado. A entrega pode estar parcialmente pronta, mas não deve apresentar S como totalmente verificada. O fornecedor precisa de comunicar o estado e decidir, conforme o acordo, se entrega uma parte ou aguarda. Não se inventa a confirmação para evitar mostrar pendência. A atividade distingue erro de produção e informação em falta, pois exigem ações diferentes. Corrigir R depende de comparar com a fonte; concluir S depende de obter informação. Um único rótulo pronto esconderia essa diferença operacional."
+          ]
+        },
+        {
+          "title": "O reporte de um problema não é uma ameaça a apagar",
+          "paragraphs": [
+            "Uma dúvida do destinatário pode revelar um erro ou uma instrução ambígua. Registe versão, localização e efeito relatado, depois verifique o caso antes de responder. Não prometa que a correção resolve toda a experiência sem retestar a tarefa relevante. Uma comunicação de entrega deve listar o que está concluído, o que ficou pendente e qual o próximo passo, sem apresentar uma fase parcial como o pacote integral. Essa clareza é particularmente importante no primeiro trabalho, quando o prestador ainda está a observar tempos e pontos de falha.",
+            "Entregue o quadro R/S, a correção versionada e uma mensagem de estado. Inclua uma lista curta de verificações que realmente seriam executadas e assinale as que apenas planeou. O avaliador procura correspondência entre critério e conclusão. O sucesso da oficina não depende de uma tabela sem problemas; depende de localizar o erro, corrigi-lo com fonte e conservar a condição ainda aberta. Esse padrão prepara uma entrega comercial séria sem encobrir o que o piloto revelou sobre a necessidade de melhorar a operação."
+          ]
+        }
+      ],
+      "case": "Rfonte largura16/altura22; versão transposta22/16. Espaço largura máxima18, outras dimensões desconhecidas. Ssem material confirmado. Registos fictícios.",
+      "exercise": "CorrijaR, faça teste de largura e comuniqueSpendente. Produza quadro e mensagem com versão, concluído e próximo passo; não garanta encaixe integral.",
+      "assessment": {
+        "question": "Largura16≤18 prova encaixe total da peça?",
+        "answer": "Não. Responde apenas à restrição de largura. Outras dimensões e condições não foram fornecidas.",
+        "rubric": [
+          "Corrige transposição.",
+          "Distingue erro e falta de dado.",
+          "Não amplia conclusão."
+        ]
+      }
+    },
+    {
+      "id": "6",
+      "title": "Aprender com o piloto sem fabricar uma receita de conquista",
+      "estimatedPracticeMinutes": 150,
+      "objectives": [
+        "Separar aprendizagem de uso, operação e procura.",
+        "Escolher o próximo teste com base numa ocorrência e manter limites da amostra."
+      ],
+      "sourceIds": [
+        "gds-experiment",
+        "sba-discovery"
+      ],
+      "sections": [
+        {
+          "title": "Uma primeira aceitação não demonstra uma procura repetível",
+          "paragraphs": [
+            "Um cliente pode ter escolhido por confiança pessoal, urgência específica ou condição que não se repetirá. O primeiro trabalho oferece informação importante, mas não deve ser transformado num método garantido de captação. O balanço precisa de separar uso do material, esforço de produção e decisão comercial. Um elogio não mede autonomia de uso; uma entrega no prazo não comprova margem; um pagamento não garante renovação. O aluno irá analisar um piloto fictício e escolher a próxima pergunta sem apresentar resultados como vendas reais da LDR.",
+            "O registo deve incluir evidência que contraria a expectativa. Se o cliente usou a ficha, mas continuou a perguntar por uma informação que não constava, pode ser necessário rever o campo ou a promessa. Se o prestador demorou mais por dados inconsistentes, o próximo teste pode examinar a entrada, e não a aparência. O plano de investigação deve acompanhar o que foi aprendido. Essa revisão é coerente com a orientação do GDS, mas as decisões e os critérios do exercício são próprios e não recebem uma validação científica por citar o manual."
+          ]
+        },
+        {
+          "title": "Três resultados precisam de três interpretações",
+          "paragraphs": [
+            "No caso final, a amostra de seis fichas foi entregue com cinco completas e uma pendente, explicitamente comunicada. O destinatário encontrou dimensões em quatro tentativas, pediu ajuda numa e não tentou a sexta por falta de dados. O fornecedor gastou sete horas em vez de cinco estimadas. O cliente fictício aceitou a entrega parcial segundo as condições do cenário, mas ainda não decidiu outra encomenda. A análise não pode converter quatro acertos em uma taxa de sucesso geral de todos os compradores, nem chamar renovação à ausência de uma recusa.",
+            "A diferença de tempo é duas horas, ou quarenta por cento acima da estimativa de cinco. Essa percentagem descreve este episódio e não uma regra de produtividade. Pode orientar investigar retrabalho, entrada e conferência antes de assumir vários pedidos. O uso também requer um teste dirigido ao caso em que houve ajuda. A peça pendente precisa de continuar identificada; não deve ser retirada da análise apenas para melhorar a proporção. A interpretação preserva denominador e motivo de não execução, em vez de juntar tudo numa pontuação de sucesso sem significado claro."
+          ]
+        },
+        {
+          "title": "O próximo passo pode ser menor que a ambição inicial",
+          "paragraphs": [
+            "Uma decisão possível é rever a entrada de dados e repetir uma pequena entrega com critérios melhores. Outra é investigar um segmento em que as características são mais estáveis. O balanço deve dizer que hipótese cada ação procura esclarecer e que compromisso ainda não será assumido. Não há obrigação pedagógica de anunciar crescimento ou uma lista de clientes no fim do curso. A capacidade de interromper uma expansão prematura é um resultado válido quando a evidência mostra uma restrição que precisa de ser resolvida.",
+            "Entregue uma nota de aprendizagem com três secções: uso, operação e procura. Para cada uma, inclua um dado, uma conclusão limitada e um próximo teste. Acrescente uma afirmação de marketing que recusaria publicar com base neste piloto. O curso termina com um caminho educacional até uma primeira oferta e entrega simuladas, não com prova de aquisição de clientes ou das cento e sessenta horas históricas. A aplicação real exige condições adequadas, revisão e prática adicional, preservando a diferença entre aprender com um caso, executar trabalho e demonstrar uma operação comercial consistente."
+          ]
+        }
+      ],
+      "case": "Piloto sintético6fichas:5completas/1pendente;4tentativas sem ajuda,1com ajuda,1não tentada. Tempo7hcontra5. Entrega parcial aceite no cenário; nova encomenda não decidida.",
+      "exercise": "Analise uso/operação/procura; calcule diferença2h/40% e escolha próximos testes. Preserve pendente e não confunda ausência de recusa com renovação.",
+      "assessment": {
+        "question": "Quatro tentativas sem ajuda demonstram sucesso universal da oferta?",
+        "answer": "Não. São ocorrências limitadas, com uma ajuda e uma tentativa não feita. Procura repetível e operação sustentável continuam por investigar.",
+        "rubric": [
+          "Separa três dimensões.",
+          "Calcula2h e40%.",
+          "Não inventa venda ou renovação."
+        ]
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão comercial e metodológica dos testes e das condições de participação.",
+    "Pilotar amostra, atividade e critérios; acrescentar prática acompanhada antes de validar160h.",
+    "Testar materiais e leitor de forma acessível, sem modificar progresso ou direitos existentes.",
+    "Revisão editorial e autorização antes de publicação."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}
