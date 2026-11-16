@@ -36,7 +36,7 @@ function ProposalButton({ secondary = false }: { secondary?: boolean }) {
 
 function EmployeeOnboarding() {
   const download = `data:text/plain;charset=utf-8,${encodeURIComponent(onboardingChecklistText())}`;
-  return <EnterprisePage title="Uma chegada preparada. Um primeiro mês com direção."
+  return <EnterprisePage proposalSearch={{ solution: ONBOARDING_SOLUTION, source: ONBOARDING_SOURCE }} title="Uma chegada preparada. Um primeiro mês com direção."
     intro="Integração de novos colaboradores para pequenas empresas: organize o acolhimento, distribua responsabilidades e acompanhe os primeiros 30 dias com um plano que a equipa consegue pôr em prática.">
     <section aria-label="Começar a integração" className="grid gap-6 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
       <div className="rounded-3xl bg-[#12233a] p-6 text-white sm:p-9">

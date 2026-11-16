@@ -39,6 +39,9 @@ try {
     await page.getByRole('link',{name:'Conhecer o programa e o checklist gratuito',exact:true}).click();
     await page.getByRole('heading',{name:'Uma chegada preparada. Um primeiro mês com direção.',exact:true}).waitFor();
     assert.equal(new URL(page.url()).pathname,'/empresas/integracao-colaboradores');
+    const headerProposal=new URL(await page.getByRole('navigation',{name:'Central Empresas'}).getByRole('link',{name:'Solicitar proposta',exact:true}).getAttribute('href'),origin);
+    assert.equal(headerProposal.searchParams.get('solution'),'Integração de novos colaboradores');
+    assert.equal(headerProposal.searchParams.get('source'),'integracao-colaboradores');
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false,`onboarding overflow ${width}px`);
     await page.screenshot({path:`${evidence}/onboarding-${width}.jpg`,fullPage:false});
     await page.screenshot({path:`${evidence}/onboarding-full-${width}.jpg`,fullPage:true});
