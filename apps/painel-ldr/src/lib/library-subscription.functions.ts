@@ -84,8 +84,10 @@ export const clientAcademyReadingEdition = createServerFn({ method: "GET" })
     setResponseHeader("Cache-Control", "private, no-store");
     const { getProtectedAcademyReadingEdition } =
       await import("@/lib/academy-reading-content.server");
-    return getProtectedAcademyReadingEdition(context.userId, data.slug, (key) =>
-      libraryCourseDecision(context, key),
+    const { hasOwnerDigitalAccess } = await import("@/lib/owner-digital-access.server");
+    const owner = hasOwnerDigitalAccess(emailOf(context.claims), context.userId);
+    return getProtectedAcademyReadingEdition(context.userId, data.slug, async (key) =>
+      owner ? { allowed: true } : libraryCourseDecision(context, key),
     );
   });
 

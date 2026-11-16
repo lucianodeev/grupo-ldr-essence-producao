@@ -69,6 +69,12 @@ test('real server-function handler preserves subscription decisions and sends pr
   }
   active=true;expires='2099-01-01T00:00:00Z';const allowed=await fn.run(context,{slug});assert.equal(allowed.allowed,true);assert.equal(allowed.edition.modules.length,6);
   assert.ok(headers.every(([k,v])=>k==='Cache-Control'&&v==='private, no-store'));
+  active=false;expires=null;
+  const ownerPolicy=load('lib/owner-digital-access.server.ts');
+  const owned=await fn.run({...context,userId:ownerPolicy.OWNER_DIGITAL_ACCESS_USER_ID,claims:{email:ownerPolicy.OWNER_DIGITAL_ACCESS_EMAIL}},{slug});
+  assert.equal(owned.allowed,true);assert.equal(owned.edition.modules.length,6);
+  const stillDenied=await fn.run(context,{slug});assert.equal(stillDenied.allowed,false);assert.equal(stillDenied.edition,null);
+
   await assert.rejects(fn.run({...context,userId:''},{slug}),/Sessão inválida/);
   assert.throws(()=>fn.run(context,{slug:44}),/Curso inválido/);
  }finally{if(previous===undefined)delete process.env.SUPABASE_SERVICE_ROLE_KEY;else process.env.SUPABASE_SERVICE_ROLE_KEY=previous;}
