@@ -16,3 +16,13 @@ test('does not claim receipt without a nonempty confirmed protocol',()=>{
  assert.equal(commercialProtocol({protocol:'LDR-TEST'}),'LDR-TEST');assert.equal(commercialProtocol('LDR-TEST'),'LDR-TEST');
  for(const result of [null,{},true,{protocol:''},{protocol:5}])assert.throws(()=>commercialProtocol(result));
 });
+test('onboarding requests preserve the existing Master subject and identify the reviewed source only',()=>{
+ const payload=commercialSupportPayload({...input,solution:'Integração de novos colaboradores',source:'integracao-colaboradores'});
+ assert.equal(payload.p_subject,'Serviços para empresas');
+ assert.equal(payload.p_source_project,'Central Empresas LDR');
+ assert.equal(payload.p_source_url,'https://ldrecossistema.online/empresas/integracao-colaboradores');
+ assert.ok(payload.p_message.includes('Solução: Integração de novos colaboradores'));
+ assert.equal(payload.p_email,'contact@example.invalid');
+ for(const source of ['https://attacker.invalid','/cliente/agenda','other'])assert.throws(()=>commercialSupportPayload({...input,source}));
+ assert.equal(commercialSupportPayload(input).p_source_url,'https://ldrecossistema.online/empresas/proposta');
+});

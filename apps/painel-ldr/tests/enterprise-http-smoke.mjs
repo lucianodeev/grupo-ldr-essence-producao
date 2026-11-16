@@ -22,6 +22,7 @@ try {
     ['/empresas/proposta', 'Vamos construir a proposta certa'],
     ['/empresas/academy', 'Academy para empresas e instituições'],
     ['/empresas/ldr-one', 'LDR ONE para empresas'],
+    ['/empresas/integracao-colaboradores', 'Uma chegada preparada. Um primeiro mês com direção.'],
   ]);
   const links = new Set();
   for (const [route, title] of routes) {

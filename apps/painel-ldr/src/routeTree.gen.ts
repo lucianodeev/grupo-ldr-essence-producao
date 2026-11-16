@@ -124,6 +124,7 @@ import { Route as EbooksSlugRouteImport } from './routes/ebooks.$slug'
 import { Route as EmpresaLoginRouteImport } from './routes/empresa.login'
 import { Route as EmpresasIndexRouteImport } from './routes/empresas.index'
 import { Route as EmpresasAcademyRouteImport } from './routes/empresas.academy'
+import { Route as EmpresasIntegracaoColaboradoresRouteImport } from './routes/empresas.integracao-colaboradores'
 import { Route as EmpresasLdrOneRouteImport } from './routes/empresas.ldr-one'
 import { Route as EmpresasPropostaRouteImport } from './routes/empresas.proposta'
 import { Route as EmpresasServicosRouteImport } from './routes/empresas.servicos'
@@ -896,6 +897,12 @@ const EmpresasAcademyRoute = EmpresasAcademyRouteImport.update({
   path: '/academy',
   getParentRoute: () => EmpresasRoute,
 } as any)
+const EmpresasIntegracaoColaboradoresRoute =
+  EmpresasIntegracaoColaboradoresRouteImport.update({
+    id: '/integracao-colaboradores',
+    path: '/integracao-colaboradores',
+    getParentRoute: () => EmpresasRoute,
+  } as any)
 const EmpresasLdrOneRoute = EmpresasLdrOneRouteImport.update({
   id: '/ldr-one',
   path: '/ldr-one',
@@ -2033,6 +2040,7 @@ export interface FileRoutesByFullPath {
   '/ebooks/$slug': typeof EbooksSlugRoute
   '/empresa/login': typeof EmpresaLoginRoute
   '/empresas/academy': typeof EmpresasAcademyRoute
+  '/empresas/integracao-colaboradores': typeof EmpresasIntegracaoColaboradoresRoute
   '/empresas/ldr-one': typeof EmpresasLdrOneRoute
   '/empresas/proposta': typeof EmpresasPropostaRoute
   '/empresas/servicos': typeof EmpresasServicosRoute
@@ -2320,6 +2328,7 @@ export interface FileRoutesByTo {
   '/ebooks/$slug': typeof EbooksSlugRoute
   '/empresa/login': typeof EmpresaLoginRoute
   '/empresas/academy': typeof EmpresasAcademyRoute
+  '/empresas/integracao-colaboradores': typeof EmpresasIntegracaoColaboradoresRoute
   '/empresas/ldr-one': typeof EmpresasLdrOneRoute
   '/empresas/proposta': typeof EmpresasPropostaRoute
   '/empresas/servicos': typeof EmpresasServicosRoute
@@ -2616,6 +2625,7 @@ export interface FileRoutesById {
   '/ebooks/$slug': typeof EbooksSlugRoute
   '/empresa/login': typeof EmpresaLoginRoute
   '/empresas/academy': typeof EmpresasAcademyRoute
+  '/empresas/integracao-colaboradores': typeof EmpresasIntegracaoColaboradoresRoute
   '/empresas/ldr-one': typeof EmpresasLdrOneRoute
   '/empresas/proposta': typeof EmpresasPropostaRoute
   '/empresas/servicos': typeof EmpresasServicosRoute
@@ -2909,6 +2919,7 @@ export interface FileRouteTypes {
     | '/ebooks/$slug'
     | '/empresa/login'
     | '/empresas/academy'
+    | '/empresas/integracao-colaboradores'
     | '/empresas/ldr-one'
     | '/empresas/proposta'
     | '/empresas/servicos'
@@ -3196,6 +3207,7 @@ export interface FileRouteTypes {
     | '/ebooks/$slug'
     | '/empresa/login'
     | '/empresas/academy'
+    | '/empresas/integracao-colaboradores'
     | '/empresas/ldr-one'
     | '/empresas/proposta'
     | '/empresas/servicos'
@@ -3491,6 +3503,7 @@ export interface FileRouteTypes {
     | '/ebooks/$slug'
     | '/empresa/login'
     | '/empresas/academy'
+    | '/empresas/integracao-colaboradores'
     | '/empresas/ldr-one'
     | '/empresas/proposta'
     | '/empresas/servicos'
@@ -4579,6 +4592,13 @@ declare module '@tanstack/react-router' {
       path: '/academy'
       fullPath: '/empresas/academy'
       preLoaderRoute: typeof EmpresasAcademyRouteImport
+      parentRoute: typeof EmpresasRoute
+    }
+    '/empresas/integracao-colaboradores': {
+      id: '/empresas/integracao-colaboradores'
+      path: '/integracao-colaboradores'
+      fullPath: '/empresas/integracao-colaboradores'
+      preLoaderRoute: typeof EmpresasIntegracaoColaboradoresRouteImport
       parentRoute: typeof EmpresasRoute
     }
     '/empresas/ldr-one': {
@@ -6449,6 +6469,7 @@ const CarreiraRouteWithChildren = CarreiraRoute._addFileChildren(
 
 interface EmpresasRouteChildren {
   EmpresasAcademyRoute: typeof EmpresasAcademyRoute
+  EmpresasIntegracaoColaboradoresRoute: typeof EmpresasIntegracaoColaboradoresRoute
   EmpresasLdrOneRoute: typeof EmpresasLdrOneRoute
   EmpresasPropostaRoute: typeof EmpresasPropostaRoute
   EmpresasServicosRoute: typeof EmpresasServicosRoute
@@ -6457,6 +6478,7 @@ interface EmpresasRouteChildren {
 
 const EmpresasRouteChildren: EmpresasRouteChildren = {
   EmpresasAcademyRoute: EmpresasAcademyRoute,
+  EmpresasIntegracaoColaboradoresRoute: EmpresasIntegracaoColaboradoresRoute,
   EmpresasLdrOneRoute: EmpresasLdrOneRoute,
   EmpresasPropostaRoute: EmpresasPropostaRoute,
   EmpresasServicosRoute: EmpresasServicosRoute,
