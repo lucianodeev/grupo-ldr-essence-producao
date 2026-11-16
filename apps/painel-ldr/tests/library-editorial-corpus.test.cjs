@@ -2,12 +2,15 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const {validateCourseDraft}=require('../../../tools/validate-course-drafts.cjs');
 const {reviewEditorialCorpus,readCandidates}=require('../../../tools/review-editorial-corpus.cjs');
 const root=path.resolve(__dirname,'../../..');
-test('every course candidate matches a real catalog identity while leaving its historical catalog untouched',()=>{
+test('every candidate retains a verifiable historical catalog base and current commercial identity',()=>{
  const catalog=fs.readFileSync(path.join(root,'apps/painel-ldr/src/lib/academy-subscription-courses.catalog.ts'),'utf8');
- const checksum=crypto.createHash('sha256').update(catalog).digest('hex');
+ const baseline=fs.readFileSync(path.join(root,'editorial/catalog-baselines/academy-subscription-20261115.ts.txt'),'utf8');
+ const checksum=crypto.createHash('sha256').update(baseline).digest('hex');
  for(const candidate of readCandidates(root).filter(d=>d.modules)){
   assert.ok(catalog.includes(candidate.slug+'|'+candidate.productKey+'|'),candidate.productKey);
   assert.equal(candidate.baseCatalogSha256,checksum);
+  const row=text=>text.split('\n').find(line=>line.startsWith(candidate.slug+'|'));
+  assert.equal(row(catalog),row(baseline),'commercial identity and historical rows must remain unchanged');
   const result=validateCourseDraft(candidate);
   assert.deepEqual(result.errors,[],candidate.productKey);
   assert.equal(result.complete,true);
@@ -38,4 +41,21 @@ test('professional writing exercises require different genres and ship all task 
  assert.ok(d.modules[6].case.includes('dezoito'));
  assert.ok(d.modules[6].case.includes('catorze'));
  assert.ok(d.modules[7].exercise.includes('oito perguntas'));
+});
+
+// A reading-only edition may change presentation without rewriting the other 49 products.
+test('only the approved customer-service reading presentation differs from the archived catalog',()=>{
+ const loader=require('./helpers/load-ts.cjs')();
+ const current=loader('lib/academy-subscription-courses.catalog.ts').ACADEMY_SUBSCRIPTION_COURSES;
+ const historical=loader(path.join(root,'editorial/catalog-baselines/academy-subscription-20261115.ts.txt')).ACADEMY_SUBSCRIPTION_COURSES;
+ const plain=value=>JSON.parse(JSON.stringify(value));
+ assert.equal(current.length,historical.length);
+ for(const before of historical){
+  const after=current.find(item=>item.slug===before.slug);assert.ok(after);
+  if(before.slug!=='atendimento-ao-cliente-com-humanizacao-e-resultado'){assert.deepEqual(plain(after),plain(before));continue;}
+  assert.equal(after.productKey,before.productKey);assert.equal(after.hours,before.hours);assert.equal(after.certificate,false);
+  assert.deepEqual(plain(after.modules.slice(0,14)),plain(before.modules.slice(0,14)));
+  assert.equal(after.modules[14].title,before.modules[14].title);assert.equal(after.modules[14].activity,before.modules[14].activity);
+  assert.ok(!after.description.pt.includes('120'));assert.ok(after.description.pt.includes('40–50'));
+ }
 });
