@@ -5,7 +5,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
 
-function validateCustomerServiceUnits(root = path.resolve(__dirname, '../docs/audit-20261115/course-development/customer-service')) {
 const names = [
   'unit-01-diagnostico-do-pedido.md',
   'unit-02-priorizacao-e-encaminhamento.md',
@@ -13,7 +12,8 @@ const names = [
   'unit-04-reclamacoes-causas-prevencao.md',
   'unit-05-recuperacao-confianca-acompanhamento.md',
   'unit-06-simulacao-integral-avaliacao.md',
-];
+ ];
+function validateCustomerServiceUnits(root = path.resolve(__dirname, '../docs/audit-20261115/course-development/customer-service')) {
 const errors = [];
 const results = [];
 const normalized = text => text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
