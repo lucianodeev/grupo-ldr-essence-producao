@@ -12,6 +12,9 @@
     "authoredFreeModules": 59,
     "freeModules": 59,
     "subscriptionCatalog": 50,
+    "authoredSubscriptionCandidates": 10,
+    "authoredSubscriptionModules": 71,
+    "pendingSubscriptionCourses": 40,
     "exactDuplicateGroups": 0,
     "nearDuplicatePairs": 11710
   },
@@ -716,7 +719,7 @@
       "modules": 15,
       "topics": 45,
       "materialsListed": 3,
-      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 15/15 módulos, não aprovada nem integrada",
       "source": "src/lib/academy-subscription-courses.catalog.ts",
       "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 15/15 módulos; não integrado no leitor",
       "editorialDraft": "editorial/courses/interview-preparation.pt.json",
@@ -730,7 +733,7 @@
       "modules": 15,
       "topics": 45,
       "materialsListed": 3,
-      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 8/8 módulos, não aprovada nem integrada",
       "source": "src/lib/academy-subscription-courses.catalog.ts",
       "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 8/8 módulos; não integrado no leitor",
       "editorialDraft": "editorial/courses/professional-writing.pt.json",
@@ -744,9 +747,11 @@
       "modules": 15,
       "topics": 45,
       "materialsListed": 3,
-      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
       "source": "src/lib/academy-subscription-courses.catalog.ts",
-      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/career-orientation.pt.json",
+      "authoredDraftModules": 6
     },
     {
       "product_key": "curso_assinatura_auxiliar_de_escritorio",
@@ -756,7 +761,7 @@
       "modules": 15,
       "topics": 45,
       "materialsListed": 3,
-      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
       "source": "src/lib/academy-subscription-courses.catalog.ts",
       "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
       "editorialDraft": "editorial/courses/office-support.pt.json",
@@ -794,7 +799,7 @@
       "modules": 15,
       "topics": 45,
       "materialsListed": 3,
-      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
       "source": "src/lib/academy-subscription-courses.catalog.ts",
       "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
       "editorialDraft": "editorial/courses/vacancy-selection.pt.json",
@@ -820,9 +825,11 @@
       "modules": 15,
       "topics": 45,
       "materialsListed": 3,
-      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
       "source": "src/lib/academy-subscription-courses.catalog.ts",
-      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/logical-reasoning.pt.json",
+      "authoredDraftModules": 6
     },
     {
       "product_key": "curso_assinatura_conhecimentos_gerais_para_vida_academica_e_profissional",
@@ -844,9 +851,11 @@
       "modules": 15,
       "topics": 45,
       "materialsListed": 3,
-      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
       "source": "src/lib/academy-subscription-courses.catalog.ts",
-      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/cv-strategy.pt.json",
+      "authoredDraftModules": 6
     },
     {
       "product_key": "curso_assinatura_linkedin_profissional_perfil_networking_e_oportunidades",
@@ -868,9 +877,11 @@
       "modules": 15,
       "topics": 45,
       "materialsListed": 3,
-      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
       "source": "src/lib/academy-subscription-courses.catalog.ts",
-      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/workplace-communication.pt.json",
+      "authoredDraftModules": 6
     },
     {
       "product_key": "curso_assinatura_atendimento_ao_cliente_com_humanizacao_e_resultado",
@@ -892,9 +903,11 @@
       "modules": 15,
       "topics": 45,
       "materialsListed": 3,
-      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
       "source": "src/lib/academy-subscription-courses.catalog.ts",
-      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/administrative-assistant.pt.json",
+      "authoredDraftModules": 6
     },
     {
       "product_key": "curso_assinatura_rotinas_de_escritorio_e_organizacao_administrativa",
@@ -904,9 +917,11 @@
       "modules": 15,
       "topics": 45,
       "materialsListed": 3,
-      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
       "source": "src/lib/academy-subscription-courses.catalog.ts",
-      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/office-routines.pt.json",
+      "authoredDraftModules": 6
     },
     {
       "product_key": "curso_assinatura_introducao_ao_departamento_pessoal",
@@ -1692,6 +1707,72 @@
   ],
   "courseCandidates": [
     {
+      "productKey": "curso_assinatura_assistente_administrativo_na_pratica",
+      "title": "Assistente Administrativo na Prática",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 180,
+      "path": "editorial/courses/administrative-assistant.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
+      "productKey": "curso_assinatura_orientacao_de_carreira",
+      "title": "Orientação de Carreira",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 120,
+      "path": "editorial/courses/career-orientation.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
+      "productKey": "curso_assinatura_curriculo_estrategico_como_apresentar_sua_historia_profissional",
+      "title": "Currículo Estratégico: Como Apresentar sua História Profissional",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 80,
+      "path": "editorial/courses/cv-strategy.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
       "productKey": "curso_assinatura_como_se_preparar_para_uma_entrevista_de_emprego",
       "title": "Como se Preparar para uma Entrevista de Emprego",
       "status": "draft",
@@ -1709,6 +1790,50 @@
         "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
         "paragraphsChecked": 105,
         "pairsChecked": 5460,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
+      "productKey": "curso_assinatura_raciocinio_logico_para_estudos_concursos_e_selecoes",
+      "title": "Raciocínio Lógico para Estudos, Concursos e Seleções",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 120,
+      "path": "editorial/courses/logical-reasoning.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
+      "productKey": "curso_assinatura_rotinas_de_escritorio_e_organizacao_administrativa",
+      "title": "Rotinas de Escritório e Organização Administrativa",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 160,
+      "path": "editorial/courses/office-routines.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
         "exact": [],
         "near": []
       }
@@ -1778,14 +1903,36 @@
         "exact": [],
         "near": []
       }
+    },
+    {
+      "productKey": "curso_assinatura_comunicacao_profissional_para_o_mercado_de_trabalho",
+      "title": "Comunicação Profissional para o Mercado de Trabalho",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 100,
+      "path": "editorial/courses/workplace-communication.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
+        "exact": [],
+        "near": []
+      }
     }
   ],
   "editorialCorpusReview": {
-    "documents": 5,
-    "units": 55,
+    "documents": 11,
+    "units": 91,
     "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
-    "paragraphsChecked": 353,
-    "pairsChecked": 62128,
+    "paragraphsChecked": 569,
+    "pairsChecked": 161596,
     "exact": [],
     "near": []
   },

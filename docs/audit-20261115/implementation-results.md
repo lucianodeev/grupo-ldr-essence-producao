@@ -54,7 +54,32 @@ Foi acrescentada uma candidata com **seis oficinas de Auxiliar de Escritório**,
 
 As fontes consultadas são o perfil ocupacional National Careers Service e orientações de NARA e The National Archives, com âmbito identificado. Nenhum fornecedor foi contactado, reserva efetuada, documento eliminado ou pagamento iniciado. Os seis módulos são uma proposta editorial distinta dos quinze títulos históricos, sem migração ativa; a carga anunciada de 160 horas continua sem validação.
 
-`docs/editorial-review.html` permite leitura autónoma dos **quatro cursos candidatos e do eBook**, com 55 unidades, pesquisa sem acentos, índice, atividades, respostas comentadas, bibliografia e limites. É gerado exclusivamente a partir das candidatas originais; não contém as prévias integrais das obras protegidas, não consulta a base de dados e não grava progresso. O HTML foi analisado por parser, os identificadores são únicos e a sintaxe e normalização da pesquisa foram verificadas. A revisão visual interativa ainda precisa de navegador; a presença de CSS responsivo não é apresentada como teste visual. O CI verifica que o ficheiro corresponde às fontes.
+`docs/editorial-review.html` permite leitura autónoma dos **dez cursos candidatos e do eBook**, com 91 unidades, pesquisa sem acentos, índice, atividades, respostas comentadas, bibliografia e limites. É gerado exclusivamente a partir das candidatas originais; não contém as prévias integrais das obras protegidas, não consulta a base de dados e não grava progresso. O HTML foi analisado por parser, os identificadores são únicos e a sintaxe e normalização da pesquisa foram verificadas. A revisão visual interativa ainda precisa de navegador; a presença de CSS responsivo não é apresentada como teste visual. O CI verifica que o ficheiro corresponde às fontes.
+
+## Seis cursos adicionais: carreira, administração, comunicação e lógica
+
+Foram escritos **36 módulos novos**, em seis candidatas, com **17.886 palavras de desenvolvimento**. Cada módulo inclui objetivos próprios, caso, exercício, resposta comentada e rubrica. As contagens são descritivas, não uma aprovação pedagógica.
+
+| Curso | Módulos | Palavras no desenvolvimento | Prática estimada, sem pilotagem | Carga histórica, não validada |
+| --- | --- | --- | --- | --- |
+| Currículo Estratégico | 6 | 2.871 | 720min | 80h |
+| Orientação de Carreira | 6 | 2.821 | 750min | 120h |
+| Assistente Administrativo na Prática | 6 | 2.999 | 780min | 180h |
+| Comunicação Profissional para o Mercado de Trabalho | 6 | 3.038 | 735min | 100h |
+| Rotinas de Escritório e Organização Administrativa | 6 | 3.048 | 705min | 160h |
+| Raciocínio Lógico para Estudos, Concursos e Seleções | 6 | 3.109 | 780min | 120h |
+
+Currículo trata inventário factual, contribuição sem inflação de métricas, cronologia, competências, versões destinadas e conferência final. Orientação investiga direção e aprendizagem: pergunta, experiência, ocupações, exploração limitada, condições e mapa revisável. Não repete técnicas de candidatura nem apresenta instrumentos como testes vocacionais.
+
+Assistente trabalha estados do processo, conciliação de quatro documentos, exceções, filas, indicadores e melhoria. Rotinas trabalha consolidação de canais, cadência, listas de verificação, recorrência, continuidade e simplificação. O Auxiliar já escrito concentra procedimentos de execução; os três percursos têm objetos e exercícios distintos. Incluem divergências numéricas, estados condicionados e limites de autoridade, sem simular autorizações ou alterar permissões.
+
+Comunicação trabalha interação entre colegas: finalidade, escuta, retorno, desacordo, passagem de informação e reparação. Há alternativas acessíveis às encenações, sem exigir exposição de conflitos pessoais ou interpretar linguagem corporal como diagnóstico. A confirmação de entendimento da AHRQ é identificada como analogia proveniente da saúde, sem importar protocolo clínico ou afirmar eficácia universal.
+
+Lógica desenvolve proposições e quantificadores, conectores, condicionais, validade, conjuntos e problema integrado. Os exercícios distinguem contraexemplo, conclusão necessária e informação insuficiente. Os cálculos dos dois conjuntos e as quatro formas de inferência foram revistos no próprio enunciado; a revisão matemática independente continua necessária. O percurso não afirma cobrir todos os editais nem garantir aprovação em seleção.
+
+Fontes oficiais consultadas: Europass, Conselho da UE, OCDE, National Careers Service, GAO, The National Archives, Acas, AHRQ e OpenStax. Cada candidata declara o alcance real de consulta. Normas estrangeiras não se apresentam como regras locais. Exemplos, personagens e dados LDR são fictícios e originais.
+
+O catálogo original de 50 cursos não foi alterado. **Dez têm agora uma sequência textual candidata, com 71 módulos; faltam desenvolver 40.** Desses dez, quatro já existiam no início deste lote e seis foram acrescentados. Todos permanecem `draft`, `published=false`, `validatedHours=null`, com revisões obrigatórias por realizar. Não se converteram minutos estimados em cargas anunciadas nem se integrou a mudança de sequência no progresso dos alunos.
 
 ## Revisão editorial dos eBooks
 
@@ -70,7 +95,7 @@ A revisão das **outras dezasseis obras** continua pendente, incluindo validaç�
 
 ## Repetição entre produtos
 
-A triagem conjunta das cinco candidatas (quatro cursos e um eBook) examinou **55 unidades, 353 parágrafos e 62.128 pares**: zero cópias exatas e zero pares próximos pelo limiar Jaccard de seis palavras ≥0,40. Os testes incluem uma cópia introduzida entre produtos para confirmar a deteção. Não se lê nem reemite a obra protegida original neste verificador; apenas as novas candidatas são comparadas. Isto não substitui revisão semântica ou pedagógica externa.
+A triagem conjunta das onze candidatas (dez cursos e um eBook) examinou **91 unidades, 569 parágrafos e 161.596 pares**: zero cópias exatas e zero pares próximos pelo limiar Jaccard de seis palavras ≥0,40. Os testes incluem uma cópia introduzida entre produtos para confirmar a deteção. Não se lê nem reemite a obra protegida original neste verificador; apenas as novas candidatas são comparadas. Isto não substitui revisão semântica ou pedagógica externa.
 
 ## Revisão conservadora de duas obras existentes
 
@@ -149,7 +174,7 @@ A suíte de regressão inclui vários dos testes específicos; estas quantidades
 ## Pendências que continuam abertas
 
 1. Revisão pedagógica especializada dos 59 módulos, testes com alunos, materiais complementares e dimensionamento de carga real; completar áudio e avaliação oral nos idiomas.
-2. Realizar revisão externa e pilotagem dos quinze módulos da candidata de entrevistas, incluindo dimensionamento da carga. Desenvolver as aulas próprias dos restantes 46 roteiros de assinatura, de RH e de cada formação profissional. A contagem de títulos ou texto gerado não comprova 600/1200 horas.
+2. Realizar revisão externa e pilotagem dos quinze módulos da candidata de entrevistas, incluindo dimensionamento da carga. Desenvolver as aulas próprias dos restantes 40 roteiros de assinatura, de RH e de cada formação profissional. A contagem de títulos ou texto gerado não comprova 600/1200 horas.
 3. Rever externamente os vinte capítulos da candidata desenvolvida e revisar as outras 16 obras, com verificação intelectual, bibliográfica e de direitos, sem substituir versões antigas automaticamente.
 4. Testar a prévia com sessões sintéticas reais: comprador, assinante ativo/inativo e aluno sem compra. Verificar acessibilidade interativa, visual e overflow em dispositivos móveis.
 5. Validar anexos externos, emissão e consulta de certificados e concorrência entre dispositivos num ambiente de testes. O teste PostgreSQL separado não substitui cookies, PostgREST ou uma política de produção com sessões reais de aluno.

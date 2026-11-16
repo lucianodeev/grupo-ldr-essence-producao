@@ -64,22 +64,22 @@ Atualização editorial: 16/11/2026; inventário de origem: 15/11/2026. Nenhum p
 
 | Curso | Módulos | Carga histórica | Estado |
 | --- | --- | --- | --- |
-| Como se Preparar para uma Entrevista de Emprego | 15 | 80h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
-| Redação Profissional e Escrita para Processos Seletivos | 15 | 100h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
-| Orientação de Carreira | 15 | 120h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
-| Auxiliar de Escritório | 15 | 160h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
+| Como se Preparar para uma Entrevista de Emprego | 15 | 80h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 15/15 módulos, não aprovada nem integrada |
+| Redação Profissional e Escrita para Processos Seletivos | 15 | 100h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 8/8 módulos, não aprovada nem integrada |
+| Orientação de Carreira | 15 | 120h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada |
+| Auxiliar de Escritório | 15 | 160h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada |
 | Como Ganhar Dinheiro com Inteligência Artificial | 15 | 120h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
 | Como Vender Produtos e Serviços com Estratégia | 15 | 140h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
-| Como Selecionar a Vaga Certa para o Seu Perfil | 15 | 80h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
+| Como Selecionar a Vaga Certa para o Seu Perfil | 15 | 80h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada |
 | Orientação de Carreira Internacional | 15 | 160h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
-| Raciocínio Lógico para Estudos, Concursos e Seleções | 15 | 120h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
+| Raciocínio Lógico para Estudos, Concursos e Seleções | 15 | 120h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada |
 | Conhecimentos Gerais para Vida Acadêmica e Profissional | 15 | 120h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
-| Currículo Estratégico: Como Apresentar sua História Profissional | 15 | 80h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
+| Currículo Estratégico: Como Apresentar sua História Profissional | 15 | 80h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada |
 | LinkedIn Profissional: Perfil, Networking e Oportunidades | 15 | 80h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
-| Comunicação Profissional para o Mercado de Trabalho | 15 | 100h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
+| Comunicação Profissional para o Mercado de Trabalho | 15 | 100h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada |
 | Atendimento ao Cliente com Humanização e Resultado | 15 | 120h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
-| Assistente Administrativo na Prática | 15 | 180h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
-| Rotinas de Escritório e Organização Administrativa | 15 | 160h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
+| Assistente Administrativo na Prática | 15 | 180h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada |
+| Rotinas de Escritório e Organização Administrativa | 15 | 160h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada |
 | Introdução ao Departamento Pessoal | 15 | 140h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
 | Noções de Recursos Humanos para Iniciantes | 15 | 120h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
 | Inteligência Artificial para Estudantes e Profissionais | 15 | 100h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
@@ -155,10 +155,16 @@ As versões candidatas não são usadas pelo leitor de produção. O original e 
 
 | Curso | Módulos desenvolvidos / previstos | Carga anunciada / validada | Estado |
 | --- | --- | --- | --- |
+| Assistente Administrativo na Prática | 6 / 6 | 180h / por validar | draft; published=false; elegível=false |
+| Orientação de Carreira | 6 / 6 | 120h / por validar | draft; published=false; elegível=false |
+| Currículo Estratégico: Como Apresentar sua História Profissional | 6 / 6 | 80h / por validar | draft; published=false; elegível=false |
 | Como se Preparar para uma Entrevista de Emprego | 15 / 15 | 80h / por validar | draft; published=false; elegível=false |
+| Raciocínio Lógico para Estudos, Concursos e Seleções | 6 / 6 | 120h / por validar | draft; published=false; elegível=false |
+| Rotinas de Escritório e Organização Administrativa | 6 / 6 | 160h / por validar | draft; published=false; elegível=false |
 | Auxiliar de Escritório | 6 / 6 | 160h / por validar | draft; published=false; elegível=false |
 | Redação Profissional e Escrita para Processos Seletivos | 8 / 8 | 100h / por validar | draft; published=false; elegível=false |
 | Como Selecionar a Vaga Certa para o Seu Perfil | 6 / 6 | 80h / por validar | draft; published=false; elegível=false |
+| Comunicação Profissional para o Mercado de Trabalho | 6 / 6 | 100h / por validar | draft; published=false; elegível=false |
 
 Rascunhos separados do leitor. Número de módulos e tempo de prática estimado não validam a carga anunciada.
 
@@ -173,7 +179,7 @@ Os manifests contêm apenas hashes e posições. Os textos integrais das prévia
 
 ## Triagem entre candidatas originais
 
-5 produtos; 55 unidades; 353 parágrafos e 62128 pares. Cópias exatas: 0; pares próximos: 0. Método: paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required. A ausência de sinal não equivale a aprovação conceptual ou científica.
+11 produtos; 91 unidades; 569 parágrafos e 161596 pares. Cópias exatas: 0; pares próximos: 0. Método: paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required. A ausência de sinal não equivale a aprovação conceptual ou científica.
 
 ## Duplicação e limites
 
