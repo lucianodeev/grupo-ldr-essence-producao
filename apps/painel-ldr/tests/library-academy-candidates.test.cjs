@@ -11,10 +11,10 @@ function strings(value) {
 }
 const checksum = value => crypto.createHash('sha256').update(value).digest('hex');
 
-test('all 20 authored courses convert losslessly, including supplementary task data, and stay blocked', () => {
+test('all 21 authored courses convert losslessly, including supplementary task data, and stay blocked', () => {
   const candidates = prepareAllCandidates();
-  assert.equal(candidates.length, 20);
-  assert.equal(candidates.reduce((n, e) => n + e.modules.length, 0), 131);
+  assert.equal(candidates.length, 21);
+  assert.equal(candidates.reduce((n, e) => n + e.modules.length, 0), 137);
   for (const edition of candidates) {
     assert.equal(edition.published, false);
     assert.equal(edition.validatedHours, null);
