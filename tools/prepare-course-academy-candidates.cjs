@@ -38,7 +38,9 @@ function prepareCourseCandidate(filename, root = ROOT) {
       '## Resposta comentada', module.assessment.answer,
       '## Critérios de revisão', ...module.assessment.rubric,
       '## Referências e limites de utilização',
-      ...references.flatMap(source => [source.title, source.url, source.scope]),
+      ...references.flatMap(source => [source.title, source.url,
+        ...(source.doi ? ['DOI: ' + source.doi] : []),
+        'Consulta registada no rascunho: ' + source.consulted, source.scope]),
     ];
     const body = parts.join('\n\n');
     return { id: module.id, title: module.title, format: 'markdown', body,
@@ -46,7 +48,8 @@ function prepareCourseCandidate(filename, root = ROOT) {
   });
   return {
     schema: 'ldr-academy-reading-edition-v1', slug: draft.slug, productKey: draft.productKey,
-    editionId: 'review-' + hash(raw), locale: 'pt', status: 'draft', published: false,
+    editionId: 'review-' + hash(raw + '\n' + modules.map(module => module.sha256).join('\n')),
+    locale: 'pt', status: 'draft', published: false,
     validatedHours: null, releaseMode: 'reading-only', certificate: false,
     review: { pedagogy: false, editorial: false, rights: false, accessibility: false, workload: false, reader: false },
     approval: null, modules,
