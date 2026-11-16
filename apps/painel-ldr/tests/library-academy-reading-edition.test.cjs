@@ -8,7 +8,7 @@ const { renderToStaticMarkup } = require('react-dom/server');
 const load = require('./helpers/load-ts.cjs')();
 const { prepareAcademyCandidate } = require('../../../tools/prepare-customer-service-academy.cjs');
 const { exportDraft } = require('../../../tools/export-customer-service-review.cjs');
-const { isApprovedReadingEdition, getAcademyReadingEdition } = load('lib/academy-reading-editions.ts');
+const { isApprovedReadingEdition, academyReadingTimeLabel } = load('lib/academy-reading-editions.ts');
 const { AcademyReadingEditionView, AcademyMarkdown } = load('components/academy-reading-edition.tsx');
 const { getAcademySubscriptionCourse } = load('lib/academy-subscription-courses.catalog.ts');
 const root = path.resolve(__dirname, '../../..');
@@ -37,7 +37,7 @@ test('offline Academy adapter preserves every byte and deterministic identity wi
 test('pending candidate is absent from Academy and cannot render even by direct mount', () => {
   const candidate = prepareAcademyCandidate();
   assert.equal(isApprovedReadingEdition(candidate), false);
-  assert.equal(getAcademyReadingEdition(candidate.slug, candidate.productKey), null);
+  assert.ok(academyReadingTimeLabel(candidate.slug).includes('sem certificado'));
   assert.equal(render(AcademyReadingEditionView, { edition: candidate }), '');
 });
 test('every review, named approval, date and validated workload is independently required', () => {
@@ -85,11 +85,11 @@ test('reading edition leaves the fifteen historical modules and their storage na
   assert.ok(route.indexOf('if (!active)') < route.indexOf('<AcademyReadingEditionView'));
   assert.ok(route.includes('resourceKey: course.productKey'));
 });
-test('only synthetic approved fixture renders the separate reader; no draft content enters the registry', () => {
+test('approved fixture renders the reader; public metadata imports no teaching content', () => {
   const html = render(AcademyReadingEditionView, { edition: syntheticApproved() });
   assert.ok(html.includes('Unidades da edição de leitura'));
   assert.ok(html.includes('não altera as conclusões'));
   const registry = fs.readFileSync(path.join(root, 'apps/painel-ldr/src/lib/academy-reading-editions.ts'), 'utf8');
-  assert.ok(registry.includes('approvedEditions: readonly AcademyReadingEdition[] = []'));
+  assert.ok(!registry.includes('customer-service-release.server'));
   assert.ok(!registry.includes('customer-service/')); assert.ok(!registry.includes('body: "'));
 });

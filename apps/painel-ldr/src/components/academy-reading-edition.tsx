@@ -102,6 +102,14 @@ export function AcademyReadingEditionView({ edition }: { edition: AcademyReading
         Estas unidades pertencem a uma edição separada. A navegação não altera as conclusões nem o
         progresso do currículo histórico e não emite certificados.
       </p>
+      {edition.releaseMode === "reading-only" && (
+        <p className="mt-3 text-sm text-slate-600">
+          Leitura estimada: {edition.estimatedReadingMinutes?.min}–
+          {edition.estimatedReadingMinutes?.max} minutos. Estimativa de leitura a 200–250
+          palavras/minuto; a execução dos exercícios varia conforme o ritmo do aluno. Sem carga
+          horária certificada.
+        </p>
+      )}
       <nav aria-label="Unidades da edição de leitura" className="my-5">
         <ol className="space-y-2">
           {edition.modules.map((module, i) => (

@@ -1,3 +1,4 @@
+import { academyReadingTimeLabel } from "@/lib/academy-reading-editions";
 import { LibraryLearningDashboard } from "@/components/library-learning-dashboard";
 import type { DashboardItem } from "@/lib/library-dashboard";
 import { ACADEMY_FREE_COURSES } from "@/lib/academy-free-courses.catalog";
@@ -561,9 +562,10 @@ function ClientLibrary() {
       kind: "course" as const,
       access: "verify" as const,
       editorial:
-        locale === "pt"
+        academyReadingTimeLabel(c.slug, locale) ??
+        (locale === "pt"
           ? "Roteiro curricular disponível. Aulas aprofundadas, materiais e carga horária por validar."
-          : editorialPending,
+          : editorialPending),
     })),
   ];
 

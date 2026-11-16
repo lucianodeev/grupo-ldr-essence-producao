@@ -7,7 +7,9 @@ on:
       - 'apps/painel-ldr/src/lib/academy-reading-editions.ts'
       - 'docs/audit-20261115/course-development/customer-service/**'
       - 'tools/prepare-customer-service-academy.cjs'
+      - 'apps/painel-ldr/src/content/academy-reading/**'
       - 'tools/test-academy-reading-browser.cjs'
+      - 'tools/check-academy-reading-assets.cjs'
       - '.github/workflows/academy-reading-browser.yml'
 permissions:
   contents: read
@@ -27,11 +29,13 @@ jobs:
         run: npm ci --no-audit --no-fund
       - name: Build real application styles without deployment
         run: npm --prefix apps/painel-ldr run build
+      - name: Verify paid teaching bodies are absent from public assets
+        run: node tools/check-academy-reading-assets.cjs
       - name: Install isolated free browser runner
         run: |
           npm install --prefix /tmp/ldr-reader-ci --no-audit --no-fund playwright@1.62.1
           /tmp/ldr-reader-ci/node_modules/.bin/playwright install --with-deps chromium
-      - name: Check six units on desktop and mobile with synthetic approval
+      - name: Check approved reading edition on desktop and mobile
         env:
           LDR_READER_PLAYWRIGHT: /tmp/ldr-reader-ci/node_modules/playwright
         run: node tools/test-academy-reading-browser.cjs

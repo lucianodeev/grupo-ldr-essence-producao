@@ -1,3 +1,4 @@
+import { CUSTOMER_SERVICE_READING_SLUG } from "./academy-reading-editions";
 export type AcademyLocale = "pt" | "en" | "fr" | "es";
 
 type I18nText = Record<AcademyLocale, string>;
@@ -8,7 +9,7 @@ export type SubscriptionCourse = {
   category:"comportamento"|"gestao"|"marketing"|"educacao"|"direito"|"psicanalise";
   track:string;
   hours:number;
-  certificate:true;
+  certificate:boolean;
   subscriptionOnly:true;
   name:I18nText;
   description:I18nText;
@@ -91,7 +92,7 @@ const trackVoice:Record<string,string>={
   "Empreendedorismo Realista":"para sair da ideia e construir entrega comercial com consistência",
 };
 
-const descriptionFor=(row:CourseRow)=>i18n(`${row.title} é um curso livre de ${row.hours} horas criado ${trackVoice[row.track]??"para apoiar uma jornada prática de aprendizagem"}. O percurso combina orientação objetiva, exercícios aplicados e materiais de apoio para que o aluno avance no próprio ritmo, com certificado ao final.`);
+const descriptionFor=(row:CourseRow)=>row.slug === CUSTOMER_SERVICE_READING_SLUG ? i18n("Seis unidades de leitura com casos fictícios, exercícios e respostas comentadas sobre diagnóstico, prioridade, decisões difíceis, recorrência e acompanhamento. Leitura estimada de 40–50 minutos; atividades no próprio ritmo, sem carga horária certificada ou certificado.") : i18n(`${row.title} é um curso livre de ${row.hours} horas criado ${trackVoice[row.track]??"para apoiar uma jornada prática de aprendizagem"}. O percurso combina orientação objetiva, exercícios aplicados e materiais de apoio para que o aluno avance no próprio ritmo, com certificado ao final.`);
 
 const moduleThemes=[
   ["Aula zero", "como aproveitar este curso sem pressa nem improviso", "Criar um compromisso simples de estudo e definir quando o conteúdo será aplicado."],
@@ -113,7 +114,7 @@ const moduleThemes=[
 
 const modulesFor=(row:CourseRow):SubscriptionCourseModule[]=>moduleThemes.map(([title,topic,activity],idx)=>({
   title:idx===0?`${title}: antes de entrar em ${row.focus}`:`${title}: ${row.focus}`,
-  topics:[topic, row.track, idx===14?`${row.hours}h de percurso com certificado`:`aplicação prática em ${row.focus}`],
+  topics:[topic, row.track, idx===14?(row.slug===CUSTOMER_SERVICE_READING_SLUG?"Histórico preservado; sem certificado nesta edição":`${row.hours}h de percurso com certificado`):`aplicação prática em ${row.focus}`],
   activity:activity.replace("o curso", row.title).replace("do módulo", `sobre ${row.focus}`),
 }));
 
@@ -142,7 +143,7 @@ export const ACADEMY_SUBSCRIPTION_COURSES:SubscriptionCourse[] = rows.map((row)=
   category:row.category,
   track:row.track,
   hours:row.hours,
-  certificate:true,
+  certificate:row.slug !== CUSTOMER_SERVICE_READING_SLUG,
   subscriptionOnly:true,
   name:i18n(row.title),
   description:descriptionFor(row),

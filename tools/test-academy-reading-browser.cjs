@@ -11,20 +11,17 @@ const { prepareAcademyCandidate } = require(
 const scratch = "/tmp/ldr-reading-browser";
 fs.mkdirSync(scratch, { recursive: true });
 const source = prepareAcademyCandidate();
-// Local interactive fixture only. Simulated approval never modifies repository sources.
-const fixture = structuredClone(source);
-fixture.status = "approved";
-fixture.published = true;
-fixture.validatedHours = 1;
-fixture.approval = {
-  reviewer: "SYNTHETIC LOCAL TEST",
-  reviewedAt: "2026-11-16T00:00:00Z",
-};
-for (const key of Object.keys(fixture.review)) fixture.review[key] = true;
+// Approved reading content inside an isolated local fixture, never a signed-in production account.
+const load = require(
+  path.join(root, "apps/painel-ldr/tests/helpers/load-ts.cjs"),
+)();
+const fixture = load(
+  "content/academy-reading/customer-service-release.server.ts",
+).CUSTOMER_SERVICE_READING_EDITION;
 (async () => {
   await build({
     stdin: {
-      contents: `import React from 'react'; import {createRoot} from 'react-dom/client'; import {AcademyReadingEditionView} from './src/components/academy-reading-edition'; const edition=${JSON.stringify(fixture)}; const draft=${JSON.stringify(source)}; window.__writes=[]; const original=Storage.prototype.setItem; Storage.prototype.setItem=function(...args){window.__writes.push(args);return original.apply(this,args)}; createRoot(document.getElementById('root')).render(<><p>TESTE LOCAL — aprovação simulada; conteúdo não publicado.</p><AcademyReadingEditionView edition={new URLSearchParams(location.search).has('pending')?draft:edition}/></>);`,
+      contents: `import React from 'react'; import {createRoot} from 'react-dom/client'; import {AcademyReadingEditionView} from './src/components/academy-reading-edition'; const edition=${JSON.stringify(fixture)}; const draft=${JSON.stringify(source)}; window.__writes=[]; const original=Storage.prototype.setItem; Storage.prototype.setItem=function(...args){window.__writes.push(args);return original.apply(this,args)}; createRoot(document.getElementById('root')).render(<><p>TESTE ISOLADO — edição de leitura; sem sessão real.</p><AcademyReadingEditionView edition={new URLSearchParams(location.search).has('pending')?draft:edition}/></>);`,
       resolveDir: path.join(root, "apps/painel-ldr"),
       sourcefile: "reading-browser-fixture.tsx",
       loader: "tsx",
@@ -88,7 +85,8 @@ for (const key of Object.keys(fixture.review)) fixture.review[key] = true;
           name: source.modules[index].title,
         });
         await article.waitFor();
-        assert.ok((await article.innerText()).includes("Revisões pendentes:"));
+        assert.ok((await article.innerText()).length > 1000);
+        assert.ok(!(await article.innerText()).includes("Revisões pendentes:"));
         assert.equal(
           await nav.getByRole("button").nth(index).getAttribute("aria-current"),
           "step",
@@ -147,7 +145,7 @@ for (const key of Object.keys(fixture.review)) fixture.review[key] = true;
     const report = {
       pass: true,
       scope:
-        "Isolated component fixture with synthetic approval; not real signed-in account flow",
+        "Isolated approved reading component fixture; not real signed-in account flow",
       results,
     };
     fs.writeFileSync(
