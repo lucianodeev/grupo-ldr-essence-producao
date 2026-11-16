@@ -1,0 +1,353 @@
+{
+  "productKey": "curso_assinatura_assistente_administrativo_na_pratica",
+  "slug": "assistente-administrativo-na-pratica",
+  "title": "Assistente Administrativo na Prática",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 180,
+  "validatedHours": null,
+  "expectedModuleCount": 6,
+  "scope": "Coordenação de processos administrativos: estados, conciliação documental, exceções, filas, indicadores e piloto de melhoria. Casos e números integralmente fictícios. Distingue-se dos procedimentos de execução de Auxiliar Administrativo e da cadência de rotinas de escritório. Não confere competência contabilística, financeira ou de aprovação. As 180 horas históricas carecem de validação prática.",
+  "courseObjectives": [
+    "Representar estados de um pedido e as condições de passagem entre eles.",
+    "Identificar responsabilidades sem presumir autorização para executar qualquer etapa.",
+    "Comparar quantidades e referências entre quatro documentos sintéticos.",
+    "Registar divergências sem alterar os originais ou declarar irregularidade sem investigação.",
+    "Distinguir desvio, correção e exceção autorizada num procedimento.",
+    "Produzir um registo de decisão que permita compreender fundamento, alcance e validade.",
+    "Reconstruir entradas, saídas e trabalho pendente num período definido.",
+    "Propor critérios de ordenação que considerem dependências e capacidade.",
+    "Calcular média e mediana de durações e explicar o que cada medida deixa por mostrar.",
+    "Definir denominador e âmbito de um indicador antes de o comparar.",
+    "Relacionar uma proposta de controlo com um problema documentado.",
+    "Desenhar um piloto reversível e distinguir resultado observado de efeito demonstrado."
+  ],
+  "sources": [
+    {
+      "id": "gao-control-2025",
+      "title": "U.S. Government Accountability Office (2025). Standards for Internal Control in the Federal Government. GAO-25-107721.",
+      "url": "https://www.gao.gov/products/gao-25-107721",
+      "consulted": "2026-11-16",
+      "scope": "Página de apresentação, Fast Facts e Highlights consultados; não se declara leitura integral do relatório de 131 páginas. Enquadramento de objetivos, controlos preventivos e avaliação de riscos e mudanças no governo federal norte-americano. Mapas, tabelas, indicadores e exercícios LDR são aplicações originais, sem imposição jurídica a outras jurisdições."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Mapear um processo pelas decisões que permitem avançar"
+    },
+    {
+      "id": "2",
+      "title": "Conciliar pedido, encomenda, receção e documento de cobrança"
+    },
+    {
+      "id": "3",
+      "title": "Tratar exceções com rastreabilidade e limite de decisão"
+    },
+    {
+      "id": "4",
+      "title": "Organizar filas de trabalho sem confundir urgência e volume"
+    },
+    {
+      "id": "5",
+      "title": "Construir indicadores que não ocultam a experiência do processo"
+    },
+    {
+      "id": "6",
+      "title": "Propor uma melhoria pequena com critérios de aceitação"
+    }
+  ],
+  "modules": [
+    {
+      "id": "1",
+      "title": "Mapear um processo pelas decisões que permitem avançar",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Representar estados de um pedido e as condições de passagem entre eles.",
+        "Identificar responsabilidades sem presumir autorização para executar qualquer etapa."
+      ],
+      "sourceIds": [
+        "gao-control-2025"
+      ],
+      "sections": [
+        {
+          "title": "O percurso do pedido é diferente da lista de tarefas",
+          "paragraphs": [
+            "Uma lista pode dizer receber, conferir, encaminhar e arquivar sem explicar quando cada ação está concluída. Um mapa de processo precisa de representar também estados e decisões. Recebido significa que o pedido chegou; completo significa que contém os elementos necessários ao tratamento; autorizado significa que alguém com competência decidiu permitir uma operação. Estes acontecimentos não são sinónimos. O assistente administrativo acompanha a transição e torna visível o que falta, sem transformar a sua capacidade de organizar informação em poder de aprovar despesas ou conceder acessos.",
+            "A apresentação do Green Book de 2025, do GAO, enquadra controlo interno em objetivos operacionais, informação e conformidade. Trata-se de referência da administração federal dos Estados Unidos, não de legislação aplicável automaticamente a uma empresa lusófona. Usaremos essa relação entre objetivo e controlo para construir uma simulação própria. O objetivo fictício é fornecer materiais de uma oficina na quantidade autorizada, deixando rastreável quem pediu, quem decidiu e o que foi entregue. Os estados propostos pertencem ao exercício e devem ser adaptados a cada organização."
+          ]
+        },
+        {
+          "title": "Uma oficina com fronteiras pouco claras",
+          "paragraphs": [
+            "No cenário, a equipa de formação envia um pedido de materiais à administração. O fornecedor comunica que tem stock; uma pessoa interpreta essa mensagem como autorização de compra. Há duas decisões diferentes: disponibilidade externa e aprovação interna. O mapa deve impedir que a primeira substitua a segunda. A entrada do processo é um pedido identificável, com finalidade e quantidade. A saída é a confirmação da entrega ou o encerramento justificado sem fornecimento. O simples envio de uma mensagem ao fornecedor não constitui a saída pretendida.",
+            "Represente cada transição com quatro campos: estado anterior, condição observável, função responsável e registo produzido. Um pedido incompleto pode voltar ao solicitante com indicação do elemento ausente. Esse retorno não precisa de criar outro pedido sem ligação ao primeiro. Uma recusa de autorização termina um ramo com motivo e responsável; não deve desaparecer da contagem de entradas. Um pedido cancelado pelo solicitante tem outro motivo, mesmo que também termine sem entrega. Distinguir os ramos permite compreender o processo posteriormente."
+          ]
+        },
+        {
+          "title": "Verificar o desenho antes de executar",
+          "paragraphs": [
+            "Percorra o mapa com três situações: pedido completo, quantidade ausente e autorização recusada. Em cada passagem, pergunte que evidência mostra que a condição foi cumprida. Um campo marcado como conferido sem identificar o objeto da conferência é insuficiente para explicar a decisão. Não é necessário recolher informação ilimitada: o registo deve apoiar a finalidade da passagem. O exercício usa funções fictícias e não solicita documentos de pessoas reais. Também não exige que o aluno simule assinaturas de responsáveis ou execute uma compra.",
+            "A entrega contém o mapa e um pequeno dicionário dos estados, acompanhado pelos três percursos de teste. Assinale uma transição que permanece bloqueada por falta de autoridade e outra por falta de informação. Essa distinção ajuda a escolher o encaminhamento adequado. O curso trabalha coordenação e controlo de processos; procedimentos de atendimento, arquivo e agenda do percurso de Auxiliar Administrativo não serão reproduzidos aqui. O mapa será a base para analisar divergências e capacidade, mantendo visíveis as decisões que não pertencem ao assistente."
+          ]
+        }
+      ],
+      "case": "Uma oficina pede materiais. O fornecedor confirma stock, mas a autorização interna ainda não existe. O pedido pode regressar por informação em falta ou encerrar por recusa.",
+      "exercise": "Desenhe estados e transições; execute os três percursos de teste e identifique evidência, função e bloqueio em cada passagem.",
+      "assessment": {
+        "question": "Confirmar stock autoriza a compra no processo descrito?",
+        "answer": "Não. A disponibilidade do fornecedor não substitui a decisão da função interna competente. A transição deve aguardar a autorização identificada.",
+        "rubric": [
+          "Separa disponibilidade e autorização.",
+          "Representa retornos e encerramentos.",
+          "Liga transições a evidências."
+        ]
+      }
+    },
+    {
+      "id": "2",
+      "title": "Conciliar pedido, encomenda, receção e documento de cobrança",
+      "estimatedPracticeMinutes": 135,
+      "objectives": [
+        "Comparar quantidades e referências entre quatro documentos sintéticos.",
+        "Registar divergências sem alterar os originais ou declarar irregularidade sem investigação."
+      ],
+      "sourceIds": [
+        "gao-control-2025"
+      ],
+      "sections": [
+        {
+          "title": "Cada documento responde a uma pergunta própria",
+          "paragraphs": [
+            "A conciliação documental procura relações entre registos que descrevem etapas diferentes. O pedido expressa uma necessidade; a encomenda regista o que foi solicitado ao fornecedor; a receção descreve o que chegou e foi conferido; o documento de cobrança indica o que está a ser cobrado. A correspondência não depende apenas de existir o mesmo nome em todos os papéis. Quantidade, unidade, referência e momento precisam de ser comparáveis. O exercício é operacional e não ensina lançamento contabilístico, apuramento fiscal ou autorização de pagamentos.",
+            "Construa uma tabela por referência de item, preservando o identificador de cada documento. Uma caixa e uma unidade podem representar quantidades distintas; não se convertem sem conhecer o conteúdo da caixa. Uma entrega parcial pode ser legítima, mas precisa de ser distinguida de uma entrega completa. A falta de correspondência é um sinal a esclarecer, não uma prova automática de fraude. A orientação de controlo preventivo apresentada pelo GAO serve de enquadramento; a tabela e os critérios deste caso foram desenvolvidos especificamente para aprendizagem LDR."
+          ]
+        },
+        {
+          "title": "Quarenta pastas solicitadas, trinta e seis recebidas",
+          "paragraphs": [
+            "Os documentos fictícios registam quarenta pastas na encomenda, trinta e seis na receção e quarenta na cobrança. Todas as quantidades estão em unidades e referem a mesma versão da encomenda. A diferença entre encomendado e recebido é quatro. A diferença entre cobrado e recebido também é quatro, mas essa igualdade numérica não determina a causa. Pode existir uma entrega restante, erro de registo ou cobrança a corrigir. A tabela deve indicar exatamente qual é a comparação e que informação ainda está ausente.",
+            "Uma mensagem posterior afirma que chegaram mais quatro pastas, mas não contém identificação da receção nem confirmação pela função competente. Essa mensagem abre uma verificação; não autoriza reescrever trinta e seis como quarenta no registo anterior. Se a entrega adicional for confirmada, será necessário ligá-la à encomenda e conservar a sequência temporal. O assistente prepara o dossiê para a decisão conforme o procedimento aplicável. Não decide pagar a diferença apenas para deixar a tabela sem alertas, nem elimina uma linha para aproximar artificialmente os totais."
+          ]
+        },
+        {
+          "title": "Resolver sem destruir a sequência de evidências",
+          "paragraphs": [
+            "Dê a cada divergência um identificador, descreva os valores comparados e encaminhe uma pergunta específica. Em vez de solicitar genericamente verificar a fatura, pergunte se existe confirmação de receção das quatro unidades restantes e qual o documento que a suporta. Identifique quem precisa de responder e o estado provisório do processo. Se a organização exigir bloqueio enquanto a diferença não estiver esclarecida, o assistente regista esse estado; a regra real deve ser consultada e não inventada durante a conferência.",
+            "A entrega reúne a tabela de conciliação, duas hipóteses alternativas e os respetivos elementos necessários para as distinguir. Inclua uma nota que impeça interpretar o exercício como aprovação de pagamento. O resultado esperado é um dossiê claro para quem tem responsabilidade de decidir, não uma coleção de totais aparentemente iguais. Uma divergência bem delimitada vale mais que uma reconciliação fabricada. Ao terminar, outro profissional deve conseguir reconstruir o que era conhecido antes da mensagem posterior e o que continuou por confirmar depois dela."
+          ]
+        }
+      ],
+      "case": "Encomenda de quarenta pastas; receção confirmada de trinta e seis; cobrança de quarenta. Mensagem posterior alega entrega de quatro sem referência verificável.",
+      "exercise": "Prepare tabela, diferenças com sentido explícito, duas hipóteses e pedidos de confirmação. Preserve os originais e proponha estado provisório sem aprovar pagamento.",
+      "assessment": {
+        "question": "A mensagem posterior permite substituir o valor original da receção?",
+        "answer": "Não. É um elemento a verificar. Uma receção adicional confirmada deverá ser ligada ao processo, preservando a sequência dos registos.",
+        "rubric": [
+          "Calcula quatro unidades em falta.",
+          "Não transforma divergência em acusação.",
+          "Distingue conferência e decisão de pagamento."
+        ]
+      }
+    },
+    {
+      "id": "3",
+      "title": "Tratar exceções com rastreabilidade e limite de decisão",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Distinguir desvio, correção e exceção autorizada num procedimento.",
+        "Produzir um registo de decisão que permita compreender fundamento, alcance e validade."
+      ],
+      "sourceIds": [
+        "gao-control-2025"
+      ],
+      "sections": [
+        {
+          "title": "A urgência explica o contexto, mas não cria competência",
+          "paragraphs": [
+            "Um processo desenhado para situações regulares encontra pedidos incompletos, indisponibilidade de um responsável ou alterações de prazo. O tratamento de exceções precisa de tornar essas condições visíveis. Chamar exceção a qualquer passagem fora do procedimento pode esconder um desvio sem autorização. A exceção autorizada exige uma decisão de quem pode tomá-la, com alcance e condições compreensíveis. O assistente prepara e conserva a informação; não assume uma competência apenas porque alguém escreveu urgente no assunto da mensagem.",
+            "O enquadramento de controlo interno do GAO inclui documentação de avaliação de riscos e de mudanças. A aplicação didática aqui é restrita: organizar um registo que ligue situação, alternativa e decisão. Não se importa uma regra jurídica nem se garante que este formulário satisfaz uma auditoria real. Uma organização pode ter requisitos específicos de aprovação e conservação. Antes de usar o modelo no trabalho, será preciso verificar essas regras. No exercício, todas as funções e os limites de decisão são fornecidos como condições fictícias."
+          ]
+        },
+        {
+          "title": "Uma alteração de entrega que não resolve todas as restrições",
+          "paragraphs": [
+            "Um expositor precisa de materiais até quinta-feira. O fornecedor habitual só consegue entregar na sexta. A coordenação pode decidir alterar o local de recolha; não pode aumentar o valor autorizado. A proposta alternativa mantém o valor e exige recolha por outra equipa. O assistente deve verificar a disponibilidade dessa equipa antes de apresentar a alternativa como executável. A autorização sobre o local não equivale a uma autorização sobre horário de trabalho, transporte ou despesa adicional, que não foram definidos no caso.",
+            "O registo contém o pedido original, o impedimento, as alternativas conhecidas, a função que decide e as condições da escolha. Uma resposta como pode seguir é ambígua se não indicar a proposta a que se refere. Associe a decisão à versão concreta, sem interpretar silêncio como concordância. Se a equipa de recolha não confirmar, o estado permanece condicionado. Não é correto marcar o processo como resolvido apenas porque a coordenação aprovou a parte que estava dentro da sua competência. Uma dependência externa pode continuar em aberto."
+          ]
+        },
+        {
+          "title": "A exceção não se transforma silenciosamente na nova regra",
+          "paragraphs": [
+            "Quando a situação se repete, o registo de exceções pode revelar uma incompatibilidade persistente entre o procedimento e o trabalho. A solução pode exigir rever o desenho, não multiplicar autorizações informais. Separe a resolução deste caso da proposta de mudança permanente. A primeira tem data, objeto e condições próprios; a segunda precisa de avaliação e decisão sobre impactos futuros. Não copie uma aprovação anterior para um pedido novo como se ela concedesse permissão ilimitada a qualquer circunstância semelhante.",
+            "A atividade termina com uma nota de decisão de uma página e um quadro de dependências. Acrescente duas interpretações excessivas de uma autorização e corrija-as. Depois escreva uma pergunta para revisão do procedimento se o atraso voltar a ocorrer em três situações sintéticas. A pergunta deve partir de observações, sem concluir antecipadamente que o fornecedor ou a equipa são incompetentes. O produto permite continuar o trabalho com limites claros e fornece matéria para melhoria, mantendo separadas a ocorrência, a decisão que a tratou e uma eventual alteração da regra."
+          ]
+        }
+      ],
+      "case": "Entrega habitual sexta; necessidade quinta. Coordenação pode alterar local, mas não aumentar valor. Recolha alternativa depende de outra equipa ainda não confirmada.",
+      "exercise": "Redija nota de decisão, dependências e duas leituras indevidas da autorização. Proponha pergunta de revisão caso a ocorrência se repita.",
+      "assessment": {
+        "question": "A aprovação do novo local resolve a disponibilidade da equipa de recolha?",
+        "answer": "Não. São decisões e dependências distintas. A execução continua condicionada à confirmação necessária.",
+        "rubric": [
+          "Delimita competência.",
+          "Liga decisão a uma versão.",
+          "Separa exceção e mudança de procedimento."
+        ]
+      }
+    },
+    {
+      "id": "4",
+      "title": "Organizar filas de trabalho sem confundir urgência e volume",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Reconstruir entradas, saídas e trabalho pendente num período definido.",
+        "Propor critérios de ordenação que considerem dependências e capacidade."
+      ],
+      "sourceIds": [
+        "gao-control-2025"
+      ],
+      "sections": [
+        {
+          "title": "O trabalho pendente precisa de uma unidade de contagem",
+          "paragraphs": [
+            "Uma equipa pode receber vinte mensagens sobre sete pedidos. Contar mensagens como procura produz um volume diferente de contar pedidos distintos. Antes de discutir capacidade, defina a unidade de trabalho e a fronteira do período. Um pedido reaberto deve conservar uma relação com a ocorrência anterior; um pedido cancelado precisa de motivo para sair da fila. A contagem não substitui o mapa do processo: é necessário saber que estados estão incluídos no trabalho pendente e que acontecimento permite considerar uma saída.",
+            "Neste módulo, a unidade será um pedido administrativo distinto e o período será uma manhã fictícia. O saldo inicial é oito pedidos; entram onze novos; concluem-se nove; dois dos pedidos são cancelados e encerrados, sem sobreposição com os concluídos. O saldo final é oito: oito mais onze menos nove menos dois. Não significa que a procura foi integralmente satisfeita, porque cancelamento e conclusão têm naturezas diferentes. Uma apresentação responsável mostra as duas saídas separadamente e explica os critérios usados."
+          ]
+        },
+        {
+          "title": "Um saldo estável pode esconder uma fila envelhecida",
+          "paragraphs": [
+            "Dos oito pedidos finais, três já estavam no saldo inicial e aguardam confirmação externa; cinco chegaram nessa manhã. O número total manteve-se, mas parte do trabalho continua bloqueada. O assistente deve tornar essa condição visível sem retirar os três da fila apenas porque não consegue atuar imediatamente. Pode distinguir pendente acionável e pendente à espera, mantendo ambos no total definido. Uma lista de próximos passos permite saber quem deve responder e quando a dependência será novamente verificada, sem inventar um prazo de serviço oficial.",
+            "A ordenação não precisa de depender exclusivamente da data de chegada nem da palavra urgente. Um pedido com prazo externo comprovado pode exigir análise diferente de outro que apenas recebeu uma marcação enfática. Considere impacto, compromisso conhecido, dependência e esforço estimado; depois explicite quem pode alterar prioridades. O exercício não oferece uma fórmula universal que transforma valores incomparáveis numa pontuação indiscutível. Dois critérios podem entrar em conflito e exigir decisão da coordenação em vez de automatização pelo assistente."
+          ]
+        },
+        {
+          "title": "Capacidade e comunicação de limites",
+          "paragraphs": [
+            "Uma tarefa bloqueada não liberta necessariamente toda a capacidade: pode exigir acompanhamento e comunicação. Por outro lado, persegui-la continuamente pode impedir tratar pedidos que já têm condições de avançar. Proponha momentos de revisão e um sinal para mudança relevante. Uma atualização deve informar o que aguarda confirmação e o que já foi feito, sem prometer uma conclusão que depende de terceiros. A decisão de aumentar equipa ou alterar compromissos exige dados e autoridade adicionais que a simulação não fornece.",
+            "Entregue uma reconciliação da fila e uma proposta de ordenação para quatro pedidos inventados com condições explícitas. Inclua um conflito que remete à coordenação e uma mensagem que comunica um limite real sem culpabilizar outra equipa. A atividade avalia se o aluno consegue relacionar volume, estado e possibilidade de ação. A fila final não é apenas um total numa célula: deve permitir escolher um próximo passo justificável, reconhecer o trabalho que continua a existir e conservar uma explicação verificável para as entradas e saídas do período."
+          ]
+        }
+      ],
+      "case": "Saldo inicial oito; onze entradas; nove conclusões e dois cancelamentos distintos. Saldo final oito, dos quais três aguardam confirmação desde o início.",
+      "exercise": "Concilie o saldo e represente estados. Crie quatro pedidos com conflitos de prioridade; ordene os acionáveis e explicite uma decisão que exige coordenação.",
+      "assessment": {
+        "question": "Saldo final igual ao inicial prova que todos os pedidos receberam resposta?",
+        "answer": "Não. O volume pode permanecer enquanto pedidos antigos continuam bloqueados. Conclusões e cancelamentos precisam de ser apresentados separadamente.",
+        "rubric": [
+          "Fecha a conta em oito.",
+          "Mantém bloqueados visíveis.",
+          "Justifica prioridade e escalonamento."
+        ]
+      }
+    },
+    {
+      "id": "5",
+      "title": "Construir indicadores que não ocultam a experiência do processo",
+      "estimatedPracticeMinutes": 135,
+      "objectives": [
+        "Calcular média e mediana de durações e explicar o que cada medida deixa por mostrar.",
+        "Definir denominador e âmbito de um indicador antes de o comparar."
+      ],
+      "sourceIds": [
+        "gao-control-2025"
+      ],
+      "sections": [
+        {
+          "title": "Um indicador começa por uma definição operacional",
+          "paragraphs": [
+            "Tempo de resposta pode medir desde a chegada até à primeira mensagem, até à decisão ou até à conclusão. Os valores não são comparáveis se a definição mudar sem aviso. Antes de calcular, escreva o início, o fim, a unidade e os casos incluídos. Esclareça também o tratamento dos pedidos que ainda não terminaram. Uma tabela composta apenas por concluídos descreve esses casos, mas não informa por si o tempo de espera de toda a fila. O indicador precisa de uma legenda que permita saber a pergunta a que responde.",
+            "A referência do GAO a objetivos de informação e operação ajuda a situar a necessidade de registos úteis; os cálculos e o conjunto de dados desta aula são próprios. Não se atribuem ao documento fórmulas que não foram consultadas. Usaremos dias de calendário sintéticos e casos concluídos, sem inferir metas legais ou compromissos reais. Cada valor começa na entrada completa e termina no encerramento confirmado. Essa escolha é didática e não afirma que outras definições de prazo estejam erradas para finalidades diferentes."
+          ]
+        },
+        {
+          "title": "Cinco casos rápidos e um caso muito mais lento",
+          "paragraphs": [
+            "As durações dos seis pedidos são um, um, um, um, um e dez dias. A soma é quinze; a média é dois vírgula cinco dias. Com seis valores ordenados, a mediana é a média entre o terceiro e o quarto, ambos iguais a um: resulta um dia. As medidas são corretas e contam aspetos diferentes. A mediana descreve o centro ordenado; a média reflete a influência da duração de dez dias. Nenhuma autoriza afirmar que todos os utilizadores esperaram um dia, nem que dois vírgula cinco foi a duração mais frequente.",
+            "Agora considere um indicador de devoluções: três pedidos devolvidos por informação insuficiente entre doze pedidos novos. A proporção é vinte e cinco por cento nesse conjunto. Se as três devoluções pertencem aos seis pedidos concluídos da primeira tabela, pode calcular outra proporção, mas será outra pergunta e outro denominador. Não troque doze por seis apenas para produzir um valor mais expressivo. Um pedido devolvido duas vezes também exige distinguir número de pedidos com devolução e número de eventos de devolução."
+          ]
+        },
+        {
+          "title": "Comparar com o contexto que dá significado ao número",
+          "paragraphs": [
+            "Uma alteração de período pode modificar o tipo de pedidos. Uma média menor depois de uma mudança não demonstra, isoladamente, que a mudança causou melhoria. Pode haver casos mais simples, menos entradas ou exclusão dos bloqueados. Preserve a definição e examine a composição antes de concluir. Um quadro pode apresentar contagem, mediana, média e maior duração, acompanhado de notas sobre limitações. Isso não elimina a necessidade de ouvir dificuldades concretas; oferece uma base que pode ser confrontada com os registos dos casos.",
+            "A avaliação pede uma ficha de indicador, cálculos reproduzíveis e duas conclusões permitidas, seguidas de duas conclusões que os dados não sustentam. Inclua uma pergunta sobre o caso de dez dias sem o eliminar como anomalia automaticamente. Talvez revele uma dependência relevante; talvez haja erro a confirmar. O trabalho do assistente é tornar a informação interpretável e mostrar a origem dos valores. Um painel visualmente elegante perde utilidade quando oculta o denominador, apaga o caso difícil ou mistura duração de conclusão com rapidez da primeira resposta."
+          ]
+        }
+      ],
+      "case": "Seis concluídos: durações de um, um, um, um, um e dez dias. Noutra contagem, três dos doze novos pedidos tiveram devolução.",
+      "exercise": "Calcule média, mediana e proporção; defina os dois indicadores e escreva limites de comparação. Explique como distinguir pedidos devolvidos e eventos de devolução.",
+      "assessment": {
+        "question": "Mediana de um dia significa que nenhum pedido demorou mais?",
+        "answer": "Não. A mediana descreve o centro ordenado; o conjunto contém um caso de dez dias. A média é dois vírgula cinco e não substitui a distribuição.",
+        "rubric": [
+          "Obtém média 2,5 e mediana 1.",
+          "Obtém 25% no denominador doze.",
+          "Não conclui causalidade ou duração universal."
+        ]
+      }
+    },
+    {
+      "id": "6",
+      "title": "Propor uma melhoria pequena com critérios de aceitação",
+      "estimatedPracticeMinutes": 150,
+      "objectives": [
+        "Relacionar uma proposta de controlo com um problema documentado.",
+        "Desenhar um piloto reversível e distinguir resultado observado de efeito demonstrado."
+      ],
+      "sourceIds": [
+        "gao-control-2025"
+      ],
+      "sections": [
+        {
+          "title": "A melhoria deve responder a um mecanismo identificável",
+          "paragraphs": [
+            "Adicionar uma assinatura a todos os pedidos pode aumentar trabalho sem resolver a causa de uma divergência. Antes de propor uma mudança, descreva o problema observado e a relação que espera modificar. Se os pedidos chegam sem unidade de quantidade, um campo orientado pode ser pertinente. Se a unidade já existe e é ignorada na receção, acrescentar outro campo na entrada provavelmente não trata o mesmo mecanismo. O assistente precisa de ligar a proposta à etapa relevante e identificar quem deve avaliar os efeitos sobre outras funções.",
+            "O Green Book apresenta a avaliação de mudanças como parte do controlo interno. O piloto LDR é uma aplicação didática, não um procedimento certificado pelo GAO. A proposta será limitada a um formulário sintético e não alterará regras de autorização, acessos ou histórico. Uma hipótese pode dizer que tornar explícita a unidade de quantidade ajudará a reduzir pedidos devolvidos por esse motivo. A hipótese ainda não é um resultado. Precisará de critérios de observação e de uma forma de identificar novas dificuldades criadas pela alteração."
+          ]
+        },
+        {
+          "title": "Um formulário que pode melhorar uma coisa e piorar outra",
+          "paragraphs": [
+            "Na semana fictícia inicial, quatro de vinte pedidos foram devolvidos por unidade ausente. A proposta obriga a selecionar unidade e apresenta exemplos de preenchimento. Num teste com vinte novos pedidos sintéticos, apenas um é devolvido pelo mesmo motivo, mas três utilizadores escolhem unidade incorreta para conseguir avançar. Contar só os campos vazios faria a mudança parecer plenamente bem-sucedida. O critério de aceitação precisa de considerar a correção do significado e a capacidade de corrigir uma escolha, não apenas o preenchimento formal.",
+            "A equipa deve examinar se o menu oferece opções adequadas, se a explicação é compreensível e se existe encaminhamento para uma situação não prevista. Não se deve inserir uma opção artificial apenas para forçar toda a realidade a caber na lista. Um piloto reversível conserva a versão anterior, os critérios e as ocorrências de teste, permitindo decidir voltar atrás ou ajustar o desenho. O assistente prepara essa comparação e uma recomendação fundamentada; a aprovação da mudança pertence à função que a organização definir."
+          ]
+        },
+        {
+          "title": "Aceitar, ajustar ou interromper com base no que foi observado",
+          "paragraphs": [
+            "Antes do teste, estabeleça o que conta como melhoria e que falha exige revisão imediata. Um campo que impede registar pedidos legítimos pode justificar interrupção mesmo quando reduz devoluções por ausência. Os critérios devem avaliar o objetivo do processo e os efeitos sobre as pessoas que o usam. Depois do teste, compare resultados com esses critérios sem os reescrever apenas para justificar a proposta preferida. Se um critério inicial era inadequado, registe a revisão como aprendizagem e explique por que precisará de novo teste.",
+            "O dossiê final inclui o mapa do processo, problema documentado, hipótese, desenho do formulário, resultados sintéticos e decisão proposta. A queda de quatro para uma devolução nesse teste não demonstra um efeito causal estável em produção; os conjuntos e as condições são limitados. O aluno deve reconhecer também os três erros de unidade e propor uma revisão dirigida. A competência final é coordenar informação para uma decisão de melhoria verificável, mantendo a possibilidade de recusar a primeira solução quando ela produz um indicador melhor e um processo menos fiel à necessidade real."
+          ]
+        }
+      ],
+      "case": "Antes: quatro em vinte devolvidos por unidade ausente. Piloto sintético: um em vinte pelo mesmo motivo, mas três escolhas de unidade incorretas. A mudança é reversível.",
+      "exercise": "Monte dossiê de piloto com hipótese, critérios definidos antes do resultado, dois riscos novos e decisão proposta. Inclua o que teria de ser retestado após revisão.",
+      "assessment": {
+        "question": "A redução de campos vazios basta para aprovar o formulário?",
+        "answer": "Não. O teste revelou escolhas incorretas. A avaliação precisa de considerar significado, uso e efeitos do controlo, além da contagem de ausências.",
+        "rubric": [
+          "Relaciona mecanismo e intervenção.",
+          "Considera os três erros novos.",
+          "Separa piloto sintético e prova causal em produção."
+        ]
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão por profissional de administração e controlo interno, com adequação ao contexto de uso.",
+    "Pilotar instrumentos e tempos; verificar correspondência com as 180 horas anunciadas.",
+    "Testar acessibilidade dos mapas e tabelas e leitor isolado, sem alterar percursos existentes.",
+    "Revisão editorial e autorização antes de qualquer publicação."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

@@ -1,0 +1,363 @@
+{
+  "productKey": "curso_assinatura_comunicacao_profissional_para_o_mercado_de_trabalho",
+  "slug": "comunicacao-profissional-para-o-mercado-de-trabalho",
+  "title": "Comunicação Profissional para o Mercado de Trabalho",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 100,
+  "validatedHours": null,
+  "expectedModuleCount": 6,
+  "scope": "Interações orais e coordenação entre colegas: intenção, escuta, feedback, desacordo, canais e reparação. Distingue-se de redação, entrevista, oratória pública e apresentação de diapositivos. Casos fictícios; não é formação em mediação, psicoterapia ou procedimento disciplinar. As 100 horas anunciadas não estão validadas.",
+  "courseObjectives": [
+    "Distinguir informação, pedido, proposta e decisão numa interação profissional.",
+    "Reformular expressões ambíguas em ações que possam ser confirmadas.",
+    "Distinguir relato recebido e interpretação pessoal.",
+    "Usar perguntas abertas, perguntas de precisão e confirmação sem induzir respostas.",
+    "Converter juízos globais em observações situadas e efeitos explicitados.",
+    "Formular um pedido de ajuste que possa ser discutido e acompanhado.",
+    "Identificar interesses de trabalho diferentes por trás de propostas incompatíveis.",
+    "Apresentar uma alternativa com condição e custo, reconhecendo quando a decisão exige outra função.",
+    "Relacionar canal com urgência, necessidade de interação e registo.",
+    "Distinguir envio, receção, compreensão e aceitação de uma tarefa.",
+    "Reconstruir uma falha de coordenação a partir das perspetivas dos intervenientes.",
+    "Negociar reparação e acompanhamento sem exigir concordância sobre intenções não demonstradas."
+  ],
+  "sources": [
+    {
+      "id": "acas-conversations",
+      "title": "Acas (2014). Challenging conversations and how to manage them.",
+      "url": "https://www.acas.org.uk/sites/default/files/2021-04/challenging-conversations-and-how-to-manage-them.pdf",
+      "consulted": "2026-11-16",
+      "scope": "Introdução e passagens Prepare, What do you know?, tipos de pergunta e escuta consultadas. Preparação, esclarecimento e limites de função; não se declara leitura integral nem se importam estatísticas, interpretação de linguagem corporal, obrigações legais ou disciplinares britânicas. Casos e estrutura de exercícios LDR são originais."
+    },
+    {
+      "id": "ahrq-checkback",
+      "title": "Agency for Healthcare Research and Quality (2023). Tool: Check-Back (or Repeat-Back). TeamSTEPPS.",
+      "url": "https://www.ahrq.gov/teamstepps-program/curriculum/communication/tools/checkback.html",
+      "consulted": "2026-11-16",
+      "scope": "Definição e passagens sobre confirmação de receção e compreensão consultadas. Referência oriunda de comunicação em saúde, utilizada apenas como analogia explícita de confirmação nos casos administrativos. Não se ensinam protocolos clínicos nem se afirma eficácia generalizada do roteiro LDR."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Tornar explícito o que uma conversa pretende resolver"
+    },
+    {
+      "id": "2",
+      "title": "Escutar para esclarecer antes de responder"
+    },
+    {
+      "id": "3",
+      "title": "Dar retorno sobre trabalho sem reduzir a pessoa a um rótulo"
+    },
+    {
+      "id": "4",
+      "title": "Discordar sobre alternativas sem ocultar os custos"
+    },
+    {
+      "id": "5",
+      "title": "Escolher o canal e fechar a passagem de informação"
+    },
+    {
+      "id": "6",
+      "title": "Conduzir uma conversa de reparação depois de um mal-entendido"
+    }
+  ],
+  "modules": [
+    {
+      "id": "1",
+      "title": "Tornar explícito o que uma conversa pretende resolver",
+      "estimatedPracticeMinutes": 105,
+      "objectives": [
+        "Distinguir informação, pedido, proposta e decisão numa interação profissional.",
+        "Reformular expressões ambíguas em ações que possam ser confirmadas."
+      ],
+      "sourceIds": [
+        "acas-conversations"
+      ],
+      "sections": [
+        {
+          "title": "Uma frase pode conter mais de uma intenção",
+          "paragraphs": [
+            "Quando alguém diz precisamos disto pronto, o destinatário pode ouvir uma ordem, uma preocupação ou uma proposta de prioridade. As palavras não tornam automaticamente claro quem decide, que produto é esperado ou que compromisso já existe. A comunicação profissional começa por explicitar a função da intervenção. Informar uma dificuldade não equivale a pedir que alguém a resolva; sugerir uma alternativa não equivale a aprová-la. A clareza permite discutir a ação sem obrigar o interlocutor a adivinhar o estatuto de cada frase.",
+            "O guia da Acas sobre conversas difíceis destaca preparação e clareza de finalidade no contexto de relações de trabalho. Neste curso, a aplicação será feita em interações fictícias entre colegas, sem importar procedimentos disciplinares britânicos. O aluno aprenderá a abrir uma conversa com assunto, razão e resultado pretendido. Isso não exige um discurso formal em todas as situações. Uma abertura breve pode permitir compreender por que o tema foi trazido e que participação se espera da outra pessoa."
+          ]
+        },
+        {
+          "title": "A palavra pronto esconde um desacordo de significado",
+          "paragraphs": [
+            "No caso, Beatriz pede a Omar uma apresentação pronta até quarta-feira. Para Beatriz, isso inclui texto revisto, imagens autorizadas e ficheiro que possa ser projetado. Para Omar, significa um primeiro conjunto de diapositivos para discussão. Ambos podem trabalhar com empenho e ainda chegar a resultados incompatíveis. A conversa precisa de esclarecer o estado esperado, não de procurar imediatamente quem usou a palavra errada. Perguntar que partes precisam de estar verificadas torna a diferença visível antes que se converta num juízo sobre competência.",
+            "Omar pode confirmar que consegue entregar uma versão para revisão, mas depende de outra pessoa para as imagens. Beatriz deve saber se está a negociar um primeiro rascunho ou uma entrega final. A resposta profissional distingue capacidade confirmada e dependência. Repetir consigo fazer sem essa distinção cria um compromisso que o caso não suporta. Também não basta responder não consigo se existe uma parte viável que pode ser negociada. O diálogo deve permitir examinar o alcance e decidir como tratar a dependência, sem transferir culpa por antecipação."
+          ]
+        },
+        {
+          "title": "Construir linguagem comum sem exigir uniformidade pessoal",
+          "paragraphs": [
+            "Identifique termos que têm significado particular naquele trabalho: revisto, aprovado, enviado ou fechado. Peça exemplos do estado pretendido em vez de presumir uma definição universal. A clarificação não deve ser tratada como prova de ignorância. Pode haver diferenças entre equipas ou experiências anteriores igualmente plausíveis. Uma pergunta específica ajuda a localizar a divergência sem pedir uma explicação excessiva de tudo. O aluno deve praticar tanto a formulação como a resposta, reconhecendo quando foi ele próprio que deixou implícita uma condição importante.",
+            "A atividade consiste em encenar uma abertura e uma negociação de alcance em dois minutos, seguida de análise escrita. O observador assinala a intenção inicial, a expressão ambígua e a confirmação obtida. Uma representação fluente que não esclarece o produto continua incompleta. Uma pausa para perguntar pode ser o momento mais competente da interação. O objetivo é produzir um entendimento que permita agir e verificar o compromisso depois, preservando a possibilidade de dizer que uma parte ainda precisa de decisão, sem transformar uma conversa curta num acordo sobre tudo."
+          ]
+        }
+      ],
+      "case": "Beatriz e Omar entendem apresentação pronta de modos diferentes. A versão final depende de imagens que uma terceira pessoa ainda não verificou.",
+      "exercise": "Encene a abertura, esclareça pronto e negocie o alcance. Anote informação, pedido e compromisso efetivo; indique uma dependência que permaneceu aberta.",
+      "assessment": {
+        "question": "Dizer sim ao pedido resolve a ambiguidade de pronto?",
+        "answer": "Não. É necessário confirmar produto, estado de revisão e dependências. A concordância com uma palavra pode ocultar compromissos diferentes.",
+        "rubric": [
+          "Identifica a intenção.",
+          "Define o produto observável.",
+          "Não promete a parte dependente sem confirmação."
+        ]
+      }
+    },
+    {
+      "id": "2",
+      "title": "Escutar para esclarecer antes de responder",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Distinguir relato recebido e interpretação pessoal.",
+        "Usar perguntas abertas, perguntas de precisão e confirmação sem induzir respostas."
+      ],
+      "sourceIds": [
+        "acas-conversations",
+        "ahrq-checkback"
+      ],
+      "sections": [
+        {
+          "title": "Escutar não é preparar uma réplica em silêncio",
+          "paragraphs": [
+            "Um interlocutor pode começar a responder ao primeiro detalhe e deixar de ouvir a dificuldade central. Escutar profissionalmente exige acompanhar o relato e adiar uma conclusão quando ainda falta contexto. Isso não obriga a concordar com tudo nem a aceitar uma versão sem verificação. Significa distinguir o que a pessoa disse, o que se inferiu e o que precisa de ser perguntado. O aluno irá trabalhar com um diálogo curto, identificando o ponto em que uma interpretação se transforma indevidamente num facto atribuído ao colega.",
+            "A Acas diferencia tipos de pergunta e alerta para perguntas que induzem conclusões ou juntam muitas questões. Use uma pergunta aberta para conhecer a sequência, uma pergunta de precisão para localizar um elemento e uma confirmação para testar o entendimento. A ordem depende da conversa. Não é uma receita que elimina conflitos. Uma pergunta com aparência aberta pode continuar acusatória se pressupõe a culpa. Por que decidiu ignorar a equipa assume uma intenção que o relato talvez ainda não permita estabelecer."
+          ]
+        },
+        {
+          "title": "O atraso que parecia falta de colaboração",
+          "paragraphs": [
+            "Rui diz que não respondeu à revisão porque só recebeu acesso ao ficheiro na tarde seguinte. Leonor tinha interpretado a ausência como recusa em colaborar. A primeira resposta pode perguntar quando o acesso ficou disponível e que parte da revisão ainda é possível. Isso não prova imediatamente que todos os problemas vieram do acesso; permite separar uma condição verificável da intenção que Leonor atribuiu. A conversa precisa de deixar espaço para corrigir o relato se os registos apresentarem outra sequência.",
+            "Uma paráfrase útil conserva a distinção: percebi que o acesso só ficou disponível depois do prazo inicial; é essa a sequência? Rui pode confirmar ou corrigir. A AHRQ descreve o check-back como confirmação do conteúdo recebido por quem o enviou, num programa de comunicação em saúde. Aqui usaremos apenas a lógica de verificar entendimento num caso administrativo, sem importar protocolos clínicos ou alegar eficácia comprovada em todos os setores. A confirmação deve incidir na informação relevante e não transformar cada frase numa repetição mecânica."
+          ]
+        },
+        {
+          "title": "Confirmar sem interrogar ou diagnosticar",
+          "paragraphs": [
+            "Uma sucessão rápida de perguntas pode dificultar a resposta. Faça uma pergunta de cada vez e permita completar o raciocínio, respeitando necessidades de comunicação distintas. Silêncio, tom de voz ou contacto visual não permitem concluir honestidade, motivação ou estado clínico. Se um sinal parecer ambíguo, a saída é perguntar de modo respeitoso ou oferecer outra forma de participação. O exercício não ensina leitura de personalidade por linguagem corporal. O observador deve avaliar ações comunicativas identificáveis, sem premiar um estilo pessoal como se fosse universalmente superior.",
+            "Entregue duas versões do diálogo: uma que fecha a interpretação cedo demais e outra que esclarece a sequência antes de discutir o próximo passo. Assinale uma pergunta aberta, outra de precisão e uma confirmação corrigível. O parceiro pode alterar uma informação durante a encenação; o aluno deve atualizar o entendimento sem fingir que sempre o soube. A competência final é chegar a uma representação partilhada suficientemente precisa para continuar, mantendo visível a diferença entre compreender o relato, verificar os factos e concordar com uma decisão."
+          ]
+        }
+      ],
+      "case": "Rui relata acesso tardio ao ficheiro; Leonor interpretara o silêncio como recusa. A sequência pode ser verificada, mas a intenção não é conhecida.",
+      "exercise": "Produza e encene duas versões, marcando pergunta aberta, precisão e confirmação. Introduza uma correção do relato e demonstre como atualizar o entendimento.",
+      "assessment": {
+        "question": "Uma paráfrase confirmada prova que todo o relato é factual?",
+        "answer": "Não. Confirma o entendimento do que foi relatado. A verificação dos acontecimentos pode exigir registos ou outras informações.",
+        "rubric": [
+          "Separa intenção inferida e relato.",
+          "Evita perguntas indutoras.",
+          "Distingue entendimento e verificação."
+        ]
+      }
+    },
+    {
+      "id": "3",
+      "title": "Dar retorno sobre trabalho sem reduzir a pessoa a um rótulo",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Converter juízos globais em observações situadas e efeitos explicitados.",
+        "Formular um pedido de ajuste que possa ser discutido e acompanhado."
+      ],
+      "sourceIds": [
+        "acas-conversations"
+      ],
+      "sections": [
+        {
+          "title": "Um rótulo não diz o que precisa de mudar",
+          "paragraphs": [
+            "Chamar alguém desorganizado pode expressar frustração sem esclarecer a ocorrência relevante. Um retorno útil sobre trabalho precisa de indicar o que foi observado, em que situação e por que isso importa. A afirmação deve ter alcance proporcional à evidência. Duas versões sem identificação de data permitem falar de dificuldade em escolher a versão correta; não demonstram um traço permanente da pessoa. O aluno irá praticar feedback sobre um produto concreto, sem diagnosticar personalidade nem transformar uma discordância de método numa avaliação global de valor profissional.",
+            "A preparação factual recomendada pela Acas oferece uma referência para evitar basear a conversa em rumores. O exercício LDR organiza o retorno em ocorrência, efeito conhecido, pergunta e pedido. Não se apresenta essa sequência como método científico validado. O efeito precisa de ser distinguido de um receio: o trabalho foi refeito é diferente de poderia ter sido refeito. Nomear essa diferença permite conversar sobre a gravidade real e sobre prevenção, sem amplificar consequências apenas para tornar a mensagem mais convincente."
+          ]
+        },
+        {
+          "title": "Duas versões e uma escolha feita sem confirmação",
+          "paragraphs": [
+            "Clara enviou dois ficheiros chamados programa_final em dias diferentes. Miguel utilizou a primeira versão para preparar o material e refez duas páginas ao descobrir a segunda. O retorno pode descrever os nomes iguais, a escolha feita e o retrabalho. Também deve reconhecer que Miguel escolheu sem confirmar qual era a versão válida. Isso não cancela a dificuldade dos nomes; distribui os acontecimentos de forma mais fiel. O diálogo pode discutir uma convenção de identificação e uma confirmação antes da produção, em vez de atribuir toda a ocorrência a uma única pessoa.",
+            "Clara pode explicar que a segunda versão resultou de uma alteração pedida pela coordenação. Essa explicação contextualiza o envio, mas não resolve automaticamente a identificação. Miguel pode perguntar o que permitiria distinguir rascunho e versão autorizada. Um pedido concreto seria testar nomes com data e estado, acompanhados por aviso de substituição. O acordo depende do modo de trabalho da equipa e não é estabelecido unilateralmente pelo exercício. Se outra função decide a versão válida, ela precisa de participar no desenho da confirmação."
+          ]
+        },
+        {
+          "title": "Receber feedback inclui examinar e corrigir a base",
+          "paragraphs": [
+            "O destinatário não precisa de aceitar uma afirmação inexata para demonstrar maturidade. Pode reconhecer o efeito relatado e pedir o exemplo que o sustenta. Se o retorno disser que isto acontece sempre, dois episódios não bastam para confirmar a generalização. A resposta pode trazer um registo diferente e propor verificar a sequência. Também pode reconhecer um erro específico sem aceitar um rótulo. O objetivo não é vencer a discussão, mas identificar o ajuste pertinente e o que continua em desacordo.",
+            "A prática termina com uma conversa em três papéis: quem apresenta o retorno, quem o recebe e quem observa. O observador regista frases que distinguem ocorrência e interpretação, bem como o pedido efetivo. Troque os papéis e repita com uma informação nova que altere parte do diagnóstico inicial. Não pontue o aluno por conseguir um pedido de desculpa ou submissão do colega. A avaliação incide na precisão, na abertura à correção e na possibilidade de acompanhar um ajuste concreto sem exigir concordância com afirmações que os dados não sustentam."
+          ]
+        }
+      ],
+      "case": "Clara enviou dois programa_final. Miguel escolheu o primeiro sem confirmar e refez duas páginas. A segunda versão resultou de alteração da coordenação.",
+      "exercise": "Prepare feedback e resposta, com ocorrência, efeito, pergunta e pedido. Encene três papéis e introduza informação que obrigue a rever uma afirmação inicial.",
+      "assessment": {
+        "question": "A explicação da alteração elimina a necessidade de identificar versões?",
+        "answer": "Não. Contextualiza o segundo envio, mas a equipa ainda precisa de distinguir a versão válida e a confirmação necessária antes da produção.",
+        "rubric": [
+          "Evita rótulos e sempre sem base.",
+          "Reconhece escolhas dos dois participantes.",
+          "Propõe ajuste acompanhável."
+        ]
+      }
+    },
+    {
+      "id": "4",
+      "title": "Discordar sobre alternativas sem ocultar os custos",
+      "estimatedPracticeMinutes": 135,
+      "objectives": [
+        "Identificar interesses de trabalho diferentes por trás de propostas incompatíveis.",
+        "Apresentar uma alternativa com condição e custo, reconhecendo quando a decisão exige outra função."
+      ],
+      "sourceIds": [
+        "acas-conversations"
+      ],
+      "sections": [
+        {
+          "title": "O desacordo pode ser sobre objetivos legítimos",
+          "paragraphs": [
+            "Uma equipa pode valorizar rapidez de lançamento enquanto outra precisa de concluir a verificação de acessibilidade. Descrever uma como dinâmica e a outra como resistente impede discutir a diferença real. A conversa deve tornar explícito o objetivo que cada proposta procura proteger e a informação disponível. Reconhecer a legitimidade de uma preocupação não obriga a aceitar a solução sugerida. O aluno irá praticar uma divergência em que não existe tempo para realizar tudo e em que uma decisão terá de assumir uma consequência.",
+            "As orientações da Acas sobre preparação e perguntas servem de apoio limitado à condução da conversa. As alternativas do caso são originais e não constituem uma regra de gestão de risco. Uma pessoa pode reformular a posição do colega para confirmar o entendimento e depois explicar a própria restrição. A sequência perde utilidade se a reformulação for usada apenas como preâmbulo para ignorar a resposta. É preciso permitir que a outra pessoa corrija o que foi compreendido e que isso modifique a proposta quando pertinente."
+          ]
+        },
+        {
+          "title": "Lançar tudo, lançar parte ou adiar",
+          "paragraphs": [
+            "No cenário, um boletim tem quatro secções prontas e uma quinta com gráfico ainda sem descrição textual. A equipa de publicação quer cumprir a data; a responsável pelo conteúdo quer verificar a explicação do gráfico. O grupo pode discutir lançar apenas as quatro secções, adiar o conjunto ou manter a data com uma alternativa textual verificada. Não deve declarar acessibilidade resolvida apenas por retirar uma imagem se informação essencial desaparece. Também não pode assumir que há uma obrigação legal específica sem conhecer o contexto real.",
+            "Cada alternativa exige uma pergunta: as quatro secções fazem sentido sem a quinta? A explicação alternativa foi verificada por quem conhece os dados? Quem pode aprovar o adiamento e comunicar a alteração? A conversa precisa de distinguir uma opção disponível de uma ideia ainda dependente de trabalho. Prometer resolver depois sem definir o que falta conserva a divergência sob uma aparência de acordo. O aluno deve tornar o custo visível, como conteúdo adiado, tempo adicional de revisão ou necessidade de comunicação aos destinatários."
+          ]
+        },
+        {
+          "title": "Concluir com decisão localizada ou encaminhamento",
+          "paragraphs": [
+            "Nem todo desacordo deve terminar em consenso. Pode existir uma decisão da função competente, acompanhada do risco identificado e da responsabilidade de acompanhamento. O registo não deve afirmar que todos concordaram quando alguém apenas compreendeu a decisão. Também não deve atribuir oposição pessoal a quem apresentou uma restrição técnica. Uma boa síntese separa o que foi decidido, a condição ainda aberta e a preocupação registada. Isso permite continuar a colaboração sem reescrever artificialmente a conversa como unanimidade.",
+            "Encene uma discussão de cinco minutos com três alternativas e uma restrição que surge a meio. Prepare depois uma síntese de seis linhas para os participantes conferirem. O avaliador procura se o aluno examinou consequências, preservou informação essencial e soube encaminhar a decisão que excede a sua função. O resultado não é medido pela vitória da sua proposta. A competência é transformar uma divergência num conjunto discutível de escolhas e permitir que a decisão seja tomada com conhecimento do que será entregue, do que ficará pendente e de quem deve responder por cada condição."
+          ]
+        }
+      ],
+      "case": "Boletim com quatro secções prontas e uma quinta com gráfico sem descrição textual verificada. Há pressão para manter data e decisão editorial ainda por tomar.",
+      "exercise": "Encene três alternativas, introduza uma restrição nova e redija síntese com decisão, condição e desacordo remanescente. Não atribua uma obrigação jurídica ao caso.",
+      "assessment": {
+        "question": "Compreender a decisão significa concordar com ela?",
+        "answer": "Não. A síntese pode registar entendimento e execução atribuída, mantendo a preocupação ou discordância sem alegar unanimidade.",
+        "rubric": [
+          "Expõe custos das alternativas.",
+          "Verifica preservação da informação.",
+          "Distingue consenso, decisão e encaminhamento."
+        ]
+      }
+    },
+    {
+      "id": "5",
+      "title": "Escolher o canal e fechar a passagem de informação",
+      "estimatedPracticeMinutes": 105,
+      "objectives": [
+        "Relacionar canal com urgência, necessidade de interação e registo.",
+        "Distinguir envio, receção, compreensão e aceitação de uma tarefa."
+      ],
+      "sourceIds": [
+        "ahrq-checkback",
+        "acas-conversations"
+      ],
+      "sections": [
+        {
+          "title": "O canal modifica o que é possível verificar",
+          "paragraphs": [
+            "Uma chamada permite esclarecer uma dúvida imediatamente quando as pessoas estão disponíveis, mas pode deixar pouco registo do compromisso. Uma mensagem escrita permite recuperar o conteúdo, mas não garante leitura no momento necessário. A escolha do canal precisa de considerar a ação, o tempo e a possibilidade de participação do destinatário. Não existe um canal profissional superior em qualquer situação. Uma conversa importante pode exigir um registo posterior; um pedido simples pode ser resolvido por escrito sem convocar uma reunião.",
+            "A lógica de confirmação descrita pela AHRQ ajuda a distinguir transmissão e entendimento. O contexto original é saúde; este exercício adapta apenas a ideia de fechar a passagem de informação entre colegas num evento fictício. Não se incluem instruções clínicas nem se transfere um resultado de segurança para outros setores. O aluno observará quatro acontecimentos: mensagem enviada, receção reconhecida, conteúdo compreendido e compromisso aceite. Um visto de leitura não demonstra automaticamente os últimos dois, assim como uma confirmação de compreensão não concede autoridade para uma tarefa."
+          ]
+        },
+        {
+          "title": "Uma alteração de sala minutos antes da abertura",
+          "paragraphs": [
+            "No cenário, Joana coordena a receção de uma exposição. A sala mudou e a abertura está próxima. Enviar a alteração num grupo com muitas pessoas pode não alcançar quem está na entrada. A equipa precisa de identificar um destinatário responsável e obter confirmação da informação relevante: sala nova e efeito na orientação dos visitantes. Não é necessário reenviar a lista completa dos participantes para explicar a mudança. A partilha deve concentrar-se no que a pessoa precisa de saber para a ação, respeitando o procedimento e as permissões locais.",
+            "O destinatário confirma a sala, mas informa que não pode abandonar a entrada para mudar a sinalização. Há entendimento da mensagem e ausência de capacidade para uma parte da tarefa. Joana precisa de procurar outro responsável ou alterar o plano, em vez de marcar tudo como tratado. Uma confirmação pode revelar um problema, e essa é precisamente a sua utilidade. A interação deve permitir comunicar impedimentos sem punir quem os torna visíveis. O curso não recomenda contornar acessos ou usar contas pessoais para acelerar o envio."
+          ]
+        },
+        {
+          "title": "Registar o compromisso que realmente existiu",
+          "paragraphs": [
+            "Uma nota posterior pode indicar sala confirmada, orientação verbal na entrada e sinalização atribuída a outra função. O registo serve a continuidade do trabalho e não precisa de transcrever toda a conversa. Evite acrescentar dados pessoais ou comentários sobre motivação que não ajudam a ação. A necessidade de conservar e partilhar o registo depende de regras organizacionais aplicáveis, que não serão inventadas aqui. O exercício usa apenas nomes fictícios e não pede gravação de pessoas reais nem envio de mensagens externas.",
+            "A entrega é um plano de comunicação para a alteração de sala, com destinatário, canal, informação mínima e sinal de confirmação. Introduza uma indisponibilidade e demonstre como o plano muda. O observador deve conseguir dizer o que foi entendido, o que foi aceite e o que ainda exige decisão. O produto final não é uma mensagem mais elegante: é uma passagem de informação que mantém a responsabilidade localizável e permite corrigir uma falha antes que a equipa interprete o simples ato de enviar como conclusão de todo o trabalho."
+          ]
+        }
+      ],
+      "case": "Joana comunica mudança de sala. Quem está na entrada compreende, mas não pode sair para alterar sinalização. O grupo de mensagens não prova alcance da informação.",
+      "exercise": "Desenhe plano de comunicação e simule a confirmação com impedimento. Registe informação mínima, compromisso aceite e tarefa ainda por atribuir.",
+      "assessment": {
+        "question": "Um visto de leitura comprova que a sinalização será alterada?",
+        "answer": "Não. Não demonstra aceitação nem capacidade de executar. É necessário esclarecer o responsável e o compromisso específico.",
+        "rubric": [
+          "Distingue quatro acontecimentos.",
+          "Escolhe canal com razões.",
+          "Não partilha dados desnecessários nem presume capacidade."
+        ]
+      }
+    },
+    {
+      "id": "6",
+      "title": "Conduzir uma conversa de reparação depois de um mal-entendido",
+      "estimatedPracticeMinutes": 150,
+      "objectives": [
+        "Reconstruir uma falha de coordenação a partir das perspetivas dos intervenientes.",
+        "Negociar reparação e acompanhamento sem exigir concordância sobre intenções não demonstradas."
+      ],
+      "sourceIds": [
+        "acas-conversations",
+        "ahrq-checkback"
+      ],
+      "sections": [
+        {
+          "title": "Reparar exige reconhecer o efeito e rever o entendimento",
+          "paragraphs": [
+            "Depois de um mal-entendido, uma equipa pode discutir durante muito tempo quem devia ter percebido a mensagem. A conversa de reparação começa por reconstruir o que cada pessoa recebeu, interpretou e fez, procurando o efeito sobre o trabalho. Isso permite identificar pontos de mudança sem exigir uma declaração sobre intenções privadas. O aluno integrará preparação, perguntas, retorno e confirmação num caso novo. Não se trata de mediação profissional nem de resolver situações de assédio ou discriminação por uma conversa informal que substitua canais adequados.",
+            "As referências deste curso apoiam preparação e verificação de entendimento; não garantem que qualquer relação será reparada com um roteiro. Uma pessoa pode precisar de interromper a conversa para consultar informação ou procurar apoio institucional. A simulação tem limites de respeito e participação: não exige relatar conflitos pessoais nem representar agressões. Pode ser realizada com leitura de papéis fictícios ou análise individual de diálogo, mantendo os mesmos critérios sobre informação, alternativas e compromisso. Fluência oral não será confundida com submissão ou ausência de dúvida."
+          ]
+        },
+        {
+          "title": "Uma reserva que cada pessoa julgava confirmada",
+          "paragraphs": [
+            "Na situação final, Elisa escreveu posso reservar o equipamento quando houver confirmação da atividade. Tomás respondeu está previsto para sexta e passou a contar com o equipamento. Elisa entendeu previsto como intenção ainda condicionada e não reservou. Quando a atividade foi confirmada, já não havia o recurso disponível. A reconstrução mostra duas interpretações, mas não prova desinteresse de uma das pessoas. O grupo deve identificar a confirmação que não ocorreu e reconhecer o efeito concreto: o plano de utilização não pode ser executado como estava.",
+            "Existem duas alternativas fictícias: adaptar a atividade a outro recurso disponível ou alterar a data, dependendo da decisão da coordenação. Nenhuma pessoa deve prometer uma reserva que não controla. A reparação imediata inclui comunicar a limitação, preparar alternativas verificáveis e localizar quem decide. A prevenção futura pode estabelecer como distinguir previsão, confirmação e reserva efetiva. O compromisso precisa de ser compreensível para os dois intervenientes e testado com um exemplo, sem transformar toda a comunicação da equipa num formulário excessivo."
+          ]
+        },
+        {
+          "title": "Avaliar o percurso da conversa e a qualidade do acordo",
+          "paragraphs": [
+            "O observador marca cinco momentos: finalidade, reconstrução, reconhecimento do efeito, análise de alternativas e confirmação do próximo passo. Se faltar informação, regista-se a pergunta e quem a procura. A conversa não precisa de produzir uma narrativa única sobre o passado; pode terminar com a divergência explicitada e com uma forma de agir que ambos compreendem. Um pedido de desculpa pode ocorrer, mas não é o critério que aprova o exercício. O foco é a capacidade de corrigir coordenação e assumir a parte de responsabilidade sustentada pelos acontecimentos.",
+            "A avaliação final reúne o diálogo anotado, uma proposta imediata e uma regra de confirmação para o futuro. Depois de receber uma observação do parceiro, o aluno revê uma intervenção e explica a alteração. Essa revisão permite mostrar aprendizagem para além da primeira encenação. O dossiê deve preservar a diferença entre ação proposta e ação já executada: nenhuma reserva real foi feita neste curso. O resultado esperado é uma conversa capaz de produzir entendimento e responsabilidade com limites claros, sem fabricar consenso, atribuir personalidade a partir de uma falha ou prometer que uma técnica garante cooperação."
+          ]
+        }
+      ],
+      "case": "Elisa condicionou reserva à confirmação; Tomás respondeu que atividade estava prevista. Nenhuma confirmação explícita ocorreu e o equipamento tornou-se indisponível.",
+      "exercise": "Encene ou analise o diálogo, marque cinco momentos e proponha reparação com duas alternativas. Teste uma regra de confirmação e reveja uma intervenção após feedback.",
+      "assessment": {
+        "question": "É preciso concordar sobre a intenção de cada pessoa para definir o próximo passo?",
+        "answer": "Não. É possível reconstruir mensagens e efeitos, manter interpretações distintas e definir alternativas e compromissos sem provar intenções privadas.",
+        "rubric": [
+          "Reconstrói sem inventar motivos.",
+          "Assume efeitos e limites.",
+          "Distingue proposta, decisão e execução."
+        ]
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão de comunicação profissional, conceptual e editorial; verificar a progressão das simulações.",
+    "Pilotar critérios de observação, alternativas acessíveis e tempos; validar as 100 horas históricas.",
+    "Rever leitor isolado e possibilidade de avaliação oral sem exigir exposição de conflitos pessoais.",
+    "Autorização explícita antes de publicação; não substituir módulos ou progressos ativos."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

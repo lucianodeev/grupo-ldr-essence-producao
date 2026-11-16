@@ -1,0 +1,361 @@
+{
+  "productKey": "curso_assinatura_curriculo_estrategico_como_apresentar_sua_historia_profissional",
+  "slug": "curriculo-estrategico-como-apresentar-sua-historia-profissional",
+  "title": "Currículo Estratégico: Como Apresentar sua História Profissional",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 80,
+  "validatedHours": null,
+  "expectedModuleCount": 6,
+  "scope": "Seis oficinas próprias sobre inventário, contribuição, cronologia, competências, adaptação e verificação. Distingue-se do curso de carta profissional e do treino de entrevistas: o produto é um currículo rastreável com versões. Casos inteiramente fictícios; sem envio de candidaturas ou criação de qualificações. Carga histórica por validar.",
+  "courseObjectives": [
+    "Separar arquivo de experiências e currículo destinado a uma oportunidade.",
+    "Associar afirmações profissionais a uma origem e a um grau de confirmação.",
+    "Redigir descrições com ação, objeto e alcance da responsabilidade.",
+    "Distinguir quantidade documentada, resultado coletivo e causalidade não demonstrada.",
+    "Representar experiências sobrepostas sem alterar datas para criar uma trajetória artificialmente linear.",
+    "Distinguir função, entidade e natureza do vínculo numa estrutura legível.",
+    "Separar curso realizado, qualificação formal, prática demonstrada e intenção de aprendizagem.",
+    "Descrever competências linguísticas e digitais sem criar equivalências ou níveis não avaliados.",
+    "Selecionar e ordenar informação para duas oportunidades diferentes sem alterar o histórico.",
+    "Construir um registo de versões que permita saber o que foi enviado e porquê.",
+    "Executar uma revisão de factos, recuperação de informação e apresentação.",
+    "Produzir uma decisão de prontidão com pendências identificadas, sem prometer aprovação automática."
+  ],
+  "sources": [
+    {
+      "id": "europass-profile",
+      "title": "União Europeia / Europass. What is the difference between the Europass Profile and a CV?",
+      "url": "https://europass.europa.eu/en/what-difference-between-europass-profile-and-cv",
+      "consulted": "2026-11-16",
+      "scope": "Página consultada sobre perfil abrangente e seleção de informação para currículos específicos. Não se afirma que um formato seja obrigatório ou que o serviço valide as afirmações do utilizador."
+    },
+    {
+      "id": "council-cv",
+      "title": "Secretariado-Geral do Conselho da União Europeia. Creating an effective CV for jobs in the EU institutions: a brief guide. Revisão indicada: 16 de julho de 2026.",
+      "url": "https://www.consilium.europa.eu/en/general-secretariat/careers/candidate-toolkit/effective-cvs-for-eu-jobs/",
+      "consulted": "2026-11-16",
+      "scope": "Página consultada sobre pertinência, responsabilidades, clareza e honestidade. Contexto de candidaturas institucionais europeias; não se universalizam requisitos de dados pessoais, formatos ou probabilidades de seleção. Casos e métodos de revisão LDR são originais."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Construir um inventário antes de escolher o que apresentar"
+    },
+    {
+      "id": "2",
+      "title": "Descrever contribuição sem inflacionar resultados"
+    },
+    {
+      "id": "3",
+      "title": "Organizar cronologia, vínculos e simultaneidades"
+    },
+    {
+      "id": "4",
+      "title": "Apresentar competências e formação com alcance reconhecível"
+    },
+    {
+      "id": "5",
+      "title": "Adaptar versões preservando uma única base factual"
+    },
+    {
+      "id": "6",
+      "title": "Verificar o currículo como documento utilizável"
+    }
+  ],
+  "modules": [
+    {
+      "id": "1",
+      "title": "Construir um inventário antes de escolher o que apresentar",
+      "estimatedPracticeMinutes": 105,
+      "objectives": [
+        "Separar arquivo de experiências e currículo destinado a uma oportunidade.",
+        "Associar afirmações profissionais a uma origem e a um grau de confirmação."
+      ],
+      "sourceIds": [
+        "europass-profile"
+      ],
+      "sections": [
+        {
+          "title": "O documento enviado não precisa de conter todo o arquivo",
+          "paragraphs": [
+            "Um currículo resulta de uma seleção, mas essa seleção precisa de um material de base confiável. Se cada candidatura começa por tentar recordar datas e tarefas, as versões podem acumular divergências difíceis de explicar. O inventário profissional reúne experiências, formação e produtos de trabalho com informação sobre origem e confirmação. Ele tem uma função interna. O currículo destinado ao leitor utiliza apenas a parte pertinente, respeitando instruções e a necessidade de tornar a trajetória compreensível.",
+            "O Europass distingue o perfil amplo, onde se organiza informação, dos currículos criados com partes desse perfil. A atividade LDR adapta essa distinção sem exigir criar uma conta ou publicar dados. O aluno trabalhará com um arquivo fictício e escolherá o que precisa de confirmar. Um inventário extenso não é automaticamente um bom currículo, assim como uma versão curta não deve ser construída apagando informação que contradiz a imagem desejada. A seleção conserva a verdade dos factos utilizados."
+          ]
+        },
+        {
+          "title": "A origem de uma afirmação modifica a forma de a usar",
+          "paragraphs": [
+            "No caso de Marina, existem um contrato com datas, uma lista de atividades anotada por ela e uma mensagem informal de agradecimento de uma associação. O contrato pode apoiar o período, mas não descreve necessariamente todas as ações realizadas. A nota pessoal ajuda a reconstruir tarefas, sem ser comprovação independente. A mensagem pode reconhecer uma colaboração, mas não transforma a atividade em emprego remunerado. Cada documento oferece informação de alcance diferente. O inventário deve preservar essa distinção antes de qualquer redação.",
+            "Crie campos para tipo de experiência, período, atividade concreta, responsabilidade, produto, origem da informação e ponto por confirmar. Uma linha pode ter período confirmado e quantidade de atendimentos desconhecida. Não é necessário atribuir um número apenas porque outros exemplos de currículo usam métricas. O dado ausente permanece como pergunta. Se o aluno estiver a trabalhar com a própria história fora deste exercício, poderá manter documentos privados em local apropriado; não precisa de os anexar indiscriminadamente a candidaturas."
+          ]
+        },
+        {
+          "title": "Escolher o que verificar primeiro",
+          "paragraphs": [
+            "A prioridade de conferência depende do efeito da informação. Uma diferença de um mês entre duas versões pode exigir esclarecimento antes do envio. Uma estimativa sobre o número de eventos organizados pode ser retirada se não houver base suficiente e se não for indispensável à compreensão da tarefa. O inventário não deve crescer sem critério. Para cada dúvida, indique o uso previsto e a consequência de não a resolver. Essa decisão evita gastar tempo a documentar detalhes irrelevantes enquanto uma afirmação central permanece incerta.",
+            "A entrega consiste num inventário de seis linhas e numa lista de três verificações priorizadas. Acrescente duas informações que ficarão no arquivo interno e não na versão enviada, explicando porquê. O objetivo é produzir uma base editorial estável, capaz de alimentar currículos diferentes sem mudar acontecimentos. Nos módulos seguintes, o aluno irá transformar essa base em descrições de experiência, organizar a cronologia e testar a correspondência com requisitos. O ponto de partida é saber o que está a afirmar antes de decidir como o apresentará."
+          ]
+        }
+      ],
+      "case": "Marina possui contrato com datas, notas pessoais de tarefas e agradecimento por colaboração associativa. Não há contagem confirmada de atendimentos; a colaboração não foi emprego remunerado.",
+      "exercise": "Crie seis linhas de inventário com origem e grau de confirmação. Priorize três verificações e selecione duas informações apenas para o arquivo interno. Use dados sintéticos identificados.",
+      "assessment": {
+        "question": "Uma mensagem de agradecimento permite apresentar a colaboração como emprego remunerado?",
+        "answer": "Não. Pode apoiar a existência da colaboração no seu alcance, mas não altera a natureza do vínculo. Tipo de atividade, datas e tarefas precisam de ser descritos separadamente.",
+        "rubric": [
+          "Separa inventário e versão enviada.",
+          "Relaciona cada afirmação com origem e limite.",
+          "Prioriza a verificação pela relevância da informação."
+        ]
+      }
+    },
+    {
+      "id": "2",
+      "title": "Descrever contribuição sem inflacionar resultados",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Redigir descrições com ação, objeto e alcance da responsabilidade.",
+        "Distinguir quantidade documentada, resultado coletivo e causalidade não demonstrada."
+      ],
+      "sourceIds": [
+        "council-cv"
+      ],
+      "sections": [
+        {
+          "title": "Um verbo deve corresponder ao papel efetivo",
+          "paragraphs": [
+            "A descrição de uma experiência informa o que a pessoa fez e permite ao leitor relacioná-lo com a função em discussão. Apoiar uma implementação não equivale a dirigir o projeto. Preparar dados para um relatório não significa ter aprovado as suas conclusões. A escolha verbal precisa de corresponder à responsabilidade, e não apenas ao impacto retórico. Uma frase pode ganhar precisão e relevância sem receber um verbo mais grandioso. A honestidade da descrição não depende de tornar todas as experiências extraordinárias.",
+            "O guia do Conselho da União Europeia recomenda destacar realizações e responsabilidades pertinentes e evitar exageros. Neste módulo, os exemplos e o método de revisão são próprios. Uma descrição será examinada em três partes: ação realizada, objeto ou contexto e alcance verificável. Nem todas as frases precisam de um resultado numérico. Quando a informação não existe, a contribuição pode ser explicada por procedimento, problema tratado ou produto entregue, desde que isso corresponda ao dossiê."
+          ]
+        },
+        {
+          "title": "Uma contribuição individual dentro de um resultado da equipa",
+          "paragraphs": [
+            "Rafael, personagem fictícia, conferiu nomes numa lista de participantes de três oficinas. A equipa recebeu noventa inscrições no total, mas o dossiê não informa quantas vieram de ações de Rafael. A frase atraí noventa participantes atribuiria uma causalidade não demonstrada. Uma formulação mais sustentada descreve a conferência das listas e o encaminhamento de registos incompletos. O total de inscrições pode entrar como contexto coletivo, se for útil, sem ser apresentado como resultado produzido por uma única pessoa.",
+            "O aluno deverá distinguir o que foi contado daquilo que foi inferido. Três oficinas é um dado do caso; redução de erros em cinquenta por cento não é. Não se deve fabricar uma linha de base para criar uma melhoria percentual. Se existissem registos antes e depois, ainda seria preciso explicar o que foi medido e que mudanças ocorreram. A atividade não pede uma demonstração causal completa, mas exige que a redação não simule essa demonstração quando dispõe apenas de uma descrição de tarefas."
+          ]
+        },
+        {
+          "title": "Selecionar detalhes que ajudam a interpretar a experiência",
+          "paragraphs": [
+            "Uma descrição demasiado vaga obriga o leitor a imaginar o processo. Uma descrição excessivamente minuciosa pode esconder a contribuição no meio de ferramentas e etapas secundárias. Escolha o detalhe que permite discutir uma competência relevante: como a informação foi conferida, que problema foi identificado e a quem foi encaminhado. O nome de uma ferramenta só deve entrar com o nível de utilização efetivo. Abrir um ficheiro não demonstra domínio de automatização, e utilizar uma função não equivale a conhecer todo o programa.",
+            "A entrega contém quatro descrições em formato de tópicos e uma tabela de afirmações rejeitadas. Cada rejeição precisa de uma razão: responsabilidade excessiva, quantidade sem base, causalidade indevida ou detalhe irrelevante. Compare duas versões de uma mesma experiência e explique qual informa melhor sem alterar os factos. O resultado é uma redação que permite aprofundamento numa entrevista. Uma boa frase de currículo continua defensável quando alguém pergunta o que exatamente fez e como sabe que o resultado descrito ocorreu."
+          ]
+        }
+      ],
+      "case": "Rafael conferiu listas de três oficinas e encaminhou registos incompletos. A equipa recebeu noventa inscrições. Não existem medidas anteriores de erro nem dados de captação individual.",
+      "exercise": "Redija quatro tópicos com ação, objeto e alcance. Construa uma tabela com quatro afirmações exageradas que rejeitaria e a sua substituição sustentada. Preserve os números do caso.",
+      "assessment": {
+        "question": "Pode afirmar redução de erros em cinquenta por cento por ter conferido as listas?",
+        "answer": "Não. Faltam medida inicial, medida posterior e definição de erro. É possível descrever a conferência e o encaminhamento sem inventar uma melhoria percentual.",
+        "rubric": [
+          "Escolhe verbos proporcionais.",
+          "Não atribui resultado coletivo a uma pessoa sem suporte.",
+          "Mantém métricas documentadas e retira as inventadas."
+        ]
+      }
+    },
+    {
+      "id": "3",
+      "title": "Organizar cronologia, vínculos e simultaneidades",
+      "estimatedPracticeMinutes": 105,
+      "objectives": [
+        "Representar experiências sobrepostas sem alterar datas para criar uma trajetória artificialmente linear.",
+        "Distinguir função, entidade e natureza do vínculo numa estrutura legível."
+      ],
+      "sourceIds": [
+        "council-cv"
+      ],
+      "sections": [
+        {
+          "title": "Uma linha temporal precisa de consistência, não de perfeição",
+          "paragraphs": [
+            "Trajetórias podem conter emprego, trabalho independente, estudo, voluntariado e períodos sem atividade profissional. Esses estados não são intercambiáveis. O currículo deve organizá-los de modo que o leitor compreenda o que ocorreu e em que período. A cronologia não precisa de parecer uma progressão sem interrupções para ter valor. A tentativa de eliminar sobreposições ou intervalos por alteração de datas produz um problema maior do que a irregularidade que o autor pretendia esconder.",
+            "As recomendações do Conselho sobre duração e clareza das experiências fornecem um ponto de partida. A estrutura deste módulo é uma decisão editorial própria, não uma regra obrigatória para todos os processos. Se um formulário exige dia, mês e ano, é necessário responder às instruções com a precisão disponível e esclarecer dúvidas. Se o documento permite mês e ano, a apresentação pode utilizar essa unidade de forma consistente. Não é adequado criar o dia exato para preencher uma lacuna de memória."
+          ]
+        },
+        {
+          "title": "O mesmo período pode conter atividades diferentes",
+          "paragraphs": [
+            "No caso fictício, Teresa trabalhou de janeiro a outubro, iniciou uma formação em setembro e colaborou voluntariamente num evento em novembro. A formação sobrepôs-se a dois meses de trabalho; não precisa de ser deslocada para depois para tornar a sequência mais simples. A colaboração pode entrar numa secção própria ou junto de experiências relevantes, desde que a sua natureza fique explícita. O nome de uma associação não informa por si se houve emprego, prestação de serviço ou participação ocasional.",
+            "Um cargo informal também exige cuidado. Se Teresa era apresentada internamente como responsável da receção, mas o documento contratual usa outra designação, pode ser necessário escolher uma formulação que explique a função sem afirmar uma categoria formal inexistente. O exercício não resolve equivalências jurídicas ou profissionais. Pede que o aluno separe título utilizado, tarefas e vínculo. Quando essas informações divergem, a revisão deve torná-las conciliáveis, e não escolher apenas a versão de maior prestígio."
+          ]
+        },
+        {
+          "title": "Testar se a sequência pode ser reconstruída",
+          "paragraphs": [
+            "Faça uma leitura apenas das datas e tipos de atividade. Depois leia as responsabilidades. A primeira passagem procura incoerências temporais; a segunda, diferenças de alcance. Se o leitor conclui que a formação durou menos porque começou durante o emprego, a apresentação precisa de revisão. Se confunde uma colaboração de um dia com um ano de trabalho, falta delimitação. O teste não consiste em esconder tudo o que possa gerar uma pergunta, mas em permitir que perguntas legítimas tenham uma base clara.",
+            "A entrega inclui uma linha temporal, uma estrutura de secções e uma nota que justifica duas escolhas de organização. Acrescente uma informação que precisa de confirmação documental e uma resposta curta sobre a sobreposição de estudo e trabalho. O módulo prepara consistência entre currículo, formulário e conversa, sem transformar um documento num relato completo da vida. A cronologia é um instrumento de compreensão: deve preservar acontecimentos e relações temporais, em vez de fabricar uma narrativa linear que o próprio autor não conseguiria sustentar."
+          ]
+        }
+      ],
+      "case": "Teresa trabalhou janeiro–outubro, estudou a partir de setembro e colaborou num evento de um dia em novembro. A designação interna de função não é igual ao título contratual.",
+      "exercise": "Monte a cronologia e uma estrutura de secções. Apresente vínculo e duração de cada atividade. Explique a sobreposição e formule uma questão documental que precisa de resolver antes de escolher o título da função.",
+      "assessment": {
+        "question": "A formação deve ser deslocada para novembro para evitar a sobreposição?",
+        "answer": "Não. A apresentação deve manter o início em setembro e permitir compreender o estudo em paralelo com o trabalho. Clareza não autoriza alterar datas.",
+        "rubric": [
+          "Preserva relações temporais.",
+          "Distingue natureza e duração do vínculo.",
+          "Não transforma designação informal em categoria formal sem confirmação."
+        ]
+      }
+    },
+    {
+      "id": "4",
+      "title": "Apresentar competências e formação com alcance reconhecível",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Separar curso realizado, qualificação formal, prática demonstrada e intenção de aprendizagem.",
+        "Descrever competências linguísticas e digitais sem criar equivalências ou níveis não avaliados."
+      ],
+      "sourceIds": [
+        "europass-profile",
+        "council-cv"
+      ],
+      "sections": [
+        {
+          "title": "O nome de um curso não demonstra tudo o que a pessoa consegue fazer",
+          "paragraphs": [
+            "Uma formação pode oferecer conhecimento e prática sem conferir uma habilitação regulamentada. O currículo precisa de indicar o que foi concluído, por quem foi emitido e que alcance consegue demonstrar. O título de uma formação livre não deve ser convertido numa qualificação profissional que ela não concede. Este módulo trata a precisão da apresentação; não fornece parecer sobre reconhecimento de diplomas, profissões reguladas ou equivalências entre países. Quando essas questões são relevantes, exigem informação oficial adequada ao destino e à atividade.",
+            "O Europass permite organizar aprendizagem e competências no perfil, enquanto o guia do Conselho pede informação pertinente sobre línguas e formação. A aplicação LDR utiliza descrições verificáveis, sem inferir níveis automaticamente. Uma lista de cursos pode funcionar como arquivo; a versão enviada seleciona os que ajudam a interpretar a candidatura. A seleção não modifica o estado de conclusão. Estudar um tema, frequentar uma atividade e obter um certificado são acontecimentos diferentes e devem ser apresentados com a sua designação correta."
+          ]
+        },
+        {
+          "title": "Uma competência pode ter condições e limites",
+          "paragraphs": [
+            "No cenário, André concluiu uma oficina de edição de texto, utiliza folhas de cálculo para listas simples e consegue conversar em francês sobre tarefas conhecidas. Não existe avaliação formal de nível linguístico. O currículo pode descrever essas utilizações, mas não deve atribuir automaticamente um nível do Quadro Europeu ou afirmar domínio avançado de análise de dados. O aluno deverá mostrar como uma competência se relaciona com uma tarefa e indicar quando a designação depende de avaliação ou documentação adicional.",
+            "Uma escala visual com cinco estrelas não explica o que a pessoa consegue realizar. Pode ser substituída por uma descrição breve: introdução e conferência de dados em tabelas simples, por exemplo. Essa formulação continua limitada e não representa uma certificação. Se o processo exigir um nível formal, o candidato precisa de saber que prova é aceite. O exercício não cria certificados fictícios nem recomenda apresentar uma autoavaliação como equivalente a um exame reconhecido."
+          ]
+        },
+        {
+          "title": "Evitar a inflação por tradução ou reorganização",
+          "paragraphs": [
+            "Ao traduzir uma formação, conserve o nome original ou indique claramente que a designação traduzida é explicativa. Uma tradução mais prestigiante não deve alterar a natureza do curso. O mesmo vale para ferramentas: utilizar uma aplicação durante algumas tarefas não transforma o utilizador em administrador do sistema. A revisão deve comparar a afirmação com o que efetivamente foi praticado e com o requisito da oportunidade. Quando não há correspondência suficiente, a lacuna precisa de permanecer disponível para discussão.",
+            "A entrega será uma secção de competências e formação acompanhada por notas de alcance. Para quatro itens, indique o que pode afirmar, o que não pode concluir e que informação permitiria maior precisão. Acrescente uma tradução explicativa sem atribuir equivalência formal. O objetivo é construir um documento que seja útil ao leitor e fiel à aprendizagem, sem depender de adjetivos como avançado ou especialista para preencher espaço. A credibilidade aparece quando os limites da competência são compreensíveis e podem ser verificados em tarefas proporcionais."
+          ]
+        }
+      ],
+      "case": "André concluiu oficina de texto, usa tabelas simples e conversa em francês sobre tarefas conhecidas. Não tem exame de nível linguístico nem certificação avançada de dados.",
+      "exercise": "Redija quatro itens de competências e formação, com notas de alcance e informação em falta. Substitua uma escala de estrelas por descrição operacional e faça uma tradução explicativa que preserve o estatuto do curso.",
+      "assessment": {
+        "question": "Uma conversa funcional em francês permite atribuir automaticamente um nível formal específico?",
+        "answer": "Não. Pode ser descrita no seu contexto, mas um nível formal exige critérios de autoavaliação adequados ou avaliação reconhecida conforme o processo. O caso não fornece essa avaliação.",
+        "rubric": [
+          "Distingue aprendizagem e qualificação.",
+          "Descreve utilizações concretas.",
+          "Não cria nível, equivalência ou certificação."
+        ]
+      }
+    },
+    {
+      "id": "5",
+      "title": "Adaptar versões preservando uma única base factual",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Selecionar e ordenar informação para duas oportunidades diferentes sem alterar o histórico.",
+        "Construir um registo de versões que permita saber o que foi enviado e porquê."
+      ],
+      "sourceIds": [
+        "europass-profile"
+      ],
+      "sections": [
+        {
+          "title": "Adaptar é escolher relações, não mudar acontecimentos",
+          "paragraphs": [
+            "Um currículo dirigido a apoio ao público pode destacar experiências diferentes de outro destinado a tratamento de informação. O inventário de base permanece o mesmo. A adaptação modifica a seleção, a ordem e a explicação da relevância, sem criar um cargo novo ou uma realização que não existiu. A distinção Europass entre perfil e currículos ajuda a organizar esse trabalho. O aluno irá construir duas versões a partir de um dossiê único, mantendo campos factuais que não podem divergir entre elas.",
+            "Antes de editar, identifique os requisitos centrais de cada oportunidade e marque as experiências que os podem esclarecer. Uma palavra usada no anúncio pode ajudar a nomear uma tarefa efetivamente realizada. Não deve ser introduzida apenas para simular correspondência. Se a vaga pede gestão de contratos e a experiência foi arquivar documentos, trocar o verbo para gerir altera o alcance. Uma adaptação intelectualmente honesta pode revelar que determinada candidatura ainda não tem evidência suficiente para um requisito."
+          ]
+        },
+        {
+          "title": "Duas versões com prioridades diferentes",
+          "paragraphs": [
+            "O dossiê fictício de Aline contém atendimento numa biblioteca, atualização de uma lista de empréstimos e apoio pontual a uma feira. A oportunidade U enfatiza contacto com utilizadores; V destaca conferência de registos. Para U, o atendimento pode abrir a secção de experiência, com uma descrição do tipo de pedido tratado. Para V, a atualização da lista pode receber maior detalhe. As datas, a entidade e a natureza do vínculo continuam iguais. O aluno deverá assinalar esses campos como invariantes.",
+            "Uma terceira informação do anúncio V pede automatização, que o dossiê não demonstra. A versão não deve acrescentar experiência de programação. Pode manter a competência efetiva e indicar aprendizagem atual apenas se ela existir no caso. A adaptação também pode consistir em retirar uma afirmação excessiva. O objetivo não é obter correspondência perfeita a qualquer custo, mas permitir que o leitor compreenda a contribuição disponível e os pontos que o processo precisará de avaliar."
+          ]
+        },
+        {
+          "title": "Saber qual versão pertence a cada envio",
+          "paragraphs": [
+            "Guarde um registo com oportunidade, data sintética, nome da versão e diferenças relevantes. Um nome como currículo_final deixa de informar quando há várias candidaturas. Não é necessário incluir detalhes pessoais no nome do ficheiro além do que o processo exige. A convenção deve permitir recuperar o documento efetivamente enviado e preparar uma conversa coerente com ele. Corrigir o arquivo de base depois não deve fazer o autor esquecer que uma versão anterior continha uma informação que precisa de ser esclarecida.",
+            "A entrega inclui duas páginas de currículo, um mapa de invariantes e um registo de versões. Acrescente uma discrepância introduzida de propósito, detete-a e explique como a corrigiria antes de qualquer envio. A atividade termina com uma capacidade de adaptação controlada: informação estável, apresentação pertinente e histórico recuperável. Não se mede o sucesso pelo número de palavras do anúncio copiadas, mas pela correspondência entre tarefas, evidências e afirmações que continuam verdadeiras em ambas as versões."
+          ]
+        }
+      ],
+      "case": "Aline fez atendimento em biblioteca, atualizou lista de empréstimos e apoiou feira. U pede contacto com utilizadores; V pede conferência e menciona automatização não demonstrada no dossiê.",
+      "exercise": "Crie duas versões resumidas, um mapa de campos invariantes e registo de versões. Mostre três alterações legítimas de seleção e uma alteração factual que deve ser rejeitada.",
+      "assessment": {
+        "question": "A versão V pode converter atualização de lista em programação de automatizações para corresponder ao anúncio?",
+        "answer": "Não. Muda a competência e a responsabilidade apresentadas. A adaptação deve dar destaque à conferência efetivamente realizada e conservar a lacuna sobre automatização.",
+        "rubric": [
+          "Mantém invariantes factuais.",
+          "Distingue seleção e fabricação.",
+          "Permite recuperar a versão associada a cada oportunidade."
+        ]
+      }
+    },
+    {
+      "id": "6",
+      "title": "Verificar o currículo como documento utilizável",
+      "estimatedPracticeMinutes": 150,
+      "objectives": [
+        "Executar uma revisão de factos, recuperação de informação e apresentação.",
+        "Produzir uma decisão de prontidão com pendências identificadas, sem prometer aprovação automática."
+      ],
+      "sourceIds": [
+        "council-cv"
+      ],
+      "sections": [
+        {
+          "title": "A revisão final precisa de mais de uma leitura",
+          "paragraphs": [
+            "Uma leitura contínua pode confirmar fluidez e deixar passar um mês incorreto. Uma procura por erros ortográficos pode não revelar que a experiência central ficou escondida. O controlo final será dividido em factos, recuperação e apresentação. O guia do Conselho recomenda clareza, atualização e revisão, mas a sequência operacional deste módulo é própria. Não é uma certificação de conformidade com todos os sistemas de candidatura ou um método para garantir seleção. O currículo precisa ainda de respeitar as instruções concretas do processo.",
+            "Na leitura de factos, compare a versão com o inventário e os documentos disponíveis. Verifique datas, títulos, tipo de vínculo, formação e quantidades. Na leitura de recuperação, peça a um leitor que localize duas informações relacionadas com a vaga sem explicação oral. Na apresentação, examine se o texto permanece legível e selecionável no formato de entrega, quando aplicável. Um ficheiro que parece bonito num ecrã pode perder estrutura quando aberto noutro; essa possibilidade precisa de teste, não de uma promessa universal sobre formatos."
+          ]
+        },
+        {
+          "title": "Um leitor procura informação diferente do autor",
+          "paragraphs": [
+            "No caso fictício final, o currículo de Nuno inclui uma experiência de conferência pertinente apenas na última linha, enquanto a abertura apresenta quatro qualidades sem exemplos. O leitor encontra rapidamente o contacto, mas não percebe onde Nuno praticou a tarefa principal. A revisão pode alterar a hierarquia e a descrição da experiência. Não é necessário inventar um resumo grandioso. O teste de recuperação deverá ser repetido para verificar se o ponto antes escondido se tornou identificável.",
+            "Um sistema automático de candidatura também pode ter instruções de formato ou campos próprios. Este curso não conhece o algoritmo de todos os empregadores e não atribui eficácia universal a uma quantidade de palavras-chave. O aluno deve seguir as condições fornecidas e testar a integridade do ficheiro. Se o formulário exige informação que a versão resumida não contém, isso precisa de ser tratado no formulário. A utilização de um modelo conhecido não dispensa conferir o conteúdo e não demonstra que um sistema o interpretará exatamente como o autor espera."
+          ]
+        },
+        {
+          "title": "Decidir o que está pronto e o que exige esclarecimento",
+          "paragraphs": [
+            "Classifique as pendências: erro factual, informação por confirmar, problema de apresentação ou adaptação ao processo. Um erro de data deve ser corrigido antes do envio. Uma dúvida sobre requisito formal pode exigir contacto pelo canal adequado. Um detalhe estético não deve receber prioridade superior à verdade de uma qualificação. A revisão termina quando os critérios definidos para aquela entrega foram satisfeitos ou quando a decisão de aguardar informação fica explícita. Não se pede ao aluno que envie um documento incompleto apenas para encerrar a atividade.",
+            "O portefólio final reúne inventário, descrições revistas, cronologia, secção de formação, duas versões e relatório de verificação. Registe se a leitura por outra pessoa ocorreu de facto; se não, identifique a autoavaliação e o teste ainda pendente. Acrescente uma regra para a próxima atualização, como rever a origem de novas métricas antes de as incluir. O produto é um processo de edição e controlo que pode ser aplicado novamente. A qualidade continua dependente de factos, pertinência e instruções, e não de um modelo capaz de garantir contratação."
+          ]
+        }
+      ],
+      "case": "Nuno tem experiência relevante de conferência escondida na última linha. O contacto é localizável, mas a abertura só enumera qualidades. Não há informação sobre algoritmo de recrutamento.",
+      "exercise": "Faça três passagens de revisão e um teste de recuperação com duas perguntas. Reorganize a informação relevante e entregue o relatório de prontidão com pendências, versão utilizada e revisão externa efetivamente realizada ou ainda por fazer.",
+      "assessment": {
+        "question": "Um modelo conhecido permite garantir interpretação correta e aprovação por qualquer sistema de candidatura?",
+        "answer": "Não. É necessário respeitar instruções e testar o ficheiro, sem inferir funcionamento de algoritmos desconhecidos. O modelo não substitui verdade factual, pertinência e verificação.",
+        "rubric": [
+          "Revê factos antes de estética.",
+          "Testa recuperação com evidência.",
+          "Distingue prontidão documental e resultado de seleção."
+        ]
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão linguística e de orientação profissional; testar recuperação com leitores.",
+    "Pilotar tempo, materiais e avaliação sem presumir equivalência às 80 horas.",
+    "Validar acessibilidade e correspondência com roteiro histórico antes de integrar.",
+    "Manter direitos e progresso existentes e obter aprovação antes de produção."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

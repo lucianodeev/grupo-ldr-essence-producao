@@ -1,0 +1,360 @@
+{
+  "productKey": "curso_assinatura_rotinas_de_escritorio_e_organizacao_administrativa",
+  "slug": "rotinas-de-escritorio-e-organizacao-administrativa",
+  "title": "Rotinas de Escritório e Organização Administrativa",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 160,
+  "validatedHours": null,
+  "expectedModuleCount": 6,
+  "scope": "Governo de rotinas recorrentes: consolidação de entradas, cadência, listas de verificação, calendário, continuidade e revisão de custo e utilidade. Distingue-se da execução de tarefas do Auxiliar e do controlo de processos do Assistente. Cenários sintéticos, sem operações ou concessões de acesso reais. Carga de 160 horas histórica ainda por validar.",
+  "courseObjectives": [
+    "Relacionar mensagens de canais diferentes com pedidos distintos.",
+    "Definir um registo de referência que conserve origem e alterações.",
+    "Distribuir tarefas recorrentes segundo frequência e dependências.",
+    "Explicitar que situações justificam interromper um bloco de trabalho.",
+    "Distinguir instrução, item de conferência e prova de execução.",
+    "Testar uma checklist contra uma falha que permite assinalar sem verificar.",
+    "Distinguir data interna, prazo externo e data dependente de confirmação.",
+    "Representar recorrências sem presumir regras jurídicas ou calendários universais.",
+    "Identificar dependências de uma pessoa que impedem continuidade de uma rotina.",
+    "Desenhar substituição com acesso e autoridade previamente verificados.",
+    "Comparar utilidade e custo de registos recorrentes.",
+    "Propor simplificação reversível preservando a evidência necessária."
+  ],
+  "sources": [
+    {
+      "id": "tna-governance",
+      "title": "The National Archives (UK). Essential Records Management: A guide to managing electronic records using existing infrastructures and resources.",
+      "url": "https://cdn.nationalarchives.gov.uk/documents/essential-records-management.pdf",
+      "consulted": "2026-11-16",
+      "scope": "Introdução, âmbito, definições e início de Records Management Policy consultados. Referência sobre contexto, regras e responsabilidades, com controlo de acesso identificado na estrutura do guia; não se declara leitura integral. Exemplos técnicos históricos não se apresentam como requisitos atuais; não se transferem regras de eliminação, conservação ou revisão jurídica para outras instituições."
+    },
+    {
+      "id": "gao-routines",
+      "title": "U.S. Government Accountability Office (2025). Standards for Internal Control in the Federal Government. GAO-25-107721.",
+      "url": "https://www.gao.gov/products/gao-25-107721",
+      "consulted": "2026-11-16",
+      "scope": "Página de apresentação e Highlights consultados sobre objetivos e avaliação de mudanças. Enquadramento federal norte-americano, sem imposição jurídica local; horários, listas e cálculos deste curso são exercícios originais e não instrumentos certificados."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Consolidar entradas sem perder a origem dos pedidos"
+    },
+    {
+      "id": "2",
+      "title": "Definir cadências e critérios de interrupção"
+    },
+    {
+      "id": "3",
+      "title": "Escrever uma lista de verificação que produza evidência útil"
+    },
+    {
+      "id": "4",
+      "title": "Manter um calendário recorrente com condições explícitas"
+    },
+    {
+      "id": "5",
+      "title": "Preparar continuidade sem partilhar credenciais ou poderes"
+    },
+    {
+      "id": "6",
+      "title": "Rever a rotina pelo valor do controlo e pelo custo de manter"
+    }
+  ],
+  "modules": [
+    {
+      "id": "1",
+      "title": "Consolidar entradas sem perder a origem dos pedidos",
+      "estimatedPracticeMinutes": 105,
+      "objectives": [
+        "Relacionar mensagens de canais diferentes com pedidos distintos.",
+        "Definir um registo de referência que conserve origem e alterações."
+      ],
+      "sourceIds": [
+        "tna-governance"
+      ],
+      "sections": [
+        {
+          "title": "Canais de chegada e lugar de acompanhamento têm funções diferentes",
+          "paragraphs": [
+            "Um escritório pode receber solicitações por formulário, conversa e correio eletrónico. Exigir um único canal nem sempre é possível, mas acompanhar cada mensagem como se fosse um trabalho separado cria duplicações. A rotina de consolidação relaciona as entradas com um pedido de referência, conservando a origem. Esse registo permite saber o que está a ser tratado sem apagar a sequência de mensagens. Não significa copiar toda a correspondência para uma folha pública ou transferir documentos restritos para um local mais conveniente.",
+            "A introdução do guia Essential Records Management, de The National Archives, relaciona regras de gestão e memória das transações. A aplicação deste módulo é uma rotina original de consolidação, sem adotar prazos de retenção do Reino Unido. O registo didático terá identificador, assunto, origem, estado e ligação autorizada à informação necessária. Uma origem pode conter uma alteração relevante e não uma nova solicitação. A pessoa que consolida precisa de comparar o conteúdo e o contexto, em vez de decidir apenas pelo nome do remetente."
+          ]
+        },
+        {
+          "title": "Cinco mensagens e duas linhas de trabalho",
+          "paragraphs": [
+            "No cenário fictício, a mensagem A pede preparar quinze credenciais para a oficina Delta. B é um formulário da mesma pessoa para a mesma oficina e quantidade. C acrescenta que a quantidade passou a dezassete. D solicita uma credencial de substituição para outro evento. E pergunta onde levantar as credenciais de Delta. A e B aparentam referir o mesmo trabalho, mas a equipa deve confirmar a ligação antes de suprimir uma entrada da contagem. C altera um parâmetro; D é outro pedido; E é uma pergunta relacionada.",
+            "Crie dois registos de trabalho e uma ligação para a pergunta, mantendo a duplicação A/B como confirmada ou por confirmar conforme a evidência disponível. Contar C como trabalho independente duplicaria uma alteração do pedido de Delta; separar E como nova preparação confundiria uma pergunta com uma encomenda de credenciais. O número de mensagens continua cinco, mesmo quando o número de trabalhos é menor. Se dezassete substitui quinze, registe quem comunicou a alteração e qual a versão atual, sem apagar que a preparação começou com outra quantidade. O objetivo é reconstruir a sequência, não apenas apresentar um total final."
+          ]
+        },
+        {
+          "title": "A referência comum precisa de regras de utilização",
+          "paragraphs": [
+            "Defina quando um novo identificador é criado, como se associa uma mensagem posterior e quem pode corrigir a classificação. A regra deve permitir reabrir a dúvida se surgir um contexto diferente. Duas mensagens muito parecidas podem corresponder a eventos distintos; uma coincidência verbal não basta para fundir os pedidos. Ao mesmo tempo, uma resposta automática não deve criar trabalho novo. A qualidade da rotina depende da clareza dessas decisões e da possibilidade de recuperar o motivo pelo qual duas entradas foram relacionadas.",
+            "A entrega inclui um mapa das cinco mensagens, os registos propostos e a regra de consolidação. Identifique uma contagem que seria enganadora e uma decisão que permanece condicionada. A oficina trabalha o governo da entrada quotidiana, e não repete o procedimento de receção do curso de Auxiliar. O aluno deve mostrar como várias pessoas podem acompanhar o mesmo trabalho sem manter listas independentes incompatíveis. A rotina só é útil se reduzir ambiguidade e preservar contexto; centralizar informação sem critérios pode apenas deslocar a confusão para outra ferramenta."
+          ]
+        }
+      ],
+      "case": "A pede quinze credenciais Delta; B repete por formulário; C altera para dezassete; D pede substituição noutro evento; E pergunta onde levantar Delta. A relação A/B deve ser confirmada.",
+      "exercise": "Relacione as cinco mensagens, proponha registos de referência e justifique o número de trabalhos. Documente o estado de confirmação A/B e a alteração de quantidade.",
+      "assessment": {
+        "question": "Cinco mensagens significam cinco trabalhos distintos?",
+        "answer": "Não. Podem incluir repetição, alteração e pergunta. Há dois trabalhos identificáveis no cenário, com a ligação A/B ainda a confirmar antes da consolidação definitiva.",
+        "rubric": [
+          "Preserva as cinco origens.",
+          "Distingue alteração e pedido novo.",
+          "Não funde coincidências sem confirmação."
+        ]
+      }
+    },
+    {
+      "id": "2",
+      "title": "Definir cadências e critérios de interrupção",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Distribuir tarefas recorrentes segundo frequência e dependências.",
+        "Explicitar que situações justificam interromper um bloco de trabalho."
+      ],
+      "sourceIds": [
+        "gao-routines"
+      ],
+      "sections": [
+        {
+          "title": "Responder a tudo imediatamente é uma escolha com consequências",
+          "paragraphs": [
+            "Uma rotina perde previsibilidade quando qualquer mensagem interrompe a tarefa em curso, mesmo sem necessidade temporal. Agrupar atividades compatíveis pode reduzir trocas, mas também pode atrasar uma resposta que desbloqueia trabalho de outra equipa. O desenho da cadência precisa de considerar as duas consequências. O aluno não receberá uma duração universal de concentração. Vai construir uma distribuição para um cenário delimitado, verificando que tarefas podem aguardar e quais têm uma dependência que exige tratamento antes do bloco seguinte.",
+            "Comece por distinguir frequência e prazo: verificar uma caixa duas vezes por manhã é uma cadência; responder antes de uma decisão às onze é uma condição temporal. A frequência escolhida precisa de permitir cumprir a condição no caso. Um quadro deve indicar tarefa, janela de execução, duração aproximada e critério de interrupção. As estimativas são hipóteses de planeamento, não avaliações de produtividade pessoal. Quando o volume varia, a rotina deve prever como rever o plano em vez de exigir que a pessoa absorva qualquer aumento sem limite."
+          ]
+        },
+        {
+          "title": "Uma manhã com um desbloqueio antes das onze",
+          "paragraphs": [
+            "O escritório fictício funciona entre nove e treze. Há uma conferência de sessenta minutos, preparação de envios durante quarenta e cinco, triagem de vinte minutos em dois momentos e uma verificação de disponibilidade que demora quinze. Esta última informa uma reunião às onze. A soma das tarefas é cento e sessenta minutos, restando oitenta no intervalo de quatro horas. Esse saldo não é garantia de capacidade livre: existem deslocações internas, respostas variáveis e pausas a considerar. O plano deve mostrar onde a margem fica, sem a preencher automaticamente.",
+            "Se a verificação começar às onze, a informação chega tarde para a reunião, ainda que o quadro tenha todas as tarefas previstas. O aluno deve situá-la antes e reservar forma de comunicar a resposta. Um pedido de correção que impede um envio das dez e meia pode justificar interrupção; uma atualização sem efeito antes da tarde pode aguardar a triagem. Cada critério precisa de uma razão observável. Não basta a identidade hierárquica de quem envia para supor que qualquer assunto tem prioridade absoluta."
+          ]
+        },
+        {
+          "title": "A rotina deve tornar negociável o que mudou",
+          "paragraphs": [
+            "Introduza uma ocorrência que acrescenta cinquenta minutos de trabalho e exige decisão sobre a ordem. O plano não precisa de caber por magia. É possível adiar uma atividade sem compromisso imediato, pedir decisão de prioridade ou redistribuir uma parte autorizada. Registe o que muda e que consequência é comunicada. A referência do GAO a controlo orientado a objetivos enquadra a atenção aos efeitos, mas os horários e as regras de interrupção deste exercício são próprios e não normas profissionais universais.",
+            "Apresente um quadro inicial e outro revisto, com duas interrupções aceites e duas recusadas ou diferidas. Justifique as escolhas pelo efeito sobre o trabalho. O avaliador procura coerência entre cadência, dependência e capacidade conhecida. Não atribui uma nota melhor a quem elimina toda a margem. A aprendizagem é desenhar uma rotina explicável que possa ser ajustada quando chega informação nova, conservando a diferença entre compromisso, preferência de organização e trabalho que precisa de decisão adicional para ser assumido."
+          ]
+        }
+      ],
+      "case": "Manhã nove–treze: conferência 60min, envios 45, duas triagens de 20 e verificação 15 que deve informar reunião às onze. Surge ocorrência de 50min.",
+      "exercise": "Construa quadro inicial e revisão. Calcule o saldo, preserve margem justificada e compare quatro possíveis interrupções segundo o efeito temporal.",
+      "assessment": {
+        "question": "Uma verificação marcada às onze cumpre informar a reunião das onze?",
+        "answer": "Não. Precisa de terminar e ser comunicada em tempo útil. A soma de durações não substitui a análise das dependências.",
+        "rubric": [
+          "Calcula 160min e saldo80.",
+          "Posiciona a dependência antes da reunião.",
+          "Explicita critérios de interrupção."
+        ]
+      }
+    },
+    {
+      "id": "3",
+      "title": "Escrever uma lista de verificação que produza evidência útil",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Distinguir instrução, item de conferência e prova de execução.",
+        "Testar uma checklist contra uma falha que permite assinalar sem verificar."
+      ],
+      "sourceIds": [
+        "tna-governance"
+      ],
+      "sections": [
+        {
+          "title": "Assinalar uma caixa não explica o que foi observado",
+          "paragraphs": [
+            "Uma lista de verificação pode ajudar a recordar pontos críticos, mas também criar uma aparência de controlo. O item documentos corretos não diz quais documentos, que condição se verifica ou que resultado é aceite. Para funcionar, o item precisa de uma pergunta observável e de uma resposta que preserve uma diferença relevante. Não é necessário escrever um manual dentro de cada caixa; pode existir uma instrução ligada. O importante é que duas pessoas consigam compreender a mesma conferência e registar uma situação que impede avançar.",
+            "A gestão de registos distingue regras de trabalho e evidências de acontecimentos. Essa distinção orienta este exercício, sem atribuir ao guia de The National Archives uma checklist pronta. O procedimento descreve como conferir; a lista orienta a execução; o registo mostra o resultado daquela execução. Uma cópia de formulário em branco não prova que o processo foi verificado. Uma lista preenchida também pode ser insuficiente se apenas repete sim em itens vagos e não permite associar a conferência ao lote ou à versão tratados."
+          ]
+        },
+        {
+          "title": "Um envio informativo que pode conter uma edição errada",
+          "paragraphs": [
+            "No cenário, uma equipa prepara um pacote com carta de apresentação, calendário e instruções de participação. O calendário correto é a edição C; a pasta de trabalho ainda contém B. Uma lista com pacote completo pode ser marcada mesmo com a edição errada, porque os três documentos estão presentes. Substitua-a por itens que distinguem presença e versão. A lista deve indicar a referência conferida, sem exigir copiar todo o calendário. Caso a edição não possa ser confirmada, a opção pendente precisa de impedir que a incerteza se torne um sim automático.",
+            "Acrescente uma situação em que as instruções não se aplicam a um dos destinatários fictícios. Não aplicável deve ter motivo suficiente para diferenciar uma exceção legítima de um item ignorado. Um campo obrigatório pode ser inadequado quando não há forma de representar essa situação. O aluno deve rever o desenho para permitir a realidade do caso, mantendo a decisão relevante. A revisão da lista não altera retroativamente o que foi registado na conferência anterior nem transforma uma versão antiga em erro apenas porque o modelo mudou."
+          ]
+        },
+        {
+          "title": "Testar com alguém que não escreveu a lista",
+          "paragraphs": [
+            "Entregue a checklist e um pacote sintético a outra pessoa, sem explicar oralmente todas as intenções. Peça que assinale o ponto em que precisou de adivinhar. Esse teste de interpretação não demonstra eficácia em produção, mas revela ambiguidades do instrumento. Observe também o custo: se a lista pede referências redundantes em quatro locais, uma mudança pode gerar inconsistência. Procure a menor informação que permita compreender o resultado, sem retirar a identificação necessária para relacionar a conferência com o objeto correto.",
+            "O trabalho final inclui uma lista inicial defeituosa, a versão revista e o resultado do teste com duas situações. Explique um item removido e outro tornado mais preciso. O objetivo não é aumentar o número de caixas nem obter cem por cento de marcações positivas. Uma boa lista deve conseguir registar um problema sem pressionar o utilizador a ocultá-lo para terminar. A qualidade aparece quando o instrumento ajuda a distinguir pacote completo, pacote verificado e pacote ainda condicionado por uma dúvida de versão ou de aplicabilidade."
+          ]
+        }
+      ],
+      "case": "Pacote com carta, calendário e instruções. Edição correta do calendário C; pasta ainda tem B. Instruções não se aplicam a um destinatário sintético.",
+      "exercise": "Redesenhe checklist vaga, teste com dois pacotes e documente pendente e não aplicável. Preserve a distinção entre presença, versão e decisão.",
+      "assessment": {
+        "question": "Três documentos presentes permitem marcar o pacote como verificado?",
+        "answer": "Não. A presença não confirma a edição correta nem a aplicabilidade. A lista deve localizar essas verificações e representar a incerteza.",
+        "rubric": [
+          "Distingue instrução e evidência.",
+          "Identifica edição C e problema B.",
+          "Não força um sim quando falta confirmação."
+        ]
+      }
+    },
+    {
+      "id": "4",
+      "title": "Manter um calendário recorrente com condições explícitas",
+      "estimatedPracticeMinutes": 105,
+      "objectives": [
+        "Distinguir data interna, prazo externo e data dependente de confirmação.",
+        "Representar recorrências sem presumir regras jurídicas ou calendários universais."
+      ],
+      "sourceIds": [
+        "tna-governance"
+      ],
+      "sections": [
+        {
+          "title": "Uma repetição no calendário não explica a origem do compromisso",
+          "paragraphs": [
+            "Tarefas que se repetem semanal ou mensalmente podem ter fundamentos diferentes. Uma reunião interna é uma convenção de equipa; uma prestação exigida por uma entidade externa pode depender de regra específica; outra ação só começa depois de receber informação. Misturar todas como eventos iguais dificulta perceber o efeito de uma alteração. A rotina precisa de conservar a origem, a função responsável e o critério de revisão. Este módulo usa apenas datas internas fictícias; não ensina prazos fiscais, laborais ou de conservação documental.",
+            "Uma ficha de recorrência deve dizer o que se repete e o que precisa de ser confirmado em cada ocorrência. Atualizar mensalmente uma lista não significa que todos os dados continuam válidos por trinta dias. O período é um mecanismo de revisão, não um certificado de atualidade. Se houver alteração relevante antes da revisão seguinte, a rotina deve permitir tratá-la. Também é necessário saber se a atividade pode avançar sem a informação de outra equipa ou se deve permanecer assinalada como condicionada, evitando datas que prometem uma entrega impossível."
+          ]
+        },
+        {
+          "title": "Uma revisão de contactos com duas dependências",
+          "paragraphs": [
+            "Num cenário de quatro semanas, a equipa revê contactos internos à terça-feira da segunda semana. A lista de mudanças chega da coordenação na segunda à tarde; a publicação depende de conferência na quarta de manhã. Se a lista não chegar, a terça continua a ser momento de verificar a pendência, mas não prova que os contactos foram atualizados. O calendário deve distinguir revisão iniciada, dados recebidos, conferência e publicação. Não se devem substituir os dados por estimativas para cumprir a aparência de recorrência.",
+            "Na terceira semana ocorre uma mudança confirmada num contacto de serviço. Esperar até à revisão do mês seguinte pode tornar a informação desatualizada. O aluno precisa de desenhar um gatilho de atualização entre ciclos, respeitando a mesma autorização e conferência definidas no cenário. A atividade não exige recolher contactos pessoais reais. Deve usar identificadores sintéticos e representar o acesso adequado à lista. Uma alteração urgente não concede permissão de publicar qualquer dado nem de tornar acessível uma informação que continua restrita."
+          ]
+        },
+        {
+          "title": "Rever sem duplicar compromissos esquecidos",
+          "paragraphs": [
+            "Quando uma reunião ou tarefa muda de cadência, é necessário tratar os eventos futuros e a instrução que os sustenta. Criar uma nova série sem sinalizar a anterior pode deixar duas rotinas contraditórias. O exercício conserva o histórico e propõe a atualização dos próximos eventos por quem tem competência, sem apagar o que já ocorreu. Uma nota de alteração indica a partir de quando a regra vale e que ocorrências afeta. Não se executa qualquer mudança em calendário real nem se envia convite externo durante a aprendizagem.",
+            "Entregue um calendário de quatro semanas e três fichas: ocorrência regular, informação ausente e mudança entre ciclos. Assinale datas confirmadas e dependentes. O avaliador verifica se o quadro representa trabalho efetivamente realizado e se a origem da recorrência continua identificável. O produto precisa de permitir que outra pessoa compreenda por que uma data existe e o que fazer se uma condição falhar. O calendário torna-se assim instrumento de coordenação, em vez de uma coleção de lembretes que aparenta cumprimento apenas porque os eventos se repetem automaticamente."
+          ]
+        }
+      ],
+      "case": "Revisão interna na terça da segunda semana; dados segunda à tarde; conferência quarta. Dados podem faltar e mudança confirmada surge na terceira semana.",
+      "exercise": "Monte quatro semanas e fichas para ciclo normal, ausência e alteração entre ciclos. Defina gatilho e revisão de série futura, sem inventar prazos legais.",
+      "assessment": {
+        "question": "O lembrete recorrente confirma que os dados foram atualizados?",
+        "answer": "Não. Marca uma oportunidade de ação. O estado deve refletir receção, revisão e conferência efetivas, incluindo condições em falta.",
+        "rubric": [
+          "Distingue origem e condição.",
+          "Prevê alteração entre ciclos.",
+          "Não confunde evento e execução."
+        ]
+      }
+    },
+    {
+      "id": "5",
+      "title": "Preparar continuidade sem partilhar credenciais ou poderes",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Identificar dependências de uma pessoa que impedem continuidade de uma rotina.",
+        "Desenhar substituição com acesso e autoridade previamente verificados."
+      ],
+      "sourceIds": [
+        "tna-governance"
+      ],
+      "sections": [
+        {
+          "title": "Saber como fazer não equivale a poder executar",
+          "paragraphs": [
+            "Uma rotina pode estar descrita e ainda depender exclusivamente da conta ou da autoridade de uma pessoa. A continuidade precisa de considerar conhecimento, acesso e competência para decidir. Um substituto pode compreender o trabalho, mas não ter permissão para abrir o local necessário; pode ter acesso de leitura, mas não poder aprovar uma publicação. Essas diferenças devem ser verificadas antes da ausência prevista. A solução não é partilhar palavras-passe, simular identidade ou usar uma sessão que pertence a outro profissional.",
+            "O guia de The National Archives inclui controlo de acesso e responsabilidades como dimensões da gestão de registos. A atividade LDR usa essa distinção para construir um teste de continuidade com materiais fictícios. Não define novas permissões numa plataforma real nem recomenda conceder acesso irrestrito para prevenir qualquer problema. O desenho deve preservar as funções e as políticas existentes. Quando falta autorização, o plano precisa de localizar o pedido à função competente e a alternativa temporária que pode ser executada legitimamente."
+          ]
+        },
+        {
+          "title": "Um boletim que fica preso na conta da pessoa ausente",
+          "paragraphs": [
+            "No caso, Paula prepara um boletim interno semanal. A equipa pode ler o modelo, mas só Paula possui permissão de publicação. Durante uma ausência prevista, Sérgio consegue preparar o conteúdo e solicitar revisão, mas não publicar. O plano deve separar preparação, aprovação e publicação e identificar quem poderá realizar a última etapa dentro das regras. Escrever Sérgio substitui Paula não resolve essa dependência. A substituição precisa de alcance e confirmação por quem administra o processo, sem transferir automaticamente todos os poderes da função.",
+            "Uma saída temporária pode ser adiar a edição, se a coordenação competente decidir e comunicar essa opção. Outra pode ser designar um publicador já autorizado, depois de verificar disponibilidade. O exercício não presume que essa pessoa existe nem que aceitará o trabalho. A ficha deve indicar o estado de confirmação. A ausência de resposta continua como condição aberta. Esse rigor evita apresentar um plano aparentemente completo que só funcionaria se alguém contornasse controlos ou assumisse uma tarefa para a qual não foi designado."
+          ]
+        },
+        {
+          "title": "Ensaiar a continuidade com uma recuperação limitada",
+          "paragraphs": [
+            "O teste consiste em entregar ao substituto uma ocorrência sintética da rotina e observar se consegue identificar o modelo válido, preparar o produto e encaminhar o que não pode decidir. Não é necessário publicar realmente. Registe onde precisou de informação adicional e quanto do trabalho ficou bloqueado por permissão. Uma falha no ensaio serve para melhorar o plano, não para culpar quem recusou ultrapassar limites. A documentação deve indicar contactos de função e caminhos autorizados, sem incluir segredos ou dados pessoais desnecessários.",
+            "Apresente um mapa de continuidade e o relato do ensaio. Inclua uma alternativa que depende de aprovação e uma tarefa que o substituto já consegue executar. O resultado esperado é tornar a dependência visível e tratável. Não se exige que toda a atividade prossiga sem qualquer interrupção: algumas ações precisam legitimamente de uma decisão especializada ou de uma função específica. A qualidade do plano está em distinguir o que pode continuar, o que deve aguardar e como comunicar essa diferença sem degradar as permissões que protegem o trabalho e as pessoas."
+          ]
+        }
+      ],
+      "case": "Paula publica boletim. Sérgio lê modelo e prepara conteúdo, mas não publica. Ausência prevista exige decisão sobre publicador autorizado ou adiamento.",
+      "exercise": "Desenhe mapa de continuidade, faça ensaio sem publicação e registe bloqueios. Separe alternativa autorizada, alternativa pendente e tarefa já executável.",
+      "assessment": {
+        "question": "Partilhar a palavra-passe de Paula resolve legitimamente a continuidade?",
+        "answer": "Não. O plano deve preservar identidade e permissões, verificar funções autorizadas e encaminhar o que o substituto não pode executar.",
+        "rubric": [
+          "Separa conhecimento, acesso e autoridade.",
+          "Não partilha credenciais.",
+          "Regista disponibilidade ainda não confirmada."
+        ]
+      }
+    },
+    {
+      "id": "6",
+      "title": "Rever a rotina pelo valor do controlo e pelo custo de manter",
+      "estimatedPracticeMinutes": 135,
+      "objectives": [
+        "Comparar utilidade e custo de registos recorrentes.",
+        "Propor simplificação reversível preservando a evidência necessária."
+      ],
+      "sourceIds": [
+        "gao-routines"
+      ],
+      "sections": [
+        {
+          "title": "Uma rotina antiga pode continuar a executar sem continuar a servir",
+          "paragraphs": [
+            "Registos paralelos podem ter surgido para necessidades diferentes e tornar-se redundantes depois de uma mudança. Eliminar todos para ganhar tempo pode perder evidência; conservar todos indefinidamente pode multiplicar inconsistências. A revisão precisa de perguntar que decisão cada registo apoia, quem o usa e que diferença não pode desaparecer. O aluno analisará uma rotina com três listas e proporá uma simplificação limitada. O exercício não autoriza apagar documentos de uma organização real nem substitui uma política de retenção ou uma avaliação de conformidade.",
+            "A ideia de avaliar mudanças no controlo interno, apresentada pelo GAO, enquadra a atenção aos efeitos da simplificação. Os dados de tempo e os instrumentos deste módulo são próprios. Antes de propor retirar uma etapa, identifique a função que ela cumpre e a informação que não existe noutro lugar. Duas listas com campos semelhantes podem servir leitores distintos ou conter estados diferentes. A semelhança visual não prova redundância. A comparação deve ser feita por significado e uso, preservando a origem dos registos analisados."
+          ]
+        },
+        {
+          "title": "Três listas e uma informação que só existe numa delas",
+          "paragraphs": [
+            "Na rotina fictícia, a equipa mantém uma lista de pedidos, uma folha de acompanhamento e um resumo semanal. A primeira contém origem e descrição; a segunda acrescenta responsável e estado; o resumo conta os estados no fim da semana. Preencher as duas primeiras consome quinze minutos cada por dia útil; o resumo consome vinte minutos por semana. Numa semana sintética de cinco dias, são cento e setenta minutos. Fundir campos num registo de referência pode reduzir duplicação, mas o novo desenho precisa de preservar origem, responsável, estado e capacidade de produzir o resumo.",
+            "Um ensaio mostra que o registo consolidado demora vinte minutos diários e o resumo continua a exigir vinte semanais: são cento e vinte minutos, uma diferença de cinquenta. Isso é uma observação do ensaio, não garantia de poupança constante. Se o acesso ao registo consolidado expuser descrições a quem só precisava dos totais, a mudança cria um problema. A simplificação deve prever visualizações ou circulação compatíveis com permissões, sem assumir que centralizar informação obriga a dar o mesmo acesso a toda a equipa."
+          ]
+        },
+        {
+          "title": "Comparar sem apagar o passado para provar a melhoria",
+          "paragraphs": [
+            "Defina critérios antes de recomendar a adoção: recuperação das origens, localização dos responsáveis, representação correta dos estados e acesso apropriado. O tempo é uma dimensão, não o único objetivo. Conserve a possibilidade de regressar à organização anterior enquanto a versão nova é testada com dados sintéticos. Documente erros e dúvidas, mesmo quando desfavorecem a proposta. Uma medição sem ocorrência complexa pode subestimar o custo real. A revisão deve dizer que condições faltam examinar antes de considerar o desenho pronto para uso.",
+            "A entrega final reúne o diagnóstico das três listas, a proposta de registo, cálculos e teste de recuperação de quatro informações. Acrescente uma decisão de manter um elemento que parecia redundante e uma simplificação justificada. O curso termina com uma forma de governar rotinas: entrada coerente, cadência, conferência, recorrência e continuidade, avaliadas pelo efeito sobre o trabalho. Não se confunde essa síntese com validar as cento e sessenta horas históricas do catálogo. Os tempos propostos precisam de pilotagem e as mudanças reais continuam dependentes de avaliação e autorização no contexto de cada organização."
+          ]
+        }
+      ],
+      "case": "Duas listas de15min/dia e resumo20min/semana, cinco dias:170min. Ensaio consolidado20min/dia mais resumo20:120min. Acesso às descrições não pode ser ampliado automaticamente.",
+      "exercise": "Compare funções, calcule tempos e desenhe registo consolidado com circulação adequada. Teste recuperação de origem, responsável, estado e totais; documente um limite e um critério de recuo.",
+      "assessment": {
+        "question": "Poupar cinquenta minutos no ensaio basta para aprovar a mudança?",
+        "answer": "Não. A proposta também deve preservar contexto, estados e acesso. O ensaio limitado não garante poupança constante ou adequação ao uso real.",
+        "rubric": [
+          "Calcula170,120 e diferença50.",
+          "Preserva informação e permissões.",
+          "Prevê critérios e reversibilidade."
+        ]
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão de administração e gestão documental; verificar limites entre os três percursos administrativos.",
+    "Pilotar instrumentos e compreensão das condições; dimensionar trabalho para a carga histórica anunciada.",
+    "Verificar acessibilidade dos quadros e leitor de revisão, sem alterar dados, permissões ou progressos existentes.",
+    "Aprovação editorial e autorização antes de produção."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

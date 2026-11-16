@@ -1,0 +1,383 @@
+{
+  "productKey": "curso_assinatura_raciocinio_logico_para_estudos_concursos_e_selecoes",
+  "slug": "raciocinio-logico-para-estudos-concursos-e-selecoes",
+  "title": "Raciocínio Lógico para Estudos, Concursos e Seleções",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 120,
+  "validatedHours": null,
+  "expectedModuleCount": 6,
+  "scope": "Percurso introdutório de lógica clássica: proposições e quantificadores, conectores, condicionais, validade, conjuntos e problema integrado. Não cobre automaticamente qualquer edital; não inclui ainda banco extenso graduado ou todos os temas de matemática de concursos. Casos e dados originais sintéticos; 120 horas históricas por validar.",
+  "courseObjectives": [
+    "Identificar afirmações com valor de verdade num contexto definido.",
+    "Construir negações de todos, algum e nenhum sem trocar negação por contrário.",
+    "Construir uma tabela de quatro possibilidades para duas proposições.",
+    "Distinguir ou inclusivo, exclusão e agrupamentos diferentes.",
+    "Distinguir implicação, recíproca e bicondicional.",
+    "Identificar a combinação que falsifica uma condicional material.",
+    "Aplicar modus ponens e modus tollens com premissas explícitas.",
+    "Refutar uma inferência inválida por um caso com premissas verdadeiras e conclusão falsa.",
+    "Reconstruir regiões de dois conjuntos a partir de totais e sobreposição.",
+    "Distinguir pelo menos uma atividade, exatamente uma e nenhuma.",
+    "Combinar quantificadores, implicação e conjuntos num enunciado delimitado.",
+    "Separar conclusão necessária, possibilidade e informação insuficiente."
+  ],
+  "sources": [
+    {
+      "id": "os-statements",
+      "title": "OpenStax. Contemporary Mathematics. 2.1 Statements and Quantifiers.",
+      "url": "https://openstax.org/books/contemporary-mathematics/pages/2-1-statements-and-quantifiers",
+      "consulted": "2026-11-16",
+      "scope": "Definição de proposição e passagens sobre quantificadores consultadas; aplicações e cartões originais. Não se declara leitura integral do livro ou validação do curso."
+    },
+    {
+      "id": "os-compound",
+      "title": "OpenStax. Contemporary Mathematics. 2.2 Compound Statements.",
+      "url": "https://openstax.org/books/contemporary-mathematics/pages/2-2-compound-statements",
+      "consulted": "2026-11-16",
+      "scope": "Conectores e agrupamento consultados; não se copiam questões, tabelas ou exemplos do manual. Não se declara leitura integral do livro ou validação do curso."
+    },
+    {
+      "id": "os-conditional",
+      "title": "OpenStax. Contemporary Mathematics. 2.4 Truth Tables for the Conditional and Biconditional.",
+      "url": "https://openstax.org/books/contemporary-mathematics/pages/2-4-truth-tables-for-the-conditional-and-biconditional",
+      "consulted": "2026-11-16",
+      "scope": "Apresentação, explicação da condicional material e tabela de quatro possibilidades consultadas; não se copiam exemplos do manual. Desenvolvimento aplicado às peças é original, com revisão matemática independente pendente."
+    },
+    {
+      "id": "os-arguments",
+      "title": "OpenStax. Contemporary Mathematics. 2.7 Logical Arguments.",
+      "url": "https://openstax.org/books/contemporary-mathematics/pages/2-7-logical-arguments",
+      "consulted": "2026-11-16",
+      "scope": "Definições de validade/solidez e passagens sobre modus ponens e modus tollens consultadas. Argumentos e contraexemplos de caixas são novos. Não se declara leitura integral do livro ou validação do curso."
+    },
+    {
+      "id": "os-sets",
+      "title": "OpenStax. Contemporary Mathematics. 1.4 Set Operations with Two Sets.",
+      "url": "https://openstax.org/books/contemporary-mathematics/pages/1-4-set-operations-with-two-sets",
+      "consulted": "2026-11-16",
+      "scope": "Definições de união/interseção e passagens de cardinalidade e contagem da sobreposição consultadas; contagens e problemas LDR originais. Não se declara leitura integral do livro."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Distinguir proposições e negar afirmações quantificadas"
+    },
+    {
+      "id": "2",
+      "title": "Combinar condições com e, ou e agrupamento"
+    },
+    {
+      "id": "3",
+      "title": "Ler se… então sem inverter a condição"
+    },
+    {
+      "id": "4",
+      "title": "Avaliar uma conclusão pelas premissas, não pela aparência"
+    },
+    {
+      "id": "5",
+      "title": "Contar conjuntos sem duplicar a interseção"
+    },
+    {
+      "id": "6",
+      "title": "Resolver um problema integrado e justificar os limites"
+    }
+  ],
+  "modules": [
+    {
+      "id": "1",
+      "title": "Distinguir proposições e negar afirmações quantificadas",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Identificar afirmações com valor de verdade num contexto definido.",
+        "Construir negações de todos, algum e nenhum sem trocar negação por contrário."
+      ],
+      "sourceIds": [
+        "os-statements"
+      ],
+      "sections": [
+        {
+          "title": "Precisar o que pode ser verdadeiro ou falso",
+          "paragraphs": [
+            "Considere um conjunto fictício de quatro cartões numerados de um a quatro. A frase o cartão dois é azul faz uma afirmação que pode ser verdadeira ou falsa segundo os dados. A pergunta qual é a cor do cartão dois e a ordem pinte o cartão não têm essa função. Em lógica clássica introdutória, trabalhamos com proposições e com valores de verdade definidos. Não conhecer a cor não é o mesmo que a proposição ser falsa: pode faltar informação ao aluno para determinar o valor, embora a frase continue a fazer uma afirmação.",
+            "A secção sobre proposições e quantificadores da OpenStax oferece as definições de referência. Os cartões e as situações deste curso são originais. Para analisar uma frase, fixe o domínio e o momento. Todos os cartões são azuis diz respeito aos quatro cartões do cenário, não a todos os cartões existentes. Uma expressão como está perto pode precisar de um critério para eliminar ambiguidade antes da formalização. A lógica não decide sozinha qual definição linguística era pretendida; o enunciado tem de estabelecer o significado relevante."
+          ]
+        },
+        {
+          "title": "A negação precisa de abranger exatamente a afirmação inicial",
+          "paragraphs": [
+            "Os cartões um, dois e três são azuis; o quatro é verde. A frase todos os quatro cartões são azuis é falsa. A sua negação é existe pelo menos um destes cartões que não é azul, que é verdadeira. Não é necessário que nenhum seja azul para negar todos. O cartão quatro fornece um contraexemplo suficiente. Se a afirmação for existe pelo menos um cartão verde, a negação passa a ser nenhum cartão do conjunto é verde. Neste caso, a primeira é verdadeira e a negação é falsa.",
+            "Em lógica, algum significa pelo menos um e pode incluir todos, salvo condição explícita em contrário. Na linguagem quotidiana, algum pode sugerir apenas uma parte; essa sugestão não deve entrar silenciosamente no exercício formal. Também é importante distinguir não azul de verde: no conjunto deste cenário coincidem para o cartão quatro, mas isso não é uma equivalência geral entre cores. Uma negação não precisa de escolher uma alternativa específica quando várias possibilidades satisfazem o não. O domínio e as propriedades devem permanecer estáveis na reformulação."
+          ]
+        },
+        {
+          "title": "Testar o par antes de aceitar a resposta",
+          "paragraphs": [
+            "Para conferir uma negação, pergunte se a afirmação e a proposta de negação poderiam ser verdadeiras ao mesmo tempo ou falsas ao mesmo tempo no domínio estabelecido. Uma negação correta troca o valor em cada situação possível. Todos são azuis e todos são verdes podem ser ambos falsos num conjunto misto, logo não são negações um do outro. Esse teste ajuda a descobrir respostas que apenas parecem opostas. O aluno deve justificar com uma configuração concreta, em vez de depender da impressão causada pelas palavras.",
+            "Prepare quatro afirmações sobre os cartões, escreva as negações e atribua os valores no cenário fornecido. Depois altere apenas a cor do cartão quatro para azul e reveja os valores afetados. A mudança mostra que negar uma frase é uma operação sobre o seu sentido, não um esforço para a tornar sempre falsa. A avaliação considera a precisão do domínio, o alcance do quantificador e a capacidade de produzir um contraexemplo, sem transformar uma conclusão sobre quatro cartões numa generalização sobre qualquer conjunto possível."
+          ]
+        }
+      ],
+      "case": "Cartões1,2,3 azuis; cartão4 verde. Domínio contém exatamente esses quatro cartões e cores no momento descrito.",
+      "exercise": "Escreva quatro afirmações e negações; avalie-as e repita após mudar só cartão4 para azul. Inclua contraexemplo a uma negação incorreta.",
+      "assessment": {
+        "question": "Negar todos são azuis exige afirmar nenhum é azul?",
+        "answer": "Não. Basta afirmar que existe pelo menos um não azul. No cenário, o cartão quatro testemunha a negação de todos.",
+        "rubric": [
+          "Preserva domínio.",
+          "Interpreta algum como pelo menos um.",
+          "Distingue contrário e negação."
+        ]
+      }
+    },
+    {
+      "id": "2",
+      "title": "Combinar condições com e, ou e agrupamento",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Construir uma tabela de quatro possibilidades para duas proposições.",
+        "Distinguir ou inclusivo, exclusão e agrupamentos diferentes."
+      ],
+      "sourceIds": [
+        "os-compound"
+      ],
+      "sections": [
+        {
+          "title": "O significado do conector determina a seleção",
+          "paragraphs": [
+            "Uma regra fictícia permite participar numa oficina a quem possui bilhete ou convite. Neste módulo, ou é inclusivo: possuir ambos também satisfaz a condição. Se a intenção fosse exatamente um dos dois, seria necessário dizê-lo. A conjunção e exige as duas condições. A diferença modifica a classificação de casos concretos, não apenas a maneira de escrever. O aluno irá enumerar possibilidades para evitar decidir pelo uso informal da linguagem quando o enunciado já fixou uma convenção lógica.",
+            "Represente bilhete por B e convite por C. As combinações são ambos verdadeiros; B verdadeiro e C falso; B falso e C verdadeiro; ambos falsos. B e C é verdadeiro apenas na primeira. B ou C é verdadeiro nas três primeiras. Esses resultados referem-se à condição descrita e não a regras reais de acesso a eventos. O curso não concede direitos nem recomenda contornar controlos. A secção Compound Statements da OpenStax fundamenta os conectores; os nomes, a regra e a tabela aplicada pertencem ao exercício."
+          ]
+        },
+        {
+          "title": "O agrupamento altera uma condição de três partes",
+          "paragraphs": [
+            "Acrescente A: a pessoa confirmou disponibilidade no horário. Compare (B ou C) e A com B ou (C e A). Na primeira, a disponibilidade é exigida a qualquer pessoa. Na segunda, um bilhete verdadeiro satisfaz a regra mesmo com A falso. O caso B verdadeiro, C falso e A falso distingue as duas expressões: a primeira é falsa e a segunda verdadeira. Escrever a frase sem parênteses nem explicação pode esconder essa diferença. O aluno deverá produzir versões verbais que tornem o agrupamento explícito.",
+            "Uma tradução possível da primeira é tem bilhete ou convite e, em qualquer desses casos, confirmou disponibilidade. Para a segunda, pode dizer tem bilhete, ou então tem simultaneamente convite e disponibilidade confirmada. As formulações precisam de ser examinadas por quem lê, porque pequenas mudanças verbais podem reintroduzir ambiguidade. Não se deve resolver um problema de tradução aplicando automaticamente uma prioridade de símbolos que não foi declarada no texto de origem. Primeiro compreenda a regra; depois use os símbolos para a representar com precisão."
+          ]
+        },
+        {
+          "title": "Uma tabela é uma enumeração, não uma amostra",
+          "paragraphs": [
+            "Para três proposições com dois valores cada, existem oito combinações possíveis. Ao listar todas sem repetição, o aluno cobre o espaço completo da análise proposicional; não está a fazer um inquérito sobre frequentadores. Uma única combinação com resultados diferentes basta para mostrar que duas expressões não são equivalentes. Por outro lado, coincidirem em dois exemplos não prova equivalência em todos os casos. Essa distinção entre teste parcial e enumeração completa será importante na avaliação de argumentos mais à frente.",
+            "A entrega é a tabela de B e C, seguida da comparação das duas expressões com A. Inclua um caso que as distingue e uma regra de exatamente um entre bilhete e convite, explicada por palavras ou por tabela. O avaliador deve conseguir verificar a resposta linha a linha. Não é necessário decorar todos os símbolos antes de compreender os casos; pode começar com frases completas e adicionar uma legenda. A competência consiste em conservar o significado quando muda de linguagem e justificar por que determinada combinação satisfaz ou não a condição."
+          ]
+        }
+      ],
+      "case": "B=bilhete; C=convite; A=disponibilidade. Ou inclusivo. Comparar (B ou C) e A contra B ou (C e A).",
+      "exercise": "Construa quatro linhas B/C e oito linhas B/C/A; compare as expressões. Defina exatamente um e apresente um caso que separe os agrupamentos.",
+      "assessment": {
+        "question": "B verdadeiro, C falso e A falso produz o mesmo resultado nos dois agrupamentos?",
+        "answer": "Não. (B ou C) e A é falso; B ou (C e A) é verdadeiro. Esse caso prova que as expressões não são equivalentes.",
+        "rubric": [
+          "Enumera sem omissões.",
+          "Mantém ou inclusivo.",
+          "Mostra caso separador."
+        ]
+      }
+    },
+    {
+      "id": "3",
+      "title": "Ler se… então sem inverter a condição",
+      "estimatedPracticeMinutes": 135,
+      "objectives": [
+        "Distinguir implicação, recíproca e bicondicional.",
+        "Identificar a combinação que falsifica uma condicional material."
+      ],
+      "sourceIds": [
+        "os-conditional"
+      ],
+      "sections": [
+        {
+          "title": "Uma direção de implicação não cria a direção inversa",
+          "paragraphs": [
+            "Num jogo fictício, se uma peça tem estrela, então tem borda preta. Denote estrela por E e borda preta por P. A regra é E implica P. Uma peça com estrela e borda preta é compatível; uma peça sem estrela e com borda preta também. A regra não diz que apenas as peças com estrela têm essa borda. Concluir E a partir de P acrescenta uma direção que não foi fornecida. O aluno precisa de distinguir a regra escrita de uma associação que lhe parece provável ou habitual.",
+            "Na condicional material da lógica clássica, E implica P é falsa apenas quando E é verdadeiro e P falso. Nos outros três pares de valores, é verdadeira. Isso é uma convenção formal de avaliação, não uma afirmação sobre causa ou tempo. Uma frase real com se pode ter usos que exigem interpretação adicional. Neste curso, o enunciado indicará quando se está a trabalhar com a condicional material. A secção da OpenStax sobre tabelas condicionais fornece a referência; as peças e os testes foram criados para esta aula."
+          ]
+        },
+        {
+          "title": "Necessário e suficiente descrevem relações diferentes",
+          "paragraphs": [
+            "Segundo a regra do jogo, ter estrela é suficiente para exigir borda preta; ter borda preta é necessário para uma peça que tenha estrela. Não é suficiente para concluir estrela, porque pode haver bordas pretas sem estrela. Para dizer estrela se e somente se borda preta, seriam necessárias as duas direções. Essa bicondicional exclui também a peça sem estrela que tem borda preta. A diferença pode ser testada com quatro peças que representem as quatro combinações, em vez de depender de uma frase memorizada.",
+            "Imagine agora que a inspeção encontra uma peça com estrela e borda branca. Se branca significa não preta neste cenário, ela contraria a regra. Uma peça sem estrela e sem borda preta não a contraria, pois a condição inicial não ocorreu. Dizer que a regra foi respeitada nesse par formal não significa que a ausência de estrela tenha causado a cor. A avaliação proposicional e a explicação causal são questões distintas. O curso não transforma uma tabela de valores numa teoria sobre como os objetos foram produzidos."
+          ]
+        },
+        {
+          "title": "Negar a regra é localizar o seu contraexemplo",
+          "paragraphs": [
+            "A negação de E implica P corresponde a E verdadeiro e P falso. Não é a regra se não tem estrela, então não tem borda preta: essa é outra condicional. Para mostrar que a afirmação universal sobre as peças falha, procure uma peça com a propriedade inicial sem a consequência exigida. Uma observação compatível não prova que todas as peças obedecem. O aluno deve indicar se está a avaliar uma peça conhecida, uma tabela de possibilidades ou uma regra sobre todo o conjunto, mantendo esses níveis separados.",
+            "Produza um quadro de quatro peças possíveis e indique compatibilidade com implicação e bicondicional. Depois escreva a recíproca e a negação da regra e forneça um exemplo para cada diferença. A entrega deve explicar necessário e suficiente com referência às peças, sem trocar as palavras por uma mnemónica vazia. O avaliador procura uma justificação que sobreviva à mudança dos nomes das propriedades. Se a pessoa só acerta porque imagina que estrelas costumam ser desenhadas de determinada forma, ainda não isolou a estrutura lógica que o exercício pretende desenvolver."
+          ]
+        }
+      ],
+      "case": "E=estrela; P=borda preta. Regra E implica P; branca equivale a não preta no cenário. As quatro combinações são possíveis antes de aplicar a regra.",
+      "exercise": "Compare implicação e bicondicional nas quatro peças. Escreva recíproca e negação, explique necessário/suficiente e dê contraexemplo à inversão.",
+      "assessment": {
+        "question": "Borda preta permite concluir estrela pela regra E implica P?",
+        "answer": "Não. P pode ocorrer sem E. A recíproca precisaria de premissa adicional; só E verdadeiro e P falso viola a condicional dada.",
+        "rubric": [
+          "Obtém V,F,V,V para pares VV,VF,FV,FF.",
+          "Distingue direção inversa.",
+          "Separa implicação e causa."
+        ]
+      }
+    },
+    {
+      "id": "4",
+      "title": "Avaliar uma conclusão pelas premissas, não pela aparência",
+      "estimatedPracticeMinutes": 135,
+      "objectives": [
+        "Aplicar modus ponens e modus tollens com premissas explícitas.",
+        "Refutar uma inferência inválida por um caso com premissas verdadeiras e conclusão falsa."
+      ],
+      "sourceIds": [
+        "os-arguments"
+      ],
+      "sections": [
+        {
+          "title": "Validade não é sinónimo de plausibilidade",
+          "paragraphs": [
+            "Um argumento dedutivo é válido quando não há situação em que todas as premissas sejam verdadeiras e a conclusão falsa. Essa avaliação examina a relação, não garante que as premissas descrevam o mundo. Num cenário fictício, toda a caixa selada tem etiqueta; esta caixa está selada; portanto tem etiqueta. A conclusão segue da regra e do caso. Se a regra tiver sido inventada ou estiver errada, a estrutura continua válida, mas não oferece uma conclusão factual segura sobre caixas reais. Um argumento sólido reúne validade e premissas verdadeiras.",
+            "Duas formas serão praticadas: de se S então T e S, concluir T; de se S então T e não T, concluir não S. São conhecidas como modus ponens e modus tollens. A secção Logical Arguments da OpenStax fornece a referência formal. A aula usa caixas e etiquetas originais, sem copiar os exemplos do manual. O aluno deve identificar cada premissa e a conclusão antes de nomear a forma. O rótulo sozinho não mostra se a frase foi traduzida corretamente."
+          ]
+        },
+        {
+          "title": "Uma etiqueta pode existir por outra razão",
+          "paragraphs": [
+            "Compare o argumento: toda a caixa selada tem etiqueta; esta caixa tem etiqueta; logo está selada. Ele afirma a consequência e tenta recuperar a condição inicial. Para refutar a validade, basta imaginar uma caixa não selada com etiqueta. A regra continua respeitada, a segunda premissa é verdadeira e a conclusão falsa. Não é necessário descobrir uma caixa assim no armazém real para demonstrar a possibilidade lógica no cenário. O contraexemplo mostra que as premissas fornecidas não obrigam a conclusão, mesmo que algumas caixas etiquetadas estejam seladas.",
+            "Outra tentativa inválida diz: toda a caixa selada tem etiqueta; esta não está selada; logo não tem etiqueta. A mesma caixa não selada com etiqueta mantém as premissas verdadeiras e torna a conclusão falsa. Negar a condição inicial não obriga a negar a consequência. Ao contrário, se esta caixa não tem etiqueta, a regra permite concluir que não está selada. O aluno deve comparar as duas negativas e explicar qual parte da condicional foi negada, sem tratar qualquer frase com não como aplicação de modus tollens."
+          ]
+        },
+        {
+          "title": "Construir uma refutação que respeita todas as premissas",
+          "paragraphs": [
+            "Um suposto contraexemplo que viola a regra não refuta a validade do argumento que assume essa regra. O teste exige manter todas as premissas verdadeiras. Esta condição impede escolher uma situação arbitrária apenas porque contraria a conclusão. Uma tabela de possibilidades pode ajudar: elimine as linhas em que alguma premissa é falsa e veja se resta uma linha com conclusão falsa. Se não resta nenhuma, a forma é válida. Isso não dispensa verificar depois a verdade das premissas quando o argumento é usado numa situação empírica.",
+            "Classifique quatro argumentos, dois válidos e dois inválidos, usando as versões fornecidas sobre caixas. Para cada inválido, apresente o contraexemplo completo com valores de S e T. Para um válido, invente uma premissa factual falsa e explique por que isso afeta a solidez sem alterar a relação formal. A avaliação distingue conhecimento de uma forma e capacidade de a testar. O aluno deve conseguir dizer não se pode concluir, em vez de substituir a falta de implicação por uma afirmação oposta que também não foi demonstrada."
+          ]
+        }
+      ],
+      "case": "S=caixa selada; T=etiqueta. Premissa geral S implica T. Comparar S→T,S; S→T,não T; S→T,T; S→T,não S.",
+      "exercise": "Classifique as quatro formas; forneça contraexemplos para as inválidas. Distingua argumento válido e sólido com premissa factual explicitamente falsa.",
+      "assessment": {
+        "question": "Uma caixa não selada e etiquetada refuta a regra toda a selada tem etiqueta?",
+        "answer": "Não. É compatível com a regra. Serve para refutar inferências que concluem selada a partir de etiquetada ou não etiquetada a partir de não selada.",
+        "rubric": [
+          "Mantém premissas no contraexemplo.",
+          "Identifica duas formas válidas.",
+          "Não confunde invalidade com conclusão necessariamente falsa."
+        ]
+      }
+    },
+    {
+      "id": "5",
+      "title": "Contar conjuntos sem duplicar a interseção",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Reconstruir regiões de dois conjuntos a partir de totais e sobreposição.",
+        "Distinguir pelo menos uma atividade, exatamente uma e nenhuma."
+      ],
+      "sourceIds": [
+        "os-sets"
+      ],
+      "sections": [
+        {
+          "title": "Um total pode contar a mesma pessoa duas vezes",
+          "paragraphs": [
+            "Num grupo fictício de trinta participantes, dezoito fizeram a oficina A e quatorze a oficina B. Seis fizeram ambas. Somar dezoito e quatorze produz trinta e dois inscrições em oficinas, mas não trinta e duas pessoas distintas. Quem fez ambas entrou na soma duas vezes. Para contar quem fez pelo menos uma, subtraia uma cópia da interseção: dezoito mais quatorze menos seis resulta vinte e seis. O domínio é o mesmo grupo de trinta e todas as contagens usam pessoas, não sessões frequentadas.",
+            "A secção de operações com dois conjuntos da OpenStax apresenta união e interseção; os números e o cenário são novos. A união contém quem pertence a A, a B ou a ambos; a interseção contém quem pertence aos dois. Um desenho pode organizar as regiões, mas não precisa de estar à escala para sustentar o cálculo. Se for utilizado visualmente, deve ter rótulos claros e alternativa textual. A posição dentro de cada região representa pertença, não qualidade da participação, preferência ou intensidade de aprendizagem."
+          ]
+        },
+        {
+          "title": "Preencher primeiro o que pertence aos dois",
+          "paragraphs": [
+            "Coloque seis na região comum. A parte apenas A tem dezoito menos seis, ou doze. Apenas B tem quatorze menos seis, ou oito. As três regiões internas somam doze mais seis mais oito, ou vinte e seis. Fora dos dois conjuntos ficam trinta menos vinte e seis, ou quatro. Exatamente uma oficina corresponde a doze mais oito, ou vinte. Pelo menos uma inclui também os seis que fizeram ambas. Cada expressão seleciona regiões diferentes e precisa de ser lida antes de escolher uma operação.",
+            "Confira o resultado de duas maneiras: doze mais seis recupera dezoito; oito mais seis recupera quatorze. As quatro regiões, incluindo nenhuma, recuperam trinta. Se algum subtotal não fechar, procure a origem da diferença antes de modificar o número de pessoas que fizeram ambas. Um resultado negativo numa região pode revelar dados incompatíveis. Por exemplo, afirmar vinte pessoas em ambas quando só dezoito fizeram A não descreve um conjunto possível com essas definições. Não é um sinal para substituir o valor negativo por zero e continuar."
+          ]
+        },
+        {
+          "title": "O denominador precisa de acompanhar a pergunta",
+          "paragraphs": [
+            "Se a pergunta é que proporção do grupo fez ambas, o denominador é trinta: seis sobre trinta, ou vinte por cento. Se pergunta que proporção entre participantes de A também fez B, o denominador é dezoito: seis sobre dezoito, ou um terço. Isso não torna uma percentagem mais correta que a outra; respondem a perguntas distintas. O curso não extrapola estas proporções para qualquer população nem as apresenta como probabilidade causal de aprender uma competência. São descrições exatas do grupo fictício definido no enunciado.",
+            "Entregue as quatro regiões, as verificações e respostas para pelo menos uma, exatamente uma e nenhuma. Acrescente duas proporções com denominadores justificados e um conjunto de números incompatível, explicando o motivo. O avaliador deve poder reconstruir cada passo sem depender de um gráfico decorativo. A aprendizagem não consiste em memorizar soma e subtrai sem saber o que se contou duas vezes. Ela exige conservar a unidade, o domínio e o significado de cada região ao transformar o enunciado numa operação e devolver o resultado à pergunta original."
+          ]
+        }
+      ],
+      "case": "Trinta pessoas; A dezoito; B quatorze; ambas seis. Mesma unidade e domínio. Todos os dados são sintéticos.",
+      "exercise": "Calcule quatro regiões e contagens solicitadas; obtenha proporções entre grupo total e participantes A. Crie dados impossíveis e mostre a incompatibilidade.",
+      "assessment": {
+        "question": "Exatamente uma e pelo menos uma oficina têm a mesma contagem?",
+        "answer": "Não. Exatamente uma dá vinte; pelo menos uma dá vinte e seis, incluindo as seis de ambas. Nenhuma corresponde a quatro.",
+        "rubric": [
+          "Recupera12,6,8,4.",
+          "Escolhe denominadores30 e18.",
+          "Deteta dados impossíveis sem remendar a conta."
+        ]
+      }
+    },
+    {
+      "id": "6",
+      "title": "Resolver um problema integrado e justificar os limites",
+      "estimatedPracticeMinutes": 150,
+      "objectives": [
+        "Combinar quantificadores, implicação e conjuntos num enunciado delimitado.",
+        "Separar conclusão necessária, possibilidade e informação insuficiente."
+      ],
+      "sourceIds": [
+        "os-statements",
+        "os-arguments",
+        "os-sets"
+      ],
+      "sections": [
+        {
+          "title": "Traduzir o enunciado antes de procurar uma alternativa",
+          "paragraphs": [
+            "A avaliação integrada apresenta um clube fictício com doze membros. Cada membro pode receber no máximo um caderno. Sete estão no grupo de leitura L; seis estão no grupo de debate D; três pertencem a ambos. Todos os membros de L receberam um caderno. Não foi dito que apenas L recebeu caderno. Os dados permitem calcular pertenças e algumas conclusões, mas não permitem reconstruir toda a distribuição de cadernos. O primeiro passo é separar contagens, regra universal e informação ausente, sem completar o enunciado com uma imagem plausível de como um clube costuma funcionar.",
+            "Registe as premissas em linhas e defina o domínio como os doze membros. A união L ou D tem sete mais seis menos três, ou dez. Apenas L tem quatro; apenas D tem três; ambos têm três; nenhum tem dois. Essas regiões fecham doze e recuperam os totais. A regra sobre cadernos aplica-se aos sete de L, incluindo os três que também estão em D. Portanto, pelo menos sete receberam caderno. Dizer exatamente sete exigiria excluir receções entre os cinco que estão fora de L, o que não foi fornecido."
+          ]
+        },
+        {
+          "title": "Um caderno encontrado não identifica automaticamente o grupo",
+          "paragraphs": [
+            "Um membro chamado Alex recebeu caderno. Não se pode concluir que está em L, porque a regra só garante uma direção. Se outro membro, Bia, não recebeu caderno, pode concluir-se que não está em L, assumindo a regra universal e o relato como premissas verdadeiras. Não se pode concluir por isso que Bia pertence a D: ela pode estar na região apenas D ou fora dos dois grupos. O aluno deve reconhecer a conclusão permitida e interromper a inferência quando falta uma ligação adicional.",
+            "Para mostrar que exatamente sete não é necessário, construa duas distribuições compatíveis: uma em que só os sete de L receberam e outra em que esses sete e mais uma pessoa fora de L receberam. Ambas respeitam as contagens e a regra. A segunda refuta a necessidade de exatamente sete. Se adicionar a premissa apenas membros de L receberam caderno, a conclusão muda; não é uma descoberta sobre os dados anteriores, mas o efeito de uma regra nova. A comparação torna explícito o papel de cada premissa no resultado."
+          ]
+        },
+        {
+          "title": "Uma solução inclui o que não se pode saber",
+          "paragraphs": [
+            "A ficha final deve classificar cinco afirmações: dez pertencem a pelo menos um grupo; exatamente sete membros receberam caderno; todos os de L receberam; Alex pertence a L; Bia não pertence a L. A primeira e a terceira são necessárias, a segunda e a quarta não são determinadas pelas informações, e a quinta segue das premissas acrescentadas sobre Bia. Não confunda não determinada com falsa: uma distribuição pode tornar a frase verdadeira e outra falsa. Essa distinção é central para responder questões em que as alternativas exploram a tentação de concluir mais do que foi dado.",
+            "Apresente contas, regiões, duas distribuições de cadernos e justificações para cada classificação. Acrescente a alteração produzida pela premissa de exclusividade. O exercício termina com um comentário sobre o método: que dado foi usado em cada passagem e que hipótese precisou de permanecer aberta. Não há garantia de aprovação em concurso nem cobertura de todos os temas de um edital. Este percurso introdutório necessita de prática graduada adicional e pilotagem antes de corresponder às cento e vinte horas históricas. A competência demonstrada aqui é argumentar com precisão num problema delimitado e reconhecer o limite informacional da própria solução."
+          ]
+        }
+      ],
+      "case": "Doze membros, com no máximo um caderno por membro; L sete; D seis; ambos três. Todos de L receberam caderno, sem exclusividade. Alex recebeu; Bia não recebeu. Regra e relatos assumidos verdadeiros para o problema.",
+      "exercise": "Reconstrua regiões; classifique cinco afirmações; dê duas distribuições de cadernos compatíveis. Depois acrescente exclusividade e indique exatamente que conclusões mudam.",
+      "assessment": {
+        "question": "O facto de Alex ter caderno prova pertença a L?",
+        "answer": "Não. Isso afirmaria a consequência. Já Bia sem caderno não pode pertencer a L pelas premissas. O total de cadernos é pelo menos sete, sem determinação exata.",
+        "rubric": [
+          "Calcula4,3,3,2 e união10.",
+          "Constrói dois modelos compatíveis.",
+          "Distingue indeterminação e falsidade."
+        ]
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão matemática independente de definições, traduções e soluções.",
+    "Desenvolver e pilotar banco graduado complementar; aferir dificuldade e carga antes de validar 120 horas.",
+    "Testar leitura acessível de tabelas e símbolos; verificar leitor isolado sem alterar progresso antigo.",
+    "Revisão editorial e autorização antes de publicação; nenhuma garantia de aprovação em seleção."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}
