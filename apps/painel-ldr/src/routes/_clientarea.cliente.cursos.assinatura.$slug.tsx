@@ -6,6 +6,8 @@ import { useI18n } from "@/lib/i18n";
 import { getAcademySubscriptionCourse } from "@/lib/academy-subscription-courses.catalog";
 import { clientLibraryCourseEntitlement } from "@/lib/library-subscription.functions";
 import { clientSaveProgress } from "@/lib/learning.functions";
+import { getAcademyReadingEdition } from "@/lib/academy-reading-editions";
+import { AcademyReadingEditionView } from "@/components/academy-reading-edition";
 
 export const Route = createFileRoute("/_clientarea/cliente/cursos/assinatura/$slug")({
   component: Page,
@@ -97,6 +99,7 @@ function Page() {
   const locale = (raw === "en" || raw === "fr" || raw === "es" ? raw : "pt") as Locale;
   const u = UI[locale];
   const course = getAcademySubscriptionCourse(slug);
+  const readingEdition = course ? getAcademyReadingEdition(course.slug, course.productKey) : null;
   const getEntitlement = useServerFn(clientLibraryCourseEntitlement);
   const saveProgress = useServerFn(clientSaveProgress);
   const [checking, setChecking] = useState(true);
@@ -211,6 +214,10 @@ function Page() {
           </div>
         </div>
       </section>
+
+      {readingEdition && (
+        <AcademyReadingEditionView key={readingEdition.editionId} edition={readingEdition} />
+      )}
 
       <section className="grid gap-4 lg:grid-cols-[300px_1fr]">
         <aside className="rounded-2xl border bg-white p-3">
