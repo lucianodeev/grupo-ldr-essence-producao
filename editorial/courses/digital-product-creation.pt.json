@@ -188,27 +188,28 @@
         {
           "title": "Um conjunto pequeno com um erro que não deve ser apagado por impulso",
           "paragraphs": [
-            "Os dados sintéticos são: E01, Atlas das Nuvens, conferência e autorização confirmadas; E02, Contos do Bairro, conferência em falta; E03, Jardim de Palavras, conferido mas sem autorização; uma segunda ficha E02 com o mesmo título e sem indicação de exemplar adicional. E01 pode ser classificado disponível segundo a regra. E02 continua por conferir; E03 ainda não cumpre todas as condições. A segunda ficha E02 é uma duplicação possível a investigar. Não se cria E04 nem se apaga a ficha original sem confirmar o que aconteceu.",
+            "Os dados sintéticos são: E01, Atlas das Nuvens, conferência e autorização confirmadas; E02, Contos do Bairro, conferência em falta; E03, Jardim de Palavras, conferido mas sem autorização; uma segunda ficha E02 com o mesmo título e sem indicação de exemplar adicional. E01 pode ser classificado disponível segundo a regra. E02 continua por conferir; E03 ainda não cumpre todas as condições. A segunda ficha E02 é uma duplicação possível a investigar. Não se cria E04 nem se apaga a ficha original sem confirmar o que aconteceu. O estado de E03 deve ser registado como «pendente de autorização», mesmo depois de a conferência física estar concluída. Essa pendência é distinta da conferência em falta de E02: ambas impedem a classificação «disponível», mas exigem ações e responsáveis diferentes. No exemplo, não existe prova de autorização para E03, nem se deve deduzi-la do facto de o exemplar estar na lista.",
             "A instrução pode pedir assinalar a ocorrência, comparar identificador e contexto e solicitar confirmação ao responsável fictício. Se houver dois exemplares físicos, cada um precisará de identidade distinta segundo a regra do kit. Se for a mesma ficha reenviada, a consolidação deverá preservar a origem relevante. A atividade não apresenta uma verdade sobre um inventário real. Fornece um conjunto em que a resposta proporcional é manter estados e dúvidas, evitando que a tabela pareça limpa à custa de uma decisão sem base. O exemplo precisa de mostrar como a incerteza é representada."
           ]
         },
         {
           "title": "O enunciado deve ter informação suficiente para a resposta esperada",
           "paragraphs": [
-            "Uma pergunta que exige saber a condição física de um livro não pode ser corrigida por uma resposta única se essa informação não foi fornecida. O autor deve acrescentar o dado ou mudar a tarefa para identificar o que falta. O mesmo vale para exercícios de cálculo e interpretação. Escreva uma chave que explique as condições e admita respostas alternativas quando o enunciado permite. A revisão não deve penalizar o leitor por recusar uma conclusão que o próprio material não sustenta. Essa recusa pode ser precisamente o resultado de aprendizagem pretendido.",
+            "Uma pergunta que exige saber a condição física de um livro não pode ser corrigida por uma resposta única se essa informação não foi fornecida. O autor deve acrescentar o dado ou mudar a tarefa para identificar o que falta. O mesmo vale para exercícios de cálculo e interpretação. Escreva uma chave que explique as condições e admita respostas alternativas quando o enunciado permite. A revisão não deve penalizar o leitor por recusar uma conclusão que o próprio material não sustenta. Essa recusa pode ser precisamente o resultado de aprendizagem pretendido. A tabela final deve conter uma coluna «condição em falta»: E01 nenhuma; E02 conferência; E03 autorização; segunda ficha E02 confirmação de identidade. Para E03, registe quem deve confirmar a autorização e mantenha o campo de prova vazio até existir evidência, sem atribuir consentimento fictício ao titular.",
             "Entregue uma página de instruções, a tabela preenchida e quatro perguntas com chave. Faça uma pergunta em que o resultado é uma verificação pendente e outra em que existe resposta determinada. O avaliador procura precisão e possibilidade de execução por alguém que não acompanhou a escrita. Um texto sofisticado que exige adivinhar a intenção do autor continua incompleto. O primeiro protótipo editorial deve permitir trabalhar com os dados fornecidos e localizar o ponto em que a responsabilidade passa a uma confirmação externa, em vez de encerrar artificialmente todos os casos."
           ]
         }
       ],
       "case": "E01conferido/autorizado;E02sem conferência;E03conferido sem autorização; segunda fichaE02sem prova de exemplar adicional. Títulos e registos fictícios.",
-      "exercise": "Escreva instrução e tabela, quatro questões e chave. Preserve a duplicação possível como dúvida e diferencie conclusão determinada de confirmação necessária.",
+      "exercise": "Escreva instrução e tabela, quatro questões e chave. Preserve a duplicação possível como dúvida e diferencie conclusão determinada de confirmação necessária. Inclua a condição pendente de autorização de E03 como campo separado da conferência, com responsável e prova ainda não obtida.",
       "assessment": {
         "question": "A segunda ficha E02 deve receber novo identificador automaticamente?",
-        "answer": "Não. É preciso confirmar se há outro exemplar ou reenvio da mesma ficha. A tabela não prova a existência de um objeto adicional.",
+        "answer": "Não. É preciso confirmar se há outro exemplar ou reenvio da mesma ficha. A tabela não prova a existência de um objeto adicional. E03 continua pendente de autorização, embora já tenha sido conferido; não deve ser disponibilizado.",
         "rubric": [
           "Mantém E01disponível.",
           "Não libera E02/E03.",
-          "Preserva dúvida de duplicação."
+          "Preserva dúvida de duplicação.",
+          "Regista autorização em falta de E03 separadamente da conferência em falta de E02."
         ]
       }
     },
