@@ -70,7 +70,12 @@
         "career"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "1"
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Organização de pedidos e prazos: experiência fornecida. Previsões e autoria de indicadores: não demonstradas. A apresentação antiga mostra leitura de números de outra pessoa. No teste, 8/10=80% de pedidos no prazo, segundo o critério convencional recebido. Identificar a produção como simulação e registar o apoio usado.",
+        "limitesDaConclusao": "Confirmar tarefas e autonomia da oportunidade antes de declarar correspondência completa."
+      }
     },
     {
       "title": "Comparar caminhos de mudança com compromisso limitado",
@@ -109,7 +114,12 @@
         "career"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "2"
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "A cabe no recorte: 4 horas semanais para 6 disponíveis e custo 160 para limite 200. B exige mais 14 horas semanais e mais 40 unidades. Teste de duas semanas de A: produzir uma análise sintética e explicá-la com revisão; observar tempo e apoio. Um desconto para 200 resolveria somente a condição de custo de B.",
+        "limitesDaConclusao": "Compatibilidade de recursos não demonstra procura de trabalho, retorno ou contratação."
+      }
     }
   ],
   "review": {

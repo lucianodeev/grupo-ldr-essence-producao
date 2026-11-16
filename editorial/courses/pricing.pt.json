@@ -70,7 +70,12 @@
         "budget"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "1"
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Custo=30+40+10=80; diferença=100−80=20. Acréscimo/custo=20/80=25%; diferença/preço=20/100=20%. Versão extra:30+60+10=100, diferença zero neste recorte. Se o tempo inicial valer50, custo90 e diferença10: 10/90≈11,11% sobre custo e 10% sobre preço.",
+        "limitesDaConclusao": "Não chamar lucro líquido ao recorte; confirmar esforço e elementos não incluídos."
+      }
     },
     {
       "title": "Testar contribuição e capacidade antes de conceder desconto",
@@ -109,7 +114,12 @@
         "budget"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "2"
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Custo por venda=18+2=20. Preço40: contribuição20, equilíbrio120/20=6. Preço30: contribuição10, equilíbrio120/10=12. Capacidade10 ao preço reduzido produz100 de contribuição e deixa20 de fixos por cobrir. Cinco vendas a40 também produzem100.",
+        "limitesDaConclusao": "Verificar procura e custos de escala; não recomendar investimento ou concluir que a quantidade necessária será vendida."
+      }
     }
   ],
   "review": {

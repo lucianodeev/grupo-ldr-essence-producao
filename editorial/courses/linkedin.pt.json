@@ -73,7 +73,12 @@
         "linkedin"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "1"
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Título possível: apoio à organização de encontros e inscrições. Resumo: oito meses em listas, confirmações e encaminhamento de dúvidas. Experiência mantém a coordenadora responsável por equipa/orçamento. Formação: curso introdutório concluído, sem certificação profissional presumida. Exemplo de lista deve ser marcado como simulação.",
+        "limitesDaConclusao": "Não inventar direção, crescimento ou qualificações; não publicar documentos da associação."
+      }
     },
     {
       "title": "Uma conversa profissional com motivo e limite",
@@ -113,7 +118,12 @@
         "linkedin"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "2"
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Mensagem possível: li a pergunta sobre dúvidas na chegada; trabalhei com inscrições e gostaria de saber se aceita comentar a organização das instruções. Registo: ligação aceite, pergunta sem resposta, depois indisponibilidade comunicada. Encerramento: agradecer e terminar o pedido, sem outro canal.",
+        "limitesDaConclusao": "Aceitar ligação ou agradecer não confirma mentoria, indicação ou contratação."
+      }
     }
   ],
   "review": {

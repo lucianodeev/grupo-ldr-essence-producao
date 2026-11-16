@@ -70,7 +70,12 @@
         "career"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "1"
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Recurso: 5 horas; comunidade/deslocação ocupam 2 e deixam 3. Proposta de oito excede três. Sequência A em cada uma das quatro semanas: 2 horas compromisso, 2 escrita, 1 investigação profissional. Sequência B: 2 compromisso, 1 escrita, 2 investigação. A prioriza prática escrita; B prioriza investigação, com custos explícitos de adiamento.",
+        "limitesDaConclusao": "São exemplos de distribuição, não resultados já alcançados ou prioridades universais de Bia."
+      }
     },
     {
       "title": "Rever um projeto quando surgem condições novas",
@@ -109,7 +114,12 @@
         "career"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "2"
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Nota de mudança: apresentação acrescenta duas horas e a função investigada revelou diferença de tarefas. Uma opção de treino é aceitar a apresentação numa semana e reduzir escrita/investigação em duas horas, explicitando o que se adia; outras são negociar participação menor ou recusar. Conservar a descoberta sobre a função como informação útil.",
+        "limitesDaConclusao": "Bia precisa de escolher segundo critérios declarados; não presumir obrigação de aceitar ou recurso adicional."
+      }
     }
   ],
   "review": {

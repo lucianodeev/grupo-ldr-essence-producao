@@ -70,7 +70,12 @@
         "documents"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "1"
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Registo M17: pedido em preparação; pergunta sobre estado; solicitação separada de mudança de endereço; procedimento de verificação por esclarecer. Resposta possível: o pedido está em preparação; recebemos a solicitação de alteração e vamos confirmar o procedimento autorizado antes de a executar. Passagem interna conserva as duas questões e a verificação pendente.",
+        "limitesDaConclusao": "Não pedir documentos ou alterar dados por improviso; sem prazo de expedição fornecido."
+      }
     },
     {
       "title": "Comunicar indisponibilidade e acompanhar um pedido digital",
@@ -109,7 +114,12 @@
         "documents"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "2"
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Estados: conteúdo preparado, tentativa de envio com falha de anexo, entrega não confirmada. Atualização reconhece a falha e indica conferência/reenvio pelo canal autorizado. Encerramento exige ficheiro correto disponibilizado e verificação prevista concluída. Se chegar versão errada, o pedido continua por resolver mesmo com entrega técnica confirmada.",
+        "limitesDaConclusao": "Não afirmar causa no equipamento da cliente ou mudar para serviço público sem autorização."
+      }
     }
   ],
   "review": {

@@ -70,7 +70,12 @@
         "wellbeing"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "1"
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Observável: mensagem precisamos de rever. Interpretação de Bruno: trabalho sem valor. Pergunta: que ponto e critério precisam de revisão? Esclarecimento: uma referência trocada, estrutura mantida. Atualização: conferir a referência e a linha correspondente; a informação nova não sustenta desvalorização total.",
+        "limitesDaConclusao": "O pequeno caso não demonstra intenção, padrão da relação ou diagnóstico."
+      }
     },
     {
       "title": "Responder a tensão preservando tarefa e limite",
@@ -109,7 +114,12 @@
         "wellbeing"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "2"
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Resposta possível: a minuta foi enviada às 10h; a alteração chegou às 11h e a autorização continua pendente. Posso encaminhar a versão para quem tem competência de aprovar, mas não substituo essa decisão. Depois do reconhecimento do envio, conserva-se a urgência e a condição de aprovação; preparar acompanhamento por versão.",
+        "limitesDaConclusao": "Não concluir toda a responsabilidade pelo atraso nem prometer prazo de decisão de terceiro."
+      }
     }
   ],
   "review": {

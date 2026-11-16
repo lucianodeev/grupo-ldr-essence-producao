@@ -70,7 +70,12 @@
         "writing"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "1"
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Anúncio possível: a oficina será na sala B, no térreo; a sala A está indisponível; para ajuda, procure a receção. Versão para chegada tardia conserva destino e apoio. Ensaio observa presença e ordem dessas informações e duração; uma pausa para consultar é preferível a inventar causa.",
+        "limitesDaConclusao": "Não afirmar avaria ou acidente; o exercício não mede saúde ou capacidade definitiva de falar."
+      }
     },
     {
       "title": "Responder a perguntas e adaptar a explicação",
@@ -109,7 +114,12 @@
         "writing"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "2"
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Equipamento e entrada tardia: informação não fornecida, pedir confirmação à organização sem resposta improvisada. Receção: explicar entrada principal e balcão à esquerda, identificado como apoio. Revisão da fala inicial pode acrescentar essa referência curta.",
+        "limitesDaConclusao": "Distinguir atualização posterior e conhecimento disponível no primeiro anúncio."
+      }
     }
   ],
   "review": {

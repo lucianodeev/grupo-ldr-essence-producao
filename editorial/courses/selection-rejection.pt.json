@@ -70,7 +70,12 @@
         "career"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "1"
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Facto: Rui não avança; motivo não comunicado. Ponto de revisão: candidatura não mostrou exemplo de atendimento escrito exigido no anúncio. Pedido possível: existe feedback sobre a correspondência dos exemplos com as tarefas? Ação independente: preparar exemplo sintético de atendimento, claramente marcado como treino.",
+        "limitesDaConclusao": "O ponto melhorável não demonstra a causa da recusa nem autoriza inventar experiência."
+      }
     },
     {
       "title": "Rever uma sequência de candidaturas com denominadores claros",
@@ -109,7 +114,22 @@
         "career"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "2"
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Registo: duas recusas, uma resposta pendente e uma vaga retirada. Conferência da quinta tentativa de treino: responder às duas perguntas, respeitar limite de150 palavras no total e prazo convencional indicado. Erro anterior de pergunta obrigatória é verificável, mas não explica todas as decisões.",
+        "limitesDaConclusao": "A quinta chamada é inteiramente fictícia e a conferência não permite prever entrevista ou contratação.",
+        "quintaCandidaturaDeTreino": {
+          "natureza": "Chamada inventada apenas para a atividade.",
+          "prazoConvencional": "30/11/2026 às 18h UTC; cenário fictício, não oportunidade real.",
+          "perguntas": [
+            "Como confere duas referências divergentes?",
+            "Como comunica uma dúvida que depende de decisão de outra função?"
+          ],
+          "limite": "150 palavras no total das duas respostas.",
+          "dadosDaResposta": "Pode usar apenas exemplos sintéticos, identificados como treino, sem declarar experiência real adicional."
+        }
+      }
     }
   ],
   "review": {

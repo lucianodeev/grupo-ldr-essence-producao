@@ -73,7 +73,12 @@
         "documents"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "1"
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Lista: ficha indica 12 e mensagem 15, divergência; formação recebida, verificação desconhecida; autorização preparada sem assinatura. Encaminhar data e assinatura à função responsável. Após confirmação do dia 15, atualizar só a data, conservando assinatura pendente e rasto da divergência.",
+        "limitesDaConclusao": "Receção de comprovativo não demonstra reconhecimento legal ou validade profissional."
+      }
     },
     {
       "title": "Reconciliar ocorrências antes de fechar um mapa interno",
@@ -113,7 +118,12 @@
         "documents"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "2"
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Mapa inicial: três presenças confirmadas/créditos, uma ausência comunicada e uma ocorrência pendente. Resumo antigo incluiu a pendente como presença e a ausência no total de participações. Quando a quinta data é confirmada, passam a quatro presenças/créditos; a ausência continua distinta.",
+        "limitesDaConclusao": "Não aplicar descontos ou legislação de salários à unidade fictícia crédito."
+      }
     }
   ],
   "review": {

@@ -73,7 +73,12 @@
         "career"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "1"
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Matriz: Norte distribui pedidos e acompanha indicadores; Sul acrescenta aprovação de orçamento. Leonor evidencia distribuição, não aprovação. Valores 2000/2300 são os anunciados, sem comparação líquida ou por hora válida. Perguntas: jornada e composição de Sul, período remuneratório e alcance da autoridade em ambos.",
+        "limitesDaConclusao": "Não recomendar mudança por diferença nominal ou preencher impostos/custo de vida sem dados."
+      }
     },
     {
       "title": "Apresentar uma competência sem inventar equivalência",
@@ -113,7 +118,12 @@
         "career"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "2"
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Ficha: manter designação do certificado, descrever organização de 120 registos e criação de índice, assinalar ausência de equivalência indicada. Apresentação possível: organizei registos por referência e preparei um índice; não defini política nem medi tempo poupado. Perguntas de reconhecimento dependem de identificar entidade e procedimento aplicáveis.",
+        "limitesDaConclusao": "Tradução não é reconhecimento e esta apresentação não demonstra autorização de exercício."
+      }
     }
   ],
   "review": {

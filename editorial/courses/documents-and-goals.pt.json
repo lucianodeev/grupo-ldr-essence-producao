@@ -70,7 +70,12 @@
         "documents"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "1"
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Índice: mapa 1 autorizado para 20; mapa 2 proposto para 24, condicionado a verificação. Lista de 16 confirmações e lista de 5 interesses conservadas separadamente; há uma sobreposição. Para montagem, apontar mapa 1 e manter a proposta identificada. Os conjuntos representam 20 identificadores distintos, se não houver outras duplicações, mas somente 16 confirmações.",
+        "limitesDaConclusao": "Não tratar interesse como reserva nem trocar mapa por data de modificação."
+      }
     },
     {
       "title": "Acompanhar uma meta sem confundir atividade e resultado",
@@ -109,7 +114,12 @@
         "documents"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "2"
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Medida da meta: confirmações distintas/20. Inicialmente 16/20=80%, não 25/20=125% a partir de mensagens. Depois: 16+3−1=18; 18/20=90%; faltam 2 para a meta. Rotina: conferir identificador, manifestação explícita e referência da evidência antes de atualizar. Capacidade 20 conserva-se até nova decisão.",
+        "limitesDaConclusao": "Rever duplicações e explicitar qualquer mudança de meta; não prometer as duas confirmações restantes."
+      }
     }
   ],
   "review": {

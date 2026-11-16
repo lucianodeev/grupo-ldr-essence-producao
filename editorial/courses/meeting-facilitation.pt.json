@@ -70,7 +70,12 @@
         "planning"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "1"
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Pauta: escolher sequência que respeite centro até 11h e bairro a partir de 12h. Coordenadora decide; logística fornece capacidade/tempos; atendimento traz restrições. Folha: alternativas A/B, condição, evidência e responsável. Faltam partida, deslocação e duração das entregas, pelo que a preparação não demonstra viabilidade.",
+        "limitesDaConclusao": "Não inventar tempos ou chamar à convocatória uma decisão já tomada."
+      }
     },
     {
       "title": "Facilitar divergência sem fabricar consenso",
@@ -109,7 +114,12 @@
         "planning"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "2"
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Esclarecer rápida como tempo total e justa como distribuição de atrasos. X=90 minutos; Y=105, diferença 15. Ata: coordenadora escolhe teste Y numa data, condicionado à receção; João concorda; Inês executa mantendo reserva. Se faltar confirmação, assinalar condição e pedir nova decisão.",
+        "limitesDaConclusao": "Não registar unanimidade ou interpretar execução como concordância com todos os critérios."
+      }
     }
   ],
   "review": {

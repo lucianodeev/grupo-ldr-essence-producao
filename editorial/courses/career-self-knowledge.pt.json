@@ -70,7 +70,12 @@
         "career"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "1"
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Ficha 1: lista individual, silêncio, preferência positiva. Ficha 2: resumo a conhecidos, avaliação aceitável. Ficha 3: receção com instruções incompletas, dificuldade relatada. Hipótese de teste: orientar duas pessoas fictícias com ficha completa e perguntas previstas; observar informações transmitidas e consultas necessárias. A hipótese não estabelece a causa da dificuldade anterior.",
+        "limitesDaConclusao": "Não classificar personalidade ou adequação definitiva a uma carreira."
+      }
     },
     {
       "title": "Comparar escolhas que envolvem valores em tensão",
@@ -109,7 +114,12 @@
         "career"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "2"
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "A: previsibilidade conhecida e pouca aprendizagem nova. B: aprendizagem acompanhada e horário por esclarecer. Separar condições indispensáveis de preferências. Pergunta prioritária: em que dias e horas ocorreria a variação? Decisão provisória possível: investigar B antes de escolher; se a informação não chegar a tempo, avaliar A segundo os critérios declarados. Custo reconhecido: adiar uma aprendizagem ou aceitar reorganização se compatível.",
+        "limitesDaConclusao": "As prioridades de Lina precisam de ser declaradas; não compensar uma incompatibilidade indispensável com pontos favoráveis."
+      }
     }
   ],
   "review": {

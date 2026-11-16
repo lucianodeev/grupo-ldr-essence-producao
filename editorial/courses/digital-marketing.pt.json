@@ -70,7 +70,12 @@
         "marketing"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "1"
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Situação: equipa pequena precisa de reunir disponibilidades e confirmar turnos. Mensagem possível: veja um exemplo de quadro que distingue turnos confirmados e pendentes. Publicação apresenta uso e aponta para página; página esclarece formato, limites e condições. O exemplo mantém um turno sem responsável, em vez de o preencher para parecer eficaz.",
+        "limitesDaConclusao": "Verificar compatibilidade do formato; o quadro não aprova horários nem garante ausência de faltas."
+      }
     },
     {
       "title": "Ler um teste sem atribuir vendas ao indicador errado",
@@ -109,7 +114,12 @@
         "marketing"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "2"
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "A: visitas/visualizações=20/100=20%; pedidos/visitas=4/20=20%. B: 16/80=20%; 6/16=37,5%. Não há compras ou pessoas únicas identificadas. Relatório possível: as duas razões de visita são iguais; a relação entre pedidos e visitas difere neste teste pequeno. Próximo teste: comparar mensagens definindo o que se altera e tentando conservar condições semelhantes.",
+        "limitesDaConclusao": "Não atribuir causalidade ao texto ou interpretar pedido como compra."
+      }
     }
   ],
   "review": {

@@ -70,7 +70,12 @@
         "budget"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "1"
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Original: saldo 100; no dia 3 a saída de 250 produz insuficiência calculada de 150; no dia 10 entram 300 e o final é 150. Alternativa apenas com acordo confirmado: entrada dia 10 eleva saldo a 400; saída dia 12 deixa 150. O total é igual, mas o calendário difere.",
+        "limitesDaConclusao": "Não inventar crédito ou presumir renegociação; verificar datas e condições reais antes de decidir."
+      }
     },
     {
       "title": "Separar rendimento confirmado e expectativa",
@@ -109,7 +114,12 @@
         "budget"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "2"
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Só confirmado: 150+200−300=50. Com recebimento adicional de 180: 230. Após compra hipotética de 80: −30 ou 150, respetivamente. A entrada condicional muda de estado sem duplicar a linha; aceitação não é recebimento. Se chegar apenas 90, cenário realizado correspondente é 140 antes da compra, não 230.",
+        "limitesDaConclusao": "Datas e outras necessidades não foram fornecidas; não recomendar a compra ou um produto financeiro."
+      }
     }
   ],
   "review": {

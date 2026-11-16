@@ -40,3 +40,13 @@ Todos mantêm draft, published=false, validatedHours=null e revisões a falso. P
 | Oratória e Segurança para Falar em Público | `editorial/courses/public-speaking.pt.json` | 2 |
 | Como Lidar com Rejeição em Processos Seletivos | `editorial/courses/selection-rejection.pt.json` | 2 |
 | Produtividade sem Ansiedade | `editorial/courses/sustainable-productivity.pt.json` | 2 |
+
+## Revisão interna das oficinas compactas
+
+Revisão assistida por IA sobre os 28 cursos/56 oficinas, registada em `editorial/reviews/compact-courses-20261116.json`, ligada por SHA-256 a cada módulo revisto. Não é aprovação editorial externa, científica, de direitos ou de publicação. Todas as revisões formais permanecem a falso.
+
+Acrescentadas 56 resoluções comentadas das atividades e respetivos limites, sem substituir as respostas de verificação. Completados os dados fictícios da quinta candidatura, o calendário da chamada Aurora e uma lista com referência repetida/data ausente. Nenhuma destas datas descreve oportunidade real ou tarefa agendada.
+
+Quarenta cálculos das resoluções têm operação, valores, arredondamento e trecho correspondente reproduzidos em teste. Os hashes detetam alteração posterior que torne este registo desatualizado. A prova refere-se às contas e unidades identificadas, não a validação de modelos ou eficácia pedagógica.
+
+Corrigida omissão de campos nulos no exportador de pacotes: passam a aparecer como não fornecidos, permitindo distinguir ausência explícita de informação de um campo inexistente. O exportador conserva estado de rascunho e bloqueio de publicação.

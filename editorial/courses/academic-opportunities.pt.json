@@ -70,7 +70,18 @@
         "career"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "1"
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Matrícula: disponível. Resumo: 600 palavras, precisa de revisão para no máximo 500. Referência 1: recebida. Referência 2: pedida, receção pendente. Reduzir o resumo e acompanhar a receção são ações diferentes. Uma versão de 480 palavras respeita o limite textual, mas não resolve a referência. Mesmo com documentação completa, a seleção posterior continua em aberto.",
+        "limitesDaConclusao": "Confirmar receção pelo procedimento da chamada fictícia, sem presumir aceitação por envio ou atribuição de bolsa.",
+        "calendarioDeTreino": {
+          "natureza": "Datas inventadas para planear as correções.",
+          "dataDePreparacao": "26/11/2026",
+          "limiteDeRececao": "30/11/2026 às 18h UTC",
+          "condicao": "Resumo e duas referências recebidos até ao limite; sem prorrogação fornecida."
+        }
+      }
     },
     {
       "title": "Construir uma candidatura coerente entre projeto e condições",
@@ -109,7 +120,12 @@
         "career"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "2"
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "A proposta exige pelo menos 3 horas semanais de entrevistas para apenas 2 disponíveis: excede 1 hora antes de observação/análise. No recorte alternativo, comparar ocupação C e D nos dois momentos usando os registos sintéticos: C passa de 60% a 80%; D de 62,5% a 50%. Isso descreve ocupação, não motivos. Apresentar observação em aula como experiência conhecida, sem liderança internacional.",
+        "limitesDaConclusao": "A alternativa depende de corresponder à chamada e de orientação institucional; não autoriza pesquisa real."
+      }
     }
   ],
   "review": {

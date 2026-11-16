@@ -73,7 +73,12 @@
         "ai"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "1"
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Ficha A: caixa, pinho, 20 cm; não acrescentar impermeabilidade. Ficha B: vaso azul, altura por confirmar. Ficha C: bolsa de tecido, lavagem por confirmar. Âmbito proposto: quinze fichas com atributos fornecidos, revisão contra a origem e perguntas separadas; exclui publicação, fotografia, tradução e propriedades não documentadas. A amostra demonstra um formato de entrega, não aceitação do serviço.",
+        "limitesDaConclusao": "Responsável precisa de confirmar atributos ausentes antes de os incluir; não prometer vendas."
+      }
     },
     {
       "title": "Calcular o piloto antes de anunciar escala",
@@ -113,7 +118,12 @@
         "ai"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "2"
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Tempo: 30+10+40+20+20=120 minutos. Custos fornecidos: 12+8=20. Diferença do recorte: 60−20=40; por duas horas, 20 por hora antes de elementos ausentes. Oito fichas passaram sem alteração, duas foram corrigidas. A conclusão descreve dez itens, não taxa futura. Se a revisão aumentar 20 minutos, o quociente passa a aproximadamente 17,14 por hora.",
+        "limitesDaConclusao": "Nova encomenda exige verificar dados, esforço, responsabilidades e âmbito, sem extrapolar a amostra."
+      }
     }
   ],
   "review": {

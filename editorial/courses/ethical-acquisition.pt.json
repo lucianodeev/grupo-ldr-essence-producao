@@ -70,7 +70,12 @@
         "marketing"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "1"
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "A: necessidade manifestada, conferir canal e termos do pedido. B: aparência antiga, sem necessidade ou intenção demonstradas. C: indicação indireta, sem permissão de dados presumida. Abordagem de A: responder ao pedido com revisão delimitada de descrições e lacunas, perguntando se deseja conhecer condições; não garantir vendas ou validação técnica.",
+        "limitesDaConclusao": "Não executar contacto real nem tratar todos os cartões como oportunidades qualificadas."
+      }
     },
     {
       "title": "Avaliar uma parceria sem confundir indicação e recomendação validada",
@@ -109,7 +114,12 @@
         "marketing"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "2"
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Acordo de treino: parceiro apresenta oferta em contexto autorizado e pergunta sobre contacto; não aprova condições pela Clara nem promete resultado. Relatório: dois pedidos de informação, uma recusa e duas respostas ausentes; zero contratos fornecidos. A comissão depende do contrato convencionado, não dos cinco nomes.",
+        "limitesDaConclusao": "Definir condições reais com enquadramento adequado antes de qualquer parceria; não perseguir quem recusou."
+      }
     }
   ],
   "review": {

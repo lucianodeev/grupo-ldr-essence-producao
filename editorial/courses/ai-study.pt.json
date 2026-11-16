@@ -73,7 +73,12 @@
         "ai"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "1"
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Sábado aberto: informação não fornecida. Três empréstimos: contradiz o limite de dois. Renovação automática: contradiz a confirmação exigida. Resposta revista: o regulamento de treino informa segunda a sexta, 10–18h, dois empréstimos e renovação mediante confirmação; não esclarece sábado. A versão não acrescenta multas ou reservas.",
+        "limitesDaConclusao": "Uma segunda geração não substitui evidência sobre a regra."
+      }
     },
     {
       "title": "Escolher um uso permitido e demonstrar aprendizagem própria",
@@ -113,7 +118,12 @@
         "ai"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "2"
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Perguntas permitidas com declaração: sim, segundo Delta, desde que revistas. Entrega integral gerada como redação própria: não. Envio de notas internas: não. Declaração possível: usei sugestões para formular perguntas, revi-as e escrevi as respostas. Questões de treino: quantos empréstimos são permitidos? Dois. A renovação é automática? Não, exige confirmação. Uma pergunta sobre multas deve ser identificada como não respondível pelo regulamento.",
+        "limitesDaConclusao": "Transparência não dispensa cumprir autoria e limites de dados; a declaração descreve apenas auxílio realmente utilizado."
+      }
     }
   ],
   "review": {

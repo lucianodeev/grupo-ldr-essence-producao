@@ -66,3 +66,10 @@ test('all 50 subscription products have either a complete draft edition or the e
   assert.equal(isApprovedReadingEdition(released), true);
   assert.equal(candidates.some(item => item.published || isApprovedReadingEdition(item)), false);
 });
+
+test('review packets preserve explicitly missing data instead of silently dropping fields', () => {
+  const candidate = prepareCourseCandidate('professional-restart.pt.json');
+  assert.ok(candidate.modules[0].body.includes('listaSintetica / 2 / data: não fornecido'));
+  assert.ok(candidate.modules[0].body.includes('resolucaoComentada:'));
+  assert.equal(isApprovedReadingEdition(candidate), false);
+});

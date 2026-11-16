@@ -80,7 +80,12 @@
         "writing"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "1"
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Cronologia relativa: aviso previa quinta-feira; participante relata porta fechada nesse dia; associação comunica adiamento por autorização em falta. Síntese conserva a origem de cada informação. Não existe prova de inauguração nem decisão de fiscal identificado. Pedir datas/documentos sobre abertura e autorização ajudaria a verificar a sequência; um aviso novo continua previsão.",
+        "limitesDaConclusao": "Não transformar ausência de prova em acusação ou atribuir data a fotografia sem contexto."
+      }
     },
     {
       "title": "Interpretar números sem trocar a população de referência",
@@ -120,7 +125,12 @@
         "learning"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "2"
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Inscrições: 40→60, aumento 20/40=50%. Presenças: 30→42, aumento 12/30=40%. Taxas: 30/40=75%; 42/60=70%, queda de 5 pontos percentuais. Relatório corrigido apresenta volume e proporção separados. Pergunta adicional: houve cancelamentos registados e em que condições?",
+        "limitesDaConclusao": "Não atribuir o resultado à campanha nem classificar sucesso global sem objetivos/custos."
+      }
     }
   ],
   "review": {

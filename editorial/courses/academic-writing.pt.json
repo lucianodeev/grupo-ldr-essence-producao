@@ -70,7 +70,12 @@
         "writing"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "1"
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Título possível: Ocupação observada em duas salas às 15h. Pergunta: como diferem as proporções naquele momento? Azul: 8/12, aproximadamente 66,7%; Verde: 5/10, 50%. A diferença observada não explica preferência ou concentração. Questões futuras: o padrão repete-se noutros dias e que critérios os utilizadores dizem considerar? Essas respostas ainda não existem no corpus.",
+        "limitesDaConclusao": "Conservar o recorte de uma tarde; não atribuir causalidade à decoração."
+      }
     },
     {
       "title": "Integrar uma fonte sem apagar a autoria nem inventar referências",
@@ -109,7 +114,12 @@
         "writing"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "2"
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Utilização literal: segundo o Relato de Campo Alfa, a porta lateral esteve fechada durante a observação, com a formulação literal assinalada no texto final. Paráfrase possível: a Equipa Alfa registou indisponibilidade daquela entrada no período observado. Comentário: o relato não permite saber como a entrada seria utilizada se estivesse aberta. Referência descritiva: Equipa Alfa, Relato de Campo Alfa, 16/11/2026, documento sintético sem paginação.",
+        "limitesDaConclusao": "Aplicar a norma de citação exigida num trabalho real; não inventar página ou atribuir motivo do fecho."
+      }
     }
   ],
   "review": {

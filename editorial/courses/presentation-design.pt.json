@@ -77,7 +77,12 @@
         "writing"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "1"
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Roteiro: 1 pergunta da comissão; 2 registo de três interrupções em dez sessões; 3 hipótese de teste; 4 condições e dados ausentes; 5 decisão solicitada. Fotografias mostram espaço, não frequência. Notas distinguem observação, eficácia ainda não demonstrada e custo/prazo pendentes.",
+        "limitesDaConclusao": "Não prometer eliminar interrupções nem inventar orçamento para completar a página."
+      }
     },
     {
       "title": "Representar uma comparação sem esconder a base",
@@ -116,7 +121,12 @@
         "learning"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "2"
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Página de volume: 18 e 24 resolvidos, mostrando totais 20 e 30. Página de proporção: 90% e 80%, queda de dez pontos percentuais. Título possível: volume aumentou e proporção diminuiu. Nota: faltam dificuldade, prazo e satisfação para avaliar qualidade ou explicar causa.",
+        "limitesDaConclusao": "Rótulos e descrição textual devem permitir recuperar valores sem depender de cores."
+      }
     }
   ],
   "review": {

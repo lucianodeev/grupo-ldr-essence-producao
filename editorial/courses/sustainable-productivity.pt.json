@@ -70,7 +70,12 @@
         "wellbeing"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "1"
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Carga=2+1+0,5+0,5+3=7 horas para6 disponíveis. Revisão antecede preparação; uma resposta depende de informação. Proposta possível: negociar transferência de1h de preparação, explicitando efeito na entrega e necessidade de acordo. Se revisão aumentar0,5h, diferença passa a1,5h.",
+        "limitesDaConclusao": "Não adicionar horas pessoais ou tratar uma proposta de mudança como acordo confirmado."
+      }
     },
     {
       "title": "Rever o dia sem transformar desvios em identidade",
@@ -109,7 +114,12 @@
         "wellbeing"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "2"
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Estados: tarefa concluída, outra interrompida por ficheiro ausente, terceira substituída por pedido autorizado e conferência cancelada. Teste possível: verificar disponibilidade do ficheiro antes do próximo bloco, se isso estiver ao alcance de Joana. Observar condição e resultado sem classificar a pessoa.",
+        "limitesDaConclusao": "Não presumir causa total ou transformar organização de tarefas em tratamento de ansiedade."
+      }
     }
   ],
   "review": {

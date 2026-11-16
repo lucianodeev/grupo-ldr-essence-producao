@@ -70,7 +70,12 @@
         "learning"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "1"
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Competência: tornar documento, estado e próxima ação recuperáveis. Três notas de exemplo: versão inicial A1 para revisão; A2 revisto com dúvida Q1 para esclarecimento; A3 autorizado apenas para uso X, indicando essa condição. O observador procura localização, estado e próximo responsável, registando a lista de conferência usada.",
+        "limitesDaConclusao": "Os identificadores são dados de treino adicionados, não factos da experiência de Eva ou decisões reais de Marta."
+      }
     },
     {
       "title": "Usar feedback sem o transformar em verdade sobre a pessoa",
@@ -109,7 +114,12 @@
         "learning"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "2"
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Comentários verificáveis: pasta divergente e dúvida ausente. Generalização sempre desorganizada excede a evidência. Resposta reconhece os dois pontos e pede observações situadas. No caso novo, conferir ligação para a versão correta e escrever a pergunta aberta; acertar a pasta não resolve uma ligação errada.",
+        "limitesDaConclusao": "Não inventar qual é a versão correta quando o pacote só informa divergência; solicitar confirmação."
+      }
     }
   ],
   "review": {

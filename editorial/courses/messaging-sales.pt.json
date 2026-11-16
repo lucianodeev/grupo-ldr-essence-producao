@@ -70,7 +70,12 @@
         "whatsapp"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "1"
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Resposta: o kit tem três folhas editáveis e guia; não inclui consultoria nem resultado em sete dias. Pergunta opcional deve esclarecer uma necessidade da decisão, sem inventar compatibilidade. Quando Jo informa que não quer continuar, agradecer e encerrar.",
+        "limitesDaConclusao": "A consulta não autoriza novas finalidades ou chamadas por si só; não enviar contacto real."
+      }
     },
     {
       "title": "Confirmar uma encomenda sem confundir interesse e aceitação",
@@ -109,7 +114,12 @@
         "whatsapp"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "2"
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Antes: opções 20/30 e dúvida sobre apoio; nenhuma inclui apoio individual. Resumo deve esclarecer versão, preço e exclusão. Depois: Jo escolhe 20 e pede instruções; registar escolha e pagamento sem evidência. Passagem conserva essa versão e etapa. Uma mudança futura exige novo resumo das condições.",
+        "limitesDaConclusao": "Não contar pedido de instruções como pagamento nem promover interesse a aceitação."
+      }
     }
   ],
   "review": {

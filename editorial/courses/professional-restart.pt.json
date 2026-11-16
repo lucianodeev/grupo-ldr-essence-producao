@@ -70,7 +70,26 @@
         "career"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "1"
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Cronologia conserva atividade anterior e intervalo de dois anos, sem motivo inventado. Inventário: recibos, contactos autorizados e preparação de reuniões; separar experiência de observação atual. Tarefa sintética possível: localizar referência repetida R2 e uma data ausente numa lista de treino, registando dúvidas em vez de completar dados por suposição.",
+        "limitesDaConclusao": "Não apresentar uma formação em curso como concluída nem usar documentos reservados de empregador anterior.",
+        "listaSintetica": [
+          {
+            "referencia": "R1",
+            "data": "01/11/2026"
+          },
+          {
+            "referencia": "R2",
+            "data": "02/11/2026"
+          },
+          {
+            "referencia": "R2",
+            "data": null
+          }
+        ]
+      }
     },
     {
       "title": "Desenhar uma primeira semana de retorno executável",
@@ -109,7 +128,12 @@
         "career"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "2"
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Plano inicial: exemplo1h, apresentação1h e uma oportunidade1,5h =3,5h; margem0,5h. Outra oportunidade continua pendente. Após exemplo demorar1,5h:1,5+1+1,5=4h, sem margem. Registo de saída conserva exemplo, versão da apresentação e perguntas da oportunidade investigada.",
+        "limitesDaConclusao": "A sequência depende da entrega anterior; não declarar candidatura pronta se aparecer requisito não demonstrado."
+      }
     }
   ],
   "review": {

@@ -73,7 +73,12 @@
         "career"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "1"
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Três fichas: residência, autorização da atividade e reconhecimento. Formação pode ajudar a explicar qualificação; interesse da empresa demonstra apenas esse interesse. Consulta fictícia deve pedir o canal competente para cada assunto, indicar contexto sintético e conservar respostas pendentes.",
+        "limitesDaConclusao": "Não concluir permissão ou proibição, inventar entidade ou tratar conselho informal como decisão."
+      }
     },
     {
       "title": "Traduzir percurso em evidências e negociar uma ponte de entrada",
@@ -113,7 +118,12 @@
         "career"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "2"
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Sara evidencia referências e horários; comunicação no novo idioma exige prática. A menciona apoio, mas falta responsável/disponibilidade; B exige autonomia imediata. Exemplos sintéticos: lista conferida, atualização de horário e mensagem de divergência, marcados como treino. Perguntar tarefas iniciais, apoio e revisão de autonomia.",
+        "limitesDaConclusao": "Não apagar experiência anterior nem inventar fluência, condições de apoio ou elegibilidade."
+      }
     }
   ],
   "review": {

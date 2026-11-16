@@ -73,7 +73,12 @@
         "career"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "1"
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Necessidade: compreender atraso em vinte pedidos e capacidade declarada de dezoito, incluindo quatro devoluções cuja sobreposição é desconhecida. Critérios ligados a tarefas: classificar casos, conferir campos e comunicar decisão já autorizada. Alternativas: melhorar entrada ou acrescentar capacidade com âmbito; verificar tipos de devolução e recursos antes de comparar.",
+        "limitesDaConclusao": "Não somar vinte e quatro pedidos distintos nem escolher por características pessoais."
+      }
     },
     {
       "title": "Organizar integração e aprendizagem sem prometer autonomia imediata",
@@ -113,7 +118,12 @@
         "career"
       ],
       "estimatedPracticeMinutes": 90,
-      "id": "2"
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Registo de Nuno: quatro simples corretos; exceção inicialmente incorreta; exceção reconhecida com consulta. Plano: garantir instrução e pessoa de apoio, praticar exceções e rever evidência. Decisão de treino: classificar simples com consulta e encaminhar exceções para acompanhamento.",
+        "limitesDaConclusao": "Não declarar autonomia sem apoio ou culpar Nuno por instrução/acompanhamento que a organização não forneceu."
+      }
     }
   ],
   "review": {

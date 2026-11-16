@@ -10,7 +10,8 @@ const hash = value => crypto.createHash('sha256').update(value).digest('hex');
 // Preserve every string and number in supplementary work/simulation packets.
 // Separate paragraphs work with the Academy reader's deliberately small Markdown subset.
 function packetParagraphs(value, trail = []) {
-  if (value === null || value === undefined) return [];
+  if (value === undefined) return [];
+  if (value === null) return [trail.join(' / ') + ': não fornecido'];
   if (typeof value !== 'object') return [trail.join(' / ') + ': ' + String(value)];
   return Object.entries(value).flatMap(([key, item]) => packetParagraphs(item, [...trail, key]));
 }
