@@ -4,9 +4,8 @@
 'use strict';
 const fs = require('node:fs');
 const path = require('node:path');
-const assert = require('node:assert/strict');
 
-const root = path.resolve(__dirname, '../docs/audit-20261115/course-development/customer-service');
+function validateCustomerServiceUnits(root = path.resolve(__dirname, '../docs/audit-20261115/course-development/customer-service')) {
 const names = [
   'unit-01-diagnostico-do-pedido.md',
   'unit-02-priorizacao-e-encaminhamento.md',
@@ -28,7 +27,7 @@ for (const [index, name] of names.entries()) {
   const words = countWords(text);
   const questions = (text.match(/\*\*(?:Pergunta\s+)?\d+\./g) || []).length;
   const headings = (text.match(/^###\s+.+$/gm) || []).length;
-  const expectedTitle = new RegExp('^## Unidade ' + (index + 1) + ' \\u2014 ', 'm');
+  const expectedTitle = new RegExp('^## Unidade ' + (index + 1) + ' — ', 'm');
   if (!expectedTitle.test(text)) errors.push(name + ': incorrect unit heading');
   if (words < 1100) errors.push(name + ': insufficient development (<1100 words)');
   if (questions < 3) errors.push(name + ': fewer than three numbered assessment questions');
@@ -45,5 +44,11 @@ for (const [index, name] of names.entries()) {
   results.push({ name, words, assessmentQuestions: questions, sections: headings, longParagraphs: paragraphs.length });
 }
 if (results.length !== names.length) errors.push('Expected six units, found ' + results.length);
-console.log(JSON.stringify({ units: results.length, results, errors }, null, 2));
-if (errors.length) process.exitCode = 1;
+return { units: results.length, results, errors };
+}
+if (require.main === module) {
+  const result = validateCustomerServiceUnits();
+  console.log(JSON.stringify(result, null, 2));
+  if (result.errors.length) process.exitCode = 1;
+}
+module.exports = { validateCustomerServiceUnits, files: names };
