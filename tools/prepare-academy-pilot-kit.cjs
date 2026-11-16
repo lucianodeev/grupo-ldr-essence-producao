@@ -26,14 +26,21 @@ Estado: preparado, não aplicado. Zero participantes e zero pareceres recolhidos
 6. O revisor confronta o que foi observado com os objetivos. Registar problema, trecho, impacto e correção proposta. Repetir apenas as partes cuja alteração ou resultado o justifique. Resultados deste grupo não demonstram eficácia universal.
 7. O responsável decide o âmbito de uma eventual edição e o que permanece por validar. Não converter tempo estimado ou poucos registos em 80–160 horas certificadas. Recolha de tempos não aprova certificados. Não publicar enquanto existirem pendências de conteúdo/direitos ou decisão de aprovação em falta.
 
-Os ficheiros não enviam dados, não fazem login, não acedem a Stripe/Supabase nem alteram progresso. Não colocar este kit em diretório público. Entregar o gabarito apenas ao facilitador/revisor até terminar a tentativa correspondente.
+Os ficheiros não enviam dados, não fazem login, não acedem a Stripe/Supabase nem alteram progresso. Cada geração exige uma pasta nova; os kits existentes e os seus registos não são sobrescritos. Não colocar este kit em diretório público. Entregar o gabarito apenas ao facilitador/revisor até terminar a tentativa correspondente.
 `;
 function prepareKit(documents, output, sourceCommit) {
   output = path.resolve(output);
   const relative = path.relative(ROOT, output);
   if (!relative.startsWith('..' + path.sep) && relative !== '..') throw new Error('Pilot output must be outside the repository/public application');
   if (!/^[a-f0-9]{40}$/.test(sourceCommit)) throw new Error('Exact source commit required');
-  fs.mkdirSync(output, { recursive: true });
+  // Reserve a new directory atomically. Never regenerate over collected human evidence.
+  fs.mkdirSync(path.dirname(output), { recursive: true });
+  try {
+    fs.mkdirSync(output);
+  } catch (error) {
+    if (error.code === 'EEXIST') throw new Error('Pilot destination already exists; choose a new directory. Existing responses and reviews were preserved.');
+    throw error;
+  }
   fs.mkdirSync(path.join(output, 'Participantes'), { recursive: true });
   fs.mkdirSync(path.join(output, 'Gabaritos'), { recursive: true });
   const pilot = [['source_commit','course_slug','unit_id','module_sha256','participant_code','date','reading_minutes','activity_minutes','pause_minutes','support_used','response','difficulty','status']];
