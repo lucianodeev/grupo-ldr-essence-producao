@@ -12,9 +12,9 @@
     "authoredFreeModules": 59,
     "freeModules": 59,
     "subscriptionCatalog": 50,
-    "authoredSubscriptionCandidates": 10,
-    "authoredSubscriptionModules": 71,
-    "pendingSubscriptionCourses": 40,
+    "authoredSubscriptionCandidates": 12,
+    "authoredSubscriptionModules": 83,
+    "pendingSubscriptionCourses": 38,
     "exactDuplicateGroups": 0,
     "nearDuplicatePairs": 11710
   },
@@ -1063,9 +1063,11 @@
       "modules": 15,
       "topics": 45,
       "materialsListed": 3,
-      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
       "source": "src/lib/academy-subscription-courses.catalog.ts",
-      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/adult-study-planning.pt.json",
+      "authoredDraftModules": 6
     },
     {
       "product_key": "curso_assinatura_tecnicas_de_aprendizagem_e_memorizacao",
@@ -1075,9 +1077,11 @@
       "modules": 15,
       "topics": 45,
       "materialsListed": 3,
-      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
       "source": "src/lib/academy-subscription-courses.catalog.ts",
-      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/learning-memory.pt.json",
+      "authoredDraftModules": 6
     },
     {
       "product_key": "curso_assinatura_escrita_academica_para_iniciantes",
@@ -1729,6 +1733,28 @@
       }
     },
     {
+      "productKey": "curso_assinatura_planejamento_de_estudos_para_adultos",
+      "title": "Planejamento de Estudos para Adultos",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 100,
+      "path": "editorial/courses/adult-study-planning.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
       "productKey": "curso_assinatura_orientacao_de_carreira",
       "title": "Orientação de Carreira",
       "status": "draft",
@@ -1790,6 +1816,28 @@
         "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
         "paragraphsChecked": 105,
         "pairsChecked": 5460,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
+      "productKey": "curso_assinatura_tecnicas_de_aprendizagem_e_memorizacao",
+      "title": "Técnicas de Aprendizagem e Memorização",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 100,
+      "path": "editorial/courses/learning-memory.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
         "exact": [],
         "near": []
       }
@@ -1928,11 +1976,11 @@
     }
   ],
   "editorialCorpusReview": {
-    "documents": 11,
-    "units": 91,
+    "documents": 13,
+    "units": 103,
     "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
-    "paragraphsChecked": 569,
-    "pairsChecked": 161596,
+    "paragraphsChecked": 641,
+    "pairsChecked": 205120,
     "exact": [],
     "near": []
   },

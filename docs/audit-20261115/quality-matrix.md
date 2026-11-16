@@ -91,8 +91,8 @@ Atualização editorial: 16/11/2026; inventário de origem: 15/11/2026. Nenhum p
 | Empreendedorismo para Quem Está Começando do Zero | 15 | 180h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
 | Organização Pessoal e Gestão do Tempo | 15 | 80h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
 | Produtividade sem Ansiedade | 15 | 80h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
-| Planejamento de Estudos para Adultos | 15 | 100h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
-| Técnicas de Aprendizagem e Memorização | 15 | 100h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
+| Planejamento de Estudos para Adultos | 15 | 100h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada |
+| Técnicas de Aprendizagem e Memorização | 15 | 100h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada |
 | Escrita Acadêmica para Iniciantes | 15 | 120h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
 | Como Fazer Apresentações Profissionais | 15 | 100h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
 | Oratória e Segurança para Falar em Público | 15 | 120h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
@@ -156,9 +156,11 @@ As versões candidatas não são usadas pelo leitor de produção. O original e 
 | Curso | Módulos desenvolvidos / previstos | Carga anunciada / validada | Estado |
 | --- | --- | --- | --- |
 | Assistente Administrativo na Prática | 6 / 6 | 180h / por validar | draft; published=false; elegível=false |
+| Planejamento de Estudos para Adultos | 6 / 6 | 100h / por validar | draft; published=false; elegível=false |
 | Orientação de Carreira | 6 / 6 | 120h / por validar | draft; published=false; elegível=false |
 | Currículo Estratégico: Como Apresentar sua História Profissional | 6 / 6 | 80h / por validar | draft; published=false; elegível=false |
 | Como se Preparar para uma Entrevista de Emprego | 15 / 15 | 80h / por validar | draft; published=false; elegível=false |
+| Técnicas de Aprendizagem e Memorização | 6 / 6 | 100h / por validar | draft; published=false; elegível=false |
 | Raciocínio Lógico para Estudos, Concursos e Seleções | 6 / 6 | 120h / por validar | draft; published=false; elegível=false |
 | Rotinas de Escritório e Organização Administrativa | 6 / 6 | 160h / por validar | draft; published=false; elegível=false |
 | Auxiliar de Escritório | 6 / 6 | 160h / por validar | draft; published=false; elegível=false |
@@ -179,7 +181,7 @@ Os manifests contêm apenas hashes e posições. Os textos integrais das prévia
 
 ## Triagem entre candidatas originais
 
-11 produtos; 91 unidades; 569 parágrafos e 161596 pares. Cópias exatas: 0; pares próximos: 0. Método: paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required. A ausência de sinal não equivale a aprovação conceptual ou científica.
+13 produtos; 103 unidades; 641 parágrafos e 205120 pares. Cópias exatas: 0; pares próximos: 0. Método: paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required. A ausência de sinal não equivale a aprovação conceptual ou científica.
 
 ## Duplicação e limites
 
