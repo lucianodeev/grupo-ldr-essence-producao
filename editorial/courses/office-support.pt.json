@@ -142,7 +142,7 @@
           "title": "Um conflito visível e outro escondido na preparação",
           "paragraphs": [
             "A sala D tem uma reunião confirmada das nove às nove e meia. Surge um pedido das nove e vinte às dez. Os intervalos sobrepõem-se por dez minutos; o pedido não pode ser confirmado com base apenas no horário final da primeira atividade. Depois da reunião, a regra fictícia exige dez minutos de preparação antes de outra utilização. Assim, o primeiro início possível após o compromisso existente será às nove e quarenta, se não houver outra restrição. Essa conclusão depende da regra fornecida, não de um padrão universal de reuniões.",
-            "A pessoa que pediu o segundo evento pode aceitar nove e quarenta ou precisar de outro recurso. O auxiliar deverá apresentar a alternativa e obter a confirmação apropriada, em vez de deslocar uma reunião já confirmada para abrir espaço. No dossiê, a sala E está livre, mas o equipamento necessário ainda não foi verificado. A alternativa tem uma condição pendente. Chamar-lhe solução confirmada eliminaria a diferença entre espaço disponível e recurso adequado à atividade."
+            "Se a segunda reunião mantiver os quarenta minutos pedidos, a alternativa será das nove e quarenta às dez e vinte, ainda dependente de aceitação. A pessoa que pediu o evento pode aceitar esse novo intervalo ou precisar de outro recurso. O auxiliar deverá apresentar a alternativa e obter a confirmação apropriada, em vez de deslocar uma reunião já confirmada para abrir espaço. No dossiê, a sala E está livre, mas o equipamento necessário ainda não foi verificado. A alternativa tem uma condição pendente. Chamar-lhe solução confirmada eliminaria a diferença entre espaço disponível e recurso adequado à atividade."
           ]
         },
         {
@@ -154,10 +154,10 @@
         }
       ],
       "case": "Sala D: reunião confirmada 09h00–09h30; preparação de dez minutos; novo pedido 09h20–10h00. Sala E livre, equipamento necessário ainda não verificado.",
-      "exercise": "Desenhe os intervalos, calcule sobreposição e primeiro início possível em D. Proponha duas alternativas com condições. Após uma resposta fictícia de aprovação, produza o registo final e a comunicação de alteração.",
+      "exercise": "Desenhe os intervalos, calcule sobreposição e primeiro início possível em D. Indique também o fim se conservar os quarenta minutos de duração. Proponha duas alternativas com condições. Após uma resposta fictícia de aprovação, produza o registo final e a comunicação de alteração.",
       "assessment": {
         "question": "A sala D pode receber imediatamente outro evento às 09h30 segundo este dossiê?",
-        "answer": "Não. A regra do exercício exige dez minutos de preparação, tornando 09h40 o primeiro início possível após a reunião, se as restantes condições forem satisfeitas. O pedido original tem dez minutos de sobreposição.",
+        "answer": "Não. A regra do exercício exige dez minutos de preparação, tornando 09h40 o primeiro início possível após a reunião, se as restantes condições forem satisfeitas. O pedido original tem dez minutos de sobreposição. Mantendo quarenta minutos, o intervalo proposto será 09h40–10h20 e precisa de aceitação; não é uma reserva automaticamente confirmada.",
         "rubric": [
           "Calcula intervalos e preparação.",
           "Não move compromisso confirmado sem autorização.",

@@ -50,7 +50,7 @@ Os oito e seis módulos substituem editorialmente o molde conceptual anterior, m
 
 ## Curso de Auxiliar de Escritório e leitura editorial
 
-Foi acrescentada uma candidata com **seis oficinas de Auxiliar de Escritório**, 2.789 palavras de desenvolvimento e 720 minutos de prática estimada sem pilotagem. Trabalha receção e triagem, agenda e recursos, arquivo e versões, conferência de registos, preparação de reposição e passagem de trabalho. Os exercícios têm identificadores, intervalos, valores e respostas definidos. O pacote integrado distingue quatro estados de trabalho e inclui perguntas de recuperação.
+Foi acrescentada uma candidata com **seis oficinas de Auxiliar de Escritório**, 2.812 palavras de desenvolvimento e 720 minutos de prática estimada sem pilotagem. Trabalha receção e triagem, agenda e recursos, arquivo e versões, conferência de registos, preparação de reposição e passagem de trabalho. Os exercícios têm identificadores, intervalos, valores e respostas definidos. O pacote integrado distingue quatro estados de trabalho e inclui perguntas de recuperação.
 
 As fontes consultadas são o perfil ocupacional National Careers Service e orientações de NARA e The National Archives, com âmbito identificado. Nenhum fornecedor foi contactado, reserva efetuada, documento eliminado ou pagamento iniciado. Os seis módulos são uma proposta editorial distinta dos quinze títulos históricos, sem migração ativa; a carga anunciada de 160 horas continua sem validação.
 
