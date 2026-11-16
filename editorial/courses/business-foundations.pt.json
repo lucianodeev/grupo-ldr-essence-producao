@@ -228,27 +228,28 @@
         {
           "title": "Uma etapa externa pode limitar o calendário",
           "paragraphs": [
-            "Uma pessoa parceira autorizada só consegue conferir três dossiers na semana, embora o prestador tenha tempo para preparar cinco. Se a conferência depende dessa função, a capacidade de entrega confirmada é três, não cinco. Preparar os outros dois cria trabalho em curso e não entrega concluída. O mapa deve mostrar onde os dossiers aguardam e que compromisso pode ser assumido sem omitir a restrição. Não se deve marcar a conferência como feita nem atribuí-la a alguém não autorizado apenas para aproximar o resultado da previsão inicial.",
+            "Uma pessoa parceira autorizada só consegue conferir três dossiers na semana, embora o prestador tenha tempo para preparar cinco. Se a conferência depende dessa função, a capacidade de entrega confirmada é três, não cinco. Preparar os outros dois cria trabalho em curso e não entrega concluída. O mapa deve mostrar onde os dossiers aguardam e que compromisso pode ser assumido sem omitir a restrição. Não se deve marcar a conferência como feita nem atribuí-la a alguém não autorizado apenas para aproximar o resultado da previsão inicial. A restrição também altera a conclusão financeira do módulo anterior: com preço de 120, custo variável de 30 e contribuição unitária de 90, três entregas geram apenas 270 de contribuição no período, ficando 90 abaixo do custo fixo de 360. O ponto de equilíbrio de quatro entregas é matematicamente correto, mas operacionalmente inalcançável enquanto a conferência autorizada se limitar a três. Não confunda quatro pedidos recebidos com quatro entregas faturáveis nem preencha a diferença com um dossier ainda sem conferência.",
             "Além disso, o cliente precisa de enviar informações até ao início da preparação. Uma promessa de entrega na sexta pode estar condicionada a receber elementos completos na terça, segundo o cenário. A condição precisa de ser comunicada antes do compromisso, com procedimento para atraso. Isso não significa transferir toda a responsabilidade para o cliente: o prestador deve explicar o que precisa e confirmar se o material recebido permite começar. Uma dependência mal descrita pode produzir atrasos que não são visíveis no cálculo de horas."
           ]
         },
         {
           "title": "Capacidade contratável é diferente de possibilidade máxima",
           "paragraphs": [
-            "Uma agenda sem espaço para esclarecer dúvidas pode produzir entregas formalmente concluídas e pouco utilizáveis. A decisão de reservar margem precisa de uma razão, não de uma percentagem universal inventada. O aluno deve indicar que incerteza pretende acomodar e o que observará no piloto. A capacidade calculada é uma hipótese a testar em condições delimitadas. A referência de plano de negócio da SBA enquadra a ligação entre operação e projeções, mas não fornece uma taxa de produtividade LDR ou um padrão universal de horas por dossier.",
+            "Uma agenda sem espaço para esclarecer dúvidas pode produzir entregas formalmente concluídas e pouco utilizáveis. A decisão de reservar margem precisa de uma razão, não de uma percentagem universal inventada. O aluno deve indicar que incerteza pretende acomodar e o que observará no piloto. A capacidade calculada é uma hipótese a testar em condições delimitadas. A referência de plano de negócio da SBA enquadra a ligação entre operação e projeções, mas não fornece uma taxa de produtividade LDR ou um padrão universal de horas por dossier. Acrescente uma coluna de viabilidade económica: três entregas deixam um défice de 90 face ao fixo; quatro cobririam o fixo, mas excedem a capacidade autorizada em uma unidade. A proposta de faseamento deve distinguir encomendas aceites, entregas efetivas e momento de reconhecimento da receita. Uma eventual redução de custos, aumento de margem ou ampliação autorizada da conferência exige nova simulação e não constitui resultado já obtido.",
             "Construa um quadro com preparação, conferência e dados de entrada. Mostre a diferença entre cinco unidades preparáveis e três entregáveis e proponha dois compromissos alternativos para uma semana com quatro pedidos. Uma alternativa pode ser fasear, outra negociar data; não presuma aceitação. A entrega deve explicar a consequência de cada escolha para qualidade e trabalho em curso. O objetivo é vender uma operação possível, reconhecendo que capacidade não cresce pela eliminação de controlos nem por promessas que dependem de disponibilidade ainda não confirmada."
           ]
         }
       ],
       "case": "Dossier3h preparação+1h conferência;20h semanais para estas etapas. Conferente autorizado só aceita3 por semana. Quatro pedidos chegam, com entradas necessárias ainda por confirmar.",
-      "exercise": "Calcule capacidade teórica e efetiva; represente espera e proponha dois compromissos condicionados para quatro pedidos, sem ampliar permissões.",
+      "exercise": "Calcule capacidade teórica e efetiva; represente espera e proponha dois compromissos condicionados para quatro pedidos, sem ampliar permissões. Cruze o gargalo com a contribuição de90 e o fixo360: calcule o défice com três entregas e explique por que quatro não são executáveis nas condições descritas.",
       "assessment": {
         "question": "Cinco dossiers preparados significam cinco entregas confirmadas?",
-        "answer": "Não. A conferência limita a três. Os restantes constituem trabalho em curso enquanto essa etapa não for realizada.",
+        "answer": "Não. A conferência limita a três. Os restantes constituem trabalho em curso enquanto essa etapa não for realizada. Financeiramente, três contribuições de90 somam270, faltando90 para cobrir o fixo360; o equilíbrio requer quatro entregas, acima da capacidade autorizada.",
         "rubric": [
           "Calcula20/4=5 como limite teórico.",
           "Localiza gargalo3.",
-          "Comunica dependências e não presume aprovação."
+          "Comunica dependências e não presume aprovação.",
+          "Explicita défice de90 com três entregas e incompatibilidade entre equilíbrio de quatro e capacidade de três."
         ]
       }
     },
