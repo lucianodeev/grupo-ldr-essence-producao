@@ -6,7 +6,7 @@ const schema = z.object({
   email: z.string().trim().email().max(254), interest: z.enum(COMMERCIAL_INTERESTS), solution: z.enum(COMMERCIAL_SOLUTIONS),
   source: z.literal("integracao-colaboradores").optional(),
   message: z.string().trim().min(5).max(3000), consent: z.literal(true), website: z.string().max(0),
-});
+}).refine(d => d.source !== "integracao-colaboradores" || d.solution === "Integração de novos colaboradores", { path: ["solution"], message: "Origem e solução incompatíveis." });
 export function commercialSupportPayload(input: unknown) {
   const d = schema.parse(input);
   return { p_name: d.name, p_email: d.email.toLowerCase(), p_phone: "", p_subject: "Serviços para empresas",

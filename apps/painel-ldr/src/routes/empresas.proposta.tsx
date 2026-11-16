@@ -13,7 +13,7 @@ function Proposal(){
   async function submit(event:FormEvent<HTMLFormElement>){
     event.preventDefault();if(sending||protocol)return;
     const form=new FormData(event.currentTarget);setSending(true);setError("");
-    try{const payload=commercialSupportPayload({source:search.source,organization:form.get("organization"),name:form.get("name"),email:form.get("email"),interest:form.get("interest"),solution:form.get("solution"),message:form.get("message"),consent:form.get("consent")==="on",website:form.get("website")||""});setProtocol(commercialProtocol(await send({data:payload})));}
+    try{const payload=commercialSupportPayload({source:form.get("solution")==="Integração de novos colaboradores"?search.source:undefined,organization:form.get("organization"),name:form.get("name"),email:form.get("email"),interest:form.get("interest"),solution:form.get("solution"),message:form.get("message"),consent:form.get("consent")==="on",website:form.get("website")||""});setProtocol(commercialProtocol(await send({data:payload})));}
     catch{setError("Não foi possível confirmar o pedido. Verifique os campos ou utilize o atendimento institucional.");}finally{setSending(false);}
   }
   const field="mt-2 min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-base focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#866a3c]";
