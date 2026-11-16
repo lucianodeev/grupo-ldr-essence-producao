@@ -50,6 +50,7 @@ function PublicHome() {
         <div className="mt-6 flex flex-wrap gap-3">
           <Link to="/empresas/proposta" className="rounded-full bg-[#f4c76b] px-6 py-3 text-sm font-bold text-[#1f1303]">Solicitar proposta empresarial</Link>
           <Link to="/ecossistema" className="rounded-full border border-white/30 px-6 py-3 text-sm font-bold text-white">Conhecer o ecossistema</Link>
+          <Link to="/empresas/integracao-colaboradores" className="rounded-full border border-white/30 px-6 py-3 text-sm font-bold text-white">Integração de novos colaboradores</Link>
         </div>
         <h2 className="mt-10 text-xl font-bold text-white!">Serviços para empresas</h2>
         <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
