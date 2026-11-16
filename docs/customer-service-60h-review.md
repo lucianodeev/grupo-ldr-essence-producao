@@ -516,7 +516,7 @@ A tem 8 mensagens e 2 incidentes confirmados únicos em 100 pedidos: 2%. B tem 5
 
 ### U4-P — Oficinas de aplicação (180 min estimados)
 
-- Deduplicate os registos, conte mensagens e incidentes confirmados por período e calcule taxas por pedidos totais. (60 min)
+- Conserve todas as mensagens e deduplique apenas os identificadores ao contar incidentes confirmados; calcule taxas por pedidos totais. (60 min)
 
 - Faça uma árvore com três hipóteses: permissão, pagamento e navegação. Para cada uma, proponha teste e resultado que a contrariaria. (60 min)
 

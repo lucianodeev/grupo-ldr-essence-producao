@@ -851,7 +851,7 @@
           "estimatedMinutes": 180,
           "steps": [
             {
-              "instruction": "Deduplicate os registos, conte mensagens e incidentes confirmados por período e calcule taxas por pedidos totais.",
+              "instruction": "Conserve todas as mensagens e deduplique apenas os identificadores ao contar incidentes confirmados; calcule taxas por pedidos totais.",
               "minutes": 60
             },
             {

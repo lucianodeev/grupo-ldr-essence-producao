@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import {
   CUSTOMER_SERVICE_READING_SLUG,
   isApprovedReadingEdition,
+  isReleasedAcademyPracticeGuide,
   type AcademyReadingEdition,
 } from "./academy-reading-editions";
 
@@ -29,5 +30,11 @@ export async function getProtectedAcademyReadingEdition(
   ) {
     throw new Error("Não foi possível validar a edição de leitura.");
   }
-  return { allowed: true, edition };
+  const { CUSTOMER_SERVICE_PRACTICE_GUIDE: practiceGuide } =
+    await import("@/content/academy-reading/customer-service-practice.server");
+  if (!isReleasedAcademyPracticeGuide(practiceGuide, edition) ||
+    practiceGuide.modules.some(module => createHash("sha256").update(module.body).digest("hex") !== module.sha256)) {
+    throw new Error("Não foi possível validar o percurso de prática.");
+  }
+  return { allowed: true, edition: { ...edition, practiceGuide } };
 }
