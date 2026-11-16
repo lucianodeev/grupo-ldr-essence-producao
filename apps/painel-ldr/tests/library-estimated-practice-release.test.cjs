@@ -55,5 +55,5 @@ test('only existing product access returns the guide and reading source is never
  const bad=loader({'@/content/academy-reading/customer-service-practice.server':{CUSTOMER_SERVICE_PRACTICE_GUIDE:broken}})('lib/academy-reading-content.server.ts');
  await assert.rejects(bad.getProtectedAcademyReadingEdition('active',reading.slug,async()=>({allowed:true})),/validar o percurso/);
  const component=fs.readFileSync(path.join(root,'apps/painel-ldr/src/components/academy-reading-edition.tsx'),'utf8');
- assert.ok(!/localStorage|clientSaveProgress|fetch\\(|supabase|stripe/i.test(component));
+ assert.ok(!['localStorage','clientSaveProgress','fetch(','supabase','stripe'].some(token=>component.toLowerCase().includes(token.toLowerCase())));
 });
