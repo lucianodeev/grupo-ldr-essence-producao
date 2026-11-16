@@ -1,0 +1,129 @@
+{
+  "productKey": "curso_assinatura_preparacao_para_bolsas_intercambios_e_oportunidades_academicas",
+  "slug": "preparacao-para-bolsas-intercambios-e-oportunidades-academicas",
+  "title": "Preparação para Bolsas, Intercâmbios e Oportunidades Acadêmicas",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 140,
+  "validatedHours": null,
+  "expectedModuleCount": 2,
+  "scope": "Oficinas de leitura de chamada e preparação de candidatura sintética. Sem oportunidades reais, garantia de bolsa, regras migratórias ou reconhecimento académico presumido. Mantém as 140 horas históricas sem validação.",
+  "courseObjectives": [
+    "Classificar condições sem confundir candidatura admissível e bolsa atribuída.",
+    "Alinhar objetivo, método e recursos sem exagerar experiência."
+  ],
+  "sources": [
+    {
+      "id": "career",
+      "title": "Europass. Preparing for work abroad.",
+      "url": "https://europass.europa.eu/en/work-europe/preparing-work-abroad",
+      "consulted": "2026-11-16",
+      "scope": "Resumo oficial consultado sobre apresentar competências e qualificações no contexto de trabalho internacional. Não se declara verificação de regras migratórias, equivalência ou licença profissional. Os documentos e mercados dos exercícios são fictícios."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Ler uma chamada separando elegibilidade, documentos e seleção"
+    },
+    {
+      "id": "2",
+      "title": "Construir uma candidatura coerente entre projeto e condições"
+    }
+  ],
+  "modules": [
+    {
+      "title": "Ler uma chamada separando elegibilidade, documentos e seleção",
+      "objectives": [
+        "Classificar condições sem confundir candidatura admissível e bolsa atribuída."
+      ],
+      "sections": [
+        {
+          "title": "A chamada fictícia Aurora",
+          "paragraphs": [
+            "A chamada Aurora é inteiramente inventada para esta oficina. Ela exige matrícula ativa, um resumo de projeto de até quinhentas palavras e duas referências recebidas até à data indicada no pacote. A seleção posterior considera pertinência do projeto e disponibilidade de vagas. O aluno deve separar condições de apresentação, documentos e critérios de seleção. Cumprir os requisitos permite analisar a admissibilidade segundo a convenção do exercício; não demonstra atribuição de bolsa. A existência de uma chamada com formato semelhante também não permite transportar estas regras para um programa real, cujos termos teriam de ser consultados na fonte responsável.",
+            "A candidata fictícia Lúcia tem comprovativo de matrícula, um resumo de seiscentas palavras e uma referência recebida; a outra foi pedida, mas não chegou. O quadro inicial marca documentação completa porque todos os pedidos foram enviados. Corrija os estados: matrícula disponível, resumo acima do limite e referência ainda pendente. Pedido de documento não é documento recebido. O aluno deve identificar ações concretas antes da data, sem inventar prorrogação ou concluir que uma referência posterior será aceite. O cenário não fornece essas possibilidades e não deve ser completado por analogia com experiências de outros programas."
+          ]
+        },
+        {
+          "title": "Uma pergunta ao programa precisa de assunto definido",
+          "paragraphs": [
+            "Prepare uma consulta fictícia sobre o procedimento de confirmação de receção das referências, identificando a condição que o enunciado já fornece e a informação que falta. Não peça uma exceção como se fosse direito garantido nem envie dados pessoais reais. A oficina não submete candidaturas ou paga taxas. O aluno deve conseguir explicar que a consulta esclarece o processo, enquanto a revisão do resumo e o acompanhamento da referência são tarefas distintas. Uma lista de documentos só é útil quando conserva estado, responsável e condição de conclusão, em vez de marcar tudo como resolvido no momento em que o candidato começa a tratar do assunto.",
+            "Entregue a matriz da chamada e um plano de correção para o resumo e a referência. Se Lúcia reduzir o texto para quatrocentas e oitenta palavras e receber a segunda referência a tempo, poderá indicar conformidade com esses requisitos do cenário. Ainda assim, a atribuição dependerá da seleção posterior e das condições da chamada. A rubrica procura leitura precisa e distinção entre elegibilidade, completude e resultado. O curso não promete financiamento, viagem ou autorização de entrada num país. Prepara uma candidatura documentalmente compreensível, com pendências visíveis e perguntas que podem ser encaminhadas sem substituir a decisão da instituição responsável.",
+            "Se a chamada exigir referências recebidas, um comprovativo de envio pelo recomendante não deverá ser tratado automaticamente como receção confirmada. O estado deve corresponder ao acontecimento exigido no texto, e não ao mais fácil de obter."
+          ]
+        }
+      ],
+      "case": "Aurora fictícia: matrícula, resumo≤500palavras,2referências recebidas até data. Lúcia tem resumo600,uma referência,outra apenas pedida.",
+      "exercise": "Classifique condições e estados e planeie duas correções sem presumir aceitação.",
+      "assessment": {
+        "question": "Documentação completa garante bolsa?",
+        "answer": "Não. São condições distintas de seleção e atribuição.",
+        "rubric": [
+          "Lê limite e receção.",
+          "Não inventa prorrogação.",
+          "Distingue admissibilidade e resultado."
+        ]
+      },
+      "sourceIds": [
+        "career"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "1"
+    },
+    {
+      "title": "Construir uma candidatura coerente entre projeto e condições",
+      "objectives": [
+        "Alinhar objetivo, método e recursos sem exagerar experiência."
+      ],
+      "sections": [
+        {
+          "title": "Um projeto que promete mais do que consegue executar",
+          "paragraphs": [
+            "O resumo fictício de Lúcia propõe compreender a utilização de uma sala de estudo durante quatro semanas. Ela dispõe de duas horas semanais e pretende fazer três entrevistas de uma hora por semana, além de observações e análise. A carga de entrevistas, sozinha, excede a disponibilidade. A oficina pede rever o desenho antes de polir a linguagem da candidatura. Não se deve reduzir palavras mantendo um plano inviável. O aluno precisa de relacionar pergunta, atividade, tempo e informação necessária, conservando a distinção entre ambição académica e condições de execução efetivamente fornecidas.",
+            "A experiência de Lúcia inclui uma tarefa de observação em aula, não coordenação de investigação independente. Uma versão candidata afirma que ela liderou projetos internacionais. Retire essa afirmação e descreva a experiência conhecida, incluindo o apoio que precisaria para uma atividade nova. O projeto de treino não será executado com participantes reais; qualquer pesquisa real exigiria orientação e verificações éticas e institucionais adequadas. O aluno deve evitar apresentar uma proposta sintética como autorização de recolha de dados ou usar o exercício para procurar informações pessoais de estudantes sem enquadramento."
+          ]
+        },
+        {
+          "title": "Rever âmbito e consistência antes da entrega",
+          "paragraphs": [
+            "Prepare uma versão menor da pergunta e um plano compatível com as duas horas semanais, indicando quais atividades são apenas propostas e dependem de aprovação. Uma possibilidade no cenário é analisar registos sintéticos já fornecidos e escrever uma comparação delimitada, sem entrevistas reais. Essa mudança altera o tipo de conclusão possível: não permitirá explicar motivações de utilizadores. O aluno deve rever objetivo e resultado esperado em conjunto, em vez de trocar o método e conservar promessas que já não correspondem aos dados que pretende analisar. A coerência é mais importante do que manter todas as partes do rascunho inicial.",
+            "O produto final inclui resumo revisto, plano temporal e lista de condições que faltam confirmar com o programa fictício. Confira se os anexos e a apresentação de experiência concordam com o projeto. Não acrescente uma parceria, supervisão ou acesso a dados que não foi fornecido para tornar a proposta mais forte. A rubrica avalia relação entre pergunta, método, recursos e afirmações sobre percurso. A oficina não garante seleção nem substitui orientação científica. Mostra como uma candidatura pode apresentar um projeto mais limitado e ainda assim mais compreensível, porque o leitor consegue distinguir intenção, capacidade demonstrada e condições que dependem de decisão institucional.",
+            "Se o programa exigir atividades com participantes, a alternativa de registos sintéticos pode não cumprir a chamada. O aluno deve verificar a correspondência e reconhecer a incompatibilidade, em vez de declarar adequação apenas porque o novo plano cabe no tempo."
+          ]
+        }
+      ],
+      "case": "Lúcia:2h/semana×4; propõe3entrevistas de1h/semana+observação/análise. Só experiência de observação em aula. Alternativa de dados sintéticos disponíveis: sala C com 6/10 lugares ocupados no momento 1 e 8/10 no momento 2; sala D com 5/8 e 4/8. Momentos de treino, sem dados sobre motivos ou pessoas.",
+      "exercise": "Reveja âmbito e alegações; proponha análise de dados sintéticos condicionada à adequação da chamada.",
+      "assessment": {
+        "question": "Reduzir o texto resolve a incompatibilidade de tempo?",
+        "answer": "Não. É preciso rever atividades e conclusões; entrevistas sozinhas exigem3hpara2h disponíveis.",
+        "rubric": [
+          "Confere tempo.",
+          "Não inventa liderança.",
+          "Revê método e objetivo juntos."
+        ]
+      },
+      "sourceIds": [
+        "career"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "2"
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão especializada do âmbito deste curso e revisão editorial dos casos e critérios.",
+    "Pilotar as duas oficinas com participantes e tecnologias de apoio; ampliar a prática antes de qualquer equivalência à carga histórica anunciada.",
+    "Conferir fontes, direitos e cálculos; definir correspondência com o roteiro histórico sem apagar progresso ou certificados.",
+    "Aprovação fundamentada antes de integração ativa; esta edição compacta não comprova as horas históricas."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

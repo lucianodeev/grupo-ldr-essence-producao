@@ -1,0 +1,129 @@
+{
+  "productKey": "curso_assinatura_captacao_de_clientes_com_etica_e_estrategia",
+  "slug": "captacao-de-clientes-com-etica-e-estrategia",
+  "title": "Captação de Clientes com Ética e Estratégia",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 120,
+  "validatedHours": null,
+  "expectedModuleCount": 2,
+  "scope": "Oficinas de qualificação e parceria comercial com condições transparentes. Não utiliza contactos reais, automação de mensagens ou promessa de clientes. Separa relevância, autorização e interesse confirmado.",
+  "courseObjectives": [
+    "Justificar uma hipótese de adequação sem presumir interesse.",
+    "Definir papéis, informação partilhável e condição de continuidade."
+  ],
+  "sources": [
+    {
+      "id": "marketing",
+      "title": "Federal Trade Commission. Advertising and Marketing.",
+      "url": "https://www.ftc.gov/business-guidance/advertising-marketing",
+      "consulted": "2026-11-16",
+      "scope": "Página introdutória consultada na etapa anterior: alegações verdadeiras e sustentação. Não se declara parecer de conformidade local. Dados, ofertas e mensagens de treino não são campanhas reais."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Escolher quem abordar por correspondência com uma necessidade"
+    },
+    {
+      "id": "2",
+      "title": "Avaliar uma parceria sem confundir indicação e recomendação validada"
+    }
+  ],
+  "modules": [
+    {
+      "title": "Escolher quem abordar por correspondência com uma necessidade",
+      "objectives": [
+        "Justificar uma hipótese de adequação sem presumir interesse."
+      ],
+      "sections": [
+        {
+          "title": "A oferta de revisão de menus",
+          "paragraphs": [
+            "A empresa fictícia Clara revê menus de pequenos espaços de restauração, procurando inconsistências de descrição e informação em falta. O pacote oferece três possíveis contextos: um espaço que publicou pedido de ajuda para atualizar o menu, outro cujo menu parece antigo e um terceiro recomendado por um parceiro sem informação adicional. O aluno deve distinguir necessidade manifestada, hipótese baseada em observação limitada e indicação indireta. Nenhuma dessas situações autoriza afirmar que o espaço já quer contratar a Clara. A qualificação começa por relacionar a oferta com uma necessidade e por conservar o que ainda não se sabe.",
+            "No primeiro caso, o pedido público permite preparar uma resposta diretamente relacionada com a solicitação, verificando canal e condições apresentados. No segundo, aparência antiga não demonstra erro ou desejo de alteração. No terceiro, a indicação não equivale a permissão para partilhar documentos ou contactos reservados. Prepare uma ficha curta para cada contexto com evidência disponível, hipótese de adequação e pergunta de esclarecimento. Não recolha dados reais ou invente um diagnóstico do negócio. O exercício deve ser resolvido com os três cartões sintéticos e com uma descrição fiel do serviço que a Clara consegue oferecer."
+          ]
+        },
+        {
+          "title": "Uma abordagem que permita recusar",
+          "paragraphs": [
+            "Escreva uma mensagem para o contexto com pedido explícito. Ela deve identificar o motivo, descrever uma entrega limitada e perguntar se a pessoa quer esclarecer as condições. Não utilize urgência inventada, falsa familiaridade ou afirmação de que todos os concorrentes já compraram. A oferta de revisão não garante aumento de vendas nem certificação de informação alimentar. Se o menu exigir validação técnica ou normativa, o âmbito deverá reconhecer essa necessidade em vez de a ocultar para parecer um serviço completo. O aluno deve explicar o que o prestador consegue verificar e o que depende de outra competência.",
+            "O produto final reúne as fichas e uma decisão de abordagem por contexto, incluindo a possibilidade de não contactar. A rubrica valoriza a relação entre evidência e pertinência, não o número de mensagens preparadas. Uma lista grande pode continuar a conter hipóteses fracas ou contactos sem finalidade clara. O curso não oferece parecer sobre todos os enquadramentos de comunicação comercial; antes de qualquer uso real seriam necessárias verificações de canal, permissões e regras locais. A oficina demonstra que captação ética inclui reconhecer ausência de adequação e respeitar uma recusa, sem tratar toda pessoa identificável como oportunidade automaticamente disponível para exploração comercial.",
+            "Se o pedido público disser apenas fornecedores locais, não acrescente uma condição diferente para justificar a abordagem. A relevância precisa de respeitar os termos efetivos da solicitação, e não apenas a parte que favorece o prestador."
+          ]
+        }
+      ],
+      "case": "Clara revê menus. A pede ajuda publicamente; B parece antigo; C é indicação sem dados. Sem garantia de vendas ou validação técnica.",
+      "exercise": "Qualifique três contextos e prepare apenas uma resposta pertinente ao pedido explícito.",
+      "assessment": {
+        "question": "Uma aparência antiga demonstra intenção de contratar?",
+        "answer": "Não. É observação limitada que não comprova necessidade nem interesse.",
+        "rubric": [
+          "Distingue níveis de evidência.",
+          "Delimita serviço.",
+          "Admite não abordar."
+        ]
+      },
+      "sourceIds": [
+        "marketing"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "1"
+    },
+    {
+      "title": "Avaliar uma parceria sem confundir indicação e recomendação validada",
+      "objectives": [
+        "Definir papéis, informação partilhável e condição de continuidade."
+      ],
+      "sections": [
+        {
+          "title": "O acordo proposto por um parceiro",
+          "paragraphs": [
+            "Um parceiro fictício propõe indicar a Clara a cinco estabelecimentos e receber uma comissão por qualquer contrato resultante. O pacote não fornece aceitação dos estabelecimentos nem autoriza partilha de dados. A oficina pede preparar condições da parceria antes de contar clientes captados. Uma indicação pode ser um ponto de início, mas não demonstra necessidade, consentimento, capacidade de pagamento ou adequação do serviço. O aluno deverá distinguir o que o parceiro se propõe fazer, o que a Clara pode prometer e qual decisão continua a pertencer a cada estabelecimento, sem inventar uma relação comercial já concluída.",
+            "O cenário informa que o parceiro poderá apresentar a oferta em contexto autorizado e perguntar se cada interessado deseja contacto posterior. Não poderá prometer resultado técnico nem aceitar condições em nome da Clara. Prepare uma descrição desses limites. A remuneração proposta também precisa de uma condição observável: contrato efetivamente celebrado segundo as regras fictícias do exercício, não simples nome entregue numa lista. Não se definem aqui regras fiscais, contratuais ou de comissão aplicáveis a qualquer país. Trabalha-se a clareza documental necessária para que as partes saibam o que está e o que não está combinado."
+          ]
+        },
+        {
+          "title": "Rever resultados pelo acontecimento correto",
+          "paragraphs": [
+            "Depois do teste, dois estabelecimentos pedem informação, um recusa e os restantes não respondem. O relatório do parceiro anuncia cinco clientes. Corrija-o: há dois pedidos de informação, uma recusa e duas respostas ausentes. Nenhum contrato foi fornecido. A análise deve conservar a diferença entre atividade do parceiro e resultado comercial. Não se deve considerar silêncio como aceitação nem transferir a recusa para uma abordagem insistente noutro canal. O aluno prepara um registo com estado, informação autorizada e próxima ação compatível com a manifestação recebida no exercício.",
+            "Entregue condições de parceria e relatório corrigido, acrescentando perguntas sobre conflitos de interesse e comunicação transparente da relação quando pertinente. Não invente uma validação jurídica ou um formulário universal de consentimento. A rubrica procura coerência entre papéis e estados, permitindo avaliar se a parceria produz contactos relevantes sem prometer um número de contratos. O curso não executa campanhas, pagamentos ou mensagens. A competência exercitada é reconhecer que uma estratégia de captação inclui desenho de responsabilidades e conferência de resultados, e que chamar clientes a nomes ou curiosidade pode distorcer tanto a decisão comercial como as expectativas de quem participa na parceria.",
+            "Se um dos pedidos de informação evoluir para contrato, registe essa passagem com a evidência correspondente. Não retroaja o estado de todos os cinco estabelecimentos nem utilize um resultado para validar automaticamente a qualidade da lista inteira."
+          ]
+        }
+      ],
+      "case": "Parceiro indica cinco: dois pedem informação, um recusa, dois não respondem. Sem contratos. Comissão de treino ligada a contrato, não nome.",
+      "exercise": "Defina limites e corrija relatório de cinco clientes com estados reais.",
+      "assessment": {
+        "question": "Dois pedidos de informação satisfazem a condição de contrato?",
+        "answer": "Não. São etapas diferentes; nenhum contrato foi fornecido.",
+        "rubric": [
+          "Conserva autoridade das partes.",
+          "Não conta silêncio como aceitação.",
+          "Liga comissão à condição dada."
+        ]
+      },
+      "sourceIds": [
+        "marketing"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "2"
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão especializada do âmbito deste curso e revisão editorial dos casos e critérios.",
+    "Pilotar as duas oficinas com participantes e tecnologias de apoio; ampliar a prática antes de qualquer equivalência à carga histórica anunciada.",
+    "Conferir fontes, direitos e cálculos; definir correspondência com o roteiro histórico sem apagar progresso ou certificados.",
+    "Aprovação fundamentada antes de integração ativa; esta edição compacta não comprova as horas históricas."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

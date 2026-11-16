@@ -1,0 +1,129 @@
+{
+  "productKey": "curso_assinatura_como_organizar_documentos_rotinas_e_metas",
+  "slug": "como-organizar-documentos-rotinas-e-metas",
+  "title": "Como Organizar Documentos, Rotinas e Metas",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 80,
+  "validatedHours": null,
+  "expectedModuleCount": 2,
+  "scope": "Oficinas integradas de dossiê e acompanhamento de uma feira fictícia. Distingue-se de rotinas administrativas gerais ao ligar evidências documentais a entregas e metas de um projeto delimitado. Sem prazos legais de retenção.",
+  "courseObjectives": [
+    "Relacionar documento, versão, estado e utilização.",
+    "Definir medida, base e rotina de atualização."
+  ],
+  "sources": [
+    {
+      "id": "documents",
+      "title": "The National Archives. Essential records management.",
+      "url": "https://cdn.nationalarchives.gov.uk/documents/essential-records-management.pdf",
+      "consulted": "2026-11-16",
+      "scope": "Introdução e estrutura consultadas na etapa anterior sobre contexto, responsabilidades e controlo de acesso. Não se declara leitura integral ou revisão de normas locais. Não se prescrevem prazos legais de conservação."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Construir um dossiê que permita saber o que está decidido"
+    },
+    {
+      "id": "2",
+      "title": "Acompanhar uma meta sem confundir atividade e resultado"
+    }
+  ],
+  "modules": [
+    {
+      "title": "Construir um dossiê que permita saber o que está decidido",
+      "objectives": [
+        "Relacionar documento, versão, estado e utilização."
+      ],
+      "sections": [
+        {
+          "title": "Os ficheiros da feira Azul",
+          "paragraphs": [
+            "O projeto fictício Feira Azul reúne quatro ficheiros: mapa da sala versão um, mapa versão dois ainda em proposta, lista de mesas confirmadas e lista de interessados sem confirmação. A pasta inicial chama-se tudo final. Esse nome não descreve os estados e pode levar alguém a usar a proposta como mapa autorizado ou contar interesse como reserva. A oficina pede criar um índice que permita recuperar finalidade, versão, estado e responsável. Organizar documentos não é apenas colocar nomes semelhantes numa pasta; é preservar as relações necessárias para compreender o que cada peça permite fazer no projeto.",
+            "O pacote informa que o mapa um foi autorizado para vinte mesas. O mapa dois propõe vinte e quatro, mas depende de uma verificação de espaço ainda não realizada. A lista contém dezasseis mesas confirmadas e cinco manifestações de interesse, uma delas já incluída nas confirmações. Não se deve somar dezasseis e cinco para declarar vinte e uma reservas distintas. O aluno deve distinguir estado e sobreposição, criando uma referência que permita perceber quais entradas se relacionam. O exercício usa identificadores sintéticos, sem nomes ou contactos reais de participantes da feira."
+          ]
+        },
+        {
+          "title": "Um índice que reduza interpretações indevidas",
+          "paragraphs": [
+            "Prepare um quadro textual com identificador, nome descritivo, versão, utilização permitida no cenário e pendência. O mapa dois pode permanecer guardado como proposta; não precisa de ser apagado para que o índice seja claro. A relação com o mapa um deverá indicar qual referência está autorizada e qual alteração se investiga. Para as listas, conserve confirmação e interesse como categorias distintas. Não se prescreve uma política universal de arquivo ou prazo de conservação. O objetivo é permitir que uma pessoa nova recupere o estado do projeto sem depender de um nome de pasta que promete conclusão onde ela ainda não existe.",
+            "Entregue índice e uma instrução de uso para quem prepara a montagem. A instrução deve apontar o mapa autorizado, a capacidade correspondente e a condição que impede utilizar a proposta. Se surgir nova confirmação, atualize a lista sem alterar automaticamente o mapa. Documentos ligados ao mesmo projeto podem mudar em momentos diferentes. A rubrica avalia coerência entre peças e decisões, não quantidade de subpastas ou sofisticação da ferramenta. O curso trabalha um dossiê pequeno e totalmente fictício para mostrar como organização documental pode sustentar uma rotina e impedir que uma meta futura seja confundida com um estado já alcançado.",
+            "Se a verificação aprovar vinte e quatro mesas, registe a decisão e a versão a que se refere. Não basta renomear o mapa dois como final, pois a informação sobre a autorização precisa de continuar recuperável."
+          ]
+        }
+      ],
+      "case": "Mapa1 autorizado20; mapa2 propõe24/verificação pendente.16confirmadas,5interesses,1 sobreposto.",
+      "exercise": "Crie índice, distinga categorias e escreva instrução de montagem.",
+      "assessment": {
+        "question": "Todos os ficheiros numa pasta final estão autorizados?",
+        "answer": "Não. O estado depende das decisões; mapa2 é proposta e interesse não é confirmação.",
+        "rubric": [
+          "Conserva versões.",
+          "Não soma sobreposição.",
+          "Relaciona utilização e evidência."
+        ]
+      },
+      "sourceIds": [
+        "documents"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "1"
+    },
+    {
+      "title": "Acompanhar uma meta sem confundir atividade e resultado",
+      "objectives": [
+        "Definir medida, base e rotina de atualização."
+      ],
+      "sections": [
+        {
+          "title": "Uma meta com duas contagens possíveis",
+          "paragraphs": [
+            "A meta de treino da Feira Azul é confirmar vinte mesas até ao ponto de revisão convencionado. A equipa enviou vinte e cinco respostas a interessados e possui dezasseis confirmações distintas. O relatório apresenta cento e vinte e cinco por cento da meta porque dividiu mensagens enviadas por vinte. A conta usa uma atividade como se fosse resultado. O aluno deve corrigir a medida: dezasseis confirmações sobre vinte correspondem a oitenta por cento da meta. As mensagens podem ser acompanhadas separadamente, mas não substituem a condição que o projeto definiu como confirmação de participação.",
+            "Uma rotina de atualização precisa de dizer o que entra na contagem e qual peça demonstra o estado. No exercício, confirmação exige a manifestação explícita fornecida no cartão sintético. Uma pergunta sobre preço ou uma resposta ainda por ler não deve ser promovida a confirmação para melhorar o indicador. O aluno prepara um registo com identificador, estado e referência da evidência, usando os dados da oficina anterior. O indicador deve poder ser reconstruído; caso contrário, um total aparentemente preciso pode esconder duplicação, mudança de critério ou inclusão de acontecimentos que não correspondem à meta."
+          ]
+        },
+        {
+          "title": "Ligar o acompanhamento à próxima decisão",
+          "paragraphs": [
+            "No ponto de revisão, surgem três confirmações novas e uma desistência entre as dezasseis anteriores. O total passa a dezoito, equivalente a noventa por cento da meta de vinte. A equipa deve atualizar a contagem sem apagar o histórico de entradas e saída. A capacidade autorizada continua a vinte até haver outra decisão sobre o mapa. O aluno precisa de distinguir meta, total confirmado e limite de capacidade. A eventual aprovação de vinte e quatro mesas não altera silenciosamente a meta anterior: qualquer revisão de objetivo deve ser explicitada para que a comparação continue compreensível.",
+            "Entregue uma rotina curta de conferência e uma nota de situação com dezoito confirmações, duas posições até à meta e a condição do mapa ainda em acompanhamento. Não transforme a distância restante numa promessa de que será preenchida. A rubrica observa medida correta, atualização e relação com uma decisão prática, como rever contactos esperados ou confirmar condições da montagem. O curso não recomenda insistência sobre pessoas que recusaram nem recolha de dados além do necessário. A aprendizagem consiste em ligar documentos, rotina e meta de um projeto, mantendo a diferença entre esforço realizado, resultado confirmado e capacidade para receber mais participantes.",
+            "Se uma confirmação nova corresponder a identificador já presente, não aumente o total antes de resolver a duplicação. Uma atualização frequente só é útil quando conserva o critério que torna a medida interpretável."
+          ]
+        }
+      ],
+      "case": "Meta20confirmações;25mensagens;16confirmadas. Depois+3−1=18. Capacidade20 até nova decisão.",
+      "exercise": "Corrija indicador, atualize total e proponha rotina com evidência por entrada.",
+      "assessment": {
+        "question": "Vinte e cinco mensagens comprovam125% da meta de confirmações?",
+        "answer": "Não. Inicialmente16/20=80%; depois18/20=90%.",
+        "rubric": [
+          "Distingue atividade e resultado.",
+          "Confere entradas/saída.",
+          "Não muda meta silenciosamente."
+        ]
+      },
+      "sourceIds": [
+        "documents"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "2"
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão especializada do âmbito deste curso e revisão editorial dos casos e critérios.",
+    "Pilotar as duas oficinas com participantes e tecnologias de apoio; ampliar a prática antes de qualquer equivalência à carga histórica anunciada.",
+    "Conferir fontes, direitos e cálculos; definir correspondência com o roteiro histórico sem apagar progresso ou certificados.",
+    "Aprovação fundamentada antes de integração ativa; esta edição compacta não comprova as horas históricas."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

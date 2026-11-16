@@ -11,10 +11,10 @@ function strings(value) {
 }
 const checksum = value => crypto.createHash('sha256').update(value).digest('hex');
 
-test('all 21 authored courses convert losslessly, including supplementary task data, and stay blocked', () => {
+test('all 49 authored courses convert losslessly, including supplementary task data, and stay blocked', () => {
   const candidates = prepareAllCandidates();
-  assert.equal(candidates.length, 21);
-  assert.equal(candidates.reduce((n, e) => n + e.modules.length, 0), 137);
+  assert.equal(candidates.length, 49);
+  assert.equal(candidates.reduce((n, e) => n + e.modules.length, 0), 193);
   for (const edition of candidates) {
     assert.equal(edition.published, false);
     assert.equal(edition.validatedHours, null);
@@ -50,4 +50,19 @@ test('export rejects paths outside the drafts directory and unreviewed candidate
   assert.throws(() => prepareCourseCandidate('../private.json'), /Invalid candidate filename/);
   const publicMetadata = fs.readFileSync(path.join(root, 'apps/painel-ldr/src/lib/academy-reading-editions.ts'), 'utf8');
   assert.ok(!publicMetadata.includes('prepare-course-academy-candidates'));
+});
+
+test('all 50 subscription products have either a complete draft edition or the existing approved reading edition', () => {
+  const catalog = load('lib/academy-subscription-courses.catalog.ts').ACADEMY_SUBSCRIPTION_COURSES;
+  const { CUSTOMER_SERVICE_READING_EDITION: released } = load('content/academy-reading/customer-service-release.server.ts');
+  const candidates = prepareAllCandidates();
+  assert.equal(catalog.length, 50);
+  assert.equal(new Set(candidates.map(item => item.productKey)).size, 49);
+  for (const product of catalog) {
+    const matches = [...candidates, released].filter(item => item.productKey === product.productKey);
+    assert.equal(matches.length, 1, product.slug + ': missing or duplicate edition');
+    assert.equal(matches[0].slug, product.slug);
+  }
+  assert.equal(isApprovedReadingEdition(released), true);
+  assert.equal(candidates.some(item => item.published || isApprovedReadingEdition(item)), false);
 });

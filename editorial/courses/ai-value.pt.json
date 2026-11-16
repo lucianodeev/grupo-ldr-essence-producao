@@ -1,0 +1,133 @@
+{
+  "productKey": "curso_assinatura_como_ganhar_dinheiro_com_inteligencia_artificial",
+  "slug": "como-ganhar-dinheiro-com-inteligencia-artificial",
+  "title": "Como Ganhar Dinheiro com Inteligência Artificial",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 120,
+  "validatedHours": null,
+  "expectedModuleCount": 2,
+  "scope": "Edição compacta de duas oficinas sobre uma entrega comercial assistida por IA: delimitar valor verificável e testar viabilidade operacional. Sem promessa de rendimento, utilização de dados reais ou equivalência às 120 horas históricas.",
+  "courseObjectives": [
+    "Definir um resultado que o cliente consiga conferir.",
+    "Delimitar dados e revisão humana antes de propor automação.",
+    "Incluir correção e comunicação no esforço do serviço.",
+    "Distinguir resultado de uma amostra e capacidade de produção."
+  ],
+  "sources": [
+    {
+      "id": "ai",
+      "title": "NIST. Generative Artificial Intelligence Profile, AI 600-1.",
+      "url": "https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence",
+      "consulted": "2026-11-16",
+      "scope": "Resumo oficial e resultados da pesquisa consultados sobre riscos de conteúdo plausível incorreto. Não se declara leitura integral. Cenários, registos de teste e números são originais; não constituem certificação de sistema."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Separar uma entrega vendável de uma demonstração impressionante"
+    },
+    {
+      "id": "2",
+      "title": "Calcular o piloto antes de anunciar escala"
+    }
+  ],
+  "modules": [
+    {
+      "title": "Separar uma entrega vendável de uma demonstração impressionante",
+      "objectives": [
+        "Definir um resultado que o cliente consiga conferir.",
+        "Delimitar dados e revisão humana antes de propor automação."
+      ],
+      "sections": [
+        {
+          "title": "O catálogo da oficina Lume",
+          "paragraphs": [
+            "A oficina fictícia Lume vende quinze peças artesanais e recebe descrições desiguais dos seus produtos. O pedido é preparar fichas consistentes para o catálogo, não criar uma loja nem garantir vendas. Uma demonstração de texto fluente pode impressionar sem resolver o trabalho: se uma ficha inventar uma dimensão ou material, aumenta a necessidade de conferência. Antes de escolher um modelo, o aluno deverá definir os campos que serão preenchidos, a origem dos dados e o que acontecerá quando uma informação não estiver disponível. A proposta começa no resultado verificável, e não na promessa de que a inteligência artificial fará tudo.",
+            "O pacote de treino contém três objetos sintéticos. A caixa A mede vinte centímetros e é de pinho; o vaso B tem cor azul e altura não informada; a bolsa C é de tecido, mas não tem instrução de lavagem confirmada. Uma saída candidata descreve o vaso como tendo trinta centímetros e recomenda lavar a bolsa na máquina. Nenhuma dessas duas afirmações aparece nos dados. O aluno deve retirar ambas e registar as perguntas para o responsável. Pedir novamente uma resposta ao sistema não constitui confirmação independente: continua a faltar evidência sobre o próprio produto."
+          ]
+        },
+        {
+          "title": "Desenhar uma entrega com fronteiras",
+          "paragraphs": [
+            "A entrega proposta terá quinze fichas, cada uma com nome, material, dimensão confirmada e observação sobre informação em falta. Um campo ausente ficará identificado, sem substituição por linguagem publicitária que esconda a lacuna. A pessoa responsável pela revisão compara os campos com a ficha original e decide se o texto pode ser utilizado. O cliente não compra apenas palavras produzidas: recebe um conjunto conferido dentro de um âmbito acordado. Essa revisão precisa de entrar no desenho da tarefa, pois uma demonstração automática que ignora o seu custo não descreve a execução completa do serviço.",
+            "Prepare uma amostra com os três objetos e uma lista explícita de exclusões: fotografia, publicação, tradução e afirmações técnicas não comprovadas estão fora deste exercício. Utilize somente os dados sintéticos fornecidos; não carregue contactos, encomendas ou documentos reais num serviço externo. Ao apresentar a amostra, diferencie proposta, teste e serviço aceite. O título comercial histórico do curso não demonstra que alguém ganhará dinheiro. A avaliação procura uma entrega compreensível e controlável, permitindo que o possível cliente a recuse ou peça esclarecimentos sem pressão e que o prestador reconheça os limites do que realmente conseguiu verificar.",
+            "Uma segunda saída chama à madeira da caixa material impermeável. O pacote só diz pinho. A revisão deve rejeitar a propriedade adicional e explicar que conhecer o nome de um material não demonstra um tratamento específico aplicado àquela peça."
+          ]
+        }
+      ],
+      "case": "Lume: A caixa de pinho de 20 cm; B vaso azul, altura ausente; C bolsa de tecido, lavagem não confirmada. Saída candidata inventa 30 cm para B e lavagem na máquina para C.",
+      "exercise": "Produza as três fichas, assinale lacunas e escreva o âmbito de um serviço de quinze fichas. Explique a revisão antes da utilização.",
+      "assessment": {
+        "question": "A repetição da altura inventada por duas respostas de IA confirma que o vaso mede trinta centímetros?",
+        "answer": "Não. Falta uma fonte independente sobre o objeto. A altura deve ficar por confirmar; a repetição do texto não cria evidência.",
+        "rubric": [
+          "Mantém somente atributos fornecidos.",
+          "Define revisão e exclusões.",
+          "Não promete venda ou rendimento."
+        ]
+      },
+      "sourceIds": [
+        "ai"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "1"
+    },
+    {
+      "title": "Calcular o piloto antes de anunciar escala",
+      "objectives": [
+        "Incluir correção e comunicação no esforço do serviço.",
+        "Distinguir resultado de uma amostra e capacidade de produção."
+      ],
+      "sections": [
+        {
+          "title": "Custos que a demonstração deixou fora",
+          "paragraphs": [
+            "Considere agora um piloto fictício de dez fichas. Preparar os dados demora trinta minutos, a primeira geração dez, a conferência quarenta e as correções vinte. A comunicação e entrega consomem outros vinte minutos. O trabalho completo demora cento e vinte minutos, embora a demonstração visível tenha durado apenas dez. O aluno deverá reconstruir essa sequência e explicar por que apresentar só o tempo de geração produz uma imagem incompleta do serviço. Os tempos pertencem ao exercício; não representam o desempenho de uma ferramenta, o ritmo de um profissional nem uma garantia para qualquer catálogo futuro.",
+            "O preço experimental é sessenta unidades monetárias. Há doze unidades de custos diretos e oito de outros custos atribuídos ao piloto. Restam quarenta antes de considerar impostos e outros elementos não fornecidos. Dividir quarenta pelas duas horas produz vinte unidades por hora neste recorte. Esse cálculo não é lucro líquido certificado nem recomendação de preço: serve para tornar visíveis as componentes que a proposta incluiu e as que continuam desconhecidas. Se o prestador omitir revisão, comunicação ou custos, a comparação perde utilidade mesmo que a conta da geração automática esteja correta."
+          ]
+        },
+        {
+          "title": "Um erro muda a decisão comercial",
+          "paragraphs": [
+            "Na primeira amostra, oito fichas passam sem alteração e duas exigem correção. O resultado permite descrever o que ocorreu com estes dez itens; não demonstra oitenta por cento de aprovação em qualquer novo conjunto. A segunda encomenda pode ter dados piores, materiais diferentes ou exigências adicionais. Prepare um critério de continuidade: a nova entrega só será aceite depois de confirmar campos, responsabilidades e esforço previsto. Caso o cliente pretenda cem fichas com descrição técnica não disponível, a resposta adequada pode ser recusar esse âmbito, pedir documentação ou propor uma etapa de levantamento separada.",
+            "Entregue um quadro com tempos, custos, erros observados e perguntas para o próximo piloto. Acrescente duas versões de uma apresentação comercial: uma que descreva fielmente a amostra e outra, marcada como inadequada, que prometa multiplicar vendas automaticamente. Compare a evidência necessária para cada frase. A escolha de continuar deve considerar capacidade, qualidade e condições aceites, não apenas entusiasmo com a tecnologia. O instrumento não aconselha contrair crédito, comprar assinaturas ou abandonar rendimento existente. A decisão pedagógica termina em testar uma hipótese de serviço com limites claros e em reconhecer quando ainda não existe base para prometer escala.",
+            "Se a revisão consumir mais vinte minutos, mantenha os custos conhecidos e recalcule a relação com o tempo: quarenta divididos por duas horas e vinte minutos já não equivale a vinte por hora. Esta alteração deve aparecer antes de comparar novos pedidos."
+          ]
+        }
+      ],
+      "case": "Piloto de 10 fichas: tempos 30+10+40+20+20 minutos; preço 60; custos 12+8. Oito fichas passam sem alteração e duas são corrigidas. Unidades monetárias fictícias.",
+      "exercise": "Calcule o tempo completo e a contribuição do recorte. Escreva uma conclusão sobre o piloto e critérios para aceitar uma segunda encomenda.",
+      "assessment": {
+        "question": "É correto anunciar que o serviço foi entregue em dez minutos e rende sessenta por duas horas de trabalho?",
+        "answer": "Não. Dez minutos medem só geração. O serviço levou duas horas; descontados os vinte de custos fornecidos, restam quarenta neste recorte, equivalentes a vinte por hora antes de elementos não informados.",
+        "rubric": [
+          "Reconstrói 120 minutos.",
+          "Distingue preço e contribuição.",
+          "Não transforma dez itens em previsão universal."
+        ]
+      },
+      "sourceIds": [
+        "ai"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "2"
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão especializada do âmbito deste curso e revisão editorial dos casos e critérios.",
+    "Pilotar as duas oficinas com participantes e tecnologias de apoio; ampliar a prática antes de qualquer equivalência à carga histórica anunciada.",
+    "Conferir fontes, direitos e cálculos; definir correspondência com o roteiro histórico sem apagar progresso ou certificados.",
+    "Aprovação fundamentada antes de integração ativa; esta edição compacta não comprova as horas históricas."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

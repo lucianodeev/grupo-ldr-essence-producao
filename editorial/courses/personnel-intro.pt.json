@@ -1,0 +1,133 @@
+{
+  "productKey": "curso_assinatura_introducao_ao_departamento_pessoal",
+  "slug": "introducao-ao-departamento-pessoal",
+  "title": "Introdução ao Departamento Pessoal",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 140,
+  "validatedHours": null,
+  "expectedModuleCount": 2,
+  "scope": "Oficinas de controlo documental e reconciliação de ocorrências num departamento pessoal fictício. Não fornece cálculo legal de salários, impostos, contribuições ou prazos de qualquer país. Regras e valores são apenas dados de treino.",
+  "courseObjectives": [
+    "Classificar documentos pelo estado de verificação.",
+    "Encaminhar divergência à função competente sem decidir direitos.",
+    "Comparar registos sem aplicar legislação presumida.",
+    "Identificar a origem de uma diferença de total."
+  ],
+  "sources": [
+    {
+      "id": "documents",
+      "title": "The National Archives. Essential records management.",
+      "url": "https://cdn.nationalarchives.gov.uk/documents/essential-records-management.pdf",
+      "consulted": "2026-11-16",
+      "scope": "Introdução e estrutura consultadas na etapa anterior sobre contexto, responsabilidades e controlo de acesso. Não se declara leitura integral ou revisão de normas locais. Não se prescrevem prazos legais de conservação."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Conferir um processo sem transformar falta de documento em falta de direito"
+    },
+    {
+      "id": "2",
+      "title": "Reconciliar ocorrências antes de fechar um mapa interno"
+    }
+  ],
+  "modules": [
+    {
+      "title": "Conferir um processo sem transformar falta de documento em falta de direito",
+      "objectives": [
+        "Classificar documentos pelo estado de verificação.",
+        "Encaminhar divergência à função competente sem decidir direitos."
+      ],
+      "sections": [
+        {
+          "title": "O dossiê de admissão de treino",
+          "paragraphs": [
+            "A organização fictícia Cedro recebeu um processo para preparar o início de uma atividade. O pacote contém uma ficha com nome sintético, uma data proposta, um comprovativo de formação e uma autorização interna ainda sem assinatura. A regra do exercício determina que o assistente confere presença e coerência dos documentos e encaminha divergências ao responsável. Não determina elegibilidade laboral, validade migratória ou reconhecimento de qualificações. A distinção é essencial: observar um campo em falta não dá ao assistente autoridade para concluir que a pessoa perdeu um direito ou não pode exercer uma profissão.",
+            "A ficha indica início no dia doze, enquanto a mensagem do coordenador propõe o dia quinze. Registe a divergência sem escolher a data que parece mais conveniente. O comprovativo de formação está presente, mas o pacote não informa se foi verificado; a autorização foi preparada, mas não assinada. Use estados diferentes: recebido, por verificar e aguardando decisão. Se todos forem condensados em documento entregue, quem recebe o processo poderá interpretar presença como validação. A tarefa exige uma lista que permita reconstruir o que efetivamente existe e qual confirmação é necessária para cada campo relevante."
+          ]
+        },
+        {
+          "title": "Encaminhar com precisão e acesso limitado",
+          "paragraphs": [
+            "Prepare uma nota para a pessoa responsável pela admissão com a referência de cada peça e duas perguntas objetivas: qual data deve prevalecer e quem confirma a autorização. Não envie o processo completo a um grupo sem função no caso. O treino usa dados inteiramente inventados e pode ser realizado sem qualquer documento de identificação real. O controlo de acesso não é demonstrado por escrever confidencial no assunto; depende das regras e dos destinatários autorizados. Esta oficina não certifica uma política de proteção de dados, mas pede que o aluno evite exposição desnecessária durante a preparação da sua resposta.",
+            "Uma atualização posterior confirma o dia quinze e mantém a assinatura pendente. Altere somente o campo resolvido, conservando o histórico da divergência e a condição ainda aberta. O aluno entrega lista de conferência, nota de encaminhamento e atualização. A rubrica valoriza a diferença entre conferir, validar e decidir; não o número de documentos pedidos. Solicitar mais informação sem finalidade definida pode aumentar trabalho e exposição sem esclarecer o problema. A atividade termina quando o processo comunica com precisão o seu estado, não quando o assistente inventa uma autorização para eliminar todas as pendências da lista.",
+            "Se uma cópia legível substituir uma imagem incompleta, atualize a disponibilidade dessa peça sem declarar automaticamente que a informação foi validada. Legibilidade, presença e decisão continuam a ser estados diferentes no processo de treino."
+          ]
+        }
+      ],
+      "case": "Cedro: ficha dia 12; mensagem dia 15; formação recebida sem verificação indicada; autorização sem assinatura. Depois confirma-se dia 15, assinatura continua pendente.",
+      "exercise": "Crie lista de estados e encaminhamento; atualize apenas a divergência resolvida.",
+      "assessment": {
+        "question": "A presença do comprovativo permite declarar qualificação legal reconhecida?",
+        "answer": "Não. O pacote só demonstra receção; reconhecimento e verificação não foram fornecidos.",
+        "rubric": [
+          "Distingue recebido e validado.",
+          "Não decide direitos.",
+          "Preserva assinatura pendente."
+        ]
+      },
+      "sourceIds": [
+        "documents"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "1"
+    },
+    {
+      "title": "Reconciliar ocorrências antes de fechar um mapa interno",
+      "objectives": [
+        "Comparar registos sem aplicar legislação presumida.",
+        "Identificar a origem de uma diferença de total."
+      ],
+      "sections": [
+        {
+          "title": "Uma regra convencional para a simulação",
+          "paragraphs": [
+            "O mapa desta oficina usa uma unidade de treino chamada crédito, sem relação com salário ou benefício real. A regra fictícia atribui um crédito por presença confirmada numa atividade e não atribui crédito a registos ainda sem confirmação. Existem cinco datas. Em três há presença confirmada, numa há ausência comunicada e noutra a ficha de presença não chegou. O aluno deve calcular três créditos confirmados e conservar uma ocorrência em aberto. A regra não define remuneração, justificação legal de ausência ou qualquer desconto salarial. Confundir essa convenção com direito laboral transformaria uma reconciliação simples numa orientação que o material não permite prestar.",
+            "Um resumo anterior mostra quatro créditos e cinco presenças. Ao comparar as peças, descubra que a ocorrência sem ficha foi contada como presença e que a ausência comunicada foi incluída no total de participações. As duas diferenças devem ser explicadas separadamente. Corrigir apenas o total de créditos deixaria o número de presenças incorreto. A tabela final precisa de indicar data de treino, estado, peça disponível e efeito segundo a regra fornecida. Nenhum campo deve ser preenchido com a suposição de que falta de registo significa ausência, porque essa equivalência também não foi estabelecida."
+          ]
+        },
+        {
+          "title": "Fechar o que está comprovado e manter a divergência",
+          "paragraphs": [
+            "Prepare uma nota de reconciliação que preserve os números anteriores como referência de revisão, identifique as duas classificações indevidas e apresente o total confirmado. O responsável poderá decidir pedir a ficha em falta. Se ela chegar confirmando presença, o total passa a quatro créditos e quatro presenças; a ausência comunicada continua a não ser presença. A alteração decorre da peça nova, não da vontade de fazer o resumo concordar com uma expectativa. Esse encadeamento permite perceber por que um número mudou e evita reescrever o mapa como se nunca tivesse existido uma pendência.",
+            "No exercício final, explique a uma pessoa de outra equipa por que não calculou descontos, férias ou contribuições. Esses elementos exigiriam regras e dados que não foram fornecidos. O objetivo introdutório do departamento pessoal é reconhecer documentos, estados e limites de função antes de executar operações de maior impacto. Entregue o mapa, a memória de comparação e a pergunta sobre a ocorrência aberta. A avaliação procura rastreabilidade e contenção de inferências. Não será aceite completar o caso com uma regra encontrada de memória sobre um país, pois o cenário não identifica uma jurisdição nem pede aconselhamento sobre uma relação laboral real.",
+            "Uma correção deve referir a ocorrência que a provocou. Se surgir uma sexta data, ela não pode ser usada para justificar o erro anterior sem alterar também o período analisado e explicar a mudança de âmbito."
+          ]
+        }
+      ],
+      "case": "Cinco datas: três presenças confirmadas, uma ausência comunicada, uma ficha em falta. Crédito de treino só por presença confirmada. Resumo anterior: quatro créditos/cinco presenças.",
+      "exercise": "Reconcilie estados e totais. Mostre o efeito de uma ficha posterior confirmar a quinta data.",
+      "assessment": {
+        "question": "Ficha ausente significa ausência comprovada?",
+        "answer": "Não. Há informação pendente. Inicialmente três presenças/créditos; após confirmação adicional, quatro.",
+        "rubric": [
+          "Não aplica legislação.",
+          "Explica duas classificações indevidas.",
+          "Conserva pendência sem a converter em ausência."
+        ]
+      },
+      "sourceIds": [
+        "documents"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "2"
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão especializada do âmbito deste curso e revisão editorial dos casos e critérios.",
+    "Pilotar as duas oficinas com participantes e tecnologias de apoio; ampliar a prática antes de qualquer equivalência à carga histórica anunciada.",
+    "Conferir fontes, direitos e cálculos; definir correspondência com o roteiro histórico sem apagar progresso ou certificados.",
+    "Aprovação fundamentada antes de integração ativa; esta edição compacta não comprova as horas históricas."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

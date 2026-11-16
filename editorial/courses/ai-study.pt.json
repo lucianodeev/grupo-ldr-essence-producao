@@ -1,0 +1,133 @@
+{
+  "productKey": "curso_assinatura_inteligencia_artificial_para_estudantes_e_profissionais",
+  "slug": "inteligencia-artificial-para-estudantes-e-profissionais",
+  "title": "Inteligência Artificial para Estudantes e Profissionais",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 100,
+  "validatedHours": null,
+  "expectedModuleCount": 2,
+  "scope": "Duas oficinas de uso crítico: verificar uma resposta contra um texto fornecido e decidir o que pode entrar numa tarefa institucional. Não ensina a contornar regras de avaliação nem valida ferramentas ou as 100 horas históricas.",
+  "courseObjectives": [
+    "Separar afirmação sustentada, contradita e não verificável.",
+    "Reescrever uma resposta mantendo a origem de cada conclusão.",
+    "Interpretar regras de uma tarefa fictícia.",
+    "Documentar o auxílio sem transferir autoria ou dados reservados."
+  ],
+  "sources": [
+    {
+      "id": "ai",
+      "title": "NIST. Generative Artificial Intelligence Profile, AI 600-1.",
+      "url": "https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence",
+      "consulted": "2026-11-16",
+      "scope": "Resumo oficial e resultados da pesquisa consultados sobre riscos de conteúdo plausível incorreto. Não se declara leitura integral. Cenários, registos de teste e números são originais; não constituem certificação de sistema."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Conferir uma resposta plausível com evidência disponível"
+    },
+    {
+      "id": "2",
+      "title": "Escolher um uso permitido e demonstrar aprendizagem própria"
+    }
+  ],
+  "modules": [
+    {
+      "title": "Conferir uma resposta plausível com evidência disponível",
+      "objectives": [
+        "Separar afirmação sustentada, contradita e não verificável.",
+        "Reescrever uma resposta mantendo a origem de cada conclusão."
+      ],
+      "sections": [
+        {
+          "title": "O regulamento da biblioteca de treino",
+          "paragraphs": [
+            "Uma resposta bem escrita pode conter uma informação ausente ou contrária ao material estudado. Nesta oficina, o aluno trabalha com um regulamento inteiramente fictício, suficientemente curto para permitir conferência direta. O documento diz que a biblioteca de treino abre de segunda a sexta, das dez às dezoito horas; permite dois empréstimos simultâneos; e exige confirmação para renovar. Não há informação sobre multas, abertura ao sábado ou reservas digitais. A tarefa não mede conhecimentos sobre bibliotecas reais. Avalia se o leitor conserva aquilo que o documento efetivamente afirma e reconhece aquilo que ainda não consegue saber.",
+            "A resposta candidata afirma que a biblioteca abre ao sábado, aceita três empréstimos e renova automaticamente. Classifique cada frase antes de a corrigir. A abertura ao sábado não foi fornecida; o limite de três contradiz o limite de dois; a renovação automática contradiz a necessidade de confirmação. Essas categorias ajudam a escolher a próxima ação: procurar informação em falta é diferente de corrigir uma contradição já demonstrada. Escrever simplesmente que toda a resposta está errada perderia essa distinção e não indicaria ao utilizador qual informação precisa de fonte adicional."
+          ]
+        },
+        {
+          "title": "Uma revisão que deixe rasto",
+          "paragraphs": [
+            "Construa uma versão revista com três colunas textuais: afirmação candidata, evidência disponível e decisão de revisão. Não invente número de página ou ligação para tornar o quadro mais convincente. O pacote não contém esses elementos. A referência pode ser a frase correspondente do regulamento fornecido. Para o sábado, a conclusão será informação não disponibilizada, e não encerramento confirmado. A ausência de uma regra no excerto não prova a existência da regra oposta. O aluno precisa de conservar esse limite ao transformar a análise num pequeno texto de orientação para outra pessoa.",
+            "Por fim, escreva uma resposta de quatro frases que apresente o horário confirmado, o limite de empréstimos e a condição de renovação, identificando a dúvida sobre sábado. Explique que a versão foi conferida contra o documento de treino. Não atribua ao sistema a validação do regulamento nem use uma segunda geração como substituto da comparação. Esta oficina apresenta um procedimento de revisão de um texto fechado, sem alegar que ele basta para validar qualquer resposta em ciência, direito ou saúde. Quanto maior o impacto e a incerteza de uma informação real, mais importante será identificar fontes e responsáveis adequados antes de a utilizar.",
+            "Acrescente uma pergunta sobre multas. A resposta correta no exercício será que não foram fornecidas regras sobre esse assunto. Não acrescente uma prática presumida de outras bibliotecas para completar o texto, pois isso mudaria o conjunto de evidências que está a ser avaliado."
+          ]
+        }
+      ],
+      "case": "Regra fictícia: segunda a sexta, 10–18h; dois empréstimos; renovação mediante confirmação. Resposta candidata: sábado aberto, três empréstimos, renovação automática.",
+      "exercise": "Classifique as três afirmações, associe evidência e redija resposta corrigida sem acrescentar política de multas ou reservas.",
+      "assessment": {
+        "question": "O silêncio do excerto sobre sábado comprova encerramento nesse dia?",
+        "answer": "Não. O excerto não fornece essa informação. Três empréstimos e renovação automática, pelo contrário, contradizem regras expressas.",
+        "rubric": [
+          "Distingue ausência e contradição.",
+          "Não inventa referências.",
+          "Conserva a condição de confirmação."
+        ]
+      },
+      "sourceIds": [
+        "ai"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "1"
+    },
+    {
+      "title": "Escolher um uso permitido e demonstrar aprendizagem própria",
+      "objectives": [
+        "Interpretar regras de uma tarefa fictícia.",
+        "Documentar o auxílio sem transferir autoria ou dados reservados."
+      ],
+      "sections": [
+        {
+          "title": "A instrução institucional muda a escolha",
+          "paragraphs": [
+            "A turma fictícia Delta recebe uma tarefa com estas regras: o argumento e a redação final devem ser produzidos pelo estudante; é permitido pedir sugestões de perguntas sobre um texto fornecido; qualquer auxílio utilizado deve ser declarado; documentos internos não podem ser enviados a serviços externos. São condições do exercício, não uma descrição das políticas de todas as instituições. O aluno deverá avaliar três propostas de utilização a partir delas. Uma ferramenta tecnicamente capaz de executar uma ação não torna essa ação permitida, e o facto de um colega a ter utilizado não altera o enunciado recebido.",
+            "A primeira proposta é pedir cinco perguntas para orientar a leitura de um texto público. A segunda é entregar uma redação integral produzida por um sistema como se fosse escrita pelo estudante. A terceira é carregar uma lista interna de avaliações para pedir um resumo. Segundo as regras Delta, a primeira pode integrar o trabalho desde que o auxílio seja declarado e as perguntas sejam revistas; a segunda não respeita a autoria exigida; a terceira viola a condição sobre documentos internos. Não é necessário publicar dados de colegas ou executar qualquer chamada para realizar esta análise."
+          ]
+        },
+        {
+          "title": "Um registo de aprendizagem verificável",
+          "paragraphs": [
+            "O produto do exercício é uma ficha com a pergunta pedida, as sugestões recebidas num exemplo sintético e as alterações feitas pelo próprio aluno. Entre as sugestões, inclua uma questão que não pode ser respondida pelo texto, para mostrar que aceitar uma lista de perguntas também exige revisão. Depois, responda a duas perguntas sem consultar uma solução e confronte as respostas com o material. A comparação serve para identificar o que foi compreendido e o que ainda depende de apoio. Não é uma medição clínica da memória nem uma prova de que determinada ferramenta aumentou a aprendizagem.",
+            "A declaração de auxílio deve descrever a função realmente desempenhada, sem transformar transparência numa fórmula que autorize qualquer uso. Dizer que se utilizou um sistema não corrige, por si só, uma violação da instrução sobre autoria. Termine com uma alternativa para quem não tem acesso à ferramenta: usar as perguntas sintéticas já incluídas no pacote e realizar a mesma seleção e resposta. O critério de avaliação é a qualidade das decisões e da explicação própria, não a marca da aplicação. A oficina mantém separados acesso tecnológico, autorização institucional e aprendizagem demonstrada, três questões que não se resolvem pelo simples facto de um texto parecer fluente.",
+            "Uma sugestão de pergunta pode exigir uma experiência pessoal que o texto não menciona. O aluno deve substituí-la por uma questão respondível ou identificá-la como extensão de investigação, sem apresentar uma resposta inventada como compreensão demonstrada da leitura fornecida."
+          ]
+        }
+      ],
+      "case": "Regras Delta: texto final do aluno; sugestões de perguntas permitidas e declaradas; envio de documentos internos proibido. Propostas: perguntas sobre texto público, redação integral, lista interna de notas. Para a tentativa de perguntas, utilize o regulamento sintético da oficina 1: segunda a sexta 10–18h, dois empréstimos, renovação mediante confirmação; sem informação sobre sábado.",
+      "exercise": "Avalie as três propostas, produza uma declaração precisa e resolva duas questões com explicação própria usando dados sintéticos. Use o regulamento da oficina 1 como texto de treino, não uma fonte externa.",
+      "assessment": {
+        "question": "Declarar o uso de IA torna permitida a entrega integral gerada quando o enunciado exige redação própria?",
+        "answer": "Não. A declaração descreve o auxílio, mas não altera a condição de autoria. As propostas devem respeitar simultaneamente as regras aplicáveis.",
+        "rubric": [
+          "Aplica cada condição do enunciado.",
+          "Não expõe informação interna.",
+          "Demonstra explicação própria e alternativa sem ferramenta."
+        ]
+      },
+      "sourceIds": [
+        "ai"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "2"
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão especializada do âmbito deste curso e revisão editorial dos casos e critérios.",
+    "Pilotar as duas oficinas com participantes e tecnologias de apoio; ampliar a prática antes de qualquer equivalência à carga histórica anunciada.",
+    "Conferir fontes, direitos e cálculos; definir correspondência com o roteiro histórico sem apagar progresso ou certificados.",
+    "Aprovação fundamentada antes de integração ativa; esta edição compacta não comprova as horas históricas."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

@@ -1,0 +1,129 @@
+{
+  "productKey": "curso_assinatura_escrita_academica_para_iniciantes",
+  "slug": "escrita-academica-para-iniciantes",
+  "title": "Escrita Acadêmica para Iniciantes",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 120,
+  "validatedHours": null,
+  "expectedModuleCount": 2,
+  "scope": "Duas oficinas de argumento e uso de fontes num pequeno corpus sintético. Não fornece norma universal de citação, revisão científica concluída ou equivalência a 120 horas. Fontes do exercício são inventadas e identificadas como tal.",
+  "courseObjectives": [
+    "Distinguir tema amplo, pergunta delimitada e conclusão possível.",
+    "Distinguir citação, paráfrase e interpretação própria."
+  ],
+  "sources": [
+    {
+      "id": "writing",
+      "title": "European Commission. Plain language: making European Commission texts clear.",
+      "url": "https://translation.ec.europa.eu/languages-and-translation-european-commission/plain-language-making-european-commission-texts-clear_en",
+      "consulted": "2026-11-16",
+      "scope": "Princípios da página consultados na etapa anterior sobre finalidade, destinatário e revisão. Não se copiam modelos, não se impõe norma linguística e não se afirma conformidade académica ou acessibilidade integral."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Construir uma pergunta e um argumento que o corpus permita discutir"
+    },
+    {
+      "id": "2",
+      "title": "Integrar uma fonte sem apagar a autoria nem inventar referências"
+    }
+  ],
+  "modules": [
+    {
+      "title": "Construir uma pergunta e um argumento que o corpus permita discutir",
+      "objectives": [
+        "Distinguir tema amplo, pergunta delimitada e conclusão possível."
+      ],
+      "sections": [
+        {
+          "title": "O estudo das mesas ocupadas",
+          "paragraphs": [
+            "O corpus fictício contém observações de duas salas de estudo numa única tarde. Na sala Azul, oito de doze mesas estavam ocupadas às quinze horas; na sala Verde, cinco de dez. Não foram observadas outras horas, dias, condições de acesso ou motivos de escolha. O tema geral é utilização de espaços de estudo. Uma pergunta compatível com o material é como se compara a ocupação nas duas salas naquele momento. Uma pergunta sobre por que estudantes preferem determinado ambiente exigiria informação que o corpus não contém. A delimitação não diminui o valor do trabalho; impede que a conclusão responda a algo que nunca foi observado.",
+            "O parágrafo candidato afirma que a decoração da sala Azul causa maior concentração e que todas as universidades deveriam reproduzi-la. Nenhuma medida de concentração ou decoração aparece nos dados. O aluno deve retirar a cadeia causal e reconstruir uma afirmação proporcional: a ocupação observada foi de oito em doze e cinco em dez, em condições limitadas a um momento. Pode calcular aproximadamente sessenta e seis vírgula sete por cento e cinquenta por cento, mas essas proporções não explicam preferências. A introdução deve apresentar objeto, recorte e pergunta antes de anunciar resultados ou recomendações."
+          ]
+        },
+        {
+          "title": "Da observação ao parágrafo discutível",
+          "paragraphs": [
+            "Prepare um parágrafo com afirmação central, dados que a sustentam e limite interpretativo. A sequência precisa de permitir que o leitor distinga o que foi observado do que se propõe investigar depois. Não acrescente nomes de autores, números de página ou estudos reais para dar aparência académica ao cenário. O corpus é sintético e deve ser apresentado assim. Uma escrita responsável não depende de acumular referências, mas de atribuir corretamente informações e de explicar a relação entre evidência e argumento. Neste exercício, o trabalho é formular uma comparação, não provar uma teoria sobre aprendizagem ou arquitetura.",
+            "Entregue título, pergunta, parágrafo e duas questões de investigação futura. Uma pode pedir observações em mais dias; outra pode perguntar pelos critérios de escolha dos utilizadores, sem presumir o que responderiam. A rubrica avalia coerência entre pergunta, método descrito e conclusão, não o uso de palavras abstratas. Se o aluno preferir um texto curto, ele ainda precisa de conservar o recorte temporal e as bases de contagem. A oficina não substitui orientação institucional, avaliação ética de pesquisa real ou normas de uma área específica; prepara uma decisão de escrita que pode ser examinada e corrigida a partir do material disponível.",
+            "Se uma nova observação encontrar resultados inversos, o texto inicial não se torna necessariamente falso: descrevia outro momento. O problema surgiria se tivesse apresentado uma tarde como padrão permanente ou como demonstração de uma causa que não foi investigada."
+          ]
+        }
+      ],
+      "case": "Corpus sintético: uma tarde, 15h; Azul 8/12 mesas; Verde 5/10. Sem medida de concentração ou preferência.",
+      "exercise": "Escreva pergunta, comparação delimitada e duas questões futuras.",
+      "assessment": {
+        "question": "Pode concluir que a decoração causou maior concentração?",
+        "answer": "Não. Decoração e concentração não foram medidas; só há ocupação num momento.",
+        "rubric": [
+          "Delimita recorte.",
+          "Conserva denominadores.",
+          "Não fabrica causalidade."
+        ]
+      },
+      "sourceIds": [
+        "writing"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "1"
+    },
+    {
+      "title": "Integrar uma fonte sem apagar a autoria nem inventar referências",
+      "objectives": [
+        "Distinguir citação, paráfrase e interpretação própria."
+      ],
+      "sections": [
+        {
+          "title": "Um fragmento fornecido, três modos de o usar",
+          "paragraphs": [
+            "O exercício fornece uma fonte inventada, chamada Relato de Campo Alfa, com a frase: a porta lateral esteve fechada durante a observação. O autor fictício é Equipa Alfa e o documento tem a data de treino indicada no pacote, sem paginação. Um texto candidato copia a frase sem identificar a origem, outro troca apenas uma palavra e um terceiro apresenta uma interpretação sobre acesso. O aluno deve reconhecer que copiar exige indicação clara de que se usa a formulação da fonte e que alterar uma palavra não elimina a necessidade de atribuição. A interpretação própria também precisa de mostrar em que informação se apoia.",
+            "Não se pede seguir uma norma bibliográfica específica, pois instituições e áreas podem exigir formatos diferentes. Prepare, por isso, uma referência descritiva com os elementos realmente fornecidos e assinale a ausência de paginação. Não invente uma página sete para completar um modelo. Se optar por uma paráfrase, explique com estrutura própria que uma entrada não esteve disponível naquele período, mantendo a atribuição ao relato. O conteúdo da paráfrase deve conservar porta lateral e momento observado; não pode passar a dizer que o edifício inteiro esteve encerrado ou que a restrição existiu durante todo o dia."
+          ]
+        },
+        {
+          "title": "Conferir a relação entre fonte e argumento",
+          "paragraphs": [
+            "Uma interpretação possível é que a observação não permite conhecer o uso daquela entrada enquanto esteve fechada. Isso não demonstra a razão do fecho nem a sua influência sobre a ocupação das salas. Escreva uma frase de interpretação e uma de limite, distinguindo-as do relato original. A qualidade da integração depende dessa separação. O aluno não deve utilizar a fonte como decoração no fim de um parágrafo que afirma mais do que ela sustenta. Também não deve atribuir à equipa fictícia uma recomendação sobre funcionamento do edifício quando ela apenas registou uma condição de observação.",
+            "O produto final reúne uma utilização literal devidamente marcada, uma paráfrase fiel e um comentário próprio com limite. Acrescente uma lista de conferência: origem identificada, formulação conservada ou reformulada de modo adequado, metadados não inventados e alcance respeitado. A atividade pode ser realizada sem ferramentas automáticas de deteção, que não substituem a leitura da relação entre os textos. Não se declara ausência universal de plágio a partir de um teste numérico. A avaliação observa decisões de autoria num fragmento pequeno e totalmente sintético, preparando o aluno para procurar as instruções e fontes reais exigidas quando escrever um trabalho académico efetivo.",
+            "Uma referência ao Relato Alfa não permite afirmar que outra sala estava igualmente fechada. Mesmo com atribuição correta, a informação continua a ter um âmbito; citar uma fonte não autoriza ampliar o que ela descreve."
+          ]
+        }
+      ],
+      "case": "Fonte sintética Equipa Alfa, Relato de Campo Alfa, data de treino 16/11/2026, sem páginas: porta lateral fechada durante observação.",
+      "exercise": "Produza utilização literal, paráfrase e comentário; conserve metadados conhecidos e limite da observação.",
+      "assessment": {
+        "question": "Trocar uma palavra dispensa atribuir a origem?",
+        "answer": "Não. A informação continua proveniente do relato e a paráfrase deve ter formulação própria e atribuição.",
+        "rubric": [
+          "Não inventa página.",
+          "Distingue voz da fonte e análise.",
+          "Conserva alcance temporal e espacial."
+        ]
+      },
+      "sourceIds": [
+        "writing"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "2"
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão especializada do âmbito deste curso e revisão editorial dos casos e critérios.",
+    "Pilotar as duas oficinas com participantes e tecnologias de apoio; ampliar a prática antes de qualquer equivalência à carga histórica anunciada.",
+    "Conferir fontes, direitos e cálculos; definir correspondência com o roteiro histórico sem apagar progresso ou certificados.",
+    "Aprovação fundamentada antes de integração ativa; esta edição compacta não comprova as horas históricas."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

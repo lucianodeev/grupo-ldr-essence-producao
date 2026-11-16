@@ -1,0 +1,129 @@
+{
+  "productKey": "curso_assinatura_precificacao_para_servicos_e_produtos_digitais",
+  "slug": "precificacao-para-servicos-e-produtos-digitais",
+  "title": "Precificação para Serviços e Produtos Digitais",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 100,
+  "validatedHours": null,
+  "expectedModuleCount": 2,
+  "scope": "Oficinas de composição de preço e análise de contribuição num negócio fictício. Não recomenda preços, impostos ou investimento; distingue contas de treino e viabilidade comercial ainda não demonstrada.",
+  "courseObjectives": [
+    "Calcular duas percentagens com bases diferentes e identificar custos ausentes.",
+    "Calcular ponto de equilíbrio convencional e distinguir capacidade."
+  ],
+  "sources": [
+    {
+      "id": "budget",
+      "title": "Consumer Financial Protection Bureau. Assess your spending.",
+      "url": "https://www.consumerfinance.gov/owning-a-home/prepare/assess-your-spending/",
+      "consulted": "2026-11-16",
+      "scope": "Resumo da página oficial consultado sobre registar despesas e confrontar rendimentos. Contexto americano não transferido para tributação, produtos ou aconselhamento individual. Cálculos e regras de treino são inteiramente sintéticos."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Distinguir custo, preço, acréscimo e margem"
+    },
+    {
+      "id": "2",
+      "title": "Testar contribuição e capacidade antes de conceder desconto"
+    }
+  ],
+  "modules": [
+    {
+      "title": "Distinguir custo, preço, acréscimo e margem",
+      "objectives": [
+        "Calcular duas percentagens com bases diferentes e identificar custos ausentes."
+      ],
+      "sections": [
+        {
+          "title": "A entrega de uma ficha digital",
+          "paragraphs": [
+            "O serviço fictício Forma prepara uma ficha digital personalizada. O pacote atribui trinta unidades monetárias a recursos diretos, quarenta ao tempo de trabalho previsto e dez a outros custos alocados à entrega. O total convencional é oitenta. Um preço experimental de cem deixa uma diferença de vinte neste recorte. A oficina não chama a essa diferença lucro líquido, pois não fornece impostos, perdas, aquisição de clientes ou todos os custos possíveis. O aluno deve apresentar os elementos incluídos e os ausentes antes de utilizar a conta para comparar alternativas de preço ou dimensão da entrega.",
+            "Calcule o acréscimo sobre custo: vinte divididos por oitenta corresponde a vinte e cinco por cento. Calcule a diferença sobre o preço: vinte divididos por cem corresponde a vinte por cento. As duas percentagens descrevem os mesmos vinte com denominadores diferentes. Um texto candidato chama margem de vinte e cinco por cento ao resultado sobre custo. Corrija a formulação e explique a base usada. Não basta trocar a palavra para decorar uma regra; o aluno deve conseguir reconstruir numerador e denominador e perceber por que as medidas não podem ser utilizadas como se fossem idênticas."
+          ]
+        },
+        {
+          "title": "O âmbito altera o que o preço cobre",
+          "paragraphs": [
+            "O cliente fictício pede uma segunda versão que aumenta o tempo atribuído de quarenta para sessenta unidades, mantendo os outros custos do pacote. O total passa a cem, igual ao preço inicial. A diferença de vinte desaparece neste recorte, antes mesmo dos elementos ausentes. O aluno não deve prometer a versão adicional como pequena alteração sem analisar o efeito. Uma resposta pode esclarecer o âmbito e apresentar uma nova proposta, mas não deve assumir aceitação. A oficina não determina qual preço o mercado pagará; mostra que alterar o trabalho mantendo o preço pode mudar a relação entre receita e custo.",
+            "Entregue memória de cálculo, quadro de inclusões e uma mensagem sobre a versão adicional. Acrescente uma pergunta sobre o esforço efetivo que só poderia ser respondida depois de observar a execução. Estimativas de tempo podem estar erradas e precisam de revisão; uma conta correta com dados inadequados continua limitada. A rubrica observa precisão de bases, âmbito e linguagem sobre resultados. Não se promete rentabilidade ou aconselha comprar ferramentas para reduzir custos. O curso apresenta um modelo convencional pequeno, que permite localizar uma diferença e formular uma decisão de proposta sem o transformar numa recomendação financeira individual ou numa fórmula universal de preço.",
+            "Se o tempo real equivaler a cinquenta em vez de quarenta unidades no serviço inicial, o custo passa a noventa e a diferença cai para dez. A revisão deve atualizar as duas percentagens, e não conservar os valores anteriores porque o preço não mudou."
+          ]
+        }
+      ],
+      "case": "Custos30+40+10=80; preço100. Versão adicional aumenta tempo para60: custo100. Sem impostos ou outros elementos fornecidos.",
+      "exercise": "Calcule acréscimo e diferença/preço, analise versão extra e identifique ausências.",
+      "assessment": {
+        "question": "Vinte sobre oitenta e vinte sobre cem são a mesma percentagem?",
+        "answer": "Não. São25% e20%, respetivamente; bases diferentes.",
+        "rubric": [
+          "Conserva denominadores.",
+          "Não chama lucro líquido ao recorte.",
+          "Revê âmbito."
+        ]
+      },
+      "sourceIds": [
+        "budget"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "1"
+    },
+    {
+      "title": "Testar contribuição e capacidade antes de conceder desconto",
+      "objectives": [
+        "Calcular ponto de equilíbrio convencional e distinguir capacidade."
+      ],
+      "sections": [
+        {
+          "title": "Um produto e duas propostas de preço",
+          "paragraphs": [
+            "O produto fictício Guia tem custo variável de dezoito unidades e um custo de processamento de duas por venda, ambos incluídos na convenção desta oficina. Os custos fixos atribuídos ao período são cento e vinte. Com preço de quarenta, cada venda contribui vinte para cobrir os fixos; seis vendas cobrem exatamente cento e vinte nesse modelo. O aluno deve mostrar a conta e indicar que ela não comprova procura ou recebimento. O ponto de equilíbrio é uma relação entre os dados fornecidos, não uma promessa de que seis clientes aparecerão ou de que todos pagarão no prazo esperado.",
+            "A proposta de desconto reduz o preço para trinta, mantendo custos variáveis e processamento. A contribuição passa a dez e seriam necessárias doze vendas para cobrir os mesmos fixos. A capacidade conhecida de entrega no período é de dez unidades. Assim, no recorte fornecido, vender toda a capacidade ao preço reduzido não cobre os custos fixos: dez vezes dez resulta em cem, vinte abaixo dos cento e vinte. A análise não exige declarar que descontos são sempre errados. Exige verificar o que a alteração faz à relação entre contribuição, quantidade e capacidade antes de a anunciar como estratégia vantajosa."
+          ]
+        },
+        {
+          "title": "Uma decisão que conserve o que ainda não se sabe",
+          "paragraphs": [
+            "Prepare uma nota comparando as duas propostas e uma pergunta sobre os custos que poderiam mudar com o volume. O pacote não demonstra que os dezoito e dois permaneceriam iguais em qualquer escala. Também não informa devoluções, descontos acumulados ou impostos. O aluno deve manter essas limitações sem preencher a tabela com estimativas arbitrárias. Se a capacidade fosse ampliada, seria necessário verificar o custo dessa ampliação antes de concluir que doze vendas resolveriam o problema. Uma quantidade necessária não é automaticamente uma quantidade executável, e uma quantidade executável não comprova vendas efetivas.",
+            "O produto final inclui as contas de seis e doze unidades, o resultado de dez vendas ao preço reduzido e uma recomendação de investigação, não de investimento. Pode propor testar procura dentro de um âmbito pequeno ou rever o desenho do produto, desde que apresente essas ações como hipóteses. A rubrica verifica se o aluno liga preço a contribuição e distingue capacidade, procura e caixa. O curso não recomenda endividamento, tributação ou qualquer produto financeiro. A aprendizagem termina numa comparação transparente das condições de treino, permitindo reconhecer quando uma promoção aparentemente simples exige decisões que os dados disponíveis ainda não sustentam.",
+            "Se houver apenas cinco vendas ao preço quarenta, a contribuição total será cem, também inferior aos fixos. O cenário evidencia que um preço com contribuição maior não elimina a necessidade de volume nem demonstra viabilidade por si só."
+          ]
+        }
+      ],
+      "case": "Variável18+processamento2; fixos120; preço40 ou30; capacidade10.",
+      "exercise": "Calcule contribuição, equilíbrio e efeito do desconto a capacidade máxima.",
+      "assessment": {
+        "question": "Dez vendas a30 cobrem120 de fixos?",
+        "answer": "Não. Contribuição10×10=100; faltam20 no modelo.",
+        "rubric": [
+          "Calcula6/12 unidades.",
+          "Distingue procura/capacidade.",
+          "Não recomenda investimento."
+        ]
+      },
+      "sourceIds": [
+        "budget"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "2"
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão especializada do âmbito deste curso e revisão editorial dos casos e critérios.",
+    "Pilotar as duas oficinas com participantes e tecnologias de apoio; ampliar a prática antes de qualquer equivalência à carga histórica anunciada.",
+    "Conferir fontes, direitos e cálculos; definir correspondência com o roteiro histórico sem apagar progresso ou certificados.",
+    "Aprovação fundamentada antes de integração ativa; esta edição compacta não comprova as horas históricas."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

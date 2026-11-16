@@ -1,0 +1,133 @@
+{
+  "productKey": "curso_assinatura_carreira_para_imigrantes_e_mercado_internacional",
+  "slug": "carreira-para-imigrantes-e-mercado-internacional",
+  "title": "Carreira para Imigrantes e Mercado Internacional",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 160,
+  "validatedHours": null,
+  "expectedModuleCount": 2,
+  "scope": "Duas oficinas para organizar percurso e encaminhar dúvidas numa transição entre contextos. Não determina direitos migratórios ou elegibilidade profissional; não promete regularização ou emprego. Casos e instituições são fictícios.",
+  "courseObjectives": [
+    "Distinguir três perguntas documentais diferentes.",
+    "Organizar fontes e responsáveis sem presumir direitos.",
+    "Identificar experiência transferível sem apagar o percurso.",
+    "Comparar uma função de entrada com objetivos e condições."
+  ],
+  "sources": [
+    {
+      "id": "career",
+      "title": "Europass. Preparing for work abroad.",
+      "url": "https://europass.europa.eu/en/work-europe/preparing-work-abroad",
+      "consulted": "2026-11-16",
+      "scope": "Resumo oficial consultado sobre apresentar competências e qualificações no contexto de trabalho internacional. Não se declara verificação de regras migratórias, equivalência ou licença profissional. Os documentos e mercados dos exercícios são fictícios."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Separar a procura de trabalho das verificações de autorização"
+    },
+    {
+      "id": "2",
+      "title": "Traduzir percurso em evidências e negociar uma ponte de entrada"
+    }
+  ],
+  "modules": [
+    {
+      "title": "Separar a procura de trabalho das verificações de autorização",
+      "objectives": [
+        "Distinguir três perguntas documentais diferentes.",
+        "Organizar fontes e responsáveis sem presumir direitos."
+      ],
+      "sections": [
+        {
+          "title": "O quadro de Davi",
+          "paragraphs": [
+            "Davi prepara uma procura de trabalho num contexto fictício e recebeu três perguntas distintas: pode residir naquele território, pode executar a atividade pretendida e precisa de reconhecimento de uma qualificação específica? O pacote não fornece respostas legais. A tarefa é organizar as perguntas, os documentos que Davi já tem e os canais competentes que ainda precisa de identificar. Uma proposta de emprego não responde automaticamente às três questões. Um certificado de formação também não demonstra, por si só, autorização de residência ou exercício. A oficina ensina a manter essas relações separadas para evitar decisões apoiadas numa equivalência que nunca foi estabelecida.",
+            "No cenário, Davi possui um comprovativo de formação, uma mensagem de interesse de uma empresa e uma lista pessoal de documentos. Nenhuma peça contém decisão de autoridade. Um conhecido afirma que a mensagem resolve toda a situação. O aluno deve registar essa afirmação como conselho informal não confirmado, sem a transformar numa regra. Também não deve concluir o contrário, afirmando impossibilidade de trabalhar: faltam elementos para qualquer das decisões. A resposta adequada identifica qual pergunta cada documento pode ajudar a esclarecer e quais verificações permanecem pendentes antes de aceitar compromissos que dependam delas."
+          ]
+        },
+        {
+          "title": "Um registo de investigação que proteja a decisão",
+          "paragraphs": [
+            "Crie uma ficha por pergunta com assunto, informação disponível, fonte a consultar, data da consulta e resposta ainda não obtida. Não utilize uma página sobre outro país ou outro tipo de atividade para preencher silenciosamente o campo. Se uma fonte oficial não esclarecer o caso, a ficha deverá conservar a dúvida e indicar necessidade de orientação qualificada. O exercício não pede submeter formulários reais, enviar documentos pessoais ou contratar intermediários. O aluno trabalha com um dossier sintético e deve conseguir explicar a diferença entre preparação de uma consulta e obtenção de uma autorização efetiva.",
+            "Entregue o quadro e uma mensagem fictícia solicitando esclarecimento, com as três perguntas separadas e sem dados pessoais desnecessários. Acrescente um critério de atualização: uma resposta deve ser associada ao assunto e ao contexto a que se refere, não utilizada como solução universal para outros casos. A rubrica observa capacidade de formular dúvidas úteis e de não antecipar decisões. O curso não atribui estatuto jurídico a Davi nem substitui avaliação de uma autoridade. O objetivo é permitir que a procura profissional avance com organização e que compromissos dependentes de autorização sejam reconhecidos como tal, em vez de desaparecerem dentro de uma expectativa de emprego.",
+            "Uma resposta sobre residência não deverá ser arquivada como confirmação de reconhecimento profissional. O aluno precisa de associar cada resposta à pergunta exata e verificar se o contexto descrito corresponde ao caso que pretende esclarecer."
+          ]
+        }
+      ],
+      "case": "Davi tem formação, interesse informal de empresa e lista de documentos; nenhuma decisão de autoridade. Dúvidas: residência, execução da atividade, reconhecimento.",
+      "exercise": "Organize três fichas e uma consulta fictícia; não conclua direitos nem envie documentos reais.",
+      "assessment": {
+        "question": "A mensagem da empresa comprova simultaneamente residência e autorização de atividade?",
+        "answer": "Não. Só demonstra o interesse descrito; as outras perguntas exigem verificação própria.",
+        "rubric": [
+          "Separa as três perguntas.",
+          "Não conclui permissão ou proibição.",
+          "Distingue consulta e decisão."
+        ]
+      },
+      "sourceIds": [
+        "career"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "1"
+    },
+    {
+      "title": "Traduzir percurso em evidências e negociar uma ponte de entrada",
+      "objectives": [
+        "Identificar experiência transferível sem apagar o percurso.",
+        "Comparar uma função de entrada com objetivos e condições."
+      ],
+      "sections": [
+        {
+          "title": "A experiência de Sara não desaparece na mudança",
+          "paragraphs": [
+            "Sara trabalhou numa cooperativa fictícia organizando entregas e comunicando com fornecedores. No novo contexto, não conhece parte do vocabulário utilizado num anúncio de apoio logístico. O exercício não pede escolher um nível inferior por causa da origem ou declarar que toda experiência anterior é equivalente. Pede analisar tarefas concretas: conferir referências, atualizar horários e comunicar divergências. Sara já realizou as duas primeiras; a comunicação de divergências no novo idioma ainda precisa de prática. O aluno deve conservar a experiência demonstrada e identificar a aprendizagem específica, sem transformar uma diferença linguística numa avaliação global da capacidade profissional.",
+            "O anúncio de treino oferece acompanhamento inicial, mas não explica quem o presta nem quando estará disponível. Outra oportunidade exige autonomia imediata na comunicação com fornecedores. Compare essas condições com os exemplos de Sara e formule perguntas. A primeira oportunidade não é automaticamente adequada por mencionar apoio; a segunda não é automaticamente impossível por exigir comunicação. Falta compreender a atividade, o suporte real e a forma de demonstrar competência. O aluno deve evitar tanto apagar o percurso de Sara como inventar fluência ou certificação para a aproximar de uma vaga cujo âmbito ainda não foi totalmente esclarecido."
+          ]
+        },
+        {
+          "title": "Uma ponte com condições de revisão",
+          "paragraphs": [
+            "Prepare um pequeno portefólio sintético: uma lista de referências conferidas, uma atualização de horário e uma mensagem de divergência construída com o vocabulário do exercício. Identifique que os exemplos são de treino. Eles podem tornar visível uma capacidade, mas não substituem experiência real ou avaliação exigida por um empregador. Acrescente um plano de prática com tarefa, apoio necessário e forma de observação. O objetivo não é prometer dominar um idioma em determinado número de dias, mas tornar a aprendizagem pretendida específica o suficiente para que possa ser acompanhada e revista.",
+            "Finalmente, escreva uma proposta de pergunta para a oportunidade com acompanhamento: que tarefas seriam feitas primeiro, quem responderia às dúvidas e quando se reveria a autonomia? A resposta recebida, se existisse, precisaria de ser confirmada no contexto real; no exercício, permanece uma pergunta. A entrega inclui comparação das duas oportunidades e critérios pessoais de continuidade, como compatibilidade de horário e apoio efetivo. Não há recomendação migratória ou garantia de contratação. A avaliação procura uma estratégia que reconheça competência anterior, necessidade de aprendizagem e condições de trabalho, permitindo uma escolha argumentada em vez de uma conclusão baseada apenas na condição de imigrante.",
+            "Se Sara conseguir explicar a divergência com apoio de uma lista de termos, registe essa condição de execução. Não a apresente como comunicação autónoma sem apoio, mas também não elimine a evidência de que a tarefa foi compreendida e realizada."
+          ]
+        }
+      ],
+      "case": "Sara confere referências e horários; comunicação no novo idioma precisa de prática. Vaga A menciona apoio sem responsável; B exige comunicação autónoma imediata.",
+      "exercise": "Compare condições, crie três exemplos sintéticos e formule perguntas de acompanhamento.",
+      "assessment": {
+        "question": "A falta de vocabulário num anúncio permite concluir ausência de experiência logística?",
+        "answer": "Não. Deve separar tarefas já demonstradas e aprendizagem linguística específica, verificando condições de apoio.",
+        "rubric": [
+          "Conserva experiência anterior.",
+          "Não inventa fluência.",
+          "Especifica apoio e revisão."
+        ]
+      },
+      "sourceIds": [
+        "career"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "2"
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão especializada do âmbito deste curso e revisão editorial dos casos e critérios.",
+    "Pilotar as duas oficinas com participantes e tecnologias de apoio; ampliar a prática antes de qualquer equivalência à carga histórica anunciada.",
+    "Conferir fontes, direitos e cálculos; definir correspondência com o roteiro histórico sem apagar progresso ou certificados.",
+    "Aprovação fundamentada antes de integração ativa; esta edição compacta não comprova as horas históricas."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

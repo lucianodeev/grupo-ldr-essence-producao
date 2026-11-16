@@ -1,0 +1,133 @@
+{
+  "productKey": "curso_assinatura_orientacao_de_carreira_internacional",
+  "slug": "orientacao-de-carreira-internacional",
+  "title": "Orientação de Carreira Internacional",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 160,
+  "validatedHours": null,
+  "expectedModuleCount": 2,
+  "scope": "Oficinas de comparação de oportunidades e construção de evidências de competências entre contextos. Não aconselha imigração, reconhecimento ou fiscalidade. Mercados e requisitos são inventados; nenhuma vaga real é apresentada como verificada.",
+  "courseObjectives": [
+    "Analisar tarefas e condições em anúncios sintéticos.",
+    "Separar informação comparável e lacunas decisivas.",
+    "Explicar experiência para um leitor de outro contexto.",
+    "Distinguir tradução descritiva e reconhecimento formal."
+  ],
+  "sources": [
+    {
+      "id": "career",
+      "title": "Europass. Preparing for work abroad.",
+      "url": "https://europass.europa.eu/en/work-europe/preparing-work-abroad",
+      "consulted": "2026-11-16",
+      "scope": "Resumo oficial consultado sobre apresentar competências e qualificações no contexto de trabalho internacional. Não se declara verificação de regras migratórias, equivalência ou licença profissional. Os documentos e mercados dos exercícios são fictícios."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Comparar mercados sem confundir título de função e trabalho"
+    },
+    {
+      "id": "2",
+      "title": "Apresentar uma competência sem inventar equivalência"
+    }
+  ],
+  "modules": [
+    {
+      "title": "Comparar mercados sem confundir título de função e trabalho",
+      "objectives": [
+        "Analisar tarefas e condições em anúncios sintéticos.",
+        "Separar informação comparável e lacunas decisivas."
+      ],
+      "sections": [
+        {
+          "title": "Dois anúncios com nomes parecidos",
+          "paragraphs": [
+            "Leonor compara dois anúncios fictícios de coordenação de operações em mercados chamados Norte e Sul. No Norte, a função inclui distribuir pedidos e acompanhar indicadores; no Sul, inclui também negociar orçamento e aprovar alterações. O título semelhante não torna as responsabilidades equivalentes. A primeira tarefa é reconstruir o trabalho descrito, identificando decisões, entregas e limites. Não se utilizam salários atuais, regras migratórias ou dados de países reais. O exercício pretende mostrar que uma comparação internacional começa por compreender o conteúdo das funções e as condições efetivamente fornecidas, antes de ordenar oportunidades pela aparência do título.",
+            "O anúncio Norte informa quarenta horas e uma remuneração bruta fictícia de dois mil; o Sul informa remuneração de dois mil e trezentos, mas omite horário e componentes incluídas. O aluno pode registar os valores anunciados, mas não concluir que Sul oferece melhor rendimento por hora ou maior disponibilidade financeira. Faltam dados comparáveis e não foram fornecidos impostos, custo de vida ou benefícios. Transformar a diferença de trezentos numa recomendação de mudança seria ultrapassar o cenário. A resposta útil formula perguntas concretas sobre jornada, âmbito e composição da remuneração."
+          ]
+        },
+        {
+          "title": "Construir uma comparação sem preencher o desconhecido",
+          "paragraphs": [
+            "Prepare uma matriz com tarefas, autoridade, horário, remuneração apresentada e perguntas em aberto. Os campos desconhecidos devem permanecer identificados. Leonor tem experiência em distribuir pedidos e organizar informação, mas não aprovava orçamento. Isso permite relacionar parte da sua experiência com Norte e identificar uma lacuna específica em Sul; não demonstra elegibilidade completa para qualquer das funções. A avaliação deve distinguir competência evidenciada, competência por explorar e requisito ainda não esclarecido. Não se inventa uma experiência internacional para aproximar a candidata do anúncio, nem se trata mudança de país como prova automática de competência cultural.",
+            "Na conclusão, proponha dois passos de investigação de baixo compromisso: confirmar o âmbito com o canal indicado no anúncio sintético e reunir exemplos de tarefas já realizadas. Nenhuma candidatura real será enviada. Se o aluno quiser transportar a estrutura para um caso próprio, terá de verificar fontes oficiais e condições atuais, incluindo autorização de trabalho quando aplicável. O curso não fornece essas respostas. A entrega pedagógica é uma comparação que conserva diferenças e lacunas, permitindo uma decisão futura mais informada sem apresentar como certeza aquilo que o pacote ainda não permite calcular ou demonstrar.",
+            "Uma oferta com o mesmo título pode usar a palavra coordenação apenas para organizar informação, enquanto outra a usa para decidir prioridades de toda uma equipa. A matriz deverá descrever essas ações, evitando tratar a equivalência de palavras como equivalência de função."
+          ]
+        }
+      ],
+      "case": "Norte: distribuir pedidos/indicadores, 40h, bruto fictício 2000. Sul: também aprovar orçamento, 2300, horário omitido. Leonor não aprovava orçamento.",
+      "exercise": "Compare tarefas e condições e produza perguntas que impedem uma escolha responsável.",
+      "assessment": {
+        "question": "O valor de 2300 comprova melhor remuneração por hora?",
+        "answer": "Não. Falta a jornada e composição comparável. A diferença nominal não resolve a comparação.",
+        "rubric": [
+          "Não calcula rendimento líquido presumido.",
+          "Identifica autoridade diferente.",
+          "Conserva lacunas como lacunas."
+        ]
+      },
+      "sourceIds": [
+        "career"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "1"
+    },
+    {
+      "title": "Apresentar uma competência sem inventar equivalência",
+      "objectives": [
+        "Explicar experiência para um leitor de outro contexto.",
+        "Distinguir tradução descritiva e reconhecimento formal."
+      ],
+      "sections": [
+        {
+          "title": "O comprovativo de Teresa",
+          "paragraphs": [
+            "Teresa possui um certificado fictício de formação em organização de arquivos e experiência numa pequena equipa. O documento apresenta nome do curso, entidade, conteúdo e data, mas não informa equivalência a um nível de qualificação de outro sistema. A oficina pede preparar uma explicação compreensível para um recrutador de contexto diferente. Traduzir o nome ou descrever o que foi aprendido pode facilitar a compreensão; não cria reconhecimento oficial. O aluno deve conservar a designação original e distinguir a descrição funcional de qualquer decisão que dependa de uma entidade competente, ainda não identificada no cenário.",
+            "Escolha dois exemplos de competência fornecidos: Teresa organizou cento e vinte registos por referência e criou um índice para localizar pastas. O pacote não mede quanto tempo poupou nem demonstra que definiu a política de arquivo da organização. Uma apresentação fiel explica o problema, a tarefa e o alcance da contribuição. Evite substituir arquivo de apoio por direção documental internacional ou afirmar domínio de uma norma que não aparece na experiência. O objetivo é tornar a evidência legível, não criar uma versão mais prestigiante através de uma mudança de idioma ou de nomenclatura profissional."
+          ]
+        },
+        {
+          "title": "Um dossiê que permita perguntas melhores",
+          "paragraphs": [
+            "Prepare uma ficha com designação original, descrição em linguagem simples, atividades observáveis e documentação disponível. Acrescente uma lista separada de verificações necessárias caso uma oportunidade exija reconhecimento formal. Essa lista pode identificar a necessidade de procurar a autoridade e o procedimento aplicáveis, mas não deve inventar custos, prazos ou aceitação garantida. O exercício usa nomes e documentos sintéticos e não exige carregar certificados pessoais em plataformas. O aluno deve explicar qual informação ajuda um recrutador a compreender a experiência e qual questão continua fora do alcance de uma apresentação curricular.",
+            "No fecho, compare duas frases: experiência em organizar registos segundo referências recebidas e qualificação reconhecida internacionalmente. A primeira pode ser sustentada pelos dados; a segunda exigiria evidência que não foi fornecida. Redija uma apresentação oral curta e uma nota documental que concordem entre si. A rubrica valoriza clareza e possibilidade de verificação, sem premiar o uso de vocabulário estrangeiro por si só. A oficina termina num dossiê honesto de competências, que pode apoiar investigação e diálogo, mas não substitui autorização de exercício, reconhecimento académico ou decisão de contratação por qualquer instituição real.",
+            "Se surgir uma tradução oficial do documento, acrescente-a como nova peça e identifique o que ela comprova. A tradução pode esclarecer o conteúdo, mas não deve ser descrita como decisão de reconhecimento quando nenhuma entidade tomou essa decisão no cenário."
+          ]
+        }
+      ],
+      "case": "Teresa: certificado de organização de arquivos sem equivalência indicada; organizou 120 registos e um índice; sem medição de tempo ou política definida por ela.",
+      "exercise": "Prepare ficha descritiva, exemplos e perguntas de reconhecimento, sem equivalência inventada.",
+      "assessment": {
+        "question": "Traduzir um certificado cria reconhecimento formal noutro sistema?",
+        "answer": "Não. Tradução descritiva e reconhecimento são operações diferentes; o segundo depende de verificação competente não fornecida.",
+        "rubric": [
+          "Mantém a designação original.",
+          "Explica duas tarefas observáveis.",
+          "Não inventa autoridade, custo ou prazo."
+        ]
+      },
+      "sourceIds": [
+        "career"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "2"
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão especializada do âmbito deste curso e revisão editorial dos casos e critérios.",
+    "Pilotar as duas oficinas com participantes e tecnologias de apoio; ampliar a prática antes de qualquer equivalência à carga histórica anunciada.",
+    "Conferir fontes, direitos e cálculos; definir correspondência com o roteiro histórico sem apagar progresso ou certificados.",
+    "Aprovação fundamentada antes de integração ativa; esta edição compacta não comprova as horas históricas."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

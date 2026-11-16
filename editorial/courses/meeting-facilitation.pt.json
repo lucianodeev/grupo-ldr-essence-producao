@@ -1,0 +1,129 @@
+{
+  "productKey": "curso_assinatura_como_conduzir_reunioes_e_apresentacoes_com_seguranca",
+  "slug": "como-conduzir-reunioes-e-apresentacoes-com-seguranca",
+  "title": "Como Conduzir Reuniões e Apresentações com Segurança",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 100,
+  "validatedHours": null,
+  "expectedModuleCount": 2,
+  "scope": "Oficinas de facilitação: preparar uma decisão coletiva e conduzir uma divergência de interpretação. Não é curso de criação de slides ou tratamento de ansiedade; dados e funções são convencionais.",
+  "courseObjectives": [
+    "Relacionar pauta, autoridade e informação necessária.",
+    "Reconstruir posições, critérios e decisão."
+  ],
+  "sources": [
+    {
+      "id": "planning",
+      "title": "GitLab Handbook. All-Remote Meetings.",
+      "url": "https://handbook.gitlab.com/handbook/company/culture/all-remote/meetings/",
+      "consulted": "2026-11-16",
+      "scope": "Secções sobre finalidade, pauta, contributos e registos consultadas na etapa anterior. Referência empresarial situada; não valida eficácia universal. As situações, sequências e instrumentos do curso são próprios."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Convocar para decidir e distribuir a preparação"
+    },
+    {
+      "id": "2",
+      "title": "Facilitar divergência sem fabricar consenso"
+    }
+  ],
+  "modules": [
+    {
+      "title": "Convocar para decidir e distribuir a preparação",
+      "objectives": [
+        "Relacionar pauta, autoridade e informação necessária."
+      ],
+      "sections": [
+        {
+          "title": "A escolha da rota de entrega",
+          "paragraphs": [
+            "A equipa fictícia Rota precisa de escolher entre duas sequências de entrega. A opção A chega primeiro ao centro e depois ao bairro; a opção B faz o inverso. A coordenadora decide a ordem, a pessoa da logística conhece a capacidade e o atendimento tem as restrições comunicadas pelos destinatários. Uma reunião com todos os colaboradores, sem essas informações, pode aumentar o número de opiniões sem permitir a decisão. Prepare a convocatória a partir da pergunta concreta: qual sequência respeita as condições recebidas? Identifique quem decide, quem fornece dados e quem apenas precisa de receber a conclusão depois.",
+            "O pacote informa que o centro só recebe até às onze horas e o bairro a partir do meio-dia. Não fornece tempos de deslocação. Portanto, não basta afirmar que A é viável porque parece ordenar bem as janelas. A pauta deve pedir os tempos e verificar se a operação pode cumprir os dois intervalos. Uma reunião útil pode terminar com uma pergunta ainda aberta e uma ação para a resolver. A exigência de decidir durante a chamada não autoriza inventar uma duração de trajeto ou ocultar uma restrição que impede concluir."
+          ]
+        },
+        {
+          "title": "Preparação e resultado esperado",
+          "paragraphs": [
+            "Envie, no exercício, uma pauta com as duas alternativas, as restrições, o dado em falta e o resultado procurado. Reserve um momento para verificar se todos interpretam centro até onze e bairro a partir de doze da mesma maneira. Essas expressões indicam condições diferentes: limite de receção e início de disponibilidade. O facilitador não precisa de dominar todos os dados para organizar a conversa, mas deve reconhecer quando falta informação decisiva. A sua função inclui tornar a pergunta compreensível, manter a discussão relacionada com ela e impedir que uma suposição seja registada como facto consensual.",
+            "O produto final é uma convocatória e uma folha de decisão ainda não preenchida. Na folha, separe opção considerada, condição de viabilidade, evidência e responsável pela próxima verificação. Não apresente a preparação como decisão já tomada. Uma nota para pessoas ausentes deve indicar quando poderão consultar o resultado, sem afirmar que concordaram por não terem participado. O exercício permite preparar a reunião em papel, sem conta numa plataforma ou gravação de pessoas. A avaliação procura ligação entre necessidade, participantes e materiais, evitando confundir condução segura com controlo autoritário da conversa ou obrigação de produzir unanimidade.",
+            "Se a logística informar posteriormente quarenta minutos entre os locais, a reunião deverá integrar esse dado com a hora de saída e os tempos de entrega. O número isolado ainda não demonstra a viabilidade completa; a sequência precisa de ser reconstruída com todas as condições fornecidas."
+          ]
+        }
+      ],
+      "case": "Centro recebe até 11h; bairro a partir de 12h. Coordenadora decide; logística informa capacidade/tempos; atendimento fornece restrições. Tempos ainda ausentes.",
+      "exercise": "Prepare pauta, funções e folha que distinga decisão e verificação pendente.",
+      "assessment": {
+        "question": "Ordenar as janelas comprova a viabilidade de A?",
+        "answer": "Não. Faltam deslocação, partida e duração de entrega; a pauta deve tornar essas dependências explícitas.",
+        "rubric": [
+          "Identifica quem decide.",
+          "Não inventa tempos.",
+          "Conserva a pergunta pendente."
+        ]
+      },
+      "sourceIds": [
+        "planning"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "1"
+    },
+    {
+      "title": "Facilitar divergência sem fabricar consenso",
+      "objectives": [
+        "Reconstruir posições, critérios e decisão."
+      ],
+      "sections": [
+        {
+          "title": "A mesma palavra esconde duas perguntas",
+          "paragraphs": [
+            "Na reunião fictícia, Inês defende que a rota deve ser mais rápida e João afirma que deve ser mais justa. O facilitador não precisa de escolher uma pessoa para apoiar; precisa de esclarecer o significado operacional dessas expressões. Inês refere o tempo total do percurso. João refere a distribuição de atrasos entre destinatários. Ambas as posições podem ser relevantes, mas não estão a medir a mesma coisa. Registe cada critério e peça que seja relacionado com as condições da entrega. Evite transformar uma diferença sobre prioridade numa acusação de incompetência ou falta de compromisso.",
+            "O material de treino apresenta dois cenários sintéticos: a rota X demora noventa minutos e concentra um atraso no mesmo destinatário de sempre; a rota Y demora cento e cinco e distribui a ordem de forma diferente. Não foi fornecida uma regra que atribua peso a cada critério. O aluno deve conduzir a comparação sem anunciar que quinze minutos a mais são sempre aceitáveis ou sempre inadequados. Essa decisão pertence à função definida no exercício e exige explicitar a prioridade adotada, a consequência conhecida e o que ainda precisa de confirmação com os destinatários."
+          ]
+        },
+        {
+          "title": "Encerrar com uma decisão atribuível",
+          "paragraphs": [
+            "A coordenadora escolhe testar Y numa única data, condicionada à confirmação de receção. João concorda; Inês aceita executar o teste, mas mantém reserva sobre o tempo. A ata deve conservar essa diferença. Aceitar executar não é concordar com toda a justificação, e uma reserva não equivale a recusa de colaboração. Registe decisão, âmbito experimental, condição, responsável e revisão prevista. Uma ata que declare unanimidade apagaria informação relevante e tornaria mais difícil avaliar o teste depois. O facilitador deve conferir se o registo representa as posições, em vez de utilizar o silêncio final como prova de acordo.",
+            "Prepare uma mensagem de encerramento com a decisão e a pergunta que ainda depende de confirmação. Para avaliar o encontro, procure se as alternativas ficaram compreensíveis e se a próxima ação tem responsável, sem medir qualidade apenas pela duração da chamada. O exercício não atribui notas a traços pessoais nem ensina a silenciar discordância. Uma pessoa pode facilitar de modo consistente mesmo quando a reunião termina sem consenso. A segurança aqui significa saber qual pergunta está em discussão, reconhecer limites de autoridade e produzir um registo que permita continuar o trabalho sem reinterpretar a conversa pela memória de quem falou mais.",
+            "Se a confirmação de receção não chegar, o teste não passa automaticamente a autorizado. A nota de acompanhamento deve mencionar essa condição e solicitar nova decisão, conservando a diferença entre a opção escolhida em princípio e a possibilidade efetiva de a executar."
+          ]
+        }
+      ],
+      "case": "X:90min, mesmo destinatário atrasado; Y:105min, ordem diferente. Coordenadora escolhe teste Y condicionado. Inês executa mas mantém reserva; João concorda.",
+      "exercise": "Escreva perguntas de esclarecimento, ata fiel e acompanhamento se faltar confirmação.",
+      "assessment": {
+        "question": "Aceitar executar Y permite registar unanimidade sobre os critérios?",
+        "answer": "Não. A reserva de Inês deve ser conservada; execução, concordância e autorização são estados diferentes.",
+        "rubric": [
+          "Explicita critérios.",
+          "Preserva discordância.",
+          "Mantém a condição do teste."
+        ]
+      },
+      "sourceIds": [
+        "planning"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "2"
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão especializada do âmbito deste curso e revisão editorial dos casos e critérios.",
+    "Pilotar as duas oficinas com participantes e tecnologias de apoio; ampliar a prática antes de qualquer equivalência à carga histórica anunciada.",
+    "Conferir fontes, direitos e cálculos; definir correspondência com o roteiro histórico sem apagar progresso ou certificados.",
+    "Aprovação fundamentada antes de integração ativa; esta edição compacta não comprova as horas históricas."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

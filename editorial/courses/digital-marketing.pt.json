@@ -1,0 +1,129 @@
+{
+  "productKey": "curso_assinatura_introducao_ao_marketing_digital_para_iniciantes",
+  "slug": "introducao-ao-marketing-digital-para-iniciantes",
+  "title": "Introdução ao Marketing Digital para Iniciantes",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 120,
+  "validatedHours": null,
+  "expectedModuleCount": 2,
+  "scope": "Oficinas de correspondência entre público, mensagem e objetivo e de interpretação de um teste pequeno. Não promete alcance, vendas ou retorno; não executa anúncios pagos nem configura rastreamento.",
+  "courseObjectives": [
+    "Distinguir público amplo, situação de uso e ação desejada.",
+    "Distinguir exposição, visita e pedido."
+  ],
+  "sources": [
+    {
+      "id": "marketing",
+      "title": "Federal Trade Commission. Advertising and Marketing.",
+      "url": "https://www.ftc.gov/business-guidance/advertising-marketing",
+      "consulted": "2026-11-16",
+      "scope": "Página introdutória consultada na etapa anterior: alegações verdadeiras e sustentação. Não se declara parecer de conformidade local. Dados, ofertas e mensagens de treino não são campanhas reais."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Escolher uma mensagem por necessidade e objetivo"
+    },
+    {
+      "id": "2",
+      "title": "Ler um teste sem atribuir vendas ao indicador errado"
+    }
+  ],
+  "modules": [
+    {
+      "title": "Escolher uma mensagem por necessidade e objetivo",
+      "objectives": [
+        "Distinguir público amplo, situação de uso e ação desejada."
+      ],
+      "sections": [
+        {
+          "title": "O calendário de uma associação",
+          "paragraphs": [
+            "A associação fictícia Linha oferece um calendário editável para organizar turnos de voluntariado. O primeiro plano pretende divulgá-lo para todas as pessoas interessadas em produtividade. O aluno deverá reduzir a ambiguidade: o recurso foi desenhado para uma equipa pequena que precisa de ver disponibilidades e confirmar turnos, não para qualquer dificuldade de organização. Identifique situação, utilizador e ação desejada. Uma comunicação inicial pode convidar a conhecer um exemplo, sem prometer resolver gestão de equipas ou substituir uma decisão de coordenação que continua a depender de pessoas e regras da associação.",
+            "O pacote apresenta duas mensagens. A primeira anuncia nunca mais tenha faltas e a segunda mostra como um quadro reúne disponibilidades ainda por confirmar. A primeira atribui ao recurso um resultado que não foi demonstrado. A segunda descreve uma função observável e conserva o estado pendente. O aluno deve explicar essa diferença e produzir um pequeno exemplo sintético de três turnos, dos quais um ainda não tem responsável. Não se deve preencher o turno aberto com um nome inventado para que a imagem pareça mais eficaz; a lacuna faz parte da informação que o recurso precisa de mostrar."
+          ]
+        },
+        {
+          "title": "Relacionar canal e próxima pergunta",
+          "paragraphs": [
+            "Compare dois contextos de divulgação fornecidos: uma página de apresentação com espaço para explicar o exemplo e uma publicação curta que aponta para essa página. O objetivo da publicação é permitir que pessoas com a necessidade reconheçam o uso e decidam saber mais. O objetivo da página é esclarecer formato, limites e condições. Não se exige usar uma rede específica ou conhecer o seu algoritmo. A escolha do canal deve ser justificada pelo tipo de informação necessário, em vez de pressupor que o mais popular é sempre o mais adequado para qualquer oferta ou etapa da decisão.",
+            "Entregue a definição de situação de uso, a mensagem curta e a estrutura da página. Inclua uma pergunta que o material ainda não responde, como se o formato funciona com a ferramenta utilizada pela equipa interessada. Não a transforme numa compatibilidade garantida. A rubrica observa alinhamento entre necessidade, mensagem e próxima ação, sem medir sucesso pelo volume de publicações. O curso introdutório não substitui pesquisa de mercado ou revisão de conformidade. Ele permite construir uma hipótese de comunicação verificável e distinguir uma promessa abrangente de uma descrição concreta que uma pessoa pode examinar antes de decidir se o recurso é pertinente.",
+            "Se uma equipa precisar de aprovação de horários, o calendário pode representar o estado mas não conceder essa autoridade. A mensagem deve evitar apresentar visualização como solução automática da decisão organizacional."
+          ]
+        }
+      ],
+      "case": "Linha: calendário para turnos; três turnos, um sem responsável. Mensagens: nunca mais faltas versus disponibilidades por confirmar.",
+      "exercise": "Defina situação, mensagens e página sem ocultar turno aberto.",
+      "assessment": {
+        "question": "Um quadro de turnos comprova ausência de faltas futuras?",
+        "answer": "Não. Representa informação; não garante comportamento ou autorização.",
+        "rubric": [
+          "Delimita uso.",
+          "Não inventa responsável.",
+          "Alinha canal e informação."
+        ]
+      },
+      "sourceIds": [
+        "marketing"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "1"
+    },
+    {
+      "title": "Ler um teste sem atribuir vendas ao indicador errado",
+      "objectives": [
+        "Distinguir exposição, visita e pedido."
+      ],
+      "sections": [
+        {
+          "title": "O percurso de uma pequena campanha fictícia",
+          "paragraphs": [
+            "O teste da associação Linha registou cem visualizações de uma publicação, vinte visitas à página e quatro pedidos de informação. O pacote não identifica pessoas únicas nem compras. Um relatório candidato afirma que vinte por cento do público comprou. O aluno deverá corrigir a relação entre medida e acontecimento: vinte visitas sobre cem visualizações é uma razão entre esses registos, não uma taxa de compra. Quatro pedidos também não equivalem a quatro vendas. Antes de calcular, nomeie o que foi contado, em que período e qual evento cada número pretende representar no cenário de treino.",
+            "Outra publicação obteve oitenta visualizações, dezasseis visitas e seis pedidos. As razões visita por visualização são iguais a vinte por cento em ambos os casos; os pedidos por visita diferem, quatro em vinte e seis em dezasseis. O aluno pode apresentar vinte por cento e trinta e sete vírgula cinco por cento para essas relações, explicando que são contagens pequenas e sem controlo das condições. Não conclua superioridade universal da segunda mensagem nem atribua a diferença ao texto, porque o pacote não demonstra público equivalente, distribuição igual ou ausência de outras mudanças durante o teste."
+          ]
+        },
+        {
+          "title": "Usar o resultado para formular a próxima investigação",
+          "paragraphs": [
+            "Prepare um relatório com números, denominadores e duas perguntas. Uma pergunta pode examinar se os pedidos correspondem à situação de uso prevista; outra pode perguntar que informação as pessoas procuram antes de decidir. O objetivo não é recolher dados pessoais desnecessários nem instalar uma ferramenta de rastreamento. Os registos sintéticos bastam para praticar interpretação. Uma métrica pode orientar uma dúvida sem demonstrar causalidade. O aluno deve evitar escolher o resultado mais favorável para todas as etapas ou esconder que não existe informação de compra no conjunto disponível.",
+            "Entregue a comparação e uma proposta de próximo teste com uma alteração claramente identificada. Se desejar comparar mensagens, explique que condições tentaria manter semelhantes e o que continuaria limitado. Não prometa um tamanho de amostra suficiente ou uma conclusão estatística que o curso não calcula. A rubrica verifica se o texto diferencia observação, hipótese e decisão de investigação. O marketing introdutório é apresentado como trabalho de compreender uma oferta e os sinais recebidos, não como produção automática de vendas. A ausência de compras registadas não demonstra inexistência de vendas fora do registo; demonstra apenas que o material não permite afirmá-las.",
+            "Se surgirem compras depois, será necessário associá-las ao período e ao percurso conhecido antes de atualizar o relatório. Um número posterior não deve ser inserido na comparação inicial sem explicar a mudança de dados e de âmbito."
+          ]
+        }
+      ],
+      "case": "A:100visualizações/20visitas/4pedidos. B:80/16/6. Sem pessoas únicas ou compras identificadas.",
+      "exercise": "Compare razões, corrija relatório e proponha investigação limitada.",
+      "assessment": {
+        "question": "Vinte visitas permitem afirmar vinte compras?",
+        "answer": "Não. São acontecimentos diferentes; compras não foram fornecidas.",
+        "rubric": [
+          "Nomeia eventos.",
+          "Confere20% e37,5%.",
+          "Não atribui causalidade."
+        ]
+      },
+      "sourceIds": [
+        "marketing"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "2"
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão especializada do âmbito deste curso e revisão editorial dos casos e critérios.",
+    "Pilotar as duas oficinas com participantes e tecnologias de apoio; ampliar a prática antes de qualquer equivalência à carga histórica anunciada.",
+    "Conferir fontes, direitos e cálculos; definir correspondência com o roteiro histórico sem apagar progresso ou certificados.",
+    "Aprovação fundamentada antes de integração ativa; esta edição compacta não comprova as horas históricas."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

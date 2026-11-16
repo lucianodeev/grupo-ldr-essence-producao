@@ -1,0 +1,129 @@
+{
+  "productKey": "curso_assinatura_projeto_de_vida_trabalho_e_futuro_profissional",
+  "slug": "projeto-de-vida-trabalho-e-futuro-profissional",
+  "title": "Projeto de Vida, Trabalho e Futuro Profissional",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 160,
+  "validatedHours": null,
+  "expectedModuleCount": 2,
+  "scope": "Oficinas de coordenação de projetos pessoais, aprendizagem e trabalho num trimestre fictício. Não prescreve propósito de vida, terapia ou previsão de futuro. Separa aspirações e compromissos executáveis.",
+  "courseObjectives": [
+    "Explicitar escolhas entre atividades e compromissos.",
+    "Distinguir persistência, adaptação e substituição de objetivo."
+  ],
+  "sources": [
+    {
+      "id": "career",
+      "title": "Europass. Preparing for work abroad.",
+      "url": "https://europass.europa.eu/en/work-europe/preparing-work-abroad",
+      "consulted": "2026-11-16",
+      "scope": "Resumo oficial consultado sobre apresentar competências e qualificações no contexto de trabalho internacional. Não se declara verificação de regras migratórias, equivalência ou licença profissional. Os documentos e mercados dos exercícios são fictícios."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Distribuir recursos entre projetos que concorrem"
+    },
+    {
+      "id": "2",
+      "title": "Rever um projeto quando surgem condições novas"
+    }
+  ],
+  "modules": [
+    {
+      "title": "Distribuir recursos entre projetos que concorrem",
+      "objectives": [
+        "Explicitar escolhas entre atividades e compromissos."
+      ],
+      "sections": [
+        {
+          "title": "O trimestre de Bia",
+          "paragraphs": [
+            "Bia deseja melhorar a escrita, participar num projeto comunitário e procurar uma função diferente. O pacote fictício informa cinco horas semanais disponíveis para esses projetos e duas atividades já combinadas: uma hora de encontro comunitário e uma hora de deslocação associada. Antes de acrescentar metas, calcule o recurso que permanece: três horas. A oficina não pede ordenar dimensões da vida por importância universal. Pede reconhecer que projetos diferentes podem disputar o mesmo tempo e que uma aspiração valiosa ainda precisa de condições para se transformar numa sequência de trabalho possível.",
+            "Bia propõe três horas de escrita e três de procura profissional, além do compromisso comunitário. O plano somaria oito horas no total, excedendo em três a disponibilidade fornecida. Uma folha bonita ou uma frase de motivação não resolve essa diferença. O aluno deverá apresentar alternativas, como distribuir a investigação profissional e a escrita por semanas diferentes, ou renegociar um compromisso se houver possibilidade real. Não se presume apoio familiar, dinheiro para reduzir trabalho ou horas livres adicionais. O cenário exige que os limites sejam apresentados como condições de decisão, não como defeitos pessoais de Bia."
+          ]
+        },
+        {
+          "title": "Escolher uma sequência com perdas reconhecidas",
+          "paragraphs": [
+            "Prepare duas propostas para quatro semanas. Uma privilegia escrita e mantém uma ação pequena de investigação profissional; outra privilegia a investigação e mantém uma prática curta de escrita. Cada proposta deve respeitar as cinco horas e explicitar o que será adiado. A comparação não precisa de uma pontuação que esconda o custo de cada escolha. Bia pode valorizar simultaneamente comunidade, aprendizagem e mudança profissional sem conseguir avançar igualmente em tudo naquele período. O aluno deve escrever uma razão para a sequência escolhida e uma condição que justificaria revê-la, conservando a possibilidade de decidir de outra forma depois.",
+            "Entregue o mapa de projetos, o plano de quatro semanas e uma nota sobre os elementos fora de controlo. Uma resposta de recrutamento, por exemplo, não depende apenas das horas dedicadas à procura; uma apresentação comunitária pode depender de outras pessoas. O curso não promete que organizar o trimestre produz um futuro profissional específico. A rubrica verifica coerência entre recursos, compromissos e entregas, permitindo que um projeto continue como aspiração sem ser falsamente marcado como compromisso em execução. O produto é uma coordenação concreta do próximo período, não uma declaração definitiva sobre identidade, propósito ou valor de uma vida.",
+            "Se a deslocação deixar de ser necessária numa semana, a hora libertada só deverá entrar no plano depois de a mudança ser confirmada. Uma possibilidade futura não deve ser contada como recurso já disponível."
+          ]
+        }
+      ],
+      "case": "Bia dispõe5h/semana; comunidade1h+deslocação1h. Propõe escrita3h+procura3h: total8h.",
+      "exercise": "Desenhe duas sequências de quatro semanas, com adiamentos e critérios de revisão.",
+      "assessment": {
+        "question": "Valorizar três projetos garante poder executá-los simultaneamente no ritmo desejado?",
+        "answer": "Não. É preciso compatibilizar recursos e compromissos; o plano proposto excede três horas.",
+        "rubric": [
+          "Confere disponibilidade.",
+          "Reconhece perdas.",
+          "Não promete futuro."
+        ]
+      },
+      "sourceIds": [
+        "career"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "1"
+    },
+    {
+      "title": "Rever um projeto quando surgem condições novas",
+      "objectives": [
+        "Distinguir persistência, adaptação e substituição de objetivo."
+      ],
+      "sections": [
+        {
+          "title": "Uma oportunidade altera o trimestre",
+          "paragraphs": [
+            "Na segunda semana, Bia recebe uma proposta fictícia de apresentação comunitária que exige duas horas adicionais de preparação. Ao mesmo tempo, a investigação profissional revelou que uma função pretendida tem tarefas diferentes das que imaginava. O plano inicial já não descreve todas as condições. A oficina pede rever decisões sem transformar adaptação em fracasso ou insistência em virtude automática. O aluno deve identificar o que mudou, o efeito sobre os recursos e qual compromisso precisa de nova confirmação. Não basta acrescentar a oportunidade ao calendário e conservar todos os resultados anteriores como se continuassem igualmente prováveis.",
+            "Existem três alternativas de treino: aceitar a apresentação e reduzir temporariamente escrita, pedir uma versão menor da participação ou recusar a nova proposta mantendo o plano. Nenhuma é apresentada como resposta universal. Cada uma conserva algo e adia outra coisa. O aluno deverá relacionar a escolha com os critérios de Bia e as condições efetivas, sem inventar obrigação moral de aceitar trabalho comunitário. Quanto à função investigada, a informação nova pode levar a formular outra pergunta ou abandonar aquela hipótese específica; não demonstra que toda a procura profissional perdeu sentido."
+          ]
+        },
+        {
+          "title": "Uma revisão que conserve a aprendizagem",
+          "paragraphs": [
+            "Prepare uma nota de mudança com plano anterior, informação nova, decisão revista e consequências. Conserve o que foi aprendido sobre a função, mesmo se Bia deixar de a considerar. Investigar uma alternativa e descobrir incompatibilidade pode produzir informação útil, sem garantir que a investigação seguinte será adequada. O registo evita reiniciar toda a reflexão a cada oportunidade. Não se deve utilizar o resultado para concluir que Bia nunca sabe o que quer ou que qualquer mudança de objetivo é sinal de falta de disciplina. Essas generalizações não são sustentadas pelo trimestre fictício.",
+            "A entrega final inclui uma versão revista do plano e duas perguntas para a revisão seguinte: os compromissos escolhidos continuam compatíveis com o recurso disponível e as evidências recolhidas ainda sustentam as hipóteses profissionais? A rubrica observa clareza de consequências e conservação de aprendizagem, não fidelidade rígida ao primeiro desenho. O curso não oferece uma previsão de satisfação ou sucesso, e não substitui acompanhamento para decisões pessoais complexas. Termina com um projeto que pode ser atualizado de modo fundamentado, reconhecendo que futuro profissional, aprendizagem e outros compromissos exigem escolhas continuadas em condições que não estão inteiramente sob controlo individual.",
+            "Se a apresentação for reduzida e exigir apenas meia hora adicional, refaça a comparação. A avaliação de uma alternativa depende da sua dimensão concreta, não apenas do nome participação comunitária ou da preferência manifestada no início do percurso."
+          ]
+        }
+      ],
+      "case": "Nova apresentação exige2h extras; função investigada difere do imaginado. Opções: reduzir escrita, negociar participação menor ou recusar.",
+      "exercise": "Produza nota de mudança e plano com consequências explícitas.",
+      "assessment": {
+        "question": "Deixar uma hipótese profissional após investigá-la apaga a utilidade da investigação?",
+        "answer": "Não. A informação sobre incompatibilidade pode orientar outra escolha; não prova falha global do projeto.",
+        "rubric": [
+          "Explica o que mudou.",
+          "Reconhece consequências.",
+          "Preserva aprendizagem."
+        ]
+      },
+      "sourceIds": [
+        "career"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "2"
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão especializada do âmbito deste curso e revisão editorial dos casos e critérios.",
+    "Pilotar as duas oficinas com participantes e tecnologias de apoio; ampliar a prática antes de qualquer equivalência à carga histórica anunciada.",
+    "Conferir fontes, direitos e cálculos; definir correspondência com o roteiro histórico sem apagar progresso ou certificados.",
+    "Aprovação fundamentada antes de integração ativa; esta edição compacta não comprova as horas históricas."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

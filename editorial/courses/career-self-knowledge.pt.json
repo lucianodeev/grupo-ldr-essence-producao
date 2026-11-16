@@ -1,0 +1,129 @@
+{
+  "productKey": "curso_assinatura_autoconhecimento_e_escolhas_profissionais",
+  "slug": "autoconhecimento-e-escolhas-profissionais",
+  "title": "Autoconhecimento e Escolhas Profissionais",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 100,
+  "validatedHours": null,
+  "expectedModuleCount": 2,
+  "scope": "Oficinas de exploração por experiências e critérios de escolha. Não é teste vocacional ou de personalidade, diagnóstico ou previsão de sucesso. Trabalha preferências situadas e decisões reversíveis.",
+  "courseObjectives": [
+    "Distinguir preferência observada e rótulo permanente.",
+    "Tornar critérios e perdas de cada opção explícitos."
+  ],
+  "sources": [
+    {
+      "id": "career",
+      "title": "Europass. Preparing for work abroad.",
+      "url": "https://europass.europa.eu/en/work-europe/preparing-work-abroad",
+      "consulted": "2026-11-16",
+      "scope": "Resumo oficial consultado sobre apresentar competências e qualificações no contexto de trabalho internacional. Não se declara verificação de regras migratórias, equivalência ou licença profissional. Os documentos e mercados dos exercícios são fictícios."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Explorar preferências a partir de tarefas e condições"
+    },
+    {
+      "id": "2",
+      "title": "Comparar escolhas que envolvem valores em tensão"
+    }
+  ],
+  "modules": [
+    {
+      "title": "Explorar preferências a partir de tarefas e condições",
+      "objectives": [
+        "Distinguir preferência observada e rótulo permanente."
+      ],
+      "sections": [
+        {
+          "title": "As três experiências de Lina",
+          "paragraphs": [
+            "Lina participou em três atividades fictícias: organizar uma lista sozinha num ambiente silencioso, apresentar um resumo a duas pessoas conhecidas e receber participantes num encontro com instruções incompletas. Gostou da primeira, avaliou a segunda como aceitável e sentiu dificuldade na terceira. Um comentário conclui que Lina é uma pessoa incapaz de trabalhar com público. O pacote não permite essa classificação. As situações diferem em tarefa, apoio, familiaridade e ambiente. A oficina pede explorar o que cada experiência mostra, evitando transformar uma reação num contexto específico numa identidade profissional permanente.",
+            "Prepare uma ficha por experiência com atividade, condição, apoio recebido e avaliação de Lina. Na receção, a dificuldade pode estar relacionada com várias condições, incluindo instruções incompletas, mas nenhuma causa foi demonstrada isoladamente. O aluno deve formular perguntas que ajudem a distinguir essas possibilidades. Gostar de organizar uma lista também não prova adequação a qualquer função administrativa, pois outras tarefas e condições podem ser diferentes. Uma exploração honesta conserva o interesse manifestado sem ampliar o seu alcance para uma escolha de carreira que exigiria mais experiências e informação."
+          ]
+        },
+        {
+          "title": "Um teste pequeno para uma hipótese específica",
+          "paragraphs": [
+            "Escolha uma hipótese e um teste reversível. Por exemplo, Lina pode simular uma receção com instruções completas e duas perguntas previstas, observando o que muda em relação ao caso anterior. Isso não valida um instrumento psicológico nem elimina a influência de outras diferenças. Serve para produzir uma experiência adicional que torne a reflexão mais concreta. Registe antes o que pretende observar, como clareza da informação transmitida ou necessidade de consulta. Não use apenas gostei ou não gostei como resultado, mas também não descarte essas avaliações como se não tivessem importância na escolha pessoal.",
+            "O produto final é uma nota de hipótese, uma atividade de teste e uma conclusão delimitada. A conclusão pode dizer que Lina conseguiu orientar duas pessoas com apoio de uma ficha e continua a preferir tarefas de organização. Não deve dizer que encontrou a profissão certa ou que superou definitivamente uma incapacidade. O curso utiliza dados sintéticos e não pede revelações sobre saúde, família ou vivências difíceis. A rubrica valoriza a capacidade de relacionar experiência e condição, permitindo rever hipóteses em vez de fechar a identidade de alguém numa categoria que o material não tem autoridade para atribuir.",
+            "Se o teste produzir outra dificuldade, descreva o que ocorreu e quais condições estavam presentes. Não aumente automaticamente a certeza do rótulo inicial; uma experiência adicional ainda precisa de ser interpretada no seu próprio âmbito."
+          ]
+        }
+      ],
+      "case": "Lina gosta de lista individual; aceita resumo a conhecidos; tem dificuldade na receção sem instruções. Comentário chama-a incapaz de público.",
+      "exercise": "Construa fichas e teste de receção com instruções completas.",
+      "assessment": {
+        "question": "Três experiências diferentes demonstram um perfil permanente?",
+        "answer": "Não. Tarefas e condições variam; cabe explorar hipóteses, não atribuir identidade definitiva.",
+        "rubric": [
+          "Relaciona condições.",
+          "Evita rótulo.",
+          "Define observação e limite."
+        ]
+      },
+      "sourceIds": [
+        "career"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "1"
+    },
+    {
+      "title": "Comparar escolhas que envolvem valores em tensão",
+      "objectives": [
+        "Tornar critérios e perdas de cada opção explícitos."
+      ],
+      "sections": [
+        {
+          "title": "Dois projetos possíveis para o próximo trimestre",
+          "paragraphs": [
+            "Lina considera dois projetos fictícios. O primeiro oferece tarefas conhecidas, horário previsível e pouca oportunidade de aprender uma ferramenta nova. O segundo oferece aprendizagem acompanhada, mas tem horário variável ainda não esclarecido. Ela valoriza previsibilidade e aprendizagem; esses critérios não se resolvem apenas escolhendo a opção mais emocionante ou a que parece mais segura. A oficina pede explicitar o que cada alternativa oferece, o que exige e qual informação falta. Não existe resposta universal correta, pois o pacote não atribui a mesma prioridade a todas as pessoas nem determina a situação real de Lina.",
+            "Use três categorias: condição indispensável, preferência negociável e pergunta aberta. Se Lina declarar que não pode aceitar variação em determinados dias, essa condição deve aparecer antes de uma soma de pontos favoráveis. Uma pontuação elevada em aprendizagem não compensa automaticamente uma incompatibilidade indispensável. Ao mesmo tempo, o horário do segundo projeto ainda é desconhecido, pelo que não deve ser classificado como incompatível sem confirmação. O aluno precisa de distinguir uma restrição real de uma possibilidade ainda não verificada e formular a pergunta necessária para tornar a comparação mais informativa."
+          ]
+        },
+        {
+          "title": "Uma escolha que possa ser explicada e revista",
+          "paragraphs": [
+            "Prepare uma decisão provisória com a razão principal, a informação que poderia mudá-la e o momento de revisão. Uma alternativa é investigar primeiro o horário do segundo projeto; outra é escolher o primeiro se a confirmação não chegar antes da decisão necessária. Essas são opções do exercício, não recomendações para abandonar ou aceitar emprego real. O aluno deverá mostrar como a decisão respeita os critérios definidos e onde permanece incerteza. Não se deve apresentar a escolha como descoberta de um propósito único ou garantia de realização profissional ao longo da vida.",
+            "Entregue uma tabela de critérios e uma carta curta escrita por Lina para si mesma, explicando a escolha sem desvalorizar a alternativa rejeitada. Nomeie um custo: optar por previsibilidade pode adiar uma aprendizagem, enquanto optar por aprendizagem pode exigir reorganização se o horário for compatível. Reconhecer custos torna a decisão mais compreensível e evita prometer uma opção sem perdas. A rubrica observa coerência entre critérios, dados e conclusão. O autoconhecimento é trabalhado como reflexão situada e possibilidade de revisão, não como acesso a uma essência psicológica que permitiria prever todas as escolhas profissionais futuras.",
+            "Se o horário variável for depois esclarecido e couber nas condições indispensáveis, a comparação deverá ser reaberta. Rever uma decisão por informação nova não significa que a reflexão anterior tenha sido inútil ou que Lina não se conheça."
+          ]
+        }
+      ],
+      "case": "Projeto A: horário previsível/tarefas conhecidas/pouca aprendizagem nova. B: aprendizagem acompanhada/horário variável desconhecido. Lina valoriza previsibilidade e aprender.",
+      "exercise": "Classifique critérios, formule pergunta e escreva decisão provisória com custo e condição de revisão.",
+      "assessment": {
+        "question": "Uma soma de preferências pode apagar condição indispensável?",
+        "answer": "Não. Deve verificar compatibilidade e informação em falta antes de compensar critérios por pontos.",
+        "rubric": [
+          "Distingue restrição e dúvida.",
+          "Reconhece custos.",
+          "Prevê revisão por nova informação."
+        ]
+      },
+      "sourceIds": [
+        "career"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "2"
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão especializada do âmbito deste curso e revisão editorial dos casos e critérios.",
+    "Pilotar as duas oficinas com participantes e tecnologias de apoio; ampliar a prática antes de qualquer equivalência à carga histórica anunciada.",
+    "Conferir fontes, direitos e cálculos; definir correspondência com o roteiro histórico sem apagar progresso ou certificados.",
+    "Aprovação fundamentada antes de integração ativa; esta edição compacta não comprova as horas históricas."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}
