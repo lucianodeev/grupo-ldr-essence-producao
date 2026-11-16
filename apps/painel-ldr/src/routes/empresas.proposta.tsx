@@ -4,8 +4,8 @@ import { useState, type FormEvent } from "react";
 import { EnterprisePage } from "@/components/enterprise-page";
 import { submitEcosystemSupport } from "@/lib/ecosystem-support.functions";
 import { COMMERCIAL_INTERESTS, COMMERCIAL_SOLUTIONS, commercialProtocol, commercialSupportPayload } from "@/lib/commercial-request";
-type ProposalSearch = { solution?: (typeof COMMERCIAL_SOLUTIONS)[number] };
-export const Route = createFileRoute("/empresas/proposta")({validateSearch:(search:Record<string,unknown>):ProposalSearch=>{const solution=COMMERCIAL_SOLUTIONS.find(value=>value===search["solution"]);return solution?{solution}:{}},head:()=>({meta:[{title:"Proposta empresarial | Ecossistema LDR"}],links:[{rel:"canonical",href:"https://ldrecossistema.online/empresas/proposta"}]}),component:Proposal});
+type ProposalSearch = { solution?: (typeof COMMERCIAL_SOLUTIONS)[number]; source?: "integracao-colaboradores" };
+export const Route = createFileRoute("/empresas/proposta")({validateSearch:(search:Record<string,unknown>):ProposalSearch=>{const solution=COMMERCIAL_SOLUTIONS.find(value=>value===search["solution"]);return {...(solution?{solution}:{}),...(search["source"]==="integracao-colaboradores"?{source:"integracao-colaboradores" as const}:{})}},head:()=>({meta:[{title:"Proposta empresarial | Ecossistema LDR"}],links:[{rel:"canonical",href:"https://ldrecossistema.online/empresas/proposta"}]}),component:Proposal});
 function Proposal(){
   const search=Route.useSearch();
   const send=useServerFn(submitEcosystemSupport);
@@ -13,7 +13,7 @@ function Proposal(){
   async function submit(event:FormEvent<HTMLFormElement>){
     event.preventDefault();if(sending||protocol)return;
     const form=new FormData(event.currentTarget);setSending(true);setError("");
-    try{const payload=commercialSupportPayload({organization:form.get("organization"),name:form.get("name"),email:form.get("email"),interest:form.get("interest"),solution:form.get("solution"),message:form.get("message"),consent:form.get("consent")==="on",website:form.get("website")||""});setProtocol(commercialProtocol(await send({data:payload})));}
+    try{const payload=commercialSupportPayload({source:search.source,organization:form.get("organization"),name:form.get("name"),email:form.get("email"),interest:form.get("interest"),solution:form.get("solution"),message:form.get("message"),consent:form.get("consent")==="on",website:form.get("website")||""});setProtocol(commercialProtocol(await send({data:payload})));}
     catch{setError("Não foi possível confirmar o pedido. Verifique os campos ou utilize o atendimento institucional.");}finally{setSending(false);}
   }
   const field="mt-2 min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-base focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#866a3c]";
