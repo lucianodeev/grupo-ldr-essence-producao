@@ -1,0 +1,47 @@
+name: Validate customer service editorial draft
+on:
+  push:
+    branches:
+      - audit/biblioteca-redesign-20261115
+    paths:
+      - 'docs/audit-20261115/course-development/customer-service/**'
+      - 'tools/validate-customer-service-units.cjs'
+      - 'tools/export-customer-service-review.cjs'
+      - '.github/workflows/validate-customer-service-editorial.yml'
+  workflow_dispatch:
+jobs:
+  offline-editorial-validation:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate six source units
+        run: node tools/validate-customer-service-units.cjs
+      - name: Export draft without changing catalog
+        run: node tools/export-customer-service-review.cjs --stdout > /tmp/customer-service-review.json
+      - name: Assert draft status, module count and lossless hashes
+        run: |
+          node - <<'NODE'
+          const fs = require('node:fs');
+          const crypto = require('node:crypto');
+          const assert = require('node:assert/strict');
+          const data = JSON.parse(fs.readFileSync('/tmp/customer-service-review.json', 'utf8'));
+          assert.equal(data.schema, 'ldr-editorial-review-export-v1');
+          assert.equal(data.status, 'draft');
+          assert.equal(data.published, false);
+          assert.equal(data.activationEligible, false);
+          assert.equal(data.validatedHours, null);
+          assert.equal(data.modules.length, 6);
+          assert.equal(new Set(data.modules.map(m => m.id)).size, 6);
+          for (const m of data.modules) {
+            assert.equal(m.format, 'markdown');
+            assert.equal(m.reviewStatus, 'pending');
+            assert.equal(crypto.createHash('sha256').update(m.body).digest('hex'), m.sha256);
+            assert.equal(fs.readFileSync(m.sourceFile, 'utf8'), m.body);
+          }
+          console.log('PASS: six lossless draft units, unpublished and ineligible for activation');
+          NODE
