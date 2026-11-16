@@ -23,7 +23,7 @@ function Review(){const [course,setCourse]=useState(0),[unit,setUnit]=useState(0
 const edition=editions[course],module=edition.modules[unit];
 return <main className="mx-auto max-w-6xl space-y-5 p-4">
 <h1>Revisão técnica isolada — conteúdos não publicados</h1>
-<label>Curso em revisão<select value={course} onChange={event=>{setCourse(Number(event.target.value));setUnit(0)}} className="block w-full min-w-0 max-w-full border p-3">{editions.map((item,index)=><option key={item.slug} value={index}>{item.slug}</option>)}</select></label>
+<label htmlFor="review-course">Curso em revisão</label><select id="review-course" value={course} onChange={event=>{setCourse(Number(event.target.value));setUnit(0)}} className="block w-full min-w-0 max-w-full border p-3">{editions.map((item,index)=><option key={item.slug} value={index}>{item.slug}</option>)}</select>
 <nav aria-label="Unidades em revisão" className="grid gap-2 sm:grid-cols-2">{edition.modules.map((item,index)=><button type="button" key={item.id} aria-current={unit===index?'step':undefined} onClick={()=>setUnit(index)} className="min-w-0 rounded border p-3 text-left">{item.id}. {item.title}</button>)}</nav>
 <article aria-label={module.title} className="min-w-0 rounded border p-4"><h2>{module.title}</h2><AcademyMarkdown body={module.body}/></article>
 <section aria-label="Bloqueio de publicação"><AcademyReadingEditionView edition={edition}/></section>
@@ -65,6 +65,7 @@ createRoot(document.getElementById('root')).render(<Review/>);`,
       page.on('pageerror', error => errors.push(error.message));
       page.on('request', request => { if (!request.url().startsWith(origin + '/')) externalRequests.push(request.url()); });
       await page.goto(origin);
+      await page.screenshot({ path: path.join(scratch, 'initial-' + viewport.width + '.png') });
       for (const [courseIndex, edition] of editions.entries()) {
         await page.getByLabel('Curso em revisão', { exact: true }).selectOption(String(courseIndex));
         const nav = page.getByRole('navigation', { name: 'Unidades em revisão' });
