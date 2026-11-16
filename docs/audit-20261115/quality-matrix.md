@@ -161,6 +161,15 @@ As versões candidatas não são usadas pelo leitor de produção. O original e 
 
 Rascunhos separados do leitor. Número de módulos e tempo de prática estimado não validam a carga anunciada.
 
+## Prévias conservadoras de obras existentes
+
+| Produto / idioma | Versão base / proposta | Cópias removidas na prévia | Estado |
+| --- | --- | --- | --- |
+| ebook_estudos_caso_psicanalise / pt | 3 / 4 | 943 | review-required; published=false; original inalterado=true |
+| livro_menino_mamao / pt | 2 / 3 | 512 | review-required; published=false; original inalterado=true |
+
+Os manifests contêm apenas hashes e posições. Os textos integrais das prévias ficam fora do repositório; não há regravação em produção. Zero grupos no limiar selecionado não significa ausência de todas as formas de repetição.
+
 ## Triagem entre candidatas originais
 
 4 produtos; 49 unidades; 317 parágrafos e 50086 pares. Cópias exatas: 0; pares próximos: 0. Método: paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required. A ausência de sinal não equivale a aprovação conceptual ou científica.

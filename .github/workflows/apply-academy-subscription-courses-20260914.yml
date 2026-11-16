@@ -15,6 +15,7 @@ on:
       - 'apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca*.tsx'
       - 'apps/painel-ldr/src/routes/_clientarea.cliente.cursos*.tsx'
       - 'apps/painel-ldr/tests/library-*.test.cjs'
+      - 'apps/painel-ldr/tests/library-progress.pgtest.cjs'
       - 'apps/painel-ldr/tests/editorial-drafts.test.cjs'
       - 'apps/painel-ldr/tests/helpers/**'
       - 'editorial/drafts/**'
@@ -39,6 +40,7 @@ on:
       - 'apps/painel-ldr/src/routes/_clientarea.cliente.biblioteca*.tsx'
       - 'apps/painel-ldr/src/routes/_clientarea.cliente.cursos*.tsx'
       - 'apps/painel-ldr/tests/library-*.test.cjs'
+      - 'apps/painel-ldr/tests/library-progress.pgtest.cjs'
       - 'apps/painel-ldr/tests/editorial-drafts.test.cjs'
       - 'apps/painel-ldr/tests/helpers/**'
       - 'editorial/drafts/**'
@@ -78,3 +80,38 @@ jobs:
         run: npm --prefix apps/painel-ldr run typecheck
       - name: Build Academy without deployment
         run: npm --prefix apps/painel-ldr run build
+  progress-postgres:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: ldr_library_test
+          POSTGRES_PASSWORD: ci_local_only
+          POSTGRES_DB: ldr_library_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ldr_library_test -d ldr_library_ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      LDR_LIBRARY_ISOLATED_DB: '1'
+      PGHOST: 127.0.0.1
+      PGPORT: '5432'
+      PGUSER: ldr_library_test
+      PGPASSWORD: ci_local_only
+      PGDATABASE: ldr_library_ci
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Ensure PostgreSQL client
+        run: command -v psql || (sudo apt-get update -qq && sudo apt-get install -y postgresql-client)
+      - name: Exercise concurrent progress in disposable PostgreSQL
+        run: node --test apps/painel-ldr/tests/library-progress.pgtest.cjs

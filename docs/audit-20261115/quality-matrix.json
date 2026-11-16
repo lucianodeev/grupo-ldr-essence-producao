@@ -1764,6 +1764,48 @@
     "exact": [],
     "near": []
   },
+  "editorialRevisions": [
+    {
+      "productKey": "ebook_estudos_caso_psicanalise",
+      "locale": "pt",
+      "baseVersion": 3,
+      "candidateVersion": 4,
+      "status": "review-required",
+      "published": false,
+      "selectedGroups": 41,
+      "previewMetrics": {
+        "beforeWords": 42592,
+        "afterWords": 26883,
+        "removedCopies": 943,
+        "unitsBefore": 196,
+        "unitsAfter": 196,
+        "emptyUnits": 0,
+        "remainingRepeatedGroupsAtThreshold": 0,
+        "originalUnchanged": true
+      },
+      "path": "editorial/revisions/ebook_estudos_caso_psicanalise.pt.plan.json"
+    },
+    {
+      "productKey": "livro_menino_mamao",
+      "locale": "pt",
+      "baseVersion": 2,
+      "candidateVersion": 3,
+      "status": "review-required",
+      "published": false,
+      "selectedGroups": 16,
+      "previewMetrics": {
+        "beforeWords": 18749,
+        "afterWords": 10439,
+        "removedCopies": 512,
+        "unitsBefore": 40,
+        "unitsAfter": 40,
+        "emptyUnits": 0,
+        "remainingRepeatedGroupsAtThreshold": 0,
+        "originalUnchanged": true
+      },
+      "path": "editorial/revisions/livro_menino_mamao.pt.plan.json"
+    }
+  ],
   "exactDuplicates": [],
   "nearDuplicateGroups": [
     {

@@ -1,6 +1,6 @@
 # Biblioteca LDR — implementação e pendências reais
 
-Atualização: 15/11/2026. Branch: `audit/biblioteca-redesign-20261115`. PR #302. Esta continuação partiu de `1a5813ce79d40afb570b9938f17642c5f3f1516e` e conserva os commits anteriores.
+Atualização: 16/11/2026. Branch: `audit/biblioteca-redesign-20261115`. PR #302. Esta continuação partiu de `1a5813ce79d40afb570b9938f17642c5f3f1516e` e conserva os commits anteriores.
 
 ## Resultado disponível na branch
 
@@ -56,13 +56,36 @@ A **candidata v2 de “Como Mudar o Comportamento Humano” tem agora vinte cap�
 
 As referências incluem os artigos de Michie, Lally, Harkin, Gollwitzer, Ryan/Deci, Bandura e Roediger/Karpicke, além de definições do manual OpenStax. O alcance de consulta está declarado: não se afirma leitura integral quando apenas resumo ou passagens foram consultados. O DOI de Gollwitzer bloqueou a abertura direta; o resumo indexado foi consultado. O PDF universitário de Roediger devolveu timeout; foi consultado o resumo da editora. O capítulo metodológico inicial identifica explicitamente a análise original, em vez de acrescentar uma referência decorativa.
 
-A versão 1 original permanece preservada. Esta etapa não escreveu no Supabase, não substituiu a obra, não alterou compras ou progresso e não importa a candidata pelo leitor. `status=draft`, `published=false`, todas as revisões exigidas continuam falsas. O conteúdo textual está completo para revisão; isso não é aprovação científica, terapêutica, editorial ou de direitos. Sete testes verificam estrutura, versões, casos, referências e limites de elegibilidade.
+A versão 1 original permanece preservada. A consulta de metadados de 16/11/2026 confirmou as versões portuguesas ativas 1, 3 e 2 das três obras em revisão, com os mesmos timestamps do material analisado. Esta etapa não escreveu no Supabase, não substituiu a obra, não alterou compras ou progresso e não importa a candidata pelo leitor. `status=draft`, `published=false`, todas as revisões exigidas continuam falsas. O conteúdo textual está completo para revisão; isso não é aprovação científica, terapêutica, editorial ou de direitos. Sete testes verificam estrutura, versões, casos, referências e limites de elegibilidade.
 
 A revisão das **outras dezasseis obras** continua pendente, incluindo validação específica de alegações em temas clínicos e preservação dos factos das obras autobiográficas. As obras originais não foram completadas com acontecimentos inventados.
 
 ## Repetição entre produtos
 
 A triagem conjunta das quatro candidatas (três cursos e um eBook) examinou **49 unidades, 317 parágrafos e 50.086 pares**: zero cópias exatas e zero pares próximos pelo limiar Jaccard de seis palavras ≥0,40. Os testes incluem uma cópia introduzida entre produtos para confirmar a deteção. Não se lê nem reemite a obra protegida original neste verificador; apenas as novas candidatas são comparadas. Isto não substitui revisão semântica ou pedagógica externa.
+
+## Revisão conservadora de duas obras existentes
+
+Foram preparados manifests de revisão e prévias locais apenas para as edições portuguesas, sem reescrever os textos ativos:
+
+| Obra | Base / proposta | Grupos selecionados | Cópias removidas na prévia | Palavras antes / depois | Unidades preservadas |
+| --- | --- | --- | --- | --- | --- |
+| Estudos de Caso | 3 / 4 | 41 | 943 | 42.592 / 26.883 | 196 / 196 |
+| O Menino que Vendia Mamão | 2 / 3 | 16 | 512 | 18.749 / 10.439 | 40 / 40 |
+
+As seleções incidem em enquadramentos metodológicos e frases editoriais gerais recorrentes. A primeira ocorrência é conservada. O procedimento remove trechos selecionados e não insere novos acontecimentos, falas, datas, interpretações clínicas ou factos biográficos. Isto preserva os factos narrados; não é uma verificação independente da sua verdade. Não surgiram unidades vazias.
+
+Cada manifest exige produto, idioma, versão e checksum do original, além de hashes e posições de cada remoção. Uma divergência aborta a aplicação. O utilitário recusa remover a primeira ocorrência. Os manifests versionados não contêm o texto original; a prévia completa fica fora do repositório e não é importada pelo leitor. A continuidade literária, a validade clínica do que permanece e o mapeamento de posições ainda requerem revisão. Zero grupos repetidos no limiar selecionado de dez unidades não comprova ausência de paráfrases, outras repetições ou problemas editoriais.
+
+Cinco testes sintéticos verificam preservação, primeira ocorrência, fidelidade de trechos e recusa de edição diferente. A reprodução da prévia autobiográfica foi executada com sucesso, sem alterar o export de entrada. `tools/preview-book-revision.cjs` exige um ficheiro novo fora do repositório, com permissões locais restritas; não possui cliente de base de dados ou ação de ativação.
+
+## Progresso concorrente numa base real descartável
+
+Foi acrescentado um job PostgreSQL 16 isolado ao workflow Academy. Exercita o protocolo `UPDATE` condicionado, `INSERT` e nova tentativa após `23505` em ligações reais distintas: primeiras gravações concorrentes em ordens opostas, esperas por bloqueio de linha, pedido antigo e separação de cliente/produto. A suíte existente continua a executar a própria função da aplicação com dependências simuladas.
+
+O novo teste recusa executar antes de abrir qualquer cliente SQL, exceto com opt-in explícito, host localhost, utilizador de teste e base `ldr_library_ci`. Esse bloqueio passou num teste com hostname hospedado. Não usa credenciais Supabase/Stripe, não consulta produção e não faz `DROP`, `DELETE` ou `TRUNCATE`. O PostgreSQL é um serviço efémero do runner existente; não foi criado serviço pago.
+
+A execução real deste novo job será registada no PR após o push. Não é teste ponta a ponta de cookies, PostgREST ou RLS da produção. As permissões e políticas existentes não foram alteradas.
 
 ## Correções técnicas
 
@@ -74,7 +97,7 @@ A triagem conjunta das quatro candidatas (três cursos e um eBook) examinou **49
 - O leitor verifica LDR ONE com a função existente da biblioteca para os produtos já incluídos, preservando compras pagas e aliases. Os dois eBooks especiais não foram acrescentados silenciosamente à assinatura.
 - Formatos comprimidos e históricos são validados; estruturas vazias falham de forma controlada. As 23 versões analisadas possuem estrutura reconhecível. Corrigir quebras de linha na apresentação não regrava o conteúdo armazenado.
 - A posição no leitor é guardada por ação explícita. O índice é reiniciado ao mudar idioma ou produto.
-- **Progresso no servidor:** o `upsert` que podia reduzir um percentual foi substituído por `UPDATE` condicionado a `progress_percent <= valor recebido`. Na primeira gravação, o índice único cliente/produto resolve concorrência de inserção, com nova atualização condicionada após conflito `23505`. Valores não finitos são rejeitados e falhas de escrita são devolvidas ao cliente. Não se introduziu migração, função privilegiada ou alteração de RLS. A semântica foi testada com dados sintéticos; falta um teste com duas sessões reais num ambiente isolado.
+- **Progresso no servidor:** o `upsert` que podia reduzir um percentual foi substituído por `UPDATE` condicionado a `progress_percent <= valor recebido`. Na primeira gravação, o índice único cliente/produto resolve concorrência de inserção, com nova atualização condicionada após conflito `23505`. Valores não finitos são rejeitados e falhas de escrita são devolvidas ao cliente. Não se introduziu migração, função privilegiada ou alteração de RLS. A semântica foi testada com dados sintéticos; foi preparada uma suíte complementar com ligações PostgreSQL reais num ambiente descartável; o resultado remoto está identificado no PR, sem equivalência a uma sessão de aluno real.
 
 ## Falha de regressão resolvida
 
@@ -101,9 +124,9 @@ Dois testes verificam que esta automação permanece sem escrita de branches ou 
 | --- | --- |
 | TypeScript | Passou, sem erros |
 | Build | Passou, sem deploy |
-| Suíte de regressão | 225/225 passaram |
+| Suíte de regressão | 231/231 passaram |
 | Suíte unitária existente | 59/59 passaram |
-| Testes específicos `library-*.test.cjs` | 46/46 passaram |
+| Testes específicos `library-*.test.cjs` | 52/52 passaram |
 | Validação da edição candidata | Sete testes passaram; candidata com vinte capítulos continua inelegível sem as revisões |
 | Encaminhamento Stripe | Sete testes de encaminhamento e contrato passaram; handlers e dados simulados |
 | Progresso monotónico | Oito cenários sintéticos passaram, incluindo atualizações e primeiras gravações concorrentes, isolamento de cliente e falhas |
@@ -121,7 +144,7 @@ A suíte de regressão inclui vários dos testes específicos; estas quantidades
 2. Realizar revisão externa e pilotagem dos quinze módulos da candidata de entrevistas, incluindo dimensionamento da carga. Desenvolver as aulas próprias dos restantes 47 roteiros de assinatura, de RH e de cada formação profissional. A contagem de títulos ou texto gerado não comprova 600/1200 horas.
 3. Rever externamente os vinte capítulos da candidata desenvolvida e revisar as outras 16 obras, com verificação intelectual, bibliográfica e de direitos, sem substituir versões antigas automaticamente.
 4. Testar a prévia com sessões sintéticas reais: comprador, assinante ativo/inativo e aluno sem compra. Verificar acessibilidade interativa, visual e overflow em dispositivos móveis.
-5. Validar anexos externos, emissão e consulta de certificados e concorrência entre dispositivos num ambiente de testes. Os mocks e a presença de RLS não substituem essa etapa.
+5. Validar anexos externos, emissão e consulta de certificados e concorrência entre dispositivos num ambiente de testes. O teste PostgreSQL separado não substitui cookies, PostgREST ou uma política de produção com sessões reais de aluno.
 6. Manter a promoção a produção bloqueada até as validações e a autorização explícita do utilizador. Esta entrega não fez merge, deploy, alteração de assinatura, criação de serviço pago ou escrita em produção.
 
 ## Reprodução
