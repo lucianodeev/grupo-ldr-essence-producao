@@ -115,7 +115,7 @@
         },
         {
           "id": "2",
-          "sha256": "9805866feb1d6f4e3330e471455e3b9f238850e3aa7498ebd0f162591f03b4ba",
+          "sha256": "c84533cb58562139e054057a1ff9b43b500bd6be3ae03c05b4557c14d3408f01",
           "numericalChecks": [],
           "workedSolutionPresent": true
         }
@@ -780,7 +780,7 @@
       "units": [
         {
           "id": "1",
-          "sha256": "a283955b7bad1af7285a40e8791b5f3725aa8d5065d9f1a89c8329f5a2dd25b5",
+          "sha256": "2ca42a96b2399e12dc48328206c1224c9e36a31467e5b7f1a7f3c9ef0469e4d1",
           "numericalChecks": [
             {
               "operation": "sum",
@@ -987,5 +987,25 @@
         }
       ]
     }
-  ]
+  ],
+  "sourceAlignmentFollowup": {
+    "date": "2026-11-16",
+    "baseCommit": "4df35458f4ea389dde1565e61ef5ec885cf26c6f",
+    "revisions": [
+      {
+        "file": "academic-writing.pt.json",
+        "unit": "2",
+        "previousSha256": "9805866feb1d6f4e3330e471455e3b9f238850e3aa7498ebd0f162591f03b4ba",
+        "sha256": "c84533cb58562139e054057a1ff9b43b500bd6be3ae03c05b4557c14d3408f01",
+        "reason": "Apenas associação de fontes; resolução e cálculos inalterados."
+      },
+      {
+        "file": "pricing.pt.json",
+        "unit": "1",
+        "previousSha256": "a283955b7bad1af7285a40e8791b5f3725aa8d5065d9f1a89c8329f5a2dd25b5",
+        "sha256": "2ca42a96b2399e12dc48328206c1224c9e36a31467e5b7f1a7f3c9ef0469e4d1",
+        "reason": "Apenas associação de fontes; resolução e cálculos inalterados."
+      }
+    ]
+  }
 }

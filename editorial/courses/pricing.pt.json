@@ -16,10 +16,17 @@
   "sources": [
     {
       "id": "budget",
-      "title": "Consumer Financial Protection Bureau. Assess your spending.",
-      "url": "https://www.consumerfinance.gov/owning-a-home/prepare/assess-your-spending/",
+      "title": "OpenStax. Principles of Accounting, Volume 2. 3.2 Calculate a Break-Even Point in Units and Dollars.",
+      "url": "https://openstax.org/books/principles-managerial-accounting/pages/3-2-calculate-a-break-even-point-in-units-and-dollars",
       "consulted": "2026-11-16",
-      "scope": "Resumo da página oficial consultado sobre registar despesas e confrontar rendimentos. Contexto americano não transferido para tributação, produtos ou aconselhamento individual. Cálculos e regras de treino são inteiramente sintéticos."
+      "scope": "Consultadas definições de equilíbrio e pressupostos do modelo custo-volume-resultado: preço e custo variável constantes, custo fixo delimitado e intervalo relevante. Sustenta contribuição e equilíbrio, não precificação ótima, tributação ou procura real. Consulta delimitada; não constitui validação externa do curso. Não são reproduzidos textos, figuras ou exercícios da fonte."
+    },
+    {
+      "id": "markup",
+      "title": "OpenStax. Contemporary Mathematics. Chapter 6 Formula Review.",
+      "url": "https://openstax.org/books/contemporary-mathematics/pages/6-formula-review",
+      "consulted": "2026-11-16",
+      "scope": "Consultadas apenas fórmulas de acréscimo sobre custo e preço resultante. Não confundir taxa sobre custo com margem sobre receita; não se transferem fórmulas tributárias ou financeiras do restante capítulo. Consulta delimitada; não constitui validação externa do curso. Não são reproduzidos textos, figuras ou exercícios da fonte."
     }
   ],
   "curriculum": [
@@ -67,7 +74,8 @@
         ]
       },
       "sourceIds": [
-        "budget"
+        "budget",
+        "markup"
       ],
       "estimatedPracticeMinutes": 90,
       "id": "1",
