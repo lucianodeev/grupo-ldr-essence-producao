@@ -1,0 +1,47 @@
+name: Academy reading browser checks
+on:
+  push:
+    branches: [audit/biblioteca-redesign-20261115]
+    paths:
+      - 'apps/painel-ldr/src/components/academy-reading-edition.tsx'
+      - 'apps/painel-ldr/src/lib/academy-reading-editions.ts'
+      - 'docs/audit-20261115/course-development/customer-service/**'
+      - 'tools/prepare-customer-service-academy.cjs'
+      - 'tools/test-academy-reading-browser.cjs'
+      - '.github/workflows/academy-reading-browser.yml'
+permissions:
+  contents: read
+jobs:
+  isolated-reader-browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install locked workspace dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Build real application styles without deployment
+        run: npm --prefix apps/painel-ldr run build
+      - name: Install isolated free browser runner
+        run: |
+          npm install --prefix /tmp/ldr-reader-ci --no-audit --no-fund playwright@1.62.1
+          /tmp/ldr-reader-ci/node_modules/.bin/playwright install --with-deps chromium
+      - name: Check six units on desktop and mobile with synthetic approval
+        env:
+          LDR_READER_PLAYWRIGHT: /tmp/ldr-reader-ci/node_modules/playwright
+        run: node tools/test-academy-reading-browser.cjs
+      - name: Retain isolated review evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: academy-reading-browser-evidence
+          path: |
+            /tmp/ldr-reading-browser/*.png
+            /tmp/ldr-reading-browser/results.json
+          if-no-files-found: ignore
+          retention-days: 7
