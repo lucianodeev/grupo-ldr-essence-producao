@@ -1,0 +1,363 @@
+{
+  "productKey": "curso_assinatura_empreendedorismo_para_quem_esta_comecando_do_zero",
+  "slug": "empreendedorismo-para-quem-esta-comecando-do-zero",
+  "title": "Empreendedorismo para Quem Está Começando do Zero",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 180,
+  "validatedHours": null,
+  "expectedModuleCount": 6,
+  "scope": "Introdução à viabilidade de uma unidade de negócio: valor, evidência, custos, capacidade, calendário e decisão de piloto. Distingue-se do curso sobre primeiro cliente e de negociação. Dados inteiramente sintéticos; não é aconselhamento jurídico, fiscal, de crédito ou investimento.180h históricas ainda sem validação.",
+  "courseObjectives": [
+    "Distinguir necessidade, oferta e unidade de venda.",
+    "Relacionar utilizador, pagador e operação numa hipótese de negócio.",
+    "Classificar dados de contexto, relatos e intenções segundo o seu alcance.",
+    "Formular uma pergunta de investigação que possa contrariar a ideia inicial.",
+    "Distinguir custos por entrega e custos do período no cenário fornecido.",
+    "Calcular contribuição antes de outros encargos e identificar exclusões.",
+    "Calcular capacidade sob restrição explícita e reconhecer gargalos.",
+    "Distinguir tempo disponível e prazo que depende de informação externa.",
+    "Reconstruir entradas e saídas por data numa simulação.",
+    "Distinguir venda acordada, recebimento e dinheiro disponível.",
+    "Definir critérios de teste para uma hipótese de negócio.",
+    "Integrar procura, operação e contas sem converter um piloto em garantia."
+  ],
+  "sources": [
+    {
+      "id": "sba-business",
+      "title": "U.S. Small Business Administration. Plan your business.",
+      "url": "https://www.sba.gov/counseling/plan-your-business/",
+      "consulted": "2026-11-16",
+      "scope": "Passagens de pesquisa de mercado, plano e categorias de custos consultadas na página de destino atual. Não se utilizam dados americanos como mercado local nem recomendações de crédito, fiscalidade ou estrutura jurídica. Cálculos e instrumentos LDR são originais."
+    },
+    {
+      "id": "gds-needs",
+      "title": "Government Digital Service. Learning about users and their needs.",
+      "url": "https://www.gov.uk/service-manual/user-research/start-by-learning-user-needs",
+      "consulted": "2026-11-16",
+      "scope": "Passagens de evidências, hipóteses e necessidades consultadas. Referência oriunda de serviços públicos, aplicada explicitamente como analogia à investigação de um pequeno negócio, não como validação de procura ou resultado comercial."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Definir a unidade de valor que o negócio pretende entregar"
+    },
+    {
+      "id": "2",
+      "title": "Investigar procura sem transformar opinião em mercado comprovado"
+    },
+    {
+      "id": "3",
+      "title": "Modelar custos e contribuição com uma unidade estável"
+    },
+    {
+      "id": "4",
+      "title": "Relacionar capacidade, qualidade e dependências"
+    },
+    {
+      "id": "5",
+      "title": "Separar resultado do período e disponibilidade de caixa"
+    },
+    {
+      "id": "6",
+      "title": "Decidir continuar, ajustar ou suspender depois de um piloto"
+    }
+  ],
+  "modules": [
+    {
+      "id": "1",
+      "title": "Definir a unidade de valor que o negócio pretende entregar",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Distinguir necessidade, oferta e unidade de venda.",
+        "Relacionar utilizador, pagador e operação numa hipótese de negócio."
+      ],
+      "sourceIds": [
+        "sba-business",
+        "gds-needs"
+      ],
+      "sections": [
+        {
+          "title": "Uma atividade só se torna uma oferta quando o resultado é identificável",
+          "paragraphs": [
+            "Organizar eventos, editar conteúdos ou ajudar associações são descrições de atividade. Para discutir um negócio, é necessário dizer a quem se entrega o quê, em que condições e com que responsabilidade. A unidade de venda pode ser uma sessão, um produto ou uma entrega com limites. Sem essa unidade, preço, capacidade e custo ficam referidos a objetos diferentes. O início deste curso não exige abrir empresa nem comprar ferramentas. Exige construir uma hipótese que possa ser examinada antes de assumir compromissos reais.",
+            "Considere uma pessoa que pretende apoiar pequenas associações na preparação de encontros. Vender organização pode incluir desde recolher informações até contratar espaço e gerir inscrições. Uma hipótese mais delimitada é preparar um dossier operacional de um encontro, a partir de informações fornecidas pela associação, sem executar reservas. O resultado pode ser verificado por conteúdo e prazo. Essa delimitação não prova que haverá clientes; torna possível investigar a necessidade e estimar o trabalho. O que fica excluído precisa de ser compreensível, porque também modifica o valor percebido."
+          ]
+        },
+        {
+          "title": "Quem usa pode não ser quem escolhe ou paga",
+          "paragraphs": [
+            "No caso fictício, a secretária de uma associação utiliza o dossier, a coordenação aprova a contratação e a tesouraria executa o pagamento conforme o seu procedimento. São papéis diferentes, mesmo quando uma pessoa acumula mais de um. Conversar apenas com a utilizadora pode esclarecer dificuldades, mas não confirma orçamento ou autorização. Perguntar apenas à tesouraria pode esclarecer processo de pagamento sem revelar as tarefas necessárias. O mapa de papéis permite recolher informação pertinente sem presumir que qualquer interlocutor pode comprometer a organização.",
+            "A hipótese deve representar também a participação do fornecedor. Se a associação precisa de fornecer horários e responsáveis, a entrega depende desses dados. Não é adequado prometer um dossier completo antes de saber se os elementos existem. Uma ficha simples pode ligar resultado, entrada necessária, limite e critério de conclusão. Essa ficha será usada para testar a coerência interna do negócio, não como contrato pronto ou garantia de qualidade. Os critérios foram criados para o exercício e precisam de ser ajustados ao contexto em que uma oferta real venha a existir."
+          ]
+        },
+        {
+          "title": "Uma proposta de valor é uma relação a verificar",
+          "paragraphs": [
+            "A orientação do GDS para começar por necessidades, distinguindo evidência e hipótese, ajuda a evitar que uma ferramenta escolhida previamente seja tratada como resposta inevitável. O objetivo é preparar o encontro; o dossier é uma solução possível. Talvez a associação já possua um modelo suficiente e precise apenas de uma conferência. Essa possibilidade deve permanecer aberta. Uma hipótese séria pode ser revista ou recusada quando a investigação mostra outra dificuldade, mesmo que o empreendedor já tenha preferência por um formato.",
+            "Redija a unidade de venda e o mapa de papéis, depois descreva uma alternativa que resolveria parte da necessidade sem contratar o serviço. Compare o que cada uma entrega e o que exige da associação. A análise deve permitir perceber por que alguém poderia escolher, adaptar ou recusar a oferta. O negócio não se torna viável por receber um nome apelativo. A aprendizagem começa quando a unidade de valor, as condições e o decisor são suficientemente claros para orientar as próximas verificações."
+          ]
+        }
+      ],
+      "case": "Associação fictícia: secretária usa dossier; coordenação aprova; tesouraria processa pagamento. Serviço proposto prepara documentação, sem reservas ou execução do encontro.",
+      "exercise": "Defina unidade de venda, entradas, limites e critério de conclusão. Mapeie três papéis e compare com usar apenas um modelo interno existente.",
+      "assessment": {
+        "question": "O interesse da utilizadora confirma autorização de contratação?",
+        "answer": "Não. Esclarece uma necessidade, mas aprovação e pagamento pertencem a papéis que devem ser verificados.",
+        "rubric": [
+          "Delimita resultado.",
+          "Distingue três papéis.",
+          "Mantém hipótese e alternativa."
+        ]
+      }
+    },
+    {
+      "id": "2",
+      "title": "Investigar procura sem transformar opinião em mercado comprovado",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Classificar dados de contexto, relatos e intenções segundo o seu alcance.",
+        "Formular uma pergunta de investigação que possa contrariar a ideia inicial."
+      ],
+      "sourceIds": [
+        "sba-business",
+        "gds-needs"
+      ],
+      "sections": [
+        {
+          "title": "Três tipos de informação não respondem à mesma pergunta",
+          "paragraphs": [
+            "Uma estatística sobre o número de associações descreve um universo com determinado critério. Um relato sobre dificuldade de organizar encontros descreve uma experiência. Uma frase como eu compraria exprime uma intenção no contexto em que foi dita. Nenhuma dessas informações substitui automaticamente as outras. Para investigar uma hipótese de negócio, identifique a pergunta e a fonte que pode esclarecê-la. O curso utiliza um conjunto sintético e não apresenta estimativas inventadas de mercado, taxas de conversão ou tendências locais como dados verificados.",
+            "A SBA distingue pesquisa com fontes existentes e investigação direta. A distinção é útil, mas não autoriza extrapolar uma conversa para todo o segmento. Dados secundários podem estar desatualizados ou ter uma definição diferente da população pretendida. Relatos diretos podem revelar detalhes sem permitir estimar frequência. Antes de combinar números, confira unidade, período, localização e forma de recolha. Se essa informação faltar, a limitação precisa de acompanhar o dado, em vez de desaparecer quando ele entra numa apresentação comercial."
+          ]
+        },
+        {
+          "title": "Seis contactos não são seis compradores",
+          "paragraphs": [
+            "Num cenário fictício, seis responsáveis conversaram sobre encontros: três relatam dificuldade com a documentação, dois dizem já ter um procedimento e um não organiza atividades desse tipo. Dos três com dificuldade, apenas um pede conhecer uma proposta. A análise pode dizer que três dos seis participantes relataram aquele problema, nesta amostra. Não pode anunciar metade do mercado precisa do serviço, porque não existe seleção representativa. O pedido de proposta também não é venda nem demonstra que o preço será aceite.",
+            "Procure uma pergunta que possa enfraquecer a ideia. Em vez de perguntar gostaria de um dossier profissional, peça que descrevam a última preparação e mostrem, de forma autorizada e sem dados pessoais desnecessários, onde houve trabalho adicional. Talvez a dificuldade principal seja uma decisão tardia da coordenação, que o dossier não resolve. Uma investigação só orientada a elogios pode produzir confirmação aparente e deixar a dependência central intacta. O empreendedor precisa de saber o que a oferta não consegue mudar."
+          ]
+        },
+        {
+          "title": "Conservar a origem de uma conclusão",
+          "paragraphs": [
+            "Uma nota de pesquisa deve separar acontecimento relatado, interpretação e próxima verificação. Se alguém explica que perdeu uma tarde, não transforme essa expressão numa medição precisa sem esclarecer o significado. Se a fonte é fictícia, identifique-a como tal; se a sessão foi apenas planeada, não escreva resultados como se já tivesse acontecido. A atividade não autoriza contactar pessoas nem recolher documentos reais. O aluno pode trabalhar integralmente com o caso fornecido e preparar um protocolo para uso futuro sujeito às condições apropriadas.",
+            "Produza um quadro com as seis conversas e quatro conclusões proporcionais. Acrescente duas afirmações que os dados não permitem e uma pergunta sobre a alternativa interna já existente. O resultado deve orientar uma decisão de investigar, ajustar ou parar uma hipótese, não servir apenas de argumento de venda. O rigor está em conservar o tamanho e a natureza da evidência. Um mercado ainda não comprovado pode continuar a merecer estudo; o que não pode é ser apresentado como certo apenas porque algumas pessoas reconheceram um problema."
+          ]
+        }
+      ],
+      "case": "Seis conversas sintéticas: três relatam dificuldade, duas já têm procedimento, uma não faz encontros. Um dos três pede proposta. Não há amostra representativa nem venda.",
+      "exercise": "Classifique evidências, escreva quatro conclusões limitadas e duas indevidas. Planeie uma pergunta que possa mostrar que o dossier não resolve a dificuldade principal.",
+      "assessment": {
+        "question": "Um pedido de proposta permite registar um cliente conquistado?",
+        "answer": "Não. É um passo de interesse com alcance limitado. Ainda faltam decisão, condições e eventual compromisso.",
+        "rubric": [
+          "Não extrapola3/6 ao mercado.",
+          "Distingue interesse e venda.",
+          "Procura evidência contrária."
+        ]
+      }
+    },
+    {
+      "id": "3",
+      "title": "Modelar custos e contribuição com uma unidade estável",
+      "estimatedPracticeMinutes": 135,
+      "objectives": [
+        "Distinguir custos por entrega e custos do período no cenário fornecido.",
+        "Calcular contribuição antes de outros encargos e identificar exclusões."
+      ],
+      "sourceIds": [
+        "sba-business"
+      ],
+      "sections": [
+        {
+          "title": "O preço recebido não fica todo disponível",
+          "paragraphs": [
+            "Uma estimativa de viabilidade precisa de comparar receita e recursos consumidos na mesma unidade. Alguns custos acompanham cada entrega; outros existem no período mesmo sem venda. A classificação depende do modelo e não é uma propriedade universal de um recurso. Uma ferramenta cobrada por utilização pode variar com entregas; uma assinatura fixa tem outro comportamento. O exercício é um modelo económico elementar com valores sintéticos. Não oferece aconselhamento fiscal, contabilístico ou de investimento, nem determina o que alguém deve cobrar num negócio real.",
+            "A unidade será um dossier entregue. O preço didático é cento e vinte unidades monetárias e o custo variável por dossier é trinta, incluindo os itens que o enunciado define. A diferença é noventa por entrega antes dos custos fixos e dos elementos excluídos. Chamar lucro a esses noventa omite o resto do modelo. É necessário saber que custos ainda não foram contabilizados e se o tempo do próprio prestador está representado. Uma projeção pode parecer favorável apenas porque trata trabalho como recurso gratuito e ilimitado."
+          ]
+        },
+        {
+          "title": "Quatro entregas cobrem apenas o valor fixo definido",
+          "paragraphs": [
+            "Os custos fixos do período são trezentos e sessenta. Quatro entregas produzem quatro vezes noventa de contribuição, ou trezentos e sessenta, igual ao fixo. Cinco produzem quatrocentos e cinquenta e deixam noventa depois desse fixo. As contas não demonstram rendimento líquido: no modelo não foram incluídos impostos, financiamento, investimento inicial nem remuneração adicional do titular. O aluno deve manter essas exclusões junto do resultado. Um número sem legenda pode ser aritmeticamente correto e comercialmente enganador.",
+            "Se o custo variável subir para quarenta e cinco com o preço mantido, a contribuição passa a setenta e cinco. Quatro entregas deixam trezentos, abaixo do fixo por sessenta. Cinco deixam trezentos e setenta e cinco, acima por quinze. A necessidade mínima inteira para cobrir o fixo definido passa a cinco. Não se deve arredondar quatro vírgula oito para quatro, porque uma entrega incompleta não cobre o saldo. Essa sensibilidade mostra por que uma pequena alteração num custo pode mudar a quantidade necessária, sem prever que essa procura exista."
+          ]
+        },
+        {
+          "title": "Uma conta de cobertura não cria procura nem caixa",
+          "paragraphs": [
+            "O número de entregas calculado é uma condição do modelo, não uma previsão de vendas. Também não indica quando os pagamentos entram. Uma atividade pode cobrir custos no total do período e ainda não dispor do dinheiro necessário no momento de uma despesa. Essa diferença será examinada adiante. Nesta etapa, o objetivo é conservar a unidade e explicar o que o cálculo inclui. Não se recomenda contrair dívida para completar a diferença nem usar reservas pessoais como se fossem receita comercial.",
+            "Entregue uma tabela para quatro e cinco dossiers nos dois custos variáveis, acompanhada por exclusões e interpretação. Acrescente o efeito de uma entrega que exige mais trabalho do que o previsto, sem inventar um novo valor: identifique a informação a medir antes de recalcular. A avaliação procura consistência entre unidade, fórmula e conclusão. A viabilidade começa por uma conta explicável, mas continua dependente de capacidade, procura, calendário e obrigações que este modelo simplificado não comprovou."
+          ]
+        }
+      ],
+      "case": "Preço120; variável30; fixo360 por período. Cenário alternativo variável45. Valores sintéticos; impostos, financiamento, investimento inicial e remuneração adicional não incluídos.",
+      "exercise": "Calcule contribuição e saldo para4/5 entregas em ambos os cenários. Encontre quantidade inteira de cobertura do fixo e mantenha exclusões visíveis.",
+      "assessment": {
+        "question": "Noventa por entrega já é lucro líquido?",
+        "answer": "Não. É contribuição antes do fixo e dos elementos excluídos. No cenário inicial4 cobrem360; com variável45 são necessárias5.",
+        "rubric": [
+          "Calcula90 e75.",
+          "Obtém cobertura4 e5.",
+          "Não transforma modelo em procura ou lucro líquido."
+        ]
+      }
+    },
+    {
+      "id": "4",
+      "title": "Relacionar capacidade, qualidade e dependências",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Calcular capacidade sob restrição explícita e reconhecer gargalos.",
+        "Distinguir tempo disponível e prazo que depende de informação externa."
+      ],
+      "sourceIds": [
+        "sba-business"
+      ],
+      "sections": [
+        {
+          "title": "Uma projeção de vendas precisa de caber no trabalho",
+          "paragraphs": [
+            "Um negócio de serviço não aumenta entregas apenas porque a folha de cálculo admite mais linhas. Cada unidade pode consumir preparação, execução, conferência e comunicação. A capacidade precisa de representar o conjunto relevante, sem contar apenas o momento visível ao cliente. Um gargalo é a etapa que limita o fluxo nas condições dadas. O aluno irá examinar um serviço com duas etapas e uma dependência externa, ligando a hipótese comercial ao modo como o trabalho pode efetivamente ser realizado com o padrão pretendido.",
+            "No modelo fictício, cada dossier exige três horas de preparação e uma de conferência. A operação dispõe de um orçamento conjunto de vinte horas semanais para estas duas etapas, depois de outras atividades já consideradas. Cinco dossiers consomem as vinte horas. Esse limite teórico não inclui margem para retrabalho além do que o enunciado forneceu. Não é automaticamente uma meta recomendada de vendas. Se o tempo real variar ou se houver pedidos incompletos, será preciso revisar a capacidade antes de prometer uma data a cada cliente."
+          ]
+        },
+        {
+          "title": "Uma etapa externa pode limitar o calendário",
+          "paragraphs": [
+            "Uma pessoa parceira autorizada só consegue conferir três dossiers na semana, embora o prestador tenha tempo para preparar cinco. Se a conferência depende dessa função, a capacidade de entrega confirmada é três, não cinco. Preparar os outros dois cria trabalho em curso e não entrega concluída. O mapa deve mostrar onde os dossiers aguardam e que compromisso pode ser assumido sem omitir a restrição. Não se deve marcar a conferência como feita nem atribuí-la a alguém não autorizado apenas para aproximar o resultado da previsão inicial.",
+            "Além disso, o cliente precisa de enviar informações até ao início da preparação. Uma promessa de entrega na sexta pode estar condicionada a receber elementos completos na terça, segundo o cenário. A condição precisa de ser comunicada antes do compromisso, com procedimento para atraso. Isso não significa transferir toda a responsabilidade para o cliente: o prestador deve explicar o que precisa e confirmar se o material recebido permite começar. Uma dependência mal descrita pode produzir atrasos que não são visíveis no cálculo de horas."
+          ]
+        },
+        {
+          "title": "Capacidade contratável é diferente de possibilidade máxima",
+          "paragraphs": [
+            "Uma agenda sem espaço para esclarecer dúvidas pode produzir entregas formalmente concluídas e pouco utilizáveis. A decisão de reservar margem precisa de uma razão, não de uma percentagem universal inventada. O aluno deve indicar que incerteza pretende acomodar e o que observará no piloto. A capacidade calculada é uma hipótese a testar em condições delimitadas. A referência de plano de negócio da SBA enquadra a ligação entre operação e projeções, mas não fornece uma taxa de produtividade LDR ou um padrão universal de horas por dossier.",
+            "Construa um quadro com preparação, conferência e dados de entrada. Mostre a diferença entre cinco unidades preparáveis e três entregáveis e proponha dois compromissos alternativos para uma semana com quatro pedidos. Uma alternativa pode ser fasear, outra negociar data; não presuma aceitação. A entrega deve explicar a consequência de cada escolha para qualidade e trabalho em curso. O objetivo é vender uma operação possível, reconhecendo que capacidade não cresce pela eliminação de controlos nem por promessas que dependem de disponibilidade ainda não confirmada."
+          ]
+        }
+      ],
+      "case": "Dossier3h preparação+1h conferência;20h semanais para estas etapas. Conferente autorizado só aceita3 por semana. Quatro pedidos chegam, com entradas necessárias ainda por confirmar.",
+      "exercise": "Calcule capacidade teórica e efetiva; represente espera e proponha dois compromissos condicionados para quatro pedidos, sem ampliar permissões.",
+      "assessment": {
+        "question": "Cinco dossiers preparados significam cinco entregas confirmadas?",
+        "answer": "Não. A conferência limita a três. Os restantes constituem trabalho em curso enquanto essa etapa não for realizada.",
+        "rubric": [
+          "Calcula20/4=5 como limite teórico.",
+          "Localiza gargalo3.",
+          "Comunica dependências e não presume aprovação."
+        ]
+      }
+    },
+    {
+      "id": "5",
+      "title": "Separar resultado do período e disponibilidade de caixa",
+      "estimatedPracticeMinutes": 135,
+      "objectives": [
+        "Reconstruir entradas e saídas por data numa simulação.",
+        "Distinguir venda acordada, recebimento e dinheiro disponível."
+      ],
+      "sourceIds": [
+        "sba-business"
+      ],
+      "sections": [
+        {
+          "title": "Uma venda e um recebimento podem acontecer em momentos diferentes",
+          "paragraphs": [
+            "Um acordo comercial pode prever entrega e pagamento em datas distintas. Para organizar a operação, não basta somar o valor vendido no mês; é necessário conhecer o calendário de entradas e saídas. Este módulo usa uma simulação simplificada, sem ensinar contabilização legal ou aconselhar financiamento. O saldo de caixa é reconstruído a partir de movimentos fornecidos. Uma promessa de pagamento ainda incerta precisa de ser identificada como tal, não tratada como dinheiro já disponível para assumir outra obrigação.",
+            "No cenário, o saldo inicial é duzentas unidades monetárias. Na segunda-feira sai noventa para um recurso necessário. Na quarta entra cento e vinte de um serviço anterior. Na sexta sai duzentas e cinquenta para um custo do período. O saldo passa a cento e dez, depois duzentos e trinta e, finalmente, menos vinte. O recebimento previsto para a semana seguinte não elimina a insuficiência de sexta. A sequência mostra uma restrição de calendário mesmo sem calcular resultado económico total do negócio."
+          ]
+        },
+        {
+          "title": "O calendário deve representar incerteza sem fabricar uma solução",
+          "paragraphs": [
+            "Uma outra entrada de oitenta é esperada na sexta, mas ainda não confirmada. Num cenário com ela, o saldo final seria sessenta; sem ela, menos vinte. Não se pode escolher o cenário favorável como se a confirmação já existisse. O aluno deverá marcar a dependência e formular uma pergunta operacional sobre data e condições. A atividade não recomenda pressionar o cliente, cobrar uma penalidade não acordada ou contrair crédito. Uma medida real depende das obrigações e dos recursos aplicáveis, que não foram estabelecidos neste caso.",
+            "Uma alternativa de planeamento pode ser discutir previamente uma data diferente para uma saída que ainda não esteja comprometida. Outra pode ser rever o momento de uma compra futura. Cada possibilidade precisa de distinguir opção em análise e acordo efetivo. Não se altera retroativamente um movimento já ocorrido para fazer o quadro fechar. Se o saldo negativo é uma impossibilidade operacional no contexto, o modelo deve sinalizar o problema antes, em vez de apresentar uma conta que parece válida mas exigiria dinheiro que não existe."
+          ]
+        },
+        {
+          "title": "O saldo não é uma medida completa de rentabilidade",
+          "paragraphs": [
+            "Uma entrada pode resultar de financiamento ou aporte do titular, e não de receita de clientes. Uma saída pode comprar um recurso usado por mais tempo. O exercício não classifica esses movimentos contabilisticamente, mas mostra por que saldo e resultado não devem ser confundidos. Registe a origem de cada valor e preserve as exclusões. A projeção também precisa de uma data de atualização: uma confirmação recebida depois modifica o cenário futuro, sem mudar o que era conhecido quando se tomou uma decisão anterior.",
+            "Entregue dois calendários, com e sem a entrada incerta, e explique a primeira data em que surge restrição. Acrescente uma medida que exigiria negociação e outra informação que falta antes de recomendar qualquer ação real. O avaliador procura se o aluno conserva a ordem e a natureza dos movimentos, não se consegue obter sempre um saldo positivo. Uma projeção que revela uma falta de caixa é mais útil que uma tabela otimista que mistura venda, recebimento e recursos pessoais para ocultar a necessidade de decisão."
+          ]
+        }
+      ],
+      "case": "Saldo200; segunda saída90; quarta entrada120; sexta saída250. Entrada adicional80 na sexta é incerta. Recebimento na semana seguinte não cobre automaticamente sexta.",
+      "exercise": "Calcule sequência com/sem80 e identifique a restrição. Distinga proposta de negociação e acordo confirmado; não recomende crédito ou altere movimentos passados.",
+      "assessment": {
+        "question": "Uma venda prevista para a semana seguinte resolve o saldo de sexta?",
+        "answer": "Não. Sem a entrada incerta o saldo de sexta é−20; com80 seria60. O calendário e a confirmação precisam de permanecer explícitos.",
+        "rubric": [
+          "Obtém110,230,−20.",
+          "Distingue cenário confirmado e incerto.",
+          "Não chama saldo de lucro."
+        ]
+      }
+    },
+    {
+      "id": "6",
+      "title": "Decidir continuar, ajustar ou suspender depois de um piloto",
+      "estimatedPracticeMinutes": 150,
+      "objectives": [
+        "Definir critérios de teste para uma hipótese de negócio.",
+        "Integrar procura, operação e contas sem converter um piloto em garantia."
+      ],
+      "sourceIds": [
+        "sba-business",
+        "gds-needs"
+      ],
+      "sections": [
+        {
+          "title": "Um piloto precisa de uma pergunta que possa receber resposta desfavorável",
+          "paragraphs": [
+            "Executar uma pequena versão de serviço pode ensinar sobre procura e operação, mas só se estiver claro o que se pretende observar. Fazer algo e procurar depois qualquer sinal positivo facilita confirmar a preferência inicial. Defina antes resultado esperado, limites de tempo e recursos e sinais de problema. Um critério pode examinar se o utilizador consegue preparar o encontro com o dossier; outro, se a operação cabe no tempo estimado. Não é necessário que todos os critérios sejam financeiros, nem que um elogio substitua a utilização do produto.",
+            "O piloto deste módulo é inteiramente sintético. Não houve venda, entrevista externa ou cobrança. O objetivo é reunir as dimensões trabalhadas no curso numa decisão que conserve a incerteza. O modelo de negócio descreve uma hipótese; a pesquisa oferece informação limitada; as contas e a capacidade explicitam condições. Uma falha numa dessas dimensões pode exigir rever a oferta, mesmo quando as outras parecem favoráveis. Não se recomenda aumentar divulgação para resolver automaticamente uma operação que ainda não consegue entregar com qualidade."
+          ]
+        },
+        {
+          "title": "Dois dossiers entregues não validam toda a capacidade",
+          "paragraphs": [
+            "No caso final, foram simuladas duas entregas. Uma utilizou quatro horas totais e a outra seis por falta de informação inicial. Ambas passaram na conferência; numa delas o utilizador ainda não conseguiu localizar os responsáveis sem ajuda. O preço e custos mantêm o primeiro modelo, mas o tempo observado mostra variação. A média das duas durações é cinco horas; isso não estabelece uma previsão estável de todas as entregas futuras. Com vinte horas e sem outra restrição, quatro unidades caberiam por essa média, mas o gargalo de conferência de três continua presente.",
+            "A dificuldade de localizar responsáveis sugere rever a apresentação ou a informação, não concluir imediatamente que o utilizador falhou. A entrega que exigiu seis horas também pede examinar a entrada de dados. Duas correções pequenas podem ser testadas: confirmar elementos antes de iniciar e tornar o mapa de responsáveis recuperável. O aluno deverá dizer qual ocorrência cada correção procura tratar e como observará se funcionou. Não se altera o preço fictício apenas para produzir uma conta mais confortável sem justificar que condição mudou."
+          ]
+        },
+        {
+          "title": "Uma decisão séria conserva o que ainda não foi demonstrado",
+          "paragraphs": [
+            "Continuar pode significar outro piloto limitado, e não lançamento amplo. Ajustar pode exigir reformular a unidade de venda ou o público. Suspender pode ser adequado quando falta uma condição essencial que o prestador não consegue assegurar. O relatório deve relacionar a decisão com evidências e indicar o que a faria mudar. Uma escolha prudente não precisa de ser apresentada como fracasso; uma continuação não deve ser anunciada como sucesso comprovado. O curso não fixa uma meta universal de clientes ou rendimento para validar qualquer negócio.",
+            "A entrega final é uma nota de decisão acompanhada por unidade de venda, mapa de evidências, duas contas, capacidade e calendário. Selecione apenas elementos necessários para justificar o próximo passo. Inclua uma conclusão permitida e uma promessa que recusaria fazer com base no piloto. A formação textual termina com um raciocínio verificável sobre viabilidade inicial, sem afirmar que seis módulos comprovam cento e oitenta horas de experiência empresarial. Revisão profissional, materiais adicionais e pilotagem dos tempos permanecem necessários antes de aprovar o percurso completo para publicação e certificação."
+          ]
+        }
+      ],
+      "case": "Piloto sintético: duas entregas4h e6h; ambas conferidas; uma exige ajuda para localizar responsáveis.20h disponíveis; conferência ainda limitada3. Não houve venda real.",
+      "exercise": "Escreva decisão com condições e próximos testes; calcule média5h e limite sem gargalo4, mantendo efetivo3. Identifique promessa comercial não sustentada.",
+      "assessment": {
+        "question": "A média de5h elimina a restrição de conferência de3?",
+        "answer": "Não. A média sugere4 unidades em20h sob pressupostos limitados, mas a etapa autorizada continua a limitar entregas a3.",
+        "rubric": [
+          "Integra evidência, tempo e gargalo.",
+          "Propõe teste dirigido.",
+          "Não transforma piloto em garantia."
+        ]
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão de empreendedorismo e verificação independente dos modelos e cálculos.",
+    "Pilotar tarefas, ampliar materiais e validar correspondência com180h anunciadas.",
+    "Rever acessibilidade dos quadros e leitor isolado, preservando matrículas e progresso.",
+    "Aprovação editorial e autorização antes de produção."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

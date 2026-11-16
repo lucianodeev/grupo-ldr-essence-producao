@@ -1,0 +1,353 @@
+{
+  "productKey": "curso_assinatura_como_fazer_uma_proposta_comercial_profissional",
+  "slug": "como-fazer-uma-proposta-comercial-profissional",
+  "title": "Como Fazer uma Proposta Comercial Profissional",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 100,
+  "validatedHours": null,
+  "expectedModuleCount": 6,
+  "scope": "Oficinas de briefing, especificação, composição de preço, dependências, revisões e controlo de coerência de proposta. Não é contrato pronto nem aconselhamento jurídico/fiscal. Exercícios fictícios, sem envio ou cobrança;100h históricas sem validação.",
+  "courseObjectives": [
+    "Separar pedido expresso, finalidade e informação ainda ausente.",
+    "Produzir um briefing que não atribua ao cliente uma decisão não tomada.",
+    "Transformar uma descrição vaga em entregas observáveis.",
+    "Distinguir qualidade do produto e resultado externo que o fornecedor não controla.",
+    "Discriminar quantidades, valores unitários e subtotal no cenário.",
+    "Identificar condições que tornam um total provisório ou incompleto.",
+    "Representar etapas com duração, responsável e condição de início.",
+    "Distinguir dias de trabalho e prazo decorrido no cenário fornecido.",
+    "Classificar pedidos de revisão pelo efeito na especificação.",
+    "Produzir uma nota de alteração com consequências antes de executar.",
+    "Detetar contradições entre síntese, tabelas, prazo e exclusões.",
+    "Produzir uma versão coerente e identificar condições antes do início."
+  ],
+  "sources": [
+    {
+      "id": "au-quotes",
+      "title": "Australian Government, business.gov.au. Prepare quotes.",
+      "url": "https://business.gov.au/people/contractors/prepare-quotes",
+      "consulted": "2026-11-16",
+      "scope": "Passagens sobre objetivos, descrição, custos discriminados, datas, revisões e aceitação consultadas. Usadas como referência de clareza documental; não se transferem ABN, GST, penalidades ou conclusões jurídicas australianas. A candidata não fornece contrato juridicamente validado."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Converter uma conversa comercial num briefing confirmável"
+    },
+    {
+      "id": "2",
+      "title": "Especificar entregáveis, limites e critérios de aceitação"
+    },
+    {
+      "id": "3",
+      "title": "Apresentar preço e pressupostos com contas reproduzíveis"
+    },
+    {
+      "id": "4",
+      "title": "Construir um cronograma dependente de entradas e decisões"
+    },
+    {
+      "id": "5",
+      "title": "Registar revisões sem confundir esclarecimento e ampliação"
+    },
+    {
+      "id": "6",
+      "title": "Rever a proposta como um conjunto e preparar a passagem à execução"
+    }
+  ],
+  "modules": [
+    {
+      "id": "1",
+      "title": "Converter uma conversa comercial num briefing confirmável",
+      "estimatedPracticeMinutes": 105,
+      "objectives": [
+        "Separar pedido expresso, finalidade e informação ainda ausente.",
+        "Produzir um briefing que não atribua ao cliente uma decisão não tomada."
+      ],
+      "sourceIds": [
+        "au-quotes"
+      ],
+      "sections": [
+        {
+          "title": "A proposta começa antes da redação",
+          "paragraphs": [
+            "Um cliente pode pedir uma página bonita e esperar, na realidade, reduzir dúvidas sobre um evento. Se o fornecedor começa por escolher cores e preço, pode especificar um produto que não responde à necessidade. O briefing organiza o entendimento: finalidade, destinatários, situação de uso, elementos fornecidos e decisão esperada. Não transforma toda a conversa num compromisso. Uma preferência, uma hipótese e uma exigência confirmada precisam de campos ou formulações diferentes para que a proposta posterior não trate sugestões como obrigações já acordadas.",
+            "Uma conversa também pode conter desejos incompatíveis. Entrega imediata, várias versões e revisão por muitas pessoas podem exigir negociação de alcance. O fornecedor deve localizar a incompatibilidade e formular perguntas dirigidas, em vez de prometer resolver tudo na execução. A página oficial australiana Prepare quotes recomenda conhecer objetivos e deixar claro o que está incluído. Este curso usa essa orientação documental e casos originais; não importa os requisitos fiscais ou efeitos jurídicos de uma proposta aceite naquele país para outros contextos."
+          ]
+        },
+        {
+          "title": "Um programa de encontro com três leitores diferentes",
+          "paragraphs": [
+            "No caso fictício, o Centro Aurora pede um programa digital de um encontro. Participantes precisam de consultar horários; a equipa interna precisa de contactos de coordenação; a direção quer aprovar a versão final. O briefing não deve presumir que todos os contactos internos podem aparecer na versão pública. Há duas necessidades de circulação que podem exigir documentos ou vistas diferentes. Também falta saber quem fornece o texto dos horários, em que formato e quando. Sem isso, o fornecedor ainda não conhece todas as entradas necessárias à preparação.",
+            "A expressão programa completo deve ser desdobrada em conteúdo e estado. Pode significar uma página com sessões e locais, ou incluir inscrições, mapa e regras de participação. Pergunte que informação precisa de estar disponível para que os participantes consigam orientar-se. Se inscrições já são tratadas noutro sistema, a proposta pode limitar-se a uma ligação verificada. Não acrescente gestão de pagamentos ou captação de dados apenas porque parecem valor adicional. Cada ampliação altera trabalho, responsabilidades e condições que precisam de ser discutidas."
+          ]
+        },
+        {
+          "title": "Confirmar entendimento sem fabricar uma aprovação",
+          "paragraphs": [
+            "O briefing pode terminar com uma síntese e perguntas abertas: conteúdo público, versão interna, responsável pela aprovação e data de entrega dos textos. A ausência de resposta não equivale à confirmação. Uma nota do fornecedor deve indicar quando o entendimento é provisório. Isso permite preparar alternativas sem atribuir ao cliente uma escolha que ele ainda não fez. O documento não precisa de transcrever toda a conversa; precisa de conservar as decisões que modificam o objeto, as dependências e os critérios de uma oferta possível.",
+            "Entregue uma ficha para o Centro Aurora com itens confirmados, hipóteses e quatro perguntas. Acrescente uma funcionalidade que decidiu não incluir automaticamente e explique a consequência da sua inclusão. O avaliador deve conseguir ver como cada pergunta reduz uma incerteza da proposta, em vez de encontrar uma lista genérica de dados. O resultado deste módulo é uma base para especificar entregas com fidelidade. Não se envia proposta real nem se afirma que o cliente aprovou a solução apenas porque o fornecedor conseguiu descrevê-la de forma convincente."
+          ]
+        }
+      ],
+      "case": "Centro Aurora pede programa digital. Público precisa de horários; equipa usa contactos internos; direção aprova. Origem e data dos textos ainda desconhecidas; inscrições podem existir noutro sistema.",
+      "exercise": "Crie briefing com confirmações, hipóteses e quatro perguntas. Delimite circulação pública/interna e uma funcionalidade excluída até decisão.",
+      "assessment": {
+        "question": "Uma sugestão feita na conversa deve aparecer como exigência confirmada?",
+        "answer": "Não. Deve conservar o seu estatuto e ser verificada se altera alcance, custos ou responsabilidade.",
+        "rubric": [
+          "Relaciona pergunta e incerteza.",
+          "Distingue públicos.",
+          "Não presume aprovação."
+        ]
+      }
+    },
+    {
+      "id": "2",
+      "title": "Especificar entregáveis, limites e critérios de aceitação",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Transformar uma descrição vaga em entregas observáveis.",
+        "Distinguir qualidade do produto e resultado externo que o fornecedor não controla."
+      ],
+      "sourceIds": [
+        "au-quotes"
+      ],
+      "sections": [
+        {
+          "title": "Um entregável deve poder ser localizado e examinado",
+          "paragraphs": [
+            "Melhorar a comunicação descreve uma finalidade ampla, mas não permite verificar o que o fornecedor entregará. Um entregável precisa de conteúdo, formato e alcance suficientes para orientar produção e conferência. O critério de aceitação explicita o que será observado para confirmar a correspondência. Não é necessariamente uma métrica de negócio. Uma página pode ter texto correto, navegação funcional e horários aprovados sem garantir um número de inscrições, porque esse resultado também depende de procura, divulgação e condições externas.",
+            "No caso do programa, uma especificação pode prever uma página digital em português com até oito sessões, locais, horários e ligação para inscrição já existente. A versão interna de contactos é outro objeto, com circulação delimitada. Se o cliente pedir traduções, manutenção ou integração nova, são ampliações a discutir. Excluir claramente uma atividade não significa negar a sua importância; significa impedir que uma promessa de entrega esconda trabalho ou responsabilidade que não foi dimensionada. O limite precisa de ser compreensível para o destinatário e coerente com a finalidade."
+          ]
+        },
+        {
+          "title": "Testar o critério com uma amostra que pode falhar",
+          "paragraphs": [
+            "Use três sessões sintéticas: abertura às nove na sala Azul, oficina às dez na sala Verde e balanço às onze na sala Azul. O material de origem indica que a oficina termina às dez e cinquenta. Uma versão produzida troca sala Verde por Azul. O critério presença de três sessões é satisfeito, mas o de correspondência entre fonte aprovada e local não é. O teste mostra por que quantidade de itens e correção não são equivalentes. A conferência deve poder registar uma falha específica, com referência ao elemento a corrigir.",
+            "Outro critério pode verificar se o leitor encontra a oficina pelo índice e regressa ao programa. Isso avalia uma interação concreta, sem declarar acessibilidade integral com base em um teste. O conjunto de critérios deve abranger necessidades relevantes e ser proporcional ao objeto. Um critério impossível de observar, como parecer excelente a todos, transfere a avaliação para uma preferência indefinida. Um critério estreito demais, como existir um ficheiro, pode aceitar um produto inutilizável. O aluno precisa de justificar que risco cada verificação procura reduzir."
+          ]
+        },
+        {
+          "title": "Distinguir correção de mudança de objeto",
+          "paragraphs": [
+            "Corrigir a sala para corresponder à fonte aprovada é diferente de acrescentar uma nova oficina que não estava na versão de entrada. O primeiro caso trata conformidade; o segundo pode ser alteração de conteúdo ou alcance. Essa distinção precisa de ser analisada segundo o que foi efetivamente acordado. Não se usa o curso para negar correções legítimas ou impor cobranças inesperadas. A proposta deve dizer como serão tratadas revisões e novas necessidades, mantendo a decisão visível antes de executar a ampliação.",
+            "A entrega consiste numa tabela de dois entregáveis, quatro critérios verificáveis e três exclusões com motivo. Aplique os critérios à amostra das sessões e descreva uma falha e uma mudança de objeto. O avaliador procura se outra pessoa consegue conferir a entrega sem depender de intenções implícitas do autor. A proposta ganha precisão quando o que se promete, o que se recebe e a maneira de examinar a correspondência pertencem à mesma descrição. Não se transforma a aceitação documental numa garantia de sucesso comercial do encontro."
+          ]
+        }
+      ],
+      "case": "Três sessões; oficina10h–10h50 na Verde, mas amostra coloca Azul. Página pública e contactos internos são entregas distintas; número de inscrições não é controlado pelo produtor.",
+      "exercise": "Especifique dois entregáveis, quatro critérios e três exclusões. Teste a amostra e separe correção de sala e inclusão de oficina nova.",
+      "assessment": {
+        "question": "Ter três sessões é suficiente para aceitar a amostra?",
+        "answer": "Não. A oficina aparece na sala errada. Presença, correção da fonte e possibilidade de uso são verificações diferentes.",
+        "rubric": [
+          "Define objetos observáveis.",
+          "Deteta sala errada.",
+          "Não garante inscrições."
+        ]
+      }
+    },
+    {
+      "id": "3",
+      "title": "Apresentar preço e pressupostos com contas reproduzíveis",
+      "estimatedPracticeMinutes": 135,
+      "objectives": [
+        "Discriminar quantidades, valores unitários e subtotal no cenário.",
+        "Identificar condições que tornam um total provisório ou incompleto."
+      ],
+      "sourceIds": [
+        "au-quotes"
+      ],
+      "sections": [
+        {
+          "title": "O total precisa de uma base que o leitor compreenda",
+          "paragraphs": [
+            "Um preço pode ser global ou discriminado conforme a oferta, mas a proposta precisa de dizer a que entrega se refere e que condições o sustentam. Uma lista de números sem unidade pode esconder diferenças entre página, hora, versão e sessão. O exercício trabalha uma composição sintética para tornar as relações verificáveis. Não ensina a calcular impostos aplicáveis, a escolher regime fiscal ou a determinar preço profissional para uma pessoa real. Esses elementos dependem do contexto e não serão preenchidos com uma taxa presumida.",
+            "A base fictícia inclui preparação de conteúdo de oitenta unidades monetárias, produção da página de cento e quarenta e conferência de quarenta. O subtotal é duzentas e sessenta. Uma adaptação adicional opcional custa trinta por versão, com duas versões previstas se o cliente escolher essa opção. A opção soma sessenta e o conjunto passaria a trezentos e vinte antes de encargos que não foram definidos. A proposta deve mostrar se a opção está incluída ou apenas disponível; não pode apresentá-la como gratuita numa secção e adicioná-la ao total noutra."
+          ]
+        },
+        {
+          "title": "Pressupostos podem modificar o trabalho e a comparação",
+          "paragraphs": [
+            "O preço-base considera textos finais fornecidos pelo cliente e uma única língua. Se o material exigir redação nova, essa condição precisa de revisão. O fornecedor não deve usar um pressuposto oculto para justificar uma cobrança depois. O cliente precisa de saber o que fornecer e que mudança exige nova análise. Também deve ficar claro se existe algum custo de alojamento ou ferramenta externa e quem o assume. No exercício, nenhum serviço é contratado e nenhum valor de mercado é afirmado. O objetivo é organizar as condições antes de apresentar um total como definitivo.",
+            "Compare duas propostas fictícias: X mostra duzentas e sessenta com textos fornecidos; Y mostra duzentas e noventa e inclui revisão linguística delimitada. Não se conclui que X é melhor apenas pelo menor valor. É necessário comparar o conteúdo da revisão, o estado dos textos e os custos ainda não definidos. Se não houver essa informação, a matriz de comparação deve dizer por confirmar. Não converta uma lacuna numa vantagem presumida da opção preferida. O preço tem significado quando o objeto e as condições são comparáveis."
+          ]
+        },
+        {
+          "title": "Uma revisão numérica deve preservar a versão enviada",
+          "paragraphs": [
+            "Se a opção passar a uma versão em vez de duas, o adicional será trinta, levando o subtotal a duzentas e noventa. A alteração precisa de uma nova versão identificada. Não substitua silenciosamente o documento já enviado e depois pressuponha que o cliente viu a mudança. Uma tabela de revisão pode registar item, quantidade anterior, quantidade nova e efeito no subtotal. O curso não determina o efeito jurídico dessa troca; ensina a manter a comunicação e a conta localizáveis para análise por quem decide.",
+            "Entregue o quadro-base, a opção de duas versões e a revisão para uma. Acrescente uma lista de encargos e condições ainda não definidos, sem inventar taxas ou penalidades. O avaliador confere as operações e verifica se o texto evita apresentar subtotal como total final quando faltam componentes aplicáveis. O resultado esperado é uma proposta numericamente explicável, com pressupostos que o leitor consiga questionar. A credibilidade não depende de esconder a composição ou usar um preço apelativo que muda quando o cliente descobre o que a oferta realmente incluía."
+          ]
+        }
+      ],
+      "case": "Preparação80+produção140+conferência40=260. Opção30por versão;2versões=60, subtotal320. Revisão para1versão:290. Impostos e encargos locais não definidos.",
+      "exercise": "Apresente três quadros e comparação X260/Y290 com condições diferentes. Liste informação necessária para total final sem inventar enquadramento fiscal.",
+      "assessment": {
+        "question": "X260 é necessariamente mais vantajosa que Y290?",
+        "answer": "Não. Os escopos diferem e faltam condições. O subtotal-base260 e os adicionais devem ser comparados com conteúdo e encargos definidos.",
+        "rubric": [
+          "Obtém260,320,290.",
+          "Identifica pressupostos.",
+          "Não presume impostos ou melhor opção."
+        ]
+      }
+    },
+    {
+      "id": "4",
+      "title": "Construir um cronograma dependente de entradas e decisões",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Representar etapas com duração, responsável e condição de início.",
+        "Distinguir dias de trabalho e prazo decorrido no cenário fornecido."
+      ],
+      "sourceIds": [
+        "au-quotes"
+      ],
+      "sections": [
+        {
+          "title": "O calendário deve mostrar o que faz uma etapa começar",
+          "paragraphs": [
+            "Dizer entrega em cinco dias deixa dúvidas se não se sabe a partir de quando, que dias contam e de que informações o trabalho depende. O cronograma precisa de representar produção e decisões do cliente. Uma etapa pode durar um dia de trabalho do fornecedor e aguardar vários dias por aprovação. A soma de esforço não é automaticamente o prazo decorrido. O exercício define dias consecutivos sintéticos para evitar pressupor feriados ou calendários laborais de qualquer país; uma proposta real precisará de explicitar a convenção aplicável.",
+            "Considere a sequência: dia um, receção e conferência dos textos; dias dois e três, produção; dia quatro, revisão do cliente; dia cinco, correção e entrega. O fornecedor trabalha em quatro dias definidos, e o percurso ocupa cinco se as condições forem cumpridas. A revisão do cliente não é tempo vazio: é uma decisão necessária para a etapa seguinte. A proposta deve indicar quem consolida essa resposta, para que comentários de várias pessoas não se convertam em instruções contraditórias entregues diretamente a quem produz."
+          ]
+        },
+        {
+          "title": "Uma resposta tardia desloca a condição, não autoriza uma conclusão fictícia",
+          "paragraphs": [
+            "No cenário, os comentários do dia quatro só chegam no dia seis. A correção prevista para o dia cinco não pode ser dada como concluída antes de conhecer os comentários. Se o fornecedor tiver disponibilidade no dia sete, esse é um novo cenário possível, não uma promessa automática. É preciso verificar agenda e comunicar o efeito. Não se deve afirmar que qualquer atraso do cliente desloca o prazo por uma regra universal; o tratamento depende das condições acordadas e de uma confirmação que a atividade não substitui.",
+            "Outra ocorrência é receber um texto com uma sessão sem horário. A primeira conferência identifica a falta e pede esclarecimento. Se a informação não é essencial para montar a estrutura, pode haver trabalho parcial, desde que o estado seja claro. Se é essencial para a entrega, a proposta deve conservar a dependência. O aluno deve distinguir etapa iniciada, produto parcial e entrega final. Uma barra preenchida num calendário não é prova de que as condições da conclusão foram cumpridas. O cronograma precisa de acompanhar o estado real do objeto."
+          ]
+        },
+        {
+          "title": "Uma alternativa de calendário precisa de assumir o seu custo",
+          "paragraphs": [
+            "Pode ser possível reduzir a primeira versão para manter uma data, mas isso altera o que será entregue. Pode ser possível aumentar recursos autorizados, mas isso depende de disponibilidade e custos. Também pode ser necessário negociar outra data. O curso não recomenda horas excessivas como resposta padrão a uma condição mal definida. Cada alternativa deve indicar o que preserva, o que muda e quem precisa de decidir. Uma proposta profissional torna esses efeitos discutíveis antes de os converter em compromisso.",
+            "Apresente o calendário original, o cenário de resposta no dia seis e uma alternativa de alcance reduzido. Identifique a convenção de dias e os responsáveis por cada confirmação. O avaliador procura coerência entre condições, duração e promessa. O resultado não é um gráfico visualmente cheio: é um plano que permite saber quando o fornecedor pode agir, quando aguarda decisão e que compromisso precisa de ser revisto se a informação não chega. Nenhuma reserva, contratação ou alteração de agenda real é executada durante a oficina."
+          ]
+        }
+      ],
+      "case": "Dias sintéticos consecutivos:1entradas,2–3produção,4revisão cliente,5correção. Comentários chegam6; disponibilidade no7 ainda precisa de confirmação. Um horário também pode faltar.",
+      "exercise": "Desenhe cenário-base, atraso e alternativa reduzida, com responsáveis e condições. Não declare automaticamente prazo7 ou conclusão antes dos comentários.",
+      "assessment": {
+        "question": "Quatro dias de esforço significam prazo decorrido de quatro dias?",
+        "answer": "Não. O percurso inclui a etapa de decisão no dia4 e depende das condições. No cenário-base ocupa5dias; no atraso é necessária nova confirmação.",
+        "rubric": [
+          "Separa esforço e duração decorrida.",
+          "Representa dependência.",
+          "Não presume disponibilidade futura."
+        ]
+      }
+    },
+    {
+      "id": "5",
+      "title": "Registar revisões sem confundir esclarecimento e ampliação",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Classificar pedidos de revisão pelo efeito na especificação.",
+        "Produzir uma nota de alteração com consequências antes de executar."
+      ],
+      "sourceIds": [
+        "au-quotes"
+      ],
+      "sections": [
+        {
+          "title": "Nem toda mudança de frase altera o mesmo nível da oferta",
+          "paragraphs": [
+            "Uma pergunta sobre o que já está incluído pede esclarecimento. Uma falha em relação à fonte aprovada pede correção. Um novo idioma, uma integração ou outra sessão pode alterar o alcance. A classificação não deve ser usada para recusar automaticamente pedidos: deve permitir discutir o efeito com transparência. Compare a solicitação com a versão de referência e identifique que parte muda. Se o texto anterior era ambíguo, o fornecedor também precisa de reconhecer a sua contribuição para o mal-entendido, em vez de atribuir toda a diferença ao cliente.",
+            "A proposta deve dizer como serão recebidos e consolidados comentários, mas não precisa de criar um procedimento pesado para uma alteração pequena. A nota pode conter pedido, base, efeito em conteúdo, prazo e valor e decisão necessária. O efeito pode ser nenhum numa dessas dimensões; não se inventa um custo apenas porque existe uma revisão. Por outro lado, uma nova responsabilidade não deve entrar silenciosamente como favor se compromete a capacidade de cumprir as restantes entregas. A pessoa que produz precisa de conhecer o compromisso efetivo."
+          ]
+        },
+        {
+          "title": "Três pedidos sobre o mesmo programa",
+          "paragraphs": [
+            "No caso, a versão aprovada prevê português, oito sessões e ligação a inscrições existente. O pedido R1 corrige um local transcrito incorretamente a partir da fonte correta. R2 pede uma versão em espanhol. R3 pede criar um formulário que guarde inscrições. R1 trata uma discrepância; R2 amplia língua; R3 acrescenta uma função e tratamento de informação que precisam de análise própria. Não se deve presumir que o mesmo preço adicional por versão cobre os riscos e recursos de um sistema de inscrições novo.",
+            "Prepare respostas proporcionais. Para R1, indique correção e conferência. Para R2, verifique texto, tradução, revisão e calendário antes de orçamentar. Para R3, formule questões sobre finalidade, dados necessários, responsabilidades e infraestrutura, sem recolher informação real. O curso não oferece um formulário juridicamente conforme nem orienta contornar políticas de acesso. A resposta pode concluir que R3 exige outra proposta ou competência adicional. Reconhecer esse limite é uma parte legítima da relação comercial, não um defeito a esconder por medo de perder o cliente."
+          ]
+        },
+        {
+          "title": "Uma versão nova precisa de dizer o que substitui",
+          "paragraphs": [
+            "Identifique documentos por número ou data e estado. Quando uma revisão é enviada, destaque mudanças relevantes e solicite a decisão apropriada. Não pressuponha que um anexo novo foi lido porque a mensagem anterior recebeu resposta. Se a negociação alterar preço e prazo, ambos devem permanecer consistentes na síntese e nas tabelas. Uma lista de alterações também permite preparar o trabalho sem depender da memória de quem acompanhou todas as mensagens. O histórico não deve ser apagado para fazer parecer que a oferta sempre incluiu o pedido mais recente.",
+            "Entregue três notas R1–R3 e uma revisão consolidada que mantenha pendente o que ainda não pode ser decidido. Acrescente uma frase anterior ambígua e a sua correção editorial. O avaliador deve perceber que trabalho pode avançar e que ampliação ainda aguarda condições. A competência é gerir a evolução da proposta sem criar compromisso invisível. O curso não determina quais alterações constituem obrigação legal em qualquer jurisdição; conserva os factos documentais para que o acordo possa ser revisto de modo informado e adequado ao contexto."
+          ]
+        }
+      ],
+      "case": "BasePT,8sessões,ligação existente. R1local errado por transcrição; R2espanhol; R3formulário novo com inscrições. Responsabilidades e infraestruturaR3 não definidas.",
+      "exercise": "Classifique R1–R3 e redija notas de efeito. Faça revisão que preserve pendências e indique o documento substituído sem apagar histórico.",
+      "assessment": {
+        "question": "R3 é apenas outra versão do programa?",
+        "answer": "Não. Acrescenta uma função e tratamento de informação. Exige analisar alcance, competências, dados e infraestrutura antes de prometer execução.",
+        "rubric": [
+          "Distingue três tipos.",
+          "Não cobra ou promete automaticamente.",
+          "Mantém versões e decisões."
+        ]
+      }
+    },
+    {
+      "id": "6",
+      "title": "Rever a proposta como um conjunto e preparar a passagem à execução",
+      "estimatedPracticeMinutes": 150,
+      "objectives": [
+        "Detetar contradições entre síntese, tabelas, prazo e exclusões.",
+        "Produzir uma versão coerente e identificar condições antes do início."
+      ],
+      "sourceIds": [
+        "au-quotes"
+      ],
+      "sections": [
+        {
+          "title": "Uma proposta pode ter partes corretas e um conjunto contraditório",
+          "paragraphs": [
+            "O resumo pode prometer duas línguas enquanto o preço considera apenas uma. O cronograma pode depender de textos prontos enquanto a secção de responsabilidades diz que o fornecedor os escreve. Cada frase pode parecer plausível isoladamente, mas a combinação não descreve uma operação definida. A revisão final precisa de atravessar o documento pelas mesmas dimensões: objeto, entrada, responsabilidade, valor, prazo e critério. Não se limita à ortografia. O aluno irá procurar conflitos num pacote fornecido e construir uma versão que permita saber exatamente o que está a ser oferecido.",
+            "A apresentação deve ajudar o leitor a decidir, com a informação central recuperável e os pressupostos junto da promessa correspondente. Uma condição escondida no fim não corrige necessariamente uma afirmação absoluta na abertura. A revisão deve eliminar a contradição, não acrescentar ressalvas difíceis de localizar. A assinatura ou outro mecanismo de aceitação depende do processo e contexto jurídico aplicáveis. Esta oficina prepara um documento comercial para revisão; não certifica validade contratual nem executa a aceitação em nome de qualquer organização."
+          ]
+        },
+        {
+          "title": "Um pacote com quatro conflitos localizáveis",
+          "paragraphs": [
+            "O pacote sintético anuncia uma página em português e espanhol, mas a tabela-base inclui só português. O preço de abertura diz trezentos e vinte; a tabela foi revista para uma opção de trinta e mostra duzentos e noventa. O cronograma promete sexta sem condicionar a entrega dos textos, enquanto as entradas continuam por confirmar. Por fim, a descrição inclui inscrição completa e as exclusões dizem que só existe ligação para um serviço externo. São quatro conflitos de conteúdo e estado, não apenas problemas de estilo. O aluno deve citar a dimensão contraditória e escolher o que precisa de decisão.",
+            "Uma correção possível conserva português, subtotal-base duzentos e sessenta, opção de uma versão por trinta e ligação existente. Espanhol e formulário novo ficam fora até análise. O prazo deve ser apresentado como condicionado a entradas e disponibilidade confirmadas. Essa versão não é a única decisão comercial possível; é uma interpretação coerente com a base proposta. Se o aluno escolher outro alcance, deve recalcular e revisar as restantes secções, sem inventar que houve aprovação do cliente. A qualidade é a consistência e a clareza do que permanece em aberto."
+          ]
+        },
+        {
+          "title": "A passagem à execução conserva decisões e pendências",
+          "paragraphs": [
+            "Antes do início, a equipa precisa de receber a versão de referência, as entradas conhecidas e os pontos ainda bloqueados. Uma proposta aceite não faz aparecer automaticamente textos, permissões ou disponibilidade. O registo de passagem deve separar decisão comercial e condição operacional. Também deve dizer quem comunica novas alterações e onde se encontra a fonte aprovada. Não é necessário transmitir toda a correspondência ou dados pessoais desnecessários. O objetivo é permitir produção fiel ao compromisso, preservando o histórico e a possibilidade de corrigir uma dúvida antes que se torne retrabalho.",
+            "A entrega final reúne a proposta revista, um quadro dos quatro conflitos e a nota de passagem. Outro leitor deverá conseguir responder a cinco perguntas: o que recebe, o que fornece, qual subtotal conhece, quando pode contar com a entrega e como a examina. Se alguma resposta depender de informação ausente, ela deve permanecer visível. O percurso termina com um pacote editorial de proposta, sem declarar que seis oficinas validam cem horas de formação ou substituem revisão profissional. As competências e os tempos precisam de pilotagem antes de ativar a candidata ou emitir certificação correspondente."
+          ]
+        }
+      ],
+      "case": "Conflitos:PT+ES versusPT; abertura320versustabela290; sexta certa versusentradas pendentes; inscrição completa versusligação externa. Base possível260+opção30,semES/formulário.",
+      "exercise": "Resolva quatro conflitos numa versão coerente, conserve decisões pendentes e produza nota de passagem. Teste cinco perguntas de recuperação com outro leitor ou análise individual.",
+      "assessment": {
+        "question": "Corrigir apenas o total resolve o pacote?",
+        "answer": "Não. Alcance linguístico, prazo e função de inscrição também divergem. A revisão precisa de tornar todas as secções coerentes e distinguir decisão e hipótese.",
+        "rubric": [
+          "Localiza quatro conflitos.",
+          "Conserva conta e alcance.",
+          "Não inventa aceitação ou prontidão operacional."
+        ]
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão de propostas por profissional comercial e adequação jurídica/fiscal antes de qualquer uso real dos modelos.",
+    "Pilotar conferência, recuperação de informação e carga de100h anunciadas.",
+    "Verificar leitor acessível e correspondência com progresso histórico antes de integração.",
+    "Aprovação editorial e autorização antes de publicação."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

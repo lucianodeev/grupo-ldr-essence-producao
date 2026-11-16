@@ -1,0 +1,353 @@
+{
+  "productKey": "curso_assinatura_organizacao_pessoal_e_gestao_do_tempo",
+  "slug": "organizacao-pessoal-e-gestao-do-tempo",
+  "title": "Organização Pessoal e Gestão do Tempo",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 80,
+  "validatedHours": null,
+  "expectedModuleCount": 6,
+  "scope": "Organização individual de compromissos e ações: inventário, estimativa, dependência, contexto, interrupção e revisão. Distinto de planeamento de estudos e rotinas administrativas institucionais. Casos fictícios;não é diagnóstico,terapia ou promessa de produtividade ilimitada.80h históricas sem validação.",
+  "courseObjectives": [
+    "Classificar itens de uma lista pelo tipo de decisão que exigem.",
+    "Transformar um projeto amplo em ação executável com condição de conclusão.",
+    "Distinguir duração de tarefa e tempo decorrido com deslocação ou espera.",
+    "Calcular se um conjunto cabe numa janela definida sem eliminar condições.",
+    "Distinguir prazo conhecido e urgência atribuída sem fundamento.",
+    "Ordenar ações dependentes e justificar o que ficará adiado.",
+    "Relacionar tarefa com recurso, local e condição de início.",
+    "Detetar sobreposição causada por preparação ou transição omitida.",
+    "Distinguir interrupção que exige ação e informação que pode aguardar.",
+    "Registar ponto de retoma e rever o plano sem duplicar compromissos.",
+    "Comparar planeado e executado distinguindo causas de diferença.",
+    "Propor uma mudança testável sem transformar organização em promessa de desempenho ilimitado."
+  ],
+  "sources": [
+    {
+      "id": "openstax-planning",
+      "title": "Bright, D. S., & Cortes, A. H. (2019). Principles of Management. OpenStax. Secção17.2, The Planning Process.",
+      "url": "https://openstax.org/books/principles-management/pages/17-2-the-planning-process",
+      "consulted": "2026-11-16",
+      "scope": "Passagens de situação atual, objetivos, pressupostos, ações e revisão consultadas. Referência de planeamento organizacional, não prova de eficácia de método individual de produtividade. Não se reproduzem textos, diagramas, exemplos ou instrumentos do manual. Exercícios de agenda e critérios LDR são originais."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Separar compromissos, projetos e próximas ações"
+    },
+    {
+      "id": "2",
+      "title": "Estimar esforço e verificar janelas utilizáveis"
+    },
+    {
+      "id": "3",
+      "title": "Priorizar por compromisso, consequência e dependência"
+    },
+    {
+      "id": "4",
+      "title": "Construir um calendário com contexto e preparação"
+    },
+    {
+      "id": "5",
+      "title": "Tratar interrupções e alterações com uma decisão de retorno"
+    },
+    {
+      "id": "6",
+      "title": "Rever o sistema pela utilidade e pela fidelidade ao que aconteceu"
+    }
+  ],
+  "modules": [
+    {
+      "id": "1",
+      "title": "Separar compromissos, projetos e próximas ações",
+      "estimatedPracticeMinutes": 105,
+      "objectives": [
+        "Classificar itens de uma lista pelo tipo de decisão que exigem.",
+        "Transformar um projeto amplo em ação executável com condição de conclusão."
+      ],
+      "sourceIds": [
+        "openstax-planning"
+      ],
+      "sections": [
+        {
+          "title": "Uma lista pode misturar objetos que não se executam da mesma forma",
+          "paragraphs": [
+            "Renovar o espaço de trabalho, telefonar para confirmar uma entrega e comparecer a um compromisso numa hora fixa não são tarefas equivalentes. O primeiro é um projeto com várias decisões; o segundo é uma ação; o terceiro ocupa uma janela com condição externa. Se todos aparecem como linhas iguais, escolher o próximo passo pode exigir reconstruir o contexto cada vez. O curso organiza esses objetos para tornar o trabalho pessoal discutível e revisável. Não utiliza uma lista como medida de valor da pessoa ou diagnóstico de capacidade.",
+            "O inventário inicial deve distinguir compromisso com data, projeto, ação possível, espera e ideia ainda não assumida. Uma ideia interessante não precisa de entrar automaticamente no calendário. Uma espera precisa de ligação ao que depende dela e de um momento de revisão adequado. A ação deve ter um resultado observável, como receber confirmação ou produzir um rascunho identificável. A classificação é um instrumento didático próprio, não uma taxonomia universal. Se uma categoria não ajudar a escolher ou acompanhar o trabalho, ela pode ser revista em vez de multiplicada sem necessidade."
+          ]
+        },
+        {
+          "title": "Uma mudança de casa com linhas demasiado amplas",
+          "paragraphs": [
+            "No caso fictício, Camilo escreve mudar o escritório, resolver caixa, falar com transportadora e entregar equipamento às quinze de quinta. A primeira linha reúne selecionar objetos, conhecer dimensões, preparar volumes e combinar transporte. Resolver caixa pode significar comprar embalagem ou localizar uma caixa já existente; a ação ainda não está definida. Falar com transportadora também precisa de finalidade, como perguntar dimensão máxima aceite. O compromisso de quinta tem hora e não deve ser tratado como tarefa flexível que cabe em qualquer intervalo.",
+            "Uma próxima ação para o projeto pode ser medir a mesa e registar largura, profundidade e altura antes de pedir informação sobre transporte. Essa ação tem entrada conhecida e um produto que permite a pergunta seguinte. Não é necessário planear todos os detalhes futuros com precisão falsa. É suficiente mostrar a dependência e a próxima decisão. Se a medida depende de acesso ao espaço, essa condição fica visível. O curso não executa a mudança nem recomenda contratar um serviço; utiliza o caso para examinar a organização da ação."
+          ]
+        },
+        {
+          "title": "O inventário precisa de um lugar e uma revisão",
+          "paragraphs": [
+            "Manter a mesma tarefa em três listas pode tornar difícil saber se foi concluída ou alterada. Uma referência comum deve permitir relacionar anotações e versões sem apagar contexto útil. Não é obrigatório utilizar uma aplicação ou adquirir um sistema. O aluno pode trabalhar em papel, texto ou tabela simples, desde que consiga localizar o estado atual e a informação necessária. A ferramenta deve apoiar a decisão, não criar uma rotina de manutenção mais exigente que o trabalho que pretende organizar.",
+            "Entregue o inventário de Camilo, uma próxima ação para cada linha ambígua e uma condição de conclusão para a medição. Acrescente uma ideia que ficará fora dos compromissos atuais e explique a decisão. O avaliador procura se a pessoa consegue distinguir um resultado amplo de algo que pode iniciar nas condições conhecidas. O percurso começa por reduzir a ambiguidade do que foi assumido. Uma lista mais curta não significa automaticamente melhor organização; o critério é permitir saber o que existe, em que estado está e que decisão é necessária para agir."
+          ]
+        }
+      ],
+      "case": "Camilo: mudar escritório,resolver caixa,falar com transportadora,entregar equipamento15hquinta. Dimensões ainda desconhecidas. Todos os compromissos são fictícios.",
+      "exercise": "Classifique quatro linhas, defina ações e condição de conclusão da medição. Preserve compromisso15h e uma ideia ainda não assumida.",
+      "assessment": {
+        "question": "Mudar o escritório é uma ação única pronta a executar?",
+        "answer": "Não. É um projeto que inclui decisões e dependências. Uma primeira ação delimitada pode ser medir a mesa e registar três dimensões.",
+        "rubric": [
+          "Distingue tipos.",
+          "Define produto observável.",
+          "Não trata ideia como compromisso."
+        ]
+      }
+    },
+    {
+      "id": "2",
+      "title": "Estimar esforço e verificar janelas utilizáveis",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Distinguir duração de tarefa e tempo decorrido com deslocação ou espera.",
+        "Calcular se um conjunto cabe numa janela definida sem eliminar condições."
+      ],
+      "sourceIds": [
+        "openstax-planning"
+      ],
+      "sections": [
+        {
+          "title": "Somar tarefas não basta para construir uma agenda",
+          "paragraphs": [
+            "Duas tarefas de trinta minutos podem não caber numa hora se há deslocação ou preparação entre elas. A estimativa deve representar o que consome a janela relevante, sem presumir que os intervalos são intercambiáveis. O aluno irá analisar uma manhã com tempo fixo e tarefas que exigem locais diferentes. Não receberá uma duração ideal de bloco ou percentagem universal de margem. A decisão será justificada pelas condições do caso e revista quando a execução mostrar uma diferença, sem transformar um desvio isolado em falha pessoal.",
+            "Distinga esforço ativo, tempo de espera e prazo decorrido. Uma resposta externa pode demorar dois dias e exigir poucos minutos de trabalho; esses dois dias não ficam automaticamente ocupados, mas podem bloquear outra ação. Uma tarefa de concentração pode exigir um recurso que não está disponível em qualquer intervalo. A ficha de estimativa deve indicar base, incerteza e condição de início. Um número sem origem pode ser usado como hipótese inicial, desde que não apareça depois como medição comprovada ou promessa a outra pessoa."
+          ]
+        },
+        {
+          "title": "Noventa minutos com uma deslocação inevitável",
+          "paragraphs": [
+            "No cenário, uma pessoa tem noventa minutos entre dez e onze e meia. A tarefa A exige trinta e cinco minutos no espaço de trabalho; B exige vinte e cinco no balcão de recolha. O percurso entre locais demora dez minutos em cada sentido. O conjunto, incluindo regresso, ocupa oitenta minutos: trinta e cinco mais vinte e cinco mais vinte. Restam dez minutos de margem no caso. Se a pessoa não precisar de regressar antes do compromisso seguinte, a conta poderá mudar, mas essa condição não deve ser presumida sem verificar onde começa a atividade seguinte.",
+            "Uma ocorrência acrescenta quinze minutos de espera no balcão. O total passa a noventa e cinco e ultrapassa a janela por cinco. Não se resolve o problema reduzindo retroativamente a duração de A sem informação. Pode ser preciso fazer apenas uma tarefa, escolher outra janela ou rever um compromisso que admita mudança. Cada opção precisa de ser comparada com consequência e possibilidade real. O exercício não recomenda acelerar deslocação ou eliminar necessidades essenciais para preservar uma agenda. O plano deve revelar a incompatibilidade antes de tratar todas as linhas como confirmadas."
+          ]
+        },
+        {
+          "title": "A experiência melhora a hipótese sem criar uma regra permanente",
+          "paragraphs": [
+            "Depois de executar uma tarefa, registe o tempo observado e a condição relevante. Uma demora por fila não deve ser misturada com o esforço de preencher um documento se o objetivo é estimar partes diferentes. Ao mesmo tempo, excluir toda espera de um planeamento de deslocação produz uma previsão que não representa o percurso. A escolha depende da pergunta. O aluno deve indicar que componente está a medir e por que essa informação ajuda a próxima decisão, sem recolher detalhes pessoais que não são necessários ao exercício.",
+            "Entregue duas contas, uma agenda-base e uma alternativa para a espera adicional. Acrescente uma estimativa que precisa de observação posterior e uma condição que mudaria o regresso. O avaliador verifica se a agenda respeita a janela e conserva as dependências. O resultado é um uso mais rigoroso do tempo conhecido, não a promessa de que uma pessoa conseguirá realizar mais tarefas em qualquer dia. Uma incompatibilidade bem descrita permite escolher; uma agenda que só cabe depois de omitir deslocações oferece uma certeza que a execução não poderá cumprir."
+          ]
+        }
+      ],
+      "case": "Janela90min;A35;B25;deslocação10ida+10volta=80,totalcomespera15=95. Regresso necessário no cenário-base.",
+      "exercise": "Calcule margem10eultrapassagem5. Monte alternativa e identifique condição que permitiria retirar regresso, sem a presumir.",
+      "assessment": {
+        "question": "A35+B25cabem sempre numa hora?",
+        "answer": "Não. No cenário existem20min de deslocação, total80. Com15de espera,total95,superando a janela90em5.",
+        "rubric": [
+          "Conta deslocações.",
+          "Reconhece95>90.",
+          "Não fabrica compressão."
+        ]
+      }
+    },
+    {
+      "id": "3",
+      "title": "Priorizar por compromisso, consequência e dependência",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Distinguir prazo conhecido e urgência atribuída sem fundamento.",
+        "Ordenar ações dependentes e justificar o que ficará adiado."
+      ],
+      "sourceIds": [
+        "openstax-planning"
+      ],
+      "sections": [
+        {
+          "title": "A prioridade precisa de dizer o que está a proteger",
+          "paragraphs": [
+            "Uma tarefa pode parecer urgente porque é visível ou porque chegou por último. Outra pode ter pouca duração e desbloquear um compromisso importante. A escolha precisa de considerar prazo, consequência e dependência, sem reduzir todas as dimensões a uma pontuação supostamente objetiva. O aluno construirá uma ordem para quatro ações de um caso fictício. A análise não pretende definir o que é importante na vida de todas as pessoas. Examina o que o enunciado estabelece e onde uma decisão depende de informação que ainda falta.",
+            "Um prazo conhecido deve ter origem: compromisso assumido, condição de um processo ou convenção interna. Uma data desejada não é automaticamente uma obrigação externa. Também é importante saber se uma ação pode ser adiada sem impedir outra. O modelo de planeamento da OpenStax distingue objetivos, pressupostos e ações no contexto organizacional. Aqui, a aplicação individual é um exercício próprio, sem alegar eficácia universal. O aluno deverá explicar cada escolha em linguagem concreta, em vez de usar rótulos como prioridade máxima sem indicar que efeito justificam."
+          ]
+        },
+        {
+          "title": "Quatro ações e uma sequência que não pode ser invertida",
+          "paragraphs": [
+            "No cenário, Inácio precisa de enviar uma ficha até às dezasseis por compromisso fictício. Antes de enviar, deve confirmar um código com outra pessoa, disponível para responder até ao meio-dia. Também quer escolher um novo fundo para apresentação, sem prazo, e organizar uma pasta cujo conteúdo só será usado na semana seguinte. A confirmação do código precisa de atenção antes do meio-dia, embora o envio tenha prazo mais tarde. Começar pelo fundo visual porque é rápido pode consumir a oportunidade de obter a informação que desbloqueia a ficha.",
+            "A prioridade não exige trabalhar sem pausa até às dezasseis. Exige localizar a dependência e escolher o momento de a tratar. Se a outra pessoa não responder, o plano precisa de prever um encaminhamento ou comunicação da condição, conforme o caso, sem inventar o código. A organização da pasta pode ser preparada noutra janela se isso não comprometer a utilização futura. O aluno deve indicar o que foi adiado e por que a escolha é compatível com os compromissos conhecidos. Retirar uma tarefa da agenda não a faz desaparecer do inventário."
+          ]
+        },
+        {
+          "title": "Duas prioridades podem exigir negociação",
+          "paragraphs": [
+            "Se surgir outro compromisso incompatível, não existe obrigação de resolver tudo apenas por melhor organização. Pode ser necessário pedir decisão, negociar alcance ou comunicar impossibilidade. A agenda deve conservar essa tensão em vez de apresentar uma ordem que só funciona se uma dependência for ignorada. O aluno pode propor alternativas, mas não declarar que foram aceites. A capacidade de reconhecer um conflito de compromissos é parte do planeamento; não deve ser substituída por uma recomendação genérica para esforçar-se mais ou escolher sempre o pedido mais recente.",
+            "Entregue uma ordem justificada para as quatro ações e uma versão com ausência de resposta ao meio-dia. Acrescente duas perguntas que precisam de ser esclarecidas antes de aceitar um novo compromisso. O avaliador procura se a pessoa protege o que é necessário sem atribuir prioridade pelo volume de ansiedade ou pela aparência da tarefa. O resultado deve permitir ver o próximo passo e a consequência da escolha. A prioridade ganha utilidade quando pode ser explicada e revista, sem transformar uma matriz num juiz automático de todos os valores e condições do quotidiano."
+          ]
+        }
+      ],
+      "case": "Inácio:envio16h; código depende de pessoa disponível até12h; fundo visualsem prazo; pasta usada sósemana seguinte. Não inventar código ou aceitação de mudança.",
+      "exercise": "Ordene4ações e trate falta de resposta12h. Registe adiamentos e2perguntas antes de novo compromisso; diferencie prazo e desejo.",
+      "assessment": {
+        "question": "Prazo16hpermite deixar a pergunta do código para15h?",
+        "answer": "Não no cenário. O interlocutor está disponível até12h; essa dependência condiciona o envio posterior.",
+        "rubric": [
+          "Localiza dependência.",
+          "Justifica adiamento.",
+          "Reconhece negociação necessária."
+        ]
+      }
+    },
+    {
+      "id": "4",
+      "title": "Construir um calendário com contexto e preparação",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Relacionar tarefa com recurso, local e condição de início.",
+        "Detetar sobreposição causada por preparação ou transição omitida."
+      ],
+      "sourceIds": [
+        "openstax-planning"
+      ],
+      "sections": [
+        {
+          "title": "Uma janela livre não serve necessariamente para qualquer tarefa",
+          "paragraphs": [
+            "Uma atividade pode precisar de mesa, ligação, documento ou disponibilidade de outra pessoa. Colocá-la num espaço do calendário sem verificar o contexto cria uma marcação que não pode ser executada. O aluno irá construir uma sequência em que algumas tarefas são flexíveis e outras dependem de recurso partilhado. O objetivo não é preencher todos os intervalos. É representar onde uma ação tem condições de acontecer e onde o tempo deve permanecer disponível para transição ou decisão. O desenho será examinado pelo caso, sem uma duração universal de sessão.",
+            "Um evento também pode exigir preparação antes e encerramento depois. Se a chamada começa às catorze, abrir o documento ou testar o equipamento às catorze pode significar que a pessoa ainda não está pronta para a tarefa combinada. O plano deve distinguir a atividade e o trabalho que a torna possível. Isso não exige criar um lembrete para cada pequeno gesto; exige tornar visível a parte que modifica a viabilidade. A granularidade do calendário deve ajudar a agir, sem impor manutenção excessiva ou uma ilusão de controlo de cada minuto."
+          ]
+        },
+        {
+          "title": "Um recurso disponível por quarenta e cinco minutos",
+          "paragraphs": [
+            "No cenário, uma sala com equipamento está disponível das catorze às catorze e quarenta e cinco. A tarefa principal dura trinta minutos e exige dez de preparação antes. O encerramento demora cinco. O conjunto ocupa quarenta e cinco minutos e precisa de começar às catorze para terminar na janela. Marcar a tarefa principal às catorze e quinze levaria a preparação a catorze e cinco e o fim a catorze e cinquenta, ultrapassando o recurso por cinco. A agenda precisa de representar o conjunto e não apenas a parte principal.",
+            "Outra tarefa de vinte minutos pode ser feita sem a sala, mas exige um documento que só chega às quinze. Ela não deve ser colocada às treze apenas porque há tempo. O aluno deve preservar a condição de entrada e propor uma janela posterior. Se o documento atrasar, a ação permanece condicionada. Não se simula acesso nem se cria conteúdo para manter o horário original. A agenda pode incluir uma alternativa executável naquele contexto, desde que isso não faça perder a tarefa dependente nem esconder o motivo pelo qual não pôde avançar."
+          ]
+        },
+        {
+          "title": "O calendário pode distinguir reserva e compromisso confirmado",
+          "paragraphs": [
+            "Uma hipótese de janela pode ser útil para planear, mas precisa de ser identificada como hipótese. Um recurso ainda não confirmado não deve aparecer como garantido numa comunicação a terceiros. O aluno deve escolher uma legenda simples para estado e evitar cores como único meio de representar a diferença. Um calendário pode ser usado em papel ou texto e precisa de continuar compreensível sem uma aplicação específica. O curso não executa reservas reais, não altera agendas externas e não presume que a pessoa possui autoridade para bloquear recursos partilhados.",
+            "Entregue a sequência completa, a análise da marcação às catorze e quinze e uma alternativa para o documento que chega às quinze. Inclua legenda de confirmação e uma ocorrência de atraso. O avaliador confere se tarefa, preparação e encerramento cabem no recurso. O resultado esperado é um calendário que descreve condições de execução, em vez de uma coleção de blocos visualmente equilibrados. A agenda torna-se mais útil quando deixa claro o que está confirmado, o que depende de outro acontecimento e o que pode ser revisto sem apagar o compromisso de origem."
+          ]
+        }
+      ],
+      "case": "Sala14h–14h45;preparação10,principal30,encerramento5. Principal14h15implica fim14h50. Outra tarefa20depende de documento15h.",
+      "exercise": "Monte sequência45min, detete ultrapassagem5 e programe tarefa dependente depois15h. Use legenda de confirmação sem reservar recurso real.",
+      "assessment": {
+        "question": "Marcar só os30min principais representa toda a necessidade da sala?",
+        "answer": "Não. Preparação e encerramento somam15,ocupando45min. O início da principal deve ser compatível com o conjunto.",
+        "rubric": [
+          "Conta45min.",
+          "Deteta14h50fora.",
+          "Preserva entrada15h."
+        ]
+      }
+    },
+    {
+      "id": "5",
+      "title": "Tratar interrupções e alterações com uma decisão de retorno",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Distinguir interrupção que exige ação e informação que pode aguardar.",
+        "Registar ponto de retoma e rever o plano sem duplicar compromissos."
+      ],
+      "sourceIds": [
+        "openstax-planning"
+      ],
+      "sections": [
+        {
+          "title": "A interrupção altera o plano e precisa de ser tratada como informação",
+          "paragraphs": [
+            "Uma mensagem pode revelar uma condição que muda a prioridade, ou apenas acrescentar uma ideia que não precisa de resposta imediata. Tratar todas como urgentes torna a agenda imprevisível; ignorar todas pode impedir um compromisso real. O aluno irá formular critérios ligados a consequência e prazo no caso fornecido. Não se prescreve desligar canais indispensáveis nem impor limites sem considerar o contexto. A decisão precisa de distinguir disponibilidade pessoal, responsabilidade assumida e regra da organização quando o trabalho envolve outras pessoas.",
+            "Uma interrupção aceite deve deixar um ponto de retorno. Registe o que estava a fazer, o próximo passo e a informação necessária, sem reescrever todo o projeto. Essa nota permite retomar sem depender apenas da memória. O curso não apresenta uma alegação científica de poupança de tempo por utilizar o registo; oferece uma técnica de organização a testar. Se a interrupção cria trabalho novo, indique o efeito na agenda. A tarefa anterior não se torna concluída nem desaparece do inventário apenas porque o foco mudou."
+          ]
+        },
+        {
+          "title": "Uma confirmação que muda e uma sugestão que pode esperar",
+          "paragraphs": [
+            "No cenário, Raquel está a conferir uma lista de oito itens e já examinou os cinco primeiros. Chega uma mensagem confirmada de que a recolha combinada para as dezassete passou a ter uma alternativa às dezasseis, sujeita à sua decisão. Chega também uma sugestão de reorganizar as cores da lista, sem prazo. A primeira pode exigir uma decisão porque modifica o percurso do dia; a segunda pode ser registada para revisão posterior. O aluno deve examinar se a nova hora é compatível, não aceitá-la automaticamente por ter chegado como alternativa.",
+            "A nota de retoma pode dizer continuar no item seis; conferir referência da origem e completar itens sete e oito. Isso é diferente de marcar a lista inteira como revista. Se a decisão sobre recolha consumir quinze minutos, esse tempo precisa de ser considerado na janela disponível. A alternativa das dezasseis pode ser recusada se incompatível, com comunicação proporcional. O exercício não pede que a pessoa escolha sempre o horário mais cedo nem que altere um compromisso externo sem concordância. O importante é conservar o estado do trabalho e a natureza da decisão."
+          ]
+        },
+        {
+          "title": "O plano revisto deve dizer o que mudou e porquê",
+          "paragraphs": [
+            "Uma mudança de prioridade pode exigir adiar uma tarefa flexível ou reduzir alcance, mas não justifica apagar a versão anterior do plano. Uma nota breve permite compreender que informação motivou a revisão. Se uma interrupção se repete, pode ser preciso analisar o modo de entrada ou negociar uma rotina apropriada. A resposta não precisa de ser sempre mais resistência individual. Alguns problemas resultam de condições de coordenação que exigem participação de outras funções. O curso mantém esse limite para não transformar toda dificuldade operacional numa falta de disciplina da pessoa.",
+            "Entregue a decisão sobre as duas mensagens, a nota de retoma e a agenda revista com os quinze minutos. Acrescente uma condição que faria mudar a resposta à recolha e uma questão para revisão se a situação se repetir. O avaliador procura se a pessoa conserva o trabalho em curso e distingue informação relevante de distração pelo seu efeito, não apenas pelo canal. O resultado é uma forma de retomar com precisão depois de uma mudança legítima, preservando compromissos e evitando prometer que qualquer dia pode continuar igual apesar de novas exigências."
+          ]
+        }
+      ],
+      "case": "Raquel conferiu5de8itens; retoma no6. Recolha17hganha alternativa16hpor decidir; sugestão de coressem prazo. Decisão consome15min.",
+      "exercise": "Classifique mensagens, decida com condições e escreva nota6–8. Refaça agenda com15min e uma questão de coordenação se a mudança se repetir.",
+      "assessment": {
+        "question": "Interromper depois doitem5permite marcar8conferidos?",
+        "answer": "Não. Deve conservar o estado e retomar no6. A mudança de foco não conclui os restantes.",
+        "rubric": [
+          "Preserva5/8.",
+          "Não aceita16hautomaticamente.",
+          "Conta tempo da decisão."
+        ]
+      }
+    },
+    {
+      "id": "6",
+      "title": "Rever o sistema pela utilidade e pela fidelidade ao que aconteceu",
+      "estimatedPracticeMinutes": 150,
+      "objectives": [
+        "Comparar planeado e executado distinguindo causas de diferença.",
+        "Propor uma mudança testável sem transformar organização em promessa de desempenho ilimitado."
+      ],
+      "sourceIds": [
+        "openstax-planning"
+      ],
+      "sections": [
+        {
+          "title": "A revisão deve ajudar a próxima decisão",
+          "paragraphs": [
+            "Uma semana pode terminar com menos tarefas concluídas porque houve uma dependência externa, uma estimativa inadequada ou uma mudança legítima de prioridade. Contar apenas linhas concluídas não permite distinguir esses casos. A revisão precisa de relacionar plano, ocorrência e efeito. Não é uma avaliação moral da pessoa nem um diagnóstico de produtividade. O aluno irá analisar um registo sintético e escolher uma alteração pequena. O sistema de organização deve ser avaliado pela capacidade de tornar o trabalho compreensível e revisável, sem exigir que todo o tempo seja preenchido.",
+            "O capítulo da OpenStax relaciona planeamento e revisão de ações no contexto organizacional. Este curso adapta a ideia de ciclo de análise, sem reproduzir o modelo ou afirmar eficácia clínica de um método pessoal. Uma mudança precisa de responder a uma ocorrência: estimar deslocação, conferir entrada ou separar compromisso de hipótese. Acrescentar mais campos ao sistema pode aumentar manutenção sem esclarecer nada. O aluno deve justificar o que pretende aprender com a alteração e que sinal indicará que ela não ajuda, mantendo a possibilidade de simplificar ou regressar à versão anterior."
+          ]
+        },
+        {
+          "title": "Três diferenças que não pedem a mesma resposta",
+          "paragraphs": [
+            "No cenário final, T1 foi prevista em trinta minutos e executada em quarenta e cinco por incluir uma deslocação omitida de quinze. T2 estava no calendário, mas não começou porque faltou documento externo. T3 demorou os vinte minutos previstos e concluiu o resultado definido. O tempo ativo conhecido de T1 e T3 é sessenta e cinco minutos. Não se acrescenta à execução o tempo reservado a T2 se a atividade não ocorreu. Ao mesmo tempo, a espera pode ter afetado o calendário e precisa de ser descrita conforme a pergunta da análise.",
+            "A revisão de T1 pode incluir deslocação na próxima estimativa; T2 precisa de condição de entrada e uma verificação antes de reservar execução; T3 pode manter a estimativa até haver nova informação. Não é necessário reduzir todas as durações para realizar mais. Também não se conclui que T2 foi um fracasso de disciplina. O aluno deve conservar o que estava fora do seu controlo e identificar o que poderia ter sido verificado antes. Essa distinção permite uma mudança pertinente sem apagar a restrição real ou atribuir causalidade além do episódio."
+          ]
+        },
+        {
+          "title": "Uma mudança de sistema pode ser testada com poucos critérios",
+          "paragraphs": [
+            "Escolha uma alteração, como acrescentar condição de início às tarefas dependentes. No próximo conjunto sintético, examine se a condição está preenchida e se permite decidir antes da janela. Registe também o esforço de manter o campo. Se ele apenas repete informação sem melhorar a decisão, pode ser simplificado. O objetivo não é construir um painel perfeito, mas um suporte que ajude a assumir compromissos possíveis e localizar o que precisa de revisão. Diferentes pessoas podem preferir formatos diferentes sem que isso determine um estilo psicológico fixo.",
+            "A entrega final reúne inventário, uma agenda corrigida e a análise T1–T3, seguida de um teste de mudança e dos seus limites. Acrescente uma conclusão que o registo permite e outra que não permite, como prever desempenho de todas as semanas. As seis oficinas desenvolvem um percurso textual de organização pessoal, sem validar as oitenta horas históricas anunciadas. Prática adicional, revisão pedagógica e pilotagem continuam necessárias. A competência demonstrada é organizar ações com condições claras e aprender com a execução, preservando a possibilidade de renegociar o que não cabe em vez de fabricar tempo ou prometer disponibilidade ilimitada."
+          ]
+        }
+      ],
+      "case": "T1prevista30/executada45com deslocação15omitida;T2não iniciada por documento;T3prevista20/executada20e concluída. Tempo executado conhecido65min.",
+      "exercise": "Compare3ocorrências e proponha uma mudança testável com custo de manutenção. Calcule65e não classifiqueT2como execução ou falha pessoal.",
+      "assessment": {
+        "question": "T2no calendário deve contar como tempo de tarefa executada?",
+        "answer": "Não. A atividade não começou. A espera pode afetar o plano, mas precisa de ser distinguida da execução no indicador usado.",
+        "rubric": [
+          "Obtém65min.",
+          "Distingue três causas.",
+          "Não promete produtividade ilimitada."
+        ]
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão pedagógica e de adequação das aplicações individuais, sem presumir validação científica do método LDR.",
+    "Verificar cálculos e pilotar instrumentos, acessibilidade e carga de80h anunciadas.",
+    "Testar leitor isolado e materiais de agenda sem recolher dados pessoais ou alterar progressos.",
+    "Aprovação editorial e autorização antes de produção."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

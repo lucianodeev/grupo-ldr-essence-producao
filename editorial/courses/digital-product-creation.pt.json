@@ -1,0 +1,371 @@
+{
+  "productKey": "curso_assinatura_como_criar_produtos_digitais_do_zero",
+  "slug": "como-criar-produtos-digitais-do-zero",
+  "title": "Como Criar Produtos Digitais do Zero",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 160,
+  "validatedHours": null,
+  "expectedModuleCount": 6,
+  "scope": "Projeto editorial de kit digital utilizável: necessidade, arquitetura, instrução, fontes/permissões, teste e edição. Distingue-se de marketing e vendas; não reutiliza obras protegidas ou publica produto. Regras, títulos e dados fictícios;160h históricas por validar.",
+  "courseObjectives": [
+    "Distinguir suporte digital e utilidade de um produto.",
+    "Definir uma tarefa do utilizador com início e resultado observável.",
+    "Organizar informação pela sequência de decisões do leitor.",
+    "Detetar conteúdo repetido e lacunas entre explicação, exemplo e aplicação.",
+    "Produzir uma instrução com entrada, ação e resultado identificáveis.",
+    "Testar o exemplo com dados que incluem duplicação e condição ausente.",
+    "Distinguir autoria própria, citação, reutilização e recurso de origem desconhecida.",
+    "Preparar um inventário de direitos sem presumir que acesso público equivale a autorização.",
+    "Definir teste de uso com critério observável e sem orientação excessiva.",
+    "Distinguir falha de conteúdo, navegação e formato a partir de uma ocorrência.",
+    "Definir o pacote de uma edição e verificar a correspondência com a descrição.",
+    "Planejar correções preservando versão anterior e acesso já concedido."
+  ],
+  "sources": [
+    {
+      "id": "gds-product",
+      "title": "Government Digital Service. Learning about users and their needs.",
+      "url": "https://www.gov.uk/service-manual/user-research/start-by-learning-user-needs",
+      "consulted": "2026-11-16",
+      "scope": "Passagens sobre necessidades baseadas em evidência e distinção entre problema e solução consultadas. Aplicação didática a produto editorial, sem afirmar validação comercial."
+    },
+    {
+      "id": "wai-headings",
+      "title": "W3C Web Accessibility Initiative. Headings. Page Structure Tutorial.",
+      "url": "https://www.w3.org/WAI/tutorials/page-structure/headings/",
+      "consulted": "2026-11-16",
+      "scope": "Overview e Heading ranks consultados. Enquadramento de estrutura semântica e navegação em HTML; não se declara conformidade integral WCAG nem se transfere automaticamente o teste para PDF/EPUB."
+    },
+    {
+      "id": "cc-overview",
+      "title": "Creative Commons. Sharing Openly, Sharing Globally — The CC Licenses.",
+      "url": "https://creativecommons.org/cc-licenses/",
+      "consulted": "2026-11-16",
+      "scope": "Descrições de BY, SA, NC e ND consultadas como introdução a condições distintas. Não se verificou licença de qualquer recurso de terceiros, não se presume titularidade ou compatibilidade jurídica e não se altera a licença das obras LDR."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Escolher um problema e uma transformação editorial delimitada"
+    },
+    {
+      "id": "2",
+      "title": "Construir uma arquitetura em que cada peça tem função"
+    },
+    {
+      "id": "3",
+      "title": "Escrever instruções e exemplos que possam ser executados"
+    },
+    {
+      "id": "4",
+      "title": "Manter um registo de fontes e permissões de utilização"
+    },
+    {
+      "id": "5",
+      "title": "Testar leitura, navegação e recuperação com tarefas concretas"
+    },
+    {
+      "id": "6",
+      "title": "Preparar uma edição com versão, entrega e manutenção"
+    }
+  ],
+  "modules": [
+    {
+      "id": "1",
+      "title": "Escolher um problema e uma transformação editorial delimitada",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Distinguir suporte digital e utilidade de um produto.",
+        "Definir uma tarefa do utilizador com início e resultado observável."
+      ],
+      "sourceIds": [
+        "gds-product"
+      ],
+      "sections": [
+        {
+          "title": "O ficheiro é o suporte, não a necessidade",
+          "paragraphs": [
+            "Um PDF de cinquenta páginas pode conter informação e ainda não ajudar o leitor a realizar o que precisa. Começar pelo formato ou pelo número de páginas pode levar a produzir volume sem utilidade definida. O projeto deste curso é um kit fictício para coordenar uma feira comunitária de troca de livros. O objetivo será organizar uma lista de exemplares e decisões de circulação, não prometer aumentar público ou resolver todas as dificuldades de um evento. A tarefa permite examinar estrutura, instruções e uso sem depender de conteúdo protegido de uma obra existente.",
+            "A orientação do GDS para distinguir necessidade e solução é aplicada aqui como referência de desenho. A pessoa precisa de saber que exemplares estão disponíveis e quais aguardam decisão. Um kit é uma hipótese de solução, não uma preferência que o utilizador já confirmou. Outra solução poderia ser uma rotina de equipa apoiada numa ferramenta que a associação possui. Antes de desenvolver, descreva o acontecimento que dispara a tarefa e o que o utilizador precisa de conseguir fazer no fim. Essa descrição evita que cada ideia nova se transforme automaticamente num capítulo."
+          ]
+        },
+        {
+          "title": "Um segmento definido pela tarefa, não por uma personalidade inventada",
+          "paragraphs": [
+            "O utilizador fictício é a pessoa que consolida informações enviadas por voluntários. Pode ter experiência administrativa ou estar a começar; não se presume domínio de folha de cálculo, acesso constante à internet ou preferência fixa por aprendizagem visual. As condições de uso precisam de ser investigadas. No cenário, a lista deve poder ser consultada num telefone e impressa em texto legível. Isso modifica o desenho dos campos e das instruções. Não basta exportar a mesma página complexa e chamar multiplataforma a um produto que ainda não foi testado.",
+            "A transformação pretendida é passar de mensagens dispersas para uma lista em que cada exemplar tem identificador, estado e próxima decisão. Não inclui avaliar valor comercial ou autenticidade de edições, recolher dados de compradores ou criar sistema de pagamentos. Essa delimitação protege a coerência do produto e permite testar o percurso. Um resultado observável pode ser localizar três exemplares e explicar por que um deles não pode ser disponibilizado ainda. Esse resultado é mais específico que aprender a organizar melhor e fornece uma base para criar o protótipo."
+          ]
+        },
+        {
+          "title": "Definir o primeiro produto sem ampliar a promessa",
+          "paragraphs": [
+            "O projeto inicial conterá uma explicação de estados, um exemplo preenchido, uma ficha em branco e um exercício de conferência. Cada peça tem função. A explicação fornece critérios; o exemplo mostra aplicação; a ficha apoia uso; o exercício verifica entendimento. A presença das quatro não comprova que o kit funciona, mas torna o teste possível. Materiais adicionais só devem entrar quando respondem a uma necessidade que o percurso ainda não atende. Um capítulo motivacional não substitui a regra que permite decidir se um exemplar está disponível.",
+            "Produza uma ficha de produto com tarefa, condição de uso, resultado e limite. Acrescente duas alternativas de solução e explique que dúvida o protótipo deverá esclarecer. Não invente entrevistas ou vendas para justificar a escolha. O avaliador procura uma relação explícita entre necessidade e material proposto. Ao terminar, o aluno terá um objeto suficientemente delimitado para escrever, testar e revisar, sem confundir o facto de ser digital com originalidade, qualidade editorial ou procura comercial já demonstrada."
+          ]
+        }
+      ],
+      "case": "Kit fictício para consolidar exemplares de feira comunitária. Utilizador precisa de consultar no telefone e imprimir. Objetivo: identificador, estado e próxima decisão; sem pagamentos ou avaliação de livros.",
+      "exercise": "Defina tarefa, resultado e quatro peças do produto. Compare duas soluções alternativas e identifique dúvida de uso a testar, sem declarar pesquisa realizada.",
+      "assessment": {
+        "question": "Escolher PDF e cinquenta páginas define a utilidade?",
+        "answer": "Não. Define suporte e extensão. A utilidade precisa de estar ligada à tarefa e ao resultado que o leitor consegue realizar.",
+        "rubric": [
+          "Delimita transformação.",
+          "Considera condições de uso.",
+          "Não inventa procura."
+        ]
+      }
+    },
+    {
+      "id": "2",
+      "title": "Construir uma arquitetura em que cada peça tem função",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Organizar informação pela sequência de decisões do leitor.",
+        "Detetar conteúdo repetido e lacunas entre explicação, exemplo e aplicação."
+      ],
+      "sourceIds": [
+        "gds-product",
+        "wai-headings"
+      ],
+      "sections": [
+        {
+          "title": "Um índice é uma hipótese sobre o percurso do utilizador",
+          "paragraphs": [
+            "Uma sequência editorial pode seguir o assunto do autor e deixar o leitor sem saber por onde começar. Para um material de uso, é útil relacionar cada secção com uma pergunta ou decisão. No kit da feira, o leitor primeiro precisa de compreender identificadores e estados, depois examinar um exemplo e, por fim, aplicar a regra e conferir. A arquitetura deve permitir também regressar diretamente à dúvida. Não é necessário repetir a introdução em cada parte para tornar o produto autónomo; uma referência localizada pode preservar contexto com menos ruído.",
+            "Crie um mapa com pergunta do leitor, conteúdo necessário e ação seguinte. Se duas secções respondem à mesma pergunta com palavras diferentes, examine se existe aprofundamento real. Uma pode explicar a regra e outra aplicá-la a um caso difícil; isso é progressão. Duas listas equivalentes sem função distinta são candidatas a consolidação. O curso não define uma quantidade ideal de capítulos. A extensão resulta do trabalho intelectual e operacional necessário, não de um número escolhido para aumentar a aparência de valor."
+          ]
+        },
+        {
+          "title": "Quatro estados e uma fronteira que precisa de exemplo",
+          "paragraphs": [
+            "O protótipo utiliza estados fictícios: recebido significa que o exemplar foi registado; por conferir significa que falta verificar a correspondência entre exemplar e ficha; disponível significa que essa conferência terminou e a participação foi autorizada; retirado significa que saiu da lista ativa com motivo registado. Os estados são convenções deste exercício. A frase foi recebido não permite concluir disponível. A arquitetura precisa de colocar essa diferença antes de pedir ao leitor que classifique exemplares. Um exemplo que salta diretamente de recebido para disponível sem explicar a decisão reforçaria precisamente a confusão que o produto pretende evitar.",
+            "No mapa editorial, a primeira secção define estados; a segunda apresenta duas transições; a terceira oferece ficha; a quarta pede conferir um conjunto novo. Um glossário pode reunir termos para consulta, mas não deve copiar páginas inteiras de explicação. A mesma condição de autorização pode reaparecer num exercício como aplicação, com uma pergunta que exija reconhecê-la. O aluno deve explicar por que a repetição do conceito é necessária e como a tarefa muda. O objetivo é evitar tanto redundância vazia como cortes que deixam o leitor sem uma distinção indispensável."
+          ]
+        },
+        {
+          "title": "Hierarquia visual e estrutura de navegação precisam de corresponder",
+          "paragraphs": [
+            "O tutorial WAI sobre títulos descreve como níveis e organização semântica apoiam navegação em páginas. No protótipo HTML, um título de secção e os subtítulos devem refletir relações, não apenas tamanho visual. Esta referência não prova acessibilidade integral nem conformidade de outros formatos. Para a ficha impressa, também será necessário verificar legibilidade e recuperação de informação. O aluno deve conservar o mapa do conteúdo como base comum, reconhecendo que cada suporte exige inspeção própria. Um PDF e uma página podem partilhar texto e ainda oferecer experiências de navegação diferentes.",
+            "Entregue um índice anotado, o mapa de quatro estados e uma justificação para duas reaparições legítimas de conceito. Identifique uma secção a fundir e uma lacuna a completar. O avaliador deverá conseguir seguir da pergunta à aplicação sem encontrar um salto de conhecimento oculto. O produto começa a adquirir coerência quando a ordem, a navegação e os exemplos tornam as distinções recuperáveis. A arquitetura será revisada com o teste, não tratada como definitiva apenas porque os títulos parecem profissionais."
+          ]
+        }
+      ],
+      "case": "Estados de treino: recebido; por conferir; disponível após conferência e autorização; retirado com motivo. Arquitetura proposta: definição, transições, ficha, aplicação nova.",
+      "exercise": "Monte índice anotado e mapa de decisões. Justifique duas reaparições de conceito, uma fusão e uma lacuna, preservando conferência e autorização.",
+      "assessment": {
+        "question": "Recebido permite inferir disponível no kit?",
+        "answer": "Não. Há condições adicionais de conferência e autorização. A arquitetura precisa de ensinar e testar essa diferença.",
+        "rubric": [
+          "Organiza por pergunta.",
+          "Distingue aprofundamento e duplicação.",
+          "Alinha hierarquia e função."
+        ]
+      }
+    },
+    {
+      "id": "3",
+      "title": "Escrever instruções e exemplos que possam ser executados",
+      "estimatedPracticeMinutes": 135,
+      "objectives": [
+        "Produzir uma instrução com entrada, ação e resultado identificáveis.",
+        "Testar o exemplo com dados que incluem duplicação e condição ausente."
+      ],
+      "sourceIds": [
+        "gds-product"
+      ],
+      "sections": [
+        {
+          "title": "A instrução precisa de dizer o que o leitor faz com quê",
+          "paragraphs": [
+            "Organize os livros corretamente parece orientação, mas não permite escolher uma ação ou conferir o resultado. Uma instrução operacional deve identificar o objeto, a ação e o critério relevante. Pode dizer atribua um identificador a cada exemplar físico e use o mesmo identificador na ficha. Depois explique o que fazer quando duas fichas parecem corresponder ao mesmo exemplar. A pessoa precisa de poder reconhecer uma situação em que deve parar e pedir confirmação. A clareza não consiste em eliminar todas as exceções, mas em tornar as que afetam a decisão visíveis e tratáveis.",
+            "Um exemplo preenchido deve mostrar a regra em uso e conservar as condições. Se o exemplo marca disponível sem indicar conferência ou autorização, contradiz a explicação. Uma revisão editorial precisa de percorrer tabela, legenda e atividade com a mesma definição. Também deve separar dados fornecidos e decisões inferidas. Uma mensagem dizendo este é o mesmo livro pode referir o título, mas não necessariamente o mesmo exemplar físico. O kit precisa de ensinar essa distinção antes de pedir eliminar uma suposta duplicação."
+          ]
+        },
+        {
+          "title": "Um conjunto pequeno com um erro que não deve ser apagado por impulso",
+          "paragraphs": [
+            "Os dados sintéticos são: E01, Atlas das Nuvens, conferência e autorização confirmadas; E02, Contos do Bairro, conferência em falta; E03, Jardim de Palavras, conferido mas sem autorização; uma segunda ficha E02 com o mesmo título e sem indicação de exemplar adicional. E01 pode ser classificado disponível segundo a regra. E02 continua por conferir; E03 ainda não cumpre todas as condições. A segunda ficha E02 é uma duplicação possível a investigar. Não se cria E04 nem se apaga a ficha original sem confirmar o que aconteceu.",
+            "A instrução pode pedir assinalar a ocorrência, comparar identificador e contexto e solicitar confirmação ao responsável fictício. Se houver dois exemplares físicos, cada um precisará de identidade distinta segundo a regra do kit. Se for a mesma ficha reenviada, a consolidação deverá preservar a origem relevante. A atividade não apresenta uma verdade sobre um inventário real. Fornece um conjunto em que a resposta proporcional é manter estados e dúvidas, evitando que a tabela pareça limpa à custa de uma decisão sem base. O exemplo precisa de mostrar como a incerteza é representada."
+          ]
+        },
+        {
+          "title": "O enunciado deve ter informação suficiente para a resposta esperada",
+          "paragraphs": [
+            "Uma pergunta que exige saber a condição física de um livro não pode ser corrigida por uma resposta única se essa informação não foi fornecida. O autor deve acrescentar o dado ou mudar a tarefa para identificar o que falta. O mesmo vale para exercícios de cálculo e interpretação. Escreva uma chave que explique as condições e admita respostas alternativas quando o enunciado permite. A revisão não deve penalizar o leitor por recusar uma conclusão que o próprio material não sustenta. Essa recusa pode ser precisamente o resultado de aprendizagem pretendido.",
+            "Entregue uma página de instruções, a tabela preenchida e quatro perguntas com chave. Faça uma pergunta em que o resultado é uma verificação pendente e outra em que existe resposta determinada. O avaliador procura precisão e possibilidade de execução por alguém que não acompanhou a escrita. Um texto sofisticado que exige adivinhar a intenção do autor continua incompleto. O primeiro protótipo editorial deve permitir trabalhar com os dados fornecidos e localizar o ponto em que a responsabilidade passa a uma confirmação externa, em vez de encerrar artificialmente todos os casos."
+          ]
+        }
+      ],
+      "case": "E01conferido/autorizado;E02sem conferência;E03conferido sem autorização; segunda fichaE02sem prova de exemplar adicional. Títulos e registos fictícios.",
+      "exercise": "Escreva instrução e tabela, quatro questões e chave. Preserve a duplicação possível como dúvida e diferencie conclusão determinada de confirmação necessária.",
+      "assessment": {
+        "question": "A segunda ficha E02 deve receber novo identificador automaticamente?",
+        "answer": "Não. É preciso confirmar se há outro exemplar ou reenvio da mesma ficha. A tabela não prova a existência de um objeto adicional.",
+        "rubric": [
+          "Mantém E01disponível.",
+          "Não libera E02/E03.",
+          "Preserva dúvida de duplicação."
+        ]
+      }
+    },
+    {
+      "id": "4",
+      "title": "Manter um registo de fontes e permissões de utilização",
+      "estimatedPracticeMinutes": 120,
+      "objectives": [
+        "Distinguir autoria própria, citação, reutilização e recurso de origem desconhecida.",
+        "Preparar um inventário de direitos sem presumir que acesso público equivale a autorização."
+      ],
+      "sourceIds": [
+        "cc-overview"
+      ],
+      "sections": [
+        {
+          "title": "Encontrar um recurso não determina o que se pode fazer com ele",
+          "paragraphs": [
+            "Uma imagem disponível numa pesquisa, uma tabela de um manual e um texto enviado por outra pessoa têm origens e condições diferentes. A produção de um material digital precisa de um inventário que permita saber o que foi criado, consultado ou incorporado. O facto de conseguir descarregar não demonstra autorização para revender, adaptar ou publicar. Este módulo ensina a organizar informação para revisão de direitos; não oferece um parecer sobre a legalidade de um uso concreto nem substitui a análise da licença e do contexto aplicável.",
+            "O inventário pode conter identificação do recurso, autor indicado, página de origem, licença declarada, versão, data de consulta e uso pretendido. Acrescente a localização no produto e o estado de verificação. Uma referência bibliográfica pode apoiar uma explicação sem significar que o conteúdo foi reproduzido. Uma citação curta e uma adaptação extensa também não devem ser registadas como a mesma operação. A distinção permite encaminhar uma dúvida específica e retirar um elemento pendente antes da circulação, preservando a contribuição original e a rastreabilidade editorial."
+          ]
+        },
+        {
+          "title": "Condições diferentes não se resolvem com a palavra grátis",
+          "paragraphs": [
+            "A apresentação oficial Creative Commons distingue licenças com atribuição e condições como partilha nas mesmas condições, uso não comercial e restrição de adaptações. Essas diferenças mostram por que não basta anotar CC ou gratuito. É necessário consultar a licença específica e verificar se corresponde ao recurso e ao uso proposto. O curso não declara compatibilidade de licenças nem escolhe uma para obras LDR. Também não conclui que uma licença resolve todos os direitos eventualmente envolvidos num recurso, como imagens de pessoas ou marcas.",
+            "No pacote fictício, há uma ilustração original do autor, uma fotografia encontrada sem licença identificada e um ícone cuja página declara uma licença específica ainda não consultada integralmente. A ilustração entra no inventário com a origem declarada, mas autoria e eventuais elementos incorporados continuam sujeitos à revisão. A fotografia fica pendente e não deve ser incorporada por suposição. O ícone exige confirmar condições e informação de atribuição. O aluno pode substituir ambos por elementos próprios simples, sem inventar uma autorização que não obteve ou afirmar ter lido um documento que não abriu."
+          ]
+        },
+        {
+          "title": "A revisão de direitos acompanha as versões do produto",
+          "paragraphs": [
+            "Uma alteração pode acrescentar um recurso ou modificar a forma de uso de outro. O inventário precisa de acompanhar essa mudança e permitir localizar a versão publicada a que se refere. Se um elemento for retirado, conserve o histórico necessário para compreender a decisão, sem disponibilizar o recurso indevidamente. Não transfira para o comprador a tarefa de descobrir que partes do kit não tinham condição verificada. A descrição comercial também deve corresponder às permissões efetivamente concedidas sobre o produto, que precisam de revisão apropriada antes de uso real.",
+            "Entregue o inventário de três recursos e uma decisão para cada um: manter para revisão, verificar ou substituir. Escreva uma atribuição apenas com campos conhecidos e marque os que faltam, em vez de preencher nomes ou licenças fictícias como se fossem reais. O avaliador procura se a pessoa distingue consulta de incorporação e consegue conservar a incerteza. A qualidade editorial inclui saber de onde vem cada componente e que questão precisa de ser resolvida antes de prometer que o pacote está pronto para distribuição comercial."
+          ]
+        }
+      ],
+      "case": "Pacote fictício: ilustração declarada própria; fotografia sem licença identificada; ícone com indicação de licença cujo texto ainda precisa de consulta. Nenhum recurso real é incorporado.",
+      "exercise": "Faça inventário e decisão para três recursos; prepare atribuição com campos pendentes explícitos. Não aplique licença nova às obras LDR nem invente autorização.",
+      "assessment": {
+        "question": "Acesso gratuito comprova autorização de revenda e adaptação?",
+        "answer": "Não. Origem e condições específicas precisam de verificação; gratuito não é uma licença suficiente.",
+        "rubric": [
+          "Separa consulta/incorporação.",
+          "Não presume compatibilidade.",
+          "Mantém recursos pendentes fora da distribuição."
+        ]
+      }
+    },
+    {
+      "id": "5",
+      "title": "Testar leitura, navegação e recuperação com tarefas concretas",
+      "estimatedPracticeMinutes": 135,
+      "objectives": [
+        "Definir teste de uso com critério observável e sem orientação excessiva.",
+        "Distinguir falha de conteúdo, navegação e formato a partir de uma ocorrência."
+      ],
+      "sourceIds": [
+        "wai-headings",
+        "gds-product"
+      ],
+      "sections": [
+        {
+          "title": "Perguntar se gostou não testa a tarefa do produto",
+          "paragraphs": [
+            "Um leitor pode elogiar a aparência e ainda não conseguir usar o material. O teste precisa de uma tarefa e um critério que permitam observar o percurso. Para o kit, peça localizar a definição de disponível, classificar E03 e encontrar onde registar a confirmação em falta. Não dê o caminho enquanto a pessoa tenta, porque isso altera o que pode ser observado. Se precisar de ajudar, registe o apoio e o momento. O objetivo é examinar o material, não avaliar a inteligência ou a obediência de quem participa.",
+            "Uma sessão pode ser simulada por análise do próprio percurso ou executada com participação apropriada. O relatório deve distinguir o que realmente aconteceu e o que foi apenas planeado. Não invente utilizadores, falas ou taxas de sucesso. O caso fornecido usa ocorrências sintéticas para praticar diagnóstico: a pessoa encontra o título, mas não compreende uma condição; ou compreende a regra quando a encontra, mas não consegue navegar até ela. São problemas diferentes e pedem correções diferentes. Reescrever a definição não resolve necessariamente uma falha de índice."
+          ]
+        },
+        {
+          "title": "O mesmo conteúdo pode falhar de maneira diferente em cada suporte",
+          "paragraphs": [
+            "Num protótipo HTML sintético, os títulos parecem grandes, mas não têm níveis semânticos. A navegação por títulos não encontra as secções. O tutorial WAI sustenta a necessidade de relacionar títulos e estrutura. Numa impressão, a instrução depende de uma cor que desaparece em cinzento, sem rótulo textual alternativo. Aqui a correção precisa de preservar a distinção por palavras ou outro sinal. Nenhum desses testes isolados certifica acessibilidade integral, e a presença de CSS responsivo não prova que o produto funciona em todos os dispositivos.",
+            "Outra ocorrência é a ficha conter uma coluna de estado demasiado estreita, cortando por conferir. O leitor pode interpretar apenas conferir como uma ação, em vez de um estado. Uma alteração de largura, quebra ou rótulo precisa de ser testada com o mesmo objetivo. O autor deve conservar um exemplo da falha e uma nova tentativa, sem concluir que todo problema foi resolvido pela primeira correção. O teste de recuperação liga o desenho a uma consequência observável e impede que preferência estética seja o único critério de revisão."
+          ]
+        },
+        {
+          "title": "A observação deve produzir uma revisão localizada",
+          "paragraphs": [
+            "Use uma ficha com tarefa, percurso observado, dificuldade, hipótese e alteração proposta. Uma falha de compreensão pode exigir exemplo ou regra mais precisa; uma falha de navegação pode exigir rótulo e estrutura; uma falha de formato pode exigir outro arranjo. Não aplique todas as correções ao mesmo tempo sem saber que problema cada uma procura tratar. Se o novo teste continuar a falhar, a hipótese precisa de ser revista. O aluno deve reconhecer quando a ocorrência não permite distinguir as causas e pedir outra observação em vez de escolher uma por preferência.",
+            "Entregue três tarefas de teste, a ficha das ocorrências fornecidas e um plano de reteste. Acrescente critérios para telefone e impressão, indicando limites do que foi verificado. O avaliador procura uma cadeia entre tarefa, observação e revisão. Um produto passa a ser mais sério quando pode ser examinado por esse percurso, com falhas conservadas como informação de melhoria. Não se publica uma declaração de conformidade ou funcionamento universal a partir de uma inspeção parcial do protótipo, e nenhuma sessão real é descrita como executada sem ter ocorrido."
+          ]
+        }
+      ],
+      "case": "Ocorrências sintéticas: HTMLsem níveis de título; impressão perde distinção só por cor; ficha corta por conferir. Testar localizar definição, classificarE03 e registar pendência.",
+      "exercise": "Crie três tarefas e fichas de diagnóstico, com revisão e reteste. Separe ocorrências fornecidas de sessões efetivamente executadas e não certifique WCAG.",
+      "assessment": {
+        "question": "Gostar do visual demonstra capacidade de classificar E03?",
+        "answer": "Não. É necessário observar a tarefa. A regra exige conferência e autorização; o material precisa de tornar essa condição recuperável.",
+        "rubric": [
+          "Define critério observável.",
+          "Distingue conteúdo/navegação/formato.",
+          "Regista ajuda e limites."
+        ]
+      }
+    },
+    {
+      "id": "6",
+      "title": "Preparar uma edição com versão, entrega e manutenção",
+      "estimatedPracticeMinutes": 150,
+      "objectives": [
+        "Definir o pacote de uma edição e verificar a correspondência com a descrição.",
+        "Planejar correções preservando versão anterior e acesso já concedido."
+      ],
+      "sourceIds": [
+        "gds-product",
+        "cc-overview",
+        "wai-headings"
+      ],
+      "sections": [
+        {
+          "title": "O produto inclui a forma como o leitor o recebe e reconhece",
+          "paragraphs": [
+            "Um kit não está pronto apenas porque o texto foi exportado. O pacote precisa de identificar edição, ficheiros incluídos, instruções de abertura e condições conhecidas de uso. A descrição deve dizer o que o comprador recebe e distinguir material principal, ficha e solução. Se o pacote só contém um índice, não deve ser anunciado como formação completa. Se o ficheiro depende de uma ferramenta externa, essa condição precisa de ser visível. O aluno irá preparar uma edição candidata e uma lista de verificação sem publicar ou cobrar qualquer produto real.",
+            "A versão permite relacionar comentários, correções e acesso. Um leitor pode estar a usar uma edição anterior e reportar uma falha que já foi tratada noutra. Sem identificação, o suporte pode responder à versão errada. A nota de alteração deve indicar o que mudou e o efeito para quem já utiliza o material. Não é necessário apagar a edição anterior para disponibilizar uma correção. A preservação também não significa deixar uma instrução errada circular sem aviso: é preciso definir como comunicar e oferecer uma versão revista conforme as condições apropriadas."
+          ]
+        },
+        {
+          "title": "Uma atualização que não deve transformar campos existentes silenciosamente",
+          "paragraphs": [
+            "Na edição candidata um, a ficha usa recebido, por conferir, disponível e retirado. A revisão dois propõe acrescentar reservado entre disponível e retirado. Essa alteração modifica a classificação e não pode ser apresentada apenas como correção de vírgulas. A documentação precisa de explicar o novo estado, as condições de passagem e o tratamento de fichas antigas. O exercício não migra dados reais nem escolhe automaticamente o estado dos registos históricos. O leitor deve poder distinguir o que já anotou e o que a regra nova passaria a exigir.",
+            "Uma atualização menor, como corrigir um erro no nome de uma secção, tem outro efeito. O aluno deve classificar ambas e produzir notas proporcionais. Também deve conferir se a descrição comercial continua fiel: se a edição inclui exemplo, ficha e chave, todos precisam de estar no pacote e abrir nas condições testadas. Uma solução guardada apenas no computador do autor não é um material complementar entregue. Um link que exige acesso não explicado pode impedir uso mesmo quando o ficheiro principal está correto. O teste precisa de cobrir a experiência de receção, sem usar compras ou contas reais."
+          ]
+        },
+        {
+          "title": "Manutenção precisa de responsabilidade e limite",
+          "paragraphs": [
+            "Um canal de reporte pode recolher versão, localização e descrição do problema sem pedir informação pessoal desnecessária. A promessa de suporte deve corresponder à capacidade e ao período definidos, em vez de oferecer acompanhamento ilimitado sem meios. Se não há atualização contínua incluída, isso precisa de ser comunicado claramente antes da venda. O curso não define cláusulas jurídicas de consumo ou licenciamento; prepara questões e informação para revisão apropriada. Direitos existentes de compradores e autores não são alterados por uma decisão editorial tomada durante uma oficina.",
+            "A entrega final contém pacote candidato, lista de ficheiros, nota de edição e plano de tratamento de dois reportes. Verifique uma mudança de estado e uma correção menor, preservando a distinção. Acrescente o que ainda falta testar antes de declarar o produto utilizável e editorialmente aprovado. O percurso fornece seis oficinas textuais e exercícios próprios, não comprova as cento e sessenta horas históricas. Conteúdo, direitos, acessibilidade, funcionamento e tempo precisam de revisão e pilotagem antes de integrar qualquer edição no catálogo ativo ou substituir materiais já adquiridos."
+          ]
+        }
+      ],
+      "case": "Edição1quatro estados; edição2propõe reservado. Pacote deve conter explicação, exemplo, ficha e chave. Há correção menor separada de mudança estrutural. Sem migração ou compra real.",
+      "exercise": "Prepare pacote candidato e duas notas de alteração. Planeie reportes com versão e local, teste abertura e identifique pendências sem substituir históricos.",
+      "assessment": {
+        "question": "Acrescentar reservado é apenas correção tipográfica?",
+        "answer": "Não. Altera a classificação e as transições, exigindo explicação e plano para versões anteriores, sem migração automática dos registos.",
+        "rubric": [
+          "Identifica pacote completo.",
+          "Distingue alteração estrutural.",
+          "Preserva acesso e histórico."
+        ]
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão editorial e pedagógica do kit e pilotagem com utilizadores, sem presumir resultados.",
+    "Revisão de direitos e condições antes de incorporar qualquer recurso externo real.",
+    "Testes de acessibilidade e abertura em cada formato, materiais adicionais e validação da carga160h.",
+    "Plano de integração com preservação de compradores e autorização antes de produção."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}
