@@ -56,3 +56,19 @@ test('neither edited course can be activated without specialist reviews', () => 
     assert.ok(['scientific', 'editorial', 'rights', 'reader', 'workload'].every(key => draft.review[key] === false));
   }
 });
+
+test('higher variable cost raises break-even to five and cannot bypass capacity', () => {
+  const draft = read('business-foundations.pt.json');
+  const module = draft.modules.find(item => item.id === '3');
+  const text = teachingText(module);
+  const price = 120, variableCost = 45, fixedCost = 360, authorizedCapacity = 3;
+  const contribution = price - variableCost;
+  const breakEven = Math.ceil(fixedCost / contribution);
+  assert.equal(contribution, 75);
+  assert.equal(breakEven, 5);
+  assert.equal(fixedCost - authorizedCapacity * contribution, 135);
+  assert.match(text, /setenta e cinco/);
+  assert.match(text, /cinco/);
+  assert.ok(authorizedCapacity < breakEven);
+  assert.equal(draft.published, false);
+});
