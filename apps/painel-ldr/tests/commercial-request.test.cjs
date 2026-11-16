@@ -26,3 +26,8 @@ test('onboarding requests preserve the existing Master subject and identify the 
  for(const source of ['https://attacker.invalid','/cliente/agenda','other'])assert.throws(()=>commercialSupportPayload({...input,source}));
  assert.equal(commercialSupportPayload(input).p_source_url,'https://ldrecossistema.online/empresas/proposta');
 });
+
+test('onboarding attribution cannot be assigned to another commercial solution',()=>{
+ assert.throws(()=>commercialSupportPayload({...input,source:'integracao-colaboradores',solution:'Formação empresarial'}));
+ assert.equal(commercialSupportPayload({...input,source:'integracao-colaboradores',solution:'Integração de novos colaboradores'}).p_source_url,'https://ldrecossistema.online/empresas/integracao-colaboradores');
+});
