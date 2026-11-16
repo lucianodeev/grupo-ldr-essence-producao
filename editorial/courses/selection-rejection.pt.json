@@ -1,0 +1,149 @@
+{
+  "productKey": "curso_assinatura_como_lidar_com_rejeicao_em_processos_seletivos",
+  "slug": "como-lidar-com-rejeicao-em-processos-seletivos",
+  "title": "Como Lidar com Rejeição em Processos Seletivos",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 80,
+  "validatedHours": null,
+  "expectedModuleCount": 2,
+  "scope": "Oficinas de interpretação de resultados e revisão de candidaturas fictícias. Não trata sofrimento psicológico, promete contratação ou mede valor pessoal. Distingue resultado de seleção e evidência sobre uma candidatura.",
+  "courseObjectives": [
+    "Separar resultado comunicado, critério conhecido e hipótese.",
+    "Analisar etapas sem concluir valor pessoal ou causalidade."
+  ],
+  "sources": [
+    {
+      "id": "career",
+      "title": "National Careers Service. Identifying skills and upskilling.",
+      "url": "https://nationalcareers.service.gov.uk/careers-advice/identifying-skills-and-upskilling/",
+      "consulted": "2026-11-16",
+      "scope": "Consultadas orientações sobre reconhecer competências, rever experiências, comparar requisitos e planear aprendizagem. Sustenta reflexão profissional; não valida testes psicométricos, tratamento emocional, garantia de contratação ou requisitos internacionais. Consulta delimitada; não constitui validação externa do curso. Não são reproduzidos textos, figuras ou exercícios da fonte."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Interpretar uma recusa sem inventar a razão"
+    },
+    {
+      "id": "2",
+      "title": "Rever uma sequência de candidaturas com denominadores claros"
+    }
+  ],
+  "modules": [
+    {
+      "title": "Interpretar uma recusa sem inventar a razão",
+      "objectives": [
+        "Separar resultado comunicado, critério conhecido e hipótese."
+      ],
+      "sections": [
+        {
+          "title": "A resposta recebida por Rui",
+          "paragraphs": [
+            "Rui recebe uma mensagem fictícia informando que a organização decidiu continuar com outra candidatura. A mensagem agradece a participação, mas não apresenta pontuação, comparação ou motivo específico. O aluno deve começar pelo que a peça permite afirmar: Rui não avançará naquele processo. Não permite concluir falta de capacidade geral, discriminação comprovada ou preferência por uma característica que nunca foi mencionada. Reconhecer esse limite não exige diminuir a importância pessoal do resultado. A oficina trabalha interpretação documental e próxima ação profissional, sem prescrever como a pessoa deve sentir-se ou oferecer tratamento para sofrimento associado à rejeição.",
+            "O histórico inclui um anúncio que pedia organização de dados e atendimento escrito. Rui enviou exemplos de organização, mas não um exemplo de atendimento. Isso identifica uma oportunidade de rever a apresentação futura, sem provar que a omissão causou a recusa. A diferença é decisiva: um elemento melhorável pode ser observado na candidatura mesmo quando o motivo da decisão permanece desconhecido. O aluno prepara dois campos separados, o que consigo rever no material e o que não sei sobre a seleção, evitando preencher o segundo com uma explicação que apenas parece plausível."
+          ]
+        },
+        {
+          "title": "Uma resposta que procure informação sem exigir decisão diferente",
+          "paragraphs": [
+            "Prepare uma mensagem curta que agradeça a informação e pergunte se existe feedback sobre a correspondência dos exemplos com as tarefas anunciadas. Não peça dados de outros candidatos nem pressione a organização a justificar informação que não se comprometeu a fornecer no cenário. A ausência de resposta posterior deverá permanecer como ausência de informação, e não como confirmação de uma hipótese. O exercício não envia mensagens reais. A finalidade é mostrar que um pedido de esclarecimento pode ser específico e útil sem transformar a continuidade da procura de trabalho numa dependência da resposta de terceiros.",
+            "Entregue a interpretação da mensagem, uma revisão possível do material e uma ação independente para o próximo processo, como preparar um exemplo sintético de atendimento claramente identificado como treino. Não apresente esse exemplo como experiência já realizada num emprego. A rubrica verifica distinção entre facto e inferência, pertinência do pedido e honestidade da evidência. O curso não promete evitar novas recusas nem transformar qualquer resultado numa oportunidade positiva. Reconhece que o próximo passo pode ser pequeno e que, se a experiência produzir dificuldades persistentes na vida real, este material educacional não substitui apoio adequado à situação individual.",
+            "Se o feedback posterior mencionar falta de exemplo escrito, essa informação pode atualizar a leitura deste processo. Ela não demonstra que todas as recusas anteriores tiveram o mesmo motivo, pois pertencem a decisões e contextos diferentes."
+          ]
+        }
+      ],
+      "case": "Rui recebe recusa sem motivo. Anúncio pede dados e atendimento escrito; candidatura mostra só dados.",
+      "exercise": "Separe facto/hipótese, peça feedback específico e prepare melhoria independente.",
+      "assessment": {
+        "question": "A omissão de exemplo escrito comprova a causa da recusa?",
+        "answer": "Não. É um ponto observável para revisão, mas o motivo não foi comunicado.",
+        "rubric": [
+          "Não inventa motivo.",
+          "Não pede dados de concorrentes.",
+          "Revisa sem falsificar experiência."
+        ]
+      },
+      "sourceIds": [
+        "career"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Facto: Rui não avança; motivo não comunicado. Ponto de revisão: candidatura não mostrou exemplo de atendimento escrito exigido no anúncio. Pedido possível: existe feedback sobre a correspondência dos exemplos com as tarefas? Ação independente: preparar exemplo sintético de atendimento, claramente marcado como treino.",
+        "limitesDaConclusao": "O ponto melhorável não demonstra a causa da recusa nem autoriza inventar experiência."
+      }
+    },
+    {
+      "title": "Rever uma sequência de candidaturas com denominadores claros",
+      "objectives": [
+        "Analisar etapas sem concluir valor pessoal ou causalidade."
+      ],
+      "sections": [
+        {
+          "title": "Quatro processos diferentes",
+          "paragraphs": [
+            "O registo fictício de Rui inclui quatro candidaturas: uma recusada na triagem, uma com entrevista e recusa posterior, uma ainda sem resposta e uma encerrada porque a vaga foi retirada. Um resumo diz quatro rejeições seguidas. A primeira revisão deve corrigir a classificação. Existem duas recusas comunicadas, uma resposta pendente e um processo retirado. Essa diferença importa para escolher ações e interpretar resultados. O número quatro não deve ser usado como medida de inadequação de Rui nem como prova de que uma única característica explica o conjunto, pois as situações não são equivalentes.",
+            "As candidaturas também diferem no material enviado. Num caso, Rui não respondeu a uma pergunta obrigatória; noutro, enviou o documento completo; nos restantes, o pacote não permite conferir tudo. O aluno deve identificar um erro verificável e conservar as lacunas. A recusa depois da entrevista não comprova que o documento completo era perfeito, e o erro obrigatório não demonstra sozinho o motivo comunicado na triagem. Uma revisão pode reunir correções úteis sem construir uma explicação total de decisões para as quais não há informação suficiente no registo."
+          ]
+        },
+        {
+          "title": "Escolher uma alteração que possa ser observada",
+          "paragraphs": [
+            "Prepare uma lista curta de conferência para o próximo envio: instruções, perguntas obrigatórias e correspondência entre exemplos e tarefas. Use-a numa quinta candidatura sintética que contém um prazo, duas perguntas e um limite de extensão. O aluno deverá demonstrar a conferência antes do envio fictício, sem medir sucesso apenas pela obtenção de entrevista. Cumprir instruções é um resultado sob controlo do exercício; a decisão de seleção continua dependente de critérios e circunstâncias externos. A avaliação precisa de conservar essa diferença para que uma melhoria do processo não seja apresentada como promessa de contratação.",
+            "Entregue o registo corrigido e uma nota de aprendizagem que nomeie um erro, uma informação desconhecida e uma ação de revisão. Não transforme a tabela em ranking de pessoas ou em previsão de probabilidade individual. Quatro casos pequenos e distintos não sustentam uma estimativa estável de sucesso. O curso utiliza a sequência para organizar informação e reduzir inferências indevidas, não para classificar a capacidade emocional de Rui. A rubrica procura precisão dos estados e consistência da conferência na quinta tentativa, aceitando que o resultado futuro continue em aberto mesmo quando o trabalho de preparação foi executado de forma mais cuidadosa.",
+            "Se a candidatura pendente receber resposta depois, atualize apenas o seu estado e a data correspondente. Não altere retroativamente a descrição do conjunto inicial como se a informação posterior já estivesse disponível quando a revisão foi feita."
+          ]
+        }
+      ],
+      "case": "Quatro casos: recusa triagem; entrevista/recusa; pendente; vaga retirada. Uma pergunta obrigatória ficou sem resposta num caso.",
+      "exercise": "Corrija estados e confira uma quinta candidatura com instruções sintéticas.",
+      "assessment": {
+        "question": "Pode estimar chance individual a partir de quatro casos heterogéneos?",
+        "answer": "Não. O conjunto não fornece base adequada; descreva etapas e correções verificáveis.",
+        "rubric": [
+          "Distingue retirada e recusa.",
+          "Confere instruções.",
+          "Não promete resultado."
+        ]
+      },
+      "sourceIds": [
+        "career"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Registo: duas recusas, uma resposta pendente e uma vaga retirada. Conferência da quinta tentativa de treino: responder às duas perguntas, respeitar limite de150 palavras no total e prazo convencional indicado. Erro anterior de pergunta obrigatória é verificável, mas não explica todas as decisões.",
+        "limitesDaConclusao": "A quinta chamada é inteiramente fictícia e a conferência não permite prever entrevista ou contratação.",
+        "quintaCandidaturaDeTreino": {
+          "natureza": "Chamada inventada apenas para a atividade.",
+          "prazoConvencional": "30/11/2026 às 18h UTC; cenário fictício, não oportunidade real.",
+          "perguntas": [
+            "Como confere duas referências divergentes?",
+            "Como comunica uma dúvida que depende de decisão de outra função?"
+          ],
+          "limite": "150 palavras no total das duas respostas.",
+          "dadosDaResposta": "Pode usar apenas exemplos sintéticos, identificados como treino, sem declarar experiência real adicional."
+        }
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão especializada do âmbito deste curso e revisão editorial dos casos e critérios.",
+    "Pilotar as duas oficinas com participantes e tecnologias de apoio; ampliar a prática antes de qualquer equivalência à carga histórica anunciada.",
+    "Conferir fontes, direitos e cálculos; definir correspondência com o roteiro histórico sem apagar progresso ou certificados.",
+    "Aprovação fundamentada antes de integração ativa; esta edição compacta não comprova as horas históricas."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

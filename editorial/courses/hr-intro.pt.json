@@ -1,0 +1,143 @@
+{
+  "productKey": "curso_assinatura_nocoes_de_recursos_humanos_para_iniciantes",
+  "slug": "nocoes-de-recursos-humanos-para-iniciantes",
+  "title": "Noções de Recursos Humanos para Iniciantes",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 120,
+  "validatedHours": null,
+  "expectedModuleCount": 2,
+  "scope": "Duas oficinas sobre analisar necessidade de trabalho e organizar integração. Não seleciona candidatos reais nem ensina decisão baseada em características pessoais sensíveis. Separa RH de conferência documental do departamento pessoal.",
+  "courseObjectives": [
+    "Distinguir volume de trabalho e solução antecipada.",
+    "Relacionar tarefas, condições e critérios pertinentes.",
+    "Definir condições de entrada e apoio.",
+    "Distinguir atividade apresentada, praticada e executada com autonomia."
+  ],
+  "sources": [
+    {
+      "id": "career",
+      "title": "U.S. Office of Personnel Management. Job Analysis.",
+      "url": "https://www.opm.gov/policy-data-oversight/assessment-and-selection/job-analysis/",
+      "consulted": "2026-11-16",
+      "scope": "Consultado resumo oficial sobre tarefas, competências e sua ligação, incluindo necessidades de formação. Aplicação limitada à descrição de funções; não valida o plano LDR de integração nem transfere legislação ou padrões de seleção dos EUA. Consulta delimitada; não constitui validação externa do curso. Não são reproduzidos textos, figuras ou exercícios da fonte."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Transformar um pedido de contratação numa necessidade analisável"
+    },
+    {
+      "id": "2",
+      "title": "Organizar integração e aprendizagem sem prometer autonomia imediata"
+    }
+  ],
+  "modules": [
+    {
+      "title": "Transformar um pedido de contratação numa necessidade analisável",
+      "objectives": [
+        "Distinguir volume de trabalho e solução antecipada.",
+        "Relacionar tarefas, condições e critérios pertinentes."
+      ],
+      "sections": [
+        {
+          "title": "A equipa que pede mais uma pessoa",
+          "paragraphs": [
+            "A equipa fictícia Ponte pede uma nova contratação porque o atendimento está atrasado. O pacote mostra vinte pedidos por semana, capacidade conhecida para dezoito e quatro devoluções por instrução incompleta. Esses números levantam pelo menos duas perguntas: a capacidade disponível é suficiente para o volume e que parte do retrabalho pode ser tratada pelo processo? Não demonstram automaticamente qual contratação seria adequada. O aluno deve separar o problema observado da solução inicialmente solicitada. Recursos humanos participa na compreensão do trabalho necessário; não se limita a transformar qualquer pedido do gestor numa lista de características de uma pessoa ideal.",
+            "Analise três tarefas fornecidas: classificar pedidos, conferir documentos e comunicar uma decisão já autorizada. Cada uma exige uma evidência diferente. Classificar pode ser observado num conjunto sintético; conferir exige reconhecer campos e divergências; comunicar envolve conservar a decisão e explicar o próximo passo. Nenhuma dessas tarefas justifica selecionar por idade, origem, situação familiar ou diagnóstico de saúde. O aluno deve redigir critérios relacionados com a execução e indicar as condições materiais de trabalho ainda por esclarecer. O exercício não autoriza decisões sobre candidatos reais nem cria um instrumento psicométrico validado."
+          ]
+        },
+        {
+          "title": "Comparar alternativas antes de abrir a vaga",
+          "paragraphs": [
+            "Uma alternativa é reorganizar a entrada dos pedidos e testar instruções mais completas; outra é acrescentar capacidade com função delimitada. Prepare uma ficha que descreva o que cada alternativa pretende resolver e qual informação falta para a comparar. Não some as quatro devoluções aos vinte pedidos como se fossem necessariamente quatro pessoas novas: o pacote descreve retrabalho e pode referir-se a pedidos já contados. Uma análise útil mantém essa ambiguidade visível. Pedir a relação entre pedidos e devoluções é mais preciso do que escolher um total elevado para tornar a contratação aparentemente inevitável.",
+            "A entrega será um resumo da necessidade, três tarefas e um plano de recolha de informação. Se a equipa decidir abrir uma vaga, o resumo deverá distinguir requisitos necessários, aprendizagem possível e condições que a organização precisa de disponibilizar. Não se promete resolver o atraso apenas com uma contratação, pois o problema pode continuar se o processo de entrada permanecer incompleto. A rubrica observa a ligação entre evidência e critério, evitando tanto minimizar a sobrecarga como atribuí-la automaticamente a falha individual. O aluno precisa de justificar as perguntas que propõe, não demonstrar autoridade para aprovar orçamento ou admitir alguém.",
+            "Acrescente uma pergunta sobre o tipo de pedidos devolvidos. Se todas as devoluções ocorrerem por um único campo ausente, a hipótese de melhorar a entrada merece investigação específica antes de atribuir o problema à capacidade individual da equipa."
+          ]
+        }
+      ],
+      "case": "Ponte: vinte pedidos semanais, capacidade dezoito, quatro devoluções possivelmente incluídas nos vinte. Tarefas: classificar, conferir e comunicar decisão autorizada.",
+      "exercise": "Redija necessidade, critérios de tarefa e duas alternativas com perguntas ainda abertas.",
+      "assessment": {
+        "question": "É correto afirmar que existem vinte e quatro pedidos distintos?",
+        "answer": "Não. As devoluções podem pertencer aos vinte. É necessário verificar a relação antes de somar.",
+        "rubric": [
+          "Separa problema e solução.",
+          "Usa critérios de trabalho.",
+          "Não soma conjuntos sem verificar sobreposição."
+        ]
+      },
+      "sourceIds": [
+        "career"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Necessidade: compreender atraso em vinte pedidos e capacidade declarada de dezoito, incluindo quatro devoluções cuja sobreposição é desconhecida. Critérios ligados a tarefas: classificar casos, conferir campos e comunicar decisão já autorizada. Alternativas: melhorar entrada ou acrescentar capacidade com âmbito; verificar tipos de devolução e recursos antes de comparar.",
+        "limitesDaConclusao": "Não somar vinte e quatro pedidos distintos nem escolher por características pessoais."
+      }
+    },
+    {
+      "title": "Organizar integração e aprendizagem sem prometer autonomia imediata",
+      "objectives": [
+        "Definir condições de entrada e apoio.",
+        "Distinguir atividade apresentada, praticada e executada com autonomia."
+      ],
+      "sections": [
+        {
+          "title": "A primeira semana de Nuno",
+          "paragraphs": [
+            "Nuno inicia uma função fictícia de apoio à equipa Ponte. A organização planeia apresentar as instruções na segunda-feira, praticar com exemplos na terça e acompanhar os primeiros pedidos na quarta. A lista inicial marca tudo como concluído quando a apresentação termina. Esse registo confunde exposição ao material com capacidade de executar o trabalho. O aluno deverá separar três estados de aprendizagem: conteúdo apresentado, tentativa observada e execução autorizada dentro de um âmbito. Não é necessário avaliar personalidade ou recolher informação íntima para observar uma tarefa de treino e identificar onde ainda falta apoio.",
+            "O pacote apresenta duas tentativas sintéticas. Na primeira, Nuno classifica corretamente quatro pedidos simples, mas encaminha um caso excecional como se fosse rotina. Na segunda, reconhece a exceção depois de consultar a instrução. A melhoria permite registar uma execução com consulta naquele caso, não autonomia geral. O responsável precisa de definir quais tarefas podem ser realizadas, quando pedir ajuda e quem está disponível para responder. Se o contacto de apoio estiver ausente, essa condição também afeta a integração; não deve ser tratada automaticamente como incapacidade do novo colaborador."
+          ]
+        },
+        {
+          "title": "Uma revisão de integração com responsabilidade partilhada",
+          "paragraphs": [
+            "Prepare um plano curto com acesso a materiais, treino, acompanhamento e ponto de revisão. Cada ação deve ter responsável e evidência de realização. A presença numa sessão pode comprovar participação, enquanto uma classificação de pedidos exige observar respostas. Se a equipa não disponibilizou a instrução atual, registe a falta como condição do processo, não como erro atribuído a Nuno. O curso não define regras legais de período experimental, contrato ou avaliação de desempenho; trabalha uma sequência convencional de aprendizagem em situação fictícia. Qualquer utilização real precisa de adequação profissional e contextual.",
+            "Na revisão final, a equipa confirma que Nuno pode classificar pedidos simples com consulta e encaminhar exceções para acompanhamento. Redija a decisão com esse âmbito, conservando uma necessidade de prática adicional. Não escreva totalmente integrado se a própria nota ainda descreve dependências importantes. A avaliação procura coerência entre o que foi observado e a autorização concedida, além de identificar responsabilidades da organização. O produto final inclui uma ficha de aprendizagem e um plano de apoio; não inclui pontuação de valor pessoal, previsão de sucesso no emprego ou comparação entre pessoas com características diferentes. A integração é apresentada como trabalho organizado e verificável, não como uma cerimónia que substitui condições de execução.",
+            "Se o apoio anunciado não estiver disponível na quarta-feira, o plano precisa de rever as tarefas autorizadas nesse dia. A alteração deve mencionar a condição ausente, sem transformar a falta de acompanhamento num resultado negativo de aprendizagem de Nuno."
+          ]
+        }
+      ],
+      "case": "Nuno acerta quatro pedidos simples, erra uma exceção e depois a reconhece com consulta. Instrução e pessoa de apoio devem estar disponíveis.",
+      "exercise": "Construa estados de aprendizagem, plano de apoio e decisão de âmbito limitado.",
+      "assessment": {
+        "question": "Acertar com consulta comprova autonomia sem consulta?",
+        "answer": "Não. Deve registar-se o apoio usado e delimitar a autorização à condição observada.",
+        "rubric": [
+          "Distingue exposição e execução.",
+          "Identifica condições da organização.",
+          "Não transforma a observação em diagnóstico pessoal."
+        ]
+      },
+      "sourceIds": [
+        "career"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Registo de Nuno: quatro simples corretos; exceção inicialmente incorreta; exceção reconhecida com consulta. Plano: garantir instrução e pessoa de apoio, praticar exceções e rever evidência. Decisão de treino: classificar simples com consulta e encaminhar exceções para acompanhamento.",
+        "limitesDaConclusao": "Não declarar autonomia sem apoio ou culpar Nuno por instrução/acompanhamento que a organização não forneceu."
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão especializada do âmbito deste curso e revisão editorial dos casos e critérios.",
+    "Pilotar as duas oficinas com participantes e tecnologias de apoio; ampliar a prática antes de qualquer equivalência à carga histórica anunciada.",
+    "Conferir fontes, direitos e cálculos; definir correspondência com o roteiro histórico sem apagar progresso ou certificados.",
+    "Aprovação fundamentada antes de integração ativa; esta edição compacta não comprova as horas históricas."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

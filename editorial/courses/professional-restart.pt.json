@@ -1,0 +1,153 @@
+{
+  "productKey": "curso_assinatura_como_recomecar_profissionalmente",
+  "slug": "como-recomecar-profissionalmente",
+  "title": "Como Recomeçar Profissionalmente",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 120,
+  "validatedHours": null,
+  "expectedModuleCount": 2,
+  "scope": "Oficinas de recuperação de evidências e construção de uma primeira ação de retorno. Não promete emprego, apaga interrupções ou substitui orientação individual. O percurso fictício não determina direitos ou aptidão clínica.",
+  "courseObjectives": [
+    "Reconstruir tarefas e distinguir estado atual de experiência passada.",
+    "Escolher uma sequência pequena com dependências e critérios."
+  ],
+  "sources": [
+    {
+      "id": "career",
+      "title": "National Careers Service. Identifying skills and upskilling.",
+      "url": "https://nationalcareers.service.gov.uk/careers-advice/identifying-skills-and-upskilling/",
+      "consulted": "2026-11-16",
+      "scope": "Consultadas orientações sobre reconhecer competências, rever experiências, comparar requisitos e planear aprendizagem. Sustenta reflexão profissional; não valida testes psicométricos, tratamento emocional, garantia de contratação ou requisitos internacionais. Consulta delimitada; não constitui validação externa do curso. Não são reproduzidos textos, figuras ou exercícios da fonte."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Recuperar evidências sem preencher a interrupção com uma história falsa"
+    },
+    {
+      "id": "2",
+      "title": "Desenhar uma primeira semana de retorno executável"
+    }
+  ],
+  "modules": [
+    {
+      "title": "Recuperar evidências sem preencher a interrupção com uma história falsa",
+      "objectives": [
+        "Reconstruir tarefas e distinguir estado atual de experiência passada."
+      ],
+      "sections": [
+        {
+          "title": "O regresso de Helena",
+          "paragraphs": [
+            "Helena interrompeu uma atividade de apoio administrativo durante dois anos e pretende voltar a procurar trabalho. O pacote fictício descreve tarefas anteriores: organizar recibos, atualizar uma lista de contactos profissionais autorizados e preparar informação para reuniões. Não informa a causa da interrupção e não pede que ela seja exposta. A oficina começa por recuperar o que Helena efetivamente realizou, sem inventar um projeto de consultoria para ocupar o intervalo. Uma cronologia honesta pode conservar uma interrupção; não precisa de transformar todos os períodos em atividade profissional para que a experiência anterior seja compreensível.",
+            "Os materiais disponíveis são uma descrição antiga de função e duas listas sintéticas. Eles ajudam a recordar o tipo de tarefa, mas não demonstram domínio atual de qualquer programa. Separe experiência anterior, evidência disponível e capacidade que precisa de ser observada novamente. Helena pode saber explicar como conferia uma lista e ainda precisar de aprender uma ferramenta diferente. Isso não elimina o seu percurso, mas exige uma apresentação precisa. O aluno deve evitar tanto afirmar que ela perdeu todas as competências como declarar atualização completa apenas porque já trabalhou numa função semelhante."
+          ]
+        },
+        {
+          "title": "Um inventário para orientar a primeira verificação",
+          "paragraphs": [
+            "Prepare uma ficha com três tarefas anteriores e uma pergunta de atualização para cada uma. Para conferir registos, proponha um pequeno conjunto sintético com duas referências repetidas e uma data ausente. Para preparar uma reunião, forneça uma pauta com decisão pendente. O aluno escolherá uma tarefa para realizar, identificando o apoio utilizado. Não se pede recolher dados de antigos empregadores, obter documentos reservados ou contactar pessoas reais. A primeira verificação serve para tornar visível uma capacidade concreta, não para avaliar globalmente a empregabilidade de Helena ou o significado pessoal da interrupção.",
+            "O produto final inclui a cronologia, a ficha e uma apresentação de experiência que conserve datas conhecidas e estados atuais. Se o motivo do intervalo não for necessário ao objetivo da candidatura, o exercício não o inventa nem o exige como confissão. A rubrica verifica fidelidade, pertinência e perguntas de atualização. O curso não oferece uma fórmula que elimine perguntas de recrutamento nem promete que todas as organizações interpretarão a interrupção da mesma forma. Ele prepara material que permita a Helena explicar o seu percurso e escolher uma próxima ação a partir de evidências, em vez de depender de um rótulo como desatualizada ou pronta para tudo.",
+            "Uma formação iniciada durante o retorno deve aparecer como em curso até haver conclusão confirmada. A vontade de mostrar atualização não autoriza alterar esse estado ou apresentar inscrição como qualificação já obtida."
+          ]
+        }
+      ],
+      "case": "Helena: apoio administrativo anterior, intervalo de dois anos, causa não fornecida; descrição antiga e listas sintéticas; ferramenta atual não testada.",
+      "exercise": "Prepare cronologia, inventário e uma tarefa de atualização sem inventar atividade no intervalo.",
+      "assessment": {
+        "question": "Uma pausa demonstra perda de toda competência?",
+        "answer": "Não. É necessário distinguir experiência e observação atual, sem inferência global.",
+        "rubric": [
+          "Não falsifica cronologia.",
+          "Distingue passado e atualização.",
+          "Não exige dado íntimo."
+        ]
+      },
+      "sourceIds": [
+        "career"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Cronologia conserva atividade anterior e intervalo de dois anos, sem motivo inventado. Inventário: recibos, contactos autorizados e preparação de reuniões; separar experiência de observação atual. Tarefa sintética possível: localizar referência repetida R2 e uma data ausente numa lista de treino, registando dúvidas em vez de completar dados por suposição.",
+        "limitesDaConclusao": "Não apresentar uma formação em curso como concluída nem usar documentos reservados de empregador anterior.",
+        "listaSintetica": [
+          {
+            "referencia": "R1",
+            "data": "01/11/2026"
+          },
+          {
+            "referencia": "R2",
+            "data": "02/11/2026"
+          },
+          {
+            "referencia": "R2",
+            "data": null
+          }
+        ]
+      }
+    },
+    {
+      "title": "Desenhar uma primeira semana de retorno executável",
+      "objectives": [
+        "Escolher uma sequência pequena com dependências e critérios."
+      ],
+      "sections": [
+        {
+          "title": "Quatro horas para retomar a procura",
+          "paragraphs": [
+            "Helena dispõe de quatro horas na semana fictícia para preparar o retorno. Considera três ações: rever um exemplo de trabalho durante uma hora, adaptar uma apresentação durante uma hora e investigar duas oportunidades durante três horas. O total de cinco horas não cabe na disponibilidade fornecida. A oficina não pede transformar essa incompatibilidade em falta de motivação. Pede escolher uma sequência que produza um resultado utilizável e identificar o que ficará para outra semana. O plano deve respeitar as condições reais do cenário, sem pressupor disponibilidade noturna, apoio financeiro ou recursos que não foram mencionados.",
+            "A apresentação depende do exemplo que Helena pretende usar; a investigação das duas oportunidades pode ser dividida em duas partes de uma hora e meia, segundo a convenção do exercício. Uma proposta é executar o exemplo, rever a apresentação e investigar uma oportunidade, totalizando três horas e meia. Isso deixa meia hora de margem, mas não conclui a investigação das duas. O aluno deve apresentar a escolha com esse limite. Não se deve contar a margem como outra tarefa concluída nem prometer candidatura pronta se a investigação ainda revelar condições que precisam de esclarecimento."
+          ]
+        },
+        {
+          "title": "Um resultado que permita continuar sem reiniciar",
+          "paragraphs": [
+            "Crie um registo de saída da semana: exemplo produzido, versão da apresentação, informação confirmada sobre a primeira oportunidade e pergunta para a segunda. Esse registo permite retomar sem reconstruir todas as decisões. O exercício não utiliza um número de candidaturas como único indicador. Preparar uma peça completa e compreender uma condição pode ser mais informativo para a próxima ação do que enviar várias mensagens sem verificar correspondência. Essa comparação é uma decisão sobre o cenário, não uma regra universal sobre quantas candidaturas uma pessoa deve fazer para obter emprego.",
+            "Entregue o plano e uma revisão hipotética em que a primeira tarefa demora uma hora e meia. Recalcule a sequência e explicite o que muda. O objetivo é mostrar que um plano pode ser ajustado sem que o retorno profissional seja declarado fracasso ou sucesso total. A rubrica observa prioridade, dependência e registo de continuidade. Não se prevê prazo de contratação ou rendimento, e a atividade não substitui acompanhamento especializado quando a pessoa precisa de apoio adicional. O curso termina numa primeira semana executável, com trabalho concreto e pendências honestas, em vez de uma promessa ampla de recomeço que não indique como continuar depois da primeira tentativa.",
+            "Se a oportunidade investigada exigir uma condição não demonstrada, registe-a antes de adaptar novamente a apresentação. Modificar palavras não resolve uma qualificação ausente nem autoriza declarar experiência que o inventário não contém."
+          ]
+        }
+      ],
+      "case": "Disponibilidade 4h; exemplo1h, apresentação1h, duas oportunidades3h divisíveis em1,5h cada. Exemplo antecede apresentação.",
+      "exercise": "Planeie e reveja após exemplo demorar1,5h; conserve trabalho e pendências.",
+      "assessment": {
+        "question": "Três horas e meia de plano concluem duas investigações?",
+        "answer": "Não. A proposta contém apenas uma; a segunda permanece para continuidade. Depois de o exemplo demorar 1,5h, a sequência 1,5+1+1,5 ocupa exatamente as quatro horas e deixa a segunda investigação pendente.",
+        "rubric": [
+          "Respeita quatro horas.",
+          "Conserva dependência.",
+          "Não confunde plano e resultado."
+        ]
+      },
+      "sourceIds": [
+        "career"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Plano inicial: exemplo1h, apresentação1h e uma oportunidade1,5h =3,5h; margem0,5h. Outra oportunidade continua pendente. Após exemplo demorar1,5h:1,5+1+1,5=4h, sem margem. Registo de saída conserva exemplo, versão da apresentação e perguntas da oportunidade investigada.",
+        "limitesDaConclusao": "A sequência depende da entrega anterior; não declarar candidatura pronta se aparecer requisito não demonstrado."
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão especializada do âmbito deste curso e revisão editorial dos casos e critérios.",
+    "Pilotar as duas oficinas com participantes e tecnologias de apoio; ampliar a prática antes de qualquer equivalência à carga histórica anunciada.",
+    "Conferir fontes, direitos e cálculos; definir correspondência com o roteiro histórico sem apagar progresso ou certificados.",
+    "Aprovação fundamentada antes de integração ativa; esta edição compacta não comprova as horas históricas."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

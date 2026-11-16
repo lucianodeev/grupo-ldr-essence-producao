@@ -1,6 +1,6 @@
 import { Fragment, useState } from "react";
 import type { AcademyReadingEdition } from "@/lib/academy-reading-editions";
-import { isApprovedReadingEdition } from "@/lib/academy-reading-editions";
+import { isApprovedReadingEdition, isReleasedAcademyPracticeGuide } from "@/lib/academy-reading-editions";
 
 // Intentionally small Markdown subset. React escapes raw HTML and URLs stay text.
 function Inline({ text }: { text: string }) {
@@ -91,6 +91,8 @@ export function AcademyReadingEditionView({ edition }: { edition: AcademyReading
   // Defense in depth: the component must not display pending candidates even in a direct mount.
   if (!isApprovedReadingEdition(edition)) return null;
   const unit = edition.modules[Math.min(index, edition.modules.length - 1)]!;
+  const practiceGuide = isReleasedAcademyPracticeGuide(edition.practiceGuide, edition) ? edition.practiceGuide : null;
+  const practiceUnit = practiceGuide?.modules.find(module => module.id === unit.id);
   return (
     <section
       lang={edition.locale}
@@ -130,6 +132,17 @@ export function AcademyReadingEditionView({ edition }: { edition: AcademyReading
         <h2 className="mb-5 font-serif text-3xl">{unit.title}</h2>
         <AcademyMarkdown body={unit.body} />
       </article>
+      {practiceGuide && practiceUnit && (
+        <section aria-label="Percurso prático de 60 horas estimadas" className="mt-10 space-y-5 border-t pt-8">
+          <h2 className="font-serif text-2xl">Percurso prático — 60 horas estimadas</h2>
+          <p className="text-sm text-slate-600">
+            12 h de estudo ativo · 18 h de exercícios · 12 h de casos · 14 h de projeto · 4 h de avaliação e revisão.
+            Estimativa para as seis unidades; não é duração validada nem carga horária certificada.
+          </p>
+          <p className="text-sm text-slate-600">{practiceGuide.reviewDisclosure}</p>
+          <AcademyMarkdown body={practiceUnit.body} />
+        </section>
+      )}
     </section>
   );
 }

@@ -1,0 +1,143 @@
+{
+  "productKey": "curso_assinatura_linkedin_profissional_perfil_networking_e_oportunidades",
+  "slug": "linkedin-profissional-perfil-networking-e-oportunidades",
+  "title": "LinkedIn Profissional: Perfil, Networking e Oportunidades",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 80,
+  "validatedHours": null,
+  "expectedModuleCount": 2,
+  "scope": "Duas oficinas independentes da interface: construir um perfil fiel e uma aproximação profissional pertinente. Sem alegações sobre algoritmo, alcance ou contratação; as 80 horas históricas permanecem por validar.",
+  "courseObjectives": [
+    "Converter experiência em afirmações rastreáveis.",
+    "Distinguir formação concluída, atividade realizada e objetivo futuro.",
+    "Justificar uma aproximação por contexto verificável.",
+    "Distinguir aceitação de contacto e interesse comercial ou recrutamento."
+  ],
+  "sources": [
+    {
+      "id": "linkedin",
+      "title": "LinkedIn. Professional Community Policies.",
+      "url": "https://www.linkedin.com/legal/professional-community-policies",
+      "consulted": "2026-11-16",
+      "scope": "Resumo de pesquisa na fonte oficial consultado sobre autenticidade e informação. Não se verificou cada funcionalidade, posição de controlos ou algoritmo; as atividades independem da interface e não prometem alcance."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Um perfil que sustente o que anuncia"
+    },
+    {
+      "id": "2",
+      "title": "Uma conversa profissional com motivo e limite"
+    }
+  ],
+  "modules": [
+    {
+      "title": "Um perfil que sustente o que anuncia",
+      "objectives": [
+        "Converter experiência em afirmações rastreáveis.",
+        "Distinguir formação concluída, atividade realizada e objetivo futuro."
+      ],
+      "sections": [
+        {
+          "title": "A história profissional de Mila",
+          "paragraphs": [
+            "Mila participou durante oito meses na organização de encontros de uma associação fictícia. Confirmava inscrições, preparava listas e encaminhava dúvidas para a coordenadora. Não coordenava equipas, não definia o orçamento e não possui dados de aumento de participação. O exercício pede preparar um perfil profissional que torne essa contribuição visível sem aumentar o cargo ou inventar resultados. A especificidade nasce de tarefas, contexto e responsabilidade. Uma frase verdadeira e delimitada ajuda quem lê a perceber o trabalho; uma promessa grandiosa pode esconder justamente aquilo que a candidata consegue explicar com segurança numa conversa posterior.",
+            "O rascunho inicial apresenta Mila como diretora de operações, responsável por duplicar a participação e especialista certificada em gestão. O pacote apenas informa que terminou um curso introdutório de organização de eventos, sem certificação profissional indicada. Retire as três afirmações que excedem os dados. Pode descrever apoio à organização, gestão de inscrições e comunicação de dúvidas, mantendo a função da coordenadora. O interesse em trabalhar em operações pode aparecer como objetivo, mas não deve ser transformado em cargo já ocupado. A ausência de uma métrica não obriga a inventar um número para que a experiência pareça relevante."
+          ]
+        },
+        {
+          "title": "Selecionar e testar a apresentação",
+          "paragraphs": [
+            "Prepare um título curto, um resumo e duas entradas de experiência. Cada entrada deverá responder o que Mila fazia, em que contexto e até onde ia a sua responsabilidade. Se quiser incluir um exemplo de material, use uma lista sintética criada para o exercício, sem nomes de participantes ou documentos da associação. Um portefólio não precisa de revelar informação reservada para demonstrar organização. Também não é adequado apresentar a simulação como documento produzido num emprego real. Identifique a natureza do exemplo, permitindo que a pessoa interessada interprete corretamente a evidência que está a observar.",
+            "Faça uma revisão procurando incompatibilidades entre título, resumo e experiência. Se o título prometer direção de operações e a experiência descrever apoio, a inconsistência continua mesmo que cada frase esteja bem escrita. A política de autenticidade da plataforma é uma referência de enquadramento; esta oficina não descreve controlos da interface nem métodos para favorecer um algoritmo. O aluno entrega textos prontos para revisão, sem publicar num perfil real. A avaliação observa fidelidade, relevância e coerência, sem classificar a pessoa por idade, origem, fotografia ou outras características que não são necessárias para compreender as competências do caso.",
+            "Se Mila começar outra formação, deve apresentar a situação como em curso e distinguir essa inscrição do curso já terminado. A escolha da expressão não depende de tornar a trajetória mais impressionante; depende de permitir que o leitor reconstrua corretamente o estado da aprendizagem."
+          ]
+        }
+      ],
+      "case": "Mila: oito meses de apoio a encontros; inscrições, listas e dúvidas. Coordenadora decide equipa/orçamento. Curso introdutório concluído; sem métrica de crescimento ou certificação profissional fornecida.",
+      "exercise": "Reescreva título, resumo e experiência. Corrija direção, crescimento e certificação inventados; identifique como sintético um exemplo de portefólio.",
+      "assessment": {
+        "question": "Pode substituir a falta de números por uma estimativa de crescimento apresentada como resultado real?",
+        "answer": "Não. Deve descrever tarefas e alcance conhecidos. Uma estimativa não observada não pode ser convertida em realização comprovada.",
+        "rubric": [
+          "Preserva o nível real de responsabilidade.",
+          "Distingue objetivo e experiência.",
+          "Não expõe documentos de terceiros."
+        ]
+      },
+      "sourceIds": [
+        "linkedin"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Título possível: apoio à organização de encontros e inscrições. Resumo: oito meses em listas, confirmações e encaminhamento de dúvidas. Experiência mantém a coordenadora responsável por equipa/orçamento. Formação: curso introdutório concluído, sem certificação profissional presumida. Exemplo de lista deve ser marcado como simulação.",
+        "limitesDaConclusao": "Não inventar direção, crescimento ou qualificações; não publicar documentos da associação."
+      }
+    },
+    {
+      "title": "Uma conversa profissional com motivo e limite",
+      "objectives": [
+        "Justificar uma aproximação por contexto verificável.",
+        "Distinguir aceitação de contacto e interesse comercial ou recrutamento."
+      ],
+      "sections": [
+        {
+          "title": "Ler antes de pedir",
+          "paragraphs": [
+            "Mila encontra uma publicação fictícia de Teresa sobre acolhimento de participantes em eventos pequenos. A publicação pergunta como reduzir dúvidas repetidas na chegada e menciona a experiência de uma equipa de voluntariado. O exercício não pede localizar a pessoa real, recolher contactos ou automatizar convites. O material já contém aquilo que deve ser lido. Mila pode formular uma pergunta específica sobre a organização das instruções, relacionando-a com uma tarefa que efetivamente realizou. Essa relação é mais informativa do que elogiar genericamente a trajetória de Teresa ou pedir emprego sem qualquer contexto sobre a conversa proposta.",
+            "Compare duas mensagens. A primeira afirma que Mila é admiradora de todos os projetos de Teresa e exige uma indicação para uma vaga. A segunda menciona a pergunta da publicação, explica brevemente a experiência com listas de inscrição e pergunta se Teresa aceita comentar uma escolha de organização. A segunda oferece um motivo reconhecível e uma possibilidade de recusa. Isso não garante resposta ou oportunidade. O aluno deve rever a pertinência do pedido e a fidelidade da apresentação, sem transformar proximidade aparente numa relação profissional que ainda não existe."
+          ]
+        },
+        {
+          "title": "Acompanhar sem pressionar",
+          "paragraphs": [
+            "No cenário, Teresa aceita o contacto, mas não responde à pergunta. Essa ação não significa disponibilidade para mentoria, recrutamento ou mensagens repetidas. Prepare um registo simples com data, motivo do contacto e estado conhecido. Se houver uma resposta, atualize o registo com o conteúdo efetivo, sem interpretar cortesia como promessa. A atividade utiliza nomes fictícios e não requer listas reais de pessoas. O objetivo é conservar o contexto de uma relação possível, em vez de construir um volume de abordagens como se todas as pessoas que aceitaram uma ligação tivessem manifestado a mesma necessidade.",
+            "O pacote final inclui uma mensagem inicial, uma resposta a uma recusa explícita e uma nota de encerramento do acompanhamento. Na recusa, Teresa informa que não está disponível; Mila agradece e termina o pedido, sem tentar contornar a decisão através de outros canais. Discuta como uma contribuição pública pertinente pode continuar a fazer sentido sem servir de pretexto para insistência privada. A oficina não ensina extração de dados, contas falsas ou automações de interação. O critério final é a qualidade do contexto e do respeito pela resposta recebida, não o número de contactos, a popularidade do perfil ou uma promessa de contratação.",
+            "Suponha que Teresa responde apenas agradeço a mensagem. Essa frase permite registar uma resposta cortês, sem inferir disponibilidade para uma reunião. O próximo estado não deve saltar para oportunidade confirmada só porque a conversa deixou de estar sem resposta."
+          ]
+        }
+      ],
+      "case": "Teresa publica pergunta sobre dúvidas na chegada a eventos. Mila tem experiência de inscrições. Teresa aceita contacto, não responde e depois comunica indisponibilidade.",
+      "exercise": "Redija aproximação contextual, registo de estado e resposta de encerramento à indisponibilidade. Não envie mensagens reais.",
+      "assessment": {
+        "question": "Aceitar uma ligação demonstra que Teresa quer receber propostas ou indicar Mila para emprego?",
+        "answer": "Não. Só comprova a aceitação da ligação no cenário. Mentoria, proposta e indicação exigiriam manifestação própria, não fornecida.",
+        "rubric": [
+          "Usa o contexto específico da publicação.",
+          "Não interpreta cortesia como compromisso.",
+          "Encerra o pedido após recusa."
+        ]
+      },
+      "sourceIds": [
+        "linkedin"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Mensagem possível: li a pergunta sobre dúvidas na chegada; trabalhei com inscrições e gostaria de saber se aceita comentar a organização das instruções. Registo: ligação aceite, pergunta sem resposta, depois indisponibilidade comunicada. Encerramento: agradecer e terminar o pedido, sem outro canal.",
+        "limitesDaConclusao": "Aceitar ligação ou agradecer não confirma mentoria, indicação ou contratação."
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão especializada do âmbito deste curso e revisão editorial dos casos e critérios.",
+    "Pilotar as duas oficinas com participantes e tecnologias de apoio; ampliar a prática antes de qualquer equivalência à carga histórica anunciada.",
+    "Conferir fontes, direitos e cálculos; definir correspondência com o roteiro histórico sem apagar progresso ou certificados.",
+    "Aprovação fundamentada antes de integração ativa; esta edição compacta não comprova as horas históricas."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

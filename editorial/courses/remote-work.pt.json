@@ -1,0 +1,361 @@
+{
+  "productKey": "curso_assinatura_trabalho_remoto_e_organizacao_profissional",
+  "slug": "trabalho-remoto-e-organizacao-profissional",
+  "title": "Trabalho Remoto e Organização Profissional",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 100,
+  "validatedHours": null,
+  "expectedModuleCount": 6,
+  "scope": "Seis oficinas sobre coordenação distribuída: acordos de entrega, intervalos em UTC fictícios, versões, reuniões, indisponibilidade e passagem de trabalho. Casos Horizonte inteiramente sintéticos; sem aconselhamento laboral, clínico ou de segurança operacional. Não substitui curso de gestão individual do tempo nem comunicação interpessoal. Cem horas históricas não validadas.",
+  "courseObjectives": [
+    "Distinguir entrega, disponibilidade e autorização num pedido remoto.",
+    "Redigir um acordo de trabalho que outra pessoa consiga executar sem reconstruir uma conversa.",
+    "Calcular sobreposição entre intervalos fornecidos.",
+    "Distinguir prazo de entrega, janela de resposta e presença simultânea.",
+    "Separar versão mais recente e versão autorizada.",
+    "Construir um registo de decisão com alternativas, condição e consequência.",
+    "Escolher participantes pela decisão necessária.",
+    "Registar propostas, decisões e ações sem tratar presença como concordância.",
+    "Distinguir tarefas executáveis sem ligação e tarefas dependentes de acesso.",
+    "Comunicar uma indisponibilidade com impacto e próxima atualização.",
+    "Reconciliar tarefas, decisões e documentos numa entrega integrada.",
+    "Distinguir conclusão parcial, aceitação e autorização de uso."
+  ],
+  "sources": [
+    {
+      "id": "gitlab-nonlinear",
+      "title": "GitLab Handbook. The complete guide to asynchronous and non-linear working.",
+      "url": "https://handbook.gitlab.com/handbook/company/culture/all-remote/non-linear-workday/",
+      "consulted": "2026-11-16",
+      "scope": "Passagens sobre documentação, coordenação entre horários e dificuldades de organização consultadas. Descrevem uma prática empresarial, não uma norma laboral ou estudo de eficácia universal. Não se adotam horários pessoais, políticas de ausência, promessas de bem-estar ou exemplos da fonte. Casos, números e instrumentos Horizonte são originais."
+    },
+    {
+      "id": "gitlab-meetings",
+      "title": "GitLab Handbook. All-Remote Meetings.",
+      "url": "https://handbook.gitlab.com/handbook/company/culture/all-remote/meetings/",
+      "consulted": "2026-11-16",
+      "scope": "Secções sobre objetivo, pauta, contexto, contribuição de ausentes, documentação e ações consultadas. Não se reproduzem exemplos, modelos ou políticas de gravação; não se transferem prazos internos ou regras de participação. A comparação de minutos-pessoa e os sete itens da entrega são exercícios originais, sem eficácia validada."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Transformar uma tarefa remota num acordo verificável"
+    },
+    {
+      "id": "2",
+      "title": "Coordenar janelas de colaboração sem confundir relógios"
+    },
+    {
+      "id": "3",
+      "title": "Registar decisões e versões que outra pessoa consiga recuperar"
+    },
+    {
+      "id": "4",
+      "title": "Preparar uma reunião que produza uma decisão utilizável"
+    },
+    {
+      "id": "5",
+      "title": "Continuar uma entrega perante falha de ligação sem contornar regras"
+    },
+    {
+      "id": "6",
+      "title": "Entregar um pacote remoto com estados coerentes"
+    }
+  ],
+  "modules": [
+    {
+      "id": "1",
+      "title": "Transformar uma tarefa remota num acordo verificável",
+      "estimatedPracticeMinutes": 90,
+      "objectives": [
+        "Distinguir entrega, disponibilidade e autorização num pedido remoto.",
+        "Redigir um acordo de trabalho que outra pessoa consiga executar sem reconstruir uma conversa."
+      ],
+      "sourceIds": [
+        "gitlab-nonlinear"
+      ],
+      "sections": [
+        {
+          "title": "O trabalho que sai da conversa",
+          "paragraphs": [
+            "Uma equipa distribuída pode trocar muitas mensagens e continuar sem acordo sobre o que precisa de entregar. Nesta oficina, trabalho remoto significa colaborar sem depender da presença no mesmo lugar; não significa disponibilidade permanente, autonomia contratual ilimitada ou ausência de supervisão. A atividade começa num problema concreto: uma pessoa escreve que precisa do material para amanhã, outra envia uma apresentação e uma terceira esperava um ficheiro editável. Todas trabalharam, mas o objeto da entrega permaneceu ambíguo. O exercício pede tornar essa diferença observável antes de escolher uma ferramenta.",
+            "O caso acompanha a equipa fictícia Horizonte, que prepara instruções para uma sessão interna. Eva solicita doze cartões de orientação. Rui vai rever o texto e Lia organizará a sequência. A expressão material pronto não esclarece se os cartões precisam apenas de redação ou também de revisão e autorização. Comece por escrever três estados diferentes: texto produzido, texto revisto e utilização autorizada. O documento só pode avançar de estado quando existir o elemento definido para essa passagem, e não porque alguém afirmou estar praticamente concluído."
+          ]
+        },
+        {
+          "title": "Construir o acordo sem inventar autoridade",
+          "paragraphs": [
+            "Na ficha do exercício, cada cartão tem título, instrução, exemplo e pessoa responsável. A entrega solicitada é um conjunto editável com doze cartões numerados e uma lista das dúvidas ainda abertas. Rui confere a clareza; Eva decide se o conjunto pode ser utilizado. Lia organiza os ficheiros, mas não recebe autoridade para aprovar as instruções. Ao montar o acordo, mantenha essas funções separadas. Se Eva não responder até ao ponto de controlo combinado, o silêncio deixa a decisão pendente: não muda automaticamente a responsabilidade nem transforma o conjunto em material aprovado.",
+            "Acrescente a origem das informações e o lugar onde ficará a versão de trabalho. Uma mensagem pode apontar para esse lugar sem carregar mais uma cópia independente. O aluno deverá conseguir responder quem executa, quem revê, quem decide e onde se encontram as questões não resolvidas. Não é necessário inventar uma política empresarial completa para cumprir a atividade. Basta tornar explícitas as condições deste pequeno trabalho e identificar aquilo que ainda precisa de confirmação. As condições fictícias não substituem regras reais da organização onde alguém venha a trabalhar."
+          ]
+        },
+        {
+          "title": "Verificar compreensão antes de contar produção",
+          "paragraphs": [
+            "Faça agora a leitura como se fosse Lia, que não acompanhou a conversa inicial. Explique o que fará com os cartões e qual ação depende de Eva. Se a ficha não permitir responder, registe uma pergunta específica em vez de preencher a lacuna por suposição. Esta troca pode acontecer por escrito, respeitando o canal e o prazo acordados. O objetivo pedagógico é testar a recuperabilidade da informação; não medir a capacidade pessoal de trabalhar remotamente nem demonstrar que a comunicação assíncrona funciona melhor em qualquer situação.",
+            "No fecho da atividade, há sete cartões revistos, quatro apenas redigidos e um ainda sem exemplo. O total de doze posições existe, mas só sete passaram pela revisão. Apresente o estado de cada grupo e mantenha a autorização geral pendente. Dizer doze cartões prontos esconderia duas condições diferentes de trabalho incompleto. Entregue uma ficha de acordo e uma atualização curta, permitindo que a próxima pessoa continue a tarefa sem adivinhar o significado de pronto ou confundir quantidade de ficheiros com decisão concluída."
+          ]
+        }
+      ],
+      "case": "Equipa Horizonte: Eva solicita 12 cartões; Rui revê; Lia organiza. Estado: 7 revistos, 4 apenas redigidos, 1 sem exemplo. Só Eva autoriza utilização. Dados fictícios.",
+      "exercise": "Escreva a ficha de entrega, os três estados, as funções e uma atualização para alguém que não acompanhou a conversa. Liste as confirmações em falta.",
+      "assessment": {
+        "question": "Existirem doze ficheiros permite informar que os doze cartões estão prontos para utilização?",
+        "answer": "Não. Sete foram revistos, quatro estão apenas redigidos e um permanece sem exemplo. A autorização de Eva é uma condição separada e ainda não foi dada.",
+        "rubric": [
+          "Distingue os estados de redação, revisão e autorização.",
+          "Preserva as funções sem transferir autoridade pelo silêncio.",
+          "Permite recuperar objeto, localização e pendências."
+        ]
+      }
+    },
+    {
+      "id": "2",
+      "title": "Coordenar janelas de colaboração sem confundir relógios",
+      "estimatedPracticeMinutes": 90,
+      "objectives": [
+        "Calcular sobreposição entre intervalos fornecidos.",
+        "Distinguir prazo de entrega, janela de resposta e presença simultânea."
+      ],
+      "sourceIds": [
+        "gitlab-nonlinear"
+      ],
+      "sections": [
+        {
+          "title": "Trabalhar com uma referência comum",
+          "paragraphs": [
+            "A coordenação à distância precisa de uma referência temporal que possa ser interpretada por todas as pessoas envolvidas. Nesta oficina, os horários já são fornecidos em UTC e pertencem a um único dia fictício. Não é necessário converter cidades nem presumir diferenças sazonais entre países. O aluno deve escrever a data do cenário e conservar a referência em cada compromisso. Assim, a atividade avalia intervalos e dependências sem introduzir erros de conversão ou apresentar como universal uma diferença de relógios que pode mudar ao longo do ano.",
+            "No quadro recebido, Ana está disponível das 09h às 15h UTC, Bruno das 12h às 18h UTC e Célia das 15h às 19h UTC. Ana e Bruno partilham três horas, das 12h às 15h. Bruno e Célia partilham três horas, das 15h às 18h. A fronteira das 15h entre Ana e Célia não constitui uma reunião com duração positiva. É precisamente neste ponto que uma lista de horários pode parecer conciliada sem reservar tempo real para uma conversa entre as três pessoas."
+          ]
+        },
+        {
+          "title": "Desenhar a passagem em vez de exigir presença",
+          "paragraphs": [
+            "O trabalho tem duas dependências: Ana produz uma nota de contexto e Célia verifica uma decisão que depende dessa nota. Bruno pode apoiar a passagem de informação, mas não aprova o resultado em nome de qualquer colega. Uma possibilidade no exercício é Ana disponibilizar a nota antes das 14h UTC, Bruno assinalar dúvidas dentro da sua sobreposição e Célia encontrar a nota e essas dúvidas a partir das 15h. Essa sequência é uma proposta de coordenação a confirmar, não uma obrigação de resposta fora da disponibilidade indicada.",
+            "Separe três campos no plano: quando o material fica acessível, até quando se pretende uma resposta e qual alternativa será usada se ela não chegar. Um prazo de resposta deve ser acordado; não nasce simplesmente porque o remetente escolheu uma hora conveniente para si. Se uma decisão exige participação simultânea das três pessoas, o quadro fornecido não a garante. Nesse caso, o aluno deve identificar a impossibilidade atual e pedir um novo acordo, sem esconder o problema numa convocatória ou declarar que todos os horários são flexíveis."
+          ]
+        },
+        {
+          "title": "Explicar limites da solução escolhida",
+          "paragraphs": [
+            "A proposta assíncrona reduz a necessidade de coincidência, mas não elimina dependências nem substitui situações que exigem conversa direta. No cenário, a nota precisa de apresentar a pergunta, as alternativas e os dados que faltam. Sem isso, Célia poderá iniciar o seu período de trabalho sem conseguir decidir. O aluno deve produzir uma passagem utilizável, e não apenas desenhar setas entre nomes. Considere também a possibilidade de alguém comunicar uma indisponibilidade: atualizar o plano é mais preciso do que manter um compromisso que já perdeu as condições de execução.",
+            "O produto final é uma linha temporal acompanhada de uma mensagem curta. A mensagem informa que não existe uma janela positiva comum às três pessoas nos intervalos recebidos, identifica a sequência proposta e pede confirmação das horas de entrega e resposta. Não atribua esta conclusão aos fusos reais de cidades específicas, porque o exercício não forneceu esses dados. Também não transforme a proposta numa regra sobre trabalho remoto. A avaliação procura consistência dos intervalos e respeito pelas disponibilidades declaradas, mantendo a diferença entre uma opção possível e um acordo efetivamente confirmado."
+          ]
+        }
+      ],
+      "case": "Dia fictício em UTC: Ana 09–15h; Bruno 12–18h; Célia 15–19h. Ana prepara contexto e Célia decide; Bruno pode esclarecer mas não aprovar.",
+      "exercise": "Desenhe as sobreposições, proponha uma passagem assíncrona e escreva a confirmação necessária para cada prazo. Não use dados de fusos reais.",
+      "assessment": {
+        "question": "Qual é a duração positiva da janela comum às três pessoas?",
+        "answer": "Não há janela comum com duração positiva. Ana termina às 15h e Célia começa às 15h. Ana/Bruno e Bruno/Célia têm três horas de sobreposição cada, em intervalos diferentes.",
+        "rubric": [
+          "Calcula as duas sobreposições de três horas.",
+          "Não trata um instante de fronteira como reunião.",
+          "Identifica o que ainda exige acordo."
+        ]
+      }
+    },
+    {
+      "id": "3",
+      "title": "Registar decisões e versões que outra pessoa consiga recuperar",
+      "estimatedPracticeMinutes": 90,
+      "objectives": [
+        "Separar versão mais recente e versão autorizada.",
+        "Construir um registo de decisão com alternativas, condição e consequência."
+      ],
+      "sourceIds": [
+        "gitlab-nonlinear"
+      ],
+      "sections": [
+        {
+          "title": "O nome do ficheiro não decide o estado",
+          "paragraphs": [
+            "Num trabalho remoto, encontrar um ficheiro não garante saber se ele pode orientar a próxima ação. A oficina apresenta três versões de uma instrução interna: C1 contém o rascunho inicial, C2 recebeu revisão de linguagem e C3 acrescenta uma condição ainda por confirmar. A data mais recente ajuda a ordenar acontecimentos, mas não demonstra autorização. O aluno precisa de recuperar o motivo de cada alteração e o estado correspondente. Não basta renomear C3 como final nem supor que a pessoa que a gravou tinha competência para aprovar a mudança.",
+            "O histórico fictício informa que C2 foi autorizado por Eva para a atividade A. A versão C3 propõe usar a mesma instrução também na atividade B, cuja condição de utilização não foi verificada. Isso significa que C2 continua a ser a referência autorizada para A, dentro dos limites recebidos, enquanto B permanece pendente. A resposta não é apagar C3, pois ela conserva uma proposta e a sua pergunta aberta. Também não é substituir todas as ligações por C3, porque essa ação confundiria novidade documental com alteração de âmbito aprovada."
+          ]
+        },
+        {
+          "title": "Uma decisão recuperável inclui a pergunta",
+          "paragraphs": [
+            "Prepare um registo que explique qual pergunta foi decidida, quais alternativas existiam, quem tinha a função de decidir e a que situação a decisão se aplica. Acrescente a versão usada, a data do registo e a evidência de autorização fornecida no cenário. Quando um campo não está disponível, escreva pendente ou não fornecido. Esta marcação não é um defeito do documento: impede que a próxima pessoa atribua certeza a um dado inexistente. O instrumento é um exercício original de rastreabilidade, sem pretensão de satisfazer requisitos documentais de qualquer setor regulado.",
+            "Agora introduza uma discordância: Rui considera que a condição de B pode alterar a instrução de A. A discordância precisa de ser registada com a relação que propõe rever, sem reescrever retroativamente a decisão anterior como se nunca tivesse existido. Eva terá de avaliar se a referência autorizada para A continua adequada. Até essa avaliação, a atualização deve indicar o risco identificado e a pergunta aberta. Não transforme automaticamente a opinião mais recente numa decisão, mas também não esconda informação nova atrás de um estado que já não descreve toda a situação."
+          ]
+        },
+        {
+          "title": "Ensaiar a recuperação por alguém ausente",
+          "paragraphs": [
+            "Imagine que Lia regressa depois de dois dias e encontra apenas uma mensagem dizendo aprovado. Ela deverá conseguir seguir a ligação para o registo e identificar objeto, âmbito, responsável e pendências. Teste essa recuperação com as informações do exercício, sem recorrer à memória da conversa. Se a palavra aprovado não tiver objeto ou versão, a mensagem é insuficiente. Uma atualização melhor aponta para o registo e resume o que pode continuar, o que deve esperar e quem responderá à dúvida que impede a extensão para outro contexto de uso.",
+            "A entrega final inclui uma pequena lista de versões, um registo de decisão e uma mensagem para Lia. As três peças precisam de concordar entre si. Se a lista disser que C3 está pendente e a mensagem recomendar utilizá-la em B, a incoerência permanece mesmo com uma apresentação visual cuidada. O critério central é permitir que outra pessoa recupere o fundamento da ação. Não será avaliado o uso de um programa específico, o número de comentários feitos ou a velocidade de resposta, pois nenhum desses elementos comprova por si só uma decisão compreendida e autorizada."
+          ]
+        }
+      ],
+      "case": "C2 foi autorizada por Eva apenas para A. C3 acrescenta B, cuja condição está por verificar. Rui levanta possível impacto de B sobre A; Eva ainda não avaliou esse impacto.",
+      "exercise": "Crie lista de versões, registo da decisão e passagem para Lia, mantendo explícita a nova dúvida sobre A e a falta de autorização de B.",
+      "assessment": {
+        "question": "Por ser mais recente, C3 substitui automaticamente C2 como instrução autorizada para A e B?",
+        "answer": "Não. C3 é uma proposta com extensão pendente. O registo deve conservar a autorização anterior de A e a nova dúvida levantada, pedindo avaliação a Eva; B não tem autorização no cenário.",
+        "rubric": [
+          "Distingue cronologia e autorização.",
+          "Regista a discordância sem apagar o histórico.",
+          "Não preenche dados ausentes por suposição."
+        ]
+      }
+    },
+    {
+      "id": "4",
+      "title": "Preparar uma reunião que produza uma decisão utilizável",
+      "estimatedPracticeMinutes": 90,
+      "objectives": [
+        "Escolher participantes pela decisão necessária.",
+        "Registar propostas, decisões e ações sem tratar presença como concordância."
+      ],
+      "sourceIds": [
+        "gitlab-meetings"
+      ],
+      "sections": [
+        {
+          "title": "Começar pelo resultado que falta",
+          "paragraphs": [
+            "Uma reunião remota ocupa tempo de várias pessoas ao mesmo tempo. Antes de a convocar, identifique a pergunta que precisa de resposta e o motivo pelo qual o material escrito ainda não a resolveu. No exercício, existem duas propostas para a ordem dos cartões da sessão Horizonte. As diferenças estão documentadas, mas Eva e Rui interpretam de modo distinto uma condição de utilização. A reunião serve para esclarecer essa condição e decidir o que pode avançar. Não serve apenas para todas as pessoas repetirem o trabalho que já descreveram nas suas atualizações.",
+            "O aluno recebe duas opções de convocatória: quatro pessoas durante trinta minutos ou Eva e Rui durante vinte minutos, com perguntas prévias de Lia e Ana. A primeira utiliza cento e vinte minutos-pessoa; a segunda, quarenta. A diferença de oitenta minutos-pessoa é uma comparação aritmética do cenário, não prova de melhor decisão ou produtividade superior. Se a decisão depender de informação que só Ana consegue esclarecer e ela não a tiver registado, reduzir o número de participantes poderá impedir o resultado. A escolha precisa de justificar como essa dependência será tratada."
+          ]
+        },
+        {
+          "title": "Dar contexto e oportunidade de contribuir",
+          "paragraphs": [
+            "Prepare uma pauta curta com a pergunta, as versões das duas propostas, a condição controvertida e as contribuições solicitadas. Lia não poderá participar; deixe um lugar identificado para a sua pergunta e registe se foi respondida. A pessoa ausente não perde automaticamente a possibilidade de esclarecer uma informação relevante. Ao mesmo tempo, não invente consenso: receber uma pergunta ou enviar uma nota não equivale a concordar com a decisão final. Na simulação, os participantes têm funções definidas e qualquer extensão de autoridade precisa de confirmação explícita.",
+            "O registo da reunião deverá separar o que foi proposto, o que foi decidido e o que permanece como ação futura. Eva pode escolher uma sequência condicional à verificação de um exemplo. Nesse caso, a ata não deve anunciar autorização incondicional de todos os cartões. Escreva a condição e a pessoa responsável pela verificação. Se a condição continuar sem resposta ao terminar o encontro, o grupo pode sair com uma próxima ação clara, ainda que a pergunta inicial não esteja inteiramente resolvida. Essa distinção evita que a necessidade de encerrar a chamada produza uma conclusão fictícia."
+          ]
+        },
+        {
+          "title": "Conservar o resultado depois da chamada",
+          "paragraphs": [
+            "Depois da reunião, Lia recebe um resumo com ligação para o registo, indicação da condição pendente e canal onde pode pedir esclarecimento. Não é necessário gravar pessoas ou recolher dados pessoais para realizar esta atividade. A simulação pode ser feita por leitura de papéis e notas escritas, com a mesma pergunta e os mesmos critérios de avaliação. O material não estabelece obrigações legais sobre gravações, horários ou participação. A finalidade é produzir documentação suficiente para recuperar uma decisão e continuar o trabalho sem depender de quem esteve presente na conversa.",
+            "Entregue a pauta, a justificação de participantes e um registo de encerramento. Acrescente um critério para avaliar se uma nova reunião é necessária: existe uma pergunta que depende novamente de interação simultânea ou basta completar a verificação acordada? Não marque encontros recorrentes por simples continuidade do exercício. O avaliador procurará uma relação entre necessidade, contexto disponível e resultado registado. A duração utilizada no treino é uma condição fictícia; não deve ser apresentada como tempo ideal universal nem como promessa de que uma reunião curta produz necessariamente melhores decisões."
+          ]
+        }
+      ],
+      "case": "Opções: 4 pessoas × 30 minutos ou 2 × 20 minutos com perguntas prévias das ausentes. Eva decide; Rui esclarece a condição; Lia não pode participar. Uma verificação de exemplo pode permanecer pendente.",
+      "exercise": "Escolha e justifique participantes, calcule minutos-pessoa, escreva pauta e ata distinguindo proposta, decisão condicional e verificação.",
+      "assessment": {
+        "question": "A alternativa com quarenta minutos-pessoa está demonstrada como melhor por consumir menos tempo simultâneo?",
+        "answer": "Não. A diferença é de oitenta minutos-pessoa, mas a alternativa só é adequada se conservar a informação e a autoridade necessárias à decisão. Menor duração não demonstra melhor resultado.",
+        "rubric": [
+          "Confere 120 e 40 minutos-pessoa.",
+          "Explica como tratar a contribuição de Lia.",
+          "Mantém condições pendentes visíveis na ata."
+        ]
+      }
+    },
+    {
+      "id": "5",
+      "title": "Continuar uma entrega perante falha de ligação sem contornar regras",
+      "estimatedPracticeMinutes": 90,
+      "objectives": [
+        "Distinguir tarefas executáveis sem ligação e tarefas dependentes de acesso.",
+        "Comunicar uma indisponibilidade com impacto e próxima atualização."
+      ],
+      "sourceIds": [
+        "gitlab-nonlinear"
+      ],
+      "sections": [
+        {
+          "title": "Uma falha técnica muda as condições do plano",
+          "paragraphs": [
+            "O caso desta oficina começa quando a ligação de Rui falha antes da revisão dos cartões. Trabalhar remotamente não elimina falhas de equipamento, energia ou acesso. O objetivo não é ensinar recuperação técnica nem garantir continuidade em qualquer circunstância. O aluno precisa de identificar quais tarefas continuam possíveis com os materiais e autorizações disponíveis, quais devem esperar e quem precisa de conhecer o impacto. Uma resposta responsável não consiste em afirmar que tudo continuará normal, mas em atualizar o plano com aquilo que ainda pode ser verificado naquele momento.",
+            "O pacote fictício inclui quatro tarefas. A primeira é rever a clareza de dois exemplos sintéticos num ficheiro local cuja utilização offline foi autorizada. A segunda exige confirmar uma informação num sistema indisponível. A terceira depende da resposta de Eva. A quarta é preparar um resumo sem dados reservados, usando notas de treino já disponíveis. As tarefas um e quatro podem ser iniciadas nas condições fornecidas; as outras duas permanecem dependentes. Essa classificação decorre do enunciado, não de uma licença geral para copiar materiais empresariais para equipamentos ou serviços pessoais."
+          ]
+        },
+        {
+          "title": "Preservar limites enquanto se procura alternativa",
+          "paragraphs": [
+            "A proposta de colocar o conjunto inteiro num serviço público de partilha não resolve a falta de autorização para essa transferência. No exercício, esse caminho deve ser registado como não autorizado e retirado do plano. Também não se pede credenciais a um colega para entrar na sua sessão. O aluno trabalha apenas com alternativas que respeitem os acessos já definidos. Se nenhuma alternativa autorizada permitir cumprir a verificação necessária, deve declarar a dependência e o efeito na entrega, em vez de converter a urgência numa justificação automática para ultrapassar os limites do cenário.",
+            "Escreva uma atualização com três elementos: condição atual conhecida, parte da entrega afetada e próximo ponto de informação combinado. Evite estimar uma hora de restabelecimento sem evidência. Pode informar que a revisão dos exemplos locais prossegue e que a confirmação no sistema está impedida. A mensagem precisa de permitir que Eva decida se reorganiza a sequência, pede outra pessoa autorizada ou adia a entrega dependente. O aluno não decide sozinho uma alteração de compromisso que envolve responsabilidades de outros participantes e não apresenta uma tarefa parcial como substituição equivalente de todo o trabalho."
+          ]
+        },
+        {
+          "title": "Retomar com reconciliação de estados",
+          "paragraphs": [
+            "Quando o acesso regressa no cenário, compare o que foi realizado localmente com a versão de trabalho que a equipa manteve. Não sobreponha silenciosamente o ficheiro local ao conjunto partilhado. Registe as mudanças, confirme se os exemplos ainda correspondem à instrução atual e identifique conflitos antes de apresentar a revisão como concluída. A oficina não determina um procedimento técnico de sincronização: utiliza dois pequenos textos sintéticos para que o aluno explique o que pretende conservar e porquê. Qualquer operação real depende das ferramentas e das regras aprovadas pela organização responsável pelos materiais.",
+            "O resultado desta atividade é um plano de continuidade proporcional: duas tarefas executáveis, duas dependências explícitas, uma atualização de impacto e uma proposta de reconciliação. A qualidade é avaliada pela precisão dos estados e pelo respeito às condições fornecidas. Não se pede comprovar disponibilidade constante, usar uma rede pessoal ou resolver a falha fora do horário acordado. Caso o aluno precise de fazer a oficina sem computador, pode redigir os mesmos estados em papel. Essa alternativa conserva a decisão pedagógica central e evita confundir acesso a equipamento com compreensão do problema apresentado."
+          ]
+        }
+      ],
+      "case": "Falha de ligação. T1: rever dois exemplos sintéticos locais, offline autorizado. T2: consultar sistema indisponível. T3: obter resposta de Eva. T4: resumir notas de treino sem dados reservados. Serviço público de partilha não autorizado.",
+      "exercise": "Classifique T1–T4, recuse a alternativa não autorizada, escreva a atualização e descreva como comparar alterações locais após o restabelecimento.",
+      "assessment": {
+        "question": "É correto anunciar as quatro tarefas concluídas porque duas puderam avançar offline?",
+        "answer": "Não. T1 e T4 podem avançar; T2 depende do acesso e T3 da resposta. O restabelecimento exige também comparar alterações locais com a versão da equipa antes de as considerar reconciliadas.",
+        "rubric": [
+          "Conserva as duas dependências distintas.",
+          "Não propõe credenciais de terceiros ou partilha não autorizada.",
+          "Explica a reconciliação sem sobrescrita silenciosa."
+        ]
+      }
+    },
+    {
+      "id": "6",
+      "title": "Entregar um pacote remoto com estados coerentes",
+      "estimatedPracticeMinutes": 90,
+      "objectives": [
+        "Reconciliar tarefas, decisões e documentos numa entrega integrada.",
+        "Distinguir conclusão parcial, aceitação e autorização de uso."
+      ],
+      "sourceIds": [
+        "gitlab-meetings",
+        "gitlab-nonlinear"
+      ],
+      "sections": [
+        {
+          "title": "Reunir evidências que antes estavam separadas",
+          "paragraphs": [
+            "A última oficina usa um pacote inteiramente fictício para integrar as decisões anteriores. O aluno recebe sete itens de uma entrega: cinco concluídos segundo os critérios do cenário, um bloqueado por confirmação no sistema e outro ainda em revisão por Rui. Eva é responsável pela autorização de utilização do conjunto. A atividade não pede refazer os cinco itens concluídos. Pede produzir uma passagem que permita distinguir o trabalho disponível, as condições ainda ausentes e a decisão necessária para que outra pessoa saiba o que pode utilizar sem depender de uma explicação oral complementar.",
+            "Uma mensagem inicial afirma que a entrega está completa porque os sete ficheiros foram enviados. Essa contagem trata presença documental como conclusão. O aluno deve confrontá-la com o quadro de estados: cinco itens satisfazem os critérios, um não pôde ser verificado e um ainda aguarda revisão. O total de ficheiros não modifica esses factos. A proporção de itens concluídos é cinco em sete, aproximadamente setenta e um vírgula quatro por cento, mas a percentagem também não autoriza o uso do conjunto nem descreve a importância relativa de cada pendência para o objetivo da sessão."
+          ]
+        },
+        {
+          "title": "Construir uma passagem que sustente a próxima decisão",
+          "paragraphs": [
+            "O pacote final inclui um índice dos sete itens, a versão de cada um, o estado, a referência para a evidência de conclusão ou a condição em falta e a pessoa que acompanhará essa condição. Separe índice e decisão: um índice completo pode mostrar com precisão uma entrega incompleta. No registo destinado a Eva, formule a pergunta sobre utilização parcial e indique as limitações conhecidas. Se o item bloqueado for indispensável à sessão, o aluno precisa de sinalizar essa dependência, sem presumir que cinco itens concluídos compensam a falta de um requisito essencial.",
+            "Introduza agora uma atualização: Rui termina a revisão do sexto item, mas a confirmação no sistema continua indisponível. O quadro passa a seis itens concluídos e um bloqueado. A passagem deve mencionar o que mudou e conservar o bloqueio. Não pode manter a percentagem anterior nem anunciar automaticamente aceitação por Eva. O exercício avalia a capacidade de atualizar uma representação sem apagar condições que ainda permanecem. A alteração do número de itens concluídos e a autorização do conjunto são acontecimentos diferentes, com evidências próprias, e devem continuar distinguíveis no documento final."
+          ]
+        },
+        {
+          "title": "Rever o pacote pela perspetiva de quem recebe",
+          "paragraphs": [
+            "Faça uma conferência final com três perguntas: outra pessoa encontra a versão indicada, entende o estado sem interpretar cores e identifica a próxima decisão? Use rótulos textuais como concluído, em revisão e bloqueado. Se uma informação depender de uma cor, de uma imagem ou de uma lembrança da conversa, acrescente uma descrição recuperável no material. Esta conferência é uma tarefa de revisão do exercício, não uma certificação de acessibilidade. Testes com tecnologias de apoio e participantes continuam necessários antes de afirmar que todos os formatos e condições de utilização foram validados.",
+            "Entregue o índice atualizado, a nota de passagem e uma reflexão curta sobre uma suposição que corrigiu ao longo do percurso. O aluno pode apresentar o trabalho por escrito ou numa explicação oral acompanhada de registo textual das decisões, sem divulgar situações reais da sua vida profissional. A rubrica observa consistência entre estados, limites e próxima ação. Não atribui perfil de personalidade, aptidão definitiva para emprego remoto ou garantia de contratação. O curso termina com uma entrega verificável e um conjunto de questões para revisão, mantendo a carga histórica anunciada separada do tempo de prática ainda não pilotado."
+          ]
+        }
+      ],
+      "case": "Pacote final: 7 itens, inicialmente 5 concluídos, 1 em revisão e 1 bloqueado. Rui conclui depois a revisão; o bloqueio no sistema permanece. Só Eva autoriza utilização. Dados fictícios.",
+      "exercise": "Prepare índice antes/depois, calcule proporções, escreva passagem e pergunta de decisão. Explique por que quantidade e percentagem não autorizam uso.",
+      "assessment": {
+        "question": "Depois da revisão de Rui, quantos itens estão concluídos e o conjunto já está autorizado?",
+        "answer": "Seis de sete estão concluídos, aproximadamente 85,7%. Um permanece bloqueado e a autorização de Eva não foi fornecida. Nem a contagem nem a percentagem permitem presumir autorização.",
+        "rubric": [
+          "Atualiza de 5/7 para 6/7 sem apagar o bloqueio.",
+          "Conserva versão, evidência e responsável por condição.",
+          "Separa conclusão de itens e autorização do conjunto."
+        ]
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão por profissional de coordenação de equipas distribuídas e revisão editorial; a prática de uma empresa não valida os instrumentos LDR.",
+    "Pilotar tarefas, níveis de dificuldade e formatos com participantes; verificar acessibilidade com tecnologias de apoio.",
+    "Conferir independentemente intervalos e cálculos e dimensionar o tempo real; não converter seis oficinas em cem horas certificadas.",
+    "Definir correspondência com o currículo histórico e obter aprovação antes de integração ativa, preservando assinaturas, acessos e progresso."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

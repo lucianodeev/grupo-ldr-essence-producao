@@ -1,0 +1,150 @@
+{
+  "productKey": "curso_assinatura_conhecimentos_gerais_para_vida_academica_e_profissional",
+  "slug": "conhecimentos-gerais-para-vida-academica-e-profissional",
+  "title": "Conhecimentos Gerais para Vida Acadêmica e Profissional",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 120,
+  "validatedHours": null,
+  "expectedModuleCount": 2,
+  "scope": "Duas oficinas de literacia informacional e quantitativa: confrontar relatos e interpretar contagens de uma iniciativa fictícia. Não é enciclopédia, preparação integral de concurso ou comprovação das 120 horas históricas.",
+  "courseObjectives": [
+    "Identificar o que uma fonte efetivamente permite afirmar.",
+    "Confrontar documentos sem escolher pela aparência de autoridade.",
+    "Calcular percentagens com denominador explícito.",
+    "Distinguir aumento absoluto, relativo e pontos percentuais."
+  ],
+  "sources": [
+    {
+      "id": "writing",
+      "title": "European Commission. Plain language: making European Commission texts clear.",
+      "url": "https://translation.ec.europa.eu/languages-and-translation-european-commission/plain-language-making-european-commission-texts-clear_en",
+      "consulted": "2026-11-16",
+      "scope": "Princípios da página consultados na etapa anterior sobre finalidade, destinatário e revisão. Não se copiam modelos, não se impõe norma linguística e não se afirma conformidade académica ou acessibilidade integral."
+    },
+    {
+      "id": "learning",
+      "title": "OpenStax. Contemporary Mathematics. 6.1 Understanding Percent.",
+      "url": "https://openstax.org/books/contemporary-mathematics/pages/6-1-understanding-percent",
+      "consulted": "2026-11-16",
+      "scope": "Consultadas definições de percentagem e relação entre parte, base e taxa. Sustenta apenas os cálculos de proporções; não valida design visual, acessibilidade integral ou eficácia pedagógica das apresentações. Consulta delimitada; não constitui validação externa do curso. Não são reproduzidos textos, figuras ou exercícios da fonte."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Distinguir acontecimento, interpretação e pergunta aberta"
+    },
+    {
+      "id": "2",
+      "title": "Interpretar números sem trocar a população de referência"
+    }
+  ],
+  "modules": [
+    {
+      "title": "Distinguir acontecimento, interpretação e pergunta aberta",
+      "objectives": [
+        "Identificar o que uma fonte efetivamente permite afirmar.",
+        "Confrontar documentos sem escolher pela aparência de autoridade."
+      ],
+      "sections": [
+        {
+          "title": "Três relatos sobre a sala de leitura",
+          "paragraphs": [
+            "Uma associação fictícia anuncia a abertura de uma sala de leitura. O aluno recebe três peças: um aviso datado que prevê abertura na quinta-feira, uma mensagem de participante dizendo que encontrou a porta fechada nesse dia e uma nota posterior da associação informando adiamento por falta de autorização de utilização. Nenhuma peça inclui o documento da autorização. O exercício pede reconstruir a sequência com os limites disponíveis. O primeiro aviso demonstra uma previsão comunicada, a mensagem relata uma experiência individual e a nota posterior explica a alteração segundo a própria associação. Misturar essas naturezas produziria uma conclusão mais forte do que a evidência permite.",
+            "Uma publicação candidata afirma que a sala foi inaugurada e encerrada no mesmo dia por decisão de uma autoridade identificada apenas como fiscal. Essa sequência não aparece no pacote. A porta fechada não comprova inauguração anterior e a falta de autorização não identifica quem decidiu ou qual procedimento ocorreu. O aluno deve retirar a narrativa inventada e formular perguntas verificáveis: houve abertura efetiva, qual era a condição em falta e que documento sustentaria a explicação? Não é necessário acusar alguém de mentira para reconhecer que um relato ainda não fornece informação suficiente."
+          ]
+        },
+        {
+          "title": "Construir uma síntese que possa ser corrigida",
+          "paragraphs": [
+            "Escreva uma linha temporal com data da mensagem, acontecimento descrito e grau de confirmação. Use formulações como abertura prevista, porta encontrada fechada por um participante e adiamento comunicado pela associação. Estas expressões conservam a origem de cada afirmação. Uma síntese não precisa de parecer definitiva para ser útil. Ela pode informar o que se sabe e o que falta verificar, permitindo atualizar o quadro quando surgir um documento novo. O exercício não pede investigar pessoas reais, atribuir intenção ou identificar responsabilidades jurídicas a partir de um conjunto incompleto de notas.",
+            "Na última etapa, acrescente uma quarta peça sintética: um novo aviso marca visita orientada para a semana seguinte, ainda dependente de confirmação. Revise a síntese sem transformar previsão em realização. O aluno deverá mostrar qual parte mudou e qual pergunta continua aberta. A avaliação procura diferenças entre fonte, conteúdo e inferência, não a memorização de nomes ou datas. A mesma disciplina pode orientar leitura académica e trabalho profissional, mas esta oficina só demonstra a análise do pacote fornecido. Não autoriza concluir que todo comunicado institucional é confiável ou que um testemunho isolado seja sempre falso, pois nenhuma dessas generalizações foi testada pelo caso.",
+            "Uma fotografia sem data poderia mostrar a porta aberta noutro momento. Antes de a usar como prova de inauguração na quinta-feira, seria necessário estabelecer quando foi obtida e o que efetivamente representa. A imagem não resolve automaticamente a lacuna temporal do relato."
+          ]
+        }
+      ],
+      "case": "Pacote: aviso prevê quinta-feira; participante relata porta fechada; associação comunica adiamento por autorização em falta. Não há prova de inauguração nem decisão de fiscal identificado.",
+      "exercise": "Produza cronologia e síntese de oito linhas, corrigindo a narrativa de inauguração/encerramento. Liste documentos que faltam sem inventá-los.",
+      "assessment": {
+        "question": "O relato de porta fechada prova que a sala foi inaugurada e depois encerrada por fiscalização?",
+        "answer": "Não. O relato descreve a porta fechada naquele momento. A sequência e a autoridade mencionadas não estão demonstradas.",
+        "rubric": [
+          "Atribui cada afirmação à peça correspondente.",
+          "Distingue previsão e acontecimento.",
+          "Mantém perguntas abertas sem acusação infundada."
+        ]
+      },
+      "sourceIds": [
+        "writing"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Cronologia relativa: aviso previa quinta-feira; participante relata porta fechada nesse dia; associação comunica adiamento por autorização em falta. Síntese conserva a origem de cada informação. Não existe prova de inauguração nem decisão de fiscal identificado. Pedir datas/documentos sobre abertura e autorização ajudaria a verificar a sequência; um aviso novo continua previsão.",
+        "limitesDaConclusao": "Não transformar ausência de prova em acusação ou atribuir data a fotografia sem contexto."
+      }
+    },
+    {
+      "title": "Interpretar números sem trocar a população de referência",
+      "objectives": [
+        "Calcular percentagens com denominador explícito.",
+        "Distinguir aumento absoluto, relativo e pontos percentuais."
+      ],
+      "sections": [
+        {
+          "title": "A oficina que cresceu de duas maneiras",
+          "paragraphs": [
+            "A iniciativa fictícia Farol recebeu quarenta inscrições no primeiro mês e sessenta no segundo. Comparecimento confirmado foi de trinta e quarenta e duas pessoas, respetivamente. O aumento de inscrições é de vinte pessoas, equivalente a cinquenta por cento sobre as quarenta iniciais. O comparecimento aumentou doze pessoas, equivalente a quarenta por cento sobre as trinta iniciais. Esses dois crescimentos são verdadeiros no recorte e respondem a perguntas diferentes. Não se deve escolher o número mais elevado para representar todos os resultados, porque inscrição e presença são acontecimentos distintos e as bases de comparação também diferem.",
+            "Calcule agora a proporção de presenças entre inscritos. No primeiro mês, trinta em quarenta corresponde a setenta e cinco por cento. No segundo, quarenta e duas em sessenta corresponde a setenta por cento. Houve mais participantes em número absoluto, mas a proporção de comparecimento caiu cinco pontos percentuais. Isso não é contradição. O segundo conjunto tem mais inscrições e outra relação entre inscrição e presença. O aluno precisa de escrever o denominador sempre que apresentar uma percentagem, evitando que uma frase sobre adesão mude silenciosamente de população no meio da comparação."
+          ]
+        },
+        {
+          "title": "Uma conclusão proporcional ao registo",
+          "paragraphs": [
+            "O relatório candidato diz que a campanha aumentou a participação em cinquenta por cento e melhorou a taxa de presença. A primeira afirmação usa crescimento de inscrições como se fosse crescimento de presentes; a segunda contraria as proporções calculadas. Além disso, o pacote não permite atribuir a alteração à campanha, porque não fornece comparação controlada nem outras condições de divulgação. Corrija o relatório em linguagem acessível, explicando os resultados observados sem inventar a causa. A tarefa não exige técnicas estatísticas avançadas: exige escolher a conta que corresponde à pergunta e conservar o alcance limitado dos dados.",
+            "Entregue uma tabela textual com os quatro totais, as duas taxas e uma nota sobre os limites de inferência. Proponha uma pergunta adicional que ajudaria a compreender o comparecimento, como a existência de cancelamentos registados, sem afirmar que já conhece a resposta. Se alguém preferir uma representação gráfica, os eixos e rótulos deverão distinguir inscrições e presenças; a imagem não substitui a definição das medidas. A rubrica valoriza precisão e capacidade de explicar duas tendências simultâneas. Não se avalia a iniciativa como sucesso ou fracasso global, pois o caso não forneceu objetivos, custos ou critérios suficientes para essa decisão.",
+            "Se o segundo mês tivesse quarenta e cinco presentes entre sessenta inscritos, a taxa seria novamente setenta e cinco por cento. Esse contrafactual permite separar igualdade da taxa e igualdade do número de pessoas, sem alterar os dados efetivamente observados no caso principal."
+          ]
+        }
+      ],
+      "case": "Farol: mês 1 com 40 inscrições/30 presenças; mês 2 com 60/42. Relatório atribui crescimento de 50% à participação e melhoria da taxa à campanha.",
+      "exercise": "Calcule crescimentos e taxas, corrija o relatório e formule uma pergunta adicional sem atribuir causalidade à campanha.",
+      "assessment": {
+        "question": "Como podem existir mais presentes e uma taxa de comparecimento menor?",
+        "answer": "O total passa de 30 a 42, mas os inscritos passam de 40 a 60. A taxa passa de 75% a 70%, queda de cinco pontos percentuais; os denominadores são diferentes.",
+        "rubric": [
+          "Calcula 50% nas inscrições e 40% nas presenças.",
+          "Distingue pontos percentuais.",
+          "Não atribui causalidade sem evidência."
+        ]
+      },
+      "sourceIds": [
+        "learning"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Inscrições: 40→60, aumento 20/40=50%. Presenças: 30→42, aumento 12/30=40%. Taxas: 30/40=75%; 42/60=70%, queda de 5 pontos percentuais. Relatório corrigido apresenta volume e proporção separados. Pergunta adicional: houve cancelamentos registados e em que condições?",
+        "limitesDaConclusao": "Não atribuir o resultado à campanha nem classificar sucesso global sem objetivos/custos."
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão especializada do âmbito deste curso e revisão editorial dos casos e critérios.",
+    "Pilotar as duas oficinas com participantes e tecnologias de apoio; ampliar a prática antes de qualquer equivalência à carga histórica anunciada.",
+    "Conferir fontes, direitos e cálculos; definir correspondência com o roteiro histórico sem apagar progresso ou certificados.",
+    "Aprovação fundamentada antes de integração ativa; esta edição compacta não comprova as horas históricas."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

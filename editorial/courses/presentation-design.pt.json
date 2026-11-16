@@ -1,0 +1,146 @@
+{
+  "productKey": "curso_assinatura_como_fazer_apresentacoes_profissionais",
+  "slug": "como-fazer-apresentacoes-profissionais",
+  "title": "Como Fazer Apresentações Profissionais",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 100,
+  "validatedHours": null,
+  "expectedModuleCount": 2,
+  "scope": "Duas oficinas sobre arquitetura de uma apresentação e representação honesta de dados. Distingue-se de facilitação de reuniões e treino de expressão oral. Não exige ferramenta paga.",
+  "courseObjectives": [
+    "Selecionar evidências segundo a pergunta do destinatário.",
+    "Escolher rótulos, denominadores e limitações de um gráfico."
+  ],
+  "sources": [
+    {
+      "id": "writing",
+      "title": "European Commission. Plain language: making European Commission texts clear.",
+      "url": "https://translation.ec.europa.eu/languages-and-translation-european-commission/plain-language-making-european-commission-texts-clear_en",
+      "consulted": "2026-11-16",
+      "scope": "Princípios da página consultados na etapa anterior sobre finalidade, destinatário e revisão. Não se copiam modelos, não se impõe norma linguística e não se afirma conformidade académica ou acessibilidade integral."
+    },
+    {
+      "id": "learning",
+      "title": "OpenStax. Contemporary Mathematics. 6.1 Understanding Percent.",
+      "url": "https://openstax.org/books/contemporary-mathematics/pages/6-1-understanding-percent",
+      "consulted": "2026-11-16",
+      "scope": "Consultadas definições de percentagem e relação entre parte, base e taxa. Sustenta apenas os cálculos de proporções; não valida design visual, acessibilidade integral ou eficácia pedagógica das apresentações. Consulta delimitada; não constitui validação externa do curso. Não são reproduzidos textos, figuras ou exercícios da fonte."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Construir uma sequência para uma decisão do público"
+    },
+    {
+      "id": "2",
+      "title": "Representar uma comparação sem esconder a base"
+    }
+  ],
+  "modules": [
+    {
+      "title": "Construir uma sequência para uma decisão do público",
+      "objectives": [
+        "Selecionar evidências segundo a pergunta do destinatário."
+      ],
+      "sections": [
+        {
+          "title": "O pedido de equipamento do laboratório fictício",
+          "paragraphs": [
+            "A equipa Íris pretende apresentar um pedido de equipamento a uma comissão. Tem fotografias do espaço, uma lista de atividades e um registo de interrupções, mas a comissão precisa de decidir se autoriza um teste limitado ou pede mais informação. O primeiro rascunho usa oito páginas de história da equipa e termina com uma frase vaga sobre inovação. Reorganize o material pela decisão: que problema foi observado, o que se propõe testar, que condições faltam e qual resposta se pretende da comissão. Uma apresentação profissional não é um depósito de tudo o que o autor sabe sobre o assunto.",
+            "O registo mostra três interrupções em dez sessões por falta de um recurso partilhado. Não informa quanto tempo cada interrupção durou nem se o equipamento proposto resolveria todos os casos. Essa evidência sustenta descrever uma dificuldade observada, mas não prometer eliminar interrupções. O aluno deve preparar uma abertura que identifique o problema sem aumentar o alcance dos dados. A proposta de teste pode incluir observar acesso, utilização e limitações, desde que essas observações sejam apresentadas como plano futuro. Não se deve escrever resultado esperado como se fosse resultado já obtido."
+          ]
+        },
+        {
+          "title": "Cada página precisa de uma função",
+          "paragraphs": [
+            "Produza um roteiro de cinco páginas: pergunta da comissão, evidência disponível, hipótese de teste, condições e decisão solicitada. Para cada página, indique a mensagem central e o elemento que a sustenta. Uma fotografia pode mostrar o espaço, mas não prova a frequência de interrupções; essa frequência vem do registo. Uma lista de equipamentos pode informar alternativas, mas não demonstra qual delas é adequada. A revisão deve conferir se o elemento visual realmente apoia a frase que o acompanha, evitando utilizar uma imagem atraente como substituto de uma relação que ainda não foi demonstrada.",
+            "A versão final deve funcionar também como documento textual curto. Escreva títulos informativos, descreva o que cada imagem acrescenta e conserve as dúvidas que a comissão precisa de conhecer. Não coloque a informação decisiva apenas numa explicação oral que desaparecerá quando o material circular. O aluno entrega roteiro e notas, sem comprar modelos ou usar marcas de software como critério de qualidade. A avaliação procura uma sequência que permita compreender e responder ao pedido. Não exige que a comissão aprove a proposta: uma apresentação pode ser clara e ainda assim revelar que faltam condições para autorizar o teste.",
+            "Se a comissão pedir custo e prazo, acrescente esses elementos apenas quando existirem dados no pacote. Identificar orçamento pendente é mais preciso do que inventar um valor para que a última página pareça completa e pronta para decisão."
+          ]
+        }
+      ],
+      "case": "Íris: três interrupções em dez sessões; duração e eficácia do novo equipamento desconhecidas. Comissão decide teste limitado ou mais informação.",
+      "exercise": "Crie roteiro de cinco páginas e notas que separem observação, hipótese e pedido.",
+      "assessment": {
+        "question": "A fotografia do espaço comprova três interrupções?",
+        "answer": "Não. O registo sustenta a contagem; a fotografia fornece outro tipo de informação.",
+        "rubric": [
+          "Relaciona página e função.",
+          "Não promete eliminar o problema.",
+          "Mantém custo/prazo desconhecidos."
+        ]
+      },
+      "sourceIds": [
+        "writing"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Roteiro: 1 pergunta da comissão; 2 registo de três interrupções em dez sessões; 3 hipótese de teste; 4 condições e dados ausentes; 5 decisão solicitada. Fotografias mostram espaço, não frequência. Notas distinguem observação, eficácia ainda não demonstrada e custo/prazo pendentes.",
+        "limitesDaConclusao": "Não prometer eliminar interrupções nem inventar orçamento para completar a página."
+      }
+    },
+    {
+      "title": "Representar uma comparação sem esconder a base",
+      "objectives": [
+        "Escolher rótulos, denominadores e limitações de um gráfico."
+      ],
+      "sections": [
+        {
+          "title": "Dois períodos que não têm a mesma dimensão",
+          "paragraphs": [
+            "O material da segunda oficina compara pedidos resolvidos por uma equipa fictícia. No período A foram resolvidos dezoito de vinte pedidos; no período B, vinte e quatro de trinta. Um gráfico candidato mostra apenas dezoito e vinte e quatro e usa o título qualidade melhorou. A contagem resolvida aumentou, mas a proporção passou de noventa para oitenta por cento. Nenhum desses indicadores mede sozinho qualidade, porque o pacote não informa dificuldade, prazo ou satisfação. O aluno deve escolher uma pergunta para a comparação antes de decidir que número irá destacar e que conclusão pode acompanhar o desenho.",
+            "Prepare duas representações textuais ou gráficas: uma para volume resolvido e outra para proporção de resolução. Ambas devem mostrar os totais de referência e identificar os períodos sem abreviaturas ambíguas. Se utilizar barras, não manipule a escala para sugerir uma diferença que os números não sustentam. O exercício não proíbe recortes de escala em qualquer contexto; exige que a escolha seja clara e justificada. Uma representação legível permite ao destinatário recuperar os dados e perceber qual aspeto está a ser comparado, em vez de depender da interpretação oferecida pelo apresentador."
+          ]
+        },
+        {
+          "title": "Rever a frase que o público levará consigo",
+          "paragraphs": [
+            "Reescreva o título como contagem resolvida aumentou e proporção de resolução diminuiu, se a finalidade for apresentar as duas tendências. Acrescente uma nota de que faltam dados para explicar a mudança. A diferença entre noventa e oitenta é de dez pontos percentuais; não deve ser descrita como queda de dez por cento sem explicar outra base de cálculo. O aluno pode evitar uma conta relativa desnecessária e utilizar pontos percentuais para tornar a comparação direta. A precisão não exige encher a página de fórmulas; exige que a frase corresponda à medida escolhida.",
+            "Entregue um par de páginas com a mesma fonte de dados e duas perguntas diferentes. Inclua uma descrição que possa ser lida sem ver cores, barras ou ícones. Peça a um leitor fictício para responder quantos pedidos existiram e quantos foram resolvidos em cada período; se o material não permitir recuperar esses valores, reveja-o. Não se afirma conformidade completa com acessibilidade a partir dessa conferência. A rubrica observa integridade da comparação, rótulos e conclusão proporcional. Uma apresentação forte não precisa de esconder uma tendência desfavorável: pode expô-la com clareza e mostrar qual investigação será necessária para compreender o resultado.",
+            "Suponha que apareça uma terceira página com apenas oitenta por cento, sem período ou total. Ela perde a base necessária para interpretar a medida. O aluno deve repor o contexto ou retirar o destaque, e não esperar que a plateia o deduza das páginas anteriores."
+          ]
+        }
+      ],
+      "case": "A:18/20 resolvidos; B:24/30. Gráfico de contagens chama à diferença melhoria de qualidade.",
+      "exercise": "Construa duas representações e corrija título e nota de limites.",
+      "assessment": {
+        "question": "Mais resolvidos implica taxa maior?",
+        "answer": "Não. Há 24 em vez de 18, mas 80% em vez de 90%; queda de dez pontos percentuais.",
+        "rubric": [
+          "Explicita denominadores.",
+          "Não chama qualidade a uma contagem.",
+          "Fornece alternativa textual."
+        ]
+      },
+      "sourceIds": [
+        "learning"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Página de volume: 18 e 24 resolvidos, mostrando totais 20 e 30. Página de proporção: 90% e 80%, queda de dez pontos percentuais. Título possível: volume aumentou e proporção diminuiu. Nota: faltam dificuldade, prazo e satisfação para avaliar qualidade ou explicar causa.",
+        "limitesDaConclusao": "Rótulos e descrição textual devem permitir recuperar valores sem depender de cores."
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão especializada do âmbito deste curso e revisão editorial dos casos e critérios.",
+    "Pilotar as duas oficinas com participantes e tecnologias de apoio; ampliar a prática antes de qualquer equivalência à carga histórica anunciada.",
+    "Conferir fontes, direitos e cálculos; definir correspondência com o roteiro histórico sem apagar progresso ou certificados.",
+    "Aprovação fundamentada antes de integração ativa; esta edição compacta não comprova as horas históricas."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

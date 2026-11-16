@@ -1,0 +1,139 @@
+{
+  "productKey": "curso_assinatura_inteligencia_emocional_no_trabalho",
+  "slug": "inteligencia-emocional-no-trabalho",
+  "title": "Inteligência Emocional no Trabalho",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 100,
+  "validatedHours": null,
+  "expectedModuleCount": 2,
+  "scope": "Duas oficinas sobre reconhecer interpretação e escolher resposta num conflito sintético. Não mede inteligência emocional, diagnostica pessoas ou oferece tratamento. Separa estados subjetivos e factos observáveis.",
+  "courseObjectives": [
+    "Separar observação, interpretação e pergunta de esclarecimento.",
+    "Construir uma resposta firme com pedido concreto e limite de função."
+  ],
+  "sources": [
+    {
+      "id": "wellbeing",
+      "title": "World Health Organization. Doing What Matters in Times of Stress.",
+      "url": "https://www.who.int/publications/i/item/9789240003927/",
+      "consulted": "2026-11-16",
+      "scope": "Apresentação oficial do guia consultada, sem reprodução de exercícios ou imagens e sem alegar leitura integral. Apenas delimita educação e cuidado; as oficinas LDR não são intervenção clínica nem instrumentos validados."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Distinguir o que aconteceu do significado atribuído"
+    },
+    {
+      "id": "2",
+      "title": "Responder a tensão preservando tarefa e limite"
+    }
+  ],
+  "modules": [
+    {
+      "title": "Distinguir o que aconteceu do significado atribuído",
+      "objectives": [
+        "Separar observação, interpretação e pergunta de esclarecimento."
+      ],
+      "sections": [
+        {
+          "title": "A mensagem de três palavras",
+          "paragraphs": [
+            "Uma pessoa da equipa fictícia escreve a Bruno: precisamos de rever. Bruno interpreta a mensagem como prova de que o seu trabalho não tem valor. O pacote não informa o tom, o motivo ou o alcance da revisão. A oficina não pede negar o desconforto de Bruno nem afirmar que a intenção foi certamente positiva. Pede distinguir a mensagem observável da interpretação produzida e identificar a informação que falta. Uma resposta profissional pode reconhecer que a frase foi recebida com preocupação e, ao mesmo tempo, pedir o objeto e o critério da revisão antes de concluir uma avaliação global do trabalho.",
+            "Prepare três campos: texto recebido, significado atribuído e pergunta que permitiria esclarecer. No primeiro, conserve as palavras fornecidas. No segundo, escreva a interpretação como interpretação, sem a transformar numa citação da outra pessoa. No terceiro, pergunte que parte precisa de revisão e para que resultado. A atividade utiliza um caso sintético para evitar exposição de conflitos pessoais. Não se aplica uma escala para classificar Bruno como emocionalmente competente ou incompetente. O objetivo é tornar examinável a passagem entre um estímulo breve e a decisão de resposta, mantendo espaço para informação nova."
+          ]
+        },
+        {
+          "title": "Escolher uma resposta que não amplie a suposição",
+          "paragraphs": [
+            "Compare responder nunca valorizam o que faço e responder pode indicar o ponto e o critério que precisamos de rever? A segunda formula uma pergunta relacionada com o trabalho; não demonstra que o desconforto desapareceu nem obriga a aceitar qualquer pedido. Depois chega uma informação: há uma referência trocada numa tabela, enquanto a estrutura geral foi mantida. Atualize a compreensão do caso. A correção específica não sustenta a conclusão inicial de desvalorização total, mas também não permite avaliar toda a relação entre as pessoas. O aluno deve conservar o alcance limitado desta nova peça.",
+            "Entregue uma resposta inicial e uma nota de atualização após o esclarecimento. Explique o que a informação nova permite decidir: conferir a referência e rever a linha correspondente. Se existissem comportamentos repetidos de desrespeito, seria necessário analisar outras evidências e canais adequados; o cenário não os fornece. O curso não ensina tolerar situações prejudiciais nem reduzir todos os conflitos a interpretações individuais. A rubrica observa distinção entre factos, significados e próxima ação, mantendo a possibilidade de reconhecer emoções sem transformar um exercício de comunicação numa intervenção psicológica ou numa avaliação da saúde de alguém.",
+            "Uma nova mensagem dizendo a tabela inteira está incorreta exigiria outra revisão do âmbito. O aluno não deve conservar a conclusão de erro único se a evidência mudar, nem antecipar essa conclusão antes de receber a informação."
+          ]
+        }
+      ],
+      "case": "Mensagem: precisamos de rever. Interpretação de Bruno: trabalho sem valor. Esclarecimento posterior: uma referência trocada; estrutura mantida.",
+      "exercise": "Construa três campos, resposta de esclarecimento e atualização limitada ao erro indicado.",
+      "assessment": {
+        "question": "A frase inicial comprova desvalorização total?",
+        "answer": "Não. Ela não identifica motivo ou âmbito. O esclarecimento posterior indica um erro específico.",
+        "rubric": [
+          "Distingue vozes e interpretações.",
+          "Formula pergunta de trabalho.",
+          "Não diagnostica nem presume intenção."
+        ]
+      },
+      "sourceIds": [
+        "wellbeing"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Observável: mensagem precisamos de rever. Interpretação de Bruno: trabalho sem valor. Pergunta: que ponto e critério precisam de revisão? Esclarecimento: uma referência trocada, estrutura mantida. Atualização: conferir a referência e a linha correspondente; a informação nova não sustenta desvalorização total.",
+        "limitesDaConclusao": "O pequeno caso não demonstra intenção, padrão da relação ou diagnóstico."
+      }
+    },
+    {
+      "title": "Responder a tensão preservando tarefa e limite",
+      "objectives": [
+        "Construir uma resposta firme com pedido concreto e limite de função."
+      ],
+      "sections": [
+        {
+          "title": "Uma urgência que chegou em tom de acusação",
+          "paragraphs": [
+            "A coordenadora fictícia diz a Paula que o atraso é todo dela e pede que aprove imediatamente uma alteração. O pacote mostra que Paula prepara o documento, enquanto a autorização pertence a outra função. A oficina pede separar duas questões: verificar a responsabilidade pelo atraso e decidir o que Paula pode fazer agora. Não é necessário resolver toda a relação antes de comunicar um limite operacional. Paula pode apresentar o estado do documento, reconhecer a urgência e indicar que não tem autoridade para aprovar. Uma resposta emocionalmente informada não significa aceitar culpa não verificada ou realizar uma ação para a qual não recebeu competência.",
+            "O histórico de treino contém envio da minuta às dez horas, pedido de alteração às onze e autorização ainda ausente ao meio-dia. Esses registos não demonstram sozinhos todas as causas do atraso, mas permitem corrigir a afirmação de que nada foi preparado. O aluno deverá usar essa informação sem atacar a personalidade da coordenadora. Uma frase útil distingue o que está concluído, a condição pendente e o encaminhamento possível. A tarefa não exige expor sentimentos íntimos ou contar experiências reais; utiliza apenas os dados e as funções definidos para esta situação."
+          ]
+        },
+        {
+          "title": "Um limite que permita continuar o trabalho",
+          "paragraphs": [
+            "Escreva uma resposta com três partes: estado verificável, limite de autoridade e pedido à pessoa competente. Se Paula puder encaminhar a versão para decisão, deve identificar a versão e a alteração solicitada. Não deve prometer que a autorização chegará numa hora específica, pois essa condição não foi fornecida. Também não deve transformar a resposta numa longa defesa que esconda o próximo passo. A firmeza é observada na clareza do limite e da ação, sem exigir uma postura corporal ou um estilo de voz universal para todas as pessoas e contextos.",
+            "Na segunda parte da atividade, a coordenadora reconhece o registo de envio, mas mantém a urgência. Atualize a conversa sem tratar esse reconhecimento como solução de todas as tensões. O documento continua dependente de aprovação. Prepare uma nota para acompanhar a decisão e uma pergunta posterior sobre como evitar atribuições precipitadas em situações semelhantes. O curso não atribui pontuação de inteligência emocional nem prescreve tratamento de conflitos laborais. A rubrica verifica se o aluno consegue manter precisão, limite e continuidade da tarefa numa conversa difícil, respeitando o facto de que comportamentos persistentes podem exigir análise e intervenção por canais que este pequeno cenário não substitui.",
+            "Se a autorização for depois dada, registe quem decidiu e sobre que versão. O fim da pendência documental não apaga o histórico da conversa, mas altera a ação necessária para concluir a entrega."
+          ]
+        }
+      ],
+      "case": "Paula envia minuta 10h; alteração pedida 11h; autorização pendente 12h. Coordenadora atribui todo atraso a Paula; só outra função pode aprovar.",
+      "exercise": "Escreva resposta firme, encaminhamento e atualização após reconhecimento do envio.",
+      "assessment": {
+        "question": "Reconhecer urgência obriga Paula a aprovar?",
+        "answer": "Não. Pode comunicar estado e encaminhar, mantendo a autoridade atribuída a outra função.",
+        "rubric": [
+          "Não aceita culpa sem análise.",
+          "Conserva limite de função.",
+          "Não promete decisão de terceiros."
+        ]
+      },
+      "sourceIds": [
+        "wellbeing"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Resposta possível: a minuta foi enviada às 10h; a alteração chegou às 11h e a autorização continua pendente. Posso encaminhar a versão para quem tem competência de aprovar, mas não substituo essa decisão. Depois do reconhecimento do envio, conserva-se a urgência e a condição de aprovação; preparar acompanhamento por versão.",
+        "limitesDaConclusao": "Não concluir toda a responsabilidade pelo atraso nem prometer prazo de decisão de terceiro."
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão especializada do âmbito deste curso e revisão editorial dos casos e critérios.",
+    "Pilotar as duas oficinas com participantes e tecnologias de apoio; ampliar a prática antes de qualquer equivalência à carga histórica anunciada.",
+    "Conferir fontes, direitos e cálculos; definir correspondência com o roteiro histórico sem apagar progresso ou certificados.",
+    "Aprovação fundamentada antes de integração ativa; esta edição compacta não comprova as horas históricas."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

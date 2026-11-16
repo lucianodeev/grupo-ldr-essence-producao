@@ -1,0 +1,139 @@
+{
+  "productKey": "curso_assinatura_oratoria_e_seguranca_para_falar_em_publico",
+  "slug": "oratoria-e-seguranca-para-falar-em-publico",
+  "title": "Oratória e Segurança para Falar em Público",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 120,
+  "validatedHours": null,
+  "expectedModuleCount": 2,
+  "scope": "Oficinas de organização e adaptação da fala num cenário sintético. Não oferece tratamento de ansiedade, diagnóstico de comunicação ou garantia de confiança. Permite realização escrita ou em áudio sem exposição pública.",
+  "courseObjectives": [
+    "Organizar abertura, desenvolvimento e fecho segundo uma pergunta.",
+    "Distinguir esclarecimento, dúvida não respondida e informação nova."
+  ],
+  "sources": [
+    {
+      "id": "writing",
+      "title": "University of North Carolina Writing Center. Speeches.",
+      "url": "https://writingcenter.unc.edu/tips-and-tools/speeches/",
+      "consulted": "2026-11-16",
+      "scope": "Consultadas secções sobre finalidade, público e organização de apresentações orais. Sustenta estrutura comunicativa; não comprova eficácia das oficinas, tratamento de ansiedade ou equivalência de formação. Consulta delimitada; não constitui validação externa do curso. Não são reproduzidos textos, figuras ou exercícios da fonte."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Preparar uma fala que possa ser acompanhada"
+    },
+    {
+      "id": "2",
+      "title": "Responder a perguntas e adaptar a explicação"
+    }
+  ],
+  "modules": [
+    {
+      "title": "Preparar uma fala que possa ser acompanhada",
+      "objectives": [
+        "Organizar abertura, desenvolvimento e fecho segundo uma pergunta."
+      ],
+      "sections": [
+        {
+          "title": "Noventa segundos sobre uma mudança de sala",
+          "paragraphs": [
+            "Ana deve explicar a um grupo fictício que a oficina mudou de sala. Tem noventa segundos de treino e precisa de comunicar três informações: a nova localização, a razão operacional conhecida e como obter ajuda para chegar. O rascunho começa com uma longa história sobre a organização do edifício e só menciona a sala no fim. A primeira revisão deve antecipar o que o destinatário precisa de saber para agir. Não se trata de decorar uma fórmula universal de discurso, mas de relacionar a ordem da fala com uma necessidade concreta de orientação no cenário fornecido.",
+            "O pacote informa sala B no piso térreo, alteração por indisponibilidade da sala A e apoio junto da receção. Não informa avaria, acidente ou responsabilidade de uma pessoa. Ana deve evitar preencher a explicação com uma causa dramática. Uma fala segura quanto ao conteúdo distingue a razão comunicada dos detalhes desconhecidos. O aluno escreve uma abertura direta, explica o motivo dentro do limite conhecido e termina com o ponto de apoio. Se alguém precisar de orientação diferente, a fala deve permitir pedir esclarecimento sem pressupor que todas as pessoas interpretam o espaço ou os percursos da mesma maneira."
+          ]
+        },
+        {
+          "title": "Ensaiar compreensão em vez de procurar perfeição",
+          "paragraphs": [
+            "Faça uma tentativa escrita ou em áudio usando um cronómetro apenas como instrumento de observação. Registe se as três informações aparecem e em que ordem. O tempo obtido não mede valor pessoal, inteligência ou capacidade definitiva de falar em público. Se o texto ultrapassar o intervalo, corte elementos que não ajudam a localizar a oficina, preservando as informações essenciais. Se terminar muito antes, verifique se não omitiu o apoio disponível. A finalidade do ensaio é tornar a revisão concreta: observar uma escolha de estrutura e decidir o que mudar no próximo teste.",
+            "Prepare duas versões com a mesma informação: uma para o anúncio inicial e outra para responder a alguém que chegou depois. A segunda pode ser mais curta, mas deve continuar a indicar localização e ajuda. Não se exige gesticulação específica, contacto visual constante ou exposição de experiências pessoais. O aluno pode usar notas e realizar a tarefa por escrito como alternativa de análise. A rubrica verifica se o público consegue responder onde vai e onde pede apoio. O curso não promete eliminar receio de falar; oferece uma situação delimitada em que organizar a mensagem permite observar e rever decisões de comunicação.",
+            "Se Ana se esquecer do motivo, pode reconhecer a pausa e consultar a nota. Inventar uma avaria para evitar esse momento introduziria um erro de conteúdo mais importante do que a interrupção do ritmo da fala."
+          ]
+        }
+      ],
+      "case": "Mudança fictícia: sala B no térreo; A indisponível; apoio na receção; motivo técnico não fornecido. Tempo de treino 90 segundos.",
+      "exercise": "Crie duas falas, observe presença das informações e reveja a ordem.",
+      "assessment": {
+        "question": "Uma pausa para consultar notas deve ser preenchida com causa plausível inventada?",
+        "answer": "Não. Consultar preserva a precisão; inventar altera o conteúdo.",
+        "rubric": [
+          "Entrega localização e apoio.",
+          "Não inventa causa.",
+          "Usa ensaio para rever escolhas."
+        ]
+      },
+      "sourceIds": [
+        "writing"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Anúncio possível: a oficina será na sala B, no térreo; a sala A está indisponível; para ajuda, procure a receção. Versão para chegada tardia conserva destino e apoio. Ensaio observa presença e ordem dessas informações e duração; uma pausa para consultar é preferível a inventar causa.",
+        "limitesDaConclusao": "Não afirmar avaria ou acidente; o exercício não mede saúde ou capacidade definitiva de falar."
+      }
+    },
+    {
+      "title": "Responder a perguntas e adaptar a explicação",
+      "objectives": [
+        "Distinguir esclarecimento, dúvida não respondida e informação nova."
+      ],
+      "sections": [
+        {
+          "title": "Quando a pergunta muda o foco",
+          "paragraphs": [
+            "Depois do anúncio, uma participante pergunta se a sala B tem o mesmo equipamento. Outra pergunta se poderá entrar depois do horário previsto. O pacote não informa nenhuma dessas condições. Ana não precisa de responder de imediato para demonstrar domínio da fala. Deve identificar a pergunta, dizer o que ainda não sabe e indicar a necessidade de confirmação com a organização. A oficina distingue capacidade de explicar de autoridade para decidir. Uma apresentação fluente pode perder confiança quando transforma uma pergunta legítima numa resposta improvisada que o próprio material não permite sustentar.",
+            "Uma terceira pessoa diz que não percebeu onde fica a receção. Nesse caso, a dificuldade não é falta de informação sobre equipamento ou horário, mas compreensão da orientação já dada. O aluno deve adaptar a explicação usando as referências disponíveis no mapa sintético: entrada principal, balcão à esquerda e identificação escrita apoio à oficina. Não basta repetir a mesma frase num tom mais alto. A resposta deve mudar a referência ou a sequência para ajudar a pessoa a localizar o ponto de apoio, mantendo o cuidado de não inventar um percurso ou condição de acesso não descritos."
+          ]
+        },
+        {
+          "title": "Uma revisão com perguntas observáveis",
+          "paragraphs": [
+            "O exercício fornece três cartões para o ensaio: equipamento desconhecido, entrada tardia desconhecida e receção localizada no mapa. Classifique-os antes de escrever as respostas. Para os dois primeiros, formule encaminhamento e compromisso de informação apenas se houver responsável e condição definidos no cenário. Para o terceiro, ofereça uma explicação alternativa verificável. Essa preparação evita que todas as perguntas sejam tratadas como ameaça à apresentação ou como obrigação de improvisar. O aluno deve conservar a diferença entre não compreender uma mensagem, precisar de um detalhe adicional e pedir uma decisão que ultrapassa a função de quem fala.",
+            "Entregue respostas curtas e uma nota de revisão da apresentação inicial. Talvez valha a pena acrescentar a referência da receção, porque o teste revelou uma dúvida de localização. Isso não significa incluir todas as respostas possíveis no anúncio, tornando-o longo e difícil de acompanhar. A avaliação procura seleção e adaptação, não velocidade ou ausência de pausas. Nenhuma pessoa real precisa de ser filmada e o material não serve para diagnosticar dificuldades de comunicação. O produto final mostra como reconhecer o tipo de pergunta e ajustar o discurso com precisão, conservando as lacunas que dependem de outra fonte.",
+            "Se a organização confirmar depois a disponibilidade do equipamento, Ana deve identificar essa informação como atualização. Não deve reescrever o ensaio inicial como se a resposta já fosse conhecida naquele momento, pois a revisão também precisa de mostrar de onde veio a certeza."
+          ]
+        }
+      ],
+      "case": "Perguntas: equipamento de B desconhecido; entrada tardia desconhecida; receção no mapa à esquerda da entrada principal, identificada como apoio à oficina.",
+      "exercise": "Classifique e responda aos três cartões; proponha uma alteração à fala inicial.",
+      "assessment": {
+        "question": "Todas as perguntas exigem a mesma estratégia de resposta?",
+        "answer": "Não. Duas pedem informação/decisão ainda não fornecida; a terceira permite adaptar uma orientação conhecida.",
+        "rubric": [
+          "Reconhece limites.",
+          "Adapta referências.",
+          "Não promete confirmação sem condição."
+        ]
+      },
+      "sourceIds": [
+        "writing"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Equipamento e entrada tardia: informação não fornecida, pedir confirmação à organização sem resposta improvisada. Receção: explicar entrada principal e balcão à esquerda, identificado como apoio. Revisão da fala inicial pode acrescentar essa referência curta.",
+        "limitesDaConclusao": "Distinguir atualização posterior e conhecimento disponível no primeiro anúncio."
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão especializada do âmbito deste curso e revisão editorial dos casos e critérios.",
+    "Pilotar as duas oficinas com participantes e tecnologias de apoio; ampliar a prática antes de qualquer equivalência à carga histórica anunciada.",
+    "Conferir fontes, direitos e cálculos; definir correspondência com o roteiro histórico sem apagar progresso ou certificados.",
+    "Aprovação fundamentada antes de integração ativa; esta edição compacta não comprova as horas históricas."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

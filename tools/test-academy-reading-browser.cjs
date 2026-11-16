@@ -15,9 +15,10 @@ const source = prepareAcademyCandidate();
 const load = require(
   path.join(root, "apps/painel-ldr/tests/helpers/load-ts.cjs"),
 )();
-const fixture = load(
-  "content/academy-reading/customer-service-release.server.ts",
-).CUSTOMER_SERVICE_READING_EDITION;
+const fixture = {
+  ...load("content/academy-reading/customer-service-release.server.ts").CUSTOMER_SERVICE_READING_EDITION,
+  practiceGuide: load("content/academy-reading/customer-service-practice.server.ts").CUSTOMER_SERVICE_PRACTICE_GUIDE,
+};
 (async () => {
   await build({
     stdin: {
@@ -86,6 +87,14 @@ const fixture = load(
         });
         await article.waitFor();
         assert.ok((await article.innerText()).length > 1000);
+        const practice = page.getByRole("region", { name: "Percurso prático de 60 horas estimadas" });
+        await practice.waitFor();
+        const practiceText = await practice.innerText();
+        assert.ok(practiceText.includes(fixture.practiceGuide.modules[index].title));
+        assert.ok(practiceText.includes("Não são 60 horas de vídeo"));
+        assert.ok(practiceText.includes("U" + (index + 1) + "-P"));
+        assert.ok(!practiceText.includes("Gabarito do facilitador"));
+        assert.ok(!practiceText.includes("[object Object]"));
         assert.ok(!(await article.innerText()).includes("Revisões pendentes:"));
         assert.equal(
           await nav.getByRole("button").nth(index).getAttribute("aria-current"),
@@ -132,6 +141,9 @@ const fixture = load(
       results.push({
         viewport,
         units: 6,
+        practiceUnits: 6,
+        estimatedPracticeHours: 60,
+        certifiedHours: null,
         keyboard: true,
         rubricTable: true,
         pageOverflow: false,

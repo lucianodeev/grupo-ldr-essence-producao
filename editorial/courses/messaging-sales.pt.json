@@ -1,0 +1,139 @@
+{
+  "productKey": "curso_assinatura_vendas_pelo_whatsapp_e_redes_sociais",
+  "slug": "vendas-pelo-whatsapp-e-redes-sociais",
+  "title": "Vendas pelo WhatsApp e Redes Sociais",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 120,
+  "validatedHours": null,
+  "expectedModuleCount": 2,
+  "scope": "Oficinas de conversa comercial solicitada e confirmação de condições num canal de mensagens. Sem disparos, extração de contactos ou uso de conta real. Políticas de plataforma e regras locais exigem verificação antes de aplicação.",
+  "courseObjectives": [
+    "Distinguir pergunta recebida e permissão para campanhas futuras.",
+    "Registar condições e verificar o que foi efetivamente aceite."
+  ],
+  "sources": [
+    {
+      "id": "whatsapp",
+      "title": "WhatsApp. Business Messaging Policy.",
+      "url": "https://business.whatsapp.com/policy",
+      "consulted": "2026-11-16",
+      "scope": "Resultado de pesquisa oficial consultado sobre permissões para mensagens e interrupção a pedido. Não se declara conformidade de campanha, disponibilidade de funcionalidade ou regra jurídica universal. A oficina não envia mensagens."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Começar uma conversa com finalidade reconhecível"
+    },
+    {
+      "id": "2",
+      "title": "Confirmar uma encomenda sem confundir interesse e aceitação"
+    }
+  ],
+  "modules": [
+    {
+      "title": "Começar uma conversa com finalidade reconhecível",
+      "objectives": [
+        "Distinguir pergunta recebida e permissão para campanhas futuras."
+      ],
+      "sections": [
+        {
+          "title": "A consulta sobre o kit de treino",
+          "paragraphs": [
+            "A pessoa fictícia Jo envia uma pergunta sobre um kit de organização à loja Ponto. Quer saber se contém folhas editáveis. A pergunta permite responder sobre o produto solicitado no contexto da conversa; não deve ser convertida automaticamente em autorização para campanhas indefinidas, chamadas ou partilha do contacto. A oficina trabalha com um diálogo já fornecido e não pede localizar clientes reais. O aluno deverá manter a finalidade da interação e responder primeiro à questão, evitando transformar uma consulta simples numa sequência de pressão ou num pedido de dados que não são necessários para explicar o kit.",
+            "O pacote informa que o kit contém três folhas editáveis e um guia de leitura, sem acompanhamento individual. Uma resposta candidata diz que inclui consultoria e garante organização em sete dias. Nenhuma dessas condições é verdadeira no cenário. Corrija a mensagem mantendo conteúdo, formato e limite de suporte. O aluno deve evitar substituir a promessa falsa por uma formulação igualmente vaga, como resultados surpreendentes. Uma conversa comercial útil permite compreender o que se recebe e o que não está incluído, sem exigir que a pessoa descubra exclusões importantes apenas depois de manifestar vontade de comprar."
+          ]
+        },
+        {
+          "title": "Responder e permitir uma decisão livre",
+          "paragraphs": [
+            "Prepare uma mensagem de esclarecimento e uma pergunta opcional sobre outra informação necessária à decisão, como compatibilidade do formato indicado no pacote. Não invente uma função da aplicação ou um procedimento de pagamento que não foi fornecido. A oficina independe da posição de botões e de funcionalidades atuais de redes sociais. As referências de política enquadram expectativas de mensagens e pedidos de interrupção, mas não certificam uma campanha real. O aluno deve distinguir uma conversa esperada sobre a consulta e qualquer nova finalidade de contacto que exigiria verificação própria.",
+            "No diálogo seguinte, Jo diz que não pretende continuar. Escreva um encerramento que respeite a resposta e não transfira a abordagem para outro canal. O produto final contém a resposta inicial, a correção das duas alegações e o encerramento. A rubrica avalia clareza e respeito pelo estado real da conversa, não capacidade de insistir até obter pagamento. O curso não promete taxa de conversão ou autorização jurídica de marketing. Também não solicita credenciais, listas de números ou contratação de ferramentas. A venda é trabalhada como possibilidade de decisão informada, não como obrigação de transformar cada contacto recebido num cliente ou numa audiência permanente.",
+            "Se Jo pedir apenas o guia, confirme se ele existe como oferta separada antes de o prometer. A vontade de adaptar a conversa não cria um produto que o catálogo sintético não apresentou."
+          ]
+        }
+      ],
+      "case": "Kit Ponto: três folhas editáveis+guia; sem consultoria ou resultado em prazo fixo. Jo pergunta formato e depois não quer continuar.",
+      "exercise": "Responda, corrija alegações e encerre a conversa sem nova abordagem.",
+      "assessment": {
+        "question": "Perguntar sobre o kit autoriza campanhas e chamadas futuras por si só?",
+        "answer": "Não. A consulta tem finalidade delimitada; outros contactos não devem ser presumidos autorizados.",
+        "rubric": [
+          "Conserva produto e exclusões.",
+          "Não inventa garantia.",
+          "Respeita interrupção."
+        ]
+      },
+      "sourceIds": [
+        "whatsapp"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Resposta: o kit tem três folhas editáveis e guia; não inclui consultoria nem resultado em sete dias. Pergunta opcional deve esclarecer uma necessidade da decisão, sem inventar compatibilidade. Quando Jo informa que não quer continuar, agradecer e encerrar.",
+        "limitesDaConclusao": "A consulta não autoriza novas finalidades ou chamadas por si só; não enviar contacto real."
+      }
+    },
+    {
+      "title": "Confirmar uma encomenda sem confundir interesse e aceitação",
+      "objectives": [
+        "Registar condições e verificar o que foi efetivamente aceite."
+      ],
+      "sections": [
+        {
+          "title": "Duas versões de uma oferta no mesmo chat",
+          "paragraphs": [
+            "A loja Ponto apresenta primeiro um kit por vinte unidades monetárias e depois uma versão ampliada por trinta. Jo responde parece bom, mas pergunta se a versão ampliada contém apoio individual. O pacote informa que nenhuma versão inclui esse apoio. O atendente não deve registar aceitação da versão ampliada só porque a frase parece favorável. A pergunta revela uma condição relevante ainda por esclarecer. A oficina pede reconstruir qual versão foi apresentada, qual dúvida permanece e que manifestação seria necessária para confirmar o objeto da encomenda no cenário de treino.",
+            "Prepare um resumo curto com versão, preço fictício, formato e exclusão do apoio. Evite copiar toda a conversa, pois a sequência de ofertas pode deixar ambíguo a que preço uma resposta se refere. A pessoa deve conseguir identificar o que está a considerar antes de qualquer confirmação. Não se apresenta uma regra contratual universal sobre aceitação por chat; trata-se de uma convenção documental do exercício. A atividade não executa pagamento e não promete entrega. O aluno precisa de reconhecer a diferença entre sinal de interesse, esclarecimento e confirmação explícita de uma opção definida."
+          ]
+        },
+        {
+          "title": "Acompanhar sem inventar o próximo estado",
+          "paragraphs": [
+            "No segundo cartão do diálogo, Jo escolhe a versão de vinte e pede instruções de pagamento. Isso permite registar a escolha e a solicitação, mas não pagamento concluído. O pacote não fornece transação ou confirmação financeira. Uma atualização correta conserva o pedido em estado aguardando informação de pagamento. O aluno deve evitar marcar ganho ou entregue apenas para encerrar uma tarefa comercial. A nota de passagem para outra pessoa deve apontar versão escolhida, condições explicadas e etapa pendente, de modo que a próxima resposta não volte a oferecer a versão de trinta como se tivesse sido selecionada.",
+            "O produto final inclui um resumo antes da escolha, outro depois e uma resposta caso Jo altere a opção antes de pagar. A mudança precisa de ser associada à nova versão e às condições correspondentes, sem reutilizar uma confirmação sobre outro objeto. A rubrica verifica consistência entre oferta, pergunta e estado. O curso não ensina emissão fiscal ou regras de defesa do consumidor de qualquer país; essas condições dependeriam de enquadramento real. A competência exercitada é manter uma conversa comercial compreensível e rastreável, sem transformar entusiasmo, pedido de instruções ou silêncio numa confirmação de acontecimentos que não foram fornecidos pelo cenário.",
+            "Se uma confirmação financeira posterior aparecer, confira a sua associação à versão escolhida antes de avançar. Um valor igual ao preço não resolve, por si só, a identificação do pedido ou a adequação da entrega."
+          ]
+        }
+      ],
+      "case": "Kit20 e ampliado30; nenhum tem apoio. Jo pergunta apoio, depois escolhe20 e pede instruções; sem transação fornecida.",
+      "exercise": "Registe estados antes/depois e passagem precisa.",
+      "assessment": {
+        "question": "Pedir instruções de pagamento comprova pagamento efetuado?",
+        "answer": "Não. Demonstra uma solicitação; pagamento permanece sem evidência.",
+        "rubric": [
+          "Não presume aceitação.",
+          "Identifica versão/preço.",
+          "Mantém etapa financeira pendente."
+        ]
+      },
+      "sourceIds": [
+        "whatsapp"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Antes: opções 20/30 e dúvida sobre apoio; nenhuma inclui apoio individual. Resumo deve esclarecer versão, preço e exclusão. Depois: Jo escolhe 20 e pede instruções; registar escolha e pagamento sem evidência. Passagem conserva essa versão e etapa. Uma mudança futura exige novo resumo das condições.",
+        "limitesDaConclusao": "Não contar pedido de instruções como pagamento nem promover interesse a aceitação."
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão especializada do âmbito deste curso e revisão editorial dos casos e critérios.",
+    "Pilotar as duas oficinas com participantes e tecnologias de apoio; ampliar a prática antes de qualquer equivalência à carga histórica anunciada.",
+    "Conferir fontes, direitos e cálculos; definir correspondência com o roteiro histórico sem apagar progresso ou certificados.",
+    "Aprovação fundamentada antes de integração ativa; esta edição compacta não comprova as horas históricas."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

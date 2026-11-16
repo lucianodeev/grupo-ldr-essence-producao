@@ -1,5 +1,15 @@
 name: Academy reading browser checks
 on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'apps/painel-ldr/src/components/academy-reading-edition.tsx'
+      - 'apps/painel-ldr/src/lib/academy-reading-*.ts'
+      - 'apps/painel-ldr/src/content/academy-reading/**'
+      - 'editorial/programmes/**'
+      - 'tools/test-academy-reading-browser.cjs'
+      - 'tools/check-academy-reading-assets.cjs'
+      - '.github/workflows/academy-reading-browser.yml'
   push:
     branches: [audit/biblioteca-redesign-20261115]
     paths:

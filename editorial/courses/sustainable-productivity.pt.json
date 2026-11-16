@@ -1,0 +1,139 @@
+{
+  "productKey": "curso_assinatura_produtividade_sem_ansiedade",
+  "slug": "produtividade-sem-ansiedade",
+  "title": "Produtividade sem Ansiedade",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 80,
+  "validatedHours": null,
+  "expectedModuleCount": 2,
+  "scope": "Oficinas educacionais de carga e revisão de compromissos. O título histórico não é promessa de ausência ou tratamento de ansiedade. Não avalia saúde mental; trabalha apenas uma agenda fictícia e condições de execução.",
+  "courseObjectives": [
+    "Calcular capacidade disponível e explicitar a negociação necessária.",
+    "Separar estimativa, execução e mudança de condições."
+  ],
+  "sources": [
+    {
+      "id": "wellbeing",
+      "title": "World Health Organization. Mental health at work.",
+      "url": "https://www.who.int/news-room/fact-sheets/detail/mental-health-at-work",
+      "consulted": "2026-11-16",
+      "scope": "Consultadas secções de fatores de risco sobre excesso de carga, horários e controlo do trabalho. Não apresenta organização pessoal como substituto de condições laborais adequadas, nem valida o cronograma LDR ou qualquer intervenção clínica. Consulta delimitada; não constitui validação externa do curso. Não são reproduzidos textos, figuras ou exercícios da fonte."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Reconhecer uma carga que não cabe antes de atribuir culpa"
+    },
+    {
+      "id": "2",
+      "title": "Rever o dia sem transformar desvios em identidade"
+    }
+  ],
+  "modules": [
+    {
+      "title": "Reconhecer uma carga que não cabe antes de atribuir culpa",
+      "objectives": [
+        "Calcular capacidade disponível e explicitar a negociação necessária."
+      ],
+      "sections": [
+        {
+          "title": "A terça-feira de Joana",
+          "paragraphs": [
+            "A agenda fictícia de Joana contém seis horas disponíveis para atividades profissionais. Foram solicitadas uma revisão de duas horas, uma reunião de uma hora, duas respostas de meia hora e uma preparação de três horas. O total é sete horas. A diferença de uma hora não desaparece com uma lista mais organizada ou com a decisão de fazer tudo rapidamente. A oficina começa por tornar a incompatibilidade visível. O aluno não deve concluir que Joana é pouco disciplinada nem diagnosticar ansiedade; precisa de comparar compromissos e capacidade segundo os dados recebidos.",
+            "Existem dependências diferentes: a revisão é necessária antes da preparação; a reunião tem horário fixo no cenário; uma das respostas depende de informação que ainda não chegou. Isso permite formular alternativas, mas não autoriza eliminar a resposta do planeamento como se já estivesse resolvida. Prepare um quadro com duração estimada, condição de início, destinatário e margem de alteração conhecida. Não invente disponibilidade fora das seis horas. A atividade não recomenda trabalhar mais tarde ou sacrificar descanso para que a soma pareça caber; pede reconhecer que a decisão envolve condições e prioridades de outras pessoas."
+          ]
+        },
+        {
+          "title": "Uma proposta de renegociação verificável",
+          "paragraphs": [
+            "Escolha uma alternativa e identifique quem precisa de a confirmar. Por exemplo, propor transferir uma hora da preparação exige verificar o efeito na entrega e obter acordo de quem a solicitou. A proposta deve dizer o que ficaria concluído, o que mudaria e qual informação ainda falta. Escrever não consigo fazer nada seria tão impreciso como prometer todas as tarefas. O aluno deverá comunicar uma incompatibilidade concreta e uma possibilidade de reorganização, sem usar uma explicação clínica ou uma avaliação pessoal como substituto da análise do trabalho fornecido.",
+            "O produto final é uma agenda revista acompanhada de uma mensagem de negociação. A agenda pode manter um bloco condicionado à chegada da informação, mas não deve tratar essa espera como conclusão. Acrescente um ponto de atualização para rever a proposta se a dependência não se resolver. A rubrica procura coerência entre soma, sequência e compromissos. Não se mede o valor profissional de Joana pelo número de tarefas marcadas. O curso oferece um exercício de organização e comunicação, sem afirmar que esta estrutura previne ou cura sofrimento psicológico ou funciona de forma idêntica para todas as pessoas.",
+            "Se a revisão demorar duas horas e meia, a diferença total aumenta para uma hora e meia. A atualização precisa de mostrar a nova estimativa, em vez de conservar uma agenda cuja viabilidade já não corresponde às condições observadas."
+          ]
+        }
+      ],
+      "case": "Seis horas disponíveis; tarefas 2h+1h+0,5h+0,5h+3h. Revisão antecede preparação; uma resposta depende de informação.",
+      "exercise": "Calcule carga, represente dependências e escreva proposta de renegociação.",
+      "assessment": {
+        "question": "Organizar melhor a lista elimina a diferença de uma hora?",
+        "answer": "Não. A carga soma sete horas para seis disponíveis; exige mudança de âmbito, prazo, apoio ou outra condição confirmada.",
+        "rubric": [
+          "Calcula a diferença.",
+          "Não inventa horas adicionais.",
+          "Distingue proposta e acordo."
+        ]
+      },
+      "sourceIds": [
+        "wellbeing"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Carga=2+1+0,5+0,5+3=7 horas para6 disponíveis. Revisão antecede preparação; uma resposta depende de informação. Proposta possível: negociar transferência de1h de preparação, explicitando efeito na entrega e necessidade de acordo. Se revisão aumentar0,5h, diferença passa a1,5h.",
+        "limitesDaConclusao": "Não adicionar horas pessoais ou tratar uma proposta de mudança como acordo confirmado."
+      }
+    },
+    {
+      "title": "Rever o dia sem transformar desvios em identidade",
+      "objectives": [
+        "Separar estimativa, execução e mudança de condições."
+      ],
+      "sections": [
+        {
+          "title": "O registo de uma tarde diferente da prevista",
+          "paragraphs": [
+            "No segundo cenário, a agenda de Joana previa três tarefas de uma hora e uma conferência de meia hora. O registo mostra uma tarefa concluída, outra interrompida após quarenta minutos por falta de ficheiro e uma terceira substituída por um pedido novo autorizado. A conferência não ocorreu porque a pessoa responsável cancelou. O resumo inicial diz que Joana falhou três tarefas. Reescreva a análise distinguindo execução, impedimento, substituição e cancelamento. Uma contagem simples de itens não concluídos esconde causas diferentes e não permite escolher a melhoria adequada para o dia seguinte.",
+            "O aluno deverá conservar os factos disponíveis sem inventar justificações. Não se sabe se o ficheiro poderia ter sido pedido antes nem se o pedido novo era inevitável. Essas são perguntas para revisão, não conclusões já demonstradas. O tempo gasto na tarefa interrompida também não é automaticamente perdido: o pacote pode indicar uma parte reutilizável, mas não a forneceu. A oficina ensina a procurar informação suficiente para compreender o desvio, evitando tanto culpar a pessoa por tudo como declarar que nenhuma escolha individual poderia ter contribuído para o resultado."
+          ]
+        },
+        {
+          "title": "Uma revisão que produza uma alteração pequena",
+          "paragraphs": [
+            "Escolha uma mudança concreta relacionada com uma condição observada. Uma possibilidade é conferir a disponibilidade dos ficheiros antes de iniciar o próximo bloco, desde que essa verificação esteja ao alcance de Joana. Outra é registar o efeito de pedidos novos no que foi deslocado. Não adote simultaneamente dez hábitos ou um sistema complexo para responder a um único registo. O teste deve ter tarefa, condição de uso e evidência de que foi realizado. Dizer ser mais produtiva não permite observar o que mudou; dizer conferir o ficheiro de entrada antes da próxima revisão permite analisar uma ação delimitada.",
+            "Entregue uma nota de revisão que use linguagem sobre o trabalho: tarefa interrompida, pedido substituído, reunião cancelada e informação ainda não verificada. Evite frases sobre ser incapaz ou nunca conseguir cumprir. A proposta não é uma técnica clínica de controlo de pensamentos; é uma descrição mais precisa do cenário. Se o aluno aplicar o tema a dificuldades reais persistentes que afetam a vida, o material não substitui apoio adequado. A avaliação desta oficina permanece restrita à qualidade do registo e à correspondência entre problema observado e mudança proposta, sem prometer um estado emocional como resultado.",
+            "Se o ficheiro estiver disponível no teste seguinte e a tarefa continuar a não terminar, a revisão deverá procurar o que ocorreu nessa tentativa. Não será adequado repetir automaticamente a explicação anterior apenas porque ela já tinha sido registada num dia diferente."
+          ]
+        }
+      ],
+      "case": "Tarefas: uma concluída; outra interrompida após 40min por ficheiro ausente; terceira substituída por pedido autorizado; conferência cancelada pelo responsável.",
+      "exercise": "Classifique acontecimentos e proponha um teste pequeno, sem juízo de personalidade.",
+      "assessment": {
+        "question": "Os quatro estados podem ser resumidos como quatro falhas pessoais?",
+        "answer": "Não. Têm condições e causas distintas, algumas ainda desconhecidas; a revisão deve descrevê-las.",
+        "rubric": [
+          "Separa estados.",
+          "Não inventa causa.",
+          "Relaciona teste e observação."
+        ]
+      },
+      "sourceIds": [
+        "wellbeing"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Estados: tarefa concluída, outra interrompida por ficheiro ausente, terceira substituída por pedido autorizado e conferência cancelada. Teste possível: verificar disponibilidade do ficheiro antes do próximo bloco, se isso estiver ao alcance de Joana. Observar condição e resultado sem classificar a pessoa.",
+        "limitesDaConclusao": "Não presumir causa total ou transformar organização de tarefas em tratamento de ansiedade."
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão especializada do âmbito deste curso e revisão editorial dos casos e critérios.",
+    "Pilotar as duas oficinas com participantes e tecnologias de apoio; ampliar a prática antes de qualquer equivalência à carga histórica anunciada.",
+    "Conferir fontes, direitos e cálculos; definir correspondência com o roteiro histórico sem apagar progresso ou certificados.",
+    "Aprovação fundamentada antes de integração ativa; esta edição compacta não comprova as horas históricas."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

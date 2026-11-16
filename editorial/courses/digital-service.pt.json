@@ -1,0 +1,139 @@
+{
+  "productKey": "curso_assinatura_atendimento_online_e_comunicacao_digital",
+  "slug": "atendimento-online-e-comunicacao-digital",
+  "title": "Atendimento Online e Comunicação Digital",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 100,
+  "validatedHours": null,
+  "expectedModuleCount": 2,
+  "scope": "Oficinas de continuidade entre canais e resposta a informação incompleta. Distingue-se do curso de humanização: foco em contexto digital, registo e limites de dados. Não executa atendimento real.",
+  "courseObjectives": [
+    "Relacionar mensagens sobre o mesmo pedido sem expor informação desnecessária.",
+    "Distinguir envio, receção e resolução."
+  ],
+  "sources": [
+    {
+      "id": "documents",
+      "title": "The National Archives. Essential records management.",
+      "url": "https://cdn.nationalarchives.gov.uk/documents/essential-records-management.pdf",
+      "consulted": "2026-11-16",
+      "scope": "Introdução e estrutura consultadas na etapa anterior sobre contexto, responsabilidades e controlo de acesso. Não se declara leitura integral ou revisão de normas locais. Não se prescrevem prazos legais de conservação."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Reunir contexto sem fazer o cliente repetir dados reservados"
+    },
+    {
+      "id": "2",
+      "title": "Comunicar indisponibilidade e acompanhar um pedido digital"
+    }
+  ],
+  "modules": [
+    {
+      "title": "Reunir contexto sem fazer o cliente repetir dados reservados",
+      "objectives": [
+        "Relacionar mensagens sobre o mesmo pedido sem expor informação desnecessária."
+      ],
+      "sections": [
+        {
+          "title": "O pedido que chegou por dois canais",
+          "paragraphs": [
+            "O serviço fictício Mosaico recebe uma mensagem por formulário e outra por chat. Ambas mencionam o pedido de treino M17, mas a segunda acrescenta que o endereço de entrega precisa de confirmação. O assistente não deve criar automaticamente duas solicitações independentes nem alterar o endereço apenas porque a mensagem mais recente parece urgente. A oficina pede reunir o contexto pelo identificador fornecido e assinalar a condição de verificação. Não se trabalha com dados reais de clientes, palavras-passe ou documentos. O objetivo é permitir continuidade do atendimento sem aumentar exposição ou confundir a existência de uma mensagem com autorização para executar a mudança.",
+            "O formulário diz que o cliente não recebeu informação sobre o estado; o chat pergunta se a entrega pode ir para outro local. São necessidades relacionadas, mas diferentes. Prepare um registo com pergunta de estado, pedido de alteração e verificação pendente. Uma resposta que diga estamos a tratar de tudo não permite saber qual parte foi compreendida. O aluno deve reconhecer as duas questões e explicar o que pode informar imediatamente segundo o pacote. O cenário fornece apenas que o pedido está em preparação; não fornece expedição, prazo confirmado ou regra de alteração de endereço."
+          ]
+        },
+        {
+          "title": "Uma resposta que preserve a próxima ação",
+          "paragraphs": [
+            "Escreva uma resposta que confirme o identificador, informe preparação e indique que a mudança depende de verificação pelo procedimento autorizado do serviço. Não invente esse procedimento nem peça que a pessoa envie documentos sensíveis no chat. Se o pacote não especifica o canal de verificação, a ação interna será obter essa informação com o responsável. O aluno deve distinguir uma explicação do estado e a execução de uma alteração. Uma mensagem clara pode reduzir ambiguidade, mas não cria permissão operacional para modificar dados ou prometer que o novo destino já foi aceite.",
+            "O produto final inclui o registo consolidado e uma passagem para outro atendente. A passagem deve permitir ver o que foi respondido, a condição em falta e quem precisa de confirmar o próximo passo. Não copie toda a conversa para tornar a nota aparentemente completa; selecione o contexto necessário sem perder a origem das informações relevantes. A rubrica observa continuidade, precisão e limite de dados. O curso não certifica segurança de um sistema ou conformidade de um processo de identificação. Trabalha uma situação fechada em que o aluno consegue demonstrar que duas mensagens não são duas autorizações nem duas entregas diferentes.",
+            "Se uma terceira mensagem pedir o cancelamento, acrescente a nova solicitação e verifique o seu efeito no pedido anterior. Não mantenha alteração de endereço e cancelamento como ações simultaneamente confirmadas sem uma decisão que resolva a relação entre elas."
+          ]
+        }
+      ],
+      "case": "M17 em preparação. Formulário pede estado; chat pede mudar endereço. Sem expedição, prazo ou procedimento de verificação fornecidos.",
+      "exercise": "Consolide questões, responda ao que é conhecido e prepare passagem com verificação pendente.",
+      "assessment": {
+        "question": "A mensagem mais recente autoriza alterar o endereço?",
+        "answer": "Não. Demonstra uma solicitação; faltam procedimento e verificação autorizados.",
+        "rubric": [
+          "Distingue duas necessidades.",
+          "Não solicita dados sensíveis por improviso.",
+          "Preserva condição e origem."
+        ]
+      },
+      "sourceIds": [
+        "documents"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Registo M17: pedido em preparação; pergunta sobre estado; solicitação separada de mudança de endereço; procedimento de verificação por esclarecer. Resposta possível: o pedido está em preparação; recebemos a solicitação de alteração e vamos confirmar o procedimento autorizado antes de a executar. Passagem interna conserva as duas questões e a verificação pendente.",
+        "limitesDaConclusao": "Não pedir documentos ou alterar dados por improviso; sem prazo de expedição fornecido."
+      }
+    },
+    {
+      "title": "Comunicar indisponibilidade e acompanhar um pedido digital",
+      "objectives": [
+        "Distinguir envio, receção e resolução."
+      ],
+      "sections": [
+        {
+          "title": "O anexo que não chegou ao destino",
+          "paragraphs": [
+            "A cliente fictícia recebe uma resposta dizendo que o material solicitado foi enviado. O registo do serviço mostra geração de uma mensagem, mas o anexo falhou e não existe confirmação de entrega. Um segundo atendente marca o pedido como resolvido porque encontrou o texto da resposta. O exercício pede reconstruir os estados: conteúdo preparado, tentativa de envio e entrega não confirmada. Nenhum desses estados deve ser confundido com resolução da necessidade. O aluno deverá explicar o que o registo demonstra e qual verificação falta, sem afirmar que a cliente não soube utilizar o serviço ou que o problema é necessariamente do seu equipamento.",
+            "O pacote permite duas ações internas: conferir o ficheiro sintético e reenviar pelo mesmo canal autorizado depois de confirmar que o anexo está disponível. Não autoriza transferi-lo para uma plataforma pública ou pedir credenciais da cliente. Prepare uma atualização que reconheça a falha conhecida e indique a ação em curso, sem prometer entrega antes de a verificar. O exercício não ensina administração de servidores ou diagnóstico técnico de correio. Trata a relação entre um acontecimento digital e a conclusão de atendimento que alguém pretende registar a partir dele."
+          ]
+        },
+        {
+          "title": "Encerrar segundo uma evidência definida",
+          "paragraphs": [
+            "Defina um critério de encerramento para o cenário: o ficheiro correto foi disponibilizado no canal autorizado e a verificação de entrega prevista no exercício foi concluída. Se a cliente continuar sem conseguir abrir, o atendimento precisa de registar essa nova condição e encaminhar conforme o âmbito disponível. Não deve apagar a tentativa anterior nem voltar a anunciar resolução apenas porque um botão de envio foi acionado. A nota de acompanhamento deve distinguir falha de anexo, ação corretiva e resultado observado, permitindo que outra pessoa perceba o estado sem repetir todo o contacto.",
+            "Entregue uma sequência de mensagens de treino e o registo de estados correspondente. Cada mensagem deve concordar com a evidência existente naquele momento. A avaliação procura precisão temporal: não usar uma confirmação posterior como se já existisse na primeira resposta. O aluno também deve distinguir cordialidade e clareza de promessa indevida. Dizer que compreende o inconveniente não exige inventar um prazo nem assumir uma causa que não foi verificada. O curso termina com um pedido cujo estado pode ser recuperado por quem atende depois, sem confundir atividade no sistema com satisfação presumida ou com execução completa daquilo que foi solicitado.",
+            "Se o ficheiro reenviado tiver versão errada, a confirmação de entrega não encerra o problema. Entrega técnica e adequação do conteúdo precisam de ser verificadas segundo o critério definido para esta solicitação específica."
+          ]
+        }
+      ],
+      "case": "Resposta gerada; anexo falhou; sem confirmação. Permitido conferir e reenviar pelo canal autorizado.",
+      "exercise": "Crie estados, atualização e critério de encerramento; inclua hipótese de versão errada.",
+      "assessment": {
+        "question": "Texto de resposta existente comprova resolução?",
+        "answer": "Não. Falta entrega do ficheiro correto e verificação prevista.",
+        "rubric": [
+          "Distingue preparação/envio/entrega.",
+          "Não muda canal sem autorização.",
+          "Confere versão."
+        ]
+      },
+      "sourceIds": [
+        "documents"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Estados: conteúdo preparado, tentativa de envio com falha de anexo, entrega não confirmada. Atualização reconhece a falha e indica conferência/reenvio pelo canal autorizado. Encerramento exige ficheiro correto disponibilizado e verificação prevista concluída. Se chegar versão errada, o pedido continua por resolver mesmo com entrega técnica confirmada.",
+        "limitesDaConclusao": "Não afirmar causa no equipamento da cliente ou mudar para serviço público sem autorização."
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão especializada do âmbito deste curso e revisão editorial dos casos e critérios.",
+    "Pilotar as duas oficinas com participantes e tecnologias de apoio; ampliar a prática antes de qualquer equivalência à carga histórica anunciada.",
+    "Conferir fontes, direitos e cálculos; definir correspondência com o roteiro histórico sem apagar progresso ou certificados.",
+    "Aprovação fundamentada antes de integração ativa; esta edição compacta não comprova as horas históricas."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

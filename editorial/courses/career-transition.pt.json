@@ -1,0 +1,139 @@
+{
+  "productKey": "curso_assinatura_transicao_de_carreira_com_planejamento",
+  "slug": "transicao-de-carreira-com-planejamento",
+  "title": "Transição de Carreira com Planejamento",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 140,
+  "validatedHours": null,
+  "expectedModuleCount": 2,
+  "scope": "Oficinas de comparação de competências e teste reversível de uma mudança. Não recomenda abandonar emprego ou contrair dívida; recursos e valores são fictícios e não constituem aconselhamento financeiro.",
+  "courseObjectives": [
+    "Separar tarefa transferível e lacuna a verificar.",
+    "Definir condições e pontos de revisão antes de ampliar um plano."
+  ],
+  "sources": [
+    {
+      "id": "career",
+      "title": "National Careers Service. Identifying skills and upskilling.",
+      "url": "https://nationalcareers.service.gov.uk/careers-advice/identifying-skills-and-upskilling/",
+      "consulted": "2026-11-16",
+      "scope": "Consultadas orientações sobre reconhecer competências, rever experiências, comparar requisitos e planear aprendizagem. Sustenta reflexão profissional; não valida testes psicométricos, tratamento emocional, garantia de contratação ou requisitos internacionais. Consulta delimitada; não constitui validação externa do curso. Não são reproduzidos textos, figuras ou exercícios da fonte."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Mapear a distância entre função atual e função pretendida"
+    },
+    {
+      "id": "2",
+      "title": "Comparar caminhos de mudança com compromisso limitado"
+    }
+  ],
+  "modules": [
+    {
+      "title": "Mapear a distância entre função atual e função pretendida",
+      "objectives": [
+        "Separar tarefa transferível e lacuna a verificar."
+      ],
+      "sections": [
+        {
+          "title": "A mudança de Ivo para análise de operações",
+          "paragraphs": [
+            "Ivo pretende passar de apoio comercial para análise de operações num cenário fictício. Na função anterior, organizava pedidos e acompanhava datas, mas não construía modelos de previsão. O anúncio de treino pede organizar dados, explicar um indicador e testar uma hipótese com informação fornecida. A primeira oficina compara tarefas, não apenas nomes de cargos. Ivo pode apresentar evidência de organização de pedidos e identificar a necessidade de praticar análise de indicadores. Não deve renomear a função anterior como analista para eliminar a distância entre o percurso e a oportunidade que deseja explorar.",
+            "O pacote oferece três evidências: uma lista conferida, um resumo de prazos e uma apresentação em que Ivo apenas leu números preparados por outra pessoa. A terceira não demonstra que calculou ou interpretou o indicador. O aluno deve atribuir corretamente a contribuição de Ivo e escolher uma tarefa nova para observar a competência ainda não demonstrada. Uma matriz de transição útil mantém essa diferença entre familiaridade com um produto de trabalho e capacidade de o produzir. Ela não classifica o valor pessoal do candidato nem afirma que uma lacuna pequena torna a mudança garantida."
+          ]
+        },
+        {
+          "title": "Construir um teste que informe a decisão",
+          "paragraphs": [
+            "Prepare um exercício sintético com dez pedidos, oito concluídos no prazo e dois depois. Ivo deve calcular a proporção e explicar que a medida depende do critério de prazo fornecido. O teste pode mostrar uma primeira execução com apoio, não domínio de todas as tarefas de análise. Registe a fonte dos dados, o cálculo e a explicação em linguagem simples. Se Ivo precisar de um exemplo resolvido, essa condição deve acompanhar a evidência. O objetivo é produzir informação sobre aprendizagem e interesse, sem transformar uma simulação num histórico de trabalho que nunca aconteceu.",
+            "Entregue a matriz e um portefólio identificado como treino. Acrescente uma pergunta sobre a função pretendida que o anúncio não resolve, como o tipo de dados e a autonomia esperada. A transição precisa de combinar aprendizagem com investigação do trabalho real; não se limita a completar um curso ou alterar o título do perfil. A rubrica observa honestidade de contribuição e relação entre lacuna e teste. O material não determina se Ivo deve aceitar uma vaga, abandonar a atividade anterior ou investir dinheiro na mudança. Permite examinar uma parte da decisão com evidências mais específicas do que entusiasmo ou comparação superficial de cargos.",
+            "Se Ivo calcular oito em dez como oitenta por cento, ainda deverá explicar o que conta como no prazo. Um número correto sem definição da medida não demonstra compreensão suficiente para a tarefa de análise proposta."
+          ]
+        }
+      ],
+      "case": "Ivo organizava pedidos/datas, não previsões. Leu números produzidos por outro. Teste: dez pedidos, oito no prazo, dois depois.",
+      "exercise": "Mapeie contribuições e produza cálculo explicado, identificado como simulação.",
+      "assessment": {
+        "question": "Ler uma apresentação demonstra autoria dos indicadores?",
+        "answer": "Não. A contribuição deve ser descrita como leitura; cálculo e análise precisam de evidência própria.",
+        "rubric": [
+          "Não renomeia função.",
+          "Calcula80% e define medida.",
+          "Identifica apoio e âmbito."
+        ]
+      },
+      "sourceIds": [
+        "career"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Organização de pedidos e prazos: experiência fornecida. Previsões e autoria de indicadores: não demonstradas. A apresentação antiga mostra leitura de números de outra pessoa. No teste, 8/10=80% de pedidos no prazo, segundo o critério convencional recebido. Identificar a produção como simulação e registar o apoio usado.",
+        "limitesDaConclusao": "Confirmar tarefas e autonomia da oportunidade antes de declarar correspondência completa."
+      }
+    },
+    {
+      "title": "Comparar caminhos de mudança com compromisso limitado",
+      "objectives": [
+        "Definir condições e pontos de revisão antes de ampliar um plano."
+      ],
+      "sections": [
+        {
+          "title": "Dois percursos e um recurso comum",
+          "paragraphs": [
+            "Ivo considera um percurso A de prática semanal durante oito semanas e um percurso B intensivo de duas semanas. O pacote informa disponibilidade de seis horas por semana. A exige quatro horas semanais; B exige vinte. Não foram fornecidas horas adicionais nem possibilidade de ausência na atividade atual. Assim, A cabe na disponibilidade declarada, enquanto B exige uma alteração que ainda não foi confirmada. A conclusão não é que intensivos são inadequados para todas as pessoas, mas que o plano B não pode ser tratado como executável neste cenário sem resolver a condição que o impede.",
+            "Os custos fictícios são cento e sessenta unidades em A e duzentas e quarenta em B, com um limite reservado de duzentas. A comparação deve manter tempo e dinheiro como restrições diferentes. B excede ambas; um eventual desconto não resolveria a disponibilidade horária, e uma mudança de horário não resolveria sozinha o custo. O aluno não deve propor crédito ou abandono de rendimento como resposta automática. A atividade pede formular perguntas e alternativas de baixo compromisso, usando apenas recursos e autorizações fornecidos, sem transformar o desejo de mudança numa obrigação de aceitar qualquer risco."
+          ]
+        },
+        {
+          "title": "Um ensaio antes de uma decisão maior",
+          "paragraphs": [
+            "Prepare um teste de duas semanas inspirado em A, com duas tarefas observáveis e um ponto de revisão. O teste deve indicar o que Ivo pretende aprender sobre capacidade de execução, interesse e apoio necessário. Não se mede apenas se gostou das aulas. Pode observar se conseguiu produzir uma análise, quanto apoio utilizou e que perguntas sobre a função surgiram. Esses resultados informam a próxima decisão, sem demonstrar retorno financeiro ou probabilidade de contratação. O plano deve conservar uma opção de parar ou adaptar, em vez de tratar qualquer revisão como falta de compromisso com a transição.",
+            "O produto final reúne comparação dos percursos, condições pendentes e critérios de continuidade. Se o teste revelar necessidade de mais tempo, a resposta poderá ser reduzir âmbito ou rever a sequência, não concluir imediatamente incapacidade. Se revelar desinteresse, essa informação também pode ser útil antes de um compromisso maior. A rubrica procura uma decisão proporcional ao que foi testado e às restrições declaradas. O curso não oferece aconselhamento financeiro individual ou garantia de carreira; trabalha uma forma de tornar reversível uma investigação inicial e de separar uma oportunidade de aprendizagem de uma mudança profissional que exige outras evidências e decisões.",
+            "Se A alterar a carga para sete horas semanais, a conclusão de compatibilidade deve ser revista. Conservar uma avaliação antiga depois de mudar uma condição retiraria utilidade ao próprio planeamento."
+          ]
+        }
+      ],
+      "case": "Disponível6h/semana e200unidades. A:4h×8semanas/custo160. B:20h×2/custo240.",
+      "exercise": "Compare restrições e desenhe teste de duas semanas com critérios de revisão.",
+      "assessment": {
+        "question": "Um desconto que coloque B em200 resolve todas as incompatibilidades?",
+        "answer": "Não. Continuam20h necessárias para6h disponíveis, salvo alteração confirmada.",
+        "rubric": [
+          "Separa tempo e custo.",
+          "Não recomenda endividamento.",
+          "Define teste reversível."
+        ]
+      },
+      "sourceIds": [
+        "career"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "A cabe no recorte: 4 horas semanais para 6 disponíveis e custo 160 para limite 200. B exige mais 14 horas semanais e mais 40 unidades. Teste de duas semanas de A: produzir uma análise sintética e explicá-la com revisão; observar tempo e apoio. Um desconto para 200 resolveria somente a condição de custo de B.",
+        "limitesDaConclusao": "Compatibilidade de recursos não demonstra procura de trabalho, retorno ou contratação."
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão especializada do âmbito deste curso e revisão editorial dos casos e critérios.",
+    "Pilotar as duas oficinas com participantes e tecnologias de apoio; ampliar a prática antes de qualquer equivalência à carga histórica anunciada.",
+    "Conferir fontes, direitos e cálculos; definir correspondência com o roteiro histórico sem apagar progresso ou certificados.",
+    "Aprovação fundamentada antes de integração ativa; esta edição compacta não comprova as horas históricas."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

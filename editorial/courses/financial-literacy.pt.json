@@ -1,0 +1,139 @@
+{
+  "productKey": "curso_assinatura_educacao_financeira_basica_para_profissionais",
+  "slug": "educacao-financeira-basica-para-profissionais",
+  "title": "Educação Financeira Básica para Profissionais",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 100,
+  "validatedHours": null,
+  "expectedModuleCount": 2,
+  "scope": "Oficinas de calendário de caixa e cenários de rendimento fictício. Sem recomendação de crédito, investimento, produto ou decisão fiscal; não representa aconselhamento financeiro individual.",
+  "courseObjectives": [
+    "Distinguir saldo final e disponibilidade numa data intermédia.",
+    "Construir cenários sem gastar uma hipótese como certeza."
+  ],
+  "sources": [
+    {
+      "id": "budget",
+      "title": "Consumer Financial Protection Bureau. Assess your spending.",
+      "url": "https://www.consumerfinance.gov/owning-a-home/prepare/assess-your-spending/",
+      "consulted": "2026-11-16",
+      "scope": "Resumo da página oficial consultado sobre registar despesas e confrontar rendimentos. Contexto americano não transferido para tributação, produtos ou aconselhamento individual. Cálculos e regras de treino são inteiramente sintéticos."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Verificar quando o dinheiro entra e sai"
+    },
+    {
+      "id": "2",
+      "title": "Separar rendimento confirmado e expectativa"
+    }
+  ],
+  "modules": [
+    {
+      "title": "Verificar quando o dinheiro entra e sai",
+      "objectives": [
+        "Distinguir saldo final e disponibilidade numa data intermédia."
+      ],
+      "sections": [
+        {
+          "title": "Um mês positivo com uma data problemática",
+          "paragraphs": [
+            "O orçamento fictício de Tomás começa com cem unidades monetárias disponíveis. Há uma saída de duzentas e cinquenta no dia três e uma entrada confirmada de trezentas no dia dez. Não existem outros movimentos no pacote. A conta do mês termina em cento e cinquenta: cem mais trezentos menos duzentos e cinquenta. Contudo, no dia três, antes da entrada, o saldo calculado seria menos cento e cinquenta. A oficina pede representar a sequência, porque um total mensal positivo não demonstra capacidade de cumprir uma saída numa data anterior ao recebimento.",
+            "Prepare um calendário com saldo inicial, movimento e saldo após cada acontecimento. Não reorganize as datas para que a tabela pareça viável. Também não acrescente automaticamente um empréstimo, um limite bancário ou apoio de terceiros; nenhum desses recursos foi fornecido. O aluno deve identificar a incompatibilidade temporal e formular perguntas sobre alternativas que precisariam de confirmação. Uma possibilidade de renegociar a data não é um acordo já obtido. A análise deve manter o estado da obrigação e da entrada, sem transformar uma intenção de negociação em dinheiro disponível ou em alteração efetiva do compromisso."
+          ]
+        },
+        {
+          "title": "Um quadro de investigação antes de decidir",
+          "paragraphs": [
+            "Liste informações que seriam necessárias para comparar alternativas reais: possibilidade de mudança de data, custos e consequências aplicáveis, e confirmação de que a entrada ocorrerá como previsto. O curso não fornece essas respostas nem aconselha escolher um produto financeiro. O cenário utiliza unidades abstratas para que a aprendizagem se concentre no calendário e não pareça uma análise da situação pessoal de alguém. O aluno deve explicar por que a sequência importa e identificar o momento em que o plano deixa de ser executável com os recursos expressamente disponíveis no pacote.",
+            "Entregue o calendário e uma nota com a diferença entre resultado mensal e condição de caixa. Acrescente uma versão alternativa em que a saída, mediante acordo fictício já confirmado, passa para o dia doze. Nesse caso, a entrada do dia dez eleva o saldo a quatrocentos antes da saída e o mês termina nos mesmos cento e cinquenta. A comparação mostra que datas podem mudar a viabilidade temporal sem alterar o total. A rubrica procura precisão e distinção entre cenário original e alternativa confirmada, sem apresentar a renegociação como direito garantido ou solução universal para dificuldades financeiras reais.",
+            "Se a entrada atrasar, o calendário alternativo também precisa de ser revisto. O facto de ter funcionado com uma data confirmada no exercício não demonstra que qualquer rendimento futuro seja certo ou que o mesmo plano se mantenha adequado quando os dados mudam."
+          ]
+        }
+      ],
+      "case": "Inicial100; saída250dia3; entrada300dia10. Alternativa apenas se acordo confirmado muda saída para12.",
+      "exercise": "Faça os dois calendários, identifique insuficiência temporal e perguntas antes de comparar opções.",
+      "assessment": {
+        "question": "Saldo final150 comprova disponibilidade para saída no dia3?",
+        "answer": "Não. Antes da entrada, faltam150; o calendário revela a incompatibilidade.",
+        "rubric": [
+          "Respeita datas.",
+          "Não inventa recurso.",
+          "Distingue acordo e hipótese."
+        ]
+      },
+      "sourceIds": [
+        "budget"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Original: saldo 100; no dia 3 a saída de 250 produz insuficiência calculada de 150; no dia 10 entram 300 e o final é 150. Alternativa apenas com acordo confirmado: entrada dia 10 eleva saldo a 400; saída dia 12 deixa 150. O total é igual, mas o calendário difere.",
+        "limitesDaConclusao": "Não inventar crédito ou presumir renegociação; verificar datas e condições reais antes de decidir."
+      }
+    },
+    {
+      "title": "Separar rendimento confirmado e expectativa",
+      "objectives": [
+        "Construir cenários sem gastar uma hipótese como certeza."
+      ],
+      "sections": [
+        {
+          "title": "Duas entradas com estados diferentes",
+          "paragraphs": [
+            "O cenário fictício de Nora começa com cento e cinquenta unidades disponíveis. Existem duzentas de entrada confirmada e cento e oitenta de um serviço ainda sujeito a aceitação. As saídas previstas somam trezentas. O cenário baseado apenas na entrada confirmada termina em cinquenta; se a aceitação adicional ocorrer e o recebimento se verificar, termina em duzentas e trinta. O aluno deve apresentar os dois cenários separados. Somar tudo como rendimento garantido ocultaria uma condição importante, enquanto ignorar a possibilidade de entrada adicional eliminaria informação útil para acompanhar o plano, desde que o seu estado permaneça explícito.",
+            "Nora considera uma compra opcional de oitenta unidades. No cenário apenas com valores confirmados, essa compra levaria o resultado final de cinquenta para menos trinta. No cenário com a entrada adicional, ficariam cento e cinquenta. A oficina não recomenda realizar ou adiar a compra em qualquer situação real. Pede mostrar como a decisão depende de uma condição que ainda não foi satisfeita e de outras informações não fornecidas, como datas e necessidades. Uma expectativa de serviço aceite não deve ser apresentada como saldo disponível antes de existir evidência correspondente."
+          ]
+        },
+        {
+          "title": "Atualizar o estado sem contar a mesma entrada duas vezes",
+          "paragraphs": [
+            "Prepare uma tabela com entrada confirmada, entrada condicional, acontecimento necessário e evidência de recebimento. Se o serviço de cento e oitenta for aceite depois, atualize o seu estado sem acrescentar outra linha como se fossem mais cento e oitenta. Aceitação e recebimento também não são o mesmo acontecimento. A atividade pede identificar as etapas que o pacote informa e aquilo que ainda precisa de confirmação. O aluno deve evitar duplicar a expectativa quando ela se transforma em compromisso ou em entrada, pois essa duplicação pode criar uma disponibilidade fictícia mesmo com somas aritmeticamente corretas.",
+            "Entregue os dois cenários antes e depois da compra hipotética e uma nota sobre condições desconhecidas. A rubrica verifica a soma e, sobretudo, o estado dos dados que a alimentam. Não se pretende inferir risco de um produto, oferecer estratégia de investimento ou aconselhar uma dívida. O curso introdutório trabalha a capacidade de ler um pequeno plano financeiro sem confundir previsão com facto. A conclusão deve permitir que outra pessoa veja o que depende de aceitação e de recebimento, reconhecendo que uma conta futura continua a exigir revisão quando prazos, valores ou compromissos mudam fora do cenário original.",
+            "Se apenas metade do valor adicional for recebida, use noventa no cenário realizado e conserve o restante segundo o estado informado. Não marque o total de cento e oitenta como disponível por causa de uma entrada parcial."
+          ]
+        }
+      ],
+      "case": "Inicial150; entrada confirmada200; condicional180; saídas300; compra opcional80.",
+      "exercise": "Compare cenários e registe transição de expectativa/aceitação/recebimento sem duplicação.",
+      "assessment": {
+        "question": "Aceitar o serviço permite somar180 como recebido?",
+        "answer": "Não. Aceitação e recebimento diferem; os cenários devem conservar as condições.",
+        "rubric": [
+          "Calcula50/230 e−30/150.",
+          "Não duplica entrada.",
+          "Não recomenda crédito ou produto."
+        ]
+      },
+      "sourceIds": [
+        "budget"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Só confirmado: 150+200−300=50. Com recebimento adicional de 180: 230. Após compra hipotética de 80: −30 ou 150, respetivamente. A entrada condicional muda de estado sem duplicar a linha; aceitação não é recebimento. Se chegar apenas 90, cenário realizado correspondente é 140 antes da compra, não 230.",
+        "limitesDaConclusao": "Datas e outras necessidades não foram fornecidas; não recomendar a compra ou um produto financeiro."
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão especializada do âmbito deste curso e revisão editorial dos casos e critérios.",
+    "Pilotar as duas oficinas com participantes e tecnologias de apoio; ampliar a prática antes de qualquer equivalência à carga histórica anunciada.",
+    "Conferir fontes, direitos e cálculos; definir correspondência com o roteiro histórico sem apagar progresso ou certificados.",
+    "Aprovação fundamentada antes de integração ativa; esta edição compacta não comprova as horas históricas."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

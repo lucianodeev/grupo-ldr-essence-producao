@@ -1,0 +1,139 @@
+{
+  "productKey": "curso_assinatura_desenvolvimento_pessoal_para_vida_profissional",
+  "slug": "desenvolvimento-pessoal-para-vida-profissional",
+  "title": "Desenvolvimento Pessoal para Vida Profissional",
+  "locale": "pt",
+  "status": "draft",
+  "published": false,
+  "advertisedHours": 120,
+  "validatedHours": null,
+  "expectedModuleCount": 2,
+  "scope": "Duas oficinas de prática e feedback sobre uma competência de trabalho. Não promete transformação pessoal universal, formação de hábitos em prazo fixo ou certificação das 120 horas históricas.",
+  "courseObjectives": [
+    "Definir uma competência e uma tentativa com critérios.",
+    "Separar comentário, evidência e alteração testável."
+  ],
+  "sources": [
+    {
+      "id": "learning",
+      "title": "IES/What Works Clearinghouse. Organizing Instruction and Study to Improve Student Learning.",
+      "url": "https://ies.ed.gov/ncee/wwc/PracticeGuide/1",
+      "consulted": "2026-11-16",
+      "scope": "Recomendações e notas da página oficial consultadas na etapa anterior, sem declarar leitura integral. A sequência e os instrumentos LDR são novos e não estão validados pelo guia."
+    }
+  ],
+  "curriculum": [
+    {
+      "id": "1",
+      "title": "Transformar uma intenção vaga numa prática observável"
+    },
+    {
+      "id": "2",
+      "title": "Usar feedback sem o transformar em verdade sobre a pessoa"
+    }
+  ],
+  "modules": [
+    {
+      "title": "Transformar uma intenção vaga numa prática observável",
+      "objectives": [
+        "Definir uma competência e uma tentativa com critérios."
+      ],
+      "sections": [
+        {
+          "title": "O objetivo de Eva de ser mais profissional",
+          "paragraphs": [
+            "Eva escreve que pretende ser mais profissional, mas não identifica uma situação que queira executar de maneira diferente. O caso fictício fornece uma dificuldade concreta: ao entregar uma tarefa, costuma omitir o estado da revisão e a próxima ação esperada. A oficina propõe trabalhar essa entrega, em vez de transformar um objetivo amplo numa avaliação de toda a pessoa. Defina um comportamento observável: produzir uma nota que indique versão, estado e próximo responsável. O aluno deve explicar como a tentativa será examinada, sem afirmar que três campos bastam para definir profissionalismo em qualquer função.",
+            "O pacote contém duas notas de treino. A primeira diz segue o documento e a segunda diz versão dois, texto revisto, aprovação de Marta pendente. Compare o que um destinatário consegue recuperar de cada uma. A segunda oferece mais contexto, mas ainda pode precisar de dizer onde está o documento e qual ação se solicita a Marta. O objetivo não é elogiar qualquer mensagem que pareça organizada; é identificar qual informação permite continuar o trabalho. A prática deverá conservar a distinção entre revisão concluída e autorização pendente, sem transformar uma melhoria de comunicação numa conclusão sobre maturidade pessoal."
+          ]
+        },
+        {
+          "title": "Preparar tentativa, observação e revisão",
+          "paragraphs": [
+            "Escolha três entregas sintéticas para praticar: uma versão inicial, uma revisão com dúvida e uma versão autorizada para âmbito limitado. Eva escreverá uma nota para cada estado. O observador verificará se consegue identificar o documento, o estado e a ação seguinte, sem pedir contexto adicional que deveria estar na nota. Registe o apoio usado, como uma lista de conferência. Realizar bem a tarefa com essa lista não demonstra execução sem apoio, mas pode ser um resultado útil e adequado. O plano de aprendizagem deve descrever a condição, em vez de ocultá-la para parecer mais autónomo.",
+            "A entrega inclui a intenção reformulada, os três exemplos e uma revisão baseada nas respostas do observador fictício. Se os destinatários não recuperarem a próxima ação, a alteração seguinte deve tratar esse ponto específico. Não acrescente um conjunto de metas sobre comunicação, liderança e disciplina sem relação com a dificuldade inicial. A rubrica procura correspondência entre problema, prática e evidência. Este exercício não valida uma metodologia universal de desenvolvimento pessoal nem promete resultados num número fixo de dias. Ele demonstra como uma aspiração ampla pode dar origem a uma atividade pequena, examinável e passível de revisão, mantendo o alcance do que realmente foi praticado.",
+            "Quando a nota exigir uma decisão de outra pessoa, a prática não pode criar essa decisão. Eva pode melhorar a clareza do pedido, mas o resultado da aprendizagem deve ser separado da rapidez com que o destinatário responde."
+          ]
+        }
+      ],
+      "case": "Eva omite estado/próxima ação. Nota 1: segue documento. Nota 2: versão 2, revisto, aprovação de Marta pendente.",
+      "exercise": "Defina competência e três notas para estados distintos, com critérios de recuperação.",
+      "assessment": {
+        "question": "Uma resposta rápida de Marta comprova que Eva aprendeu?",
+        "answer": "Não. Deve observar a qualidade das notas e as condições da tentativa; resposta de terceiro é outra variável.",
+        "rubric": [
+          "Delimita competência.",
+          "Conserva estado e ação.",
+          "Regista apoio utilizado."
+        ]
+      },
+      "sourceIds": [
+        "learning"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "1",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Competência: tornar documento, estado e próxima ação recuperáveis. Três notas de exemplo: versão inicial A1 para revisão; A2 revisto com dúvida Q1 para esclarecimento; A3 autorizado apenas para uso X, indicando essa condição. O observador procura localização, estado e próximo responsável, registando a lista de conferência usada.",
+        "limitesDaConclusao": "Os identificadores são dados de treino adicionados, não factos da experiência de Eva ou decisões reais de Marta."
+      }
+    },
+    {
+      "title": "Usar feedback sem o transformar em verdade sobre a pessoa",
+      "objectives": [
+        "Separar comentário, evidência e alteração testável."
+      ],
+      "sections": [
+        {
+          "title": "Três comentários sobre a mesma entrega",
+          "paragraphs": [
+            "Eva recebe três comentários fictícios: o ficheiro estava difícil de encontrar, a nota não mencionava a dúvida aberta e és sempre desorganizada. Os dois primeiros apontam elementos que podem ser examinados; o terceiro é uma generalização sobre a pessoa. O aluno deve procurar a evidência e a alteração possível, sem aceitar o rótulo como diagnóstico nem rejeitar automaticamente toda a informação porque a formulação foi desagradável. A oficina não decide como Eva deve sentir-se. Trabalha uma leitura do feedback que preserve dados úteis e identifique afirmações cujo alcance excede a situação observada.",
+            "O pacote mostra que o ficheiro estava numa pasta diferente da indicada e que a dúvida realmente não aparecia na nota. Essas duas condições sustentam uma correção específica. Não demonstram o sempre do terceiro comentário. Prepare uma resposta que reconheça os dois pontos verificáveis e peça que futuras observações indiquem situação e efeito. O objetivo não é vencer uma discussão sobre a identidade de Eva, mas tornar a revisão praticável. Se faltasse evidência sobre o ficheiro, seria necessário perguntar antes de assumir o problema; neste caso, porém, a relação entre pasta indicada e localização foi fornecida."
+          ]
+        },
+        {
+          "title": "Escolher uma mudança e testar noutra situação",
+          "paragraphs": [
+            "A alteração proposta é conferir a ligação e mencionar a dúvida antes da próxima entrega sintética. O novo caso contém uma pasta correta, uma ligação que abre outra versão e uma pergunta ainda sem resposta. Eva deve perceber que acertar a pasta não resolve a versão errada. A prática de transferência pede aplicar o critério ao problema novo, em vez de repetir mecanicamente a correção anterior. O aluno regista o que encontrou, a alteração feita e o limite da tentativa. Uma única entrega melhorada não comprova que todos os futuros documentos serão organizados corretamente.",
+            "Entregue uma análise dos três comentários, uma resposta e a nota revista para o novo caso. A rubrica verifica se a revisão trata localização, versão e dúvida de modo coerente, sem utilizar um rótulo pessoal como explicação de tudo. O curso distingue aprender uma tarefa e procurar apoio para questões mais amplas de bem-estar ou relacionamento, que não são avaliadas aqui. A conclusão pode reconhecer uma melhoria observada e a necessidade de continuar a praticar. Não deve anunciar transformação definitiva de personalidade ou uma competência global apenas porque o aluno produziu um exemplo correto sob condições conhecidas.",
+            "Se o novo destinatário encontrar o ficheiro mas não compreender a dúvida, a revisão seguinte deverá tratar a formulação da pergunta. O resultado parcial informa a próxima tentativa; não precisa de ser escondido para que a prática pareça bem-sucedida em todos os critérios."
+          ]
+        }
+      ],
+      "case": "Comentários: difícil localizar; dúvida omitida; sempre desorganizada. Evidência confirma pasta divergente e dúvida ausente. Novo caso: pasta correta, ligação para versão errada, pergunta aberta.",
+      "exercise": "Classifique comentários, responda e corrija a nova entrega sem generalização pessoal.",
+      "assessment": {
+        "question": "Confirmar dois erros comprova a generalização sempre desorganizada?",
+        "answer": "Não. Sustenta duas correções na situação, sem demonstrar um traço permanente ou todas as entregas.",
+        "rubric": [
+          "Usa evidência específica.",
+          "Transfere critério para nova versão.",
+          "Conserva limite da observação."
+        ]
+      },
+      "sourceIds": [
+        "learning"
+      ],
+      "estimatedPracticeMinutes": 90,
+      "id": "2",
+      "workPacket": {
+        "natureza": "Exemplo didático sintético; solução possível, não resposta única nem validação externa.",
+        "resolucaoComentada": "Comentários verificáveis: pasta divergente e dúvida ausente. Generalização sempre desorganizada excede a evidência. Resposta reconhece os dois pontos e pede observações situadas. No caso novo, conferir ligação para a versão correta e escrever a pergunta aberta; acertar a pasta não resolve uma ligação errada.",
+        "limitesDaConclusao": "Não inventar qual é a versão correta quando o pacote só informa divergência; solicitar confirmação."
+      }
+    }
+  ],
+  "review": {
+    "scientific": false,
+    "editorial": false,
+    "rights": false,
+    "reader": false,
+    "workload": false
+  },
+  "remaining": [
+    "Revisão especializada do âmbito deste curso e revisão editorial dos casos e critérios.",
+    "Pilotar as duas oficinas com participantes e tecnologias de apoio; ampliar a prática antes de qualquer equivalência à carga histórica anunciada.",
+    "Conferir fontes, direitos e cálculos; definir correspondência com o roteiro histórico sem apagar progresso ou certificados.",
+    "Aprovação fundamentada antes de integração ativa; esta edição compacta não comprova as horas históricas."
+  ],
+  "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b"
+}

@@ -286,7 +286,7 @@
         {
           "title": "Um total pode contar a mesma pessoa duas vezes",
           "paragraphs": [
-            "Num grupo fictício de trinta participantes, dezoito fizeram a oficina A e quatorze a oficina B. Seis fizeram ambas. Somar dezoito e quatorze produz trinta e dois inscrições em oficinas, mas não trinta e duas pessoas distintas. Quem fez ambas entrou na soma duas vezes. Para contar quem fez pelo menos uma, subtraia uma cópia da interseção: dezoito mais quatorze menos seis resulta vinte e seis. O domínio é o mesmo grupo de trinta e todas as contagens usam pessoas, não sessões frequentadas.",
+            "Num grupo fictício de trinta participantes, dezoito fizeram a oficina A e quatorze a oficina B. Seis fizeram ambas. Somar dezoito e quatorze produz trinta e duas inscrições em oficinas, mas não trinta e duas pessoas distintas. Quem fez ambas entrou na soma duas vezes. Para contar quem fez pelo menos uma, subtraia uma cópia da interseção: dezoito mais quatorze menos seis resulta vinte e seis. O domínio é o mesmo grupo de trinta e todas as contagens usam pessoas, não sessões frequentadas.",
             "A secção de operações com dois conjuntos da OpenStax apresenta união e interseção; os números e o cenário são novos. A união contém quem pertence a A, a B ou a ambos; a interseção contém quem pertence aos dois. Um desenho pode organizar as regiões, mas não precisa de estar à escala para sustentar o cálculo. Se for utilizado visualmente, deve ter rótulos claros e alternativa textual. A posição dentro de cada região representa pertença, não qualidade da participação, preferência ou intensidade de aprendizagem."
           ]
         },
@@ -348,7 +348,7 @@
         {
           "title": "Uma solução inclui o que não se pode saber",
           "paragraphs": [
-            "A ficha final deve classificar cinco afirmações: dez pertencem a pelo menos um grupo; exatamente sete membros receberam caderno; todos os de L receberam; Alex pertence a L; Bia não pertence a L. A primeira e a terceira são necessárias, a segunda e a quarta não são determinadas pelas informações, e a quinta segue das premissas acrescentadas sobre Bia. Não confunda não determinada com falsa: uma distribuição pode tornar a frase verdadeira e outra falsa. Essa distinção é central para responder questões em que as alternativas exploram a tentação de concluir mais do que foi dado.",
+            "A ficha final deve classificar cinco afirmações: dez pertencem a pelo menos um grupo; exatamente sete membros receberam caderno; todos os de L receberam; Alex pertence a L; Bia não pertence a L. A primeira e a terceira são necessárias, a segunda e a quarta não são determinadas pelas informações, e a quinta segue das premissas acrescentadas sobre Bia. Não confunda não determinada com falsa: uma distribuição pode tornar a frase verdadeira e outra falsa. Essa distinção é central para responder questões em que as alternativas exploram a tentação de concluir mais do que foi dado. Como Bia não recebeu e há doze membros com no máximo um caderno por pessoa, o total também não pode exceder onze. Sete e onze são ambos realizáveis: no mínimo só L recebe; no máximo todos exceto Bia recebem, colocando Bia fora de L. O intervalo de sete a onze é um limite exato sob estas premissas, não uma estimativa.",
             "Apresente contas, regiões, duas distribuições de cadernos e justificações para cada classificação. Acrescente a alteração produzida pela premissa de exclusividade. O exercício termina com um comentário sobre o método: que dado foi usado em cada passagem e que hipótese precisou de permanecer aberta. Não há garantia de aprovação em concurso nem cobertura de todos os temas de um edital. Este percurso introdutório necessita de prática graduada adicional e pilotagem antes de corresponder às cento e vinte horas históricas. A competência demonstrada aqui é argumentar com precisão num problema delimitado e reconhecer o limite informacional da própria solução."
           ]
         }
@@ -357,12 +357,137 @@
       "exercise": "Reconstrua regiões; classifique cinco afirmações; dê duas distribuições de cadernos compatíveis. Depois acrescente exclusividade e indique exatamente que conclusões mudam.",
       "assessment": {
         "question": "O facto de Alex ter caderno prova pertença a L?",
-        "answer": "Não. Isso afirmaria a consequência. Já Bia sem caderno não pode pertencer a L pelas premissas. O total de cadernos é pelo menos sete, sem determinação exata.",
+        "answer": "Não. Isso afirmaria a consequência. Já Bia sem caderno não pode pertencer a L pelas premissas. O total de cadernos é pelo menos sete, sem determinação exata. Considerando Bia e o limite de um por membro, o máximo é onze; o total pode ser qualquer inteiro de sete a onze.",
         "rubric": [
           "Calcula4,3,3,2 e união10.",
           "Constrói dois modelos compatíveis.",
-          "Distingue indeterminação e falsidade."
+          "Distingue indeterminação e falsidade.",
+          "Justifica os extremos sete e onze sem atribuir a Bia um caderno."
         ]
+      },
+      "workPacket": {
+        "natureza": "Modelos matemáticos sintéticos; verificação assistida por IA, sem parecer externo.",
+        "dominio": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "Alex": 0,
+        "Bia": 1,
+        "L": [
+          0,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "D": [
+          0,
+          2,
+          3,
+          8,
+          9,
+          10
+        ],
+        "modelosCadernos": [
+          [
+            0,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          [
+            0,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          [
+            0,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          [
+            0,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          [
+            0,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ]
+        ],
+        "contraexemploAlex": {
+          "L": [
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "D": [
+            2,
+            3,
+            4,
+            9,
+            10,
+            11
+          ],
+          "cadernos": [
+            0,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        },
+        "resolucaoComentada": "As regiões apenas L, ambos, apenas D e nenhum têm 4, 3, 3 e 2 membros. A regra L implica receber, por isso os sete de L recebem; Bia não recebe e fica fora de L. Os cinco modelos atribuem 7, 8, 9, 10 e 11 cadernos, sempre a Alex e nunca a Bia. O modelo adicional põe Alex fora de L mas com caderno, refutando a inferência inversa.",
+        "limitesDaConclusao": "A numeração identifica apenas membros fictícios. A conclusão depende do domínio de doze, dos relatos e da regra universal; não descreve uma amostra real."
       }
     }
   ],

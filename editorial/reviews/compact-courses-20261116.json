@@ -1,0 +1,1011 @@
+{
+  "kind": "internal-desk-review",
+  "reviewer": "Codex — revisão interna assistida por IA; não é revisor externo",
+  "reviewDate": "2026-11-16",
+  "baseCommit": "f533322616e707a282e09d94f86aaf3a6fee9755",
+  "scope": [
+    "Correspondência entre objetivos, enunciados, dados e resolução das 56 oficinas compactas.",
+    "Conferência dos cálculos declarados neste registo e dos limites das conclusões.",
+    "Revisão de completude dos dados necessários, sem validação científica ou de eficácia."
+  ],
+  "publicationApproval": false,
+  "specialistReview": false,
+  "participantPilot": false,
+  "assistiveTechnologyTest": false,
+  "validatedHours": null,
+  "fixes": [
+    "Quinta candidatura com duas perguntas, limite de palavras e prazo convencionais fornecidos.",
+    "Chamada Aurora com calendário explicitamente fictício, sem prazo real de candidatura.",
+    "Lista sintética de atualização profissional incluída, com referência repetida e data em falta.",
+    "56 resoluções comentadas para as atividades, além das respostas às perguntas de verificação.",
+    "Exportador conserva campos explicitamente nulos como não fornecidos."
+  ],
+  "courses": [
+    {
+      "file": "academic-opportunities.pt.json",
+      "slug": "preparacao-para-bolsas-intercambios-e-oportunidades-academicas",
+      "productKey": "curso_assinatura_preparacao_para_bolsas_intercambios_e_oportunidades_academicas",
+      "units": [
+        {
+          "id": "1",
+          "sha256": "471a6998a332f87dd2a82afbc0ca97b35ffccff3eaa53681fe9269c58528dc39",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        },
+        {
+          "id": "2",
+          "sha256": "1c20f70fb73a69947388009bf79e6899e8af82b4559d19bd03d7b65ddcee90ed",
+          "numericalChecks": [
+            {
+              "operation": "percent",
+              "inputs": [
+                6,
+                10
+              ],
+              "expected": 60,
+              "decimals": 0,
+              "claim": "60%"
+            },
+            {
+              "operation": "percent",
+              "inputs": [
+                8,
+                10
+              ],
+              "expected": 80,
+              "decimals": 0,
+              "claim": "80%"
+            },
+            {
+              "operation": "percent",
+              "inputs": [
+                5,
+                8
+              ],
+              "expected": 62.5,
+              "decimals": 1,
+              "claim": "62,5%"
+            },
+            {
+              "operation": "percent",
+              "inputs": [
+                4,
+                8
+              ],
+              "expected": 50,
+              "decimals": 0,
+              "claim": "50%"
+            }
+          ],
+          "workedSolutionPresent": true
+        }
+      ]
+    },
+    {
+      "file": "academic-writing.pt.json",
+      "slug": "escrita-academica-para-iniciantes",
+      "productKey": "curso_assinatura_escrita_academica_para_iniciantes",
+      "units": [
+        {
+          "id": "1",
+          "sha256": "e0efc9a1a703eebba54fbe63d7650746db8d46f3faab62b09f6a70b64243eb37",
+          "numericalChecks": [
+            {
+              "operation": "percent",
+              "inputs": [
+                8,
+                12
+              ],
+              "expected": 66.7,
+              "decimals": 1,
+              "claim": "66,7%"
+            },
+            {
+              "operation": "percent",
+              "inputs": [
+                5,
+                10
+              ],
+              "expected": 50,
+              "decimals": 0,
+              "claim": "50%"
+            }
+          ],
+          "workedSolutionPresent": true
+        },
+        {
+          "id": "2",
+          "sha256": "c84533cb58562139e054057a1ff9b43b500bd6be3ae03c05b4557c14d3408f01",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        }
+      ]
+    },
+    {
+      "file": "ai-study.pt.json",
+      "slug": "inteligencia-artificial-para-estudantes-e-profissionais",
+      "productKey": "curso_assinatura_inteligencia_artificial_para_estudantes_e_profissionais",
+      "units": [
+        {
+          "id": "1",
+          "sha256": "22ffaa1a384e287a03f1e1791e8e150216742cf3684848bdee35fa7207d4dcd0",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        },
+        {
+          "id": "2",
+          "sha256": "8357e0ffad8efee281e08e5ae1e2cf4a16668a7196b077eebc8947dda20dc212",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        }
+      ]
+    },
+    {
+      "file": "ai-value.pt.json",
+      "slug": "como-ganhar-dinheiro-com-inteligencia-artificial",
+      "productKey": "curso_assinatura_como_ganhar_dinheiro_com_inteligencia_artificial",
+      "units": [
+        {
+          "id": "1",
+          "sha256": "fb1af7c57c72da4309ae1e05c5f51adf1c71de65bbf7ce6be1d3efe774ca5eea",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        },
+        {
+          "id": "2",
+          "sha256": "372bbbd0f25f971ce3eaac15d3d6290b970839c07526621ad4e7918a68a22d81",
+          "numericalChecks": [
+            {
+              "operation": "sum",
+              "inputs": [
+                30,
+                10,
+                40,
+                20,
+                20
+              ],
+              "expected": 120,
+              "decimals": 0,
+              "claim": "30+10+40+20+20=120"
+            },
+            {
+              "operation": "subtract",
+              "inputs": [
+                60,
+                20
+              ],
+              "expected": 40,
+              "decimals": 0,
+              "claim": "60−20=40"
+            },
+            {
+              "operation": "divide",
+              "inputs": [
+                40,
+                2
+              ],
+              "expected": 20,
+              "decimals": 0,
+              "claim": "20 por hora"
+            },
+            {
+              "operation": "divide",
+              "inputs": [
+                2400,
+                140
+              ],
+              "expected": 17.14,
+              "decimals": 2,
+              "claim": "17,14 por hora"
+            }
+          ],
+          "workedSolutionPresent": true
+        }
+      ]
+    },
+    {
+      "file": "career-self-knowledge.pt.json",
+      "slug": "autoconhecimento-e-escolhas-profissionais",
+      "productKey": "curso_assinatura_autoconhecimento_e_escolhas_profissionais",
+      "units": [
+        {
+          "id": "1",
+          "sha256": "9c4878f3e8236193847a6c6bded5e43b7105b5d69777f140c88d50bc95b7a34d",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        },
+        {
+          "id": "2",
+          "sha256": "06a0a496f4a596e1ce4b96e4473493813629277f4d8efb544a31853874223622",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        }
+      ]
+    },
+    {
+      "file": "career-transition.pt.json",
+      "slug": "transicao-de-carreira-com-planejamento",
+      "productKey": "curso_assinatura_transicao_de_carreira_com_planejamento",
+      "units": [
+        {
+          "id": "1",
+          "sha256": "e383f7ca77e3833f3de7a0a441009710cd15e17e541972394fa220adfeef8325",
+          "numericalChecks": [
+            {
+              "operation": "percent",
+              "inputs": [
+                8,
+                10
+              ],
+              "expected": 80,
+              "decimals": 0,
+              "claim": "8/10=80%"
+            }
+          ],
+          "workedSolutionPresent": true
+        },
+        {
+          "id": "2",
+          "sha256": "fcd3d6c27b53dbc630414e0bb81bd1a46d5b5b98c7db1f36a6cce2a4d5f7a912",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        }
+      ]
+    },
+    {
+      "file": "digital-marketing.pt.json",
+      "slug": "introducao-ao-marketing-digital-para-iniciantes",
+      "productKey": "curso_assinatura_introducao_ao_marketing_digital_para_iniciantes",
+      "units": [
+        {
+          "id": "1",
+          "sha256": "1adcbf06d94bf2cda9ef9a324e887f2d19e97b814b5a818941ad6d5f6ef0bafb",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        },
+        {
+          "id": "2",
+          "sha256": "4c4b3a9ca1e0fe400faa7386828df8974804c6788d8e8df831d8eb01c1d7637d",
+          "numericalChecks": [
+            {
+              "operation": "percent",
+              "inputs": [
+                20,
+                100
+              ],
+              "expected": 20,
+              "decimals": 0,
+              "claim": "20/100=20%"
+            },
+            {
+              "operation": "percent",
+              "inputs": [
+                4,
+                20
+              ],
+              "expected": 20,
+              "decimals": 0,
+              "claim": "4/20=20%"
+            },
+            {
+              "operation": "percent",
+              "inputs": [
+                16,
+                80
+              ],
+              "expected": 20,
+              "decimals": 0,
+              "claim": "16/80=20%"
+            },
+            {
+              "operation": "percent",
+              "inputs": [
+                6,
+                16
+              ],
+              "expected": 37.5,
+              "decimals": 1,
+              "claim": "6/16=37,5%"
+            }
+          ],
+          "workedSolutionPresent": true
+        }
+      ]
+    },
+    {
+      "file": "digital-service.pt.json",
+      "slug": "atendimento-online-e-comunicacao-digital",
+      "productKey": "curso_assinatura_atendimento_online_e_comunicacao_digital",
+      "units": [
+        {
+          "id": "1",
+          "sha256": "db773ba18d4b3c064a13274d5b250255d662efc24edb759322be997be5138fcc",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        },
+        {
+          "id": "2",
+          "sha256": "9e70f052c90d98c12eaa9f215db852292803ef65214794e5c4b074beb52d6dc0",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        }
+      ]
+    },
+    {
+      "file": "documents-and-goals.pt.json",
+      "slug": "como-organizar-documentos-rotinas-e-metas",
+      "productKey": "curso_assinatura_como_organizar_documentos_rotinas_e_metas",
+      "units": [
+        {
+          "id": "1",
+          "sha256": "53c0a7a35f894931beb756bc842e33d84806ef538efae6af1c6b4aa7be63aed1",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        },
+        {
+          "id": "2",
+          "sha256": "53f079b21c6e33e14de663349fbe56b42106b082f1eea65ff8b49703de4cda0c",
+          "numericalChecks": [
+            {
+              "operation": "percent",
+              "inputs": [
+                16,
+                20
+              ],
+              "expected": 80,
+              "decimals": 0,
+              "claim": "16/20=80%"
+            },
+            {
+              "operation": "sum",
+              "inputs": [
+                16,
+                3,
+                -1
+              ],
+              "expected": 18,
+              "decimals": 0,
+              "claim": "16+3−1=18"
+            },
+            {
+              "operation": "percent",
+              "inputs": [
+                18,
+                20
+              ],
+              "expected": 90,
+              "decimals": 0,
+              "claim": "18/20=90%"
+            }
+          ],
+          "workedSolutionPresent": true
+        }
+      ]
+    },
+    {
+      "file": "emotions-at-work.pt.json",
+      "slug": "inteligencia-emocional-no-trabalho",
+      "productKey": "curso_assinatura_inteligencia_emocional_no_trabalho",
+      "units": [
+        {
+          "id": "1",
+          "sha256": "3f9e5c5b74cf527d93d56bdd8b96556d147ae2c95aed6ce482ffd627b1ade921",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        },
+        {
+          "id": "2",
+          "sha256": "f8a1ad9877c445fcede2b064df677d532a45853bfdf4932b49ff1f290c3553a7",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        }
+      ]
+    },
+    {
+      "file": "ethical-acquisition.pt.json",
+      "slug": "captacao-de-clientes-com-etica-e-estrategia",
+      "productKey": "curso_assinatura_captacao_de_clientes_com_etica_e_estrategia",
+      "units": [
+        {
+          "id": "1",
+          "sha256": "77d26bf8cc21ebea59ac8ec6b67663b40b206a95ba8f7ad1fd2a364e8a50aa5f",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        },
+        {
+          "id": "2",
+          "sha256": "337e7b5b4410ae6fc7954a2339b7cee8ea326011f7e95ad8d9b20f7ab69a7bcb",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        }
+      ]
+    },
+    {
+      "file": "financial-literacy.pt.json",
+      "slug": "educacao-financeira-basica-para-profissionais",
+      "productKey": "curso_assinatura_educacao_financeira_basica_para_profissionais",
+      "units": [
+        {
+          "id": "1",
+          "sha256": "ce2bad097bb0bd8e42ccac2c5a5fdac33fde35b0c37f631dd46458e74188b723",
+          "numericalChecks": [
+            {
+              "operation": "subtract",
+              "inputs": [
+                100,
+                250
+              ],
+              "expected": -150,
+              "decimals": 0,
+              "claim": "insuficiência calculada de 150"
+            },
+            {
+              "operation": "sum",
+              "inputs": [
+                100,
+                300,
+                -250
+              ],
+              "expected": 150,
+              "decimals": 0,
+              "claim": "final é 150"
+            }
+          ],
+          "workedSolutionPresent": true
+        },
+        {
+          "id": "2",
+          "sha256": "c09f452bb4b5e201050f1be6a44ee2e68e44172f3c2050081172fc6c62456f04",
+          "numericalChecks": [
+            {
+              "operation": "sum",
+              "inputs": [
+                150,
+                200,
+                -300
+              ],
+              "expected": 50,
+              "decimals": 0,
+              "claim": "150+200−300=50"
+            },
+            {
+              "operation": "sum",
+              "inputs": [
+                150,
+                200,
+                180,
+                -300
+              ],
+              "expected": 230,
+              "decimals": 0,
+              "claim": "230"
+            },
+            {
+              "operation": "sum",
+              "inputs": [
+                150,
+                200,
+                -300,
+                -80
+              ],
+              "expected": -30,
+              "decimals": 0,
+              "claim": "−30"
+            },
+            {
+              "operation": "sum",
+              "inputs": [
+                150,
+                200,
+                90,
+                -300
+              ],
+              "expected": 140,
+              "decimals": 0,
+              "claim": "140"
+            }
+          ],
+          "workedSolutionPresent": true
+        }
+      ]
+    },
+    {
+      "file": "general-literacy.pt.json",
+      "slug": "conhecimentos-gerais-para-vida-academica-e-profissional",
+      "productKey": "curso_assinatura_conhecimentos_gerais_para_vida_academica_e_profissional",
+      "units": [
+        {
+          "id": "1",
+          "sha256": "6b848fc08e37554265aa5a73bb7f475d02a8021247175838fde8f88c8d25dde5",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        },
+        {
+          "id": "2",
+          "sha256": "9788b0448890486f19fe16b332836d7d56190a34afce61a24c0ffb753db275a2",
+          "numericalChecks": [
+            {
+              "operation": "percent",
+              "inputs": [
+                20,
+                40
+              ],
+              "expected": 50,
+              "decimals": 0,
+              "claim": "20/40=50%"
+            },
+            {
+              "operation": "percent",
+              "inputs": [
+                12,
+                30
+              ],
+              "expected": 40,
+              "decimals": 0,
+              "claim": "12/30=40%"
+            },
+            {
+              "operation": "percent",
+              "inputs": [
+                30,
+                40
+              ],
+              "expected": 75,
+              "decimals": 0,
+              "claim": "30/40=75%"
+            },
+            {
+              "operation": "percent",
+              "inputs": [
+                42,
+                60
+              ],
+              "expected": 70,
+              "decimals": 0,
+              "claim": "42/60=70%"
+            }
+          ],
+          "workedSolutionPresent": true
+        }
+      ]
+    },
+    {
+      "file": "hr-intro.pt.json",
+      "slug": "nocoes-de-recursos-humanos-para-iniciantes",
+      "productKey": "curso_assinatura_nocoes_de_recursos_humanos_para_iniciantes",
+      "units": [
+        {
+          "id": "1",
+          "sha256": "0c71e4899732b4f6014b6f16cf2060e62196ef1b1d4e9906d3a6abcbb2592591",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        },
+        {
+          "id": "2",
+          "sha256": "b6010ac18028d5badb7ceda3ca3b1ecd6bc7a9fa8cc9a507a465b47927bc6dd8",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        }
+      ]
+    },
+    {
+      "file": "international-career.pt.json",
+      "slug": "orientacao-de-carreira-internacional",
+      "productKey": "curso_assinatura_orientacao_de_carreira_internacional",
+      "units": [
+        {
+          "id": "1",
+          "sha256": "542ab344b80c6421ff88de7e4fc39948012dd1d36e5ee01988ae4731b9bda331",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        },
+        {
+          "id": "2",
+          "sha256": "dd1b86bcd9642ba457039092c5b86feb1bb00545230e6e674ccea6c2b2a36532",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        }
+      ]
+    },
+    {
+      "file": "life-and-work.pt.json",
+      "slug": "projeto-de-vida-trabalho-e-futuro-profissional",
+      "productKey": "curso_assinatura_projeto_de_vida_trabalho_e_futuro_profissional",
+      "units": [
+        {
+          "id": "1",
+          "sha256": "5df9eef7a74f8e908487cc7f140c2d557c6821b0146df0afde3990609e4a0f54",
+          "numericalChecks": [
+            {
+              "operation": "sum",
+              "inputs": [
+                2,
+                2,
+                1
+              ],
+              "expected": 5,
+              "decimals": 0,
+              "claim": "5 horas"
+            }
+          ],
+          "workedSolutionPresent": true
+        },
+        {
+          "id": "2",
+          "sha256": "544a7080788bfb542e6468eb9401b92c268b079b3f84bc7415bb5165bea60ccb",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        }
+      ]
+    },
+    {
+      "file": "linkedin.pt.json",
+      "slug": "linkedin-profissional-perfil-networking-e-oportunidades",
+      "productKey": "curso_assinatura_linkedin_profissional_perfil_networking_e_oportunidades",
+      "units": [
+        {
+          "id": "1",
+          "sha256": "119df0a5f9ae4473a6f4df0a150837ce4bf264e49a4e7a9742db2dc577d36a84",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        },
+        {
+          "id": "2",
+          "sha256": "377f4b741a8a324b8a9be09ec2e0879bbdcbeef5459c84f5a8af4dc4880e1d3f",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        }
+      ]
+    },
+    {
+      "file": "meeting-facilitation.pt.json",
+      "slug": "como-conduzir-reunioes-e-apresentacoes-com-seguranca",
+      "productKey": "curso_assinatura_como_conduzir_reunioes_e_apresentacoes_com_seguranca",
+      "units": [
+        {
+          "id": "1",
+          "sha256": "a87ded7964a1a347961ea7f8be140c696401f258930286ccfcdc5caa607154dc",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        },
+        {
+          "id": "2",
+          "sha256": "5688f8041b65a68aee24986ff66a05d18012338509aa5a3f9f6c16202edf00f6",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        }
+      ]
+    },
+    {
+      "file": "messaging-sales.pt.json",
+      "slug": "vendas-pelo-whatsapp-e-redes-sociais",
+      "productKey": "curso_assinatura_vendas_pelo_whatsapp_e_redes_sociais",
+      "units": [
+        {
+          "id": "1",
+          "sha256": "d2f00a7fbfe25a293eda7338dcbba5940b7e1c242e64d18c7050396e02ecaee0",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        },
+        {
+          "id": "2",
+          "sha256": "ae7ca73cafc56eea3899977525aa3adabed5fca03b20c988b236702f6549f52d",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        }
+      ]
+    },
+    {
+      "file": "migrant-career.pt.json",
+      "slug": "carreira-para-imigrantes-e-mercado-internacional",
+      "productKey": "curso_assinatura_carreira_para_imigrantes_e_mercado_internacional",
+      "units": [
+        {
+          "id": "1",
+          "sha256": "321029226e0c5ea21d512df8c0958a4686b01ec316408f259a2d55eaeeafe197",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        },
+        {
+          "id": "2",
+          "sha256": "9394882dd8a0cd15eeac356ac6a02628329e2962844166496871d45798bc21df",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        }
+      ]
+    },
+    {
+      "file": "personnel-intro.pt.json",
+      "slug": "introducao-ao-departamento-pessoal",
+      "productKey": "curso_assinatura_introducao_ao_departamento_pessoal",
+      "units": [
+        {
+          "id": "1",
+          "sha256": "12fbbc97acde891f8fcc3bb286470b158b09ffa1ca43dec3ffe445e31b4901a5",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        },
+        {
+          "id": "2",
+          "sha256": "41f7a50417e025d254b7d8373e6141d980671cee64898f389ed105d3de7be341",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        }
+      ]
+    },
+    {
+      "file": "presentation-design.pt.json",
+      "slug": "como-fazer-apresentacoes-profissionais",
+      "productKey": "curso_assinatura_como_fazer_apresentacoes_profissionais",
+      "units": [
+        {
+          "id": "1",
+          "sha256": "ec661b2020d8797e2e5219acf50eec75bffd4b4b5911d589dc57b9c98d89ce6a",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        },
+        {
+          "id": "2",
+          "sha256": "39e4fa2fa7766e22ff57064d1bd100f290da217d9c55b3c24cce080322c39601",
+          "numericalChecks": [
+            {
+              "operation": "percent",
+              "inputs": [
+                18,
+                20
+              ],
+              "expected": 90,
+              "decimals": 0,
+              "claim": "90%"
+            },
+            {
+              "operation": "percent",
+              "inputs": [
+                24,
+                30
+              ],
+              "expected": 80,
+              "decimals": 0,
+              "claim": "80%"
+            }
+          ],
+          "workedSolutionPresent": true
+        }
+      ]
+    },
+    {
+      "file": "pricing.pt.json",
+      "slug": "precificacao-para-servicos-e-produtos-digitais",
+      "productKey": "curso_assinatura_precificacao_para_servicos_e_produtos_digitais",
+      "units": [
+        {
+          "id": "1",
+          "sha256": "2ca42a96b2399e12dc48328206c1224c9e36a31467e5b7f1a7f3c9ef0469e4d1",
+          "numericalChecks": [
+            {
+              "operation": "sum",
+              "inputs": [
+                30,
+                40,
+                10
+              ],
+              "expected": 80,
+              "decimals": 0,
+              "claim": "30+40+10=80"
+            },
+            {
+              "operation": "percent",
+              "inputs": [
+                20,
+                80
+              ],
+              "expected": 25,
+              "decimals": 0,
+              "claim": "20/80=25%"
+            },
+            {
+              "operation": "percent",
+              "inputs": [
+                20,
+                100
+              ],
+              "expected": 20,
+              "decimals": 0,
+              "claim": "20/100=20%"
+            },
+            {
+              "operation": "percent",
+              "inputs": [
+                10,
+                90
+              ],
+              "expected": 11.11,
+              "decimals": 2,
+              "claim": "11,11%"
+            }
+          ],
+          "workedSolutionPresent": true
+        },
+        {
+          "id": "2",
+          "sha256": "ea7b884be66ee2c7d8442158d135cbb66db0f8d3e4340f7e308447e226f680be",
+          "numericalChecks": [
+            {
+              "operation": "divide",
+              "inputs": [
+                120,
+                20
+              ],
+              "expected": 6,
+              "decimals": 0,
+              "claim": "120/20=6"
+            },
+            {
+              "operation": "divide",
+              "inputs": [
+                120,
+                10
+              ],
+              "expected": 12,
+              "decimals": 0,
+              "claim": "120/10=12"
+            }
+          ],
+          "workedSolutionPresent": true
+        }
+      ]
+    },
+    {
+      "file": "professional-development.pt.json",
+      "slug": "desenvolvimento-pessoal-para-vida-profissional",
+      "productKey": "curso_assinatura_desenvolvimento_pessoal_para_vida_profissional",
+      "units": [
+        {
+          "id": "1",
+          "sha256": "c59b6b47282a5c13dc070dd49e4038f05d5b9130f9488cb00db112fc086f61b7",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        },
+        {
+          "id": "2",
+          "sha256": "7e2bfaade9ba8729dc3c9bc2cb77a6fd00a86ef180a932906895ca155a554a6d",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        }
+      ]
+    },
+    {
+      "file": "professional-restart.pt.json",
+      "slug": "como-recomecar-profissionalmente",
+      "productKey": "curso_assinatura_como_recomecar_profissionalmente",
+      "units": [
+        {
+          "id": "1",
+          "sha256": "9ac4e6217429b977416d2607ec00418146de50d2bf531fe6a22bbb49cb9025b4",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        },
+        {
+          "id": "2",
+          "sha256": "e12d134d6d91c5c2183c8951bf093f5af6d44166e05f954ffc2a54135cb1b1b2",
+          "numericalChecks": [
+            {
+              "operation": "sum",
+              "inputs": [
+                1,
+                1,
+                1.5
+              ],
+              "expected": 3.5,
+              "decimals": 1,
+              "claim": "=3,5h"
+            },
+            {
+              "operation": "sum",
+              "inputs": [
+                1.5,
+                1,
+                1.5
+              ],
+              "expected": 4,
+              "decimals": 0,
+              "claim": "=4h"
+            }
+          ],
+          "workedSolutionPresent": true
+        }
+      ]
+    },
+    {
+      "file": "public-speaking.pt.json",
+      "slug": "oratoria-e-seguranca-para-falar-em-publico",
+      "productKey": "curso_assinatura_oratoria_e_seguranca_para_falar_em_publico",
+      "units": [
+        {
+          "id": "1",
+          "sha256": "14e8aa61aa9c416cfa50d6ec7b27e6474b0ce0d753e1e9136bad4af5372c1ea0",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        },
+        {
+          "id": "2",
+          "sha256": "9b32cc7ec931ca0537b5d0edc1e4f5a9d3e54ebdf8ca1625fed8f2075aed1115",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        }
+      ]
+    },
+    {
+      "file": "selection-rejection.pt.json",
+      "slug": "como-lidar-com-rejeicao-em-processos-seletivos",
+      "productKey": "curso_assinatura_como_lidar_com_rejeicao_em_processos_seletivos",
+      "units": [
+        {
+          "id": "1",
+          "sha256": "7c51a4384758c79eb7bce544e1e85bccc240ce0ebcb9b39fd99791cf74c01e9e",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        },
+        {
+          "id": "2",
+          "sha256": "b3205884febcd18bacd673136595a1d9edd067958e2683626bf6a78ff82f025c",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        }
+      ]
+    },
+    {
+      "file": "sustainable-productivity.pt.json",
+      "slug": "produtividade-sem-ansiedade",
+      "productKey": "curso_assinatura_produtividade_sem_ansiedade",
+      "units": [
+        {
+          "id": "1",
+          "sha256": "7caf96169fc4a51704561e9e638acc7d7590b5da3276cea6024685a89cc61c25",
+          "numericalChecks": [
+            {
+              "operation": "sum",
+              "inputs": [
+                2,
+                1,
+                0.5,
+                0.5,
+                3
+              ],
+              "expected": 7,
+              "decimals": 0,
+              "claim": "=7 horas"
+            }
+          ],
+          "workedSolutionPresent": true
+        },
+        {
+          "id": "2",
+          "sha256": "891a39e94dce831477e87458a7722d617cc2b821024319760ce3ab6d086256c4",
+          "numericalChecks": [],
+          "workedSolutionPresent": true
+        }
+      ]
+    }
+  ],
+  "sourceAlignmentFollowup": {
+    "date": "2026-11-16",
+    "baseCommit": "4df35458f4ea389dde1565e61ef5ec885cf26c6f",
+    "revisions": [
+      {
+        "file": "academic-writing.pt.json",
+        "unit": "2",
+        "previousSha256": "9805866feb1d6f4e3330e471455e3b9f238850e3aa7498ebd0f162591f03b4ba",
+        "sha256": "c84533cb58562139e054057a1ff9b43b500bd6be3ae03c05b4557c14d3408f01",
+        "reason": "Apenas associação de fontes; resolução e cálculos inalterados."
+      },
+      {
+        "file": "pricing.pt.json",
+        "unit": "1",
+        "previousSha256": "a283955b7bad1af7285a40e8791b5f3725aa8d5065d9f1a89c8329f5a2dd25b5",
+        "sha256": "2ca42a96b2399e12dc48328206c1224c9e36a31467e5b7f1a7f3c9ef0469e4d1",
+        "reason": "Apenas associação de fontes; resolução e cálculos inalterados."
+      }
+    ]
+  }
+}

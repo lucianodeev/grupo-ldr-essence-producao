@@ -5,6 +5,7 @@ export type AcademyReadingEdition = {
   productKey: string;
   editionId: string;
   locale: "pt";
+  practiceGuide?: AcademyPracticeGuide;
   status: "draft" | "approved";
   published: boolean;
   validatedHours: number | null;
@@ -76,10 +77,46 @@ export const CUSTOMER_SERVICE_READING_SLUG = "atendimento-ao-cliente-com-humaniz
 export function academyReadingTimeLabel(slug: string, locale = "pt"): string | null {
   if (slug !== CUSTOMER_SERVICE_READING_SLUG) return null;
   const labels: Record<string, string> = {
-    pt: "6 unidades · leitura estimada: 40–50 min · atividades no próprio ritmo · sem certificado",
-    en: "6 units · estimated reading: 40–50 min · self-paced activities · no certificate",
-    fr: "6 unités · lecture estimée : 40–50 min · activités à votre rythme · sans certificat",
-    es: "6 unidades · lectura estimada: 40–50 min · actividades a tu ritmo · sin certificado",
+    pt: "6 unidades · leitura estimada: 40–50 min · percurso opcional de 60 h estimadas · sem certificado",
+    en: "6 units · estimated reading: 40–50 min · optional practice: 60 estimated hours · no certificate",
+    fr: "6 unités · lecture estimée : 40–50 min · parcours facultatif : 60 h estimées · sans certificat",
+    es: "6 unidades · lectura estimada: 40–50 min · práctica opcional: 60 h estimadas · sin certificado",
   };
   return labels[locale] ?? labels["pt"]!;
+}
+
+/** Owner-authorized self-study guidance; neither certified hours nor an external review. */
+export type AcademyPracticeGuide = {
+  schema: "ldr-academy-practice-guide-v1";
+  programmeId: string;
+  slug: string;
+  productKey: string;
+  sourceProgrammeSha256: string;
+  estimatedMinutes: number;
+  validatedHours: null;
+  certificate: false;
+  publication: { kind: "owner-authorized-estimated-practice"; authorizedBy: string; authorizedAt: string; instruction: string };
+  reviewDisclosure: string;
+  modules: { id: string; title: string; estimatedMinutes: number; body: string; sha256: string }[];
+};
+
+export function isReleasedAcademyPracticeGuide(guide: AcademyPracticeGuide | undefined, edition: AcademyReadingEdition): guide is AcademyPracticeGuide {
+  return Boolean(guide &&
+    guide.schema === "ldr-academy-practice-guide-v1" &&
+    guide.programmeId === "customer-service-60h-estimated-v1" &&
+    guide.slug === CUSTOMER_SERVICE_READING_SLUG && guide.slug === edition.slug &&
+    guide.productKey === edition.productKey &&
+    guide.estimatedMinutes === 3600 && guide.validatedHours === null && guide.certificate === false &&
+    /^[a-f0-9]{64}$/.test(guide.sourceProgrammeSha256) &&
+    guide.publication?.kind === "owner-authorized-estimated-practice" &&
+    guide.publication.authorizedBy.trim() && guide.publication.instruction.trim() &&
+    Number.isFinite(Date.parse(guide.publication.authorizedAt)) &&
+    guide.reviewDisclosure.trim() &&
+    guide.modules.length === edition.modules.length &&
+    guide.modules.reduce((sum, module) => sum + module.estimatedMinutes, 0) === guide.estimatedMinutes &&
+    guide.modules.every((module, index) =>
+      module.id === edition.modules[index]?.id && module.title.trim() && module.body.trim() &&
+      Number.isInteger(module.estimatedMinutes) && module.estimatedMinutes > 0 && /^[a-f0-9]{64}$/.test(module.sha256)
+    )
+  );
 }
