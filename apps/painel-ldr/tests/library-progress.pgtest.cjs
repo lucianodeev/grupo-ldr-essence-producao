@@ -5,13 +5,16 @@ const { execFile } = require('node:child_process');
 const { promisify } = require('node:util');
 const run = promisify(execFile);
 const env = process.env;
-if (env.LDR_LIBRARY_ISOLATED_DB !== '1' || !['127.0.0.1','localhost'].includes(env.PGHOST) || env.PGDATABASE !== 'ldr_library_ci' || env.PGUSER !== 'ldr_library_test') {
+if (env.LDR_LIBRARY_ISOLATED_DB !== '1' || !['127.0.0.1','localhost'].includes(env.PGHOST) || env.PGPORT !== '5432' || env.PGDATABASE !== 'ldr_library_ci' || env.PGUSER !== 'ldr_library_test') {
   throw new Error('Refusing database tests outside the explicit disposable localhost library fixture');
 }
+// Do not allow libpq service/host-address defaults to redirect this localhost-only fixture.
+const isolatedEnv={...env,PGHOST:'127.0.0.1',PGPORT:'5432',PGDATABASE:'ldr_library_ci',PGUSER:'ldr_library_test'};
+for(const key of ['PGHOSTADDR','PGSERVICE','PGSERVICEFILE','PGPASSFILE','PGOPTIONS'])delete isolatedEnv[key];
 const customerA='10000000-0000-0000-0000-000000000001',customerB='10000000-0000-0000-0000-000000000002';
 const quote=value=>"'"+String(value).replaceAll("'","''")+"'";
 async function query(sql) {
-  const result=await run('psql',['-X','-q','-A','-t','--set','ON_ERROR_STOP=1','--set','VERBOSITY=sqlstate','-c',sql],{env,timeout:20000});
+  const result=await run('psql',['-X','-q','-A','-t','--host','127.0.0.1','--port','5432','--username','ldr_library_test','--dbname','ldr_library_ci','--set','ON_ERROR_STOP=1','--set','VERBOSITY=sqlstate','-c',sql],{env:isolatedEnv,timeout:20000});
   return result.stdout.trim();
 }
 // Same update/insert/23505 retry protocol as saveClientProgress. The app path is separately executed by the mock suite.
