@@ -12,6 +12,7 @@ export const Route = createFileRoute("/empresas/")({
 const offers = [
   { title: "RH & Estratégia", description: "Consultoria, organização de processos e desenvolvimento de pessoas.", href: "/empresas/servicos", icon: BriefcaseBusiness },
   { title: "Recrutamento e seleção", description: "Conheça as soluções e solicite uma proposta adaptada à sua empresa.", href: "/empresas/proposta", icon: UsersRound },
+  { title: "Integração de novos colaboradores", description: "Onboarding estruturado, etapas de acolhimento e checklist para novas contratações.", href: "/empresas/integracao-colaboradores", icon: UsersRound },
   { title: "Formação empresarial", description: "Cursos e conteúdos de desenvolvimento profissional do Ecossistema LDR.", href: "/empresas/academy", icon: GraduationCap },
   { title: "LDR ONE Business", description: "Conheça as soluções digitais para equipas e empresas.", href: "/empresas/ldr-one", icon: BriefcaseBusiness },
 ] as const;
@@ -37,7 +38,7 @@ function CentralEmpresas() {
       <section className="border-t border-[#e2dac9] bg-white py-16">
         <div className="mx-auto max-w-6xl px-5">
           <h2 className="font-serif text-3xl font-bold">Soluções para empresas</h2>
-          <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {offers.map(({ title, description, href, icon: Icon }) => (
               <article key={title} className="rounded-2xl border border-[#e2dac9] p-6">
                 <Icon className="h-7 w-7 text-[#866a3c]" aria-hidden="true" />
