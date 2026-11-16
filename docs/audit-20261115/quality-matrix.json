@@ -12,9 +12,9 @@
     "authoredFreeModules": 59,
     "freeModules": 59,
     "subscriptionCatalog": 50,
-    "authoredSubscriptionCandidates": 12,
-    "authoredSubscriptionModules": 83,
-    "pendingSubscriptionCourses": 38,
+    "authoredSubscriptionCandidates": 20,
+    "authoredSubscriptionModules": 131,
+    "pendingSubscriptionCourses": 30,
     "exactDuplicateGroups": 0,
     "nearDuplicatePairs": 11710
   },
@@ -787,9 +787,11 @@
       "modules": 15,
       "topics": 45,
       "materialsListed": 3,
-      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
       "source": "src/lib/academy-subscription-courses.catalog.ts",
-      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/sales-strategy.pt.json",
+      "authoredDraftModules": 6
     },
     {
       "product_key": "curso_assinatura_como_selecionar_a_vaga_certa_para_o_seu_perfil",
@@ -967,9 +969,11 @@
       "modules": 15,
       "topics": 45,
       "materialsListed": 3,
-      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
       "source": "src/lib/academy-subscription-courses.catalog.ts",
-      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/digital-product-creation.pt.json",
+      "authoredDraftModules": 6
     },
     {
       "product_key": "curso_assinatura_como_divulgar_um_produto_na_internet",
@@ -979,9 +983,11 @@
       "modules": 15,
       "topics": 45,
       "materialsListed": 3,
-      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
       "source": "src/lib/academy-subscription-courses.catalog.ts",
-      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/online-product-promotion.pt.json",
+      "authoredDraftModules": 6
     },
     {
       "product_key": "curso_assinatura_como_fazer_uma_proposta_comercial_profissional",
@@ -991,9 +997,11 @@
       "modules": 15,
       "topics": 45,
       "materialsListed": 3,
-      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
       "source": "src/lib/academy-subscription-courses.catalog.ts",
-      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/commercial-proposal.pt.json",
+      "authoredDraftModules": 6
     },
     {
       "product_key": "curso_assinatura_como_conduzir_reunioes_e_apresentacoes_com_seguranca",
@@ -1015,9 +1023,11 @@
       "modules": 15,
       "topics": 45,
       "materialsListed": 3,
-      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
       "source": "src/lib/academy-subscription-courses.catalog.ts",
-      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/first-customer.pt.json",
+      "authoredDraftModules": 6
     },
     {
       "product_key": "curso_assinatura_empreendedorismo_para_quem_esta_comecando_do_zero",
@@ -1027,9 +1037,11 @@
       "modules": 15,
       "topics": 45,
       "materialsListed": 3,
-      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
       "source": "src/lib/academy-subscription-courses.catalog.ts",
-      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/business-foundations.pt.json",
+      "authoredDraftModules": 6
     },
     {
       "product_key": "curso_assinatura_organizacao_pessoal_e_gestao_do_tempo",
@@ -1039,9 +1051,11 @@
       "modules": 15,
       "topics": 45,
       "materialsListed": 3,
-      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
       "source": "src/lib/academy-subscription-courses.catalog.ts",
-      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/personal-time-organization.pt.json",
+      "authoredDraftModules": 6
     },
     {
       "product_key": "curso_assinatura_produtividade_sem_ansiedade",
@@ -1235,9 +1249,11 @@
       "modules": 15,
       "topics": 45,
       "materialsListed": 3,
-      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
+      "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada",
       "source": "src/lib/academy-subscription-courses.catalog.ts",
-      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/trustworthy-offer.pt.json",
+      "authoredDraftModules": 6
     },
     {
       "product_key": "curso_assinatura_precificacao_para_servicos_e_produtos_digitais",
@@ -1755,6 +1771,28 @@
       }
     },
     {
+      "productKey": "curso_assinatura_empreendedorismo_para_quem_esta_comecando_do_zero",
+      "title": "Empreendedorismo para Quem Está Começando do Zero",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 180,
+      "path": "editorial/courses/business-foundations.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
       "productKey": "curso_assinatura_orientacao_de_carreira",
       "title": "Orientação de Carreira",
       "status": "draft",
@@ -1777,6 +1815,28 @@
       }
     },
     {
+      "productKey": "curso_assinatura_como_fazer_uma_proposta_comercial_profissional",
+      "title": "Como Fazer uma Proposta Comercial Profissional",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 100,
+      "path": "editorial/courses/commercial-proposal.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
       "productKey": "curso_assinatura_curriculo_estrategico_como_apresentar_sua_historia_profissional",
       "title": "Currículo Estratégico: Como Apresentar sua História Profissional",
       "status": "draft",
@@ -1784,6 +1844,50 @@
       "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
       "advertisedHours": 80,
       "path": "editorial/courses/cv-strategy.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
+      "productKey": "curso_assinatura_como_criar_produtos_digitais_do_zero",
+      "title": "Como Criar Produtos Digitais do Zero",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 160,
+      "path": "editorial/courses/digital-product-creation.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
+      "productKey": "curso_assinatura_como_sair_da_ideia_e_chegar_ao_primeiro_cliente",
+      "title": "Como Sair da Ideia e Chegar ao Primeiro Cliente",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 160,
+      "path": "editorial/courses/first-customer.pt.json",
       "errors": [],
       "authoredModules": 6,
       "expectedModules": 6,
@@ -1909,6 +2013,50 @@
       }
     },
     {
+      "productKey": "curso_assinatura_como_divulgar_um_produto_na_internet",
+      "title": "Como Divulgar um Produto na Internet",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 120,
+      "path": "editorial/courses/online-product-promotion.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
+      "productKey": "curso_assinatura_organizacao_pessoal_e_gestao_do_tempo",
+      "title": "Organização Pessoal e Gestão do Tempo",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 80,
+      "path": "editorial/courses/personal-time-organization.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
       "productKey": "curso_assinatura_redacao_profissional_e_escrita_para_processos_seletivos",
       "title": "Redação Profissional e Escrita para Processos Seletivos",
       "status": "draft",
@@ -1926,6 +2074,50 @@
         "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
         "paragraphsChecked": 56,
         "pairsChecked": 1540,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
+      "productKey": "curso_assinatura_como_vender_produtos_e_servicos_com_estrategia",
+      "title": "Como Vender Produtos e Serviços com Estratégia",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 140,
+      "path": "editorial/courses/sales-strategy.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
+      "productKey": "curso_assinatura_como_criar_uma_oferta_irresistivel_sem_promessas_falsas",
+      "title": "Como Criar uma Oferta Irresistível sem Promessas Falsas",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 120,
+      "path": "editorial/courses/trustworthy-offer.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
         "exact": [],
         "near": []
       }
@@ -1976,11 +2168,11 @@
     }
   ],
   "editorialCorpusReview": {
-    "documents": 13,
-    "units": 103,
+    "documents": 21,
+    "units": 151,
     "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
-    "paragraphsChecked": 641,
-    "pairsChecked": 205120,
+    "paragraphsChecked": 929,
+    "pairsChecked": 431056,
     "exact": [],
     "near": []
   },

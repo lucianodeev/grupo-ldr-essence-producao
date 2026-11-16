@@ -69,7 +69,7 @@ Atualização editorial: 16/11/2026; inventário de origem: 15/11/2026. Nenhum p
 | Orientação de Carreira | 15 | 120h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada |
 | Auxiliar de Escritório | 15 | 160h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada |
 | Como Ganhar Dinheiro com Inteligência Artificial | 15 | 120h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
-| Como Vender Produtos e Serviços com Estratégia | 15 | 140h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
+| Como Vender Produtos e Serviços com Estratégia | 15 | 140h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada |
 | Como Selecionar a Vaga Certa para o Seu Perfil | 15 | 80h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada |
 | Orientação de Carreira Internacional | 15 | 160h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
 | Raciocínio Lógico para Estudos, Concursos e Seleções | 15 | 120h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada |
@@ -83,13 +83,13 @@ Atualização editorial: 16/11/2026; inventário de origem: 15/11/2026. Nenhum p
 | Introdução ao Departamento Pessoal | 15 | 140h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
 | Noções de Recursos Humanos para Iniciantes | 15 | 120h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
 | Inteligência Artificial para Estudantes e Profissionais | 15 | 100h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
-| Como Criar Produtos Digitais do Zero | 15 | 160h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
-| Como Divulgar um Produto na Internet | 15 | 120h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
-| Como Fazer uma Proposta Comercial Profissional | 15 | 100h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
+| Como Criar Produtos Digitais do Zero | 15 | 160h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada |
+| Como Divulgar um Produto na Internet | 15 | 120h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada |
+| Como Fazer uma Proposta Comercial Profissional | 15 | 100h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada |
 | Como Conduzir Reuniões e Apresentações com Segurança | 15 | 100h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
-| Como Sair da Ideia e Chegar ao Primeiro Cliente | 15 | 160h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
-| Empreendedorismo para Quem Está Começando do Zero | 15 | 180h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
-| Organização Pessoal e Gestão do Tempo | 15 | 80h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
+| Como Sair da Ideia e Chegar ao Primeiro Cliente | 15 | 160h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada |
+| Empreendedorismo para Quem Está Começando do Zero | 15 | 180h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada |
+| Organização Pessoal e Gestão do Tempo | 15 | 80h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada |
 | Produtividade sem Ansiedade | 15 | 80h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
 | Planejamento de Estudos para Adultos | 15 | 100h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada |
 | Técnicas de Aprendizagem e Memorização | 15 | 100h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada |
@@ -105,7 +105,7 @@ Atualização editorial: 16/11/2026; inventário de origem: 15/11/2026. Nenhum p
 | Trabalho Remoto e Organização Profissional | 15 | 100h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
 | Atendimento Online e Comunicação Digital | 15 | 100h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
 | Vendas pelo WhatsApp e Redes Sociais | 15 | 120h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
-| Como Criar uma Oferta Irresistível sem Promessas Falsas | 15 | 120h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
+| Como Criar uma Oferta Irresistível sem Promessas Falsas | 15 | 120h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte; candidata separada 6/6 módulos, não aprovada nem integrada |
 | Precificação para Serviços e Produtos Digitais | 15 | 100h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
 | Educação Financeira Básica para Profissionais | 15 | 100h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
 | Como Organizar Documentos, Rotinas e Metas | 15 | 80h | parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte |
@@ -157,14 +157,22 @@ As versões candidatas não são usadas pelo leitor de produção. O original e 
 | --- | --- | --- | --- |
 | Assistente Administrativo na Prática | 6 / 6 | 180h / por validar | draft; published=false; elegível=false |
 | Planejamento de Estudos para Adultos | 6 / 6 | 100h / por validar | draft; published=false; elegível=false |
+| Empreendedorismo para Quem Está Começando do Zero | 6 / 6 | 180h / por validar | draft; published=false; elegível=false |
 | Orientação de Carreira | 6 / 6 | 120h / por validar | draft; published=false; elegível=false |
+| Como Fazer uma Proposta Comercial Profissional | 6 / 6 | 100h / por validar | draft; published=false; elegível=false |
 | Currículo Estratégico: Como Apresentar sua História Profissional | 6 / 6 | 80h / por validar | draft; published=false; elegível=false |
+| Como Criar Produtos Digitais do Zero | 6 / 6 | 160h / por validar | draft; published=false; elegível=false |
+| Como Sair da Ideia e Chegar ao Primeiro Cliente | 6 / 6 | 160h / por validar | draft; published=false; elegível=false |
 | Como se Preparar para uma Entrevista de Emprego | 15 / 15 | 80h / por validar | draft; published=false; elegível=false |
 | Técnicas de Aprendizagem e Memorização | 6 / 6 | 100h / por validar | draft; published=false; elegível=false |
 | Raciocínio Lógico para Estudos, Concursos e Seleções | 6 / 6 | 120h / por validar | draft; published=false; elegível=false |
 | Rotinas de Escritório e Organização Administrativa | 6 / 6 | 160h / por validar | draft; published=false; elegível=false |
 | Auxiliar de Escritório | 6 / 6 | 160h / por validar | draft; published=false; elegível=false |
+| Como Divulgar um Produto na Internet | 6 / 6 | 120h / por validar | draft; published=false; elegível=false |
+| Organização Pessoal e Gestão do Tempo | 6 / 6 | 80h / por validar | draft; published=false; elegível=false |
 | Redação Profissional e Escrita para Processos Seletivos | 8 / 8 | 100h / por validar | draft; published=false; elegível=false |
+| Como Vender Produtos e Serviços com Estratégia | 6 / 6 | 140h / por validar | draft; published=false; elegível=false |
+| Como Criar uma Oferta Irresistível sem Promessas Falsas | 6 / 6 | 120h / por validar | draft; published=false; elegível=false |
 | Como Selecionar a Vaga Certa para o Seu Perfil | 6 / 6 | 80h / por validar | draft; published=false; elegível=false |
 | Comunicação Profissional para o Mercado de Trabalho | 6 / 6 | 100h / por validar | draft; published=false; elegível=false |
 
@@ -181,7 +189,7 @@ Os manifests contêm apenas hashes e posições. Os textos integrais das prévia
 
 ## Triagem entre candidatas originais
 
-13 produtos; 103 unidades; 641 parágrafos e 205120 pares. Cópias exatas: 0; pares próximos: 0. Método: paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required. A ausência de sinal não equivale a aprovação conceptual ou científica.
+21 produtos; 151 unidades; 929 parágrafos e 431056 pares. Cópias exatas: 0; pares próximos: 0. Método: paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required. A ausência de sinal não equivale a aprovação conceptual ou científica.
 
 ## Duplicação e limites
 

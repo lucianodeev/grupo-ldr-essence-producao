@@ -54,7 +54,7 @@ Foi acrescentada uma candidata com **seis oficinas de Auxiliar de Escritório**,
 
 As fontes consultadas são o perfil ocupacional National Careers Service e orientações de NARA e The National Archives, com âmbito identificado. Nenhum fornecedor foi contactado, reserva efetuada, documento eliminado ou pagamento iniciado. Os seis módulos são uma proposta editorial distinta dos quinze títulos históricos, sem migração ativa; a carga anunciada de 160 horas continua sem validação.
 
-`docs/editorial-review.html` permite leitura autónoma dos **doze cursos candidatos e do eBook**, com 103 unidades, pesquisa sem acentos, índice, atividades, respostas comentadas, bibliografia e limites. É gerado exclusivamente a partir das candidatas originais; não contém as prévias integrais das obras protegidas, não consulta a base de dados e não grava progresso. O HTML foi analisado por parser, os identificadores são únicos e a sintaxe e normalização da pesquisa foram verificadas. A revisão visual interativa ainda precisa de navegador; a presença de CSS responsivo não é apresentada como teste visual. O CI verifica que o ficheiro corresponde às fontes.
+`docs/editorial-review.html` permite leitura autónoma dos **vinte cursos candidatos e do eBook**, com 151 unidades, pesquisa sem acentos, índice, atividades, respostas comentadas, bibliografia e limites. É gerado exclusivamente a partir das candidatas originais; não contém as prévias integrais das obras protegidas, não consulta a base de dados e não grava progresso. O HTML foi analisado por parser, os identificadores são únicos e a sintaxe e normalização da pesquisa foram verificadas. A revisão visual interativa ainda precisa de navegador; a presença de CSS responsivo não é apresentada como teste visual. O CI verifica que o ficheiro corresponde às fontes.
 
 ## Seis cursos adicionais: carreira, administração, comunicação e lógica
 
@@ -79,7 +79,7 @@ Lógica desenvolve proposições e quantificadores, conectores, condicionais, va
 
 Fontes oficiais consultadas: Europass, Conselho da UE, OCDE, National Careers Service, GAO, The National Archives, Acas, AHRQ e OpenStax. Cada candidata declara o alcance real de consulta. Normas estrangeiras não se apresentam como regras locais. Exemplos, personagens e dados LDR são fictícios e originais.
 
-O catálogo original de 50 cursos não foi alterado. **Doze têm agora uma sequência textual candidata, com 83 módulos; faltam desenvolver 38.** Desses doze, quatro já existiam no início desta continuação e oito foram acrescentados em dois lotes. Todos permanecem `draft`, `published=false`, `validatedHours=null`, com revisões obrigatórias por realizar. Não se converteram minutos estimados em cargas anunciadas nem se integrou a mudança de sequência no progresso dos alunos.
+O catálogo original de 50 cursos não foi alterado. **Vinte têm agora uma sequência textual candidata, com 131 módulos; faltam desenvolver 30.** Há quatro sequências iniciais e dois conjuntos posteriores de oito cursos; todos continuam sujeitos a revisão e carga. Todos permanecem `draft`, `published=false`, `validatedHours=null`, com revisões obrigatórias por realizar. Não se converteram minutos estimados em cargas anunciadas nem se integrou a mudança de sequência no progresso dos alunos.
 
 ## Dois percursos de estudo: planeamento e técnicas
 
@@ -96,7 +96,36 @@ Técnicas trabalha familiaridade e aplicação, perguntas de recuperação, expl
 
 Foram consultadas as recomendações e níveis de evidência da página oficial IES/WWC (2007), o resumo integral da revisão de Dunlosky e colegas (2013) na APS e o resumo do estudo de Roediger/Karpicke (2006) no PubMed. O alcance bibliográfico é declarado: não se afirma leitura integral dos artigos ou revisão exaustiva atual da área. As conclusões de 2013 são identificadas como históricas; a atualização especializada continua pendente.
 
-Nesta continuação, **oito dos 46 cursos pendentes receberam 48 módulos e 24.208 palavras novas de desenvolvimento**. Os restantes 38 ainda precisam de redação específica. Todas as candidatas continuam sem integração ou publicação; carga, revisão externa, prática complementar e experiência com alunos não são consideradas concluídas.
+No lote anterior desta branch, **oito dos 46 cursos então pendentes receberam 48 módulos e 24.208 palavras novas de desenvolvimento**. Ficaram 38 para o lote seguinte. Todas as candidatas continuam sem integração ou publicação; carga, revisão externa, prática complementar e experiência com alunos não são consideradas concluídas.
+
+## Continuação dos 38: oito cursos com redação nova
+
+Este lote desenvolveu **oito cursos e 48 módulos**, com **24.940 palavras novas de desenvolvimento**. Os restantes **30 dos 38 ainda não têm redação específica**. Não houve publicação, integração no leitor, alteração de catálogo ativo ou validação automática de horas.
+
+| Curso | Módulos | Palavras de desenvolvimento | Prática estimada, sem pilotagem | Carga histórica, não validada |
+| --- | --- | --- | --- | --- |
+| Empreendedorismo para Quem Está Começando do Zero | 6 | 3.002 | 780min | 180h |
+| Como Fazer uma Proposta Comercial Profissional | 6 | 3.092 | 750min | 100h |
+| Como Criar Produtos Digitais do Zero | 6 | 3.162 | 780min | 160h |
+| Como Sair da Ideia e Chegar ao Primeiro Cliente | 6 | 3.116 | 765min | 160h |
+| Como Vender Produtos e Serviços com Estratégia | 6 | 3.103 | 780min | 140h |
+| Como Divulgar um Produto na Internet | 6 | 3.118 | 765min | 120h |
+| Como Criar uma Oferta Irresistível sem Promessas Falsas | 6 | 3.155 | 735min | 120h |
+| Organização Pessoal e Gestão do Tempo | 6 | 3.192 | 735min | 80h |
+
+Empreendedorismo examina unidade de valor, evidência de procura, contribuição, capacidade, calendário de caixa e decisão de piloto. O orçamento de vinte horas é identificado como conjunto das funções, evitando confundir disponibilidade individual com capacidade da operação. Primeiro Cliente trabalha hipóteses, relatos, amostra, piloto limitado, primeira entrega e aprendizagem; não repete a visão global de viabilidade.
+
+Proposta Comercial trabalha briefing, entregáveis, critérios, composição de preço, cronograma, alterações e quatro conflitos num pacote. Estratégia de Vendas trabalha adequação de oportunidades, qualificação, demonstração, objeções, negociação e estados. Oferta Credível examina promessa, componentes, comparação de opções, prova, capacidade e cinco falhas de uma oferta; o título não justifica técnicas para impedir recusa. A carga histórica desta oferta é 120h, conforme o catálogo, sem a considerar validada.
+
+Produtos Digitais desenvolve um kit fictício de feira de livros: necessidade, arquitetura, instruções, fontes/permissões, teste e edição. Divulgação Digital trabalha campanha, canal, destino, métricas e comparação de mensagens; URLs usam apenas domínio de exemplo, sem Analytics, cookies, anúncios, mensagens ou cobrança reais. Organização Pessoal examina ações e compromissos individuais, estimativa, dependência, contexto, interrupções e revisão, distinguindo-se das rotinas administrativas e do estudo.
+
+Os enunciados contêm dados, condições e respostas para exercitar quantidades, subtotais, percentagens, horários, limites e incerteza. Foram conferidos, entre outros, contribuição90/75, cobertura4/5, saldo−20/60, desconto10%do preço versus25%da contribuição, grupo2/5 e capacidade5/6, cliques5%/aberturas60%/global3%, diferença2pontos percentuais versus20%relativa e janelas80/95min. São modelos sintéticos com exclusões explícitas, não recomendações financeiras ou dados de resultados comerciais.
+
+Fontes primárias consultadas incluem SBA, GDS, business.gov.au, W3C WAI, Creative Commons, FTC, Google Analytics Help e OpenStax. Cada candidata declara alcance de consulta e contexto. Não se importam regras fiscais, de publicidade ou contratuais estrangeiras como legislação local. Exemplos, rubricas, matrizes e tabelas LDR são originais; não se afirmam resultados científicos, direitos de recurso externo, certificações ou testemunhos não verificados.
+
+A triagem ampliada com as oito sequências gratuitas examinou **29 produtos, 210 unidades, 1.123 parágrafos e 630.003 pares**, sem cópias ou pares próximos no limiar. Casos, exercícios, perguntas e respostas dos **131 módulos candidatos** também não apresentam duplicações exatas após normalização. A triagem não comprova ausência de toda repetição conceptual nem substitui revisão humana.
+
+Todas as vinte candidatas de assinatura conservam `draft`, `published=false`, `validatedHours=null` e revisões obrigatórias falsas. Conteúdo textual disponível não equivale a percurso integralmente aprovado ou carga comprovada. Este lote não fez qualquer acesso à base Supabase; os metadados de produção da matriz continuam a ser o snapshot identificado de 15/11, com verificações anteriores separadas.
 
 ## Revisão editorial dos eBooks
 
@@ -112,7 +141,7 @@ A revisão das **outras dezasseis obras** continua pendente, incluindo validaç�
 
 ## Repetição entre produtos
 
-A triagem conjunta das treze candidatas (doze cursos e um eBook) examinou **103 unidades, 641 parágrafos e 205.120 pares**: zero cópias exatas e zero pares próximos pelo limiar Jaccard de seis palavras ≥0,40. Os testes incluem uma cópia introduzida entre produtos para confirmar a deteção. Não se lê nem reemite a obra protegida original neste verificador; apenas as novas candidatas são comparadas. Isto não substitui revisão semântica ou pedagógica externa.
+A triagem conjunta das vinte e uma candidatas (vinte cursos e um eBook) examinou **151 unidades, 929 parágrafos e 431.056 pares**: zero cópias exatas e zero pares próximos pelo limiar Jaccard de seis palavras ≥0,40. Os testes incluem uma cópia introduzida entre produtos para confirmar a deteção. Não se lê nem reemite a obra protegida original neste verificador; apenas as novas candidatas são comparadas. Isto não substitui revisão semântica ou pedagógica externa.
 
 ## Revisão conservadora de duas obras existentes
 
@@ -191,7 +220,7 @@ A suíte de regressão inclui vários dos testes específicos; estas quantidades
 ## Pendências que continuam abertas
 
 1. Revisão pedagógica especializada dos 59 módulos, testes com alunos, materiais complementares e dimensionamento de carga real; completar áudio e avaliação oral nos idiomas.
-2. Realizar revisão externa e pilotagem dos quinze módulos da candidata de entrevistas, incluindo dimensionamento da carga. Desenvolver as aulas próprias dos restantes 38 roteiros de assinatura, de RH e de cada formação profissional. A contagem de títulos ou texto gerado não comprova 600/1200 horas.
+2. Realizar revisão externa e pilotagem dos quinze módulos da candidata de entrevistas, incluindo dimensionamento da carga. Desenvolver as aulas próprias dos restantes 30 roteiros de assinatura, de RH e de cada formação profissional. A contagem de títulos ou texto gerado não comprova 600/1200 horas.
 3. Rever externamente os vinte capítulos da candidata desenvolvida e revisar as outras 16 obras, com verificação intelectual, bibliográfica e de direitos, sem substituir versões antigas automaticamente.
 4. Testar a prévia com sessões sintéticas reais: comprador, assinante ativo/inativo e aluno sem compra. Verificar acessibilidade interativa, visual e overflow em dispositivos móveis.
 5. Validar anexos externos, emissão e consulta de certificados e concorrência entre dispositivos num ambiente de testes. O teste PostgreSQL separado não substitui cookies, PostgREST ou uma política de produção com sessões reais de aluno.
