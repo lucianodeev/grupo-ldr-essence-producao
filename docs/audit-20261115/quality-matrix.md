@@ -1,6 +1,6 @@
 # Biblioteca LDR — matriz individual de qualidade
 
-Data: 15/11/2026. Nenhum produto foi aprovado como integralmente concluído nesta auditoria. Presença de texto e número de palavras não demonstram carga horária ou rigor científico.
+Atualização editorial: 16/11/2026; inventário de origem: 15/11/2026. Nenhum produto foi aprovado como integralmente concluído nesta auditoria. Presença de texto e número de palavras não demonstram carga horária ou rigor científico.
 
 ## Programas publicados no Supabase
 
@@ -156,6 +156,7 @@ As versões candidatas não são usadas pelo leitor de produção. O original e 
 | Curso | Módulos desenvolvidos / previstos | Carga anunciada / validada | Estado |
 | --- | --- | --- | --- |
 | Como se Preparar para uma Entrevista de Emprego | 15 / 15 | 80h / por validar | draft; published=false; elegível=false |
+| Auxiliar de Escritório | 6 / 6 | 160h / por validar | draft; published=false; elegível=false |
 | Redação Profissional e Escrita para Processos Seletivos | 8 / 8 | 100h / por validar | draft; published=false; elegível=false |
 | Como Selecionar a Vaga Certa para o Seu Perfil | 6 / 6 | 80h / por validar | draft; published=false; elegível=false |
 
@@ -172,7 +173,7 @@ Os manifests contêm apenas hashes e posições. Os textos integrais das prévia
 
 ## Triagem entre candidatas originais
 
-4 produtos; 49 unidades; 317 parágrafos e 50086 pares. Cópias exatas: 0; pares próximos: 0. Método: paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required. A ausência de sinal não equivale a aprovação conceptual ou científica.
+5 produtos; 55 unidades; 353 parágrafos e 62128 pares. Cópias exatas: 0; pares próximos: 0. Método: paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required. A ausência de sinal não equivale a aprovação conceptual ou científica.
 
 ## Duplicação e limites
 

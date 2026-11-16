@@ -1,5 +1,6 @@
 {
-  "asOf": "2026-11-15",
+  "asOf": "2026-11-16",
+  "sourceSnapshotAsOf": "2026-11-15",
   "method": "Supabase export read-only + executable data catalogs; word counts and similarity are triage signals, not editorial certification. No full paid text emitted.",
   "summary": {
     "programs": 40,
@@ -757,7 +758,9 @@
       "materialsListed": 3,
       "editorial": "parcial — tópicos e atividades; sem texto aprofundado de aula nesta fonte",
       "source": "src/lib/academy-subscription-courses.catalog.ts",
-      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado"
+      "next": "Desenvolver aulas específicas e fornecer materiais reais; validar avaliação e carga antes de certificado; rascunho separado com 6/6 módulos; não integrado no leitor",
+      "editorialDraft": "editorial/courses/office-support.pt.json",
+      "authoredDraftModules": 6
     },
     {
       "product_key": "curso_assinatura_como_ganhar_dinheiro_com_inteligencia_artificial",
@@ -1711,6 +1714,28 @@
       }
     },
     {
+      "productKey": "curso_assinatura_auxiliar_de_escritorio",
+      "title": "Auxiliar de Escritório",
+      "status": "draft",
+      "published": false,
+      "baseCatalogSha256": "5ab95c4f644ea39bd16ae088f64f173c4828132a95df3f9ae7e7f5126839326b",
+      "advertisedHours": 160,
+      "path": "editorial/courses/office-support.pt.json",
+      "errors": [],
+      "authoredModules": 6,
+      "expectedModules": 6,
+      "complete": true,
+      "validatedHours": null,
+      "activationEligible": false,
+      "repetitionReview": {
+        "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
+        "paragraphsChecked": 36,
+        "pairsChecked": 630,
+        "exact": [],
+        "near": []
+      }
+    },
+    {
       "productKey": "curso_assinatura_redacao_profissional_e_escrita_para_processos_seletivos",
       "title": "Redação Profissional e Escrita para Processos Seletivos",
       "status": "draft",
@@ -1756,11 +1781,11 @@
     }
   ],
   "editorialCorpusReview": {
-    "documents": 4,
-    "units": 49,
+    "documents": 5,
+    "units": 55,
     "method": "paragraphs >=25 words; six-word shingles; Jaccard >=0.40; editorial review still required",
-    "paragraphsChecked": 317,
-    "pairsChecked": 50086,
+    "paragraphsChecked": 353,
+    "pairsChecked": 62128,
     "exact": [],
     "near": []
   },

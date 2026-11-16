@@ -48,6 +48,14 @@ Seleção de vagas trabalha tarefas e requisitos, evidências e aprendizagem, co
 
 Os oito e seis módulos substituem editorialmente o molde conceptual anterior, mas **não há migração ativa** dos quinze títulos históricos. A correspondência de módulos e a preservação de posições precisam de ser decididas antes de integrar uma nova sequência. Ambas as candidatas estão `draft`, `published=false`, `validatedHours=null`; revisão externa, leitor e carga continuam pendentes.
 
+## Curso de Auxiliar de Escritório e leitura editorial
+
+Foi acrescentada uma candidata com **seis oficinas de Auxiliar de Escritório**, 2.789 palavras de desenvolvimento e 720 minutos de prática estimada sem pilotagem. Trabalha receção e triagem, agenda e recursos, arquivo e versões, conferência de registos, preparação de reposição e passagem de trabalho. Os exercícios têm identificadores, intervalos, valores e respostas definidos. O pacote integrado distingue quatro estados de trabalho e inclui perguntas de recuperação.
+
+As fontes consultadas são o perfil ocupacional National Careers Service e orientações de NARA e The National Archives, com âmbito identificado. Nenhum fornecedor foi contactado, reserva efetuada, documento eliminado ou pagamento iniciado. Os seis módulos são uma proposta editorial distinta dos quinze títulos históricos, sem migração ativa; a carga anunciada de 160 horas continua sem validação.
+
+`docs/editorial-review.html` permite leitura autónoma dos **quatro cursos candidatos e do eBook**, com 55 unidades, pesquisa sem acentos, índice, atividades, respostas comentadas, bibliografia e limites. É gerado exclusivamente a partir das candidatas originais; não contém as prévias integrais das obras protegidas, não consulta a base de dados e não grava progresso. O HTML foi analisado por parser, os identificadores são únicos e a sintaxe e normalização da pesquisa foram verificadas. A revisão visual interativa ainda precisa de navegador; a presença de CSS responsivo não é apresentada como teste visual. O CI verifica que o ficheiro corresponde às fontes.
+
 ## Revisão editorial dos eBooks
 
 A matriz conserva a auditoria das **17 obras, em 23 versões linguísticas**. Os 19 produtos anteriormente relatados não foram confirmados na tabela.
@@ -62,7 +70,7 @@ A revisão das **outras dezasseis obras** continua pendente, incluindo validaç�
 
 ## Repetição entre produtos
 
-A triagem conjunta das quatro candidatas (três cursos e um eBook) examinou **49 unidades, 317 parágrafos e 50.086 pares**: zero cópias exatas e zero pares próximos pelo limiar Jaccard de seis palavras ≥0,40. Os testes incluem uma cópia introduzida entre produtos para confirmar a deteção. Não se lê nem reemite a obra protegida original neste verificador; apenas as novas candidatas são comparadas. Isto não substitui revisão semântica ou pedagógica externa.
+A triagem conjunta das cinco candidatas (quatro cursos e um eBook) examinou **55 unidades, 353 parágrafos e 62.128 pares**: zero cópias exatas e zero pares próximos pelo limiar Jaccard de seis palavras ≥0,40. Os testes incluem uma cópia introduzida entre produtos para confirmar a deteção. Não se lê nem reemite a obra protegida original neste verificador; apenas as novas candidatas são comparadas. Isto não substitui revisão semântica ou pedagógica externa.
 
 ## Revisão conservadora de duas obras existentes
 
@@ -85,7 +93,7 @@ Foi acrescentado um job PostgreSQL 16 isolado ao workflow Academy. Exercita o pr
 
 O novo teste recusa executar antes de abrir qualquer cliente SQL, exceto com opt-in explícito, host localhost, utilizador de teste e base `ldr_library_ci`. Esse bloqueio passou num teste com hostname hospedado. Não usa credenciais Supabase/Stripe, não consulta produção e não faz `DROP`, `DELETE` ou `TRUNCATE`. O PostgreSQL é um serviço efémero do runner existente; não foi criado serviço pago.
 
-A execução real deste novo job será registada no PR após o push. Não é teste ponta a ponta de cookies, PostgREST ou RLS da produção. As permissões e políticas existentes não foram alteradas.
+O job `progress-postgres` do head `3a7041c` passou no GitHub na execução Academy `43779777352`, assim como o job de conteúdo, TypeScript e build. Os quatro workflows desse head terminaram com sucesso. A execução do novo lote terá resultado próprio no PR. Não é teste ponta a ponta de cookies, PostgREST ou RLS da produção. As permissões e políticas existentes não foram alteradas.
 
 ## Correções técnicas
 
@@ -129,7 +137,7 @@ Dois testes verificam que esta automação permanece sem escrita de branches ou 
 | Testes específicos `library-*.test.cjs` | 52/52 passaram |
 | Validação da edição candidata | Sete testes passaram; candidata com vinte capítulos continua inelegível sem as revisões |
 | Encaminhamento Stripe | Sete testes de encaminhamento e contrato passaram; handlers e dados simulados |
-| Progresso monotónico | Oito cenários sintéticos passaram, incluindo atualizações e primeiras gravações concorrentes, isolamento de cliente e falhas |
+| Progresso monotónico | Oito cenários da função com dependências simuladas e suíte PostgreSQL isolada passaram; ligações concorrentes, índice único, bloqueio de linha e separação cliente/produto |
 | Estrutura de eBooks | 23/23 versões normalizadas sem erro estrutural; não é aprovação editorial |
 | Renderização do painel | Verificada em PT/EN/FR/ES com dados sintéticos |
 | Supabase nesta continuação | Apenas SELECT: metadados da obra, não nulidade e índice único de `library_progress` |
@@ -141,7 +149,7 @@ A suíte de regressão inclui vários dos testes específicos; estas quantidades
 ## Pendências que continuam abertas
 
 1. Revisão pedagógica especializada dos 59 módulos, testes com alunos, materiais complementares e dimensionamento de carga real; completar áudio e avaliação oral nos idiomas.
-2. Realizar revisão externa e pilotagem dos quinze módulos da candidata de entrevistas, incluindo dimensionamento da carga. Desenvolver as aulas próprias dos restantes 47 roteiros de assinatura, de RH e de cada formação profissional. A contagem de títulos ou texto gerado não comprova 600/1200 horas.
+2. Realizar revisão externa e pilotagem dos quinze módulos da candidata de entrevistas, incluindo dimensionamento da carga. Desenvolver as aulas próprias dos restantes 46 roteiros de assinatura, de RH e de cada formação profissional. A contagem de títulos ou texto gerado não comprova 600/1200 horas.
 3. Rever externamente os vinte capítulos da candidata desenvolvida e revisar as outras 16 obras, com verificação intelectual, bibliográfica e de direitos, sem substituir versões antigas automaticamente.
 4. Testar a prévia com sessões sintéticas reais: comprador, assinante ativo/inativo e aluno sem compra. Verificar acessibilidade interativa, visual e overflow em dispositivos móveis.
 5. Validar anexos externos, emissão e consulta de certificados e concorrência entre dispositivos num ambiente de testes. O teste PostgreSQL separado não substitui cookies, PostgREST ou uma política de produção com sessões reais de aluno.
@@ -153,6 +161,7 @@ A suíte de regressão inclui vários dos testes específicos; estas quantidades
 - `node tools/validate-editorial-drafts.cjs`
 - `node tools/validate-course-drafts.cjs`
 - `node tools/review-editorial-corpus.cjs`
+- `node tools/render-editorial-review.cjs`
 - `node --test apps/painel-ldr/tests/library-*.test.cjs apps/painel-ldr/tests/editorial-drafts.test.cjs`
 - `npm --prefix apps/painel-ldr run test:regressions`
 - `npm --prefix apps/painel-ldr test`

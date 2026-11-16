@@ -8,7 +8,7 @@ function reviewEditorialCorpus(documents) {
   return { documents:documents.length, units:modules.length, ...result };
 }
 function readCandidates(root = path.resolve(__dirname, '..')) {
-  return ['editorial/courses','editorial/drafts'].flatMap(directory => fs.readdirSync(path.join(root,directory)).filter(name=>name.endsWith('.json')).map(name=>JSON.parse(fs.readFileSync(path.join(root,directory,name),'utf8'))));
+  return ['editorial/courses','editorial/drafts'].flatMap(directory => fs.readdirSync(path.join(root,directory)).filter(name=>name.endsWith('.json')).sort().map(name=>JSON.parse(fs.readFileSync(path.join(root,directory,name),'utf8'))));
 }
 module.exports = { reviewEditorialCorpus, readCandidates };
 if (require.main === module) {
