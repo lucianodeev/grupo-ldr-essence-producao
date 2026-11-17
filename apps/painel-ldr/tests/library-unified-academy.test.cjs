@@ -43,6 +43,9 @@ test('the authenticated reading handler recognises LDR ONE for all 50 courses an
  one=false;assert.equal((await functions.clientAcademyReadingEdition.run(context,{slug:ACADEMY_SUBSCRIPTION_COURSES[0].slug})).allowed,false);
  legacy=true;expires=past;assert.equal((await functions.clientAcademyReadingEdition.run(context,{slug:ACADEMY_SUBSCRIPTION_COURSES[0].slug})).allowed,false);
  expires=future;assert.equal((await functions.clientAcademyReadingEdition.run(context,{slug:ACADEMY_SUBSCRIPTION_COURSES[0].slug})).allowed,true);
+ assert.equal((await functions.clientLibraryCourseEntitlement.run(context,{resourceKey:'human_room_assisted_synthesis'})).allowed,true);
+ expires=past;assert.equal((await functions.clientLibraryCourseEntitlement.run(context,{resourceKey:'human_room_assisted_synthesis'})).allowed,false);
+ legacy=false;one=true;expires=future;assert.equal((await functions.clientLibraryCourseEntitlement.run(context,{resourceKey:'human_room_assisted_synthesis'})).allowed,false);
  const before=lookups;assert.equal((await functions.clientLibraryCourseEntitlement.run(context,{resourceKey:'consulta_psicanalitica'})).allowed,false);assert.equal(lookups,before);
  }finally{if(previous===undefined)delete process.env.SUPABASE_SERVICE_ROLE_KEY;else process.env.SUPABASE_SERVICE_ROLE_KEY=previous;}
 });

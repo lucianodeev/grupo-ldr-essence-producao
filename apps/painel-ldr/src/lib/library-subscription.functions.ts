@@ -56,14 +56,16 @@ async function libraryCourseDecision(
   context: { userId: string; claims: Record<string, unknown>; accessToken?: string | null },
   resourceKey: string,
 ) {
-  if (!isAcademySubscriptionProduct(resourceKey)) return resolveLegacyEntitlement({ resourceKey });
+  const eligible = isAcademySubscriptionProduct(resourceKey);
+  // Existing non-course digital benefit shares this endpoint; retain its legacy access.
+  const legacyDigitalBenefit = resourceKey === "human_room_assisted_synthesis";
+  if (!eligible && !legacyDigitalBenefit) return resolveLegacyEntitlement({ resourceKey });
   const result = !process.env["SUPABASE_SERVICE_ROLE_KEY"]
     ? await libraryEdge(context.accessToken)
     : await (async () => {
         const { getLibrarySubscriptionContext } = await import("@/lib/library-subscription.server");
         return getLibrarySubscriptionContext(context.userId, emailOf(context.claims));
       })();
-  const eligible = isAcademySubscriptionProduct(resourceKey);
   const expiry = result.subscription?.current_period_end;
   const libraryActive = Boolean(result.active) && (!expiry || Date.parse(expiry) > Date.now());
   let ldrOne = false;
@@ -77,7 +79,7 @@ async function libraryCourseDecision(
   return resolveLegacyEntitlement({
     resourceKey: resourceKey,
     owned, passEnabled: eligible, passEligible: eligible, pass: ldrOne,
-    librarySubscription: eligible && libraryActive,
+    librarySubscription: (eligible || legacyDigitalBenefit) && libraryActive,
     librarySubscriptionId: result.subscription?.id ?? undefined,
     libraryExpiresAt: result.subscription?.current_period_end ?? undefined,
   });
