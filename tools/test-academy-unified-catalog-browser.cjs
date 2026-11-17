@@ -16,7 +16,7 @@ async function main(){fs.mkdirSync(output,{recursive:true});
  try{browser=await chromium.launch({headless:true,args:['--no-sandbox'],...(process.env.LDR_READER_CHROMIUM?{executablePath:process.env.LDR_READER_CHROMIUM}:{})});
  for(const viewport of [{width:390,height:844},{width:1280,height:900}]){const page=await browser.newPage({viewport}),errors=[],external=[];page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(!r.url().startsWith(origin))external.push(r.url())});await page.goto(origin);
  const cards=page.locator('[data-academy-key][data-academy-subscription="true"]');await cards.first().waitFor();assert.equal(await cards.count(),91);
- const expected=rows.map(r=>r.key).sort(),publicKeys=await cards.evaluateAll(nodes=>nodes.map(n=>n.getAttribute('data-academy-key')).sort());assert.deepEqual(publicKeys,expected);
+ const expected=Array.from(rows,r=>r.key).sort(),publicKeys=await cards.evaluateAll(nodes=>nodes.map(n=>n.getAttribute('data-academy-key')).sort());assert.deepEqual(publicKeys,expected);
  for(const row of rows)assert.equal(await page.locator('[data-academy-key="'+row.key+'"]').getAttribute('href'),row.publicPath);
  await page.getByPlaceholder('Buscar curso ou formação…',{exact:true}).fill('Auxiliar de Escritório');assert.equal(await cards.count(),1);await page.getByPlaceholder('Buscar curso ou formação…',{exact:true}).fill('');assert.equal(await cards.count(),91);
  await cards.first().focus();await page.keyboard.press('Tab');assert.ok(await cards.nth(1).evaluate(n=>n===document.activeElement));assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await cards.first().scrollIntoViewIfNeeded();await page.screenshot({path:path.join(output,'public-'+viewport.width+'.png'),fullPage:false});
@@ -27,4 +27,3 @@ async function main(){fs.mkdirSync(output,{recursive:true});
  const report={pass:true,scope:'Real public Academy and library dashboard components in an isolated local fixture; membership data synthetic, no signed-in production user or payment',results};fs.writeFileSync(path.join(output,'results.json'),JSON.stringify(report,null,2));console.log(JSON.stringify(report));
  }finally{if(browser)await browser.close();await new Promise(resolve=>server.close(resolve));}}
 main().catch(error=>{console.error(error);process.exitCode=1});
-
