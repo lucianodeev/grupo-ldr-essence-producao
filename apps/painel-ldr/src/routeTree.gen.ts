@@ -57,6 +57,7 @@ import { Route as LdrPassRouteImport } from './routes/ldr-pass'
 import { Route as LdrRhEstrategiaRouteImport } from './routes/ldr-rh-estrategia'
 import { Route as LivrosRouteImport } from './routes/livros'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as LojaRouteImport } from './routes/loja'
 import { Route as LucianoRouteImport } from './routes/luciano'
 import { Route as LucianoRodriguesAlmeidaRouteImport } from './routes/luciano-rodrigues-almeida'
 import { Route as MensagensProfissionaisRouteImport } from './routes/mensagens-profissionais'
@@ -77,6 +78,7 @@ import { Route as ProfissionalServicosRouteImport } from './routes/profissional-
 import { Route as RedeAcademicaRouteImport } from './routes/rede-academica'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SellerReferralRouteImport } from './routes/seller-referral'
+import { Route as ServicosProfissionaisRouteImport } from './routes/servicos-profissionais'
 import { Route as TreinamentoRouteImport } from './routes/treinamento'
 import { Route as VendedorRouteImport } from './routes/vendedor'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
@@ -148,6 +150,8 @@ import { Route as ImprensaSalaDeImprensaRouteImport } from './routes/imprensa.sa
 import { Route as ImprensaTrabalheConoscoRouteImport } from './routes/imprensa.trabalhe-conosco'
 import { Route as InstituicoesPainelRouteImport } from './routes/instituicoes.painel'
 import { Route as LivrosSlugRouteImport } from './routes/livros_.$slug'
+import { Route as LojaIndexRouteImport } from './routes/loja.index'
+import { Route as LojaSlugRouteImport } from './routes/loja.$slug'
 import { Route as ProfissionaisCategoryRouteImport } from './routes/profissionais.$category'
 import { Route as ProfissionalSlugRouteImport } from './routes/profissional.$slug'
 import { Route as ProfissionalCadastroRouteImport } from './routes/profissional.cadastro'
@@ -557,6 +561,11 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LojaRoute = LojaRouteImport.update({
+  id: '/loja',
+  path: '/loja',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LucianoRoute = LucianoRouteImport.update({
   id: '/luciano',
   path: '/luciano',
@@ -655,6 +664,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
 const SellerReferralRoute = SellerReferralRouteImport.update({
   id: '/seller-referral',
   path: '/seller-referral',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicosProfissionaisRoute = ServicosProfissionaisRouteImport.update({
+  id: '/servicos-profissionais',
+  path: '/servicos-profissionais',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TreinamentoRoute = TreinamentoRouteImport.update({
@@ -1017,6 +1031,16 @@ const LivrosSlugRoute = LivrosSlugRouteImport.update({
   id: '/livros_/$slug',
   path: '/livros/$slug',
   getParentRoute: () => rootRouteImport,
+} as any)
+const LojaIndexRoute = LojaIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LojaRoute,
+} as any)
+const LojaSlugRoute = LojaSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => LojaRoute,
 } as any)
 const ProfissionaisCategoryRoute = ProfissionaisCategoryRouteImport.update({
   id: '/$category',
@@ -1975,6 +1999,7 @@ export interface FileRoutesByFullPath {
   '/ldr-rh-estrategia': typeof LdrRhEstrategiaRoute
   '/livros': typeof LivrosRoute
   '/login': typeof LoginRoute
+  '/loja': typeof LojaRouteWithChildren
   '/luciano': typeof LucianoRoute
   '/luciano-rodrigues-almeida': typeof LucianoRodriguesAlmeidaRoute
   '/mensagens-profissionais': typeof MensagensProfissionaisRoute
@@ -1995,6 +2020,7 @@ export interface FileRoutesByFullPath {
   '/rede-academica': typeof RedeAcademicaRoute
   '/reset-password': typeof ResetPasswordRoute
   '/seller-referral': typeof SellerReferralRoute
+  '/servicos-profissionais': typeof ServicosProfissionaisRoute
   '/treinamento': typeof TreinamentoRoute
   '/vendedor': typeof AuthenticatedVendedorRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
@@ -2063,6 +2089,7 @@ export interface FileRoutesByFullPath {
   '/imprensa/trabalhe-conosco': typeof ImprensaTrabalheConoscoRoute
   '/instituicoes/painel': typeof InstituicoesPainelRoute
   '/livros/$slug': typeof LivrosSlugRoute
+  '/loja/$slug': typeof LojaSlugRoute
   '/profissionais/$category': typeof ProfissionaisCategoryRoute
   '/profissional/$slug': typeof ProfissionalSlugRoute
   '/profissional/cadastro': typeof ProfissionalCadastroRoute
@@ -2072,6 +2099,7 @@ export interface FileRoutesByFullPath {
   '/vendedor/apresentacao': typeof VendedorApresentacaoRoute
   '/empresas/': typeof EmpresasIndexRoute
   '/imprensa/': typeof ImprensaIndexRoute
+  '/loja/': typeof LojaIndexRoute
   '/admin/acessos': typeof AuthenticatedAdminAcessosRoute
   '/admin/alunos-matriculas': typeof AuthenticatedAdminAlunosMatriculasRoute
   '/admin/catalogo': typeof AuthenticatedAdminCatalogoRoute
@@ -2285,6 +2313,7 @@ export interface FileRoutesByTo {
   '/rede-academica': typeof RedeAcademicaRoute
   '/reset-password': typeof ResetPasswordRoute
   '/seller-referral': typeof SellerReferralRoute
+  '/servicos-profissionais': typeof ServicosProfissionaisRoute
   '/treinamento': typeof TreinamentoRoute
   '/vendedor': typeof AuthenticatedVendedorRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
@@ -2351,6 +2380,7 @@ export interface FileRoutesByTo {
   '/imprensa/trabalhe-conosco': typeof ImprensaTrabalheConoscoRoute
   '/instituicoes/painel': typeof InstituicoesPainelRoute
   '/livros/$slug': typeof LivrosSlugRoute
+  '/loja/$slug': typeof LojaSlugRoute
   '/profissionais/$category': typeof ProfissionaisCategoryRoute
   '/profissional/$slug': typeof ProfissionalSlugRoute
   '/profissional/cadastro': typeof ProfissionalCadastroRoute
@@ -2360,6 +2390,7 @@ export interface FileRoutesByTo {
   '/vendedor/apresentacao': typeof VendedorApresentacaoRoute
   '/empresas': typeof EmpresasIndexRoute
   '/imprensa': typeof ImprensaIndexRoute
+  '/loja': typeof LojaIndexRoute
   '/admin/acessos': typeof AuthenticatedAdminAcessosRoute
   '/admin/alunos-matriculas': typeof AuthenticatedAdminAlunosMatriculasRoute
   '/admin/catalogo': typeof AuthenticatedAdminCatalogoRoute
@@ -2559,6 +2590,7 @@ export interface FileRoutesById {
   '/ldr-rh-estrategia': typeof LdrRhEstrategiaRoute
   '/livros': typeof LivrosRoute
   '/login': typeof LoginRoute
+  '/loja': typeof LojaRouteWithChildren
   '/luciano': typeof LucianoRoute
   '/luciano-rodrigues-almeida': typeof LucianoRodriguesAlmeidaRoute
   '/mensagens-profissionais': typeof MensagensProfissionaisRoute
@@ -2579,6 +2611,7 @@ export interface FileRoutesById {
   '/rede-academica': typeof RedeAcademicaRoute
   '/reset-password': typeof ResetPasswordRoute
   '/seller-referral': typeof SellerReferralRoute
+  '/servicos-profissionais': typeof ServicosProfissionaisRoute
   '/treinamento': typeof TreinamentoRoute
   '/vendedor': typeof VendedorRouteWithChildren
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
@@ -2648,6 +2681,7 @@ export interface FileRoutesById {
   '/imprensa/trabalhe-conosco': typeof ImprensaTrabalheConoscoRoute
   '/instituicoes/painel': typeof InstituicoesPainelRoute
   '/livros_/$slug': typeof LivrosSlugRoute
+  '/loja/$slug': typeof LojaSlugRoute
   '/profissionais/$category': typeof ProfissionaisCategoryRoute
   '/profissional/$slug': typeof ProfissionalSlugRoute
   '/profissional/cadastro': typeof ProfissionalCadastroRoute
@@ -2657,6 +2691,7 @@ export interface FileRoutesById {
   '/vendedor/apresentacao': typeof VendedorApresentacaoRoute
   '/empresas/': typeof EmpresasIndexRoute
   '/imprensa/': typeof ImprensaIndexRoute
+  '/loja/': typeof LojaIndexRoute
   '/_authenticated/admin/acessos': typeof AuthenticatedAdminAcessosRoute
   '/_authenticated/admin/alunos-matriculas': typeof AuthenticatedAdminAlunosMatriculasRoute
   '/_authenticated/admin/catalogo': typeof AuthenticatedAdminCatalogoRoute
@@ -2854,6 +2889,7 @@ export interface FileRouteTypes {
     | '/ldr-rh-estrategia'
     | '/livros'
     | '/login'
+    | '/loja'
     | '/luciano'
     | '/luciano-rodrigues-almeida'
     | '/mensagens-profissionais'
@@ -2874,6 +2910,7 @@ export interface FileRouteTypes {
     | '/rede-academica'
     | '/reset-password'
     | '/seller-referral'
+    | '/servicos-profissionais'
     | '/treinamento'
     | '/vendedor'
     | '/admin'
@@ -2942,6 +2979,7 @@ export interface FileRouteTypes {
     | '/imprensa/trabalhe-conosco'
     | '/instituicoes/painel'
     | '/livros/$slug'
+    | '/loja/$slug'
     | '/profissionais/$category'
     | '/profissional/$slug'
     | '/profissional/cadastro'
@@ -2951,6 +2989,7 @@ export interface FileRouteTypes {
     | '/vendedor/apresentacao'
     | '/empresas/'
     | '/imprensa/'
+    | '/loja/'
     | '/admin/acessos'
     | '/admin/alunos-matriculas'
     | '/admin/catalogo'
@@ -3164,6 +3203,7 @@ export interface FileRouteTypes {
     | '/rede-academica'
     | '/reset-password'
     | '/seller-referral'
+    | '/servicos-profissionais'
     | '/treinamento'
     | '/vendedor'
     | '/admin'
@@ -3230,6 +3270,7 @@ export interface FileRouteTypes {
     | '/imprensa/trabalhe-conosco'
     | '/instituicoes/painel'
     | '/livros/$slug'
+    | '/loja/$slug'
     | '/profissionais/$category'
     | '/profissional/$slug'
     | '/profissional/cadastro'
@@ -3239,6 +3280,7 @@ export interface FileRouteTypes {
     | '/vendedor/apresentacao'
     | '/empresas'
     | '/imprensa'
+    | '/loja'
     | '/admin/acessos'
     | '/admin/alunos-matriculas'
     | '/admin/catalogo'
@@ -3437,6 +3479,7 @@ export interface FileRouteTypes {
     | '/ldr-rh-estrategia'
     | '/livros'
     | '/login'
+    | '/loja'
     | '/luciano'
     | '/luciano-rodrigues-almeida'
     | '/mensagens-profissionais'
@@ -3457,6 +3500,7 @@ export interface FileRouteTypes {
     | '/rede-academica'
     | '/reset-password'
     | '/seller-referral'
+    | '/servicos-profissionais'
     | '/treinamento'
     | '/vendedor'
     | '/_authenticated/admin'
@@ -3526,6 +3570,7 @@ export interface FileRouteTypes {
     | '/imprensa/trabalhe-conosco'
     | '/instituicoes/painel'
     | '/livros_/$slug'
+    | '/loja/$slug'
     | '/profissionais/$category'
     | '/profissional/$slug'
     | '/profissional/cadastro'
@@ -3535,6 +3580,7 @@ export interface FileRouteTypes {
     | '/vendedor/apresentacao'
     | '/empresas/'
     | '/imprensa/'
+    | '/loja/'
     | '/_authenticated/admin/acessos'
     | '/_authenticated/admin/alunos-matriculas'
     | '/_authenticated/admin/catalogo'
@@ -3734,6 +3780,7 @@ export interface RootRouteChildren {
   LdrRhEstrategiaRoute: typeof LdrRhEstrategiaRoute
   LivrosRoute: typeof LivrosRoute
   LoginRoute: typeof LoginRoute
+  LojaRoute: typeof LojaRouteWithChildren
   LucianoRoute: typeof LucianoRoute
   LucianoRodriguesAlmeidaRoute: typeof LucianoRodriguesAlmeidaRoute
   MensagensProfissionaisRoute: typeof MensagensProfissionaisRoute
@@ -3754,6 +3801,7 @@ export interface RootRouteChildren {
   RedeAcademicaRoute: typeof RedeAcademicaRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SellerReferralRoute: typeof SellerReferralRoute
+  ServicosProfissionaisRoute: typeof ServicosProfissionaisRoute
   TreinamentoRoute: typeof TreinamentoRoute
   VendedorRoute: typeof VendedorRouteWithChildren
   AdminContatosRoute: typeof AdminContatosRoute
@@ -4125,6 +4173,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/loja': {
+      id: '/loja'
+      path: '/loja'
+      fullPath: '/loja'
+      preLoaderRoute: typeof LojaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/luciano': {
       id: '/luciano'
       path: '/luciano'
@@ -4263,6 +4318,13 @@ declare module '@tanstack/react-router' {
       path: '/seller-referral'
       fullPath: '/seller-referral'
       preLoaderRoute: typeof SellerReferralRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/servicos-profissionais': {
+      id: '/servicos-profissionais'
+      path: '/servicos-profissionais'
+      fullPath: '/servicos-profissionais'
+      preLoaderRoute: typeof ServicosProfissionaisRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/treinamento': {
@@ -4761,6 +4823,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/livros/$slug'
       preLoaderRoute: typeof LivrosSlugRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/loja/': {
+      id: '/loja/'
+      path: '/'
+      fullPath: '/loja/'
+      preLoaderRoute: typeof LojaIndexRouteImport
+      parentRoute: typeof LojaRoute
+    }
+    '/loja/$slug': {
+      id: '/loja/$slug'
+      path: '/$slug'
+      fullPath: '/loja/$slug'
+      preLoaderRoute: typeof LojaSlugRouteImport
+      parentRoute: typeof LojaRoute
     }
     '/profissionais/$category': {
       id: '/profissionais/$category'
@@ -6565,6 +6641,18 @@ const InstituicoesRouteWithChildren = InstituicoesRoute._addFileChildren(
   InstituicoesRouteChildren,
 )
 
+interface LojaRouteChildren {
+  LojaSlugRoute: typeof LojaSlugRoute
+  LojaIndexRoute: typeof LojaIndexRoute
+}
+
+const LojaRouteChildren: LojaRouteChildren = {
+  LojaSlugRoute: LojaSlugRoute,
+  LojaIndexRoute: LojaIndexRoute,
+}
+
+const LojaRouteWithChildren = LojaRoute._addFileChildren(LojaRouteChildren)
+
 interface ProfissionaisRouteChildren {
   ProfissionaisCategoryRoute: typeof ProfissionaisCategoryRoute
 }
@@ -6642,6 +6730,7 @@ const rootRouteChildren: RootRouteChildren = {
   LdrRhEstrategiaRoute: LdrRhEstrategiaRoute,
   LivrosRoute: LivrosRoute,
   LoginRoute: LoginRoute,
+  LojaRoute: LojaRouteWithChildren,
   LucianoRoute: LucianoRoute,
   LucianoRodriguesAlmeidaRoute: LucianoRodriguesAlmeidaRoute,
   MensagensProfissionaisRoute: MensagensProfissionaisRoute,
@@ -6662,6 +6751,7 @@ const rootRouteChildren: RootRouteChildren = {
   RedeAcademicaRoute: RedeAcademicaRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SellerReferralRoute: SellerReferralRoute,
+  ServicosProfissionaisRoute: ServicosProfissionaisRoute,
   TreinamentoRoute: TreinamentoRoute,
   VendedorRoute: VendedorRouteWithChildren,
   AdminContatosRoute: AdminContatosRoute,

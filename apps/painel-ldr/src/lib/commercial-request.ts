@@ -4,7 +4,7 @@ export const COMMERCIAL_SOLUTIONS = ["Consultoria estratégica", "Tecnologia, IA
 const schema = z.object({
   organization: z.string().trim().min(2).max(160), name: z.string().trim().min(2).max(120),
   email: z.string().trim().email().max(254), interest: z.enum(COMMERCIAL_INTERESTS), solution: z.enum(COMMERCIAL_SOLUTIONS),
-  source: z.literal("integracao-colaboradores").optional(),
+  source: z.enum(["integracao-colaboradores", "servicos-profissionais"]).optional(),
   message: z.string().trim().min(5).max(3000), consent: z.literal(true), website: z.string().max(0),
 }).refine(d => d.source !== "integracao-colaboradores" || d.solution === "Integração de novos colaboradores", { path: ["solution"], message: "Origem e solução incompatíveis." });
 export function commercialSupportPayload(input: unknown) {
@@ -13,7 +13,9 @@ export function commercialSupportPayload(input: unknown) {
     p_message: `Organização: ${d.organization}\nInteresse: ${d.interest}\nSolução: ${d.solution}\n\n${d.message}`,
     p_source_project: "Central Empresas LDR", p_source_url: d.source === "integracao-colaboradores"
       ? "https://ldrecossistema.online/empresas/integracao-colaboradores"
-      : "https://ldrecossistema.online/empresas/proposta",
+      : d.source === "servicos-profissionais"
+        ? "https://ldrecossistema.online/servicos-profissionais"
+        : "https://ldrecossistema.online/empresas/proposta",
     p_language: "pt", p_wants_luciano: false, p_consent: d.consent, p_website: d.website };
 }
 export function commercialProtocol(result: unknown): string {

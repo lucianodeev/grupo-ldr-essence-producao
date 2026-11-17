@@ -159,3 +159,22 @@ export async function getProtectedDigitalContent(
     content: normalizeDigitalReaderContent(decodeContent(data.content)),
   };
 }
+
+/** Keep checkout closed when the marketed edition cannot be delivered. */
+export async function hasCompleteStoreEbook(productKey: DigitalReaderProductKey, expectedChapters: number) {
+  const { data, error } = await supabaseAdmin
+    .from("digital_product_content")
+    .select("content")
+    .eq("product_key", productKey)
+    .eq("locale", "pt")
+    .eq("active", true)
+    .maybeSingle();
+
+  if (error || !data) return false;
+  try {
+    const content = normalizeDigitalReaderContent(decodeContent(data.content));
+    return content.kind === "book" && content.data.chapters.length === expectedChapters;
+  } catch {
+    return false;
+  }
+}

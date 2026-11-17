@@ -347,6 +347,11 @@ function EcosystemMap() {
         </div>
 
 
+        <nav aria-label="LDR Store" className="flex flex-wrap gap-3 px-4 sm:px-5">
+          <Link to="/loja" className="rounded-full bg-[#122c27] px-5 py-3 text-sm font-bold text-white">LDR Store</Link>
+          <Link to="/servicos-profissionais" className="rounded-full border border-[#122c27] px-5 py-3 text-sm font-bold text-[#122c27]">{{ pt: "Serviços profissionais", en: "Professional services", fr: "Services professionnels", es: "Servicios profesionales" }[locale]}</Link>
+        </nav>
+
         <EcosystemServiceShowcase />
 
         <section className="mt-8 overflow-hidden rounded-[30px] border border-[#d6ad63]/60 bg-white p-6 shadow-xl sm:p-8">
