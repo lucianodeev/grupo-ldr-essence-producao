@@ -1,3 +1,4 @@
+import { isAcademySubscriptionProduct } from "@/lib/academy-unified-catalog";
 import { createServerFn } from "@tanstack/react-start";
 import { getRequest, setResponseHeader } from "@tanstack/react-start/server";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
@@ -55,15 +56,30 @@ async function libraryCourseDecision(
   context: { userId: string; claims: Record<string, unknown>; accessToken?: string | null },
   resourceKey: string,
 ) {
+  const eligible = isAcademySubscriptionProduct(resourceKey);
+  // Existing non-course digital benefit shares this endpoint; retain its legacy access.
+  const legacyDigitalBenefit = resourceKey === "human_room_assisted_synthesis";
+  if (!eligible && !legacyDigitalBenefit) return resolveLegacyEntitlement({ resourceKey });
   const result = !process.env["SUPABASE_SERVICE_ROLE_KEY"]
     ? await libraryEdge(context.accessToken)
     : await (async () => {
         const { getLibrarySubscriptionContext } = await import("@/lib/library-subscription.server");
         return getLibrarySubscriptionContext(context.userId, emailOf(context.claims));
       })();
+  const expiry = result.subscription?.current_period_end;
+  const libraryActive = Boolean(result.active) && (!expiry || Date.parse(expiry) > Date.now());
+  let ldrOne = false;
+  let owned = false;
+  if (eligible && !libraryActive && process.env["SUPABASE_SERVICE_ROLE_KEY"] && result.customer?.id) {
+    const { getAcademyCatalogAccess } = await import("@/lib/academy-catalog-access.server");
+    const access = await getAcademyCatalogAccess(result.customer.id);
+    ldrOne = access.active;
+    owned = access.ownedKeys.includes(resourceKey);
+  }
   return resolveLegacyEntitlement({
     resourceKey: resourceKey,
-    librarySubscription: Boolean(result.active),
+    owned, passEnabled: eligible, passEligible: eligible, pass: ldrOne,
+    librarySubscription: (eligible || legacyDigitalBenefit) && libraryActive,
     librarySubscriptionId: result.subscription?.id ?? undefined,
     libraryExpiresAt: result.subscription?.current_period_end ?? undefined,
   });
@@ -121,4 +137,18 @@ export const clientSetLibrarySubscriptionCancellation = createServerFn({ method:
       emailOf(context.claims),
       data.cancelAtPeriodEnd,
     );
+  });
+
+// Read-only catalogue access status; kept separate from billing/subscription management.
+export const clientAcademyCatalogAccess = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    setResponseHeader("Cache-Control", "private, no-store");
+    const { hasOwnerDigitalAccess } = await import("@/lib/owner-digital-access.server");
+    if (hasOwnerDigitalAccess(emailOf(context.claims), context.userId)) return { active: true, ownedKeys: [] as string[] };
+    const { resolveClient } = await import("@/lib/client-portal.server");
+    const resolved = await resolveClient(context.userId, emailOf(context.claims));
+    if (resolved.status !== "ok") return { active: false, ownedKeys: [] as string[] };
+    const { getAcademyCatalogAccess } = await import("@/lib/academy-catalog-access.server");
+    return getAcademyCatalogAccess(resolved.customer.id);
   });

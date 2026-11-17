@@ -21,7 +21,7 @@ function fail(message:string):never{throw new Error(message)}
 
 async function customerFor(userId:string,email:string|null){const ctx=await resolveClient(userId,email);if(ctx.status!=="ok")fail("Acesso do cliente não disponível.");return ctx.customer;}
 function matches(order:any){const metadata=(order?.metadata??{}) as Record<string,unknown>;const key=typeof metadata['product_key']==="string"?metadata['product_key']:"";return order?.catalog_key===PRODUCT_KEY||key===PRODUCT_KEY||key===PRODUCT_SLUG;}
-async function paidOrder(customerId:string){const {data,error}=await db.from("orders").select("id,catalog_key,payment_status,amount_cents,currency,stripe_checkout_session_id,metadata,created_at").eq("customer_id",customerId).eq("payment_status","pago").order("created_at",{ascending:false});if(error)fail("Não foi possível verificar a compra da formação.");return (data??[]).find(matches)??null;}
+async function paidOrder(customerId:string){const {data,error}=await db.from("orders").select("id,catalog_key,payment_status,amount_cents,currency,stripe_checkout_session_id,metadata,created_at").eq("customer_id",customerId).eq("payment_status","pago").order("created_at",{ascending:false});if(error)fail("Não foi possível verificar a compra da formação.");return (data??[]).filter((o:any)=>(o.metadata??{}).source!=="library_subscription").find(matches)??null;}
 function appOrigin(){const request=getRequest();const requestUrl=request?new URL(request.url):null;return process.env['CLIENT_PANEL_URL']?.replace(/\/$/,"")||requestUrl?.origin||"https://ldracademy.online";}
 function daysSince(value:string|null|undefined){if(!value)return 0;const time=Date.parse(value);if(!Number.isFinite(time))return 0;return Math.max(0,Math.floor((Date.now()-time)/86_400_000));}
 
@@ -86,8 +86,8 @@ async function savedProgress(customerId:string){
 export async function getBriefTherapyOffer(userId:string,email:string|null){
   const customer=await customerFor(userId,email);
   const owner=hasOwnerDigitalAccess(email??customer.email,userId);
-  const order=owner?null:await paidOrder(customer.id);
-  const entitled=Boolean(order)||owner;
+  const [order,ldrOne]=await Promise.all([owner?Promise.resolve(null):paidOrder(customer.id),hasActiveLdrOne(customer.id,"academy")]);
+  const entitled=Boolean(order)||owner||ldrOne;
   const enrollment=await ensureEnrollment(customer.id,entitled);
   const progress=await savedProgress(customer.id);
   const enrolledAt=(enrollment?.enrolled_at??order?.created_at??null) as string|null;
@@ -96,7 +96,7 @@ export async function getBriefTherapyOffer(userId:string,email:string|null){
   const progressPercent=Number(progress?.progress_percent??enrollment?.progress_percent??0);
   const projectApproved=await paidCourseProjectApproved(customer.id,"formacao-terapia-breve-psicanalitica");
   const certificateEligible=entitled&&elapsedDays>=MINIMUM_DAYS&&progressPercent>=100&&projectApproved;
-  return {productKey:PRODUCT_KEY,slug:PRODUCT_SLUG,title:TITLE,priceBrlCents:PRICE_BRL,priceEurCents:PRICE_EUR,regularPriceBrlCents:PRICE_BRL,regularPriceEurCents:PRICE_EUR,launchPromotionActive:false,launchMonths:0,launchStart:null,launchEnd:null,entitled,lifetimeAccess:true,minimumMonths:6,maximumMonths:MAXIMUM_MONTHS,minimumDays:MINIMUM_DAYS,liveSessionsIncluded:6,totalModules:15,totalLessons:TOTAL_LESSONS,totalHours:TOTAL_HOURS,enrolledAt,elapsedDays,maxUnlockedLesson,progressPercent,cohortNumber:enrollment?.training_cohorts?.cohort_number??null,cohortCapacity:enrollment?.training_cohorts?.capacity??COHORT_CAPACITY,certificateEligible,certificateAvailableAt:certificateEligible?new Date().toISOString():enrollment?.certificate_available_at??null,customerName:customer.fullName??customer.email??"Aluno"};
+  return {productKey:PRODUCT_KEY,slug:PRODUCT_SLUG,title:TITLE,priceBrlCents:PRICE_BRL,priceEurCents:PRICE_EUR,regularPriceBrlCents:PRICE_BRL,regularPriceEurCents:PRICE_EUR,launchPromotionActive:false,launchMonths:0,launchStart:null,launchEnd:null,entitled,lifetimeAccess:Boolean(order)||owner,includedInLdrOne:true,minimumMonths:6,maximumMonths:MAXIMUM_MONTHS,minimumDays:MINIMUM_DAYS,liveSessionsIncluded:6,totalModules:15,totalLessons:TOTAL_LESSONS,totalHours:TOTAL_HOURS,enrolledAt,elapsedDays,maxUnlockedLesson,progressPercent,cohortNumber:enrollment?.training_cohorts?.cohort_number??null,cohortCapacity:enrollment?.training_cohorts?.capacity??COHORT_CAPACITY,certificateEligible,certificateAvailableAt:certificateEligible?new Date().toISOString():enrollment?.certificate_available_at??null,customerName:customer.fullName??customer.email??"Aluno"};
 }
 
 export async function createBriefTherapyCheckout(userId:string,email:string|null,market:Market){

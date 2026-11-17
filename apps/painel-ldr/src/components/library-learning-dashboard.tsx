@@ -1,3 +1,4 @@
+import { AcademyCatalogCard } from "./academy-catalog-card";
 import { useMemo, useState } from "react";
 import { BookOpen, GraduationCap, Search, ArrowUpRight } from "lucide-react";
 import {
@@ -294,7 +295,13 @@ export function LibraryLearningDashboard({
                 : "items"}
         </p>
         <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {selected.map((item) => (
+          {selected.map((item) => item.academyCard ? (
+            <AcademyCatalogCard key={item.key} catalogKey={item.key} subscription={item.academyCard.subscription ?? true} title={item.title} description={item.description}
+              detail={item.academyCard.detail} editorial={item.editorial} href={item.href} icon={item.academyCard.icon}
+              accent={item.academyCard.accent} accessLabel={item.academyCard.accessLabel}
+              cta={item.access === "offer" ? t.offer : item.access === "verify" ? t.verify : t.open}
+              progress={view === "progress" ? progress.find(p => p.product_key === item.key)?.progress_percent ?? 0 : undefined}/>
+          ) : (
             <article
               key={item.key}
               className="flex min-w-0 flex-col rounded-2xl border border-slate-200 bg-[#fcfcfd] p-5"

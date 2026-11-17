@@ -1069,7 +1069,7 @@ export async function getClientDigitalLibrary(userId: string, email: string | nu
   const { hasOwnerDigitalAccess } = await import("@/lib/owner-digital-access.server");
   const ownerAccess = hasOwnerDigitalAccess(email ?? customer.email, userId);
   const { hasActiveLdrOne } = await import("@/lib/ldr-one-entitlement.server");
-  const ldrOneAccess = await hasActiveLdrOne(customer.id);
+  const ldrOneAccess = await hasActiveLdrOne(customer.id,"academy");
 
   const { data: orders } = await supabaseAdmin
     .from("orders")
