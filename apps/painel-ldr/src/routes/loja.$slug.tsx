@@ -1,5 +1,5 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { commerceAction, LdrCommercePage } from "@/components/ldr-commerce-page";
 import { academySubscriptionLabel } from "@/lib/academy-unified-catalog";
 import { ebookStorePrice, STORE_CATEGORIES, STORE_PRODUCTS } from "@/lib/ldr-store-catalog";
@@ -48,11 +48,18 @@ function StoreProduct() {
   const [pending, setPending] = useState(false);
   const [error, setError] = useState(false);
 
+  const attempts = useRef(new Map<string, string>());
+
   async function checkout() {
     setPending(true);
     setError(false);
     try {
-      const result = await ldrStoreSandboxCheckout({ data: { productKey: product.key, market } });
+      const attempt = `${product.key}:${market}`;
+      const requestId = attempts.current.get(attempt) ?? crypto.randomUUID();
+      attempts.current.set(attempt, requestId);
+      const result = await ldrStoreSandboxCheckout({
+        data: { productKey: product.key, market, requestId },
+      });
       window.location.assign(result.url);
     } catch {
       setError(true);

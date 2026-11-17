@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { getRequest } from "@tanstack/react-start/server";
 import { psychoanalysisEbookByKey } from "@/lib/psychoanalysis-ebooks.catalog";
 import { storeSandboxEnabled } from "@/lib/ldr-store-sandbox";
@@ -20,7 +21,7 @@ export async function createDigitalCheckoutWithFixedBrlEbooks(
   userId: string,
   email: string | null,
   input: { productKey: string; market: DigitalMarket },
-  options?: { sandbox: true },
+  options?: { sandbox: true; requestId: string },
 ) {
   const sandbox = options?.sandbox === true;
   if (sandbox && !storeSandboxEnabled(process.env, getRequest().url)) fail("Checkout de teste indisponível.");
@@ -44,12 +45,17 @@ export async function createDigitalCheckoutWithFixedBrlEbooks(
   const stripeCurrency = input.market === "BR" ? "brl" : "eur";
   const title = ebook.title;
   const premium = PREMIUM_EBOOKS.has(input.productKey);
+  const attempt = options?.requestId;
+  const hash = attempt && createHash("sha256").update(`ldr:store:${userId}:${attempt.toLowerCase()}`).digest("hex");
+  const orderId = hash ? `${hash.slice(0,8)}-${hash.slice(8,12)}-5${hash.slice(13,16)}-a${hash.slice(17,20)}-${hash.slice(20,32)}` : undefined;
   const transaction = sandbox ? { checkout_kind: "ldr_store_sandbox", customer_id: customer.id, catalog_key: ebook.key } : null;
   const metadata = { product_key: ebook.key, market: input.market, auth_user_id: userId, fixed_price: true, premium, ...transaction };
 
-  const { data: order, error: orderError } = await supabaseAdmin
+  const select = "id,order_number,customer_id,contact_email,catalog_key,amount_cents,currency,payment_status,stripe_checkout_session_id,created_at,metadata";
+  const created = await supabaseAdmin
     .from("orders")
     .insert({
+      ...(orderId ? { id: orderId } : {}),
       order_number: "",
       customer_id: customer.id,
       contact_email: customer.email,
@@ -66,10 +72,22 @@ export async function createDigitalCheckoutWithFixedBrlEbooks(
       catalog_key: input.productKey,
       metadata,
     } as never)
-    .select("id, order_number")
+    .select(select)
     .single();
 
-  if (orderError || !order) fail("Não foi possível iniciar o pedido.");
+  const existing = orderId && created.error?.code === "23505"
+    ? await supabaseAdmin.from("orders").select(select).eq("id", orderId).eq("customer_id", customer.id).maybeSingle()
+    : created;
+  const order = existing.data;
+  if (existing.error || !order) fail("Não foi possível iniciar o pedido.");
+  if (sandbox) {
+    const stored = order.metadata as Record<string, unknown> | null;
+    if (stored?.["checkout_kind"] !== "ldr_store_sandbox" || order.catalog_key !== ebook.key ||
+      order.amount_cents !== amountCents || order.currency !== currency || order.payment_status !== "pendente" ||
+      !(Date.parse(order.created_at) > Date.now() - 60 * 60 * 1000)) {
+      fail("Este pedido de teste já não está disponível.");
+    }
+  }
 
   const secret = process.env["STRIPE_SECRET_KEY"];
   if (!secret) {
@@ -101,38 +119,50 @@ export async function createDigitalCheckoutWithFixedBrlEbooks(
     params.set(`metadata[${name}]`, value);
     params.set(`payment_intent_data[metadata][${name}]`, value);
   }
-  if (customer.email) params.set("customer_email", customer.email);
+  const checkoutEmail = sandbox ? order.contact_email : customer.email;
+  if (checkoutEmail) params.set("customer_email", checkoutEmail);
 
   let response: Response;
+  let session: { id?: string; url?: string; livemode?: boolean; error?: { message?: string } };
   try {
     response = await fetch("https://api.stripe.com/v1/checkout/sessions", {
       method: "POST",
-      headers: { Authorization: `Bearer ${secret}`, "Content-Type": "application/x-www-form-urlencoded" },
+      ...(sandbox ? { redirect: "error" as const, signal: AbortSignal.timeout(20000) } : {}),
+      headers: { Authorization: `Bearer ${secret}`, "Content-Type": "application/x-www-form-urlencoded",
+        ...(sandbox ? { "Idempotency-Key": `ldr-store-${order.id}` } : {}) },
       body: params,
     });
+    session = await response.json();
   } catch {
-    await supabaseAdmin.from("orders").delete().eq("id", order.id);
+    if (!sandbox) await supabaseAdmin.from("orders").delete().eq("id", order.id);
     fail("Não foi possível abrir o checkout.");
   }
 
-  const session = await response.json() as { id?: string; url?: string; livemode?: boolean; error?: { message?: string } };
   if (!response.ok || !session.id || !session.url) {
+    if (sandbox) fail("Não foi possível abrir o checkout de teste.");
     await supabaseAdmin.from("orders").delete().eq("id", order.id);
     fail(session.error?.message || "Não foi possível abrir o checkout.");
   }
 
   if (sandbox && (session.livemode !== false || !/^cs_test_[a-zA-Z0-9]+$/.test(session.id) ||
     !/^https:\/\/checkout\.stripe\.com\//.test(session.url))) {
-    await supabaseAdmin.from("orders").delete().eq("id", order.id);
     fail("Não foi possível confirmar a sessão de teste.");
   }
 
-  const { error: saveError } = await supabaseAdmin.from("orders").update({
+  const save = supabaseAdmin.from("orders").update({
     stripe_checkout_session_id: session.id,
     metadata: { ...metadata, stripe_price_id: null },
   } as never).eq("id", order.id);
 
-  if (sandbox && saveError) fail("Não foi possível registar a sessão de teste.");
+  if (sandbox) {
+    const { data: saved, error: saveError } = await save
+      .eq("payment_status", "pendente")
+      .or(`stripe_checkout_session_id.is.null,stripe_checkout_session_id.eq.${session.id}`)
+      .select("id").maybeSingle();
+    if (saveError || !saved) fail("Não foi possível registar a sessão de teste.");
+  } else {
+    await save;
+  }
 
   return { url: session.url, orderId: order.id, orderNumber: order.order_number };
 }

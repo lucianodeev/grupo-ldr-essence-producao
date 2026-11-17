@@ -2,10 +2,10 @@
 // This function never confirms payment or issues credits.
 type Order = { id: string; title: string; amount_cents: number; currency: string; contact_email: string | null };
 export async function hostedServiceCheckout(order: Order, metadata: Record<string, string>, expires: number,
-  deps: { env: Record<string, string | undefined>; request?: typeof fetch }) {
+  deps: { env: Record<string, string | undefined>; request?: typeof fetch; returnOrigin?: string }) {
   const key = deps.env["STRIPE_SECRET_KEY"] ?? "";
   if (!/^(?:[sr]k_(?:live|test)|rkcs_test)_[A-Za-z0-9]+$/.test(key)) throw Error("Pagamento temporariamente indisponível.");
-  const origin = "https://ldrecossistema.online";
+  const origin = deps.returnOrigin ?? "https://ldrecossistema.online";
   const params = new URLSearchParams({ mode: "payment", client_reference_id: order.id,
     success_url: `${origin}/cliente/pedido/${order.id}?payment=processing`,
     cancel_url: `${origin}/cliente/pedido/${order.id}?payment=cancel`, expires_at: String(expires),

@@ -1,4 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
+import { setResponseHeader } from "@tanstack/react-start/server";
 
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import type { DigitalReaderLocale, DigitalReaderProductKey } from "@/lib/digital-content.server";
@@ -37,6 +38,7 @@ export const clientDigitalProductContent = createServerFn({ method: "GET" })
     return input as { productKey: DigitalReaderProductKey; locale: DigitalReaderLocale };
   })
   .handler(async ({ context, data }) => {
+    setResponseHeader("Cache-Control", "private, no-store");
     const { getProtectedDigitalContent } = await import("@/lib/digital-content.server");
     return getProtectedDigitalContent(context.userId, emailOf(context.claims), data.productKey, data.locale);
   });

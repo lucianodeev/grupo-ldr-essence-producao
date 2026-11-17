@@ -56,20 +56,24 @@ function fail(message: string): never {
 
 async function resolveCustomer(userId: string, email: string | null) {
   const mail = email?.trim().toLowerCase() ?? null;
-  const { data: linked } = await supabaseAdmin
+  const { data: linked, error: linkedError } = await supabaseAdmin
     .from("customers")
     .select("id,portal_active")
     .eq("auth_user_id", userId)
     .maybeSingle();
+  if (linkedError || (linked && !linked.portal_active)) fail("Acesso de cliente não encontrado.");
   if (linked?.portal_active) return linked.id;
 
   if (mail) {
-    const { data: byEmail } = await supabaseAdmin
+    const { data: byEmail, error: byEmailError } = await supabaseAdmin
       .from("customers")
-      .select("id,portal_active")
-      .ilike("email", mail)
+      .select("id,email,portal_active")
+      .ilike("email", mail.replace(/[\\%_]/g, "\\$&"))
+      .is("auth_user_id", null)
       .maybeSingle();
-    if (byEmail?.portal_active) return byEmail.id;
+    if (!byEmailError && byEmail?.portal_active && byEmail.email?.trim().toLowerCase() === mail) {
+      return byEmail.id;
+    }
   }
   fail("Acesso de cliente não encontrado.");
 }

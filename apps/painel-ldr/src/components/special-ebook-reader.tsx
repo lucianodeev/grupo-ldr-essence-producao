@@ -35,8 +35,8 @@ export function SpecialEbookReader({ productKey }: { productKey: SpecialProductK
     queryKey: ["special-ebook-reader", productKey, locale],
     queryFn: () => contentFn({ data: { productKey, locale } }),
     retry: false,
-    staleTime: 5 * 60 * 1000,
-    refetchOnWindowFocus: false,
+    refetchOnMount: "always",
+    refetchOnWindowFocus: "always",
   });
 
   const payload = query.data?.content as ReaderPayload | undefined;
@@ -45,7 +45,7 @@ export function SpecialEbookReader({ productKey }: { productKey: SpecialProductK
   const page = pages[safeIndex];
   const progress = useMemo(() => pages.length ? Math.round(((safeIndex + 1) / pages.length) * 100) : 0, [pages.length, safeIndex]);
 
-  if (query.isLoading) return <section className="s8-card">{copy.loading}</section>;
+  if (query.isFetching && !query.isFetchedAfterMount) return <section className="s8-card">{copy.loading}</section>;
   if (query.error || !query.data || payload?.kind !== "ebook" || !pages.length) return <section className="s8-card">{copy.unavailable}</section>;
 
   return (

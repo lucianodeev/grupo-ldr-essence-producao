@@ -16,6 +16,7 @@ export const ldrStoreSandboxCheckout = createServerFn({ method: "POST" })
       .object({
         productKey: z.string().max(100),
         market: z.enum(["INTL", "BR"]),
+        requestId: z.string().uuid(),
       })
       .strict()
       .parse(input),
@@ -37,6 +38,6 @@ export const ldrStoreSandboxCheckout = createServerFn({ method: "POST" })
       context.userId,
       typeof email === "string" ? email : null,
       data,
-      { sandbox: true },
+      { sandbox: true, requestId: data.requestId },
     );
   });

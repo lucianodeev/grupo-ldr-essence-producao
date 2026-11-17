@@ -1,3 +1,4 @@
+import { storeSandboxEnabled } from "@/lib/ldr-store-sandbox";
 import { createHash } from "node:crypto";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { resolveAccess } from "@/lib/access.server";
@@ -108,6 +109,10 @@ export async function acceptAndPayQuote(context: any, raw: unknown, deps: {
   const input = acceptQuoteSchema.parse(raw), db = deps.db ?? dbDefault, env = deps.env ?? process.env, now = deps.now ?? nowSeconds();
   if (env["ENTERPRISE_QUOTES_CHECKOUT_ENABLED"] !== "true" || !/^(?:[sr]k_(?:live|test)|rkcs_test)_[A-Za-z0-9]+$/.test(env["STRIPE_SECRET_KEY"] ?? "") ||
       !/^whsec_[A-Za-z0-9]+$/.test(env["STRIPE_WEBHOOK_SECRET"] ?? "")) fail();
+  const localQuote = env["LDR_STORE_SANDBOX_ENABLED"] === "true";
+  const returnUrl = env["CLIENT_PANEL_URL"];
+  if (localQuote && (!returnUrl || !storeSandboxEnabled(env, returnUrl))) fail();
+  const returnOrigin = localQuote && returnUrl ? new URL(returnUrl).origin : undefined;
   const identity = await supportIdentity(context);
   if (!await quoteReady(db)) fail();
   let { data: order, error } = await db.from("orders").select(fields).eq("id", input.id).eq("contact_email", identity.email).maybeSingle();
@@ -140,7 +145,7 @@ export async function acceptAndPayQuote(context: any, raw: unknown, deps: {
     return { url: url.href, orderId: order.id };
   }
   const session = await hostedServiceCheckout(order, { checkout_kind: "enterprise_quote", order_id: order.id,
-    customer_id: order.customer_id, catalog_key: order.catalog_key ?? "" }, order.metadata.checkout_expires_at, { env, ...(deps.request ? { request: deps.request } : {}) });
+    customer_id: order.customer_id, catalog_key: order.catalog_key ?? "" }, order.metadata.checkout_expires_at, { env, ...(deps.request ? { request: deps.request } : {}), ...(returnOrigin ? { returnOrigin } : {}) });
   const { data: saved, error: saveError } = await db.from("orders").update({ stripe_checkout_session_id: session.id,
     metadata: { ...order.metadata, checkout_url: session.url } }).eq("id", order.id).eq("payment_status", "pendente")
     .eq("metadata->>quote_state", "accepted").neq("status", "cancelado").select("id").maybeSingle();
