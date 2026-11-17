@@ -112,6 +112,9 @@ export function AcademyReadingEditionView({ edition }: { edition: AcademyReading
           horária certificada.
         </p>
       )}
+      {edition.releaseDisclosure && (
+        <p className="mt-3 text-sm text-slate-600">{edition.releaseDisclosure}</p>
+      )}
       <nav aria-label="Unidades da edição de leitura" className="my-5">
         <ol className="space-y-2">
           {edition.modules.map((module, i) => (

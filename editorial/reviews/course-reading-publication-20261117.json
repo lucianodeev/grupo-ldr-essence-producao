@@ -1,0 +1,2257 @@
+{
+  "kind": "owner-authorized-internal-reading-release",
+  "date": "2026-11-17",
+  "authorization": {
+    "responsible": "Luciano Rodrigues Almeida",
+    "instruction": "Ok executar todos 49 para finalizar",
+    "scope": "Publicar49edições de leitura e prática sem converter horas históricas em carga certificada."
+  },
+  "scope": "Revisão interna assistida por IA da edição derivada; não é parecer externo, validação científica, habilitação profissional ou certificação.",
+  "externalReview": false,
+  "participantPilot": false,
+  "assistiveTechnologyTest": false,
+  "validatedHours": null,
+  "certificate": false,
+  "sourceDraftsRemainUnpublished": true,
+  "courses": [
+    {
+      "file": "academic-opportunities.pt.json",
+      "slug": "preparacao-para-bolsas-intercambios-e-oportunidades-academicas",
+      "productKey": "curso_assinatura_preparacao_para_bolsas_intercambios_e_oportunidades_academicas",
+      "sourceSha256": "04b270b796f6206d4051d87f8bad68ec02d9d6d1697e3b99fc3df3bfbd441ba9",
+      "editionId": "reading-8a2a78c8e277bfce2aa7a5fc10c79ccafb79e2c32ffeeb5e04f2056823bc23bf",
+      "words": 1533,
+      "readingMinutes": {
+        "min": 7,
+        "max": 8,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "471a6998a332f87dd2a82afbc0ca97b35ffccff3eaa53681fe9269c58528dc39",
+          "sha256": "1cd41f2ad1c3d4392a5e845c2c89af7a0070aba2405254ead87798d50c3f478f"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "1c20f70fb73a69947388009bf79e6899e8af82b4559d19bd03d7b65ddcee90ed",
+          "sha256": "e967f29ab722d65a489633c68aa433ccbece9f45d681a8fff819ab476b2e8572"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "academic-writing.pt.json",
+      "slug": "escrita-academica-para-iniciantes",
+      "productKey": "curso_assinatura_escrita_academica_para_iniciantes",
+      "sourceSha256": "42f6d1f08ffc3afc77e0aece53838db09a5690d29827eeb3477a8742e8618ac2",
+      "editionId": "reading-3d446497b2f976c1f5d2b1fcd51f348a16e406ce8d2cef7ebfab730b54bc2d5f",
+      "words": 1503,
+      "readingMinutes": {
+        "min": 7,
+        "max": 8,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "e0efc9a1a703eebba54fbe63d7650746db8d46f3faab62b09f6a70b64243eb37",
+          "sha256": "485ee7de19dfcd220639a6a19bc2d36808b8c0a7497210db9f36f2e8ab1d0100"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "c84533cb58562139e054057a1ff9b43b500bd6be3ae03c05b4557c14d3408f01",
+          "sha256": "27d69a075fbbd02bcf8d651ad9bcffe4897721f05b21c997c2b669999131be7f"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "administrative-assistant.pt.json",
+      "slug": "assistente-administrativo-na-pratica",
+      "productKey": "curso_assinatura_assistente_administrativo_na_pratica",
+      "sourceSha256": "7d5e4548b94e2078732717217fe854a43b0dc052d20c34e1df32144ea859ff6f",
+      "editionId": "reading-e5e5d54cdb493c21b7ca09e44afa802335ecb17d23ff2cc0a62d96820480a5a3",
+      "words": 4676,
+      "readingMinutes": {
+        "min": 19,
+        "max": 24,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "252a73b9c2a3bc470dff4f96c27783292b6612f10cef718eaa17975b9d7158fa",
+          "sha256": "0d3ec3056b4c0e449f67808b1a2ff1ca544735397d3ec2b8414986468a21ec82"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "e751a4e2674a1763bce74badd11e73c07d053393c7cf325bb5057a65c35725a7",
+          "sha256": "8d01a99bdbb6dfab35821bc2f7269d36aed12634e0f02a7270dc92105542bdc5"
+        },
+        {
+          "id": "3",
+          "sourceSha256": "79db548ccc59d49899dddd5591dd9716a3b683d4f4e826fd3d60588a097b90bd",
+          "sha256": "bbb072f878c317d0cc6952a9db31a3944285dc02a66d5a51e319abcc6aa87f5c"
+        },
+        {
+          "id": "4",
+          "sourceSha256": "d05aa03b9b8d07f14438b96db219f0c453d5456928533ef3bbc7d468669c4023",
+          "sha256": "b7568b492a0aa2c5502367d7274f219f4b6840812fd2126be4aeba43b0b2f84c"
+        },
+        {
+          "id": "5",
+          "sourceSha256": "230fe9371a5b6692c87919082418bb095856eec0196b4e828c67e02c6eca4a0c",
+          "sha256": "65a018589bf689aebbec0e90a07f908e216e032dde419a3b528de0abb93df5a8"
+        },
+        {
+          "id": "6",
+          "sourceSha256": "9bfe1d597da04617bd9814a903b1afdf5bda6b04170b63e5bd31dec37675f2aa",
+          "sha256": "9de762cdbe5c0099867efe63204e68c81f343fc9c180e0354867f8f440314cbc"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "adult-study-planning.pt.json",
+      "slug": "planejamento-de-estudos-para-adultos",
+      "productKey": "curso_assinatura_planejamento_de_estudos_para_adultos",
+      "sourceSha256": "6306021c237e958844f90e586e0ad0145048a4e302327d503222853f2b73445f",
+      "editionId": "reading-47b2f1089b726bda841171f44da57dbd5e2f85a67de7cdc80f1f642177174eb0",
+      "words": 4796,
+      "readingMinutes": {
+        "min": 20,
+        "max": 24,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "c2059d95202df783f588bc42917234e0b14e89db0e9ab4cd666542b6b7e20e18",
+          "sha256": "bc7954190f254c09f269b56edaf304cd2319e0c7ae512b692a3fce9ab8771495"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "5c56212c8639d59c995d72166916374dc3197329ee1c1a9ffd5a1e785a2a7cc6",
+          "sha256": "4577a3fea7fdff9341a12e43ec5f3da283bcd10f006fb636478d5a499b021266"
+        },
+        {
+          "id": "3",
+          "sourceSha256": "923fbd98ba78cea611378deecb66c43fa4dae402574c1a7ab6817b1732fa22f4",
+          "sha256": "4bc78875edd7fb78d6825db057698242659373910b46507859170715848a5d41"
+        },
+        {
+          "id": "4",
+          "sourceSha256": "a43f163bbd24eb579e078f8a8862a407ff1e709e140d203a475a071850639fb1",
+          "sha256": "e23ba8ca53b24def05c286f87ed92e66ab5dcaeacf7e720c665978921130a30e"
+        },
+        {
+          "id": "5",
+          "sourceSha256": "9351747b0d61026f971ccf1677d56d9904275cc29dac5018d341fb17c45328c8",
+          "sha256": "69e211a9b7fbba01c970ede1d11803c314928a9e89a30f6f77a72095b66b9e54"
+        },
+        {
+          "id": "6",
+          "sourceSha256": "bd52fb2c9852f36ccbdc1b38e733b81d69b5ea96ed1466d9c9097e5c45a6dcef",
+          "sha256": "04f1bc6c6390cf69e4245e9d34ab44a8b6d7901cb5ada3b5f8e75314c8c745b0"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "ai-study.pt.json",
+      "slug": "inteligencia-artificial-para-estudantes-e-profissionais",
+      "productKey": "curso_assinatura_inteligencia_artificial_para_estudantes_e_profissionais",
+      "sourceSha256": "cd56c7d61580f451f904bfcf16121dc5bcef5df3abbf4503d1ecc31ba1924d7f",
+      "editionId": "reading-30def85ebb0ccfd08136cb6c0eb859d400bc7fc7b3e4520b396de6847e74c66d",
+      "words": 1528,
+      "readingMinutes": {
+        "min": 7,
+        "max": 8,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "22ffaa1a384e287a03f1e1791e8e150216742cf3684848bdee35fa7207d4dcd0",
+          "sha256": "1493ac40ed64c68e7fde21aa73848cc496f84ae703ba0b61368937d30dc0fddc"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "8357e0ffad8efee281e08e5ae1e2cf4a16668a7196b077eebc8947dda20dc212",
+          "sha256": "77defb71b4d4b531fbf80aa54b2e81db236b2726d09e591b7ae4c8215b8942bc"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "ai-value.pt.json",
+      "slug": "como-ganhar-dinheiro-com-inteligencia-artificial",
+      "productKey": "curso_assinatura_como_ganhar_dinheiro_com_inteligencia_artificial",
+      "sourceSha256": "c769b26dac8f68490514c48d486f941ad843cea94bc6328eef391b847ec54e8e",
+      "editionId": "reading-363bdbbdc14823b10938658bfe9664a5d3e904233f273798b46b8a2aaee94114",
+      "words": 1520,
+      "readingMinutes": {
+        "min": 7,
+        "max": 8,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "fb1af7c57c72da4309ae1e05c5f51adf1c71de65bbf7ce6be1d3efe774ca5eea",
+          "sha256": "e820db5805fc47e5253097fc3aea5005d897458857bdc79aedf1de6afb69317a"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "372bbbd0f25f971ce3eaac15d3d6290b970839c07526621ad4e7918a68a22d81",
+          "sha256": "9c0d21eaf17ea09f386b02a180d7bfe70bc464dfeeacb9b958bab431d4b63758"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "business-foundations.pt.json",
+      "slug": "empreendedorismo-para-quem-esta-comecando-do-zero",
+      "productKey": "curso_assinatura_empreendedorismo_para_quem_esta_comecando_do_zero",
+      "sourceSha256": "895b68b8d3845bb2a10dd5749db66c2181989a0a66f6b4d3a70511eb7abf43c7",
+      "editionId": "reading-9ca0e254c7519e29ab4c586c6cefe71381fc880d2c2febb5b9e3cc22ee614fd6",
+      "words": 4850,
+      "readingMinutes": {
+        "min": 20,
+        "max": 25,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "61fed5ad0cdac3a753a0d7a0fb0e0bd42e1625eb2e4b1e960a539ee2549891b5",
+          "sha256": "214ecf075732749b96999c71834c4a37591b29e0ac5e63fdf6c2c653c5de8730"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "a2f52b9c91d177d7a49da772353d9c8897a4fec892745b63b3ce4059543954ee",
+          "sha256": "810b6941722fa4ce4ccc2f8ad7666724ac1f16b18cfd5f031e2cef74456e34ba"
+        },
+        {
+          "id": "3",
+          "sourceSha256": "7bae6929ff8cf651237938b5ab3b3cf1caa8e455c02d62ac5f6f27afc7bc5ac8",
+          "sha256": "d9845c9f80bade43afb160904759405a349898bc515801aeb75823f95f66851c"
+        },
+        {
+          "id": "4",
+          "sourceSha256": "662f6f325da2b0c9471762fa20baca4fa98d9ae8a50c917d77fc6cbb3f4f48d8",
+          "sha256": "c96a8c5d6698929153832b758719b1c423b170a261725231006d78361ba48123"
+        },
+        {
+          "id": "5",
+          "sourceSha256": "796ca7fd001fbb33be07765cdafca539033bf55dcd0c11ffc28eeb8771066597",
+          "sha256": "b0bdb07d353227d17dfb6efb731c5c9e9408bc666acc41dd9aad9ef9bb9263b7"
+        },
+        {
+          "id": "6",
+          "sourceSha256": "e847e2a77a2b8539de10c5e3ac8a2487bc91a276b8af501ed7a4fabbd6b7d349",
+          "sha256": "00a8eac2e04910baa7627a77fde14294b74e7dd6fbb6d00eb61c2d18950d97f9"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "career-orientation.pt.json",
+      "slug": "orientacao-de-carreira",
+      "productKey": "curso_assinatura_orientacao_de_carreira",
+      "sourceSha256": "11f42d53de3bd17c8acfa64d0d474adb1a50950920a6b3c9a3f137215e92441d",
+      "editionId": "reading-3708daa3df9b4e0a10d3daf4d294f96a0a0640a5d9a05d40ce56a464f64fc6ce",
+      "words": 4596,
+      "readingMinutes": {
+        "min": 19,
+        "max": 23,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "2489ee4d72e2674d498361f88f857aeaf4857ce963bfd345bfa2cc86fd65c08e",
+          "sha256": "74d7e0befef203e08e32bd69fa2b01e88e478461b5c13b3cd2fe3f28dcea65a5"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "bcafc96ef1cd073ff4d801d6589c8535dec411e435941dd7092aa439ea717444",
+          "sha256": "f9ae15e1447c006c4178c2f7b1abe6a1699b9c46ff6aef2992ad9fbf2c632b0d"
+        },
+        {
+          "id": "3",
+          "sourceSha256": "08f6ddb1ca8e9f0d28b26c7efe75af267b908aec8ffa338472e70b4e163f35ce",
+          "sha256": "a00eb66562b820c0b33e7f6f68c091318210a756ba4f7c9f13b8e229b4190d29"
+        },
+        {
+          "id": "4",
+          "sourceSha256": "85d24b003afe69c93b037cdaa532be855d8a78d89c7e7026b5ad41d5f7cac042",
+          "sha256": "11ad11b42a9b4f13c4fe853d9b253d18dbe7729651dda4db96625a2023df6b55"
+        },
+        {
+          "id": "5",
+          "sourceSha256": "0267019ef53b19653b1391a110b13a3e8789a0021d394897e9a77c77546c3d58",
+          "sha256": "b679a6d1e532d14cd1a7b54ad32e544c66fcafee86c4131052ac65667713c274"
+        },
+        {
+          "id": "6",
+          "sourceSha256": "cc148cb11264c0da1429b4765012bce95f4488de49464773d3ef7bed7439d792",
+          "sha256": "7e4d0aa1ecfc069c4a08fc0aa5ab423c34232563cb3a2424c9ed6daff4554748"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "career-self-knowledge.pt.json",
+      "slug": "autoconhecimento-e-escolhas-profissionais",
+      "productKey": "curso_assinatura_autoconhecimento_e_escolhas_profissionais",
+      "sourceSha256": "eb380def0ea67e37341f4220d850242c8ca465134b45771215148178ceb0df63",
+      "editionId": "reading-b4264b7f8bc2776175c9db97c3fd81ebd5192412cb067a45feb46590229b9d0b",
+      "words": 1406,
+      "readingMinutes": {
+        "min": 6,
+        "max": 8,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "9c4878f3e8236193847a6c6bded5e43b7105b5d69777f140c88d50bc95b7a34d",
+          "sha256": "1a770f00324176b5e3ad39f847550fb8f7d0bc68eab5e80086e2dac6a63b0bde"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "06a0a496f4a596e1ce4b96e4473493813629277f4d8efb544a31853874223622",
+          "sha256": "91291b4d7621b2c3e8609a52029116652e0c3d750d02c7fc283061f070e34778"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "career-transition.pt.json",
+      "slug": "transicao-de-carreira-com-planejamento",
+      "productKey": "curso_assinatura_transicao_de_carreira_com_planejamento",
+      "sourceSha256": "a9cbbf542f139c4613c2792928e15bdc1ed0a7a12696089890a4e76659f1753e",
+      "editionId": "reading-60cf3e6e07607990efaeb20c636e87c2850d19fd9b45cea17d07728c5d3410c0",
+      "words": 1411,
+      "readingMinutes": {
+        "min": 6,
+        "max": 8,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "e383f7ca77e3833f3de7a0a441009710cd15e17e541972394fa220adfeef8325",
+          "sha256": "2bceb3f3988f1c9f0f4fdccf1954e076301f00ffc264d0a95e218f25e6be71d3"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "fcd3d6c27b53dbc630414e0bb81bd1a46d5b5b98c7db1f36a6cce2a4d5f7a912",
+          "sha256": "f4bbaee1f27b2cec72b0079c094bbf6a975af5f31f2d0e63de420b1403f706f4"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "commercial-proposal.pt.json",
+      "slug": "como-fazer-uma-proposta-comercial-profissional",
+      "productKey": "curso_assinatura_como_fazer_uma_proposta_comercial_profissional",
+      "sourceSha256": "8da0ce1b994ad0eade9b796523c42a32c982f961a561cb036294179aa403116d",
+      "editionId": "reading-1f005486592839ebea38931323c5d9c09fcd017e66a456495b075f2be45d09b3",
+      "words": 4542,
+      "readingMinutes": {
+        "min": 19,
+        "max": 23,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "91c24b12d505da06e7d00efd5a2a44c88caac98aa1d15b3de0ea346282145f94",
+          "sha256": "5b6153ca4547f1133306d295686a5a4bbb7d3f225d19e6244c022c4f21565e69"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "25df3472c7ce0966e1631b02cb5b0222de5b3384abd9e54c0a30e0b3c20163ad",
+          "sha256": "6209e5b0bd736ebf5aa2d5b705cbea7a7519ba9d266b4268059cfc8bb759a507"
+        },
+        {
+          "id": "3",
+          "sourceSha256": "961395d3da91f53eedff41dd4b290690861a7a6c8a900e29e8a6fd14ac5b2da7",
+          "sha256": "52d26edc5439108949b24efc40fd3150cf2a0350623eba334513548650037e81"
+        },
+        {
+          "id": "4",
+          "sourceSha256": "e964bb5671b0d27f26d64631632370e1df855468f6d44129ded6d43038cd695f",
+          "sha256": "f9c379ab9341cabd7daa1d2e010a23d7506b4959daa00659cd4c3faa338a1515"
+        },
+        {
+          "id": "5",
+          "sourceSha256": "329a2fce3c96ed74dbaae62bf6c9bea2b567c83850849d6f1ba8a0c25bd2ce1b",
+          "sha256": "b4307330665f631030cc8185b39169278856b5144ebf6eb70e18fea441876066"
+        },
+        {
+          "id": "6",
+          "sourceSha256": "0d8de32cff3c5c96eb96fbc824e624a6bf5d35af444aee5795c4747f10db2369",
+          "sha256": "a22c468a34d2c5aba75dc429cdbad9885fa593dd6b3f6f9bdf1a86ca2a967ee7"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "cv-strategy.pt.json",
+      "slug": "curriculo-estrategico-como-apresentar-sua-historia-profissional",
+      "productKey": "curso_assinatura_curriculo_estrategico_como_apresentar_sua_historia_profissional",
+      "sourceSha256": "11a6e130c5ec0589d3b2ecbd0622e643ff39aee0927807b06cc1100112825ebf",
+      "editionId": "reading-4239aad208034b3088725b9ca533a3b956b6839e64fbad14e1e2fbd35fc30faa",
+      "words": 4679,
+      "readingMinutes": {
+        "min": 19,
+        "max": 24,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "9a94a44c6b7c63354652759be5f5cd92c62e2dbe97e4b3f9b49d5b8a8a5d9005",
+          "sha256": "1894e835d0011a049d5f0b6c6453c0243a13839b48f1d4cead173cd80a0b9694"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "5fed444662d78655f854d8bcf0af3d5d755a41f748a10ce117b828c65bef31fc",
+          "sha256": "942d2d6db5ccf63717d312dafc88436cf92cc4d687cc3f3c6579201c7236a883"
+        },
+        {
+          "id": "3",
+          "sourceSha256": "2852048d5fec394159154679f857e3a28f94121e33a38e72a0028170fe095637",
+          "sha256": "d8b822e0bd3e871baf1e0b6ff10536b4cf1cf1eeff6d7e76a07fae18fe1f1a34"
+        },
+        {
+          "id": "4",
+          "sourceSha256": "4a05803b01770dce00183189b4286fc7080080e50c5787a470fbf3a61941b3db",
+          "sha256": "d9afa85f6acf5b915c2d8f92812023bd5f347536cbc0170b5ed5e26f92ae16a1"
+        },
+        {
+          "id": "5",
+          "sourceSha256": "598eb08379cc85a63435bbdd9ff6db29056bef255d9dc1d9115184531d08e081",
+          "sha256": "c1977d0870805b3b0ed5d504fbb9ead1c9e6463ff2bc15a78eac55aa992a565d"
+        },
+        {
+          "id": "6",
+          "sourceSha256": "cdb6260598c9f02a19f4d8b01a1ad775e07a7fc80a6af3197cc6f86026df9107",
+          "sha256": "3f03a0a3a6b5d5335dea3f0ad35699973424f556010a8f7cd857c647f8d2b4ea"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "digital-marketing.pt.json",
+      "slug": "introducao-ao-marketing-digital-para-iniciantes",
+      "productKey": "curso_assinatura_introducao_ao_marketing_digital_para_iniciantes",
+      "sourceSha256": "d0a20d4edfff8368c15ac1fa8cc9f53a97fbb45e38d32633f969beaeb309df88",
+      "editionId": "reading-b6ebf93041e5aee6213f9cdf4a17b2fa5c2b876077cdd92fa8ed1eb1392db6c8",
+      "words": 1346,
+      "readingMinutes": {
+        "min": 6,
+        "max": 7,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "1adcbf06d94bf2cda9ef9a324e887f2d19e97b814b5a818941ad6d5f6ef0bafb",
+          "sha256": "26156c8e5694bef886d0c9c3070673ad616573f7ff5487105aba7c79b973565b"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "4c4b3a9ca1e0fe400faa7386828df8974804c6788d8e8df831d8eb01c1d7637d",
+          "sha256": "73821eb591932697ca548e1de30df3ed906828b9e668e88ddd866fac8d4ab564"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "digital-product-creation.pt.json",
+      "slug": "como-criar-produtos-digitais-do-zero",
+      "productKey": "curso_assinatura_como_criar_produtos_digitais_do_zero",
+      "sourceSha256": "3db19783c0e8eadb0f2daae6dd4f7d865bfcf8791ad423d0211109bcad427db0",
+      "editionId": "reading-4d6a306d4bfa468da0fc7d524e71b8cbde00bb864c54b3af472be8b69c68d2a0",
+      "words": 4968,
+      "readingMinutes": {
+        "min": 20,
+        "max": 25,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "56d199cbe4915285338f348509c11a0375060d352bd7140492deaaff54a1fda9",
+          "sha256": "2b44989a9cf5ca3be0a52d1384e708f998cf6d0f31ea05c4cdb499b12a21eeef"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "73dbd130b226f81383c94debbbf6e2e2e711fb12cbeaa5a8812f7e85e00ab893",
+          "sha256": "1201727f749749684e43899b7c77a5e317283303239bd1be22ea17b196e5b365"
+        },
+        {
+          "id": "3",
+          "sourceSha256": "0bb42df25b196d2a6393c7aba6f49573263ec0a491bb4fdd74d2d8eb9e239424",
+          "sha256": "ae6ac66090ea62d13412e34bb874caf479a18ca392124e19ce6bf5e8f8bf1458"
+        },
+        {
+          "id": "4",
+          "sourceSha256": "18b2b97791ee027629e23f46f6df70512c12458aaf57a0916d420dee7d9675d2",
+          "sha256": "5e20bae1112dbdfb76335bbd51bbf0e4c4a8da203076dd59ac61f844c804f500"
+        },
+        {
+          "id": "5",
+          "sourceSha256": "6e7ea2adfbb2a1aa01a01175743252845ffac78f58d32bd0ccd144bbf3c41ec6",
+          "sha256": "2824c85e174660426a36c98e1c636960f974222c2b5c541c29c30007f0c7c934"
+        },
+        {
+          "id": "6",
+          "sourceSha256": "5e7196e94c8e5f49760a06f590745bba06397e124fccb170f4eee7d7c370a31a",
+          "sha256": "d9614272716d6fbc26137a9353b44eff6717d18d8624336e4f90b291fe583ebf"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "digital-service.pt.json",
+      "slug": "atendimento-online-e-comunicacao-digital",
+      "productKey": "curso_assinatura_atendimento_online_e_comunicacao_digital",
+      "sourceSha256": "2d654f65e079ac17675681503f12a1ad7eb05f8b8705257418fbbdcba4df58b2",
+      "editionId": "reading-fc22a54c3fd6d828a6fcfba5578cffd0d97163aceb5db6a1b359d03cac1570e5",
+      "words": 1394,
+      "readingMinutes": {
+        "min": 6,
+        "max": 7,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "db773ba18d4b3c064a13274d5b250255d662efc24edb759322be997be5138fcc",
+          "sha256": "54e1b7c872d570f1e05325a092813a8ecfa850b37bccb913521812e4e281cdd7"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "9e70f052c90d98c12eaa9f215db852292803ef65214794e5c4b074beb52d6dc0",
+          "sha256": "93ce5cd591d1a8952d6a20f7124aea6af87c8fb4e8025b75950a07faab586e04"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "documents-and-goals.pt.json",
+      "slug": "como-organizar-documentos-rotinas-e-metas",
+      "productKey": "curso_assinatura_como_organizar_documentos_rotinas_e_metas",
+      "sourceSha256": "7b00f86d579895f2e2ae268f79439db2baa1062ee398e8cc407515d99d5435fe",
+      "editionId": "reading-12ecef888fa9fa0e5a3a36da788f08ad7adc67085c5cba31d8f9b23a6db8faa0",
+      "words": 1355,
+      "readingMinutes": {
+        "min": 6,
+        "max": 7,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "53c0a7a35f894931beb756bc842e33d84806ef538efae6af1c6b4aa7be63aed1",
+          "sha256": "31fd072fe4769e839d7f69ca2042544bef5bdad863d19a568802a868f8db03f2"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "53f079b21c6e33e14de663349fbe56b42106b082f1eea65ff8b49703de4cda0c",
+          "sha256": "f78cf7bd005fb5d6b0c10aa08b82227282fc0ef49d50e561f4b6a247762c4534"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "emotions-at-work.pt.json",
+      "slug": "inteligencia-emocional-no-trabalho",
+      "productKey": "curso_assinatura_inteligencia_emocional_no_trabalho",
+      "sourceSha256": "22913f20cc56fe851476e6e8ec9c0185a3bd64d5bbcf0f736ac068bfeda36a89",
+      "editionId": "reading-074248bc7f451d0b209e5a5dba8ab5771d87f3557a782df1d918b5c8e4e41eb3",
+      "words": 1407,
+      "readingMinutes": {
+        "min": 6,
+        "max": 8,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "3f9e5c5b74cf527d93d56bdd8b96556d147ae2c95aed6ce482ffd627b1ade921",
+          "sha256": "3740dfd922833810b02395fd389373ae6b936af17b32049ca358e0c0557fa181"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "f8a1ad9877c445fcede2b064df677d532a45853bfdf4932b49ff1f290c3553a7",
+          "sha256": "6d0b53b6f6c18d968908c17472a99996c53de880ac45c39aefb21eb5cedb4e12"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "ethical-acquisition.pt.json",
+      "slug": "captacao-de-clientes-com-etica-e-estrategia",
+      "productKey": "curso_assinatura_captacao_de_clientes_com_etica_e_estrategia",
+      "sourceSha256": "37a926795029c97dc9b0a5902205ccfe27d3d25e281135145820869cc104dfaa",
+      "editionId": "reading-3f853d871b3e31b7ea6a7427c06080907d62f98f4a2091ff034781ebc2549416",
+      "words": 1387,
+      "readingMinutes": {
+        "min": 6,
+        "max": 7,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "77d26bf8cc21ebea59ac8ec6b67663b40b206a95ba8f7ad1fd2a364e8a50aa5f",
+          "sha256": "c7cdba61dc6563ea9aca83e1cf614b30141d3ed4b31e5dd16e81d9c84a5783ec"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "337e7b5b4410ae6fc7954a2339b7cee8ea326011f7e95ad8d9b20f7ab69a7bcb",
+          "sha256": "f4d3cfe3e18629d9bf4c79775130288601a8ca0e143f38f3391fb49fa58d6171"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "financial-literacy.pt.json",
+      "slug": "educacao-financeira-basica-para-profissionais",
+      "productKey": "curso_assinatura_educacao_financeira_basica_para_profissionais",
+      "sourceSha256": "b72a93d9124c581b3d046c50a51c78f28393a4f5f923176127af0a48af61934b",
+      "editionId": "reading-cae38d449aec56c1c1de692a61ca2eb20272614e28cb8f9fab9a171ac27242ae",
+      "words": 1362,
+      "readingMinutes": {
+        "min": 6,
+        "max": 7,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "ce2bad097bb0bd8e42ccac2c5a5fdac33fde35b0c37f631dd46458e74188b723",
+          "sha256": "81d124fa7b2214eccda26a18ca178a085dcaba27a0b5a760f073af46d794f0f1"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "c09f452bb4b5e201050f1be6a44ee2e68e44172f3c2050081172fc6c62456f04",
+          "sha256": "aff1485a4b31adb4d498ce0d4a248d8b3708a2ea371380659e8f141b69cfeed5"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "first-customer.pt.json",
+      "slug": "como-sair-da-ideia-e-chegar-ao-primeiro-cliente",
+      "productKey": "curso_assinatura_como_sair_da_ideia_e_chegar_ao_primeiro_cliente",
+      "sourceSha256": "cb4c58ab462497936d4f6ce139381fe2b3f12aa92b0c193400af446bd6288202",
+      "editionId": "reading-7244e7094ec6c5ab0548471d2e5ddf9c709fa68cedd48a35f326aa0c4ec76b71",
+      "words": 4698,
+      "readingMinutes": {
+        "min": 19,
+        "max": 24,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "ee2de3c5071ae98925b96bcc98343a9122d1a2bee70597a722814971ba0666c7",
+          "sha256": "3f38d3fa8031aef1627e1d078c4abdfc3d00c59c745eb4c4fc1bfa98c545e972"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "7407274c312c50d99d8530066d0962b2be51f441bb9f8b8743bea42096cdd087",
+          "sha256": "6abe8664ccdf99bb4a0fb2a400329f7047a4cb633d981dce5f59ff6bd1f46ef6"
+        },
+        {
+          "id": "3",
+          "sourceSha256": "4bb5e55a742ad453b1cb235e9c8d27125fa9bbc00d453a4aa24025f433bdd3c0",
+          "sha256": "9f5b6fd88140b26365cd858ce6fe05264f9839a1f73d50c402bdd9214f78b60d"
+        },
+        {
+          "id": "4",
+          "sourceSha256": "de2cc5285f3db438a2fa1daeec51d13a5470944c6e71aaf9a13a3eefe1ea1c5b",
+          "sha256": "b3e725d0350b07b69311f2d61a43fbe7d81b71c418805a52a57ea5d2d3289f2f"
+        },
+        {
+          "id": "5",
+          "sourceSha256": "4e19f447da350afe727886e9fa7d314c15c3a2e4db67aee3b91a640c4759daa7",
+          "sha256": "2a70091d47021496b15b1d1cf90c74d5ebbf39d5b758c697f786c24fc685bdac"
+        },
+        {
+          "id": "6",
+          "sourceSha256": "6c7f0a7bf912a4a9f35a634bba5acfc50b32ee0d112d9188620f72e95cce9b91",
+          "sha256": "08c9f095342eb985935604fde84120cf8a3f2ce40e809bbe8c25fb34f0fc6370"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "general-literacy.pt.json",
+      "slug": "conhecimentos-gerais-para-vida-academica-e-profissional",
+      "productKey": "curso_assinatura_conhecimentos_gerais_para_vida_academica_e_profissional",
+      "sourceSha256": "a57530a4a28a31a05371d03ac61248f4bc2fa9bc0d9ce9d711942a9f905432df",
+      "editionId": "reading-ed5d99208fefef53e276d3b8b354041e4193ab7a988c725d195781952b8324a2",
+      "words": 1498,
+      "readingMinutes": {
+        "min": 6,
+        "max": 8,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "6b848fc08e37554265aa5a73bb7f475d02a8021247175838fde8f88c8d25dde5",
+          "sha256": "8df9cb82b8db2b7d5eb625b74f9b77b5ec2077ab05af86459af6d3138307a76a"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "9788b0448890486f19fe16b332836d7d56190a34afce61a24c0ffb753db275a2",
+          "sha256": "cba820169c83e68ba5e610915ada320fe3ceff83c51baca5db8ca1368760fbf8"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "hr-intro.pt.json",
+      "slug": "nocoes-de-recursos-humanos-para-iniciantes",
+      "productKey": "curso_assinatura_nocoes_de_recursos_humanos_para_iniciantes",
+      "sourceSha256": "c15497af5eda16484fdf99d639d1a7a7fe0b3ab5ee3c0301fee9d5efd34fe9c8",
+      "editionId": "reading-c09fa5f74f2d6f884f543d039e1a87422658971876b69cf78c4a8bb891f4eb83",
+      "words": 1462,
+      "readingMinutes": {
+        "min": 6,
+        "max": 8,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "0c71e4899732b4f6014b6f16cf2060e62196ef1b1d4e9906d3a6abcbb2592591",
+          "sha256": "9a36d6bfe1e26b3909d3fabc6e4b1460c4159ce208d324fdee316b70fb5c6e08"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "b6010ac18028d5badb7ceda3ca3b1ecd6bc7a9fa8cc9a507a465b47927bc6dd8",
+          "sha256": "0ba1f4faff1e3a19157398b69d07b2bf044a3a4a9cd0a93ff046810dc766ede7"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "international-career.pt.json",
+      "slug": "orientacao-de-carreira-internacional",
+      "productKey": "curso_assinatura_orientacao_de_carreira_internacional",
+      "sourceSha256": "642d4d9bded1c3fcbe1e38a18991d8b91e2a9052946803da03eabb081c93ba0f",
+      "editionId": "reading-c93419775521f2da9664f6275f6889a661aa0ed0ec28f6c9524429ef31b04b08",
+      "words": 1398,
+      "readingMinutes": {
+        "min": 6,
+        "max": 7,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "542ab344b80c6421ff88de7e4fc39948012dd1d36e5ee01988ae4731b9bda331",
+          "sha256": "54dfd467f4ab6345344884619dcba8cba6f1d34741793e5562e85000c1e509f7"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "dd1b86bcd9642ba457039092c5b86feb1bb00545230e6e674ccea6c2b2a36532",
+          "sha256": "2c1718f0105cb570f387f8625cc219e3ffdead3ce110686e3f7c0393ded479eb"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "interview-preparation.pt.json",
+      "slug": "como-se-preparar-para-uma-entrevista-de-emprego",
+      "productKey": "curso_assinatura_como_se_preparar_para_uma_entrevista_de_emprego",
+      "sourceSha256": "a5210e6d952ea5f54e5b1975a52f734079992fc70879f133916e6535773ba301",
+      "editionId": "reading-e2b5821e93b816f32b764a7859061ec2c50565ffee5d3cb98c843fbcfcf92567",
+      "words": 13724,
+      "readingMinutes": {
+        "min": 55,
+        "max": 69,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "c26bdf09e5068653e62daffc9e0f32ebd87abd765299b40127520b6eaaee3198",
+          "sha256": "3acd84142e6bdc48788dc98119cd0067d46950f8e169b309dc75c8194a94c5dc"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "68912e431937a7ab9a64fd47c2e8ef3b6966fc2f1c13c36b86eb1979d2a5be0c",
+          "sha256": "58f3ac7e85168c62e3e701093a19d79a96c57a63f6bf784bb12a72f681db1b98"
+        },
+        {
+          "id": "3",
+          "sourceSha256": "226518b669526c3cff8987284c4397609cf4c47275e4500d69d2d561c138cc7f",
+          "sha256": "67ebbe24253c289cc3088b19f9dbdea0b9c188ee82ee32bb7cce889b26268d09"
+        },
+        {
+          "id": "4",
+          "sourceSha256": "d7ec2926d2e923fad7f9a7c0726b48b7f03a375b078edb798312c2766582be77",
+          "sha256": "1a625353207dc36dc7265dfc9ecc32f53c50f756c26ee7f20d794fd90055984a"
+        },
+        {
+          "id": "5",
+          "sourceSha256": "2e620eafdaaa9b50d752af568fa43088134092c082d0f4c730932c7d6fc01ba6",
+          "sha256": "7a2d77d5f7e2356f7dd2fceb5ac22591e5b118d1621baf6620f3fb1120087996"
+        },
+        {
+          "id": "6",
+          "sourceSha256": "2bcfcc87e5acd21dc2a0592de65d2a439a2ab20c2b197b0d98a5cd51f5b374c4",
+          "sha256": "07ecfc0a2948762b60b2dd675d329840aa9e37a041d8f5075546b3d8c3fe4199"
+        },
+        {
+          "id": "7",
+          "sourceSha256": "ccaba292e4019075f609a961f9943d1732fb5b3bbe2c21514ed0f4814093634f",
+          "sha256": "6488601c37b1f175a54e3dadb9be9b4af3b53242bb3aa0487e792ea9b2b85f16"
+        },
+        {
+          "id": "8",
+          "sourceSha256": "a52969c7916b0ad1624e2ad0525ec9bbe0816fe93f25c7d6dc402624b0049d8c",
+          "sha256": "318f4671f907f4f5f498be891d73e640c246cee7674eb3fb0705aad88eb85897"
+        },
+        {
+          "id": "9",
+          "sourceSha256": "a7e080d70701393297488def5aced5d0e54f7b972b104e120a6e4a79907239d2",
+          "sha256": "2a4039c9237e5e5b7217103e6d51e1a0ee20fe76ffc8fb9358b498f43753f3cb"
+        },
+        {
+          "id": "10",
+          "sourceSha256": "7a09cb4c04a81f009271a512ad5cc6e46d9f05353ee9007ba6bfdb7a087565b3",
+          "sha256": "1a23b144724427dd887ca343b48a481d2049cff3eb4ee2e8bd7ff38b8037ed88"
+        },
+        {
+          "id": "11",
+          "sourceSha256": "b6c4a2de22da2666084ac6ad111d15ee5422da9afb9150770cd521ae4af365ab",
+          "sha256": "ee437b5f753e7c7fd2783fe384786822ddacd4ba98c4e722a59fa6603196e590"
+        },
+        {
+          "id": "12",
+          "sourceSha256": "960d850ca5f7771d007cda9b7df4a6c53d48583c6d2470796c778a59bd982f25",
+          "sha256": "0b94f75a3e1a825608f129035996d9fd0f287baa4c22a3ccbf1c764429f4f309"
+        },
+        {
+          "id": "13",
+          "sourceSha256": "594ff5fc84a485ca1af99ec7c7b9b99a96b6174af652159f677807fa76eea8c0",
+          "sha256": "974e669b67ff327599ef5396757b586eb4ac25218c842cf9fefe37c48564ed64"
+        },
+        {
+          "id": "14",
+          "sourceSha256": "06ce9645dc22b0db2a266b5cbf489992e50be2b1f4d98c5562e189f662f5084f",
+          "sha256": "5662aee0e3e474d1ece1b4eb1f1fef5e378ffc8f5712edebf4a554a1b40d92f9"
+        },
+        {
+          "id": "15",
+          "sourceSha256": "1282569041565cedcbab54cb1d9bc334d1ddb953c24e82b5dbed60bedad230ca",
+          "sha256": "1700a948e03bd911fb7cc7355fc45a1b9b7b4cb9ee5b120cf516ecea4b993545"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "learning-memory.pt.json",
+      "slug": "tecnicas-de-aprendizagem-e-memorizacao",
+      "productKey": "curso_assinatura_tecnicas_de_aprendizagem_e_memorizacao",
+      "sourceSha256": "6ccbc2510feff16a44817af3ff6c5de0e341f2594eb3702c0c174832cbe11363",
+      "editionId": "reading-f02d4da9451dd5122bb106f00e22aa9cc535c447e683437340ff6858424a2d31",
+      "words": 5078,
+      "readingMinutes": {
+        "min": 21,
+        "max": 26,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "de377b3c7b7878e73861b80f003a4a81ab8d9c718cf355c43e4f55161b8d0488",
+          "sha256": "1f3255f9294b1a30b0d6e613ff62ca80139e5865daebe2ae28bb6b418ecdd387"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "486688dbfa977193e022fd746d77fb433c3e110534661223443f126ab71a1a0f",
+          "sha256": "b6d0caf93779481c3df0b87b87df6e1447bd0e6f22284105d7b7e3b5efa1c3d0"
+        },
+        {
+          "id": "3",
+          "sourceSha256": "5744209aa3837016f331b607edf3fd7b9431195382955baf5edee861e9fad26c",
+          "sha256": "0f4f4efd58406f76ce61e497b19fe2cfe9bd1b19c04811bffdc5970f0fbb73c9"
+        },
+        {
+          "id": "4",
+          "sourceSha256": "d1bb362be930d87a0d5ffa85cc7c520b9e8684d56e9b70bf6acf45b49a1a4331",
+          "sha256": "b79312d0fdd382f316fd18583ed9ab6e94bd2503ea4e1d201a7097a1541a5528"
+        },
+        {
+          "id": "5",
+          "sourceSha256": "7fc366d6ee91ea1d7a92793e2c7804fb46a5525509fb22448f04025adfa9528c",
+          "sha256": "c4d5d2f8a20e99030365f590d46ff5d1a6cc133c0c8dc32090901db82a3187e0"
+        },
+        {
+          "id": "6",
+          "sourceSha256": "b8063231058cb43a9802e044ee8c0eb9c11caa58ca9fe185a6f3af6fb3f070ac",
+          "sha256": "648f3053e199b1265682f674d55c1a44d1492a3b4a005c61d1bede7ba27258b4"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "life-and-work.pt.json",
+      "slug": "projeto-de-vida-trabalho-e-futuro-profissional",
+      "productKey": "curso_assinatura_projeto_de_vida_trabalho_e_futuro_profissional",
+      "sourceSha256": "1e3fcbef344d37cf22c33b2794664cddcb4fb0ea8e5183fcef12a39a308d0b47",
+      "editionId": "reading-9352783fe7b2d465fa350a9644d289706686584be1b41ee6e3ebff95e4ec35de",
+      "words": 1401,
+      "readingMinutes": {
+        "min": 6,
+        "max": 8,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "5df9eef7a74f8e908487cc7f140c2d557c6821b0146df0afde3990609e4a0f54",
+          "sha256": "3ce6b79f95e05a5ee03c94fb847df6dc1806d42f202f8d6abcca9cb865b8c2cf"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "544a7080788bfb542e6468eb9401b92c268b079b3f84bc7415bb5165bea60ccb",
+          "sha256": "a3335f95d973ae229768821a2890301ec9d2eb9987c7d4c44a6f4f79e011f48d"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "linkedin.pt.json",
+      "slug": "linkedin-profissional-perfil-networking-e-oportunidades",
+      "productKey": "curso_assinatura_linkedin_profissional_perfil_networking_e_oportunidades",
+      "sourceSha256": "ee2f9f4c9608fe93b5d118e430f1a5c92c2440fb5f5871fea7eb0de107605e3a",
+      "editionId": "reading-5733a5f346397c3fe144d977a8e329eeab4c4bd150a856dc121de51512e7f0e5",
+      "words": 1437,
+      "readingMinutes": {
+        "min": 6,
+        "max": 8,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "119df0a5f9ae4473a6f4df0a150837ce4bf264e49a4e7a9742db2dc577d36a84",
+          "sha256": "956b6da29540eb899484b4f6961461a363573196254be9b77bb3a240d7f1ea22"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "377f4b741a8a324b8a9be09ec2e0879bbdcbeef5459c84f5a8af4dc4880e1d3f",
+          "sha256": "e6a5951c355408c5f10b5bd055e05d4026230983c020f7f04db12c03cc859668"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "logical-reasoning.pt.json",
+      "slug": "raciocinio-logico-para-estudos-concursos-e-selecoes",
+      "productKey": "curso_assinatura_raciocinio_logico_para_estudos_concursos_e_selecoes",
+      "sourceSha256": "fac5388c4024f0f76e78e7aa7f4b9225684f8c008a249e49eae239ef6e877b46",
+      "editionId": "reading-3e1ec30ac0270a46060618cd6af03fe75529478c55b9669d4330b1214f0cc111",
+      "words": 5345,
+      "readingMinutes": {
+        "min": 22,
+        "max": 27,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "c3031acb8048b756f22567cc99821e7ecc91fe963f2ad5b99ea209fec3d18ec3",
+          "sha256": "d5a78704991ec7ad7f34da85b1b24d326c1b48556ef9341aa8fc87f01b3ac7f3"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "3c16642cca3748052015ae61d85aa97881669adb2cb55cbe7e67d24eaf8d697f",
+          "sha256": "f8a4e2c55f96c5e2dabb7e2bc93c65afd4c973e451f3e008d2e79bc14708b002"
+        },
+        {
+          "id": "3",
+          "sourceSha256": "d2bc406927b48cb326afcde47cb1c6309b2662e6f325fb24bb9103e320d7ef10",
+          "sha256": "9ec9d302d6192ec3a9dcf0030ff07c96d6c223fadb87ddfe3f91c6abd1a3d142"
+        },
+        {
+          "id": "4",
+          "sourceSha256": "e5dd1181cb1739be4b7f406559d410b7f0712baa042f3b0f5b88d865419d7c56",
+          "sha256": "541e7f74a2e8524f945fdcfb68ca7664296211834fb4072b41ba2b2e8ccfe7cd"
+        },
+        {
+          "id": "5",
+          "sourceSha256": "b34315c0a51f65caafce6ee1e0e3e8bc429a31e42451b285431e7d72a55e7222",
+          "sha256": "c0b4a6ee0c89f7c3c385d08cc430616a5e3af7867029b9b932ef05cdb31b22ff"
+        },
+        {
+          "id": "6",
+          "sourceSha256": "e39c20cad16145b1a38eabf4d27b5f0cfe526129602f8fc4acaacebf8cf36f2f",
+          "sha256": "0e89ef39ab049ecf1b396f5da68afcaa74c7e4971d0c40cf20fc4bc5534d3a19"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "meeting-facilitation.pt.json",
+      "slug": "como-conduzir-reunioes-e-apresentacoes-com-seguranca",
+      "productKey": "curso_assinatura_como_conduzir_reunioes_e_apresentacoes_com_seguranca",
+      "sourceSha256": "01f716695e492247e3f6bbcfa34b07b8c1cf60376d2e5b345454ca034c82ca6b",
+      "editionId": "reading-07b2e075c3380efe5831274753c253e813ecfa1f9d5d3909a8564d4baae81156",
+      "words": 1376,
+      "readingMinutes": {
+        "min": 6,
+        "max": 7,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "a87ded7964a1a347961ea7f8be140c696401f258930286ccfcdc5caa607154dc",
+          "sha256": "950a6fc208593ef975896435703644b61915999dedd898a0dd124d0b3c1dda98"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "5688f8041b65a68aee24986ff66a05d18012338509aa5a3f9f6c16202edf00f6",
+          "sha256": "30ba41b91aa777c0bfdba9fce5db3b554267b5afdade413328c71ad877e68ef7"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "messaging-sales.pt.json",
+      "slug": "vendas-pelo-whatsapp-e-redes-sociais",
+      "productKey": "curso_assinatura_vendas_pelo_whatsapp_e_redes_sociais",
+      "sourceSha256": "aeb3d2e0daa216bc924418c3e179f02490b61e58920f5c969d5b6f807ae746a1",
+      "editionId": "reading-c8a0e81fd40a7decd01be9ff66cacef6ceed2c522ed7c5498a072e0696513178",
+      "words": 1366,
+      "readingMinutes": {
+        "min": 6,
+        "max": 7,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "d2f00a7fbfe25a293eda7338dcbba5940b7e1c242e64d18c7050396e02ecaee0",
+          "sha256": "ccf891a5e3dc55bfab777badcf0ce357ff4d9b16c174f050877dfebb2b42d6ed"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "ae7ca73cafc56eea3899977525aa3adabed5fca03b20c988b236702f6549f52d",
+          "sha256": "aa73a07caea4f179eb04e3ebb32026eedaa52d95849169a835797d729850e5e5"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "migrant-career.pt.json",
+      "slug": "carreira-para-imigrantes-e-mercado-internacional",
+      "productKey": "curso_assinatura_carreira_para_imigrantes_e_mercado_internacional",
+      "sourceSha256": "7baeb2a8ec411e8a45a3fbfffc0df659263aaed39b9108a1246806e41ca9805c",
+      "editionId": "reading-404d8c35fa232447b93418eaffb51bbf017461e582885582f83f675f3b07256b",
+      "words": 1429,
+      "readingMinutes": {
+        "min": 6,
+        "max": 8,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "321029226e0c5ea21d512df8c0958a4686b01ec316408f259a2d55eaeeafe197",
+          "sha256": "e061dcd207f352ac1328475089c7a7c5b2fa1fe14811f04b44a61a15274f8bcc"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "9394882dd8a0cd15eeac356ac6a02628329e2962844166496871d45798bc21df",
+          "sha256": "353371a16c18ac070a4d05b6ff3ff7f39684c6b355bb1f21bdb1e8c579e24040"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "office-routines.pt.json",
+      "slug": "rotinas-de-escritorio-e-organizacao-administrativa",
+      "productKey": "curso_assinatura_rotinas_de_escritorio_e_organizacao_administrativa",
+      "sourceSha256": "4357025597d26065c2dc30127af76c9abe322345bc7c162ee1e46301e35ff57d",
+      "editionId": "reading-4c390c23b9a30640d82cb38ce214db10875dd72094d1f8e5aa635ad2fb835957",
+      "words": 4709,
+      "readingMinutes": {
+        "min": 19,
+        "max": 24,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "de7774b17104c19429d690f8eb1fec22b6794c345018d6c5d154039147f4ada9",
+          "sha256": "da9cb28d5bd0942afb1eb89b61a4abfada9af423f3cc188e1fcb443e215b6539"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "fc85018eb68a0e48ef3c65e4532181ee03ac7d9b522c4e41052681ab8a411975",
+          "sha256": "93c77c759d87161e6674c6254150d8eccd728249e921ed72a5dd059e05d0bd50"
+        },
+        {
+          "id": "3",
+          "sourceSha256": "6b7ddcbfc8bafb4681c3bcd75ba8d5bf7950405569b36d485b5aa6f169f55431",
+          "sha256": "a07475853144ebadef283f4ecdebd4aa2ec5e9ae16732c5f4333caeabdbbeff3"
+        },
+        {
+          "id": "4",
+          "sourceSha256": "69d9af05666915361c531647960ca4818b95fec9ba00eba4679dd216c28930dd",
+          "sha256": "e0ad8fab0ac0eb8ec791b92546655993387287f7ea7814e44ec7e0a095fe8687"
+        },
+        {
+          "id": "5",
+          "sourceSha256": "d012ef924bb0f8a1c46cb4cc5f2cf602c33ef359b113f5a5fa857d855b2d515b",
+          "sha256": "a060c6a961e8bd3c01bc575671adb1d441946ff8f686f5868dfda9db8a33a8a5"
+        },
+        {
+          "id": "6",
+          "sourceSha256": "387bbd334a63afa642c1650e9c5df7f7734d5f79afae34c24ff5eb65bfe7b59a",
+          "sha256": "bcfd4d186fcd25462294fb49fd2dc22c54c6dbf417084f042ec8f57d6b3fc6cb"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "office-support.pt.json",
+      "slug": "auxiliar-de-escritorio",
+      "productKey": "curso_assinatura_auxiliar_de_escritorio",
+      "sourceSha256": "4e772e9d28e559406de66237ce85eec3abb418459d85389815a570fbf2aaf62f",
+      "editionId": "reading-03f43f774d2dee3bd280f0c4531555a0f1f260ce7447a4128f15e78aa3bb1866",
+      "words": 4807,
+      "readingMinutes": {
+        "min": 20,
+        "max": 25,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "77119d02d612fbef7bfab0ba5e4871fd9229d9cc415a0567ed280179c4871bdd",
+          "sha256": "4d17346b538c8d39c26ba82dc8fc14d550af4d97d8eb3fdda5654bf65cc4b79e"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "a406f32176aa8be82e5a8503776156fff1bdc7b61702a23fe3eb17c295fcd74b",
+          "sha256": "72c80887e91374870bcd2a52161a1a4bc80cf7f16da162a527a807de2ebad9a3"
+        },
+        {
+          "id": "3",
+          "sourceSha256": "736edc0803f9b4c6d58faf2f1d8c450059890327d57c910849d9edf218548878",
+          "sha256": "846c75cc687f1788458ea2b187097b30b0c7a489a9917ca75aa46955d25400dc"
+        },
+        {
+          "id": "4",
+          "sourceSha256": "7c747682d12b6b9d22ad22bf0a59b72ae7415727eb0b79b5a7227ccc9a5ede10",
+          "sha256": "8deafd60b43d951ca7b955f44402c5bac45c89562c97604e493ec0bcfc4c522a"
+        },
+        {
+          "id": "5",
+          "sourceSha256": "a9dd19861d20e4cad1205065c18955cca443c1e10b9898a06486184ec8b4b386",
+          "sha256": "3f72b3afa45988a67f5f792d774ab399cddc67229a72784b793c9c02fbf77a9d"
+        },
+        {
+          "id": "6",
+          "sourceSha256": "f642b5211f3066bc9ffc1f24fab7797a6dcaa23e2e6fb5f44bfcf2d3f8f988ec",
+          "sha256": "9f46fdae8592f840d0b53692ef31254acccbaed7b76aa0223c06a03930894e5a"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "online-product-promotion.pt.json",
+      "slug": "como-divulgar-um-produto-na-internet",
+      "productKey": "curso_assinatura_como_divulgar_um_produto_na_internet",
+      "sourceSha256": "4c04604a9a0e7e7a1c12e4163e4106c084519885563eab23536d6088b1f59d07",
+      "editionId": "reading-369342d6e068086a6cc895990141313e3be17cd55e82edfb70f56d7248120a1d",
+      "words": 4677,
+      "readingMinutes": {
+        "min": 19,
+        "max": 24,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "884b0be15cdbb7fecfbb5ec192b7a6e51377a16b0a6a3ccb0792adc73897b1ac",
+          "sha256": "df52f7f29fa37d2bddd4e7b2360bb8fb5f1c15e0e43487629f62d9e7e3193ecb"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "b88af97ddfd42e793e264162bcaea2c110c0b818a9a4debdafc2c602b52dcdf7",
+          "sha256": "003d67b59db0e4a8583985ff09b0e53f4c6101504f926ab03457a7d6402748e1"
+        },
+        {
+          "id": "3",
+          "sourceSha256": "d5cbd0ef2e858fd14864d8cebb4c4a37355e9ad45454009a0d2bc72ec8272973",
+          "sha256": "fbe6cd908f1aff0c5e1df5bca01ffe2089b16d750efca3db9b4e8bb81d5cdbd6"
+        },
+        {
+          "id": "4",
+          "sourceSha256": "a65892ceca9e8df19b1eef295f8f4c6035a114be234f5cdd3377ac0f8484d205",
+          "sha256": "80c7732d1f1cddceaaa2582705c01c463babae1f08f9dfe9240d401a30b440a5"
+        },
+        {
+          "id": "5",
+          "sourceSha256": "b0a254de72f62e7a6bcd41b4cdaa78ed1dfbdd6336d6cdabe0d2883ac5528ad4",
+          "sha256": "08b5d92f987a7c0afe2f32187dab54adadc8733c97d504630a9f5af17238bf79"
+        },
+        {
+          "id": "6",
+          "sourceSha256": "d5070a76c36efbbe46a8a6649808d6bdeeab9946b1c207b300597e6b4a12abdd",
+          "sha256": "da56979617dbccca0e946809a4738092a0f8c123985e999d2a9ff7a2c4d76554"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "personal-time-organization.pt.json",
+      "slug": "organizacao-pessoal-e-gestao-do-tempo",
+      "productKey": "curso_assinatura_organizacao_pessoal_e_gestao_do_tempo",
+      "sourceSha256": "34f946e37ed792d8d8f1f3ed50ac393aed61e4991e5d4888659bf377f591f7c9",
+      "editionId": "reading-61a3f3e618d94bfea74de21126b475e883adc6d9613472d123d8a68079885e25",
+      "words": 4662,
+      "readingMinutes": {
+        "min": 19,
+        "max": 24,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "e9280a5e682cc1796b1cde8ee6cb064b34684a6c928ffbe92a65c68c10a8223f",
+          "sha256": "7be0456a760ec0b4b58c03fae146202a9919b19f8e4e446228de3f5970164373"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "af54ac8a8e79a31951729b74f7a5ecd5503f0b1688d9fb4fd2db712b140a390f",
+          "sha256": "ab1a568f514964df83df18f3e6d238b7591f3b63f02eb1e8694b2f10c47cdaf6"
+        },
+        {
+          "id": "3",
+          "sourceSha256": "6456fb9d1826216ed47cef5d8be2695b7582f2958f8ada2f17c8268e9fc463c3",
+          "sha256": "d5d1fa15fc6e61703981868b7182956964745a0ca13d11f7fec52927fe6aeda1"
+        },
+        {
+          "id": "4",
+          "sourceSha256": "fd2425b4b6da2784ede3ee9fc0f8303defa35223d99c6ae32ff055b08591689e",
+          "sha256": "9a53e1c5ac95042fc7dc5899ab5d5f78c43d0be1e14c8ffc04710e8665c6fa9e"
+        },
+        {
+          "id": "5",
+          "sourceSha256": "e35e6021d677f78ba9440001ea77ef4e0d0c5ff02723ebfef99d8128e01482ea",
+          "sha256": "b940bbc2a2b3acede7908502d9fc060ef353ef881bace06b6ae8bff9cd139276"
+        },
+        {
+          "id": "6",
+          "sourceSha256": "6566dde6e0f878879ee50ba77f48b6d617e139bd73a0838976484c9f04f2ef2c",
+          "sha256": "fbf1e08111905a5db6451f6a8b9238169ec485aa8e46856293c3ef229bd8000a"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "personnel-intro.pt.json",
+      "slug": "introducao-ao-departamento-pessoal",
+      "productKey": "curso_assinatura_introducao_ao_departamento_pessoal",
+      "sourceSha256": "6e7696e8a103e093248b0b652960c7eda092884b68889e55fae0f42fa9731996",
+      "editionId": "reading-10704d37c88b608e3629bd38050620def297d7d6d3ebcd28d9831bca5767943b",
+      "words": 1406,
+      "readingMinutes": {
+        "min": 6,
+        "max": 8,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "12fbbc97acde891f8fcc3bb286470b158b09ffa1ca43dec3ffe445e31b4901a5",
+          "sha256": "6015b650e739919a4b93e70bf0591dc684797fdede7c9ea1982dbcda0bd0aac0"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "41f7a50417e025d254b7d8373e6141d980671cee64898f389ed105d3de7be341",
+          "sha256": "d4cee4800bd5083783077943c96d9fde30bb536bbbc21985302280dd5fe71d4f"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "presentation-design.pt.json",
+      "slug": "como-fazer-apresentacoes-profissionais",
+      "productKey": "curso_assinatura_como_fazer_apresentacoes_profissionais",
+      "sourceSha256": "6dad0a93bf43009cc22d332c19a59827cf94c8ad6182a9fe1b9852940328a6fe",
+      "editionId": "reading-0a55692e4f7988c95b22161f6cbf38223af7b82a51e75e618e14d4365d45de4b",
+      "words": 1400,
+      "readingMinutes": {
+        "min": 6,
+        "max": 7,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "ec661b2020d8797e2e5219acf50eec75bffd4b4b5911d589dc57b9c98d89ce6a",
+          "sha256": "0969528aaf993b62ad0642731b7d357e487875c2b3bb45407ba322fd02a6f004"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "39e4fa2fa7766e22ff57064d1bd100f290da217d9c55b3c24cce080322c39601",
+          "sha256": "bea48173ac51ebd6d4f11da4e16c3dcc137a0a840db020796d867822287e40ca"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "pricing.pt.json",
+      "slug": "precificacao-para-servicos-e-produtos-digitais",
+      "productKey": "curso_assinatura_precificacao_para_servicos_e_produtos_digitais",
+      "sourceSha256": "53347335d54e5cdcf46adf36899cfc543819da70ad2b2c2f9982d574e8854018",
+      "editionId": "reading-6284e6ad71faf5bddda9cd3974c1d9cd2c6af9f7b075c82201d3a7962e1bc7e5",
+      "words": 1460,
+      "readingMinutes": {
+        "min": 6,
+        "max": 8,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "2ca42a96b2399e12dc48328206c1224c9e36a31467e5b7f1a7f3c9ef0469e4d1",
+          "sha256": "c441fce06e46e0a07a07983c1feda6120ee1c0c2565ad5321e858dd73eee9205"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "ea7b884be66ee2c7d8442158d135cbb66db0f8d3e4340f7e308447e226f680be",
+          "sha256": "ffbcec854a258e5aaea15eeb6abd5cf01c91a7216315650ca7a5857ffbe7306e"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "professional-development.pt.json",
+      "slug": "desenvolvimento-pessoal-para-vida-profissional",
+      "productKey": "curso_assinatura_desenvolvimento_pessoal_para_vida_profissional",
+      "sourceSha256": "182279a6c3387238cd0fcbec45ae82bc0110c7c0a60f5818e31d2423f5e27df2",
+      "editionId": "reading-c58a29ebb210d83ae9a04b0df9ba48ad4ae2a8ffc14b287c62516ad503b83a65",
+      "words": 1429,
+      "readingMinutes": {
+        "min": 6,
+        "max": 8,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "c59b6b47282a5c13dc070dd49e4038f05d5b9130f9488cb00db112fc086f61b7",
+          "sha256": "6a99cb9f2573cd5f40acba62e7ef13466581573eef14dee707718fc039e413d3"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "7e2bfaade9ba8729dc3c9bc2cb77a6fd00a86ef180a932906895ca155a554a6d",
+          "sha256": "55fa37e5a83634dbdfb7c1e73a242ba17111e2419e168241b08b321493ff7f92"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "professional-restart.pt.json",
+      "slug": "como-recomecar-profissionalmente",
+      "productKey": "curso_assinatura_como_recomecar_profissionalmente",
+      "sourceSha256": "32dcb14953e99ae80d7e314f562df295de15214644f713833ca96d46fc0db39b",
+      "editionId": "reading-7f8292397bc2ee2180806065fb895a4510afeecff3231e90e98300205a7c8afa",
+      "words": 1457,
+      "readingMinutes": {
+        "min": 6,
+        "max": 8,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "9ac4e6217429b977416d2607ec00418146de50d2bf531fe6a22bbb49cb9025b4",
+          "sha256": "6bdd227b1177efc61b5f1507d43f7dc2f1bec034f9d073f66be6e5b4d88de51f"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "e12d134d6d91c5c2183c8951bf093f5af6d44166e05f954ffc2a54135cb1b1b2",
+          "sha256": "1e7cd5b8e214b710161f8aa5bd133732c696d916ec7a67629e959bd5d67325d5"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "professional-writing.pt.json",
+      "slug": "redacao-profissional-e-escrita-para-processos-seletivos",
+      "productKey": "curso_assinatura_redacao_profissional_e_escrita_para_processos_seletivos",
+      "sourceSha256": "0360eda388e2737e7b35b17a110c19f899fcfdb8c203a740cc0cd00f6c6a3422",
+      "editionId": "reading-89b4accfa8f16afe449c4106c71ea663b19c7ae8790de3308ba49feffa9e0390",
+      "words": 6829,
+      "readingMinutes": {
+        "min": 28,
+        "max": 35,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "39dd52ee54e86a0881ec236c0ad3355233c6681b5f993add06b97007b3489d0f",
+          "sha256": "26ca7949a02b8ae520414f70a341e8ea2064d0fee3f5ac9f1a000882551f12e3"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "be65ffce37596f165fe89e7b30387619ba1fbbc847dd33545d1bc3f336e8b607",
+          "sha256": "3377a9e3957d12ba6e6acb52a580c147c1e9b92fa03c75a2f06558556301e2e4"
+        },
+        {
+          "id": "3",
+          "sourceSha256": "748f6395715250c23caa49727a019e312584c2dbd41ef89b1fd6d3e34ab5de0c",
+          "sha256": "7694f2cf9aa6f8b6a9f5a7b302c06d139961d47bb852cd8a2cc2791f5cd12d08"
+        },
+        {
+          "id": "4",
+          "sourceSha256": "52eb0249cdfd447205b7385e99b0ebdd0acab4b8a254e0c05ccdf7183a8589e4",
+          "sha256": "46a4f724d2da0f4632c451ff9ef88e7bcd74ecfb82d9e6df382d61846fe249f0"
+        },
+        {
+          "id": "5",
+          "sourceSha256": "d0e9d79a1d3efdbe4b9d41e166be36fa6ce6da03bf8a04f66744ed3315692e98",
+          "sha256": "99f432ed5e6d09fe1b17f33873273165c99f827b00fa4b33534e09856492d943"
+        },
+        {
+          "id": "6",
+          "sourceSha256": "b36aafbfbf9aa6344ee9d56fe4c41378026fa4fc9028dc85cb90a0ea968d8838",
+          "sha256": "80e77f7a5e5a40de550a896616ad452e2cb68a4f686d3b2e8f4f85ad95012dde"
+        },
+        {
+          "id": "7",
+          "sourceSha256": "218c49d98bba09fc047e481fcef7397e50e4da8d8f9376d98a8a58cc828ba6cc",
+          "sha256": "91b150ace25edca0e7223e01c64eb321b4ac860e09667b0cec386ae72b87d215"
+        },
+        {
+          "id": "8",
+          "sourceSha256": "5f4975bd83bb15161bcc8995211ebf2adadb45886a3682b5d42f04b9cbf42a55",
+          "sha256": "43578e4966496363be910dd4636b21749cdc970fe9b69b6bb874257715c0cd55"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "public-speaking.pt.json",
+      "slug": "oratoria-e-seguranca-para-falar-em-publico",
+      "productKey": "curso_assinatura_oratoria_e_seguranca_para_falar_em_publico",
+      "sourceSha256": "d13b0fe7c77d8cbe460219bcffd517d11c7dcdde5dbf805773df16a2d8ade3e0",
+      "editionId": "reading-eb0f8fa8a547426aa4ed8f0cbc00ace076c8ded72f8b9a8271b71ae0c2be8f4b",
+      "words": 1418,
+      "readingMinutes": {
+        "min": 6,
+        "max": 8,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "14e8aa61aa9c416cfa50d6ec7b27e6474b0ce0d753e1e9136bad4af5372c1ea0",
+          "sha256": "58b66d42cdf343487de7ee801116896a858c63bc24ada4ad9b69417ed9bedc8a"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "9b32cc7ec931ca0537b5d0edc1e4f5a9d3e54ebdf8ca1625fed8f2075aed1115",
+          "sha256": "deb09d5267061a19854b073707908891856db1c6e5613091f521901df74ccf09"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "remote-work.pt.json",
+      "slug": "trabalho-remoto-e-organizacao-profissional",
+      "productKey": "curso_assinatura_trabalho_remoto_e_organizacao_profissional",
+      "sourceSha256": "59e877ee14bee833b7cadee3cf7b05097b0bd2c47b9e3b4b48affada1739ab22",
+      "editionId": "reading-5daf2ac3b9e0f175becd4af2de2e1913757177793231aa2bff53ffcae9c5ae56",
+      "words": 5007,
+      "readingMinutes": {
+        "min": 21,
+        "max": 26,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "2eb16f25e8e868fecdc6937988e4a3061946300897fb1f0fd605e2703bd2c931",
+          "sha256": "611f4bb480d7a1e58f2ada4b3669bccf652de9f3f0e82b87df4b644a24dbe6ab"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "f279c9e9041135538c084c9c0ca1ec364400464eb4854a6d894c98f63ae5349a",
+          "sha256": "cb9d869b1ee1d9301073a82269812edcc70a7023624737b982bcca1e1b1894ad"
+        },
+        {
+          "id": "3",
+          "sourceSha256": "21c58033881deb2829d5a688bc004035df15710c555682aa8433295e75dc674c",
+          "sha256": "fc396a697eae8a6d5f5e6e871e95ce24a1fa1c38cfe62131a47612d76201eeeb"
+        },
+        {
+          "id": "4",
+          "sourceSha256": "8690b5c70a7b124032de6079498e9437b2eff0a7b040865a64cc3eeb844190fd",
+          "sha256": "6174eb146c2c774a6f2be02fe81442ab55f3ff1946b9ca5b15fe7098d0748b5e"
+        },
+        {
+          "id": "5",
+          "sourceSha256": "c9890023678f795d386a598dc0ee19dbb3976ccf584fe7ce15c33a182166f722",
+          "sha256": "6003dd4bb6a9e3a4ab8739e3697c17d6467a7e906f051370d251bd2360fbb45f"
+        },
+        {
+          "id": "6",
+          "sourceSha256": "43e2a536ab367e81e4d0f06da371b2707b327cde5f480ec7042a3dec21c92801",
+          "sha256": "99da2ed9e3e239c91f6b95ffe1389d4dc0d94409385c84e0787fbe0caa13fa25"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "sales-strategy.pt.json",
+      "slug": "como-vender-produtos-e-servicos-com-estrategia",
+      "productKey": "curso_assinatura_como_vender_produtos_e_servicos_com_estrategia",
+      "sourceSha256": "9f0cd82bfa5f5f3e1ef9c944666d8a0da41ce5bf7a2fc4dfb0e5fb44b7c2c586",
+      "editionId": "reading-d107cb2bf255e7db30dfee8df3aa4cad013d1e533792a82509d47f1610e9e30d",
+      "words": 4526,
+      "readingMinutes": {
+        "min": 19,
+        "max": 23,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "6ba5ef29b92858922fb9694bfe9be136652c6daac183c9f3daa9aeb8420c8435",
+          "sha256": "c294cad9d1ad70ad04731e1437f1e8d2c52ba57878949c101551c05fb9e7453b"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "11601ed0aa1223073111cc5f7c14aac445f86766a385cd4d1f8f7074bbe8db1b",
+          "sha256": "43e875185cde445ded99566ddc1f420c787bf9fc08c53108227c24af1e1d5954"
+        },
+        {
+          "id": "3",
+          "sourceSha256": "07849325e6d95dcba059945a5540e3acd20afdad5479e736c734d79eb70b05d6",
+          "sha256": "460a22dba20166a151d49924256cac3075a3e2006723b27754257d81ecefa969"
+        },
+        {
+          "id": "4",
+          "sourceSha256": "9110b678ca43bf7555236d56d031a6bf00d9281712f02cd6aeb5ed9a991d445e",
+          "sha256": "c41aa42c76b6262adc8eecfc431c5c175d8730db9f8fed283243784f51cb957a"
+        },
+        {
+          "id": "5",
+          "sourceSha256": "9218060930c0c314a4ff291baa441cd7161c8e1a9e21e7cca833a40f30c0ea10",
+          "sha256": "622f339053388cea9f06309255637828e2143ef2bce28479f2a94ad637a89d63"
+        },
+        {
+          "id": "6",
+          "sourceSha256": "b0a982e4bc3b3ac87cf27a9972be5e980fa94a64a4814bf850368194254dc062",
+          "sha256": "7672ec84905fdac0000c6e39068c92b2607702e22b45f7880f1ace5b19e51023"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "selection-rejection.pt.json",
+      "slug": "como-lidar-com-rejeicao-em-processos-seletivos",
+      "productKey": "curso_assinatura_como_lidar_com_rejeicao_em_processos_seletivos",
+      "sourceSha256": "81ff401f9b82bfb4383b7fd2156f88951b0885ec9bfa6b49ba6eb7e8cd6e7303",
+      "editionId": "reading-8f276cfa3d4fda620c5d8232b9d48d3c9459298ca9b26bfb91913fe71759987e",
+      "words": 1468,
+      "readingMinutes": {
+        "min": 6,
+        "max": 8,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "7c51a4384758c79eb7bce544e1e85bccc240ce0ebcb9b39fd99791cf74c01e9e",
+          "sha256": "f3815d34af35bf53855d24a65e09494f5b3b63562ca66c5c1b03fa2b18026821"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "b3205884febcd18bacd673136595a1d9edd067958e2683626bf6a78ff82f025c",
+          "sha256": "4345d5f3e968c716f878f43772c88c728a6170a168df76caf9a5e7b764b9bdc0"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "sustainable-productivity.pt.json",
+      "slug": "produtividade-sem-ansiedade",
+      "productKey": "curso_assinatura_produtividade_sem_ansiedade",
+      "sourceSha256": "381faf44aa81138094727aa4ff087ab3b4a6bc42a1d788f4c5281bbc2fea18ce",
+      "editionId": "reading-97194ba79b9346b824abeba3603a9db8657369d98d0f87d4ffcc5bed602b2984",
+      "words": 1405,
+      "readingMinutes": {
+        "min": 6,
+        "max": 8,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "7caf96169fc4a51704561e9e638acc7d7590b5da3276cea6024685a89cc61c25",
+          "sha256": "8f77c6a5faac69c6e6267c172f43effddd8547cb3c9eff304d202ddb538f21cf"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "891a39e94dce831477e87458a7722d617cc2b821024319760ce3ab6d086256c4",
+          "sha256": "ea43313291e518da85cc2c73d03270ea2ce621bc1990bc31b893b8d06baef5e2"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "trustworthy-offer.pt.json",
+      "slug": "como-criar-uma-oferta-irresistivel-sem-promessas-falsas",
+      "productKey": "curso_assinatura_como_criar_uma_oferta_irresistivel_sem_promessas_falsas",
+      "sourceSha256": "9b9dc3984803d20ca9cbc12c0a8c17d86c38e5a802e906699fb6797c69046210",
+      "editionId": "reading-072da0415d038e57dc05a8c7903a0b26a04e2b4ec66b73b2c4a18db5ce49d543",
+      "words": 4530,
+      "readingMinutes": {
+        "min": 19,
+        "max": 23,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "c3dd79c9b1ca08b9e079d637dd017b1dad847a7b48b00b0dc3e44a7a083d2c0f",
+          "sha256": "23e30692c28d5ee4c78ba9c4234a4054ef5073a2163941fec368df71b0aa80f8"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "33d6fffe179a56131dee7c23276ed52c678e2de081178d8c3bace351880d5d21",
+          "sha256": "762af631f6f54ea04c355158132a636fd830c0d305fbda037b8363d66cbc8fde"
+        },
+        {
+          "id": "3",
+          "sourceSha256": "7857d03d1011d2d6b73effbfb7c379361fcd4cfdcea5188a39cc7a0cc15d176e",
+          "sha256": "1cb0cfa52c9fc5ce36a506258e7253db46b2cf6463572f7660294362e117c2bb"
+        },
+        {
+          "id": "4",
+          "sourceSha256": "437eb66a38cd431068c95943240a507ddc47c88f019f1bbdf62af91457f5b2de",
+          "sha256": "5d14fc4779c31f9fcdc578008ec44b75525da9ecfe65b9c336cd72233ab4f07c"
+        },
+        {
+          "id": "5",
+          "sourceSha256": "f4be99533fd2086bec13c45d4fe5d3242760aa4f42883fe8be187f5022721883",
+          "sha256": "6fee831cd048167c372ddc296f87d777cf49e254448afc3bdf82d52e9b064aa8"
+        },
+        {
+          "id": "6",
+          "sourceSha256": "6878aac631fa7aef608ed5fe390751ff899d695ea40de7d410dc17743781110c",
+          "sha256": "3b4956f86d5de9b0619ba131da6e7d61c149abbe9a5432605252b22ba8dbb036"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "vacancy-selection.pt.json",
+      "slug": "como-selecionar-a-vaga-certa-para-o-seu-perfil",
+      "productKey": "curso_assinatura_como_selecionar_a_vaga_certa_para_o_seu_perfil",
+      "sourceSha256": "94e3bd18ae721929b3ff63b2e315fb8748e93c093ceea72ae3169ecc7d2f4ba0",
+      "editionId": "reading-3fb25486010c33856d92ad88de25737f6ac952607a605c9f2410a93cffe82745",
+      "words": 4665,
+      "readingMinutes": {
+        "min": 19,
+        "max": 24,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "b34ed898a23643a03e87fd088d2730d23c0d910b4bda602b4fa9060224c23962",
+          "sha256": "de81dc1b647c9a3b732e5fbd69921e23ce27f79ff49719bc74af99038c88084c"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "10445a0eb40538f24090719e476ffa362df32392f95bbdb476b17701c5fedd11",
+          "sha256": "dc27fa0a8e10fed8ff64218c8bf5818ad86a29c1edf6e7b3e4a93b45a3624590"
+        },
+        {
+          "id": "3",
+          "sourceSha256": "d99f59212132cec8ea27b73db378fb6eb7174adcce7bf91dc6fc41b38937b345",
+          "sha256": "7cd91370a77eacd4a28b5174d8a6b1307b181cb6c7318c4a2ef25cd87fa3a469"
+        },
+        {
+          "id": "4",
+          "sourceSha256": "03860ade17e995b1ecf1913dccd807f09d159999c9d266f4c7c9ec32c199ab0a",
+          "sha256": "0418b9990616d8433694292766acb427f7be745dd1e0e72c082edc43c7297352"
+        },
+        {
+          "id": "5",
+          "sourceSha256": "7849e9cbb9a17aa316ae3ba4bda7a373ec9546533715b3bfb1f532f4e0253daf",
+          "sha256": "72e2e91000f7f432085c03d272a4b57d10c1e393bd757079b201be3b1fc963b3"
+        },
+        {
+          "id": "6",
+          "sourceSha256": "1e9c00023428ef07d8cc52535178fa5f032d2bd33fde699dcfe6b1181600293c",
+          "sha256": "1f0fc649191a0b403c64e3ac622923583e2c490930b8ef9e6562adea0e07244a"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    },
+    {
+      "file": "workplace-communication.pt.json",
+      "slug": "comunicacao-profissional-para-o-mercado-de-trabalho",
+      "productKey": "curso_assinatura_comunicacao_profissional_para_o_mercado_de_trabalho",
+      "sourceSha256": "27e4e1645ff234055babbb6518ca3d43e685406d1d55660af9b550ace05b1c29",
+      "editionId": "reading-57c440ad830fcee0a4b92516bda8496f10e7a561e1e2748f09765aaeffd5ece5",
+      "words": 4808,
+      "readingMinutes": {
+        "min": 20,
+        "max": 25,
+        "wordsPerMinute": [
+          200,
+          250
+        ]
+      },
+      "modules": [
+        {
+          "id": "1",
+          "sourceSha256": "4114d4aa0d5516594f2d45ac41eab78a63f7221b29bee490f7e61d4d7ddd7ff2",
+          "sha256": "1c46c7550ec609642197b34c9ef0b43c5c6f8e2566faba0fcc919d37a1e59db4"
+        },
+        {
+          "id": "2",
+          "sourceSha256": "c60dda8a7688004142421c8cd91505e7c6a53c57682d0feb810275d91dac7bcc",
+          "sha256": "fa98a9d99ab6a289593e854bc67b22c67c0881cec35e11199a3b233fc291d991"
+        },
+        {
+          "id": "3",
+          "sourceSha256": "93be4cf6129d071e39dc129c4740d99d09a46953ff649ef6e9ebcc01c7553abc",
+          "sha256": "a4ce83e60c16eba1286fe1757296f3ba837a969417db42b24f8ab2779b2d3d58"
+        },
+        {
+          "id": "4",
+          "sourceSha256": "88b9f4d8880815174460e306326cd51b2f621ab9227d91a56a820f0290bd6096",
+          "sha256": "36ee311e9821bce8bababe19f0c9099bbb055340f040676e4e281dc322aa7e7a"
+        },
+        {
+          "id": "5",
+          "sourceSha256": "c3d30b5de250882cbc608f6d0d750a7fb8d758e3b6d59544feaa126ad6405b2e",
+          "sha256": "02205acddc1012bf26b84f50b9c271d883ef51cd1862eddea6e72e10a8605634"
+        },
+        {
+          "id": "6",
+          "sourceSha256": "5dac21711c329369d1f6fb2509835922ad9b60feaf35cc773f4c5bb1e5640e20",
+          "sha256": "4259638e8b53d27f6a8fa5e656f46f07f10c40a64d235cb729f257508105994c"
+        }
+      ],
+      "reviewScope": {
+        "pedagogy": "Objetivos, dados fictícios, exercícios, respostas e limites existentes; sem avaliação de eficácia.",
+        "editorial": "Derivação rastreável; só o aviso de rascunho e o rótulo de consulta foram alterados.",
+        "rights": "Textos didáticos próprios assistidos por IA, casos sintéticos, referências por ligação; sem incorporar imagens, manuais ou excertos externos. Não é parecer jurídico.",
+        "accessibility": "HTML do leitor, teclado, contraste/overflow e marcação; sem certificação de acessibilidade ou teste com tecnologias de apoio.",
+        "workload": "Estimativa de leitura do corpo exportado a200–250palavras/minuto; exclui execução das atividades, sem validar horas históricas.",
+        "reader": "Contrato, acesso ao produto, integridade e navegador verificáveis em CI antes de merge."
+      }
+    }
+  ]
+}

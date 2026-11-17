@@ -1,3 +1,4 @@
+import { getAcademyCourseReadingMetadata } from "@/lib/academy-course-reading-catalog";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useMemo, useState } from "react";
@@ -105,6 +106,7 @@ function Page() {
   const locale = (raw === "en" || raw === "fr" || raw === "es" ? raw : "pt") as Locale;
   const u = UI[locale];
   const course = getAcademySubscriptionCourse(slug);
+  const readingMetadata = course ? getAcademyCourseReadingMetadata(course.slug) : null;
   const readingLabel = course ? academyReadingTimeLabel(course.slug, locale) : null;
   const [readingEdition, setReadingEdition] = useState<AcademyReadingEdition | null>(null);
   const [readingError, setReadingError] = useState(false);
@@ -224,7 +226,7 @@ function Page() {
           {u.badge}
         </span>
         <h1 className="mt-4 font-serif text-3xl text-[#fff7e7]">{course.name[locale]}</h1>
-        <p className="mt-2 max-w-4xl text-white/80">{course.description[locale]}</p>
+        <p className="mt-2 max-w-4xl text-white/80">{readingMetadata?.summary ?? course.description[locale]}</p>
         <p className="mt-3 text-sm font-semibold text-white/70">
           {readingLabel ?? u.hours(course.hours)}
         </p>
