@@ -8,6 +8,7 @@ export type DashboardItem = {
   kind: LibraryKind;
   access: LibraryAccess;
   editorial: string;
+  academyCard?: { subscription?: boolean; icon: string; accent: string; detail: string; accessLabel: string };
 };
 export type DashboardProgress = {
   product_key: string;

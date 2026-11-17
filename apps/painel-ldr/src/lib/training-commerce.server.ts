@@ -54,7 +54,7 @@ async function launchStatus() {
 async function paidOrder(customerId: string) {
   const { data, error } = await db.from("orders").select("id,catalog_key,payment_status,amount_cents,currency,stripe_checkout_session_id,metadata,created_at").eq("customer_id", customerId).eq("payment_status", "pago").order("created_at", { ascending: false });
   if (error) fail("Não foi possível verificar a compra do treinamento.");
-  return (data ?? []).find(productMatches) ?? null;
+  return (data ?? []).filter((o:any)=>(o.metadata??{}).source!=="library_subscription").find(productMatches) ?? null;
 }
 
 async function trainingRow() {
@@ -121,7 +121,7 @@ export async function getDoMamaoTrainingOffer(userId: string, email: string | nu
   const training = await trainingRow();
   const launch = await launchStatus();
   let currentEnrollment = await enrollment(customer.id, training.id);
-  const [order, ldrOne] = await Promise.all([paidOrder(customer.id), hasActiveLdrOne(customer.id)]);
+  const [order, ldrOne] = await Promise.all([paidOrder(customer.id), hasActiveLdrOne(customer.id,"academy")]);
   if (!currentEnrollment && order) { await provisionFromPaidOrder(customer.id, order); currentEnrollment = await enrollment(customer.id, training.id); }
   if (!currentEnrollment && ldrOne) { await db.from("training_enrollments").upsert({ training_id: training.id, customer_id: customer.id, active: true }, { onConflict: "training_id,customer_id" }); currentEnrollment = await enrollment(customer.id, training.id); }
   if (!currentEnrollment) currentEnrollment = await ensureOwnerEnrollment(customer.id, training.id, email, userId);

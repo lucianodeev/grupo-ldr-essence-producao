@@ -97,7 +97,7 @@ async function assertEntitlement(customerId: string, productKey: DigitalReaderPr
     productKey !== "ebook_da_pobreza_ao_primeiro_contrato"
   ) {
     const { hasActiveLdrOne } = await import("@/lib/ldr-one-entitlement.server");
-    if (await hasActiveLdrOne(customerId)) return;
+    if (await hasActiveLdrOne(customerId,"academy")) return;
   }
   fail("Conteúdo disponível somente após confirmação da compra.");
 }

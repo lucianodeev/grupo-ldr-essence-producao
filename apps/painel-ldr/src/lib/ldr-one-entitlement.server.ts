@@ -3,7 +3,16 @@ import { supabaseAdmin } from "@/integrations/supabase/client.server";
 const db = supabaseAdmin as any;
 
 // Paid digital catalog entitlement: free content remains independently accessible.
-export async function hasActiveLdrOne(customerId: string) {
+export async function hasActiveLdrOne(customerId: string, scope?: "academy") {
+  // Academy-only compatibility. No prices, rows, credits or billing plans are changed.
+  // Other LDR ONE consumers retain the original checks below.
+  if (scope === "academy") {
+    const { data: library, error: libraryError } = await db.from("library_subscriptions")
+      .select("id,status,current_period_end").eq("customer_id", customerId)
+      .in("status", ["active", "trialing"]).order("created_at", { ascending: false }).limit(1).maybeSingle();
+    if (!libraryError && library?.id && ["active", "trialing"].includes(library.status) &&
+      (!library.current_period_end || new Date(library.current_period_end).getTime() > Date.now())) return true;
+  }
   const { data: direct, error } = await db
     .from("ldr_pass_subscriptions")
     .select("id,status,current_period_end")

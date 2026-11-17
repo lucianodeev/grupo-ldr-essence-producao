@@ -92,11 +92,18 @@ jobs:
           PLAYWRIGHT_PACKAGE: /tmp/ldr-browser/package.json
           LDR_VISUAL_OUTPUT: /tmp/ldr-commercial-visual
         run: node scripts/agenda/commercial-visual.mjs
+      - name: Verify shared Academy catalog in public and private views
+        env:
+          LDR_READER_PLAYWRIGHT: /tmp/ldr-browser/node_modules/playwright
+        run: node tools/test-academy-unified-catalog-browser.cjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: commercial-desktop-mobile
-          path: /tmp/ldr-commercial-visual/*.jpg
+          path: |
+            /tmp/ldr-commercial-visual/*.jpg
+            /tmp/ldr-unified-academy/results.json
+            /tmp/ldr-unified-academy/*.png
           if-no-files-found: ignore
   database:
     runs-on: ubuntu-latest

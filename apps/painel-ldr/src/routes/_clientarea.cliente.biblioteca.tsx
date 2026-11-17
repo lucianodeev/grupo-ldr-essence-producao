@@ -1,3 +1,5 @@
+import { clientAcademyCatalogAccess } from "@/lib/library-subscription.functions";
+import { academyUnifiedCatalog, academySubscriptionLabel, academyLegacyFreeCourses, academyFreeLabel } from "@/lib/academy-unified-catalog";
 import { getAcademyCourseReadingMetadata } from "@/lib/academy-course-reading-catalog";
 import { academyReadingTimeLabel } from "@/lib/academy-reading-editions";
 import { LibraryLearningDashboard } from "@/components/library-learning-dashboard";
@@ -190,6 +192,8 @@ function ClientLibrary() {
   const t = TXT[locale];
   const ct = libraryCardText(locale);
   const ac = libraryAcademicCardText(locale);
+  const academyAccessFn = useServerFn(clientAcademyCatalogAccess);
+  const { data: academyAccess } = useQuery({ queryKey: ["academy-catalog-access"], gcTime: 0, queryFn: () => academyAccessFn({}) });
   const ldrPassFn = useServerFn(clientLdrPass),
     fn = useServerFn(clientDigitalLibrary),
     trainingFn = useServerFn(clientDoMamaoTrainingOffer),
@@ -441,8 +445,14 @@ function ClientLibrary() {
         : locale === "es"
           ? "Revisión editorial y duración pendientes."
           : "Editorial review and study hours pending validation.";
+  const legacyOwnedAcademyKeys = new Set([
+    ["do_mamao_ao_negocio", ent.training], ["formacao_psicanalise", ent.psycho],
+    ["formacao_terapia_breve_psicanalitica", ent.brief], ["formacao_massoterapia", ent.massage],
+    ["formacao_negocio_24_horas", ent.business24], ["formacao_mentoria_profissional_carreira", ent.mentor],
+    ["formacao_lideranca_gestao_pessoas", ent.leader], ["formacao_ia_negocios_carreira", ent.ai],
+  ].filter(([, allowed]) => Boolean(allowed)).map(([key]) => String(key)));
   const dashboardItems: DashboardItem[] = [
-    ...data.products.map((p) => ({
+    ...data.products.filter(p => !academyUnifiedCatalog(locale).some(item => item.key === p.key)).map((p) => ({
       key: p.key,
       title: p.title,
       description: p.description,
@@ -458,120 +468,27 @@ function ClientLibrary() {
       href: `/cliente/cursos/academy/${c.slug}`,
       kind: "course" as const,
       access: "free" as const,
+      academyCard:{subscription:false,icon:"🎓",accent:"#0b3764",detail:academyFreeLabel(locale),accessLabel:academyFreeLabel(locale)},
       editorial:
         locale === "pt"
           ? `${freeCourseLessons(c.slug).length}/${c.modules.length} módulos com texto específico. Edição em revisão; carga horária por validar.`
           : editorialPending,
     })),
-    ...[
-      ["curso_gratuito_organizar_carreira", "Carreira", "/cliente/cursos/organizar-carreira"],
-      [
-        "curso_gratuito_frances_negocios_a1",
-        "Francês para Negócios A1",
-        "/cliente/cursos/frances-negocios-a1",
-      ],
-      [
-        "curso_gratuito_primeiros_socorros",
-        "Primeiros Socorros",
-        "/cliente/cursos/primeiros-socorros",
-      ],
-    ].map(([key, title, href]) => ({
-      key: key!,
-      title: title!,
-      description: "",
-      href: href!,
-      kind: "course" as const,
-      access: "free" as const,
-      editorial: editorialPending,
+    ...academyLegacyFreeCourses(locale).map(item => ({
+      key:item.key,title:item.title,description:item.description,href:item.href,kind:"course" as const,access:"free" as const,editorial:editorialPending,
+      academyCard:{subscription:false,icon:item.icon,accent:"#0b3764",detail:academyFreeLabel(locale),accessLabel:academyFreeLabel(locale)},
     })),
-    ...[
-      [
-        "treinamento_do_mamao_ao_negocio",
-        "Do Mamão ao Negócio",
-        "/cliente/treinamentos/do-mamao-ao-negocio",
-        ent.training,
-      ],
-      [
-        "formacao_psicanalise",
-        "Formação em Psicanálise",
-        "/cliente/treinamentos/psicanalise",
-        ent.psycho,
-      ],
-      [
-        "formacao_terapia_breve_psicanalitica",
-        "Terapia Breve Psicanalítica",
-        "/cliente/treinamentos/terapia-breve-psicanalitica",
-        ent.brief,
-      ],
-      ["formacao_massoterapia", "Massoterapia", "/cliente/treinamentos/massoterapia", ent.massage],
-      [
-        "formacao_negocio_24_horas",
-        "Negócio em 24 Horas",
-        "/cliente/treinamentos/negocio-24-horas",
-        ent.business24,
-      ],
-      [
-        "formacao_mentoria_profissional_carreira",
-        "Mentoria e Carreira",
-        "/cliente/treinamentos/mentoria-carreira",
-        ent.mentor,
-      ],
-      [
-        "formacao_lideranca_gestao_pessoas",
-        "Liderança e Gestão",
-        "/cliente/treinamentos/lideranca-gestao",
-        ent.leader,
-      ],
-      [
-        "formacao_ia_negocios_carreira",
-        "IA nos Negócios e Carreira",
-        "/cliente/treinamentos/ia-negocios-carreira",
-        ent.ai,
-      ],
-    ].map(([key, title, href, allowed]) => ({
-      key: String(key),
-      title: String(title),
-      description: "",
-      href: String(href),
-      kind: "formation" as const,
-      access: allowed ? ("granted" as const) : ("verify" as const),
-      editorial: editorialPending,
+    ...academyUnifiedCatalog(locale).map(item => ({
+      key: item.key, title: item.title, description: item.description, href: item.learnerPath,
+      kind: item.kind, access: academyAccess?.active || academyAccess?.ownedKeys.includes(item.key) || legacyOwnedAcademyKeys.has(item.key) ? ("granted" as const) : ("verify" as const), editorial: item.editorial,
+      academyCard: { icon: item.icon, accent: item.accent, detail: item.detail, accessLabel: academySubscriptionLabel(locale) },
     })),
-    ...PROFESSIONAL_FORMATIONS.map((f) => ({
-      key: f.productKey,
-      title: pfText(f, locale).name,
-      description: pfText(f, locale).description,
-      href: f.learnerPath,
-      kind: "formation" as const,
-      access: "verify" as const,
-      editorial: editorialPending,
-    })),
-    {
-      key: "formacao_gestao_pessoas_rh",
-      title: "Gestão de Pessoas e RH",
-      description: "",
-      href: "/cliente/formacoes/gestao-pessoas-rh",
-      kind: "formation",
-      access: "verify",
-      editorial: editorialPending,
-    },
-    ...ACADEMY_SUBSCRIPTION_COURSES.map((c) => ({
-      key: c.productKey,
-      title: c.name[locale],
-      description: getAcademyCourseReadingMetadata(c.slug)?.summary ?? c.description[locale],
-      href: `/cliente/cursos/assinatura/${c.slug}`,
-      kind: "course" as const,
-      access: "verify" as const,
-      editorial:
-        academyReadingTimeLabel(c.slug, locale) ??
-        (locale === "pt"
-          ? "Roteiro curricular disponível. Aulas aprofundadas, materiais e carga horária por validar."
-          : editorialPending),
-    })),
+
   ];
 
   return (
     <div className="min-w-0 space-y-6 pb-8">
+      <section id="academy-library-catalog" aria-label="Catálogo Academy">
       <LibraryLearningDashboard
         locale={locale}
         items={dashboardItems.filter(
@@ -580,6 +497,7 @@ function ClientLibrary() {
         progress={learning?.progress ?? []}
       />
 
+      </section>
       <details
         id="catalogo-ldr"
         className="scroll-mt-24 rounded-[24px] border border-slate-200 bg-white shadow-sm"
@@ -631,10 +549,10 @@ function ClientLibrary() {
                 {accessLabels.editorial}
               </span>
             </a>
-            {card("training", ct.business, "bg-[#d6ad63]", "grad", accessLabels.included)}
-            {card("psycho", ct.psycho, "bg-[#5b2b86]", "grad", accessLabels.single)}
-            {card("brief", ct.brief, "bg-[#17645e]", "grad", accessLabels.included)}
-            {card("massage", ct.massage, "bg-[#0F5E7A]", "grad", accessLabels.included)}
+
+
+
+
             <a
               href="/clinica-social"
               className="min-w-0 rounded-2xl bg-[#2F6F4E] px-1 py-4 text-center text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
@@ -662,10 +580,10 @@ function ClientLibrary() {
                 {ct.writtenCareer}
               </p>
             </a>
-            {card("business24", ct.business24, "bg-[#c85a24]", "grad", accessLabels.included)}
-            {card("mentor", ct.mentorship, "bg-[#0b5cab]", "grad", accessLabels.included)}
-            {card("leader", ct.leadership, "bg-[#0f5132]", "grad", accessLabels.included)}
-            {card("hr", ct.hr, "bg-[#047857]", "grad", accessLabels.included)}
+
+
+
+
             <a
               href="/cliente/cursos/organizar-carreira"
               className="min-w-0 rounded-2xl bg-[#b85c2e] px-1 py-4 text-center text-white shadow-sm"
@@ -724,76 +642,8 @@ function ClientLibrary() {
               </p>
               <span className="mt-2 block text-[8px] font-bold text-white/75">GRATUITO</span>
             </a>
-            {card("ai", "IA", "bg-[#143d59]", "grad", accessLabels.single)}
-            <a
-              href="/cliente/treinamentos/psicanalise-internacional"
-              className="min-w-0 rounded-2xl bg-[#24476f] px-1 py-4 text-center text-white shadow-sm"
-            >
-              <span className="mx-auto block text-lg">🌍</span>
-              <p className="mt-2 text-[8px] font-black leading-tight sm:text-[10px]">
-                Psicanálise Internacional
-              </p>
-              <span className="mt-2 inline-flex rounded-full bg-white/15 px-1.5 py-0.5 text-[6px] font-black uppercase">
-                {accessLabels.single}
-              </span>
-            </a>
-            <a
-              href="/cliente/psicanalista-alta-performance"
-              className="min-w-0 rounded-2xl bg-[#8a6a2d] px-1 py-4 text-center text-white shadow-sm"
-            >
-              <span className="mx-auto block text-lg">📈</span>
-              <p className="mt-2 text-[8px] font-black leading-tight sm:text-[10px]">
-                Alta Performance
-              </p>
-              <span className="mt-2 inline-flex rounded-full bg-white/15 px-1.5 py-0.5 text-[6px] font-black uppercase">
-                {accessLabels.single}
-              </span>
-            </a>
 
-            {PROFESSIONAL_FORMATIONS.map((f, i) => {
-              const ft = pfText(f, locale);
-              const included = includedProfessionalSlugs.has(f.slug);
-              const colors = [
-                "#6F4E37",
-                "#3E6B89",
-                "#8C4A5B",
-                "#6A5A91",
-                "#2E7D6E",
-                "#9A6B2F",
-                "#4F6B3C",
-                "#7B4F8C",
-                "#A14F36",
-                "#356B72",
-                "#76543A",
-                "#5D6F8A",
-                "#884C63",
-                "#3E745B",
-                "#8B6A3E",
-                "#526B88",
-                "#6D3FA0",
-                "#2F6F73",
-                "#A65A3A",
-                "#7A3651",
-                "#315F86",
-                "#B1842F",
-              ];
-              return (
-                <a
-                  key={f.slug}
-                  href={f.learnerPath}
-                  className="min-w-0 rounded-2xl px-1 py-4 text-center text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
-                  style={{ backgroundColor: colors[i % colors.length] }}
-                >
-                  <span className="mx-auto block text-lg">{f.icon}</span>
-                  <p className="mt-2 text-[8px] font-black leading-tight sm:text-[10px]">
-                    {ft.short}
-                  </p>
-                  <span className="mt-2 inline-flex rounded-full bg-white/15 px-1.5 py-0.5 text-[6px] font-black uppercase tracking-wide text-white sm:text-[7px]">
-                    {included ? accessLabels.included : accessLabels.single}
-                  </span>
-                </a>
-              );
-            })}
+            <a href="#academy-library-catalog" className="col-span-full rounded-xl border bg-white p-4 text-center font-semibold text-[#071426]">{locale==="en"?"Open the unified course catalog":locale==="fr"?"Ouvrir le catalogue unique":locale==="es"?"Abrir el catálogo unificado":"Abrir catálogo único de cursos e formações"}</a>
           </div>
           {active ? (
             <div className="mt-4 rounded-2xl border bg-white p-5 shadow-inner">
@@ -1184,7 +1034,7 @@ function ClientLibrary() {
             <p className="text-xs font-black uppercase tracking-[.16em] text-[#f2cf83]">
               {subscriptionData?.active ? SUB_TXT[locale].active : "LDR ONE"}
             </p>
-            {!subscriptionData?.active ? (
+            {!subscriptionData?.active && !academyAccess?.active ? (
               <>
                 <p className="mt-2 text-2xl font-black text-white">
                   € 39,90<span className="text-xs font-medium text-white/70"> / mês</span>
@@ -1208,12 +1058,12 @@ function ClientLibrary() {
               </>
             ) : (
               <div className="mt-3">
-                <p className="text-xs text-white/75">LDR ONE ativo</p>
+                <p className="text-xs text-white/75">{subscriptionData?.active ? "LDR ONE ativo" : "Acesso acadêmico disponível"}</p>
                 <a
-                  href="/cliente/ldr-pass"
+                  href={subscriptionData?.active ? "/cliente/ldr-pass" : "#academy-library-catalog"}
                   className="mt-3 inline-flex w-full justify-center rounded-xl bg-white px-3 py-2 text-xs font-black text-[#071426]"
                 >
-                  GERENCIAR LDR ONE
+                  {subscriptionData?.active ? "GERENCIAR LDR ONE" : "ABRIR CATÁLOGO"}
                 </a>
               </div>
             )}
