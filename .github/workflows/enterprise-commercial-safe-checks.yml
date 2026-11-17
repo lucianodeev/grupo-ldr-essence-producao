@@ -65,15 +65,25 @@ jobs:
         run: node scripts/agenda/free-supabase-integration.mjs
       - run: npm install --prefix /tmp/free-browser --no-audit --no-fund playwright@1.56.1
       - run: /tmp/free-browser/node_modules/.bin/playwright install --with-deps chromium
-      - name: Verify cookie sessions and private pages in the real local application
+      - name: Verify eBook purchase, refund and Master proposal with local Supabase and Stripe fixtures
         env:
+          AGENDA_PG_PACKAGE: /tmp/free-pg/package.json
           PLAYWRIGHT_PACKAGE: /tmp/free-browser/package.json
           LDR_LOCAL_SUPABASE_STATUS: /tmp/ldr-local-status.json
           LDR_LOCAL_BROWSER_IDENTITIES: /tmp/ldr-local-browser-identities.json
-        run: node scripts/agenda/free-supabase-browser.mjs
+          LDR_COMMERCE_EVIDENCE: /tmp/ldr-commerce-evidence
+        run: node scripts/agenda/ldr-commerce-browser-e2e.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ldr-commerce-browser-evidence
+          path: /tmp/ldr-commerce-evidence/*.png
+          if-no-files-found: ignore
       - name: Remove disposable stack and local data
         if: always()
-        run: supabase stop --workdir /tmp/ldr-free-supabase --no-backup
+        run: |
+          rm -f /tmp/ldr-local-browser-identities.json /tmp/ldr-local-status.json
+          supabase stop --workdir /tmp/ldr-free-supabase --no-backup
   visual:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
