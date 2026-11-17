@@ -1,3 +1,5 @@
+import { getAcademyCourseReadingMetadata } from "./academy-course-reading-catalog";
+
 /** Reading editions supplement the historical curriculum; they never migrate its progress. */
 export type AcademyReadingEdition = {
   schema: "ldr-academy-reading-edition-v1";
@@ -6,6 +8,7 @@ export type AcademyReadingEdition = {
   editionId: string;
   locale: "pt";
   practiceGuide?: AcademyPracticeGuide;
+  releaseDisclosure?: string;
   status: "draft" | "approved";
   published: boolean;
   validatedHours: number | null;
@@ -75,7 +78,18 @@ export function isApprovedReadingEdition(edition: AcademyReadingEdition): boolea
 // Public metadata only. Teaching bodies are returned by an authenticated server function.
 export const CUSTOMER_SERVICE_READING_SLUG = "atendimento-ao-cliente-com-humanizacao-e-resultado";
 export function academyReadingTimeLabel(slug: string, locale = "pt"): string | null {
-  if (slug !== CUSTOMER_SERVICE_READING_SLUG) return null;
+  if (slug !== CUSTOMER_SERVICE_READING_SLUG) {
+    const meta = getAcademyCourseReadingMetadata(slug);
+    if (!meta) return null;
+    const { min, max } = meta.estimatedReadingMinutes;
+    const labels: Record<string, string> = {
+      pt: `${meta.moduleCount} unidades · leitura estimada: ${min}–${max} min · prática ao seu ritmo · sem certificado`,
+      en: `${meta.moduleCount} units · estimated reading: ${min}–${max} min · self-paced practice · no certificate`,
+      fr: `${meta.moduleCount} unités · lecture estimée : ${min}–${max} min · pratique à votre rythme · sans certificat`,
+      es: `${meta.moduleCount} unidades · lectura estimada: ${min}–${max} min · práctica a tu ritmo · sin certificado`,
+    };
+    return labels[locale] ?? labels["pt"]!;
+  }
   const labels: Record<string, string> = {
     pt: "6 unidades · leitura estimada: 40–50 min · percurso opcional de 60 h estimadas · sem certificado",
     en: "6 units · estimated reading: 40–50 min · optional practice: 60 estimated hours · no certificate",

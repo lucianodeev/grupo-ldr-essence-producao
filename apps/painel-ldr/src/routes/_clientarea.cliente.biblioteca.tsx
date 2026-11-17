@@ -1,3 +1,4 @@
+import { getAcademyCourseReadingMetadata } from "@/lib/academy-course-reading-catalog";
 import { academyReadingTimeLabel } from "@/lib/academy-reading-editions";
 import { LibraryLearningDashboard } from "@/components/library-learning-dashboard";
 import type { DashboardItem } from "@/lib/library-dashboard";
@@ -453,7 +454,7 @@ function ClientLibrary() {
     ...ACADEMY_FREE_COURSES.map((c) => ({
       key: c.productKey,
       title: c.name[locale],
-      description: c.description[locale],
+      description: getAcademyCourseReadingMetadata(c.slug)?.summary ?? c.description[locale],
       href: `/cliente/cursos/academy/${c.slug}`,
       kind: "course" as const,
       access: "free" as const,
@@ -557,7 +558,7 @@ function ClientLibrary() {
     ...ACADEMY_SUBSCRIPTION_COURSES.map((c) => ({
       key: c.productKey,
       title: c.name[locale],
-      description: c.description[locale],
+      description: getAcademyCourseReadingMetadata(c.slug)?.summary ?? c.description[locale],
       href: `/cliente/cursos/assinatura/${c.slug}`,
       kind: "course" as const,
       access: "verify" as const,

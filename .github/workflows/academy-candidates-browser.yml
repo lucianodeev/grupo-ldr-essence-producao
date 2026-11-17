@@ -6,6 +6,9 @@ on:
       - 'tools/test-academy-candidates-browser.cjs'
       - 'tools/prepare-course-academy-candidates.cjs'
       - 'editorial/courses/**'
+      - 'apps/painel-ldr/src/content/academy-reading/courses-reading-release.server.ts'
+      - 'tools/prepare-academy-course-reading-releases.cjs'
+      - 'tools/test-academy-course-releases-browser.cjs'
       - 'apps/painel-ldr/src/components/academy-reading-edition.tsx'
       - '.github/workflows/academy-candidates-browser.yml'
 permissions:
@@ -33,6 +36,10 @@ jobs:
         env:
           LDR_READER_PLAYWRIGHT: /tmp/ldr-reader-ci/node_modules/playwright
         run: node tools/test-academy-candidates-browser.cjs
+      - name: Verify all published reading editions with the real component
+        env:
+          LDR_READER_PLAYWRIGHT: /tmp/ldr-reader-ci/node_modules/playwright
+        run: node tools/test-academy-course-releases-browser.cjs
       - name: Retain hashes and review evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -41,5 +48,7 @@ jobs:
           path: |
             /tmp/ldr-candidates-browser/results.json
             /tmp/ldr-candidates-browser/*.png
+            /tmp/ldr-course-reading-releases/results.json
+            /tmp/ldr-course-reading-releases/*.png
           retention-days: 7
           if-no-files-found: error
