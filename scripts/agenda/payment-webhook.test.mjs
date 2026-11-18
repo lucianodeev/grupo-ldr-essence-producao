@@ -6,8 +6,10 @@ import {createHmac,randomUUID} from 'node:crypto';
 const ts=createRequire(process.env.AGENDA_PG_PACKAGE||import.meta.url)('typescript');
 const original=fs.readFileSync(new URL('../../apps/painel-ldr/src/routes/api/stripe/webhook.ts',import.meta.url),'utf8');
 const secret='synthetic-webhook-signing-secret-only';
+const sandboxModule = new URL('../../apps/painel-ldr/src/lib/ldr-store-sandbox.ts', import.meta.url).href;
 const source=original.replace('import { createFileRoute } from "@tanstack/react-router";','const createFileRoute=()=>config=>config;')
- .replace('const { supabaseAdmin } = await import("@/integrations/supabase/client.server");','const supabaseAdmin=globalThis.__agendaWebhookDB;');
+ .replace('const { supabaseAdmin } = await import("@/integrations/supabase/client.server");','const supabaseAdmin=globalThis.__agendaWebhookDB;')
+ .replace('"@/lib/ldr-store-sandbox"', JSON.stringify(sandboxModule));
 assert.notEqual(source,original);
 assert(!source.includes('await import("@/integrations/supabase/client.server")'));
 const code=ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText;
@@ -34,7 +36,7 @@ async function fixture(order=null){
  const send=(e,options={})=>{
   const raw=typeof e==='string'?e:JSON.stringify(e),t=options.timestamp??Math.floor(Date.now()/1000);
   const sig=options.signature??`t=${t},v1=${createHmac('sha256',secret).update(`${t}.${raw}`).digest('hex')}`;
-  return post({request:new Request('https://example.invalid/api/stripe/webhook',{method:'POST',headers:{'stripe-signature':sig,'content-type':'application/json'},body:raw})});
+  return post({request:new Request(options.url ?? 'https://example.invalid/api/stripe/webhook',{method:'POST',headers:{'stripe-signature':sig,'content-type':'application/json'},body:raw})});
  };
  return {state,event,send};
 }
@@ -185,4 +187,74 @@ test('financial confirmation preserves an already cancelled quote so it cannot r
 });
 test('fixed project checkout uses the same guarded exact-price provider event path',async()=>{
  const order={...quoteOrder(),metadata:{checkout_kind:'catalog_service',sessions:0}};const f=await fixture(order),e=quoteEvent(f);e.data.object.metadata.checkout_kind='catalog_service';assert.equal((await f.send(e)).status,200);assert.equal(f.state.order.payment_status,'pago');
+});
+
+const storeCheckoutUrl = 'http://127.0.0.1:3000/api/stripe/webhook';
+
+function prepareStoreDelivery(t) {
+ const settings = {
+  LDR_STORE_SANDBOX_ENABLED: 'true',
+  SUPABASE_SERVICE_ROLE_KEY: 'local-fixture',
+  SUPABASE_URL: 'http://127.0.0.1:54321',
+  VITE_SUPABASE_URL: 'http://127.0.0.1:54321',
+  CLIENT_PANEL_URL: 'http://127.0.0.1:3000',
+ };
+ const prior = new Map(Object.keys(settings).map(key => [key, process.env[key]]));
+ Object.assign(process.env, settings);
+ t.after(() => {
+  for (const [key, value] of prior) {
+   if (value === undefined) delete process.env[key];
+   else process.env[key] = value;
+  }
+ });
+}
+
+function storeOrder() {
+ return { ...individualOrder(), catalog_key: 'ebook_estudos_caso_psicanalise', amount_cents: 1490,
+  stripe_checkout_session_id: 'cs_test_fixture', metadata: { checkout_kind: 'ldr_store_sandbox' } };
+}
+
+function storeEvent(f, type) {
+ const event = f.event(type);
+ event.livemode = false;
+ Object.assign(event.data.object, { id: 'cs_test_fixture', amount_total: 1490, payment_intent: 'pi_fixture',
+  metadata: { checkout_kind: 'ldr_store_sandbox', order_id: 'synthetic-order', customer_id: 'customer-A',
+   catalog_key: 'ebook_estudos_caso_psicanalise', product_key: 'ebook_estudos_caso_psicanalise' } });
+ return event;
+}
+
+test('store checkout only delivers the paid edition once through the signed test session', async (t) => {
+ prepareStoreDelivery(t);
+ const f = await fixture(storeOrder());
+ const badAmount = storeEvent(f);
+ badAmount.data.object.amount_total = 1489;
+ assert.equal((await f.send(badAmount, { url: storeCheckoutUrl })).status, 503);
+ const badSession = storeEvent(f);
+ badSession.data.object.id = 'cs_test_other';
+ assert.equal((await f.send(badSession, { url: storeCheckoutUrl })).status, 503);
+ assert.equal(f.state.updates.length, 0);
+
+ const paid = storeEvent(f);
+ assert.equal((await f.send(paid, { url: storeCheckoutUrl })).status, 200);
+ assert.equal((await (await f.send(paid, { url: storeCheckoutUrl })).json()).duplicate, true);
+ assert.equal(f.state.updates.length, 1);
+ assert.equal(f.state.order.payment_status, 'pago');
+ assert.equal(f.state.order.status, 'concluido');
+
+ const refund = storeEvent(f, 'charge.refunded');
+ Object.assign(refund.data.object, { id: 'ch_fixture', amount: 1490, amount_refunded: 1490 });
+ assert.equal((await f.send(refund, { url: storeCheckoutUrl })).status, 200);
+ assert.equal(f.state.order.payment_status, 'reembolsado');
+ assert.equal((await f.send(paid, { url: storeCheckoutUrl })).status, 200);
+ assert.equal(f.state.updates.length, 2);
+});
+
+test('store event cannot touch orders on a public URL or using a live event', async (t) => {
+ prepareStoreDelivery(t);
+ const f = await fixture(storeOrder());
+ const event = storeEvent(f);
+ assert.equal((await f.send(event)).status, 400);
+ event.livemode = true;
+ assert.equal((await f.send(event, { url: storeCheckoutUrl })).status, 400);
+ assert.equal(f.state.calls, 0);
 });

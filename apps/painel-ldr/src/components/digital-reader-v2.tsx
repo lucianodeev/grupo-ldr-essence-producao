@@ -271,8 +271,8 @@ export function DigitalReaderV2({ productKey }: { productKey: ProductKey }) {
     queryKey: ["digital-reader", productKey, locale],
     queryFn: () => contentFn({ data: { productKey, locale } }),
     retry: false,
-    staleTime: 5 * 60 * 1000,
-    refetchOnWindowFocus: false,
+    refetchOnMount: "always",
+    refetchOnWindowFocus: "always",
   });
   useEffect(() => {
     setChapterIndex(0);
@@ -328,7 +328,7 @@ export function DigitalReaderV2({ productKey }: { productKey: ProductKey }) {
     setPageIndex(0);
     setChapterIndex(0);
   }, [locale, productKey]);
-  if (query.isLoading) return <section className="s8-card">{copy.loading}</section>;
+  if (query.isFetching && !query.isFetchedAfterMount) return <section className="s8-card">{copy.loading}</section>;
   if (query.error || !query.data || !payload)
     return <section className="s8-card">{copy.unavailable}</section>;
   const dark = theme === "dark";

@@ -56,20 +56,24 @@ function fail(message: string): never {
 
 async function resolveCustomer(userId: string, email: string | null) {
   const mail = email?.trim().toLowerCase() ?? null;
-  const { data: linked } = await supabaseAdmin
+  const { data: linked, error: linkedError } = await supabaseAdmin
     .from("customers")
     .select("id,portal_active")
     .eq("auth_user_id", userId)
     .maybeSingle();
+  if (linkedError || (linked && !linked.portal_active)) fail("Acesso de cliente não encontrado.");
   if (linked?.portal_active) return linked.id;
 
   if (mail) {
-    const { data: byEmail } = await supabaseAdmin
+    const { data: byEmail, error: byEmailError } = await supabaseAdmin
       .from("customers")
-      .select("id,portal_active")
-      .ilike("email", mail)
+      .select("id,email,portal_active")
+      .ilike("email", mail.replace(/[\\%_]/g, "\\$&"))
+      .is("auth_user_id", null)
       .maybeSingle();
-    if (byEmail?.portal_active) return byEmail.id;
+    if (!byEmailError && byEmail?.portal_active && byEmail.email?.trim().toLowerCase() === mail) {
+      return byEmail.id;
+    }
   }
   fail("Acesso de cliente não encontrado.");
 }
@@ -107,7 +111,7 @@ function decodeContent(value: Json): Json {
   const obj = value as { encoding?: unknown; payload?: unknown };
   if (obj.encoding === "gzip-base64" && typeof obj.payload === "string") {
     try {
-      const text = gunzipSync(Buffer.from(obj.payload, "base64")).toString("utf8");
+      const text = gunzipSync(Buffer.from(obj.payload, "base64"), { maxOutputLength: 8_000_000 }).toString("utf8");
       return JSON.parse(text) as Json;
     } catch {
       fail("Não foi possível abrir este conteúdo.");
@@ -158,4 +162,38 @@ export async function getProtectedDigitalContent(
     version: data.version,
     content: normalizeDigitalReaderContent(decodeContent(data.content)),
   };
+}
+
+/** Keep checkout closed when the marketed edition cannot be delivered. */
+export async function hasCompleteStoreEbook(productKey: DigitalReaderProductKey, expectedChapters: number) {
+  const { data, error } = await supabaseAdmin
+    .from("digital_product_content")
+    .select("content")
+    .eq("product_key", productKey)
+    .eq("locale", "pt")
+    .eq("active", true)
+    .maybeSingle();
+
+  if (error || !data) return false;
+  try {
+    const content = normalizeDigitalReaderContent(decodeContent(data.content));
+    if (content.kind === "book") return content.data.chapters.length === expectedChapters;
+
+    // Existing paginated editions identify chapters directly or number their sections.
+    const sectionsByChapter = new Map<number, number>();
+    for (const page of content.pages) {
+      const heading = page.titulo?.trim() ?? "";
+      const chapter = /^Capítulo\s+(\d+)\s*[—–-]/iu.exec(heading);
+      const section = /^(\d+)\.(\d+)\s*[—–-]/u.exec(heading);
+      if (!chapter && !section) continue;
+      const chapterNumber = Number((chapter ?? section)?.[1]);
+      const sectionNumber = chapter ? 1 : Number(section?.[2]);
+      if (chapterNumber < 1 || chapterNumber > expectedChapters ||
+        sectionNumber !== (sectionsByChapter.get(chapterNumber) ?? 0) + 1) return false;
+      sectionsByChapter.set(chapterNumber, sectionNumber);
+    }
+    return expectedChapters > 0 && sectionsByChapter.size === expectedChapters;
+  } catch {
+    return false;
+  }
 }

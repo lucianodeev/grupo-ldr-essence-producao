@@ -1,0 +1,31 @@
+name: Stripe hosted E2E preflight (manual, no payments)
+on:
+  workflow_dispatch:
+  workflow_call:
+permissions:
+  contents: read
+jobs:
+  guard:
+    if: github.ref == 'refs/heads/feat/ldr-store-servicos-20261117'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    environment: ldr-stripe-e2e-test
+    env:
+      LDR_E2E_BASE_URL: http://127.0.0.1:8787
+      LDR_E2E_SUPABASE_URL: http://127.0.0.1:54321
+      LDR_E2E_STRIPE_TAX: 'false'
+      LDR_E2E_CONFIRM_ISOLATED: 'true'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Fail closed unless test-only secrets and loopback configuration exist
+        env:
+          STRIPE_SECRET_KEY_TEST: ${{ secrets.STRIPE_SECRET_KEY_TEST }}
+          STRIPE_WEBHOOK_SECRET_TEST: ${{ secrets.STRIPE_WEBHOOK_SECRET_TEST }}
+        run: node scripts/agenda/stripe-hosted-e2e-preflight.mjs
+      - name: Explicit non-execution boundary
+        run: echo 'Preflight only; no Stripe API call, no payment, no webhook or Supabase service started.'
