@@ -5,12 +5,13 @@ const secret = process.env.STRIPE_SECRET_KEY_TEST || '';
 const webhook = process.env.STRIPE_WEBHOOK_SECRET_TEST || '';
 const url = process.env.LDR_E2E_BASE_URL || '';
 const supabase = process.env.LDR_E2E_SUPABASE_URL || '';
-if (!/^sk_test_[A-Za-z0-9]+$/.test(secret)) fail('missing or invalid test-only Stripe key');
+if (!/^(?:sk|rk)_test_[A-Za-z0-9]+$/.test(secret)) fail('missing or invalid test-only Stripe key');
 if (!/^whsec_[A-Za-z0-9]+$/.test(webhook)) fail('missing or invalid isolated webhook signing secret');
 for (const [label, value] of [['app', url], ['supabase', supabase]]) {
   try {
     const parsed = new URL(value);
     if (!['127.0.0.1', 'localhost', '[::1]'].includes(parsed.hostname)) fail(label + ' URL must be loopback');
+    if (parsed.username || parsed.password) fail(label + ' URL must not contain credentials');
     if (!['http:', 'https:'].includes(parsed.protocol)) fail(label + ' URL protocol unsupported');
   } catch { fail(label + ' loopback URL missing or invalid'); }
 }

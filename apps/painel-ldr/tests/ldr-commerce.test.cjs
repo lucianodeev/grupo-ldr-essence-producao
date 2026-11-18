@@ -31,9 +31,11 @@ test("checkout requires the opt-in, a Stripe test key and local application and 
     CLIENT_PANEL_URL: url,
   };
   assert.equal(storeSandboxEnabled(env, `${url}/loja`), true);
+  assert.equal(storeSandboxEnabled({ ...env, STRIPE_SECRET_KEY: "rk_test_fixture" }, url), true);
   for (const change of [
     { LDR_STORE_SANDBOX_ENABLED: undefined },
     { STRIPE_SECRET_KEY: "sk_live_fixture" },
+    { STRIPE_SECRET_KEY: "rk_live_fixture" },
     { SUPABASE_URL: "https://example.invalid" },
     { SUPABASE_URL: "http://127.0.0.1@example.invalid" },
     { VITE_SUPABASE_URL: "https://example.invalid" },

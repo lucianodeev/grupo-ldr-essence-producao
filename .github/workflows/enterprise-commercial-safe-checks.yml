@@ -8,9 +8,17 @@ on:
       - 'scripts/agenda/**'
       - '.github/workflows/enterprise-commercial-safe-checks.yml'
   workflow_dispatch:
+    inputs:
+      hosted-stripe-preflight:
+        type: boolean
+        default: false
+        description: Check the protected Stripe test environment without payments
 permissions:
   contents: read
 jobs:
+  hosted-stripe-preflight:
+    if: github.event_name == 'workflow_dispatch' && inputs.hosted-stripe-preflight && github.ref == 'refs/heads/feat/ldr-store-servicos-20261117'
+    uses: ./.github/workflows/stripe-hosted-e2e-preflight.yml
   application:
     runs-on: ubuntu-latest
     timeout-minutes: 15

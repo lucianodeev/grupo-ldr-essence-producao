@@ -1,10 +1,10 @@
 # PR #316 — Preparação do E2E Stripe hospedado em ambiente isolado
 
-Estado: **preparado, não executado**. Data: 2026-11-18. Escopo: branch `feat/ldr-store-servicos-20261117`, sem merge, deploy, pagamentos reais ou alteração de produção.
+Estado: **runner local preparado, ensaio hospedado pendente**. Data: 2026-11-18. Escopo: branch `feat/ldr-store-servicos-20261117`, sem merge, deploy, pagamentos reais ou alteração de produção.
 
 ## Regras obrigatórias
 
-1. Usar exclusivamente Stripe `livemode=false`, com `sk_test_...` e `whsec_...` de **endpoint de teste isolado**. Rejeitar `sk_live_`, `rk_live_`, `pk_live_` e qualquer sessão com `livemode=true`.
+1. Usar exclusivamente Stripe `livemode=false`, com `rk_test_...` ou `sk_test_...` e assinatura de **listener de teste isolado**. Rejeitar `sk_live_`, `rk_live_`, `pk_live_` e qualquer sessão com `livemode=true`.
 2. **Stripe Tax desativado** para estes ensaios (`automatic_tax.enabled=false`). Isto não substitui análise fiscal para produção.
 3. Supabase Auth, PostgREST e PostgreSQL descartáveis, com contas e eBook sintéticos. Não apontar `SUPABASE_URL` para o projeto de produção.
 4. Nunca imprimir segredos, tokens de autenticação, URLs de checkout com tokens ou dados pessoais em logs/artefactos. Não adicionar segredos a ficheiros versionados, comentários, PR ou screenshots.
@@ -14,15 +14,32 @@ Estado: **preparado, não executado**. Data: 2026-11-18. Escopo: branch `feat/ld
 
 - `.github/workflows/enterprise-commercial-safe-checks.yml`, job `local-supabase`: sobe Supabase descartável, executa `scripts/agenda/free-supabase-integration.mjs` e `scripts/agenda/ldr-commerce-browser-e2e.mjs`, recolhe capturas e destrói o ambiente.
 - `docs/ldr-store-servicos-e2e-pr316-20261118.md`: validação com **simulador Stripe**, não com Stripe hospedado.
-- A ligação Stripe do ChatGPT confirma a conta `acct_1U28k7Klx2LyNGeB` em `livemode=false`; **essa autorização não fornece automaticamente** `sk_test_` ao runner GitHub.
+- A ligação Stripe do ChatGPT confirma a conta `acct_1U28k7Klx2LyNGeB` em `livemode=false`; **essa autorização não fornece automaticamente** uma chave de teste ao processo local ou ao runner GitHub.
 
-## Preparação necessária antes de ativar novo job
+## Execução hospedada em estação local
 
-- Criar um **environment GitHub Actions separado**, por exemplo `ldr-stripe-e2e-test`, com aprovação humana para acesso a segredos. Usar segredos apenas nesse environment, não como variáveis públicas nem em PRs de forks.
-- Disponibilizar ao runner, por canal seguro, `STRIPE_SECRET_KEY_TEST` (chave restrita de teste, permissões mínimas) e `STRIPE_WEBHOOK_SECRET_TEST` (segredo do listener de teste isolado). Não copiar chaves reais ou de produção.
-- Criar uma estratégia de entrega dos eventos Stripe **ao endpoint local**: preferencialmente `stripe listen --forward-to http://127.0.0.1:<porta>/<webhook>` num runner descartável, com segredo de assinatura correspondente ao listener; verificar o mecanismo de autenticação CLI e permissões antes de configurar. Não abrir webhook de produção.
-- Confirmar as variáveis/rotas efetivas do servidor e do handler no código, os esquemas de pedidos e as transições de acesso antes de escrever o runner. Usar URLs de sucesso/cancelamento locais. Não usar o domínio oficial.
-- Adicionar job **manual** `workflow_dispatch`, isolado dos workflows de PR e de produção; validar `livemode=false` em cada sessão e PaymentIntent antes de avançar. Abortá-lo se faltar qualquer segredo ou se a URL de Supabase não for loopback/ambiente descartável.
+Instale Docker, Supabase CLI 2.122.1 e Stripe CLI oficiais, use Node.js 22 e execute a partir da raiz da branch. Disponibilize uma chave de API de teste da conta `acct_1U28k7Klx2LyNGeB` ao terminal por um canal de segredos. Use uma chave restrita com permissões de leitura da conta e dos PaymentIntents, criação de Checkout Sessions e reembolsos e acesso ao listener da Stripe CLI, se a configuração da conta permitir. O script extrai o segredo da sessão do listener para memória e encaminha apenas eventos dos dois pedidos sintéticos. Não é preciso pré-cadastrar um endpoint público ou fornecer um segundo segredo para esse percurso.
+
+```bash
+git switch feat/ldr-store-servicos-20261117
+git pull --ff-only
+npm ci --no-audit --no-fund
+read -rsp 'Chave Stripe de teste: ' STRIPE_SECRET_KEY_TEST; printf '\n'
+STRIPE_SECRET_KEY_TEST="$STRIPE_SECRET_KEY_TEST" bash scripts/agenda/run-stripe-hosted-e2e.sh
+unset STRIPE_SECRET_KEY_TEST
+```
+
+Quando Chromium abrir a página hospedada, confirme a indicação de modo de teste e use o cartão de teste Stripe `4242 4242 4242 4242`, validade futura e CVC de teste. Repita para a proposta. O runner aguarda os webhooks assinados, valida os PaymentIntents, solicita o reembolso de teste do eBook, reenvia os mesmos eventos assinados e compara a Biblioteca e a Área Master com o banco descartável. O cenário com um identificador distinto de evento atrasado é exercitado pela suíte de simulação. Consulte a [orientação sobre testes do Checkout](https://docs.stripe.com/automated-testing) e os [cartões de teste](https://docs.stripe.com/testing#cards).
+
+## Pré-validação opcional no GitHub Actions
+
+O environment `ldr-stripe-e2e-test` exige aprovação de `lucianodeev` e limita a execução à branch do PR. A pré-validação exige os dois segredos de teste cadastrados nesse environment. O executor local obtém a sua própria assinatura efémera pela Stripe CLI. Como o workflow dedicado ainda só existe na branch, a chamada com esta ref parte do workflow Enterprise commercial safe checks, já registado em main. A pré-validação verifica formato e loopback, sem aceder à Stripe.
+
+```bash
+gh workflow run enterprise-commercial-safe-checks.yml \
+  --repo lucianodeev/grupo-ldr-essence-producao \
+  --ref feat/ldr-store-servicos-20261117 -f hosted-stripe-preflight=true
+```
 
 ## Critérios de aceitação
 
@@ -40,9 +57,10 @@ Estado: **preparado, não executado**. Data: 2026-11-18. Escopo: branch `feat/ld
 - [x] Acesso à conta Stripe de teste confirmado.
 - [x] Stripe Tax desativado para esta validação por decisão do responsável.
 - [x] Workflow local e evidência simulada inspecionados.
-- [ ] Segredos de teste disponíveis no runner por canal seguro.
+- [x] Environment GitHub criado e protegido, sem segredos no momento da criação.
+- [ ] Chave de teste disponibilizada por canal seguro ao processo local.
 - [ ] Endpoint de webhook local/forwarder validado.
-- [ ] Runner hospedado de teste implementado na branch e revisto.
+- [x] Runner local preparado para Checkout hospedado com Stripe CLI.
 - [ ] Fluxos reais de Stripe **em modo de teste** executados com evidências.
 - [ ] Revisão final do PR.
 

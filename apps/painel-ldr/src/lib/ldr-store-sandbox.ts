@@ -19,7 +19,7 @@ export function storeSandboxEnabled(
 ) {
   return (
     env["LDR_STORE_SANDBOX_ENABLED"] === "true" &&
-    /^sk_test_[a-zA-Z0-9_]+$/.test(env["STRIPE_SECRET_KEY"] ?? "") &&
+    /^(?:sk|rk)_test_[a-zA-Z0-9_]+$/.test(env["STRIPE_SECRET_KEY"] ?? "") &&
     Boolean(env["SUPABASE_SERVICE_ROLE_KEY"]) &&
     isLoopbackHttpUrl(env["SUPABASE_URL"]) &&
     (!env["VITE_SUPABASE_URL"] || isLoopbackHttpUrl(env["VITE_SUPABASE_URL"])) &&

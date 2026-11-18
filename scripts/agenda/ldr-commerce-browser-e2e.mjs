@@ -8,6 +8,7 @@ import { createRequire } from "node:module";
 import { setTimeout as delay } from "node:timers/promises";
 import { pathToFileURL } from "node:url";
 import { gzipSync } from "node:zlib";
+import { hostedStripe } from "./stripe-hosted-e2e.mjs";
 
 const require = createRequire(
   new URL("../../apps/painel-ldr/package.json", import.meta.url),
@@ -38,8 +39,22 @@ const pg = new Client({ connectionString: dbUrl.toString() });
 const db = createClient(status.API_URL, status.SERVICE_ROLE_KEY, {
   auth: { persistSession: false, autoRefreshToken: false },
 });
-const stripeKey = "sk_test_" + randomBytes(20).toString("hex");
-const hookSecret = "whsec_" + randomBytes(20).toString("hex");
+const hosted = process.env.LDR_E2E_STRIPE_MODE === "hosted";
+if (
+  hosted &&
+  (process.env.LDR_E2E_CONFIRM_ISOLATED !== "true" ||
+    process.env.LDR_E2E_STRIPE_TAX !== "false")
+)
+  throw Error(
+    "Hosted E2E requires explicit isolation and Stripe Tax disabled.",
+  );
+const stripeKey = hosted
+  ? process.env.STRIPE_SECRET_KEY_TEST
+  : "sk_test_" + randomBytes(20).toString("hex");
+const stripe = hosted
+  ? hostedStripe({ apiKey: stripeKey, appOrigin: origin })
+  : null;
+let hookSecret = "whsec_" + randomBytes(20).toString("hex");
 
 const stripeCalls = [];
 const sessions = new Map();
@@ -54,8 +69,15 @@ const provider = http.createServer(async (request, response) => {
     const key = request.headers["idempotency-key"];
     assert.equal(typeof key, "string");
     const wasCreated = sessions.has(key);
-    const id =
-      sessions.get(key)?.id ?? `cs_test_${randomBytes(12).toString("hex")}`;
+    const session = stripe
+      ? await stripe.createSession(body, key)
+      : {
+          id:
+            sessions.get(key)?.id ??
+            `cs_test_${randomBytes(12).toString("hex")}`,
+          livemode: false,
+        };
+    const { id } = session;
     const metadata = Object.fromEntries(
       [...body].flatMap(([name, value]) => {
         const match = name.match(/^metadata\[(.+)\]$/);
@@ -74,12 +96,16 @@ const provider = http.createServer(async (request, response) => {
     response.end(
       JSON.stringify({
         id,
-        url: `https://checkout.stripe.com/c/pay/${id}`,
-        livemode: false,
+        url: session.url ?? `https://checkout.stripe.com/c/pay/${id}`,
+        livemode: session.livemode,
       }),
     );
   } catch {
-    response.writeHead(400).end("Invalid isolated transport fixture");
+    if (hosted)
+      console.error(
+        "Hosted Stripe session request rejected by the isolated transport.",
+      );
+    response.writeHead(400).end("Invalid isolated transport request");
   }
 });
 
@@ -212,6 +238,7 @@ const scratch = fs.mkdtempSync(
 try {
   await pg.connect();
   await seed();
+  if (stripe) hookSecret = await stripe.start();
   await new Promise((resolve, reject) => {
     provider.once("error", reject);
     provider.listen(0, "127.0.0.1", resolve);
@@ -246,7 +273,7 @@ try {
   await new Promise((resolve, reject) => {
     const build = spawn("npm", ["run", "build:render"], {
       cwd,
-      env,
+      env: { ...env, STRIPE_SECRET_KEY: "", STRIPE_WEBHOOK_SECRET: "" },
       stdio: ["ignore", buildLog, buildLog],
     });
     build.on("error", reject);
@@ -268,11 +295,12 @@ try {
   fs.closeSync(serverLog);
   await poll(async () => (await fetch(origin + "/loja")).ok);
 
-  browser = await chromium.launch(
-    process.env.LDR_BROWSER_SINGLE_PROCESS === "true"
+  browser = await chromium.launch({
+    headless: !hosted,
+    ...(process.env.LDR_BROWSER_SINGLE_PROCESS === "true"
       ? { args: ["--no-zygote", "--single-process"] }
-      : {},
-  );
+      : {}),
+  });
   const context = await browser.newContext({
     locale: "pt-PT",
     viewport: { width: 390, height: 844 },
@@ -281,7 +309,14 @@ try {
     const url = new URL(route.request().url());
     if (url.origin === origin || url.origin === status.API_URL)
       return route.continue();
-    if (url.origin === "https://checkout.stripe.com") {
+    if (
+      hosted &&
+      url.protocol === "https:" &&
+      (url.hostname.endsWith(".stripe.com") ||
+        url.hostname.endsWith(".stripe.network"))
+    )
+      return route.continue();
+    if (!hosted && url.origin === "https://checkout.stripe.com") {
       return route.fulfill({
         status: 200,
         contentType: "text/html",
@@ -360,30 +395,36 @@ try {
     (await order(digital.metadata.order_id)).payment_status,
     "pendente",
   );
-  assert.equal(
-    await page.getByRole("heading", { name: "Fixture Stripe local" }).count(),
-    1,
-  );
   pass(
-    "eBook checkout retry keeps one order and the same Stripe fixture session after lost response",
+    "eBook retry keeps one order and the same Stripe checkout session after lost response",
   );
-  await inaccessibleBook();
-
-  const digitalPaid = await webhook(digital, "checkout.session.completed");
-  const digitalFailed = await webhook(
-    digital,
-    "payment_intent.payment_failed",
-    {},
-    false,
-  );
-  await send(digitalFailed);
-  assert.equal(
-    (await order(digital.metadata.order_id)).payment_status,
-    "falhou",
-  );
-  await inaccessibleBook();
-  await send(digitalPaid);
-  assert.equal((await send(digitalPaid)).duplicate, true);
+  let digitalPaid, hostedDigitalPaid;
+  if (stripe) {
+    hostedDigitalPaid = await stripe.complete(digital.metadata.order_id);
+    digitalPaid = hostedDigitalPaid.event;
+    await stripe.replay(hostedDigitalPaid);
+  } else {
+    assert.equal(
+      await page.getByRole("heading", { name: "Fixture Stripe local" }).count(),
+      1,
+    );
+    await inaccessibleBook();
+    digitalPaid = await webhook(digital, "checkout.session.completed");
+    const digitalFailed = await webhook(
+      digital,
+      "payment_intent.payment_failed",
+      {},
+      false,
+    );
+    await send(digitalFailed);
+    assert.equal(
+      (await order(digital.metadata.order_id)).payment_status,
+      "falhou",
+    );
+    await inaccessibleBook();
+    await send(digitalPaid);
+    assert.equal((await send(digitalPaid)).duplicate, true);
+  }
   assert.equal((await order(digital.metadata.order_id)).payment_status, "pago");
   await page.goto(origin + reader);
   await page.getByText(marker, { exact: true }).waitFor();
@@ -396,7 +437,7 @@ try {
     200,
   );
   pass(
-    `paid event delivers the edition in Biblioteca, duplicate ignored (order ${digital.metadata.order_id}, fixture session ${digital.id})`,
+    `paid event delivers the edition in Biblioteca, duplicate ignored (order ${digital.metadata.order_id}, ${hosted ? "hosted test" : "fixture"} session ${digital.id})`,
   );
 
   await login("other");
@@ -419,14 +460,22 @@ try {
     [],
   );
   pass("second authenticated customer denied by Biblioteca and PostgREST RLS");
-  const digitalRefund = await webhook(digital, "charge.refunded", {
-    id: "ch_fixture",
-    amount: 490,
-    amount_refunded: 490,
-  });
-  await send(digitalRefund);
-  assert.equal((await send(digitalRefund)).duplicate, true);
-  await send({ ...digitalPaid, id: "evt_" + randomBytes(8).toString("hex") });
+  let digitalRefund;
+  if (stripe) {
+    const refund = await stripe.refundBook(digital.metadata.order_id);
+    digitalRefund = refund.event;
+    await stripe.replay(refund);
+    await stripe.replay(hostedDigitalPaid);
+  } else {
+    digitalRefund = await webhook(digital, "charge.refunded", {
+      id: "ch_fixture",
+      amount: 490,
+      amount_refunded: 490,
+    });
+    await send(digitalRefund);
+    assert.equal((await send(digitalRefund)).duplicate, true);
+    await send({ ...digitalPaid, id: "evt_" + randomBytes(8).toString("hex") });
+  }
   assert.equal(
     (await order(digital.metadata.order_id)).payment_status,
     "reembolsado",
@@ -514,9 +563,16 @@ try {
     (await order(quote.metadata.order_id)).metadata.quote_state,
     "accepted",
   );
-  const quotePaid = await webhook(quote, "checkout.session.completed");
-  await send(quotePaid);
-  assert.equal((await send(quotePaid)).duplicate, true);
+  let quotePaid;
+  if (stripe) {
+    const paid = await stripe.complete(quote.metadata.order_id);
+    quotePaid = paid.event;
+    await stripe.replay(paid);
+  } else {
+    quotePaid = await webhook(quote, "checkout.session.completed");
+    await send(quotePaid);
+    assert.equal((await send(quotePaid)).duplicate, true);
+  }
   assert.equal((await order(quote.metadata.order_id)).payment_status, "pago");
   await page.goto(origin + "/cliente/propostas");
   await card.getByText(/Pagamento: pago/).waitFor();
@@ -529,7 +585,7 @@ try {
     page.getByRole("region", { name: "Propostas e pagamentos" }),
   );
   pass(
-    `accepted quote reconciled in both client and Master UIs (order ${quote.metadata.order_id}, fixture session ${quote.id})`,
+    `accepted quote reconciled in both client and Master UIs (order ${quote.metadata.order_id}, ${hosted ? "hosted test" : "fixture"} session ${quote.id})`,
   );
   const receipts = unwrap(
     await db
@@ -540,28 +596,37 @@ try {
   assert.equal(receipts.length, 3);
   assert.equal(sessions.size, 2);
   pass(
-    "real local order and receipt tables reconcile to two fixture sessions with no duplicates",
+    `local order and receipt tables reconcile to two ${hosted ? "Stripe test" : "fixture"} sessions with no duplicates`,
   );
 } catch (error) {
-  for (const name of ["build.log", "server.log"]) {
-    const file = scratch + "/" + name;
-    if (fs.existsSync(file))
-      console.error(
-        fs
-          .readFileSync(file, "utf8")
-          .split("\n")
-          .slice(-12)
-          .join("\n")
-          .replaceAll(status.SERVICE_ROLE_KEY, "[redacted]")
-          .replaceAll(status.ANON_KEY, "[redacted]")
-          .replaceAll(stripeKey, "[redacted]")
-          .replaceAll(hookSecret, "[redacted]"),
-      );
+  if (hosted) {
+    // Browser errors and subprocess logs can contain session URLs or headers.
+    console.error(
+      "Hosted Stripe E2E stopped. The last PASS identifies the completed stage.",
+    );
+    process.exitCode = 1;
+  } else {
+    for (const name of ["build.log", "server.log"]) {
+      const file = scratch + "/" + name;
+      if (fs.existsSync(file))
+        console.error(
+          fs
+            .readFileSync(file, "utf8")
+            .split("\n")
+            .slice(-12)
+            .join("\n")
+            .replaceAll(status.SERVICE_ROLE_KEY, "[redacted]")
+            .replaceAll(status.ANON_KEY, "[redacted]")
+            .replaceAll(stripeKey, "[redacted]")
+            .replaceAll(hookSecret, "[redacted]"),
+        );
+    }
+    throw error;
   }
-  throw error;
 } finally {
   await browser?.close();
   app?.kill("SIGTERM");
+  await stripe?.stop();
   if (provider.listening)
     await new Promise((resolve) => provider.close(resolve));
   await pg.end();
