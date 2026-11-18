@@ -7,12 +7,11 @@ import { useI18n } from "@/lib/i18n";
 import { getAcademySubscriptionCourse } from "@/lib/academy-subscription-courses.catalog";
 import {
   clientAcademyReadingEdition,
+  clientCompleteAcademyReadingUnit,
   clientLibraryCourseEntitlement,
 } from "@/lib/library-subscription.functions";
-import { clientSaveProgress } from "@/lib/learning.functions";
 import {
   academyReadingTimeLabel,
-  type AcademyReadingEdition,
 } from "@/lib/academy-reading-editions";
 import { AcademyReadingEditionView } from "@/components/academy-reading-edition";
 
@@ -28,8 +27,7 @@ const UI = {
     progress: "Seu progresso",
     prev: "Anterior",
     next: "Próximo",
-    done: "Marcar concluído",
-    completed: "Concluído",
+    historicalCompleted: "Concluído",
     topics: "Pontos de estudo",
     activity: "Atividade aplicada",
     materials: "Materiais complementares",
@@ -47,8 +45,7 @@ const UI = {
     progress: "Your progress",
     prev: "Previous",
     next: "Next",
-    done: "Mark complete",
-    completed: "Completed",
+    historicalCompleted: "Completed",
     topics: "Study points",
     activity: "Applied activity",
     materials: "Complementary materials",
@@ -66,8 +63,7 @@ const UI = {
     progress: "Votre progression",
     prev: "Précédent",
     next: "Suivant",
-    done: "Marquer terminé",
-    completed: "Terminé",
+    historicalCompleted: "Terminé",
     topics: "Points d’étude",
     activity: "Activité appliquée",
     materials: "Matériels complémentaires",
@@ -85,8 +81,7 @@ const UI = {
     progress: "Tu progreso",
     prev: "Anterior",
     next: "Siguiente",
-    done: "Marcar completado",
-    completed: "Completado",
+    historicalCompleted: "Completado",
     topics: "Puntos de estudio",
     activity: "Actividad aplicada",
     materials: "Materiales complementarios",
@@ -108,11 +103,11 @@ function Page() {
   const course = getAcademySubscriptionCourse(slug);
   const readingMetadata = course ? getAcademyCourseReadingMetadata(course.slug) : null;
   const readingLabel = course ? academyReadingTimeLabel(course.slug, locale) : null;
-  const [readingEdition, setReadingEdition] = useState<AcademyReadingEdition | null>(null);
+  const [readingEdition, setReadingEdition] = useState<Awaited<ReturnType<typeof clientAcademyReadingEdition>> | null>(null);
   const [readingError, setReadingError] = useState(false);
   const getReadingEdition = useServerFn(clientAcademyReadingEdition);
   const getEntitlement = useServerFn(clientLibraryCourseEntitlement);
-  const saveProgress = useServerFn(clientSaveProgress);
+  const completeUnit = useServerFn(clientCompleteAcademyReadingUnit);
   const [checking, setChecking] = useState(true);
   const [active, setActive] = useState(false);
   const [index, setIndex] = useState(0);
@@ -132,7 +127,7 @@ function Page() {
     setReadingError(false);
     const request = readingLabel
       ? getReadingEdition({ data: { slug: course.slug } }).then((result) => {
-          if (alive) setReadingEdition(result.edition);
+          if (alive) setReadingEdition(result);
           return result;
         })
       : getEntitlement({ data: { resourceKey: course.productKey } });
@@ -155,6 +150,8 @@ function Page() {
   }, [course, getEntitlement, getReadingEdition, readingLabel]);
 
   useEffect(() => {
+    setDone([]);
+    setIndex(0);
     if (!course) return;
     try {
       const saved = JSON.parse(
@@ -197,25 +194,8 @@ function Page() {
       </section>
     );
 
-  const persist = (nextDone: number[], nextIndex = index) => {
-    setDone(nextDone);
-    setIndex(nextIndex);
-    try {
-      localStorage.setItem(
-        `ldr-subscription-course-${course.slug}`,
-        JSON.stringify({ done: nextDone, index: nextIndex }),
-      );
-    } catch {}
-    saveProgress({
-      data: {
-        productKey: course.productKey,
-        progressPercent: Math.round((nextDone.length / course.modules.length) * 100),
-        currentLocation: `${u.module} ${nextIndex + 1}`,
-      },
-    }).catch(() => {});
-  };
-  const complete = () => persist(done.includes(index) ? done : [...done, index]);
   const next = () => setIndex(Math.min(course.modules.length - 1, index + 1));
+  const edition = readingEdition?.edition;
   const module = course.modules[index];
   if (!module) return <section className="s8-card">{u.notFound}</section>;
 
@@ -252,8 +232,15 @@ function Page() {
         </div>
       </section>
 
-      {readingEdition && (
-        <AcademyReadingEditionView key={readingEdition.editionId} edition={readingEdition} />
+      {edition && (
+        <AcademyReadingEditionView
+          key={edition.editionId}
+          edition={edition}
+          initialCompleted={readingEdition?.completedUnits}
+          onComplete={(unitId) =>
+            completeUnit({ data: { slug, editionId: edition.editionId, unitId } })
+          }
+        />
       )}
 
       <details open={!readingLabel}>
@@ -321,21 +308,12 @@ function Page() {
                   {u.prev}
                 </button>
                 <div className="flex gap-2">
-                  <button
-                    disabled
-                    title="Roteiro curricular; desenvolvimento e avaliação pendentes"
-                    onClick={complete}
-                    className="rounded-xl border px-4 py-2 font-bold"
-                  >
-                    {done.includes(index) ? (
-                      <>
-                        <CheckCircle2 className="mr-1 inline h-4 w-4" />
-                        {u.completed}
-                      </>
-                    ) : (
-                      u.done
-                    )}
-                  </button>
+                  {done.includes(index) && (
+                    <span className="rounded-xl border px-4 py-2 font-bold">
+                      <CheckCircle2 className="mr-1 inline h-4 w-4" />
+                      {u.historicalCompleted}
+                    </span>
+                  )}
                   <button
                     onClick={next}
                     disabled={index === course.modules.length - 1}

@@ -22,7 +22,13 @@ const fixture = {
 (async () => {
   await build({
     stdin: {
-      contents: `import React from 'react'; import {createRoot} from 'react-dom/client'; import {AcademyReadingEditionView} from './src/components/academy-reading-edition'; const edition=${JSON.stringify(fixture)}; const draft=${JSON.stringify(source)}; window.__writes=[]; const original=Storage.prototype.setItem; Storage.prototype.setItem=function(...args){window.__writes.push(args);return original.apply(this,args)}; createRoot(document.getElementById('root')).render(<><p>TESTE ISOLADO — edição de leitura; sem sessão real.</p><AcademyReadingEditionView edition={new URLSearchParams(location.search).has('pending')?draft:edition}/></>);`,
+      contents: `import React from 'react'; import {createRoot} from 'react-dom/client'; import {AcademyReadingEditionView} from './src/components/academy-reading-edition'; const edition=${JSON.stringify(fixture)}; const draft=${JSON.stringify(source)}; window.__writes=[]; const original=Storage.prototype.setItem; Storage.prototype.setItem=function(...args){if(this===localStorage)window.__writes.push(args);return original.apply(this,args)};
+      const onComplete = async (id) => {
+        const response = await fetch('/complete', {method: 'POST', body: id});
+        if (!response.ok) throw Error('Test save failed');
+        return response.json();
+      };
+      fetch('/progress').then(response => response.json()).then(completed => createRoot(document.getElementById('root')).render(<><p>TESTE ISOLADO — edição de leitura; sem sessão real.</p><AcademyReadingEditionView edition={new URLSearchParams(location.search).has('pending')?draft:edition} initialCompleted={completed} onComplete={onComplete}/></>));`,
       resolveDir: path.join(root, "apps/painel-ldr"),
       sourcefile: "reading-browser-fixture.tsx",
       loader: "tsx",
@@ -35,7 +41,29 @@ const fixture = {
   });
   const assets = path.join(root, "apps/painel-ldr/dist/client/assets");
   const css = fs.readdirSync(assets).filter((f) => f.endsWith(".css"));
+  let failSave = false;
+  const completed = new Set();
   const server = http.createServer((req, res) => {
+    if (req.url === "/complete" && req.method === "POST") {
+      if (failSave) {
+        req.resume();
+        res.statusCode = 503;
+        return res.end();
+      }
+      req.setEncoding("utf8");
+      let id = "";
+      req.on("data", (chunk) => { id += chunk; });
+      req.on("end", () => {
+        completed.add(id);
+        res.setHeader("Content-Type", "application/json");
+        res.end(JSON.stringify([...completed]));
+      });
+      return;
+    }
+    if (req.url === "/progress") {
+      res.setHeader("Content-Type", "application/json");
+      return res.end(JSON.stringify([...completed]));
+    }
     if (req.url === "/fixture.js") {
       res.setHeader("Content-Type", "text/javascript");
       return res.end(fs.readFileSync(path.join(scratch, "fixture.js")));
@@ -67,6 +95,7 @@ const fixture = {
       { width: 390, height: 844 },
       { width: 1280, height: 900 },
     ]) {
+      completed.clear();
       const page = await browser.newPage({ viewport });
       const errors = [];
       const unexpected = [];
@@ -123,6 +152,21 @@ const fixture = {
         "step",
       );
       assert.deepEqual(await page.evaluate(() => window.__writes), []);
+      const complete = page.getByRole("button", { name: "Marcar como concluída" });
+      failSave = true;
+      await complete.click();
+      await page.getByRole("alert").getByText("Tente novamente.", { exact: false }).waitFor();
+      await page.getByRole("status").getByText("0 de 6 unidades concluídas").waitFor();
+      failSave = false;
+      await complete.click();
+      await page.getByRole("status").getByText("1 de 6 unidades concluídas").waitFor();
+      assert.equal(await page.getByRole("button", { name: "Unidade concluída" }).isDisabled(), true);
+      assert.match(await nav.getByRole("button").nth(1).innerText(), /Concluída/);
+      await page.reload();
+      await page.getByRole("status").getByText("1 de 6 unidades concluídas").waitFor();
+      await nav.getByRole("button").nth(1).click();
+      assert.equal(await page.getByRole("button", { name: "Unidade concluída" }).isDisabled(), true);
+      assert.deepEqual((await page.evaluate(() => window.__writes)).map(([key]) => key), []);
       assert.deepEqual(unexpected, []);
       assert.deepEqual(errors, []);
       await page.screenshot({
@@ -130,7 +174,7 @@ const fixture = {
         fullPage: true,
       });
       await page.goto(url + "/?pending");
-      await page.waitForFunction(() => Array.isArray(window.__writes));
+      await page.getByText("TESTE ISOLADO", { exact: false }).waitFor();
       assert.equal(
         await page
           .getByRole("navigation", { name: "Unidades da edição de leitura" })
@@ -147,7 +191,9 @@ const fixture = {
         keyboard: true,
         rubricTable: true,
         pageOverflow: false,
-        storageWrites: 0,
+        historicalStorageWrites: 0,
+        completionPersistsOnReload: true,
+        retryAfterSaveFailure: true,
         externalRequests: 0,
         scriptErrors: 0,
         pendingCandidateHidden: true,

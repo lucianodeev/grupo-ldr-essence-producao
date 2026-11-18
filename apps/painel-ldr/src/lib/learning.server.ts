@@ -1,3 +1,4 @@
+import { ACADEMY_READING_PROGRESS_PREFIX } from "@/lib/academy-reading-progress-key";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { resolveClient } from "@/lib/client-portal.server";
 import { hasOwnerDigitalAccess } from "@/lib/owner-digital-access.server";
@@ -44,7 +45,7 @@ export async function getClientLearningHub(userId: string, email: string | null)
   const [{ data: enrollments }, { data: comments }, { data: progress }, canDeleteComments] = await Promise.all([
     supabaseAdmin.from("training_enrollments").select("training_id,active,cohort_id,training_programs(id,slug,title,description,status),training_cohorts(cohort_number,capacity,status)").eq("customer_id", customer.id).eq("active", true),
     supabaseAdmin.from("library_comments").select("id,product_key,training_id,parent_id,author_user_id,author_kind,author_label,body,status,created_at").eq("customer_id", customer.id).order("created_at", { ascending: true }),
-    supabaseAdmin.from("library_progress").select("product_key,progress_percent,current_location,updated_at").eq("customer_id", customer.id),
+    supabaseAdmin.from("library_progress").select("product_key,progress_percent,current_location,updated_at").eq("customer_id", customer.id).not("product_key", "like", ACADEMY_READING_PROGRESS_PREFIX + "%"),
     clientCommentDeleteEnabled(),
   ]);
 
@@ -89,7 +90,7 @@ export async function deleteClientLibraryComment(userId: string, email: string |
 
 export async function saveClientProgress(userId: string, email: string | null, input: { productKey: string; progressPercent: number; currentLocation?: string | null }) {
   const customer = await requireClient(userId, email);
-  if (!Number.isFinite(input.progressPercent) || typeof input.productKey !== "string" || !input.productKey.trim() || input.productKey.length > 180) fail("Progresso inválido.");
+  if (!Number.isFinite(input.progressPercent) || typeof input.productKey !== "string" || !input.productKey.trim() || input.productKey.length > 180 || input.productKey.startsWith(ACADEMY_READING_PROGRESS_PREFIX)) fail("Progresso inválido.");
   const pct = Math.max(0, Math.min(100, Math.round(input.progressPercent)));
   const patch = { progress_percent: pct, current_location: input.currentLocation ?? null, updated_at: new Date().toISOString() };
   // The comparison is part of UPDATE itself: stale devices cannot lower a newer percentage.
