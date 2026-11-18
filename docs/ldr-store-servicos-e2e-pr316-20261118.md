@@ -34,3 +34,20 @@ O typecheck e o build Render passaram. Também passaram 59 testes unitários, 30
 A conta oferecida pela ligação Stripe só estava em `livemode=true`. A execução não enviou tráfego à API Stripe e não usou dados reais. Para validar o fornecedor, disponibilize ao ambiente isolado uma chave `sk_test_` e um segredo de webhook de teste por um canal de segredos. Repita no checkout hospedado os dois pagamentos com cartão de teste e o reembolso de eBook, receba os eventos de teste no endpoint local e compare os estados com os da tabela acima.
 
 Antes de publicar, reveja os alertas de dependências já registados, valide as quatro edições comprimidas e resolva as duas edições cujo índice não coincide com o conteúdo armazenado. O merge e o deploy dependem de autorização explícita. [Validação anterior e inventário editorial](ldr-store-servicos-validacao-20261117.md)
+
+## Fecho técnico em 18/11/2026
+
+O [workflow anterior](https://github.com/lucianodeev/grupo-ldr-essence-producao/actions/runs/44199041500) concluiu com sucesso e publicou as capturas de navegador. Nesta rodada, as edições portuguesas agrupadas em capítulos e as paginadas com capítulos numerados passam pela mesma validação de conteúdo. O leitor normaliza ambos os formatos. O checkout exige que cada capítulo anunciado esteja presente e bloqueia lacunas na numeração das secções.
+
+| Edição portuguesa ativa | Versão | Capítulos verificados | Páginas |
+| --- | ---: | ---: | ---: |
+| Estudos de Caso em Psicanálise | 3 | 24 | 196 |
+| A Prática Clínica da Psicanálise | 1 | 20 | 23 |
+| Psicanálise e Autismo | 1 | 20 | 23 |
+| A Psicanálise no Mundo | 1 | 20 | 23 |
+
+Os quatro ficheiros foram descodificados em modo leitura e passaram pela nova validação de checkout. **Falar com Quem Feriu** e **Da Pobreza ao Primeiro Contrato** continuam com seis páginas armazenadas e um plano editorial de 20 capítulos. A loja identifica ambas como **Edição em revisão** e retira o preço e o checkout. A disponibilidade no leitor segue as regras existentes. Para liberar a venda dessas duas edições, é necessário fornecer e revisar as edições completas correspondentes ao índice.
+
+As dependências de TanStack Start/Router, Vite, jsPDF e Zod foram atualizadas. A auditoria de runtime passou de 20 alertas (6 críticos) para 11 alertas altos na árvore do picomatch. O [aviso do picomatch](https://github.com/advisories/GHSA-fc5q-39xc-vjpf) ainda não indica versão corrigida. A rodada local aprovou typecheck, build Render, 59 testes unitários, 301 regressões, 29 testes de webhook e a demonstração de loja e serviços em Chromium a 390 e 1.280 px. A suíte E2E no CI foi adaptada para testar compra e leitura de conteúdo comprimido.
+
+A ligação ao Stripe ainda devolve apenas modo real. O ensaio hospedado continua dependente de credenciais de teste e de um webhook assinado de teste. A validação acima decorreu com dados de produção apenas em leitura para os quatro livros e dados sintéticos nos pedidos.

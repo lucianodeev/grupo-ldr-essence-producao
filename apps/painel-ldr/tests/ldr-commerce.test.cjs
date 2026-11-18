@@ -110,4 +110,39 @@ test("only a complete stored eBook edition can open the store checkout", async (
   assert.equal(await hasCompleteStoreEbook(key, 2), false);
   content.data.chapters[0][2] = [""];
   assert.equal(await hasCompleteStoreEbook(key, 1), false);
+  const { gzipSync } = require("node:zlib");
+  const paginated = (headings) => ({
+    encoding: "gzip-base64",
+    payload: gzipSync(
+      JSON.stringify({
+        kind: "ebook",
+        pages: headings.map((titulo) => ({ titulo, texto: "Texto sintético da página." })),
+      }),
+    ).toString("base64"),
+  });
+  content = paginated(["Introdução", "Capítulo 1 — Início", "Capítulo 2 — Desenvolvimento"]);
+  assert.equal(await hasCompleteStoreEbook(key, 2), true);
+  content = paginated(["Nota", "1.1 — Introdução", "1.2 — Desenvolvimento", "2.1 — Continuação"]);
+  assert.equal(await hasCompleteStoreEbook(key, 2), true);
+  content = paginated([
+    "Nota",
+    "1.1 — Introdução",
+    "1.3 — Secção sem a anterior",
+    "2.1 — Continuação",
+  ]);
+  assert.equal(await hasCompleteStoreEbook(key, 2), false);
+  content = paginated(["Introdução", "Capítulo 1 — Início", "Capítulo 3 — Lacuna"]);
+  assert.equal(await hasCompleteStoreEbook(key, 3), false);
+});
+
+test("the two short legacy editions are kept in the catalogue with checkout held for review", () => {
+  const { PSYCHOANALYSIS_EBOOKS, storeEbookUnderReview } = require("./helpers/load-ts.cjs")()(
+    "lib/psychoanalysis-ebooks.catalog.ts",
+  );
+  assert.equal(
+    PSYCHOANALYSIS_EBOOKS.filter(storeEbookUnderReview)
+      .map((item) => item.key)
+      .join(","),
+    "ebook_falar_com_quem_feriu,ebook_da_pobreza_ao_primeiro_contrato",
+  );
 });

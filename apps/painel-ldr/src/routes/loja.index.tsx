@@ -1,3 +1,4 @@
+import { storeEbookUnderReview } from "@/lib/psychoanalysis-ebooks.catalog";
 import { createFileRoute } from "@tanstack/react-router";
 import { useDeferredValue, useState } from "react";
 import { AcademyCatalogCard } from "@/components/academy-catalog-card";
@@ -100,7 +101,9 @@ function Store() {
                 subscription={product.kind !== "ebook"}
                 accessLabel={
                   product.kind === "ebook"
-                    ? ebookStorePrice(product, market)
+                    ? storeEbookUnderReview(product)
+                      ? "Edição em revisão"
+                      : ebookStorePrice(product, market)
                     : academySubscriptionLabel()
                 }
                 cta="Ver detalhes"

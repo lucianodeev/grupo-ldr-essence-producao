@@ -111,7 +111,7 @@ function decodeContent(value: Json): Json {
   const obj = value as { encoding?: unknown; payload?: unknown };
   if (obj.encoding === "gzip-base64" && typeof obj.payload === "string") {
     try {
-      const text = gunzipSync(Buffer.from(obj.payload, "base64")).toString("utf8");
+      const text = gunzipSync(Buffer.from(obj.payload, "base64"), { maxOutputLength: 8_000_000 }).toString("utf8");
       return JSON.parse(text) as Json;
     } catch {
       fail("Não foi possível abrir este conteúdo.");
@@ -177,7 +177,22 @@ export async function hasCompleteStoreEbook(productKey: DigitalReaderProductKey,
   if (error || !data) return false;
   try {
     const content = normalizeDigitalReaderContent(decodeContent(data.content));
-    return content.kind === "book" && content.data.chapters.length === expectedChapters;
+    if (content.kind === "book") return content.data.chapters.length === expectedChapters;
+
+    // Existing paginated editions identify chapters directly or number their sections.
+    const sectionsByChapter = new Map<number, number>();
+    for (const page of content.pages) {
+      const heading = page.titulo?.trim() ?? "";
+      const chapter = /^Capítulo\s+(\d+)\s*[—–-]/iu.exec(heading);
+      const section = /^(\d+)\.(\d+)\s*[—–-]/u.exec(heading);
+      if (!chapter && !section) continue;
+      const chapterNumber = Number((chapter ?? section)?.[1]);
+      const sectionNumber = chapter ? 1 : Number(section?.[2]);
+      if (chapterNumber < 1 || chapterNumber > expectedChapters ||
+        sectionNumber !== (sectionsByChapter.get(chapterNumber) ?? 0) + 1) return false;
+      sectionsByChapter.set(chapterNumber, sectionNumber);
+    }
+    return expectedChapters > 0 && sectionsByChapter.size === expectedChapters;
   } catch {
     return false;
   }

@@ -1,3 +1,4 @@
+import { storeEbookUnderReview } from "@/lib/psychoanalysis-ebooks.catalog";
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { useRef, useState } from "react";
 import { commerceAction, LdrCommercePage } from "@/components/ldr-commerce-page";
@@ -16,7 +17,10 @@ export const Route = createFileRoute("/loja/$slug")({
     if (!product) throw notFound();
     return {
       product,
-      sandboxEnabled: product.kind === "ebook" && (await ldrStoreSandboxStatus()).enabled,
+      sandboxEnabled:
+        product.kind === "ebook" &&
+        !storeEbookUnderReview(product) &&
+        (await ldrStoreSandboxStatus()).enabled,
     };
   },
   head: ({ loaderData }) => ({
@@ -108,7 +112,9 @@ function StoreProduct() {
           <h2 className="font-serif text-2xl">Acesso digital</h2>
           <p className="mt-3 text-lg font-bold">
             {product.kind === "ebook"
-              ? ebookStorePrice(product, market)
+              ? storeEbookUnderReview(product)
+                ? "Edição em revisão"
+                : ebookStorePrice(product, market)
               : academySubscriptionLabel()}
           </p>
           {product.kind === "ebook" && (

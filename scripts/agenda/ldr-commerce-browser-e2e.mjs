@@ -7,6 +7,7 @@ import http from "node:http";
 import { createRequire } from "node:module";
 import { setTimeout as delay } from "node:timers/promises";
 import { pathToFileURL } from "node:url";
+import { gzipSync } from "node:zlib";
 
 const require = createRequire(
   new URL("../../apps/painel-ldr/package.json", import.meta.url),
@@ -174,16 +175,16 @@ async function seed() {
       USING (EXISTS (SELECT 1 FROM ecosystem_contacts c WHERE c.id = contact_id));
     NOTIFY pgrst,'reload schema';
   `);
+  const edition = {
+    kind: "ebook",
+    pages: Array.from({ length: 20 }, (_, i) => ({
+      titulo: `Capítulo ${i + 1} — Validação sintética`,
+      texto: i === 0 ? marker : `Página sintética ${i + 1}.`,
+    })),
+  };
   const content = {
-    kind: "book",
-    data: {
-      title: "Edição sintética de validação",
-      chapters: Array.from({ length: 20 }, (_, i) => [
-        `Capítulo sintético ${i + 1}`,
-        "",
-        [i === 0 ? marker : `Página sintética ${i + 1}.`],
-      ]),
-    },
+    encoding: "gzip-base64",
+    payload: gzipSync(JSON.stringify(edition)).toString("base64"),
   };
   await pg.query(
     "INSERT INTO digital_product_content VALUES ($1,'pt','Edição sintética de validação',$2,1,true)",
