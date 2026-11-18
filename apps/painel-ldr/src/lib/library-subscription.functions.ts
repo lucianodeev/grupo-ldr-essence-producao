@@ -89,6 +89,19 @@ export const clientLibraryCourseEntitlement = createServerFn({ method: "GET" })
   .inputValidator((data: { resourceKey: string }) => data)
   .handler(async ({ context, data }) => libraryCourseDecision(context, data.resourceKey));
 
+async function authorizedReadingEdition(
+  context: { userId: string; claims: Record<string, unknown>; accessToken?: string | null },
+  slug: string,
+) {
+  const { getProtectedAcademyReadingEdition } =
+    await import("@/lib/academy-reading-content.server");
+  const { hasOwnerDigitalAccess } = await import("@/lib/owner-digital-access.server");
+  const owner = hasOwnerDigitalAccess(emailOf(context.claims), context.userId);
+  return getProtectedAcademyReadingEdition(context.userId, slug, async (key) =>
+    owner ? { allowed: true } : libraryCourseDecision(context, key),
+  );
+}
+
 export const clientAcademyReadingEdition = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((data: { slug: string }) => {
@@ -98,13 +111,30 @@ export const clientAcademyReadingEdition = createServerFn({ method: "GET" })
   })
   .handler(async ({ context, data }) => {
     setResponseHeader("Cache-Control", "private, no-store");
-    const { getProtectedAcademyReadingEdition } =
-      await import("@/lib/academy-reading-content.server");
-    const { hasOwnerDigitalAccess } = await import("@/lib/owner-digital-access.server");
-    const owner = hasOwnerDigitalAccess(emailOf(context.claims), context.userId);
-    return getProtectedAcademyReadingEdition(context.userId, data.slug, async (key) =>
-      owner ? { allowed: true } : libraryCourseDecision(context, key),
-    );
+    const result = await authorizedReadingEdition(context, data.slug);
+    if (!result.edition) return { ...result, completedUnits: [] };
+    const { loadAcademyReadingProgress } = await import("@/lib/academy-reading-progress.server");
+    const completedUnits = await loadAcademyReadingProgress(
+      context.userId, emailOf(context.claims), result.edition,
+    ).catch(() => null);
+    return { ...result, completedUnits };
+  });
+
+export const clientCompleteAcademyReadingUnit = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: { slug: string; editionId: string; unitId: string }) => {
+    if (!data || [data.slug, data.editionId, data.unitId].some(
+      (value) => typeof value !== "string" || !value || value.length > 160,
+    )) throw new Error("Unidade inválida.");
+    return data;
+  })
+  .handler(async ({ context, data }) => {
+    setResponseHeader("Cache-Control", "private, no-store");
+    const { edition } = await authorizedReadingEdition(context, data.slug);
+    if (!edition || edition.editionId !== data.editionId)
+      throw new Error("Edição indisponível. Volte a abrir o curso.");
+    const { loadAcademyReadingProgress } = await import("@/lib/academy-reading-progress.server");
+    return loadAcademyReadingProgress(context.userId, emailOf(context.claims), edition, data.unitId);
   });
 
 export const clientCreateLibrarySubscriptionCheckout = createServerFn({ method: "POST" })

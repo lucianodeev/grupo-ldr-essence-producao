@@ -1,3 +1,4 @@
+import { ACADEMY_READING_PROGRESS_PREFIX } from "@/lib/academy-reading-progress-key";
 import type { SupabaseClient } from "@supabase/supabase-js";
 
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
@@ -110,7 +111,8 @@ export async function getAdminAcademyEnrollments(supabase: Client, userId: strin
       .select("id,customer_id,status,current_period_end")
       .in("status", ["active", "trialing"]),
     db.from("library_progress")
-      .select("customer_id,product_key,progress_percent,updated_at"),
+      .select("customer_id,product_key,progress_percent,updated_at")
+      .not("product_key", "like", ACADEMY_READING_PROGRESS_PREFIX + "%"),
   ]);
 
   if (enrollmentsResult.error) fail();

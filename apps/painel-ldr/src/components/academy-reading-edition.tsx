@@ -86,11 +86,38 @@ export function AcademyMarkdown({ body }: { body: string }) {
   );
 }
 
-export function AcademyReadingEditionView({ edition }: { edition: AcademyReadingEdition }) {
+export function AcademyReadingEditionView({
+  edition,
+  initialCompleted,
+  onComplete,
+}: {
+  edition: AcademyReadingEdition;
+  initialCompleted?: string[] | null;
+  onComplete?: (unitId: string) => Promise<string[]>;
+}) {
   const [index, setIndex] = useState(0);
+  const [completed, setCompleted] = useState(initialCompleted ?? []);
+  const [pendingUnit, setPendingUnit] = useState<string | null>(null);
+  const [error, setError] = useState(initialCompleted === null
+    ? "Não foi possível consultar o progresso. Recarregue a página ou tente concluir a unidade."
+    : null);
+
   // Defense in depth: the component must not display pending candidates even in a direct mount.
   if (!isApprovedReadingEdition(edition)) return null;
   const unit = edition.modules[Math.min(index, edition.modules.length - 1)]!;
+  const unitCompleted = completed.includes(unit.id);
+  const completeUnit = async () => {
+    if (!onComplete || pendingUnit || unitCompleted) return;
+    setPendingUnit(unit.id);
+    setError(null);
+    try {
+      setCompleted(await onComplete(unit.id));
+    } catch {
+      setError("Não foi possível confirmar a conclusão. Tente novamente.");
+    } finally {
+      setPendingUnit(null);
+    }
+  };
   const practiceGuide = isReleasedAcademyPracticeGuide(edition.practiceGuide, edition) ? edition.practiceGuide : null;
   const practiceUnit = practiceGuide?.modules.find(module => module.id === unit.id);
   return (
@@ -115,6 +142,11 @@ export function AcademyReadingEditionView({ edition }: { edition: AcademyReading
       {edition.releaseDisclosure && (
         <p className="mt-3 text-sm text-slate-600">{edition.releaseDisclosure}</p>
       )}
+      {onComplete && (
+        <p role="status" className="mt-3 text-sm font-semibold text-slate-700">
+          {completed.length} de {edition.modules.length} unidades concluídas
+        </p>
+      )}
       <nav aria-label="Unidades da edição de leitura" className="my-5">
         <ol className="space-y-2">
           {edition.modules.map((module, i) => (
@@ -126,6 +158,7 @@ export function AcademyReadingEditionView({ edition }: { edition: AcademyReading
                 className="text-left font-semibold underline focus-visible:outline-2"
               >
                 {i + 1}. {module.title}
+                {completed.includes(module.id) && " · Concluída"}
               </button>
             </li>
           ))}
@@ -145,6 +178,19 @@ export function AcademyReadingEditionView({ edition }: { edition: AcademyReading
           <p className="text-sm text-slate-600">{practiceGuide.reviewDisclosure}</p>
           <AcademyMarkdown body={practiceUnit.body} />
         </section>
+      )}
+      {onComplete && (
+        <div className="mt-8 border-t pt-5">
+          <button
+            type="button"
+            disabled={unitCompleted || pendingUnit !== null}
+            onClick={completeUnit}
+            className="min-h-11 rounded-xl bg-[#071426] px-4 py-2 font-bold text-white disabled:opacity-60"
+          >
+            {unitCompleted ? "Unidade concluída" : pendingUnit === unit.id ? "A guardar…" : "Marcar como concluída"}
+          </button>
+          {error && <p role="alert" className="mt-3 text-sm text-red-700">{error}</p>}
+        </div>
       )}
     </section>
   );
