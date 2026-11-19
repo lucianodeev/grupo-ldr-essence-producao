@@ -32,13 +32,14 @@ function PublicHome() {
 
   return <>
     <section className="bg-[#071426] px-5 py-8 text-white">
-      <div className="mx-auto grid max-w-6xl gap-4 md:grid-cols-[1fr_auto_auto] md:items-center">
+      <div className="mx-auto grid max-w-6xl gap-4 md:grid-cols-[1fr_auto_auto_auto] md:items-center">
         <div>
           <p className="text-xs font-black uppercase tracking-[.2em] text-[#f4c76b]">Ecossistema LDR</p>
           <h2 className="mt-2 font-serif text-2xl font-bold text-white!">Acesse o mapa central e o LDR PASS.</h2>
           <p className="mt-1 text-sm text-white/70">A Academy agora referencia as entradas principais: Biblioteca, Rede Acadêmica, LDR PASS, Clínica Social, LDR RH & Estratégia e Human Room.</p>
         </div>
         <Link to="/ecossistema" className="inline-flex w-auto items-center justify-center rounded-full bg-[#f4c76b] px-4 py-2 text-center text-[11px] font-black uppercase tracking-[.10em] text-[#1f1303]">Mapa do ecossistema</Link>
+        <Link to="/feira360" className="inline-flex min-h-11 items-center justify-center rounded-full border border-[#f4c76b]/70 px-4 py-2 text-sm font-bold text-[#f4c76b]">Encontrar serviços</Link>
         <Link to="/ldr-pass" className="inline-flex w-auto items-center justify-center rounded-full border border-white/20 px-4 py-2 text-center text-[11px] font-black uppercase tracking-[.10em] text-white hover:bg-white/10">LDR PASS</Link>
       </div>
     </section>

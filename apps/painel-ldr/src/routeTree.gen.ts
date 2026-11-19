@@ -31,6 +31,7 @@ import { Route as EcossistemaRouteImport } from './routes/ecossistema'
 import { Route as EmpreendedoresRouteImport } from './routes/empreendedores'
 import { Route as EmpresasRouteImport } from './routes/empresas'
 import { Route as FalarComEcossistemaRouteImport } from './routes/falar-com-ecossistema'
+import { Route as Feira360RouteImport } from './routes/feira360'
 import { Route as FilmRouteImport } from './routes/film'
 import { Route as FormacaoComunicacaoOratoriaRouteImport } from './routes/formacao-comunicacao-oratoria'
 import { Route as FormacaoCopywritingVendasRouteImport } from './routes/formacao-copywriting-vendas'
@@ -128,6 +129,7 @@ import { Route as EmpresasIntegracaoColaboradoresRouteImport } from './routes/em
 import { Route as EmpresasLdrOneRouteImport } from './routes/empresas.ldr-one'
 import { Route as EmpresasPropostaRouteImport } from './routes/empresas.proposta'
 import { Route as EmpresasServicosRouteImport } from './routes/empresas.servicos'
+import { Route as Feira360ParceiroRouteImport } from './routes/feira360_.parceiro'
 import { Route as FormacaoSlugRouteImport } from './routes/formacao.$slug'
 import { Route as FormacoesSlugRouteImport } from './routes/formacoes.$slug'
 import { Route as FuncionarioLoginRouteImport } from './routes/funcionario.login'
@@ -161,6 +163,7 @@ import { Route as AuthenticatedAdminCatalogoRouteImport } from './routes/_authen
 import { Route as AuthenticatedAdminClinicaSocialRouteImport } from './routes/_authenticated/admin.clinica-social'
 import { Route as AuthenticatedAdminEmpresasRouteImport } from './routes/_authenticated/admin.empresas'
 import { Route as AuthenticatedAdminEquipeRouteImport } from './routes/_authenticated/admin.equipe'
+import { Route as AuthenticatedAdminFeira360RouteImport } from './routes/_authenticated/admin.feira360'
 import { Route as AuthenticatedAdminFinanceiroRouteImport } from './routes/_authenticated/admin.financeiro'
 import { Route as AuthenticatedAdminForumTreinamentoRouteImport } from './routes/_authenticated/admin.forum-treinamento'
 import { Route as AuthenticatedAdminInteressesGraduacoesRouteImport } from './routes/_authenticated/admin.interesses-graduacoes'
@@ -243,6 +246,7 @@ import { Route as CarreiraEmpresaGuiaTriagemResponsavelRouteImport } from './rou
 import { Route as CarreiraEmpresaPublicarRouteImport } from './routes/carreira.empresa.publicar'
 import { Route as CarreiraProjetosProjectIdRouteImport } from './routes/carreira.projetos.$projectId'
 import { Route as CarreiraVagasJobIdRouteImport } from './routes/carreira.vagas.$jobId'
+import { Route as Feira360PPartnerRouteImport } from './routes/feira360_.p.$partner'
 import { Route as HumanRoomSalasSlugRouteImport } from './routes/human-room.salas.$slug'
 import { Route as ImprensaNoticiasSlugRouteImport } from './routes/imprensa.noticias.$slug'
 import { Route as ClientareaClienteBibliotecaProductKeyRouteImport } from './routes/_clientarea.cliente.biblioteca.$productKey'
@@ -303,6 +307,7 @@ import { Route as ClientareaClienteTreinamentosFormacaoProfissionalSlugRouteImpo
 import { Route as ClientareaClienteTreinamentosPsicanaliseCertificadoRouteImport } from './routes/_clientarea.cliente.treinamentos.psicanalise.certificado'
 import { Route as ClientareaClienteTreinamentosPsicanaliseForumRouteImport } from './routes/_clientarea.cliente.treinamentos.psicanalise.forum'
 import { Route as CarreiraEmpresaVagasJobIdCandidatosRouteImport } from './routes/carreira.empresa.vagas.$jobId.candidatos'
+import { Route as Feira360PPartnerSServiceRouteImport } from './routes/feira360_.p.$partner_.s.$service'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -411,6 +416,11 @@ const EmpresasRoute = EmpresasRouteImport.update({
 const FalarComEcossistemaRoute = FalarComEcossistemaRouteImport.update({
   id: '/falar-com-ecossistema',
   path: '/falar-com-ecossistema',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Feira360Route = Feira360RouteImport.update({
+  id: '/feira360',
+  path: '/feira360',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FilmRoute = FilmRouteImport.update({
@@ -918,6 +928,11 @@ const EmpresasServicosRoute = EmpresasServicosRouteImport.update({
   path: '/servicos',
   getParentRoute: () => EmpresasRoute,
 } as any)
+const Feira360ParceiroRoute = Feira360ParceiroRouteImport.update({
+  id: '/feira360_/parceiro',
+  path: '/feira360/parceiro',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FormacaoSlugRoute = FormacaoSlugRouteImport.update({
   id: '/formacao/$slug',
   path: '/formacao/$slug',
@@ -1087,6 +1102,12 @@ const AuthenticatedAdminEquipeRoute =
   AuthenticatedAdminEquipeRouteImport.update({
     id: '/equipe',
     path: '/equipe',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminFeira360Route =
+  AuthenticatedAdminFeira360RouteImport.update({
+    id: '/feira360',
+    path: '/feira360',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
 const AuthenticatedAdminFinanceiroRoute =
@@ -1570,6 +1591,11 @@ const CarreiraVagasJobIdRoute = CarreiraVagasJobIdRouteImport.update({
   path: '/$jobId',
   getParentRoute: () => CarreiraVagasRoute,
 } as any)
+const Feira360PPartnerRoute = Feira360PPartnerRouteImport.update({
+  id: '/feira360_/p/$partner',
+  path: '/feira360/p/$partner',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HumanRoomSalasSlugRoute = HumanRoomSalasSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -1928,6 +1954,12 @@ const CarreiraEmpresaVagasJobIdCandidatosRoute =
     path: '/vagas/$jobId/candidatos',
     getParentRoute: () => CarreiraEmpresaRoute,
   } as any)
+const Feira360PPartnerSServiceRoute =
+  Feira360PPartnerSServiceRouteImport.update({
+    id: '/feira360_/p/$partner_/s/$service',
+    path: '/feira360/p/$partner/s/$service',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -1949,6 +1981,7 @@ export interface FileRoutesByFullPath {
   '/empreendedores': typeof EmpreendedoresRoute
   '/empresas': typeof EmpresasRouteWithChildren
   '/falar-com-ecossistema': typeof FalarComEcossistemaRoute
+  '/feira360': typeof Feira360Route
   '/film': typeof FilmRoute
   '/formacao-comunicacao-oratoria': typeof FormacaoComunicacaoOratoriaRoute
   '/formacao-copywriting-vendas': typeof FormacaoCopywritingVendasRoute
@@ -2044,6 +2077,7 @@ export interface FileRoutesByFullPath {
   '/empresas/ldr-one': typeof EmpresasLdrOneRoute
   '/empresas/proposta': typeof EmpresasPropostaRoute
   '/empresas/servicos': typeof EmpresasServicosRoute
+  '/feira360/parceiro': typeof Feira360ParceiroRoute
   '/formacao/$slug': typeof FormacaoSlugRoute
   '/formacoes/$slug': typeof FormacoesSlugRoute
   '/funcionario/login': typeof FuncionarioLoginRoute
@@ -2078,6 +2112,7 @@ export interface FileRoutesByFullPath {
   '/admin/clinica-social': typeof AuthenticatedAdminClinicaSocialRoute
   '/admin/empresas': typeof AuthenticatedAdminEmpresasRoute
   '/admin/equipe': typeof AuthenticatedAdminEquipeRoute
+  '/admin/feira360': typeof AuthenticatedAdminFeira360Route
   '/admin/financeiro': typeof AuthenticatedAdminFinanceiroRoute
   '/admin/forum-treinamento': typeof AuthenticatedAdminForumTreinamentoRoute
   '/admin/interesses-graduacoes': typeof AuthenticatedAdminInteressesGraduacoesRoute
@@ -2158,6 +2193,7 @@ export interface FileRoutesByFullPath {
   '/carreira/empresa/publicar': typeof CarreiraEmpresaPublicarRoute
   '/carreira/projetos/$projectId': typeof CarreiraProjetosProjectIdRoute
   '/carreira/vagas/$jobId': typeof CarreiraVagasJobIdRouteWithChildren
+  '/feira360/p/$partner': typeof Feira360PPartnerRoute
   '/human-room/salas/$slug': typeof HumanRoomSalasSlugRoute
   '/imprensa/noticias/$slug': typeof ImprensaNoticiasSlugRoute
   '/painel-profissional/': typeof AuthenticatedPainelProfissionalIndexRoute
@@ -2220,6 +2256,7 @@ export interface FileRoutesByFullPath {
   '/cliente/treinamentos/psicanalise/certificado': typeof ClientareaClienteTreinamentosPsicanaliseCertificadoRoute
   '/cliente/treinamentos/psicanalise/forum': typeof ClientareaClienteTreinamentosPsicanaliseForumRoute
   '/carreira/empresa/vagas/$jobId/candidatos': typeof CarreiraEmpresaVagasJobIdCandidatosRoute
+  '/feira360/p/$partner/s/$service': typeof Feira360PPartnerSServiceRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -2240,6 +2277,7 @@ export interface FileRoutesByTo {
   '/ecossistema': typeof EcossistemaRoute
   '/empreendedores': typeof EmpreendedoresRoute
   '/falar-com-ecossistema': typeof FalarComEcossistemaRoute
+  '/feira360': typeof Feira360Route
   '/film': typeof FilmRoute
   '/formacao-comunicacao-oratoria': typeof FormacaoComunicacaoOratoriaRoute
   '/formacao-copywriting-vendas': typeof FormacaoCopywritingVendasRoute
@@ -2332,6 +2370,7 @@ export interface FileRoutesByTo {
   '/empresas/ldr-one': typeof EmpresasLdrOneRoute
   '/empresas/proposta': typeof EmpresasPropostaRoute
   '/empresas/servicos': typeof EmpresasServicosRoute
+  '/feira360/parceiro': typeof Feira360ParceiroRoute
   '/formacao/$slug': typeof FormacaoSlugRoute
   '/formacoes/$slug': typeof FormacoesSlugRoute
   '/funcionario/login': typeof FuncionarioLoginRoute
@@ -2366,6 +2405,7 @@ export interface FileRoutesByTo {
   '/admin/clinica-social': typeof AuthenticatedAdminClinicaSocialRoute
   '/admin/empresas': typeof AuthenticatedAdminEmpresasRoute
   '/admin/equipe': typeof AuthenticatedAdminEquipeRoute
+  '/admin/feira360': typeof AuthenticatedAdminFeira360Route
   '/admin/financeiro': typeof AuthenticatedAdminFinanceiroRoute
   '/admin/forum-treinamento': typeof AuthenticatedAdminForumTreinamentoRoute
   '/admin/interesses-graduacoes': typeof AuthenticatedAdminInteressesGraduacoesRoute
@@ -2446,6 +2486,7 @@ export interface FileRoutesByTo {
   '/carreira/empresa/publicar': typeof CarreiraEmpresaPublicarRoute
   '/carreira/projetos/$projectId': typeof CarreiraProjetosProjectIdRoute
   '/carreira/vagas/$jobId': typeof CarreiraVagasJobIdRouteWithChildren
+  '/feira360/p/$partner': typeof Feira360PPartnerRoute
   '/human-room/salas/$slug': typeof HumanRoomSalasSlugRoute
   '/imprensa/noticias/$slug': typeof ImprensaNoticiasSlugRoute
   '/painel-profissional': typeof AuthenticatedPainelProfissionalIndexRoute
@@ -2508,6 +2549,7 @@ export interface FileRoutesByTo {
   '/cliente/treinamentos/psicanalise/certificado': typeof ClientareaClienteTreinamentosPsicanaliseCertificadoRoute
   '/cliente/treinamentos/psicanalise/forum': typeof ClientareaClienteTreinamentosPsicanaliseForumRoute
   '/carreira/empresa/vagas/$jobId/candidatos': typeof CarreiraEmpresaVagasJobIdCandidatosRoute
+  '/feira360/p/$partner/s/$service': typeof Feira360PPartnerSServiceRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -2533,6 +2575,7 @@ export interface FileRoutesById {
   '/empreendedores': typeof EmpreendedoresRoute
   '/empresas': typeof EmpresasRouteWithChildren
   '/falar-com-ecossistema': typeof FalarComEcossistemaRoute
+  '/feira360': typeof Feira360Route
   '/film': typeof FilmRoute
   '/formacao-comunicacao-oratoria': typeof FormacaoComunicacaoOratoriaRoute
   '/formacao-copywriting-vendas': typeof FormacaoCopywritingVendasRoute
@@ -2629,6 +2672,7 @@ export interface FileRoutesById {
   '/empresas/ldr-one': typeof EmpresasLdrOneRoute
   '/empresas/proposta': typeof EmpresasPropostaRoute
   '/empresas/servicos': typeof EmpresasServicosRoute
+  '/feira360_/parceiro': typeof Feira360ParceiroRoute
   '/formacao/$slug': typeof FormacaoSlugRoute
   '/formacoes/$slug': typeof FormacoesSlugRoute
   '/funcionario/login': typeof FuncionarioLoginRoute
@@ -2663,6 +2707,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/clinica-social': typeof AuthenticatedAdminClinicaSocialRoute
   '/_authenticated/admin/empresas': typeof AuthenticatedAdminEmpresasRoute
   '/_authenticated/admin/equipe': typeof AuthenticatedAdminEquipeRoute
+  '/_authenticated/admin/feira360': typeof AuthenticatedAdminFeira360Route
   '/_authenticated/admin/financeiro': typeof AuthenticatedAdminFinanceiroRoute
   '/_authenticated/admin/forum-treinamento': typeof AuthenticatedAdminForumTreinamentoRoute
   '/_authenticated/admin/interesses-graduacoes': typeof AuthenticatedAdminInteressesGraduacoesRoute
@@ -2743,6 +2788,7 @@ export interface FileRoutesById {
   '/carreira/empresa/publicar': typeof CarreiraEmpresaPublicarRoute
   '/carreira/projetos/$projectId': typeof CarreiraProjetosProjectIdRoute
   '/carreira/vagas/$jobId': typeof CarreiraVagasJobIdRouteWithChildren
+  '/feira360_/p/$partner': typeof Feira360PPartnerRoute
   '/human-room/salas/$slug': typeof HumanRoomSalasSlugRoute
   '/imprensa/noticias/$slug': typeof ImprensaNoticiasSlugRoute
   '/_authenticated/painel-profissional/': typeof AuthenticatedPainelProfissionalIndexRoute
@@ -2805,6 +2851,7 @@ export interface FileRoutesById {
   '/_clientarea/cliente/treinamentos/psicanalise/certificado': typeof ClientareaClienteTreinamentosPsicanaliseCertificadoRoute
   '/_clientarea/cliente/treinamentos/psicanalise/forum': typeof ClientareaClienteTreinamentosPsicanaliseForumRoute
   '/carreira/empresa/vagas/$jobId/candidatos': typeof CarreiraEmpresaVagasJobIdCandidatosRoute
+  '/feira360_/p/$partner_/s/$service': typeof Feira360PPartnerSServiceRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -2828,6 +2875,7 @@ export interface FileRouteTypes {
     | '/empreendedores'
     | '/empresas'
     | '/falar-com-ecossistema'
+    | '/feira360'
     | '/film'
     | '/formacao-comunicacao-oratoria'
     | '/formacao-copywriting-vendas'
@@ -2923,6 +2971,7 @@ export interface FileRouteTypes {
     | '/empresas/ldr-one'
     | '/empresas/proposta'
     | '/empresas/servicos'
+    | '/feira360/parceiro'
     | '/formacao/$slug'
     | '/formacoes/$slug'
     | '/funcionario/login'
@@ -2957,6 +3006,7 @@ export interface FileRouteTypes {
     | '/admin/clinica-social'
     | '/admin/empresas'
     | '/admin/equipe'
+    | '/admin/feira360'
     | '/admin/financeiro'
     | '/admin/forum-treinamento'
     | '/admin/interesses-graduacoes'
@@ -3037,6 +3087,7 @@ export interface FileRouteTypes {
     | '/carreira/empresa/publicar'
     | '/carreira/projetos/$projectId'
     | '/carreira/vagas/$jobId'
+    | '/feira360/p/$partner'
     | '/human-room/salas/$slug'
     | '/imprensa/noticias/$slug'
     | '/painel-profissional/'
@@ -3099,6 +3150,7 @@ export interface FileRouteTypes {
     | '/cliente/treinamentos/psicanalise/certificado'
     | '/cliente/treinamentos/psicanalise/forum'
     | '/carreira/empresa/vagas/$jobId/candidatos'
+    | '/feira360/p/$partner/s/$service'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -3119,6 +3171,7 @@ export interface FileRouteTypes {
     | '/ecossistema'
     | '/empreendedores'
     | '/falar-com-ecossistema'
+    | '/feira360'
     | '/film'
     | '/formacao-comunicacao-oratoria'
     | '/formacao-copywriting-vendas'
@@ -3211,6 +3264,7 @@ export interface FileRouteTypes {
     | '/empresas/ldr-one'
     | '/empresas/proposta'
     | '/empresas/servicos'
+    | '/feira360/parceiro'
     | '/formacao/$slug'
     | '/formacoes/$slug'
     | '/funcionario/login'
@@ -3245,6 +3299,7 @@ export interface FileRouteTypes {
     | '/admin/clinica-social'
     | '/admin/empresas'
     | '/admin/equipe'
+    | '/admin/feira360'
     | '/admin/financeiro'
     | '/admin/forum-treinamento'
     | '/admin/interesses-graduacoes'
@@ -3325,6 +3380,7 @@ export interface FileRouteTypes {
     | '/carreira/empresa/publicar'
     | '/carreira/projetos/$projectId'
     | '/carreira/vagas/$jobId'
+    | '/feira360/p/$partner'
     | '/human-room/salas/$slug'
     | '/imprensa/noticias/$slug'
     | '/painel-profissional'
@@ -3387,6 +3443,7 @@ export interface FileRouteTypes {
     | '/cliente/treinamentos/psicanalise/certificado'
     | '/cliente/treinamentos/psicanalise/forum'
     | '/carreira/empresa/vagas/$jobId/candidatos'
+    | '/feira360/p/$partner/s/$service'
   id:
     | '__root__'
     | '/'
@@ -3411,6 +3468,7 @@ export interface FileRouteTypes {
     | '/empreendedores'
     | '/empresas'
     | '/falar-com-ecossistema'
+    | '/feira360'
     | '/film'
     | '/formacao-comunicacao-oratoria'
     | '/formacao-copywriting-vendas'
@@ -3507,6 +3565,7 @@ export interface FileRouteTypes {
     | '/empresas/ldr-one'
     | '/empresas/proposta'
     | '/empresas/servicos'
+    | '/feira360_/parceiro'
     | '/formacao/$slug'
     | '/formacoes/$slug'
     | '/funcionario/login'
@@ -3541,6 +3600,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/clinica-social'
     | '/_authenticated/admin/empresas'
     | '/_authenticated/admin/equipe'
+    | '/_authenticated/admin/feira360'
     | '/_authenticated/admin/financeiro'
     | '/_authenticated/admin/forum-treinamento'
     | '/_authenticated/admin/interesses-graduacoes'
@@ -3621,6 +3681,7 @@ export interface FileRouteTypes {
     | '/carreira/empresa/publicar'
     | '/carreira/projetos/$projectId'
     | '/carreira/vagas/$jobId'
+    | '/feira360_/p/$partner'
     | '/human-room/salas/$slug'
     | '/imprensa/noticias/$slug'
     | '/_authenticated/painel-profissional/'
@@ -3683,6 +3744,7 @@ export interface FileRouteTypes {
     | '/_clientarea/cliente/treinamentos/psicanalise/certificado'
     | '/_clientarea/cliente/treinamentos/psicanalise/forum'
     | '/carreira/empresa/vagas/$jobId/candidatos'
+    | '/feira360_/p/$partner_/s/$service'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -3708,6 +3770,7 @@ export interface RootRouteChildren {
   EmpreendedoresRoute: typeof EmpreendedoresRoute
   EmpresasRoute: typeof EmpresasRouteWithChildren
   FalarComEcossistemaRoute: typeof FalarComEcossistemaRoute
+  Feira360Route: typeof Feira360Route
   FilmRoute: typeof FilmRoute
   FormacaoComunicacaoOratoriaRoute: typeof FormacaoComunicacaoOratoriaRoute
   FormacaoCopywritingVendasRoute: typeof FormacaoCopywritingVendasRoute
@@ -3768,6 +3831,7 @@ export interface RootRouteChildren {
   ClinicaSocialSolicitarRoute: typeof ClinicaSocialSolicitarRoute
   EbooksSlugRoute: typeof EbooksSlugRoute
   EmpresaLoginRoute: typeof EmpresaLoginRoute
+  Feira360ParceiroRoute: typeof Feira360ParceiroRoute
   FormacaoSlugRoute: typeof FormacaoSlugRoute
   FormacoesSlugRoute: typeof FormacoesSlugRoute
   FuncionarioLoginRoute: typeof FuncionarioLoginRoute
@@ -3782,9 +3846,11 @@ export interface RootRouteChildren {
   ApiHotmartWebhookRoute: typeof ApiHotmartWebhookRoute
   ApiIntegrationsSiteOrdersRoute: typeof ApiIntegrationsSiteOrdersRoute
   ApiStripeWebhookRoute: typeof ApiStripeWebhookRoute
+  Feira360PPartnerRoute: typeof Feira360PPartnerRoute
   ApiIntegrationsGoogleCalendarCallbackRoute: typeof ApiIntegrationsGoogleCalendarCallbackRoute
   ApiIntegrationsGoogleCalendarStartRoute: typeof ApiIntegrationsGoogleCalendarStartRoute
   ApiIntegrationsGoogleCalendarValidateRoute: typeof ApiIntegrationsGoogleCalendarValidateRoute
+  Feira360PPartnerSServiceRoute: typeof Feira360PPartnerSServiceRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -3941,6 +4007,13 @@ declare module '@tanstack/react-router' {
       path: '/falar-com-ecossistema'
       fullPath: '/falar-com-ecossistema'
       preLoaderRoute: typeof FalarComEcossistemaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feira360': {
+      id: '/feira360'
+      path: '/feira360'
+      fullPath: '/feira360'
+      preLoaderRoute: typeof Feira360RouteImport
       parentRoute: typeof rootRouteImport
     }
     '/film': {
@@ -4622,6 +4695,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EmpresasServicosRouteImport
       parentRoute: typeof EmpresasRoute
     }
+    '/feira360_/parceiro': {
+      id: '/feira360_/parceiro'
+      path: '/feira360/parceiro'
+      fullPath: '/feira360/parceiro'
+      preLoaderRoute: typeof Feira360ParceiroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/formacao/$slug': {
       id: '/formacao/$slug'
       path: '/formacao/$slug'
@@ -4851,6 +4931,13 @@ declare module '@tanstack/react-router' {
       path: '/equipe'
       fullPath: '/admin/equipe'
       preLoaderRoute: typeof AuthenticatedAdminEquipeRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/feira360': {
+      id: '/_authenticated/admin/feira360'
+      path: '/feira360'
+      fullPath: '/admin/feira360'
+      preLoaderRoute: typeof AuthenticatedAdminFeira360RouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
     '/_authenticated/admin/financeiro': {
@@ -5427,6 +5514,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CarreiraVagasJobIdRouteImport
       parentRoute: typeof CarreiraVagasRoute
     }
+    '/feira360_/p/$partner': {
+      id: '/feira360_/p/$partner'
+      path: '/feira360/p/$partner'
+      fullPath: '/feira360/p/$partner'
+      preLoaderRoute: typeof Feira360PPartnerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/human-room/salas/$slug': {
       id: '/human-room/salas/$slug'
       path: '/$slug'
@@ -5847,6 +5941,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CarreiraEmpresaVagasJobIdCandidatosRouteImport
       parentRoute: typeof CarreiraEmpresaRoute
     }
+    '/feira360_/p/$partner_/s/$service': {
+      id: '/feira360_/p/$partner_/s/$service'
+      path: '/feira360/p/$partner/s/$service'
+      fullPath: '/feira360/p/$partner/s/$service'
+      preLoaderRoute: typeof Feira360PPartnerSServiceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -5857,6 +5958,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminClinicaSocialRoute: typeof AuthenticatedAdminClinicaSocialRoute
   AuthenticatedAdminEmpresasRoute: typeof AuthenticatedAdminEmpresasRoute
   AuthenticatedAdminEquipeRoute: typeof AuthenticatedAdminEquipeRoute
+  AuthenticatedAdminFeira360Route: typeof AuthenticatedAdminFeira360Route
   AuthenticatedAdminFinanceiroRoute: typeof AuthenticatedAdminFinanceiroRoute
   AuthenticatedAdminForumTreinamentoRoute: typeof AuthenticatedAdminForumTreinamentoRoute
   AuthenticatedAdminInteressesGraduacoesRoute: typeof AuthenticatedAdminInteressesGraduacoesRoute
@@ -5891,6 +5993,7 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminClinicaSocialRoute: AuthenticatedAdminClinicaSocialRoute,
   AuthenticatedAdminEmpresasRoute: AuthenticatedAdminEmpresasRoute,
   AuthenticatedAdminEquipeRoute: AuthenticatedAdminEquipeRoute,
+  AuthenticatedAdminFeira360Route: AuthenticatedAdminFeira360Route,
   AuthenticatedAdminFinanceiroRoute: AuthenticatedAdminFinanceiroRoute,
   AuthenticatedAdminForumTreinamentoRoute:
     AuthenticatedAdminForumTreinamentoRoute,
@@ -6614,6 +6717,7 @@ const rootRouteChildren: RootRouteChildren = {
   EmpreendedoresRoute: EmpreendedoresRoute,
   EmpresasRoute: EmpresasRouteWithChildren,
   FalarComEcossistemaRoute: FalarComEcossistemaRoute,
+  Feira360Route: Feira360Route,
   FilmRoute: FilmRoute,
   FormacaoComunicacaoOratoriaRoute: FormacaoComunicacaoOratoriaRoute,
   FormacaoCopywritingVendasRoute: FormacaoCopywritingVendasRoute,
@@ -6676,6 +6780,7 @@ const rootRouteChildren: RootRouteChildren = {
   ClinicaSocialSolicitarRoute: ClinicaSocialSolicitarRoute,
   EbooksSlugRoute: EbooksSlugRoute,
   EmpresaLoginRoute: EmpresaLoginRoute,
+  Feira360ParceiroRoute: Feira360ParceiroRoute,
   FormacaoSlugRoute: FormacaoSlugRoute,
   FormacoesSlugRoute: FormacoesSlugRoute,
   FuncionarioLoginRoute: FuncionarioLoginRoute,
@@ -6690,12 +6795,14 @@ const rootRouteChildren: RootRouteChildren = {
   ApiHotmartWebhookRoute: ApiHotmartWebhookRoute,
   ApiIntegrationsSiteOrdersRoute: ApiIntegrationsSiteOrdersRoute,
   ApiStripeWebhookRoute: ApiStripeWebhookRoute,
+  Feira360PPartnerRoute: Feira360PPartnerRoute,
   ApiIntegrationsGoogleCalendarCallbackRoute:
     ApiIntegrationsGoogleCalendarCallbackRoute,
   ApiIntegrationsGoogleCalendarStartRoute:
     ApiIntegrationsGoogleCalendarStartRoute,
   ApiIntegrationsGoogleCalendarValidateRoute:
     ApiIntegrationsGoogleCalendarValidateRoute,
+  Feira360PPartnerSServiceRoute: Feira360PPartnerSServiceRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
