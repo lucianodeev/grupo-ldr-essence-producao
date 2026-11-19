@@ -89,3 +89,8 @@ export function decimalToHundredths(value: string): number | null {
   const [whole, fraction = ""] = value.split(/[.,]/);
   return Number(whole) * 100 + Number(fraction.padEnd(2, "0"));
 }
+
+export function feiraSource(search: Record<string, unknown>): { ref?: string } {
+  const value = search["ref"];
+  return typeof value === "string" && /^[A-Za-z0-9_-]{1,60}$/.test(value) ? { ref: value } : {};
+}

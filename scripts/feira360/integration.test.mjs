@@ -7,7 +7,7 @@ const migration = new URL("../../apps/painel-ldr/supabase/migrations/20261119095
 const existingRoles = new URL("../../apps/painel-ldr/supabase/migrations/20260820164018_eff62b65-ffac-4508-9f87-27c58f019b8a.sql", import.meta.url);
 const actor = (id) => `00000000-0000-4000-8000-${String(id).padStart(12, "0")}`;
 
-async function database({ existingPrivateHelper = true } = {}) {
+async function database({ existingPrivateHelper = true, journeys = false } = {}) {
   const db = new PGlite();
   await db.exec(`
     create role anon; create role authenticated; create role service_role;
@@ -29,6 +29,23 @@ async function database({ existingPrivateHelper = true } = {}) {
   if (existingPrivateHelper) await db.exec(roleMigration.split("-- Repoint policies")[0]);
   await db.exec(await readFile(migration, "utf8"));
 
+  if (journeys) {
+    await db.exec(`
+      create table public.ecosystem_contacts (
+        id uuid primary key default gen_random_uuid(), name text, email text, subject text,
+        message text, source_project text, source_url text, language text, wants_luciano boolean, consent_contact boolean
+      );
+      create table public.orders (
+        id uuid primary key default gen_random_uuid(), order_number text, title text, contact_email text,
+        amount_cents integer, currency text, payment_status text, status text, customer_id uuid,
+        stripe_checkout_session_id text, metadata jsonb not null
+      );
+    `);
+    await db.exec(await readFile(new URL(
+      "../../apps/painel-ldr/supabase/migrations/20261119160000_feira360_journeys.sql", import.meta.url,
+    ), "utf8"));
+  }
+
   async function as(id, run) {
     try {
       await db.exec(`set role ${id ? "authenticated" : "anon"}; set request.jwt.claim.sub = '${id ? actor(id) : ""}';`);
@@ -43,6 +60,8 @@ async function database({ existingPrivateHelper = true } = {}) {
     as,
     rpc: (id, action, payload = {}) => as(id, async () =>
       (await db.query("select public.feira360_account($1, $2) as result", [action, payload])).rows[0].result),
+    journey: (id, action, payload = {}) => as(id, async () =>
+      (await db.query("select public.feira360_journeys($1, $2) as result", [action, payload])).rows[0].result),
     catalog: (...filters) => as(0, async () =>
       (await db.query(`select public.feira360_catalog(${filters.map((_, i) => `$${i + 1}`).join(",")}) as result`, filters)).rows[0].result),
   };
@@ -145,4 +164,66 @@ test("orçamento, consentimento, isolamento, encaminhamento, comissão e auditor
   await assert.rejects(rpc(3, "quote", request("studio", { brief: "Pedido que excede a limitação horária." })), invalid);
   await rpc(4, "moderate", { id: a, status: "suspended" });
   assert.deepEqual((await rpc(1, "partner_dashboard")).quotes, []);
+});
+
+test("pedido geral preserva origem, isola clientes e parceiros e só gera comissão após pagamento", async (t) => {
+  const { db, rpc, journey, as } = await database({ journeys: true });
+  t.after(() => db.close());
+  const partnerA = await rpc(1, "apply", candidate("origem"));
+  const partnerB = await rpc(2, "apply", candidate("destino"));
+  for (const id of [partnerA, partnerB]) await rpc(4, "moderate", { id, status: "approved" });
+  const link = (await journey(1, "partner")).ref;
+  const data = {
+    requestKey: "08f60368-c3dc-4da9-834e-f739bd89e7af", category: "digital",
+    brief: "Preciso de um site acessível com agendamento.", deadline: "30 dias",
+    budgetCents: 50000, consent: true, source: link,
+  };
+  await assert.rejects(journey(0, "submit", data), denied);
+  await assert.rejects(journey(6, "submit", data), denied);
+  await assert.rejects(journey(3, "submit", { ...data, consent: false }), invalid);
+  const id = await journey(3, "submit", data);
+  assert.equal(await journey(3, "submit", data), id);
+  assert.equal(await journey(3, "submit", { ...data, requestKey: crypto.randomUUID() }), id);
+  assert.equal((await journey(3, "mine")).briefs[0].status, "received");
+  assert.deepEqual((await journey(5, "mine")).briefs, []);
+  await assert.rejects(journey(5, "cancel", { id }), invalid);
+  await assert.rejects(journey(3, "forward", { id, partnerId: partnerB }), denied);
+  await journey(4, "review", { id });
+  await rpc(4, "commission_rate", { bps: 2100 });
+  await journey(4, "forward", { id, partnerId: partnerB });
+  assert.deepEqual((await journey(1, "partner")).briefs, []);
+  const [delivered] = (await journey(2, "partner")).briefs;
+  assert.equal(delivered.id, id);
+  assert.equal(delivered.customer_email, undefined);
+  assert.equal((await journey(1, "partner")).attributed, 1);
+  const contactId = await journey(4, "prepare_proposal", { id });
+  assert.equal(await journey(4, "prepare_proposal", { id }), contactId);
+  await assert.rejects(journey(3, "cancel", { id }), invalid);
+  assert.equal((await journey(4, "master"))[0].referral_name, "Perfil de teste");
+  const order = (await db.query(`insert into public.orders
+    (order_number, title, contact_email, amount_cents, currency, payment_status, status, metadata)
+    values ('TESTE', 'Site', 'fixture-3@example.test', 12000, 'EUR', 'pendente', 'novo', $1)
+    returning id`, [{ checkout_kind: "enterprise_quote", quote_state: "approved", contact_id: contactId, source_project: "FEIRA 360" }])).rows[0].id;
+  await assert.rejects(db.query(`insert into public.orders (metadata)
+    select metadata from public.orders where id=$1`, [order]), { code: "23505" });
+  await assert.rejects(journey(5, "link_proposal", { id, orderId: order }), denied);
+  await journey(4, "link_proposal", { id, orderId: order });
+  await journey(4, "link_proposal", { id, orderId: order });
+  assert.equal((await journey(3, "mine")).briefs[0].status, "proposal");
+  assert.equal((await journey(4, "master"))[0].commission_cents, null);
+  await assert.rejects(as(1, () => db.query("select * from public.feira360_briefs")), denied);
+  await db.query("update public.orders set payment_status='pago', customer_id=$2, stripe_checkout_session_id='cs_test_fixture', metadata=metadata || $3 where id=$1",
+    [order, actor(3), { quote_state: "accepted", user_id: actor(3) }]);
+  assert.equal((await journey(3, "mine")).briefs[0].status, "contracted");
+  await db.query("update public.orders set payment_status='pago', status='concluido' where id=$1", [order]);
+  assert.equal((await journey(3, "mine")).briefs[0].status, "done");
+  const paid = (await journey(4, "master"))[0];
+  assert.equal(paid.commission_bps, 1500);
+  assert.equal(paid.commission_cents, 1800);
+  assert.equal((await db.query("select count(*)::integer as total from public.feira360_brief_commissions")).rows[0].total, 1);
+  assert.equal((await journey(1, "partner")).converted, 1);
+  const cancelId = await journey(5, "submit", data);
+  assert.notEqual(cancelId, id);
+  await journey(5, "cancel", { id: cancelId });
+  assert.equal((await journey(5, "mine")).briefs[0].status, "canceled");
 });

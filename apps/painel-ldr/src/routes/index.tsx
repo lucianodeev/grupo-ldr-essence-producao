@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { AcademyUniversityHome } from "@/components/academy-university-home";
 import { AcademyEcosystemSection } from "@/components/academy-ecosystem-section";
 import { AcademyInstitutionalIntro } from "@/components/academy-institutional-intro";
+import { EcosystemJourneyLinks } from "@/components/ecosystem-journey-links";
 import { EcosystemServiceShowcase } from "@/components/ecosystem-service-showcase";
 
 // Desktop home actions intentionally compact; LDR ONE is the current digital subscription.
@@ -48,6 +49,7 @@ function PublicHome() {
         </div>
       </section>
     )}
+    {!area && <EcosystemJourneyLinks />}
     <section className="bg-[#071426] px-5 py-8 text-white">
       <div className="mx-auto grid max-w-6xl gap-4 md:grid-cols-[1fr_auto_auto_auto] md:items-center">
         <div>

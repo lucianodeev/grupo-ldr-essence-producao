@@ -3,6 +3,7 @@ import { LanguageSelect, useI18n } from "../lib/i18n";
 import { useQuery } from "@tanstack/react-query";
 import { ecosystemNews } from "../lib/ecosystem-news.functions";
 import { ECOSYSTEM_TICKER } from "../lib/ecosystem-ticker";
+import { EcosystemJourneyLinks } from "@/components/ecosystem-journey-links";
 import { EcosystemServiceShowcase } from "@/components/ecosystem-service-showcase";
 
 type Hub = {
@@ -340,6 +341,7 @@ function EcosystemMap() {
             </Link>
           </div>
         </div>
+        <EcosystemJourneyLinks locale={locale} />
         <a href="/?area=academy" className="text-sm font-bold text-[#8a4c18]">{copy.back}</a>
         <div className="mt-7 min-w-0 rounded-[34px] border border-[#d6ad63]/40 bg-white p-6 shadow-xl sm:p-9">
           <p className="text-xs font-black uppercase tracking-[.2em] text-[#9a6a20]">{copy.welcome}</p>
