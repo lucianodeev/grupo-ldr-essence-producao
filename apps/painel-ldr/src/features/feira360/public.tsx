@@ -2,6 +2,7 @@ import { useState, type FormEvent, type ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight, Search, MapPin } from "lucide-react";
+import { EcosystemServiceShowcase } from "@/components/ecosystem-service-showcase";
 import { account, catalogQuery } from "./data";
 import { categories, modalities, money, type Listing } from "./model";
 import { supabase } from "@/integrations/supabase/client";
@@ -137,13 +138,25 @@ export function Marketplace() {
         <div className="mx-auto max-w-6xl text-center">
           <h1 className="font-serif text-4xl font-bold text-white! sm:text-6xl">FEIRA 360</h1>
           <p className="mt-5 text-base text-white/90 sm:text-lg">
-            Encontre serviços de parceiros aprovados e solicite um orçamento.
+            Explore os serviços, livros e formações do LDR. Também pode cadastrar o seu negócio como parceiro.
           </p>
-          <Link className={`${secondary} mt-4`} to="/feira360/parceiro">
-            Quero ser parceiro
+          <Link className={`${button} mt-4`} to="/feira360/parceiro">
+            Cadastrar meu negócio
           </Link>
         </div>
       </section>
+      <div className="mx-auto max-w-6xl px-5">
+        <EcosystemServiceShowcase />
+        <section aria-labelledby="feira360-products" className={`${card} mt-6`}>
+          <h2 id="feira360-products" className="font-serif text-2xl font-bold">Produtos e formações LDR</h2>
+          <p className="mt-2 text-sm text-slate-700">Explore livros, eBooks, cursos e acessos digitais no catálogo do Ecossistema.</p>
+          <div className="mt-4 flex flex-wrap gap-3">
+            <Link to="/produtos" className={button}>Ver todos os produtos</Link>
+            <Link to="/livros" className={secondary}>Ver livros</Link>
+            <Link to="/" search={{ area: "academy" }} className={secondary}>Explorar a LDR Academy</Link>
+          </div>
+        </section>
+      </div>
       <section className="mx-auto max-w-6xl px-5 py-8">
         <form
           onSubmit={search}
