@@ -31,6 +31,23 @@ function PublicHome() {
   }, []);
 
   return <>
+    {!area && (
+      <section aria-labelledby="international-ecosystem-sign" className="bg-[#071426] px-4 py-8 sm:px-6 sm:py-12">
+        <div className="mx-auto max-w-6xl rounded-xl border border-[#d6ad63] bg-[#071426] p-1.5 text-center shadow-2xl sm:p-2.5">
+          <div className="rounded-lg border border-[#d6ad63]/55 bg-[linear-gradient(145deg,#1c3657,#071426_70%)] px-3 py-9 sm:px-8 sm:py-14">
+            <p className="mb-4 text-xs font-bold tracking-[.28em] text-[#f5e6cc]">LDR</p>
+            <h2 id="international-ecosystem-sign" className="font-serif text-[clamp(1.6rem,7.4vw,6.5rem)] font-bold leading-none tracking-tight text-[#efd293]! uppercase">
+              <span className="block">Ecossistema</span>{" "}
+              <span className="block">Internacional</span>
+            </h2>
+            <div className="mt-6 flex flex-wrap justify-center gap-3">
+              <Link to="/ecossistema" className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#efd293] px-6 py-3 text-sm font-black text-[#071426] hover:bg-[#fff0cc]">Entrar no Ecossistema</Link>
+              <Link to="/feira360" className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#efd293] px-6 py-3 text-sm font-bold text-[#efd293] hover:bg-white/10">Encontrar serviços</Link>
+            </div>
+          </div>
+        </div>
+      </section>
+    )}
     <section className="bg-[#071426] px-5 py-8 text-white">
       <div className="mx-auto grid max-w-6xl gap-4 md:grid-cols-[1fr_auto_auto_auto] md:items-center">
         <div>
