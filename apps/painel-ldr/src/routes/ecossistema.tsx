@@ -328,10 +328,22 @@ function EcosystemMap() {
       </div>
       <section className="mx-auto w-full max-w-6xl px-4 pb-12 pt-24 sm:px-5 sm:pb-16 sm:pt-24">
         <div className="mb-4 ml-auto w-36"><LanguageSelect /></div>
+        <div className="mb-7 rounded-xl border border-[#d6ad63] bg-[#071426] p-1.5 text-center shadow-2xl sm:p-2.5">
+          <div className="rounded-lg border border-[#d6ad63]/55 bg-[linear-gradient(145deg,#1c3657,#071426_70%)] px-3 py-9 sm:px-8 sm:py-14">
+            <p className="mb-4 text-xs font-bold tracking-[.28em] text-[#f5e6cc]">LDR</p>
+            <h1 className="font-serif text-[clamp(1.6rem,7.4vw,6.5rem)] leading-none font-bold tracking-tight text-[#efd293]! uppercase">
+              <span className="block">Ecossistema</span>{" "}
+              <span className="block">Internacional</span>
+            </h1>
+            <Link to="/feira360" className="mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-[#efd293] px-6 py-3 text-sm font-black text-[#071426] hover:bg-[#fff0cc] sm:text-base">
+              {({ pt: "Entrar na FEIRA 360", en: "Explore FEIRA 360", fr: "Entrer dans FEIRA 360", es: "Entrar en FEIRA 360" } as const)[locale]}
+            </Link>
+          </div>
+        </div>
         <a href="/?area=academy" className="text-sm font-bold text-[#8a4c18]">{copy.back}</a>
         <div className="mt-7 min-w-0 rounded-[34px] border border-[#d6ad63]/40 bg-white p-6 shadow-xl sm:p-9">
           <p className="text-xs font-black uppercase tracking-[.2em] text-[#9a6a20]">{copy.welcome}</p>
-          <h1 className="mt-3 font-serif text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">{copy.hello}</h1>
+          <h2 className="mt-3 font-serif text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">{copy.hello}</h2>
           <p className="mt-3 text-xl font-bold text-[#8a4c18]">{copy.home}</p>
           <p className="mt-4 max-w-3xl text-base leading-7 text-[#6f6358]">
             {copy.intro}
