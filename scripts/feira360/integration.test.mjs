@@ -7,7 +7,7 @@ const migration = new URL("../../apps/painel-ldr/supabase/migrations/20261119095
 const existingRoles = new URL("../../apps/painel-ldr/supabase/migrations/20260820164018_eff62b65-ffac-4508-9f87-27c58f019b8a.sql", import.meta.url);
 const actor = (id) => `00000000-0000-4000-8000-${String(id).padStart(12, "0")}`;
 
-async function database() {
+async function database({ existingPrivateHelper = true } = {}) {
   const db = new PGlite();
   await db.exec(`
     create role anon; create role authenticated; create role service_role;
@@ -26,7 +26,7 @@ async function database() {
       from generate_series(1,6) n;
   `);
   const roleMigration = await readFile(existingRoles, "utf8");
-  await db.exec(roleMigration.split("-- Repoint policies")[0]);
+  if (existingPrivateHelper) await db.exec(roleMigration.split("-- Repoint policies")[0]);
   await db.exec(await readFile(migration, "utf8"));
 
   async function as(id, run) {
@@ -102,7 +102,7 @@ test("catálogo anónimo, aprovação, filtros, serviços adicionais e destaque"
 });
 
 test("orçamento, consentimento, isolamento, encaminhamento, comissão e auditoria", async (t) => {
-  const { db, rpc, as } = await database();
+  const { db, rpc, as } = await database({ existingPrivateHelper: false });
   t.after(() => db.close());
   const a = await rpc(1, "apply", candidate("studio"));
   const b = await rpc(2, "apply", candidate("outro-studio", "Bruxelas"));

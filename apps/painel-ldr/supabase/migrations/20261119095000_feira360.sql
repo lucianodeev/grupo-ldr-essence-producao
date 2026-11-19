@@ -1,5 +1,25 @@
 begin;
 
+-- The live schema retains the public Master helper. Install its private
+-- equivalent only on installations that have not already migrated it.
+create schema if not exists private;
+do $migration$
+begin
+  if to_regprocedure('private.is_superadmin(uuid)') is null then
+    create function private.is_superadmin(_user_id uuid)
+      returns boolean language sql stable security definer set search_path = ''
+      as $helper$
+        select exists (
+          select 1 from public.profiles p
+          join public.user_roles r on r.user_id = p.id
+          where p.id = _user_id and p.is_active and r.role = 'superadmin'
+        )
+      $helper$;
+    revoke all on function private.is_superadmin(uuid) from public, anon, authenticated;
+  end if;
+end
+$migration$;
+
 create table public.feira360_partners (
   id uuid primary key default gen_random_uuid(),
   owner_id uuid not null unique references auth.users(id),
