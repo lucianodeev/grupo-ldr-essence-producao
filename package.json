@@ -6,9 +6,11 @@
     "apps/painel-ldr"
   ],
   "scripts": {
-    "build:painel": "npm --prefix apps/painel-ldr run build"
+    "build:painel": "npm --prefix apps/painel-ldr run build",
+    "test:feira360": "node --test scripts/feira360/*.test.mjs"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "0.3.16",
     "vite": "7.3.2"
   }
 }

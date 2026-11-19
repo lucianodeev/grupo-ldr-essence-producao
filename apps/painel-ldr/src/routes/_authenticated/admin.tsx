@@ -12,6 +12,7 @@ const PRIMARY_AREAS = [
   ["Pedidos e propostas", "Solicitações empresariais e contactos recebidos, com protocolo e acompanhamento. Pagamentos só após proposta aprovada.", "/admin/contatos"],
   ["Atendimentos", "Agenda, atendimentos de hoje, clientes e acompanhamento administrativo.", "/admin/meus-atendimentos"],
   ["Profissionais", "Aprovação, perfis, serviços, conformidade e operação da rede multidisciplinar.", "/admin/rede"],
+  ["FEIRA 360", "Parceiros, oportunidades, comissões e destaque na vitrine.", "/admin/feira360"],
   ["Clínica Social", "Solicitações, profissionais participantes, valores sociais e acompanhamento.", "/admin/clinica-social"],
   ["Empresas", "Planos corporativos, colaboradores, benefícios e créditos.", "/admin/empresas"],
   ["Financeiro", "Pagamentos, taxa LDR de 20%, repasses, reembolsos e conciliação.", "/admin/financeiro"],

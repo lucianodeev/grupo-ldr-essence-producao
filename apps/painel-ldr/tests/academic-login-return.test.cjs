@@ -77,6 +77,16 @@ test('preview academic callback stays on the preview origin and returns to exact
   assert.equal(handler.exchanges.length, 1);
 });
 
+test('FEIRA 360 Netlify preview preserves the partner destination', async () => {
+  const destination = '/feira360/parceiro';
+  const returnCookie = ssr.serializeCookieHeader(helper.ACADEMIC_RETURN_COOKIE, destination);
+  const handler = callback();
+  const url = 'https://deploy-preview-318--ldr-ecossistema-provisorio.netlify.app/api/auth/callback?code=test-only';
+  const response = await handler.run(url, returnCookie);
+  assert.equal(response.status, 303);
+  assert.equal(response.headers.get('location'), destination);
+});
+
 test('failed and missing OAuth code return to academic login with a visible error and preserved destination', async () => {
   for (const [suffix, error, expected] of [['?code=test-only', { message: 'expired' }, 'exchange_failed'], ['', null, 'missing_code']]) {
     const handler = callback(error);
