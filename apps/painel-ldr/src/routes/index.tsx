@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { AcademyUniversityHome } from "@/components/academy-university-home";
 import { AcademyEcosystemSection } from "@/components/academy-ecosystem-section";
 import { AcademyInstitutionalIntro } from "@/components/academy-institutional-intro";
+import { EcosystemJourneyLinks } from "@/components/ecosystem-journey-links";
 import { EcosystemServiceShowcase } from "@/components/ecosystem-service-showcase";
 
 // Desktop home actions intentionally compact; LDR ONE is the current digital subscription.
@@ -48,11 +49,7 @@ function PublicHome() {
         </div>
       </section>
     )}
-    {!area && <nav aria-label="Por onde começar" className="mx-auto grid max-w-6xl gap-3 px-4 py-5 sm:grid-cols-3">
-      <Link to="/feira360" hash="pedido" className="rounded-xl bg-[#10223b] px-4 py-4 text-center font-bold text-white">Quero contratar um serviço</Link>
-      <Link to="/" search={{ area: "academy" }} className="rounded-xl border border-[#d6ad63] px-4 py-4 text-center font-bold">Quero aprender</Link>
-      <Link to="/feira360/parceiro" className="rounded-xl border border-[#d6ad63] px-4 py-4 text-center font-bold">Quero divulgar meu negócio</Link>
-    </nav>}
+    {!area && <EcosystemJourneyLinks />}
     <section className="bg-[#071426] px-5 py-8 text-white">
       <div className="mx-auto grid max-w-6xl gap-4 md:grid-cols-[1fr_auto_auto_auto] md:items-center">
         <div>
