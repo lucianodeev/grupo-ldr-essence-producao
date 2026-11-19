@@ -135,18 +135,8 @@ export function Marketplace() {
     <FeiraPage>
       <section className="bg-[radial-gradient(ellipse_at_top_right,#304664,#11223a_65%)] px-4 py-10 text-white sm:px-6 md:py-16">
         <div className="mx-auto max-w-6xl text-center">
-          <div className="rounded-xl border border-[#d9ab59]/80 bg-[#10223b] p-1.5 shadow-[0_15px_45px_#050d19] sm:p-2.5">
-            <div className="rounded-lg border border-[#d9ab59]/50 bg-[linear-gradient(145deg,#1c3657,#0b1b30_65%)] px-2 py-9 sm:px-8 sm:py-14">
-              <p className="mb-3 text-xs font-bold uppercase tracking-[0.28em] text-[#eee3ce] sm:text-sm">
-                FEIRA 360
-              </p>
-              <h1 className="font-serif text-[clamp(1.7rem,7.4vw,6.5rem)] leading-[0.98] font-bold tracking-tight text-[#efd293]! uppercase">
-                <span className="block">Ecossistema</span>{" "}
-                <span className="block">Internacional</span>
-              </h1>
-            </div>
-          </div>
-          <p className="mt-6 text-base text-white/90 sm:text-lg">
+          <h1 className="font-serif text-4xl font-bold text-white! sm:text-6xl">FEIRA 360</h1>
+          <p className="mt-5 text-base text-white/90 sm:text-lg">
             Encontre serviços de parceiros aprovados e solicite um orçamento.
           </p>
           <Link className={`${secondary} mt-4`} to="/feira360/parceiro">
