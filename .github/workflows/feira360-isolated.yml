@@ -1,0 +1,30 @@
+name: FEIRA 360 isolated Supabase
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/feira360-isolated.yml'
+      - 'scripts/feira360/**'
+      - 'apps/painel-ldr/supabase/migrations/*feira360.sql'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: supabase/setup-cli@v1
+        with:
+          version: 2.39.2
+      - name: Test Auth and marketplace RPCs in disposable Supabase
+        run: |
+          set -euo pipefail
+          isolated="$(mktemp -d)"
+          supabase init --workdir "$isolated"
+          supabase start --workdir "$isolated" > "$isolated/start.log"
+          trap 'supabase stop --workdir "$isolated" --no-backup' EXIT
+          supabase status --workdir "$isolated" -o json > "$isolated/status.json"
+          node scripts/feira360/supabase-smoke.mjs "$isolated/status.json"
