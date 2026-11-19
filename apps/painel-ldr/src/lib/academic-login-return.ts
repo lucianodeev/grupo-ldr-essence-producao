@@ -10,7 +10,7 @@ export function academicReturnPath(value: unknown): string | null {
     const libraryReturn = url.pathname === "/cliente/biblioteca" || /^\/cliente\/(?:ebooks|biblioteca)\/ebook_(?:falar_com_quem_feriu|da_pobreza_ao_primeiro_contrato)$/.test(url.pathname);
     const careerReturn = url.pathname === "/carreira/minha-jornada" || url.pathname === "/carreira/meu-desenvolvimento" || url.pathname === "/carreira/meu-futuro" || url.pathname === "/carreira/passaporte" || url.pathname === "/carreira/oportunidades-para-mim";
     const serviceReturn = ["/cliente/contratar", "/cliente/propostas"].includes(url.pathname);
-    const feiraReturn = /^\/feira360\/(?:parceiro|p\/[a-z0-9-]{1,64}\/s\/[a-z0-9-]{1,64})$/.test(url.pathname);
+    const feiraReturn = url.pathname === "/feira360" || /^\/feira360\/(?:parceiro|p\/[a-z0-9-]{1,64}\/s\/[a-z0-9-]{1,64})$/.test(url.pathname);
     if (!feiraReturn && !libraryReturn && !careerReturn && !serviceReturn && url.pathname !== "/ldr-pass" && url.pathname !== "/cliente/rede-academica" && !url.pathname.startsWith("/cliente/rede-academica/")) return null;
     return `${url.pathname}${url.search}${url.hash}`;
   } catch {

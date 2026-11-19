@@ -1,9 +1,9 @@
-import { useEffect, useState, type FormEvent } from "react";
+import type { FormEvent } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import { supabase } from "@/integrations/supabase/client";
 import type { Json } from "@/integrations/supabase/types";
-import { account } from "./data";
+import { account, useAccountIdentity } from "./data";
+import { MasterBriefs, PartnerBriefs } from "./journeys";
 import {
   categories,
   decimalToHundredths,
@@ -16,26 +16,6 @@ import {
   type Quote,
 } from "./model";
 import { button, card, FeiraPage, field, Options, secondary } from "./public";
-
-function useAccountIdentity() {
-  const [identity, setIdentity] = useState<string | null>();
-  useEffect(() => {
-    let active = true;
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (active) setIdentity(session?.user.id ?? null);
-    });
-    void supabase.auth.getSession().then(({ data }) => {
-      if (active) setIdentity(data.session?.user.id ?? null);
-    });
-    return () => {
-      active = false;
-      subscription.unsubscribe();
-    };
-  }, []);
-  return identity;
-}
 
 function useDashboard<T>(action: string, actor: string) {
   const queryClient = useQueryClient();
@@ -126,6 +106,7 @@ function PartnerContent({ actor }: { actor: string }) {
               </Link>
             )}
           </article>
+          {partner.status === "approved" && <PartnerBriefs actor={actor} slug={partner.slug} />}
           <h2 className="my-4 font-serif text-2xl font-bold">Os seus serviços</h2>
           <ul className="mb-4 grid gap-1">
             {services.map((service) => (
@@ -473,6 +454,7 @@ function MasterContent({ actor }: { actor: string }) {
           </article>
         ))}
       </div>
+      <MasterBriefs actor={actor} partners={partners} />
       <h2 className="my-4 font-serif text-2xl font-bold">Pedidos de orçamento</h2>
       {!quotes.length && <p>Nenhum pedido recebido.</p>}
       <div className="grid gap-4 lg:grid-cols-2">

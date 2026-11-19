@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight, Search, MapPin } from "lucide-react";
 import { EcosystemServiceShowcase } from "@/components/ecosystem-service-showcase";
+import { GeneralBriefForm } from "./journeys";
 import { account, catalogQuery } from "./data";
 import { categories, modalities, money, type Listing } from "./model";
 import { supabase } from "@/integrations/supabase/client";
@@ -15,12 +16,16 @@ export const field =
   "block w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-[#18263b]";
 export const card = "rounded-2xl border border-[#ded5c4] bg-white p-5 shadow-sm";
 
-export function FeiraPage({ children }: { children: ReactNode }) {
+export function FeiraPage({ children, source = "" }: { children: ReactNode; source?: string }) {
   return (
     <main className="min-h-screen bg-[#f8f4ed] text-[#18263b]">
       <nav aria-label="FEIRA 360" className="border-b border-white/15 bg-[#10223b] text-white">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-4">
-          <Link to="/feira360" className="font-serif text-xl font-bold tracking-wide">
+          <Link
+            to="/feira360"
+            search={source ? { ref: source } : {}}
+            className="font-serif text-xl font-bold tracking-wide"
+          >
             FEIRA <span className="text-[#edc474]">360</span>
           </Link>
           <div className="flex flex-wrap gap-4 text-sm font-semibold">
@@ -53,7 +58,7 @@ export function Options({
   );
 }
 
-function ServiceCard({ service }: { service: Listing }) {
+function ServiceCard({ service, source }: { service: Listing; source: string }) {
   return (
     <article className={card}>
       <div className="flex flex-wrap items-center gap-2 text-xs font-semibold">
@@ -64,6 +69,7 @@ function ServiceCard({ service }: { service: Listing }) {
       <Link
         to="/feira360/p/$partner"
         params={{ partner: service.partner_slug }}
+        search={source ? { ref: source } : {}}
         className="text-sm underline"
       >
         {service.partner_name}
@@ -80,7 +86,7 @@ function ServiceCard({ service }: { service: Listing }) {
           className="inline-flex min-h-11 items-center gap-1 text-sm font-bold underline"
           to="/feira360/p/$partner/s/$service"
           params={{ partner: service.partner_slug, service: service.slug }}
-          search={{}}
+          search={source ? { ref: source } : {}}
         >
           Ver serviço <ArrowUpRight size={15} />
         </Link>
@@ -112,7 +118,7 @@ function Pagination({
   );
 }
 
-export function Marketplace() {
+export function Marketplace({ source }: { source: string }) {
   const [filters, setFilters] = useState({
     p_query: "",
     p_category: "",
@@ -133,12 +139,13 @@ export function Marketplace() {
     });
   }
   return (
-    <FeiraPage>
+    <FeiraPage source={source ?? ""}>
       <section className="bg-[radial-gradient(ellipse_at_top_right,#304664,#11223a_65%)] px-4 py-10 text-white sm:px-6 md:py-16">
         <div className="mx-auto max-w-6xl text-center">
           <h1 className="font-serif text-4xl font-bold text-white! sm:text-6xl">FEIRA 360</h1>
           <p className="mt-5 text-base text-white/90 sm:text-lg">
-            Explore os serviços, livros e formações do LDR. Também pode cadastrar o seu negócio como parceiro.
+            Explore os serviços, livros e formações do LDR. Também pode cadastrar o seu negócio como
+            parceiro.
           </p>
           <Link className={`${button} mt-4`} to="/feira360/parceiro">
             Cadastrar meu negócio
@@ -146,14 +153,25 @@ export function Marketplace() {
         </div>
       </section>
       <div className="mx-auto max-w-6xl px-5">
+        <GeneralBriefForm source={source} />
         <EcosystemServiceShowcase />
         <section aria-labelledby="feira360-products" className={`${card} mt-6`}>
-          <h2 id="feira360-products" className="font-serif text-2xl font-bold">Produtos e formações LDR</h2>
-          <p className="mt-2 text-sm text-slate-700">Explore livros, eBooks, cursos e acessos digitais no catálogo do Ecossistema.</p>
+          <h2 id="feira360-products" className="font-serif text-2xl font-bold">
+            Produtos e formações LDR
+          </h2>
+          <p className="mt-2 text-sm text-slate-700">
+            Explore livros, eBooks, cursos e acessos digitais no catálogo do Ecossistema.
+          </p>
           <div className="mt-4 flex flex-wrap gap-3">
-            <Link to="/produtos" className={button}>Ver todos os produtos</Link>
-            <Link to="/livros" className={secondary}>Ver livros</Link>
-            <Link to="/" search={{ area: "academy" }} className={secondary}>Explorar a LDR Academy</Link>
+            <Link to="/produtos" className={button}>
+              Ver todos os produtos
+            </Link>
+            <Link to="/livros" className={secondary}>
+              Ver livros
+            </Link>
+            <Link to="/" search={{ area: "academy" }} className={secondary}>
+              Explorar a LDR Academy
+            </Link>
           </div>
         </section>
       </div>
@@ -196,6 +214,7 @@ export function Marketplace() {
           loading={listings.isPending}
           error={listings.isError}
           items={listings.data?.slice(0, 24)}
+          source={source}
         />
         <Pagination page={page} count={listings.data?.length ?? 0} onPage={setPage} />
       </section>
@@ -207,10 +226,12 @@ function Results({
   loading,
   error,
   items,
+  source = "",
 }: {
   loading: boolean;
   error: boolean;
   items: Listing[] | undefined;
+  source?: string;
 }) {
   if (loading) return <p role="status">A carregar serviços…</p>;
   if (error)
@@ -219,7 +240,11 @@ function Results({
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {items.map((service) => (
-        <ServiceCard key={`${service.partner_slug}/${service.slug}`} service={service} />
+        <ServiceCard
+          key={`${service.partner_slug}/${service.slug}`}
+          service={service}
+          source={source}
+        />
       ))}
     </div>
   );
@@ -240,9 +265,13 @@ export function Detail({
   );
   const listing = result.data?.[0];
   return (
-    <FeiraPage>
+    <FeiraPage source={source ?? ""}>
       <section className="mx-auto max-w-6xl px-5 py-8">
-        <Link to="/feira360" className="text-sm font-bold underline">
+        <Link
+          to="/feira360"
+          search={source ? { ref: source } : {}}
+          className="text-sm font-bold underline"
+        >
           Voltar à vitrine
         </Link>
         {listing && (
@@ -262,7 +291,12 @@ export function Detail({
         {service && listing ? (
           <>
             <p className="mb-4">
-              <Link to="/feira360/p/$partner" params={{ partner }} className="underline">
+              <Link
+                to="/feira360/p/$partner"
+                params={{ partner }}
+                search={source ? { ref: source } : {}}
+                className="underline"
+              >
                 {listing.partner_name}
               </Link>
               {" · "}
@@ -282,6 +316,7 @@ export function Detail({
                 loading={result.isPending}
                 error={result.isError}
                 items={result.data?.slice(0, 24)}
+                source={source ?? ""}
               />
             </div>
             <Pagination page={page} count={result.data?.length ?? 0} onPage={setPage} />

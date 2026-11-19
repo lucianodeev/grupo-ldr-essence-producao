@@ -20,7 +20,7 @@ function Proposals() {
     {query.isLoading ? <p role="status" className="mt-6">Carregando…</p> : query.isError ? <p role="alert" className="mt-6">Não foi possível carregar as propostas. <button className="underline" onClick={() => void query.refetch()}>Tentar novamente</button></p> : <ul className="mt-6 space-y-5">{query.data?.map((quote: any) => {
       const expired = quote.expiresAt * 1000 <= Date.now();
       const payable = !expired && quote.status !== "cancelado" && quote.paymentStatus === "pendente";
-      return <li key={quote.id} className="s8-card min-w-0 space-y-4">
+      return <li key={quote.id} id={`proposta-${quote.id}`} className="s8-card min-w-0 scroll-mt-24 space-y-4">
         <div><p className="text-xs font-bold text-muted-foreground">{quote.number}</p><h2 className="mt-2 font-serif text-2xl">{quote.title}</h2></div>
         <p className="text-xl font-bold">{formatMoney(quote.amountCents, quote.currency)}</p>
         <p className="whitespace-pre-wrap text-sm leading-7">{quote.scope}</p>

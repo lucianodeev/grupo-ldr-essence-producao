@@ -10,6 +10,7 @@ import {
   labelOf,
   toneOf,
 } from "@/lib/central";
+import { ClientBriefs } from "@/features/feira360/journeys";
 import { useClientOverview } from "@/lib/client-portal-data";
 
 export const Route = createFileRoute("/_clientarea/cliente/pedidos")({
@@ -36,6 +37,7 @@ function ClientOrders() {
   return (
     <div>
       <PageHeader title="Meus pedidos" subtitle="Todos os serviços contratados com a LDR." />
+      <ClientBriefs />
       {orders.length ? (
         <ul className="grid gap-3">
           {orders.map((o) => (

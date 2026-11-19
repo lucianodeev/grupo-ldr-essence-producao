@@ -1380,6 +1380,7 @@ type LegacyDatabase = {
     Functions: {
       feira360_catalog: { Args: { p_query?: string; p_category?: string; p_locality?: string; p_modality?: string; p_partner?: string; p_service?: string; p_offset?: number }; Returns: Json };
       feira360_account: { Args: { p_action: string; p_data?: Json }; Returns: Json };
+      feira360_journeys: { Args: { p_action: string; p_data?: Json }; Returns: Json };
       audit_event: {
         Args: { _action: string; _details: Json; _target: string }
         Returns: undefined

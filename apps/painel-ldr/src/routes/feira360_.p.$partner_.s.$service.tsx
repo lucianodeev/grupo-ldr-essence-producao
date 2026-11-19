@@ -1,11 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Detail } from "@/features/feira360/public";
 
+import { feiraSource } from "@/features/feira360/model";
+
 export const Route = createFileRoute("/feira360_/p/$partner_/s/$service")({
-  validateSearch: (search: Record<string, unknown>): { ref?: string } =>
-    typeof search["ref"] === "string" && /^[A-Za-z0-9_-]{1,60}$/.test(search["ref"])
-      ? { ref: search["ref"] }
-      : {},
+  validateSearch: feiraSource,
   component: Service,
 });
 

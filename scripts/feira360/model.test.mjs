@@ -17,3 +17,9 @@ test("login mantém referências da Feira e aceita somente destinos permitidos",
   }
   assert.equal(academicReturnPath("/cliente/biblioteca"), "/cliente/biblioteca");
 });
+
+test("pedido geral conserva origem e âncora no retorno do login", () => {
+  const path = "/feira360?ref=ldr-unique#pedido";
+  assert.equal(academicReturnPath(path), path);
+  assert.equal(academicReturnPath("//outra.example/feira360?ref=ldr-unique#pedido"), null);
+});
