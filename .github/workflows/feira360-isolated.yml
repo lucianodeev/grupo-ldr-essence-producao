@@ -9,7 +9,7 @@ permissions:
   contents: read
 jobs:
   verify:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
@@ -18,13 +18,13 @@ jobs:
           node-version: '22'
       - uses: supabase/setup-cli@v1
         with:
-          version: 2.39.2
+          version: 2.122.1
       - name: Test Auth and marketplace RPCs in disposable Supabase
         run: |
           set -euo pipefail
           isolated="$(mktemp -d)"
-          supabase init --workdir "$isolated"
-          supabase start --workdir "$isolated" > "$isolated/start.log"
+          supabase init --workdir "$isolated" --yes
+          supabase start --workdir "$isolated" --exclude storage-api,imgproxy,realtime,studio,postgres-meta,edge-runtime,logflare,vector,supavisor > "$isolated/start.log"
           trap 'supabase stop --workdir "$isolated" --no-backup' EXIT
           supabase status --workdir "$isolated" -o json > "$isolated/status.json"
           node scripts/feira360/supabase-smoke.mjs "$isolated/status.json"
